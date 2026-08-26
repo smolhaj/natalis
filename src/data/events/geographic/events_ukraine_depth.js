@@ -15,14 +15,14 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_chernobyl',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
       G.currentYear >= 1986 && G.currentYear <= 1990 &&
       G.age >= 8 &&
       !G.mem?.ukrDepChernobyl,
-    text: pick([
+    text: () => pick([
       'April 26, 1986, reactor four. The explosion is at 1:23 a.m. Pripyat does not evacuate for 36 hours — the Soviet state needs time to determine that the evacuation is necessary. When the buses finally come, residents are told to bring documents for three days. Most leave without photographs, without extra clothing, without anything that acknowledges what three days means. The Ferris wheel in Pripyat is still there. No one ever rides it again.',
       'The liquidators. 600,000 men across the Soviet Union sent to contain the reactor, clean the rooftops, build the sarcophagus. They receive medals. Some receive doses that are not measured accurately, or measured and not disclosed. The bonus pay is good. The paperwork afterward is complicated. Some of them are your age. Some of them are your uncles.',
     ]),
@@ -57,7 +57,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_1990s_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -106,7 +106,7 @@ export const UKRAINE_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 1991 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.ukrDepSovietId,
-    text: pick([
+    text: () => pick([
       'You are Ukrainian and Soviet and both at once. The school is in Russian. The films are in Russian. The songs you know by heart are in Russian. The village your grandmother came from speaks Ukrainian, but that Ukrainian sounds old and rural — not the Ukrainian in the official newspaper, which is careful and bureaucratic, not the Ukrainian in the village, which is not for official use. You know who you are. The state has opinions about who you are that are different from your own.',
       'The Sixties: the shistdesiatnyky — the generation of writers, artists, intellectuals who pushed for Ukrainian culture in the Khrushchev thaw. Ivan Dziuba. Lina Kostenko. Vasyl Stus. What happened to them: Stus died in a Soviet camp in 1985. Dziuba was made to recant. Kostenko was silenced for twenty years. The state that silenced them is the state your career depends on. You know their names. You do not say them at work.',
     ]),
@@ -123,7 +123,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_crimea_2014',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -163,7 +163,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_lviv_galicia',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -184,7 +184,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_kharkiv_wartime',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -226,7 +226,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_mobilization_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -269,7 +269,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_basement_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&

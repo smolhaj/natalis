@@ -76,7 +76,7 @@ export const LETTER_EVENTS = [
 
   {
     id: 'letter_official_ominous',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isLetter: true,
     when: (G) =>
@@ -91,7 +91,7 @@ export const LETTER_EVENTS = [
 
   {
     id: 'letter_from_ofw_parent',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     isLetter: true,
     when: (G) =>
@@ -132,7 +132,7 @@ export const LETTER_EVENTS = [
     when: (G) =>
       G.currentYear >= 1946 && G.currentYear < 1965 &&
       (G.character.country?.name === 'Russia' || G.character.country?.name === 'Ukraine' || G.character.country?.name === 'Belarus') &&
-      (G.flags.has('gulag_family') || G.flags.has('family_arrested')) &&
+      (G.flags.has('gulag_family_memory') || G.flags.has('family_arrested')) &&
       G.age >= 16 &&
       !G.mem?.letterGulag,
     text: 'A letter arrives — or rather, a portion of a letter, the rest removed by the censor. What remains is ordinary language: the weather, health, a request for warm socks. The ordinary language, in this context, contains everything that cannot be said. You read what remains several times. You learn to read the spaces where the censor\'s scissors went.',

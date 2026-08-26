@@ -13,7 +13,7 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
 
   {
     id: 'no_1942_deportation',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NORWEGIAN(G) &&
@@ -29,7 +29,7 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
 
   {
     id: 'fin_continuation_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_FINNISH(G) &&
@@ -51,7 +51,7 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
 
   {
     id: 'fin_finlandization',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_FINNISH(G) &&

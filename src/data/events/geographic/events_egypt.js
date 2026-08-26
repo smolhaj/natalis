@@ -20,7 +20,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_naksa_1967',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -47,7 +47,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_sadat_infitah',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -61,7 +61,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_mubarak_emergency',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -75,7 +75,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_bread_riots_1977',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -89,7 +89,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_tahrir_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -159,7 +159,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_gulf_contract_choice',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -201,7 +201,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_coptic_navigation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&

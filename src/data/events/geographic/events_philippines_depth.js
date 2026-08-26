@@ -13,7 +13,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
 
   {
     id: 'ph_dep_ofw_departure',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isPhilippines(G) &&
@@ -40,7 +40,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
 
   {
     id: 'ph_dep_balikbayan_box',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       isPhilippines(G) &&
@@ -57,7 +57,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
 
   {
     id: 'ph_dep_jeepney',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isPhilippines(G) &&
@@ -103,7 +103,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
 
   {
     id: 'ph_dep_imelda_shoes',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       isPhilippines(G) &&
@@ -222,7 +222,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
 
   {
     id: 'ph_dep_ondoy_2009',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       isPhilippines(G) &&

@@ -104,7 +104,7 @@ export const COUNTRY_ARC_3_EVENTS = [
 
   {
     id: 'iran_iraq_war_son',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Iran' &&
@@ -231,7 +231,7 @@ export const COUNTRY_ARC_3_EVENTS = [
 
   {
     id: 'iran_green_movement_2009',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country?.name === 'Iran' &&
@@ -258,7 +258,7 @@ export const COUNTRY_ARC_3_EVENTS = [
 
   {
     id: 'iran_mahsa_amini_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country?.name === 'Iran' &&
@@ -293,7 +293,7 @@ export const COUNTRY_ARC_3_EVENTS = [
 
   {
     id: 'sa_first_vote_1994',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country?.name === 'South Africa' &&
@@ -320,7 +320,7 @@ export const COUNTRY_ARC_3_EVENTS = [
 
   {
     id: 'sa_mandela_era_hope',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'South Africa' &&
@@ -348,7 +348,7 @@ export const COUNTRY_ARC_3_EVENTS = [
 
   {
     id: 'sa_marikana_2012',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country?.name === 'South Africa' &&
@@ -375,7 +375,7 @@ export const COUNTRY_ARC_3_EVENTS = [
 
   {
     id: 'sa_loadshedding',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'South Africa' &&

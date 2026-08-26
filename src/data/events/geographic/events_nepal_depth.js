@@ -9,7 +9,7 @@
 const IS_NEPAL = (G) => G.character.country?.name === 'Nepal'
 const IS_HILL_ETHNIC = (G) =>
   IS_NEPAL(G) &&
-  ['gurung', 'magar', 'rai', 'limbu', 'tamang'].includes(G.character.ethnicity)
+  ['magar', 'tamang'].includes(G.character.ethnicity)
 const IS_DALIT_NEPAL = (G) =>
   IS_NEPAL(G) && G.character.ethnicity === 'dalit_nepal'
 const IS_THARU = (G) =>
@@ -23,7 +23,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_gurkha_recruitment',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_HILL_ETHNIC(G) &&
@@ -290,7 +290,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_kumari',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_NEWAR(G) &&

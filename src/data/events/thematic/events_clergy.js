@@ -162,7 +162,7 @@ export const CLERGY_EVENTS = [
     id: 'cle_yeshiva_compact',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => IS_ISRAEL(G) && (G.religion === 'jewish_orthodox' || G.religion?.includes('jewish')) && G.currentYear >= 1955 && G.currentYear <= 1990 && G.age >= 18 && G.age <= 25 && !G.mem.cleYeshiva,
+    when: (G) => IS_ISRAEL(G) && G.religion === 'jewish' && G.currentYear >= 1955 && G.currentYear <= 1990 && G.age >= 18 && G.age <= 25 && !G.mem.cleYeshiva,
     text: 'Ben-Gurion made a compact with the Orthodox rabbis in 1947: full-time yeshiva students would be exempt from military service. There are four hundred exemptions originally granted; by the time you are studying there are tens of thousands. You study Torah. Your secular neighbour has gone to the army for three years. The compact that protects your study is not fully comfortable, but you did not design it.',
     choices: [
       {

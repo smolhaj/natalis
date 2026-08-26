@@ -11,7 +11,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_chavez_1998',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -44,7 +44,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_barrio_adentro',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -64,7 +64,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_oil_boom',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -91,7 +91,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_dep_chavez_death',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -116,7 +116,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_food_line',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -143,7 +143,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_2017_protest',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -170,7 +170,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_hyperinflation',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -190,7 +190,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_departure',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -224,7 +224,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_colectivo',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -252,7 +252,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_dollarization',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -271,7 +271,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_clap',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -298,11 +298,11 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_migrant_colombia',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('ven_diaspora') &&
-      G.currentCountry === 'Colombia' &&
+      G.currentCountry?.name === 'Colombia' &&
       G.currentYear >= 2017 && G.currentYear <= 2024 &&
       G.age >= 18 &&
       !G.mem?.venMigrantColombia,

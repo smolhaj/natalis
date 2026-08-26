@@ -6,7 +6,7 @@ export const TURKEY_EVENTS = [
 
   {
     id: 'tur_ataturk_alphabet',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Turkey' &&
@@ -60,13 +60,13 @@ export const TURKEY_EVENTS = [
 
   {
     id: 'tur_syrian_refugees',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Turkey' &&
       G.currentYear >= 2015 && G.currentYear <= 2025 &&
       G.age >= 20 &&
-      G.ethnicity !== 'arab' &&
+      G.ethnicity !== 'arab_turkish' &&
       !G.mem.turSyrianRefugees,
     text: 'Turkey hosts more Syrian refugees than any country in the world — 3.6 million at peak, by official count. Hatay, Gaziantep, Şanlıurfa: the southern cities are transformed. Syrian neighbourhoods have their own bakeries, their own Arabic-language schools, their own parallel economy. Two things are simultaneously true: these people are here because their country was destroyed, and the political economy of their presence is generating a resentment that is being organised into votes. The transit route through Turkey to Greece is the most-travelled in Europe. You see both the people and the politics. Which one you act on is something else.',
     choices: [

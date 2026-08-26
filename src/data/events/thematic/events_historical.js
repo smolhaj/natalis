@@ -80,7 +80,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_apartheid_bantu_education',
-    phase: 'childhood',
+    phase: null,
     weight: 7,
     when: (G) => G.character.country.name === 'South Africa' && G.character.ethnicity === 'black_south_african' && G.currentYear >= 1953 && G.currentYear <= 1979 && G.age >= 8 && G.age <= 16 && !G.mem?.bantu_education,
     text: 'Your school teaches a curriculum designed by the apartheid government. Less mathematics, less science, less critical thinking — enough to produce labourers, not leaders. Your teacher tells you this, quietly. He was educated before the Act.',
@@ -117,7 +117,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_segregated_school',
-    phase: 'childhood',
+    phase: null,
     weight: 8,
     when: (G) => G.character.country.name === 'United States' && G.character.ethnicity === 'black_american' && G.currentYear >= 1950 && G.currentYear <= 1970 && G.age >= 6 && G.age <= 16 && !G.mem?.segregated_school,
     text: (G) => `Your school is for Negro children only. It has fewer books, older desks, and a building that has been in disrepair since before you were born. The white school two miles away has a gymnasium. ${G.currentYear >= 1954 ? 'Brown v. Board said this is illegal. The school board disagrees in practice.' : 'This is simply how things are.'}`,
@@ -140,7 +140,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_civil_rights_march',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) => G.character.country.name === 'United States' && G.character.ethnicity === 'black_american' && G.currentYear >= 1960 && G.currentYear <= 1968 && G.age >= 18 && G.age <= 35 && !G.mem?.civil_rights_march,
     text: 'The movement is building. There is a march. There will be police and possibly worse. There are also people — thousands of them — who believe that what is wrong can be made right by the weight of bodies in the street.',
@@ -153,7 +153,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_redlining',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) => G.character.country.name === 'United States' && G.character.ethnicity === 'black_american' && G.currentYear >= 1950 && G.currentYear <= 1975 && G.age >= 25 && G.age <= 45 && !G.mem?.redlining,
     text: 'You have saved enough for a down payment. The bank loan officer is polite. He tells you the property you want is in a "transitional" neighbourhood and the bank cannot approve the loan. The neighbourhood is where white families live.',
@@ -167,7 +167,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_soviet_party_pressure',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.currentYear >= 1950 && G.currentYear <= 1989 && G.age >= 18 && G.age <= 35 && !G.mem?.party_pressure,
     text: 'Your supervisor tells you that joining the Party would be "beneficial for your career." He says it with a smile that means something else entirely.',
@@ -302,7 +302,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_caste_well_untouchability',
-    phase: 'childhood',
+    phase: null,
     weight: 7,
     when: (G) => G.character.country.name === 'India' && G.character.ethnicity === 'dalit' && G.age >= 8 && G.age <= 16 && G.currentYear < 1990 && !G.mem?.caste_well,
     text: 'You reach for the village well. An upper-caste man grabs your wrist and pulls you back. Dalits do not touch the well. You are sent to fetch water from a different source — further, dirtier. Your mother doesn\'t look surprised when you tell her.',
@@ -368,7 +368,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_diaspora_identity_crisis',
-    phase: 'adolescence',
+    phase: null,
     weight: 6,
     when: (G) => G.age >= 14 && G.age <= 22 && G.flags.includes('emigrated') && !G.mem?.diaspora_identity && G.currentCountry?.archetype === 'wealthy_west',
     text: 'At home you are foreign. In the country your parents came from, you are also foreign. You speak both languages with an accent that marks you in each direction. You belong completely to neither place and you are starting to understand that this might be permanent.',
@@ -381,7 +381,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_remittance_pressure',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) => G.age >= 20 && G.age <= 35 && G.flags.includes('emigrated') && !G.mem?.remittance_pressure && ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character.country.archetype),
     text: 'Your family back home is depending on the money you send. A medical emergency. A sibling\'s school fees. A cousin\'s business start-up. The requests are not dishonest — the need is real. But you are saving to rent a proper apartment.',
@@ -427,5 +427,31 @@ export const HISTORICAL_EVENTS = [
       { text: 'Close the paper. You have lived with this as long as it takes to live with something.', tag: null, outcome: 'The photograph fades. The road does not.', effect: (p) => { p.m -= 15; p.r += 10; p.setMem('guilt_reckoning', true) } },
     ],
     effect: null,
+  },
+
+  // ── BANGLADESH 1971 ───────────────────────────────────────────────────────────
+  // Sets `liberation_war_witnessed`, which the Bhola cyclone follow-through reads.
+
+  {
+    id: 'hist_liberation_war_1971',
+    phase: null,
+    weight: 6,
+    when: (G) =>
+      G.character?.country?.name === 'Bangladesh' &&
+      G.currentYear >= 1971 && G.currentYear <= 1972 &&
+      G.age >= 6 &&
+      !G.flags.has('liberation_war_witnessed') &&
+      !G.mem?.histLiberationWar,
+    text: 'In March the army comes out of the cantonment at night and the university does not open again that term. For nine months the country is a set of things you learn not to say on the road: which bridge is held, whose brother has gone across to train, what the word razakar means when it is used about a neighbour. In December the Indian aircraft come over low and the surrender is signed in a racecourse in Dhaka. Your family counts who is still here. The count is not the same as it was in February.',
+    context: 'Following the Pakistani army\'s Operation Searchlight in March 1971, an estimated 300,000 to 3 million people were killed and around 10 million fled to India. Bangladesh became independent on 16 December 1971.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 16
+      p.r += 10
+      p.karma += 4
+      p.addFlag('liberation_war_witnessed')
+      p.addFlag('war_childhood')
+      p.setMem('histLiberationWar', true)
+    },
   },
 ]

@@ -12,7 +12,7 @@
 const IS_COLOMBIA = (G) => G.character.country?.name === 'Colombia'
 const IS_AFROCOLOMBIANO = (G) =>
   G.character.country?.name === 'Colombia' &&
-  (G.character.ethnicity === 'afrocolombian' || G.character.ethnicity === 'palenquero')
+  G.character.ethnicity === 'afro_colombian'
 
 export const COLOMBIA_DEPTH_EVENTS = [
 
@@ -20,7 +20,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
 
   {
     id: 'col_dep_false_positives',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_COLOMBIA(G) &&
@@ -59,7 +59,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
 
   {
     id: 'col_dep_medellin_transforms',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_COLOMBIA(G) &&
@@ -98,7 +98,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
 
   {
     id: 'col_dep_coca_farmer',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_COLOMBIA(G) &&
@@ -158,7 +158,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
 
   {
     id: 'col_dep_choco_displaced',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_AFROCOLOMBIANO(G) &&
@@ -198,7 +198,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
 
   {
     id: 'col_dep_desplazado_city',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_COLOMBIA(G) &&

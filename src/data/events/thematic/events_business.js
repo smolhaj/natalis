@@ -172,4 +172,37 @@ export const BUSINESS_EVENTS = [
     effect: null,
   },
 
+
+  // ── THE MEMO YOU KEPT ─────────────────────────────────────────────────────────
+  // Sets `corporate_scandal_covered`, which a journalist reopens fifteen years on.
+
+  {
+    id: 'biz_scandal_buried',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.career &&
+      (G.career.level ?? 0) >= 2 &&
+      G.age >= 28 && G.age <= 50 &&
+      ['business', 'finance', 'law', 'engineering', 'media'].includes(G.career?.field ?? '') &&
+      !G.flags.has('corporate_scandal_covered') &&
+      !G.mem?.bizScandalBuried &&
+      Math.random() < 0.08,
+    text: 'The figures in the second attachment do not match the figures in the first, and the difference is not a rounding error. The meeting to discuss it is scheduled for forty minutes and takes twelve. A revised version goes out that afternoon with a new file name. You print the original before it is taken down and you are not sure, at the time, why you do that.',
+    choices: [
+      {
+        text: 'Let it go out. Keep the printout.',
+        tag: null,
+        outcome: 'The quarter closes well. The printout goes into a folder at home, behind the tax paperwork, and stays there for fifteen years.',
+        effect: (p) => { p.mo += 6000; p.r += 12; p.karma -= 8; p.addFlag('corporate_scandal_covered'); p.setMem('bizScandalBuried', true) },
+      },
+      {
+        text: 'Put the discrepancy in writing to the board.',
+        tag: null,
+        outcome: 'The email goes at 6am. You are moved sideways within a quarter to a role with a longer title and less to do. You sleep well.',
+        effect: (p) => { p.m -= 4; p.karma += 10; p.w -= 4; p.addFlag('whistleblower_internal'); p.setMem('bizScandalBuried', true) },
+      },
+    ],
+    effect: null,
+  },
 ]

@@ -40,7 +40,7 @@ const IRAN_EVENTS = [
 
   {
     id: 'irn_khatami_era',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -69,7 +69,7 @@ const IRAN_EVENTS = [
 
   {
     id: 'irn_sanctions_economy',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -90,7 +90,7 @@ const IRAN_EVENTS = [
 
   {
     id: 'irn_private_public',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -119,7 +119,7 @@ const IRAN_EVENTS = [
 
   {
     id: 'irn_hijab_daily',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -154,7 +154,7 @@ const IRAN_EVENTS = [
 
   {
     id: 'irn_brain_drain',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -184,14 +184,15 @@ const IRAN_EVENTS = [
 
   {
     id: 'irn_jcpoa',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Iran' &&
       G.currentYear >= 2015 && G.currentYear <= 2020 &&
       G.age >= 20 &&
       !G.mem?.irn_jcpoa,
-    text: 'July 2015: the JCPOA is signed. The P5+1. Iran limits its nuclear program; the sanctions are lifted. Economists model what integration into the global economy would mean for a country of 80 million with significant natural resources and an educated workforce. The rial improves. International companies begin sending delegations. Boeing signs a deal for 100 aircraft. Europeans come to negotiate. May 2018: Trump withdraws. The secondary sanctions are reimposed with maximum pressure. Boeing cancels the deal. The European companies leave. The rial collapses. The generation that waited for the deal to be signed and then watched it dissolve carries a specific double loss: the hope and the answer to what happens after the hope.',
+    text: 'For eighteen months the rial holds still and your brother talks about the workshop he will open. Foreign delegations come through the hotel where your cousin works and she learns to say good afternoon in three languages. Then in May the announcement comes from Washington and by August the rial is worth half of what it was in the spring. Your brother does not mention the workshop again and neither do you.',
+    context: 'The Joint Comprehensive Plan of Action was signed in July 2015: Iran limited its nuclear programme in exchange for sanctions relief. Boeing agreed to sell 100 aircraft and European firms returned. The United States withdrew in May 2018 and reimposed secondary sanctions; the deals were cancelled and the rial lost most of its value.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('irn_jcpoa_generation'); p.setMem('irn_jcpoa', true); },
   },

@@ -800,7 +800,7 @@ export const CITIES_EXTENDED_EVENTS = [
     when: (G) =>
       G.place?.id === 'za_johannesburg' &&
       G.currentYear >= 1960 && G.currentYear <= 1986 &&
-      G.ethnicity === 'black' &&
+      G.ethnicity === 'black_south_african' &&
       !G.mem?.jhbPassLaws,
     text: () =>
       `The dompas — the reference book — must be on your person at all times in Johannesburg. It specifies where you are permitted to be, when, and why. To be in the city without the right endorsements is a criminal offense. The police check at the bus stop, at the train station, at the corner near your employer's building. The specific rhythm of Johannesburg is, in part, the rhythm of people calculating whether their papers are in order.`,

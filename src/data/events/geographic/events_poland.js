@@ -34,7 +34,7 @@ export const POLAND_EVENTS = [
 
   {
     id: 'pol_pope_john_paul_1978',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -61,7 +61,7 @@ export const POLAND_EVENTS = [
 
   {
     id: 'pol_solidarity_1980',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -88,7 +88,7 @@ export const POLAND_EVENTS = [
 
   {
     id: 'pol_martial_law_1981',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -115,7 +115,7 @@ export const POLAND_EVENTS = [
 
   {
     id: 'pol_round_table_1989',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -142,7 +142,7 @@ export const POLAND_EVENTS = [
 
   {
     id: 'pol_shock_therapy',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -169,7 +169,7 @@ export const POLAND_EVENTS = [
 
   {
     id: 'pol_eu_accession_2004',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -196,7 +196,7 @@ export const POLAND_EVENTS = [
 
   {
     id: 'pol_smolensk_2010',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -223,7 +223,7 @@ export const POLAND_EVENTS = [
 
   {
     id: 'pol_womens_strike_2020',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Poland' &&

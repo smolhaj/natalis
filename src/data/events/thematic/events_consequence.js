@@ -189,7 +189,7 @@ export const CONSEQUENCE_EVENTS = [
 
   {
     id: 'smoker_doctor_warning',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) => G.flags.includes('smoker') && G.age >= 45 && G.age <= 58 && !G.mem?.smoker_warning,
     text: 'The doctor listens to your lungs and writes something down and then looks at you directly. She is not alarmist. She says: you have been smoking for a long time. She says: the changes are visible now. She says: there is still time to make this better. She does not say: barely.',

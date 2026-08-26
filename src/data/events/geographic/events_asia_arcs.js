@@ -135,7 +135,7 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_untac_election',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.caUntacElection &&
@@ -155,7 +155,7 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_eccc_trial',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.caEcccTrial &&
@@ -380,7 +380,7 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_bangladesh_remittance',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.bdRemittance &&
@@ -403,7 +403,7 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_pakistan_muhajir_arrival',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.pkMuhajirArrival &&
@@ -450,7 +450,7 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_pakistan_zia_islamisation',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.pkZiaIslamisation &&
@@ -561,7 +561,7 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_pakistan_karachi_violence',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.pkKarachiViolence &&

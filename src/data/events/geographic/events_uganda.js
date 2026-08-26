@@ -8,7 +8,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_amin_era',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
@@ -40,7 +40,7 @@ export const UGANDA_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Uganda' &&
       G.currentYear === 1972 &&
-      (G.character.ethnicity === 'asian' || G.character.ethnicity === 'asian_ugandan' || G.character.ethnicity === 'south_asian') &&
+      G.character.ethnicity === 'asian_ugandan' &&
       !G.mem.ugaAsianExpulsion,
     text: 'August 4, 1972. Idi Amin announces that Uganda\'s Asian population — some 60,000 people, most of them British citizens or British Protected Persons, many whose families have been in East Africa for three generations — have 90 days to leave. The businesses, the properties, the savings accounts are to be handed over under the policy he calls "Africanisation." Your family has built a duka, a trading business, a network of relationships that took decades. You have 90 days.',
     choices: null,
@@ -49,7 +49,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_slim_disease',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
@@ -63,7 +63,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_museveni_liberation_1986',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
@@ -104,7 +104,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_museveni_consolidation',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Uganda' &&

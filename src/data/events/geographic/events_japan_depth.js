@@ -9,7 +9,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_okinawa_battle_1945',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -37,7 +37,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_occupation_constitution',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -64,7 +64,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_karoshi',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -92,7 +92,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_kobe_earthquake_1995',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -249,7 +249,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_fukushima_evacuation',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Japan' &&

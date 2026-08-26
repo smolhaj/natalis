@@ -612,12 +612,14 @@ export function schmoozeBoss(state) {
 // ─── Life transitions ─────────────────────────────────────────────────────────
 
 export function retire(state) {
-  if (!state.career && state.retired) return state
+  if (!state.career || state.retired) return state
   const pension = state.career ? Math.round(state.career.salary * 0.35) : 0
   return {
     ...state,
     career: null,
     retired: true,
+    // Recorded so tick() can actually pay it — the promise used to be prose only.
+    pensionAnnual: pension,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 10, 0, 100) },
     log: [...state.log, { age: state.age, text: `You retire.${pension > 0 ? ` You'll receive approximately $${pension.toLocaleString()}/yr in pension.` : ''}`, isKey: true }],
   }
@@ -909,7 +911,9 @@ export function goClubbing(state) {
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: `You spend the night out clubbing. Cost: $${cost}.${met ? ' You meet someone interesting.' : ''}`, isKey: false }],
   }
-  if (met) next = meetPotentialPartner({ ...next, actionsThisYear: next.actionsThisYear - 1 })
+  // Meeting someone does not refund the evening. This used to subtract the
+  // action back out before handing off, so a night out that worked was free.
+  if (met) next = meetPotentialPartner(next)
   return next
 }
 

@@ -110,7 +110,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_salaryman_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -189,7 +189,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_bubble_years',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -210,7 +210,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_bubble_collapse',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -240,7 +240,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_hikikomori',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -270,7 +270,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_fukushima',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -291,7 +291,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_aging_parent',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -351,7 +351,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_hibakusha',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -383,7 +383,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_zainichi',
-    phase: 'adolescence',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -425,7 +425,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_aum_sarin_1995',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -454,7 +454,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_ainu',
-    phase: 'adolescence',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -490,7 +490,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_okinawa_bases',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Japan' &&

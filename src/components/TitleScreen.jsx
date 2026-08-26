@@ -68,6 +68,8 @@ export default function TitleScreen() {
   const goToBirth = useGameStore(s => s.goToBirth)
   const goToCuratedBirth = useGameStore(s => s.goToCuratedBirth)
   const continueSaveSlot = useGameStore(s => s.continueSaveSlot)
+  const mode = useGameStore(s => s.mode)
+  const setMode = useGameStore(s => s.setMode)
   const deleteSaveSlot = useGameStore(s => s.deleteSaveSlot)
 
   const [slots, setSlots] = useState(() => getAllSlotMeta())
@@ -137,6 +139,31 @@ export default function TitleScreen() {
           ))}
         </div>
 
+        {/* How you want to live it. Fixed for the run once it begins. */}
+        <div className="space-y-2 text-left">
+          <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1">How you'll live it</p>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { id: 'active', name: 'Inhabit', blurb: 'You make the choices. Work, money, risk, who you keep.' },
+              { id: 'passive', name: 'Witness', blurb: 'The life goes as it goes. You read it, year by year.' },
+            ].map(m => (
+              <button
+                key={m.id}
+                onClick={() => setMode(m.id)}
+                aria-pressed={mode === m.id}
+                className={`text-left px-3 py-3 rounded-2xl border-2 transition-all active:scale-95 ${
+                  mode === m.id
+                    ? 'border-bit-blue bg-white shadow-card'
+                    : 'border-natalis-border bg-white/60 hover:border-natalis-dim'
+                }`}
+              >
+                <p className={`font-bold text-sm ${mode === m.id ? 'text-bit-blue' : 'text-natalis-text'}`}>{m.name}</p>
+                <p className="text-natalis-muted text-[11px] leading-snug mt-1">{m.blurb}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Start buttons */}
         <div className="space-y-3">
           <button
@@ -155,7 +182,9 @@ export default function TitleScreen() {
         </div>
 
         <p className="text-natalis-muted text-xs">
-          Your choices shape everything.
+          {mode === 'passive'
+            ? 'Nobody chooses where they begin. Most of it happens anyway.'
+            : 'Your choices shape everything.'}
         </p>
       </div>
     </div>

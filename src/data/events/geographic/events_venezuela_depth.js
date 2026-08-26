@@ -13,7 +13,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
 
   {
     id: 'vzla_dep_misiones',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isVenezuela(G) &&
@@ -42,7 +42,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
 
   {
     id: 'vzla_dep_hyperinflation',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       isVenezuela(G) &&
@@ -71,7 +71,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
 
   {
     id: 'vzla_dep_clap',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVenezuela(G) &&
@@ -87,7 +87,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
 
   {
     id: 'vzla_dep_apagones',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVenezuela(G) &&
@@ -103,7 +103,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
 
   {
     id: 'vzla_dep_colectivos',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVenezuela(G) &&
@@ -132,7 +132,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
 
   {
     id: 'vzla_dep_guarimbas_2017',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isVenezuela(G) &&
@@ -161,7 +161,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
 
   {
     id: 'vzla_dep_departure',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isVenezuela(G) &&
@@ -190,7 +190,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
 
   {
     id: 'vzla_dep_brain_drain',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVenezuela(G) &&

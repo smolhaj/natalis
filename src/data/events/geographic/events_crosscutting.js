@@ -77,7 +77,7 @@ export const CROSSCUTTING_EVENTS = [
 
   {
     id: 'cc_domestic_children_grow',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     cooldown: 8,
     when: (G) =>
@@ -139,9 +139,7 @@ export const CROSSCUTTING_EVENTS = [
       G.character.country.name === 'South Africa' &&
       G.flags.includes('domestic_worker') &&
       G.currentYear >= 1960 && G.currentYear <= 1994 &&
-      (G.ethnicity === 'black' || G.ethnicity === 'coloured' ||
-        (G.character.country.ethnicGroups &&
-          G.flags.includes('black_south_african'))),
+      (G.ethnicity === 'black_south_african' || G.ethnicity === 'coloured_south_african'),
     text: 'You take the seven o\'clock bus from the township to the suburb and arrive before the family is awake. You know where the spare key is, which child has bad dreams, how the husband takes his coffee. You know their news before they tell each other. On the television in the evenings you watch what is said about the country and you know it is not the same country you travel home to on the seven o\'clock bus. You change out of the uniform at the gate. You cross the street. The street is the same street with different people on it.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.e += 6; p.addFlag('apartheid_era_domestic'); p.setMem('ccDomesticSA', true) },
@@ -392,7 +390,7 @@ export const CROSSCUTTING_EVENTS = [
 
   {
     id: 'cc_camp_resettlement_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.ccCampResettlement &&
@@ -412,7 +410,7 @@ export const CROSSCUTTING_EVENTS = [
 
   {
     id: 'cc_camp_multigenerational',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.ccCampMidlife &&

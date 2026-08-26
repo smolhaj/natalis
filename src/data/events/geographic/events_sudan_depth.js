@@ -38,7 +38,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_haboob',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SUDAN(G) &&
@@ -58,7 +58,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_nuba_bombing',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NUBA(G) &&
@@ -99,7 +99,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_ghost_house_dread',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SUDAN(G) &&
@@ -121,7 +121,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_fur_land',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_FUR(G) &&
@@ -143,7 +143,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_masalit_life',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MASALIT(G) &&
@@ -165,7 +165,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_transition_hope',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SUDAN(G) &&
@@ -206,7 +206,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_tea_ladies',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SUDAN(G) &&
@@ -226,7 +226,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_arab_african',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SUDAN(G) &&

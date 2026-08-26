@@ -61,7 +61,7 @@ const PERU_EVENTS = [
 
   {
     id: 'per_autogolpe_1992',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Peru' &&
@@ -82,7 +82,7 @@ const PERU_EVENTS = [
 
   {
     id: 'per_sterilization',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Peru' &&
@@ -113,7 +113,7 @@ const PERU_EVENTS = [
 
   {
     id: 'per_lima_racism',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Peru' &&
@@ -144,7 +144,7 @@ const PERU_EVENTS = [
 
   {
     id: 'per_vladivideo',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Peru' &&
@@ -160,7 +160,7 @@ const PERU_EVENTS = [
 
   {
     id: 'per_cvr',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Peru' &&
@@ -195,7 +195,7 @@ const PERU_EVENTS = [
 
   {
     id: 'per_keiko_generation',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Peru' &&

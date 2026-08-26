@@ -21,7 +21,7 @@ export const FOLLOWTHROUGH_62_EVENTS = [
 
   {
     id: 'ft62_matatu_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('ken_dep_matatu_generation') &&
@@ -65,7 +65,7 @@ export const FOLLOWTHROUGH_62_EVENTS = [
 
   {
     id: 'ft62_runner_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ken_dep_runner_generation') &&

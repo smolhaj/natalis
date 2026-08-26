@@ -249,7 +249,7 @@ export const INDIA_DEPTH_EVENTS = [
 
   {
     id: 'ind_nri_return_question',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&

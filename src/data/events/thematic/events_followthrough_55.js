@@ -62,7 +62,7 @@ export const FOLLOWTHROUGH_55_EVENTS = [
 
   {
     id: 'ft55_regret_midlife_high',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.age >= 38 && G.age <= 55 &&

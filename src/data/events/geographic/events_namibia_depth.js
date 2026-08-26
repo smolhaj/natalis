@@ -96,7 +96,7 @@ export const NAMIBIA_DEPTH_EVENTS = [
 
   {
     id: 'nam_dep_independence_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NAMIBIAN(G) &&

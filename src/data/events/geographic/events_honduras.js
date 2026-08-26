@@ -29,7 +29,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_battalion_316',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_HONDURAN(G) &&
@@ -45,7 +45,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_contra_base',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_HONDURAN(G) &&
@@ -61,7 +61,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_hurricane_mitch',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_HONDURAN(G) &&
@@ -77,7 +77,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_zelaya_coup',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_HONDURAN(G) &&
@@ -114,7 +114,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_gang_territory_2010s',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_HONDURAN(G) &&

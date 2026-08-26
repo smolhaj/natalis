@@ -37,7 +37,7 @@ export const VIETNAM_EVENTS = [
 
   {
     id: 'vn_reeducation_camp',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.vnReeducationCamp &&
@@ -54,7 +54,7 @@ export const VIETNAM_EVENTS = [
 
   {
     id: 'vn_new_economic_zone',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.vnNewEconomicZone &&
@@ -84,7 +84,7 @@ export const VIETNAM_EVENTS = [
 
   {
     id: 'vn_boat_decision',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem.vnBoatDecision &&
@@ -118,7 +118,7 @@ export const VIETNAM_EVENTS = [
 
   {
     id: 'vn_camp_wait',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.vnCampWait &&
@@ -189,7 +189,7 @@ export const VIETNAM_EVENTS = [
 
   {
     id: 'vn_north_south_divide',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.vnNorthSouthDivide &&
@@ -308,7 +308,7 @@ export const VIETNAM_EVENTS = [
 
   {
     id: 'vn_south_china_sea_2014',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.vnSCS &&
@@ -325,7 +325,7 @@ export const VIETNAM_EVENTS = [
 
   {
     id: 'vn_cybersecurity_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.vnCyber &&

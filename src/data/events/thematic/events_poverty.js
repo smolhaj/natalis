@@ -265,7 +265,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_debt_job_loss',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.povDebtJobLoss &&
@@ -306,7 +306,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_debt_medical',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povDebtMedical &&
@@ -345,7 +345,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_debt_consumer',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povDebtConsumer &&
@@ -367,7 +367,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_collector_first',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.povCollectorFirst &&
@@ -415,7 +415,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_collector_threat',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povCollectorThreat &&
@@ -463,7 +463,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_wage_garnishment',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povWageGarnishment &&
@@ -505,7 +505,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_car_repo',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povCarRepo &&
@@ -526,7 +526,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_household_bailiffs',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povBailiffs &&
@@ -565,7 +565,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_foreclosure_notice',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povForeclosureNotice &&
@@ -617,7 +617,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_foreclosure_day',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povForeclosureDay &&
@@ -649,7 +649,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_eviction_notice_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.povEvictionNoticeAdult &&
@@ -699,7 +699,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_eviction_day',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povEvictionDay &&
@@ -726,7 +726,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_cps_visit',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povCpsVisit &&
@@ -781,7 +781,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_benefits_application',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.povBenefitsApplication &&
@@ -824,7 +824,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_benefits_experience',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povBenefitsExperience &&
@@ -847,7 +847,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_homeless_first_night',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.povHomelessFirstNight &&
@@ -883,7 +883,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_homeless_shelter',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povHomelessShelter &&
@@ -912,7 +912,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_homeless_job_hunt',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povHomelessJobHunt &&
@@ -949,7 +949,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_homeless_end',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.povHomelessEnd &&
@@ -969,7 +969,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_informal_rescue',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povInformalRescue &&
@@ -1032,7 +1032,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_move_in_sibling',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povMoveInSibling &&
@@ -1053,7 +1053,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_move_in_friend',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povMoveInFriend &&
@@ -1113,7 +1113,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_working_poor',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.povWorkingPoor &&
@@ -1134,7 +1134,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_second_job',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povSecondJob &&
@@ -1266,7 +1266,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_first_stable_address',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povFirstStableAddress &&
@@ -1286,7 +1286,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_debt_free_day',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povDebtFreeDay &&
@@ -1307,7 +1307,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_credit_rebuilding',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povCreditRebuilding &&
@@ -1329,7 +1329,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_money_not_emergency',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povMoneyNotEmergency &&
@@ -1350,7 +1350,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_payday_loan_consequence',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.povPaydayConsequence &&
@@ -1390,7 +1390,7 @@ export const POVERTY_EVENTS = [
 
   {
     id: 'pov_bankruptcy_contemplation',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.povBankruptcy &&

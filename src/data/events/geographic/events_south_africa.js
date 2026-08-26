@@ -35,7 +35,7 @@ export const SOUTH_AFRICA_EVENTS = [
 
   {
     id: 'sa_mandela_release_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -63,7 +63,7 @@ export const SOUTH_AFRICA_EVENTS = [
 
   {
     id: 'sa_state_capture',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -90,7 +90,7 @@ export const SOUTH_AFRICA_EVENTS = [
 
   {
     id: 'sa_white_emigration',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&

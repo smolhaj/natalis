@@ -44,7 +44,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_great_migration',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -72,7 +72,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_civil_rights_movement',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -109,7 +109,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_king_assassination_1968',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -145,7 +145,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_jfk_assassination_1963',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -248,7 +248,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_watergate_resignation_1974',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -279,7 +279,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_rustbelt_factory',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -344,7 +344,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_9_11_experience',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -382,7 +382,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_hurricane_katrina_2005',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -419,7 +419,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_foreclosure_2008',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -451,7 +451,7 @@ export const USA_EVENTS = [
 
   {
     id: 'usa_opioid_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -508,6 +508,220 @@ export const USA_EVENTS = [
       p.addFlag('school_shooting_era')
       p.setMem('usaSchoolShooting', true)
     },
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // THE 2000s COHORT
+  // Born after 2000: recession childhood, the drill as routine, the phone at
+  // thirteen, the promissory note, the app that is a job, 2020, the rent.
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'usa_recession_childhood_2008',
+    phase: null,
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2008 && G.currentYear <= 2013 &&
+      G.age >= 4 && G.age <= 14 &&
+      !G.mem?.usaRecessionChild,
+    text: 'A sign goes up on the Petersons’ lawn in March and a different sign — a bank’s — replaces it in August. Your father is home on a Tuesday, in the kitchen, in the clothes he wears on Saturdays. Your mother says the word restructuring the way people say a word they have recently learned. In September the second car goes. Nobody explains any of this to you and you understand all of it.',
+    context: 'The 2007–2009 financial crisis cost about 8.7 million American jobs and roughly 3.8 million homes went to foreclosure between 2007 and 2010. Household wealth for families with children fell hardest in the outer suburbs built during the lending boom.',
+    choices: null,
+    effect: (p) => { p.m -= 7; p.w -= 4; p.r += 4; p.addFlag('poverty_childhood'); p.setMem('usaRecessionChild', true) },
+  },
+
+  {
+    id: 'usa_recession_grandmother_house',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2009 && G.currentYear <= 2014 &&
+      G.age >= 5 && G.age <= 16 &&
+      G.mem?.usaRecessionChild &&
+      !G.mem?.usaGrandmotherHouse,
+    text: 'You move into your grandmother’s house in the spring — your family in two bedrooms, the garage holding what did not fit. She keeps the thermostat at sixty-five and turns off lights behind you. There is a box in the hallway marked KITCHEN that never gets unpacked, and it is still there the year you leave for good. Your parents talk in the driveway, where you can see them and not hear them.',
+    choices: null,
+    effect: (p) => { p.m -= 5; p.h -= 2; p.r += 3; p.addFlag('housing_lost'); p.setMem('usaGrandmotherHouse', true) },
+  },
+
+  {
+    id: 'usa_lockdown_drill_elementary',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2013 &&
+      G.age >= 6 && G.age <= 11 &&
+      !G.mem?.usaLockdownDrill,
+    text: 'The drill is called a lockdown and it comes twice a year, like the fire drill, except everyone is quiet for it. In September your teacher tapes construction paper over the window in the classroom door and leaves it up all year. You sit against the cabinets in the dark and are told this is practice. Somebody near you is laughing and somebody near you is not.',
+    context: 'Roughly 95 percent of American public schools ran lockdown drills by the late 2010s. Sandy Hook Elementary in December 2012 made the drill standard practice in elementary grades, where it had previously been mostly a secondary-school exercise.',
+    choices: null,
+    effect: (p) => { p.m -= 4; p.addFlag('school_shooting_era'); p.setMem('usaLockdownDrill', true) },
+  },
+
+  {
+    id: 'usa_phone_at_thirteen',
+    phase: null,
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2012 &&
+      G.age >= 12 && G.age <= 16 &&
+      !G.mem?.usaPhoneThirteen,
+    text: 'The phone arrives in a box and within a month you cannot recall the shape of an evening without it. At the end of each week a number appears telling you how many hours. The number is not a surprise and you look at it anyway. At dinner your mother says something and you say what, and she says it again, and by then you have already looked down.',
+    choices: [
+      {
+        text: 'Keep the phone in the other room at night.',
+        tag: null,
+        outcome: 'It works for a while. You sleep better in the weeks you manage it and you do not always manage it. The habit is the argument, and the argument keeps reopening.',
+        effect: (p) => { p.h += 3; p.m += 2; p.addFlag('smartphone_generation'); p.setMem('usaPhoneThirteen', true) },
+      },
+      {
+        text: 'Let it be the last thing and the first thing.',
+        tag: null,
+        outcome: 'Your sleep goes first, then the long attention you used to have for a book. You do not notice either one leaving. You notice, years later, that they are gone.',
+        effect: (p) => { p.h -= 4; p.e -= 2; p.addFlag('smartphone_generation'); p.setMem('usaPhoneThirteen', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'usa_promissory_note',
+    phase: null,
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2016 &&
+      G.age >= 17 && G.age <= 21 &&
+      G.stats.smarts >= 45 &&
+      !G.mem?.usaPromissoryNote,
+    text: 'The form is called a Master Promissory Note and you sign it on a laptop in the guidance office between fourth and fifth period. The number is larger than your father earns in a year, and the woman helping you says everyone does this, which is true. There is a box to confirm you have read the terms. You check it. You are seventeen and you have committed the first decade of your working life.',
+    context: 'US student loan debt passed $1 trillion in 2012 and $1.6 trillion by 2020, held by about 43 million borrowers. Average debt at graduation for a four-year public institution ran near $30,000; federal loans require no credit check and no assessment of ability to repay.',
+    choices: [
+      {
+        text: 'Take the loan. The degree is the only door you have been shown.',
+        tag: null,
+        outcome: 'You go. The four years are real and so is the payment, which begins six months after you walk. You will still be making it in your thirties.',
+        effect: (p) => { p.e += 6; p.mo -= 4000; p.setMem('usaPromissoryNote', true); p.setMem('usaStudentLoans', true) },
+      },
+      {
+        text: 'Do not sign. Find another route.',
+        tag: null,
+        outcome: 'You start work instead. For three years you are ahead of the ones who went, and then the sorting begins, and the rooms you can enter are decided by a document you do not have.',
+        effect: (p) => { p.mo += 1200; p.r += 5; p.setMem('usaPromissoryNote', true); p.setMem('usaNoDegree', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'usa_gig_first_job',
+    phase: null,
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2015 &&
+      G.age >= 18 && G.age <= 28 &&
+      !G.mem?.usaGigFirstJob,
+    text: 'The job is an app. You accept the ping, drive to the address, carry the bag to the door, photograph the bag on the doormat. There is no manager and no schedule and nobody to ask when the rate changes overnight, which it does in March. After gas and the car and the tax you will owe in April, you are earning something under what your mother made at nineteen.',
+    context: 'By 2021 roughly 16 percent of American adults had earned money through a gig platform. Platform workers are classified as independent contractors, which excludes them from minimum wage, overtime, unemployment insurance and employer payroll tax contributions.',
+    choices: null,
+    effect: (p) => { p.mo += 900; p.h -= 3; p.r += 4; p.addFlag('gig_worker'); p.setMem('usaGigFirstJob', true) },
+  },
+
+  {
+    id: 'usa_2020_senior_year',
+    phase: null,
+    weight: 6,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2020 && G.currentYear <= 2021 &&
+      G.age >= 14 && G.age <= 24 &&
+      !G.mem?.usa2020Year,
+    text: 'School closes in March for two weeks and does not reopen. You finish the year in a chair in your bedroom with the camera off. In June you are in the street with a cardboard sign in the heat, everyone’s face half covered, and it is the most people you have stood near in four months. At Thanksgiving your grandmother is a square on a screen at the end of the table.',
+    choices: [
+      {
+        text: 'Go out in June. Keep going out.',
+        tag: null,
+        outcome: 'You go back the next week and the week after. Something in you gets organised that summer and stays organised, and you carry it into rooms where it is not welcome.',
+        effect: (p) => { p.m -= 3; p.karma += 5; p.s += 3; p.addFlag('activist'); p.addFlag('pandemic_locked_down'); p.setMem('usa2020Year', true) },
+      },
+      {
+        text: 'Stay in the chair. The year passes through the window.',
+        tag: null,
+        outcome: 'The year passes. You come out of it with a flatness you cannot name and cannot date, and it takes two more years to lift.',
+        effect: (p) => { p.m -= 9; p.h -= 3; p.addFlag('pandemic_locked_down'); p.setMem('usa2020Year', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'usa_table_fracture',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2016 &&
+      G.age >= 15 && G.age <= 45 &&
+      !G.mem?.usaTableFracture,
+    text: 'Your uncle says the thing at the table and this year nobody laughs it off. Your mother stands to fetch something from the kitchen that she does not need. Afterward, in the car, your father explains that this is just how he is, which is the explanation you have been handed every year since you were small. You have started deciding in advance which rooms you will be a whole person in.',
+    choices: [
+      {
+        text: 'Say it back to him, at the table, in front of everyone.',
+        tag: null,
+        outcome: 'The table goes quiet in a way that is not relief. Two people text you that night to say you were right. Neither of them said anything at the time.',
+        effect: (p) => { p.m -= 4; p.s += 3; p.karma += 3; p.addFlag('political_active'); p.setMem('usaTableFracture', true) },
+      },
+      {
+        text: 'Let it go. Keep the family.',
+        tag: null,
+        outcome: 'You keep the family and you keep the sentence. It sits somewhere behind your teeth at every holiday after this one.',
+        effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('carries_family_silence'); p.setMem('usaTableFracture', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'usa_rent_and_roommates',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2021 &&
+      G.age >= 24 && G.age <= 40 &&
+      !G.mem?.usaRentForever,
+    text: 'You are twenty-eight with three roommates and a lease that goes up eight percent in June. The listing app sits on your phone the way a game sits on your phone. Your parents bought at your age; you have run the numbers often enough that you have stopped running them. You buy the good coffee, because the good coffee is a thing you can actually have.',
+    choices: null,
+    effect: (p) => { p.m -= 4; p.r += 5; p.addFlag('generation_rent'); p.addFlag('permanent_renter'); p.setMem('usaRentForever', true) },
+  },
+
+  {
+    id: 'usa_smoke_season',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2020 &&
+      G.age >= 12 && G.age <= 60 &&
+      !G.mem?.usaSmokeSeason,
+    text: 'The sky goes the colour of a held breath in the second week of August and the app gives the air a number instead of a temperature. You keep the windows shut and tape a furnace filter to the back of a box fan, the way everyone does now. The kids’ soccer is cancelled and nobody argues about it. Somebody at work says fire season and somebody else says it is just called summer.',
+    choices: null,
+    effect: (p) => { p.h -= 4; p.m -= 3; p.addFlag('witnessed_climate_change'); p.addFlag('climate_generation'); p.setMem('usaSmokeSeason', true) },
+  },
+
+  {
+    id: 'usa_2000s_cohort_late_reckoning',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.age >= 55 &&
+      (G.mem?.usaPromissoryNote || G.mem?.usaLockdownDrill || G.mem?.usa2020Year) &&
+      !G.mem?.usaCohortLate,
+    text: 'Someone in their twenties asks what it was like and you find you cannot give them the version with a shape to it. You tell them about the construction paper taped over the window in the classroom door. You tell them the figure on the promissory note, which you still know without looking. They are polite about it. You have been describing weather to a person who has only ever lived in it.',
+    choices: null,
+    effect: (p) => { p.r += 4; p.e += 2; p.setMem('usaCohortLate', true) },
   },
 
 ]

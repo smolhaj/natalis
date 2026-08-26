@@ -11,7 +11,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_imf_crisis',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isSouthKorea(G) &&
@@ -52,7 +52,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_gold_collection',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isSouthKorea(G) &&
@@ -82,7 +82,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_jeonse',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isSouthKorea(G) &&
@@ -96,7 +96,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_jeonse_fraud',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       isSouthKorea(G) &&
@@ -113,7 +113,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_ppalli_ppalli',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isSouthKorea(G) &&
@@ -127,7 +127,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_office_hierarchy',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isSouthKorea(G) &&
@@ -159,7 +159,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_cheongyak',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isSouthKorea(G) &&

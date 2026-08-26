@@ -10,7 +10,7 @@ export const ANGOLA_EVENTS = [
 
   {
     id: 'ang_independence_civil_war_1975',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Angola' &&
@@ -37,7 +37,7 @@ export const ANGOLA_EVENTS = [
 
   {
     id: 'ang_war_years_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Angola' &&
@@ -51,7 +51,7 @@ export const ANGOLA_EVENTS = [
 
   {
     id: 'ang_peace_2002',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Angola' &&
@@ -65,7 +65,7 @@ export const ANGOLA_EVENTS = [
 
   {
     id: 'ang_oil_boom',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Angola' &&
@@ -79,7 +79,7 @@ export const ANGOLA_EVENTS = [
 
   {
     id: 'ang_dos_santos_rule',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Angola' &&
@@ -93,7 +93,7 @@ export const ANGOLA_EVENTS = [
 
   {
     id: 'ang_landmine_reality',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Angola' &&

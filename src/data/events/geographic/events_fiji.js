@@ -54,7 +54,7 @@ export const FIJI_EVENTS = [
 
   {
     id: 'fj_1987_coup_indo',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_FIJI(G) &&
@@ -76,7 +76,7 @@ export const FIJI_EVENTS = [
 
   {
     id: 'fj_1987_coup_itaukei',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_FIJI(G) &&
@@ -98,7 +98,7 @@ export const FIJI_EVENTS = [
 
   {
     id: 'fj_land_lease_expires',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_FIJI(G) &&
@@ -130,7 +130,7 @@ export const FIJI_EVENTS = [
 
   {
     id: 'fj_emigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_FIJI(G) &&
@@ -162,7 +162,7 @@ export const FIJI_EVENTS = [
 
   {
     id: 'fj_2000_coup',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_FIJI(G) &&

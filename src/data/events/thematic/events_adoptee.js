@@ -37,7 +37,7 @@ export const ADOPTEE_EVENTS = [
 
   {
     id: 'adp_search',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('adopted') && G.age >= 20 && G.age <= 38 && !G.mem.adpSearch,
     text: 'The DNA kit costs eighty dollars. The results take three weeks. When they come, there is a list of potential relatives with percentages attached. A half-sibling in a city you have never been to. A first cousin twice removed in the country you were born in. The list makes the abstract specific in a way that requires you to decide what to do with specific things.',
@@ -59,7 +59,7 @@ export const ADOPTEE_EVENTS = [
 
   {
     id: 'adp_origin_trip',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('adopted') && G.age >= 30 && G.age <= 55 && !G.mem.adpOriginTrip,
     text: 'You are in the country you were born in. You have been here three days. The landscape matches something you could not have remembered because you left before you could remember. Your adoptive parents are at home, which is where you are from. The people here share your face. You are a tourist in the place that is supposed to be an origin. The specific feeling has no single word in either language.',

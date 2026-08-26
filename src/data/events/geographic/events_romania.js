@@ -33,7 +33,7 @@ export const ROMANIA_EVENTS = [
 
   {
     id: 'rom_decree_779',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -61,7 +61,7 @@ export const ROMANIA_EVENTS = [
 
   {
     id: 'rom_revolution_1989',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -94,7 +94,7 @@ export const ROMANIA_EVENTS = [
 
   {
     id: 'rom_transition_1990s',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -121,7 +121,7 @@ export const ROMANIA_EVENTS = [
 
   {
     id: 'rom_eu_emigration',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&

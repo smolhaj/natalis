@@ -23,7 +23,7 @@ const LAOS_EVENTS = [
 
   {
     id: 'laos_alms_round',
-    phase: 'early_childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Laos' &&

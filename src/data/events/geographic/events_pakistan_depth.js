@@ -38,7 +38,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
 
   {
     id: 'pak_dep_basant',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -59,14 +59,14 @@ export const PAKISTAN_DEPTH_EVENTS = [
 
   {
     id: 'pak_dep_floods_2010',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
       G.currentYear === 2010 &&
       G.age >= 10 &&
       !G.mem?.pakDepFloods,
-    text: pick([
+    text: () => pick([
       'The monsoon of 2010 is not the monsoon. By August, a fifth of Pakistan is underwater. Twenty million people are displaced — more than the 2004 Indian Ocean tsunami, more than the 2005 Kashmir earthquake, more than Haiti 2010. The Indus river swells to forty times its normal width in places. The flood moves south through the country over weeks, so that when Khyber Pakhtunkhwa is already in recovery, Sindh is just being hit. You watch the satellite maps on television and the maps look like the country is dissolving.',
       'The flood takes the crop. It takes the stored grain. It takes the tools. It takes the livestock and the documents and in some places the houses. What it leaves is wet land that will need months to drain and a debt to the chandler that will take years to pay. The government response comes with delays and the international aid comes with cameras. The cameras leave before the debt is settled.',
     ]),
@@ -189,7 +189,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
 
   {
     id: 'pak_dep_pashtunwali',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -219,7 +219,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
       G.age >= 6 && G.age <= 18 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.pakDepServant,
-    text: pick([
+    text: () => pick([
       'The mali comes on Tuesdays and the darzi comes when called and the cook has been in the kitchen since before you were born. This is the domestic economy of the middle-class Pakistani household: the outsourcing of physical work to people who come from outside the city and send the money home. You know the cook\'s village but you have never been to it. The cook knows your name and your habits and your preferences. The asymmetry of this knowledge is the texture of the relationship.',
       'You grow up in a house with servants. This is ordinary at your income level and you do not question it until later, when you are living somewhere else and the things that were done for you become visible by requiring you to do them yourself. The floor. The food. The pressing of the clothes. The things the cook knew to do without being asked. The cook knew your house better than you did. The cook was not part of the family, which is something you understood and did not articulate until you were asked.',
     ]),

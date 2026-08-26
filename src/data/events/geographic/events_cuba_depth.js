@@ -16,7 +16,7 @@ export const CUBA_DEPTH_EVENTS = [
 
   {
     id: 'cub_dep_missile_crisis',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -37,14 +37,14 @@ export const CUBA_DEPTH_EVENTS = [
 
   {
     id: 'cub_dep_nueva_trova',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
       G.currentYear >= 1968 && G.currentYear <= 1985 &&
       G.age >= 15 &&
       !G.mem?.cubDepNuevaTrova,
-    text: pick([
+    text: () => pick([
       'Silvio Rodríguez performs at the Casa de las Américas. The songs are not comfortable: they are critical, they are complex, they contain doubts that the official culture is not supposed to have. But they are also unmistakably revolutionary, unmistakably Cuban, and so they exist in a space where they are simultaneously celebrated and watched. You learn the words without necessarily understanding what exactly they are saying, and then one day you understand, and you understand that you have been singing the ambivalence for years without recognising it as ambivalence.',
       'Pablo Milanés is singing "Yolanda." Nueva trova is what the 1960s generation made out of the revolution and the guitar and the influences the Revolution cannot entirely exclude — North American folk, Brazilian bossa nova, Spanish poetry. The result is a Cuban music that is political and personal at the same time, that contains love songs which are also sometimes not love songs. You know which songs go on which occasions.',
     ]),
@@ -61,7 +61,7 @@ export const CUBA_DEPTH_EVENTS = [
 
   {
     id: 'cub_dep_doctor_mission',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -105,7 +105,7 @@ export const CUBA_DEPTH_EVENTS = [
 
   {
     id: 'cub_dep_elian',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -126,14 +126,15 @@ export const CUBA_DEPTH_EVENTS = [
 
   {
     id: 'cub_dep_dual_currency',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
       G.currentYear >= 1994 && G.currentYear <= 2021 &&
       G.age >= 18 &&
       !G.mem?.cubDepDualCurrency,
-    text: 'There are two currencies. The CUP — the Cuban peso — which you earn from your state job at the rate the state sets. The CUC — the convertible peso, pegged to the dollar — which the tourist economy runs on and which you need to buy what the state shops don\'t carry. The gap between what a state salary buys and what a CUC economy costs is the gap between two Cubas that share the same streets. The waiter at the tourist hotel who earns more in tips in a week than a doctor earns in a month in Cuban pesos. The family with remittances in Miami dollars. The family without. The question everyone carries is which side of the gap you are on and what you are prepared to do about it. In 2021 the dual currency will be unified — into a single system that creates its own problems. But for twenty-seven years this is the mathematics of daily life.',
+    text: 'Your salary comes in one money and the shampoo is priced in the other. The waiter at the hotel on the Malecon makes more in tips on a Thursday than your neighbour the paediatrician earns in a month. There is a family on the third floor whose cousin sends dollars from Hialeah and a family on the fourth floor whose cousin does not, and everyone on the stairwell knows which is which. You have learned to do the conversion in your head before you leave the flat.',
+    context: 'From 1994 Cuba ran two currencies: the peso (CUP), in which state wages were paid, and the convertible peso (CUC), pegged to the US dollar and used by the tourist economy and hard-currency shops. A CUC was worth twenty-four CUP. The system was unified in January 2021, which produced inflation and shortages of its own.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -168,7 +169,7 @@ export const CUBA_DEPTH_EVENTS = [
 
   {
     id: 'cub_dep_exit_visa',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -228,7 +229,7 @@ export const CUBA_DEPTH_EVENTS = [
 
   {
     id: 'cub_dep_gray_period',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Cuba' &&

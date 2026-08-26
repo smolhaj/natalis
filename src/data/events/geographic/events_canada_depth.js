@@ -10,7 +10,7 @@ export const CANADA_DEPTH_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Canada' &&
-      G.ethnicity === 'indigenous_canadian' &&
+      G.ethnicity === 'first_nations' &&
       G.currentYear >= 1940 && G.currentYear <= 1970 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.canResSchool,
@@ -36,7 +36,7 @@ export const CANADA_DEPTH_EVENTS = [
 
   {
     id: 'can_dep_japanese_internment_1942',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -94,14 +94,16 @@ export const CANADA_DEPTH_EVENTS = [
 
   {
     id: 'can_dep_komagata_maru_1914',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Canada' &&
-      G.currentYear >= 1914 && G.currentYear <= 1920 &&
-      G.age >= 18 && G.age <= 40 &&
+      (G.ethnicity === 'south_asian_canadian' || G.religion === 'sikh') &&
+      G.currentYear >= 1945 && G.currentYear <= 2015 &&
+      G.age >= 12 &&
       !G.mem?.canKomagata,
-    text: 'May 1914. The Komagata Maru steams into Burrard Inlet with 376 passengers — Sikhs, Hindus, Muslims, mostly Punjabi, all British subjects. The continuous journey requirement: immigrants must come directly from their country of origin without stopping. There is no direct steamship service from India to Canada. The regulation exists for exactly this purpose. The ship waits two months in the harbour. The passengers are denied food and water. The HMCS Rainbow — a Canadian warship — escorts the ship out of Canadian waters on July 23. When the Komagata Maru returns to Calcutta, British authorities open fire on the passengers at Budge Budge. Nineteen dead.',
+    text: 'At the gurdwara the older men say the name of the ship the way you say the name of a relative. Komagata Maru: two months at anchor in Burrard Inlet, three hundred and seventy-six passengers, British subjects every one, kept from stepping onto the dock and then escorted out by a warship. Your grandfather was not aboard and knew four of the men who were. When somebody at school asks where your family is from, this is the part of the answer you do not give.',
+    context: 'The Komagata Maru reached Vancouver in May 1914 carrying 376 passengers, mostly Punjabi Sikhs. Canada\'s "continuous journey" regulation admitted only immigrants arriving directly from their country of origin; no direct steamship service from India existed, which was the regulation\'s purpose. The ship was held in the harbour for two months, its passengers denied food and water, and escorted out by HMCS Rainbow on 23 July. On its return to Calcutta, British police fired on the passengers at Budge Budge and nineteen died. Canada apologised for it in the House of Commons in 2016.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 5; p.karma += 3; p.addFlag('can_komagata_generation'); p.setMem('canKomagata', true) },
   },
@@ -110,7 +112,7 @@ export const CANADA_DEPTH_EVENTS = [
 
   {
     id: 'can_dep_bathhouse_raids_1981',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -157,7 +159,7 @@ export const CANADA_DEPTH_EVENTS = [
 
   {
     id: 'can_dep_visible_minority_multicultural',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -174,7 +176,7 @@ export const CANADA_DEPTH_EVENTS = [
 
   {
     id: 'can_dep_oil_sands_worker',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Canada' &&

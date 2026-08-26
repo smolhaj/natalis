@@ -24,7 +24,7 @@ export const AFGHANISTAN_EVENTS = [
 
   {
     id: 'afg_soviet_occupation',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -51,7 +51,7 @@ export const AFGHANISTAN_EVENTS = [
 
   {
     id: 'afg_civil_war_kabul',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -65,7 +65,7 @@ export const AFGHANISTAN_EVENTS = [
 
   {
     id: 'afg_taliban_rule',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -92,7 +92,7 @@ export const AFGHANISTAN_EVENTS = [
 
   {
     id: 'afg_us_invasion_2001',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -106,7 +106,7 @@ export const AFGHANISTAN_EVENTS = [
 
   {
     id: 'afg_taliban_return_2021',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&

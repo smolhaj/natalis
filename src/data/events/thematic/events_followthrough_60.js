@@ -101,7 +101,7 @@ export const FOLLOWTHROUGH_60_EVENTS = [
 
   {
     id: 'ft60_stayed_mid',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('nga_dep_stayed_generation') &&
@@ -116,7 +116,7 @@ export const FOLLOWTHROUGH_60_EVENTS = [
 
   {
     id: 'ft60_pentecostal_mid_life',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('nga_dep_pentecostal_generation') &&

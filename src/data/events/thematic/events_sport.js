@@ -119,7 +119,7 @@ export const SPORT_EVENTS = [
       const arch = G.character.country.archetype
       return (
         ['subsaharan', 'developing_urban'].includes(arch) &&
-        G.stats.fitness >= 60 &&
+        G.fitness >= 60 &&
         G.age >= 13 && G.age <= 17 &&
         G.flags.includes('football_childhood') &&
         !G.mem?.sptScoutArrives
@@ -211,7 +211,7 @@ export const SPORT_EVENTS = [
 
   {
     id: 'spt_world_cup_year',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     cooldown: 0,
     when: (G) => {
@@ -253,7 +253,7 @@ export const SPORT_EVENTS = [
 
   {
     id: 'spt_adult_league',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 0,
     when: (G) =>

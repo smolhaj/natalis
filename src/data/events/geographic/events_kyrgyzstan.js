@@ -49,7 +49,7 @@ export const KYRGYZSTAN_EVENTS = [
 
   {
     id: 'kyr_independence_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_KYRGYZ(G) &&
@@ -65,7 +65,7 @@ export const KYRGYZSTAN_EVENTS = [
 
   {
     id: 'kyr_tulip_revolution',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_KYRGYZ(G) &&
@@ -93,7 +93,7 @@ export const KYRGYZSTAN_EVENTS = [
 
   {
     id: 'kyr_osh_2010',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_KYRGYZ(G) &&
@@ -129,7 +129,7 @@ export const KYRGYZSTAN_EVENTS = [
 
   {
     id: 'kyr_uzbek_coexistence',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_KYRGYZ(G) &&
@@ -146,7 +146,7 @@ export const KYRGYZSTAN_EVENTS = [
 
   {
     id: 'kyr_third_overthrow',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_KYRGYZ(G) &&
@@ -162,7 +162,7 @@ export const KYRGYZSTAN_EVENTS = [
 
   {
     id: 'kyr_economy_reality',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_KYRGYZ(G) &&

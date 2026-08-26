@@ -524,4 +524,35 @@ export const IMMIGRATION_EVENTS = [
     effect: (p) => { p.m += 14; p.r -= 12; p.addFlag('resettlement_established'); p.setMem('resettlementAnniversary', true) },
   },
 
+
+  // ── KURDISH DEPARTURE FOR EUROPE ──────────────────────────────────────────────
+  // Sets `kurd_europe_diaspora`, which the Kurdish arc calls back on at 40+.
+
+  {
+    id: 'imm_kurdish_to_europe',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      ['kurdish', 'kurdish_iraqi', 'kurdish_syria', 'kurd_iranian'].includes(G.ethnicity) &&
+      G.currentYear >= 1965 && G.currentYear <= 2005 &&
+      G.age >= 17 && G.age <= 40 &&
+      !G.flags.has('kurd_europe_diaspora') &&
+      !G.mem?.immKurdEurope,
+    text: 'The bus goes from the eastern towns to Istanbul and the plane goes from Istanbul to Düsseldorf, and there is a cousin in Cologne who has a room and knows which factory is hiring. Your mother packs bulgur and a wool blanket you will not need. Nobody in the family uses the word leaving; they use the word working. At the airport your father shakes your hand instead of embracing you and then embraces you.',
+    choices: [
+      {
+        text: 'Go. Send money back.',
+        tag: null,
+        outcome: 'The room in Cologne has one window and a shared kitchen. The first transfer home goes out in the fifth week. It is more than your father earned in a season.',
+        effect: (p) => { p.mo += 2500; p.m -= 6; p.r += 6; p.addFlag('kurd_europe_diaspora'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('immKurdEurope', true) },
+      },
+      {
+        text: 'Stay. The house needs someone in it.',
+        tag: null,
+        outcome: 'You stay. The cousin writes twice in the first year and then at longer intervals. The room in Cologne goes to someone else from the same street.',
+        effect: (p) => { p.m -= 4; p.r += 8; p.addFlag('stayed_behind'); p.setMem('immKurdEurope', true) },
+      },
+    ],
+    effect: null,
+  },
 ]

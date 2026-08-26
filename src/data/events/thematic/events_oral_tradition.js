@@ -9,9 +9,9 @@
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 const isOralContext = (G) =>
-  (G.character.archetype === 'subsaharan' ||
-   G.character.archetype === 'developing_unstable' ||
-   G.character.archetype === 'conflict_zone' ||
+  (G.archetype === 'subsaharan' ||
+   G.archetype === 'developing_unstable' ||
+   G.archetype === 'conflict_zone' ||
    G.ruralUrban === 'rural') &&
   G.stats.smarts < 70
 
@@ -147,10 +147,10 @@ export const ORAL_TRADITION_EVENTS = [
 
   {
     id: 'oral_violence_nearby',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
-      G.character.archetype === 'conflict_zone' &&
+      G.archetype === 'conflict_zone' &&
       G.age >= 13 && G.age <= 21 &&
       !G.mem?.oralViolenceNearby,
     text: `You hear about violence in the next district from the man who walked all night from there. He arrived at dawn and sat down in the compound without taking off his shoes. The adults went to him. Children were told to go inside again. What he said came to you through three people over three days: there were soldiers, or armed men who were not soldiers, or both. There was burning. The count of dead is uncertain because people who count them are also afraid of being counted. You understand that the uncertainty is not ignorance — it is what the event looks like from inside it.`,
@@ -173,10 +173,10 @@ export const ORAL_TRADITION_EVENTS = [
 
   {
     id: 'oral_independence_announced',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
-      G.character.archetype === 'subsaharan' &&
+      G.archetype === 'subsaharan' &&
       G.currentYear >= 1956 && G.currentYear <= 1975 &&
       G.age >= 5 && G.age <= 16 &&
       !G.mem?.oralIndependence,
@@ -211,7 +211,7 @@ export const ORAL_TRADITION_EVENTS = [
 
   {
     id: 'oral_letter_from_city',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       isOralContext(G) &&
@@ -285,10 +285,10 @@ export const ORAL_TRADITION_EVENTS = [
 
   {
     id: 'oral_soldiers_passed',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
-      (G.character.archetype === 'conflict_zone' || G.character.archetype === 'developing_unstable') &&
+      (G.archetype === 'conflict_zone' || G.archetype === 'developing_unstable') &&
       G.age >= 14 && G.age <= 25 &&
       !G.mem?.oralSoldiersPassed,
     text: `Soldiers passed through. This is a sentence that can mean many things and you know from the faces of the adults which version it means. This time: they came, they asked for food, they took some of what they asked for and some of what they didn\'t ask for, and they moved on. No one was hurt. The adults say "no one was hurt" as a complete sentence, meaning it as good news, which requires knowing what the other versions look like. You know enough now to know what the other versions look like. You are old enough to understand that "no one was hurt this time" has the word "this time" in it even when no one says "this time."`,

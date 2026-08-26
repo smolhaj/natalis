@@ -190,7 +190,7 @@ export const GANG_EVENTS = [
 
   {
     id: 'gang_violence_witnessed',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       isGangMember(G) &&
@@ -323,7 +323,7 @@ export const GANG_EVENTS = [
 
   {
     id: 'gang_after_left',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.flags.has('left_gang') &&

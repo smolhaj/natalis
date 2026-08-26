@@ -9,7 +9,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_call',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.flags.includes('orphan') &&
@@ -46,7 +46,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_admin',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('lost_parent') &&
@@ -59,7 +59,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_funeral',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('lost_parent') &&
@@ -83,7 +83,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_month_after',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.mem.griefParentFuneral &&
@@ -109,7 +109,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_belongings',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.mem.griefParentMonthAfter &&
@@ -134,7 +134,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_anniversary',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.mem.griefParentBelongings &&
@@ -269,7 +269,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_miscarriage_loss',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.partner &&
@@ -297,7 +297,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_child_young_death',
-    phase: 'midlife',
+    phase: null,
     weight: 1,
     when: (G) =>
       G.children && G.children.length > 0 &&
@@ -418,7 +418,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_friend_suicide',
-    phase: 'young_adult',
+    phase: null,
     weight: 1,
     when: (G) =>
       G.friends && G.friends.length > 0 &&

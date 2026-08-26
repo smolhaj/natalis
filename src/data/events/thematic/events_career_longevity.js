@@ -43,7 +43,7 @@ export const CAREER_LONGEVITY_EVENTS = [
 
   {
     id: 'cl_field_changed',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -86,7 +86,7 @@ export const CAREER_LONGEVITY_EVENTS = [
 
   {
     id: 'cl_obsolescence_signal',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -114,13 +114,13 @@ export const CAREER_LONGEVITY_EVENTS = [
 
   {
     id: 'cl_mastery_grief',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.career?.level >= 3 &&
       G.age >= 44 && G.age <= 58 &&
       !G.mem?.clMasteryGrief,
-    text: pick([
+    text: () => pick([
       `There was a time when the work surprised you constantly. You would finish a task and not quite know how you had done it — you had extended yourself, reached for something, and sometimes it came. That is mostly gone now. The work is good, consistently good, and consistently is the word that replaced the other thing. The consistency is real. The other thing was also real. They could not coexist.`,
       `You cannot access beginner's mind from here. The literature on expertise calls this the curse of knowledge: the more you know a domain, the less you can see what it was like not to know it, which means you have become worse at certain kinds of understanding even as you have become better at everything else. The trade was not optional. You made it by practicing.`,
     ]),
@@ -132,7 +132,7 @@ export const CAREER_LONGEVITY_EVENTS = [
 
   {
     id: 'cl_staying_question',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&

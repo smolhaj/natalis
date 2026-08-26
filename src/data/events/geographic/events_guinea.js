@@ -13,12 +13,12 @@ export const GUINEA_EVENTS = [
 
   {
     id: 'gn_no_vote_1958',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_GUINEA(G) &&
       G.currentYear >= 1958 && G.currentYear <= 1960 &&
-      G.age >= 25 && G.age <= 50 &&
+      G.age >= 18 && G.age <= 50 &&
       !G.mem?.gnNoVote,
     text: 'September 28, 1958. De Gaulle has put the question to the colonies: join the French Community with autonomy, or take full independence immediately, with France withdrawing everything. Sékou Touré has told the country: "We prefer poverty in freedom to riches in servitude." The polling station is a building you have passed your whole life. You vote.',
     choices: [
@@ -130,7 +130,7 @@ export const GUINEA_EVENTS = [
 
   {
     id: 'gn_stadium_2009',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_GUINEA(G) &&

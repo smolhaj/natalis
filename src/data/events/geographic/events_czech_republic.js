@@ -13,7 +13,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_victorious_february_1948',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_CZECH(G) &&
@@ -29,7 +29,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_slansky_trial',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CZECH(G) &&
@@ -45,7 +45,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_prague_spring',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_CZECH(G) &&
@@ -66,7 +66,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_invasion_august_1968',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_CZECH(G) &&
@@ -96,7 +96,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_emigration_1968',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CZECH(G) &&
@@ -126,7 +126,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_havel_president',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CZECH(G) &&
@@ -142,7 +142,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_velvet_divorce',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CZECH(G) &&
@@ -158,7 +158,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_eu_accession_2004',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_CZECH(G) &&

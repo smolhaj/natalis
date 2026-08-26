@@ -42,7 +42,7 @@ export const SENEGAL_EVENTS = [
 
   {
     id: 'sen_diaspora_dahira',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.includes('mouride_member') && G.flags.includes('emigrated') && G.age >= 22 && G.age <= 40 && !G.mem.senDiaspora,
     text: 'The dahira meets every two weeks in an apartment in the Bronx, or Marseille, or Milan. It is a savings circle and a prayer group and a mutual aid network and a connection to Touba that does not require being in Touba. You contribute a fixed amount each meeting. The community pools it and sends a portion to the brotherhood, and keeps a portion for members in difficulty. The state doesn\'t know it exists. It doesn\'t need to.',
@@ -169,9 +169,9 @@ export const SENEGAL_EVENTS = [
 
   {
     id: 'sen_gorée_school',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
-    when: (G) => IS_SENEGAL(G) && G.currentYear >= 1950 && G.currentYear <= 1980 && G.stats.smarts >= 55 && G.age >= 10 && !G.mem.senGoree,
+    when: (G) => IS_SENEGAL(G) && G.currentYear >= 1950 && G.currentYear <= 1980 && G.stats.smarts >= 55 && G.age >= 12 && G.age <= 24 && !G.mem.senGoree,
     text: 'The William Ponty school, or its successor, or the system it became: the best-educated generation in West Africa, trained in French, shaped by Senghor\'s Négritude. You read French poetry and write essays on African philosophy in a language that is not African. The contradiction is the education. You graduate with tools that open doors in Paris and in Dakar, and a specific ambivalence about who those tools were made for.',
     effect: (p) => { p.m += 5; p.e += 4; p.addFlag('francophone_educated'); p.setMem('senGoree', true) },
   },
@@ -180,7 +180,7 @@ export const SENEGAL_EVENTS = [
 
   {
     id: 'sen_alternance_2000',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SENEGAL(G) &&
@@ -196,7 +196,7 @@ export const SENEGAL_EVENTS = [
 
   {
     id: 'sen_casamance',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SENEGAL(G) &&

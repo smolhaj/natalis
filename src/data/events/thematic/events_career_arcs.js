@@ -210,7 +210,7 @@ const ACADEMIA_EVENTS = [
 
   {
     id: 'acad_defining_student',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.career?.id === 'academic' &&
@@ -266,7 +266,7 @@ const ACADEMIA_EVENTS = [
 
   {
     id: 'acad_burnout_sabbatical',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.career?.id === 'academic' &&
@@ -465,7 +465,7 @@ const SOLDIER_EVENTS = [
 
   {
     id: 'sold_family_distance',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.career?.id === 'soldier' &&

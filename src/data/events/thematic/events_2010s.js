@@ -54,7 +54,7 @@ export const EVENTS_2010S = [
 
   {
     id: 'dec10_always_connected',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.currentYear >= 2012 && G.currentYear <= 2020 &&
@@ -189,7 +189,7 @@ export const EVENTS_2010S = [
 
   {
     id: 'dec10_algorithm_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.currentYear >= 2014 && G.currentYear <= 2022 &&

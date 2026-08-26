@@ -27,7 +27,7 @@ export const BONDED_LABOR_EVENTS = [
 
   {
     id: 'bl_initial_loan',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       BONDED_ARCHETYPES(G) &&
@@ -62,7 +62,7 @@ export const BONDED_LABOR_EVENTS = [
 
   {
     id: 'bl_kiln_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('bonded_kiln') &&
@@ -130,7 +130,7 @@ export const BONDED_LABOR_EVENTS = [
 
   {
     id: 'bl_abolition_gap',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('bonded_labor') &&
@@ -162,7 +162,7 @@ export const BONDED_LABOR_EVENTS = [
 
   {
     id: 'bl_liberation',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('bonded_release_process') &&
@@ -193,7 +193,7 @@ export const BONDED_LABOR_EVENTS = [
 
   {
     id: 'bl_sharecrop_ledger',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_BLACK_AMERICAN(G) &&
@@ -225,7 +225,7 @@ export const BONDED_LABOR_EVENTS = [
 
   {
     id: 'bl_sharecrop_north',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_BLACK_AMERICAN(G) &&

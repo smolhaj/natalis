@@ -49,7 +49,7 @@ export const FGM_EVENTS = [
 
   {
     id: 'fgm_adolescent_question',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       FEMALE(G) &&
@@ -83,7 +83,7 @@ export const FGM_EVENTS = [
 
   {
     id: 'fgm_medical_encounter',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       FEMALE(G) &&

@@ -79,17 +79,73 @@ export function getCountryRegime(country, year) {
 
 export function isLgbtqCriminalized(country, year) {
   if (!country) return false
+  // Some countries criminalised only within a window, or recriminalised after a
+  // period of legality — Nicaragua (1992-2008), India (legal 2009-2013, struck
+  // down again 2018), Chad (from 2017). `lgbtqCriminalWindows` expresses those;
+  // when present it is authoritative for the year in question.
+  const windows = country.lgbtqCriminalWindows
+  if (Array.isArray(windows) && windows.length > 0) {
+    return windows.some(([from, to]) => year >= from && (to == null || year < to))
+  }
   if (!country.lgbtqCriminalized) return false
   if (country.lgbtqLegalYear && year >= country.lgbtqLegalYear) return false
   return true
 }
 
+
+// ─── Historical series ────────────────────────────────────────────────────────
+// countries.js carries per-era series for literacy and urbanisation
+// (`literacyHistory`, `urbanHistory`). Before these existed, a single modern
+// snapshot was applied to every birth year with a token era nudge, so a woman
+// born in 1950 India drew ~39-54% literacy odds against a real ~9%. Same shape
+// and same lerp as HISTORICAL_IMR in tick.js.
+function lerpSeries(table, year, read = (v) => v) {
+  if (!table) return null
+  const keys = Object.keys(table).map(Number).sort((a, b) => a - b)
+  if (keys.length === 0) return null
+  if (year <= keys[0]) return read(table[keys[0]])
+  if (year >= keys[keys.length - 1]) return read(table[keys[keys.length - 1]])
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (year >= keys[i] && year <= keys[i + 1]) {
+      const t = (year - keys[i]) / (keys[i + 1] - keys[i])
+      const a = read(table[keys[i]]), b = read(table[keys[i + 1]])
+      if (a == null || b == null) return a ?? b
+      return a * (1 - t) + b * t
+    }
+  }
+  return null
+}
+
+export function literacyChanceFor(country, gender, birthYear) {
+  const hist = lerpSeries(country?.literacyHistory, birthYear, (v) => gender === 'female' ? v?.f : v?.m)
+  if (hist != null) return Math.max(0.01, Math.min(0.999, hist))
+  // Fallback for countries without a series yet: the old snapshot + era nudge.
+  const base = gender === 'female' ? (country?.literacyFemale ?? 0.95) : (country?.literacyMale ?? 0.97)
+  const poor = ['low', 'very_low', 'low_medium'].includes(country?.gdp)
+  const adj = birthYear < 1960 && poor ? -0.15 : birthYear < 1980 && ['low', 'very_low'].includes(country?.gdp) ? -0.10 : 0
+  return Math.max(0.05, base + adj)
+}
+
+export function urbanChanceFor(country, birthYear) {
+  const hist = lerpSeries(country?.urbanHistory, birthYear)
+  if (hist != null) return Math.max(0.02, Math.min(0.99, hist))
+  const base = country?.urbanRate ?? 0.65
+  const adj = birthYear < 1960 ? -0.15 : birthYear < 1980 ? -0.07 : 0
+  return Math.max(0.05, Math.min(0.98, base + adj))
+}
+
 // ─── Character creation ───────────────────────────────────────────────────────
 
 export function createCharacter(overrides = {}) {
-  const country = overrides.country
-    ? COUNTRIES.find(c => c.name === overrides.country) ?? pickFrom(COUNTRIES)
-    : pickFrom(COUNTRIES)
+  // Accept either a country name or a country object. Passing an object used to
+  // fall through the name lookup and silently produce a RANDOM country, which is
+  // the kind of failure that looks like it worked.
+  const requested = overrides.country
+  const country = (typeof requested === 'string'
+    ? COUNTRIES.find(c => c.name === requested)
+    : requested?.name
+      ? COUNTRIES.find(c => c.name === requested.name) ?? requested
+      : null) ?? pickBirthCountry()
 
   const birthYear = overrides.birthYear
     ?? randomBetween(country.yearRange[0], country.yearRange[1])
@@ -141,23 +197,14 @@ export function createCharacter(overrides = {}) {
     return group.id
   })()
 
-  // Assign rural/urban based on urbanRate + era
-  const baseUrbanRate = country.urbanRate ?? 0.65
-  // Earlier birth years = more rural (pre-1960 much more rural in developing world)
-  const eraAdjust = birthYear < 1960 ? -0.15 : birthYear < 1980 ? -0.07 : 0
-  const adjustedUrbanRate = Math.max(0.05, Math.min(0.98, baseUrbanRate + eraAdjust))
+  // Rural/urban from the country's historical urbanisation series
+  const adjustedUrbanRate = urbanChanceFor(country, birthYear)
   const ruralUrban = overrides.ruralUrban ?? (Math.random() < adjustedUrbanRate
     ? (Math.random() < 0.3 ? 'suburban' : 'urban')
     : 'rural')
 
-  // Assign literacy (affects event availability)
-  const litRate = gender === 'female'
-    ? (country.literacyFemale ?? 0.95)
-    : (country.literacyMale ?? 0.97)
-  // Earlier birth years = lower literacy in developing nations
-  const eraLitAdj = birthYear < 1960 && (country.gdp === 'low' || country.gdp === 'very_low' || country.gdp === 'low_medium')
-    ? -0.15 : birthYear < 1980 && (country.gdp === 'low' || country.gdp === 'very_low') ? -0.10 : 0
-  const literate = Math.random() < Math.max(0.05, litRate + eraLitAdj)
+  // Literacy from the country's historical, gender-split literacy series
+  const literate = Math.random() < literacyChanceFor(country, gender, birthYear)
 
   // Assign birth place
   const birthPlace = pickBirthPlace(country, ruralUrban, wealthTier)
@@ -758,3 +805,96 @@ const BUSINESS_TYPES = [
   { id: 'gym',            name: 'Gym / Fitness',     emoji: '🏋️', startupCost: 40000,  baseRevenue: [30000, 90000],  minAge: 21, description: 'Health & fitness. Growing market.' },
 ]
 export { BUSINESS_TYPES }
+
+
+// ─── Season ───────────────────────────────────────────────────────────────────
+// Derived deterministically per character+year so the same year always reads the
+// same way. Southern-hemisphere countries swap summer/winter; tropical countries
+// run dry/wet instead of four seasons. Shared by buildG and the year-texture
+// layer so seasonal prose and seasonal event guards always agree.
+const SOUTHERN_HEMISPHERE = new Set([
+  'Australia','New Zealand','Argentina','Brazil','Chile','South Africa','Peru',
+  'Bolivia','Uruguay','Paraguay','Zimbabwe','Zambia','Mozambique','Angola',
+  'Namibia','Tanzania','Kenya','Rwanda','Burundi','Madagascar','Malawi',
+])
+const TROPICAL = new Set([
+  'Nigeria','Ghana','Ivory Coast','Cameroon','DR Congo','Uganda','Ethiopia',
+  'Somalia','Sudan','Guinea','Mali','Burkina Faso','Senegal','Bangladesh',
+  'Thailand','Vietnam','Indonesia','Philippines','Cambodia','Myanmar','Laos',
+  'Colombia','Venezuela','Ecuador','Guatemala','Honduras','Nicaragua',
+  'El Salvador','Dominican Republic','Haiti','Cuba','Puerto Rico','Panama',
+])
+
+export function deriveSeason(state) {
+  const currentYear = state.currentYear ?? 0
+  const countryName = (state.currentCountry ?? state.character?.country)?.name ?? ''
+  const raw = ((state.character?.birthYear ?? 1960) * 7 + currentYear * 3) % 4
+  if (TROPICAL.has(countryName)) return raw % 2 === 0 ? 'dry' : 'wet'
+  const seasons = ['winter', 'spring', 'summer', 'autumn']
+  const idx = SOUTHERN_HEMISPHERE.has(countryName) ? (raw + 2) % 4 : raw
+  return seasons[idx]
+}
+
+
+// ─── Birth weighting ──────────────────────────────────────────────────────────
+// A random birth used to be uniform across the 145-country roster, so Tuvalu was
+// exactly as likely as India and about 17% of random lives began in a country
+// with almost no dedicated content. Real births are not uniform, and a life
+// simulator that claims to show you a human life should look like the actual
+// distribution of human lives.
+//
+// Weight is the square root of population (millions). Square-rooted deliberately:
+// straight population weighting would make the roster's smaller countries
+// effectively unreachable, and they hold some of the game's best-targeted
+// writing. Dampened, India is ~34× more likely than Fiji rather than ~1,500×,
+// which is both closer to the truth and better play.
+const POPULATION_M = {
+  'China': 1412, 'India': 1408, 'United States': 332, 'Indonesia': 274, 'Pakistan': 231,
+  'Nigeria': 213, 'Brazil': 214, 'Bangladesh': 169, 'Russia': 144, 'Mexico': 130,
+  'Japan': 125, 'Ethiopia': 120, 'Philippines': 114, 'Egypt': 109, 'Vietnam': 98,
+  'DR Congo': 96, 'Turkey': 85, 'Iran': 88, 'Germany': 83, 'Thailand': 72,
+  'United Kingdom': 67, 'France': 68, 'Italy': 59, 'Tanzania': 63, 'South Africa': 59,
+  'Myanmar': 54, 'Kenya': 53, 'South Korea': 52, 'Colombia': 51, 'Spain': 47,
+  'Uganda': 46, 'Argentina': 46, 'Algeria': 44, 'Sudan': 45, 'Ukraine': 43,
+  'Iraq': 43, 'Afghanistan': 40, 'Poland': 38, 'Canada': 38, 'Morocco': 37,
+  'Saudi Arabia': 35, 'Uzbekistan': 34, 'Peru': 33, 'Angola': 34, 'Malaysia': 33,
+  'Mozambique': 32, 'Ghana': 32, 'Yemen': 33, 'Nepal': 30, 'Venezuela': 28,
+  'Madagascar': 28, 'Cameroon': 27, 'Ivory Coast': 27, 'North Korea': 26, 'Australia': 26,
+  'Niger': 25, 'Sri Lanka': 22, 'Burkina Faso': 22, 'Mali': 21, 'Romania': 19,
+  'Malawi': 19, 'Chile': 19, 'Kazakhstan': 19, 'Zambia': 19, 'Guatemala': 17,
+  'Ecuador': 18, 'Syria': 21, 'Netherlands': 17, 'Senegal': 17, 'Cambodia': 17,
+  'Chad': 17, 'Somalia': 16, 'Zimbabwe': 15, 'Guinea': 13, 'Rwanda': 13,
+  'Benin': 13, 'Burundi': 12, 'Tunisia': 12, 'Bolivia': 12, 'Haiti': 11,
+  'Belgium': 12, 'Cuba': 11, 'Jordan': 11, 'Dominican Republic': 11, 'Czech Republic': 11,
+  'Greece': 10, 'Portugal': 10, 'Sweden': 10, 'Azerbaijan': 10, 'Hungary': 10,
+  'Belarus': 9, 'Israel': 9, 'Papua New Guinea': 9, 'Austria': 9, 'Switzerland': 9,
+  'Togo': 9, 'Sierra Leone': 8, 'Laos': 7, 'Paraguay': 7, 'Libya': 7,
+  'El Salvador': 6, 'Nicaragua': 7, 'Kyrgyzstan': 7, 'Turkmenistan': 6, 'Singapore': 6,
+  'Denmark': 6, 'Finland': 6, 'Norway': 5, 'Palestine': 5, 'Central African Republic': 5,
+  'Ireland': 5, 'New Zealand': 5, 'Costa Rica': 5, 'Liberia': 5, 'Mauritania': 5,
+  'Panama': 4, 'Croatia': 4, 'Georgia': 4, 'Eritrea': 4, 'Uruguay': 3,
+  'Mongolia': 3, 'Puerto Rico': 3, 'Bosnia and Herzegovina': 3, 'Armenia': 3, 'Jamaica': 3,
+  'Albania': 3, 'Lithuania': 3, 'Qatar': 3, 'Namibia': 3, 'Lebanon': 5,
+  'Botswana': 3, 'Latvia': 2, 'Slovakia': 5, 'Bulgaria': 7, 'Serbia': 7,
+  'UAE': 10, 'Kuwait': 4, 'Taiwan': 24, 'Tajikistan': 10, 'Estonia': 1.3,
+  'Cyprus': 1.2, 'Djibouti': 1.1, 'Fiji': 0.9, 'Bahrain': 1.5, 'Guyana': 0.8,
+  'East Timor': 1.3, 'Trinidad and Tobago': 1.4, 'Maldives': 0.5, 'Belize': 0.4,
+  'Barbados': 0.3, 'Samoa': 0.2, 'Kiribati': 0.13, 'Marshall Islands': 0.06, 'Tuvalu': 0.012,
+}
+
+export function birthWeight(country) {
+  // Unknown countries fall back to a small-but-reachable weight rather than zero,
+  // so a roster addition is never silently unbirthable.
+  const pop = POPULATION_M[country?.name] ?? 3
+  return Math.sqrt(pop)
+}
+
+export function pickBirthCountry(countries = COUNTRIES) {
+  const total = countries.reduce((sum, c) => sum + birthWeight(c), 0)
+  let r = Math.random() * total
+  for (const c of countries) {
+    r -= birthWeight(c)
+    if (r <= 0) return c
+  }
+  return countries[countries.length - 1]
+}

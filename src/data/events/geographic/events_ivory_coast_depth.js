@@ -39,7 +39,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
 
   {
     id: 'ci_dep_basilica',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IVORIAN(G) &&
@@ -53,7 +53,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
 
   {
     id: 'ci_dep_dozo',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IVORIAN(G) &&
@@ -113,7 +113,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
 
   {
     id: 'ci_dep_licorne',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IVORIAN(G) &&

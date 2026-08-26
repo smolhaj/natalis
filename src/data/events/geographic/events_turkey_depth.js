@@ -14,7 +14,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_1980_coup',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TURKEY(G) &&
@@ -35,7 +35,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_alevi_identity',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ALEVI(G) &&
@@ -54,7 +54,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_sivas_massacre',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ALEVI(G) &&
@@ -97,14 +97,15 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_gezi_2013',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TURKEY(G) &&
       G.currentYear === 2013 &&
       G.age >= 16 && G.age <= 40 &&
       !G.mem?.trkGezi,
-    text: `May 27, 2013. The sit-in to protect Gezi Park from a shopping-mall project is small — thirty people, tents, trees. The police move in with tear gas at 5am. By evening the protest is in Taksim Square and growing. By the weekend it is in eighty cities. The specific Istanbul image: the woman in the red dress, tear gas at close range from a policeman — the photograph travels everywhere. What begins as an environmental protest becomes something else: a referendum on ten years of the AKP government, on the pace of change, on who gets to decide what a city looks like. The government calls the protesters looters. The protesters call each other by what they are: teachers, doctors, Kemalists, anarchists, Kurds, LGBT activists, football fan groups. The coalition is temporary. So is the moment.`,
+    text: 'It begins with thirty people and some tents around trees. The gas comes at five in the morning and by the evening it is Taksim and by the weekend it is eighty cities. In the square there are football supporters handing out lemon juice to lawyers, and a table where three women are marking a map of the pharmacies still open. Somebody has written on the hoarding that this is not about the trees, and then underneath, in another hand, that it is also about the trees.',
+    context: 'The Gezi Park sit-in against a shopping development on Taksim Square began on 27 May 2013 and was cleared by police with tear gas on 31 May, after which protests spread to some eighty Turkish cities and drew an estimated 3.5 million participants. Eleven people died. The photograph of a woman in a red dress being gassed at close range became its defining image.',
     choices: [
       {
         text: 'Go to the square. Be in it.',
@@ -146,7 +147,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_headscarf_divide',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TURKEY(G) &&

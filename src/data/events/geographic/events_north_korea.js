@@ -120,7 +120,7 @@ const NORTH_KOREA_EVENTS = [
 
   {
     id: 'dprk_defection_calculation',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) => G.character.country.name === 'North Korea' && G.age >= 20 && G.age <= 45 && !G.flags.has('dprk_defection_considered'),
     text: 'You have begun the calculation. The Tumen River at its narrowest: knee-deep and crossable at night when the guards look away — which they sometimes do, for money. China sends back those it catches; being sent back means political prison. From China: Mongolia is safer than going south, which is surveilled. Thailand, or Mongolia, routes to the South Korean embassy, to Hanawon, to a country that is technically yours but that you have been taught is the enemy. The family you leave behind is in danger if you go. The family you could have in a different life requires going. You run the numbers. You run them again.',

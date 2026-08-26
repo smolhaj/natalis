@@ -17,7 +17,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_tonga_kariba',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TONGA(G) &&

@@ -6,7 +6,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
 
   {
     id: 'pt_dep_pide_interrogation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -65,7 +65,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
 
   {
     id: 'pt_dep_prec_alentejo',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Portugal' &&

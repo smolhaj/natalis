@@ -15,7 +15,7 @@ export const IVORY_COAST_EVENTS = [
 
   {
     id: 'ci_cocoa_smallholder',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IVORIAN(G) &&
@@ -44,7 +44,7 @@ export const IVORY_COAST_EVENTS = [
 
   {
     id: 'ci_houphouet_death_1993',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IVORIAN(G) &&
@@ -60,7 +60,7 @@ export const IVORY_COAST_EVENTS = [
 
   {
     id: 'ci_coup_1999',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IVORIAN(G) &&
@@ -76,7 +76,7 @@ export const IVORY_COAST_EVENTS = [
 
   {
     id: 'ci_abidjan_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IVORIAN(G) &&
@@ -105,7 +105,7 @@ export const IVORY_COAST_EVENTS = [
 
   {
     id: 'ci_election_crisis_2010',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_IVORIAN(G) &&
@@ -133,7 +133,7 @@ export const IVORY_COAST_EVENTS = [
 
   {
     id: 'ci_north_south_identity',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IVORIAN(G) &&

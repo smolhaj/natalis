@@ -7,7 +7,7 @@
 // Derg fall 1991, Orthodox fasting, coffee ceremony, Addis growth 2010s,
 // Abiy peace 2018, Tigray war 2020–22, Pretoria 2022).
 
-const IS_ETHIOPIAN = (G) => G.currentCountry === 'Ethiopia'
+const IS_ETHIOPIAN = (G) => G.currentCountry?.name === 'Ethiopia'
 
 export const ETHIOPIA_DEPTH_EVENTS = [
 
@@ -72,7 +72,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
 
   {
     id: 'eth_haile_selassie_fall',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_ETHIOPIAN(G) &&
@@ -109,7 +109,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
 
   {
     id: 'eth_eritrea_referendum_1993',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ETHIOPIAN(G) &&
@@ -129,7 +129,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
 
   {
     id: 'eth_tplf_ethnic_federal',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ETHIOPIAN(G) &&
@@ -148,7 +148,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
 
   {
     id: 'eth_oromia_protests_2016',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_ETHIOPIAN(G) &&
@@ -185,7 +185,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
 
   {
     id: 'eth_gerd_dam',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ETHIOPIAN(G) &&

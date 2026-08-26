@@ -45,6 +45,7 @@ export const CHILDREN_ABROAD_EVENTS = [
       p.m -= 8
       p.r += 4
       p.addFlag('parent_works_abroad')
+      p.addFlag('ofw_family_member')
       p.setMem('caParentDeparts', true)
     },
   },

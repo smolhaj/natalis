@@ -51,7 +51,7 @@ export const ROADS_NOT_TAKEN_EVENTS = [
 
   {
     id: 'rnt_affair_not_taken',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('affair_not_taken') &&
@@ -78,7 +78,7 @@ export const ROADS_NOT_TAKEN_EVENTS = [
 
   {
     id: 'rnt_lost_faith_ceremony',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('lost_faith') &&
@@ -123,7 +123,7 @@ export const ROADS_NOT_TAKEN_EVENTS = [
 
   {
     id: 'rnt_political_disengaged_40',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.political_leaning === null &&

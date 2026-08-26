@@ -43,7 +43,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'hun_1956_uprising_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Hungary' &&
@@ -70,7 +70,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'hun_kadar_goulash',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Hungary' &&
@@ -97,7 +97,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'hun_border_1989',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Hungary' &&
@@ -159,7 +159,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'cze_normalization',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       (G.character.country.name === 'Czech Republic' ||
@@ -187,7 +187,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'cze_charter_77',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       (G.character.country.name === 'Czech Republic' ||
@@ -215,7 +215,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'cze_velvet_revolution',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Czech Republic' &&
@@ -248,7 +248,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'cze_lustration_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Czech Republic' &&

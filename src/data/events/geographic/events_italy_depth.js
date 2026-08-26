@@ -7,7 +7,7 @@ export const ITALY_DEPTH_EVENTS = [
 
   {
     id: 'it_dep_resistenza',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -34,7 +34,7 @@ export const ITALY_DEPTH_EVENTS = [
 
   {
     id: 'it_dep_dc_pci_anomalia',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -61,7 +61,7 @@ export const ITALY_DEPTH_EVENTS = [
 
   {
     id: 'it_dep_vaticano_due',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -76,7 +76,7 @@ export const ITALY_DEPTH_EVENTS = [
 
   {
     id: 'it_dep_seconda_repubblica',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -104,7 +104,7 @@ export const ITALY_DEPTH_EVENTS = [
 
   {
     id: 'it_dep_badanti',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -131,7 +131,7 @@ export const ITALY_DEPTH_EVENTS = [
 
   {
     id: 'it_dep_spread',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -158,7 +158,7 @@ export const ITALY_DEPTH_EVENTS = [
 
   {
     id: 'it_dep_meloni_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Italy' &&

@@ -20,7 +20,7 @@ const SINGAPORE_EVENTS = [
 
   {
     id: 'sg_separation_1965',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character.country.name === 'Singapore' &&
@@ -69,7 +69,7 @@ const SINGAPORE_EVENTS = [
 
   {
     id: 'sg_speak_mandarin',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Singapore' &&
@@ -139,7 +139,7 @@ const SINGAPORE_EVENTS = [
 
   {
     id: 'sg_psle_exam',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Singapore' &&
@@ -205,7 +205,7 @@ const SINGAPORE_EVENTS = [
 
   {
     id: 'sg_ethnic_quota',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Singapore' &&
@@ -230,7 +230,7 @@ const SINGAPORE_EVENTS = [
 
   {
     id: 'sg_lky_death_2015',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Singapore' &&

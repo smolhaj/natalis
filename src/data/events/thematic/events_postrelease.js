@@ -57,7 +57,7 @@ export const POSTRELEASE_EVENTS = [
 
   {
     id: 'pr_job_application',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     cooldown: 3,
     when: (G) =>

@@ -23,7 +23,7 @@ export const LIBYA_EVENTS = [
 
   {
     id: 'lby_lockerbie_sanctions',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Libya' &&
@@ -37,7 +37,7 @@ export const LIBYA_EVENTS = [
 
   {
     id: 'lby_rehabilitation_2003',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Libya' &&
@@ -51,7 +51,7 @@ export const LIBYA_EVENTS = [
 
   {
     id: 'lby_revolution_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Libya' &&
@@ -78,7 +78,7 @@ export const LIBYA_EVENTS = [
 
   {
     id: 'lby_post_gaddafi_chaos',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Libya' &&
@@ -92,7 +92,7 @@ export const LIBYA_EVENTS = [
 
   {
     id: 'lby_gaddafi_oil_state',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Libya' &&

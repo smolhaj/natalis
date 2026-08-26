@@ -163,7 +163,7 @@ export const SOCIAL_CAPITAL_EVENTS = [
 
   {
     id: 'sc_looks_fade_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.stats.looks <= 42 &&

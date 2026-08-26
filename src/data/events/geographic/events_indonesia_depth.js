@@ -8,7 +8,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_1965_purge',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -36,7 +36,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_new_order_silence',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -51,7 +51,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_bali_bombing_2002',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -78,7 +78,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_tsunami_2004',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -106,7 +106,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_transmigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&

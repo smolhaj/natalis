@@ -131,7 +131,7 @@ export const COHERENCE_EVENTS = [
   // ── PEER DEATH IN ADOLESCENCE → how it sits at 30 ────────────────────────
   {
     id: 'coh_peer_death_echo',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.mem?.adol2PeerDeath &&
@@ -257,7 +257,7 @@ export const COHERENCE_EVENTS = [
   // ── DEFERRED TALENT → midlife, the return question ───────────────────────
   {
     id: 'coh_deferred_talent_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('deferred_talent') &&
@@ -294,7 +294,7 @@ export const COHERENCE_EVENTS = [
   // ── LEFT SCHOOL EARLY → the credential question at 30 ────────────────────
   {
     id: 'coh_left_school_early_echo',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('left_school_early') &&

@@ -19,7 +19,7 @@ export const INDUSTRIAL_EVENTS = [
 
   {
     id: 'ind_chernobyl_liquidator_called',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['Ukraine', 'Russia'].includes(G.character.country?.name) &&

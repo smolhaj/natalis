@@ -27,7 +27,7 @@ export const ERITREA_EVENTS = [
 
   {
     id: 'eri_independence_1993',
-    phase: 'young_adult',
+    phase: null,
     weight: 9,
     when: (G) =>
       IS_ERITREA(G) &&
@@ -45,7 +45,7 @@ export const ERITREA_EVENTS = [
 
   {
     id: 'eri_border_war_1998',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       IS_ERITREA(G) &&
@@ -100,7 +100,7 @@ export const ERITREA_EVENTS = [
 
   {
     id: 'eri_g15_crackdown_2001',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_ERITREA(G) &&
@@ -118,7 +118,7 @@ export const ERITREA_EVENTS = [
 
   {
     id: 'eri_leaving_decision',
-    phase: 'midlife',
+    phase: null,
     weight: 7,
     when: (G) =>
       IS_ERITREA(G) &&
@@ -155,7 +155,7 @@ export const ERITREA_EVENTS = [
 
   {
     id: 'eri_sinai_trafficking',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ERITREA(G) &&

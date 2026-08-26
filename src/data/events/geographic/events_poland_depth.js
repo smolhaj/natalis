@@ -16,7 +16,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_katyn',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -57,14 +57,14 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_warsaw_uprising',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
       G.currentYear >= 1944 && G.currentYear <= 1960 &&
       G.age >= 5 && G.age <= 18 &&
       !G.mem?.polDepUprisingChild,
-    text: pick([
+    text: () => pick([
       'August 1, 1944. The Warsaw Uprising begins. The Home Army — the Armia Krajowa — rises against the German occupation. The Soviets are across the Vistula, close enough to hear the fighting. They stop and wait. For sixty-three days the AK holds parts of Warsaw while the Soviets wait and the Allies argue about supply lines. In October, the city surrenders. The Germans then systematically burn what remains. Two hundred thousand dead. 85 percent of Warsaw destroyed, building by building, street by street. You are small enough that what you know of it is what the adults say in the specific register adults use when the children are listening.',
       'The Powstanie Warszawskie: your parents\' generation\'s wound. Sixty-three days. The losses are in the faces of everyone you know who was old enough to be there — the particular blankness that arrives when August 1 is mentioned, the way conversations stop and then restart. You inherit the wound secondhand, which is its own shape of carrying it.',
     ]),
@@ -80,7 +80,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_warsaw_uprising_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -123,7 +123,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_kresy_family',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -144,7 +144,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_nowa_huta',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -167,7 +167,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_jedwabne',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -206,7 +206,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_pis_era',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -246,7 +246,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_uk_emigrant',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -288,7 +288,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_smolensk_conspiracy',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&

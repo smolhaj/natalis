@@ -299,7 +299,7 @@ export const FAMILY_SILENCE_EVENTS = [
   // At age 28-38, the character who carries_family_silence finally asks.
   {
     id: 'fs_adult_asks',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('carries_family_silence') &&
@@ -336,7 +336,7 @@ export const FAMILY_SILENCE_EVENTS = [
   // ── FOLLOW-THROUGH: THE WEIGHT AT 50 ────────────────────────────────────────
   {
     id: 'fs_midlife_weight',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('carries_family_silence') &&

@@ -12,7 +12,7 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_wwii_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SWEDISH(G) &&
@@ -28,7 +28,7 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_palme_assassination',
-    phase: 'midlife',
+    phase: null,
     weight: 7,
     when: (G) =>
       IS_SWEDISH(G) &&
@@ -49,7 +49,7 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_1992_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SWEDISH(G) &&
@@ -65,7 +65,7 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_immigration_question',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SWEDISH(G) &&
@@ -86,7 +86,7 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_democrats_rise',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SWEDISH(G) &&
@@ -110,7 +110,8 @@ export const SWEDEN_EVENTS = [
       G.age >= 50 &&
       G.flags.has('swe_palme_generation') &&
       !G.mem?.swePalmeResolved,
-    text: 'In June 2020, the chief prosecutor closes the case. The prime suspect is Stig Engström — "Skandia man" — an advertising executive who was at the scene and whose story has been examined and re-examined. He died in 2000. The case is closed because the prime suspect is dead and cannot be prosecuted. This means: no trial. No conviction. No confession. The case that defined the Swedish national psyche for thirty-four years ends not with an answer but with an administrative decision. The prosecutor says she is reasonably certain. Reasonable certainty, after thirty-four years, is the closure the country gets. You have spent much of your life with this open. Now it is closed in a way that does not feel finished.',
+    text: 'The prosecutor gives a press conference in June and names a man who died twenty years ago. He was an advertising executive who was on the street that night and told the police a version of it that never quite sat. There is no trial and no confession and the phrase the prosecutor uses is reasonably certain. You have had this open since you were young enough to have been standing in the snow outside the cinema yourself, and it has now been closed by an administrative decision.',
+    context: 'Olof Palme, Sweden\'s prime minister, was shot on Sveavagen in Stockholm on 28 February 1986 after leaving a cinema with his wife. In June 2020 chief prosecutor Krister Petersson closed the investigation, naming Stig Engstrom, the so-called Skandia man, as the principal suspect. Engstrom died in 2000, so no prosecution was possible.',
     choices: null,
     effect: (p) => { p.r += 8; p.m -= 5; p.e += 2; p.setMem('swePalmeResolved', true) },
   },

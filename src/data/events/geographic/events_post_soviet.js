@@ -59,7 +59,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_five_year_plan',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.psFiveYearPlan &&
@@ -88,7 +88,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_gulag_arrest',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.archetype === 'post_soviet' &&
@@ -195,7 +195,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_factory_closure',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem.psFactoryClosure &&
@@ -230,7 +230,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_savings_wiped',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem.psSavingsWiped &&
@@ -263,7 +263,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_sudden_poverty',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.psSuddenPoverty &&
@@ -293,7 +293,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_privatisation_opportunity',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem.psPrivatisationOpportunity &&
@@ -349,7 +349,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_jewish_emigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.psJewishEmigration &&
@@ -377,7 +377,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_german_heritage_emigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.psGermanEmigration &&

@@ -37,7 +37,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_junta_culture',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -91,7 +91,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_junta_fall_1974',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -119,7 +119,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_debt_crisis_2010',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -177,7 +177,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_oxi_2015',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -206,7 +206,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_brain_drain_2010s',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -266,7 +266,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_estado_novo_texture',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -321,7 +321,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_carnation_revolution',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -354,7 +354,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_retornados',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -381,7 +381,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_eu_accession',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -422,7 +422,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_troika_lived',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Portugal' &&

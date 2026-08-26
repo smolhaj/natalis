@@ -36,7 +36,7 @@ export function buildMundaneLayer(state) {
   const isHindu = religion === 'hindu'
   const isBuddhist = religion === 'buddhist'
   const isJewish = religion === 'jewish'
-  const isFolk = religion === 'folk' || religion === 'traditional'
+  const isFolk = religion === 'folk_religion'
   const isWealthy = ['very_high', 'high', 'medium_high'].includes(gdp)
   const isPoor = ['very_low', 'low'].includes(gdp)
   const isWorkingClass = ['low_medium', 'medium'].includes(gdp)

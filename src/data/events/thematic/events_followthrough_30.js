@@ -69,7 +69,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
 
   {
     id: 'ft30_survived_aids_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('survived_aids_crisis') &&

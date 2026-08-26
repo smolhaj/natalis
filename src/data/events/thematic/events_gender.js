@@ -281,7 +281,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fg_stem_not_for_girls',
-    phase: 'childhood',
+    phase: 'adolescence',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -318,7 +318,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fg_title_ix_opportunity',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -504,7 +504,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'cm_taken_from_school',
-    phase: 'childhood',
+    phase: 'adolescence',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -584,7 +584,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'cm_ngo_intervention',
-    phase: 'childhood',
+    phase: 'adolescence',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -978,7 +978,7 @@ export const GENDER_EVENTS = [
     weight: 2,
     when: (G) =>
       G.character.gender === 'female' &&
-      (G.wealthTier <= 1 || G.flags.includes('indigenous') || G.flags.includes('poverty_childhood')) &&
+      (G.wealthTier <= 1 || ['aboriginal', 'first_nations', 'indigenous_american', 'maori', 'sami', 'sami_finland'].includes(G.ethnicity) || G.flags.includes('poverty_childhood')) &&
       G.character.country.archetype === 'wealthy_west' &&
       G.currentYear >= 1950 && G.currentYear <= 1985,
     text: (G) => `You are in hospital for another procedure. A doctor mentions, briefly, that he has "taken care of something else as well." You ask what. He explains what has been done to you, in language designed not to sound like what it is. You are ${G.age} years old. Nobody asked you.`,
@@ -1354,7 +1354,8 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'male' &&
       ['developing_urban', 'subsaharan'].includes(G.character.country.archetype) &&
-      !G.flags.includes('eldest_child'),
+      G.parents?.father && G.parents.father.alive === false &&
+      (G.siblings ?? []).some(s => s.gender === 'male' && s.ageDiff > 0),
     text: 'Your father has died. In the meeting with the family, the land, the house, the business — all of it goes to your oldest brother. This is how it has always been. You receive a handshake and a blessing.',
     context: null,
     choices: [
@@ -1385,7 +1386,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'mp_men_dont_cry',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.gender === 'male' &&
@@ -1638,7 +1639,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'mp_male_sexual_assault',
-    phase: 'adolescence',
+    phase: null,
     weight: 1,
     when: (G) =>
       G.character.gender === 'male' &&
@@ -1991,7 +1992,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'lgbtq_trans_identity',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.age >= 14 && G.age <= 22 &&

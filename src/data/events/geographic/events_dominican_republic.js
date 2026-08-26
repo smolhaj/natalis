@@ -11,7 +11,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_trujillo_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&
@@ -32,11 +32,11 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_parsley_massacre',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&
-      G.currentYear >= 1937 && G.currentYear <= 1939 &&
+      G.currentYear >= 1937 && G.currentYear <= 1975 &&
       G.age >= 14 &&
       !G.mem?.drParsleyMassacre,
     text: 'In October 1937, the army moved along the northwestern border with Haiti. The test, it is said, was to ask a person to say *perejil* — parsley. Haitians who could not roll the Spanish r were identified and killed. Between 17,000 and 35,000 Haitians and dark-skinned Dominicans were killed over several days. Trujillo paid Haiti\'s government an indemnity of $750,000 — about $21 per person — and the matter was handled diplomatically. The massacre is not discussed openly. What you know, you learned in pieces, from the way adults go quiet when the border region comes up, from the family members who do not talk about certain cousins on the other side.',
@@ -48,7 +48,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_mirabal_sisters',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_DOMINICAN(G) &&
@@ -69,7 +69,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_trujillo_killed',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&
@@ -85,7 +85,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_1965_intervention',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&
@@ -134,7 +134,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_2013_statelessness',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&

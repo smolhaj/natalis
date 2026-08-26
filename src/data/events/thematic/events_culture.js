@@ -424,7 +424,7 @@ export const CULTURE_EVENTS = [
 
   {
     id: 'cult_lgbtq_conversion_fear',
-    phase: 'adolescence',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.includes('same_sex_attracted') &&
       G.lgbtqCriminalized &&
@@ -762,5 +762,39 @@ export const CULTURE_EVENTS = [
     text: 'Your brother goes to school. The question of whether you go is a discussion. Your mother says yes. Your father is not certain. The answer depends on things you are not part of — the family\'s finances, what the neighbors do, whether the school is close enough to walk without incident. The answer is eventually no.',
     choices: null,
     effect: (p) => { p.e -= 8; p.m -= 10; p.r += 8; p.addFlag('education_denied_gender') },
+  },
+
+  // ── WHERE ARE YOU REALLY FROM ─────────────────────────────────────────────────
+  // Sets `ethnic_minority_conflict` — the flag three follow-through events read
+  // for the rest of the life. Gated on actually being a minority in this country.
+
+  {
+    id: 'cult_minority_first_asked',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => {
+      if (G.mem?.cultMinorityFirstAsked) return false
+      if (G.age < 12 || G.age > 19) return false
+      const groups = G.character?.country?.ethnicGroups ?? []
+      const me = groups.find(g => g.id === G.ethnicity)
+      if (!me) return false
+      return (me.disadvantaged === true || (me.share ?? 1) <= 0.15) && groups.length > 1
+    },
+    text: 'A boy in the year above asks where you are from. You say the name of the town, because that is where you are from. He says no, where are you really from. You give him the second answer, the one about your grandparents, and watch him receive it as though it settles something. It is the first time you understand that you carry a question other people get to ask.',
+    choices: [
+      {
+        text: 'Learn the short answer and use it from now on.',
+        tag: null,
+        outcome: 'The short answer becomes a small tool you keep in a pocket. It works. Using it costs something so small you stop counting it.',
+        effect: (p) => { p.s += 3; p.r += 3; p.addFlag('ethnic_minority_conflict'); p.setMem('cultMinorityFirstAsked', true) },
+      },
+      {
+        text: 'Refuse the second question.',
+        tag: null,
+        outcome: 'You say the name of the town again. He laughs and drops it. You are pleased with yourself for a week and then tired of doing it for the rest of your life.',
+        effect: (p) => { p.m -= 3; p.e += 3; p.addFlag('ethnic_minority_conflict'); p.setMem('cultMinorityFirstAsked', true) },
+      },
+    ],
+    effect: null,
   },
 ]

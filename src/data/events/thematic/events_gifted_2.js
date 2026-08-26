@@ -659,7 +659,7 @@ const REALIZATION_EVENTS = [
 
   {
     id: 'gift_creative_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 7,
     when: (G) =>
       isGifted(G) &&

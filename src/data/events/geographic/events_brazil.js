@@ -48,7 +48,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_ai5_dictatorship',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -77,7 +77,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_amnesty_1979',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -94,7 +94,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_diretas_ja_1984',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -123,7 +123,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_bala_perdida',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -153,7 +153,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_racial_democracy',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -186,7 +186,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_chico_mendes',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -202,7 +202,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_copa_protests',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -233,7 +233,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_carandiru_proximity',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -264,7 +264,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_bolsonaro_covid',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -293,7 +293,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_hyperinflation',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -328,7 +328,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_carandiru_1992',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -393,7 +393,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_lula_election',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -422,7 +422,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_evangelical_shift',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -457,7 +457,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_lava_jato',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -486,7 +486,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_january_8_2023',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&

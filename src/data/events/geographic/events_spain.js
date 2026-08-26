@@ -114,7 +114,7 @@ export const SPAIN_EVENTS = [
 
   {
     id: 'es_franco_death_1975',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -141,7 +141,7 @@ export const SPAIN_EVENTS = [
 
   {
     id: 'es_23F_coup_attempt',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -190,7 +190,7 @@ export const SPAIN_EVENTS = [
 
   {
     id: 'es_1992',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -212,7 +212,7 @@ export const SPAIN_EVENTS = [
 
   {
     id: 'es_11m_2004',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -239,7 +239,7 @@ export const SPAIN_EVENTS = [
 
   {
     id: 'es_15m_2011',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -270,7 +270,7 @@ export const SPAIN_EVENTS = [
 
   {
     id: 'es_housing_boom_bust',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -325,7 +325,7 @@ export const SPAIN_EVENTS = [
 
   {
     id: 'es_catalan_independence_2017',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Spain' &&

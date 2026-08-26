@@ -23,7 +23,7 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_renamo_civil_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&
@@ -50,7 +50,7 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_machel_death_1986',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&
@@ -64,7 +64,7 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_peace_accords_1992',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&
@@ -78,7 +78,7 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_floods_2000',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&

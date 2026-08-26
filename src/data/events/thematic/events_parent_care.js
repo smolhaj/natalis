@@ -10,7 +10,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_first_sign',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.pcFirstSign &&
@@ -44,7 +44,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_conversation',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcFirstSign &&
@@ -78,7 +78,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_decision',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcConversation &&
@@ -123,7 +123,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_daily_reality',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcDecision &&
@@ -156,7 +156,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_sibling_disagreement',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcConversation &&
@@ -196,7 +196,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_bad_day',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcDecision &&

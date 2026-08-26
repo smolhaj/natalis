@@ -27,7 +27,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_entry_international',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.archetype === 'wealthy_west' &&
@@ -83,7 +83,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_salary_gap_local',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ngo_local_staff') &&
@@ -111,7 +111,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_salary_gap_intl',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('aw_international_staff') &&
@@ -126,7 +126,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_caseload',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ngo_worker') &&
@@ -156,7 +156,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_evacuation',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('ngo_worker') &&
@@ -169,7 +169,7 @@ export const AID_WORKER_EVENTS = [
     choices: null,
     effect: (p) => {
       p.m -= 20; p.r += 15; p.karma += 5;
-      p.addFlag(p.flags?.has?.('ngo_local_staff') ? 'aw_left_behind' : 'aw_evacuated_and_left');
+      p.addFlag(p.flags.includes('ngo_local_staff') ? 'aw_left_behind' : 'aw_evacuated_and_left');
       p.setMem('awEvacuation', true);
     },
   },
@@ -178,7 +178,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_funding_cut',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ngo_worker') &&

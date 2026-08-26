@@ -11,7 +11,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
 
   {
     id: 'eur_rom_decree_770',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -39,7 +39,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
 
   {
     id: 'eur_rom_rationing_1980s',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -53,7 +53,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
 
   {
     id: 'eur_rom_post89_transition',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -99,7 +99,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
 
   {
     id: 'eur_ser_tito_death',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Serbia' &&
@@ -113,7 +113,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
 
   {
     id: 'eur_ser_yugoslav_identity',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Serbia' &&
@@ -140,7 +140,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
 
   {
     id: 'eur_ser_hyperinflation_1993',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Serbia' &&
@@ -154,7 +154,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
 
   {
     id: 'eur_ser_nato_bombing_1999',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Serbia' &&
@@ -181,7 +181,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
 
   {
     id: 'eur_ser_milosevic_falls',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Serbia' &&

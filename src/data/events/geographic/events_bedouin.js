@@ -32,7 +32,7 @@ export const BEDOUIN_EVENTS = [
 
   {
     id: 'bdo_settlement_government',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) => IS_BEDOUIN(G) && G.currentYear >= 1950 && G.currentYear <= 1978 && G.age >= 18 && G.age <= 45 && !G.mem.bdoSettle,
     text: (G) => {
@@ -61,7 +61,7 @@ export const BEDOUIN_EVENTS = [
 
   {
     id: 'bdo_concrete_house_texture',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) => IS_BEDOUIN(G) && G.flags.has('bedouin_settled') && G.age >= 20 && G.age <= 40 && !G.mem.bdoHouseText,
     text: 'The house is solid. That is undeniable and it is something. But the ceiling is the wrong height — not wrong for a building, wrong for a person who learned to calibrate space in an open tent. The walls face the wrong direction: a tent orients itself to the prevailing wind; a house is perpendicular to the road. The children can sleep in rain. The children can drink clean water. These are the things that matter, and they are true, and the other thing is also true.',

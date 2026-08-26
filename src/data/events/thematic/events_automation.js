@@ -147,7 +147,7 @@ export const AUTOMATION_EVENTS = [
 
   {
     id: 'auto_customer_service_replaced',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.currentYear >= 2025 &&

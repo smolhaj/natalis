@@ -294,7 +294,7 @@ export const WEALTH_SYSTEM_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.partner?.engaged && !G.mem?.mahrSet &&
-      ['muslim', 'muslim_sunni', 'muslim_shia'].includes(G.religion ?? G.character?.religion) &&
+      (G.religion ?? G.character?.religion ?? '').startsWith('muslim') &&
       G.character?.gender === 'male',
     text: 'The nikah requires a mahr — a gift from you to your wife, hers unconditionally, stated in the contract. It is not symbolic. The sheikh explains that it is her financial security, her right, independent of anything that comes after.',
     choices: [

@@ -41,7 +41,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_checkpoint',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       G.character?.country?.name === 'Palestine' &&
@@ -76,7 +76,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_oslo_hope',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       isPalestinian(G) &&
@@ -148,7 +148,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_house_demolition',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character?.country?.name === 'Palestine' &&
@@ -171,7 +171,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_gaza_siege',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character?.country?.name === 'Palestine' &&
@@ -219,7 +219,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_refugee_camp_generations',
-    phase: 'childhood',
+    phase: null,
     weight: 7,
     when: (G) =>
       isPalestinian(G) &&
@@ -236,7 +236,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_olive_harvest',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character?.country?.name === 'Palestine' &&
@@ -265,7 +265,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_administrative_detention',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character?.country?.name === 'Palestine' &&
@@ -294,7 +294,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_water_access',
-    phase: 'childhood',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character?.country?.name === 'Palestine' &&
@@ -310,7 +310,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_gaza_bombardment',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character?.country?.name === 'Palestine' &&

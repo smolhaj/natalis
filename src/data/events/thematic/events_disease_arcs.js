@@ -82,7 +82,7 @@ export const DISEASE_ARC_EVENTS = [
 
   {
     id: 'da_tb_russia_1990s',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country?.name === 'Russia' &&
@@ -137,7 +137,7 @@ export const DISEASE_ARC_EVENTS = [
 
   {
     id: 'da_asian_crisis_savings',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       ['Thailand', 'Indonesia', 'South Korea', 'Malaysia'].includes(G.character.country?.name) &&
@@ -192,7 +192,7 @@ export const DISEASE_ARC_EVENTS = [
 
   {
     id: 'da_asian_crisis_recovery',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('asian_crisis_generation') &&

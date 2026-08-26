@@ -26,7 +26,7 @@ export const UKRAINE_EVENTS = [
 
   {
     id: 'ukr_independence_1991',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -53,7 +53,7 @@ export const UKRAINE_EVENTS = [
 
   {
     id: 'ukr_language_question',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -80,7 +80,7 @@ export const UKRAINE_EVENTS = [
 
   {
     id: 'ukr_orange_revolution_2004',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -107,7 +107,7 @@ export const UKRAINE_EVENTS = [
 
   {
     id: 'ukr_euromaidan_2013',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -146,7 +146,7 @@ export const UKRAINE_EVENTS = [
 
   {
     id: 'ukr_donbas_2014',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -173,7 +173,7 @@ export const UKRAINE_EVENTS = [
 
   {
     id: 'ukr_invasion_2022',
-    phase: 'late_life',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&

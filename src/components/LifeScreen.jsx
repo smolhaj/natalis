@@ -49,6 +49,8 @@ const TABS = [
 ]
 
 export default function LifeScreen() {
+  const mode = useGameStore(st => st.mode)
+  const isPassive = mode === 'passive'
   const [showActivities, setShowActivities] = useState(false)
   const [activeTab, setActiveTab] = useState('life')
   const [logMode, setLogMode] = useState('recent')
@@ -546,6 +548,9 @@ export default function LifeScreen() {
                         <span className={`font-bold mr-2 text-xs uppercase tracking-wider ${entry.isKey ? 'text-blue-500 opacity-100' : 'opacity-60'}`}>{ageLabel}</span>
                       )}
                       <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''} ${entry.isLetter ? 'italic block ml-2 border-l-2 border-amber-400 pl-3' : ''} ${entry.isKey && !entry.isWorld ? 'font-medium' : ''}`}>{entry.text}</span>
+                      {entry.outcome && (
+                        <span className="block mt-1.5 pl-3 border-l-2 border-natalis-border text-natalis-dim">{entry.outcome}</span>
+                      )}
                     </div>
                   )
                 })}
@@ -644,6 +649,9 @@ export default function LifeScreen() {
                                   {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
                                   {entry.isLetter && <span className="text-xs font-semibold mr-1 text-amber-700">✉ {al} — </span>}
                                   <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic' : ''} ${entry.isLetter ? 'italic' : ''} ${entry.isKey && !entry.isWorld ? 'font-medium' : ''}`}>{entry.text}</span>
+                                  {entry.outcome && (
+                                    <span className="block mt-1 pl-2 border-l-2 border-natalis-border text-natalis-dim">{entry.outcome}</span>
+                                  )}
                                 </div>
                               )
                             })}
@@ -673,7 +681,7 @@ export default function LifeScreen() {
                     </div>
                     {searchQuery.length >= 2 ? (() => {
                       const q = searchQuery.toLowerCase()
-                      const matches = log.filter(e => e.text?.toLowerCase().includes(q))
+                      const matches = log.filter(e => e.text?.toLowerCase().includes(q) || e.outcome?.toLowerCase().includes(q))
                       if (matches.length === 0) return (
                         <p className="text-natalis-muted text-sm italic text-center py-6">No entries match "{searchQuery}"</p>
                       )
@@ -693,6 +701,7 @@ export default function LifeScreen() {
                               {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 </span>}
                               {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
                               <span className={entry.isHeadline || entry.isSoundtrack ? 'italic' : ''}>{entry.text}</span>
+                              {entry.outcome && <span className="block mt-1 text-natalis-dim">{entry.outcome}</span>}
                             </div>
                           ))}
                         </>
@@ -1081,13 +1090,6 @@ export default function LifeScreen() {
                       <div>
                         <p className="font-semibold text-natalis-text">{partner.name}{genderMark(partner.gender)}</p>
                         <p className="text-natalis-muted text-xs">{partner.married ? '💍 Married' : partner.engaged ? '💌 Engaged' : '💑 Dating'}{partner.age ? ` · Age ${partner.age}` : ''}</p>
-                        {partner.traits?.length > 0 && (
-                          <div className="flex gap-1 mt-1 flex-wrap">
-                            {partner.traits.map(t => (
-                              <span key={t} className="text-[10px] bg-natalis-bg px-1.5 py-0.5 rounded-full text-natalis-muted capitalize">{t}</span>
-                            ))}
-                          </div>
-                        )}
                         {(() => {
                           const pFlags = []
                           if (flags.includes('partner_illness_caretaker')) pFlags.push('caretaker')
@@ -1120,13 +1122,6 @@ export default function LifeScreen() {
                           <div>
                             <p className="text-natalis-dim text-sm">{child.name.split(' ')[0]}{genderMark(child.gender)}</p>
                             {childAge !== null && <p className="text-natalis-muted text-xs">Age {childAge}</p>}
-                            {child.traits?.length > 0 && (
-                              <div className="flex gap-1 mt-0.5 flex-wrap">
-                                {child.traits.map(t => (
-                                  <span key={t} className="text-[10px] bg-natalis-bg px-1.5 py-0.5 rounded-full text-natalis-muted capitalize">{t}</span>
-                                ))}
-                              </div>
-                            )}
                             {(() => {
                               const cFlags = []
                               if (flags.includes('reconciled_with_child')) cFlags.push('reconciled')
@@ -1170,13 +1165,6 @@ export default function LifeScreen() {
                             )}
                             {p.occupation?.title === 'Homemaker' && (
                               <p className="text-natalis-muted text-xs italic">Homemaker</p>
-                            )}
-                            {p.alive && p.traits?.length > 0 && (
-                              <div className="flex gap-1 mt-0.5 flex-wrap">
-                                {p.traits.map(t => (
-                                  <span key={t} className="text-[10px] bg-natalis-bg px-1.5 py-0.5 rounded-full text-natalis-muted capitalize">{t}</span>
-                                ))}
-                              </div>
                             )}
                           </div>
                           {p.alive
@@ -1560,7 +1548,7 @@ export default function LifeScreen() {
       </div>
 
       {/* ── Activities Panel (slides up) ─────────────────────────────── */}
-      {showActivities && !pendingEvent && (
+      {showActivities && !pendingEvent && !isPassive && (
         <div className="fixed inset-0 z-40 flex flex-col justify-end" onClick={() => setShowActivities(false)}>
           <div className="absolute inset-0 bg-black/20" />
           <div className="relative z-50 bg-natalis-bg rounded-t-3xl max-h-[80vh] overflow-hidden shadow-card-lg" onClick={e => e.stopPropagation()}>
@@ -1713,8 +1701,8 @@ export default function LifeScreen() {
         <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-natalis-border shadow-card-lg">
           <div className="max-w-2xl mx-auto flex items-center px-4 py-2 gap-3">
 
-            {/* Actions remaining */}
-            <div className="flex flex-col items-center gap-1 min-w-[36px]">
+            {/* Actions remaining — meaningless in passive mode, where the only verb is Age Up */}
+            <div className={`flex-col items-center gap-1 min-w-[36px] ${isPassive ? 'hidden' : 'flex'}`}>
               <div className="flex gap-1">
                 {Array.from({ length: maxActionsPerYear }).map((_, i) => (
                   <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: i < actionsThisYear ? '#e5e5ea' : '#007aff' }} />
@@ -1725,8 +1713,8 @@ export default function LifeScreen() {
               </span>
             </div>
 
-            {/* Activities / Prison Life button */}
-            {inPrison ? (
+            {/* Activities / Prison Life button — active mode only */}
+            {isPassive ? null : inPrison ? (
               <button
                 onClick={() => setShowActivities(v => !v)}
                 className="flex-1 py-3 rounded-xl font-bold text-sm transition-all active:scale-95"

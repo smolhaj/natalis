@@ -20,7 +20,7 @@ export const GEORGIA_EVENTS = [
 
   {
     id: 'geo_april9_1989',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Georgia' &&
@@ -47,7 +47,7 @@ export const GEORGIA_EVENTS = [
 
   {
     id: 'geo_abkhazia_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Georgia' &&
@@ -74,7 +74,7 @@ export const GEORGIA_EVENTS = [
 
   {
     id: 'geo_rose_revolution',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Georgia' &&
@@ -101,7 +101,7 @@ export const GEORGIA_EVENTS = [
 
   {
     id: 'geo_war_2008',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Georgia' &&
@@ -163,7 +163,7 @@ export const GEORGIA_EVENTS = [
 
   {
     id: 'geo_1990s_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Georgia' &&
@@ -192,7 +192,7 @@ export const GEORGIA_EVENTS = [
 
   {
     id: 'geo_supra_identity',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Georgia' &&
@@ -220,7 +220,7 @@ export const GEORGIA_EVENTS = [
 
   {
     id: 'geo_orthodox_identity',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Georgia' &&
@@ -248,7 +248,7 @@ export const GEORGIA_EVENTS = [
 
   {
     id: 'geo_saakashvili_era',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Georgia' &&

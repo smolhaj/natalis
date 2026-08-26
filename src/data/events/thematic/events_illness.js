@@ -17,7 +17,7 @@ export const ILLNESS_EVENTS = [
       !G.mem.illDiabetes &&
       G.age >= 35 &&
       !G.conditions.some(c => c.id === 'diabetes') &&
-      (G.fitness < 40 || G.stats.health < 55 || G.flags.includes('overweight')),
+      (G.fitness < 40 || G.stats.health < 55),
     text: (G) => {
       const hc = G.character.country.healthcare ?? 'fair'
       if (hc === 'excellent' || hc === 'good') {
@@ -78,7 +78,7 @@ export const ILLNESS_EVENTS = [
       !G.mem.illHeartDisease &&
       G.age >= 45 &&
       !G.conditions.some(c => c.id === 'heart_disease') &&
-      (G.flags.includes('smoker') || G.flags.includes('diagnosed_diabetes') || G.conditions.some(c => c.id === 'diabetes') || G.stats.health < 50),
+      (G.flags.includes('smoker') || G.conditions.some(c => c.id === 'diabetes') || G.stats.health < 50),
     text: (G) => {
       const isSmoke = G.flags.includes('smoker')
       return isSmoke
@@ -182,7 +182,7 @@ export const ILLNESS_EVENTS = [
       !G.mem.illBackPain &&
       G.age >= 25 &&
       !G.conditions.some(c => c.id === 'back_pain') &&
-      (G.career?.field === 'labour' || G.career?.field === 'agriculture' || G.career?.field === 'construction' || G.flags.includes('physical_work')),
+      (G.career?.field === 'labour' || G.career?.field === 'agriculture' || G.career?.field === 'construction' || G.workStatus === 'informal'),
     text: 'It started as a twinge after a long shift, something that would clear up with rest. It didn\'t clear up. Three weeks later, the lower back ache is a constant companion — not disabling, but present in everything you do. The physiotherapist confirms what you suspected: disc compression, accumulated from years of the work.',
     choices: [
       {
@@ -238,7 +238,7 @@ export const ILLNESS_EVENTS = [
       G.age >= 18 && G.age <= 50 &&
       !G.conditions.some(c => c.id === 'hiv') &&
       G.currentYear >= 1981 &&
-      (G.flags.includes('lgbtq_identity') || G.flags.includes('hooksup_frequent') ||
+      (G.flags.includes('lgbtq_identity') || G.hooksUpCount >= 8 ||
        ['subsaharan', 'developing_unstable'].includes(G.character.country.archetype)) &&
       G.hooksUpCount >= 3,
     text: (G) => {
@@ -331,9 +331,9 @@ export const ILLNESS_EVENTS = [
       !G.mem.illDeafness &&
       G.age >= 45 &&
       !G.conditions.some(c => c.id === 'deafness') &&
-      (G.career?.field === 'construction' || G.career?.field === 'manufacturing' || G.flags.includes('loud_work_environment') || G.age >= 65),
+      (G.career?.field === 'construction' || G.career?.field === 'manufacturing' || G.career?.field === 'mining' || G.age >= 65),
     text: (G) => {
-      const isWork = G.career?.field === 'construction' || G.career?.field === 'manufacturing' || G.flags.includes('loud_work_environment')
+      const isWork = G.career?.field === 'construction' || G.career?.field === 'manufacturing' || G.career?.field === 'mining'
       return isWork
         ? 'The audiologist\'s tests confirm what you have been compensating for without acknowledging. Significant high-frequency hearing loss, consistent with chronic noise exposure. The years of machinery have done their work. Hearing aids will help. They will not restore what the noise took.'
         : 'Age-related hearing loss. You have been asking people to repeat themselves more than usual and attributing it to other things. The audiologist\'s chart shows the decline clearly. It will continue gradually. Hearing aids are the practical response.'
@@ -401,7 +401,7 @@ export const ILLNESS_EVENTS = [
       !G.mem.illInjury &&
       G.age >= 18 &&
       !G.conditions.some(c => c.id === 'disability_injury') &&
-      (G.flags.includes('accident') || G.flags.includes('conflict_injury') || G.flags.includes('work_injury') ||
+      (G.flags.includes('acquired_disability') || G.flags.includes('conflict_injury') || G.flags.includes('factory_injury') || G.flags.includes('laborer_injury') ||
        G.career?.field === 'military' || G.career?.field === 'construction' || G.career?.field === 'sports'),
     text: (G) => {
       if (G.flags.includes('conflict_injury')) {

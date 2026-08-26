@@ -15,14 +15,14 @@ export const ROMANIA_DEPTH_EVENTS = [
 
   {
     id: 'rom_dep_systematization',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&
       G.currentYear >= 1977 && G.currentYear <= 1989 &&
       G.age >= 18 &&
       !G.mem?.romDepSystem,
-    text: pick([
+    text: () => pick([
       'Ceaușescu announces the systematization programme — the demolition of villages and historic urban neighbourhoods to be replaced with socialist bloc apartments. In Bucharest: a fifth of the old city is demolished. The Văcărești monastery, the Brâncovenesc Hospital, the Uranus quarter, the Jewish neighbourhood of Văcărești. 40,000 buildings cleared in the capital alone. Where they were: the Boulevard of the Victory of Socialism and at its end the Casa Poporului — the House of the People — the second largest administrative building in the world by floor area, after the Pentagon, with 1,100 rooms, 20,000 workers, and 480 chandeliers. It is built on a hill created by demolishing the hill that was there before.',
       'You are moved. The apartment the state provides is smaller than the house the state demolished. The address on your documents changes. The street that was your street no longer has the buildings that made it the street you knew. The neighbourhood is still there on old maps. On the new maps it is the Boulevard of the Victory of Socialism.',
     ]),
@@ -59,7 +59,7 @@ export const ROMANIA_DEPTH_EVENTS = [
 
   {
     id: 'rom_dep_timisoara_1989',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -123,7 +123,7 @@ export const ROMANIA_DEPTH_EVENTS = [
 
   {
     id: 'rom_dep_mineriad_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -165,7 +165,7 @@ export const ROMANIA_DEPTH_EVENTS = [
 
   {
     id: 'rom_dep_securitate_file',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -206,7 +206,7 @@ export const ROMANIA_DEPTH_EVENTS = [
 
   {
     id: 'rom_dep_italy_emigration',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -229,7 +229,7 @@ export const ROMANIA_DEPTH_EVENTS = [
 
   {
     id: 'rom_dep_hungarian_minority',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&

@@ -23,7 +23,7 @@ export const JORDAN_EVENTS = [
 
   {
     id: 'jor_black_september_1970',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Jordan' &&
@@ -63,7 +63,7 @@ export const JORDAN_EVENTS = [
 
   {
     id: 'jor_peace_treaty_1994',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Jordan' &&
@@ -90,7 +90,7 @@ export const JORDAN_EVENTS = [
 
   {
     id: 'jor_syrian_refugees_2012',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Jordan' &&
@@ -104,7 +104,7 @@ export const JORDAN_EVENTS = [
 
   {
     id: 'jor_king_hussein_era',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Jordan' &&

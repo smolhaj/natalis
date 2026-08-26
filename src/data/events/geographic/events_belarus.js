@@ -77,7 +77,7 @@ const BELARUS_EVENTS = [
 
   {
     id: 'bel_2020_protests',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) => G.character.country.name === 'Belarus' && G.currentYear === 2020 && G.age >= 18 && !G.flags.has('bel_2020_generation'),
     text: 'August 9, 2020. The election results come in showing Lukashenko with 80%. Tsikhanouskaya\'s parallel count showed she had won. The ballot boxes — people who sat as observers photographed the real counts. A housewife and a teacher and a blogger\'s wife became the opposition because their husbands were in prison. The first days: people arrested, detained in the Okrestina detention centre, accounts of what happened inside. Then Sunday after Sunday: 200,000 people in the streets of Minsk. Workers at the state tractor factory striking. Women forming human chains. The country discovering, over several weeks, how many people it contains.',

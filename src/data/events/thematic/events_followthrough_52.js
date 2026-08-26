@@ -11,7 +11,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
 
   {
     id: 'ft52_war_childhood_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('war_childhood') &&
@@ -235,7 +235,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
     when: (G) =>
       G.flags.has('learned_silence') &&
       G.age >= 40 &&
-      !G.flags.has('lived_through_authoritarian') &&
+      (G.flags.has('emigrated') || ['democracy', 'federal_republic', 'parliamentary_republic', 'constitutional_monarchy'].includes(G.regime)) &&
       !G.mem?.ft52LearnedSilenceFree,
     text: `The silence you learned under the old regime runs inside you still, in a freer country or a freer era. It is not as simple as deciding to speak — the silence was installed before you could evaluate it, and now it runs as a kind of default, a calculation that happens before the sentence begins. You are in a place where the calculation is no longer necessary. The body has not fully received this information.`,
     choices: [

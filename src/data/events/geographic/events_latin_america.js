@@ -11,7 +11,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_chile_dina_silence',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Chile' &&
@@ -40,7 +40,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_chile_exile_decision',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Chile' &&
@@ -100,7 +100,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_chile_plebiscite_1988',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Chile' &&
@@ -149,7 +149,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_chile_2019_estallido',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Chile' &&
@@ -182,7 +182,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_arg_disappeared_colleague',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -213,7 +213,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_arg_proceso_complicity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -228,7 +228,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_arg_falklands_family',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -393,7 +393,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_bra_diretas_ja',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -422,7 +422,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_bra_evangelical_rise',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -456,7 +456,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_col_cartel_adjacency',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -485,7 +485,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_col_cartel_offer',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -515,7 +515,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_col_kidnap_culture',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -530,7 +530,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_col_displacement',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -545,7 +545,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_col_city_transformation',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -565,7 +565,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_col_farc_peace',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -598,7 +598,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_condor_exile_warned',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('emigrated') &&
@@ -628,7 +628,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_condor_exile_network',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('emigrated') &&
@@ -658,7 +658,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_condor_return_possible',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       (G.flags.has('chile_exiled') || G.flags.has('exile_political_work') || G.flags.has('condor_survived')) &&
@@ -691,7 +691,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_arg_78_mundial_contradiction',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -706,7 +706,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_bra_2014_copa_heartbreak',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -724,7 +724,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_pri_machine',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -761,7 +761,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_1985_earthquake',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -790,7 +790,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_1982_devaluation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -804,7 +804,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_zapatista_1994',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -869,7 +869,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_per_sendero',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Peru' &&
@@ -898,7 +898,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_per_indigenous_crossfire',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Peru' &&
@@ -913,7 +913,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_per_fujimori_autogolpe',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Peru' &&
@@ -942,7 +942,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_per_vladivideo',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Peru' &&
@@ -960,7 +960,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_ven_chavez_hope',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -989,7 +989,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_ven_exodus_decision',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -1023,7 +1023,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_cub_cdr',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -1052,7 +1052,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_cub_special_period',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -1066,7 +1066,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_cub_leaving_decision',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -1096,7 +1096,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_cub_double_economy',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -1129,7 +1129,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_bol_evo_morales',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Bolivia' &&
@@ -1168,7 +1168,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_gua_scorched_earth',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Guatemala' &&
@@ -1183,7 +1183,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_gua_civil_war_texture',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Guatemala' &&
@@ -1212,7 +1212,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_gua_peace_1996',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Guatemala' &&
@@ -1230,7 +1230,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_hai_tonton_macoutes',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Haiti' &&
@@ -1259,7 +1259,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_hai_duvalier_falls',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Haiti' &&
@@ -1305,7 +1305,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_tlatelolco_1968',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -1332,7 +1332,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_dirty_war_guerrero',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -1347,7 +1347,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_pri_falls',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -1361,7 +1361,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_narco_era',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -1416,7 +1416,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_ayotzinapa_2014',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -1443,7 +1443,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_mex_2017_earthquake',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -1474,7 +1474,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_ven_caracazo',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -1501,7 +1501,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_ven_polarization',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -1545,7 +1545,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_bra_lula_2002',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -1587,7 +1587,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_bra_bolsa_familia',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -1606,7 +1606,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_arg_corralito_2001',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -1633,7 +1633,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_arg_cacerolazos',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -1680,7 +1680,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_arg_piqueteros',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -1707,7 +1707,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_arg_kirchner_recovery',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -1739,7 +1739,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_col_la_violencia',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -1766,7 +1766,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_col_auc_paramilitares',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Colombia' &&

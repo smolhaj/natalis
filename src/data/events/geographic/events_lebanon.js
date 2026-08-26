@@ -12,7 +12,7 @@ const isChristian = (G) =>
   ['christian_maronite', 'christian_orthodox', 'christian_catholic'].includes(G.religion)
 
 const isMuslimOrDruze = (G) =>
-  ['sunni', 'shia', 'druze', 'alawi'].includes(G.religion)
+  ['muslim_sunni', 'muslim_shia', 'muslim_druze', 'muslim_alawi'].includes(G.religion)
 
 export const LEBANON_EVENTS = [
 
@@ -144,7 +144,7 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_solidere_belief',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isLebanon(G) &&
@@ -165,7 +165,7 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_diaspora_watching',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       isLebanon(G) &&
@@ -298,7 +298,7 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_stairwell_echo',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       isLebanon(G) &&

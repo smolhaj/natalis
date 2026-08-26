@@ -10,7 +10,7 @@ export const MENTAL_HEALTH_EVENTS = [
 
   {
     id: 'mh_depression_onset',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => {
       if (G.mentalHealth.condition) return false
@@ -378,7 +378,7 @@ export const MENTAL_HEALTH_EVENTS = [
 
   {
     id: 'mh_postnatal_crisis',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.children && G.children.length > 0 &&

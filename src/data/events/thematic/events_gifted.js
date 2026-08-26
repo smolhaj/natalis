@@ -720,7 +720,7 @@ const EXTRAORDINARY_ARTISTIC_EVENTS = [
 
   {
     id: 'gift_art_major_prize',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.flags.has('born_gifted_artistic') &&
@@ -780,7 +780,7 @@ const EXTRAORDINARY_LINGUISTIC_EVENTS = [
 
   {
     id: 'gift_literary_prize',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.flags.has('born_gifted_linguistic') &&

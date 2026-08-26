@@ -7,7 +7,7 @@ export const FOLLOWTHROUGH_71_EVENTS = [
 
   {
     id: 'ft71_estate_tamil_worker',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('slk_estate_tamil_generation') &&

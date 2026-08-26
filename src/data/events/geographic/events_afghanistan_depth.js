@@ -8,7 +8,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_taliban_kabul_1996',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -69,7 +69,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_2001_fall_of_kabul',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -94,7 +94,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_reconstruction_years',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -122,7 +122,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_interpreter_nato',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -151,7 +151,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_women_career_2013',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -173,7 +173,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_2021_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -210,7 +210,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_2021_diaspora_watch',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('emigrated') &&
@@ -231,7 +231,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_living_under_new_taliban',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&

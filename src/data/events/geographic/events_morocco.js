@@ -7,7 +7,7 @@
 // determines which rooms you can enter.
 
 const IS_MOROCCO = (G) => G.character.country?.name === 'Morocco'
-const IS_AMAZIGH = (G) => G.character.ethnicity === 'amazigh_moroccan' || G.character.ethnicity === 'berber'
+const IS_AMAZIGH = (G) => G.character.ethnicity === 'berber_amazigh'
 
 export const MOROCCO_EVENTS = [
 
@@ -15,7 +15,7 @@ export const MOROCCO_EVENTS = [
 
   {
     id: 'mor_years_of_lead_echo',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('years_of_lead_generation') && G.age >= 40 && !G.mem.morLeadEcho,
     text: 'The Equity and Reconciliation Commission has published its report. The number of cases: 9,779 confirmed. The reparations process has begun. The king has apologised, in the formal language of institutional acknowledgment. You think about the people who did not live to receive an apology. The commission does not name individuals who gave orders.',

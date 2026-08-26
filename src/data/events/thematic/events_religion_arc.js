@@ -48,7 +48,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_hajj_lifetime',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 35 && G.age <= 65 && !G.mem?.hajj_arc && G.money > 4000,
     text: 'You have been saving for years. The fifth pillar. You arrange everything — the visa, the accommodation, the time off work, someone to care for your family. When you finally arrive in Mecca and join the river of people circling the Ka\'aba, you feel a scale that personal faith rarely reaches.',
@@ -79,7 +79,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_daily_prayer_structure',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.includes('devout') && G.age >= 18 && G.age <= 35 && !G.mem?.daily_prayer_structure,
     text: 'Prayer is the architecture of your day. You do not always feel it — some mornings it is entirely mechanical, words said over a distracted mind — but the discipline of returning, of showing up at the appointed time regardless of how it feels, has built something. You notice this most on the days you skip it: a gap that is not quite hunger.',
@@ -89,7 +89,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_congregation_community',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => G.flags.includes('devout') && G.age >= 20 && G.age <= 40 && !G.mem?.congregation_community,
     text: 'The congregation is not only theology. It is the couple who watch your children when you are sick, the network that found you a job, the older woman who calls if she has not seen you for two weeks. You could believe the same things alone. You could not have this alone. The distinction is not always comfortable to think about.',
@@ -99,7 +99,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_observance_vs_modern_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.includes('devout') && G.age >= 20 && G.age <= 40 && !G.mem?.observance_conflict && ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype),
     text: 'The Sabbath falls on the day your company needs you to work. The fast day falls in the middle of a project launch. Your dietary restrictions make the work dinner complicated. You are always negotiating between the rhythm your faith requires and the rhythm the secular world assumes as default.',
@@ -112,7 +112,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_fasting_experience',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => ['muslim_sunni', 'muslim_shia', 'jewish', 'christian_orthodox', 'christian_catholic'].includes(G.religion) && G.age >= 20 && G.age <= 45 && !G.mem?.fasting_experience,
     text: 'The fast. However your tradition names it. The physical part is easier than you expected after the first day; the body adjusts. What opens up in the space where ordinary appetite was is harder to describe. Some people call it spiritual clarity. You are not sure what to call it. You notice that the world looks different at sunset when the breaking comes.',
@@ -122,7 +122,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_scripture_returns',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.age >= 35 && G.age <= 55 && !G.mem?.scripture_returns && !G.flags.includes('left_religion') && ['devout', 'confirmed', 'religious_education'].some(f => G.flags.includes(f)),
     text: 'You return to the text you grew up with. The same words you memorized as a child mean something different at forty. The passages about loss hit in specific places now. The ones about patience are less abstract. You understand things the child who first read them could not have known yet. The book has not changed. You have.',
@@ -134,7 +134,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_first_genuine_doubt',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) => G.age >= 14 && G.age <= 22 && !G.flags.includes('left_religion') && !G.flags.includes('lost_faith') && !G.mem?.first_doubt,
     text: 'The question arrives and it is not rhetorical. If God exists and is good, then why did this particular thing happen — the specific thing, the one that happened last month, that everyone who knows you knows about. The answer your faith gives you does not fit. You sit with the gap.',
@@ -160,7 +160,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_reading_contradicts_teaching',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.age >= 15 && G.age <= 25 && !G.flags.includes('left_religion') && !G.mem?.reading_contradicts,
     text: 'You read something — a book on evolutionary biology, a history of religious texts, a comparative religion course — that contradicts what you were taught. Not at the edges but at the foundation. The information is well-sourced. You cannot dismiss it. You have to decide what to do with it.',
@@ -173,7 +173,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_leader_behaves_badly',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.flags.includes('left_religion') && !G.mem?.leader_betrayal,
     text: 'The religious leader you trusted is found to have done something — financial, sexual, or both. The institution closes ranks around him. The investigation is slow and the apology, when it comes, is insufficient. You are left with the question of whether the institution and the faith are the same thing, and whether you can separate them.',
@@ -186,7 +186,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_science_religion_rupture',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.includes('religious_education') && G.age >= 14 && G.age <= 22 && !G.mem?.science_religion,
     text: 'The biology class covers evolution with evidence you cannot argue with. The religious school teaches otherwise with authority you were raised to trust. You sit between them for a while and then, quietly, you make a choice about which kind of knowledge you are willing to hold.',
@@ -287,7 +287,7 @@ export const RELIGION_ARC_EVENTS = [
 
   {
     id: 'rela_interfaith_relationship_arc',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.age >= 20 && G.age <= 38 && G.partner && !G.mem?.interfaith_arc,
     text: 'The person you are with does not share your religion. This was not planned. The families have opinions that are conveyed through specific silences and specific questions. Your grandmother asks, at a family meal, what the children will be raised as. The question is not unreasonable. You have not answered it between yourselves yet.',

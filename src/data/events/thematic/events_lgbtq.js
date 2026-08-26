@@ -33,7 +33,7 @@ export const LGBTQ_EVENTS = [
 
   {
     id: 'lgbtq_doubt_cycle',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.includes('lgbtq_identity') && G.age >= 14 && G.age <= 22 && !G.mem?.lgbtq_doubt_cycle,
     text: 'There is a period when you are sure, and then a period when you convince yourself you were wrong, and then a period when you are sure again. You parse your own feelings the way other people do not have to. The certainty, when it comes back the third time, has a different quality — it does not need your permission anymore.',
@@ -43,7 +43,7 @@ export const LGBTQ_EVENTS = [
 
   {
     id: 'lgbtq_not_alone',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.includes('lgbtq_identity') && G.age >= 14 && G.age <= 22 && !G.mem?.lgbtq_not_alone,
     text: (G) => {
@@ -59,7 +59,7 @@ export const LGBTQ_EVENTS = [
 
   {
     id: 'lgbtq_first_confide',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) => G.flags.includes('lgbtq_identity') && !G.flags.includes('lgbtq_out_family') && !G.lgbtqCriminalized && G.age >= 14 && G.age <= 22 && !G.mem?.lgbtq_first_confide,
     text: 'You tell one person. A friend you have known long enough that you can read their face before they speak. You say the words and there is a second of silence that lasts a very long time. Then they say: "I know." Then they say: "It does not change anything." You do not cry until you are alone.',
@@ -102,7 +102,7 @@ export const LGBTQ_EVENTS = [
 
   {
     id: 'lgbtq_outed',
-    phase: 'adolescence',
+    phase: null,
     weight: 1,
     when: (G) => G.flags.includes('lgbtq_identity') && !G.flags.includes('lgbtq_out_family') && !G.lgbtqCriminalized && G.age >= 14 && G.age <= 22 && !G.mem?.lgbtq_outed,
     text: 'Someone tells your family before you were ready. You find out when your parent asks you directly, eyes already certain of the answer. The conversation you had prepared — the one with the right words, in the right order, at the right time — never happens. That version of the story is gone.',
@@ -348,7 +348,7 @@ export const LGBTQ_EVENTS = [
 
   {
     id: 'asexual_name_arrives',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => !G.flags.includes('orientation_asexual') && G.mem?.asexual_unnamed && G.age >= 15 && G.age <= 22 && !G.mem?.asexual_named,
     text: (G) => {

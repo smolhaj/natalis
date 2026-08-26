@@ -530,4 +530,67 @@ export const CAREER_REGIME_EVENTS = [
     effect: null,
   },
 
+
+  // ── LOYALTY, AND THE REPORT ───────────────────────────────────────────────────
+  // Two flags — `chose_loyalty` and `reported_someone` — that follow-through
+  // events call back on in midlife. Both are set here, in the room, in the year.
+
+  {
+    id: 'creg_loyalty_over_truth',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.career &&
+      G.age >= 24 && G.age <= 48 &&
+      !G.flags.has('chose_loyalty') &&
+      !G.mem?.cregLoyaltyChoice &&
+      Math.random() < 0.10,
+    text: 'The inquiry is internal and polite. You are asked, in a room with three other people and a jug of water, whether you were aware of what your colleague signed off on. You were aware. He has covered for you twice, once when it mattered. The question is put again, more slowly, and the pause before your answer is long enough that everyone hears it.',
+    choices: [
+      {
+        text: 'Say you were not aware.',
+        tag: null,
+        outcome: 'The inquiry moves on. He never mentions it, which means either he does not know or he does. You go back to your desk and open a spreadsheet.',
+        effect: (p) => { p.m -= 6; p.r += 10; p.karma -= 6; p.addFlag('chose_loyalty'); p.setMem('cregLoyaltyChoice', true) },
+      },
+      {
+        text: 'Say what you know.',
+        tag: null,
+        outcome: 'You say it in one sentence and the room changes temperature. He is gone within the month. You keep the job and lose four people who used to eat lunch with you.',
+        effect: (p) => { p.m -= 8; p.karma += 8; p.s -= 6; p.addFlag('told_the_truth_at_cost'); p.setMem('cregLoyaltyChoice', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'creg_the_report_you_filed',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      repressiveRegime(G) &&
+      G.age >= 20 && G.age <= 50 &&
+      !G.flags.has('reported_someone') &&
+      !G.mem?.cregReportFiled &&
+      Math.random() < 0.09,
+    text: (G) => {
+      const who = G.career ? 'a man at work' : 'a neighbour on the second floor'
+      return `You are asked, without it being a question, to write down what ${who} said at the gathering. The form has three lines and a place for your name. Declining is also an answer and everyone in the building understands that. You are given the form to take home, which is the part that is designed to work.`
+    },
+    choices: [
+      {
+        text: 'Fill in the three lines.',
+        tag: null,
+        outcome: 'You write the smallest true thing you can and hand it in on Tuesday. He is not at the gathering the following month. Nobody says anything about it, then or ever.',
+        effect: (p) => { p.m -= 10; p.r += 14; p.karma -= 10; p.addFlag('reported_someone'); p.setMem('cregReportFiled', true) },
+      },
+      {
+        text: 'Return the form blank.',
+        tag: null,
+        outcome: 'You hand it back and say you did not hear anything. The man who takes it does not look up. Your name is now written somewhere on a different list.',
+        effect: (p) => { p.m -= 6; p.karma += 6; p.addFlag('refused_to_inform'); p.setMem('cregReportFiled', true) },
+      },
+    ],
+    effect: null,
+  },
 ]

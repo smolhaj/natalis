@@ -12,7 +12,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
 
   {
     id: 'twn_228_massacre',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Taiwan' &&
@@ -39,7 +39,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
 
   {
     id: 'twn_white_terror',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Taiwan' &&
@@ -66,7 +66,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
 
   {
     id: 'twn_waishengren',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Taiwan' &&
@@ -94,7 +94,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
 
   {
     id: 'twn_democratization',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Taiwan' &&
@@ -156,7 +156,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
 
   {
     id: 'mys_may13_1969',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Malaysia' &&
@@ -192,7 +192,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
 
   {
     id: 'mys_nep_experience',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Malaysia' &&
@@ -228,7 +228,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
 
   {
     id: 'mys_reformasi',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Malaysia' &&
@@ -255,7 +255,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
 
   {
     id: 'mys_ge14_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Malaysia' &&

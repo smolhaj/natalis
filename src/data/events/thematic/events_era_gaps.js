@@ -58,7 +58,7 @@ export const ERA_GAP_EVENTS = [
 
   {
     id: 'eg_buenos_aires_neutrality',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Argentina' &&
@@ -94,7 +94,7 @@ export const ERA_GAP_EVENTS = [
 
   {
     id: 'eg_independence_broken_promise',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       ['developing_urban', 'developing_unstable', 'subsaharan'].includes(G.character.country?.archetype) &&

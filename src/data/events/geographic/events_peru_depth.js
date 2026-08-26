@@ -13,10 +13,10 @@ const IS_SIERRA = (G) =>
   G.character.country?.name === 'Peru' && G.ruralUrban === 'rural'
 const IS_NIKKEI = (G) =>
   G.character.country?.name === 'Peru' &&
-  (G.character.ethnicity === 'nikkei' || G.character.ethnicity === 'japanese_peruvian')
+  G.character.ethnicity === 'nikkei'
 const IS_AFRO_PERUVIAN = (G) =>
   G.character.country?.name === 'Peru' &&
-  (G.character.ethnicity === 'afro_peruvian' || G.character.ethnicity === 'black')
+  G.character.ethnicity === 'afro_peruvian'
 
 export const PERU_DEPTH_EVENTS = [
 
@@ -89,7 +89,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_la_oroya',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_PERU(G) &&
@@ -188,7 +188,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_vraem_coca',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_PERU(G) &&
@@ -229,7 +229,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_castillo_2021',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_PERU(G) &&

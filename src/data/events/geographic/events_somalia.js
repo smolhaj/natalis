@@ -8,7 +8,7 @@ export const SOMALIA_EVENTS = [
 
   {
     id: 'som_state_collapse_1991',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Somalia' &&
@@ -49,7 +49,7 @@ export const SOMALIA_EVENTS = [
 
   {
     id: 'som_unosom_black_hawk_down',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Somalia' &&
@@ -63,7 +63,7 @@ export const SOMALIA_EVENTS = [
 
   {
     id: 'som_alshabaab_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Somalia' &&
@@ -104,7 +104,7 @@ export const SOMALIA_EVENTS = [
 
   {
     id: 'som_famine_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Somalia' &&

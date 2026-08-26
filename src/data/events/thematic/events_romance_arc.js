@@ -375,7 +375,7 @@ export const ROMANCE_ARC_EVENTS = [
 
   {
     id: 'romance_partner_illness_early',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.partner &&
@@ -435,4 +435,38 @@ export const ROMANCE_ARC_EVENTS = [
     effect: (p) => { p.m += 8; p.partnerRel(5); p.setMem('romanceSeparateInterests', true) },
   },
 
+
+  // ── THE DISTANCE ──────────────────────────────────────────────────────────────
+  // Sets `long_distance_relationship`, read by the letters layer and later arcs.
+
+  {
+    id: 'romance_long_distance_begins',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.partner && !G.partner.married &&
+      G.age >= 18 && G.age <= 34 &&
+      !G.flags.has('long_distance_relationship') &&
+      !G.mem?.romanceLongDistance &&
+      Math.random() < 0.12,
+    text: (G) => {
+      const pname = G.partner?.name ?? 'they'
+      return `${pname} takes the job in the other city. You help carry boxes down a stairwell and neither of you says the arithmetic out loud: four hours by bus, one weekend in three, however long this lasts. At the station you both keep saying practical things about tickets. The train goes when it says it will go.`
+    },
+    choices: [
+      {
+        text: 'Agree on a rhythm and hold to it.',
+        tag: null,
+        outcome: 'Sunday nights become a fixed thing. The distance turns out to be survivable in the specific way that scheduled things are survivable.',
+        effect: (p) => { p.m -= 3; p.e += 3; p.updatePartnerRel(3); p.addFlag('long_distance_relationship'); p.setMem('romanceLongDistance', true) },
+      },
+      {
+        text: 'Leave it open. Neither of you wants a rule.',
+        tag: null,
+        outcome: 'Some weeks you speak every day. Some weeks you do not, and the not-speaking starts to have a meaning neither of you named.',
+        effect: (p) => { p.m -= 6; p.r += 3; p.updatePartnerRel(-4); p.addFlag('long_distance_relationship'); p.setMem('romanceLongDistance', true) },
+      },
+    ],
+    effect: null,
+  },
 ]

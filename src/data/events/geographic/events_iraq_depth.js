@@ -18,7 +18,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_yazidi_identity',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_YAZIDI(G) &&
@@ -37,7 +37,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_lalish_pilgrimage',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_YAZIDI(G) &&
@@ -58,7 +58,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_marsh_world',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SHIA(G) &&
@@ -101,7 +101,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_1991_uprising',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SHIA(G) &&
@@ -122,7 +122,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_sanctions_daily',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IRAQ(G) &&
@@ -143,7 +143,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_christian_before',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_CHRISTIAN(G) && IS_IRAQ(G) &&
@@ -162,7 +162,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_christian_exodus',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CHRISTIAN(G) && IS_IRAQ(G) &&
@@ -190,7 +190,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_amman_diaspora',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IRAQ(G) &&
@@ -212,7 +212,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_kurdish_north_boom',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_KURDISH_IRAQ(G) &&

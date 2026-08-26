@@ -9,7 +9,7 @@ export const PARTNER_WANTS_EVENTS = [
 
   {
     id: 'pw_partner_wants_child',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 8,
     when: (G) => G.partner?.married && (G.children ?? []).length === 0 && G.age >= 26 && G.age <= 36 && (G.partner.relationshipQuality ?? 60) > 50,
@@ -39,7 +39,7 @@ export const PARTNER_WANTS_EVENTS = [
 
   {
     id: 'pw_partner_wants_move',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 10,
     when: (G) => G.partner?.married && G.age >= 24 && G.age <= 38 && (G.partner.relationshipQuality ?? 60) > 45,
@@ -160,7 +160,7 @@ export const PARTNER_WANTS_EVENTS = [
 
   {
     id: 'pw_partner_wants_meet_family',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 0,
     when: (G) => G.partner && !G.partner.married && G.age >= 20 && G.age <= 34 && (G.partner.relationshipQuality ?? 60) > 60 && !G.mem?.partnerMetFamily,

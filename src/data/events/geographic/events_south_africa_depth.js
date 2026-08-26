@@ -8,7 +8,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_sharpeville_1960',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -36,7 +36,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_pass_book_daily',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -44,7 +44,8 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       G.currentYear >= 1952 && G.currentYear <= 1985 &&
       G.age >= 16 &&
       !G.mem?.saPassBook,
-    text: `The dompas. The reference book. It is a hundred pages long and it controls where you can live, where you can work, which areas you can enter, whether your wife can join you in the city, whether your children can come. You carry it at all times. If you are found without it you are arrested. If it lacks the correct stamp you are arrested. The pass office on Monday morning: the queue that begins forming at four a.m. The clerk who does not look up when he speaks. The stamp that means you can stay in Johannesburg for one more year. The stamp that means you cannot. A man named Johnson Mthembu works in a factory in Germiston and has to take a day off every three months to get his pass renewed. He has done this for eleven years. He does not mention this to his white supervisor because there is nothing to say about it.`,
+    text: 'The book is a hundred pages and it lives against your chest, in the inside pocket, because a hip pocket can be picked. On Monday the queue at the pass office starts forming at four in the morning and you are in it before the sun. The clerk does not look up while he speaks to you, and the stamp he brings down decides whether Johannesburg is a place you live in or a place you have been found in. Every three months you lose a day of factory wages to this. You have never mentioned it to your supervisor because there is nothing about it to say.',
+    context: 'The Natives (Abolition of Passes and Co-ordination of Documents) Act of 1952 required every Black South African over sixteen to carry a reference book recording employment, tax, and permission to be in an urban area. Being found without it was an arrestable offence; roughly 250,000 people a year were prosecuted under the pass laws at their peak. The books were abolished in 1986.',
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -57,7 +58,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_biko_death_1977',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -85,7 +86,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_anc_exile',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -114,7 +115,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_forced_removal',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -122,7 +123,8 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 1980 &&
       G.age >= 5 &&
       !G.mem?.saForcedRemoval,
-    text: 'The Group Areas Act. The government says your community is in the wrong area — a white area, a coloured area, a wrong kind of Black area. They say this by putting up a sign and posting notices. The date comes. People who resist are arrested. Most do not resist. A truck comes. Sophiatown. District Six. Cato Manor. Fietas. The new place is called a township or a homeland. It has a name — Soweto, Mdantsane, KwaMashu — that means something different to the people who named it than to the people who now live in it. Your things are packed on the truck. The house you are leaving is not your house in any legal sense but it was the place where your grandmother was born.',
+    text: 'The notice goes up on the wall of the shop and then a man comes and paints a number on the door. On the morning the trucks arrive most people do not resist, and the ones who do are put in a van first. Your grandmother was born in this house and she carries out the cooking pots herself so that nobody else will handle them. The new place has a name and a number and a standpipe at the end of the row, and the bus to work takes ninety minutes each way.',
+    context: 'The Group Areas Act of 1950 assigned urban land by race and authorised the removal of communities declared to be in the wrong area. Sophiatown, District Six, Cato Manor and Fietas were among those cleared; an estimated 3.5 million people were forcibly relocated between 1960 and 1983 to townships and homelands such as Soweto, Mdantsane and KwaMashu.',
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -135,7 +137,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_mbeki_aids',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -190,7 +192,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_service_delivery_protest',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -218,7 +220,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_land_question',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -245,7 +247,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_afrikaner_identity',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&

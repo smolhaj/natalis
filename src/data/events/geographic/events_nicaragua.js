@@ -27,7 +27,7 @@ export const NICARAGUA_EVENTS = [
 
   {
     id: 'nic_revolution_1979',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_NICARAGUAN(G) &&
@@ -43,7 +43,7 @@ export const NICARAGUA_EVENTS = [
 
   {
     id: 'nic_literacy_crusade',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NICARAGUAN(G) &&
@@ -64,7 +64,7 @@ export const NICARAGUA_EVENTS = [
 
   {
     id: 'nic_election_1990',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NICARAGUAN(G) &&
@@ -80,7 +80,7 @@ export const NICARAGUA_EVENTS = [
 
   {
     id: 'nic_ortega_returns',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NICARAGUAN(G) &&
@@ -97,7 +97,7 @@ export const NICARAGUA_EVENTS = [
 
   {
     id: 'nic_uprising_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_NICARAGUAN(G) &&
@@ -126,7 +126,7 @@ export const NICARAGUA_EVENTS = [
 
   {
     id: 'nic_exile_wave',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NICARAGUAN(G) &&

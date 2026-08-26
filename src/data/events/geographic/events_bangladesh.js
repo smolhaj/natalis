@@ -40,7 +40,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_liberation_war_1971',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -74,7 +74,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_1974_famine',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -90,7 +90,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_mujib_1975',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -106,7 +106,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_cyclone_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -165,7 +165,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_grameen_loan',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -242,7 +242,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_malaysia_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('bng_malaysia_worker') &&
@@ -298,7 +298,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_student_uprising_2024',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&

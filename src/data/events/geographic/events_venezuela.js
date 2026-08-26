@@ -42,7 +42,7 @@ const VENEZUELA_EVENTS = [
 
   {
     id: 'ven_chavez_election_1998',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -76,7 +76,7 @@ const VENEZUELA_EVENTS = [
 
   {
     id: 'ven_2002_coup',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -97,7 +97,7 @@ const VENEZUELA_EVENTS = [
 
   {
     id: 'ven_oil_misiones',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -118,7 +118,7 @@ const VENEZUELA_EVENTS = [
 
   {
     id: 'ven_chavez_death',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -139,7 +139,7 @@ const VENEZUELA_EVENTS = [
 
   {
     id: 'ven_escasez',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -168,7 +168,7 @@ const VENEZUELA_EVENTS = [
 
   {
     id: 'ven_2017_protests',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -197,7 +197,7 @@ const VENEZUELA_EVENTS = [
 
   {
     id: 'ven_emigrar',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&

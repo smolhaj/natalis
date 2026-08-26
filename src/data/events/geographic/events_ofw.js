@@ -40,7 +40,7 @@ export const OFW_EVENTS = [
   // ── FOLLOW-THROUGH: THE CYCLE REPEATING (midlife, fires once) ─────────────
   {
     id: 'ofw_cycle_repeating',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.ofwCycleReckoning &&
@@ -110,7 +110,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_contract_renewal',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.ofwContractRenewal &&
@@ -146,7 +146,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_contract_violation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.ofwContractViolation &&
@@ -188,7 +188,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_sunday_call',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     cooldown: 3,
     when: (G) =>
@@ -222,7 +222,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_balikbayan_box',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     cooldown: 4,
     when: (G) =>
@@ -239,7 +239,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_arrival_gulf',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       !G.mem?.ofwArrival &&
@@ -254,7 +254,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_arrival_hongkong',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       !G.mem?.ofwArrival &&
@@ -269,7 +269,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_arrival_italy',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.ofwArrival &&
@@ -284,7 +284,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_remittance_ritual',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     cooldown: 5,
     when: (G) =>
@@ -310,7 +310,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_family_conference',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.ofwFamilyConference &&
@@ -339,7 +339,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_broker_fee',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.ofwBrokerFee &&
@@ -376,7 +376,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_poea_signing',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       !G.mem?.ofwPoeaSigning &&

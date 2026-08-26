@@ -37,7 +37,7 @@ export const CAMEROON_DEPTH_EVENTS = [
     when: (G) =>
       IS_CAMEROONIAN(G) &&
       G.currentYear >= 2014 &&
-      (G.religion === 'muslim_sunni' || G.religion === 'muslim_other') &&
+      G.religion === 'muslim_sunni' &&
       G.age >= 20 &&
       !G.flags.has('cmr_boko_north_witness'),
     text: 'Boko Haram crossed from Nigeria in 2014. The far north of Cameroon — Maroua, the Lake Chad basin, the Mandara mountains — received what the northeastern Nigerian border had been sending. The raids come at night. They take young men and sometimes young women. They destroy what they cannot use. The Cameroonian army is present and understaffed. The multinational joint task force coordinates across the borders in theory. In practice, you know which villages have been hit and which ones have not yet been hit, and the logic of the sequence is not legible from the outside.',
@@ -96,7 +96,7 @@ export const CAMEROON_DEPTH_EVENTS = [
 
   {
     id: 'cmr_dep_ahidjo',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_CAMEROONIAN(G) &&

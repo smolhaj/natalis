@@ -84,7 +84,7 @@ export const FOLLOWTHROUGH_82_EVENTS = [
 
   {
     id: 'ft82_chabola_apartment',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('spain_chabola_childhood') &&

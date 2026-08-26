@@ -62,7 +62,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_grand_mosque_1979',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -78,7 +78,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_mutaween',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -112,7 +112,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_gulf_war_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -141,7 +141,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_wasta',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -205,7 +205,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_khashoggi_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -234,7 +234,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_vision_2030',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&

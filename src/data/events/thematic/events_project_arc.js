@@ -187,4 +187,34 @@ export const PROJECT_ARC_EVENTS = [
     effect: (p) => { p.m += 12; p.s += 4; p.karma += 5; p.setMem('projWritingShown', true); p.legacy += 6 },
   },
 
+
+  // ── WRITING: THE FIRST READER ─────────────────────────────────────────────────
+  // Sets `writing_shown`, which proj_writing_shown reads once the work is out.
+
+  {
+    id: 'proj_writing_first_reader',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.currentProject?.type === 'writing' &&
+      ['middle', 'late', 'established'].includes(G.currentProject?.phase) &&
+      !G.flags.has('writing_shown') &&
+      !G.mem?.projWritingFirstReader,
+    text: 'You print it, or you copy it out, or you attach it. Then you sit with the thing unsent for four days. The person you have chosen is not a writer and this is the point — they will not tell you about structure, they will tell you whether they wanted to keep reading. You send it at eleven at night so that you cannot take it back in the morning.',
+    choices: [
+      {
+        text: 'Ask them to be honest.',
+        tag: null,
+        outcome: 'They are honest. Two of the things they say are wrong and one of them is the thing you already knew and had been walking around. You go back to it in the morning.',
+        effect: (p) => { p.m += 4; p.e += 4; p.addFlag('writing_shown'); p.setMem('projWritingFirstReader', true) },
+      },
+      {
+        text: 'Send it and say nothing about what you want.',
+        tag: null,
+        outcome: 'They say it is good. You cannot tell what that means and you decide not to ask. It has still left the house, which is the part that mattered.',
+        effect: (p) => { p.m += 6; p.r += 2; p.addFlag('writing_shown'); p.setMem('projWritingFirstReader', true) },
+      },
+    ],
+    effect: null,
+  },
 ]

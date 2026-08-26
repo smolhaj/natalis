@@ -25,7 +25,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'gha_rawlings_era',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ghana' &&
@@ -39,7 +39,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'gha_democracy_1992',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ghana' &&
@@ -57,7 +57,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'cdi_houphouet_era',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === "Ivory Coast" &&
@@ -71,7 +71,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'cdi_ivoirite_crisis',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === "Ivory Coast" &&
@@ -98,7 +98,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'cdi_civil_war',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === "Ivory Coast" &&
@@ -116,7 +116,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'nga_oil_boom',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -130,7 +130,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'nga_sap_1980s',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -144,7 +144,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'nga_saro_wiwa_1995',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -158,7 +158,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'nga_419_scam_culture',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -172,7 +172,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'nga_endsars_2020',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -226,7 +226,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'nga_nepa_generator_culture',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -277,7 +277,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'gha_1966_coup',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Ghana' &&
@@ -296,7 +296,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'gha_brain_drain_witness',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ghana' &&

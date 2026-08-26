@@ -9,7 +9,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_liberation_wave',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -28,7 +28,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_liberation_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('liberation_generation') &&
@@ -47,7 +47,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_long_marriage_shift',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.partner &&
@@ -69,7 +69,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_affair_temptation',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.partner &&
@@ -158,7 +158,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_late_love_arrives',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.includes('late_love_seeking') &&

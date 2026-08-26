@@ -11,10 +11,7 @@
 const IS_MYANMAR = (G) => G.character.country?.name === 'Myanmar'
 const IS_ETHNIC_MINORITY = (G) =>
   G.character.country?.name === 'Myanmar' &&
-  (G.character.ethnicity === 'karen' || G.character.ethnicity === 'kachin' ||
-   G.character.ethnicity === 'shan' || G.character.ethnicity === 'chin' ||
-   G.character.ethnicity === 'karenni' || G.character.ethnicity === 'mon' ||
-   G.character.ethnicity === 'rakhine')
+  ['karen', 'kachin', 'shan', 'chin', 'rakhine'].includes(G.character.ethnicity)
 
 export const MYANMAR_DEPTH_EVENTS = [
 
@@ -64,7 +61,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_1990_election',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MYANMAR(G) &&
@@ -144,7 +141,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_vcr_culture',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MYANMAR(G) &&
@@ -187,7 +184,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_spring_revolution',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MYANMAR(G) &&
@@ -231,7 +228,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_1990_echo',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_MYANMAR(G) &&

@@ -23,7 +23,7 @@ export const MYANMAR_EVENTS = [
 
   {
     id: 'mya_1988_uprising',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Myanmar' &&
@@ -50,7 +50,7 @@ export const MYANMAR_EVENTS = [
 
   {
     id: 'mya_slorc_years',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Myanmar' &&
@@ -64,7 +64,7 @@ export const MYANMAR_EVENTS = [
 
   {
     id: 'mya_saffron_revolution_2007',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Myanmar' &&
@@ -91,7 +91,7 @@ export const MYANMAR_EVENTS = [
 
   {
     id: 'mya_cyclone_nargis_2008',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Myanmar' &&
@@ -118,7 +118,7 @@ export const MYANMAR_EVENTS = [
 
   {
     id: 'mya_civilian_opening_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Myanmar' &&
@@ -132,7 +132,7 @@ export const MYANMAR_EVENTS = [
 
   {
     id: 'mya_coup_2021',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Myanmar' &&

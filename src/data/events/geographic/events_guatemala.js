@@ -30,7 +30,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_1954_coup',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GUATEMALAN(G) &&
@@ -51,7 +51,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_scorched_earth',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_GUATEMALAN(G) &&
@@ -79,7 +79,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_modelo_village',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GUATEMALAN(G) &&
@@ -96,7 +96,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_menchu_prize',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_GUATEMALAN(G) &&
@@ -117,7 +117,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_peace_accords_1996',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_GUATEMALAN(G) &&

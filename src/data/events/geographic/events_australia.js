@@ -69,7 +69,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_dismissal_1975',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -96,7 +96,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_port_arthur_1996',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -123,7 +123,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_tampa_2001',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -155,7 +155,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_mining_boom',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -182,7 +182,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_ssm_postal_survey_2017',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -215,7 +215,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_housing_crisis',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -245,7 +245,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_mabo_1992',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -274,7 +274,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_rudd_apology_2008',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -303,7 +303,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_black_summer_2020',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Australia' &&

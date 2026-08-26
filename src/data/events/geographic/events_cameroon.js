@@ -40,7 +40,7 @@ export const CAMEROON_EVENTS = [
 
   {
     id: 'cmr_biya_long_rule',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_CAMEROONIAN(G) &&
@@ -113,7 +113,7 @@ export const CAMEROON_EVENTS = [
 
   {
     id: 'cmr_anglophone_strike_2016',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_CAMEROONIAN(G) &&

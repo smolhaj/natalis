@@ -6,7 +6,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
 
   {
     id: 'nz_dep_maori_land_waitangi',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'New Zealand' &&
@@ -36,7 +36,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
 
   {
     id: 'nz_dep_dawn_raids_pacific',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'New Zealand' &&
@@ -66,7 +66,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
 
   {
     id: 'nz_dep_homosexual_law_reform',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'New Zealand' &&
@@ -96,7 +96,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
 
   {
     id: 'nz_dep_erebus_1979',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'New Zealand' &&
@@ -112,7 +112,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
 
   {
     id: 'nz_dep_pike_river_2010',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'New Zealand' &&
@@ -128,7 +128,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
 
   {
     id: 'nz_dep_urban_maori_identity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'New Zealand' &&
@@ -146,7 +146,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
 
   {
     id: 'nz_dep_bastion_point_1978',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'New Zealand' &&

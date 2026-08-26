@@ -36,7 +36,7 @@ export const INTERNET_ERA_EVENTS = [
 
   {
     id: 'internet_pcbang_korea',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.currentYear >= 1998 && G.currentYear <= 2005 &&
@@ -116,7 +116,7 @@ export const INTERNET_ERA_EVENTS = [
 
   {
     id: 'internet_lan_house_brazil',
-    phase: 'adolescence',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.currentYear >= 2000 && G.currentYear <= 2008 &&
@@ -158,7 +158,7 @@ export const INTERNET_ERA_EVENTS = [
 
   {
     id: 'internet_smartphone_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.currentYear >= 2009 && G.currentYear <= 2014 &&
@@ -213,7 +213,7 @@ export const INTERNET_ERA_EVENTS = [
 
   {
     id: 'nineties_end_of_history',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.currentYear >= 1993 && G.currentYear <= 1999 &&

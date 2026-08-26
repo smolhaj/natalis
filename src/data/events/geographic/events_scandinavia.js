@@ -73,7 +73,7 @@ export const SCANDINAVIA_EVENTS = [
 
   {
     id: 'scan_janteloven',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       isScandinavian(G) &&
@@ -110,7 +110,7 @@ export const SCANDINAVIA_EVENTS = [
 
   {
     id: 'scan_norway_oil',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character?.country?.name === 'Norway' &&

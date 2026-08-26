@@ -15,7 +15,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_zanzibar_revolution',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -54,7 +54,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_uganda_war_1978',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -75,7 +75,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_tazara_railway',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -96,7 +96,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_aids_epidemic',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -136,7 +136,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_gold_mining',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -174,7 +174,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_magufuli_era',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -212,7 +212,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_zanzibar_identity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TANZANIA(G) &&

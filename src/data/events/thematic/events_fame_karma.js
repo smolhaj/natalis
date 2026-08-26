@@ -499,7 +499,7 @@ export const FAME_KARMA_EVENTS = [
 
   {
     id: 'hobby_running_marathon',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       (G.hobbies?.running?.level ?? 0) >= 3 &&

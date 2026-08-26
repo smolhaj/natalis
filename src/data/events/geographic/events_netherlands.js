@@ -97,7 +97,7 @@ export const NETHERLANDS_EVENTS = [
 
   {
     id: 'nl_surinamese_wave',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&
@@ -126,7 +126,7 @@ export const NETHERLANDS_EVENTS = [
 
   {
     id: 'nl_srebrenica_1995',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&
@@ -142,7 +142,7 @@ export const NETHERLANDS_EVENTS = [
 
   {
     id: 'nl_fortuyn_2002',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&
@@ -180,7 +180,6 @@ export const NETHERLANDS_EVENTS = [
       !G.mem?.nl_colonial_reckoning,
     text: (G) => {
       const yr = G.currentYear
-      const isIndonesian = G.ethnicity === 'other' || G.character?.country?.name !== 'Netherlands'
       return yr <= 2015
         ? 'The Dutch East Indies — Indonesia. The VOC: the first multinational corporation and one of history\'s great engines of extraction. The Bersiap period after WWII: Dutch soldiers conducting what official Dutch history has called "police actions" and what Indonesian historians call a colonial war of reconquest. Three hundred and fifty years of colonial rule ending in negotiation rather than acknowledgment. The Netherlands is still working out what acknowledgment looks like.'
         : yr <= 2021

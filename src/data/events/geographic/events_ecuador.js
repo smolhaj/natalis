@@ -42,7 +42,7 @@ export const ECUADOR_EVENTS = [
 
   {
     id: 'ecu_military_dictatorship',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ECUADORIAN(G) &&
@@ -93,7 +93,7 @@ export const ECUADOR_EVENTS = [
 
   {
     id: 'ecu_spain_wave',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_ECUADORIAN(G) &&
@@ -125,7 +125,7 @@ export const ECUADOR_EVENTS = [
 
   {
     id: 'ecu_correa_revolution',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ECUADORIAN(G) &&

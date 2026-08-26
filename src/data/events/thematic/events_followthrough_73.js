@@ -137,7 +137,7 @@ export const FOLLOWTHROUGH_73_EVENTS = [
 
   {
     id: 'ft64_displacement_considered_late',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('oral_displacement_considered') &&
@@ -165,7 +165,7 @@ export const FOLLOWTHROUGH_73_EVENTS = [
 
   {
     id: 'ft64_soldiers_passed_late',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('oral_soldiers_passed') &&

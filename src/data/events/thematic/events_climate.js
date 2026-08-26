@@ -366,7 +366,7 @@ export const CLIMATE_EVENTS = [
 
   {
     id: 'clim_climate_migration_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.currentYear >= 2045 &&

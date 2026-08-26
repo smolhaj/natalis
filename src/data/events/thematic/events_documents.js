@@ -121,7 +121,7 @@ export const DOCUMENT_EVENTS = [
 
   {
     id: 'doc_stateless_marriage',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('stateless_childhood') && G.partner !== null && G.age >= 22 && G.age <= 40 && !G.mem.docMarriage,
     text: 'You need a birth certificate to register a marriage. You don\'t have one — the original, not the late-registered approximation, not the UNHCR document. The registrar explains, not unkindly, what the requirements are. The requirements were written for people who have the documents the requirements require. You ask if there is a process for people who don\'t. There is a process. The process takes two years.',

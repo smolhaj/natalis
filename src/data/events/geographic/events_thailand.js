@@ -35,7 +35,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_1997_baht_crisis',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -62,7 +62,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_red_yellow_conflict',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -89,7 +89,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_coup_generation',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -103,7 +103,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_economic_middle_income',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -119,7 +119,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_thammasat_1976',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -207,7 +207,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_deep_south',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -286,7 +286,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_covid_tourism',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -330,7 +330,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_covid_rebuilding',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Thailand' &&

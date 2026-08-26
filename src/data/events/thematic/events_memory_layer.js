@@ -7,7 +7,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_father_hands',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('lost_parent_father') &&
@@ -25,7 +25,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_mother_voice',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('lost_parent_mother') &&
@@ -43,7 +43,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_emigration_smell',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('emigrated') &&
@@ -75,7 +75,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_first_love_revisited',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('first_love_over') &&
@@ -108,7 +108,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_cancer_scare',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('cancer_survivor') &&
@@ -129,7 +129,7 @@ export const MEMORY_LAYER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) =>
-      (G.flags.has('refugee_status') || G.flags.has('displaced_childhood')) &&
+      (G.flags.has('refugee_status') || G.flags.has('displaced')) &&
       G.age >= 40 && G.age <= 58 &&
       !G.mem?.memLayerBorder,
     text: 'In a queue — bank, airport, it does not matter — you notice the particular way you hold your documents. Prepared. Alert. The queue is routine and you know it and your hands do not know it. The body remembers the queue where it mattered. The body keeps its own records.',
@@ -139,7 +139,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_boarding_school_night',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('boarding_school') &&
@@ -152,7 +152,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_failure_returns',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('knows_failure') &&
@@ -185,7 +185,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_divorce_settlement',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('divorced') &&
@@ -200,7 +200,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_war_childhood_smell',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('war_childhood') &&

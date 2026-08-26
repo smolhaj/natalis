@@ -9,7 +9,7 @@
 const IS_MOROCCO = (G) => G.character.country?.name === 'Morocco'
 const IS_SAHRAWI = (G) =>
   G.character.country?.name === 'Morocco' &&
-  (G.character.ethnicity === 'sahrawi' || G.character.ethnicity === 'hassani')
+  G.character.ethnicity === 'sahrawi'
 
 export const MOROCCO_DEPTH_EVENTS = [
 
@@ -17,7 +17,7 @@ export const MOROCCO_DEPTH_EVENTS = [
 
   {
     id: 'mor_skhirat_coup',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MOROCCO(G) &&
@@ -37,7 +37,7 @@ export const MOROCCO_DEPTH_EVENTS = [
 
   {
     id: 'mor_green_march_1975',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MOROCCO(G) &&
@@ -95,7 +95,7 @@ export const MOROCCO_DEPTH_EVENTS = [
 
   {
     id: 'mor_casa_bombings_2003',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MOROCCO(G) &&
@@ -133,7 +133,7 @@ export const MOROCCO_DEPTH_EVENTS = [
 
   {
     id: 'mor_moudawwana_2004',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MOROCCO(G) &&
@@ -171,7 +171,7 @@ export const MOROCCO_DEPTH_EVENTS = [
 
   {
     id: 'mor_hirak_rif',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MOROCCO(G) &&

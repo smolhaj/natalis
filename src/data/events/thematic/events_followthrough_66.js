@@ -9,7 +9,7 @@ export const FOLLOWTHROUGH_66_EVENTS = [
 
   {
     id: 'ft66_maduro_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('vzla_dep_maduro_generation') &&
@@ -37,7 +37,7 @@ export const FOLLOWTHROUGH_66_EVENTS = [
 
   {
     id: 'ft66_diaspora_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('vzla_dep_crisis_diaspora') &&
@@ -78,7 +78,7 @@ export const FOLLOWTHROUGH_66_EVENTS = [
 
   {
     id: 'ft66_believer_midlife_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('vzla_dep_bolivarian_believer') &&

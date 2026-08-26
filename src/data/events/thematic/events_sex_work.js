@@ -107,7 +107,7 @@ export const SEX_WORK_EVENTS = [
 
   {
     id: 'sw_entry_legalized',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       SW_LEGALIZED(G) &&
@@ -140,7 +140,7 @@ export const SEX_WORK_EVENTS = [
 
   {
     id: 'sw_daily_criminalized',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('sex_work_entry') &&
@@ -188,7 +188,7 @@ export const SEX_WORK_EVENTS = [
 
   {
     id: 'sw_regular_client',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('sex_work_entry') &&
@@ -205,7 +205,7 @@ export const SEX_WORK_EVENTS = [
 
   {
     id: 'sw_family_knows',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('sex_work_entry') &&

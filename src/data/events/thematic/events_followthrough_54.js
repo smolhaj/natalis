@@ -196,7 +196,7 @@ export const FOLLOWTHROUGH_54_EVENTS = [
 
   {
     id: 'ft54_pol_rightward_shift_personal',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.political_leaning === 'right' &&
@@ -252,7 +252,7 @@ export const FOLLOWTHROUGH_54_EVENTS = [
 
   {
     id: 'ft54_pol_friendship_fracture',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.political_leaning !== null &&
@@ -273,7 +273,7 @@ export const FOLLOWTHROUGH_54_EVENTS = [
 
   {
     id: 'ft54_pol_centre_dissolving',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.political_leaning === 'centre' &&
@@ -310,7 +310,7 @@ export const FOLLOWTHROUGH_54_EVENTS = [
 
   {
     id: 'ft54_pol_inherited_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.political_leaning !== null &&

@@ -10,7 +10,7 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'ger_wirtschaftswunder',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -44,7 +44,7 @@ export const GERMANY_FRANCE_EVENTS = [
       G.character.country.name === 'Germany' &&
       G.currentYear >= 1960 && G.currentYear <= 1975 &&
       G.age >= 18 && G.age <= 35 &&
-      ['turkish', 'yugoslav', 'italian', 'greek'].includes(G.ethnicity) &&
+      ['turkish_german', 'other_european'].includes(G.ethnicity) &&
       !G.mem?.gerGastarbeiter,
     text: 'The contract is for two years. The Deutsche Bundesbahn from Munich Hauptbahnhof to the factory town — you learn the route. The Gastarbeiter programme: Germany needs workers, Turkey has workers who need wages. The contract says two years and then home. Anwerbestopp in 1973: the recruitment stops after the oil crisis. But the workers are already here. The families come to join them. The two years become twenty years. The two years become a life.',
     choices: [
@@ -121,7 +121,7 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'ger_reunification_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -153,7 +153,7 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'ger_refugee_crisis_2015',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -180,7 +180,7 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'ger_nsu_murders_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -212,14 +212,15 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'fr_mai_68',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'France' &&
       G.currentYear === 1968 &&
       G.age >= 15 && G.age <= 35 &&
       !G.mem?.frMai68,
-    text: 'May 3, 1968. The students at the University of Paris at Nanterre occupy the administration building. The rector calls the police. By the weekend it is the Sorbonne. The police enter the courtyard and the photographs of the beatings travel. The barricades go up in the Latin Quarter: paving stones, overturned cars, the specific vocabulary of street fighting. Then the workers: ten million people on strike — the largest general strike in French history. De Gaulle disappears briefly to Baden-Baden to consult with the French army in Germany. He returns May 30, dissolves the National Assembly, gives a radio address. In June his party wins its largest parliamentary majority ever. Mai 68 reorganises French culture, sexual norms, university structure, the language of public space, and the left. It does not overthrow the government. Both things happen simultaneously.',
+    text: 'The paving stones come up easily once the first row is out, which is a thing nobody knew about this city until this month. There is no petrol, no post, no trains; ten million people are not at work and the air in the Latin Quarter tastes of tear gas at the back of the throat. On the radio de Gaulle is not there and then, on the thirtieth, he is. In June the same country that built the barricades gives his party the largest majority it has ever had.',
+    context: 'The occupation of the Nanterre administration building on 3 May 1968 spread to the Sorbonne and then to a general strike of roughly ten million workers, the largest in French history. De Gaulle left briefly for Baden-Baden to consult the French army in Germany, returned on 30 May and dissolved the National Assembly; his party won a landslide in the June elections. May 1968 reshaped French universities, sexual norms and public language without changing the government.',
     choices: [
       {
         text: 'You are at the barricades, or in the factories, or in both places across the weeks.',
@@ -273,7 +274,7 @@ export const GERMANY_FRANCE_EVENTS = [
       G.character.country.name === 'France' &&
       G.currentYear >= 1975 && G.currentYear <= 2010 &&
       G.age >= 13 && G.age <= 22 &&
-      ['north_african', 'algerian', 'moroccan', 'tunisian', 'sub_saharan'].includes(G.ethnicity) &&
+      ['north_african', 'sub_saharan_african'].includes(G.ethnicity) &&
       !G.mem?.frBanlieue,
     text: 'Your parents came to France for work. You were born here. On the papers you are French. In the city centre, in the job application process, in the police stop on the way to the metro, the papers are a different reality from the reality. The banlieue — the suburb — has its own geography: the HLM tower blocks, the local shop, the school where the teachers are there or they are not there. The France of liberté, égalité, fraternité is the same country. The distance between the two is what you have grown up measuring.',
     choices: [
@@ -295,7 +296,7 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'fr_charlie_hebdo_bataclan_2015',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'France' &&
@@ -303,7 +304,7 @@ export const GERMANY_FRANCE_EVENTS = [
       G.age >= 12 &&
       !G.mem?.frAttacks2015,
     text: (G) => {
-      if (['north_african', 'algerian', 'moroccan', 'tunisian'].includes(G.ethnicity)) {
+      if (G.ethnicity === 'north_african') {
         return 'January 7: twelve people killed at Charlie Hebdo. November 13: one hundred and thirty at the Bataclan and the café terraces. The people who did this share your family\'s religion in the form they have taken it. You share the name of their religion with them and nothing else about their project. In the days after January you are asked, implicitly and explicitly, to account for yourself. You account for yourself. You go on accounting for yourself. The accounting is open-ended.'
       }
       return 'January 7, 2015: twelve dead at Charlie Hebdo. "Je suis Charlie." November 13: one hundred and thirty at the Bataclan, Stade de France, the café terraces of the 10th arrondissement. You know the terraces. You may have been to some of them. The randomness of the evening is part of what the attack is attacking: the ordinary evening out, the concert, the match. The target is the ordinary.'
@@ -327,7 +328,7 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'fr_yellow_vests_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'France' &&

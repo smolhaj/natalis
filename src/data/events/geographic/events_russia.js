@@ -36,7 +36,7 @@ export const RUSSIA_EVENTS = [
 
   {
     id: 'ru_beslan_2004',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -55,7 +55,7 @@ export const RUSSIA_EVENTS = [
 
   {
     id: 'ru_bolotnaya_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -88,7 +88,7 @@ export const RUSSIA_EVENTS = [
 
   {
     id: 'ru_1991_coup_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -115,7 +115,7 @@ export const RUSSIA_EVENTS = [
 
   {
     id: 'ru_putin_stability_bargain',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Russia' &&

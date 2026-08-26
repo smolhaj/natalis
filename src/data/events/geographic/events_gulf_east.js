@@ -59,7 +59,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'gulf_foreign_workers',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.gulfForeignWorkers &&
@@ -265,7 +265,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'korea_gwangju_1980',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Korea' &&
@@ -292,7 +292,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'korea_democracy_1987',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Korea' &&
@@ -306,7 +306,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'korea_imf_crisis_1997',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'South Korea' &&
@@ -333,7 +333,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'korea_hallyu_2000s',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'South Korea' &&
@@ -347,7 +347,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'korea_ppalli_ppalli',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'South Korea' &&

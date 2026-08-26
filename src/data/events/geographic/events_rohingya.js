@@ -49,7 +49,7 @@ export const ROHINGYA_EVENTS = [
 
   {
     id: 'roh_stateless_document',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_RAKHINE(G) && G.currentYear >= 1982 && G.currentYear <= 2016 && G.age >= 16 && !G.mem.rohStatelessDoc,
     text: 'The form asks for your nationality. The options do not include Rohingya. In 1982 the Citizenship Law defined 135 national races; Rohingya was not among them. You were born here. Your father was born here. His father\'s father was born here. The document you hold says you are a "temporary resident" of the country where your family has lived for generations.',
@@ -115,7 +115,7 @@ export const ROHINGYA_EVENTS = [
 
   {
     id: 'roh_resettlement_interview',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('rohingya_coxs_bazar') && G.age >= 28 && G.age <= 55 && !G.mem.rohResettlementInterview,
     text: 'The UNHCR interview is in a prefab office in the camp. The caseworker has a form with columns. They ask about the date of the clearance operation, the name of your village, whether you have any documents. You do not have documents — the documents were in the house that was burned. They ask you to describe what you saw. The column is twelve centimetres wide.',

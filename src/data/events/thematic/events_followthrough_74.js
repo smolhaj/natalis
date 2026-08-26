@@ -157,7 +157,7 @@ export const FOLLOWTHROUGH_74_EVENTS = [
 
   {
     id: 'ft65_diaspora_first_year',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('ven_diaspora') &&

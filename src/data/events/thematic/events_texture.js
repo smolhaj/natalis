@@ -110,7 +110,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_water_fetch',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -124,7 +124,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_harvest_time',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -137,7 +137,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_crop_failure',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -163,7 +163,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_market_day_texture',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -179,7 +179,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_first_electricity',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.ruralUrban === 'rural' &&
@@ -208,7 +208,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_migration_temptation',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -234,7 +234,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_seasonal_work',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -262,7 +262,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_remittance',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -278,7 +278,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_traditional_medicine',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -303,7 +303,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_arranged_marriage_pressure',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -330,7 +330,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_land_inheritance',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -386,7 +386,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_depression_breadline',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       wealthyWest(G) &&
@@ -401,7 +401,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_rationing_wwii',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       wealthyWest(G) &&
@@ -415,7 +415,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_victory_day',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       wealthyWestOrSoviet(G) &&
@@ -428,7 +428,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_postwar_prosperity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       wealthyWest(G) &&
@@ -456,7 +456,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_ice_box',
-    phase: 'early_childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       wealthyWest(G) &&
@@ -469,7 +469,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_cold_war_fear',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       wealthyWest(G) &&
@@ -557,7 +557,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_1950s_conformity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       wealthyWest(G) &&
@@ -584,7 +584,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_domestic_service_wealthy',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.currentYear >= 1920 && G.currentYear <= 1960 &&
@@ -598,7 +598,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_domestic_service_working',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.currentYear >= 1920 && G.currentYear <= 1960 &&
@@ -612,7 +612,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_factory_town',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['wealthy_west', 'post_soviet'].includes(G.character.country.archetype) &&
@@ -626,7 +626,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_letter_writing',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.currentYear >= 1920 && G.currentYear <= 1960 &&
@@ -669,7 +669,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'career_political_difficulty',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -701,7 +701,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'career_passed_over',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -753,7 +753,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'career_laid_off',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.career &&
@@ -794,7 +794,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'career_younger_boss',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&

@@ -35,7 +35,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
 
   {
     id: 'nl_dep_bijlmerramp',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&
@@ -51,7 +51,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
 
   {
     id: 'nl_dep_same_sex_huwelijk',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&
@@ -97,7 +97,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
 
   {
     id: 'nl_dep_toeslagen',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&
@@ -114,7 +114,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
 
   {
     id: 'nl_dep_groningen_gas',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&
@@ -130,7 +130,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
 
   {
     id: 'nl_dep_bersiap_memory',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&
@@ -146,7 +146,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
 
   {
     id: 'nl_dep_wilders_2023',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&

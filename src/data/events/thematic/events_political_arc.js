@@ -48,7 +48,7 @@ export const POLITICAL_ARC_EVENTS = [
 
   {
     id: 'pol_left_1980s_rightward_shift',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.political_leaning === 'left' &&
@@ -113,7 +113,7 @@ export const POLITICAL_ARC_EVENTS = [
 
   {
     id: 'pol_centre_no_place',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.political_leaning === 'centre' &&
@@ -178,7 +178,7 @@ export const POLITICAL_ARC_EVENTS = [
 
   {
     id: 'pol_nationalist_abroad',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.political_leaning === 'nationalist' &&

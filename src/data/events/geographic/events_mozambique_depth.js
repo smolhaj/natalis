@@ -156,7 +156,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_cashew',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RURAL_MOZ(G) &&
@@ -197,7 +197,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_maputo_boom',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_URBAN_MOZ(G) &&
@@ -218,7 +218,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_hidden_debt',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MOZ(G) &&
@@ -300,7 +300,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_aids_orphan_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MOZ(G) &&

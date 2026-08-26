@@ -79,7 +79,7 @@ export const SOCIAL_MEDIA_EVENTS = [
 
   {
     id: 'sm_addictive_phase',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.flags.has('social_media_user') &&
@@ -136,7 +136,7 @@ export const SOCIAL_MEDIA_EVENTS = [
 
   {
     id: 'sm_arab_spring_organising',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) => {
       const country = G.character?.country?.name ?? ''
@@ -279,7 +279,7 @@ export const SOCIAL_MEDIA_EVENTS = [
 
   {
     id: 'sm_china_censored_post',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character?.country?.name === 'China' &&

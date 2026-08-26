@@ -166,11 +166,11 @@ export const SEASONAL_EVENTS = [
 
   {
     id: 'sea_ramadan_texture',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.season === 'dry' &&
-      (G.religion === 'muslim' || G.religion === 'sunni' || G.religion === 'shia') &&
+      G.religion?.startsWith('muslim') &&
       ['developing_urban', 'developing_unstable', 'subsaharan', 'wealthy_gulf'].includes(G.character.country?.archetype) &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.seaRamadan,

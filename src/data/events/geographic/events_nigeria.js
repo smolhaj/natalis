@@ -9,7 +9,7 @@ export const NIGERIA_EVENTS = [
 
   {
     id: 'nga_coup_culture',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -36,7 +36,7 @@ export const NIGERIA_EVENTS = [
 
   {
     id: 'nga_june12_1993',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -63,7 +63,7 @@ export const NIGERIA_EVENTS = [
 
   {
     id: 'nga_democracy_1999',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -77,7 +77,7 @@ export const NIGERIA_EVENTS = [
 
   {
     id: 'nga_boko_haram',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -106,7 +106,7 @@ export const NIGERIA_EVENTS = [
 
   {
     id: 'nga_sharia_north',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&

@@ -10,7 +10,7 @@ export const SUDAN_EVENTS = [
 
   {
     id: 'sdn_nimeiry_sharia_1983',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Sudan' &&
@@ -24,7 +24,7 @@ export const SUDAN_EVENTS = [
 
   {
     id: 'sdn_bashir_coup_1989',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Sudan' &&
@@ -38,7 +38,7 @@ export const SUDAN_EVENTS = [
 
   {
     id: 'sdn_darfur_2003',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Sudan' &&
@@ -65,7 +65,7 @@ export const SUDAN_EVENTS = [
 
   {
     id: 'sdn_south_sudan_independence_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Sudan' &&
@@ -79,7 +79,7 @@ export const SUDAN_EVENTS = [
 
   {
     id: 'sdn_revolution_2019',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Sudan' &&
@@ -106,7 +106,7 @@ export const SUDAN_EVENTS = [
 
   {
     id: 'sdn_coup_2021',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Sudan' &&
@@ -123,14 +123,15 @@ export const SUDAN_EVENTS = [
 
   {
     id: 'sdn_civil_war_2023',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Sudan' &&
       G.currentYear >= 2023 && G.currentYear <= 2026 &&
       G.age >= 14 &&
       !G.mem.sdnCivilWar23,
-    text: 'April 15, 2023. The Rapid Support Forces and the Sudan Armed Forces open fire on each other in Khartoum. Not at a front line — in the streets, the neighbourhoods, the buildings where people live. The RSF comes from the west; the SAF bombs from the air. By morning, the city has a different sound. The fighting does not end in days. Hospitals are occupied or damaged. Power goes. Water goes. The RSF loot shops, pharmacies, houses. By June, four million people have left the city. The transition that began when Bashir fell in 2019 ends here, in the rubble of a capital being fought over by the same two factions that spent the transition pretending to share it. The largest displacement crisis in the world is now in Sudan.',
+    text: 'It starts on a Saturday morning and it is not at a front line, it is at the end of your street. By the second day the sound of the city has changed: no traffic underneath, only the flat crack of the anti-aircraft and the drones. There is no power and the tank on the roof runs dry on the fourth day. A neighbour tells you the hospital on Africa Street has soldiers in it now, and that this is why the pharmacy is empty as well.',
+    context: 'On 15 April 2023 the Rapid Support Forces and the Sudan Armed Forces began fighting inside Khartoum. Hospitals were occupied or shelled and water and power failed across the capital; some four million people had left the city by June. The war ended the transition that began with Bashir\'s fall in 2019 and produced the largest displacement crisis in the world.',
     choices: [
       {
         text: 'You get out — before the roads close, with what you can carry.',

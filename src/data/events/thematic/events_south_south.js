@@ -3,7 +3,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_bangladesh_malaysia_recruit',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country?.name === 'Bangladesh' &&
@@ -94,7 +94,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_zim_sa_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country?.name === 'Zimbabwe' &&
@@ -173,7 +173,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_ghana_libya',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Ghana' &&
@@ -214,7 +214,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_gulag_arrest',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Russia' &&
@@ -270,7 +270,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_apartheid_pass_arrest',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country?.name === 'South Africa' &&

@@ -73,7 +73,7 @@ export const ARTS_EVENTS = [
     when: (G) =>
       !G.mem?.artsJazzBebop &&
       G.character.country.name === 'United States' &&
-      (G.flags.has('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
+      G.ethnicity === 'black_american' &&
       G.currentYear >= 1943 && G.currentYear <= 1965 &&
       G.career?.id === 'musician' &&
       G.age >= 18,
@@ -104,7 +104,7 @@ export const ARTS_EVENTS = [
     when: (G) =>
       !G.mem?.artsJazzJimCrow &&
       G.character.country.name === 'United States' &&
-      (G.flags.has('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
+      G.ethnicity === 'black_american' &&
       G.currentYear >= 1930 && G.currentYear <= 1965 &&
       G.career?.id === 'musician' &&
       G.age >= 18,

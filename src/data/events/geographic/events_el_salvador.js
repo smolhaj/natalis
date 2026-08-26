@@ -11,7 +11,7 @@ export const EL_SALVADOR_EVENTS = [
 
   {
     id: 'slv_romero_death',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_SALVADORAN(G) &&
@@ -27,7 +27,7 @@ export const EL_SALVADOR_EVENTS = [
 
   {
     id: 'slv_el_mozote',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SALVADORAN(G) &&
@@ -43,7 +43,7 @@ export const EL_SALVADOR_EVENTS = [
 
   {
     id: 'slv_gang_renta',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_SALVADORAN(G) &&
@@ -64,7 +64,7 @@ export const EL_SALVADOR_EVENTS = [
 
   {
     id: 'slv_bukele_arrival',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SALVADORAN(G) &&
@@ -109,7 +109,7 @@ export const EL_SALVADOR_EVENTS = [
 
   {
     id: 'slv_bitcoin',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SALVADORAN(G) &&

@@ -82,7 +82,7 @@ export const BALTIC_EVENTS = [
 
   {
     id: 'balt_song_festival',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       BALTIC_COUNTRIES.includes(G.character.country.name) &&
@@ -114,7 +114,7 @@ export const BALTIC_EVENTS = [
 
   {
     id: 'balt_january_1991',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       BALTIC_COUNTRIES.includes(G.character.country.name) &&
@@ -150,7 +150,7 @@ export const BALTIC_EVENTS = [
 
   {
     id: 'balt_russian_non_citizen',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isRussianMinority(G) &&
@@ -186,7 +186,7 @@ export const BALTIC_EVENTS = [
 
   {
     id: 'balt_eu_emigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       BALTIC_COUNTRIES.includes(G.character.country.name) &&

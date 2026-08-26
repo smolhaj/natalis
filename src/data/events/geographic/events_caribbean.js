@@ -54,7 +54,7 @@ export const CARIBBEAN_EVENTS = [
 
   {
     id: 'jam_1980_election_violence',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_JAMAICA(G) &&
@@ -349,14 +349,15 @@ export const CARIBBEAN_EVENTS = [
 
   {
     id: 'tri_1990_coup',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_TRINIDAD(G) &&
       G.currentYear >= 1990 && G.currentYear <= 1992 &&
       G.age >= 20 && G.age <= 45 &&
       !G.mem?.tri_1990_coup,
-    text: 'July 27, 1990, a Friday afternoon. Abu Bakr and the Jamaat al Muslimeen — a hundred and fourteen men — storm the Red House parliament building and the TTT television station simultaneously. The Prime Minister is held at gunpoint on air. The announcer you recognize from the evening news is not reading news. For six days the government of Trinidad and Tobago does not function. There is looting in Port of Spain, a city that has never seen this before. You watch from wherever you are — home, the street, a shop with a television in the window — and you understand that the country you thought you knew had a different layer underneath it all along. On the sixth day Abu Bakr surrenders. The television comes back on. The amnesty deal he negotiates is later declared unconstitutional. He serves no prison time.',
+    text: 'It is a Friday afternoon and the man reading the news is not reading the news. The Prime Minister is on the floor of the Red House with a gun on him and the announcer\'s voice has the wrong amount of air in it. For six days there is no government and there is looting on Frederick Street, which is a thing this country has not done. When it is over the television comes back and the cricket comes back, and the layer you saw underneath does not go away.',
+    context: 'On 27 July 1990 Yasin Abu Bakr and 114 members of the Jamaat al Muslimeen stormed the Red House parliament and the TTT television station in Port of Spain, holding Prime Minister A.N.R. Robinson and much of the cabinet for six days. Twenty-four people died. Abu Bakr surrendered under an amnesty later ruled unconstitutional by the Privy Council; he served no prison sentence.',
     choices: null,
     effect: (p) => {
       p.m -= 8;

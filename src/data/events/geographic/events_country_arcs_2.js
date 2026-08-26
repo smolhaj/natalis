@@ -298,7 +298,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ocp_policy_lifted',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -797,7 +797,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ca2_japan_tohoku_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -824,7 +824,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ca2_japan_nuclear_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&

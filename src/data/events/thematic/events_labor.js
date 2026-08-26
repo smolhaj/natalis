@@ -134,7 +134,7 @@ export const LABOR_EVENTS = [
     weight: 4,
     when: (G) =>
       !G.mem?.labOutcome &&
-      (G.flags.has('lab_striking') || G.flags.has('lab_three_months')) &&
+      (G.flags.has('lab_striking') || G.flags.has('lab_holdout')) &&
       !G.flags.has('lab_won'),
     text: 'The return is on a Monday. You go in through the main entrance, past where the line was. The desks are where the desks were. The work is the same. The conditions are the same. The person you manage to make eye contact with across the floor is someone who crossed the line three months ago. Neither of you speaks about it. You pick up where you left off in the way that means you did not pick up where you left off at all.',
     choices: null,
@@ -157,7 +157,7 @@ export const LABOR_EVENTS = [
     when: (G) =>
       !G.mem?.labOutcome &&
       (G.flags.has('lab_striking') || G.flags.has('lab_holdout')) &&
-      G.stats.karma > 55,
+      G.karma > 55,
     text: 'The agreement is announced on a Friday afternoon. The representative reads the terms out loud in the car park. The hourly rate is a figure. The extra leave is a number of days. The grievance procedure has teeth now. These are small specific things. They are also the specific things you went out for. The people around you are not celebrating exactly — it is more like a slow release, like a noise finally stopping.',
     choices: null,
     effect: (p) => {

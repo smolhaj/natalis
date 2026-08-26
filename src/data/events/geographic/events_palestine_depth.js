@@ -57,7 +57,7 @@ export const PALESTINE_DEPTH_EVENTS = [
 
   {
     id: 'pd_resettlement_rupture',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       (G.flags.has('camp_is_home') || G.flags.has('third_generation_refugee')) &&

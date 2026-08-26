@@ -91,7 +91,7 @@ export const CULT_EVENTS = [
 
   {
     id: 'hcr_community_deepens',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('hcr_member') &&
@@ -108,7 +108,7 @@ export const CULT_EVENTS = [
 
   {
     id: 'hcr_demands_escalate',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('hcr_social_reorganised') &&
@@ -139,7 +139,7 @@ export const CULT_EVENTS = [
 
   {
     id: 'hcr_blood_crisis',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('hcr_member') &&
@@ -204,7 +204,7 @@ export const CULT_EVENTS = [
 
   {
     id: 'hcr_exit',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('hcr_member') &&
@@ -224,7 +224,7 @@ export const CULT_EVENTS = [
 
   {
     id: 'hcr_shunning_years',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('hcr_shunned') &&
@@ -242,7 +242,7 @@ export const CULT_EVENTS = [
 
   {
     id: 'hcr_secular_reentry',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('hcr_exited') &&

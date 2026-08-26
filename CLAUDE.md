@@ -83,7 +83,7 @@ Key state fields:
 - `conditions`: `[{ id, severity: 'mild'|'moderate'|'severe', diagnosedYear, managed: bool }]` — chronic conditions; passive annual drain on health/happiness based on severity × managed status
 - `currentProject`: `{ type: 'writing'|'running'|'music'|'art'|'business', startYear, phase: 'early'|'middle'|'late'|'established'|'abandoned', name: string|null }` — slow-burn personal project, auto-detected from flags in `tick()`, advances phase by elapsed years. Surfaced in year texture prose; gates `events_project_arc.js` milestone events.
 
-### Life Phases (`src/engine/gameEngine.js: getPhase`)
+### Life Phases (`src/engine/character.js: getPhase`)
 
 ```
 early_childhood  ≤ 5
@@ -95,6 +95,54 @@ late_life        50+
 ```
 
 **IMPORTANT**: Never use `phase: 'adult'` — it is not a valid phase and will silently prevent events from ever firing.
+
+### Modes (`state.mode`)
+
+Every run is either **active** ("Inhabit") or **passive** ("Witness"), chosen on the
+title screen and fixed for that life. Same simulation, same content, same event
+pool — only the surface differs.
+
+- **active** — the player answers choice events, spends the yearly action budget,
+  takes careers and risks. The activities panel, crime and minigames are present.
+- **passive** — the life goes as it goes. Choice events still fire, but the
+  *character* answers them (`pickChoiceAutomatically` in `tick.js`, which weights
+  the options by stats, desire and regime rather than picking uniformly), and the
+  year resolves in one beat. The activities panel, action budget and crime
+  surface are hidden; the only verb is Age Up.
+
+Passive mode is the purest expression of the Sonder Principle, and it is also a
+correctness contract: a life that nobody steers must still reach a plausible age
+and a full arc. If passive medians drift, the simulation is wrong, not the mode.
+
+### Event Selection (`src/engine/tick.js: getNextEvent`)
+
+The corpus is ~8,000 events, ~2,275 of which are universal contemplative
+observations with very broad guards. Drawing from one flat weighted pool let that
+layer take ~70% of every life while the country-, era- and identity-specific
+events written around it fired a handful of times per *hundred* lives — the exact
+inversion of "specificity over coverage".
+
+Selection therefore draws a **register** first, then an event within it. Every
+event is classified once, lazily, in `src/data/events.js`:
+
+- `event.contemplative` — set by SOURCE MODULE (the 66 `events/sonder/*` files),
+  never by id prefix. The id convention drifted across those modules
+  (`sonder_`, `sonder12_`, `sdr30_`, `s14_`, `son15_`, `mundane_`), so the old
+  `startsWith('sonder_')` test missed 46% of the pool.
+- `event.register` — `anchored` (guard reads place, era or identity), `earned`
+  (guard reads what has already happened to this character), `universal`, or
+  `contemplative`. Derived from the guard's own source text.
+- `event.anchored` — place/era-keyed, including inside the contemplative layer,
+  where it earns a 3× weight so quiet years stay grounded in a real place.
+- `event.isGlimpse` — stranger glimpses, scheduled on their own ~decade cadence
+  instead of competing for weight against 8,000 other events.
+
+`REGISTER_SHARES` reserves a share of every year for each register, so adding
+content to one register can never statistically bury another. Contemplative
+events are additionally rate-limited to one every `CONTEMPLATIVE_COOLDOWN` years.
+
+**When you add events, add them to a register that is thin, not one that is
+already full.** Run `npm run sim` (or `tests/zsim.test.js`) to see the live mix.
 
 ### Event System
 
@@ -199,11 +247,37 @@ When a crime attempt is caught (via `attemptCrime()`), instead of immediately go
 
 Legal quality scales by regime: democracies have fair courts (1.0×), military dictatorships are stacked (0.35×). Lawyer fees scale by country GDP.
 
-### Partner Lifecycle (`src/engine/gameEngine.js: tickPartner`)
+### Partner Lifecycle (`src/engine/tick.js: tickPartner`)
 
 Called each year via `advanceYear`. Partner ages +1/year. At age 75+ there's a death probability (increases with age). On death: partner removed, `widowed` or `lost_partner` flags set, death logged in lifeLog. Relationship quality drifts ±1 per year.
 
 ---
+
+## The Simulation Contract
+
+Three rules the engine must keep, each of which was broken and is now enforced by
+`tests/` and by simulation:
+
+**Health is not a ratchet.** `healthCeiling(state)` sets a plateau from age, the
+healthcare of the country the character *actually lives in*, fitness and chronic
+conditions; health drifts toward it each year. A shock still hurts and a chronic
+condition still lowers the plateau permanently, but a life nobody intervenes in
+does not walk to zero. Before this, a passively-read 1962 Nigerian life had a
+median death age of **8**; it is now ~66 with ~29% under-5 mortality, which is
+what the historical record actually says.
+
+**Where you live is where you live.** `liveCountry(state)` — not the frozen
+birth country — drives salary, promotion pay, healthcare mortality, illness risk,
+the poverty premium, career availability and which world events reach you.
+Emigration used to change the prose and nothing else. A world event may set
+`followsEmigrant: true` to reach the diaspora as news from home.
+
+**Prose layers are layers, not fallbacks.** `buildYearTexture` is called every
+year with `{ specificOnly: true }`: it speaks when the memory, grief, condition,
+project, place or season layers have something specific to say about *this* life,
+and `buildMundaneLayer` fills the years when they do not. It used to be reachable
+only when the event pool came back empty — which, with ~2,000 broadly-guarded
+contemplative events, meant ~2% of years.
 
 ## The Immersion Principle
 

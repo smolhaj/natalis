@@ -17,7 +17,7 @@ export const MEXICO_DEPTH_EVENTS = [
 
   {
     id: 'mex_2000_election_night',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       isMex(G) &&
@@ -54,7 +54,7 @@ export const MEXICO_DEPTH_EVENTS = [
 
   {
     id: 'mex_tequila_crisis_1994',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       isMex(G) &&
@@ -74,7 +74,7 @@ export const MEXICO_DEPTH_EVENTS = [
 
   {
     id: 'mex_dirty_war_1970s',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isMex(G) &&
@@ -234,7 +234,7 @@ export const MEXICO_DEPTH_EVENTS = [
 
   {
     id: 'mex_amlo_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       isMex(G) &&

@@ -30,7 +30,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_alphabet_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -46,7 +46,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_mahalla_system',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -74,7 +74,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_faith_crackdown',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -103,7 +103,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_andijan_2005',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -119,7 +119,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_labour_russia',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -147,7 +147,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_fergana_borders',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -164,7 +164,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_karimov_death',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -180,7 +180,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_mirziyoyev_opening',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&

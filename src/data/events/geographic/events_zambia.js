@@ -38,7 +38,7 @@ export const ZAMBIA_EVENTS = [
 
   {
     id: 'zmb_copper_crash',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Zambia' &&
@@ -65,7 +65,7 @@ export const ZAMBIA_EVENTS = [
 
   {
     id: 'zmb_democratic_transition_1991',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Zambia' &&
@@ -79,7 +79,7 @@ export const ZAMBIA_EVENTS = [
 
   {
     id: 'zmb_aids_crisis_1990s',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Zambia' &&
@@ -93,7 +93,7 @@ export const ZAMBIA_EVENTS = [
 
   {
     id: 'zmb_evangelical_wave',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Zambia' &&

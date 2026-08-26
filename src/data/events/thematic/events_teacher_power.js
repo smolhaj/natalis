@@ -3,7 +3,7 @@ export const TEACHER_POWER_EVENTS = [
 
   {
     id: 'tpc_rural_posting',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.career?.id === 'teacher' &&
@@ -148,7 +148,7 @@ export const TEACHER_POWER_EVENTS = [
 
   {
     id: 'cop_birth_privilege',
-    phase: 'early_childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['developing_unstable', 'subsaharan', 'post_soviet'].includes(G.character.country?.archetype) &&
@@ -167,7 +167,7 @@ export const TEACHER_POWER_EVENTS = [
 
   {
     id: 'cop_the_doors',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('child_of_power') &&
@@ -221,7 +221,7 @@ export const TEACHER_POWER_EVENTS = [
 
   {
     id: 'cop_the_fall',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.flags.has('child_of_power') &&
@@ -240,7 +240,7 @@ export const TEACHER_POWER_EVENTS = [
 
   {
     id: 'cop_after_the_fall',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('power_fell') &&

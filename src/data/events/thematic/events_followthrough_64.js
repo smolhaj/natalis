@@ -9,7 +9,7 @@ export const FOLLOWTHROUGH_64_EVENTS = [
 
   {
     id: 'ft64_ofw_family_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ph_dep_ofw_family') &&
@@ -80,7 +80,7 @@ export const FOLLOWTHROUGH_64_EVENTS = [
 
   {
     id: 'ft64_seaman_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ph_dep_seaman_family') &&

@@ -92,7 +92,7 @@ export const DEBT_EVENTS = [
 
   {
     id: 'debt_spiral_deepens',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => G.flags.has('debt_spiral') && G.age >= 22 && G.age <= 35 && G.money < 600 && !G.mem.debtSpiralDeepens,
     text: 'The month where you pay the Visa with the Mastercard. The arithmetic is obvious when you write it out: you are paying 21% interest to delay 19% interest. The minimum payments together are $340. You make $2,100 a month. Rent is $1,100.',
@@ -167,7 +167,7 @@ export const DEBT_EVENTS = [
 
   {
     id: 'debt_microfinance_entry',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => DEVELOPING_ARCHETYPES.includes(G.archetype) && G.stats.wealth <= 3 && !G.flags.has('microfinance_borrower') && !G.flags.has('microfinance_declined') && G.age >= 20 && G.age <= 40,
     text: 'A loan officer comes to the village. The group lending model: five women, jointly liable. If one defaults, the others must cover it. The social pressure is the collateral. The interest rate is 22% per year, which is far below the moneylender\'s 100% per month. The first loan is small — enough to buy stock for a small trade.',
@@ -243,7 +243,7 @@ export const DEBT_EVENTS = [
 
   {
     id: 'debt_medical_bill',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.character.country?.name === 'United States' && G.conditions.length > 0 && G.age >= 30 && G.age <= 60 && !G.mem.debtMedicalBill,
     text: 'The bill arrives six weeks after the hospital stay. The number is not a typo. The insurance paid 70%, which is why the remaining 30% is a number that requires you to sit down. There is a phone number on the bill for a financial counsellor. Their hours are weekdays 9–4.',

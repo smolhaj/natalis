@@ -90,7 +90,7 @@ export const NEIGHBORHOOD_EVENTS = [
 
   {
     id: 'nbr_thin_walls',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     cooldown: 5,
     when: (G) =>
@@ -256,7 +256,7 @@ export const NEIGHBORHOOD_EVENTS = [
     cooldown: 0,
     when: (G) =>
       (G.neighborhoodTier === 'middle_class' || G.neighborhoodTier === 'elite') &&
-      (G.flags.has('rural_to_urban') || G.flags.has('born_informal') || G.mem?.startedInformal) &&
+      (G.flags.has('rural_to_urban') || G.flags.has('informal_economy') || G.mem?.startedInformal) &&
       G.age >= 30 && !G.mem?.movingUpGuiltAck,
     text: (G) => {
       const origin = G.flags.has('rural_to_urban') ? 'the village' : 'the neighbourhood where you grew up'

@@ -35,14 +35,15 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_easter_rising',
-    phase: 'adolescence',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_IRISH(G) &&
-      G.currentYear >= 1916 && G.currentYear <= 1928 &&
-      G.age >= 12 &&
+      G.currentYear >= 1966 && G.currentYear <= 1967 &&
+      G.age >= 8 &&
       !G.mem?.ireEasterRising,
-    text: 'Easter Monday, April 24, 1916. The General Post Office on Sackville Street. Patrick Pearse reads a proclamation outside. Within a week, the Rising is suppressed. Fifteen leaders are executed by firing squad over ten days — slowly enough that public opinion in Ireland shifts. The rising was initially unpopular; the executions make it something else. By 1918, Sinn Féin wins 73 of 105 Irish seats in the Westminster election and the War of Independence begins. The treaty in 1921 gives twenty-six counties a Free State and leaves six in the United Kingdom. Your country has become something — a partial thing, contested from the first. The executions produced it. The treaty defined its edges.',
+    text: 'Easter 1966. The men who were inside the GPO walk down O\'Connell Street in overcoats, old now, fewer of them than the last time they were counted. All week the television has been running the Rising each evening at the hour the news would be. In March somebody took the top off Nelson\'s Pillar with explosive and nobody in this house says they are sorry about it. Your father points at a man in the third row and says he was inside, and then says nothing else about him for the rest of the day.',
+    context: 'The Easter Rising began on 24 April 1916 and was suppressed within a week; fifteen of its leaders were executed by firing squad over ten days, which turned a largely unpopular insurrection into the founding event of the state. Sinn Féin took 73 of Ireland\'s 105 Westminster seats in 1918 and the War of Independence followed. The 1921 Treaty gave twenty-six counties a Free State and left six in the United Kingdom. The 1966 golden jubilee was the largest public commemoration the state had staged; Nelson\'s Pillar on O\'Connell Street was destroyed by a bomb that March.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 4; p.r += 3; p.addFlag('ire_rising_generation'); p.setMem('ireEasterRising', true) },
   },
@@ -51,7 +52,7 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_civil_war_wound',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
@@ -80,7 +81,7 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_emergency',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
@@ -134,7 +135,7 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_lgbtq_decrim',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&

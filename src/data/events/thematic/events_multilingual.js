@@ -43,7 +43,7 @@ export const MULTILINGUAL_EVENTS = [
 
   {
     id: 'mul_code_switch',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('emigrated') && G.age >= 20 && G.age <= 35 && !G.mem.mulCodeSwitch,
     text: 'You argue in the language you grew up in. You do maths in the language you were taught it. You dream in the language you are most afraid in, which shifts as the years pass. At work you are one person; on the phone to your mother you are another; in the place where the two overlap, you speak a third language that exists only in that gap — a creole of contexts that has no name.',
@@ -52,7 +52,7 @@ export const MULTILINGUAL_EVENTS = [
 
   {
     id: 'mul_lingua_franca_visible',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('emigrated') && G.stats.smarts >= 55 && G.age >= 22 && G.age <= 35 && !G.mem.mulLinguaFranca,
     text: 'A conference. A colleague from Nigeria — better educated, more experienced, three published papers to your one — struggles in the Q&A. His English is strong but not native-speaker strong, and the questioner is moving fast. Your English is native. You answer for him without thinking, which he doesn\'t want, and then watch him navigate the room for the next three hours with the specific competence of someone doing twice the work to get half the credit. You had not noticed, before today, what you had been given for free.',
@@ -65,7 +65,7 @@ export const MULTILINGUAL_EVENTS = [
     id: 'mul_mother_tongue_political',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => (G.flags.has('kurd_identity_suppressed') || G.flags.has('amazigh_identity') || G.flags.has('language_suppressed')) && G.age >= 18 && G.age <= 32 && !G.mem.mulMotherTonguePol,
+    when: (G) => (G.flags.has('kurd_identity_suppressed') || G.flags.has('amazigh_identity') || G.flags.has('suppressed_language')) && G.age >= 18 && G.age <= 32 && !G.mem.mulMotherTonguePol,
     text: 'You publish something in the language. Not secretly — publicly. It is the first time you have seen something in the language in print that was not a government-approved folklore booklet or a foreign linguist\'s field notes. It has the specific weight of something ordinary that is not ordinary: a sentence in your grandmother\'s language, treated as if it belongs in the world.',
     choices: [
       {

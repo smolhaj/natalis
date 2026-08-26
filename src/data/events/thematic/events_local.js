@@ -12,7 +12,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_first_recognition',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 23 && G.age <= 38
       && G.karma >= 55
@@ -26,7 +26,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_teacher_recognition',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.career?.field === 'education'
       && G.age >= 30 && G.age <= 55
@@ -38,7 +38,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_health_worker_recognition',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.career?.field === 'healthcare'
       && G.age >= 30 && G.age <= 55
@@ -52,7 +52,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_trusted_with_problems',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('local_hero')
       && G.age >= 35 && G.age <= 60
@@ -93,7 +93,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_small_victory',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('local_hero')
       && G.age >= 30 && G.age <= 55
@@ -119,7 +119,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_the_coach',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('local_hero')
       && G.age >= 28 && G.age <= 52
@@ -146,7 +146,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_memory_keeper',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('local_hero')
       && G.age >= 42 && G.age <= 65
@@ -159,7 +159,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_formal_role',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('local_achievement')
       && G.age >= 40 && G.age <= 60

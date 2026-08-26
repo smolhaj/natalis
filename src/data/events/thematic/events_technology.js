@@ -162,7 +162,7 @@ export const TECHNOLOGY_EVENTS = [
   // ── SOCIAL MEDIA ─────────────────────────────────────────────────────────────
   {
     id: 'tech_social_media_arrives',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.currentYear >= 2008 && G.currentYear <= 2013 && G.age >= 13 && G.age <= 22,
     text: 'A social network is where everyone is now. You make a profile. You add people. You learn that public life and private life are the same place now if you\'re not careful. You spend more time on it than you intend to. So does everyone.',

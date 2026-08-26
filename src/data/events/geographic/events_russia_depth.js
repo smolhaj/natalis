@@ -16,7 +16,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_great_terror',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -35,7 +35,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_family_arrest',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -58,7 +58,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_kommunalka',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -108,7 +108,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_blat_system',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -127,7 +127,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_deficit',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -210,7 +210,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_propiska',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_RUSSIA(G) &&

@@ -15,7 +15,7 @@ export const BANGLADESH_DEPTH_EVENTS = [
 
   {
     id: 'bng_dep_ekushey',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -37,14 +37,14 @@ export const BANGLADESH_DEPTH_EVENTS = [
 
   {
     id: 'bng_dep_floods_1988',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
       G.currentYear === 1988 &&
       G.age >= 12 &&
       !G.mem?.bngDepFloods88,
-    text: pick([
+    text: () => pick([
       'Seventy-five percent of Bangladesh is underwater. The floods of 1988 are the worst in recorded history for this country — worse than 1974, worse than 1987. Dhaka is flooded for the first time. The roads are rivers. The cattle are on the rooftops of buildings that still have rooftops. The water is there for weeks. When it recedes, the roads are gone in places, the crops are gone in most places, and the question of where to begin is the question of every household.',
       'The flood takes the winter rice crop before it is harvested. The aid arrives in boats. The boats can reach some villages and not others. In the villages they cannot reach, people eat what they have until they don\'t. You learn the geography of where the food goes in a disaster not from a map but from who comes back thinner and who doesn\'t come back.',
     ]),
@@ -62,14 +62,13 @@ export const BANGLADESH_DEPTH_EVENTS = [
 
   {
     id: 'bng_dep_cht_jumma',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
       G.currentYear >= 1975 && G.currentYear <= 2000 &&
       G.age >= 16 &&
-      (G.ethnicity === 'chakma' || G.ethnicity === 'marma' || G.ethnicity === 'tripura' ||
-       G.character?.ethnicity === 'chakma' || G.character?.ethnicity === 'marma') &&
+      G.ethnicity === 'chakma' &&
       !G.mem?.bngDepCHT,
     text: 'The Chittagong Hill Tracts are the forested hills where the Jumma peoples — Chakma, Marma, Tripura, and others — have lived for centuries. Since 1972, the Bangladesh government has settled Bengali Muslim families in the Hills; since 1973, the Shanti Bahini has fought an insurgency. The army operations are not in the Dhaka newspapers the way the Dhaka events are. Your village has been displaced, or your village knows of a village that was burned. The 1997 peace accord gives autonomy on paper. The settlers remain. The autonomy is partial.',
     choices: [
@@ -110,7 +109,7 @@ export const BANGLADESH_DEPTH_EVENTS = [
       G.currentYear >= 2017 &&
       G.age >= 20 &&
       !G.mem?.bngDepRohingya,
-    text: pick([
+    text: () => pick([
       'Cox\'s Bazar. The Kutupalong camp is now the largest refugee camp in the world: over a million Rohingya from Myanmar, who arrived mostly in August 2017 after the military clearance operations. The camp is visible from the beach road. The bamboo shelters on the hillside, the plastic sheeting, the NGO vehicles in a constant circuit. Bangladesh has hosted Rohingya for thirty years and the scale of 2017 is an order of magnitude larger than before. The world\'s attention came and moved on. The Rohingya are still in the camp.',
       'Your relative works for an NGO in the camp. The stories that come back from the camp are not the stories in the international news. The international news has the broad shape. The camp stories are: the specific family, the medical case that was or wasn\'t treated, the registration card that allows or doesn\'t allow movement, the particular cruelty of a situation that has lasted this long without resolution.',
     ]),
@@ -127,7 +126,7 @@ export const BANGLADESH_DEPTH_EVENTS = [
 
   {
     id: 'bng_dep_hilsa',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -147,7 +146,7 @@ export const BANGLADESH_DEPTH_EVENTS = [
 
   {
     id: 'bng_dep_eid_journey',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -170,7 +169,7 @@ export const BANGLADESH_DEPTH_EVENTS = [
 
   {
     id: 'bng_dep_rana_after',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&

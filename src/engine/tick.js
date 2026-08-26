@@ -1,10 +1,10 @@
 import { COUNTRIES } from '../data/countries'
-import { EVENTS, EVENTS_BY_PHASE } from '../data/events'
+import { EVENTS, EVENTS_BY_PHASE, classifyEvent } from '../data/events'
 import { WORLD_EVENTS } from '../data/worldEvents'
 import { RIBBONS } from '../data/ribbons'
 import { CAREERS } from '../data/careers'
 import { CRIMES } from '../data/crimes'
-import { PROPERTY_TYPES } from '../data/assets'
+import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PLACES, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
@@ -16,7 +16,7 @@ import {
   GDP_MULT, HYPERINFLATION_DRAIN, getHyperinflation,
   calculateHouseholdContribution, tickFamilyIncome,
   ADULT_TRAITS, CHILD_TRAITS, pickTraits, TRAIT_PROSE, BUSINESS_TYPES, PARTNER_OCCUPATIONS,
-  getLifeSkeletonMap, getPhaseEntryMap,
+  getLifeSkeletonMap, getPhaseEntryMap, deriveSeason,
 } from './character'
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
@@ -47,13 +47,66 @@ function applyProxy(state, proxy) {
   return { ...state, stats, regret, money, karma, fame, legacy, flags, mem: proxy.mem }
 }
 
+// ─── Where the character actually lives ───────────────────────────────────────
+// `character.country` is the frozen BIRTH country. Every economic and mortality
+// model used to read it, so emigration changed the prose and nothing else: a
+// Nigerian who moved to Germany in 1975 earned Nigerian wages at a German job,
+// kept very-poor-healthcare mortality for life, and went on experiencing
+// Nigeria's history while Germany's never reached them. Anything about the
+// conditions of a life now reads the country the character is living in.
+export function liveCountry(state) {
+  return state.currentCountry ?? state.character?.country
+}
+
+// ─── Health homeostasis ───────────────────────────────────────────────────────
+// Health used to be a one-way ratchet: aging, illness, conditions and world
+// events all subtracted, and nothing but paid activities ever restored it. A
+// life read passively therefore arrived at middle age in single digits and died
+// decades early — a 1962 Nigerian life had a median death age of 8. Bodies
+// recover. Health now drifts each year toward a ceiling set by age, the
+// healthcare available where the character actually lives, fitness, and the
+// chronic conditions they carry; a shock still hurts, but it is survivable, and
+// a chronic condition settles the body at a permanently lower plateau rather
+// than walking it to zero.
+const HC_CEILING = { excellent: 1.0, good: 0.95, fair: 0.88, poor: 0.80, very_poor: 0.72 }
+const HC_RECOVERY = { excellent: 0.22, good: 0.20, fair: 0.17, poor: 0.13, very_poor: 0.10 }
+
+export function healthCeiling(state) {
+  const age = state.age ?? 0
+  const country = state.currentCountry ?? state.character?.country
+  const hc = country?.healthcare ?? 'fair'
+  let ceiling = 95
+  if (age > 25) ceiling -= (age - 25) * 0.45
+  if (age > 60) ceiling -= (age - 60) * 0.55
+  ceiling *= HC_CEILING[hc] ?? 0.88
+
+  for (const c of state.conditions ?? []) {
+    const base = c.severity === 'severe' ? 16 : c.severity === 'mild' ? 4 : 9
+    ceiling -= c.managed ? base * 0.45 : base
+  }
+  const flags = state.flags ?? []
+  if (flags.includes('addiction') || flags.includes('alcoholic')) ceiling -= 10
+  if (flags.includes('smoker')) ceiling -= 6
+
+  const fitness = state.fitness ?? 50
+  ceiling += (fitness - 50) * 0.12
+
+  return clamp(ceiling, 8, 100)
+}
+
 function applyNaturalAging(state) {
   const { age, stats } = state
   let { happiness, health, smarts, looks, charisma } = stats
   happiness += (50 - happiness) * 0.04
-  if (age > 75) health -= 1.0
-  else if (age > 60) health -= 0.7
-  else if (age > 40) health -= 0.5
+
+  const country = state.currentCountry ?? state.character?.country
+  const ceiling = healthCeiling(state)
+  if (health < ceiling) {
+    health += (ceiling - health) * (HC_RECOVERY[country?.healthcare ?? 'fair'] ?? 0.17)
+  } else {
+    health -= (health - ceiling) * 0.35
+  }
+
   if (age > 70) looks -= 0.5
   else if (age > 50) looks -= 0.6
   else if (age > 30) looks -= 0.4
@@ -117,7 +170,25 @@ function buildEffectProxy(state) {
   proxy.clearCareer = () => { proxy._clearCareer = true }
   proxy.setPartner = (partner) => { proxy._newPartner = partner }
   proxy.clearPartner = () => { proxy._clearPartner = true }
-  proxy.addChild = (child) => { proxy._newChild = child }
+  // Events may hand over a partial child. Four already do: no name, and
+  // `ageAtBirth: 0`, which meant a newborn came out the same age as its parent
+  // once child ages were actually derived. Fill in whatever is missing here so
+  // every child is well-formed no matter which event created it.
+  proxy.addChild = (child) => {
+    const c = { ...(child ?? {}) }
+    if (!c.name) {
+      const country = state.currentCountry ?? state.character?.country
+      const pool = c.gender === 'male' ? country?.namePool?.male : country?.namePool?.female
+      const first = pool?.length ? pickFrom(pool) : null
+      c.name = first ? `${first} ${state.character?.surname ?? ''}`.trim() : 'Your child'
+    }
+    // ageAtBirth is the PARENT's age when the child arrived, so 0 is never a
+    // real value — treat it as "not supplied" and default to a newborn.
+    if (!c.ageAtBirth) c.ageAtBirth = state.age
+    if (c.relationshipQuality == null) c.relationshipQuality = 75
+    if (!c.traits) c.traits = pickTraits(CHILD_TRAITS)
+    proxy._newChild = c
+  }
   proxy.addFriend = (friend) => {
     if (!proxy._newFriends) proxy._newFriends = []
     proxy._newFriends.push(friend)
@@ -250,7 +321,15 @@ function resolveProxyExtras(state, proxy) {
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   if (proxy._releaseFromPrison) next = { ...next, inPrison: false, prisonSentence: 0 }
   if (proxy._killParent && next.parents?.[proxy._killParent]) {
-    next = { ...next, parents: { ...next.parents, [proxy._killParent]: { ...next.parents[proxy._killParent], alive: false, relationshipQuality: 0 } } }
+    const which = proxy._killParent
+    next = { ...next, parents: { ...next.parents, [which]: { ...next.parents[which], alive: false, relationshipQuality: 0 } } }
+    // Same flags as a natural death, so scripted bereavement reaches the grief
+    // and memory layers identically.
+    next = {
+      ...next,
+      flags: [...new Set([...(next.flags ?? []), `lost_parent_${which}`, `${which}_died`])],
+      mem: { ...(next.mem ?? {}), [`lost_parent_${which}Year`]: next.currentYear ?? state.currentYear },
+    }
   }
   if (proxy._residencyStatus) next = { ...next, residencyStatus: proxy._residencyStatus }
   if (proxy._partnerRelDelta && next.partner) {
@@ -476,6 +555,53 @@ function devLogPool(phase, pool, firedId, usedEventMap, phaseEvents) {
   } catch (_) { /* localStorage not available in all environments */ }
 }
 
+// ─── Selection ────────────────────────────────────────────────────────────────
+// The corpus is ~8,000 events, of which ~2,275 are universal contemplative
+// observations with very broad guards. Drawing from one flat weighted pool let
+// that layer take ~70% of every life while the country-, era- and identity-
+// specific events written around it fired a handful of times per hundred lives —
+// the exact inversion of "specificity over coverage".
+//
+// So the year is drawn in two steps: first a REGISTER, then an event within it.
+// Reserving a share of every year for anchored and earned events keeps the
+// specific content reachable no matter how large the universal pool grows.
+const REGISTER_SHARES = {
+  // anchored: keyed to place, era or identity — the education mandate
+  // earned:   keyed to what has already happened to this character — the follow-through mandate
+  // universal: generic authored events
+  // contemplative: the sonder layer
+  active:  { anchored: 0.40, earned: 0.32, universal: 0.06, contemplative: 0.22 },
+  passive: { anchored: 0.38, earned: 0.29, universal: 0.05, contemplative: 0.28 },
+}
+
+// At most one contemplative event every N years. Enforced by module membership
+// (event.contemplative), never by id prefix — the id convention drifted across
+// 66 modules and a prefix test missed 46% of the pool.
+const CONTEMPLATIVE_COOLDOWN = 3
+
+// A stranger glimpse is due roughly once a decade, per the Sonder Principle.
+const GLIMPSE_INTERVAL = 9
+
+function eventWeight(e, G, desire, leaning) {
+  let w = (e.weight ?? 1) * desireWeight(e.id, desire) * statWeight(e.id, G) * leaningWeight(e.id, leaning)
+  // Inside the contemplative layer, prefer observations that are anchored to
+  // this place and era — the "place and era texture" layer of the quiet year.
+  if (e.contemplative && e.anchored) w *= 3
+  return w
+}
+
+function weightedPick(pool, G, desire, leaning) {
+  if (pool.length === 0) return null
+  const total = pool.reduce((sum, e) => sum + eventWeight(e, G, desire, leaning), 0)
+  if (total <= 0) return pool[pool.length - 1]
+  let r = Math.random() * total
+  for (const event of pool) {
+    r -= eventWeight(event, G, desire, leaning)
+    if (r <= 0) return event
+  }
+  return pool[pool.length - 1]
+}
+
 export function getNextEvent(state) {
   const phase = getPhase(state.age)
   const G = buildG(state)
@@ -483,7 +609,8 @@ export function getNextEvent(state) {
   const currentYear = state.currentYear ?? 0
 
   const queueMatch = state.queue.find(e =>
-    (e.phase === phase || e.phase == null) && isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G))
+    (e.phase === phase || e.phase == null) && isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
+    (!state.inPrison || e.prisonOk === true)
   )
   if (queueMatch) return queueMatch
 
@@ -504,25 +631,43 @@ export function getNextEvent(state) {
     }
   }
 
-  // Sonder rate limit — at most one sonder/contemplative event every 2 years
-  const lastSonderYear = state.mem?.lastSonderYear ?? 0
-  if (currentYear - lastSonderYear < 2) {
-    pool = pool.filter(e => !e.id?.startsWith('sonder_'))
-  }
-
   devLogPool(phase, pool, null, usedEventMap, phaseEvents)
-
   if (pool.length === 0) return null
+
+  for (const e of pool) classifyEvent(e)
 
   const desire = G.desire
   const leaning = G.political_leaning
-  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1) * desireWeight(e.id, desire) * statWeight(e.id, G) * leaningWeight(e.id, leaning), 0)
-  let r = Math.random() * totalWeight
-  for (const event of pool) {
-    r -= (event.weight ?? 1) * desireWeight(event.id, desire) * statWeight(event.id, G) * leaningWeight(event.id, leaning)
-    if (r <= 0) return event
+
+  // A glimpse of a stranger's life, on its own cadence rather than competing
+  // for weight against 8,000 other events.
+  const lastGlimpse = state.mem?.lastGlimpseYear ?? (state.character?.birthYear ?? currentYear)
+  if (state.age >= 8 && currentYear - lastGlimpse >= GLIMPSE_INTERVAL) {
+    const glimpses = pool.filter(e => e.isGlimpse)
+    if (glimpses.length && chance(0.55)) return weightedPick(glimpses, G, desire, leaning)
   }
-  return pool[pool.length - 1]
+
+  const lastContemplative = state.mem?.lastContemplativeYear ?? -999
+  const contemplativeAllowed = currentYear - lastContemplative >= CONTEMPLATIVE_COOLDOWN
+
+  const buckets = { anchored: [], earned: [], universal: [], contemplative: [] }
+  for (const e of pool) (buckets[e.register] ?? buckets.universal).push(e)
+  if (!contemplativeAllowed) buckets.contemplative = []
+
+  // Draw a register, renormalising over whichever registers actually have
+  // something eligible this year.
+  const shares = REGISTER_SHARES[state.mode === 'passive' ? 'passive' : 'active']
+  const live = Object.keys(buckets).filter(k => buckets[k].length > 0)
+  if (live.length === 0) return null
+  const totalShare = live.reduce((s, k) => s + shares[k], 0)
+  let r = Math.random() * totalShare
+  let chosen = live[live.length - 1]
+  for (const k of live) {
+    r -= shares[k]
+    if (r <= 0) { chosen = k; break }
+  }
+
+  return weightedPick(buckets[chosen], G, desire, leaning)
 }
 
 export function buildG(state) {
@@ -590,7 +735,7 @@ export function buildG(state) {
     ruralUrban: state.character?.ruralUrban ?? 'urban',
     literate: flagSet.has('became_literate') ? true : (state.character?.literate ?? true),
     regime: getCountryRegime(state.character?.country, currentYear),
-    lgbtqCriminalized: isLgbtqCriminalized(state.character?.country, currentYear),
+    lgbtqCriminalized: isLgbtqCriminalized(liveCountry(state), currentYear),
     casteSystem: state.character?.country?.casteSystem ?? false,
     childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
     currentCountry: state.currentCountry ?? state.character?.country,
@@ -623,29 +768,9 @@ export function buildG(state) {
     // lastMajorEvent guard helper — prevents emotional clustering
     // G.yearsSince('bereavement') >= 2 guards miscarriage after parent death, etc.
     yearsSince: (cat) => currentYear - (state.mem?.[`lastMajorEvent_${cat}`] ?? 0),
-    // Season (0=winter 1=spring 2=summer 3=autumn) derived deterministically per year.
-    // Southern-hemisphere countries swap summer/winter. Tropical countries stay 0/1 (dry/wet).
-    season: (() => {
-      const southernHemisphere = new Set([
-        'Australia','New Zealand','Argentina','Brazil','Chile','South Africa','Peru',
-        'Bolivia','Uruguay','Paraguay','Zimbabwe','Zambia','Mozambique','Angola',
-        'Namibia','Tanzania','Kenya','Rwanda','Burundi','Madagascar','Malawi',
-      ])
-      const tropical = new Set([
-        'Nigeria','Ghana','Ivory Coast','Cameroon','DR Congo','Uganda','Ethiopia',
-        'Somalia','Sudan','Guinea','Mali','Burkina Faso','Senegal','Bangladesh',
-        'Thailand','Vietnam','Indonesia','Philippines','Cambodia','Myanmar','Laos',
-        'Colombia','Venezuela','Ecuador','Guatemala','Honduras','Nicaragua',
-        'El Salvador','Dominican Republic','Haiti','Cuba','Puerto Rico','Panama',
-      ])
-      const countryName = state.character?.country?.name ?? ''
-      // Pseudo-random but deterministic per character+year
-      const raw = ((state.character?.birthYear ?? 1960) * 7 + currentYear * 3) % 4
-      if (tropical.has(countryName)) return raw % 2 === 0 ? 'dry' : 'wet'
-      const seasons = ['winter','spring','summer','autumn']
-      const idx = southernHemisphere.has(countryName) ? (raw + 2) % 4 : raw
-      return seasons[idx]
-    })(),
+    // Season derived deterministically per character+year; shared with the
+    // year-texture layer so seasonal prose and seasonal guards agree.
+    season: deriveSeason(state),
   }
 }
 
@@ -655,8 +780,17 @@ function applyWorldEvents(state) {
   for (const we of WORLD_EVENTS) {
     if (updated.worldEventsFired.has(we.id)) continue
     if (state.currentYear < we.years[0] || state.currentYear > we.years[1]) continue
-    const archetypesMatch = !we.archetypes || we.archetypes === 'all' || we.archetypes.includes(state.character.country.archetype)
-    const countryMatch = !we.countries || we.countries.includes(state.character.country.name)
+    // History reaches you where you are. An emigrant experiences the country
+    // they live in; homeland events only follow them abroad when the event is
+    // explicitly written to (`followsEmigrant`), which is what keeps diaspora
+    // arcs — news from home, a war you are watching from outside — working.
+    const lived = liveCountry(state)
+    const birth = state.character.country
+    const abroad = lived?.name !== birth?.name
+    const candidates = abroad && we.followsEmigrant ? [lived, birth] : [lived]
+    const archetypesMatch = !we.archetypes || we.archetypes === 'all' ||
+      candidates.some(c => we.archetypes.includes(c?.archetype))
+    const countryMatch = !we.countries || candidates.some(c => we.countries.includes(c?.name))
     if (!archetypesMatch || !countryMatch) continue
     if (we.minAge && state.age < we.minAge) continue
     if (we.maxAge && state.age > we.maxAge) continue
@@ -750,9 +884,10 @@ function lerpIMR(archetype, year) {
 
 function checkDeath(state) {
   const { age, stats, character, flags } = state
-  const cr = character.country.conflictRisk ?? 0
+  const lc = liveCountry(state)
+  const cr = lc.conflictRisk ?? 0
   const currentYear = (character.birthYear ?? 1960) + age
-  const arch = character.country.archetype ?? 'developing_urban'
+  const arch = lc.archetype ?? 'developing_urban'
   let prob = 0
   let skipHcMod = false
 
@@ -797,9 +932,16 @@ function checkDeath(state) {
 
   if (!skipHcMod) {
     const hcMod = { excellent: 0.65, good: 0.8, fair: 1.0, poor: 1.25, very_poor: 1.5 }
-    prob *= hcMod[character.country.healthcare] ?? 1.0
+    prob *= hcMod[lc.healthcare] ?? 1.0
   }
-  if (stats.health < 10) prob += 0.15
+  // A very low health stat is a real mortality signal, but this used to be a
+  // flat +15%/yr cliff in a model where nothing restored health — the single
+  // largest cause of premature death in the simulation. Graded now, and gentler
+  // for children, whose age bands already carry historical mortality rates.
+  if (stats.health < 25) {
+    const severity = (25 - stats.health) / 25
+    prob += severity * severity * (age < 18 ? 0.03 : 0.09)
+  }
   // Karma very slightly modifies survival odds
   const karma = state.karma ?? 50
   prob *= clamp(1 - (karma - 50) * 0.002, 0.8, 1.2)
@@ -942,9 +1084,9 @@ export function getAvailableCareers(state) {
     if (career.requirements.minSmarts && state.stats.smarts < career.requirements.minSmarts) return false
     if (career.gdpRequired && career.gdpRequired !== 'any') {
       const gdpOrder = ['very_low', 'low', 'low_medium', 'medium', 'medium_high', 'high', 'very_high']
-      if (gdpOrder.indexOf(state.character.country.gdp) < gdpOrder.indexOf(career.gdpRequired)) return false
+      if (gdpOrder.indexOf(liveCountry(state).gdp) < gdpOrder.indexOf(career.gdpRequired)) return false
     }
-    if (Array.isArray(career.archetypeAvailable) && !career.archetypeAvailable.includes(state.character.country.archetype)) return false
+    if (Array.isArray(career.archetypeAvailable) && !career.archetypeAvailable.includes(liveCountry(state).archetype)) return false
     if (career.requirements.flags && !career.requirements.flags.some(f => state.flags.includes(f))) return false
     if (career.minYear && state.currentYear < career.minYear) return false
     if (career.maxYear && state.currentYear > career.maxYear) return false
@@ -971,7 +1113,7 @@ export function enterCareer(state, careerId) {
   const baseSalary = randomBetween(level.salaryRange[0], level.salaryRange[1])
   // Scale salary to country purchasing power
   const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
-  const salaryMult = gdpSalaryMult[state.character.country.gdp] ?? 1.0
+  const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0
   const salary = Math.round(baseSalary * salaryMult)
   const newCareer = {
     id: career.id, title: level.title, level: 0, salary,
@@ -1001,7 +1143,7 @@ export function checkPromotion(state) {
 
   const newLevel = careerDef.levels[nextIdx]
   const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
-  const salaryMult = gdpSalaryMult[state.character.country.gdp] ?? 1.0
+  const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0
   const salary = Math.round(randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1]) * salaryMult)
   const career = { ...state.career, level: nextIdx, title: newLevel.title, salary, yearsInRole: 0 }
   const log = [...state.log, { age: state.age, text: `You are promoted to ${newLevel.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
@@ -1067,7 +1209,7 @@ export function attemptCrime(state, crimeId) {
     return { ...state, log: [...state.log, { age: state.age, text: "You don't have the technical knowledge for this.", isKey: false }] }
   }
 
-  const archetypeMod = crime.archetypeModifier?.[state.character.country.archetype] ?? 0
+  const archetypeMod = crime.archetypeModifier?.[liveCountry(state).archetype] ?? 0
   // Support both old format (arrestRisk/successEffect/caughtEffect) and new format (baseSuccessRate/effect/failEffect)
   const useNewFormat = typeof crime.effect === 'function'
   const failProb = useNewFormat
@@ -1124,6 +1266,7 @@ function tickParents(state) {
   let { mother, father } = state.parents
   let log = [...state.log]
   let money = state.money ?? 0
+  const deaths = []
 
   function ageParent(parent, label) {
     if (!parent.alive) return parent
@@ -1137,7 +1280,18 @@ function tickParents(state) {
     if (chance(deathProb)) {
       const inheritance = Math.round(randomBetween(500, 60000) * (parent.relationshipQuality / 100))
       money += inheritance
-      log.push({ age: state.age, text: `Your ${label}, ${parent.name}, passes away at age ${newAge}. You inherit $${inheritance.toLocaleString()}.`, isKey: true, isDeath: true })
+      // Losing a parent is the most common grief in a human life. It used to set
+      // no flag at all, so none of the memory, grief or texture layers built to
+      // metabolize it ever knew it had happened — and it read like a receipt.
+      deaths.push({ which: label, name: parent.name, age: newAge, close: parent.relationshipQuality >= 55 })
+      const close = parent.relationshipQuality >= 55
+      const distant = parent.relationshipQuality < 30
+      const text = distant
+        ? `Your ${label}, ${parent.name}, dies at ${newAge}. You find you are not sure what you feel, and that this is its own kind of information.`
+        : close
+          ? `Your ${label}, ${parent.name}, dies at ${newAge}. There is a stretch of days afterwards that you will not be able to account for later.`
+          : `Your ${label}, ${parent.name}, dies at ${newAge}. You make the calls. You handle the arrangements. You are surprised by how much of it is paperwork.`
+      log.push({ age: state.age, text, isKey: true, isDeath: true })
       return { ...parent, currentAge: newAge, alive: false }
     }
     const drift = (60 - parent.relationshipQuality) * 0.02
@@ -1146,7 +1300,24 @@ function tickParents(state) {
 
   mother = ageParent(mother, 'mother')
   father = ageParent(father, 'father')
-  return { ...state, parents: { mother, father }, log, money }
+
+  let flags = state.flags
+  let mem = state.mem
+  if (deaths.length) {
+    const add = []
+    const nextMem = { ...(mem ?? {}) }
+    for (const d of deaths) {
+      // Canonical flag (timestamped, drives the memory layer) plus the older
+      // alias that a number of authored guards still read.
+      add.push(`lost_parent_${d.which}`, `${d.which}_died`)
+      nextMem[`lost_parent_${d.which}Year`] = state.currentYear
+      nextMem.lastMajorEvent_bereavement = state.currentYear
+      if (d.close) add.push('lost_parent_close')
+    }
+    flags = [...new Set([...(state.flags ?? []), ...add])]
+    mem = nextMem
+  }
+  return { ...state, parents: { mother, father }, log, money, flags, mem }
 }
 
 // ─── Asset ticking ───────────────────────────────────────────────────────────
@@ -1399,7 +1570,7 @@ function checkIllnessRisk(state) {
 
     // Country healthcare quality multiplies base illness risk
     const hcIllnessMod = { excellent: 0.7, good: 0.85, fair: 1.0, poor: 1.3, very_poor: 1.6 }
-    prob *= hcIllnessMod[state.character.country.healthcare] ?? 1.0
+    prob *= hcIllnessMod[liveCountry(state).healthcare] ?? 1.0
 
     // Pollution exposure increases illness risk significantly
     if (state.flags.includes('pollution_exposure')) prob *= 1.4
@@ -1408,13 +1579,13 @@ function checkIllnessRisk(state) {
 
     // Scale treatment costs to country GDP (developing-world costs are lower but so are wages)
     const gdpCostMult = { very_high: 1.4, high: 1.1, medium_high: 0.9, medium: 0.7, low_medium: 0.5, low: 0.35, very_low: 0.2 }
-    const costMult = gdpCostMult[state.character.country.gdp] ?? 1.0
+    const costMult = gdpCostMult[liveCountry(state).gdp] ?? 1.0
     // Also scale treatment success by healthcare quality (poor healthcare = worse outcomes)
     const hcSuccessMod = { excellent: 1.15, good: 1.05, fair: 1.0, poor: 0.85, very_poor: 0.7 }
-    const successMod = hcSuccessMod[state.character.country.healthcare] ?? 1.0
+    const successMod = hcSuccessMod[liveCountry(state).healthcare] ?? 1.0
 
-    const archetype = state.character.country.archetype ?? 'wealthy_west'
-    const healthcare = state.character.country.healthcare ?? 'fair'
+    const archetype = liveCountry(state).archetype ?? 'wealthy_west'
+    const healthcare = liveCountry(state).healthcare ?? 'fair'
     const illnessContext = {
       excellent: `The tests come back quickly. The specialist explains everything clearly. You have options.`,
       good:      `The GP refers you to a specialist. There is a wait. When you get there, the diagnosis is clear.`,
@@ -1646,14 +1817,20 @@ export function tick(state) {
       const prisonEvent = getNextEvent(s)
       if (prisonEvent) {
         if (s.queue.some(e => e.id === prisonEvent.id)) s.queue = s.queue.filter(e => e.id !== prisonEvent.id)
-        s.usedEventMap = new Map([...(s.usedEventMap ?? new Map()), [prisonEvent.id, s.currentYear]])
         if (!prisonEvent.choices || prisonEvent.choices.length === 0) {
           const proxy = buildEffectProxy(s)
           if (prisonEvent.effect) prisonEvent.effect(proxy)
           s = applyProxy(s, proxy)
           s = resolveProxyExtras(s, proxy)
+          s = trackCadence(s, prisonEvent, s.currentYear)
+          s = markEventUsed(s, prisonEvent)
           s.log = [...s.log, { age: s.age, text: typeof prisonEvent.text === 'function' ? prisonEvent.text(buildG(s)) : prisonEvent.text, isKey: false }]
+        } else if (s.mode === 'passive') {
+          const idx = pickChoiceAutomatically(prisonEvent, buildG(s))
+          return resolveChoice({ ...s, pendingEvent: prisonEvent }, idx)
         } else {
+          // Marked used on resolution, like every other event, so closing the tab
+          // mid-event cannot silently consume it.
           s.pendingEvent = prisonEvent
           return s
         }
@@ -1794,6 +1971,15 @@ export function tick(state) {
   // Parent aging and possible inheritance
   s = tickParents(s)
 
+  // Children's ages are derived, not stored at birth: `ageAtBirth` is the
+  // parent's age when the child arrived, so the child's age is the difference.
+  // Ten reads of `child.age` across yearTexture, epitaph and mundaneLayer were
+  // comparing against undefined, silently killing the teen-children,
+  // estranged-child, children-abroad and grandparent texture.
+  if (s.children?.length) {
+    s.children = s.children.map(c => ({ ...c, age: Math.max(0, s.age - (c.ageAtBirth ?? s.age)) }))
+  }
+
   // Sibling aging
   s = tickSiblings(s)
 
@@ -1885,9 +2071,23 @@ export function tick(state) {
   s = applySoundtrack(s)
 
   // Mundane layer — daily-life texture alongside main events
-  const mundaneText = buildMundaneLayer(s)
-  if (mundaneText) {
-    s.log = [...s.log, { age: s.age, text: mundaneText, isKey: false, isMundane: true }]
+  // ─── Annual texture ─────────────────────────────────────────────────────────
+  // buildYearTexture holds the memory layer (grief staged by years-since), the
+  // conditions and project layers, place-and-era fragments and seasonal prose —
+  // ~14,800 lines of the most life-aware writing in the game. It used to be
+  // reachable ONLY when the event pool came back empty, which with ~2,000
+  // broadly-guarded contemplative events essentially never happened, so it fired
+  // in about 2% of years. It is a layer now, not a fallback: it speaks first
+  // whenever it has something specific to say about THIS life, and the mundane
+  // layer fills the years when it does not.
+  const specificTexture = chance(0.6) ? buildYearTexture(s, { specificOnly: true }) : null
+  if (specificTexture) {
+    s.log = [...s.log, { age: s.age, year: s.currentYear, text: specificTexture, isKey: false, isTexture: true }]
+  } else {
+    const mundaneText = buildMundaneLayer(s)
+    if (mundaneText) {
+      s.log = [...s.log, { age: s.age, text: mundaneText, isKey: false, isMundane: true }]
+    }
   }
 
   // Education progression
@@ -2048,10 +2248,20 @@ export function tick(state) {
   // Illness risk check
   s = checkIllnessRisk(s)
 
+  // Retirement income. retire() logs a specific annual pension; before this,
+  // nothing ever paid it, so retirees earned nothing while the poverty premium
+  // and maintenance costs kept draining them. Subsistence economies have no
+  // formal pension, which is itself the historically accurate outcome.
+  if (s.retired && s.pensionAnnual > 0) {
+    const arch = liveCountry(s)?.archetype
+    const formal = !['subsaharan', 'developing_unstable', 'conflict_zone'].includes(arch)
+    if (formal) s.money = (s.money ?? 0) + s.pensionAnnual
+    else if (chance(0.25)) s.money = (s.money ?? 0) + Math.round(s.pensionAnnual * 0.3)
+  }
+
   // Charisma passive drain under authoritarian regimes (self-suppression of social energy)
   if (s.flags.includes('learned_silence') || s.flags.includes('authoritarian_childhood')) {
-    const liveCountry = s.currentCountry ?? s.character?.country
-    const regime = getCountryRegime(liveCountry, s.currentYear)
+    const regime = getCountryRegime(liveCountry(s), s.currentYear)
     const authRegimes = ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy', 'absolute_monarchy']
     if (authRegimes.includes(regime)) {
       s.stats = { ...s.stats, charisma: clamp(s.stats.charisma - 1, 10, 100) }
@@ -2142,11 +2352,14 @@ export function tick(state) {
     }
   }
 
-  // Partner relationship drift
-  if (s.partner) {
+  // Partner relationship drift. tickPartner already ages the partner and drifts
+  // the relationship earlier in the year; this pass pulls toward equilibrium and
+  // handles breakups. It must skip the dead — a deceased partner used to go on
+  // drifting, accruing years, and could still "leave" the character.
+  if (s.partner && s.partner.alive !== false) {
     const drift = (55 - s.partner.relationshipQuality) * 0.03 + randomBetween(-2, 2)
     const newQ = clamp(s.partner.relationshipQuality + drift, 0, 100)
-    s.partner = { ...s.partner, relationshipQuality: newQ, years: (s.partner.years ?? 0) + 1 }
+    s.partner = { ...s.partner, relationshipQuality: newQ }
     if (newQ < 20 && !s.partner.married && chance(0.3)) {
       const name = s.partner.name
       s.partner = null
@@ -2214,12 +2427,18 @@ export function tick(state) {
   const event = getNextEvent(s)
   if (!event) {
     s.pendingEvent = null
-    s.log = [...s.log, { age: s.age, year: s.currentYear, text: buildYearTexture(s), isKey: false }]
+    const texture = buildYearTexture(s)
+    if (texture) s.log = [...s.log, { age: s.age, year: s.currentYear, text: texture, isKey: false, isTexture: true }]
     return s
   }
 
   if (s.queue.some(e => e.id === event.id)) s.queue = s.queue.filter(e => e.id !== event.id)
-  s.usedEventMap = new Map([...(s.usedEventMap ?? new Map()), [event.id, s.currentYear]])
+
+  // NOTE: the event is deliberately NOT marked used here. It is marked used when
+  // it RESOLVES (resolveAutoEvent / resolveChoice). Stamping at selection time
+  // meant that closing the tab between Age Up and answering consumed the event
+  // permanently — its effect never applied — which silently ate guaranteed beats
+  // like the graduation chain and illness diagnoses.
 
   // Resolve function text so EventBox and logs always receive strings
   const resolvedText = typeof event.text === 'function' ? event.text(buildG(s)) : (event.text ?? '')
@@ -2230,8 +2449,32 @@ export function tick(state) {
     return s
   }
 
+  // Passive mode: the life goes the way it goes. Choice events still fire, but
+  // the character makes the choice, and the year resolves in one beat.
+  if (s.mode === 'passive') {
+    const idx = pickChoiceAutomatically(resolvedEvent, buildG(s))
+    return resolveChoice({ ...s, pendingEvent: resolvedEvent }, idx)
+  }
+
   s.pendingEvent = resolvedEvent
   return s
+}
+
+// An event is consumed when it resolves, not when it is shown.
+function markEventUsed(s, event) {
+  if (!event?.id) return s
+  return { ...s, usedEventMap: new Map([...(s.usedEventMap ?? new Map()), [event.id, s.currentYear]]) }
+}
+
+// Record the cadences selection depends on. Classified by module membership
+// (event.contemplative), never by id prefix — see getNextEvent.
+function trackCadence(s, event, year) {
+  if (!event) return s
+  const mem = { ...(s.mem ?? {}) }
+  let touched = false
+  if (event.contemplative) { mem.lastContemplativeYear = year; touched = true }
+  if (event.isGlimpse) { mem.lastGlimpseYear = year; touched = true }
+  return touched ? { ...s, mem } : s
 }
 
 export function resolveAutoEvent(state) {
@@ -2242,11 +2485,8 @@ export function resolveAutoEvent(state) {
   if (pendingEvent.effect) pendingEvent.effect(proxy)
   let s = applyProxy(state, proxy)
   s = resolveProxyExtras(s, proxy)
-
-  // Track sonder rate limiting
-  if (pendingEvent.id?.startsWith('sonder_')) {
-    s.mem = { ...(s.mem ?? {}), lastSonderYear: state.currentYear }
-  }
+  s = trackCadence(s, pendingEvent, state.currentYear)
+  s = markEventUsed(s, pendingEvent)
 
   s.log = [...s.log, { age: state.age, year: state.currentYear, text: pendingEvent.text, isKey: pendingEvent.isKey ?? false, isLetter: pendingEvent.isLetter ?? false, isPhaseTransition: pendingEvent.isPhaseTransition ?? false }]
   s.pendingEvent = null
@@ -2260,16 +2500,68 @@ export function resolveChoice(state, choiceIndex) {
   if (!choice) return state
 
   const proxy = buildEffectProxy(state)
+  // An event may carry BOTH a top-level effect (once-only latches, setMem
+  // guards) and per-choice effects. The top-level one used to be silently
+  // dropped here, so its latch never set and the event could re-fire forever.
+  if (pendingEvent.effect) pendingEvent.effect(proxy)
   if (choice.effect) choice.effect(proxy)
   let s = applyProxy(state, proxy)
   s = resolveProxyExtras(s, proxy)
   if (choice.tag) s.flags = [...new Set([...s.flags, choice.tag])]
   if (choice.inject) s.queue = [...s.queue, choice.inject]
+  s = trackCadence(s, pendingEvent, state.currentYear)
+  s = markEventUsed(s, pendingEvent)
   const evtText = typeof pendingEvent.text === 'function' ? pendingEvent.text(buildG(state)) : (pendingEvent.text ?? '')
   const outcomeText = typeof choice.outcome === 'function' ? choice.outcome(buildG(s)) : (choice.outcome ?? '')
-  s.log = [...s.log, { age: state.age, year: state.currentYear, text: `${evtText.slice(0, 80)}… — ${outcomeText}`, isKey: true, isLetter: pendingEvent.isLetter ?? false }]
+  // The moments the player actually shaped used to be the ONLY truncated
+  // entries in the log. Keep the full prose and carry the outcome alongside it.
+  s.log = [...s.log, {
+    age: state.age, year: state.currentYear,
+    text: evtText, outcome: outcomeText, choiceText: choice.text ?? null,
+    isKey: true, isChoice: true, isLetter: pendingEvent.isLetter ?? false,
+  }]
   s.pendingEvent = null
   return s
+}
+
+// ─── Passive mode ─────────────────────────────────────────────────────────────
+// In passive mode the player reads a life rather than steering it, so choice
+// events still fire but resolve themselves. The pick is not uniform: it leans
+// toward what this particular character, with these stats and this formative
+// desire, would plausibly do — so a passively-read life still coheres.
+function scoreChoiceForCharacter(choice, G, index) {
+  let score = 1
+  const text = `${choice.text ?? ''} ${choice.tag ?? ''}`.toLowerCase()
+  const s = G.stats ?? {}
+  if (/refuse|resist|argue|fight|confront|report|speak/.test(text)) {
+    score *= 0.6 + (s.charisma ?? 50) / 100
+    if (G.desire === 'leave_mark' || G.desire === 'freedom') score *= 1.5
+    if (['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(G.regime)) score *= 0.55
+  }
+  if (/stay|remain|keep|accept|endure|say nothing|silent|nothing/.test(text)) {
+    if (G.desire === 'safety' || G.desire === 'belong') score *= 1.5
+  }
+  if (/leave|go|move|emigrate|abroad/.test(text)) {
+    if (G.desire === 'freedom' || G.desire === 'prove_worth') score *= 1.4
+    if (G.desire === 'belong') score *= 0.7
+  }
+  if (/study|learn|school|read|train/.test(text)) score *= 0.7 + (s.smarts ?? 50) / 100
+  if (/pay|buy|spend|afford/.test(text) && (G.money ?? 0) < 500) score *= 0.35
+  if (/steal|cheat|lie|bribe/.test(text)) score *= (G.karma ?? 50) < 40 ? 1.4 : 0.6
+  return Math.max(0.05, score)
+}
+
+export function pickChoiceAutomatically(event, G) {
+  const choices = event.choices ?? []
+  if (choices.length === 0) return 0
+  const scores = choices.map((c, i) => scoreChoiceForCharacter(c, G, i))
+  const total = scores.reduce((a, b) => a + b, 0)
+  let r = Math.random() * total
+  for (let i = 0; i < scores.length; i++) {
+    r -= scores[i]
+    if (r <= 0) return i
+  }
+  return choices.length - 1
 }
 
 

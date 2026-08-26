@@ -26,7 +26,7 @@ export const SOLDIER_ARC_EVENTS = [
 
   {
     id: 'sol_deployment_orders',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_MILITARY(G) && DEPLOYMENT_CONTEXT(G) && G.age >= 18 && G.age <= 35 && !G.mem.solDeployed,
     text: 'The orders come through in the morning. You know the place name from news reports. It looked different in news reports than it does in the briefing, and different again in the briefing than it will look when you arrive. You have been trained for this. Training and the actual thing are related but not the same.',

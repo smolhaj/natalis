@@ -65,7 +65,7 @@ export const MONEY_EVENTS = [
 
   {
     id: 'money_first_debt',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.firstDebtEvent &&
@@ -162,7 +162,7 @@ export const MONEY_EVENTS = [
 
   {
     id: 'money_counting_days',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.moneyCountingDays &&
