@@ -110,6 +110,8 @@ pool — only the surface differs.
   year resolves in one beat. The activities panel, action budget and crime
   surface are hidden; the only verb is Age Up.
 
+`pickChoiceAutomatically` weighs the character's **disposition** — what they have already done — so later answers lean toward earlier ones, and a life reads as one person rather than a sequence of coin flips. Choices may declare `tag: 'defiant' | 'yielding'`; inferring it from the prose gets the hardest cases backwards, since "Say nothing at all" under interrogation is the defiant answer. Measured by calling the scorer directly (whole lives are far too noisy an instrument for this): no history 40% defiant, one defiant act 56%, three 93%; one yielding act 28%, three 4%.
+
 Passive mode is the purest expression of the Sonder Principle, and it is also a
 correctness contract: a life that nobody steers must still reach a plausible age
 and a full arc. If passive medians drift, the simulation is wrong, not the mode.
@@ -267,6 +269,7 @@ The demography is anchored to the historical record, not invented, and interpola
 - `totalFertility(state)` — archetype TFR, with `TFR_BY_COUNTRY` overrides for the countries whose fertility history diverges sharply from their archetype (Egypt and Brazil are both `developing_urban` and a full child apart).
 - `retirementAge(state)` — returns `null` where there is no pension system to be inside; a smallholder does not retire, and gets prose about the work redistributing itself instead.
 - `chooseCareer(state)` — `getAvailableCareers` answers "is this legal for this character", which is not "is this what someone like this does". Weighted by field against rural-poor / urban-poor / urban-rich columns, so a 1974 Ethiopian villager does not become a dog walker.
+- `secondaryChance(state)` / `primaryChance(state)` — whether this character finishes school, resolved at 16 against the country's literacy read for the character's own gender, scaled by era (those literacy figures are a modern snapshot applied to mid-century births), rural share, GDP tier and working-young. The engine used to grant secondary education to everyone who had not explicitly dropped out: 95% completion for a 1962 Nigerian cohort against a real 10%, 98% for a 1974 Ethiopian one against 6%. Schooling decides work, marriage age, fertility, money and half the corpus's guards, so this is the most load-bearing number in the module.
 - `ownershipChance(state)` — home ownership by archetype and year, with `OWNERSHIP_BY_COUNTRY` for the figures the archetype cannot predict (Germany 47%, Switzerland 40%, Singapore's HDB 89%, Romania 95%). Two acquisition paths, because there are two worlds: a financed purchase where there is a mortgage market and a deposit, and everywhere else — family land, a self-build, an allocated flat. Pricing the second as a purchase would have excluded most of the world for most of the period. Post-Soviet mass privatisation is an **event**, not a hazard: modelled as a lifetime rate it gave Russia 55% against a real 85%, because it was a decree that moved a country in four years.
 
 Measured against the record (`tests/demography.test.js`, which fails if this drifts):
@@ -279,7 +282,9 @@ Measured against the record (`tests/demography.test.js`, which fails if this dri
 | Brazil 1995 | 25 | 25 | 2.0 | 1.7 |
 | United States 1950 | 24 | 23 | 1.7 | 1.9 |
 | Germany 1970 | 30 | 29 | 1.4 | 1.4 |
-| Japan 1980 | 30 | 30 | 1.1 | 1.35 |
+| Japan 1980 | 29 | 30 | 1.0 | 1.35 |
+
+And attainment, which is the fork the rest of it hangs off (`secondary completion`, real in brackets): Nigeria 1962 2-20% (10%), Ethiopia 1974 0-2% (6%), India 1975 18-23% (30%), Brazil 1995 64-74% (60%), United States 1950 92-97% (80%), Germany 1970 94-96% (85%), Japan 1980 94-99% (95%). Asserted as an **ordering and wide bands**, never as point estimates: a 10% rate over 20 lives has a confidence interval most of that wide, and two consecutive runs of identical code gave 20% and 2%.
 
 ### Prison and political arrest (`src/data/events/prison/`)
 
