@@ -51,7 +51,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_e',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasPhone(G) && (G.age >= 24 && G.age <= 34 && !G.mem?.s35e),
     text: () => pick([
@@ -64,7 +64,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_f',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 40 && G.age <= 54 && !G.mem?.s35f,
     text: () => pick([
@@ -90,7 +90,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_h',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 44 && G.age <= 58 && !G.mem?.s35h),
     text: () => pick([
@@ -142,7 +142,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_l',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 42 && G.age <= 56 && !G.mem?.s35l,
     text: () => pick([
@@ -168,7 +168,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_o',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 26 && G.age <= 36 && !G.mem?.s35o,
     text: () => pick([
@@ -181,7 +181,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_p',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 46 && G.age <= 58 && !G.mem?.s35p,
     text: () => pick([
@@ -220,7 +220,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_s',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 28 && G.age <= 38 && !G.mem?.s35s),
     text: () => pick([
@@ -246,7 +246,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_u',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 43 && G.age <= 55 && !G.mem?.s35u,
     text: () => pick([
@@ -272,7 +272,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_w',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 24 && G.age <= 35 && !G.mem?.s35w,
     text: () => pick([
@@ -298,7 +298,7 @@ export const EVENTS_SONDER_45 = [
 
   {
     id: 'sonder_45_y',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 48 && G.age <= 60 && !G.mem?.s35y,
     text: () => pick([

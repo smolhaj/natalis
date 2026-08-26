@@ -24,7 +24,7 @@ export const FOLLOWTHROUGH_37_EVENTS = [
 
   {
     id: 'ft37_mitch_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('hon_mitch_survivor') &&
@@ -56,7 +56,7 @@ export const FOLLOWTHROUGH_37_EVENTS = [
 
   {
     id: 'ft37_berta_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('hon_berta_witness') &&

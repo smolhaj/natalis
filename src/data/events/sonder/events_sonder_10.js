@@ -118,7 +118,7 @@ export const EVENTS_SONDER_10 = [
 
   {
     id: 'sonder10_nbr_left_behind',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.s10NbrLeftBehind,
     text: 'Moving into this place, you found things from the person before: a single shoe, a postcard from somewhere, marks on a wall that tracked a child\'s height over several years. The child is gone. The marks remain. A life was here.',
@@ -242,7 +242,7 @@ export const EVENTS_SONDER_10 = [
 
   {
     id: 'sonder10_body_read',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 35 && !G.mem?.s10BodyRead,
     text: 'You read faster now than you used to, and you skip things without noticing you\'ve skipped them. The eye has learned to identify what matters. What you gain in speed, you may lose in something else — the unhurried sentences, the words read twice because they were exactly right. You are not sure what you\'ve traded.',
@@ -258,7 +258,7 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_faith_prayer_body',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.religion && G.religion !== 'atheist' && G.religion !== 'agnostic' && G.age >= 35 && !G.mem?.s10FaithPrayerBody,
+    when: (G) => G.religion && !['secular', 'atheist'].includes(G.religion) && G.age >= 35 && !G.mem?.s10FaithPrayerBody,
     text: 'The prayer has been said so many times that it lives in the body now rather than the mind. You can say it while thinking about something else. You are not certain whether this is devotion that has gone so deep it no longer needs effort, or whether it is something that has become automatic in the way routines become automatic. You say it anyway.',
     choices: null,
     effect: (p) => { p.m += 3; p.e += 1; p.setMem('s10FaithPrayerBody', true) },
@@ -288,7 +288,7 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_faith_object',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.religion && G.religion !== 'atheist' && G.religion !== 'agnostic' && G.age >= 35 && !G.mem?.s10FaithObject,
+    when: (G) => G.religion && !['secular', 'atheist'].includes(G.religion) && G.age >= 35 && !G.mem?.s10FaithObject,
     text: 'It has been in every home you\'ve ever lived in. The small religious object — the icon, the string of beads, the verse in a frame, the statue that has been on a shelf since before you can remember. Moving it would feel wrong even to those who are not sure it means what it meant. It stays.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s10FaithObject', true) },
@@ -338,7 +338,7 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_faith_ceremony',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.religion && G.religion !== 'atheist' && G.religion !== 'agnostic' && G.age >= 35 && !G.mem?.s10FaithCeremony,
+    when: (G) => G.religion && !['secular', 'atheist'].includes(G.religion) && G.age >= 35 && !G.mem?.s10FaithCeremony,
     text: 'You attend the annual ceremony without deciding whether you believe it. The question is set aside at the door. Everyone who is there has their own relationship with the question and has set it aside at the door. The ceremony happens, and something is marked, and the year turns, and it is enough.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s10FaithCeremony', true) },

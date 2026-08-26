@@ -2894,7 +2894,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'parent_death_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => G.age >= 22 && G.age <= 35 && !G.flags.includes('orphan') && !G.mem.parentDied && Math.random() < 0.07,
     text: 'You get the call. Your parent is gone. You knew it would happen someday. It still feels like the floor has dropped away.',
@@ -3187,9 +3187,10 @@ const BASE_EVENTS = [
   },
   {
     id: 'mid_9_11_aftermath',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.currentYear >= 2001 && G.currentYear <= 2004 && G.age >= 25 && ['wealthy_west'].includes(G.character.country.archetype),
+    when: (G) =>
+      G.age <= 49 && G.currentYear >= 2001 && G.currentYear <= 2004 && G.age >= 25 && ['wealthy_west'].includes(G.character.country.archetype),
     text: 'Everything at airports is different now. Security theater becomes a permanent feature of travel. The country you live in is afraid, and that fear has decided things.',
     choices: null,
     effect: (p) => { p.m -= 5 },
@@ -3851,7 +3852,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ya_miscarriage',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.partner && G.age >= 22 && G.age <= 38 && G.children.length === 0 && !G.mem.miscarriageEvent,
     text: (G) => {
@@ -3880,7 +3881,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ya_postpartum_depression',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.children.length > 0 && !G.mem.postpartumEvent && G.age <= 35 && G.children.some(c => c.ageAtBirth >= G.age - 2),
     text: (G) => {
@@ -5690,9 +5691,10 @@ const BASE_EVENTS = [
   },
   {
     id: 'flood_damage',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.assets?.properties?.length > 0 && !G.mem.flood_damage && G.age >= 22,
+    when: (G) =>
+      G.age <= 49 && G.assets?.properties?.length > 0 && !G.mem.flood_damage && G.age >= 22,
     text: (G) => {
       if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character.country.archetype))
         return 'The monsoon season has been brutal this year. Water has entered the ground floor of your property. The damage is extensive and insurance is a distant concept here.'
@@ -5792,9 +5794,10 @@ const BASE_EVENTS = [
   },
   {
     id: 'industry_layoffs',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
-    when: (G) => G.career !== null && !G.mem.industry_layoffs && G.currentYear >= 1980 && G.age >= 25,
+    when: (G) =>
+      G.age <= 49 && G.career !== null && !G.mem.industry_layoffs && G.currentYear >= 1980 && G.age >= 25,
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2008 && G.currentYear <= 2012)
         return 'The financial crisis has reached your industry. Whole departments are being eliminated. The redundancy notices are going out in batches and your name is on the next one.'
@@ -5847,7 +5850,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'summer_job',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.education?.enrolled !== null && G.age >= 16 && G.age <= 25 && !G.mem.summer_job,
     text: 'The summer break stretches ahead. A friend mentions there are positions at a local business — not glamorous, but the pay is real and the experience would look good on paper.',
@@ -5900,9 +5903,10 @@ const BASE_EVENTS = [
 
   {
     id: 'pet_illness',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
-    when: (G) => G.pets && G.pets.length > 0 && G.age >= 10,
+    when: (G) =>
+      G.age <= 29 && G.pets && G.pets.length > 0 && G.age >= 10,
     text: (G) => {
       if (G.character.country.archetype === 'conflict_zone')
         return 'Your pet is sick — lethargic, refusing food. In a place like this, finding a vet means scrounging for supplies and favours. The cost is not just money.'
@@ -5933,9 +5937,10 @@ const BASE_EVENTS = [
 
   {
     id: 'pet_runs_away',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
-    when: (G) => G.pets && G.pets.length > 0 && G.age >= 10 && !G.flags.includes('pet_lost'),
+    when: (G) =>
+      G.age <= 29 && G.pets && G.pets.length > 0 && G.age >= 10 && !G.flags.includes('pet_lost'),
     text: (G) => {
       if (G.character.country.archetype === 'conflict_zone')
         return 'In the chaos of another difficult week, the gate is left unlatched. Your pet is gone. In a neighbourhood like this, the odds of finding them are not good.'
@@ -5970,9 +5975,10 @@ const BASE_EVENTS = [
 
   {
     id: 'pet_death',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.pets && G.pets.length > 0 && G.age >= 18,
+    when: (G) =>
+      G.age <= 49 && G.pets && G.pets.length > 0 && G.age >= 18,
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_west' || G.character.country.archetype === 'wealthy_east')
         return 'The vet said it would be a matter of weeks. They were right. Your pet — companion, routine, small daily anchor — dies at home, quietly, on their favourite blanket.'
@@ -6001,9 +6007,10 @@ const BASE_EVENTS = [
 
   {
     id: 'pet_learns_trick',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
-    when: (G) => G.pets && G.pets.length > 0 && G.age >= 8,
+    when: (G) =>
+      G.age <= 29 && G.pets && G.pets.length > 0 && G.age >= 8,
     text: (G) => {
       if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
         return 'After weeks of patient repetition — treats, hand signals, the same word until it lost meaning — your pet finally gets it. The trick clicks. They look at you with what you are almost certain is pride.'
@@ -6060,9 +6067,10 @@ const BASE_EVENTS = [
 
   {
     id: 'affair_opportunity',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.partner !== null && G.partner.married && G.age >= 25 && !G.flags.includes('having_affair'),
+    when: (G) =>
+      G.age <= 49 && G.partner !== null && G.partner.married && G.age >= 25 && !G.flags.includes('having_affair'),
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_gulf')
         return 'A colleague — charming, careful, aware of the stakes — makes their interest clear. In this society, what you are contemplating carries consequences that extend far beyond the two of you.'
@@ -6153,9 +6161,10 @@ const BASE_EVENTS = [
 
   {
     id: 'relationship_troubles',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
-    when: (G) => G.partner !== null && G.age >= 20 && !G.mem.relationshipTroubles,
+    when: (G) =>
+      G.age <= 49 && G.partner !== null && G.age >= 20 && !G.mem.relationshipTroubles,
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_gulf')
         return 'The strain between you and your spouse has become harder to ignore. In a culture where appearances matter, what happens inside the home stays inside — but something needs to change.'
@@ -6193,7 +6202,7 @@ const BASE_EVENTS = [
 
   {
     id: 'partner_wants_children',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.partner !== null && G.age >= 22 && G.age <= 40 && G.children.length === 0 && !G.mem.discussed_kids,
     text: (G) => {
@@ -6484,7 +6493,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_brain_drain_peer',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 16 && G.age <= 22 && G.currentYear >= 1995 && !G.mem.ps_brain_drain,
     text: 'Your smartest friend has a visa. Germany. Canada. America. They have been preparing for two years without telling most people. At the farewell party there are jokes and then not jokes. You wonder if you are the one making the wrong choice.',
@@ -6567,7 +6576,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_factory_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 35 && G.currentYear >= 1991 && G.currentYear <= 2010 && !G.mem.ps_factory && !G.career,
     text: 'The factory your father worked at for thirty years is being stripped. The machines are sold for scrap. The workers — most over fifty — have nowhere to go. Your city\'s economy was built around this building. It is being peeled away brick by brick.',
@@ -6592,7 +6601,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_drinking_culture',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 35 && !G.mem.ps_drinking,
     text: 'At every celebration — wedding, promotion, wake, Tuesday — the vodka comes out. You don\'t drink at the first toast, you lose face. You don\'t drink at the third, something is wrong with you. The bottle is both hospitality and test.',
@@ -6624,7 +6633,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_protest_moment',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     isKey: true,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 40 && G.currentYear >= 2000 && !G.mem.ps_protest,
@@ -6804,7 +6813,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_late_emigration_choice',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 40 && G.age <= 65 && G.currentYear >= 2010 && !G.mem.ps_late_emigration && G.children.length > 0,
     text: 'Your children are talking about leaving. They have skills. They have options. The question they do not ask directly is whether you are coming with them. The other question is whether leaving means abandoning everything you stayed for.',
@@ -6863,7 +6872,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ru_chechnya_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -6893,9 +6902,10 @@ const BASE_EVENTS = [
 
   {
     id: 'ru_ukraine_invasion_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Russia' &&
       G.currentYear >= 2022 && G.currentYear <= 2025 &&
       G.age >= 16 &&
@@ -6926,7 +6936,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ru_mobilization_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -6973,7 +6983,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'ss_hiv_family',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     isKey: true,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.currentYear >= 1990 && G.currentYear <= 2015 && G.age >= 8 && G.age <= 25 && !G.mem.ss_hiv,
@@ -6999,7 +7009,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'ss_water_collection',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 7 && G.age <= 16 && !G.mem.ss_water,
     text: 'Before school — before anything — there is the water. The borehole is forty minutes away on foot. The jerrycan holds twenty litres. It weighs twenty kilograms full. Your arms have grown strong in ways your classmates\' haven\'t. Some mornings there is a queue.',
@@ -7024,7 +7034,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'ss_school_fees_crisis',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     isKey: true,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 10 && G.age <= 18 && !G.mem.ss_fees && G.money < 500,
@@ -7184,7 +7194,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'cz_school_bombing',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     isKey: true,
     when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 6 && G.age <= 18 && !G.mem.cz_school_attack,
@@ -7220,7 +7230,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'cz_family_separation',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     isKey: true,
     when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 5 && G.age <= 20 && !G.mem.cz_separation && G.parents,
@@ -7274,7 +7284,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'gender_safety_walk',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.character.gender === 'female' && ['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 13 && G.age <= 30 && !G.mem.gender_safety,
     text: 'Walking home. The calculations you run every time: which street, which time, how to dress, who to walk with. It is not paranoia — it is the accumulated knowledge of what happens when these calculations go wrong. Your mother taught you, her mother taught her. You know which shortcuts to avoid.',
@@ -7299,7 +7309,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'gender_early_marriage_pressure',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     isKey: true,
     when: (G) => G.character.gender === 'female' && ['subsaharan', 'developing_unstable', 'wealthy_gulf', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 16 && G.age <= 22 && !G.mem.marriage_pressure && !G.partner,
@@ -7332,7 +7342,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'ss_remittance_dependency',
-    phase: 'adolescence',
+    phase: null,
     weight: 2,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 14 && G.age <= 30 && !G.mem.ss_remittance,
     text: 'The money arrives from abroad — from London, from Doha, from Minneapolis — in irregular pulses. An uncle who emigrated ten years ago sends what he can. When it arrives, school fees are paid, the roof gets fixed. When it doesn\'t, everyone goes quiet. The family\'s survival runs on this wire.',
@@ -7416,7 +7426,7 @@ const BASE_EVENTS = [
 
   {
     id: 'du_urban_violence',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 10 && G.age <= 20 && !G.mem.du_violence && ['Brazil', 'Colombia', 'South Africa', 'Mexico'].includes(G.character.country.name),
     isKey: true,
@@ -7475,7 +7485,7 @@ const BASE_EVENTS = [
 
   {
     id: 'du_remittance_sender',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 20 && G.age <= 40 && G.career && !G.mem.du_remittance && G.money > 200,
     text: 'The first paycheque is split before it arrives. A portion goes home to the village by bus or transfer. Your parents helped pay your school fees. Your younger siblings need uniforms. The expectation is not a burden, exactly — it is the structure of things. But it does affect the apartment you can afford.',
@@ -7500,7 +7510,7 @@ const BASE_EVENTS = [
 
   {
     id: 'du_megacity_commute',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => G.character.country.archetype === 'developing_urban' && G.career && G.age >= 22 && G.age <= 55 && !G.mem.du_commute,
     text: (G) => {
@@ -8521,7 +8531,7 @@ const BASE_EVENTS = [
 
   {
     id: 'rel_children_disagreement_partner',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.partner !== null && G.age >= 26 && G.age <= 38 && !G.mem.children_disagreement,
     text: 'One of you wants children. The other is not sure, or is sure in a different direction. This has come up before and been deferred. It is no longer deferrable. The conversation that happens is the longest and most honest one you have had in years. It does not resolve cleanly.',
@@ -8916,7 +8926,7 @@ const BASE_EVENTS = [
 
   {
     id: 'civic_election_night',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 8,
     when: (G) =>
@@ -8932,9 +8942,11 @@ const BASE_EVENTS = [
 
 import { PRISON_EVENTS } from './events/prison/events_prison_life.js'
 import { PRISON_AFTER_EVENTS } from './events/prison/events_prison_after.js'
+import { POLITICAL_PRISON_EVENTS } from './events/prison/events_political_prison.js'
+import { HOUSING_EVENTS } from './events/thematic/events_housing.js'
 import { WINDFALL_EVENTS } from './events/thematic/events_windfall.js'
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...ADOLESCENCE_2_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_ALL_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...VIETNAM_DEPTH_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...LATIN_AMERICA_EVENTS, ...MEXICO_DEPTH_EVENTS, ...COUNTRY_ARC_EVENTS, ...COUNTRY_ARC_2_EVENTS, ...EARLY_LIFE_EVENTS, ...EARLY_CHILDHOOD_2_EVENTS, ...DECOLONISATION_EVENTS, ...LABOR_EVENTS, ...ASIA_ARC_EVENTS, ...CROSSCUTTING_EVENTS, ...DRC_EVENTS, ...INTERNET_ERA_EVENTS, ...ZIMBABWE_EVENTS, ...CLIMATE_EVENTS, ...INDIGENOUS_EVENTS, ...AUTOMATION_EVENTS, ...COUNTRY_ARC_3_EVENTS, ...ARTS_EVENTS, ...INFORMAL_EVENTS, ...NEIGHBORHOOD_EVENTS, ...POSTRELEASE_EVENTS, ...MENTOR_EVENTS, ...FAMILY_SILENCE_EVENTS, ...SOLO_LIFE_EVENTS, ...DYING_ARC_EVENTS, ...BODY_ARC_EVENTS, ...GRANDPARENT_ARC_EVENTS, ...INHERITANCE_ARC_EVENTS, ...EMPTY_NEST_EVENTS, ...COHERENCE_EVENTS, ...POVERTY_EVENTS, ...PREGNANCY_EVENTS, ...MENOPAUSE_EVENTS, ...CAREER_ARC_EVENTS, ...CAREER_LONGEVITY_EVENTS, ...SOCIAL_MEDIA_EVENTS, ...SCANDINAVIA_EVENTS, ...SCANDINAVIA_DEPTH_EVENTS, ...PALESTINE_EVENTS, ...GANG_EVENTS, ...WORLD_RESPONSE_EVENTS, ...SOCIAL_CAPITAL_EVENTS, ...CHILDHOOD_TEXTURE_EVENTS, ...EMIGRANT_INTEGRATION_EVENTS, ...INTIMACY_EVENTS, ...SCHOOL_EVENTS, ...CHILDREN_ABROAD_EVENTS, ...STAYED_EVENTS, ...SPORT_EVENTS, ...DISASTER_EVENTS, ...ACTIVITY_CHOICE_EVENTS, ...PROJECT_ARC_EVENTS, ...INDUSTRIAL_EVENTS, ...LEBANON_EVENTS, ...CENTRAL_AMERICA_EVENTS, ...CENTRAL_ASIA_EVENTS, ...UZBEKISTAN_EVENTS, ...KAZAKHSTAN_EVENTS, ...TAJIKISTAN_EVENTS, ...KYRGYZSTAN_EVENTS, ...TURKMENISTAN_EVENTS, ...OFW_EVENTS, ...ALGERIA_EVENTS, ...INDONESIA_EVENTS, ...INDONESIA_DEPTH_EVENTS, ...KURDISH_EVENTS, ...DEBT_EVENTS, ...HAITI_EVENTS, ...DOMINICAN_REPUBLIC_EVENTS, ...SRI_LANKA_EVENTS, ...SRI_LANKA_DEPTH_EVENTS, ...MOROCCO_EVENTS, ...MOROCCO_DEPTH_EVENTS, ...ROHINGYA_EVENTS, ...TANZANIA_EVENTS, ...TANZANIA_DEPTH_EVENTS, ...MULTILINGUAL_EVENTS, ...SENEGAL_EVENTS, ...ADOPTEE_EVENTS, ...UYGHUR_EVENTS, ...PUERTO_RICO_EVENTS, ...SOLDIER_ARC_EVENTS, ...DOCUMENT_EVENTS, ...CLERGY_EVENTS, ...KENYA_EVENTS, ...KENYA_DEPTH_EVENTS, ...ETHIOPIA_EVENTS, ...ETHIOPIA_DEPTH_EVENTS, ...CONDITION_ARC_EVENTS, ...CONDITION_ARC_2_EVENTS, ...SOUTHEAST_EUROPE_EVENTS, ...PAKISTAN_EVENTS, ...PAKISTAN_DEPTH_EVENTS, ...EGYPT_EVENTS, ...EGYPT_DEPTH_EVENTS, ...INDIA_EVENTS, ...INDIA_DEPTH_EVENTS, ...IRELAND_TURKEY_EVENTS, ...IRELAND_DEPTH_EVENTS, ...WEST_AFRICA_EVENTS, ...NIGERIA_EVENTS, ...NIGERIA_DEPTH_EVENTS, ...GHANA_EVENTS, ...UGANDA_EVENTS, ...SOMALIA_EVENTS, ...THAILAND_EVENTS, ...THAILAND_DEPTH_EVENTS, ...NEPAL_EVENTS, ...NEPAL_DEPTH_EVENTS, ...MYANMAR_EVENTS, ...MYANMAR_DEPTH_EVENTS, ...TUNISIA_EVENTS, ...SUDAN_EVENTS, ...SUDAN_DEPTH_EVENTS, ...ANGOLA_EVENTS, ...ANGOLA_DEPTH_EVENTS, ...JORDAN_EVENTS, ...LIBYA_EVENTS, ...LIBYA_DEPTH_EVENTS, ...ZAMBIA_EVENTS, ...ZAMBIA_DEPTH_EVENTS, ...MOZAMBIQUE_EVENTS, ...MOZAMBIQUE_DEPTH_EVENTS, ...AFGHANISTAN_EVENTS, ...AFGHANISTAN_DEPTH_EVENTS, ...YEMEN_EVENTS, ...GIFTED_EVENTS, ...GIFTED_2_EVENTS, ...GIFTED_3_EVENTS, ...CHINA_EVENTS, ...KOREA_EVENTS, ...KOREA_DEPTH_EVENTS, ...DISABILITY_EVENTS, ...ADDICTION_EVENTS, ...CHILD_SOLDIER_EVENTS, ...WWI_DEPRESSION_EVENTS, ...DIVORCE_EVENTS, ...DEMENTIA_EVENTS, ...CELEBRITY_EVENTS, ...TEACHER_ARC_EVENTS, ...WOUND_COPING_EVENTS, ...PARTNER_WANTS_EVENTS, ...RELATIONSHIP_CROSSOVER_EVENTS, ...SYRIA_EVENTS, ...CHILD_DEATH_ARC_EVENTS, ...ISRAEL_EVENTS, ...PANDEMIC_EVENTS, ...GREECE_PORTUGAL_EVENTS, ...PORTUGAL_DEPTH_EVENTS, ...GREECE_DEPTH_EVENTS, ...SPAIN_EVENTS, ...SPAIN_DEPTH_EVENTS, ...PHILIPPINES_EVENTS, ...PHILIPPINES_DEPTH_EVENTS, ...PHILIPPINES_DEPTH_2_EVENTS, ...UK_EVENTS, ...GERMANY_FRANCE_EVENTS, ...USA_EVENTS, ...AUSTRALIA_EVENTS, ...AUSTRALIA_DEPTH_EVENTS, ...CANADA_EVENTS, ...CANADA_DEPTH_EVENTS, ...ITALY_EVENTS, ...ITALY_DEPTH_EVENTS, ...POLAND_EVENTS, ...POLAND_DEPTH_EVENTS, ...RUSSIA_EVENTS, ...RUSSIA_DEPTH_EVENTS, ...UKRAINE_EVENTS, ...UKRAINE_DEPTH_EVENTS, ...IRAN_DEPTH_EVENTS, ...ARGENTINA_DEPTH_EVENTS, ...SOUTH_AFRICA_EVENTS, ...SOUTH_AFRICA_DEPTH_EVENTS, ...ROMANIA_EVENTS, ...ROMANIA_DEPTH_EVENTS, ...DESIRE_RESOLUTION_EVENTS, ...CENTRAL_EUROPE_EVENTS, ...CZECH_REPUBLIC_EVENTS, ...SWEDEN_EVENTS, ...NORWAY_EVENTS, ...DENMARK_EVENTS, ...BALTIC_EVENTS, ...GEORGIA_EVENTS, ...TAIWAN_MALAYSIA_EVENTS, ...ARMENIA_AZ_EVENTS, ...BELARUS_EVENTS, ...UY_PY_EC_EVENTS, ...ECUADOR_EVENTS, ...EL_SALVADOR_EVENTS, ...GUATEMALA_EVENTS, ...HONDURAS_EVENTS, ...NICARAGUA_EVENTS, ...NORTH_KOREA_EVENTS, ...NORTH_KOREA_DEPTH_EVENTS, ...CUBA_EVENTS, ...CUBA_DEPTH_EVENTS, ...NAMIBIA_EVENTS, ...NAMIBIA_DEPTH_EVENTS, ...LAOS_EVENTS, ...LAOS_DEPTH_EVENTS, ...SINGAPORE_EVENTS, ...SINGAPORE_DEPTH_EVENTS, ...NETHERLANDS_EVENTS, ...NETHERLANDS_DEPTH_EVENTS, ...BRAZIL_EVENTS, ...BRAZIL_DEPTH_EVENTS, ...BANGLADESH_EVENTS, ...BANGLADESH_DEPTH_EVENTS, ...IRAQ_EVENTS, ...IRAQ_DEPTH_EVENTS, ...RWANDA_EVENTS, ...COLOMBIA_EVENTS, ...COLOMBIA_DEPTH_EVENTS, ...VENEZUELA_EVENTS, ...VENEZUELA_DEPTH_EVENTS, ...VENEZUELA_DEPTH_2_EVENTS, ...PERU_EVENTS, ...PERU_DEPTH_EVENTS, ...JAPAN_EVENTS, ...JAPAN_DEPTH_EVENTS, ...SAUDI_EVENTS, ...BEDOUIN_EVENTS, ...IRAN_EVENTS, ...TURKEY_EVENTS, ...TURKEY_DEPTH_EVENTS, ...NOMADIC_EVENTS, ...SICK_CHILD_EVENTS, ...CAMBODIA_EVENTS, ...GUINEA_EVENTS, ...MONGOLIA_EVENTS, ...MONGOLIA_DEPTH_EVENTS, ...CARIBBEAN_EVENTS, ...ERITREA_EVENTS, ...BURKINA_EVENTS, ...POLITICAL_ARC_EVENTS, ...BOLIVIA_EVENTS, ...BOLIVIA_DEPTH_EVENTS, ...NEW_ZEALAND_EVENTS, ...NEW_ZEALAND_DEPTH_EVENTS, ...SONDER_EVENTS, ...AID_WORKER_EVENTS, ...FIJI_EVENTS, ...WATER_INFRA_EVENTS, ...BONDED_LABOR_EVENTS, ...SEX_WORK_EVENTS, ...CULT_EVENTS, ...FGM_EVENTS, ...MALI_EVENTS, ...IVORY_COAST_EVENTS, ...IVORY_COAST_DEPTH_EVENTS, ...CAMEROON_EVENTS, ...CAMEROON_DEPTH_EVENTS, ...LOCAL_EVENTS, ...EVENTS_2010S, ...EVENTS_SONDER_2, ...EVENTS_SONDER_3, ...EVENTS_SONDER_4, ...EVENTS_SONDER_5, ...EVENTS_SONDER_6, ...EVENTS_SONDER_7, ...EVENTS_SONDER_8, ...EVENTS_SONDER_9, ...EVENTS_SONDER_10, ...EVENTS_SONDER_11, ...EVENTS_SONDER_12, ...EVENTS_SONDER_13, ...EVENTS_SONDER_14, ...EVENTS_SONDER_15, ...EVENTS_SONDER_16, ...EVENTS_SONDER_17, ...EVENTS_SONDER_18, ...EVENTS_SONDER_19, ...EVENTS_SONDER_20, ...EVENTS_SONDER_21, ...EVENTS_SONDER_22, ...EVENTS_SONDER_23, ...EVENTS_SONDER_24, ...EVENTS_SONDER_25, ...EVENTS_SONDER_26, ...EVENTS_SONDER_27, ...EVENTS_SONDER_28, ...EVENTS_SONDER_29, ...EVENTS_SONDER_30, ...EVENTS_SONDER_31, ...EVENTS_SONDER_32, ...EVENTS_SONDER_33, ...EVENTS_SONDER_34, ...EVENTS_SONDER_35, ...EVENTS_SONDER_36, ...EVENTS_SONDER_37, ...EVENTS_SONDER_38, ...EVENTS_SONDER_39, ...EVENTS_SONDER_40, ...EVENTS_SONDER_41, ...EVENTS_SONDER_42, ...EVENTS_SONDER_43, ...EVENTS_SONDER_44, ...EVENTS_SONDER_45, ...EVENTS_SONDER_46, ...EVENTS_SONDER_47, ...EVENTS_SONDER_48, ...EVENTS_SONDER_49, ...EVENTS_SONDER_50, ...EVENTS_SONDER_51, ...EVENTS_SONDER_52, ...EVENTS_SONDER_53, ...EVENTS_SONDER_54, ...EVENTS_SONDER_55, ...EVENTS_SONDER_56, ...EVENTS_SONDER_57, ...EVENTS_SONDER_58, ...EVENTS_SONDER_59, ...EVENTS_SONDER_60, ...EVENTS_SONDER_61, ...EVENTS_SONDER_62, ...EVENTS_SONDER_63, ...EVENTS_SONDER_64, ...EVENTS_SONDER_65, ...EVENTS_SONDER_66, ...FOLLOWTHROUGH_30_EVENTS, ...FOLLOWTHROUGH_31_EVENTS, ...FOLLOWTHROUGH_32_EVENTS, ...FOLLOWTHROUGH_33_EVENTS, ...FOLLOWTHROUGH_34_EVENTS, ...FOLLOWTHROUGH_35_EVENTS, ...FOLLOWTHROUGH_36_EVENTS, ...FOLLOWTHROUGH_37_EVENTS, ...FOLLOWTHROUGH_38_EVENTS, ...FOLLOWTHROUGH_39_EVENTS, ...FOLLOWTHROUGH_40_EVENTS, ...FOLLOWTHROUGH_41_EVENTS, ...FOLLOWTHROUGH_42_EVENTS, ...FOLLOWTHROUGH_43_EVENTS, ...FOLLOWTHROUGH_44_EVENTS, ...FOLLOWTHROUGH_45_EVENTS, ...FOLLOWTHROUGH_46_EVENTS, ...FOLLOWTHROUGH_47_EVENTS, ...FOLLOWTHROUGH_48_EVENTS, ...FOLLOWTHROUGH_49_EVENTS, ...FOLLOWTHROUGH_50_EVENTS, ...FOLLOWTHROUGH_51_EVENTS, ...FOLLOWTHROUGH_52_EVENTS, ...FOLLOWTHROUGH_53_EVENTS, ...FOLLOWTHROUGH_54_EVENTS, ...FOLLOWTHROUGH_55_EVENTS, ...FOLLOWTHROUGH_56_EVENTS, ...FOLLOWTHROUGH_57_EVENTS, ...FOLLOWTHROUGH_58_EVENTS, ...FOLLOWTHROUGH_59_EVENTS, ...FOLLOWTHROUGH_60_EVENTS, ...FOLLOWTHROUGH_61_EVENTS, ...FOLLOWTHROUGH_62_EVENTS, ...FOLLOWTHROUGH_63_EVENTS, ...FOLLOWTHROUGH_64_EVENTS, ...FOLLOWTHROUGH_65_EVENTS, ...FOLLOWTHROUGH_66_EVENTS, ...FOLLOWTHROUGH_67_EVENTS, ...FOLLOWTHROUGH_68_EVENTS, ...FOLLOWTHROUGH_69_EVENTS, ...FOLLOWTHROUGH_70_EVENTS, ...FOLLOWTHROUGH_71_EVENTS, ...FOLLOWTHROUGH_72_EVENTS, ...FOLLOWTHROUGH_73_EVENTS, ...FOLLOWTHROUGH_74_EVENTS, ...FOLLOWTHROUGH_75_EVENTS, ...FOLLOWTHROUGH_76_EVENTS, ...FOLLOWTHROUGH_77_EVENTS, ...FOLLOWTHROUGH_78_EVENTS, ...FOLLOWTHROUGH_79_EVENTS, ...FOLLOWTHROUGH_80_EVENTS, ...FOLLOWTHROUGH_81_EVENTS, ...FOLLOWTHROUGH_82_EVENTS, ...FOLLOWTHROUGH_83_EVENTS, ...FOLLOWTHROUGH_84_EVENTS, ...FOLLOWTHROUGH_85_EVENTS, ...FOLLOWTHROUGH_86_EVENTS, ...FOLLOWTHROUGH_87_EVENTS, ...FOLLOWTHROUGH_88_EVENTS, ...FOLLOWTHROUGH_89_EVENTS, ...FOLLOWTHROUGH_90_EVENTS, ...FOLLOWTHROUGH_91_EVENTS, ...FOLLOWTHROUGH_92_EVENTS, ...FOLLOWTHROUGH_93_EVENTS, ...FOLLOWTHROUGH_94_EVENTS, ...FOLLOWTHROUGH_95_EVENTS, ...SPECIFIC_LIFE_EVENTS, ...ERA_GAP_EVENTS, ...TEACHER_POWER_EVENTS, ...DISEASE_ARC_EVENTS, ...SOUTH_SOUTH_EVENTS, ...INTERPRETER_ARC_EVENTS, ...DOCTOR_ARC_EVENTS, ...JOURNALIST_ARC_EVENTS, ...LAWYER_ARC_EVENTS, ...NURSE_ARC_EVENTS, ...FARMER_ARC_EVENTS, ...POLICE_ARC_EVENTS, ...SOCIAL_WORKER_ARC_EVENTS, ...ARTIST_ARC_EVENTS, ...ENGINEER_ARC_EVENTS, ...DEV_ARC_EVENTS, ...FACTORY_ARC_EVENTS, ...LABORER_ARC_EVENTS, ...CIVIL_SERVANT_ARC_EVENTS, ...DRIVER_ARC_EVENTS, ...CHEF_ARC_EVENTS, ...MERCHANT_ARC_EVENTS, ...ACCOUNTANT_ARC_EVENTS, ...PALESTINE_DEPTH_EVENTS, ...MEMORY_LAYER_EVENTS, ...ROADS_NOT_TAKEN_EVENTS, ...LETTER_EVENTS, ...SEASONAL_EVENTS, ...ORAL_TRADITION_EVENTS, ...PRISON_EVENTS, ...PRISON_AFTER_EVENTS, ...WINDFALL_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...ADOLESCENCE_2_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_ALL_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...VIETNAM_DEPTH_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...LATIN_AMERICA_EVENTS, ...MEXICO_DEPTH_EVENTS, ...COUNTRY_ARC_EVENTS, ...COUNTRY_ARC_2_EVENTS, ...EARLY_LIFE_EVENTS, ...EARLY_CHILDHOOD_2_EVENTS, ...DECOLONISATION_EVENTS, ...LABOR_EVENTS, ...ASIA_ARC_EVENTS, ...CROSSCUTTING_EVENTS, ...DRC_EVENTS, ...INTERNET_ERA_EVENTS, ...ZIMBABWE_EVENTS, ...CLIMATE_EVENTS, ...INDIGENOUS_EVENTS, ...AUTOMATION_EVENTS, ...COUNTRY_ARC_3_EVENTS, ...ARTS_EVENTS, ...INFORMAL_EVENTS, ...NEIGHBORHOOD_EVENTS, ...POSTRELEASE_EVENTS, ...MENTOR_EVENTS, ...FAMILY_SILENCE_EVENTS, ...SOLO_LIFE_EVENTS, ...DYING_ARC_EVENTS, ...BODY_ARC_EVENTS, ...GRANDPARENT_ARC_EVENTS, ...INHERITANCE_ARC_EVENTS, ...EMPTY_NEST_EVENTS, ...COHERENCE_EVENTS, ...POVERTY_EVENTS, ...PREGNANCY_EVENTS, ...MENOPAUSE_EVENTS, ...CAREER_ARC_EVENTS, ...CAREER_LONGEVITY_EVENTS, ...SOCIAL_MEDIA_EVENTS, ...SCANDINAVIA_EVENTS, ...SCANDINAVIA_DEPTH_EVENTS, ...PALESTINE_EVENTS, ...GANG_EVENTS, ...WORLD_RESPONSE_EVENTS, ...SOCIAL_CAPITAL_EVENTS, ...CHILDHOOD_TEXTURE_EVENTS, ...EMIGRANT_INTEGRATION_EVENTS, ...INTIMACY_EVENTS, ...SCHOOL_EVENTS, ...CHILDREN_ABROAD_EVENTS, ...STAYED_EVENTS, ...SPORT_EVENTS, ...DISASTER_EVENTS, ...ACTIVITY_CHOICE_EVENTS, ...PROJECT_ARC_EVENTS, ...INDUSTRIAL_EVENTS, ...LEBANON_EVENTS, ...CENTRAL_AMERICA_EVENTS, ...CENTRAL_ASIA_EVENTS, ...UZBEKISTAN_EVENTS, ...KAZAKHSTAN_EVENTS, ...TAJIKISTAN_EVENTS, ...KYRGYZSTAN_EVENTS, ...TURKMENISTAN_EVENTS, ...OFW_EVENTS, ...ALGERIA_EVENTS, ...INDONESIA_EVENTS, ...INDONESIA_DEPTH_EVENTS, ...KURDISH_EVENTS, ...DEBT_EVENTS, ...HAITI_EVENTS, ...DOMINICAN_REPUBLIC_EVENTS, ...SRI_LANKA_EVENTS, ...SRI_LANKA_DEPTH_EVENTS, ...MOROCCO_EVENTS, ...MOROCCO_DEPTH_EVENTS, ...ROHINGYA_EVENTS, ...TANZANIA_EVENTS, ...TANZANIA_DEPTH_EVENTS, ...MULTILINGUAL_EVENTS, ...SENEGAL_EVENTS, ...ADOPTEE_EVENTS, ...UYGHUR_EVENTS, ...PUERTO_RICO_EVENTS, ...SOLDIER_ARC_EVENTS, ...DOCUMENT_EVENTS, ...CLERGY_EVENTS, ...KENYA_EVENTS, ...KENYA_DEPTH_EVENTS, ...ETHIOPIA_EVENTS, ...ETHIOPIA_DEPTH_EVENTS, ...CONDITION_ARC_EVENTS, ...CONDITION_ARC_2_EVENTS, ...SOUTHEAST_EUROPE_EVENTS, ...PAKISTAN_EVENTS, ...PAKISTAN_DEPTH_EVENTS, ...EGYPT_EVENTS, ...EGYPT_DEPTH_EVENTS, ...INDIA_EVENTS, ...INDIA_DEPTH_EVENTS, ...IRELAND_TURKEY_EVENTS, ...IRELAND_DEPTH_EVENTS, ...WEST_AFRICA_EVENTS, ...NIGERIA_EVENTS, ...NIGERIA_DEPTH_EVENTS, ...GHANA_EVENTS, ...UGANDA_EVENTS, ...SOMALIA_EVENTS, ...THAILAND_EVENTS, ...THAILAND_DEPTH_EVENTS, ...NEPAL_EVENTS, ...NEPAL_DEPTH_EVENTS, ...MYANMAR_EVENTS, ...MYANMAR_DEPTH_EVENTS, ...TUNISIA_EVENTS, ...SUDAN_EVENTS, ...SUDAN_DEPTH_EVENTS, ...ANGOLA_EVENTS, ...ANGOLA_DEPTH_EVENTS, ...JORDAN_EVENTS, ...LIBYA_EVENTS, ...LIBYA_DEPTH_EVENTS, ...ZAMBIA_EVENTS, ...ZAMBIA_DEPTH_EVENTS, ...MOZAMBIQUE_EVENTS, ...MOZAMBIQUE_DEPTH_EVENTS, ...AFGHANISTAN_EVENTS, ...AFGHANISTAN_DEPTH_EVENTS, ...YEMEN_EVENTS, ...GIFTED_EVENTS, ...GIFTED_2_EVENTS, ...GIFTED_3_EVENTS, ...CHINA_EVENTS, ...KOREA_EVENTS, ...KOREA_DEPTH_EVENTS, ...DISABILITY_EVENTS, ...ADDICTION_EVENTS, ...CHILD_SOLDIER_EVENTS, ...WWI_DEPRESSION_EVENTS, ...DIVORCE_EVENTS, ...DEMENTIA_EVENTS, ...CELEBRITY_EVENTS, ...TEACHER_ARC_EVENTS, ...WOUND_COPING_EVENTS, ...PARTNER_WANTS_EVENTS, ...RELATIONSHIP_CROSSOVER_EVENTS, ...SYRIA_EVENTS, ...CHILD_DEATH_ARC_EVENTS, ...ISRAEL_EVENTS, ...PANDEMIC_EVENTS, ...GREECE_PORTUGAL_EVENTS, ...PORTUGAL_DEPTH_EVENTS, ...GREECE_DEPTH_EVENTS, ...SPAIN_EVENTS, ...SPAIN_DEPTH_EVENTS, ...PHILIPPINES_EVENTS, ...PHILIPPINES_DEPTH_EVENTS, ...PHILIPPINES_DEPTH_2_EVENTS, ...UK_EVENTS, ...GERMANY_FRANCE_EVENTS, ...USA_EVENTS, ...AUSTRALIA_EVENTS, ...AUSTRALIA_DEPTH_EVENTS, ...CANADA_EVENTS, ...CANADA_DEPTH_EVENTS, ...ITALY_EVENTS, ...ITALY_DEPTH_EVENTS, ...POLAND_EVENTS, ...POLAND_DEPTH_EVENTS, ...RUSSIA_EVENTS, ...RUSSIA_DEPTH_EVENTS, ...UKRAINE_EVENTS, ...UKRAINE_DEPTH_EVENTS, ...IRAN_DEPTH_EVENTS, ...ARGENTINA_DEPTH_EVENTS, ...SOUTH_AFRICA_EVENTS, ...SOUTH_AFRICA_DEPTH_EVENTS, ...ROMANIA_EVENTS, ...ROMANIA_DEPTH_EVENTS, ...DESIRE_RESOLUTION_EVENTS, ...CENTRAL_EUROPE_EVENTS, ...CZECH_REPUBLIC_EVENTS, ...SWEDEN_EVENTS, ...NORWAY_EVENTS, ...DENMARK_EVENTS, ...BALTIC_EVENTS, ...GEORGIA_EVENTS, ...TAIWAN_MALAYSIA_EVENTS, ...ARMENIA_AZ_EVENTS, ...BELARUS_EVENTS, ...UY_PY_EC_EVENTS, ...ECUADOR_EVENTS, ...EL_SALVADOR_EVENTS, ...GUATEMALA_EVENTS, ...HONDURAS_EVENTS, ...NICARAGUA_EVENTS, ...NORTH_KOREA_EVENTS, ...NORTH_KOREA_DEPTH_EVENTS, ...CUBA_EVENTS, ...CUBA_DEPTH_EVENTS, ...NAMIBIA_EVENTS, ...NAMIBIA_DEPTH_EVENTS, ...LAOS_EVENTS, ...LAOS_DEPTH_EVENTS, ...SINGAPORE_EVENTS, ...SINGAPORE_DEPTH_EVENTS, ...NETHERLANDS_EVENTS, ...NETHERLANDS_DEPTH_EVENTS, ...BRAZIL_EVENTS, ...BRAZIL_DEPTH_EVENTS, ...BANGLADESH_EVENTS, ...BANGLADESH_DEPTH_EVENTS, ...IRAQ_EVENTS, ...IRAQ_DEPTH_EVENTS, ...RWANDA_EVENTS, ...COLOMBIA_EVENTS, ...COLOMBIA_DEPTH_EVENTS, ...VENEZUELA_EVENTS, ...VENEZUELA_DEPTH_EVENTS, ...VENEZUELA_DEPTH_2_EVENTS, ...PERU_EVENTS, ...PERU_DEPTH_EVENTS, ...JAPAN_EVENTS, ...JAPAN_DEPTH_EVENTS, ...SAUDI_EVENTS, ...BEDOUIN_EVENTS, ...IRAN_EVENTS, ...TURKEY_EVENTS, ...TURKEY_DEPTH_EVENTS, ...NOMADIC_EVENTS, ...SICK_CHILD_EVENTS, ...CAMBODIA_EVENTS, ...GUINEA_EVENTS, ...MONGOLIA_EVENTS, ...MONGOLIA_DEPTH_EVENTS, ...CARIBBEAN_EVENTS, ...ERITREA_EVENTS, ...BURKINA_EVENTS, ...POLITICAL_ARC_EVENTS, ...BOLIVIA_EVENTS, ...BOLIVIA_DEPTH_EVENTS, ...NEW_ZEALAND_EVENTS, ...NEW_ZEALAND_DEPTH_EVENTS, ...SONDER_EVENTS, ...AID_WORKER_EVENTS, ...FIJI_EVENTS, ...WATER_INFRA_EVENTS, ...BONDED_LABOR_EVENTS, ...SEX_WORK_EVENTS, ...CULT_EVENTS, ...FGM_EVENTS, ...MALI_EVENTS, ...IVORY_COAST_EVENTS, ...IVORY_COAST_DEPTH_EVENTS, ...CAMEROON_EVENTS, ...CAMEROON_DEPTH_EVENTS, ...LOCAL_EVENTS, ...EVENTS_2010S, ...EVENTS_SONDER_2, ...EVENTS_SONDER_3, ...EVENTS_SONDER_4, ...EVENTS_SONDER_5, ...EVENTS_SONDER_6, ...EVENTS_SONDER_7, ...EVENTS_SONDER_8, ...EVENTS_SONDER_9, ...EVENTS_SONDER_10, ...EVENTS_SONDER_11, ...EVENTS_SONDER_12, ...EVENTS_SONDER_13, ...EVENTS_SONDER_14, ...EVENTS_SONDER_15, ...EVENTS_SONDER_16, ...EVENTS_SONDER_17, ...EVENTS_SONDER_18, ...EVENTS_SONDER_19, ...EVENTS_SONDER_20, ...EVENTS_SONDER_21, ...EVENTS_SONDER_22, ...EVENTS_SONDER_23, ...EVENTS_SONDER_24, ...EVENTS_SONDER_25, ...EVENTS_SONDER_26, ...EVENTS_SONDER_27, ...EVENTS_SONDER_28, ...EVENTS_SONDER_29, ...EVENTS_SONDER_30, ...EVENTS_SONDER_31, ...EVENTS_SONDER_32, ...EVENTS_SONDER_33, ...EVENTS_SONDER_34, ...EVENTS_SONDER_35, ...EVENTS_SONDER_36, ...EVENTS_SONDER_37, ...EVENTS_SONDER_38, ...EVENTS_SONDER_39, ...EVENTS_SONDER_40, ...EVENTS_SONDER_41, ...EVENTS_SONDER_42, ...EVENTS_SONDER_43, ...EVENTS_SONDER_44, ...EVENTS_SONDER_45, ...EVENTS_SONDER_46, ...EVENTS_SONDER_47, ...EVENTS_SONDER_48, ...EVENTS_SONDER_49, ...EVENTS_SONDER_50, ...EVENTS_SONDER_51, ...EVENTS_SONDER_52, ...EVENTS_SONDER_53, ...EVENTS_SONDER_54, ...EVENTS_SONDER_55, ...EVENTS_SONDER_56, ...EVENTS_SONDER_57, ...EVENTS_SONDER_58, ...EVENTS_SONDER_59, ...EVENTS_SONDER_60, ...EVENTS_SONDER_61, ...EVENTS_SONDER_62, ...EVENTS_SONDER_63, ...EVENTS_SONDER_64, ...EVENTS_SONDER_65, ...EVENTS_SONDER_66, ...FOLLOWTHROUGH_30_EVENTS, ...FOLLOWTHROUGH_31_EVENTS, ...FOLLOWTHROUGH_32_EVENTS, ...FOLLOWTHROUGH_33_EVENTS, ...FOLLOWTHROUGH_34_EVENTS, ...FOLLOWTHROUGH_35_EVENTS, ...FOLLOWTHROUGH_36_EVENTS, ...FOLLOWTHROUGH_37_EVENTS, ...FOLLOWTHROUGH_38_EVENTS, ...FOLLOWTHROUGH_39_EVENTS, ...FOLLOWTHROUGH_40_EVENTS, ...FOLLOWTHROUGH_41_EVENTS, ...FOLLOWTHROUGH_42_EVENTS, ...FOLLOWTHROUGH_43_EVENTS, ...FOLLOWTHROUGH_44_EVENTS, ...FOLLOWTHROUGH_45_EVENTS, ...FOLLOWTHROUGH_46_EVENTS, ...FOLLOWTHROUGH_47_EVENTS, ...FOLLOWTHROUGH_48_EVENTS, ...FOLLOWTHROUGH_49_EVENTS, ...FOLLOWTHROUGH_50_EVENTS, ...FOLLOWTHROUGH_51_EVENTS, ...FOLLOWTHROUGH_52_EVENTS, ...FOLLOWTHROUGH_53_EVENTS, ...FOLLOWTHROUGH_54_EVENTS, ...FOLLOWTHROUGH_55_EVENTS, ...FOLLOWTHROUGH_56_EVENTS, ...FOLLOWTHROUGH_57_EVENTS, ...FOLLOWTHROUGH_58_EVENTS, ...FOLLOWTHROUGH_59_EVENTS, ...FOLLOWTHROUGH_60_EVENTS, ...FOLLOWTHROUGH_61_EVENTS, ...FOLLOWTHROUGH_62_EVENTS, ...FOLLOWTHROUGH_63_EVENTS, ...FOLLOWTHROUGH_64_EVENTS, ...FOLLOWTHROUGH_65_EVENTS, ...FOLLOWTHROUGH_66_EVENTS, ...FOLLOWTHROUGH_67_EVENTS, ...FOLLOWTHROUGH_68_EVENTS, ...FOLLOWTHROUGH_69_EVENTS, ...FOLLOWTHROUGH_70_EVENTS, ...FOLLOWTHROUGH_71_EVENTS, ...FOLLOWTHROUGH_72_EVENTS, ...FOLLOWTHROUGH_73_EVENTS, ...FOLLOWTHROUGH_74_EVENTS, ...FOLLOWTHROUGH_75_EVENTS, ...FOLLOWTHROUGH_76_EVENTS, ...FOLLOWTHROUGH_77_EVENTS, ...FOLLOWTHROUGH_78_EVENTS, ...FOLLOWTHROUGH_79_EVENTS, ...FOLLOWTHROUGH_80_EVENTS, ...FOLLOWTHROUGH_81_EVENTS, ...FOLLOWTHROUGH_82_EVENTS, ...FOLLOWTHROUGH_83_EVENTS, ...FOLLOWTHROUGH_84_EVENTS, ...FOLLOWTHROUGH_85_EVENTS, ...FOLLOWTHROUGH_86_EVENTS, ...FOLLOWTHROUGH_87_EVENTS, ...FOLLOWTHROUGH_88_EVENTS, ...FOLLOWTHROUGH_89_EVENTS, ...FOLLOWTHROUGH_90_EVENTS, ...FOLLOWTHROUGH_91_EVENTS, ...FOLLOWTHROUGH_92_EVENTS, ...FOLLOWTHROUGH_93_EVENTS, ...FOLLOWTHROUGH_94_EVENTS, ...FOLLOWTHROUGH_95_EVENTS, ...SPECIFIC_LIFE_EVENTS, ...ERA_GAP_EVENTS, ...TEACHER_POWER_EVENTS, ...DISEASE_ARC_EVENTS, ...SOUTH_SOUTH_EVENTS, ...INTERPRETER_ARC_EVENTS, ...DOCTOR_ARC_EVENTS, ...JOURNALIST_ARC_EVENTS, ...LAWYER_ARC_EVENTS, ...NURSE_ARC_EVENTS, ...FARMER_ARC_EVENTS, ...POLICE_ARC_EVENTS, ...SOCIAL_WORKER_ARC_EVENTS, ...ARTIST_ARC_EVENTS, ...ENGINEER_ARC_EVENTS, ...DEV_ARC_EVENTS, ...FACTORY_ARC_EVENTS, ...LABORER_ARC_EVENTS, ...CIVIL_SERVANT_ARC_EVENTS, ...DRIVER_ARC_EVENTS, ...CHEF_ARC_EVENTS, ...MERCHANT_ARC_EVENTS, ...ACCOUNTANT_ARC_EVENTS, ...PALESTINE_DEPTH_EVENTS, ...MEMORY_LAYER_EVENTS, ...ROADS_NOT_TAKEN_EVENTS, ...LETTER_EVENTS, ...SEASONAL_EVENTS, ...ORAL_TRADITION_EVENTS, ...PRISON_EVENTS, ...PRISON_AFTER_EVENTS, ...POLITICAL_PRISON_EVENTS, ...HOUSING_EVENTS, ...WINDFALL_EVENTS]
 
 // ─── Event classification ─────────────────────────────────────────────────────
 // Two facts about every event, computed once at module load, used by
@@ -8990,11 +9002,40 @@ const EARNED_PROBE = /\bflags\b|\bmem\b|\bcareer\b|\bpartner\b|\bchildren\b|\bpa
 // ~180ms of module-load time on desktop, and only the events that actually
 // reach a candidate pool ever need it. Each event is scanned at most once and
 // the answer is cached on the event object.
+// How many INDEPENDENT things a guard demands of the character.
+//
+// The register system reserves 40% of every year for anchored events, but inside
+// that bucket a guard reading only "you are in India" competes on equal terms
+// with one reading "you are a Dalit girl in rural India between 1980 and 1995",
+// and there are far more of the former. The result is that the rarest identities
+// in the game — the ones the corpus's most specific writing was aimed at — draw
+// generic content about their country instead of the content written for them.
+// A character who satisfies a five-dimension guard is exactly the character that
+// guard was written for, so the match itself should carry weight.
+const SPECIFICITY_PROBES = [
+  /currentCountry|character\s*\.\s*country|\bcountries\b/,          // a named place
+  /ethnicity|casteSystem|\breligion\b|\bliterate\b|lgbtqCriminalized|\bconditions\b/, // who you are
+  /character\s*\.\s*gender|\bgender\b/,                            // gendered experience
+  /currentYear|birthYear/,                                          // a dated window
+  /ruralUrban|currentPlace|[Nn]eighborhood/,                        // where within the place
+]
+
+export function guardSpecificity(e) {
+  if (e.specificity !== undefined) return e.specificity
+  let src = ''
+  try { if (typeof e.when === 'function') src = Function.prototype.toString.call(e.when) } catch (_) { src = '' }
+  let n = 0
+  for (const probe of SPECIFICITY_PROBES) if (probe.test(src)) n++
+  e.specificity = n
+  return n
+}
+
 export function classifyEvent(e) {
   if (e.register !== undefined) return e
   let src = ''
   try { if (typeof e.when === 'function') src = Function.prototype.toString.call(e.when) } catch (_) { src = '' }
   e.anchored = ANCHOR_PROBE.test(src) || ANCHOR_HELPER_PROBE.test(src)
+  guardSpecificity(e)
   if (e.contemplative) e.register = 'contemplative'
   else if (e.anchored) e.register = 'anchored'
   else if (EARNED_PROBE.test(src)) e.register = 'earned'

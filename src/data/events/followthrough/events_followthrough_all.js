@@ -1245,10 +1245,11 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'fam_arc_after',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     cooldown: 0,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('famine_survivor') &&
       G.mem?.famArcSelling &&
       G.age > (G.mem?.famineAge ?? G.age) + 8 &&
@@ -2961,9 +2962,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft11_colonial_subject_election',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('colonial_subject') &&
       G.age >= 25 &&
       !G.mem?.ft11ColonialElection,
@@ -2976,7 +2978,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft11_earthquake_camp_survivor_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('earthquake_camp_survivor') &&
@@ -3030,7 +3032,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft11_care_work_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('care_work_done') && G.age >= 45 && !G.mem?.ft11CareWorkLate,
     text: 'You cared for someone until there was nothing more to care for. The specific weight of it — the things you learned to do, the hours, what you witnessed — is not the kind of thing that translates into a summary. You were present for something that most people arrange not to see up close. You are still carrying what that cost, and what it gave. They are the same thing from different angles.',
@@ -3730,7 +3732,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft14_vietnam_vet_wall',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.includes('vietnam_veteran') &&
@@ -3751,9 +3753,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft14_vietnam_refused_pardon',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.includes('vietnam_refused') &&
       G.character.country.name === 'United States' &&
       G.currentYear >= 1977 &&
@@ -4239,7 +4242,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft16_ukraine_exile_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.includes('russia_ukraine_exile') &&
@@ -4269,7 +4272,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft16_ukraine_veteran_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.includes('russia_ukraine_veteran') &&
@@ -4296,7 +4299,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft16_bolotnaya_navalny',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('bolotnaya_generation') &&
@@ -4339,7 +4342,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft17_euromaidan_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.includes('euromaidan_generation') &&
@@ -4366,7 +4369,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft17_ukraine_refugee_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('ukraine_refugee_2022') &&
@@ -4394,7 +4397,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft18_securitate_files',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.includes('securitate_generation') &&
@@ -4455,7 +4458,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft18_eu_emigrant_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('eu_emigrant_romania') &&
@@ -5424,7 +5427,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft25_sdn_revolution_after_war',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('sudan_revolution_generation') &&

@@ -135,7 +135,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_rios_montt_trial',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GUATEMALAN(G) &&

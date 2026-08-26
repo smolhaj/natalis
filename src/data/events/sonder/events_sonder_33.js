@@ -21,7 +21,7 @@ export const EVENTS_SONDER_33 = [
 
   {
     id: 'sonder_33_b',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 40 && G.age <= 54 && !G.mem?.s33b),
     text: () => pick([
@@ -47,7 +47,7 @@ export const EVENTS_SONDER_33 = [
 
   {
     id: 'sonder_33_e',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 24 && G.age <= 38 && !G.mem?.s33e,
     text: () => pick([
@@ -86,7 +86,7 @@ export const EVENTS_SONDER_33 = [
 
   {
     id: 'sonder_33_i',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 27 && G.age <= 40 && !G.mem?.s33i,
     text: () => pick([
@@ -112,7 +112,7 @@ export const EVENTS_SONDER_33 = [
 
 {
     id: 'sonder_33_m',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 46 && G.age <= 60 && !G.mem?.s33m,
     text: () => pick([
@@ -151,7 +151,7 @@ export const EVENTS_SONDER_33 = [
 
   {
     id: 'sonder_33_p',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 42 && !G.mem?.s33p,
     text: () => pick([
@@ -216,7 +216,7 @@ export const EVENTS_SONDER_33 = [
 
   {
     id: 'sonder_33_u',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasWeekend(G) && (G.age >= 42 && G.age <= 56 && !G.mem?.s33u),
     text: () => pick([
@@ -255,7 +255,7 @@ export const EVENTS_SONDER_33 = [
 
   {
     id: 'sonder_33_x',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasPhotographs(G) && (G.age >= 48 && G.age <= 62 && !G.mem?.s33x),
     text: () => pick([
@@ -268,7 +268,7 @@ export const EVENTS_SONDER_33 = [
 
   {
     id: 'sonder_33_y',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasPhone(G) && (G.age >= 26 && G.age <= 38 && !G.mem?.s33y),
     text: () => pick([

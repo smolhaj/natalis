@@ -116,9 +116,10 @@ export const FOLLOWTHROUGH_59_EVENTS = [
 
   {
     id: 'ft59_1990s_putin_order',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('ru_dep_1990s_generation') &&
       G.currentYear >= 2001 && G.currentYear <= 2010 &&
       G.age >= 25 &&
@@ -132,7 +133,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
 
   {
     id: 'ft59_chechnya_late',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('ru_dep_chechnya_generation') &&

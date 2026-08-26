@@ -109,7 +109,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
       G.character.country.name === 'Pakistan' &&
       G.currentYear >= 2000 &&
       G.age >= 15 &&
-      (G.ethnicity === 'hazara' || G.character?.ethnicity === 'hazara') &&
+      G.ethnicity === 'hazara_pakistani' &&
       !G.mem?.pakDepHazara,
     text: 'The Hazara of Quetta are Shia in a city where Lashkar-e-Jhangvi and other sectarian groups operate. The killings are targeted: a Hazara on a motorbike, a Hazara at the market, the bodies identifiable by the distinctive features that the gunmen use as criteria. Between 2008 and 2018, over two thousand Hazara are killed in Quetta. The community has contracted its geography: specific neighbourhoods, specific routes, the specific calculation of whether any given trip is necessary. Your family discusses the question of leaving — to Afghanistan, which the Hazara left to come here; to Australia, where the diaspora is building; to anywhere else.',
     choices: [

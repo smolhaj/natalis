@@ -85,7 +85,7 @@ export const FOLLOWTHROUGH_34_EVENTS = [
 
   {
     id: 'ft34_gang_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ecu_gang_generation') &&

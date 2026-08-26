@@ -128,9 +128,10 @@ export const GEORGIA_EVENTS = [
 
   {
     id: 'geo_eu_dream',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Georgia' &&
       G.currentYear >= 2014 &&
       G.age >= 18 &&

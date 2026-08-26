@@ -33,9 +33,10 @@ export const TURKEY_EVENTS = [
 
   {
     id: 'tur_kahramanmaras_2023',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Turkey' &&
       G.currentYear >= 2023 &&
       G.age >= 12 &&
@@ -88,9 +89,10 @@ export const TURKEY_EVENTS = [
 
   {
     id: 'tur_lira_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Turkey' &&
       G.currentYear >= 2021 &&
       G.age >= 18 &&
@@ -102,9 +104,10 @@ export const TURKEY_EVENTS = [
 
   {
     id: 'tur_istanbul_convention',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Turkey' &&
       G.currentYear >= 2021 &&
       G.age >= 18 &&

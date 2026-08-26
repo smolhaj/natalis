@@ -46,7 +46,7 @@ export const EVENTS_SONDER_58 = [
 
   {
     id: 'sonder_58_f',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 55 && !G.mem?.s58f,
     text: 'A meal that reconstructs something: the smell of a specific dish your grandmother made, or the taste of something you ate once in another city during a particular year when you were a particular version of yourself. The reconstruction is not complete. It is enough to make you feel that the version of yourself who ate it first still exists somewhere, having that first meal.',
@@ -116,7 +116,7 @@ export const EVENTS_SONDER_58 = [
 
   {
     id: 'sonder_58_o',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasHealthcare(G) && (G.age >= 38 && G.age <= 54 && !G.mem?.s58o),
     text: 'The appointment you have been moving forward for two years: the dentist, the dermatologist, the financial advisor, the difficult conversation. You move it because you are busy and then because the original urgency has faded and then because moving it has become its own habit. One day you will stop moving it. You know this. The appointment waits on the calendar like something you have agreed to feel guilty about.',
@@ -166,7 +166,7 @@ export const EVENTS_SONDER_58 = [
 
 {
     id: 'sonder_58_v',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 44 && G.age <= 58 && !G.mem?.s58v,
     text: 'The task you completed but did not finish: the report that was submitted but the underlying question was never resolved, the conversation that ended but the thing between you both was not addressed, the project that closed but the problem it was meant to solve is still there. The completion and the finishing are two different things. You have learned to live with both, which means learning to live with the gap between them.',
@@ -186,7 +186,7 @@ export const EVENTS_SONDER_58 = [
 
 {
     id: 'sonder_58_z',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 54 && !G.mem?.s58z,
     text: 'The piece of news that turned out to be wrong: you told several people. You adjusted your understanding of the world around it. When the correction came you noticed the correction but the adjustment to your understanding did not fully reverse. Some part of you still holds the incorrect version as a possible version. The incorrect version is still taking up space that the correct one was supposed to occupy.',
@@ -216,7 +216,7 @@ export const EVENTS_SONDER_58 = [
 
   {
     id: 'sonder_58_ac',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 40 && G.age <= 56 && !G.mem?.s58ac,
     text: 'You drive past a street you know well and something is different — a building gone, a tree cut, a shop changed — and your brain registers it as wrong before you can identify what changed. The familiar has been altered. The alteration is entirely reasonable. The feeling of wrongness is not about the change but about the version of the place that existed in your head, which is now a version that no longer corresponds to the place itself.',

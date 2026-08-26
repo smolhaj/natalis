@@ -4,6 +4,158 @@
  */
 export const POLITICAL_FLAGS = {
 
+  suffrage_inheritance: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Told, as a girl, that a woman in the family was there when women got the vote — the 1893 petition roll unrolled down the floor of the New Zealand House, the Holloway hunger-strike medal in the button drawer, a mother voting for the first time at forty-one in 1945.',
+    intent: 'both',
+    notes: 'Set by womens_vote_nz_first, womens_vote_suffragette_violence, womens_suffrage_france_delayed. Followed by suffrage_inheritance_first_vote and suffrage_inheritance_told_forward, plus year texture.',
+  },
+
+  suffrage_inheritance_kept: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Voted for the first time carrying that inheritance, and found the act ordinary — which was what it had cost somebody to make it.',
+    intent: 'year_texture',
+    notes: 'Set by suffrage_inheritance_first_vote.',
+  },
+
+  suffrage_inheritance_passed_on: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Told the family suffrage story forward to your own children, hearing your grandmother\'s pause in your own voice.',
+    intent: 'year_texture',
+    notes: 'Set by suffrage_inheritance_told_forward.',
+  },
+
+  imprisoned: {
+    weight: 'major',
+    category: 'political',
+    description: 'Went to prison: the fact of having been inside, however it happened and whatever the charge was.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  refused_to_name: {
+    weight: 'major',
+    category: 'political',
+    description: 'Interrogated and gave them nothing, keeping a list of people who never learned they had been on a list.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  named_someone: {
+    weight: 'major',
+    category: 'political',
+    description: 'Gave an interrogator a name, telling yourself they already had him, an arithmetic you never finish doing.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  signed_the_confession: {
+    weight: 'major',
+    category: 'political',
+    description: 'Signed the statement without reading it, because reading it would have meant deciding about it.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  took_it_alone: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Told them the prohibited books were yours and nobody else touched them, and took the longer sentence for it.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  detained_at_protest: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Swept up at the edges of a demonstration, along with everyone else the lorries could reach.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  beaten_in_custody: {
+    weight: 'major',
+    category: 'political',
+    description: 'Beaten in custody. The weather gets into it afterwards, and a hand on the shoulder arrives in the body first.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  jailed_for_organising: {
+    weight: 'major',
+    category: 'political',
+    description: 'Taken with the whole committee in one night, and sentenced for economic sabotage.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  protected_source_at_cost: {
+    weight: 'major',
+    category: 'political',
+    description: 'Refused to give up the two people who talked to you, and served the years that refusal cost.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  gave_up_source: {
+    weight: 'major',
+    category: 'political',
+    description: 'Gave an interrogator a source, picked the one you thought was safest, and learned later how wrong that was.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  morality_conviction: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Convicted of a public-morality offence for an ordinary evening, described back to you in a borrowed vocabulary.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  would_not_recant: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Corrected the account on the record, at length, was allowed to finish, and served three more years for it.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  detained_for_who_you_are: {
+    weight: 'major',
+    category: 'political',
+    description: 'Detained with no interrogation at all, because the category had already been decided somewhere else.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  refused_to_serve: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Refused conscription outright and said why, which was the part that added the years.',
+    intent: 'year_texture',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  reported_late: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Reported for conscription eleven days late, entered in a file that follows you into every posting.',
+    intent: 'none',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
+  served_military: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Served the conscription term.',
+    intent: 'none',
+    notes: 'Set by the political-arrest arc in events/prison/events_political_prison.js.',
+  },
+
   soweto_generation: {
     weight: 'major',
     category: 'historical',

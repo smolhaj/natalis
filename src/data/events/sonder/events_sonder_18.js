@@ -57,7 +57,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_unsent_letter',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasInternet(G) && (G.age >= 32 && G.age <= 65 && !G.mem?.s18UnsentLetter),
     text: () => pick([
@@ -87,7 +87,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_missing_building',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.ruralUrban === 'urban' &&
@@ -105,7 +105,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_market_before',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.ruralUrban !== 'rural' &&
@@ -141,7 +141,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_in_between_time',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.age >= 22 && G.age <= 45 &&
@@ -176,7 +176,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_name_called',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 55 && !G.mem?.s18NameCalled,
     text: () => pick([
@@ -191,7 +191,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_glass_reflection',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.ruralUrban === 'urban' &&
@@ -227,7 +227,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_free_afternoon',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasBooks(G) && (G.age >= 35 && G.age <= 65 &&
       !G.mem?.s18FreeAfternoon),
@@ -260,7 +260,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_radio_sickness',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => place.hasTV(G) && (G.age >= 8 && G.age <= 18 && !G.mem?.s18RadioSickness),
     text: () => pick([
@@ -275,7 +275,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_cannot_leave',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.flags.has('emigrated') &&
@@ -341,7 +341,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_small_completion',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 70 && !G.mem?.s18SmallCompletion,
     text: () => pick([
@@ -386,7 +386,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_sunday_evening',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasWeekend(G) && (G.age >= 20 && G.age <= 60 && !G.mem?.s18SundayEvening),
     text: () => pick([
@@ -419,7 +419,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_train_station_night',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.ruralUrban === 'urban' &&
@@ -471,7 +471,7 @@ export const EVENTS_SONDER_18 = [
 
   {
     id: 's18_city_by_sound',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.ruralUrban === 'urban' &&

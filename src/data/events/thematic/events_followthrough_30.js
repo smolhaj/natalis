@@ -531,7 +531,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
 
   {
     id: 'ft30_paris_attacks_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('paris_attacks_generation') &&
@@ -606,7 +606,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
 
   {
     id: 'ft30_trc_witness_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('trc_witness_generation') &&
@@ -621,7 +621,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
 
   {
     id: 'ft30_pacific_solution_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('pacific_solution_era') &&
@@ -681,7 +681,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
 
   {
     id: 'ft30_id_papua_identity_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('id_papua_identity') &&
@@ -741,7 +741,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
 
   {
     id: 'ft30_maya_language_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('maya_language_suppressed') &&
@@ -756,7 +756,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
 
   {
     id: 'ft30_contra_war_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('contra_war_survivor') &&
@@ -816,7 +816,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
 
   {
     id: 'ft30_nga_sharia_transition_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('nga_sharia_transition') &&
@@ -831,7 +831,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
 
   {
     id: 'ft30_maasai_conservation_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('maasai_conservation_displaced') &&

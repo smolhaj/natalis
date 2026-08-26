@@ -45,9 +45,10 @@ export const FOLLOWTHROUGH_83_EVENTS = [
 
   {
     id: 'ft83_same_sex_world_follows',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('nl_same_sex_pioneer_2001') &&
       G.currentYear >= 2003 && G.currentYear <= 2016 &&
       G.age >= 25 &&
@@ -86,7 +87,7 @@ export const FOLLOWTHROUGH_83_EVENTS = [
 
   {
     id: 'ft83_groningen_gas_stop',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('nl_groningen_earthquake_affected') &&

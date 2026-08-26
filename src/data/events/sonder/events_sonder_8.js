@@ -53,7 +53,7 @@ export const EVENTS_SONDER_8 = [
 
   {
     id: 'sonder8_work_unexpected_meaning',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.career && G.age >= 25 && G.age <= 35 && !G.mem?.s8WorkUnexpMeaning,
     text: 'You did not expect to care about this job. You took it because of the circumstances and then something in it turned out to matter — not every day, not obviously, but enough. You have not told anyone this because it sounds sentimental about a thing that is just work.',
@@ -117,7 +117,7 @@ export const EVENTS_SONDER_8 = [
 
   {
     id: 'sonder8_home_smell',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 8 && G.age <= 18 && !G.mem?.s8HomeSmell,
     text: 'The house has a smell that you do not notice because you live in it. You will only notice it the first time you come back after being away for long enough — you will walk in and it will be suddenly present, the smell that is home, which you never knew was home while you were inside it.',
@@ -137,7 +137,7 @@ export const EVENTS_SONDER_8 = [
 
 {
     id: 'sonder8_home_moved',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasElectricity(G) && (G.age >= 20 && G.age <= 40 && !G.mem?.s8HomeMoved),
     text: 'The new place takes a while to feel like somewhere you live. The muscle memory of the old place persists for weeks — reaching for the light switch in the wrong direction, expecting a step that isn\'t there. The body knows an address.',
@@ -191,7 +191,7 @@ export const EVENTS_SONDER_8 = [
 
   {
     id: 'sonder8_weather_rain_on_roof',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 7 && G.age <= 16 && !G.mem?.s8WeatherRainRoof,
     text: 'It rains on the roof tonight and you lie listening to it. The sound of rain on whatever roof you are under is among the oldest sounds you know. You will be able to produce it from memory decades from now, if you think about it.',
@@ -251,7 +251,7 @@ export const EVENTS_SONDER_8 = [
 
   {
     id: 'sonder8_weather_night_sky',
-    phase: 'adolescence',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 13 && G.age <= 22 && !G.mem?.s8WeatherNightSky,
     text: 'You look up at the sky at night and the scale of it is briefly present. Not frightening, just large. There is a moment in most adolescent lives when the cosmos becomes briefly legible as something that is not about you, and something in you organises around this.',

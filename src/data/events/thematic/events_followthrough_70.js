@@ -25,7 +25,7 @@ export const FOLLOWTHROUGH_70_EVENTS = [
 
   {
     id: 'ft70_mst_bolsonaro',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('bra_mst_generation') &&
@@ -63,7 +63,7 @@ export const FOLLOWTHROUGH_70_EVENTS = [
 
   {
     id: 'ft70_lava_jato_lula_return',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('bra_lava_jato_generation') &&
@@ -83,9 +83,10 @@ export const FOLLOWTHROUGH_70_EVENTS = [
 
   {
     id: 'ft70_quilombo_title_still_pending',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('bra_quilombola_generation') &&
       G.currentYear >= 2005 &&
       G.age >= 25 &&
@@ -103,7 +104,7 @@ export const FOLLOWTHROUGH_70_EVENTS = [
 
   {
     id: 'ft70_soy_water_reckoning',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('bra_soy_generation') &&

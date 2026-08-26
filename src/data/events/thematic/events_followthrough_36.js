@@ -20,7 +20,7 @@ export const FOLLOWTHROUGH_36_EVENTS = [
 
   {
     id: 'ft36_scorched_earth_ceh',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('gua_scorched_earth_generation') &&

@@ -110,6 +110,8 @@ pool — only the surface differs.
   year resolves in one beat. The activities panel, action budget and crime
   surface are hidden; the only verb is Age Up.
 
+`pickChoiceAutomatically` weighs the character's **disposition** — what they have already done — so later answers lean toward earlier ones, and a life reads as one person rather than a sequence of coin flips. Choices may declare `tag: 'defiant' | 'yielding'`; inferring it from the prose gets the hardest cases backwards, since "Say nothing at all" under interrogation is the defiant answer. Measured by calling the scorer directly (whole lives are far too noisy an instrument for this): no history 40% defiant, one defiant act 56%, three 93%; one yielding act 28%, three 4%.
+
 Passive mode is the purest expression of the Sonder Principle, and it is also a
 correctness contract: a life that nobody steers must still reach a plausible age
 and a full arc. If passive medians drift, the simulation is wrong, not the mode.
@@ -249,13 +251,60 @@ Legal quality scales by regime: democracies have fair courts (1.0×), military d
 
 ### Partner Lifecycle (`src/engine/tick.js: tickPartner`)
 
-Called each year via `advanceYear`. Partner ages +1/year. At age 75+ there's a death probability (increases with age). On death: partner removed, `widowed` or `lost_partner` flags set, death logged in lifeLog. Relationship quality drifts ±1 per year.
+Called each year via `advanceYear`. Partner ages +1/year and `partner.years` increments. At age 75+ there's a death probability (increases with age). On death: partner removed, `widowed` or `lost_partner` flags set, death logged in lifeLog. Relationship quality drifts ±1 per year.
+
+Note: this function was a no-op for every partner in the game until August 2026. It bailed on `!state.partner.alive`, and no partner was ever constructed with an `alive` field — so partners never aged, never died, quality never drifted, and `partner.years` (which gates marriage timing and the partner-moments memory layer) stayed at 0 forever. The guard is now `alive === false`, so a partner from an older save counts as alive.
+
+### Life Course (`src/engine/lifeCourse.js`)
+
+Work, a partner, a marriage, children, retirement. Every one of these was a button in a panel and nothing else, so a life nobody steered reached sixty-five having never held a job, married anyone or had a child — which also starved the `earned` register and the entire follow-through layer, both written about a partner, a child, a job.
+
+`tickLifeCourse(state)` runs each year from `tick()` and supplies these by default. **Every hook is a no-op if the player has already filled that slot**: it is a default, not a policy.
+
+The demography is anchored to the historical record, not invented, and interpolated between anchor years:
+
+- `femaleWorkChance(country, year)` — female labour force participation by archetype, modulated by the country's own female-to-male literacy ratio. Near 60% in sub-Saharan Africa for the whole period; near 5% in the Gulf in 1950.
+- `workEntryAge(state)` — a subsistence question, not a policy one: GDP tier, urban share, era, and schooling already completed.
+- `marriageAge(state)` — archetype medians with a regional male-female gap, modulated by urbanisation, schooling and female literacy. The literacy term is **one-sided** (it pulls early, never late) because the rich-world tables were calibrated on high-literacy populations already.
+- `totalFertility(state)` — archetype TFR, with `TFR_BY_COUNTRY` overrides for the countries whose fertility history diverges sharply from their archetype (Egypt and Brazil are both `developing_urban` and a full child apart).
+- `retirementAge(state)` — returns `null` where there is no pension system to be inside; a smallholder does not retire, and gets prose about the work redistributing itself instead.
+- `chooseCareer(state)` — `getAvailableCareers` answers "is this legal for this character", which is not "is this what someone like this does". Weighted by field against rural-poor / urban-poor / urban-rich columns, so a 1974 Ethiopian villager does not become a dog walker.
+- `secondaryChance(state)` / `primaryChance(state)` — whether this character finishes school, resolved at 16 against the country's literacy read for the character's own gender, scaled by era (those literacy figures are a modern snapshot applied to mid-century births), rural share, GDP tier and working-young. The engine used to grant secondary education to everyone who had not explicitly dropped out: 95% completion for a 1962 Nigerian cohort against a real 10%, 98% for a 1974 Ethiopian one against 6%. Schooling decides work, marriage age, fertility, money and half the corpus's guards, so this is the most load-bearing number in the module.
+- `ownershipChance(state)` — home ownership by archetype and year, with `OWNERSHIP_BY_COUNTRY` for the figures the archetype cannot predict (Germany 47%, Switzerland 40%, Singapore's HDB 89%, Romania 95%). Two acquisition paths, because there are two worlds: a financed purchase where there is a mortgage market and a deposit, and everywhere else — family land, a self-build, an allocated flat. Pricing the second as a purchase would have excluded most of the world for most of the period. Post-Soviet mass privatisation is an **event**, not a hazard: modelled as a lifetime rate it gave Russia 55% against a real 85%, because it was a decree that moved a country in four years.
+
+Measured against the record (`tests/demography.test.js`, which fails if this drifts):
+
+| | median marriage age | real | completed fertility | real TFR |
+|---|---|---|---|---|
+| Nigeria 1962 | 20 | 21 | 6.3 | 6.3 |
+| India 1975 | 22 | 21 | 3.0 | 2.8 |
+| Egypt 1990 | 23 | 24 | 3.4 | 3.2 |
+| Brazil 1995 | 25 | 25 | 2.0 | 1.7 |
+| United States 1950 | 24 | 23 | 1.7 | 1.9 |
+| Germany 1970 | 30 | 29 | 1.4 | 1.4 |
+| Japan 1980 | 29 | 30 | 1.0 | 1.35 |
+
+And attainment, which is the fork the rest of it hangs off (`secondary completion`, real in brackets): Nigeria 1962 2-20% (10%), Ethiopia 1974 0-2% (6%), India 1975 18-23% (30%), Brazil 1995 64-74% (60%), United States 1950 92-97% (80%), Germany 1970 94-96% (85%), Japan 1980 94-99% (95%). Asserted as an **ordering and wide bands**, never as point estimates: a 10% rate over 20 lives has a confidence interval most of that wide, and two consecutive runs of identical code gave 20% and 2%.
+
+### Prison and political arrest (`src/data/events/prison/`)
+
+Prison had exactly one entrance — `attemptCrime`, a player action behind the crime panel, which passive mode does not render — so a character could only go inside by choosing to commit a crime. In a corpus carrying the Stasi, SAVAK, Camp Boiro, the ghost houses and the gulag, nobody could be arrested for anything they said, and all 32 authored prison and post-release events fired **zero** times across 5,436 simulated lives.
+
+`p.imprison(years, { political, charge })` is the missing counterpart to the `p.releaseFromPrison` that already existed. `events_political_prison.js` is eight ways in, each gated on the regime the character is living under *that year* and most gated further on something they have already done, so the arrest lands as consequence rather than dice roll. Measured at ~8% of lives ever imprisoned across ten severe regimes; the first pass produced 21%, which is far too high for a lifetime rate.
+
+### Specificity weighting (`guardSpecificity` in `src/data/events.js`)
+
+The register system reserves 40% of each year for `anchored` events, but inside that bucket a guard reading only "you are in India" competed on equal terms with one reading "you are a Dalit girl in rural India between 1980 and 1995" — and lost, because there are hundreds of the former. Events now score how many independent things their guard demands (a named place, who you are, gendered experience, a dated window, where within the place), and satisfying a four- or five-dimension guard carries weight, because reaching that character is the whole reason it was written.
+
+### The identity-in-country audit (`npm run check-events`)
+
+The enum audit checks ethnicity and religion literals against the **global** set of ids, which is the right question for a guard naming no country and the wrong one for a guard that does. `dalit` is a real id in India, so a guard requiring Nepal *and* `dalit` passed the audit and could never fire, because Nepal's id is `dalit_nepal`. The cross audit found ten such events, including two that were demographic errors rather than typos: Brazil and Nigeria had no `christian_pentecostal`, in the two countries where that church is largest.
 
 ---
 
 ## The Simulation Contract
 
-Three rules the engine must keep, each of which was broken and is now enforced by
+Five rules the engine must keep, each of which was broken and is now enforced by
 `tests/` and by simulation:
 
 **Health is not a ratchet.** `healthCeiling(state)` sets a plateau from age, the
@@ -271,6 +320,10 @@ birth country — drives salary, promotion pay, healthcare mortality, illness ri
 the poverty premium, career availability and which world events reach you.
 Emigration used to change the prose and nothing else. A world event may set
 `followsEmigrant: true` to reach the diaspora as news from home.
+
+**An unsteered life is still a life.** `tickLifeCourse` supplies work, partnering, marriage, children and retirement at era- and place-accurate rates, stepping aside wherever the player has acted. Before it, over 150 unsteered lives: 7% ever had a career, 4% ever had a partner, 0% ever married, 1% ever had children. After: 98%, 100%, 82%, and fertility matching the record country by country.
+
+**Authored content must be reachable, and reachable is measured.** Static audits ask whether a guard *could* pass; only running the engine answers whether it *does*. A census over 5,436 lives spanning every country found a third of the corpus never firing, of which the genuinely broken part was: identity literals naming a population the required country does not have, 493 events whose declared phase silently overruled their own age guard, and a prison arc with no entrance. `npm run check-events` now carries the first, `tests/phaseReachability.test.js` the second.
 
 **Prose layers are layers, not fallbacks.** `buildYearTexture` is called every
 year with `{ specificOnly: true }`: it speaks when the memory, grief, condition,
@@ -305,9 +358,9 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-146 countries, 251 world events, 7,936 character events (2,127 of them the
-contemplative sonder layer, 156 stranger glimpses, 16 prison-only), 2,735
-registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
+146 countries, 251 world events, 7,953 character events (2,127 of them the
+contemplative sonder layer, 156 stranger glimpses, 40 prison and political-arrest),
+2,771 registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
 
 Verify with:
 
@@ -417,6 +470,7 @@ src/
         events_money.js           — 7 money-across-a-life events (first paycheck, inheritance, elder scam, counting days)
         events_illness.js         — 14 chronic illness events (diabetes, heart disease, cancer, COPD, back pain, HIV/AIDS, vision/hearing loss, depression, disability)
         events_parent_care.js     — 8-event parent care arc (first sign → final decline + killParent)
+        events_housing.js         — 6 tenure events: post-Soviet privatisation decree, two years rent upfront, the unfinished upper floor, the document against the understanding, never owning, the last mortgage payment
         events_climate.js         — 18 climate arc events (2025–2100): heat, drought, flooding, displacement, Pacific extinction, late-life witness
         events_indigenous.js      — 21 Indigenous peoples events: Aboriginal Australian, Native American, First Nations, Māori arcs
         events_automation.js      — 12 automation/AI arc events (2025–2050): career-specific disruption + UBI debate
@@ -725,8 +779,15 @@ src/
                                       Sri Lanka/Myanmar/Nepal/Laos depth echoes, Mexico/Argentina depth echoes,
                                       Bolivia/Ecuador depth echoes, Angola/Zambia/Tanzania depth echoes,
                                       Cameroon/Mongolia/Namibia depth echoes, and more
+      prison/
+        events_prison_life.js     — 16 in-prison events (prisonOk: true)
+        events_prison_after.js    — 16 post-release follow-through events
+        events_political_prison.js — 8 arrest events: the remark, the pages, the square, the organiser, the journalist's sources, the morality court, the sweep that asks nothing, the refused call-up
   engine/
     [Split into 5 focused modules in PR #105]
+    lifeCourse.js             — work, partnering, marriage, children, housing, retirement at
+                                era- and place-accurate rates; every hook a no-op if the
+                                player has already filled that slot
     gameEngine.js             — core simulation: buildG, advanceYear, emigrate,
                                 generateEpitaph, generateIdentityCard, buildYearTexture,
                                 buildEffectProxy, resolveProxyExtras, tickPartner, attemptCrime,

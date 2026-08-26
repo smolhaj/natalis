@@ -1163,7 +1163,7 @@ export const COUNTRIES = [
     yearRange: [1930, 2005],
     regime: 'federal_republic',
     regimeHistory: [{ year: 1937, to: 'single_party_authoritarian' }, { year: 1945, to: 'federal_republic' }, { year: 1964, to: 'military_dictatorship' }, { year: 1985, to: 'federal_republic' }],
-    religionWeights: { christian_catholic: 0.55, christian_protestant: 0.26, secular: 0.08, atheist: 0.03, animist: 0.03, folk_religion: 0.05 },
+    religionWeights: { christian_catholic: 0.55, christian_protestant: 0.10, christian_pentecostal: 0.16, secular: 0.08, atheist: 0.03, animist: 0.03, folk_religion: 0.05 },
     ethnicGroups: [
       { id: 'white_brazilian', name: 'White Brazilian', share: 0.48 },
       { id: 'pardo_brazilian', name: 'Pardo (Mixed)', share: 0.43 },
@@ -1628,7 +1628,7 @@ export const COUNTRIES = [
   {
     name: 'Nigeria', capital: 'Abuja', currency: 'naira', region: 'West Africa', archetype: 'subsaharan',
     regime: 'federal_republic', regimeHistory: [{ year: 1900, to: 'single_party_authoritarian' }, { year: 1960, to: 'federal_republic' }, { year: 1966, to: 'military_dictatorship' }, { year: 1979, to: 'federal_republic' }, { year: 1983, to: 'military_dictatorship' }, { year: 1999, to: 'federal_republic' }],
-    religionWeights: { muslim_sunni: 0.48, christian_protestant: 0.30, christian_catholic: 0.10, animist: 0.12 },
+    religionWeights: { muslim_sunni: 0.48, christian_protestant: 0.17, christian_pentecostal: 0.130, christian_catholic: 0.10, animist: 0.12 },
     ethnicGroups: [{ id: 'hausa_fulani', name: 'Hausa-Fulani', share: 0.29 }, { id: 'yoruba', name: 'Yoruba', share: 0.21 }, { id: 'igbo', name: 'Igbo', share: 0.18 }, { id: 'ijaw', name: 'Ijaw', share: 0.10 }, { id: 'kanuri', name: 'Kanuri', share: 0.04 }, { id: 'other_nigerian', name: 'Other', share: 0.18 }],
     lgbtqCriminalized: true, lgbtqLegalYear: null, childMarriageRisk: 0.25, casteSystem: false, urbanRate: 0.43, literacyMale: 0.72, literacyFemale: 0.60,
     literacyHistory: { 1900: { m: 0.03, f: 0.005 }, 1930: { m: 0.06, f: 0.01 }, 1960: { m: 0.20, f: 0.08 }, 1990: { m: 0.55, f: 0.35 }, 2020: { m: 0.71, f: 0.53 } },
@@ -2074,7 +2074,8 @@ export const COUNTRIES = [
     name: 'Pakistan', capital: 'Islamabad', currency: 'Pakistani rupee', region: 'South Asia', archetype: 'developing_unstable',
     regime: 'federal_republic', regimeHistory: [{ year: 1900, to: 'single_party_authoritarian' }, { year: 1947, to: 'federal_republic' }, { year: 1958, to: 'military_dictatorship' }, { year: 1971, to: 'federal_republic' }, { year: 1977, to: 'military_dictatorship' }, { year: 1988, to: 'federal_republic' }, { year: 1999, to: 'military_dictatorship' }, { year: 2002, to: 'federal_republic' }],
     religionWeights: { muslim_sunni: 0.76, muslim_shia: 0.19, muslim_ahmadiyya: 0.01, hindu: 0.02, christian_protestant: 0.015 },
-    ethnicGroups: [{ id: 'punjabi', name: 'Punjabi', share: 0.45 }, { id: 'pashtun', name: 'Pashtun', share: 0.15 }, { id: 'sindhi', name: 'Sindhi', share: 0.14 }, { id: 'muhajir', name: 'Muhajir', share: 0.08 }, { id: 'baloch', name: 'Baloch', share: 0.04, disadvantaged: true }, { id: 'other_pak', name: 'Other', share: 0.14 }],
+    ethnicGroups: [{ id: 'punjabi', name: 'Punjabi', share: 0.45 }, { id: 'pashtun', name: 'Pashtun', share: 0.15 }, { id: 'sindhi', name: 'Sindhi', share: 0.14 }, { id: 'muhajir', name: 'Muhajir', share: 0.08 }, { id: 'baloch', name: 'Baloch', share: 0.04, disadvantaged: true }, { id: 'hazara_pakistani', name: 'Hazara', share: 0.004, disadvantaged: true },
+      { id: 'other_pak', name: 'Other', share: 0.136 }],
     casteSystem: true, lgbtqCriminalized: true, lgbtqLegalYear: null, childMarriageRisk: 0.18, urbanRate: 0.33, literacyMale: 0.63, literacyFemale: 0.36,
     literacyHistory: { 1900: { m: 0.06, f: 0.005 }, 1930: { m: 0.12, f: 0.02 }, 1960: { m: 0.25, f: 0.07 }, 1990: { m: 0.50, f: 0.22 }, 2020: { m: 0.70, f: 0.47 } },
     urbanHistory: { 1900: 0.10, 1930: 0.12, 1960: 0.22, 1990: 0.31, 2020: 0.37 },

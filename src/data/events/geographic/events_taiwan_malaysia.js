@@ -127,9 +127,10 @@ export const TAIWAN_MALAYSIA_EVENTS = [
 
   {
     id: 'twn_cross_strait_tension',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Taiwan' &&
       G.currentYear >= 2022 &&
       G.age >= 18 &&

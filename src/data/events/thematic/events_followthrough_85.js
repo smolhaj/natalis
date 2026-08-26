@@ -125,9 +125,10 @@ export const FOLLOWTHROUGH_85_EVENTS = [
 
   {
     id: 'ft85_voice_aftermath',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('aus_voice_generation') &&
       G.currentYear >= 2024 &&
       G.age >= 25 &&

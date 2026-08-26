@@ -6,7 +6,7 @@ export const FOLLOWTHROUGH_81_EVENTS = [
 
   {
     id: 'ft81_partisan_april25',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('italy_partisan_veteran') &&
@@ -82,9 +82,10 @@ export const FOLLOWTHROUGH_81_EVENTS = [
 
   {
     id: 'ft81_postconciliar_abortion',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('postconciliar_generation') &&
       G.currentYear >= 1981 && G.currentYear <= 1983 &&
       G.age >= 25 &&
@@ -210,9 +211,10 @@ export const FOLLOWTHROUGH_81_EVENTS = [
 
   {
     id: 'ft81_meloni_in_office',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('italy_meloni_2022') &&
       G.currentYear >= 2024 &&
       G.age >= 25 &&

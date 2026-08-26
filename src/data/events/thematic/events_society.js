@@ -66,51 +66,99 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'womens_vote_nz_first',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character.gender === 'female' &&
       G.character.country.name === 'New Zealand' &&
-      G.currentYear >= 1893 && G.currentYear <= 1895 &&
-      G.age >= 18 &&
+      G.currentYear <= 1960 &&
+      G.age >= 7 && G.age <= 14 &&
       !G.mem?.womens_vote,
-    text: 'New Zealand is the first country on earth to grant women the right to vote. The Electoral Act passed last month. Kate Sheppard collected hundreds of thousands of signatures. You stand in line at the polling place. The man ahead of you is surprised to see women in the queue. You vote.',
-    choices: null,
-    effect: (p) => {
-      p.m += 20
-      p.e += 5
-      p.karma += 8
-      p.setMem('womens_vote', true)
-      p.addFlag('witnessed_womens_suffrage')
-      p.addFlag('first_in_world_to_vote')
-    },
+    text: 'Your grandmother tells you she signed it. She was twenty-three. The sheets were pasted end to end into one roll and when they carried it into the House they unrolled it down the floor and it kept going, past the benches, all the way to the far wall. Twenty-five thousand names. She says the men laughed at first and then stopped laughing. New Zealand was the first country on earth. She says it the way other people say a birthday.',
+    choices: [
+      {
+        text: 'Ask her what she wrote',
+        tag: null,
+        outcome: 'Her name, and the town, in a hand she says was better then. She shows you how she made the capital letters. You practise them for a week.',
+        effect: (p) => { p.m += 8; p.e += 4; p.setMem('womens_vote', true); p.addFlag('suffrage_inheritance') },
+      },
+      {
+        text: 'Ask whether anything changed',
+        tag: null,
+        outcome: 'She thinks about it longer than you expect. She says the laws did, some of them, slowly. She says what changed first was what a girl could imagine wanting.',
+        effect: (p) => { p.m += 5; p.e += 7; p.karma += 4; p.setMem('womens_vote', true); p.addFlag('suffrage_inheritance') },
+      },
+    ],
+    effect: null,
   },
 
   {
     id: 'womens_vote_suffragette_violence',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
       G.character.country.name === 'United Kingdom' &&
-      G.currentYear >= 1910 && G.currentYear <= 1914 &&
-      G.age >= 18,
-    text: 'The suffragettes are chaining themselves to railings and breaking windows. Emily Wilding Davison died at Epsom last summer, stepping onto the track. The newspapers call them hysterical. You have read their pamphlets. You know exactly what they want and why.',
+      G.currentYear <= 1952 &&
+      G.age >= 8 && G.age <= 16 &&
+      !G.mem?.suffragetteAunt,
+    text: 'Your great-aunt keeps a medal in a drawer with the buttons. It is silver, on a purple and white and green ribbon, and it is engraved with a date in 1912 and the words FOR VALOUR. She was in Holloway five weeks. Nobody in the house explains what the medal was given for, and when you ask your mother she says only that they fed her through a tube and that we do not talk about it in front of your great-aunt.',
     choices: [
       {
-        text: 'Join a suffragette march',
-        tag: 'activist',
-        outcome: 'The police are there. You are not arrested, but a woman beside you is. She goes quietly, as if she expected it.',
-        effect: (p) => { p.m -= 5; p.e += 6; p.s += 4; p.addFlag('suffragette_activist') },
+        text: 'Ask her about it anyway',
+        tag: null,
+        outcome: 'She does not tell you about the tube. She tells you about the woman in the next cell who sang, and how the wardresses could not make her stop. She says that was the part that frightened them.',
+        effect: (p) => { p.m += 4; p.e += 6; p.s += 3; p.setMem('suffragetteAunt', true); p.addFlag('suffrage_inheritance') },
       },
       {
-        text: 'Support from a distance — sign petitions, donate',
+        text: 'Put the medal back and say nothing',
         tag: null,
-        outcome: 'Your name is on a list somewhere. That is something.',
-        effect: (p) => { p.m += 3; p.e += 3; p.addFlag('suffrage_supporter') },
+        outcome: 'You close the drawer. For years afterwards you know exactly which drawer, and exactly where in it, without ever having been told.',
+        effect: (p) => { p.m += 2; p.e += 3; p.setMem('suffragetteAunt', true); p.addFlag('suffrage_inheritance') },
       },
     ],
     effect: null,
+  },
+
+  // ── SUFFRAGE INHERITANCE FOLLOW-THROUGH ─────────────────────────────────────
+  // The echo of being told, as a girl, that someone in the family did this first.
+
+  {
+    id: 'suffrage_inheritance_first_vote',
+    phase: null,
+    weight: 5,
+    when: (G) =>
+      G.flags.has('suffrage_inheritance') &&
+      G.age >= 20 && G.age <= 30 &&
+      !G.mem?.suffrageFirstVote,
+    text: 'The queue moves slowly and the hall smells of floor polish and wet wool. When it is your turn a man checks your name against a list and hands you the paper without looking up, because there is nothing about this that is remarkable to him. You take it behind the curtain. It takes eleven seconds. You had expected to feel something larger and instead you feel the ordinariness of it, which you understand, standing there, is the entire point — that it cost somebody a great deal to make this boring.',
+    choices: null,
+    effect: (p) => {
+      p.m += 8
+      p.e += 4
+      p.karma += 3
+      p.setMem('suffrageFirstVote', true)
+      p.addFlag('suffrage_inheritance_kept')
+    },
+  },
+
+  {
+    id: 'suffrage_inheritance_told_forward',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      G.flags.has('suffrage_inheritance') &&
+      G.age >= 45 &&
+      (G.children?.length ?? 0) > 0 &&
+      !G.mem?.suffrageToldForward,
+    text: 'You find yourself telling it at the table — the roll of names, or the drawer, or the coat worn to funerals and weddings. You hear your own voice doing the thing your grandmother\'s did, the small pause before the number. The children are polite about it. One of them is not listening. One of them is, and will remember the number wrong, and will tell it anyway in forty years.',
+    choices: null,
+    effect: (p) => {
+      p.m += 6
+      p.karma += 4
+      p.setMem('suffrageToldForward', true)
+      p.addFlag('suffrage_inheritance_passed_on')
+    },
   },
 
   {
@@ -926,22 +974,21 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'womens_suffrage_france_delayed',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
-      G.character.gender === 'female' &&
       G.character.country.name === 'France' &&
-      G.currentYear >= 1944 && G.currentYear <= 1946 &&
-      G.age >= 18 &&
+      G.currentYear >= 1945 && G.currentYear <= 1946 &&
+      G.age >= 9 && G.age <= 17 &&
       !G.mem?.france_womens_vote,
-    text: 'French women vote for the first time in the municipal elections. France is late — later than most of the countries it considers its peers. The Assemblée has debated this since 1919. The debate has been about whether women were ready. You have been voting in your head for twenty-five years.',
+    text: 'Your mother votes for the first time in her life. She is forty-one. She has put on the coat she wears to funerals and weddings and she will not let you carry the papers. At the table by the door a man checks her name against the list twice. France is late — later than most of the countries it compares itself to; the Assemblée has been debating whether women were ready since 1919. On the way home she does not say anything at all, and she walks faster than usual.',
     choices: null,
     effect: (p) => {
-      p.m += 12
-      p.e += 3
-      p.r += 4
+      p.m += 10
+      p.e += 5
       p.setMem('france_womens_vote', true)
       p.addFlag('witnessed_womens_suffrage')
+      p.addFlag('suffrage_inheritance')
     },
   },
 

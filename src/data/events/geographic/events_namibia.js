@@ -93,9 +93,10 @@ const NAMIBIA_EVENTS = [
 
   {
     id: 'nam_german_apology_2021',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Namibia' &&
       G.currentYear >= 2021 &&
       G.age >= 18 &&

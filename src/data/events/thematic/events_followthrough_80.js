@@ -106,9 +106,10 @@ export const FOLLOWTHROUGH_80_EVENTS = [
 
   {
     id: 'ft80_kresy_name',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('kresy_family') &&
       G.currentYear >= 1960 &&
       G.age >= 25 &&
@@ -202,9 +203,10 @@ export const FOLLOWTHROUGH_80_EVENTS = [
 
   {
     id: 'ft80_uk_brexit',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('poland_uk_emigrant') &&
       G.currentYear >= 2016 &&
       G.age >= 25 &&

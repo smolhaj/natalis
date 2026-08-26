@@ -41,7 +41,7 @@ export const FOLLOWTHROUGH_38_EVENTS = [
 
   {
     id: 'ft38_literacy_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('nic_literacy_generation') &&
@@ -73,7 +73,7 @@ export const FOLLOWTHROUGH_38_EVENTS = [
 
   {
     id: 'ft38_2018_witness_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('nic_2018_witness') &&
@@ -89,7 +89,7 @@ export const FOLLOWTHROUGH_38_EVENTS = [
 
   {
     id: 'ft38_exile_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('nic_nicaraguan_exile') &&

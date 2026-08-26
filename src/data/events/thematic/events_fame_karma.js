@@ -176,7 +176,7 @@ export const FAME_KARMA_EVENTS = [
 
   {
     id: 'fame_fading',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.fame >= 20 &&
@@ -294,7 +294,7 @@ export const FAME_KARMA_EVENTS = [
 
   {
     id: 'karma_community_recognition',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.karma > 75 &&
@@ -396,7 +396,7 @@ export const FAME_KARMA_EVENTS = [
 
   {
     id: 'karma_isolation',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.karma < 30 &&

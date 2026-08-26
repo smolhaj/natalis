@@ -25,9 +25,10 @@ export const FOLLOWTHROUGH_78_EVENTS = [
 
   {
     id: 'ft78_evita_death',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('arg_peronist_generation') &&
       G.currentYear >= 1952 && G.currentYear <= 1956 &&
       G.age >= 16 &&
@@ -45,9 +46,10 @@ export const FOLLOWTHROUGH_78_EVENTS = [
 
   {
     id: 'ft78_malvinas_return',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('arg_malvinas_conscript') &&
       G.currentYear >= 1982 && G.currentYear <= 1990 &&
       G.age >= 20 &&
@@ -64,7 +66,7 @@ export const FOLLOWTHROUGH_78_EVENTS = [
 
   {
     id: 'ft78_malvinas_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('arg_malvinas_conscript') &&
@@ -106,7 +108,7 @@ export const FOLLOWTHROUGH_78_EVENTS = [
 
   {
     id: 'ft78_amia_impunity',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('arg_amia_generation') &&
@@ -148,7 +150,7 @@ export const FOLLOWTHROUGH_78_EVENTS = [
 
   {
     id: 'ft78_trials_reckoning',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('arg_kirchner_trials_generation') &&

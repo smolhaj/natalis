@@ -65,7 +65,7 @@ export const EVENTS_SONDER_6 = [
 
   {
     id: 'sonder6_night_worrying',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 35 && !G.mem?.s6NightWorry,
     text: 'You are running through it again. The money, the job, the conversation that did not go the way you needed it to. Your mind is doing this without your permission, as it does at this hour. At some point you stop fighting it and simply watch it happen.',
@@ -75,7 +75,7 @@ export const EVENTS_SONDER_6 = [
 
 {
     id: 'sonder6_night_rural',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.ruralUrban !== 'urban' && G.age >= 8 && G.age <= 16 && !G.mem?.s6NightRural,
     text: 'The village at night is completely dark. No streetlights, the houses extinguished one by one. The stars are so dense they look like something poured. You have grown up under this sky and take it as the correct version of the sky, which means that cities, when you eventually see them, will seem to have made an error.',
@@ -322,7 +322,7 @@ export const EVENTS_SONDER_6 = [
 
   {
     id: 'sonder6_wait_child_coming_home',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.children?.length > 0 && G.age >= 38 && G.age <= 58 && !G.mem?.s6WaitChild,
     text: 'The child is late. Fifteen minutes past when they said. You stand at the window. You tell yourself not to stand at the window and you stand at the window. This is the calculation that runs continuously in the background of parenthood — the gap between where they are supposed to be and where they are — and you have never found a way to stop running it.',

@@ -390,6 +390,26 @@ export function deriveGenerationalFlags(char) {
   if (Math.random() < disabilityBaseRate) flags.push('born_with_disability')
   if (Math.random() < 0.0015) flags.push('born_deaf')
 
+  // ── Diaspora sub-identities ──────────────────────────────────────────────
+  // Populations too small to sit in ethnicGroups as their own line — a share
+  // there of 0.00007 is a group the generator will never actually produce — but
+  // large enough in the historical record to have a written arc in this corpus.
+  // The shares below are deliberately a REACHABILITY FLOOR rather than the true
+  // proportion: authored content aimed at a person the game cannot generate is
+  // content no player will ever read.
+  const eth = char.ethnicity
+  // Tibetan exile community in India, which begins with the 1959 flight.
+  if (cn === 'India' && birthYear >= 1959 && Math.random() < 0.0025) {
+    flags.push('tibetan_exile_family')
+  }
+  if (cn === 'United States' && eth === 'asian_american') {
+    // Roughly the real share of Asian America; Japanese Americans are the
+    // community the internment arc is written about.
+    if (Math.random() < 0.07) flags.push('japanese_american')
+    // Hmong resettlement follows the end of the Secret War in 1975.
+    else if (birthYear >= 1970 && Math.random() < 0.03) flags.push('hmong_american')
+  }
+
   // ── Child soldier path — conflict zone, born before 2005 ─────────────────
   if (archetype === 'conflict_zone' && birthYear < 2005 && Math.random() < 0.15) {
     flags.push('child_soldier_path')

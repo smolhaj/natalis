@@ -93,9 +93,10 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_berta_caceres',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       IS_HONDURAN(G) &&
       G.currentYear >= 2016 &&
       G.age >= 20 &&

@@ -140,6 +140,7 @@ export async function vocab() {
   const yearRange = new Map()
   const archetypeOf = new Map()
   const ethnicByCountry = new Map()
+  const religionByCountry = new Map()
 
   for (const c of COUNTRIES) {
     countryNames.add(c.name)
@@ -149,12 +150,13 @@ export async function vocab() {
     for (const g of c.ethnicGroups ?? []) if (g?.id) ethnicIds.add(g.id)
     ethnicByCountry.set(c.name, new Set((c.ethnicGroups ?? []).map(g => g.id)))
     for (const k of Object.keys(c.religionWeights ?? {})) religionKeys.add(k)
+    religionByCountry.set(c.name, new Set(Object.keys(c.religionWeights ?? {})))
     if (Array.isArray(c.yearRange)) yearRange.set(c.name, c.yearRange)
   }
 
   _vocab = {
     countryNames, ethnicIds, religionKeys, archetypes, regimes,
-    yearRange, archetypeOf, ethnicByCountry,
+    yearRange, archetypeOf, ethnicByCountry, religionByCountry,
     // Documented in CLAUDE.md; these are engine contracts, not data-derived.
     ruralUrban: new Set(['urban', 'suburban', 'rural']),
     residency: new Set(['citizen', 'permanent_resident', 'work_visa', 'undocumented',

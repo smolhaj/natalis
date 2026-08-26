@@ -38,7 +38,7 @@ export const EVENTS_SONDER_44 = [
 
   {
     id: 'sonder_44_e',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasPhotographs(G) && (G.age >= 38 && G.age <= 55 && !G.mem?.s34e),
     text: () => pick([
@@ -51,7 +51,7 @@ export const EVENTS_SONDER_44 = [
 
   {
     id: 'sonder_44_f',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 24 && G.age <= 36 && !G.mem?.s34f),
     text: () => pick([
@@ -90,7 +90,7 @@ export const EVENTS_SONDER_44 = [
 
   {
     id: 'sonder_44_i',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 42 && G.age <= 55 && !G.mem?.s34i),
     text: () => pick([
@@ -129,7 +129,7 @@ export const EVENTS_SONDER_44 = [
 
 {
     id: 'sonder_44_n',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 35 && !G.mem?.s34n,
     text: () => pick([
@@ -142,7 +142,7 @@ export const EVENTS_SONDER_44 = [
 
   {
     id: 'sonder_44_o',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 45 && G.age <= 58 && !G.mem?.s34o,
     text: () => pick([
@@ -194,7 +194,7 @@ export const EVENTS_SONDER_44 = [
 
   {
     id: 'sonder_44_s',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 26 && G.age <= 38 && !G.mem?.s34s,
     text: () => pick([
@@ -246,7 +246,7 @@ export const EVENTS_SONDER_44 = [
 
   {
     id: 'sonder_44_w',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 43 && G.age <= 55 && !G.mem?.s34w,
     text: () => pick([
@@ -298,7 +298,7 @@ export const EVENTS_SONDER_44 = [
 
   {
     id: 'sonder_44_aa',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 38 && !G.mem?.s34aa,
     text: () => pick([
@@ -324,7 +324,7 @@ export const EVENTS_SONDER_44 = [
 
   {
     id: 'sonder_44_ac',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 45 && G.age <= 60 && !G.mem?.s34ac,
     text: () => pick([

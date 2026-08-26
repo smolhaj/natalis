@@ -19,7 +19,7 @@ export const EVENTS_SONDER_12 = [
 
   {
     id: 'sonder12_sound_neighbor_tv',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => place.hasTV(G) && (G.age >= 18 && G.age <= 35 && !G.mem?.s12SoundNeighborTv),
@@ -166,7 +166,7 @@ export const EVENTS_SONDER_12 = [
 
   {
     id: 'sonder12_make_typing',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.currentYear >= 2005 && G.age >= 38 && G.age <= 58 && !G.mem?.s12MakeTyping,
     text: 'You learned to type on a keyboard with keys that pushed down with weight. Now the young type with their thumbs, quickly, without looking, producing the same words through a motion you do not share. You could learn it. You probably will not. The two motions exist in the same era, which means one of them is already archaic, and you know which one.',
@@ -350,7 +350,7 @@ export const EVENTS_SONDER_12 = [
 
   {
     id: 'sonder12_hour_after_school',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 8 && G.age <= 16 && !G.mem?.s12HourAfterSchool,
     text: 'The walk home from school — or the ride, or the journey — with the day released and the afternoon still unconsumed. This is the freest hour. Nothing is required yet. You are between obligation and obligation. You have discovered that this hour does not last, which is why you remember it as longer than it was.',
@@ -390,9 +390,10 @@ export const EVENTS_SONDER_12 = [
 
   {
     id: 'sonder12_hour_sick',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.age >= 25 && !G.mem?.s12HourSick,
+    when: (G) =>
+      G.age <= 49 && G.age >= 25 && !G.mem?.s12HourSick,
     text: 'Illness slows time. The day during a fever or a recovery is a different duration — the hours between meals enormous, the light through the window tracking across the wall in a way you never normally see. You have been well so long that the slowing surprises you. The body, when it needs rest, is very specific about the arrangements.',
     choices: null,
     effect: (p) => { p.r += 2; p.h -= 1; p.setMem('s12HourSick', true) },
@@ -400,7 +401,7 @@ export const EVENTS_SONDER_12 = [
 
   {
     id: 'sonder12_hour_sunday',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => place.hasTV(G) && (G.age >= 8 && G.age <= 16 && !G.mem?.s12HourSunday),
     text: 'A Sunday afternoon in childhood has a quality that no other time has — slow, slightly airless, the week not yet begun, the weekend already used. Whatever your family does on Sunday afternoons, you are doing it now: the meal, the visiting, the television, the street football, the walk, the specific boredom. This particular slow quality is what you will remember as what Sundays were, even when Sundays become like every other day.',

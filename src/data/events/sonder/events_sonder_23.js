@@ -10,7 +10,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_light_at_this_hour',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.mem?.sdr23LightAtHour,
     text: () => pick([
@@ -24,7 +24,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_borrowed_word',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr23BorrowedWord,
     text: () => pick([
@@ -38,7 +38,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_recurring_dream',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 60 && !G.mem?.sdr23RecurDream,
     text: () => pick([
@@ -52,7 +52,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_unexpected_competence',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 45 && !G.mem?.sdr23UnexpCompetence,
     text: () => pick([
@@ -66,7 +66,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_walk',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23TheWalk,
     text: () => pick([
@@ -80,7 +80,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_small_celebration',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr23SmallCelebration,
     text: () => pick([
@@ -94,7 +94,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_letter_unsent',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23LetterUnsent,
     text: () => pick([
@@ -108,7 +108,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_shared_silence',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 65 && !G.mem?.sdr23SharedSilence,
     text: () => pick([
@@ -122,7 +122,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_birthday_again',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 40 && G.age <= 65 && !G.mem?.sdr23BirthdayAgain,
     text: () => pick([
@@ -136,7 +136,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_object_inherited',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr23ObjectInherited,
     text: () => pick([
@@ -150,7 +150,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_city_at_dawn',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.mem?.sdr23CityDawn,
     text: () => pick([
@@ -164,7 +164,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_skill_watched',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 60 && !G.mem?.sdr23SkillWatched,
     text: () => pick([
@@ -178,7 +178,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_interruption',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr23Interruption,
     text: () => pick([
@@ -192,7 +192,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_stranger_moment',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23StrangerMoment,
@@ -207,7 +207,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_return_trip',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23ReturnTrip,
     text: () => pick([
@@ -221,7 +221,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_sound_of_home',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr23SoundHome,
     text: () => pick([
@@ -235,7 +235,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_appointment_kept',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasHealthcare(G) && (G.age >= 30 && G.age <= 65 && !G.mem?.sdr23AppointmentKept),
     text: () => pick([
@@ -249,7 +249,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_decade_end',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 68 && !G.mem?.sdr23DecadeEnd,
     text: () => pick([
@@ -263,7 +263,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_news_habit',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23NewsHabit,
     text: () => pick([
@@ -277,7 +277,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_ordinary_tuesday',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 65 && !G.mem?.sdr23OrdinaryTuesday,
     text: () => pick([
@@ -291,7 +291,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_childhood_friend',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr23ChildhoodFriend,
     text: () => pick([
@@ -347,7 +347,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_prayer',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23Prayer,
     text: () => pick([
@@ -389,7 +389,7 @@ export const EVENTS_SONDER_23 = [
 
   {
     id: 'sdr23_the_early_morning',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 70 && !G.mem?.sdr23EarlyMorning,
     text: () => pick([

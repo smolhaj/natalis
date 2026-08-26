@@ -47,7 +47,7 @@ export const EVENTS_SONDER_32 = [
 
   {
     id: 'sonder_32_e',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 24 && G.age <= 36 && !G.mem?.s32e,
     text: () => pick([
@@ -86,7 +86,7 @@ export const EVENTS_SONDER_32 = [
 
   {
     id: 'sonder_32_i',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 28 && G.age <= 42 && !G.mem?.s32i),
     text: () => pick([
@@ -99,7 +99,7 @@ export const EVENTS_SONDER_32 = [
 
   {
     id: 'sonder_32_j',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 44 && G.age <= 58 && !G.mem?.s32j,
     text: () => pick([
@@ -151,7 +151,7 @@ export const EVENTS_SONDER_32 = [
 
   {
     id: 'sonder_32_n',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 34 && !G.mem?.s32n,
     text: () => pick([
@@ -190,7 +190,7 @@ export const EVENTS_SONDER_32 = [
 
   {
     id: 'sonder_32_q',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 46 && G.age <= 60 && !G.mem?.s32q,
     text: () => pick([
@@ -203,7 +203,7 @@ export const EVENTS_SONDER_32 = [
 
   {
     id: 'sonder_32_r',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 26 && G.age <= 40 && !G.mem?.s32r,
     text: () => pick([

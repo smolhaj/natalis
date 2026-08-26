@@ -32,9 +32,10 @@ export const CAMEROON_DEPTH_EVENTS = [
 
   {
     id: 'cmr_dep_boko_north',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       IS_CAMEROONIAN(G) &&
       G.currentYear >= 2014 &&
       G.religion === 'muslim_sunni' &&
@@ -82,9 +83,10 @@ export const CAMEROON_DEPTH_EVENTS = [
 
   {
     id: 'cmr_dep_kondengui',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       IS_CAMEROONIAN(G) &&
       G.currentYear >= 1985 &&
       G.age >= 25 &&
@@ -116,9 +118,10 @@ export const CAMEROON_DEPTH_EVENTS = [
 
   {
     id: 'cmr_dep_ghost_town',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       IS_CAMEROONIAN(G) &&
       IS_ANGLOPHONE(G) &&
       G.currentYear >= 2018 &&

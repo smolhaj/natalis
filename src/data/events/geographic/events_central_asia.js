@@ -269,9 +269,10 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'tkm_isolation',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
-    when: (G) => IS_TURKMEN(G) && G.currentYear >= 2000 && G.age >= 25 && !G.mem?.tkmIsolation,
+    when: (G) =>
+      G.age <= 49 && IS_TURKMEN(G) && G.currentYear >= 2000 && G.age >= 25 && !G.mem?.tkmIsolation,
     text: 'To get a passport, you apply, and the application is reviewed. To travel, your travel is reviewed. The state has an electronic register of citizens who are permitted to leave. You are — you believe — on the permitted side of the register. The internet is filtered; the VPNs are banned; the news that arrives is the news the state has decided is appropriate. North Korea is more isolated. Turkmenistan is what second place looks like.',
     choices: null,
     effect: (p) => { p.m -= 8; p.e += 3; p.addFlag('turkmenistan_closed_world'); p.setMem('tkmIsolation', true); },

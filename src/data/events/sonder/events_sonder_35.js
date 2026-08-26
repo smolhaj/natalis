@@ -39,7 +39,7 @@ export const EVENTS_SONDER_35 = [
 
   {
     id: 'sonder35_tree_that_grew',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 45 && !G.mem?.s35TreeGrew,
     text: () => pick([

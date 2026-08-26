@@ -72,9 +72,10 @@ export const FOLLOWTHROUGH_58_EVENTS = [
 
   {
     id: 'ft58_gezi_aftermath',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('trk_dep_gezi_generation') &&
       G.currentYear >= 2014 && G.currentYear <= 2020 &&
       G.age >= 22 &&
@@ -101,9 +102,10 @@ export const FOLLOWTHROUGH_58_EVENTS = [
 
   {
     id: 'ft58_2016_purge_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('trk_dep_2016_generation') &&
       G.currentYear >= 2017 && G.currentYear <= 2022 &&
       G.age >= 25 &&
@@ -132,9 +134,10 @@ export const FOLLOWTHROUGH_58_EVENTS = [
 
   {
     id: 'ft58_amman_diaspora_resettled',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('irq_dep_diaspora_amman') &&
       G.currentYear >= 2006 && G.currentYear <= 2015 &&
       G.age >= 25 &&

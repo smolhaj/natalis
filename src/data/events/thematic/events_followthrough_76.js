@@ -28,7 +28,7 @@ export const FOLLOWTHROUGH_76_EVENTS = [
 
   {
     id: 'ft76_chernobyl_return',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ukr_chernobyl_generation') &&
@@ -49,7 +49,7 @@ export const FOLLOWTHROUGH_76_EVENTS = [
 
   {
     id: 'ft76_1990s_reckoning',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ukr_1990s_collapse_generation') &&
@@ -69,7 +69,7 @@ export const FOLLOWTHROUGH_76_EVENTS = [
 
   {
     id: 'ft76_crimea_limbo',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ukr_crimea_2014_inside') &&
@@ -90,7 +90,7 @@ export const FOLLOWTHROUGH_76_EVENTS = [
 
   {
     id: 'ft76_mobilization_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ukr_mobilization_2022') &&
@@ -109,9 +109,10 @@ export const FOLLOWTHROUGH_76_EVENTS = [
 
   {
     id: 'ft76_basement_normalised',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('ukr_basement_2022') &&
       G.currentYear >= 2023 &&
       G.age >= 10 &&

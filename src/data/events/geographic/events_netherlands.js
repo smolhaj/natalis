@@ -171,9 +171,10 @@ export const NETHERLANDS_EVENTS = [
 
   {
     id: 'nl_colonial_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Netherlands' &&
       G.currentYear >= 2011 &&
       G.age >= 25 &&

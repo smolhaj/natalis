@@ -108,7 +108,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Nepal' &&
       G.casteSystem &&
-      G.ethnicity === 'dalit' &&
+      G.ethnicity === 'dalit_nepal' &&
       G.age >= 7 && G.age <= 14 &&
       G.ruralUrban === 'rural' &&
       !G.mem?.sl_nepal_uc,
@@ -618,7 +618,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
-      ['muslim', 'muslim_sunni'].includes(G.religion) &&
+      ['muslim_sunni', 'muslim_sufi'].includes(G.religion) &&
       G.money < 800 &&
       G.age >= 16 && G.age <= 45 &&
       !G.mem?.sl_ramadan_cai,
@@ -2291,7 +2291,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_stasi_file_opened',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -2710,7 +2710,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
-      G.ethnicity === 'tibetan' &&
+      G.flags.has('tibetan_exile_family') &&
       G.currentYear >= 1965 && G.currentYear <= 2010 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.sl_tib_dharam,
@@ -3237,7 +3237,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     weight: 2,
     when: (G) =>
       G.character.country.name === 'United States' &&
-      G.ethnicity === 'japanese' &&
+      G.flags.has('japanese_american') &&
       G.currentYear >= 1900 && G.currentYear <= 1924 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_jp_hawaii,
@@ -3253,7 +3253,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United States' &&
-      G.ethnicity === 'japanese' &&
+      G.flags.has('japanese_american') &&
       G.currentYear >= 1942 && G.currentYear <= 1945 &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem?.sl_ja_intern,
@@ -3674,7 +3674,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     weight: 2,
     when: (G) =>
       G.character.country.name === 'United States' &&
-      G.ethnicity === 'hmong' &&
+      G.flags.has('hmong_american') &&
       G.currentYear >= 1978 && G.currentYear <= 2000 &&
       G.age >= 5 && G.age <= 14 &&
       !G.mem?.sl_hmong_minn,

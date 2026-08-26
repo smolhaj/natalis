@@ -769,7 +769,7 @@ export const LATE_LIFE_EVENTS = [
     weight: 2,
     when: (G) =>
       !G.mem.healthRefusingTreatment &&
-      G.flags.includes('faith_deepened') &&
+      ['faith_chosen', 'faith_rebuilt', 'faith_returned', 'faith_survived_suppression'].some(f => G.flags.includes(f)) &&
       G.age >= 68 &&
       G.stats.health < 50,
     text: 'The doctor goes through the whole of it, the cycles and the percentages and the two weeks in three you would spend feeling as though you had been poisoned, which you would have been. You tell him you will not be doing it. He asks whether there is someone he can speak to, and you tell him that you are the someone. He writes something and does not argue, and you go out into an afternoon that is very ordinary and very bright.',

@@ -102,9 +102,10 @@ export const BANGLADESH_DEPTH_EVENTS = [
 
   {
     id: 'bng_dep_rohingya_host',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Bangladesh' &&
       G.currentYear >= 2017 &&
       G.age >= 20 &&
@@ -193,9 +194,10 @@ export const BANGLADESH_DEPTH_EVENTS = [
 
   {
     id: 'bng_dep_bkash',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Bangladesh' &&
       G.currentYear >= 2012 &&
       G.age >= 20 &&

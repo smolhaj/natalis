@@ -302,9 +302,10 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_social_credit_awareness',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
+      G.age <= 49 &&
       isChina(G) &&
       G.currentYear >= 2015 &&
       G.age >= 18 &&
@@ -771,7 +772,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_heihaizi_policy_2015',
-    phase: 'late_life',
+    phase: null,
     weight: 5,
     when: (G) =>
       isChina(G) &&

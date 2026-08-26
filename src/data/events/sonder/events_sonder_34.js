@@ -260,7 +260,7 @@ export const EVENTS_SONDER_34 = [
 
   {
     id: 'sonder34_the_voice_still_heard',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 45 && !G.mem?.s34VoiceStillHeard,
     text: () => pick([

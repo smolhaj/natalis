@@ -6,7 +6,7 @@ export const FOLLOWTHROUGH_87_EVENTS = [
 
   {
     id: 'ft87_waitangi_settlement_1990s',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('nz_waitangi_generation') &&
@@ -66,7 +66,7 @@ export const FOLLOWTHROUGH_87_EVENTS = [
 
   {
     id: 'ft87_erebus_mahon_vindicated',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('nz_erebus_generation') &&
@@ -86,7 +86,7 @@ export const FOLLOWTHROUGH_87_EVENTS = [
 
   {
     id: 'ft87_pike_river_reentry_2019',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('nz_pike_river_generation') &&

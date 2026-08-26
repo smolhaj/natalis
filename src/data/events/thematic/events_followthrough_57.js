@@ -56,9 +56,10 @@ export const FOLLOWTHROUGH_57_EVENTS = [
 
   {
     id: 'ft57_yazidi_after_sinjar',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('irq_dep_yazidi_generation') &&
       G.currentYear >= 2014 && G.currentYear <= 2023 &&
       G.age >= 20 &&
@@ -101,9 +102,10 @@ export const FOLLOWTHROUGH_57_EVENTS = [
 
   {
     id: 'ft57_berber_revival',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('lby_dep_berber_generation') &&
       G.currentYear >= 2011 && G.currentYear <= 2020 &&
       G.age >= 25 &&
@@ -147,9 +149,10 @@ export const FOLLOWTHROUGH_57_EVENTS = [
 
   {
     id: 'ft57_transition_disillusioned',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('sdn_dep_transition_generation') &&
       G.currentYear >= 2021 && G.currentYear <= 2025 &&
       G.age >= 20 &&

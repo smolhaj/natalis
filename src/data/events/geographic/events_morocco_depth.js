@@ -253,7 +253,7 @@ export const MOROCCO_DEPTH_EVENTS = [
 
   {
     id: 'mor_rif_echo',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_MOROCCO(G) &&

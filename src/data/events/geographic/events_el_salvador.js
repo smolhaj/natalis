@@ -93,9 +93,10 @@ export const EL_SALVADOR_EVENTS = [
 
   {
     id: 'slv_estado_excepcion',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       IS_SALVADORAN(G) &&
       G.currentYear >= 2022 &&
       G.age >= 25 &&

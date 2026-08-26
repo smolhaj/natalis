@@ -14753,6 +14753,175 @@ function buildYearTexture(state, opts = {}) {
     'You can say the number of years out loud now without the sentence rearranging itself around them.',
   ])
 
+  if (F.has('working_young') && Math.random() < 0.13) return pick([
+    'You have never in your life had the experience of a day with nothing in it that had to be done.',
+    'People who started work at twenty talk about it as a thing that began. For you there is no line to point at.',
+    'Your hands were finished before the rest of you was. They have looked like this since you were fourteen.',
+    'You can still do the movement without thinking — the exact one, the carrying one — and your body does it sometimes when you are not paying attention.',
+  ])
+
+  if (F.has('never_schooled') && Math.random() < 0.14) return pick([
+    'Somebody hands you a form and you hand it to somebody else, and there is a particular half-second in that exchange that you have felt several thousand times.',
+    'You know the shapes of the letters on the shop signs you pass every day. You know them the way you know a face, not the way anybody means it.',
+    'You can hold a great deal in your head, because you have had to. People who write things down do not know how much they are not carrying.',
+    'Your child reads aloud to you and you correct the parts about the world, which you know, and not the parts on the page, which you do not.',
+  ])
+
+  // -- Tenure ------------------------------------------------------------------
+
+  if (F.has('privatised_the_flat') && Math.random() < 0.15) return pick([
+    'The window still does not close properly. It is your window now, and has been for years, and you have still not fixed it.',
+    'The neighbour who refused on principle moved out eventually. Nobody agrees about what happened to the flat.',
+    'You own the largest thing your family has ever owned and you got it by standing in a queue for a form.',
+  ])
+
+  if (F.has('held_the_flat_through_it') && Math.random() < 0.16) return pick([
+    'Everything else went, in pieces, over about two years. The flat stayed. That is the whole reason there was a next decade.',
+    'You sold the good coat and the television and your mother\'s rings, and you did not sell the flat, and you were right.',
+  ])
+
+  if (F.has('sold_the_privatised_flat') && Math.random() < 0.18) return pick([
+    'You know what that building sells for now. You looked once, years ago, and have been careful not to look again.',
+    'You needed the money that year. That is true, and it is the whole defence, and it is not a defence you have ever had to make out loud.',
+  ])
+
+  if (F.has('building_in_stages') && Math.random() < 0.14) return pick([
+    'The rebar at the top of the pillars has gone orange. It is still pointing at a storey everyone in the family can describe.',
+    'You can date the last several years of your finances by looking up at the house from the road.',
+  ])
+
+  if (F.has('lost_the_land') && Math.random() < 0.18) return pick([
+    'Thirty years of an understanding, against one document. You have thought about which of those is the real thing and you keep arriving at the wrong answer.',
+    'You still take the long way round rather than pass it.',
+  ])
+
+  if (F.has('defended_the_land') && Math.random() < 0.15) return pick([
+    'You kept it. You are still, all these years later, alert in a particular way about anyone walking up to the gate.',
+    'There is a folder. You know exactly which shelf, and so does everyone else in the house.',
+  ])
+
+  if (F.has('priced_out_permanently') && Math.random() < 0.15) return pick([
+    'There was no day on which it became impossible. That is the part you cannot argue with — there is no decision to point at and regret.',
+    'The letter says the increase is modest. You have kept several of them, which is not a plan, just something you do.',
+  ])
+
+  if (F.has('made_peace_with_renting') && Math.random() < 0.12) return pick([
+    'Half the country rents for life and is not poor for it. You find this convincing about two days in three.',
+  ])
+
+  if (F.has('mortgage_cleared') && Math.random() < 0.14) return pick([
+    'Twenty-five years, and the end of it was a Tuesday and a letter about data protection.',
+    'The house is yours in the other sense now as well. You keep waiting to feel the difference and mostly you feel the stairs.',
+  ])
+
+  if (F.has('long_commute_years') && Math.random() < 0.13) return pick([
+    'Four hours of every day, for years, spent moving between the room you could afford and the work that paid for it.',
+  ])
+
+  if (F.has('family_lent_for_rent') && Math.random() < 0.12) return pick([
+    'Four people put money in and not one of them wrote anything down. The total has never been said out loud and never will be.',
+  ])
+
+  if (F.has('home_without_a_deed') && !F.has('lost_the_land') && Math.random() < 0.1) return pick([
+    'There is no piece of paper. There is everybody knowing, which has been enough for a long time.',
+  ])
+
+  if (F.has('mortgaged') && !F.has('mortgage_cleared') && Math.random() < 0.09) return pick([
+    'A number leaves the account on the same day every month and will go on doing so for longer than some of your friendships have lasted.',
+  ])
+
+  // The plain fact of having been inside, underneath whatever the charge was.
+  if (F.has('imprisoned') && Math.random() < 0.12) return pick([
+    'You eat faster than everyone at the table. You have known this for years and have never managed to do anything about it.',
+    'There are forms with a box on them. You have filled in enough of them by now to know which organisations read it and which ones only file it.',
+    'Somebody says they were locked in a room once, meaning an anecdote. You make the face that lets the story continue.',
+    'You are good at waiting. It is not patience. It is a skill you were taught somewhere specific.',
+  ])
+
+  // -- The residue of a political conviction -----------------------------------
+  // Written before the arrest events that set these, per the follow-through
+  // rule: the echo exists before the stone hits the water.
+
+  if (F.has('named_someone') && Math.random() < 0.18) return pick([
+    'You have never once said the name out loud since. You say it in your head about as often as you think about the weather.',
+    'You built the case for it over many years and it is a good case, and you have never been able to finish saying it to anyone.',
+    'Somebody at a table says the word informer, about someone else, in the ordinary way people use it. The conversation moves on without you.',
+    'You told yourself they already had him. You still believe that. It has not once been enough.',
+  ])
+
+  if (F.has('refused_to_name') && Math.random() < 0.16) return pick([
+    'You gave them nothing. It is the smallest possible thing to have and you have never had to put it down.',
+    'What you kept was not heroic and was not nothing: a list of people who never learned they had been on a list.',
+    'There is a version of your life where you said the name and got out four years earlier. You can see it clearly. You have never once wanted it.',
+  ])
+
+  if (F.has('signed_the_confession') && Math.random() < 0.16) return pick([
+    'You did not read it before you signed it. You have reconstructed what it probably said perhaps a thousand times since, which is a great deal more effort than reading it would have taken.',
+    'Your signature is on a document in a building you could still find. That is simply a fact about the world now, like a river being where it is.',
+  ])
+
+  if (F.has('gave_up_source') && Math.random() < 0.2) return pick([
+    'You still know what happened to him. You learned it from a guard who mentioned it the way you would mention rain.',
+    'You do not read the paper you used to write for. You are not sure whether that is shame or just the sensible avoidance of a sore tooth.',
+    'People still occasionally introduce you as a journalist. You have stopped correcting them, because correcting them requires the rest of it.',
+  ])
+
+  if (F.has('protected_source_at_cost') && Math.random() < 0.15) return pick([
+    'One of them found you, years afterwards, and talked about something else entirely for twenty minutes, and shook your hand slightly too long at the end.',
+    'The story you went in for was not, in the end, a very important story. That has never seemed to you like the relevant fact about it.',
+  ])
+
+  if (F.has('beaten_in_custody') && Math.random() < 0.15) return pick([
+    'The weather gets into the place it got into. You can tell a front is coming a full day before anyone with a radio.',
+    'A hand on your shoulder from behind, even a friendly one, arrives in the body before it arrives anywhere else.',
+  ])
+
+  if (F.has('would_not_recant') && Math.random() < 0.14) return pick([
+    'You were allowed to finish. You have thought about that a great deal, that they let you finish, and that it changed nothing, and that you would do it again.',
+  ])
+
+  if (F.has('detained_for_who_you_are') && Math.random() < 0.16) return pick([
+    'Nobody ever asked you a question. Of everything, that is the part you have never been able to put down: there was no question, because you were not a person to them, you were an instance.',
+    'You understand, in a way that cannot be explained to people who do not, that it was never about anything you did.',
+  ])
+
+  if (F.has('jailed_for_organising') && Math.random() < 0.14) return pick([
+    'They read out the production-hours lost at the hearing in the tone you would use for a casualty list. You have never heard the word sabotage since without hearing that voice.',
+    'The committee was taken in one night, which means the list was accurate, which means it came from the room.',
+  ])
+
+  if (F.has('refused_to_serve') && Math.random() < 0.13) return pick([
+    'The refusal was one sentence and cost four years. You have re-examined the sentence many times and never found a shorter one that was still true.',
+  ])
+
+  if (F.has('detained_at_protest') && !F.has('beaten_in_custody') && Math.random() < 0.12) return pick([
+    'You think about the boy in the van who kept apologising, and whether the older woman got him to stop, and whether it helped.',
+  ])
+
+  if (F.has('morality_conviction') && Math.random() < 0.13) return pick([
+    'It was an ordinary evening. You have never been able to describe it back to anyone without using their vocabulary for it, which is the part that took.',
+  ])
+
+  if (F.has('took_it_alone') && Math.random() < 0.13) return pick([
+    'Whether it protected anybody you never established. You said the sentence you had prepared, and it turned out that saying it was the whole of what you got.',
+  ])
+
+  if (F.has('suffrage_inheritance_passed_on') && Math.random() < 0.16) return pick([
+    'You have started telling it the way it was told to you, with the same pause before the number, and you no longer know whether the number is right.',
+    'One of them asked, last year, whether it was really true. You said yes. You have never checked.',
+  ])
+
+  if (F.has('suffrage_inheritance_kept') && Math.random() < 0.15) return pick([
+    'Election day is an errand. You do the errand. You have never once been able to make it only an errand.',
+    'The booth is a curtain and a shelf and a pencil on a string, and it takes eleven seconds, and somebody was fed through a tube for it.',
+  ])
+
+  if (F.has('suffrage_inheritance') && Math.random() < 0.12) return pick([
+    'You can still see the drawer. The buttons, and the ribbon underneath them, purple and white and green.',
+    'The story gets shorter each time you hear it. By now it is mostly the number and the length of the roll.',
+    'She said what changed first was what a girl could imagine wanting. You did not understand that for another twenty years.',
+  ])
+
   if (F.has('voted_first_time_free') && Math.random() < 0.18) return pick([
     'You still remember the weight of the ballot the first time it counted. Not the result — the paper, and the queue, and how ordinary everyone was being about it.',
     'People who have always had the vote treat election day as an errand. You have never once managed to.',

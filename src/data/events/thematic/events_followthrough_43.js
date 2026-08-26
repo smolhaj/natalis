@@ -24,9 +24,10 @@ export const FOLLOWTHROUGH_43_EVENTS = [
 
   {
     id: 'ft43_liberation_accounting',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('nor_liberation_generation') &&
       G.currentYear >= 1946 && G.currentYear <= 1960 &&
       G.age >= 25 &&

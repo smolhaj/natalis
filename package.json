@@ -13,8 +13,8 @@
     "test:coverage": "vitest run --coverage",
     "check-events": "node scripts/check-events.js",
     "sim": "node scripts/sim.js",
-    "test:fast": "vitest run --exclude \"**/engineBalance.test.js\" --exclude \"**/engineRobustness.test.js\" --exclude \"**/simulation.test.js\"",
-    "test:sim": "vitest run tests/engineBalance.test.js tests/engineRobustness.test.js tests/simulation.test.js"
+    "test:fast": "vitest run --exclude \"**/engineBalance.test.js\" --exclude \"**/engineRobustness.test.js\" --exclude \"**/simulation.test.js\" --exclude \"**/demography.test.js\"",
+    "test:sim": "vitest run tests/engineBalance.test.js tests/engineRobustness.test.js tests/simulation.test.js tests/demography.test.js"
   },
   "dependencies": {
     "react": "^18.3.1",

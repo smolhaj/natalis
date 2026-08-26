@@ -26,9 +26,10 @@ export const FOLLOWTHROUGH_68_EVENTS = [
 
   {
     id: 'ft68_basant_ban',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('pak_basant_generation') &&
       G.currentYear >= 2007 &&
       G.age >= 25 &&
@@ -65,9 +66,10 @@ export const FOLLOWTHROUGH_68_EVENTS = [
 
   {
     id: 'ft68_hazara_sit_in',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('pak_hazara_generation') &&
       G.currentYear >= 2013 &&
       G.age >= 25 &&
@@ -86,7 +88,7 @@ export const FOLLOWTHROUGH_68_EVENTS = [
 
   {
     id: 'ft68_baloch_return_or_not',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('pak_baloch_missing_person_family') &&

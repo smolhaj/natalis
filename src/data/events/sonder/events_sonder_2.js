@@ -182,7 +182,7 @@ export const EVENTS_SONDER_2 = [
 
   {
     id: 'sonder2_b_face',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.s2_bfc &&
@@ -194,7 +194,7 @@ export const EVENTS_SONDER_2 = [
 
   {
     id: 'sonder2_b_glasses',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.s2_bgl &&
@@ -206,7 +206,7 @@ export const EVENTS_SONDER_2 = [
 
   {
     id: 'sonder2_b_knee',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.s2_bkn &&
@@ -252,7 +252,7 @@ export const EVENTS_SONDER_2 = [
 
   {
     id: 'sonder2_b_temperature',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.s2_btmp &&

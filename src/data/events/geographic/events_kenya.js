@@ -47,9 +47,10 @@ export const KENYA_EVENTS = [
 
   {
     id: 'ken_tribal_vote',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
-    when: (G) => IS_KENYAN(G) && G.currentYear >= 1992 && G.age >= 25 && !G.mem.kenTribalVote,
+    when: (G) =>
+      G.age <= 49 && IS_KENYAN(G) && G.currentYear >= 1992 && G.age >= 25 && !G.mem.kenTribalVote,
     text: 'Election season. The ward chairman arrives — not with a threat, nothing so direct, but with a visit and an understanding about what the visit means. The candidate is from your community. The argument for voting community is easy to follow, because it is mostly true: a member of parliament from another tribe will not build the road in this district.',
     choices: [
       {

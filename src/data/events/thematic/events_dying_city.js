@@ -21,10 +21,11 @@ export const DYING_CITY_EVENTS = [
 
   {
     id: 'rustbelt_closure_announcement',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     cooldown: 0,
     when: (G) =>
+      G.age <= 49 &&
       RUST_BELT_PLACES.has(G.place?.id) &&
       G.currentYear >= 1977 && G.currentYear <= 2005 &&
       G.age >= 22 &&

@@ -161,9 +161,10 @@ export const NIGERIA_EVENTS = [
 
   {
     id: 'nga_naira_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Nigeria' &&
       G.currentYear >= 2022 &&
       G.age >= 18 &&

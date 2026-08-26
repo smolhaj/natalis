@@ -209,6 +209,8 @@ export function generateIdentityCard(state) {
 
 // ─── Epitaph generator ───────────────────────────────────────────────────────
 
+const oneOf = (arr) => arr[Math.floor(Math.random() * arr.length)]
+
 export function generateEpitaph(state) {
   const { character, flags, stats, regret, age, children, partner, career, money } = state
   const name = character.firstName
@@ -420,7 +422,7 @@ export function generateEpitaph(state) {
   } else if (f('bel_exile') && f('bel_2020_marcher')) {
     para2.push(`${He} marched every Sunday in Minsk in August 2020, when it seemed possible that something would change. Then ${he} left. The crowd ${he} had stood in, and the country ${he} left, and the years of renewing work permits in Warsaw — these are the arc of a specific political life.`)
   } else if (f('bel_crackdown_survived') && f('bel_stayed_2020')) {
-    para2.push(`${He} stayed in Belarus after 2020, when others left, and learned what staying required. The version of ${himself} that went to work and the version that came home — ${he} kept them separate for a long time.`)
+    para2.push(`${He} stayed in Belarus after 2020, when others left, and learned what staying required. The version of ${him}self that went to work and the version that came home — ${he} kept them separate for a long time.`)
   } else if (f('bel_chernobyl_generation')) {
     para2.push(`${He} was in Belarus in April 1986, when the cloud from Chernobyl moved north. Seventy percent of the fallout. The May Day parade went ahead on schedule. ${He} was not told about the cloud in time. ${He} was told it was safe.`)
   } else if (f('uru_dictatorship_lived') && f('uru_mujica_era')) {
@@ -713,7 +715,12 @@ export function generateEpitaph(state) {
   if (any('corruption_exposed', 'bribery', 'fraud')) {
     para3.push(`A corruption scandal marked the record and the reputation never fully recovered.`)
   } else if (any('compromised', 'sold_out', 'censored_work')) {
-    para3.push(`There were choices ${he} made that ${he} couldn't fully justify later.`)
+    para3.push(oneOf([
+      `There were choices ${he} made that ${he} couldn't fully justify later.`,
+      `${He} bent where bending was what the job required, and knew exactly which times those were.`,
+      `${He} signed off on one or two things ${he} would rather not have signed off on.`,
+      `The compromises were the ordinary kind, which did not make them easier to look at.`,
+    ]))
   }
   if (f('whistleblower')) {
     para3.push(`${He} exposed something that needed exposing, at real personal cost.`)
@@ -901,6 +908,44 @@ export function generateEpitaph(state) {
     para4.push(`${He} kept things alive that might otherwise have been lost.`)
   }
 
+  // ── The years taken ──────────────────────────────────────────────────────────
+  if (f('political_prisoner')) {
+    const yrs = state.mem?.originalSentence
+    para3.push(oneOf([
+      `${He} was imprisoned for what ${he} said${yrs ? `, and lost ${yrs} year${yrs === 1 ? '' : 's'} to it` : ''}. The state that did it does not appear in most accounts of ${his} life; it appears in all of ${his} years afterwards.`,
+      `There were years ${he} did not spend outside${yrs ? ` — ${yrs} of them` : ''}, and the reason was not a crime by any measure ${he} recognised.`,
+      `${He} went to prison for a political offence. ${He} never described it as the central fact of ${his} life, and everyone who knew ${him} understood that it was.`,
+    ]))
+    if (f('refused_to_name')) {
+      para3.push(`${He} was asked for names and did not give them. There are people who never learned they had been on a list.`)
+    } else if (f('named_someone') || f('gave_up_source')) {
+      para3.push(`${He} gave them a name, once, and spent the rest of the life doing the arithmetic on it.`)
+    }
+    if (f('beaten_in_custody')) {
+      para3.push(`What was done to ${him} in custody stayed in the body. ${He} could tell weather by it.`)
+    }
+  } else if (f('served_prison_time') || f('imprisoned')) {
+    para3.push(oneOf([
+      `${He} served a sentence. It closed doors that stayed closed.`,
+      `There were years inside, and a box on every form afterwards.`,
+    ]))
+  }
+
+  // ── Tenure, where it defined the life ────────────────────────────────────────
+  if (f('lost_the_land')) {
+    para4.push(`The land went to somebody with a document. Thirty years of an understanding did not survive it.`)
+  } else if (f('defended_the_land')) {
+    para4.push(`${He} kept the house against a claim that should have taken it, and paid most of what ${he} had saved to do it.`)
+  } else if (f('privatised_the_flat') && !f('sold_the_privatised_flat')) {
+    para4.push(`The flat ${he} was allocated became the flat ${he} owned, by a decree nobody asked for, and it was the only thing the family ever owned outright.`)
+  } else if (f('sold_the_privatised_flat')) {
+    para4.push(`${He} sold the flat in the year it was worth least, because that was the year ${he} needed it.`)
+  } else if (f('priced_out_permanently')) {
+    para4.push(`${He} never owned the place ${he} lived. There was no day on which that was decided.`)
+  } else if (f('home_without_a_deed')) {
+    para4.push(`The house was built in stages, as money allowed, and stands as an accurate record of when there was any.`)
+  }
+
   // ── LEGACY: what outlasted the life ──────────────────────────────────────────
   const legacy = state.legacy ?? 0
   if (legacy >= 80) {
@@ -920,19 +965,42 @@ export function generateEpitaph(state) {
   } else if (age < 18) {
     para5.push(`${He} was still becoming something. What it would have been, no one will know.`)
   } else if (any('found_meaning', 'acceptance', 'peace')) {
-    para5.push(`Near the end, ${name} seemed at peace with the shape of the life.`)
+    para5.push(oneOf([
+      `Near the end, ${name} seemed at peace with the shape of the life.`,
+      `${He} stopped arguing with how it had gone, some years before the end, and the years after that were better.`,
+      `Whatever ${he} had been reaching for, ${he} appeared to have set it down.`,
+    ]))
   } else if (f('life_reviewed') || f('legacy_thought')) {
     para5.push(`${He} reviewed the life honestly before the end.`)
   } else if (regret > 75) {
-    para5.push(`${He} carried something unresolved into the last years — a persistent sense that something essential had been missed.`)
+    para5.push(oneOf([
+      `${He} carried something unresolved into the last years — a persistent sense that something essential had been missed.`,
+      `There was a question ${he} never put into words and never stopped asking.`,
+      `Something had been missed. ${He} could not have said what, only that the shape of it was familiar by the end.`,
+      `${He} went on expecting the life to begin properly, and it had been going on the whole time.`,
+    ]))
   } else if (regret > 50) {
-    para5.push(`There were regrets. Most people have them.`)
+    para5.push(oneOf([
+      `There were regrets. Most people have them.`,
+      `${He} would have done two or three things differently. Everyone has a list; ${his} was shorter than most.`,
+      `There were things ${he} meant to say to people who were still there to say them to.`,
+      `It was not the life ${he} had pictured. Very few of them are.`,
+      `${He} made ${his} peace with most of it, and kept the rest to ${him}self.`,
+    ]))
   } else if (f('retired_comfortable')) {
     para5.push(`${He} retired with enough, which is more than enough to say.`)
   } else if (stats.happiness > 70) {
-    para5.push(`By most measures, it was a life worth having.`)
+    para5.push(oneOf([
+      `By most measures, it was a life worth having.`,
+      `${He} was, on balance, glad to have been here.`,
+      `There was more good in it than not, which is not a small thing to be able to say.`,
+    ]))
   } else {
-    para5.push(`${name}'s life was shaped by circumstances ${he} did not choose, and decisions ${he} made from within them.`)
+    para5.push(oneOf([
+      `${name}'s life was shaped by circumstances ${he} did not choose, and decisions ${he} made from within them.`,
+      `${He} was dealt a particular century in a particular place, and lived it.`,
+      `Most of what happened to ${him} was not ${his} doing. What ${he} did with it was.`,
+    ]))
   }
 
   // Fallback — only if overall content is sparse AND para5 not already filled

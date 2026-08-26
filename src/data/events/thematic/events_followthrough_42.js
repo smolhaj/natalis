@@ -10,7 +10,7 @@ export const FOLLOWTHROUGH_42_EVENTS = [
 
   {
     id: 'ft42_yugoslav_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('yugoslav_war_survivor') &&
@@ -26,7 +26,7 @@ export const FOLLOWTHROUGH_42_EVENTS = [
 
   {
     id: 'ft42_iran_revolution_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('iran_revolution_lived') &&
@@ -74,7 +74,7 @@ export const FOLLOWTHROUGH_42_EVENTS = [
 
   {
     id: 'ft42_saigon_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('saigon_fell') &&
@@ -138,7 +138,7 @@ export const FOLLOWTHROUGH_42_EVENTS = [
 
   {
     id: 'ft42_biafra_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('biafra_generation') &&

@@ -4,7 +4,7 @@ import { WORLD_EVENTS } from '../data/worldEvents'
 import { RIBBONS } from '../data/ribbons'
 import { CAREERS } from '../data/careers'
 import { CRIMES } from '../data/crimes'
-import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
+import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
 import { localCost } from '../data/activities'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
@@ -21,6 +21,7 @@ import {
 } from './character'
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
+import { tickLifeCourse, secondaryChance, primaryChance } from './lifeCourse'
 
 function createProxy(state) {
   return {
@@ -233,6 +234,24 @@ function buildEffectProxy(state) {
   }
   proxy.killPartner = () => { proxy._killPartner = true; proxy.mem['lastMajorEvent_bereavement'] = state.currentYear }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
+  // Its missing counterpart. Prison could only ever be entered through
+  // attemptCrime — a player action behind the crime panel, which passive mode
+  // does not show at all — so in a game carrying the Stasi, SAVAK, Camp Boiro,
+  // the ghost houses and the gulag, nobody could be arrested for anything they
+  // said, and 32 authored prison events were unreachable.
+  // A home that arrives without a purchase: privatised, inherited, allocated,
+  // built. buyProperty models a financed transaction and cannot express any of
+  // those, which is most of the world for most of this period.
+  proxy.grantHome = (typeId = 'studio_flat', valueFactor = 0.6) => {
+    proxy._grantHome = { typeId, valueFactor }
+  }
+  proxy.imprison = (years, opts = {}) => {
+    proxy._imprison = {
+      years: Math.max(1, Math.round(years) || 1),
+      political: opts.political === true,
+      charge: opts.charge ?? null,
+    }
+  }
   proxy.killParent = (which) => { proxy._killParent = which; proxy.mem['lastMajorEvent_bereavement'] = state.currentYear }
   proxy.setLastMajorEvent = (cat) => { proxy.mem[`lastMajorEvent_${cat}`] = state.currentYear }
   proxy.setResidency = (status) => { proxy._residencyStatus = status }
@@ -306,7 +325,7 @@ function buildEffectProxy(state) {
       wealthStat: randomBetween(20, 80),
       craziness: randomBetween(10, 70),
       relationshipQuality: overrides.quality ?? randomBetween(55, 75),
-      married: false, engaged: false, years: 0,
+      married: false, engaged: false, years: 0, alive: true,
       traits: pickTraits(ADULT_TRAITS),
     }
     // Partners met at 28+ have a rising chance of having kids from a prior relationship
@@ -339,6 +358,35 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   if (proxy._releaseFromPrison) next = { ...next, inPrison: false, prisonSentence: 0 }
+  if (proxy._grantHome && (next.assets?.properties?.length ?? 0) === 0) {
+    const { typeId, valueFactor } = proxy._grantHome
+    const type = PROPERTY_TYPES.find(t => t.id === typeId) ?? PROPERTY_TYPES[0]
+    const value = Math.max(400, Math.round(localisePrice(type.basePrice, liveCountry(next)?.gdp, 'local') * valueFactor))
+    next = {
+      ...next,
+      assets: { ...next.assets, properties: [...(next.assets?.properties ?? []), {
+        typeId: type.id, name: type.name, purchasePrice: 0, currentValue: value, mortgage: 0,
+      }] },
+      flags: [...new Set([...(next.flags ?? []), 'homeowner'])],
+      mem: { ...(next.mem ?? {}), lcHousingSettled: true, lcHomeYear: next.currentYear },
+    }
+  }
+  if (proxy._imprison && !next.inPrison) {
+    const { years, political, charge } = proxy._imprison
+    next = {
+      ...next,
+      inPrison: true,
+      prisonSentence: years,
+      career: null,          // the job does not wait
+      // A political conviction is still a conviction, and under the regime that
+      // handed it down it closes the same doors — which is the point of it.
+      criminalRecord: [...(next.criminalRecord ?? []),
+        { crime: charge ?? (political ? 'Political offence' : 'Convicted'), age: next.age, category: political ? 'political' : 'other' }],
+      flags: [...new Set([...(next.flags ?? []), 'imprisoned',
+        ...(political ? ['political_prisoner'] : [])])],
+      mem: { ...(next.mem ?? {}), originalSentence: years, imprisonedYear: next.currentYear },
+    }
+  }
   if (proxy._killParent && next.parents?.[proxy._killParent]) {
     const which = proxy._killParent
     next = { ...next, parents: { ...next.parents, [which]: { ...next.parents[which], alive: false, relationshipQuality: 0 } } }
@@ -606,6 +654,14 @@ function eventWeight(e, G, desire, leaning) {
   // Inside the contemplative layer, prefer observations that are anchored to
   // this place and era — the "place and era texture" layer of the quiet year.
   if (e.contemplative && e.anchored) w *= 3
+  // Reaching a character who satisfies a four- or five-dimension guard is the
+  // whole point of having written it. Without this, an event needing a Dalit
+  // girl in rural India in a named decade competes on equal terms with every
+  // event needing only "India", and loses, because there are hundreds of those.
+  else if (!e.contemplative) {
+    const spec = e.specificity ?? 0
+    if (spec > 2) w *= 1 + 0.9 * (spec - 2)
+  }
   return w
 }
 
@@ -681,11 +737,31 @@ export function getNextEvent(state) {
   const shares = REGISTER_SHARES[state.mode === 'passive' ? 'passive' : 'active']
   const live = Object.keys(buckets).filter(k => buckets[k].length > 0)
   if (live.length === 0) return null
-  const totalShare = live.reduce((s, k) => s + shares[k], 0)
+
+  // Renormalise over the registers that actually have something eligible — but
+  // never into `universal`. Contemplative is on a three-year cooldown and the
+  // anchored and earned buckets genuinely empty out in early childhood or in a
+  // life that has not accumulated much yet, and a flat renormalisation handed
+  // all of that reserved share to the one register whose entire definition is
+  // "could fire for anyone". There are 90 such events against ~7,950, and they
+  // were taking 15% of every year against a 6% target. Universal keeps its
+  // nominal share and no more; the remainder goes to the specific registers.
+  const others = live.filter(k => k !== 'universal')
+  const weights = {}
+  if (others.length === 0) {
+    weights.universal = 1
+  } else {
+    const uni = live.includes('universal') ? shares.universal : 0
+    const rest = others.reduce((sum, k) => sum + shares[k], 0)
+    const scale = rest > 0 ? (1 - uni) / rest : 0
+    for (const k of others) weights[k] = shares[k] * scale
+    if (uni > 0) weights.universal = uni
+  }
+  const totalShare = Object.values(weights).reduce((a, b) => a + b, 0)
   let r = Math.random() * totalShare
   let chosen = live[live.length - 1]
-  for (const k of live) {
-    r -= shares[k]
+  for (const k of Object.keys(weights)) {
+    r -= weights[k]
     if (r <= 0) { chosen = k; break }
   }
 
@@ -755,7 +831,9 @@ export function buildG(state) {
     })(),
     ethnicity: state.character?.ethnicity ?? 'local',
     ruralUrban: state.character?.ruralUrban ?? 'urban',
-    literate: flagSet.has('became_literate') ? true : (state.character?.literate ?? true),
+    literate: flagSet.has('became_literate') ? true
+      : flagSet.has('never_schooled') ? false
+      : (state.character?.literate ?? true),
     regime: getCountryRegime(state.character?.country, currentYear),
     lgbtqCriminalized: isLgbtqCriminalized(liveCountry(state), currentYear),
     casteSystem: state.character?.country?.casteSystem ?? false,
@@ -1504,10 +1582,15 @@ function tickSiblings(state) {
 // ─── Fame ticking ─────────────────────────────────────────────────────────────
 
 function tickPartner(state) {
-  if (!state.partner || !state.partner.alive) return state
+  // `alive === false` rather than `!alive`: partners built before this field
+  // existed carry no `alive` at all, and treating those as dead is what made
+  // this whole function a no-op for every partner in the game.
+  if (!state.partner || state.partner.alive === false) return state
   // Partner ages each year; approximate age from stored value
   const partnerAge = (state.partner.age ?? 0) + 1
-  let partner = { ...state.partner, age: partnerAge }
+  // Years together drives marriage timing, the partner-moments memory layer and
+  // the relationship-quality arc. Nothing had ever incremented it.
+  let partner = { ...state.partner, age: partnerAge, years: (state.partner.years ?? 0) + 1 }
   // Natural death probability increases with age
   let deathProb = 0
   if (partnerAge >= 75) deathProb = 0.04 + (partnerAge - 75) * 0.012
@@ -1819,6 +1902,9 @@ export function tick(state) {
     if (remaining <= 0) {
       s.inPrison = false; s.prisonSentence = 0
       if (!s.flags.includes('served_prison_time')) s.flags = [...s.flags, 'served_prison_time']
+      // The post-release arc stages itself on years-since; without this stamp it
+      // reads releasedYear as "this year" forever and never advances.
+      s.mem = { ...(s.mem ?? {}), releasedYear: s.currentYear }
       s.log = [...s.log, { age: s.age, text: 'You are released from prison.', isKey: true }]
       // Parole event — queue if sentence was long
       if ((s.mem?.originalSentence ?? 0) >= 3) {
@@ -2125,8 +2211,47 @@ export function tick(state) {
   // Education progression
   s = tickEnrollment(s)
 
+  // Leaving school, at the age and the rate this place and decade actually did.
+  // Without this, every character who had not explicitly dropped out graduated
+  // secondary school, including in countries where one child in ten did.
+  if (s.age === 16 && !s.mem?.schoolingResolved && !s.flags.includes('graduated_hs')) {
+    s.mem = { ...(s.mem ?? {}), schoolingResolved: true }
+    // Someone already out of school did not finish secondary, so their level is
+    // resolved here too rather than skipped — skipping it let them fall through
+    // to the age-18 graduation block and collect the certificate anyway, which
+    // is why the subsistence cohorts did not move when this gate was added.
+    const alreadyOut = s.flags.includes('dropped_out') || s.flags.includes('child_labor') ||
+      s.flags.includes('left_school_early')
+    // Working young is not the same as being out of school: across most of the
+    // world children do both, and treating the two as identical swung the
+    // subsistence cohorts from 95% secondary completion straight to 0%.
+    const p = secondaryChance(s) * (s.flags.includes('working_young') ? 0.45 : 1)
+    if (alreadyOut || !chance(p)) {
+      // One source of truth. createCharacter already rolls literacy from the
+      // country's own figures at birth; rolling it again here would let a
+      // character be illiterate by one mechanism and schooled by the other,
+      // and the whole illiteracy arc guards on G.literate.
+      const literate = s.character?.literate ?? chance(primaryChance(s))
+      s.education = { ...s.education, level: literate ? 'primary' : 'none', enrolled: null }
+      s.flags = [...new Set([...s.flags, 'left_school_early', ...(literate ? [] : ['never_schooled'])])]
+      s.log = [...s.log, {
+        age: s.age, year: s.currentYear, isKey: true,
+        text: literate
+          ? pickFrom([
+              'You stop going. There is no last day that anybody marks — there is a week you are needed at home, and then another, and by the time the question comes up again it has answered itself.',
+              'School ends because the fees do. Nobody in the house says it is permanent and nobody says it is not.',
+              'You can read, and write your name, and do the arithmetic that the work requires. That is what the years of it were for, and it turns out to be enough for the life you get.',
+            ])
+          : pickFrom([
+              'There was never a school to leave. The nearest one is a long way off and the family needs what you can do here.',
+              'You do not learn to read. It is not a decision anyone makes; it is simply not among the things that were going to happen to you.',
+            ]),
+      }]
+    }
+  }
+
   // High school graduation at 18
-  if (s.age === 18 && !s.flags.includes('graduated_hs') && !s.flags.includes('dropped_out') && !s.flags.includes('child_labor') && !s.flags.includes('left_school_early') && !s.education?.enrolled && !s.usedEventMap?.has('hs_graduation')) {
+  if (s.age === 18 && !s.flags.includes('graduated_hs') && !s.flags.includes('dropped_out') && !s.flags.includes('child_labor') && !s.flags.includes('left_school_early') && !s.flags.includes('never_schooled') && !s.education?.enrolled && !s.usedEventMap?.has('hs_graduation')) {
     const rawGpa = Math.min(4.0, parseFloat(((s.gpa ?? 2.0) + 0.1).toFixed(2)))
     s.education = { ...s.education, level: 'secondary' }
     s.flags = [...new Set([...s.flags, 'graduated_hs'])]
@@ -2197,6 +2322,16 @@ export function tick(state) {
     }
     s.queue = [graduationEvent, ...s.queue]
   }
+
+  // ─── The ordinary course of a life ──────────────────────────────────────────
+  // Work, a partner, a marriage, children, retirement. Every one of these was a
+  // button and nothing else, so an unsteered life reached sixty-five having
+  // never held a job or married anyone — which also starved the `earned`
+  // register and the whole follow-through layer, both of which are written
+  // about a partner, a child, a job. Runs after enrollment so that schooling
+  // has already decided when work can start. Each hook is a no-op if the player
+  // has already filled that slot themselves.
+  s = tickLifeCourse(s)
 
   // Addiction health drain
   if (s.flags.includes('alcohol_addiction')) {
@@ -2561,25 +2696,97 @@ export function resolveChoice(state, choiceIndex) {
 // events still fire but resolve themselves. The pick is not uniform: it leans
 // toward what this particular character, with these stats and this formative
 // desire, would plausibly do — so a passively-read life still coheres.
+// Flags that say which way this person has already jumped. Passive mode is the
+// game's purest expression of its own principle, and a character who answers
+// each year's question independently is not a person — they are a coin. What
+// makes a life read as one life is that the choice at fifty rhymes with the
+// choice at twenty.
+const DEFIANT_FLAGS = [
+  'refused_to_name', 'would_not_recant', 'took_it_alone', 'refused_to_serve',
+  'protected_source_at_cost', 'defended_the_land', 'activist', 'dissident_reader',
+  'dissident_writer', 'detained_at_protest', 'union_solidarity', 'strike_victory',
+]
+const YIELDING_FLAGS = [
+  'named_someone', 'signed_the_confession', 'gave_up_source', 'reported_late',
+  'lost_the_land', 'compromised', 'sold_out', 'made_peace_with_renting',
+]
+
+/** −1 (bends) to +1 (refuses), from what this character has already done. */
+function disposition(G) {
+  let d = 0
+  for (const f of DEFIANT_FLAGS) if (G.flags.has ? G.flags.has(f) : G.flags.includes(f)) d += 1
+  for (const f of YIELDING_FLAGS) if (G.flags.has ? G.flags.has(f) : G.flags.includes(f)) d -= 1
+  if (G.political_leaning === 'dissident') d += 1.5
+  else if (G.political_leaning === 'nationalist') d += 0.5
+  else if (G.political_leaning === 'apolitical') d -= 0.75
+  return Math.max(-1, Math.min(1, d / 3.5))
+}
+
 function scoreChoiceForCharacter(choice, G, index) {
   let score = 1
   const text = `${choice.text ?? ''} ${choice.tag ?? ''}`.toLowerCase()
   const s = G.stats ?? {}
+  const disp = disposition(G)
+  const dependants = (G.children?.length ?? 0) > 0 || !!G.partner
+
+  // A choice may DECLARE which way it goes, via tag: 'defiant' | 'yielding'.
+  // Inferring it from the choice text alone gets the hardest cases backwards:
+  // "Say nothing at all", under interrogation, is the defiant answer and the
+  // one that costs four years, and a keyword scan reads it as acquiescence.
+  // The keyword rules below stay as the fallback for the ~8,000 events written
+  // before this existed.
+  if (choice.tag === 'defiant' || choice.tag === 'yielding') {
+    const sign = choice.tag === 'defiant' ? 1 : -1
+    score *= 1 + sign * disp * 1.05
+    if (sign > 0) {
+      score *= 0.6 + (s.charisma ?? 50) / 100
+      if (G.desire === 'leave_mark' || G.desire === 'freedom') score *= 1.4
+      if (['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(G.regime)) score *= 0.6
+      if (dependants) score *= 0.75
+    } else if (dependants) score *= 1.2
+    return Math.max(0.05, score)
+  }
+
   if (/refuse|resist|argue|fight|confront|report|speak/.test(text)) {
     score *= 0.6 + (s.charisma ?? 50) / 100
     if (G.desire === 'leave_mark' || G.desire === 'freedom') score *= 1.5
     if (['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(G.regime)) score *= 0.55
+    // A person who has refused before refuses again, and a person who has
+    // already bent finds it easier to bend.
+    score *= 1 + disp * 1.15
+    // People with someone at home take fewer of these, which is most of how
+    // authoritarian states actually work.
+    if (dependants) score *= 0.75
   }
   if (/stay|remain|keep|accept|endure|say nothing|silent|nothing/.test(text)) {
     if (G.desire === 'safety' || G.desire === 'belong') score *= 1.5
+    score *= 1 - disp * 0.75
+    if (dependants) score *= 1.2
   }
   if (/leave|go|move|emigrate|abroad/.test(text)) {
     if (G.desire === 'freedom' || G.desire === 'prove_worth') score *= 1.4
     if (G.desire === 'belong') score *= 0.7
+    // Leaving is a young person's answer far more often than an old one's, and
+    // it costs money that a poor character does not have.
+    if ((G.age ?? 30) > 55) score *= 0.5
+    if ((G.money ?? 0) < 400) score *= 0.7
   }
   if (/study|learn|school|read|train/.test(text)) score *= 0.7 + (s.smarts ?? 50) / 100
   if (/pay|buy|spend|afford/.test(text) && (G.money ?? 0) < 500) score *= 0.35
-  if (/steal|cheat|lie|bribe/.test(text)) score *= (G.karma ?? 50) < 40 ? 1.4 : 0.6
+  if (/steal|cheat|lie|bribe/.test(text)) {
+    score *= (G.karma ?? 50) < 40 ? 1.4 : 0.6
+    // Desperation is a better predictor than character.
+    if ((G.money ?? 0) < 200) score *= 1.6
+  }
+  // Anything the body has to do gets harder with age and illness.
+  if (/run|climb|carry|lift|walk|march|physical|labour|labor/.test(text)) {
+    score *= 0.5 + (s.health ?? 50) / 100
+    if ((G.age ?? 30) > 60) score *= 0.6
+  }
+  // Someone already carrying a lot of regret reaches for the repair.
+  if (/apolog|make amends|reconcile|forgive|reach out|call|visit|tell them/.test(text)) {
+    score *= 1 + Math.max(0, ((G.regret ?? 0) - 40)) / 100
+  }
   return Math.max(0.05, score)
 }
 

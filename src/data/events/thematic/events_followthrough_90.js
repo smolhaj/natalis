@@ -36,7 +36,7 @@ export const FOLLOWTHROUGH_90_EVENTS = [
 
   {
     id: 'ft90_oyu_tolgoi_late',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_MONGOLIA(G) &&

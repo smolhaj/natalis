@@ -124,9 +124,10 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'hun_orban_era',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Hungary' &&
       G.currentYear >= 2011 &&
       G.age >= 18 &&

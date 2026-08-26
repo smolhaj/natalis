@@ -43,7 +43,7 @@ export const EVENTS_SONDER_11 = [
 
   {
     id: 'sonder11_return_school',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.wentToSchool(G) && (G.age >= 35 && G.age <= 55 && !G.mem?.s11ReturnSchool),
     text: 'The school looks smaller. The rooms where years happened are ordinary rooms. The bench you sat in every day for three years is a bench. You have the dim memory that those years felt immense while they were happening — the weeks slow as years — and the school was the container of that immensity. The container is just a building now.',
@@ -127,7 +127,7 @@ export const EVENTS_SONDER_11 = [
 
   {
     id: 'sonder11_animal_stray',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 35 && !G.mem?.s11AnimalStray,
     text: 'There is a stray that has been around for a while. You have been feeding it, informally, not often enough to call yourself its person and not infrequently enough to have become its person anyway. The arrangement has no name. The animal comes and goes. One week it doesn\'t come. You do not know what happened to it. You find yourself checking.',
@@ -221,7 +221,7 @@ export const EVENTS_SONDER_11 = [
 
   {
     id: 'sonder11_inherit_debt',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.s11InheritDebt,
     text: 'The inheritance is a debt. Not only money — though there is that — but obligation, history, the need to resolve something they left unresolved. The word "inheritance" implies the good things that pass forward. It also means this: the problem you didn\'t create and have been handed anyway.',
@@ -275,7 +275,7 @@ export const EVENTS_SONDER_11 = [
 
   {
     id: 'sonder11_window_opposite',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 40 && !G.mem?.s11WindowOpposite,
     text: 'The building opposite has lit windows at night. You can see fragments — the top of a bookshelf, the ceiling of a kitchen, the brief shadow of someone crossing a room. You don\'t know them. You see them through a lit rectangle and the rectangle shows you almost nothing and it is enough to know that someone is there, living a life that is entirely their own, which you will never see.',
@@ -315,7 +315,7 @@ export const EVENTS_SONDER_11 = [
 
   {
     id: 'sonder11_window_new_view',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 38 && !G.mem?.s11WindowNew,
     text: 'The new place has a different view. You are surprised how long it takes to adjust — not the new rooms but the new window, the new default position of the eyes when you are not thinking about where you are looking. The old view has already started to fade. In a year this view will be the one you can\'t remember not knowing.',

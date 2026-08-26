@@ -84,7 +84,7 @@ export const FOLLOWTHROUGH_69_EVENTS = [
 
   {
     id: 'ft69_rohingya_years',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('bng_rohingya_host_generation') &&
@@ -104,9 +104,10 @@ export const FOLLOWTHROUGH_69_EVENTS = [
 
   {
     id: 'ft69_rana_compensation',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('bng_rana_plaza_witness') &&
       G.currentYear >= 2016 &&
       G.age >= 25 &&

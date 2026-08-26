@@ -81,7 +81,7 @@ export const ADOLESCENCE_EVENTS = [
     when: (G) =>
       !G.mem.adolFaithDoubt &&
       G.religion &&
-      G.religion !== 'none' &&
+      !['secular', 'atheist'].includes(G.religion) &&
       G.character.familyStability !== 'unstable' &&
       G.age >= 14,
     text: (G) => {
