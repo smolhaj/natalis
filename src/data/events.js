@@ -9014,7 +9014,7 @@ const EARNED_PROBE = /\bflags\b|\bmem\b|\bcareer\b|\bpartner\b|\bchildren\b|\bpa
 // guard was written for, so the match itself should carry weight.
 const SPECIFICITY_PROBES = [
   /currentCountry|character\s*\.\s*country|\bcountries\b/,          // a named place
-  /ethnicity|casteSystem|\breligion\b/,                             // who you are
+  /ethnicity|casteSystem|\breligion\b|\bliterate\b|lgbtqCriminalized|\bconditions\b/, // who you are
   /character\s*\.\s*gender|\bgender\b/,                            // gendered experience
   /currentYear|birthYear/,                                          // a dated window
   /ruralUrban|currentPlace|[Nn]eighborhood/,                        // where within the place

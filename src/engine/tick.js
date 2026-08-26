@@ -831,7 +831,9 @@ export function buildG(state) {
     })(),
     ethnicity: state.character?.ethnicity ?? 'local',
     ruralUrban: state.character?.ruralUrban ?? 'urban',
-    literate: flagSet.has('became_literate') ? true : (state.character?.literate ?? true),
+    literate: flagSet.has('became_literate') ? true
+      : flagSet.has('never_schooled') ? false
+      : (state.character?.literate ?? true),
     regime: getCountryRegime(state.character?.country, currentYear),
     lgbtqCriminalized: isLgbtqCriminalized(liveCountry(state), currentYear),
     casteSystem: state.character?.country?.casteSystem ?? false,
@@ -2225,7 +2227,11 @@ export function tick(state) {
     // subsistence cohorts from 95% secondary completion straight to 0%.
     const p = secondaryChance(s) * (s.flags.includes('working_young') ? 0.45 : 1)
     if (alreadyOut || !chance(p)) {
-      const literate = chance(primaryChance(s))
+      // One source of truth. createCharacter already rolls literacy from the
+      // country's own figures at birth; rolling it again here would let a
+      // character be illiterate by one mechanism and schooled by the other,
+      // and the whole illiteracy arc guards on G.literate.
+      const literate = s.character?.literate ?? chance(primaryChance(s))
       s.education = { ...s.education, level: literate ? 'primary' : 'none', enrolled: null }
       s.flags = [...new Set([...s.flags, 'left_school_early', ...(literate ? [] : ['never_schooled'])])]
       s.log = [...s.log, {

@@ -24,7 +24,11 @@ export const HOUSING_EVENTS = [
   {
     id: 'housing_privatisation_decree',
     phase: null,
-    weight: 12,
+    // Weighted far above a normal event because it is not a normal event: it
+    // reached essentially every urban household in the bloc inside a seven-year
+    // window. At an ordinary weight it lost draws to whatever else was eligible
+    // that year and reached about one cohort member in seven.
+    weight: 45,
     when: (G) =>
       POST_SOVIET(G) &&
       G.currentYear >= 1992 && G.currentYear <= 1998 &&
