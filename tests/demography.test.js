@@ -182,6 +182,36 @@ describe('demography matches the historical record', () => {
     expect(owned, 'and left them owning something').toBeGreaterThan(privatised * 0.8)
   }, 240_000)
 
+  it('does not hand secondary school to a cohort that did not get it', () => {
+    // The engine granted secondary education to everyone who had not explicitly
+    // dropped out: 95% completion for a 1962 Nigerian cohort against a real
+    // 10%, and 98% for a 1974 Ethiopian one against 6%.
+    //
+    // Asserted as an ORDERING and as wide bands rather than as point estimates.
+    // A completion rate near 10% measured over 20 lives has a confidence
+    // interval most of that wide, and two consecutive runs of identical code
+    // here gave 20% and 2%. What must hold is the shape: the rich cohort
+    // finishes school and the subsistence cohort mostly does not.
+    const rate = (country, birthYear) => {
+      let n = 0, secondary = 0
+      for (let i = 0; i < 22; i++) {
+        const { s } = runLife(country, birthYear)
+        if (s.age < 25) continue
+        n++
+        if (['secondary', 'university', 'graduate'].includes(s.education?.level)) secondary++
+      }
+      return { n, rate: n ? secondary / n : 0 }
+    }
+    const germany = rate('Germany', 1970)
+    const nigeria = rate('Nigeria', 1962)
+    expect(germany.n).toBeGreaterThan(6)
+    expect(nigeria.n).toBeGreaterThan(4)
+
+    expect(germany.rate, 'a 1970 German cohort finishes school').toBeGreaterThan(0.6)
+    expect(nigeria.rate, 'a 1962 Nigerian cohort mostly does not').toBeLessThan(0.5)
+    expect(germany.rate).toBeGreaterThan(nigeria.rate + 0.3)
+  }, 240_000)
+
   it('preserves the fertility ordering between countries', () => {
     // The single most important property: whatever the absolute numbers do, a
     // 1962 Nigerian life must have visibly more children than a 1970 German one.

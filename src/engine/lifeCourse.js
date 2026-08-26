@@ -491,6 +491,48 @@ function courseRetirement(s) {
   return retire(s)
 }
 
+// ─── Schooling ───────────────────────────────────────────────────────────────
+// The engine granted secondary education to everyone who had not explicitly
+// dropped out, which produced 95% secondary completion for a 1962 Nigerian
+// cohort against a real 10%, and 98% for a 1974 Ethiopian one against 6%. In
+// most of the world for most of this period, whether you finished school is THE
+// fork in a life, and the game was quietly handing it to every character.
+//
+// Modelled on the literacy the country already carries, read for the
+// character's own gender, because a literacy gap is the same gap: Nigeria is
+// 0.72 male and 0.60 female and the schooling followed that. The era term
+// exists because those literacy figures are a modern snapshot applied to
+// mid-century births, so an older cohort is scaled down towards what it
+// actually got.
+
+const SCHOOL_ERA = { 1930: 0.42, 1950: 0.62, 1970: 0.82, 1990: 1.0, 2010: 1.06 }
+
+export function secondaryChance(state) {
+  const c = liveCountry(state)
+  const female = state.character?.gender === 'female'
+  const lit = (female ? c?.literacyFemale : c?.literacyMale) ?? 0.7
+  // Near-universal literacy means near-universal secondary; 0.6 means a small
+  // minority finish, which is what the record shows.
+  let p = Math.pow(clamp((lit - 0.45) / 0.55, 0.02, 1), 1.6)
+  p *= overTime(SCHOOL_ERA, state.currentYear)
+  const urban = c?.urbanRate ?? 0.5
+  if (urban < 0.3) p *= 0.75
+  else if (urban > 0.7) p *= 1.1
+  if (['very_low', 'low'].includes(c?.gdp)) p *= 0.85
+  // A sharp child is more likely to be kept in school wherever there is a
+  // choice about it; it does not conjure a school that is not there.
+  p *= 0.8 + ((state.stats?.smarts ?? 50) / 250)
+  return clamp(p, 0.045, 0.97)
+}
+
+/** Whether this character can read at all, where secondary was not reached. */
+export function primaryChance(state) {
+  const c = liveCountry(state)
+  const female = state.character?.gender === 'female'
+  const lit = (female ? c?.literacyFemale : c?.literacyMale) ?? 0.7
+  return clamp(lit * overTime(SCHOOL_ERA, state.currentYear) + 0.1, 0.05, 0.99)
+}
+
 // ─── Housing ─────────────────────────────────────────────────────────────────
 // Nobody in this game had ever had a home of their own: buyProperty existed and
 // nothing called it, so across every simulated life the ownership rate was 0%.

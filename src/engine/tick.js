@@ -21,7 +21,7 @@ import {
 } from './character'
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
-import { tickLifeCourse } from './lifeCourse'
+import { tickLifeCourse, secondaryChance, primaryChance } from './lifeCourse'
 
 function createProxy(state) {
   return {
@@ -2209,8 +2209,43 @@ export function tick(state) {
   // Education progression
   s = tickEnrollment(s)
 
+  // Leaving school, at the age and the rate this place and decade actually did.
+  // Without this, every character who had not explicitly dropped out graduated
+  // secondary school, including in countries where one child in ten did.
+  if (s.age === 16 && !s.mem?.schoolingResolved && !s.flags.includes('graduated_hs')) {
+    s.mem = { ...(s.mem ?? {}), schoolingResolved: true }
+    // Someone already out of school did not finish secondary, so their level is
+    // resolved here too rather than skipped — skipping it let them fall through
+    // to the age-18 graduation block and collect the certificate anyway, which
+    // is why the subsistence cohorts did not move when this gate was added.
+    const alreadyOut = s.flags.includes('dropped_out') || s.flags.includes('child_labor') ||
+      s.flags.includes('left_school_early')
+    // Working young is not the same as being out of school: across most of the
+    // world children do both, and treating the two as identical swung the
+    // subsistence cohorts from 95% secondary completion straight to 0%.
+    const p = secondaryChance(s) * (s.flags.includes('working_young') ? 0.45 : 1)
+    if (alreadyOut || !chance(p)) {
+      const literate = chance(primaryChance(s))
+      s.education = { ...s.education, level: literate ? 'primary' : 'none', enrolled: null }
+      s.flags = [...new Set([...s.flags, 'left_school_early', ...(literate ? [] : ['never_schooled'])])]
+      s.log = [...s.log, {
+        age: s.age, year: s.currentYear, isKey: true,
+        text: literate
+          ? pickFrom([
+              'You stop going. There is no last day that anybody marks — there is a week you are needed at home, and then another, and by the time the question comes up again it has answered itself.',
+              'School ends because the fees do. Nobody in the house says it is permanent and nobody says it is not.',
+              'You can read, and write your name, and do the arithmetic that the work requires. That is what the years of it were for, and it turns out to be enough for the life you get.',
+            ])
+          : pickFrom([
+              'There was never a school to leave. The nearest one is a long way off and the family needs what you can do here.',
+              'You do not learn to read. It is not a decision anyone makes; it is simply not among the things that were going to happen to you.',
+            ]),
+      }]
+    }
+  }
+
   // High school graduation at 18
-  if (s.age === 18 && !s.flags.includes('graduated_hs') && !s.flags.includes('dropped_out') && !s.flags.includes('child_labor') && !s.flags.includes('left_school_early') && !s.education?.enrolled && !s.usedEventMap?.has('hs_graduation')) {
+  if (s.age === 18 && !s.flags.includes('graduated_hs') && !s.flags.includes('dropped_out') && !s.flags.includes('child_labor') && !s.flags.includes('left_school_early') && !s.flags.includes('never_schooled') && !s.education?.enrolled && !s.usedEventMap?.has('hs_graduation')) {
     const rawGpa = Math.min(4.0, parseFloat(((s.gpa ?? 2.0) + 0.1).toFixed(2)))
     s.education = { ...s.education, level: 'secondary' }
     s.flags = [...new Set([...s.flags, 'graduated_hs'])]

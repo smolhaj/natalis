@@ -5477,6 +5477,14 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by events_disasters.js, events_nepal.js, events_haiti.js, and others where physical disaster survival is confirmed.',
   },
 
+  never_schooled: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Never learned to read. Not a decision anyone made, simply not among the things that were going to happen to you.',
+    intent: 'year_texture',
+    notes: 'Set at 16 by the schooling model in tick(), where neither secondary nor primary was reached.',
+  },
+
   left_school_early: {
     weight: 'moderate',
     category: 'identity',

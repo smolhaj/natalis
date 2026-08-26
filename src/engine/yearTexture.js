@@ -14760,6 +14760,13 @@ function buildYearTexture(state, opts = {}) {
     'You can still do the movement without thinking — the exact one, the carrying one — and your body does it sometimes when you are not paying attention.',
   ])
 
+  if (F.has('never_schooled') && Math.random() < 0.14) return pick([
+    'Somebody hands you a form and you hand it to somebody else, and there is a particular half-second in that exchange that you have felt several thousand times.',
+    'You know the shapes of the letters on the shop signs you pass every day. You know them the way you know a face, not the way anybody means it.',
+    'You can hold a great deal in your head, because you have had to. People who write things down do not know how much they are not carrying.',
+    'Your child reads aloud to you and you correct the parts about the world, which you know, and not the parts on the page, which you do not.',
+  ])
+
   // -- Tenure ------------------------------------------------------------------
 
   if (F.has('privatised_the_flat') && Math.random() < 0.15) return pick([
