@@ -4,6 +4,111 @@
  */
 export const ECONOMIC_FLAGS = {
 
+  held_the_flat_through_it: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Sold everything else in pieces over two years rather than sell the privatised flat, which turned out to be the only reason the decade was survivable.',
+    intent: 'year_texture',
+    notes: 'Set by housing_privatisation_sold.',
+  },
+
+  mortgaged: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Bought with a mortgage: a number that leaves the account on the same day every month for twenty-five years.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  home_without_a_deed: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'A home held by understanding rather than title: family land, a self-build, an allocated flat.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  privatised_the_flat: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Handed the freehold of the flat you already lived in by a decree nobody asked for.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  sold_the_privatised_flat: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Sold the privatised flat within the year, for what people were paying then, because you needed it then.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  family_lent_for_rent: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Four people contributed to the two years of rent demanded upfront, and nobody wrote anything down.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  long_commute_years: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Took the cheaper room two hours out and paid for it in time instead of money, for years.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  building_in_stages: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Building the house as the money arrives: rebar pointing at a storey everyone can describe and nobody has seen.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  defended_the_land: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Fought a document with an understanding, through whatever office would hear it, and kept the house.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  lost_the_land: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Took the insulting payment rather than the same outcome with lawyers in it, and was gone within the year.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  priced_out_permanently: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Buying stopped being a deferred plan and became a thing that was not going to happen, with no day to point at.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  made_peace_with_renting: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Decided that never owning does not matter, which is convincing about two days in three.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+  mortgage_cleared: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Made the last mortgage payment, on a Tuesday, and nothing happened.',
+    intent: 'year_texture',
+    notes: 'Set by the housing arc (events/thematic/events_housing.js) or the life-course housing hook.',
+  },
+
+
   cotton_childhood: {
     weight: 'moderate',
     category: 'labor',

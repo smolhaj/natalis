@@ -200,6 +200,10 @@ export async function runSimulation({
     rec.q1DeathAge = quantile(sorted, 0.25)
     rec.q3DeathAge = quantile(sorted, 0.75)
     rec.medianAdultDeathAge = quantile(adult, 0.5)
+    // Exposed so a caller can tell a real signal from a small-sample median:
+    // in a harsh configuration this can be a dozen values, and the median of a
+    // dozen swings hard enough to fail an assertion on its own.
+    rec.adultDeaths = adult
     perConfig.push(rec)
   }
 

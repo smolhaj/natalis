@@ -4,7 +4,7 @@ import { WORLD_EVENTS } from '../data/worldEvents'
 import { RIBBONS } from '../data/ribbons'
 import { CAREERS } from '../data/careers'
 import { CRIMES } from '../data/crimes'
-import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
+import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
 import { localCost } from '../data/activities'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
@@ -239,6 +239,12 @@ function buildEffectProxy(state) {
   // does not show at all — so in a game carrying the Stasi, SAVAK, Camp Boiro,
   // the ghost houses and the gulag, nobody could be arrested for anything they
   // said, and 32 authored prison events were unreachable.
+  // A home that arrives without a purchase: privatised, inherited, allocated,
+  // built. buyProperty models a financed transaction and cannot express any of
+  // those, which is most of the world for most of this period.
+  proxy.grantHome = (typeId = 'studio_flat', valueFactor = 0.6) => {
+    proxy._grantHome = { typeId, valueFactor }
+  }
   proxy.imprison = (years, opts = {}) => {
     proxy._imprison = {
       years: Math.max(1, Math.round(years) || 1),
@@ -352,6 +358,19 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   if (proxy._releaseFromPrison) next = { ...next, inPrison: false, prisonSentence: 0 }
+  if (proxy._grantHome && (next.assets?.properties?.length ?? 0) === 0) {
+    const { typeId, valueFactor } = proxy._grantHome
+    const type = PROPERTY_TYPES.find(t => t.id === typeId) ?? PROPERTY_TYPES[0]
+    const value = Math.max(400, Math.round(localisePrice(type.basePrice, liveCountry(next)?.gdp, 'local') * valueFactor))
+    next = {
+      ...next,
+      assets: { ...next.assets, properties: [...(next.assets?.properties ?? []), {
+        typeId: type.id, name: type.name, purchasePrice: 0, currentValue: value, mortgage: 0,
+      }] },
+      flags: [...new Set([...(next.flags ?? []), 'homeowner'])],
+      mem: { ...(next.mem ?? {}), lcHousingSettled: true, lcHomeYear: next.currentYear },
+    }
+  }
   if (proxy._imprison && !next.inPrison) {
     const { years, political, charge } = proxy._imprison
     next = {

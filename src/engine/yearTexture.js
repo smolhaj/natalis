@@ -14760,6 +14760,69 @@ function buildYearTexture(state, opts = {}) {
     'You can still do the movement without thinking — the exact one, the carrying one — and your body does it sometimes when you are not paying attention.',
   ])
 
+  // -- Tenure ------------------------------------------------------------------
+
+  if (F.has('privatised_the_flat') && Math.random() < 0.15) return pick([
+    'The window still does not close properly. It is your window now, and has been for years, and you have still not fixed it.',
+    'The neighbour who refused on principle moved out eventually. Nobody agrees about what happened to the flat.',
+    'You own the largest thing your family has ever owned and you got it by standing in a queue for a form.',
+  ])
+
+  if (F.has('held_the_flat_through_it') && Math.random() < 0.16) return pick([
+    'Everything else went, in pieces, over about two years. The flat stayed. That is the whole reason there was a next decade.',
+    'You sold the good coat and the television and your mother\'s rings, and you did not sell the flat, and you were right.',
+  ])
+
+  if (F.has('sold_the_privatised_flat') && Math.random() < 0.18) return pick([
+    'You know what that building sells for now. You looked once, years ago, and have been careful not to look again.',
+    'You needed the money that year. That is true, and it is the whole defence, and it is not a defence you have ever had to make out loud.',
+  ])
+
+  if (F.has('building_in_stages') && Math.random() < 0.14) return pick([
+    'The rebar at the top of the pillars has gone orange. It is still pointing at a storey everyone in the family can describe.',
+    'You can date the last several years of your finances by looking up at the house from the road.',
+  ])
+
+  if (F.has('lost_the_land') && Math.random() < 0.18) return pick([
+    'Thirty years of an understanding, against one document. You have thought about which of those is the real thing and you keep arriving at the wrong answer.',
+    'You still take the long way round rather than pass it.',
+  ])
+
+  if (F.has('defended_the_land') && Math.random() < 0.15) return pick([
+    'You kept it. You are still, all these years later, alert in a particular way about anyone walking up to the gate.',
+    'There is a folder. You know exactly which shelf, and so does everyone else in the house.',
+  ])
+
+  if (F.has('priced_out_permanently') && Math.random() < 0.15) return pick([
+    'There was no day on which it became impossible. That is the part you cannot argue with — there is no decision to point at and regret.',
+    'The letter says the increase is modest. You have kept several of them, which is not a plan, just something you do.',
+  ])
+
+  if (F.has('made_peace_with_renting') && Math.random() < 0.12) return pick([
+    'Half the country rents for life and is not poor for it. You find this convincing about two days in three.',
+  ])
+
+  if (F.has('mortgage_cleared') && Math.random() < 0.14) return pick([
+    'Twenty-five years, and the end of it was a Tuesday and a letter about data protection.',
+    'The house is yours in the other sense now as well. You keep waiting to feel the difference and mostly you feel the stairs.',
+  ])
+
+  if (F.has('long_commute_years') && Math.random() < 0.13) return pick([
+    'Four hours of every day, for years, spent moving between the room you could afford and the work that paid for it.',
+  ])
+
+  if (F.has('family_lent_for_rent') && Math.random() < 0.12) return pick([
+    'Four people put money in and not one of them wrote anything down. The total has never been said out loud and never will be.',
+  ])
+
+  if (F.has('home_without_a_deed') && !F.has('lost_the_land') && Math.random() < 0.1) return pick([
+    'There is no piece of paper. There is everybody knowing, which has been enough for a long time.',
+  ])
+
+  if (F.has('mortgaged') && !F.has('mortgage_cleared') && Math.random() < 0.09) return pick([
+    'A number leaves the account on the same day every month and will go on doing so for longer than some of your friendships have lasted.',
+  ])
+
   // The plain fact of having been inside, underneath whatever the charge was.
   if (F.has('imprisoned') && Math.random() < 0.12) return pick([
     'You eat faster than everyone at the table. You have known this for years and have never managed to do anything about it.',

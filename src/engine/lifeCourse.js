@@ -30,6 +30,7 @@
  */
 
 import { CAREERS } from '../data/careers'
+import { PROPERTY_TYPES, localisePrice } from '../data/assets'
 import { generatePartnerProfile, getMarried, proposeMarriage, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'
 
@@ -490,6 +491,127 @@ function courseRetirement(s) {
   return retire(s)
 }
 
+// ─── Housing ─────────────────────────────────────────────────────────────────
+// Nobody in this game had ever had a home of their own: buyProperty existed and
+// nothing called it, so across every simulated life the ownership rate was 0%.
+//
+// Tenure is one of the most era- and place-defining facts of a life, and it is
+// not one story. A Soviet family waits years for an allocated flat and is then
+// handed the freehold of it in 1993 by a decree nobody asked for. A West German
+// rents for fifty years by preference and is not poor for it. A Lagos household
+// builds its own house over a decade of half-finished floors and never holds a
+// title deed. Ownership rates below are households, not people, and the second
+// table is for the countries whose figure the archetype cannot predict.
+
+const OWNERSHIP_BY_ARCHETYPE = {
+  wealthy_west:        { 1900: 0.38, 1950: 0.50, 1980: 0.62, 2000: 0.66, 2020: 0.64 },
+  // Near-total state ownership, then the mass privatisations of the early 1990s,
+  // which handed sitting tenants the freehold of the flat they already lived in.
+  post_soviet:         { 1900: 0.30, 1950: 0.06, 1988: 0.10, 1996: 0.80, 2020: 0.88 },
+  wealthy_east:        { 1900: 0.50, 1950: 0.55, 1980: 0.61, 2000: 0.61, 2020: 0.60 },
+  developing_urban:    { 1900: 0.60, 1950: 0.62, 1980: 0.66, 2000: 0.70, 2020: 0.71 },
+  developing_unstable: { 1900: 0.65, 1950: 0.66, 1980: 0.67, 2000: 0.68, 2020: 0.68 },
+  subsaharan:          { 1900: 0.80, 1950: 0.78, 1980: 0.74, 2000: 0.70, 2020: 0.66 },
+  conflict_zone:       { 1900: 0.65, 1950: 0.62, 1980: 0.58, 2000: 0.55, 2020: 0.52 },
+  wealthy_gulf:        { 1900: 0.55, 1950: 0.50, 1980: 0.38, 2000: 0.32, 2020: 0.30 },
+}
+
+const OWNERSHIP_BY_COUNTRY = {
+  Germany:     { 1950: 0.30, 1980: 0.40, 2020: 0.47 },   // renting is a choice, not a failure
+  Switzerland: { 1950: 0.32, 1980: 0.32, 2020: 0.40 },
+  Austria:     { 1950: 0.36, 1980: 0.48, 2020: 0.55 },
+  Singapore:   { 1960: 0.10, 1980: 0.60, 2000: 0.88, 2020: 0.89 },  // HDB
+  Romania:     { 1985: 0.12, 1996: 0.94, 2020: 0.95 },
+  Russia:      { 1985: 0.10, 1996: 0.78, 2020: 0.87 },
+  China:       { 1980: 0.15, 2000: 0.72, 2020: 0.90 },   // danwei housing, then the boom
+}
+
+export function ownershipChance(state) {
+  const c = liveCountry(state)
+  const named = OWNERSHIP_BY_COUNTRY[c?.name]
+  const base = named
+    ? overTime(named, state.currentYear)
+    : overTime(OWNERSHIP_BY_ARCHETYPE[c?.archetype] ?? OWNERSHIP_BY_ARCHETYPE.developing_urban, state.currentYear)
+  // Someone living on someone else's visa does not buy the flat.
+  const r = state.residencyStatus
+  if (r && r !== 'citizen' && r !== 'permanent_resident') return base * 0.15
+  return base
+}
+
+/**
+ * A home, by whichever route this place and decade actually provides one.
+ *
+ * Two paths, because there are two worlds: a financed purchase where there is a
+ * mortgage market and the money for a deposit, and everywhere else — land from
+ * the family, a house built over a decade of half-finished floors, a flat
+ * allocated and later simply handed over. The second path is most of the world
+ * for most of this period, and pricing it as a purchase would have quietly
+ * excluded it.
+ */
+function courseHousing(s) {
+  if (s.inPrison || s.age < 20 || s.age > 72) return s
+  if ((s.assets?.properties?.length ?? 0) > 0) return s
+  if (s.mem?.lcHousingSettled) return s
+
+  const c = liveCountry(s)
+  // Acquisition peaks in the thirties and tails off; the lifetime total is what
+  // the tables above say, spread across the years it actually happens in.
+  const peak = 34
+  const d = s.age - peak
+  const shape = Math.exp(-(d * d) / (d < 0 ? 90 : 260))
+  const settled = s.partner ? 1.35 : 1.0
+  const formal = ['very_high', 'high', 'medium_high'].includes(c?.gdp)
+  // Two different rates because the two paths have different brakes on them.
+  // A financed purchase is already limited by whether the deposit exists, so it
+  // needs a higher hazard to reach its lifetime rate; the unfinanced route has
+  // no such brake and saturates at the same number, which is how Nigeria and
+  // India first came out at 90% against a real 70%.
+  const p = ownershipChance(s) * shape * settled * (formal ? 0.075 : 0.05)
+  if (!chance(clamp(p, 0, 0.3))) return s
+
+  const tier = ['very_high', 'high'].includes(c?.gdp) ? 'terraced_house'
+    : c?.gdp === 'medium_high' ? 'apartment' : 'studio_flat'
+  const type = PROPERTY_TYPES.find(t => t.id === tier) ?? PROPERTY_TYPES[0]
+
+  if (formal) {
+    const price = localisePrice(type.basePrice, c?.gdp, 'local')
+    const deposit = Math.round(price * (type.downPaymentRate ?? 0.2))
+    if ((s.money ?? 0) < deposit) return s
+    s = {
+      ...s,
+      money: (s.money ?? 0) - deposit,
+      assets: { ...s.assets, properties: [...(s.assets?.properties ?? []), {
+        typeId: type.id, name: type.name, purchasePrice: price, currentValue: price, mortgage: price - deposit,
+      }] },
+      flags: [...new Set([...s.flags, 'homeowner', 'mortgaged'])],
+      mem: { ...s.mem, lcHousingSettled: true, lcHomeYear: s.currentYear },
+    }
+    return log(s, pick([
+      'The paperwork takes a morning and commits the next twenty-five years of you, and the man who hands you the pen has done this so many times that he talks about the weather all the way through it.',
+      'You own the front door. You do not own most of what is behind it yet, and will not for a long time, but the front door is a real thing and you stand in it for a while.',
+      'There is a particular sound an empty room makes before there is anything in it. You will not hear it again in this house.',
+    ]), true)
+  }
+
+  // The unfinanced route: family land, a self-build, an allocated flat that
+  // became yours. No mortgage, because there was never a bank in it.
+  const value = Math.max(400, Math.round(localisePrice(type.basePrice, c?.gdp, 'local') * 0.45))
+  s = {
+    ...s,
+    assets: { ...s.assets, properties: [...(s.assets?.properties ?? []), {
+      typeId: type.id, name: type.name, purchasePrice: 0, currentValue: value, mortgage: 0,
+    }] },
+    flags: [...new Set([...s.flags, 'homeowner', 'home_without_a_deed'])],
+    mem: { ...s.mem, lcHousingSettled: true, lcHomeYear: s.currentYear },
+  }
+  return log(s, pick([
+    'The house is finished in the sense that you live in it. The upper floor has been waiting for its windows for two years and will wait longer, and everyone builds this way, so nobody remarks on it.',
+    'Nobody signs anything. The land is where the family has been, and the arrangement is understood by everyone who needs to understand it, which works perfectly until the day it does not.',
+    'The roof goes on in stages, as the money arrives. You can date the last four years by looking up at it.',
+    'The flat was allocated, and then years later a letter arrived saying it was simply yours now. You read it twice. Nobody had asked you whether you wanted to own anything.',
+  ]), true)
+}
+
 /**
  * Run the ordinary course of a life for one year.
  * Every hook is a no-op if the player has already filled that slot themselves.
@@ -501,6 +623,7 @@ export function tickLifeCourse(state) {
   s = coursePartner(s)
   s = courseMarriage(s)
   s = courseChildren(s)
+  s = courseHousing(s)
   s = courseRetirement(s)
   return s
 }

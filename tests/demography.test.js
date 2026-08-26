@@ -135,6 +135,48 @@ describe('demography matches the historical record', () => {
     }, 240_000)
   }
 
+  it('gives people homes at roughly the rate their country and decade did', () => {
+    // Ownership was 0% across every simulated life before the housing hook:
+    // buyProperty existed and nothing called it. Tolerances are wide because
+    // run-to-run variance at this sample size is around ten points — Germany
+    // measured 49, 75, 55, 45 and 56 across five runs of the same code.
+    const measure = (country, birthYear) => {
+      let adults = 0, owned = 0
+      for (let i = 0; i < 20; i++) {
+        const { s } = runLife(country, birthYear)
+        if (s.age < 55) continue
+        adults++
+        if ((s.assets?.properties?.length ?? 0) > 0) owned++
+      }
+      return { adults, rate: adults ? owned / adults : 0 }
+    }
+    const us = measure('United States', 1950)
+    expect(us.adults).toBeGreaterThan(4)
+    // The floor is the regression that matters: not zero, and not everyone.
+    expect(us.rate).toBeGreaterThan(0.25)
+    expect(us.rate).toBeLessThan(0.95)
+
+    // Renting is a choice in Germany and not a failure, and the model must not
+    // flatten that into the Anglo-American assumption that everyone buys.
+    const de = measure('Germany', 1970)
+    expect(de.rate).toBeLessThan(0.9)
+  }, 240_000)
+
+  it('hands post-Soviet tenants the freehold they were actually handed', () => {
+    // Mass privatisation took ownership across the former bloc from near zero to
+    // eighty per cent in half a decade. Modelled as a lifetime hazard it came out
+    // at 55% against a real 85%, because it was a decree, not a hazard.
+    let adults = 0, owned = 0
+    for (let i = 0; i < 24; i++) {
+      const { s } = runLife('Russia', 1960)
+      if (s.age < 55) continue
+      adults++
+      if ((s.assets?.properties?.length ?? 0) > 0) owned++
+    }
+    expect(adults).toBeGreaterThan(4)
+    expect(owned / adults).toBeGreaterThan(0.5)
+  }, 240_000)
+
   it('preserves the fertility ordering between countries', () => {
     // The single most important property: whatever the absolute numbers do, a
     // 1962 Nigerian life must have visibly more children than a 1970 German one.
