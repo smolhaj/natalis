@@ -57,7 +57,7 @@ export const EVENTS_SONDER_34 = [
     when: (G) => !G.mem?.s34SmellOfCoat,
     text: () => pick([
       'There is a smell that belongs to a specific person — a coat, a soap, a particular combination that you cannot reconstruct but that you recognise completely when it arrives. The smell appears sometimes in unexpected places and for a moment places you in a room you have not been in for decades.',
-      'Someone from a long time ago had a specific smell that was not cologne or anything named — the accumulation of daily life into a scent that belonged to that person. You have encountered it again in strangers and each time you are briefly somewhere else.',
+      'Someone from a long time ago had a smell that was not cologne or anything named — the accumulation of daily life into a scent that belonged to that person. You have encountered it again in strangers and each time you are briefly somewhere else.',
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s34SmellOfCoat', true) },
@@ -96,7 +96,7 @@ export const EVENTS_SONDER_34 = [
     when: (G) => hasElectricity(G) && (!G.mem?.s34EmptyHouseSound),
     text: () => pick([
       'An empty house sounds different from a house with people in it. The difference is not absence of voice — it is something structural, the way the building sits with its own sounds when no one is there to cover them. The settling, the refrigerator, the thing that ticks for no obvious reason. You know which sounds are yours.',
-      'Coming home to an empty house has a specific quality that coming home to a full house does not. The quality is not simply loneliness, though loneliness can be inside it. It is also a kind of belonging — the house recognising you as the one it has been waiting for.',
+      'Coming home to an empty house has a quality that coming home to a full house does not. The quality is not simply loneliness, though loneliness can be inside it. It is also a kind of belonging — the house recognising you as the one it has been waiting for.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s34EmptyHouseSound', true) },

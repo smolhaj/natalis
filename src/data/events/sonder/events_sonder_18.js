@@ -28,7 +28,7 @@ export const EVENTS_SONDER_18 = [
       (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother')) &&
       !G.mem?.s18LastToRemember,
     text: () => pick([
-      `There are things you are the last person alive to remember. Not important things — not events that will appear in a history — but specific things: the way your father held a cup, the particular phrase your mother used when she was frightened, the exact sound the door made in the house you grew up in before the renovation. When you die, those things are gone. Not forgotten — *gone*, which is different. Forgotten implies someone could remember if they tried. These things will have no one left to try.`,
+      `There are things you are the last person alive to remember. Not important things — not events that will appear in a history — but things: the way your father held a cup, the particular phrase your mother used when she was frightened, the exact sound the door made in the house you grew up in before the renovation. When you die, those things are gone. Not forgotten — *gone*, which is different. Forgotten implies someone could remember if they tried. These things will have no one left to try.`,
       `You are the last witness to a version of your own childhood that existed only inside the people who were there. Your parents have died. The neighbours from that street have died or moved past recognition. The specific ordinary details — the colour of a specific wall, the smell of the kitchen on a specific day, the sound of a particular argument that seemed important and then didn't — exist only here now, in you, and will end when you end.`,
     ]),
     choices: null,
@@ -46,8 +46,8 @@ export const EVENTS_SONDER_18 = [
       G.flags.has('lost_parent_mother') &&
       !G.mem?.s18MothersHands,
     text: () => pick([
-      `You remember the specific way your mother's hands looked doing a particular thing — kneading dough, folding cloth, counting change in the palm before dropping it into a purse. You did not know at the time that you were memorising this. You know it now because the memory is precise in a way that has nothing to do with intention: the knuckles, the specific stain on one finger, the motion. The hands are gone and the memory of the hands is exact.`,
-      `Her hands doing a specific thing. Not a thing that was important — not a ceremony, not a moment of tenderness — just a recurring ordinary motion you watched hundreds of times without registering that you were watching. The memory arrived uninvited, years after her death, with the precision of something you had studied.`,
+      `You remember the way your mother's hands looked doing a particular thing — kneading dough, folding cloth, counting change in the palm before dropping it into a purse. You did not know at the time that you were memorising this. You know it now because the memory is precise in a way that has nothing to do with intention: the knuckles, the specific stain on one finger, the motion. The hands are gone and the memory of the hands is exact.`,
+      `Her hands doing a thing. Not a thing that was important — not a ceremony, not a moment of tenderness — just a recurring ordinary motion you watched hundreds of times without registering that you were watching. The memory arrived uninvited, years after her death, with the precision of something you had studied.`,
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s18MothersHands', true) },
@@ -61,7 +61,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) => hasInternet(G) && (G.age >= 32 && G.age <= 65 && !G.mem?.s18UnsentLetter),
     text: () => pick([
-      `There is a letter — or an email, or a draft message, or a conversation you have rehearsed — that you have not sent. The person it is addressed to is someone you know or once knew. The letter exists in a completed form in your head, in the specific order of its sentences, with the exact word in the second paragraph that you have decided on and then reconsidered. The unsending is not a decision you made. It is a decision you are making continuously, in the specific way that inaction is also a choice.`,
+      `There is a letter — or an email, or a draft message, or a conversation you have rehearsed — that you have not sent. The person it is addressed to is someone you know or once knew. The letter exists in a completed form in your head, in the order of its sentences, with the exact word in the second paragraph that you have decided on and then reconsidered. The unsending is not a decision you made. It is a decision you are making continuously, in the way that inaction is also a choice.`,
       `The message exists in full. You have written it in your head enough times to have a final draft. The final draft begins with a sentence you have revised into something exact and then revised again because exact felt too much like a demand. There is a person who would receive this message. They do not know it exists. You are not certain what sending it would produce and you are not certain the uncertainty is the reason you haven't.`,
     ]),
     choices: null,
@@ -76,7 +76,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) => G.age >= 36 && !G.mem?.s18InsomniaHour,
     text: () => pick([
-      `The specific hour is 3:14 or 4:20 or some time in that window where sleep has departed and is not coming back for a while. The mind at this hour does not behave as it does during the day. Problems present themselves without proportion, without the context that makes them manageable. Regrets arrive in a sequence that has been ordered by some part of the brain that works differently in the dark. You have learned that this hour lies and that its assessments cannot be trusted and that none of this information is available to you at 3:14.`,
+      `The hour is 3:14 or 4:20 or some time in that window where sleep has departed and is not coming back for a while. The mind at this hour does not behave as it does during the day. Problems present themselves without proportion, without the context that makes them manageable. Regrets arrive in a sequence that has been ordered by some part of the brain that works differently in the dark. You have learned that this hour lies and that its assessments cannot be trusted and that none of this information is available to you at 3:14.`,
       `You wake and you know immediately from the quality of the dark and the quality of the silence that it is somewhere between three and five. The interval is its own country. You have been a citizen of it for years. The thoughts that arrive there are the thoughts that do not have good answers, which is why the brain saves them for a time when it cannot be held accountable.`,
     ]),
     choices: null,
@@ -112,7 +112,7 @@ export const EVENTS_SONDER_18 = [
       G.age >= 18 && G.age <= 55 &&
       !G.mem?.s18MarketBefore,
     text: () => pick([
-      `The market before it opens is a different place from the market during the day. The stalls half-assembled, the produce in crates before arrangement, the vendors eating breakfast from containers brought from home, the specific smell of the place before the crowd arrives and adds its own smell. You have been here at this hour a few times — for an early train, or because of some other morning obligation — and the before-version of the market is almost private, as if you have been shown a room that is usually kept closed.`,
+      `The market before it opens is a different place from the market during the day. The stalls half-assembled, the produce in crates before arrangement, the vendors eating breakfast from containers brought from home, the smell of the place before the crowd arrives and adds its own smell. You have been here at this hour a few times — for an early train, or because of some other morning obligation — and the before-version of the market is almost private, as if you have been shown a room that is usually kept closed.`,
       `At five in the morning the market belongs to the people who run it. The fishmonger arranging the catch on ice. The vegetable seller unloading crates from a truck that arrived in the dark. The specific unhurried quality of the arrangements, the care given to the display before the display has an audience. The market at five is the same place as the market at noon and is also not the same place at all.`,
     ]),
     choices: null,
@@ -131,7 +131,7 @@ export const EVENTS_SONDER_18 = [
       !G.mem?.s18RainCity,
     text: () => pick([
       `Somewhere it is raining in the city you left. This is not a remarkable fact — it rains there regularly — but the knowledge of it is unexpectedly precise: the specific grey of that rain, the way it sounds on the roof of the building you lived in, the way the streets smell afterwards. You are not there. You are here, where it is not raining or is raining differently. The specific rain of the place you came from does not follow you, but the knowledge of what it is like does.`,
-      `You can still describe the weather of the place you are from with complete precision. The specific season, the specific quality of the light in October, the way the humidity felt in July in that particular city. You are no longer there. The precision of the memory is undiminished. You are not sure whether the precision is nostalgia or simply the accuracy of a place you knew well from the inside.`,
+      `You can still describe the weather of the place you are from with complete precision. The season, the quality of the light in October, the way the humidity felt in July in that particular city. You are no longer there. The precision of the memory is undiminished. You are not sure whether the precision is nostalgia or simply the accuracy of a place you knew well from the inside.`,
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s18RainCity', true) },
@@ -165,8 +165,8 @@ export const EVENTS_SONDER_18 = [
       G.age >= 35 &&
       !G.mem?.s18EatingAlone,
     text: () => pick([
-      `At some point the specific sadness of eating alone — the table set for one, the single glass, the meal that finishes without conversation — became something else. Not contentment, exactly. Something quieter: the meal is what it is, you eat it at a pace that is yours, you are not managing anyone's hunger but your own. This is not the life you had planned and it is also a life that has its own textures, some of which you have come to prefer without having planned to.`,
-      `You eat alone and you don't mind in the specific way you used to mind. The not-minding took time to arrive. It is not the same as not being lonely. It is the specific relationship with solitude that develops when solitude has been long enough that you have learned its geography: the good hours and the difficult ones, the meals that are pleasant eaten alone and the ones that are not.`,
+      `At some point the sadness of eating alone — the table set for one, the single glass, the meal that finishes without conversation — became something else. Not contentment, exactly. Something quieter: the meal is what it is, you eat it at a pace that is yours, you are not managing anyone's hunger but your own. This is not the life you had planned and it is also a life that has its own textures, some of which you have come to prefer without having planned to.`,
+      `You eat alone and you don't mind in the way you used to mind. The not-minding took time to arrive. It is not the same as not being lonely. It is the specific relationship with solitude that develops when solitude has been long enough that you have learned its geography: the good hours and the difficult ones, the meals that are pleasant eaten alone and the ones that are not.`,
     ]),
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s18EatingAlone', true) },
@@ -264,7 +264,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) => hasTV(G) && (G.age >= 8 && G.age <= 18 && !G.mem?.s18RadioSickness),
     text: () => pick([
-      `When someone in the house was sick, the radio stayed on at a low volume. Not for information — for company, or because silence in a sick room has its own quality that the radio softened. The specific programs you associate with illness: the ones that ran in the afternoon, the voices with the particular cadence of afternoon broadcasting. You cannot hear that program or that station without the association arriving, the specific stillness of a house with someone sick in it.`,
+      `When someone in the house was sick, the radio stayed on at a low volume. Not for information — for company, or because silence in a sick room has its own quality that the radio softened. The specific programs you associate with illness: the ones that ran in the afternoon, the voices with the particular cadence of afternoon broadcasting. You cannot hear that program or that station without the association arriving, the stillness of a house with someone sick in it.`,
       `The sound of the house when someone was ill: the particular quiet that is not silence but the suspension of normal noise. Someone moving carefully. The specific low volume of the television or radio that had been adjusted for a sick person. The smell of a particular medicine. These were the textures of childhood illness — your own or someone else's — and they reconstitute themselves completely when they arrive uninvited.`,
     ]),
     choices: null,
@@ -330,7 +330,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) => hasHealthcare(G) && (G.age >= 40 && !G.mem?.s18WaitingRoom),
     text: () => pick([
-      `The waiting room is a specific kind of place. Not an unpleasant place necessarily, but a place with its own gravity: the particular weight of waiting, the magazines that are too old to be current and too new to be interesting, the other people who are also waiting and whose reasons for waiting are not your business but are legible anyway in small ways. The waiting room is where the ordinary machinery of bureaucracy and medicine and administration becomes most visible to the people it serves.`,
+      `The waiting room is a kind of place. Not an unpleasant place necessarily, but a place with its own gravity: the particular weight of waiting, the magazines that are too old to be current and too new to be interesting, the other people who are also waiting and whose reasons for waiting are not your business but are legible anyway in small ways. The waiting room is where the ordinary machinery of bureaucracy and medicine and administration becomes most visible to the people it serves.`,
       `In the waiting room you are in a position that almost never occurs elsewhere: you are with strangers who share a situation but not an identity. Something has brought you all here and something will take you somewhere else. The conversation that sometimes starts in a waiting room — the brief, honest conversation that happens between strangers who have been placed in the same uncertain position — is one of the more honest conversations of adult life.`,
     ]),
     choices: null,
@@ -345,7 +345,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 70 && !G.mem?.s18SmallCompletion,
     text: () => pick([
-      `The specific satisfaction: the shelf assembled, the drawer that closes properly now, the path through the park you have finally memorised to avoid the mud section, the form filed. The satisfaction is exactly proportional to the task and is complete in itself. It does not require a larger purpose to justify it. The shelf is level. You know where the screwdriver is. These small completions accumulate into something that does not have a name but is recognisable as one of the reliable textures of an ordinary life.`,
+      `The satisfaction: the shelf assembled, the drawer that closes properly now, the path through the park you have finally memorised to avoid the mud section, the form filed. The satisfaction is exactly proportional to the task and is complete in itself. It does not require a larger purpose to justify it. The shelf is level. You know where the screwdriver is. These small completions accumulate into something that does not have a name but is recognisable as one of the reliable textures of an ordinary life.`,
       `Something small is finished. A task that required persistence across several days or the patience to wait for the right tool or the correct amount. Its completion produces a satisfaction that is clean and specific, uncontaminated by the things that have not been finished. For this particular hour, the completed thing is the horizon. That will shift. For now, the thing is done and the fact of its doneness is enough.`,
     ]),
     choices: null,
@@ -375,8 +375,8 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) => hasPhotographs(G) && (G.age >= 40 && !G.mem?.s18BodyHolds),
     text: () => pick([
-      `The body has been keeping records you did not authorise. The position you automatically adopt in a tense conversation — the one your parents adopted, the one you recognised with a delay of several years. The physical response to a specific kind of authority. The way your hands move when you are thinking. These are not behaviours you chose. They are things the body learned and stored in a region that decision-making cannot reach, and they were there before you noticed them.`,
-      `There are physical habits you inherited without knowing: the way you fold your arms, which is the way your father folded his arms. The specific gesture you make when you are uncertain, which you recognise in photographs of people you are descended from. The body is the oldest part of the inheritance, and it passes things forward in a form that does not have to declare itself at the border.`,
+      `The body has been keeping records you did not authorise. The position you automatically adopt in a tense conversation — the one your parents adopted, the one you recognised with a delay of several years. The physical response to a kind of authority. The way your hands move when you are thinking. These are not behaviours you chose. They are things the body learned and stored in a region that decision-making cannot reach, and they were there before you noticed them.`,
+      `There are physical habits you inherited without knowing: the way you fold your arms, which is the way your father folded his arms. The gesture you make when you are uncertain, which you recognise in photographs of people you are descended from. The body is the oldest part of the inheritance, and it passes things forward in a form that does not have to declare itself at the border.`,
     ]),
     choices: null,
     effect: (p) => { p.e += 2; p.r += 2; p.setMem('s18BodyHolds', true) },
@@ -390,8 +390,8 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) => hasWeekend(G) && (G.age >= 20 && G.age <= 60 && !G.mem?.s18SundayEvening),
     text: () => pick([
-      `Sunday evening has a specific quality that distinguishes it from all other evenings: the quality of the week approaching, the window closing on whatever the weekend permitted. The quality has been with you since school, when Sunday evening meant the end of the interval between obligations. It has modified slightly as an adult but has not disappeared. The week arrives at the same time each week and the Sunday evening knowledge of it is older than almost anything else you know.`,
-      `The dimming light of Sunday evening. The specific feeling that arrives around five or six o'clock on a Sunday when the weekend recedes into what remains of it and the week appears ahead. This feeling was first learned as a child and has never fully updated. The adult week is different from the school week. The Sunday evening feeling does not know this.`,
+      `Sunday evening has a quality that distinguishes it from all other evenings: the quality of the week approaching, the window closing on whatever the weekend permitted. The quality has been with you since school, when Sunday evening meant the end of the interval between obligations. It has modified slightly as an adult but has not disappeared. The week arrives at the same time each week and the Sunday evening knowledge of it is older than almost anything else you know.`,
+      `The dimming light of Sunday evening. The feeling that arrives around five or six o'clock on a Sunday when the weekend recedes into what remains of it and the week appears ahead. This feeling was first learned as a child and has never fully updated. The adult week is different from the school week. The Sunday evening feeling does not know this.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('s18SundayEvening', true) },
@@ -442,7 +442,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) => G.currentYear >= 1990 && G.age >= 30 && !G.mem?.s18WeightOfNews,
     text: () => pick([
-      `The news arrives with a weight that has changed over time. At twenty you had an absorption capacity for each new disaster that has been worn down by repetition. The same quality of catastrophe that shocked at twenty produces something different now: a knowledge of the pattern, a recognition of the sequence, a specific exhaustion that is not indifference but its cousin. You still care. The caring has become heavier to carry.`,
+      `The news arrives with a weight that has changed over time. At twenty you had an absorption capacity for each new disaster that has been worn down by repetition. The same quality of catastrophe that shocked at twenty produces something different now: a knowledge of the pattern, a recognition of the sequence, a exhaustion that is not indifference but its cousin. You still care. The caring has become heavier to carry.`,
       `The specific relationship with the news that develops after enough years of watching. The events are not smaller than they were. The suffering is not more distant. But the processing capacity has a history now, and the history makes every new event arrive with all the previous ones attached. This is the specific burden of having paid attention for a long time.`,
     ]),
     choices: null,
@@ -478,7 +478,7 @@ export const EVENTS_SONDER_18 = [
       G.age >= 30 && G.age <= 60 &&
       !G.mem?.s18CityBySound,
     text: () => pick([
-      `You know this city well enough to know it by sound. The particular intersection that is always loud at certain hours. The building site that has been ongoing for two years and whose sounds have become part of the texture of this block. The specific sound of the rain on the particular type of roof or window or street surface here, which is different from rain elsewhere. A city you know well is a city you know with all the senses, and the sound layer is the one that persists the longest when you are away and the first one you recognise when you return.`,
+      `You know this city well enough to know it by sound. The particular intersection that is always loud at certain hours. The building site that has been ongoing for two years and whose sounds have become part of the texture of this block. The sound of the rain on the particular type of roof or window or street surface here, which is different from rain elsewhere. A city you know well is a city you know with all the senses, and the sound layer is the one that persists the longest when you are away and the first one you recognise when you return.`,
       `The city has a sound that is only audible when you have been away long enough to stop hearing it, and then returned. The compound of engines and voices and specific rhythms of this place that constitute its ambient signature. You have been away for long enough that the sound arrived on your return as something named: this is what this city sounds like. Then it dissolved back into the ordinary background and became inaudible again.`,
     ]),
     choices: null,

@@ -12,7 +12,7 @@ export const EVENTS_SONDER_3 = [
 
   // ──────────────────────────────────────────────────────────────────────────
   // AUTHORITARIAN LIFE TEXTURE
-  // The specific quality of a life conducted under surveillance or restriction.
+  // The quality of a life conducted under surveillance or restriction.
   // Not the dramatic event but the background radiation of it.
   // ──────────────────────────────────────────────────────────────────────────
 
@@ -140,7 +140,7 @@ export const EVENTS_SONDER_3 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => hasCar(G) && (!G.mem?.s3_apologyNever && G.age >= 38),
-    text: 'There is someone you have not apologised to. The specific person, the specific thing. It was years ago — long enough that reopening it would require explaining the context, which is almost as bad as the original thing. You have thought about it in idle moments, driving or lying awake. The moment when it might have been natural to say it has passed. You carry it as a small weight, not debilitating, just present.',
+    text: 'There is someone you have not apologised to. The person, the thing. It was years ago — long enough that reopening it would require explaining the context, which is almost as bad as the original thing. You have thought about it in idle moments, driving or lying awake. The moment when it might have been natural to say it has passed. You carry it as a small weight, not debilitating, just present.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s3_apologyNever', true) },
   },
@@ -265,7 +265,7 @@ export const EVENTS_SONDER_3 = [
       !G.mem?.s3_belongNei &&
       G.flags.has('emigrated') &&
       G.age >= 38,
-    text: 'You have been here long enough that home feels like somewhere you used to live. But you have not been here so long that here is simply home. There are moments — at a gathering, at a bureaucratic counter, at a family event where the references go past you — when you understand that you are from somewhere that is no longer fully accessible and living in somewhere you are not fully from. This is not tragedy. It is the specific geography of a life lived in more than one place.',
+    text: 'You have been here long enough that home feels like somewhere you used to live. But you have not been here so long that here is simply home. There are moments — at a gathering, at a bureaucratic counter, at a family event where the references go past you — when you understand that you are from somewhere that is no longer fully accessible and living in somewhere you are not fully from. This is not tragedy. It is the geography of a life lived in more than one place.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s3_belongNei', true) },
   },
@@ -309,7 +309,7 @@ export const EVENTS_SONDER_3 = [
 
   // ──────────────────────────────────────────────────────────────────────────
   // LATE-LIFE TEXTURE
-  // What the day looks like when the structure is gone. The specific quality
+  // What the day looks like when the structure is gone. The quality
   // of time that has opened up. Body that knows things the mind hasn't caught.
   // ──────────────────────────────────────────────────────────────────────────
 

@@ -335,7 +335,7 @@ export const EVENTS_SONDER_6 = [
     phase: 'adolescence',
     weight: 2,
     when: (G) => isLiterate(G) && (G.age >= 14 && G.age <= 19 && !G.mem?.s6WaitResults),
-    text: 'Exam results. You know them or you don\'t; the knowing is in the envelope or on the board and you are not there yet. What you feel in this interval is not suspense but the specific weight of consequence — the understanding that what is about to be revealed will shape what comes next in ways you cannot yet see and cannot prevent.',
+    text: 'Exam results. You know them or you don\'t; the knowing is in the envelope or on the board and you are not there yet. What you feel in this interval is not suspense but the weight of consequence — the understanding that what is about to be revealed will shape what comes next in ways you cannot yet see and cannot prevent.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s6WaitResults', true) },
   },

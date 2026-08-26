@@ -377,7 +377,7 @@ export const EVENTS_SONDER_47 = [
     when: (G) => !G.mem?.s47ad,
     text: () => pick([
       'The other life you did not live runs parallel sometimes. Not regret exactly — more like curiosity. You see someone your age doing the thing you might have done and you observe what that life produces. Then you stop observing and return to the one you are in.',
-      'Sitting with someone who is sleeping. The specific texture of being in the presence of someone unconscious — the changed quality of the room, the breathing, the way the person looks more available than when they are awake. You are responsible for the quiet.',
+      'Sitting with someone who is sleeping. The texture of being in the presence of someone unconscious — the changed quality of the room, the breathing, the way the person looks more available than when they are awake. You are responsible for the quiet.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s47ad', true) },

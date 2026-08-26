@@ -2,7 +2,7 @@
 //
 // 36 quiet-year prose events across: the body in the workplace, objects and
 // their persistence, small economies, the texture of waiting, distance and
-// contact, what you notice about yourself in mirrors, the specific quiet of
+// contact, what you notice about yourself in mirrors, the quiet of
 // different kinds of rooms, the things that survive the people who made them.
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
@@ -52,7 +52,7 @@ export const EVENTS_SONDER_14 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => hasElectricity(G) && (G.age >= 60 && !G.mem?.s14ObjectOutlives),
-    text: `There are objects in the house that are older than the house. The table was your grandmother's. The lamp was bought in another city in a year when you were someone slightly different from who you are now and it has survived two moves. Objects accumulate a history that is not their history — they absorb the rooms they've been in, the hands that have moved them, the specific light conditions of the apartments where they have been present. The table does not remember being your grandmother's. It was simply always there.`,
+    text: `There are objects in the house that are older than the house. The table was your grandmother's. The lamp was bought in another city in a year when you were someone slightly different from who you are now and it has survived two moves. Objects accumulate a history that is not their history — they absorb the rooms they've been in, the hands that have moved them, the light conditions of the apartments where they have been present. The table does not remember being your grandmother's. It was simply always there.`,
     choices: null,
     effect: (p) => { p.setMem('s14ObjectOutlives', true) },
   },
@@ -202,7 +202,7 @@ export const EVENTS_SONDER_14 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.age >= 55 && !G.mem?.s14EmptyRoom,
-    text: `There is a room in the house that has emptied — a room that used to be occupied or used and is now a room that holds the residue of what it used to hold. You pass it. Sometimes you go in and stand in it for a moment. The specific quality of an emptied room is that it is full of the shape of what was there rather than the thing itself. The absence has a specific form that is the form of the presence it replaced.`,
+    text: `There is a room in the house that has emptied — a room that used to be occupied or used and is now a room that holds the residue of what it used to hold. You pass it. Sometimes you go in and stand in it for a moment. The quality of an emptied room is that it is full of the shape of what was there rather than the thing itself. The absence has a specific form that is the form of the presence it replaced.`,
     choices: null,
     effect: (p) => { p.setMem('s14EmptyRoom', true) },
   },
@@ -212,7 +212,7 @@ export const EVENTS_SONDER_14 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.age >= 20 && !G.mem?.s14SomeonesHouse,
-    text: `Being in someone else's house for an extended period teaches you their specific version of ordinary life. The time they eat. The sounds the house makes at night. The objects that are always where they are. You observe all of this without meaning to and what you observe tells you things about the people that they would not say in conversation. Houses are the accumulated evidence of how their occupants have decided to live. The evidence is everywhere and almost none of it is intentional.`,
+    text: `Being in someone else's house for an extended period teaches you their version of ordinary life. The time they eat. The sounds the house makes at night. The objects that are always where they are. You observe all of this without meaning to and what you observe tells you things about the people that they would not say in conversation. Houses are the accumulated evidence of how their occupants have decided to live. The evidence is everywhere and almost none of it is intentional.`,
     choices: null,
     effect: (p) => { p.setMem('s14SomeonesHouse', true) },
   },
@@ -265,6 +265,7 @@ export const EVENTS_SONDER_14 = [
     id: 's14_stranger_on_train',
     phase: 'midlife',
     weight: 2,
+    isGlimpse: true,
     when: (G) => hasPhone(G) && (G.age >= 35 && !G.mem?.s14StrangerTrain),
     text: `The woman across from you on the train today. She is doing something ordinary — reading, looking at her phone, looking at nothing in particular — and you observe, without meaning to, that she is at a specific moment in her life. You do not know what the moment is. But you can read the particular quality of attention she is giving to the nothing she is looking at — slightly inward, slightly away — and infer that something has recently happened, or is about to happen, or is being processed. You arrive at your stop and she continues.`,
     choices: null,
@@ -288,7 +289,7 @@ export const EVENTS_SONDER_14 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 40 && G.age <= 60 && !G.mem?.s14BirthdayYear,
-    text: `The birthday this year has a quality that other birthdays haven't had. Not because the number is round — though the number is close to round — but because this particular year has included specific things that have made the age feel different from the previous age. You are still the same person. Something has shifted in the aggregation of things the year contained. The birthday is the marker. The shift had been happening for months before it.`,
+    text: `The birthday this year has a quality that other birthdays haven't had. Not because the number is round — though the number is close to round — but because this particular year has included things that have made the age feel different from the previous age. You are still the same person. Something has shifted in the aggregation of things the year contained. The birthday is the marker. The shift had been happening for months before it.`,
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s14BirthdayYear', true) },
   },

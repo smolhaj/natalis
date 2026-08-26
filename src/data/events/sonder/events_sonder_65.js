@@ -198,7 +198,7 @@ export const EVENTS_SONDER_65 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => !G.mem?.s65z,
-    text: 'The relationship you handle most carefully is a relationship with someone who does not know you are handling it carefully. The care is not condescension. It is knowledge about what that person needs that they have not told you but that you have understood from long attention to the specific way they function.',
+    text: 'The relationship you handle most carefully is a relationship with someone who does not know you are handling it carefully. The care is not condescension. It is knowledge about what that person needs that they have not told you but that you have understood from long attention to the way they function.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s65z', true) },
   },

@@ -64,7 +64,7 @@ export const EVENTS_SONDER_33 = [
     weight: 2,
     when: (G) => G.age >= 14 && G.age <= 19 && !G.mem?.s33f,
     text: () => pick([
-      'The song that is everywhere this season. You will hear it in twenty years and be returned to exactly here — the specific temperature, the specific unsettled feeling of this period.',
+      'The song that is everywhere this season. You will hear it in twenty years and be returned to exactly here — the temperature, the specific unsettled feeling of this period.',
       'The version of yourself you perform for different audiences. The performance is not exactly lying. It is the selection of which true thing to present in which room.',
     ]),
     choices: null,
@@ -143,7 +143,7 @@ export const EVENTS_SONDER_33 = [
     when: (G) => G.age >= 72 && !G.mem?.s33o,
     text: () => pick([
       'The grandchild or young person asking you what it was like. What it was like is not a story — it was the daily texture of a life, and the daily texture does not compress well. You tell them something true and insufficient.',
-      'The comfort that comes from having outlasted several things you thought would break you. Not pride exactly. More like the specific knowledge that you are more durable than you believed.',
+      'The comfort that comes from having outlasted several things you thought would break you. Not pride exactly. More like the knowledge that you are more durable than you believed.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33o', true) },
@@ -220,7 +220,7 @@ export const EVENTS_SONDER_33 = [
     weight: 2,
     when: (G) => hasWeekend(G) && (G.age >= 42 && G.age <= 56 && !G.mem?.s33u),
     text: () => pick([
-      'The evening you did not plan that became the evening you remember. No event. Just the specific light and the specific people and the conversation that went longer than anyone expected.',
+      'The evening you did not plan that became the evening you remember. No event. Just the light and the people and the conversation that went longer than anyone expected.',
       'The small ceremony your household has — the way Sunday morning works, the particular thing you do before a journey, the routine that is more than a routine. It is not a ritual because no one named it. It is a ritual.',
     ]),
     choices: null,
@@ -312,7 +312,7 @@ export const EVENTS_SONDER_33 = [
     when: (G) => G.age >= 18 && G.age <= 28 && !G.mem?.s33ab,
     text: () => pick([
       'The night you stayed up for no reason except that sleep did not come and the house was quiet and you were, briefly, alone in the world in a way that was not lonely.',
-      'The possibility ahead of you — the multiple possible futures — has a specific quality at this age. From here, many things are still open. You do not fully feel the openness, but it is there.',
+      'The possibility ahead of you — the multiple possible futures — has a quality at this age. From here, many things are still open. You do not fully feel the openness, but it is there.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33ab', true) },

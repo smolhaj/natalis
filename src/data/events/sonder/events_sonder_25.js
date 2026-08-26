@@ -89,7 +89,7 @@ export const EVENTS_SONDER_25 = [
     weight: 2,
     when: (G) => !G.mem?.sdr25OthersGrief,
     text: () => pick([
-      'Watching someone else grieve: the specific discomfort of being the witness. The inadequacy of everything you might say. The way you keep saying it anyway.',
+      'Watching someone else grieve: the discomfort of being the witness. The inadequacy of everything you might say. The way you keep saying it anyway.',
       'You have sat with someone while they were in their grief, not in yours. There is a different kind of attending required. You had to learn it.',
       'Other people\'s grief comes in at an angle that yours does not. You can see it from the outside, which is both useful and the thing that makes it harder to help.',
       'The look of grief on someone you love: the face you know doing something with itself you hadn\'t seen it do. You filed that away without knowing you were filing.',
@@ -245,7 +245,7 @@ export const EVENTS_SONDER_25 = [
       'You can remember what a specific amount of money used to feel like to hold — not a large amount, a specific amount that had weight when you were young and means something different now.',
       'The first time you held an amount of money that felt like something: you know the denomination, the occasion, the feeling in the hand. The feeling has changed with the amount many times since.',
       'Physical money has a different quality than numbers on a screen. You count it differently. You lose it differently. You find it in coat pockets and it is slightly surprising in a way that a number never is.',
-      'Counting out coins for something you couldn\'t otherwise afford: the particular attention that requires, the exactness. Later this becomes a memory with a specific texture.',
+      'Counting out coins for something you couldn\'t otherwise afford: the particular attention that requires, the exactness. Later this becomes a memory with a texture.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr25PhysMoney', true) },
@@ -412,8 +412,8 @@ export const EVENTS_SONDER_25 = [
     weight: 2,
     when: (G) => !G.mem?.sdr25RainSurface,
     text: () => pick([
-      'The sound of rain on a particular surface: corrugated iron, or leaves, or a tin roof, or the window you used to sit by. You carry this specific sound as a sensory record of a place and time.',
-      'Rain sounds different depending on what it falls on. You know the specific version from wherever you grew up. The version from other places sounds wrong, slightly, for reasons that are purely biographical.',
+      'The sound of rain on a particular surface: corrugated iron, or leaves, or a tin roof, or the window you used to sit by. You carry this sound as a sensory record of a place and time.',
+      'Rain sounds different depending on what it falls on. You know the version from wherever you grew up. The version from other places sounds wrong, slightly, for reasons that are purely biographical.',
       'The rain at a certain kind of window: the pattern of drops on glass, the sound, the particular way the streetlight looked through it. This is stored precisely somewhere.',
       'Some sounds are place-specific in your memory. Rain is one. The version you know best is from a specific roof, a specific window, a specific room.',
     ]),

@@ -3,10 +3,10 @@
 // 28 quiet-year prose events across: money that isn't money (savings in
 // inflation, the envelope in the drawer), the neighbor you never spoke to,
 // public libraries, what you were reading when something happened, the
-// specific weight of a suitcase, the bus journey, what you stopped
+// weight of a suitcase, the bus journey, what you stopped
 // explaining to people, the specific nothing before falling asleep,
 // how you walk in a city you know well, photographs of strangers,
-// the specific quality of waiting rooms, and the objects of very old people.
+// the quality of waiting rooms, and the objects of very old people.
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
 
@@ -25,7 +25,7 @@ export const EVENTS_SONDER_17 = [
     when: (G) => hasBank(G) && (G.age >= 35 && !G.mem?.s17EnvelopeDrawer),
     text: () => pick([
       `There is a particular way of keeping money that is neither a bank account nor a wallet: the envelope in the drawer, the cash in the tin behind the rice, the specific small amount kept in reserve against an emergency that is not defined but understood. This practice was inherited from someone who did not trust banks, or lived somewhere the bank could not be trusted, or learned that the envelope was the thing that was still there when other things were not. You keep it now without always knowing why.`,
-      `Your grandmother kept money in a place nobody was supposed to know, which everyone knew. The practice was inherited from someone who had learned that visible wealth was taxed in specific ways that invisible wealth was not. The tin. The specific corner of the specific drawer. The knowledge is transmitted without the lesson being named.`,
+      `Your grandmother kept money in a place nobody was supposed to know, which everyone knew. The practice was inherited from someone who had learned that visible wealth was taxed in ways that invisible wealth was not. The tin. The specific corner of the specific drawer. The knowledge is transmitted without the lesson being named.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('s17EnvelopeDrawer', true) },
@@ -75,7 +75,7 @@ export const EVENTS_SONDER_17 = [
       G.character.country?.archetype !== 'conflict_zone' &&
       !G.mem?.s17PublicLibrary),
     text: () => pick([
-      `The public library of your childhood had a specific smell — paper, dust, a faint industrial carpet, the specific quiet that is not silence but the sound of multiple people being silent simultaneously. You were allowed to take home seven books at a time, or three, or an unlimited number — this varied — and you took as many as you could carry. The library was the first place that implied you could have whatever you could read, which was a different relationship with abundance than any other institution offered.`,
+      `The public library of your childhood had a smell — paper, dust, a faint industrial carpet, the quiet that is not silence but the sound of multiple people being silent simultaneously. You were allowed to take home seven books at a time, or three, or an unlimited number — this varied — and you took as many as you could carry. The library was the first place that implied you could have whatever you could read, which was a different relationship with abundance than any other institution offered.`,
       `The library was public, which meant it was everyone's, which meant on Saturday mornings it was full of everyone: the retired men reading newspapers they had not paid for, the mothers with small children in the section that had low shelves, the teenagers at computers. You were in the section for your age for a while and then you were in the adult section and the transition was not marked, you simply walked over one day and stayed. Nobody stopped you. This was also a thing the library did.`,
     ]),
     choices: null,
@@ -122,8 +122,8 @@ export const EVENTS_SONDER_17 = [
     weight: 2,
     when: (G) => hasBus(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s17TheBus),
     text: () => pick([
-      `The bus is a particular social form. Strangers in forced proximity, the etiquette of not acknowledging the proximity, the specific way people distribute themselves when the bus is empty versus when it fills. You have taken buses for years and watched the distribution: the window seats fill first, the aisle seats second, the middle seat last. The middle seat is almost always last. This is universal.`,
-      `You spent years of your life on buses — the commute, the journey between cities, the long overnight route that got you somewhere cheaper than the train. The specific quality of time on a bus is different from other kinds of transit time: the landscape is visible, the pace is slow enough to watch it, and you have nothing to do but sit in it. This turns out to be rare.`,
+      `The bus is a particular social form. Strangers in forced proximity, the etiquette of not acknowledging the proximity, the way people distribute themselves when the bus is empty versus when it fills. You have taken buses for years and watched the distribution: the window seats fill first, the aisle seats second, the middle seat last. The middle seat is almost always last. This is universal.`,
+      `You spent years of your life on buses — the commute, the journey between cities, the long overnight route that got you somewhere cheaper than the train. The quality of time on a bus is different from other kinds of transit time: the landscape is visible, the pace is slow enough to watch it, and you have nothing to do but sit in it. This turns out to be rare.`,
       `The overnight bus. A specific form of travel that exists between departure and arrival with its own rules: you sleep badly in the seat, you arrive at dawn slightly wrong, the city receives you before it is ready for you. Cheaper than the alternative. You have done this more than once.`,
     ]),
     choices: null,
@@ -138,7 +138,7 @@ export const EVENTS_SONDER_17 = [
     weight: 2,
     when: (G) => G.age >= 38 && !G.mem?.s17StoppedExplaining,
     text: () => pick([
-      `There are things you stopped explaining at some point — your choices, your background, the specific combination of things you are. Not from defeat but from economy: the explanation was longer than the situation warranted, and the listener's understanding, at the end of it, was not meaningfully better than their assumption had been. You let the assumption stand. You kept the thing.`,
+      `There are things you stopped explaining at some point — your choices, your background, the combination of things you are. Not from defeat but from economy: the explanation was longer than the situation warranted, and the listener's understanding, at the end of it, was not meaningfully better than their assumption had been. You let the assumption stand. You kept the thing.`,
       `You used to explain yourself more. The explaining has reduced over the years — not because you are less complex or less interesting in your complexity, but because the context you were explaining to has changed, or you have changed, or the things that required explanation are now simply aspects of a life that requires no justification to be what it is.`,
     ]),
     choices: null,
@@ -153,8 +153,8 @@ export const EVENTS_SONDER_17 = [
     weight: 2,
     when: (G) => G.age >= 30 && !G.mem?.s17BeforeSleep,
     text: () => pick([
-      `There is a specific quality of thought that arrives in the twenty minutes before sleep: half-formed, associative, not governed by the rational filters that operate during the day. You cannot reproduce these thoughts in the morning — they are not stored in the same way as waking thoughts — but they have a quality, in the moment, of clarity. They feel like the truth about something. By morning they are gone.`,
-      `You review the day before sleep, or you do not. The review — if you do it — happens in a specific way: not linearly, not chronologically, but in the order the day is still warm in. The thing that is still live surfaces first. Then the rest comes or doesn't.`,
+      `There is a quality of thought that arrives in the twenty minutes before sleep: half-formed, associative, not governed by the rational filters that operate during the day. You cannot reproduce these thoughts in the morning — they are not stored in the same way as waking thoughts — but they have a quality, in the moment, of clarity. They feel like the truth about something. By morning they are gone.`,
+      `You review the day before sleep, or you do not. The review — if you do it — happens in a way: not linearly, not chronologically, but in the order the day is still warm in. The thing that is still live surfaces first. Then the rest comes or doesn't.`,
       `You fall asleep to something — a sound, a routine, a specific condition of the room — that was established without deciding. The specific condition required for sleep arrived through habit rather than choice. You have been maintaining it so long that changing it would be a disruption.`,
     ]),
     choices: null,
@@ -205,7 +205,7 @@ export const EVENTS_SONDER_17 = [
       !G.mem?.s17ObjectsOldPeople,
     text: () => pick([
       `Going through the objects of someone very old is a specific experience. The objects outlasted the person who chose them and in some cases outlasted the world those objects came from. A kitchen tool for a food that nobody makes anymore. A remedy in a container whose brand no longer exists. A garment whose style ended forty years before the person did. The objects are a cross-section of a life's encounter with time.`,
-      `The very old have objects that have survived everything the objects have been through — moves, losses, decades — through a specific combination of durability and attachment. The object that made it this far is not the same as the object that was bought. It has acquired a history of surviving. That history is also part of what you inherit.`,
+      `The very old have objects that have survived everything the objects have been through — moves, losses, decades — through a combination of durability and attachment. The object that made it this far is not the same as the object that was bought. It has acquired a history of surviving. That history is also part of what you inherit.`,
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s17ObjectsOldPeople', true) },
@@ -249,7 +249,7 @@ export const EVENTS_SONDER_17 = [
     weight: 2,
     when: (G) => G.age >= 62 && !G.mem?.s17SpecificSilence,
     text: () => pick([
-      `The house at this age has a specific silence that it did not have when it was full. The silence is not unpleasant. You have learned to hear it rather than measure yourself against it. The silence is its own thing — the sound of a house that has been lived in for years, the specific acoustic quality of rooms that know you.`,
+      `The house at this age has a silence that it did not have when it was full. The silence is not unpleasant. You have learned to hear it rather than measure yourself against it. The silence is its own thing — the sound of a house that has been lived in for years, the specific acoustic quality of rooms that know you.`,
       `You have become comfortable with silence in a way you were not at thirty. The silence at thirty was something to fill. Now it is something to be in. The phone does not need to be checked. The noise does not need to be supplied. The silence of a specific hour in a specific room is sufficient.`,
     ]),
     choices: null,
@@ -377,8 +377,8 @@ export const EVENTS_SONDER_17 = [
     weight: 2,
     when: (G) => hasWeekend(G) && (G.age >= 32 && !G.mem?.s17SmallCeremony),
     text: () => pick([
-      `You have developed, without intending to, small rituals: the specific order in which you make coffee, the way you prepare for a particular kind of work, the sequence of a Sunday morning. These are not superstitions. They are something more modest — the body's preference for a path that has already been cleared, the comfort of an action that is also a form of maintenance.`,
-      `The ritual that marks nothing: the cup in the specific place, the window opened in the specific order, the phrase said to the specific animal or plant or empty room. No one taught you this. It arrived. It has been present now for long enough to be as much yours as anything else.`,
+      `You have developed, without intending to, small rituals: the order in which you make coffee, the way you prepare for a particular kind of work, the sequence of a Sunday morning. These are not superstitions. They are something more modest — the body's preference for a path that has already been cleared, the comfort of an action that is also a form of maintenance.`,
+      `The ritual that marks nothing: the cup in the place, the window opened in the order, the phrase said to the specific animal or plant or empty room. No one taught you this. It arrived. It has been present now for long enough to be as much yours as anything else.`,
     ]),
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s17SmallCeremony', true) },
@@ -411,7 +411,7 @@ export const EVENTS_SONDER_17 = [
       !G.mem?.s17GriefTexture,
     text: () => pick([
       `Grief is not the thing you expected it to be. Not the waves, necessarily, or the stages — those are true and also incomplete. What grief is, in practice, is the specific noticing: the moment you go to tell them something and remember, the habit of reaching for them and finding air, the way the world they knew is still visible but they are not in it to see it. Grief is mostly the specifics.`,
-      `You know now what grief is from the inside, which is different from knowing what grief is from the outside. The outside description is accurate as far as it goes. The inside is more particular: the specific object you cannot move, the specific day of the week that is harder, the specific smell that undoes everything briefly. The texture is yours and cannot quite be shared.`,
+      `You know now what grief is from the inside, which is different from knowing what grief is from the outside. The outside description is accurate as far as it goes. The inside is more particular: the specific object you cannot move, the day of the week that is harder, the smell that undoes everything briefly. The texture is yours and cannot quite be shared.`,
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s17GriefTexture', true) },

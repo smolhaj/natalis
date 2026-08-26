@@ -39,7 +39,7 @@ export const EVENTS_SONDER_43 = [
     when: (G) => G.season === 'summer' && (G.age >= 7 && G.age <= 13 && !G.mem?.s33c),
     text: () => pick([
       'The adult who never talked down to you. Who explained things the way they would explain to another adult, without softening. You remember this person more vividly than others from that time, because being taken seriously at that age is unusual enough to register.',
-      'The time that felt like it would last forever: a summer afternoon, a specific quality of late light, a game with rules that you all understood without writing them down. It ended. You did not know it was ending.',
+      'The time that felt like it would last forever: a summer afternoon, a quality of late light, a game with rules that you all understood without writing them down. It ended. You did not know it was ending.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33c', true) },
@@ -65,7 +65,7 @@ export const EVENTS_SONDER_43 = [
     when: (G) => G.age >= 22 && G.age <= 32 && !G.mem?.s33e,
     text: () => pick([
       'The period when you called your parents less. You were busy, or there was nothing to report, or the calls felt like obligation rather than connection. Later you understood this was a standard part of becoming your own person. The understanding didn\'t remove the small guilt of it.',
-      'The person you were going to become — the one you imagined at eighteen, at twenty-two, the version of yourself five years ahead — does not quite match what you became. This is not a failure. It is just the specific way that becoming works.',
+      'The person you were going to become — the one you imagined at eighteen, at twenty-two, the version of yourself five years ahead — does not quite match what you became. This is not a failure. It is just the way that becoming works.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33e', true) },
@@ -142,8 +142,8 @@ export const EVENTS_SONDER_43 = [
     weight: 2,
     when: (G) => G.age >= 8 && G.age <= 12 && !G.mem?.s33k,
     text: () => pick([
-      'The thing that was wrong with your house that was never fixed. The sticky door, the window that didn\'t close all the way, the stair that creaked in a specific way. You registered it each time and then stopped registering it. This is how a lot of things become normal.',
-      'The street you grew up on has a quality that you cannot describe accurately to anyone who didn\'t grow up on it. The smell, the exact proportion of shade to light in the afternoon, the specific sounds. This is not memory exactly — it\'s more like a body record.',
+      'The thing that was wrong with your house that was never fixed. The sticky door, the window that didn\'t close all the way, the stair that creaked in a way. You registered it each time and then stopped registering it. This is how a lot of things become normal.',
+      'The street you grew up on has a quality that you cannot describe accurately to anyone who didn\'t grow up on it. The smell, the exact proportion of shade to light in the afternoon, the sounds. This is not memory exactly — it\'s more like a body record.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33k', true) },
@@ -155,7 +155,7 @@ export const EVENTS_SONDER_43 = [
     weight: 2,
     when: (G) => isUrban(G) && (G.age >= 18 && G.age <= 26 && !G.mem?.s33m),
     text: () => pick([
-      'The first time you lived alone. The specific freedom and the specific loneliness, which were not opposites. The sound of the apartment when you came home to it. Learning the difference between alone-and-fine and alone-and-not-fine, and that they could be in the same evening.',
+      'The first time you lived alone. The specific freedom and the loneliness, which were not opposites. The sound of the apartment when you came home to it. Learning the difference between alone-and-fine and alone-and-not-fine, and that they could be in the same evening.',
       'The city when you first arrived in it. The feeling of newness that fades so quickly — the streets you had to concentrate to navigate, the landmarks you used as reference points. Within six months you stopped seeing them. Within a year they were invisible.',
     ]),
     choices: null,
@@ -247,7 +247,7 @@ export const EVENTS_SONDER_43 = [
     when: (G) => G.age >= 21 && G.age <= 30 && !G.mem?.s33u,
     text: () => pick([
       'The letters or messages you have saved. Not all of them — a selection, weighted toward the ones that arrived at moments when you needed exactly them. You look at them rarely, maybe once a decade. But knowing they exist changes something.',
-      'The body during a period of illness: the specific geography of the unwell body, the way the ceiling of a room looks different when you have been staring at it from a bed for three days, the slowness with which normal life reassembles after.',
+      'The body during a period of illness: the geography of the unwell body, the way the ceiling of a room looks different when you have been staring at it from a bed for three days, the slowness with which normal life reassembles after.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33u', true) },
@@ -285,7 +285,7 @@ export const EVENTS_SONDER_43 = [
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 40 && !G.mem?.s33y,
     text: () => pick([
-      'The dinner party where the conversation turned and became something real — not the performance of dinner-party intelligence but an actual disagreement or an actual confession or an actual silence that nobody rushed to fill. Rare. You remember the specific quality of that room.',
+      'The dinner party where the conversation turned and became something real — not the performance of dinner-party intelligence but an actual disagreement or an actual confession or an actual silence that nobody rushed to fill. Rare. You remember the quality of that room.',
       'The phase when you slept badly for a long time. Not dramatically — no nightmare, no crisis — just a consistent lack of full sleep that lasted for months and that coloured everything slightly wrong. Then it ended, also without drama. You did not notice the exact night it ended.',
     ]),
     choices: null,

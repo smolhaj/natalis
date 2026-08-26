@@ -33,7 +33,7 @@ export const EVENTS_SONDER_15 = [
     when: (G) => G.age >= 35 && G.age <= 55 && !G.mem?.son15ExactAmount,
     text: () => pick([
       `You know the exact amount without looking. The mortgage payment, the school fees, the rent — the figures that shape a month have been the same long enough that they are simply known, the way you know the number of steps to the bathroom in the dark.`,
-      `You remember the exact salary you were making at twenty-eight. The exact price of the apartment you didn't buy. The exact amount that would have changed a specific thing. Numbers that meant something at the time stay.`,
+      `You remember the exact salary you were making at twenty-eight. The exact price of the apartment you didn't buy. The exact amount that would have changed a thing. Numbers that meant something at the time stay.`,
       `Your child asks for money and you give them the amount you give. You do not explain the amount. The amount has an explanation that is the whole architecture of what you earn and what you owe and what is left.`,
     ]),
     choices: null,
@@ -62,7 +62,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => worksInOffice(G) && (G.age >= 35 && G.age <= 55 && G.career && !G.mem?.son15CommuteYears),
     text: () => pick([
-      `You have spent years in transit between the place where you sleep and the place where you work. The time in between has a specific quality — neither place, neither thing. You have read there, slept there, thought things there that you did not think anywhere else. The commute is where a portion of your life actually happened.`,
+      `You have spent years in transit between the place where you sleep and the place where you work. The time in between has a quality — neither place, neither thing. You have read there, slept there, thought things there that you did not think anywhere else. The commute is where a portion of your life actually happened.`,
       `You know this route so well that your body navigates it without your permission. You have looked up to find yourself at the station without any memory of walking from the bus. The route is in the body now, not in the mind.`,
       `The commute takes forty minutes each way. You have done this five days a week for nine years. You have spent a significant fraction of your waking life in this particular transit, between these particular streets, looking at these particular facades.`,
     ]),
@@ -198,7 +198,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => G.children?.length > 0 && G.age >= 38 && !G.mem?.son15ThingPassed,
     text: () => pick([
-      `Your child does the thing you do. The specific gesture, the way of saying a particular phrase. You watch them do it and feel something that is partly recognition and partly something less comfortable — you did not mean to give them that one.`,
+      `Your child does the thing you do. The gesture, the way of saying a particular phrase. You watch them do it and feel something that is partly recognition and partly something less comfortable — you did not mean to give them that one.`,
       `They will have things from you that they do not know are from you. Patterns installed so early they feel like personality. You can see some of them from the outside. You could not always.`,
       `Something from your family that you swore you would not pass on: you have passed it on in a different form. The form is different enough that it took you a while to recognise it. You recognise it now.`,
     ]),
@@ -244,7 +244,7 @@ export const EVENTS_SONDER_15 = [
     text: () => pick([
       `The tiredness has a quality now that it didn't have at thirty. Not deeper exactly — more present. It doesn't go away with one good night the way it used to. You manage it rather than defeating it.`,
       `You are tired in the morning. This is new enough that you still notice it. You sleep well and wake tired. The body is running a different calculation than the one it used to run. You are learning the new calculation.`,
-      `The specific tiredness of the middle of the week. Not physical exactly — a tiredness of the resource that runs underneath. You know how to replenish it now, which took some years to learn.`,
+      `The tiredness of the middle of the week. Not physical exactly — a tiredness of the resource that runs underneath. You know how to replenish it now, which took some years to learn.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('son15Tiredness', true) },
@@ -258,8 +258,8 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => hasPhotographs(G) && (G.age >= 35 && !G.mem?.son15NotPhotographed),
     text: () => pick([
-      `You did not take a photograph at the moment when a photograph would have been most accurate. What the place looked like. What the light was doing. The face of the person at the specific moment before it changed. The image is in memory only, which is not the same as having it.`,
-      `The ones you wish you had taken: a list that grew quietly over years. A room you lived in. A face before. A specific light on a specific afternoon. The camera was somewhere else or you didn't think of it or you thought the moment would recur. The moment did not recur.`,
+      `You did not take a photograph at the moment when a photograph would have been most accurate. What the place looked like. What the light was doing. The face of the person at the moment before it changed. The image is in memory only, which is not the same as having it.`,
+      `The ones you wish you had taken: a list that grew quietly over years. A room you lived in. A face before. A light on a specific afternoon. The camera was somewhere else or you didn't think of it or you thought the moment would recur. The moment did not recur.`,
       `There are photographs of this period. None of them are the image you would have taken if you had been thinking about it. The image you would have taken is only in your memory, where it is very precise and will eventually not be.`,
     ]),
     choices: null,
@@ -272,7 +272,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => hasPhotographs(G) && (G.age >= 60 && !G.mem?.son15PhotoExists),
     text: () => pick([
-      `You find a photograph of yourself at an age you can barely remember being. The face is yours and also not yours — the same features arranged differently, the skin a different texture, the posture of someone who has not yet accumulated the specific things that modify a posture. You look at it for a while.`,
+      `You find a photograph of yourself at an age you can barely remember being. The face is yours and also not yours — the same features arranged differently, the skin a different texture, the posture of someone who has not yet accumulated the things that modify a posture. You look at it for a while.`,
       `There is a photograph from a period you don't talk about much. The faces in it are in their twenties. Some of them you are still in contact with. Some of them you have lost track of. One of them is dead. The photograph has no sense of all this.`,
       `Your children found the photographs and asked about them. You told the version of the story that was true and also small enough to fit in a conversation. The full version lives in the drawer where the photographs are.`,
     ]),
@@ -288,7 +288,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => G.flags.has('emigrated') && G.age >= 30 && !G.mem?.son15SecondLanguage,
     text: () => pick([
-      `The second language is fluent now. But there are words in the first language for which the second language has no equivalent — not because the concept doesn't exist in the new place, but because the word in the old language has a texture, a colour, a specific weight that the translation can't reproduce. You use the first language's word, sometimes, in the middle of a sentence in the second language. The listener usually understands.`,
+      `The second language is fluent now. But there are words in the first language for which the second language has no equivalent — not because the concept doesn't exist in the new place, but because the word in the old language has a texture, a colour, a weight that the translation can't reproduce. You use the first language's word, sometimes, in the middle of a sentence in the second language. The listener usually understands.`,
       `You dream in both languages, but the emotional register of the dream is always in the first. Fear, grief, longing — these arrive in the language of childhood. The second language is for instructions.`,
       `Your children speak the second language better than the first. This was the intention. This was the cost.`,
     ]),
@@ -362,7 +362,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 58 && !G.mem?.son15OtherLife,
     text: () => pick([
-      `You imagine, briefly, the life of the person in the adjacent queue. It's not a real imagining — more like a reflex. They are buying something specific and you project a context for the specific thing and then you don't.`,
+      `You imagine, briefly, the life of the person in the adjacent queue. It's not a real imagining — more like a reflex. They are buying something specific and you project a context for the thing and then you don't.`,
       `On the train, the person across from you has been reading the same page for twenty minutes. They are somewhere that is not the page. Their face is a document that requires more information than you have.`,
       `The couple at the next table are in the middle of something. Not a fight — something subtler. The pauses between what they say. The thing they are not saying in the pauses. You look away. Their dinner is not yours to interpret.`,
     ]),
@@ -409,7 +409,7 @@ export const EVENTS_SONDER_15 = [
     when: (G) => G.age >= 65 && !G.mem?.son15AgeYouAre,
     text: () => pick([
       `You are the age your parents were when you were forming your first clear memories of them. You remember how old they seemed. You do not feel that old. This discrepancy is information about both you and them.`,
-      `You have crossed the age that certain people you knew didn't reach. You think about this occasionally, not with guilt but with the specific awareness of the people for whom this age remained theoretical.`,
+      `You have crossed the age that certain people you knew didn't reach. You think about this occasionally, not with guilt but with the awareness of the people for whom this age remained theoretical.`,
       `The number of your age is strange. Not that you feel it — you know the body and its schedule, you have made peace with the number and what it carries. It is just strange to say it and mean it.`,
     ]),
     choices: null,

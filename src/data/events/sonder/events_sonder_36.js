@@ -30,7 +30,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => !G.mem?.s36YourNameSaid,
     text: () => pick([
-      'The sound of your own name in a particular person\'s mouth: the specific way they say it, the register, the syllable they stress. You have had your name said by enough people in enough accents and tones to know that the same name is not the same in all mouths. The version someone says when they are glad to see you and the version they say when they are calling you from another room.',
+      'The sound of your own name in a particular person\'s mouth: the way they say it, the register, the syllable they stress. You have had your name said by enough people in enough accents and tones to know that the same name is not the same in all mouths. The version someone says when they are glad to see you and the version they say when they are calling you from another room.',
       'Your name sounds different depending on who is saying it and what they are about to say. You have learned to read the tone before the words. The name in a particular person\'s voice carries information the name itself does not contain.',
     ]),
     choices: null,
@@ -82,7 +82,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => !G.mem?.s36ColourAfternoon,
     text: () => pick([
-      'A specific colour that belongs to a specific time of day in a specific place. Not a general observation about light — the particular yellow of three o\'clock in October through the window of a room you spent years in. The colour is not available anywhere else in quite the same way. When something approaches it, you are briefly back in the room.',
+      'A colour that belongs to a specific time of day in a specific place. Not a general observation about light — the particular yellow of three o\'clock in October through the window of a room you spent years in. The colour is not available anywhere else in quite the same way. When something approaches it, you are briefly back in the room.',
       'The quality of light at four in the afternoon in the place you grew up: the angle, the season, the colour it made on the walls of whatever you were inside. The light has been different everywhere you have been since. The original is the reference and nothing matches it exactly.',
     ]),
     choices: null,
@@ -95,7 +95,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => !G.mem?.s36ArgumentWon,
     text: () => pick([
-      'An argument you won that you no longer feel good about having won. The winning was technically correct and the other person was wrong on the facts, and you knew it at the time, and the knowing was satisfying at the time. What you did not calculate into the winning was the relationship cost of being right in the specific way you were right.',
+      'An argument you won that you no longer feel good about having won. The winning was technically correct and the other person was wrong on the facts, and you knew it at the time, and the knowing was satisfying at the time. What you did not calculate into the winning was the relationship cost of being right in the way you were right.',
       'You were right and you said so clearly and the person you said it to has never quite been the same in that room with you. The rightness and the cost of it arrived in the same moment and only one of them was what you wanted. The moment has been finished for a long time. You still run it occasionally.',
     ]),
     choices: null,
@@ -109,7 +109,7 @@ export const EVENTS_SONDER_36 = [
     when: (G) => !G.mem?.s36BirthdayForgotten,
     text: () => pick([
       'A birthday you forgot: not of someone close, but of someone who expected you to remember. The forgetting registered with them before you knew they had registered it. The recovery was possible and you made it, but the window where you would have remembered without being reminded had passed.',
-      'The calendar of other people\'s dates that you maintain in your head: you are mostly reliable and occasionally not. The not-reliable occasions have a specific character — not carelessness so much as the moment when the internal calendar was occupied elsewhere and the date passed.',
+      'The calendar of other people\'s dates that you maintain in your head: you are mostly reliable and occasionally not. The not-reliable occasions have a character — not carelessness so much as the moment when the internal calendar was occupied elsewhere and the date passed.',
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s36BirthdayForgotten', true) },
@@ -148,7 +148,7 @@ export const EVENTS_SONDER_36 = [
     when: (G) => !G.mem?.s36HabitNoReason,
     text: () => pick([
       'A habit you have that you cannot trace to an origin — always checking a particular thing before you leave, always taking the same side of the pavement, always putting the cup in the same spot. The habit has been running for so long the origin is not available. It may have had a reason once. The reason is gone and the habit is not.',
-      'You do a small thing in a specific order every day without knowing why the order became that order. The order was not decided — it accumulated. You are inside the accumulation. The accumulation is what daily life is mostly made of.',
+      'You do a small thing in a order every day without knowing why the order became that order. The order was not decided — it accumulated. You are inside the accumulation. The accumulation is what daily life is mostly made of.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s36HabitNoReason', true) },
@@ -239,7 +239,7 @@ export const EVENTS_SONDER_36 = [
     when: (G) => !G.mem?.s36BreadLine,
     text: () => pick([
       'A queue you stood in that was not your usual life — a queue for something rationed or scarce, for a bureaucratic process that required your presence, for a service that was overwhelmed. The queue revealed the specific social contract of what you were waiting for: who cut, who was patient, who helped, who didn\'t. A queue is a brief society.',
-      'Standing in a long queue: the people on either side of you, the forward momentum in increments, the specific quality of collective waiting. The queue has a sociology — the information that travels back from the front, the alliances formed by proximity, the shared goal of reaching a point that is not visible from where you are.',
+      'Standing in a long queue: the people on either side of you, the forward momentum in increments, the quality of collective waiting. The queue has a sociology — the information that travels back from the front, the alliances formed by proximity, the shared goal of reaching a point that is not visible from where you are.',
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s36BreadLine', true) },

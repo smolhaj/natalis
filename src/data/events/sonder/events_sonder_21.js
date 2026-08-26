@@ -1,7 +1,7 @@
 // events_sonder_21.js
 // Contemplative layer — 28 events. No choices, no new flags, weight 2.
 // Themes: institutional waiting rooms, seasonal light, competence in a stranger,
-// a house during illness, objects that outlive their owners, the specific weight
+// a house during illness, objects that outlive their owners, the weight
 // of Sunday, the person who almost spoke, the bus home late, your own handwriting.
 
 import { hasFormalJob, hasWeekend, isLiterate } from './_sonderGuards.js'
@@ -45,7 +45,7 @@ export const EVENTS_SONDER_21 = [
     when: (G) => G.season === 'summer' && (!G.mem?.s21SummerAfternoon),
     text: () => pick([
       'The long summer afternoon in childhood had a quality that adult time doesn\'t. Not longer — the clock was the same — but differently proportioned. An afternoon was an enormous amount of time. You filled it with things that required no outcome.',
-      'The specific quality of summer afternoon light coming through the shutters or the curtains or the leaves. The pattern it made. The fact that you noticed it then and have not forgotten it entirely.',
+      'The quality of summer afternoon light coming through the shutters or the curtains or the leaves. The pattern it made. The fact that you noticed it then and have not forgotten it entirely.',
       'In the long summer evenings the light lasted until nine or ten and the day refused to end. The end of the day was only visible in the sky, not in the light, which kept coming.',
     ]),
     choices: null,
@@ -88,9 +88,9 @@ export const EVENTS_SONDER_21 = [
       (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.parents?.father?.alive === false || G.parents?.mother?.alive === false) &&
       !G.mem?.s21HouseDuringIllness,
     text: () => pick([
-      'The house during a parent\'s illness had a specific quality. The sound of the television in the sick room. The particular efficiency of the household reorganized around the care. The way everyone lowered their voices in certain rooms without deciding to.',
+      'The house during a parent\'s illness had a quality. The sound of the television in the sick room. The particular efficiency of the household reorganized around the care. The way everyone lowered their voices in certain rooms without deciding to.',
       'The house was the house and also became something else for a while — a site of management, of vigil, of the specific domestic work that illness requires. Then it went back to being the house. The transition in both directions was quiet.',
-      'You remember the smell of the sick room — the specific combination of things that made that smell — and the way the rest of the house was organized around trying to be quiet while life continued.',
+      'You remember the smell of the sick room — the combination of things that made that smell — and the way the rest of the house was organized around trying to be quiet while life continued.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s21HouseDuringIllness', true) },
@@ -135,7 +135,7 @@ export const EVENTS_SONDER_21 = [
     when: (G) => hasWeekend(G) && (!G.mem?.s21Sunday),
     text: () => pick([
       'Sunday has a different texture than Saturday. Saturday is the escape from the week. Sunday is the preparation for the next week that arrives at a specific hour — the hour when the week begins to cast its shadow over the rest of the day. You can feel it arriving.',
-      'The Sunday of childhood was a specific thing with specific sounds and smells — the food that was made on Sunday, the visit that happened on Sunday, the particular rhythm of a day that had a shape other days didn\'t.',
+      'The Sunday of childhood was a thing with sounds and smells — the food that was made on Sunday, the visit that happened on Sunday, the particular rhythm of a day that had a shape other days didn\'t.',
       'In the quiet of Sunday afternoon there is something available that isn\'t available the rest of the week. A particular kind of thinking. A kind of rest that isn\'t sleep. You have never found the right word for it.',
     ]),
     choices: null,
@@ -170,7 +170,7 @@ export const EVENTS_SONDER_21 = [
     text: () => pick([
       'The late bus or train is a different city than the daytime one. The people on it are the people who are out at this hour — different from the daytime population in ways that would be hard to specify but are immediately legible. You are one of them. You are going home.',
       'The city at this hour is quieter and also not quiet. The other kind of activity is present. The buildings are dark and lit simultaneously — the offices off, the apartments on, the bars visible through glass.',
-      'The late bus: the few people, the specific sounds of a city that is not asleep but is doing something different. You know this city at this hour from a sequence of nights spread across years. You are part of its late population.',
+      'The late bus: the few people, the sounds of a city that is not asleep but is doing something different. You know this city at this hour from a sequence of nights spread across years. You are part of its late population.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s21LateBus', true) },
@@ -186,7 +186,7 @@ export const EVENTS_SONDER_21 = [
     weight: 2,
     when: (G) => !G.mem?.s21CalmingThing,
     text: () => pick([
-      'There is a thing you do when you need to come back to yourself. Not dramatic — a specific kind of movement, or task, or route, or ritual. Other people don\'t know this about you and don\'t need to. The thing works. That is the whole of it.',
+      'There is a thing you do when you need to come back to yourself. Not dramatic — a kind of movement, or task, or route, or ritual. Other people don\'t know this about you and don\'t need to. The thing works. That is the whole of it.',
       'The particular activity that resets something. You discovered it by accident years ago — found yourself doing it when something was wrong and found the wrongness had changed shape by the time you finished. You do it now when you need it, knowing what it is.',
       'What settles you is probably not what you would have predicted when you were young. The young version of yourself had a different theory about what helps. The current version has the evidence.',
     ]),
@@ -308,7 +308,7 @@ export const EVENTS_SONDER_21 = [
       (G.partner?.alive || G.children?.length > 0) &&
       !G.mem?.s21FaceSleeping,
     text: () => pick([
-      'The sleeping face of someone you love. The specific quality of a face with the performance absent — the expression that isn\'t being managed, the face returning to what it is when it is not doing anything. You don\'t see this often. You see it now.',
+      'The sleeping face of someone you love. The quality of a face with the performance absent — the expression that isn\'t being managed, the face returning to what it is when it is not doing anything. You don\'t see this often. You see it now.',
       'Your child or your partner asleep. The fact of their breathing, the particular position, the face that is theirs and is also simplified by sleep into something more purely itself. You observe this for a few seconds and then leave them to it.',
       'The face of someone sleeping is a different face than the waking one. Less defended. The architecture of the expressions that the day requires is gone. You are seeing the face without its day on it.',
     ]),
@@ -344,7 +344,7 @@ export const EVENTS_SONDER_21 = [
     when: (G) =>
       G.children?.length > 0 &&
       !G.mem?.s21HospitalBirth,
-    text: 'The specific quality of the maternity ward. The sound of it. The particular institutional light. The fact that in every room something is happening that is ordinary and not ordinary simultaneously — the most ordinary biological event and the least ordinary thing that will happen to the people involved. The place is organized around this contradiction and doesn\'t acknowledge it.',
+    text: 'The quality of the maternity ward. The sound of it. The particular institutional light. The fact that in every room something is happening that is ordinary and not ordinary simultaneously — the most ordinary biological event and the least ordinary thing that will happen to the people involved. The place is organized around this contradiction and doesn\'t acknowledge it.',
     choices: null,
     effect: (p) => { p.setMem('s21HospitalBirth', true) },
   },
@@ -374,8 +374,8 @@ export const EVENTS_SONDER_21 = [
     when: (G) => !G.mem?.s21MealAlone,
     text: () => pick([
       'A meal eaten alone, without reading or screens. Just the food and the room and the sounds of the building. This is rarer than it should be. You notice you are doing it. The noticing interrupts the practice briefly.',
-      'The solo meal at the restaurant or the kitchen table. The specific quality of eating without the social dimension. The food is the food. No one is watching you eat it. You eat differently without the audience.',
-      'Eating alone without distraction is something you rarely do. When you do, the meal becomes temporarily very present — the taste of it, the temperature, the specific way the food is in the plate. The phone is in your pocket and you don\'t take it out.',
+      'The solo meal at the restaurant or the kitchen table. The quality of eating without the social dimension. The food is the food. No one is watching you eat it. You eat differently without the audience.',
+      'Eating alone without distraction is something you rarely do. When you do, the meal becomes temporarily very present — the taste of it, the temperature, the way the food is in the plate. The phone is in your pocket and you don\'t take it out.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s21MealAlone', true) },

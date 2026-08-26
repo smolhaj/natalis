@@ -44,7 +44,7 @@ export const EVENTS_SONDER_35 = [
     when: (G) => G.age >= 45 && !G.mem?.s35TreeGrew,
     text: () => pick([
       'A tree you planted or knew when it was young is now large. The largeness happened in the same time you were doing other things. The tree did not require your attention to grow. It grew anyway, and the scale of it — the height, the canopy — is the measure of the time that passed while you were busy.',
-      'You remember the sapling. You remember the specific year, roughly, that you noticed the sapling had become a tree. The tree is now older than many of the relationships you were in when you planted it. The tree outlasted them without trying.',
+      'You remember the sapling. You remember the year, roughly, that you noticed the sapling had become a tree. The tree is now older than many of the relationships you were in when you planted it. The tree outlasted them without trying.',
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s35TreeGrew', true) },
@@ -108,7 +108,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => hasBus(G) && (!G.mem?.s35BusPassenger),
     text: () => pick([
-      'The person across from you on the bus: asleep, or looking out the window at whatever the window offered. A face you will not see again, in transit, between its own two points. The face had a specific expression — not a performed expression, but a transit expression, the face a face makes when it thinks it is unobserved.',
+      'The person across from you on the bus: asleep, or looking out the window at whatever the window offered. A face you will not see again, in transit, between its own two points. The face had a expression — not a performed expression, but a transit expression, the face a face makes when it thinks it is unobserved.',
       'On the bus or train or tram: the other passengers each going between their two points, each with the complete interior life that the word "passenger" does not contain. You are also a passenger, also containing it. The containment is universal and invisible.',
     ]),
     choices: null,
@@ -122,7 +122,7 @@ export const EVENTS_SONDER_35 = [
     when: (G) => !G.mem?.s35PhraseYouUse,
     text: () => pick([
       'You use a phrase that came from someone else — a parent, a teacher, a friend, a book — and you have used it so long it feels native. When you trace it back, if you trace it back, you find the source. The phrase arrived in you from outside and stayed.',
-      'A turn of phrase, a specific way of describing something, a word you prefer over its synonyms: you got it from somewhere. From someone who phrased things this way, or a book, or a moment. The origin is usually traceable if you try. The tracing reveals that your language is partly built from other people\'s.',
+      'A turn of phrase, a way of describing something, a word you prefer over its synonyms: you got it from somewhere. From someone who phrased things this way, or a book, or a moment. The origin is usually traceable if you try. The tracing reveals that your language is partly built from other people\'s.',
     ]),
     choices: null,
     effect: (p) => { p.e += 1; p.setMem('s35PhraseYouUse', true) },
@@ -134,7 +134,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.s35WhatSureOf,
     text: () => pick([
-      'The things you were sure of at twenty-five: some of them held. More of them did not. The not-holding was gradual — an opinion that softened, a certainty that became a position you held more lightly, a conviction that the world did not support in the specific way you had believed it would. You hold your current certainties with a different grip.',
+      'The things you were sure of at twenty-five: some of them held. More of them did not. The not-holding was gradual — an opinion that softened, a certainty that became a position you held more lightly, a conviction that the world did not support in the way you had believed it would. You hold your current certainties with a different grip.',
       'You were sure of certain things when you were younger. The sureness was not arrogance — it was just what certainty felt like before you had collected enough cases to make the certainty more complex. The complexity arrived slowly. The certainties are still there, differently weighted.',
     ]),
     choices: null,
@@ -147,7 +147,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => !G.mem?.s35SpecificTuesday,
     text: () => pick([
-      'A day you remember for no obvious reason — a Tuesday in an ordinary month of an ordinary year, a day with no event attached to it, just the specific quality of how the light came through the window and what you were doing and the feeling of that particular hour. The day is filed under nothing but you still have it.',
+      'A day you remember for no obvious reason — a Tuesday in an ordinary month of an ordinary year, a day with no event attached to it, just the quality of how the light came through the window and what you were doing and the feeling of that particular hour. The day is filed under nothing but you still have it.',
       'Among the days that get remembered, some are remembered for reasons and some are remembered for no clear reason at all. A day that was simply a day, during which nothing happened that would merit recording, but which stayed. The staying is its own mystery.',
     ]),
     choices: null,
@@ -200,7 +200,7 @@ export const EVENTS_SONDER_35 = [
     when: (G) => !G.mem?.s35LongTable,
     text: () => pick([
       'The long table at a celebration: the specific abundance of a family event or a gathering where the table is too long for one conversation and so there are several conversations happening simultaneously, each with its own logic, and you can hear all of them and belong to only one. The table is a collective event that is also many private events.',
-      'A table with many people around it: the specific noise of it, the cross-conversations, the person at the far end who is having a different evening from the person at the near end. You know this kind of table from many occasions. The memory of all of them is stored as one thing.',
+      'A table with many people around it: the noise of it, the cross-conversations, the person at the far end who is having a different evening from the person at the near end. You know this kind of table from many occasions. The memory of all of them is stored as one thing.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s35LongTable', true) },
@@ -225,7 +225,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => !G.mem?.s35RainAtNight,
     text: () => pick([
-      'Rain at night: the specific sound of it on whatever surface is outside your window. You have listened to this sound in different places and the sound is different each time because the roof is different, the distance different, the density of the rain different. The sound is one of the sounds that belongs to being inside.',
+      'Rain at night: the sound of it on whatever surface is outside your window. You have listened to this sound in different places and the sound is different each time because the roof is different, the distance different, the density of the rain different. The sound is one of the sounds that belongs to being inside.',
       'The rain arrived while you were asleep and you woke to it. The room was dark and the sound of rain was continuous. You lay in the dark and listened to the rain and the listening was its own complete thing, requiring nothing from you.',
     ]),
     choices: null,
@@ -238,8 +238,8 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => G.season === 'summer' && (!G.mem?.s35HeatInSummer),
     text: () => pick([
-      'The summer heat of your childhood: the specific temperature of the place you grew up, the specific smell the heat released from the streets and the walls and the vegetation, the way the afternoon stopped. The heat of other places is hot but it is not this heat. The heat of your childhood is the reference point.',
-      'The long afternoons of summer when everything slowed: the shade that moved across the yard and you moved with it, the sound the insects made, the specific quality of the light at four o\'clock that was different from the light at noon. The heat had a texture and you lived in the texture.',
+      'The summer heat of your childhood: the temperature of the place you grew up, the smell the heat released from the streets and the walls and the vegetation, the way the afternoon stopped. The heat of other places is hot but it is not this heat. The heat of your childhood is the reference point.',
+      'The long afternoons of summer when everything slowed: the shade that moved across the yard and you moved with it, the sound the insects made, the quality of the light at four o\'clock that was different from the light at noon. The heat had a texture and you lived in the texture.',
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s35HeatInSummer', true) },
@@ -277,7 +277,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => !G.mem?.s35MoneySmallAmounts,
     text: () => pick([
-      'There was a period when you counted money in small denominations — the coins arranged, the calculation of what the week required, the specific attention to amounts that later became rounding errors. The attention was not pleasant. It was a kind of knowledge. You still do the calculation automatically even when the denominations are different.',
+      'There was a period when you counted money in small denominations — the coins arranged, the calculation of what the week required, the attention to amounts that later became rounding errors. The attention was not pleasant. It was a kind of knowledge. You still do the calculation automatically even when the denominations are different.',
       'The arithmetic of a tight month: the amount in the account, the bills due, the days remaining, the calculation you ran in your head before you ran it on paper. The arithmetic made you precise about money in a way that did not leave when the money stopped being tight.',
     ]),
     choices: null,

@@ -109,6 +109,7 @@ export const EVENTS_SONDER_66 = [
     id: 'sonder_66_n',
     phase: 'young_adult',
     weight: 2,
+    isGlimpse: true,
     when: (G) => !G.mem?.s66n,
     text: 'The person sitting across from you on public transport has a life in which you are a brief, forgettable stranger. They looked up when you sat down and then away. In their account of today you do not exist. You are glad of this. The anonymity of transit is a kind of rest.',
     choices: null,

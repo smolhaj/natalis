@@ -1,7 +1,7 @@
 // events_sonder_46.js
 // Contemplative layer — 30 events.
 // Themes: the object that outlived its purpose, distance and what it does to
-// the voice, the specific weight of an empty room, what prayer sounds like
+// the voice, the weight of an empty room, what prayer sounds like
 // from outside, the hour before the news, the body's private archive.
 
 import { hasBus, hasElectricity, hasMobile, hasPhone, hasPhotographs, isLiterate, isRural } from './_sonderGuards.js'
@@ -43,7 +43,7 @@ export const EVENTS_SONDER_46 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => !G.mem?.s36d,
-    text: 'Prayer from outside a room: you hear the rhythm but not the words. The rhythm is the most honest part — the register it arrives at, the pace of the breath, the specific cadence of petition versus gratitude. You know which kind of prayer this is without hearing the words. You have made the same sounds. The sounds go somewhere or they do not. Either way the sounds are real.',
+    text: 'Prayer from outside a room: you hear the rhythm but not the words. The rhythm is the most honest part — the register it arrives at, the pace of the breath, the cadence of petition versus gratitude. You know which kind of prayer this is without hearing the words. You have made the same sounds. The sounds go somewhere or they do not. Either way the sounds are real.',
     choices: null,
     effect: (p) => { p.setMem('s36d', true) },
   },
@@ -83,7 +83,7 @@ export const EVENTS_SONDER_46 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => hasPhotographs(G) && (G.age >= 55 && !G.mem?.s36h),
-    text: 'The body has a private archive that the mind does not have full access to. A gesture you make that you did not know you made — someone shows you a photograph and there it is, the specific angle of the wrist, the position of the head. Your mother made that gesture. Or you made it first and she learned it from you. The archive has no clear filing system and no known origin date.',
+    text: 'The body has a private archive that the mind does not have full access to. A gesture you make that you did not know you made — someone shows you a photograph and there it is, the angle of the wrist, the position of the head. Your mother made that gesture. Or you made it first and she learned it from you. The archive has no clear filing system and no known origin date.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s36h', true) },
   },
@@ -133,7 +133,7 @@ export const EVENTS_SONDER_46 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => isRural(G) && (!G.mem?.s36n),
-    text: 'The window seat on a train you have taken many times. The landscape outside is familiar and also always slightly different — different light, different season, different state of the crops or the buildings going up or the ones coming down. You look out the window with the specific attention you give to something you know well enough that you can see what has changed.',
+    text: 'The window seat on a train you have taken many times. The landscape outside is familiar and also always slightly different — different light, different season, different state of the crops or the buildings going up or the ones coming down. You look out the window with the attention you give to something you know well enough that you can see what has changed.',
     choices: null,
     effect: (p) => { p.setMem('s36n', true) },
   },
@@ -153,7 +153,7 @@ export const EVENTS_SONDER_46 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !G.mem?.s36p,
-    text: 'The specific weight of a gift you will never use but will keep because of who gave it. The shelf where it lives is the shelf of these objects. Every house has such a shelf or such a drawer. The objects on it are not decorative and not functional. They are the record of relationships in object form.',
+    text: 'The weight of a gift you will never use but will keep because of who gave it. The shelf where it lives is the shelf of these objects. Every house has such a shelf or such a drawer. The objects on it are not decorative and not functional. They are the record of relationships in object form.',
     choices: null,
     effect: (p) => { p.setMem('s36p', true) },
   },

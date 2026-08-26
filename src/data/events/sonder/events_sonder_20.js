@@ -1,7 +1,7 @@
 // events_sonder_20.js
 // Contemplative layer — 28 events. No choices, no new flags, weight 2.
 // Themes: the body's knowledge of cold, what phones changed about waiting,
-// the specific quality of being good at something no one sees, the texture
+// the quality of being good at something no one sees, the texture
 // of languages left, the moment before sleep, what infrastructure sounds like,
 // the stranger in the photograph, the skill you no longer use.
 
@@ -230,7 +230,7 @@ export const EVENTS_SONDER_20 = [
       !G.mem?.s20NeighborGlimpse,
     text: () => pick([
       'Through the window across the narrow street: someone standing at their own window, looking out. Not looking at you. Looking at whatever is between them and elsewhere. For a moment you are both people at windows, then you step back and so do they and it is over.',
-      'The neighbor above you moves around at ten at night. You have never met them. You know the specific rhythm of their evening from the ceiling — the chair pushed back, the footsteps to the kitchen, the television. They live an entire life overhead.',
+      'The neighbor above you moves around at ten at night. You have never met them. You know the rhythm of their evening from the ceiling — the chair pushed back, the footsteps to the kitchen, the television. They live an entire life overhead.',
       'The apartment across the courtyard has a light on that is always on when you get home late. You have wondered about this for years. The light tells you nothing. It is simply a fact of your neighbourhood, as ordinary as any other fact of the neighbourhood.',
     ]),
     choices: null,
@@ -246,7 +246,7 @@ export const EVENTS_SONDER_20 = [
     when: (G) =>
       G.age >= 60 &&
       !G.mem?.s20GrandparentWorld,
-    text: 'Your grandparents did not live to see this world. They would not have predicted most of it. The things that seem normal to you now — the specific texture of everyday life — would have required explanation to them. You are the explanation. You are the version of the family that knows what came after.',
+    text: 'Your grandparents did not live to see this world. They would not have predicted most of it. The things that seem normal to you now — the texture of everyday life — would have required explanation to them. You are the explanation. You are the version of the family that knows what came after.',
     choices: null,
     effect: (p) => { p.setMem('s20GrandparentWorld', true) },
   },
@@ -346,7 +346,7 @@ export const EVENTS_SONDER_20 = [
       !G.mem?.s20CountryFromOutside,
     text: () => pick([
       'People here know your country as a name and a shape on a map and a set of associations, some of which are accurate. When they say the name they mean something smaller than what you carry. You carry the whole texture. They carry the outline.',
-      'News arrives from home and you read it with a different instrument than the people around you read it with. They read the event. You read the place, the neighbourhood, the specific distance between things, what the street looks like in that season, who you know who is near there.',
+      'News arrives from home and you read it with a different instrument than the people around you read it with. They read the event. You read the place, the neighbourhood, the distance between things, what the street looks like in that season, who you know who is near there.',
       'The country you left is still there. It is changing without your direct knowledge. You get the news from family and from what people send and from the feeling of recognition when something specific appears. This is how it is to live at a distance from where you are from.',
     ]),
     choices: null,
@@ -381,7 +381,7 @@ export const EVENTS_SONDER_20 = [
       G.currentYear >= 1950 && G.currentYear <= 2000 &&
       !G.mem?.s20RadioBackground,
     text: () => pick([
-      'The radio is in the other room. The words are half-audible — a voice, the specific register of news being delivered, the pause between items. You are not listening to it. It is there anyway, the background of the house.',
+      'The radio is in the other room. The words are half-audible — a voice, the register of news being delivered, the pause between items. You are not listening to it. It is there anyway, the background of the house.',
       'Your parents listened to a radio station and it played and you absorbed more of it than you knew at the time. Songs and fragments of conversation became part of the furniture of childhood. You still hear them occasionally and they are older than any conscious memory of learning them.',
       'The radio fills the room without filling it. A voice, then music, then a voice again. The radio in the background is part of what this decade sounded like from inside a house. You are inside the house. This is the sound.',
     ]),

@@ -56,7 +56,7 @@ export const EVENTS_SONDER_45 = [
     when: (G) => hasPhone(G) && (G.age >= 24 && G.age <= 34 && !G.mem?.s35e),
     text: () => pick([
       'The phone call you almost didn\'t make. The one you had been putting off for a week and then made on a Tuesday because you were passing through the station and had twenty minutes. What came out of it was the conversation you needed to have been having for two years. You were making it out of convenience and it turned into something else. You still think about it.',
-      'You have a skill now that you did not have three years ago. Not a professional skill — something else: how to navigate a specific kind of difficult conversation, or how to cook one particular thing, or how to tell when a situation is about to get worse before it shows external signs of getting worse. You learned it from the situation that required it.',
+      'You have a skill now that you did not have three years ago. Not a professional skill — something else: how to navigate a kind of difficult conversation, or how to cook one particular thing, or how to tell when a situation is about to get worse before it shows external signs of getting worse. You learned it from the situation that required it.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.e += 2; p.setMem('s35e', true) },
@@ -81,7 +81,7 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 15 && G.age <= 20 && !G.mem?.s35g,
     text: () => pick([
-      'You are watching your parents be wrong about something. Not wrong in the way that parents are sometimes wrong — actually wrong, in a way you can see, in a domain where you know more than they do. This is new. The new thing is the specific discomfort of knowing something that the people who are supposed to know things don\'t know.',
+      'You are watching your parents be wrong about something. Not wrong in the way that parents are sometimes wrong — actually wrong, in a way you can see, in a domain where you know more than they do. This is new. The new thing is the discomfort of knowing something that the people who are supposed to know things don\'t know.',
       'The group you belong to and the group you are beginning to separate from are the same group. The separation happens slowly and is not declared. You are changing your position relative to the people you grew up with without anyone saying so. The position change will become visible in five years. Right now it is interior.',
     ]),
     choices: null,
@@ -172,7 +172,7 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 26 && G.age <= 36 && !G.mem?.s35o,
     text: () => pick([
-      'The city at 2 a.m. is a different city from the city at 2 p.m. You have been in both versions and know both and they share geography but not atmosphere. The 2 a.m. city: the specific populations out, the specific silences and specific sounds, the way the air quality changes. You have some of your best conversations in the 2 a.m. city and you do some of your worst thinking in it.',
+      'The city at 2 a.m. is a different city from the city at 2 p.m. You have been in both versions and know both and they share geography but not atmosphere. The 2 a.m. city: the specific populations out, the specific silences and sounds, the way the air quality changes. You have some of your best conversations in the 2 a.m. city and you do some of your worst thinking in it.',
       'You have a theory about how things work — the relationship, the career, the financial plan — and then the thing happens that the theory did not account for. You revise the theory. The revision makes the theory more accurate and smaller. The more accurate the theory gets, the smaller it gets. You keep revising.',
     ]),
     choices: null,
@@ -224,7 +224,7 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => worksInOffice(G) && (G.age >= 28 && G.age <= 38 && !G.mem?.s35s),
     text: () => pick([
-      'The season in a different country. You expected to adjust and you have adjusted but the seasonal expectation — the specific light, the specific temperature, the smell of a month — has not adjusted entirely. Your body is still calibrated to the original place. You feel this at odd moments: a scent in the air that belongs somewhere else.',
+      'The season in a different country. You expected to adjust and you have adjusted but the seasonal expectation — the light, the temperature, the smell of a month — has not adjusted entirely. Your body is still calibrated to the original place. You feel this at odd moments: a scent in the air that belongs somewhere else.',
       'You have done this enough times — the meeting, the negotiation, the application, the interview — that you know the shape of it. Not comfortable, exactly, but familiar. The familiarity reduces the cost of it. The cost is still nonzero but it used to be higher.',
     ]),
     choices: null,
@@ -289,7 +289,7 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 72 && !G.mem?.s35x,
     text: () => pick([
-      'The house or the apartment that you have lived in longer than any previous place. This place has absorbed a decade of a specific kind of life — the marks on the doorframe, the shelf that lists slightly, the window that sticks in summer. The place has more of your history in it than you have in any other place. This is different from being at home, though it is also that.',
+      'The house or the apartment that you have lived in longer than any previous place. This place has absorbed a decade of a kind of life — the marks on the doorframe, the shelf that lists slightly, the window that sticks in summer. The place has more of your history in it than you have in any other place. This is different from being at home, though it is also that.',
       'You have watched a technology arrive, become ubiquitous, and begin to become obsolete. You have watched this happen twice, or three times, depending on how long you have been paying attention. The pattern is always: it is going to change everything; it does change some things; it becomes part of the background; something else arrives.',
     ]),
     choices: null,
@@ -354,7 +354,7 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 32 && !G.mem?.s35ac,
     text: () => pick([
-      'You have arrived somewhere at the same time as thousands of other people: a concert, a sporting event, a political gathering, a memorial. The being-together-in-the-same-direction is a specific experience. Not community — you don\'t know these people. Something else: the temporary fact of a large number of people oriented toward the same thing, the warmth of it, the specific sound of it, the way it ends and disperses and you are separate again.',
+      'You have arrived somewhere at the same time as thousands of other people: a concert, a sporting event, a political gathering, a memorial. The being-together-in-the-same-direction is a specific experience. Not community — you don\'t know these people. Something else: the temporary fact of a large number of people oriented toward the same thing, the warmth of it, the sound of it, the way it ends and disperses and you are separate again.',
       'You have been in a relationship long enough now to know what the arguments are actually about. Not what the arguments say they are about — the dishes, the schedule, the money. What they are actually about: the thing underneath, which is always one of a small number of things. Knowing this does not make the argument shorter but it makes it more navigable.',
     ]),
     choices: null,

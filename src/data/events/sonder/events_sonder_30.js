@@ -98,7 +98,7 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.age >= 10 && isColdCountry(G) && !G.mem?.sdr30WindowWinter,
     text: () => pick([
-      'Rain on the window while you are inside and warm. The specific pleasure of being on the right side of it — not because being outside in rain is bad, but because being inside when there is rain outside is its own thing, a shelter that announces itself.',
+      'Rain on the window while you are inside and warm. The pleasure of being on the right side of it — not because being outside in rain is bad, but because being inside when there is rain outside is its own thing, a shelter that announces itself.',
       'The condensation on the window in the cold. You traced something in it when you were a child. You do not remember what. The practice of tracing something in window condensation is older than you and will outlast you.',
       'Looking out through a window at weather happening outside. You are in the warm and the weather is in the cold and the pane of glass between you holds both conditions simultaneously. You can see the outside without being in it.',
     ]),
@@ -281,7 +281,7 @@ export const EVENTS_SONDER_30 = [
     when: (G) => G.age >= 20 && !G.mem?.sdr30MorningAfter,
     text: () => pick([
       'The morning after something significant — a celebration, a funeral, a long conversation, a decision. The morning arrives regardless. The same requirements as any other morning. The significance of the day before is still in the air but the morning proceeds at its own pace.',
-      'After a long evening: the quiet of the morning, the specific quality of tired that is also rest. The night before is receding. The day ahead has not yet started. A brief interval between the two.',
+      'After a long evening: the quiet of the morning, the quality of tired that is also rest. The night before is receding. The day ahead has not yet started. A brief interval between the two.',
       'You woke up and for a moment you did not remember. Then you remembered. The morning carries forward what the night ended. This is how it always works. The morning is not separate from what preceded it.',
     ]),
     choices: null,
@@ -294,8 +294,8 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.age >= 16 && !G.mem?.sdr30BodyEffort,
     text: () => pick([
-      'Physical effort: the specific quality of the body when it is doing something that requires all of it. Not pain. Not ease. The complete engagement of the body in a task. Whatever the task is — it takes all of you and for the time it takes all of you there is nothing else.',
-      'The tiredness after work that uses the body: different from the tiredness of sitting still all day. The body that has been used is tired in a way that wants rest in a specific way. You have learned the difference between kinds of tired.',
+      'Physical effort: the quality of the body when it is doing something that requires all of it. Not pain. Not ease. The complete engagement of the body in a task. Whatever the task is — it takes all of you and for the time it takes all of you there is nothing else.',
+      'The tiredness after work that uses the body: different from the tiredness of sitting still all day. The body that has been used is tired in a way that wants rest in a way. You have learned the difference between kinds of tired.',
       'Lifting something heavy: the particular attention to weight, to balance, to what the back is doing. The body has a competence in this that the mind just watches. You have always been able to do this. You are now checking whether you still can.',
     ]),
     choices: null,
@@ -308,7 +308,7 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.season === 'summer' && (G.age >= 12 && !G.mem?.sdr30LateSun),
     text: () => pick([
-      'The sun in the late afternoon in summer: the shadows getting long, the light getting low and warm, the specific quality of this hour that people have always known and always named. The late-afternoon light is the same everywhere and specific to each place.',
+      'The sun in the late afternoon in summer: the shadows getting long, the light getting low and warm, the quality of this hour that people have always known and always named. The late-afternoon light is the same everywhere and specific to each place.',
       'A long summer evening when the light simply will not go. The sky has been doing something beautiful for an hour and it is still doing it. You noticed. You will not necessarily remember having noticed. The sky continues.',
       'Sunset: the moment of it, the colours of it, the fact that it happens every day without requiring anyone to watch and is nevertheless watchable every day. You watched today for a few minutes. Then you went back to whatever you were doing.',
     ]),

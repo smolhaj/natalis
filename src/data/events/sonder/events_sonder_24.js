@@ -191,7 +191,7 @@ export const EVENTS_SONDER_24 = [
     when: (G) => G.age >= 30 && !G.mem?.sdr24DoorSound,
     text: () => pick([
       'You knew who was home by the sound of the door. The weight of a hand on a handle is personal. You still know this.',
-      'The door of the apartment is a specific sound and you can hear it from anywhere in the building and know immediately whether it is yours.',
+      'The door of the apartment is a sound and you can hear it from anywhere in the building and know immediately whether it is yours.',
       'In the old house the third stair had a particular sound. You can hear it exactly. The stair is probably still there.',
     ]),
     choices: null,
@@ -332,7 +332,7 @@ export const EVENTS_SONDER_24 = [
     text: () => pick([
       'There are roads you have driven so many times that the hands do it without the mind. The hands know every curve. The mind can be elsewhere.',
       'The road you took every day for ten years you could still drive in the dark, though you moved away and the road has probably changed.',
-      'A road has its own personality after enough trips. The specific quality of its light at a certain hour, the bend where something happened once.',
+      'A road has its own personality after enough trips. The quality of its light at a certain hour, the bend where something happened once.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr24Roads', true) },
@@ -388,7 +388,7 @@ export const EVENTS_SONDER_24 = [
     text: () => pick([
       'The light on in the apartment across the street, 11pm. Someone is still awake over there. The light is the only evidence of an entire life going on simultaneously.',
       'Walking past a window and the inside of someone\'s evening: a television, a lamp, a figure. The complete unknowability of what that evening is.',
-      'The lit window: the simplest version of the thought that other people\'s lives are full from the inside. That specific fullness, in that specific apartment, you will never know.',
+      'The lit window: the simplest version of the thought that other people\'s lives are full from the inside. That fullness, in that specific apartment, you will never know.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr24OtherLight', true) },

@@ -19,7 +19,7 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => isLiterate(G) && (G.age >= 20 && !G.mem?.sdr26QueueNumber),
     text: () => pick([
-      'You take a number from the machine and find a seat and watch the numbers on the board. The number you hold is higher than you hoped. There is nothing to do but wait. You watch the other people with their numbers doing the same watching. The room has the specific stillness of a shared waiting that no one chose.',
+      'You take a number from the machine and find a seat and watch the numbers on the board. The number you hold is higher than you hoped. There is nothing to do but wait. You watch the other people with their numbers doing the same watching. The room has the stillness of a shared waiting that no one chose.',
       'The form asks for things you have to look up: the account number from a document at home, the date of an event you did not think you would need to remember exactly. You fill in what you know and leave a blank and hope the blank will not be the thing that sends it back.',
     ]),
     choices: null,
@@ -114,7 +114,7 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => isRural(G) && (G.age >= 22 && !G.mem?.sdr26ReturnSmell),
     text: () => pick([
-      'Before you know where you are — before you have made sense of the light or the sounds — there is the smell of the place. Something specific: the wood of the staircase, the specific dampness of the soil after rain here, the cooking from next door. Memory is faster through that channel than through any other.',
+      'Before you know where you are — before you have made sense of the light or the sounds — there is the smell of the place. Something specific: the wood of the staircase, the dampness of the soil after rain here, the cooking from next door. Memory is faster through that channel than through any other.',
       'You have been back many times. Each return is less of a return — the gap between the place and the memory has closed, the two now closer to the same thing. This is either a loss or a kind of integration. You have not decided which.',
     ]),
     choices: null,
@@ -196,7 +196,7 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => G.age >= 16 && !G.mem?.sdr26OverheardJoy,
     text: () => pick([
-      'From somewhere down the street: laughter, the specific kind that has lost control of itself, that is not performing anything. You cannot see who it is. It does not matter. The sound is enough. You walk past it and carry a small residue of it.',
+      'From somewhere down the street: laughter, the kind that has lost control of itself, that is not performing anything. You cannot see who it is. It does not matter. The sound is enough. You walk past it and carry a small residue of it.',
       'The couple at the other end of the carriage. The way she leans her head briefly on his shoulder and he adjusts his position to make it easier for her without commenting on it. Thirty seconds, maybe less. You look at your phone. But you saw it.',
     ]),
     choices: null,
@@ -212,7 +212,7 @@ export const EVENTS_SONDER_26 = [
     when: (G) => hasHealthcare(G) && (G.age >= 18 && !G.mem?.sdr26HospitalLight),
     text: () => pick([
       'Hospitals have their own light — a fluorescent quality that is neither day nor night, that makes the hour ambiguous and flattens everything. You have been here enough times to recognise the light before you remember where you are. It is the light of waiting and of not knowing, and it is the same in hospitals everywhere you have been.',
-      'The corridor between the wards. The squeak of shoes on the linoleum. The particular trolley sound. A specific smell — the antiseptic, the meals trolley, something chemical beneath both. The body recognises hospital as a category before the mind processes the specifics. You are here again.',
+      'The corridor between the wards. The squeak of shoes on the linoleum. The particular trolley sound. A smell — the antiseptic, the meals trolley, something chemical beneath both. The body recognises hospital as a category before the mind processes the specifics. You are here again.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr26HospitalLight', true) },
@@ -308,8 +308,8 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => G.age >= 16 && !G.mem?.sdr26SmallPleasure,
     text: () => pick([
-      'The first coffee of the morning, the specific temperature of it, the particular quality of the first ten minutes before the day has established its character. You are protective of this and you are right to be.',
-      'The walk you take for no reason. Not exercise, not transit — just the neighbourhood at this speed, in this light, the specific angle of approach you take to the park. Nobody required this of you. You required it of yourself.',
+      'The first coffee of the morning, the temperature of it, the particular quality of the first ten minutes before the day has established its character. You are protective of this and you are right to be.',
+      'The walk you take for no reason. Not exercise, not transit — just the neighbourhood at this speed, in this light, the angle of approach you take to the park. Nobody required this of you. You required it of yourself.',
       'Clean sheets on a night when you are genuinely tired. The window open. The temperature exactly right for the blanket weight you want. These conditions come together perhaps six times a year.',
     ]),
     choices: null,
@@ -323,7 +323,7 @@ export const EVENTS_SONDER_26 = [
     when: (G) => G.age >= 20 && !G.mem?.sdr26TaskDone,
     text: () => pick([
       'The thing that has been in the back of your mind for weeks is finally done. Not a major thing — a form, a phone call, a visit that needed making. The relief is out of proportion to the task. You understand that what you were carrying was not the task but the fact of carrying it.',
-      'You finish a list and look at it finished. There is a specific quality to the moment before you move on, when the list is complete and nothing has yet replaced it. You stay in it for a moment.',
+      'You finish a list and look at it finished. There is a quality to the moment before you move on, when the list is complete and nothing has yet replaced it. You stay in it for a moment.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('sdr26TaskDone', true) },
@@ -337,7 +337,7 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => isLiterate(G) && (G.age >= 28 && !G.mem?.sdr26OldPaper),
     text: () => pick([
-      'An envelope of old documents: a birth certificate, a letter in a handwriting you don\'t recognise, a photograph of people you can mostly identify. The paper is a specific weight that new paper is not — the compressed time of it, the fact that it has survived. Someone kept it. You keep it.',
+      'An envelope of old documents: a birth certificate, a letter in a handwriting you don\'t recognise, a photograph of people you can mostly identify. The paper is a weight that new paper is not — the compressed time of it, the fact that it has survived. Someone kept it. You keep it.',
       'The certificate is yellowed at the edges and signed by an official whose name means nothing to you now. But it names a date and a place and a relationship, and the naming still works — the information still transfers across the distance between then and now.',
     ]),
     choices: null,
@@ -379,7 +379,7 @@ export const EVENTS_SONDER_26 = [
     when: (G) => G.age >= 25 && !G.mem?.sdr26HabitDiscovered,
     text: () => pick([
       'You notice you have developed a habit — not one you chose, just one that grew: always putting the keys in the same pocket, always starting the morning in a particular sequence, always taking the same route when you have options. The habit has been there long enough to feel structural. You can\'t remember installing it.',
-      'A small ritual at the end of the workday: a specific thing that closes the work off from the rest of the evening. You developed it without intending to and depend on it now. Without it the evening feels open at one end in a way that takes time to settle.',
+      'A small ritual at the end of the workday: a thing that closes the work off from the rest of the evening. You developed it without intending to and depend on it now. Without it the evening feels open at one end in a way that takes time to settle.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr26HabitDiscovered', true) },

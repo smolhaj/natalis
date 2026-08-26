@@ -212,7 +212,7 @@ export const EVENTS_SONDER_28 = [
     text: () => pick([
       'The smell before rain — petrichor, though you may not know that word. The air changes. Something in you recognises it before you consciously register what is coming.',
       'It started raining while you were inside and by the time you noticed the street was already wet. There is always a version of this where you just missed being caught in it.',
-      'Rain on a particular surface makes a sound you know well — roof tiles, a tin roof, leaves, pavement. The specific sound of rain in the place where you grew up is a sound you carry without knowing you carry it.',
+      'Rain on a particular surface makes a sound you know well — roof tiles, a tin roof, leaves, pavement. The sound of rain in the place where you grew up is a sound you carry without knowing you carry it.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28SmellOfRain', true) },

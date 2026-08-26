@@ -143,7 +143,7 @@ export const EVENTS_SONDER_31 = [
     when: (G) => hasPhotographs(G) && (G.age >= 24 && G.age <= 38 && !G.mem?.s31k),
     text: () => pick([
       'The photo of yourself from ten years ago that you encounter unexpectedly. The person looking out from it knew nothing that you know now. They did not look like someone who didn\'t know it.',
-      'The meal you have been making for years — the dish whose quantities you know without measuring, that you make when the specific people it belongs to are gathered. It tastes like what it is.',
+      'The meal you have been making for years — the dish whose quantities you know without measuring, that you make when the people it belongs to are gathered. It tastes like what it is.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s31k', true) },
@@ -221,7 +221,7 @@ export const EVENTS_SONDER_31 = [
     when: (G) => G.age >= 8 && G.age <= 14 && !G.mem?.s31r,
     text: () => pick([
       'The adult you are visiting has a life that exists entirely outside your knowledge of it. The room they sit in when you are not here. The things they do in the hours between your visits.',
-      'The animal you found and kept briefly and then released or lost. The specific quality of caring for something that needs you and cannot ask for what it needs.',
+      'The animal you found and kept briefly and then released or lost. The quality of caring for something that needs you and cannot ask for what it needs.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s31r', true) },
@@ -337,7 +337,7 @@ export const EVENTS_SONDER_31 = [
     weight: 2,
     when: (G) => hasLeisure(G) && (G.age >= 63 && G.age <= 75 && !G.mem?.s31aa),
     text: () => pick([
-      'The question someone asks you that you have never been asked before. At this age, the new question is rare. When it comes it is welcome in a specific way.',
+      'The question someone asks you that you have never been asked before. At this age, the new question is rare. When it comes it is welcome in a way.',
       'The morning with nothing required of it. The full morning and no obligation. You are still learning what to do with this. The obligation was not nothing — it organised the hours.',
     ]),
     choices: null,

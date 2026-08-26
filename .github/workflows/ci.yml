@@ -1,0 +1,61 @@
+# Runs on pull requests and on pushes to main. Deploy (deploy.yml) is a separate
+# workflow that only fires on main, so until now nothing verified a pull request
+# at all — the test suite and the flag audit existed but gated nothing.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Content integrity: every registered flag must be set somewhere and
+      # consumed in the way its declared intent promises.
+      #
+      # check-flags reports orphaned/partial counts but exits 0, so running it
+      # alone would be a step that can never fail. Assert on its own summary
+      # line instead of editing the script's exit code, which keeps this honest
+      # whether or not the script later starts exiting non-zero itself.
+      - name: Flag audit
+        run: |
+          set -o pipefail
+          out=$(npm run --silent check-flags | sed 's/\x1b\[[0-9;]*m//g')
+          echo "$out" | tail -40
+          summary=$(echo "$out" | grep -E '^Coverage:' || true)
+          if [ -z "$summary" ]; then
+            echo "::error::check-flags produced no Coverage summary line"
+            exit 1
+          fi
+          echo "$summary"
+          if ! echo "$summary" | grep -qE '0 partial +0 orphaned'; then
+            echo "::error::Flag registry has orphaned or partial flags: $summary"
+            exit 1
+          fi
+
+      # Includes the simulation-level suites (engineBalance, engineRobustness,
+      # effectPurity, saveMigration). These are the guardrails for the failure
+      # class the audit found: content that is authored but statistically or
+      # mechanically unreachable, which no static check can see.
+      - name: Tests
+        run: npm test

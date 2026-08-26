@@ -1,7 +1,7 @@
 // events_sonder_39.js
 // Contemplative layer — 30 events.
 // Themes: the translation problem, what age teaches about time,
-// the specific weight of inherited objects, a city seen from above,
+// the weight of inherited objects, a city seen from above,
 // the conversation that should have happened.
 
 import { hasBooks } from './_sonderGuards.js'
@@ -143,7 +143,7 @@ export const EVENTS_SONDER_39 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.age >= 55 && !G.mem?.s39q,
-    text: 'There is a younger person at work who reminds you of how you were at that age — the specific combination of ambition and unawareness, the certainty about things that will turn out to be more complicated. You do not tell them this. The information would not be useful. The finding-out is the education.',
+    text: 'There is a younger person at work who reminds you of how you were at that age — the combination of ambition and unawareness, the certainty about things that will turn out to be more complicated. You do not tell them this. The information would not be useful. The finding-out is the education.',
     choices: null,
     effect: (p) => { p.r += 2; p.m += 2; p.setMem('s39q', true) },
   },
@@ -163,7 +163,7 @@ export const EVENTS_SONDER_39 = [
     phase: 'childhood',
     weight: 2,
     when: (G) => !G.mem?.s39t,
-    text: 'There was a summer — or a season, or a stretch of months — that lasted longer than any other equivalent period of your life. The time moved at a speed that is not available now. You could not tell you what made it slow. The slowness made the detail available: specific afternoons, specific light, the name of who was there.',
+    text: 'There was a summer — or a season, or a stretch of months — that lasted longer than any other equivalent period of your life. The time moved at a speed that is not available now. You could not tell you what made it slow. The slowness made the detail available: specific afternoons, light, the name of who was there.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s39t', true) },
   },

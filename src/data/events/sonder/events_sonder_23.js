@@ -14,7 +14,7 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.mem?.sdr23LightAtHour,
     text: () => pick([
-      `Late afternoon light in a room you know well. The light at this hour has a specific quality — it is almost horizontal, it catches the dust, it makes ordinary things look like evidence. You are not doing anything in particular. The light is happening.`,
+      `Late afternoon light in a room you know well. The light at this hour has a quality — it is almost horizontal, it catches the dust, it makes ordinary things look like evidence. You are not doing anything in particular. The light is happening.`,
       `The hour before dark in summer: the day has changed register without announcement. The heat has broken. People are on their way home. The streets are at full capacity but moving. This is the hour the city is actually itself.`,
       `The light this morning was specific — the angle that only exists in a handful of mornings per year, when the season is turning and the atmosphere has a quality that will not recur for months. You noticed it while doing something else. You kept doing the other thing.`,
     ]),
@@ -28,8 +28,8 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr23BorrowedWord,
     text: () => pick([
-      `There is a word in another language that does the job better than any word you have. The word is for something felt, not seen: a specific quality of longing, or the sense of time passing inside time, or the light in a place at the end of a day. Your language has a version. It is not the same word.`,
-      `You pick up a phrase from someone you met briefly — the specific way they named something — and you use it. Not their intonation, not quite their meaning, but close enough. The phrase is yours now. The person it came from is someone you will not see again.`,
+      `There is a word in another language that does the job better than any word you have. The word is for something felt, not seen: a quality of longing, or the sense of time passing inside time, or the light in a place at the end of a day. Your language has a version. It is not the same word.`,
+      `You pick up a phrase from someone you met briefly — the way they named something — and you use it. Not their intonation, not quite their meaning, but close enough. The phrase is yours now. The person it came from is someone you will not see again.`,
       `A word your grandmother used that has no translation. You know what it means when you hear it — feel it, more accurately. You cannot explain it to someone who was not there for it. The word is still in you even though it belongs to a language that may not outlast the people who speak it.`,
     ]),
     choices: null,
@@ -58,7 +58,7 @@ export const EVENTS_SONDER_23 = [
     text: () => pick([
       `Someone asks you how to do something and you know. Not theoretically — you actually know how to do it, and you walk them through it, and it works. You had not previously thought of yourself as someone who knows how to do this. You recalibrate slightly. The skill has been in you without being named.`,
       `You do something under pressure that you would have said you couldn't do. The emergency or the deadline or the no-one-else produced a version of you that managed it. Afterwards you are not sure whether to update your self-assessment or to file this under exceptional circumstances.`,
-      `A child asks you to explain something — something you actually know, something you learned years ago without attaching it to any specific memory of learning — and you explain it and the child understands. You feel the specific satisfaction of knowledge that has found its use.`,
+      `A child asks you to explain something — something you actually know, something you learned years ago without attaching it to any specific memory of learning — and you explain it and the child understands. You feel the satisfaction of knowledge that has found its use.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr23UnexpCompetence', true) },
@@ -84,7 +84,7 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr23SmallCelebration,
     text: () => pick([
-      `The small celebration: just the two of you, or just you, at a table with something good to eat and drink and the specific thing you wanted to acknowledge. Not the planned party. The quiet marking of a thing that mattered. These tend to be the ones you remember.`,
+      `The small celebration: just the two of you, or just you, at a table with something good to eat and drink and the thing you wanted to acknowledge. Not the planned party. The quiet marking of a thing that mattered. These tend to be the ones you remember.`,
       `You are briefly, genuinely happy about something that is objectively small. A task completed. A letter received. A particular meal in a particular place. The happiness is proportionate to the thing, which means the proportions are working. You file this as evidence.`,
       `The birthday no one else knows about — an anniversary of something private, a date that means something only to you. You mark it in the way you mark it: a certain food, or a certain route, or simply sitting with it for a minute before the day continues.`,
     ]),
@@ -114,7 +114,7 @@ export const EVENTS_SONDER_23 = [
     text: () => pick([
       `You are sitting with someone you know well and neither of you is talking and it is fine. This took years to arrive at — the confidence that the silence is not a failure. With some people you never get there. With the right people it becomes the most honest part of the relationship.`,
       `The car ride home in silence after something that doesn't need to be discussed further — it was discussed, it is over or ongoing, and the silence is not withdrawal but saturation. The silence carries the thing that was said. You both feel it.`,
-      `Two people doing separate things in the same room. This specific arrangement — parallel presence, not quite together, not quite apart — is the intimacy that only comes with time. It cannot be performed. It accumulates.`,
+      `Two people doing separate things in the same room. This arrangement — parallel presence, not quite together, not quite apart — is the intimacy that only comes with time. It cannot be performed. It accumulates.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr23SharedSilence', true) },
@@ -127,7 +127,7 @@ export const EVENTS_SONDER_23 = [
     when: (G) => G.age >= 40 && G.age <= 65 && !G.mem?.sdr23BirthdayAgain,
     text: () => pick([
       `The birthday arrives again. You are not sure how to feel about the number, which is bigger than the last number by the usual increment and feels larger somehow. The body has not changed overnight. The number has. The gap between these two facts is where most of the birthday exists.`,
-      `People say happy birthday and you accept it and thank them and it is pleasant and also slightly beside the point. The point is not the day but the year that produced it — the specific year you have just finished living. The year doesn't get summarised by the cake.`,
+      `People say happy birthday and you accept it and thank them and it is pleasant and also slightly beside the point. The point is not the day but the year that produced it — the year you have just finished living. The year doesn't get summarised by the cake.`,
       `You are older than you expected to be at this age — by which you mean: you did not expect, from the inside, to feel so continuous with earlier versions of yourself. You thought something would feel more resolved by now. The resolution is apparently not a feeling. It is, at most, a quieter version of the same questions.`,
     ]),
     choices: null,
@@ -168,7 +168,7 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 60 && !G.mem?.sdr23SkillWatched,
     text: () => pick([
-      `Someone is very good at something and you are watching them do it. The butcher making a specific cut. The welder with the arc perfect. The chef plating in the seconds before service. There is something in watching genuine competence that produces a specific attention. You are not in a hurry to look away.`,
+      `Someone is very good at something and you are watching them do it. The butcher making a specific cut. The welder with the arc perfect. The chef plating in the seconds before service. There is something in watching genuine competence that produces a attention. You are not in a hurry to look away.`,
       `The old man repairs the thing — the clock, the shoe, the engine — with movements so practised they are nearly invisible. He is not thinking about the movements. He is thinking about something else entirely, or nothing, while his hands do their decades of accumulated knowledge. You observe the whole thing without him noticing.`,
       `The musician plays the difficult passage not as though it is difficult but as though the difficulty has been dissolved by repetition into fluency. This is what practice actually produces: not perfection but invisibility. The difficulty becomes undetectable from the outside. It still exists inside.`,
     ]),
@@ -194,6 +194,7 @@ export const EVENTS_SONDER_23 = [
     id: 'sdr23_the_stranger_moment',
     phase: 'midlife',
     weight: 2,
+    isGlimpse: true,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23StrangerMoment,
     text: () => pick([
       `The stranger on the train makes eye contact for a second longer than usual and you both look away and then there is a moment — the briefest fraction — where you could have spoken and you don't and they don't and the train arrives somewhere and one of you leaves and the moment is over as though it never occurred. Except it occurred.`,
@@ -308,8 +309,8 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 50 && G.age <= 80 && !G.mem?.sdr23HalfMemory,
     text: () => pick([
-      `A half-memory: the image exists — a table, a face, a specific quality of light in a room — but the occasion is gone. You know it happened. You cannot place the when or the who or the why. The image floats without context. You have learned to accept these partial survivals.`,
-      `You remember the feeling of a thing but not the thing. Not what was said but the specific feeling of having been seen, or dismissed, or surprised. The feeling is the remainder of an experience that left no other trace. The feeling is its own evidence.`,
+      `A half-memory: the image exists — a table, a face, a quality of light in a room — but the occasion is gone. You know it happened. You cannot place the when or the who or the why. The image floats without context. You have learned to accept these partial survivals.`,
+      `You remember the feeling of a thing but not the thing. Not what was said but the feeling of having been seen, or dismissed, or surprised. The feeling is the remainder of an experience that left no other trace. The feeling is its own evidence.`,
       `The memory that has been there for forty years that you suddenly cannot place — is it a real memory or something you were told so many times it became one? The distinction matters but cannot be resolved. It is in you now as memory regardless of how it arrived.`,
     ]),
     choices: null,
@@ -351,7 +352,7 @@ export const EVENTS_SONDER_23 = [
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23Prayer,
     text: () => pick([
       `Whether or not you believe, there are moments where the only available gesture is prayer. Not because you have evidence of its efficacy. Because the thing is too large for any other response. You say the words, or have no words, and remain in the position of asking. This is not the same as believing. It is its own thing.`,
-      `You find yourself doing the thing your grandmother did — making the specific gesture, saying the specific phrase — that she did when things were beyond managing. You did not think you had kept this. It arrived without invitation in the moment it was needed.`,
+      `You find yourself doing the thing your grandmother did — making the gesture, saying the specific phrase — that she did when things were beyond managing. You did not think you had kept this. It arrived without invitation in the moment it was needed.`,
       `The not-quite-prayer of the person who is not sure: you direct something toward something and the directing itself is the act. Whether anything receives it is not something you can know. The act is real regardless.`,
     ]),
     choices: null,
@@ -364,9 +365,9 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 58 && G.age <= 80 && !G.mem?.sdr23Afternoon,
     text: () => pick([
-      `The afternoon that belongs to you: no appointments, no obligations, a span of hours that are yours to organise. You used to not have these. You weren't sure you wanted them. You have found that you do. The afternoon is not empty — it has reading, or walking, or the specific pleasure of doing one thing slowly. It is the luxury of pace.`,
+      `The afternoon that belongs to you: no appointments, no obligations, a span of hours that are yours to organise. You used to not have these. You weren't sure you wanted them. You have found that you do. The afternoon is not empty — it has reading, or walking, or the pleasure of doing one thing slowly. It is the luxury of pace.`,
       `At this age you can stop in the afternoon without explaining why. The explanation was required at thirty: why you were not working, why you were sitting, what you were doing with the time. The question has fallen away. The afternoon is its own justification now.`,
-      `Late afternoon in the place you live: the specific quality of this hour in this season in this home. You know it so well you can hold it from the inside as a recognisable thing. The recognition is a form of gratitude, though you would not necessarily call it that.`,
+      `Late afternoon in the place you live: the quality of this hour in this season in this home. You know it so well you can hold it from the inside as a recognisable thing. The recognition is a form of gratitude, though you would not necessarily call it that.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr23Afternoon', true) },

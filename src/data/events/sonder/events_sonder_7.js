@@ -48,7 +48,7 @@ export const EVENTS_SONDER_7 = [
     when: (G) =>
       G.age >= 7 && G.age <= 14 &&
       !G.mem?.s7FoodFeast,
-    text: 'Once a year the table is different. More food than usual arrives at once. There is a specific smell in the house before anyone eats. The adults are talking and you are allowed to stay up. The food marks the day the way a flag marks a building — it tells you this one is different from the ones around it. You will remember the food more clearly than whatever occasion it marked.',
+    text: 'Once a year the table is different. More food than usual arrives at once. There is a smell in the house before anyone eats. The adults are talking and you are allowed to stay up. The food marks the day the way a flag marks a building — it tells you this one is different from the ones around it. You will remember the food more clearly than whatever occasion it marked.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s7FoodFeast', true) },
   },
@@ -226,7 +226,7 @@ export const EVENTS_SONDER_7 = [
       G.age >= 10 && G.age <= 14 &&
       G.religion !== 'none' &&
       !G.mem?.s7RitualFirst,
-    text: 'There is a ceremony for when you are old enough. You have been preparing for months. The ceremony lasts for a specific time and follows its specific order. Afterward there is food and relatives you rarely see. Everyone tells you that you are grown now. You are not grown. But you have passed through a form that says you are, and the form is real even if the feeling will take years.',
+    text: 'There is a ceremony for when you are old enough. You have been preparing for months. The ceremony lasts for a specific time and follows its order. Afterward there is food and relatives you rarely see. Everyone tells you that you are grown now. You are not grown. But you have passed through a form that says you are, and the form is real even if the feeling will take years.',
     choices: null,
     effect: (p) => { p.m += 3; p.e += 1; p.setMem('s7RitualFirst', true) },
   },
@@ -341,7 +341,7 @@ export const EVENTS_SONDER_7 = [
   // SOUND AND MUSIC
   // Not the cultural markers already in soundtrack.js but the ambient,
   // involuntary presence of sound in a life — what you can't unhear,
-  // what music does to time, the specific frequency of a life.
+  // what music does to time, the frequency of a life.
   // ──────────────────────────────────────────────────────────────────────────
 
   {
@@ -360,6 +360,7 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_sound_neighbours_music',
     phase: 'young_adult',
     weight: 2,
+    isGlimpse: true,
     when: (G) =>
       G.ruralUrban === 'urban' &&
       G.age >= 18 && G.age <= 40 &&

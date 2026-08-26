@@ -239,7 +239,7 @@ export const EVENTS_SONDER_27 = [
     weight: 2,
     when: (G) => G.age >= 20 && !G.mem?.sdr27LearnedWatching,
     text: () => pick([
-      'The things you know that you didn\'t learn from being taught: how to read a room, how to tell when a conversation is about to change direction, what someone means when they say they\'re fine in a specific way. This knowledge came from watching over years and cannot be fully described to someone who hasn\'t done the watching.',
+      'The things you know that you didn\'t learn from being taught: how to read a room, how to tell when a conversation is about to change direction, what someone means when they say they\'re fine in a way. This knowledge came from watching over years and cannot be fully described to someone who hasn\'t done the watching.',
       'You learned how to do the thing by watching your father or your mother or your grandmother do it — not being shown, watching. The teaching was implicit, in the repeated watching. You can do it now and cannot explain how you know to do it the way you know.',
     ]),
     choices: null,
@@ -272,7 +272,7 @@ export const EVENTS_SONDER_27 = [
     when: (G) => G.age >= 20 && !G.mem?.sdr27OldCouple,
     text: () => pick([
       'An old couple crossing the street. The pace is slow and the person on the outside is adjusting their pace to match the pace of the inside person and this adjustment has been made so many times that it is now built into how they walk. They are holding something between them — a bag, an elbow — in the absent-minded way of long familiarity.',
-      'They are very old and they are arguing about something minor, and the argument has the specific texture of an argument between people who have been arguing about things for fifty years: fluent, not cruel, conducted in a shorthand that is not available to anyone else. They reach the bench and sit down and the argument continues in a quieter register.',
+      'They are very old and they are arguing about something minor, and the argument has the texture of an argument between people who have been arguing about things for fifty years: fluent, not cruel, conducted in a shorthand that is not available to anyone else. They reach the bench and sit down and the argument continues in a quieter register.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr27OldCouple', true) },

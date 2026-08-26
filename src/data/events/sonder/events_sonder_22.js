@@ -239,7 +239,7 @@ export const EVENTS_SONDER_22 = [
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr22LastTime,
     text: () => pick([
       `There was a last time you carried someone on your shoulders. A last time you ran for the bus without thinking about it. A last time you slept on a floor and it was fine. These last times passed without announcement. You were not asked to mark them.`,
-      `You realise you stopped doing something — a specific thing, a practice, a way you used to spend an afternoon — and you cannot identify when it stopped or why. It simply ceased to be available. The days reorganised around its absence.`,
+      `You realise you stopped doing something — a thing, a practice, a way you used to spend an afternoon — and you cannot identify when it stopped or why. It simply ceased to be available. The days reorganised around its absence.`,
       `The last time you saw that person you did not know it was the last time. This is always how it works. You had a conversation you cannot remember and then went your separate ways and then the ways became permanent.`,
     ]),
     choices: null,
@@ -266,8 +266,8 @@ export const EVENTS_SONDER_22 = [
     weight: 2,
     when: (G) => hasHealthcare(G) && (G.age >= 35 && G.age <= 70 && !G.mem?.sdr22HospitalCorridor),
     text: () => pick([
-      `The hospital corridor at two in the morning: people in various states of waiting, the specific quality of fluorescent light at this hour, the sound of wheels on linoleum. Everyone here is inside something. The corridor connects all of them without making them the same.`,
-      `You have learned the specific geography of this ward. The good chair by the window. The vending machine that works. The nurse who explains things properly. This is knowledge you didn't want to acquire.`,
+      `The hospital corridor at two in the morning: people in various states of waiting, the quality of fluorescent light at this hour, the sound of wheels on linoleum. Everyone here is inside something. The corridor connects all of them without making them the same.`,
+      `You have learned the geography of this ward. The good chair by the window. The vending machine that works. The nurse who explains things properly. This is knowledge you didn't want to acquire.`,
       `You go outside the hospital for ten minutes to get air and the ordinary world is still occurring — a taxi, a couple arguing, a man eating from a paper bag — and it is startling. The ordinary world has continued without any particular regard for what is happening inside the building behind you.`,
     ]),
     choices: null,
@@ -280,7 +280,7 @@ export const EVENTS_SONDER_22 = [
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 50 && !G.mem?.sdr22Ritual,
     text: () => pick([
-      `There is a small ritual you do before something difficult: a specific way of standing, or breathing, or arranging things, that signals to some part of yourself that this is now beginning. You developed it without intending to. It works. You have never explained it to anyone.`,
+      `There is a small ritual you do before something difficult: a way of standing, or breathing, or arranging things, that signals to some part of yourself that this is now beginning. You developed it without intending to. It works. You have never explained it to anyone.`,
       `The morning ritual — exactly in this order, for reasons that have been lost — takes thirty-five minutes and produces a specific state of readiness. Deviations from the order produce a less reliable state. This is not superstition. It is self-management with the mechanism removed.`,
       `You find yourself explaining your transit ritual — the particular seat, the direction you face — to someone who asked, and as you explain it you hear how specific it is. You have reasons for all of it. The reasons are not entirely rational. The ritual works anyway.`,
     ]),
@@ -296,7 +296,7 @@ export const EVENTS_SONDER_22 = [
     text: () => pick([
       `You hear yourself say something your parent always said, in your parent's exact cadence, and you stop mid-sentence. The phrase arrived through you without your permission. You are a vector for it now.`,
       `There is a gesture you make — the way you hold a cup, or signal patience — that came from somewhere in the family. No one showed you. It passed through the air, through proximity, through years of watching. You carry it without having collected it.`,
-      `You catch yourself sighing in the specific way your grandmother sighed: the exhale of someone who has made this accommodation before and will make it again. The sigh is an exact copy. You did not practise it.`,
+      `You catch yourself sighing in the way your grandmother sighed: the exhale of someone who has made this accommodation before and will make it again. The sigh is an exact copy. You did not practise it.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22InheritedPhrase', true) },
@@ -408,7 +408,7 @@ export const EVENTS_SONDER_22 = [
     text: () => pick([
       `There is a thing you made — built, cooked, planted, wrote — that is still here. It has outlasted the moment that produced it. It is not quite yours anymore in the way it was when it was new. But it's here, and it functions, or grows, or sits on a shelf in someone's house, and the making of it is somewhere in you still.`,
       `You fixed something and it stayed fixed. This is not nothing. Most things you fix eventually return to needing fixing. This one held. You remember exactly where you were standing when you realised it was done.`,
-      `The small act of making — the bread, the hem, the shelf — produces a feeling that is out of proportion to the object. The feeling is about competence, maybe, or about the hands knowing what to do, or about time spent in a specific way that leaves evidence. The evidence is a shelf. The shelf is enough.`,
+      `The small act of making — the bread, the hem, the shelf — produces a feeling that is out of proportion to the object. The feeling is about competence, maybe, or about the hands knowing what to do, or about time spent in a way that leaves evidence. The evidence is a shelf. The shelf is enough.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22ThingYouMade', true) },

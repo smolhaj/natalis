@@ -89,6 +89,7 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_nbr_sound',
     phase: 'young_adult',
     weight: 2,
+    isGlimpse: true,
     when: (G) => G.age >= 20 && !G.mem?.s10NbrSound,
     text: 'Through the wall you can hear them. Not the words, just the rhythms: raised voices once, then nothing for days, then music late at night. You have assembled a partial picture of their life from sound alone. You will never verify any of it. You have been listening to a life.',
     choices: null,

@@ -323,7 +323,7 @@ export const EVENTS_SONDER_2 = [
     when: (G) => worksInOffice(G) && (!G.mem?.s2_dwf &&
       G.age >= 32 &&
       G.career?.id),
-    text: 'The colleague you were going to have coffee with after you both left that job. The message that was drafted and not sent, the specific moment it became difficult enough that it didn\'t happen. That was three years ago. The window is probably still open. It has developed a frame now.',
+    text: 'The colleague you were going to have coffee with after you both left that job. The message that was drafted and not sent, the moment it became difficult enough that it didn\'t happen. That was three years ago. The window is probably still open. It has developed a frame now.',
     choices: null,
     effect: (p) => { p.setMem('s2_dwf', true) },
   },
@@ -360,7 +360,7 @@ export const EVENTS_SONDER_2 = [
     when: (G) => hasPhone(G) && (!G.mem?.s2_dpv &&
       G.flags.includes('lost_parent') &&
       G.age >= 35),
-    text: 'You can still hear how they answered the phone. The specific tone — slightly more formal before they recognised the voice, then the change. That voice was a constant for forty years. You hear it now only in memory, which is less reliable each year.',
+    text: 'You can still hear how they answered the phone. The tone — slightly more formal before they recognised the voice, then the change. That voice was a constant for forty years. You hear it now only in memory, which is less reliable each year.',
     choices: null,
     effect: (p) => { p.setMem('s2_dpv', true) },
   },
@@ -384,7 +384,7 @@ export const EVENTS_SONDER_2 = [
     when: (G) =>
       !G.mem?.s2_dsp &&
       G.age >= 24,
-    text: 'You have specific people for specific things now. One for the work problems. One for the family ones. One for the evenings when nothing is wrong and you just want company. They don\'t know each other. You contain all of them simultaneously.',
+    text: 'You have specific people for things now. One for the work problems. One for the family ones. One for the evenings when nothing is wrong and you just want company. They don\'t know each other. You contain all of them simultaneously.',
     choices: null,
     effect: (p) => { p.setMem('s2_dsp', true) },
   },

@@ -55,7 +55,7 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => worksInOffice(G) && (G.age >= 24 && G.age <= 36 && !G.mem?.s34f),
     text: () => pick([
-      'You are working late. Not because you have to, tonight, but because the work is in a particular state that makes it hard to stop — the problem is almost solved, the document is almost finished. You notice you have been here four hours past when you thought you\'d leave. The office or the workspace is quiet. This version of concentration, of being alone with the almost-finished thing, has a specific texture.',
+      'You are working late. Not because you have to, tonight, but because the work is in a particular state that makes it hard to stop — the problem is almost solved, the document is almost finished. You notice you have been here four hours past when you thought you\'d leave. The office or the workspace is quiet. This version of concentration, of being alone with the almost-finished thing, has a texture.',
       'The commute has become so familiar that you no longer have memories of it. You arrive. There is no narrative of arriving — just the before and the after. This is true of things you do every day: the automatic makes no deposit in memory.',
     ]),
     choices: null,
@@ -198,7 +198,7 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => G.age >= 26 && G.age <= 38 && !G.mem?.s34s,
     text: () => pick([
-      'The money is enough now. Not comfortable — but enough: the specific relief of enough, after the years of calculating. You notice you have stopped the calculation and don\'t know exactly when. The stopping is quiet. It feels like something lifted without announcement.',
+      'The money is enough now. Not comfortable — but enough: the relief of enough, after the years of calculating. You notice you have stopped the calculation and don\'t know exactly when. The stopping is quiet. It feels like something lifted without announcement.',
       'You have the job. The job is what you said you wanted. On the third month in the job you notice that having the thing you wanted does not produce the feeling you expected having the thing to produce. The feeling is more complicated than the wanting was.',
     ]),
     choices: null,
@@ -212,7 +212,7 @@ export const EVENTS_SONDER_44 = [
     when: (G) => G.age >= 70 && !G.mem?.s34t,
     text: () => pick([
       'Someone much younger asks you what it was like. You are aware as you answer that you are editing — not lying but selecting, shaping, leaving out the parts that don\'t translate. The story you tell is true but it is not all of it. All of it would take too long and also would not fit in their available understanding. This is what getting old is: you become a summarised version of what actually happened.',
-      'The garden in the morning. This is still a thing you have. The same garden or a different garden — but the fact of a garden, and the morning, and the specific quality of attention you bring to it now. You didn\'t have this attention when you were forty. It is one of the compensations.',
+      'The garden in the morning. This is still a thing you have. The same garden or a different garden — but the fact of a garden, and the morning, and the quality of attention you bring to it now. You didn\'t have this attention when you were forty. It is one of the compensations.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.r += 3; p.setMem('s34t', true) },
@@ -290,7 +290,7 @@ export const EVENTS_SONDER_44 = [
     when: (G) => hasCar(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s34z),
     text: () => pick([
       'You drove past the house you grew up in. You don\'t know why. It was not on the way to where you were going. Someone else lives there now. The colour of the door has been changed. The garden is different. The specifics of what it meant to you live in a room that is now someone else\'s kitchen.',
-      'A smell. That\'s all — a smell from somewhere, from someone passing on a street, from an open door, and you are immediately somewhere else. Not metaphorically somewhere else. You are ten, or eight, or thirteen, and the specific density of that time is available. Then it goes. Memory is mostly unavailable. This is the exception.',
+      'A smell. That\'s all — a smell from somewhere, from someone passing on a street, from an open door, and you are immediately somewhere else. Not metaphorically somewhere else. You are ten, or eight, or thirteen, and the density of that time is available. Then it goes. Memory is mostly unavailable. This is the exception.',
     ]),
     choices: null,
     effect: (p) => { p.r += 5; p.m += 2; p.setMem('s34z', true) },
@@ -341,7 +341,7 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => G.season === 'summer' && (G.age >= 9 && G.age <= 13 && !G.mem?.s34ad),
     text: () => pick([
-      'The light in summer at the end of the day, when it goes horizontal and turns everything amber. The specific hour when this happens is different here than it is anywhere else — or it feels that way. It probably isn\'t different. But it is specific to here in your memory, and in your memory is where it lives.',
+      'The light in summer at the end of the day, when it goes horizontal and turns everything amber. The hour when this happens is different here than it is anywhere else — or it feels that way. It probably isn\'t different. But it is specific to here in your memory, and in your memory is where it lives.',
       'There is a person at school who is not unkind and not kind — who exists in the middle register, who is there, who you see every day, who will become, without either of you knowing it, one of the people who populate the background of your childhood memory. In ten years they will be hard to distinguish from the wallpaper of the time. In thirty years you will remember their name and not their face.',
     ]),
     choices: null,

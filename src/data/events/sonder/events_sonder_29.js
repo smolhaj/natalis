@@ -129,7 +129,7 @@ export const EVENTS_SONDER_29 = [
     text: () => pick([
       'The door you have opened thousands of times. You do not think about opening it. You open it and you are through. When you think about this specific door — where you have been going through it, what has happened on the other side over the years — there is something in it worth a moment.',
       'There is a door somewhere that you will never open again. You may have already been through it for the last time without knowing. Most doors are like this eventually.',
-      'The sound of a particular door — the rattle, the specific weight of it, the way the latch settles. You know this sound so well it has become a kind of signal: someone is coming in, or you are home, or the day is beginning.',
+      'The sound of a particular door — the rattle, the weight of it, the way the latch settles. You know this sound so well it has become a kind of signal: someone is coming in, or you are home, or the day is beginning.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr29TheDoor', true) },
@@ -152,7 +152,7 @@ export const EVENTS_SONDER_29 = [
     when: (G) => G.age >= 20 && !G.mem?.sdr29SmellRemembered,
     text: () => pick([
       'A smell that is not common anywhere you go now: something from your grandmother\'s house, or the school corridor, or the place where you worked the first time. The smell arrives in an unexpected context and takes you back with a speed that thought cannot match.',
-      'There is a smell that means a specific thing to you and means nothing in particular to most people. Not good or bad — just encoded. It carries the first time you smelled it somewhere inside it, and everything that was happening at the time.',
+      'There is a smell that means a thing to you and means nothing in particular to most people. Not good or bad — just encoded. It carries the first time you smelled it somewhere inside it, and everything that was happening at the time.',
       'You smelled something today that you had not smelled in years. For a moment you were somewhere else entirely. Then you were back. The somewhere else was vivid while it lasted. These are the fastest kind of memory.',
     ]),
     choices: null,
@@ -223,7 +223,7 @@ export const EVENTS_SONDER_29 = [
     text: () => pick([
       'Your child is now older than you were when they were born. You are now the parent of someone your age. The arithmetic of this is simple; what it means takes longer to take in.',
       'Something your child says or does that is unmistakably from you — a gesture, a phrase, a way of reacting to something. You recognise it before you are sure what you are recognising. It is strange to see something of yourself living in another person.',
-      'The version of your child that you knew when they were small is not the person in front of you now, though the person in front of you contains that version. You are the only one who remembers both. This is a specific kind of knowledge.',
+      'The version of your child that you knew when they were small is not the person in front of you now, though the person in front of you contains that version. You are the only one who remembers both. This is a kind of knowledge.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('sdr29ChildGrown', true) },
@@ -264,7 +264,7 @@ export const EVENTS_SONDER_29 = [
     when: (G) => G.age >= 20 && (G.partner || (G.children && G.children.length > 0)) && !G.mem?.sdr29WatchSleep,
     text: () => pick([
       'You woke up before them and watched them sleep for a moment. The face in sleep is unguarded in a way the waking face is not. You know this face. Something in watching it was tender and uncomplicated in a way that the day would not be.',
-      'The child asleep: the total surrender of it, the specific weight of a sleeping child if you have to move them. The sleep of children is an argument for something, though you are not sure what.',
+      'The child asleep: the total surrender of it, the weight of a sleeping child if you have to move them. The sleep of children is an argument for something, though you are not sure what.',
       'They were asleep and you were awake and for a minute you watched. Then you got up and let them sleep and the moment passed into the ordinary category of things that happened on a Tuesday.',
     ]),
     choices: null,
@@ -305,7 +305,7 @@ export const EVENTS_SONDER_29 = [
     weight: 2,
     when: (G) => G.age >= 16 && !G.mem?.sdr29TheMusic,
     text: () => pick([
-      'A song you have not heard in years and then you hear it. The specific feeling of a song from a particular time arriving in a different time. Not just memory — something more physical. The body has been carrying it.',
+      'A song you have not heard in years and then you hear it. The feeling of a song from a particular time arriving in a different time. Not just memory — something more physical. The body has been carrying it.',
       'You found yourself singing something without knowing where it came from. The song surfaced from somewhere below the level of intention. You knew all the words. You had not thought about the song in years.',
       'The music that was playing during a specific period of your life: you hear it now and the period comes back with it, not as a visual memory but as a feeling — the particular texture of being that age, in that situation. The song is a door that opens onto it.',
     ]),
@@ -361,7 +361,7 @@ export const EVENTS_SONDER_29 = [
     weight: 2,
     when: (G) => G.age >= 14 && !G.mem?.sdr29LightEvening,
     text: () => pick([
-      'The specific light at the end of the day when the sun is almost but not fully gone — everything gold, then orange, then the colour of shadow. It takes fifteen minutes. You were there for some of it.',
+      'The light at the end of the day when the sun is almost but not fully gone — everything gold, then orange, then the colour of shadow. It takes fifteen minutes. You were there for some of it.',
       'The evening light through a particular window at a particular time of year. You look forward to it without meaning to. It comes around and you notice it came. It will come again.',
       'The moment the light changed: you were in the middle of something and then the room was different, the quality of the light shifted and for a second everything was the same but different. Then the moment passed and the light settled into its evening work.',
     ]),
@@ -390,7 +390,7 @@ export const EVENTS_SONDER_29 = [
     when: (G) => G.age >= 18 && !G.mem?.sdr29Arrival,
     text: () => pick([
       'You arrived somewhere and for a moment the arriving was its own thing — before you were inside it, before you were doing what you came to do. The threshold moment: here and not yet there.',
-      'Coming home after a time away: the specific smell of home, which you only notice when you have been away long enough to lose it. The reassembly of the familiar. The first night back in your own bed.',
+      'Coming home after a time away: the smell of home, which you only notice when you have been away long enough to lose it. The reassembly of the familiar. The first night back in your own bed.',
       'You came back to a place you had not been in some time. The place had continued without you, which is what places do. You had continued without the place. The meeting of those two continuations takes a moment.',
     ]),
     choices: null,

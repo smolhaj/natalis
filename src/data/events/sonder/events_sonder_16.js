@@ -4,7 +4,7 @@
 // the handwriting of someone gone, the recurring dream, phrases you've stopped
 // using, Sunday afternoon, the census name vs. the real name, the sound of
 // a specific decade, what you do with your hands when you're not doing anything,
-// the specific weight of a door you know well, paper — receipts and letters —
+// the weight of a door you know well, paper — receipts and letters —
 // and the small archive of what survives.
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
@@ -25,7 +25,7 @@ export const EVENTS_SONDER_16 = [
     text: () => pick([
       `At the end of a telephone call there is a particular small performance: the wind-down, the mutual signal that it is ending, the false goodbyes before the real one. You have done this thousands of times and it has never become easy — the goodbye is always slightly awkward, always faintly asymmetrical, always concluded by someone hanging up first.`,
       `You say goodbye on the phone and then wait a half-second to make sure the call has ended before you speak. This is a habit from the era of uncertain connections, of lines that did not always terminate cleanly. The habit has outlasted the technology that produced it.`,
-      `A phone call with your mother takes a specific shape: the real information in the first five minutes, the longer middle section that is mostly company, the long negotiation of goodbye at the end. You know this shape. You have always known it. When she is gone you will reconstruct these calls from memory with surprising accuracy.`,
+      `A phone call with your mother takes a shape: the real information in the first five minutes, the longer middle section that is mostly company, the long negotiation of goodbye at the end. You know this shape. You have always known it. When she is gone you will reconstruct these calls from memory with surprising accuracy.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('s16PhoneCallEnding', true) },
@@ -55,7 +55,7 @@ export const EVENTS_SONDER_16 = [
       !G.mem?.s16HandwritingDead),
     text: () => pick([
       `You find a note in their handwriting — a grocery list, a card, something unremarkable at the time of writing and now entirely remarkable. The handwriting is more their presence than the photograph. The photograph captures an exterior. The handwriting is them making a decision about where to place their pen.`,
-      `The handwriting survives. A note stuck to the back of something, a name in the front of a book. You know this handwriting better than you realised — you have been reading it your entire life, and it is only now that you can see what it cost them to write, the specific way the pen went down.`,
+      `The handwriting survives. A note stuck to the back of something, a name in the front of a book. You know this handwriting better than you realised — you have been reading it your entire life, and it is only now that you can see what it cost them to write, the way the pen went down.`,
       `There is a box that has letters in it. You have not opened it yet. You know what the handwriting looks like. You will open it, eventually, when you are ready to hold that specific presence without being overwhelmed by it. Not yet.`,
     ]),
     choices: null,
@@ -70,7 +70,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 20 && !G.mem?.s16RecurringDream,
     text: () => pick([
-      `You have a recurring dream — not every week, but often enough that you know its geography. A building with rooms that extend further than the building should allow. A street that keeps turning. A figure at a specific distance who does not come closer. The dream is not frightening. It is just persistent. You have stopped asking what it means.`,
+      `You have a recurring dream — not every week, but often enough that you know its geography. A building with rooms that extend further than the building should allow. A street that keeps turning. A figure at a distance who does not come closer. The dream is not frightening. It is just persistent. You have stopped asking what it means.`,
       `In the recurring dream you are late for something and cannot get there. The obstacle changes — the transport, the road, the geography — but the lateness is always the same. You have had this dream for twenty years. You suspect you will have it for twenty more.`,
       `You return in dreams to a place you have never been in waking life — a room, a garden, a coast. You know its layout better than rooms you have lived in. The familiarity is not threatening. It is comfortable, almost. A place that belongs to you in the specific economy of sleep.`,
     ]),
@@ -87,7 +87,7 @@ export const EVENTS_SONDER_16 = [
     when: (G) => G.age >= 35 && !G.mem?.s16PhraseStoppedUsing,
     text: () => pick([
       `There is a phrase you stopped using at some point — a word from childhood, an expression from a particular era of your life — and you cannot remember stopping. It was in your mouth for years and then it wasn't. Language sheds things like this, quietly, without notice.`,
-      `You catch yourself about to say something your mother said, or your grandmother said, a phrase from that world that you absorbed without intending to. You say it or you don't say it. Either way, you've noticed the lineage — the specific way language moves through generations like furniture, without anyone deciding to pass it on.`,
+      `You catch yourself about to say something your mother said, or your grandmother said, a phrase from that world that you absorbed without intending to. You say it or you don't say it. Either way, you've noticed the lineage — the way language moves through generations like furniture, without anyone deciding to pass it on.`,
       `You use a word that nobody under thirty uses anymore. The word is not wrong, it is just dated, and the dating marks you — places you in a decade the way a song does, makes audible what you are made of. Language is biography.`,
     ]),
     choices: null,
@@ -102,9 +102,9 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => hasWeekend(G) && (G.age >= 20 && !G.mem?.s16SundayAfternoon),
     text: () => pick([
-      `Sunday afternoon has a specific quality that no other time of the week has. The particular light of it, the particular sense of time running toward something — the week's resumption — without having reached it yet. You have spent many hours in this light without knowing what to do with them, which may be exactly what Sunday afternoon is for.`,
+      `Sunday afternoon has a quality that no other time of the week has. The particular light of it, the particular sense of time running toward something — the week's resumption — without having reached it yet. You have spent many hours in this light without knowing what to do with them, which may be exactly what Sunday afternoon is for.`,
       `Three o'clock on Sunday. The day's plans, if there were any, have been completed or abandoned. What remains is an afternoon with no particular shape. You have never managed to fill this time with anything that feels adequate to it. The feeling of Sunday at three is its own complete experience.`,
-      `The Sunday afternoon of childhood was different from the Sunday afternoon of adulthood. Something about the quality of the hours, the way the light feels — expectant, slightly melancholy, entirely familiar. The specific weight of unstructured time. You carry it differently now but the feeling has the same floor.`,
+      `The Sunday afternoon of childhood was different from the Sunday afternoon of adulthood. Something about the quality of the hours, the way the light feels — expectant, slightly melancholy, entirely familiar. The weight of unstructured time. You carry it differently now but the feeling has the same floor.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('s16SundayAfternoon', true) },
@@ -135,7 +135,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.s16SoundOfDecade,
     text: () => pick([
-      `The sounds that place you in a decade are not the songs — it is the ambient sounds: the particular tone of a dial-up modem, the click of a camera shutter before cameras went silent, the specific quality of a television turning on in a certain era. These sounds are time. Hearing them is involuntary recall.`,
+      `The sounds that place you in a decade are not the songs — it is the ambient sounds: the particular tone of a dial-up modem, the click of a camera shutter before cameras went silent, the quality of a television turning on in a certain era. These sounds are time. Hearing them is involuntary recall.`,
       `A specific ringtone that was everywhere for three years and then was gone. A sound effect in a game. The mechanical feedback of a keyboard that no longer exists. The archive of a decade is mostly sound, and sound is not stored where you can access it on purpose — only when something triggers it.`,
       `There are sounds from your childhood that no longer exist in the world — sounds specific to machinery that has been replaced, to technology that has been discontinued. The children who will never hear them will not know what they're missing. That's the nature of what gets lost.`,
     ]),
@@ -151,9 +151,9 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 30 && !G.mem?.s16HandsIdle,
     text: () => pick([
-      `When you are not doing anything in particular, your hands do something. A specific gesture, a tapping pattern, a way of holding them that is yours and has always been yours. You do not choose it. Your hands choose it. You have been watching your hands do this for thirty years and you do not know when it started.`,
+      `When you are not doing anything in particular, your hands do something. A gesture, a tapping pattern, a way of holding them that is yours and has always been yours. You do not choose it. Your hands choose it. You have been watching your hands do this for thirty years and you do not know when it started.`,
       `You notice your hands in conversation — the specific gestures, the placement, the things your hands say while your mouth is saying something else. A therapist might have something to say about the relationship between the two. You just observe it.`,
-      `Your left hand and your right hand have different habits. The dominant one knows what it is for. The other one improvises — fidgets, holds, hovers. You are ambidextrous in this specific way: one hand performs, the other one lives.`,
+      `Your left hand and your right hand have different habits. The dominant one knows what it is for. The other one improvises — fidgets, holds, hovers. You are ambidextrous in this way: one hand performs, the other one lives.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('s16HandsIdle', true) },
@@ -199,7 +199,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 40 && !G.mem?.s16WhatGotFixed,
     text: () => pick([
-      `There is a thing you spent years on — a quality you wanted to change, a problem you set out to solve in yourself — and at some point you noticed it was better. Not gone, not healed in any clean sense. Better. The work that you were doing without always being aware you were doing it produced something. The specific thing that changed is not the same thing you were targeting. That is also usually how it works.`,
+      `There is a thing you spent years on — a quality you wanted to change, a problem you set out to solve in yourself — and at some point you noticed it was better. Not gone, not healed in any clean sense. Better. The work that you were doing without always being aware you were doing it produced something. The thing that changed is not the same thing you were targeting. That is also usually how it works.`,
       `Something you were anxious about for years stopped mattering. Not because the circumstances changed — because you changed, or exhausted the anxiety, or it simply ran out. You did not plan this. It happened the way sleep comes: without deciding to.`,
     ]),
     choices: null,
@@ -229,7 +229,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.season === 'winter' && (G.age >= 35 && !G.mem?.s16LightOfPlace),
     text: () => pick([
-      `Every place has a specific quality of light. Not the weather — the light. The specific angle at which the sun comes into a room at a certain hour in a certain season. You have been in enough rooms to know this is not universal: the light here is different from the light somewhere else, and both are different from the light of where you were as a child.`,
+      `Every place has a quality of light. Not the weather — the light. The angle at which the sun comes into a room at a certain hour in a certain season. You have been in enough rooms to know this is not universal: the light here is different from the light somewhere else, and both are different from the light of where you were as a child.`,
       `The light of a particular afternoon from a particular time in your life returns without warning — attached to nothing, a quality of illumination that your body recognizes from years ago. Autumn light, or winter morning light, or the specific yellow of a certain kind of lamp in a room that no longer exists. The light is the most persistent part of what a place was.`,
     ]),
     choices: null,
@@ -297,7 +297,7 @@ export const EVENTS_SONDER_16 = [
     text: () => pick([
       `The call home is a specific ritual. You dial at the time you have agreed on — accounting for the time difference, which you now calculate automatically — and you hear the room they are in: the television, a chair scraping, the quality of sound in a house that is not where you are. The call is fifteen minutes or an hour. Either way it is a thread back through the distance.`,
       `You describe your life to someone who cannot see it and they describe theirs to you and neither description is adequate to the thing. But the contact is the point — not the accuracy of the picture, just the voice over the distance, still there.`,
-      `After you hang up there is a specific feeling that lasts for the rest of the evening. Not sadness exactly — not longing exactly. Something that has no name in either language, the particular weight of being far from something that still claims you.`,
+      `After you hang up there is a feeling that lasts for the rest of the evening. Not sadness exactly — not longing exactly. Something that has no name in either language, the particular weight of being far from something that still claims you.`,
     ]),
     choices: null,
     effect: (p) => { p.m -= 3; p.r += 3; p.setMem('s16EmigrantCallHome', true) },
@@ -312,7 +312,7 @@ export const EVENTS_SONDER_16 = [
     when: (G) => G.age >= 36 && !G.mem?.s16BodyMemory,
     text: () => pick([
       `You are doing something physical — a movement, a task, a skill — and you notice that your body knows how without your mind's participation. The body learned this years ago and retained it without being asked. Muscle memory, yes, but also something richer: a kind of competence that lives below language, that could not be described before it is demonstrated.`,
-      `Something triggers a physical memory — a smell, a texture, a posture your body recognises. The memory is not visual. It is kinetic: the specific sensation of a time and place, something the body has kept that the mind has let go. The body is a better archive than you knew.`,
+      `Something triggers a physical memory — a smell, a texture, a posture your body recognises. The memory is not visual. It is kinetic: the sensation of a time and place, something the body has kept that the mind has let go. The body is a better archive than you knew.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('s16BodyMemory', true) },
@@ -390,7 +390,7 @@ export const EVENTS_SONDER_16 = [
       !G.mem?.s16WhatTheyCalledYou,
     text: () => pick([
       `There is a name only one person ever called you — a nickname from childhood, a version of your name that existed only in their mouth. Nobody else used it. With them gone, nobody uses it. The name died when they did, and you did not know you were going to miss it this specifically.`,
-      `The way they said your name. You cannot reproduce it. Nobody else pronounced it that way — the specific weight they gave it, the tone that meant they were talking to you and nobody else. This is among the things that are now only yours to remember, which means when you go, that version of your name goes too.`,
+      `The way they said your name. You cannot reproduce it. Nobody else pronounced it that way — the weight they gave it, the tone that meant they were talking to you and nobody else. This is among the things that are now only yours to remember, which means when you go, that version of your name goes too.`,
     ]),
     choices: null,
     effect: (p) => { p.r += 4; p.setMem('s16WhatTheyCalledYou', true) },

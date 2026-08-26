@@ -1,13 +1,13 @@
 // events_sonder_19.js — Contemplative layer, batch 19
 //
-// 28 quiet-year prose events across: the specific quality of other people's
+// 28 quiet-year prose events across: the quality of other people's
 // arguments you overhear, the handshake as a technology of trust, what you
 // pass through on the way to somewhere else, gardens and what they teach,
-// the specific pleasure of expertise in a small thing, what rain looks like
-// from inside looking out, the specific quality of work that no one sees,
+// the pleasure of expertise in a small thing, what rain looks like
+// from inside looking out, the quality of work that no one sees,
 // the conversation that changed something without announcing it, letters you
 // received and what happened to them, the table where your family ate,
-// the specific quality of a voice you can no longer hear, the walk you took
+// the quality of a voice you can no longer hear, the walk you took
 // when something had just happened, what you understand about your parents
 // now that you could not understand then.
 //
@@ -27,7 +27,7 @@ export const EVENTS_SONDER_19 = [
     weight: 2,
     when: (G) => hasCafe(G) && (G.age >= 18 && G.age <= 60 && !G.mem?.s19OverheardArgument),
     text: () => pick([
-      `The argument happening in the next room, or through the wall, or at the table adjacent in the restaurant. You are not involved and cannot fully hear it — enough to understand the category, not enough to understand the content. The specific intimacy of an overheard argument between people you cannot see: the tone of each voice, the rhythm of who speaks when, the quality of the silence after the longest speech. You are an accidental witness to something that is not about you and is briefly about you anyway, because you are there.`,
+      `The argument happening in the next room, or through the wall, or at the table adjacent in the restaurant. You are not involved and cannot fully hear it — enough to understand the category, not enough to understand the content. The intimacy of an overheard argument between people you cannot see: the tone of each voice, the rhythm of who speaks when, the quality of the silence after the longest speech. You are an accidental witness to something that is not about you and is briefly about you anyway, because you are there.`,
       `The argument through the wall. You know from the voices that it is the couple next door and you know from the rhythm that it is not a new argument. You cannot make out the words. The texture — the specific escalation and the specific withdrawal and the specific long silence — is legible without the content. You have been on the other side of a wall like this. Someone in another room heard that rhythm without the words.`,
     ]),
     choices: null,
@@ -73,7 +73,7 @@ export const EVENTS_SONDER_19 = [
     when: (G) => G.season === 'autumn' && (G.age >= 35 && G.age <= 70 && !G.mem?.s19Garden),
     text: () => pick([
       `The garden teaches the same lesson in each season, which is the lesson of timing. The seed that goes in at the wrong week fails. The plant that needs more water than you gave it fails quietly, without announcement, over several days. The thing you did in autumn is still in the ground in spring. The garden is a very slow feedback mechanism that requires patience and attention over the full year, and it is one of the few systems in adult life that cannot be rushed.`,
-      `The garden — even a very small one, even a set of containers on a balcony — is a commitment to the future in a specific way. You put something in the ground that will not be what it is going to be for months. The care you give now will express itself later, when you are a different person from the person who put it in. The garden operates on a timetable that is not yours to set.`,
+      `The garden — even a very small one, even a set of containers on a balcony — is a commitment to the future in a way. You put something in the ground that will not be what it is going to be for months. The care you give now will express itself later, when you are a different person from the person who put it in. The garden operates on a timetable that is not yours to set.`,
     ]),
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s19Garden', true) },
@@ -134,7 +134,7 @@ export const EVENTS_SONDER_19 = [
     weight: 2,
     when: (G) => G.currentYear <= 2000 && G.age >= 30 && !G.mem?.s19LettersReceived,
     text: () => pick([
-      `The letters you received. Not all of them — the administrative ones, the bills, the obligatory ones — but the letters that were written for you specifically, in the specific handwriting of a specific person, containing the specific things they chose to say on a specific day. You have kept some of them. The ones you kept are the ones that arrived at a moment when they were needed, or said something that the person could not say in person, or were from someone who is now gone and whose handwriting is now the only physical record of how they thought and spoke.`,
+      `The letters you received. Not all of them — the administrative ones, the bills, the obligatory ones — but the letters that were written for you specifically, in the specific handwriting of a specific person, containing the things they chose to say on a specific day. You have kept some of them. The ones you kept are the ones that arrived at a moment when they were needed, or said something that the person could not say in person, or were from someone who is now gone and whose handwriting is now the only physical record of how they thought and spoke.`,
       `There is a box or a drawer with letters in it. The letters are from a period of your life when letters were how long distances were managed. To read them now is to read documents from an earlier self — the self that received this news, this reassurance, this declaration — as well as documents of the people who sent them. The letter is a specific form of intimacy that does not survive translation into other formats.`,
     ]),
     choices: null,
@@ -149,8 +149,8 @@ export const EVENTS_SONDER_19 = [
     weight: 2,
     when: (G) => hasLeisureTravel(G) && (G.age >= 32 && !G.mem?.s19FamilyTable),
     text: () => pick([
-      `The table where your family ate. The specific seating arrangement that was never declared and was never changed. Your place, which was your place because it had always been your place — you cannot identify the moment it became yours. The objects that were always on the table during meals: the salt in its specific container, the thing that held the napkins, the worn patch on the surface at a certain end. You sat at that table for so many meals that the specific arrangement of it is one of the most precisely remembered spaces you know.`,
-      `The meals at the table. Not the significant ones — not the birthday dinners or the holiday feasts — but the ordinary ones, the evening meal repeated across a thousand evenings with the ordinary conversation and the ordinary news and the specific way each person at the table was present. Those meals were the daily reassertion of the family as a unit. They felt ordinary because they were ordinary. Their absence is the thing that makes the ordinary visible.`,
+      `The table where your family ate. The specific seating arrangement that was never declared and was never changed. Your place, which was your place because it had always been your place — you cannot identify the moment it became yours. The objects that were always on the table during meals: the salt in its specific container, the thing that held the napkins, the worn patch on the surface at a certain end. You sat at that table for so many meals that the arrangement of it is one of the most precisely remembered spaces you know.`,
+      `The meals at the table. Not the significant ones — not the birthday dinners or the holiday feasts — but the ordinary ones, the evening meal repeated across a thousand evenings with the ordinary conversation and the ordinary news and the way each person at the table was present. Those meals were the daily reassertion of the family as a unit. They felt ordinary because they were ordinary. Their absence is the thing that makes the ordinary visible.`,
     ]),
     choices: null,
     effect: (p) => { p.m += 2; p.r += 2; p.setMem('s19FamilyTable', true) },
@@ -182,7 +182,7 @@ export const EVENTS_SONDER_19 = [
     when: (G) => G.age >= 25 && G.age <= 70 && !G.mem?.s19WalkAfter,
     text: () => pick([
       `The walk you take when something has just happened. Not a planned walk — the walk that starts because you needed to be moving rather than still, because the walls of the room had become the wrong size for what was inside you. The walk goes somewhere or nowhere. The walk produces thinking that sitting cannot produce, which is why walking is older than most of the other things people do when they need to process something. You have taken this walk enough times to have a route. The route was not chosen. It accumulated.`,
-      `After a certain kind of news, you walked. The city or the neighbourhood was what it always is — ordinary, continuous, proceeding at its own speed — and you moved through it with the specific weight of the thing that had just happened still on you. The walking and the world's ordinariness were not opposed: the world's ordinariness was the thing you needed. The contrast between the interior state and the exterior world is sometimes what allows the interior state to settle.`,
+      `After a certain kind of news, you walked. The city or the neighbourhood was what it always is — ordinary, continuous, proceeding at its own speed — and you moved through it with the weight of the thing that had just happened still on you. The walking and the world's ordinariness were not opposed: the world's ordinariness was the thing you needed. The contrast between the interior state and the exterior world is sometimes what allows the interior state to settle.`,
     ]),
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s19WalkAfter', true) },
@@ -200,7 +200,7 @@ export const EVENTS_SONDER_19 = [
       !G.mem?.s19ParentsUnderstood,
     text: () => pick([
       `You are old enough now to understand some things about your parents that you could not understand from inside the position of being their child. The specific pressures of the age they were when you were young. The marriage as it was from inside it rather than as it appeared from where you were standing. The decisions that seemed arbitrary and were not. The decisions that seemed considered and were not. The understanding is not forgiveness — forgiveness is something else — but it is a view from a different angle, which is the thing that being the same age they were gives you.`,
-      `At the age your mother was when you were twelve, or your father when you were fifteen, you can see the position from the inside now. The things they were managing. The specific decade and its pressures. The relationship between them, which you saw as a child from the position of needing them and saw as an adolescent from the position of resisting them and can see now from the position of someone who has been in the middle of a life of their own for long enough to understand that being in the middle of a life is difficult in specific ways that childhood cannot show you.`,
+      `At the age your mother was when you were twelve, or your father when you were fifteen, you can see the position from the inside now. The things they were managing. The specific decade and its pressures. The relationship between them, which you saw as a child from the position of needing them and saw as an adolescent from the position of resisting them and can see now from the position of someone who has been in the middle of a life of their own for long enough to understand that being in the middle of a life is difficult in ways that childhood cannot show you.`,
     ]),
     choices: null,
     effect: (p) => { p.e += 2; p.r += 2; p.setMem('s19ParentsUnderstood', true) },
@@ -229,7 +229,7 @@ export const EVENTS_SONDER_19 = [
     weight: 2,
     when: (G) => G.age >= 7 && G.age <= 20 && !G.mem?.s19OthersHouseSmell,
     text: () => pick([
-      `A friend's house has a specific smell that is not the smell of your own house. Your own house has no smell you can identify from inside it — you are inside the smell of your own house, which means you cannot perceive it separately from the house. The friend's house announces itself. The cooking in it, the cleaning products, the particular arrangement of materials and people and habits that produces a composite that belongs to that household. You will recognise the smell of this house in thirty years if you encounter it again.`,
+      `A friend's house has a smell that is not the smell of your own house. Your own house has no smell you can identify from inside it — you are inside the smell of your own house, which means you cannot perceive it separately from the house. The friend's house announces itself. The cooking in it, the cleaning products, the particular arrangement of materials and people and habits that produces a composite that belongs to that household. You will recognise the smell of this house in thirty years if you encounter it again.`,
       `The houses of people you knew in childhood each had their own smell that you knew before you knew anything more articulable about them. The friend whose house smelled of a particular food. The relative whose house smelled of something you could not name then and can now. The smell of a house is the composite of the life being lived in it, and it is legible to visitors in ways it is not legible to the people inside it.`,
     ]),
     choices: null,
@@ -262,7 +262,7 @@ export const EVENTS_SONDER_19 = [
       G.age >= 25 && G.age <= 65 &&
       !G.mem?.s19UnnamedNeighbour,
     text: () => pick([
-      `There is a neighbour whose name you do not know. You have lived near this person for two years, or five years, or longer, and you know their face and their schedule and the approximate weight of their footsteps on the stairs and the specific time their alarm goes off in the morning. You have never exchanged more than the nod of mutual recognition in the hallway. The nod is a relationship. You would notice if it ended. You will not know their name when they leave.`,
+      `There is a neighbour whose name you do not know. You have lived near this person for two years, or five years, or longer, and you know their face and their schedule and the approximate weight of their footsteps on the stairs and the time their alarm goes off in the morning. You have never exchanged more than the nod of mutual recognition in the hallway. The nod is a relationship. You would notice if it ended. You will not know their name when they leave.`,
       `The people whose routines you have learned without meeting: the upstairs neighbour who paces at eleven at night, the one across the street who leaves at the same early hour every morning, the person in the flat below who plays the same music on Sunday evenings. You know them with the precision that proximity produces, which is not the same as knowing them. If you met at a remove from the building you share, you would not recognise each other.`,
     ]),
     choices: null,
@@ -277,8 +277,8 @@ export const EVENTS_SONDER_19 = [
     weight: 2,
     when: (G) => hasBooks(G) && (G.age >= 8 && G.age <= 22 && !G.mem?.s19LibraryFeeling),
     text: () => pick([
-      `The specific feeling of a public library: a place that contains more than you can read in a lifetime, organised in a system you have partially learned to navigate, where the expectation is not that you will read everything but that you are free to read anything. The library is one of the stranger institutions of civic life — a building full of things that are free for the taking, on condition that you bring them back. The trust on which this rests is mostly honoured.`,
-      `The library in your town or your school or your neighbourhood. The specific smell of it, which is the smell of paper and controlled air and a specific kind of quiet. You learned early to navigate the system — the numbers on the spines, the way the sections divided — and the navigation was one of the first intellectual skills you acquired that was genuinely useful. You can still navigate it. The system has not changed. You have grown taller than the shelves you first learned on.`,
+      `The feeling of a public library: a place that contains more than you can read in a lifetime, organised in a system you have partially learned to navigate, where the expectation is not that you will read everything but that you are free to read anything. The library is one of the stranger institutions of civic life — a building full of things that are free for the taking, on condition that you bring them back. The trust on which this rests is mostly honoured.`,
+      `The library in your town or your school or your neighbourhood. The smell of it, which is the smell of paper and controlled air and a kind of quiet. You learned early to navigate the system — the numbers on the spines, the way the sections divided — and the navigation was one of the first intellectual skills you acquired that was genuinely useful. You can still navigate it. The system has not changed. You have grown taller than the shelves you first learned on.`,
     ]),
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s19LibraryFeeling', true) },
@@ -295,8 +295,8 @@ export const EVENTS_SONDER_19 = [
       G.age >= 25 &&
       !G.mem?.s19AnimalHouse,
     text: () => pick([
-      `The animal in the house knows you in a way that is not human and therefore not comparable to being known in a human way, and yet it is knowledge. The animal knows your schedule, your moods in the approximate way moods can be read from posture and approach, the specific sounds that mean what they mean. The relationship is not symmetrical — you know what the animal cannot know about itself — and is also not one-directional. The animal's attention to you is not performance.`,
-      `The animal asleep in the specific place it always sleeps. The routine negotiated over months until it became the routine: the time of feeding, the expectation at the door, the place on the furniture that was at some point conceded. The animal's presence organises small parts of the day in ways you would notice if they stopped. This is not nothing. The noticing is not nothing.`,
+      `The animal in the house knows you in a way that is not human and therefore not comparable to being known in a human way, and yet it is knowledge. The animal knows your schedule, your moods in the approximate way moods can be read from posture and approach, the sounds that mean what they mean. The relationship is not symmetrical — you know what the animal cannot know about itself — and is also not one-directional. The animal's attention to you is not performance.`,
+      `The animal asleep in the place it always sleeps. The routine negotiated over months until it became the routine: the time of feeding, the expectation at the door, the place on the furniture that was at some point conceded. The animal's presence organises small parts of the day in ways you would notice if they stopped. This is not nothing. The noticing is not nothing.`,
     ]),
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s19AnimalHouse', true) },
@@ -331,7 +331,7 @@ export const EVENTS_SONDER_19 = [
       !G.mem?.s19ChildrenTaught,
     text: () => pick([
       `The children taught: how to be looked at with total expectation, which is not the same as being admired. They taught the specific limits of what you can control — the enormous effort that goes into producing a person who then becomes, despite the effort and in some cases because of it, themselves. They taught you what love without negotiated conditions looks like from the inside of it. They taught you what it is to be responsible for someone who will one day be responsible for themselves, which is the strange arc of the whole thing.`,
-      `What you learned from having children: a specific kind of attention you did not previously have, directed at a thing outside yourself that you cannot fully control. The sleep that is always partial for years. The specific way the world becomes dangerous again after years of taking it as safe. The exhaustion that is not the same as the exhaustion of other things. And the other thing, which is harder to name, which is what it is to have someone in the world who is in the world partly because you are.`,
+      `What you learned from having children: a kind of attention you did not previously have, directed at a thing outside yourself that you cannot fully control. The sleep that is always partial for years. The way the world becomes dangerous again after years of taking it as safe. The exhaustion that is not the same as the exhaustion of other things. And the other thing, which is harder to name, which is what it is to have someone in the world who is in the world partly because you are.`,
     ]),
     choices: null,
     effect: (p) => { p.e += 2; p.m += 2; p.setMem('s19ChildrenTaught', true) },
@@ -363,7 +363,7 @@ export const EVENTS_SONDER_19 = [
       G.age >= 35 && G.age <= 60 &&
       !G.mem?.s19DeepExpertisePleasure,
     text: () => pick([
-      `The specific pleasure of expertise: when the problem arrives and the answer arrives with it, not as a conclusion to a chain of reasoning but as a whole thing, present before the reasoning that would support it. You know the reasoning — you could produce it — but the knowing preceded the reasoning. This is what twenty years produces: not just the facts but the pattern-recognition that operates faster than conscious thought, delivering verdicts that the conscious mind then endorses.`,
+      `The pleasure of expertise: when the problem arrives and the answer arrives with it, not as a conclusion to a chain of reasoning but as a whole thing, present before the reasoning that would support it. You know the reasoning — you could produce it — but the knowing preceded the reasoning. This is what twenty years produces: not just the facts but the pattern-recognition that operates faster than conscious thought, delivering verdicts that the conscious mind then endorses.`,
       `At this level of practice, the work produces a pleasure that is not available to beginners: the pleasure of difficulty that is not too difficult, of the problem that requires everything you know but no more. The challenge and the competence are calibrated to each other. This is the thing that the years of learning were building toward — not mastery as a destination, but mastery as the opening of a new layer of difficulty that is precisely commensurate with what you have become.`,
     ]),
     choices: null,
@@ -430,8 +430,8 @@ export const EVENTS_SONDER_19 = [
       (G.flags.has('cancer_survivor') || G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.flags.has('lost_partner')) &&
       !G.mem?.s19HospitalWardNight),
     text: () => pick([
-      `The hospital ward at night is a different place from the ward during visiting hours. The corridors dim to a different level. The sounds change: the machinery that was background becomes audible, the specific sounds of a place that is not sleeping but is doing its work at a reduced pace. The night staff move in a different register. You have been in a hospital ward at night — as a patient or as a visitor sitting through it — and the quality of the hours between two and five in the morning in a medical ward is a specific knowledge that doesn't translate to any other context.`,
-      `Two in the morning in the ward. The light from the corridor coming under the door. The sound of the monitoring equipment at a specific frequency. The night nurse checking something. The quality of the other beds, which you know without looking. This hour in this place is a specific hour in a specific place that has no equivalent elsewhere. You know it because you were in it. The knowledge is not transferable. It is the record of a specific night.`,
+      `The hospital ward at night is a different place from the ward during visiting hours. The corridors dim to a different level. The sounds change: the machinery that was background becomes audible, the sounds of a place that is not sleeping but is doing its work at a reduced pace. The night staff move in a different register. You have been in a hospital ward at night — as a patient or as a visitor sitting through it — and the quality of the hours between two and five in the morning in a medical ward is a knowledge that doesn't translate to any other context.`,
+      `Two in the morning in the ward. The light from the corridor coming under the door. The sound of the monitoring equipment at a frequency. The night nurse checking something. The quality of the other beds, which you know without looking. This hour in this place is a specific hour in a specific place that has no equivalent elsewhere. You know it because you were in it. The knowledge is not transferable. It is the record of a specific night.`,
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s19HospitalWardNight', true) },
