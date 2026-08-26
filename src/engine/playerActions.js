@@ -47,7 +47,7 @@ export function generatePartnerProfile(state, overrides = {}) {
     occupation: pickFrom(PARTNER_OCCUPATIONS),
     looks, smarts, wealthStat, craziness,
     relationshipQuality: randomBetween(45, 72),
-    married: false, engaged: false, years: 0,
+    married: false, engaged: false, years: 0, alive: true,
     traits: pickTraits(ADULT_TRAITS),
   }
 }

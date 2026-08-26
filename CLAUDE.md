@@ -249,13 +249,42 @@ Legal quality scales by regime: democracies have fair courts (1.0×), military d
 
 ### Partner Lifecycle (`src/engine/tick.js: tickPartner`)
 
-Called each year via `advanceYear`. Partner ages +1/year. At age 75+ there's a death probability (increases with age). On death: partner removed, `widowed` or `lost_partner` flags set, death logged in lifeLog. Relationship quality drifts ±1 per year.
+Called each year via `advanceYear`. Partner ages +1/year and `partner.years` increments. At age 75+ there's a death probability (increases with age). On death: partner removed, `widowed` or `lost_partner` flags set, death logged in lifeLog. Relationship quality drifts ±1 per year.
+
+Note: this function was a no-op for every partner in the game until August 2026. It bailed on `!state.partner.alive`, and no partner was ever constructed with an `alive` field — so partners never aged, never died, quality never drifted, and `partner.years` (which gates marriage timing and the partner-moments memory layer) stayed at 0 forever. The guard is now `alive === false`, so a partner from an older save counts as alive.
+
+### Life Course (`src/engine/lifeCourse.js`)
+
+Work, a partner, a marriage, children, retirement. Every one of these was a button in a panel and nothing else, so a life nobody steered reached sixty-five having never held a job, married anyone or had a child — which also starved the `earned` register and the entire follow-through layer, both written about a partner, a child, a job.
+
+`tickLifeCourse(state)` runs each year from `tick()` and supplies these by default. **Every hook is a no-op if the player has already filled that slot**: it is a default, not a policy.
+
+The demography is anchored to the historical record, not invented, and interpolated between anchor years:
+
+- `femaleWorkChance(country, year)` — female labour force participation by archetype, modulated by the country's own female-to-male literacy ratio. Near 60% in sub-Saharan Africa for the whole period; near 5% in the Gulf in 1950.
+- `workEntryAge(state)` — a subsistence question, not a policy one: GDP tier, urban share, era, and schooling already completed.
+- `marriageAge(state)` — archetype medians with a regional male-female gap, modulated by urbanisation, schooling and female literacy. The literacy term is **one-sided** (it pulls early, never late) because the rich-world tables were calibrated on high-literacy populations already.
+- `totalFertility(state)` — archetype TFR, with `TFR_BY_COUNTRY` overrides for the countries whose fertility history diverges sharply from their archetype (Egypt and Brazil are both `developing_urban` and a full child apart).
+- `retirementAge(state)` — returns `null` where there is no pension system to be inside; a smallholder does not retire, and gets prose about the work redistributing itself instead.
+- `chooseCareer(state)` — `getAvailableCareers` answers "is this legal for this character", which is not "is this what someone like this does". Weighted by field against rural-poor / urban-poor / urban-rich columns, so a 1974 Ethiopian villager does not become a dog walker.
+
+Measured against the record (`tests/demography.test.js`, which fails if this drifts):
+
+| | median marriage age | real | completed fertility | real TFR |
+|---|---|---|---|---|
+| Nigeria 1962 | 20 | 21 | 6.3 | 6.3 |
+| India 1975 | 22 | 21 | 3.0 | 2.8 |
+| Egypt 1990 | 23 | 24 | 3.4 | 3.2 |
+| Brazil 1995 | 25 | 25 | 2.0 | 1.7 |
+| United States 1950 | 24 | 23 | 1.7 | 1.9 |
+| Germany 1970 | 30 | 29 | 1.4 | 1.4 |
+| Japan 1980 | 30 | 30 | 1.1 | 1.35 |
 
 ---
 
 ## The Simulation Contract
 
-Three rules the engine must keep, each of which was broken and is now enforced by
+Four rules the engine must keep, each of which was broken and is now enforced by
 `tests/` and by simulation:
 
 **Health is not a ratchet.** `healthCeiling(state)` sets a plateau from age, the
@@ -271,6 +300,8 @@ birth country — drives salary, promotion pay, healthcare mortality, illness ri
 the poverty premium, career availability and which world events reach you.
 Emigration used to change the prose and nothing else. A world event may set
 `followsEmigrant: true` to reach the diaspora as news from home.
+
+**An unsteered life is still a life.** `tickLifeCourse` supplies work, partnering, marriage, children and retirement at era- and place-accurate rates, stepping aside wherever the player has acted. Before it, over 150 unsteered lives: 7% ever had a career, 4% ever had a partner, 0% ever married, 1% ever had children. After: 98%, 100%, 82%, and fertility matching the record country by country.
 
 **Prose layers are layers, not fallbacks.** `buildYearTexture` is called every
 year with `{ specificOnly: true }`: it speaks when the memory, grief, condition,

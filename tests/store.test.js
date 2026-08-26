@@ -23,10 +23,17 @@ const clearStorage = () => { for (const k of Object.keys(store)) delete store[k]
 // player leaves for the title screen. Going to the title is the real save path,
 // and it is also what a reload looks like — state gone, storage kept.
 function persistAndReload() {
+  // Read the slot BEFORE going to the title, which resets the store. Taking the
+  // first natalis_v* key in storage instead made this intermittently assert
+  // against the wrong save: livedTo() retries when a life ends early, every
+  // attempt claims a slot via findAvailableSlot, and the character the test
+  // actually cares about ends up in natalis_v2 while natalis_v1 still holds a
+  // dead newborn from a discarded attempt.
+  const slot = S().activeSaveSlot ?? 0
   S().goToTitle()
-  const slotKey = Object.keys(store).find(k => /^natalis_v\d$/.test(k))
-  expect(slotKey, 'a save slot was written').toBeTruthy()
-  return { slotKey, slot: Number(slotKey.replace('natalis_v', '')) - 1 }
+  const slotKey = `natalis_v${slot + 1}`
+  expect(store[slotKey], 'a save slot was written').toBeTruthy()
+  return { slotKey, slot }
 }
 
 /**

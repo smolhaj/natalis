@@ -21,6 +21,7 @@ import {
 } from './character'
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
+import { tickLifeCourse } from './lifeCourse'
 
 function createProxy(state) {
   return {
@@ -306,7 +307,7 @@ function buildEffectProxy(state) {
       wealthStat: randomBetween(20, 80),
       craziness: randomBetween(10, 70),
       relationshipQuality: overrides.quality ?? randomBetween(55, 75),
-      married: false, engaged: false, years: 0,
+      married: false, engaged: false, years: 0, alive: true,
       traits: pickTraits(ADULT_TRAITS),
     }
     // Partners met at 28+ have a rising chance of having kids from a prior relationship
@@ -1504,10 +1505,15 @@ function tickSiblings(state) {
 // ─── Fame ticking ─────────────────────────────────────────────────────────────
 
 function tickPartner(state) {
-  if (!state.partner || !state.partner.alive) return state
+  // `alive === false` rather than `!alive`: partners built before this field
+  // existed carry no `alive` at all, and treating those as dead is what made
+  // this whole function a no-op for every partner in the game.
+  if (!state.partner || state.partner.alive === false) return state
   // Partner ages each year; approximate age from stored value
   const partnerAge = (state.partner.age ?? 0) + 1
-  let partner = { ...state.partner, age: partnerAge }
+  // Years together drives marriage timing, the partner-moments memory layer and
+  // the relationship-quality arc. Nothing had ever incremented it.
+  let partner = { ...state.partner, age: partnerAge, years: (state.partner.years ?? 0) + 1 }
   // Natural death probability increases with age
   let deathProb = 0
   if (partnerAge >= 75) deathProb = 0.04 + (partnerAge - 75) * 0.012
@@ -2197,6 +2203,16 @@ export function tick(state) {
     }
     s.queue = [graduationEvent, ...s.queue]
   }
+
+  // ─── The ordinary course of a life ──────────────────────────────────────────
+  // Work, a partner, a marriage, children, retirement. Every one of these was a
+  // button and nothing else, so an unsteered life reached sixty-five having
+  // never held a job or married anyone — which also starved the `earned`
+  // register and the whole follow-through layer, both of which are written
+  // about a partner, a child, a job. Runs after enrollment so that schooling
+  // has already decided when work can start. Each hook is a no-op if the player
+  // has already filled that slot themselves.
+  s = tickLifeCourse(s)
 
   // Addiction health drain
   if (s.flags.includes('alcohol_addiction')) {

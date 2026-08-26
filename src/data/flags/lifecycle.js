@@ -4,6 +4,14 @@
  * downstream, per the follow-through-first rule.
  */
 export const LIFECYCLE_FLAGS = {
+
+  working_young: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Put to work as a child, in a household where the labour was needed and nobody called it a job — the set of things that were yours to do before the light went, getting bigger every year.',
+    intent: 'year_texture',
+    notes: 'Set by the life-course layer (src/engine/lifeCourse.js) where subsistence and rural poverty make child labour the norm rather than an event.',
+  },
   cared_for_children: { weight: 'major', category: 'family', description: 'Raised a child to adulthood with the relationship intact.', intent: 'event', notes: 'Earned in tick() when a child reaches 18 with relationshipQuality >= 50. Gates late_children_support and late_grandchild_born.' },
   questioning_sexuality: { weight: 'major', category: 'identity', description: 'Recognised something about their own desire, at an age and in a place that decided what it cost.', intent: 'event', notes: 'Set by adol_questioning_recognition. Gates the five era-specific LGBTQ events in specific_lives.' },
   plain_community_born: { weight: 'major', category: 'identity', description: 'Born into a plain Anabaptist community — the Ordnung, the buggy, the decision waiting at the end of adolescence.', intent: 'event', notes: 'Set by sl_plain_community_child (low-probability childhood roll). Gates sl_amish_rumspringa, which previously fired for any rural US Protestant teenager.' },

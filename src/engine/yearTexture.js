@@ -14753,6 +14753,13 @@ function buildYearTexture(state, opts = {}) {
     'You can say the number of years out loud now without the sentence rearranging itself around them.',
   ])
 
+  if (F.has('working_young') && Math.random() < 0.13) return pick([
+    'You have never in your life had the experience of a day with nothing in it that had to be done.',
+    'People who started work at twenty talk about it as a thing that began. For you there is no line to point at.',
+    'Your hands were finished before the rest of you was. They have looked like this since you were fourteen.',
+    'You can still do the movement without thinking — the exact one, the carrying one — and your body does it sometimes when you are not paying attention.',
+  ])
+
   if (F.has('suffrage_inheritance_passed_on') && Math.random() < 0.16) return pick([
     'You have started telling it the way it was told to you, with the same pause before the number, and you no longer know whether the number is right.',
     'One of them asked, last year, whether it was really true. You said yes. You have never checked.',
