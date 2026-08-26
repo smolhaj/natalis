@@ -6,7 +6,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_nasser_dream',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -132,7 +132,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_wasta_career',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Egypt' &&

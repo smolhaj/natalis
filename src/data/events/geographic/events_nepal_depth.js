@@ -167,7 +167,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_porter',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NEPAL(G) &&
@@ -208,7 +208,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_remittance_child',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NEPAL(G) &&
@@ -249,7 +249,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_remittance_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NEPAL(G) &&

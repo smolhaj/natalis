@@ -239,7 +239,7 @@ export const SENEGAL_EVENTS = [
 
   {
     id: 'sen_dakar_intellectual',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SENEGAL(G) &&

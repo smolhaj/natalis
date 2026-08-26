@@ -38,7 +38,7 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'ger_gastarbeiter_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -94,7 +94,7 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'ger_ddr_daily_life',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -268,7 +268,7 @@ export const GERMANY_FRANCE_EVENTS = [
 
   {
     id: 'fr_banlieue_second_gen',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'France' &&

@@ -55,7 +55,7 @@ export const OFW_EVENTS = [
   // ── FOLLOW-THROUGH: COST ACCOUNTING (young_adult, fires once) ─────────────
   {
     id: 'ofw_cost_accounting',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.ofwCostAccounting &&
@@ -83,7 +83,7 @@ export const OFW_EVENTS = [
 
   {
     id: 'ofw_return_stranger',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.ofwReturnStranger &&

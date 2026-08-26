@@ -9,7 +9,7 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_frelimo_independence',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&

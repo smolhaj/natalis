@@ -137,7 +137,7 @@ export const CAMBODIA_EVENTS = [
 
   {
     id: 'cam_second_generation_silence',
-    phase: 'adolescence',
+    phase: null,
     weight: 6,
     when: (G) => {
       if (G.character.country.name !== 'Cambodia') return false

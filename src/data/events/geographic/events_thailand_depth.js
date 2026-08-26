@@ -102,7 +102,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_muay_thai',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -144,7 +144,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_merit_making',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -188,7 +188,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_bar_economy',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -229,7 +229,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_royal_daily',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&

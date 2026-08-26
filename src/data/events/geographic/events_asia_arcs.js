@@ -39,7 +39,7 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_khmer_rouge_year_zero',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.caYearZero &&
@@ -253,7 +253,7 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_bangladesh_flood_annual',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     cooldown: 4,
     when: (G) =>
@@ -608,7 +608,7 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_pakistan_arranged_meeting',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.pkArrangedMeeting &&

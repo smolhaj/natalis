@@ -9,7 +9,7 @@ export const JORDAN_EVENTS = [
 
   {
     id: 'jor_palestinian_family',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Jordan' &&
@@ -37,7 +37,7 @@ export const JORDAN_EVENTS = [
 
   {
     id: 'jor_wasta_system',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Jordan' &&

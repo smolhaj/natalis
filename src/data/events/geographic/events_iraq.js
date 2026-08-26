@@ -27,7 +27,7 @@ const IRAQ_EVENTS = [
 
   {
     id: 'irq_baath_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Iraq' &&

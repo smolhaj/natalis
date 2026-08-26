@@ -176,7 +176,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ca2_china_tiananmen_witness',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -271,7 +271,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ocp_sole_support',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'China' &&

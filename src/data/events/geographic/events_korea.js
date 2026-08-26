@@ -221,7 +221,7 @@ export const KOREA_EVENTS = [
 
   {
     id: 'kr_compressed_generation',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       isSouthKorea(G) &&
@@ -298,7 +298,7 @@ export const KOREA_EVENTS = [
 
   {
     id: 'kr_sampo_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       isSouthKorea(G) &&

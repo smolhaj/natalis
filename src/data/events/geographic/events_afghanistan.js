@@ -10,7 +10,7 @@ export const AFGHANISTAN_EVENTS = [
 
   {
     id: 'afg_saur_revolution_1978',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&

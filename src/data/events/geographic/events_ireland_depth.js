@@ -13,7 +13,7 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_famine_shadow',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&

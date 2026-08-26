@@ -80,7 +80,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_copper_closure',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -120,7 +120,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_aids_orphan',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -161,7 +161,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_aids_orphan_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -182,7 +182,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_compound_lusaka',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -204,7 +204,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_mealie_crisis',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -244,7 +244,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_chinese_copper',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ZAMBIA(G) &&

@@ -46,7 +46,7 @@ export const SCANDINAVIA_EVENTS = [
 
   {
     id: 'scan_welfare_state_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       isNordic(G) &&
@@ -163,7 +163,7 @@ export const SCANDINAVIA_EVENTS = [
 
   {
     id: 'scan_finland_karelian_exile',
-    phase: 'childhood',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character?.country?.name === 'Finland' &&
@@ -179,7 +179,7 @@ export const SCANDINAVIA_EVENTS = [
 
   {
     id: 'scan_sweden_neutrality',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character?.country?.name === 'Sweden' &&

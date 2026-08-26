@@ -36,7 +36,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
 
   {
     id: 'aus_dep_ten_pound_pom_arrival',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Australia' &&

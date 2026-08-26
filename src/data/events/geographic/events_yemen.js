@@ -8,7 +8,7 @@ export const YEMEN_EVENTS = [
 
   {
     id: 'yem_saleh_era_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Yemen' &&

@@ -12,7 +12,7 @@ export const CAMEROON_DEPTH_EVENTS = [
 
   {
     id: 'cmr_dep_oil',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_CAMEROONIAN(G) &&
@@ -47,7 +47,7 @@ export const CAMEROON_DEPTH_EVENTS = [
 
   {
     id: 'cmr_dep_yaounde',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_CAMEROONIAN(G) &&
@@ -62,7 +62,7 @@ export const CAMEROON_DEPTH_EVENTS = [
 
   {
     id: 'cmr_dep_lions',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CAMEROONIAN(G) &&

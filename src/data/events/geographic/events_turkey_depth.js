@@ -169,7 +169,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_hemşehri',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TURKEY(G) &&

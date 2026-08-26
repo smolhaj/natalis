@@ -233,7 +233,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_partition_family_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'India' &&

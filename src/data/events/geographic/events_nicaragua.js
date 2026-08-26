@@ -11,7 +11,7 @@ export const NICARAGUA_EVENTS = [
 
   {
     id: 'nic_somoza_dynasty',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NICARAGUAN(G) &&

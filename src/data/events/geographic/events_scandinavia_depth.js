@@ -121,7 +121,7 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
 
   {
     id: 'fin_reparations_industry',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_FINNISH(G) &&

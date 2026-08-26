@@ -63,7 +63,7 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_mountain_summer',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       isLebanon(G) &&

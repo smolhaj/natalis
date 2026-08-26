@@ -6,7 +6,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
 
   {
     id: 'nl_dep_jodendeportatie',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&

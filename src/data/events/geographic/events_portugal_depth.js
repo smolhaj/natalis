@@ -94,7 +94,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
 
   {
     id: 'pt_dep_retornado_child',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -110,7 +110,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
 
   {
     id: 'pt_dep_luso_frances',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -126,7 +126,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
 
   {
     id: 'pt_dep_fado_political',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Portugal' &&

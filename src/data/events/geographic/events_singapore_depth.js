@@ -35,7 +35,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
 
   {
     id: 'sg_dep_nantah_closure_1980',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Singapore' &&

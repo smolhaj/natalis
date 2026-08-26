@@ -58,7 +58,7 @@ export const KENYA_DEPTH_EVENTS = [
 
   {
     id: 'ken_dep_runner',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       isKenya(G) &&

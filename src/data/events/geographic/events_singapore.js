@@ -53,7 +53,7 @@ const SINGAPORE_EVENTS = [
 
   {
     id: 'sg_kampung_clearing',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Singapore' &&

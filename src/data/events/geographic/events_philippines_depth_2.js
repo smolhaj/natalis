@@ -16,7 +16,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
 
   {
     id: 'ph_dep_bpo_shift',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -42,7 +42,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
 
   {
     id: 'ph_dep_fiesta',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Philippines' &&

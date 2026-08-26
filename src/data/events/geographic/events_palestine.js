@@ -119,7 +119,7 @@ export const PALESTINE_EVENTS = [
 
   {
     id: 'pal_first_intifada',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character?.country?.name === 'Palestine' &&

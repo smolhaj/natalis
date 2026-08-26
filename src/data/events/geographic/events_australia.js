@@ -7,7 +7,7 @@ export const AUSTRALIA_EVENTS = [
 
   {
     id: 'aus_white_australia_policy',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Australia' &&

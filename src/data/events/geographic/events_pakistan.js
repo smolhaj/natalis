@@ -6,7 +6,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_muhajir_karachi',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -21,7 +21,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_partition_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&

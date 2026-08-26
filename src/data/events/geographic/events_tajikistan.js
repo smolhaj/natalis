@@ -13,7 +13,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_soviet_dushanbe',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TAJIK(G) &&
@@ -74,7 +74,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_russia_migration',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_TAJIK(G) &&

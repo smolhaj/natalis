@@ -78,7 +78,7 @@ const CUBA_EVENTS = [
 
   {
     id: 'cub_santeria_underground',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&

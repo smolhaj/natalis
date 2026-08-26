@@ -189,7 +189,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_chechnya_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RUSSIA(G) &&

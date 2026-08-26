@@ -119,7 +119,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
 
   {
     id: 'ph_dep_moro_identity',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       isMindanao(G) &&
@@ -163,7 +163,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
 
   {
     id: 'ph_dep_seaman',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isPhilippines(G) &&
@@ -192,7 +192,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
 
   {
     id: 'ph_dep_bpo',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isPhilippines(G) &&

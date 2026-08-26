@@ -72,7 +72,7 @@ export const ERITREA_EVENTS = [
 
   {
     id: 'eri_national_service_indefinite',
-    phase: 'midlife',
+    phase: null,
     weight: 8,
     when: (G) =>
       IS_ERITREA(G) &&

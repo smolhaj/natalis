@@ -10,7 +10,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_junta_announcement',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -148,7 +148,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_civil_war_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -395,7 +395,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_geracao_rasca_2011',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Portugal' &&

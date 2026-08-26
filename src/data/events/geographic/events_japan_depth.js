@@ -148,7 +148,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_comfort_women_silence',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -222,7 +222,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_women_ceiling',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&

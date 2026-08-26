@@ -1519,7 +1519,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_bra_cor_identity',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -1572,7 +1572,7 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_bra_favela_texture',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&

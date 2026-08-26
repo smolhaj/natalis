@@ -77,7 +77,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_lra_northern',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
@@ -131,7 +131,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_boda_boda_city',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Uganda' &&

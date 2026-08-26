@@ -9,7 +9,7 @@ export const LIBYA_EVENTS = [
 
   {
     id: 'lby_gaddafi_jamahiriya',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Libya' &&

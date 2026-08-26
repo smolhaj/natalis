@@ -29,7 +29,7 @@ const RWANDA_EVENTS = [
 
   {
     id: 'rwa_habyarimana_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Rwanda' &&

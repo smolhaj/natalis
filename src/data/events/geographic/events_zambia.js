@@ -10,7 +10,7 @@ export const ZAMBIA_EVENTS = [
 
   {
     id: 'zmb_kaunda_humanism',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Zambia' &&
@@ -24,7 +24,7 @@ export const ZAMBIA_EVENTS = [
 
   {
     id: 'zmb_copper_belt',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Zambia' &&

@@ -116,7 +116,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_typhoon_season',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Philippines' &&

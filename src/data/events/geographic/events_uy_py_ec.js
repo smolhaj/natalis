@@ -109,7 +109,7 @@ const UY_PY_EC_EVENTS = [
 
   {
     id: 'pry_triple_alliance_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) => G.character.country.name === 'Paraguay' && G.currentYear >= 1940 && G.currentYear <= 1980 && G.age >= 8 && G.age <= 16 && !G.flags.has('pry_triple_alliance_memory'),
     text: 'The war. 1864 to 1870. Paraguay against Brazil, Argentina, and Uruguay at the same time. For five years. The teacher says: sixty percent of the population died. Some say seventy. After the war, four women for every man. After the war, the country was reorganized by the surviving women. You learn this and feel something that does not have a clean name in Spanish or Guaraní — the grief and the pride are the same feeling. We were nearly destroyed. We are still here.',

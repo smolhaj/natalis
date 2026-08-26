@@ -35,7 +35,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
 
   {
     id: 'eth_italian_invasion_1935',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_ETHIOPIAN(G) &&
@@ -205,7 +205,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
 
   {
     id: 'eth_runners',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ETHIOPIAN(G) &&

@@ -105,7 +105,7 @@ export const NEW_ZEALAND_EVENTS = [
 
   {
     id: 'nz_brain_drain',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NZ(G) &&

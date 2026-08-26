@@ -16,7 +16,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
 
   {
     id: 'pak_dep_cricket',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -211,7 +211,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
 
   {
     id: 'pak_dep_servant',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -277,7 +277,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
 
   {
     id: 'pak_dep_overseas_pull',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&

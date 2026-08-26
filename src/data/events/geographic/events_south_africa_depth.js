@@ -170,7 +170,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
 
   {
     id: 'sa_born_free_reality',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&

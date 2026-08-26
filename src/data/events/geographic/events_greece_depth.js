@@ -13,7 +13,7 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_prosfyges_family',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GREEK(G) &&
@@ -207,7 +207,7 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_gastarbeiter',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GREEK(G) &&

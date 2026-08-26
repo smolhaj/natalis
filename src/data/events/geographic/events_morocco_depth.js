@@ -56,7 +56,7 @@ export const MOROCCO_DEPTH_EVENTS = [
 
   {
     id: 'mor_sahrawi_tindouf',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_SAHRAWI(G) &&

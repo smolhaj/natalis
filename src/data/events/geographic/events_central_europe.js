@@ -10,7 +10,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'hun_1956_uprising_child',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Hungary' &&

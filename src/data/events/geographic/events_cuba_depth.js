@@ -150,7 +150,7 @@ export const CUBA_DEPTH_EVENTS = [
 
   {
     id: 'cub_dep_education',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&

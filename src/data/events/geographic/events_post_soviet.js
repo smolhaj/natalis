@@ -406,7 +406,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_professional_emigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.psProfessionalEmigration &&
@@ -470,7 +470,7 @@ export const POST_SOVIET_EVENTS = [
 
   {
     id: 'ps_returning_emigrant',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem.psReturningEmigrant &&

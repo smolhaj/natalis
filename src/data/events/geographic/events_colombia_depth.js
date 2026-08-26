@@ -141,7 +141,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
 
   {
     id: 'col_dep_choco_life',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_AFROCOLOMBIANO(G) &&
@@ -241,7 +241,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
 
   {
     id: 'col_dep_cafetero',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_COLOMBIA(G) &&

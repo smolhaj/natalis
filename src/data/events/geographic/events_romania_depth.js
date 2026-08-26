@@ -101,7 +101,7 @@ export const ROMANIA_DEPTH_EVENTS = [
 
   {
     id: 'rom_dep_orphan_generation',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&

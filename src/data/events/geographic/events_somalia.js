@@ -35,7 +35,7 @@ export const SOMALIA_EVENTS = [
 
   {
     id: 'som_clan_calculus',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Somalia' &&

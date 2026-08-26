@@ -58,7 +58,7 @@ export const LAOS_DEPTH_EVENTS = [
 
   {
     id: 'laos_dep_vientiane',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_LAOTIAN(G) &&

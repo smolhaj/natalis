@@ -13,7 +13,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_language_question',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_KAZAKH(G) &&
@@ -178,7 +178,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_steppe_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_KAZAKH(G) &&

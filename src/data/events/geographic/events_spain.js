@@ -297,7 +297,7 @@ export const SPAIN_EVENTS = [
 
   {
     id: 'es_brain_drain',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Spain' &&

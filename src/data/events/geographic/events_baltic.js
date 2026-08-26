@@ -13,7 +13,7 @@ export const BALTIC_EVENTS = [
 
   {
     id: 'balt_deportation_family',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       BALTIC_COUNTRIES.includes(G.character.country.name) &&
@@ -50,7 +50,7 @@ export const BALTIC_EVENTS = [
 
   {
     id: 'balt_soviet_school',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       BALTIC_COUNTRIES.includes(G.character.country.name) &&

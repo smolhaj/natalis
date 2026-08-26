@@ -16,7 +16,7 @@ export const IRAN_DEPTH_EVENTS = [
 
   {
     id: 'irn_dep_revolution_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -101,7 +101,7 @@ export const IRAN_DEPTH_EVENTS = [
 
   {
     id: 'irn_dep_martyr_child',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Iran' &&

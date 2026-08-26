@@ -53,7 +53,7 @@ export const MONGOLIA_EVENTS = [
 
   {
     id: 'mn_1990_revolution',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_MONGOLIA(G) &&

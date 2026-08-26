@@ -8,7 +8,7 @@ const ARMENIA_AZ_EVENTS = [
 
   {
     id: 'arm_genocide_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) => G.character.country.name === 'Armenia' && G.age >= 7 && G.age <= 16 && G.currentYear <= 1990 && !G.flags.has('arm_genocide_memory_bearer'),
     text: (G) => {

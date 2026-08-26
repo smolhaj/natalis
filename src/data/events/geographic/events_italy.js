@@ -33,7 +33,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_southern_emigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -189,7 +189,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_precariato',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -216,7 +216,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_mediterranean_crossing',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Italy' &&

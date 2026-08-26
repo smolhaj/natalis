@@ -66,7 +66,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_ayacucho_sendero',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_PERU(G) &&
@@ -129,7 +129,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_nikkei',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NIKKEI(G) &&
@@ -167,7 +167,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_afro_peruvian',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_AFRO_PERUVIAN(G) &&

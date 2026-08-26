@@ -24,7 +24,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_bhola_shadow',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -129,7 +129,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_garment_worker',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -213,7 +213,7 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_malaysia_decision',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&

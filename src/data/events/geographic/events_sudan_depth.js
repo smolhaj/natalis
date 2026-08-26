@@ -18,7 +18,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_two_niles',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_URBAN_SUDAN(G) &&

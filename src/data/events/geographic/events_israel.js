@@ -27,7 +27,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_founding_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 8,
     when: (G) =>
       isIsraeli(G) &&

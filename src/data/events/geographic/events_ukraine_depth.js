@@ -100,7 +100,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_soviet_identity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&

@@ -68,7 +68,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
 
   {
     id: 'ci_dep_cfa',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IVORIAN(G) &&

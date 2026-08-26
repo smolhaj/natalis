@@ -7,7 +7,7 @@ export const SOUTH_AFRICA_EVENTS = [
 
   {
     id: 'sa_soweto_1976',
-    phase: 'adolescence',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'South Africa' &&

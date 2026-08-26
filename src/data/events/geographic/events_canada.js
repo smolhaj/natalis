@@ -163,7 +163,7 @@ export const CANADA_EVENTS = [
 
   {
     id: 'can_chinese_head_tax',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Canada' &&

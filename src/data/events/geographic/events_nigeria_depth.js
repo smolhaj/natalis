@@ -4,7 +4,7 @@
 // Nollywood and Afrobeats as cultural assertion, church/mosque culture.
 
 const IS_NIGERIA = (G) => G.character.country?.name === 'Nigeria'
-const IS_SOUTH = (G) => IS_NIGERIA(G) && ['yoruba', 'igbo', 'ijaw'].includes(G.character.ethnicity)
+const IS_SOUTH = (G) => IS_NIGERIA(G) && ['yoruba', 'igbo', 'ijaw', 'other_nigerian'].includes(G.character.ethnicity)
 const IS_NORTH = (G) => IS_NIGERIA(G) && ['hausa_fulani', 'kanuri'].includes(G.character.ethnicity)
 const IS_LAGOS = (G) => IS_NIGERIA(G) && G.ruralUrban === 'urban' && G.currentYear >= 1970
 
@@ -123,7 +123,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_endsars',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NIGERIA(G) &&
@@ -179,7 +179,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_pentecostal',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SOUTH(G) &&

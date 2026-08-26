@@ -11,7 +11,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'gha_nkrumah_dream',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ghana' &&
@@ -199,7 +199,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'nga_tech_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -259,7 +259,7 @@ export const WEST_AFRICA_EVENTS = [
 
   {
     id: 'gha_nkrumah_school',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ghana' &&

@@ -249,7 +249,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'tkm_niyazov_cult',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) => IS_TURKMEN(G) && G.currentYear >= 1992 && G.currentYear <= 2006 && G.age >= 6 && G.age <= 18 && !G.mem?.tkmNiyazov,
     text: 'The school day begins with the Ruhnama: the spiritual book written by Saparmurat Niyazov, the president who renamed himself Turkmenbashi — Father of all Turkmen. The month of January is now Turkmenbashi. The month of April is named after his mother. The giant golden statue of him on top of the Neutrality Arch rotates to always face the sun. You know the Ruhnama passages by heart. You know the penalties for not knowing them. You have never discussed what you actually think about any of this.',

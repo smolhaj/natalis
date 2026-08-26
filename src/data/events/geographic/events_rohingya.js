@@ -58,7 +58,7 @@ export const ROHINGYA_EVENTS = [
 
   {
     id: 'roh_restricted_movement',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => IS_RAKHINE(G) && G.flags.has('rohingya_stateless') && G.age >= 18 && G.age <= 35 && !G.mem.rohMovement,
     text: 'To travel to the next township you need a permit. The permit costs money and takes days and may be refused without reason. Your cousin wanted to take his sick child to the hospital in Sittwe; the permit came back denied. He went anyway and was stopped at the checkpoint. The child\'s condition resolved before the permit was reapplied for. Not everyone\'s does.',

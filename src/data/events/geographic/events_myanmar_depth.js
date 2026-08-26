@@ -19,7 +19,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_ethnic_civil_war',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ETHNIC_MINORITY(G) &&
@@ -100,7 +100,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_jade_miner',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MYANMAR(G) &&
@@ -163,7 +163,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_chin_hills',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MYANMAR(G) &&

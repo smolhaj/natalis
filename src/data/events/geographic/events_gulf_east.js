@@ -85,7 +85,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'gulf_hajj_family',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.gulfHajjFamily &&
@@ -112,7 +112,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'gulf_reform_wave',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.gulfReformWave &&
@@ -134,7 +134,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'japan_company_culture',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem.japanCompanyCulture &&
@@ -238,7 +238,7 @@ export const GULF_EAST_EVENTS = [
 
   {
     id: 'korea_factory_1970s',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Korea' &&

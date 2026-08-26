@@ -22,7 +22,7 @@ export const NETHERLANDS_EVENTS = [
 
   {
     id: 'nl_hunger_winter_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&
@@ -194,7 +194,7 @@ export const NETHERLANDS_EVENTS = [
 
   {
     id: 'nl_water_country',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Netherlands' &&

@@ -24,7 +24,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_favela_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -357,7 +357,7 @@ const BRAZIL_EVENTS = [
 
   {
     id: 'bra_nordestino_migration',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&

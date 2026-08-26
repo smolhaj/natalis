@@ -6,7 +6,7 @@ export const ROMANIA_EVENTS = [
 
   {
     id: 'rom_securitate_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Romania' &&

@@ -15,7 +15,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_aldeias_comunais',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_RURAL_MOZ(G) &&
@@ -55,7 +55,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_reeducacao',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MOZ(G) &&
@@ -95,7 +95,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_landmine',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_RURAL_MOZ(G) &&
@@ -261,7 +261,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_aids_orphan',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MOZ(G) &&

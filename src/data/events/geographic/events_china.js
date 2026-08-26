@@ -379,7 +379,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_lying_flat',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       isChina(G) &&
@@ -738,7 +738,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_heihaizi_inspection',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       isChina(G) &&

@@ -170,7 +170,7 @@ export const MEXICO_DEPTH_EVENTS = [
 
   {
     id: 'mex_going_north_question',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isMex(G) &&
@@ -321,7 +321,7 @@ export const MEXICO_DEPTH_EVENTS = [
 
   {
     id: 'mex_cdmx_texture',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isMex(G) &&

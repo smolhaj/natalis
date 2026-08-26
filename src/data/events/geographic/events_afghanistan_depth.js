@@ -41,7 +41,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_education_revoked',
-    phase: 'adolescence',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&

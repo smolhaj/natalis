@@ -10,7 +10,7 @@ export const CROSSCUTTING_EVENTS = [
 
   {
     id: 'cc_domestic_worker_uniform',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.ccDomesticUniform &&
@@ -292,7 +292,7 @@ export const CROSSCUTTING_EVENTS = [
 
   {
     id: 'cc_camp_arrival_child',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.ccCampArrival &&
@@ -325,7 +325,7 @@ export const CROSSCUTTING_EVENTS = [
 
   {
     id: 'cc_camp_ration_day',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     cooldown: 3,
     when: (G) =>
@@ -338,7 +338,7 @@ export const CROSSCUTTING_EVENTS = [
 
   {
     id: 'cc_camp_informal_economy',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.ccCampEconomy &&
@@ -364,7 +364,7 @@ export const CROSSCUTTING_EVENTS = [
 
   {
     id: 'cc_camp_resettlement_interview',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem?.ccCampInterview &&

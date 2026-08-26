@@ -39,7 +39,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_postwar_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -89,7 +89,7 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_economic_miracle',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Japan' &&

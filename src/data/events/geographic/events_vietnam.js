@@ -147,7 +147,7 @@ export const VIETNAM_EVENTS = [
 
   {
     id: 'vn_doi_moi_awakening',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem.vnDoiMoiAwakening &&
@@ -278,7 +278,7 @@ export const VIETNAM_EVENTS = [
 
   {
     id: 'vn_factory_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       !G.mem.vnFactory &&

@@ -238,7 +238,7 @@ export const CARIBBEAN_EVENTS = [
 
   {
     id: 'tri_carnival_season',
-    phase: 'childhood',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_TRINIDAD(G) &&

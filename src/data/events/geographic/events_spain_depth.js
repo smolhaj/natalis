@@ -7,7 +7,7 @@ export const SPAIN_DEPTH_EVENTS = [
 
   {
     id: 'es_dep_posguerra_rojo',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -61,7 +61,7 @@ export const SPAIN_DEPTH_EVENTS = [
 
   {
     id: 'es_dep_chabolas',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Spain' &&

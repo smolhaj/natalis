@@ -185,7 +185,7 @@ export const ITALY_DEPTH_EVENTS = [
 
   {
     id: 'it_dep_ndrangheta',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Italy' &&

@@ -12,7 +12,7 @@ export const CAMEROON_EVENTS = [
 
   {
     id: 'cmr_bamileke_world',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CAMEROONIAN(G) &&
@@ -96,7 +96,7 @@ export const CAMEROON_EVENTS = [
 
   {
     id: 'cmr_douala_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_CAMEROONIAN(G) &&

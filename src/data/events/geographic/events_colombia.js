@@ -48,7 +48,7 @@ const COLOMBIA_EVENTS = [
 
   {
     id: 'col_la_violencia_rural',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Colombia' &&

@@ -8,7 +8,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_uncolonized_pride',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -178,7 +178,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_boom_years',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -257,7 +257,7 @@ export const THAILAND_EVENTS = [
 
   {
     id: 'tha_2020_protests',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Thailand' &&

@@ -38,7 +38,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_imf_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       isSouthKorea(G) &&
@@ -143,7 +143,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_hell_joseon',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isSouthKorea(G) &&
@@ -188,7 +188,7 @@ export const KOREA_DEPTH_EVENTS = [
 
   {
     id: 'kr_dep_pc_bang',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       isSouthKorea(G) &&

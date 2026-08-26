@@ -84,7 +84,7 @@ export const NAMIBIA_DEPTH_EVENTS = [
 
   {
     id: 'nam_dep_walvis_bay',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NAMIBIAN(G) &&
@@ -128,7 +128,7 @@ export const NAMIBIA_DEPTH_EVENTS = [
 
   {
     id: 'nam_dep_german_community',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NAMIBIAN(G) &&

@@ -89,7 +89,7 @@ export const INDIA_DEPTH_EVENTS = [
 
   {
     id: 'ind_regional_language_pride',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -221,7 +221,7 @@ export const INDIA_DEPTH_EVENTS = [
 
   {
     id: 'ind_village_visit_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&

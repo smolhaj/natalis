@@ -37,7 +37,7 @@ export const FIJI_EVENTS = [
 
   {
     id: 'fj_cane_season',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_FIJI(G) &&

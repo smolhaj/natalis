@@ -15,7 +15,7 @@ export const KYRGYZSTAN_EVENTS = [
 
   {
     id: 'kyr_manas_epic',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_KYRGYZ(G) &&
@@ -32,7 +32,7 @@ export const KYRGYZSTAN_EVENTS = [
 
   {
     id: 'kyr_steppe_heritage',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_KYRGYZ(G) &&

@@ -9,7 +9,7 @@ export const MYANMAR_EVENTS = [
 
   {
     id: 'mya_socialist_isolation',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Myanmar' &&

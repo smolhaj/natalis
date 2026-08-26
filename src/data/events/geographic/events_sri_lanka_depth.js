@@ -56,7 +56,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
 
   {
     id: 'slk_dep_estate_tamil',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Sri Lanka' &&
@@ -203,7 +203,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
 
   {
     id: 'slk_dep_colombo_checkpoints',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Sri Lanka' &&

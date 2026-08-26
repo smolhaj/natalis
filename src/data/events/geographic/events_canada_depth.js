@@ -65,7 +65,7 @@ export const CANADA_DEPTH_EVENTS = [
 
   {
     id: 'can_dep_quiet_revolution_quebec',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -142,7 +142,7 @@ export const CANADA_DEPTH_EVENTS = [
 
   {
     id: 'can_dep_prairie_homestead',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Canada' &&

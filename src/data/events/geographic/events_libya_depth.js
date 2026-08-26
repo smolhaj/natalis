@@ -37,7 +37,7 @@ export const LIBYA_DEPTH_EVENTS = [
 
   {
     id: 'lby_dep_green_book_school',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_LIBYA(G) &&

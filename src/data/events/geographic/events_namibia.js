@@ -50,7 +50,7 @@ const NAMIBIA_EVENTS = [
 
   {
     id: 'nam_aids_generation',
-    phase: 'adolescence',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Namibia' &&
@@ -67,7 +67,7 @@ const NAMIBIA_EVENTS = [
 
   {
     id: 'nam_swapo_ruling_party',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Namibia' &&
@@ -126,7 +126,7 @@ const NAMIBIA_EVENTS = [
 
   {
     id: 'nam_diamond_wealth',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Namibia' &&
@@ -139,7 +139,7 @@ const NAMIBIA_EVENTS = [
 
   {
     id: 'nam_san_ancestral_land',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Namibia' &&
