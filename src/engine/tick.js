@@ -234,6 +234,18 @@ function buildEffectProxy(state) {
   }
   proxy.killPartner = () => { proxy._killPartner = true; proxy.mem['lastMajorEvent_bereavement'] = state.currentYear }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
+  // Its missing counterpart. Prison could only ever be entered through
+  // attemptCrime — a player action behind the crime panel, which passive mode
+  // does not show at all — so in a game carrying the Stasi, SAVAK, Camp Boiro,
+  // the ghost houses and the gulag, nobody could be arrested for anything they
+  // said, and 32 authored prison events were unreachable.
+  proxy.imprison = (years, opts = {}) => {
+    proxy._imprison = {
+      years: Math.max(1, Math.round(years) || 1),
+      political: opts.political === true,
+      charge: opts.charge ?? null,
+    }
+  }
   proxy.killParent = (which) => { proxy._killParent = which; proxy.mem['lastMajorEvent_bereavement'] = state.currentYear }
   proxy.setLastMajorEvent = (cat) => { proxy.mem[`lastMajorEvent_${cat}`] = state.currentYear }
   proxy.setResidency = (status) => { proxy._residencyStatus = status }
@@ -340,6 +352,22 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   if (proxy._releaseFromPrison) next = { ...next, inPrison: false, prisonSentence: 0 }
+  if (proxy._imprison && !next.inPrison) {
+    const { years, political, charge } = proxy._imprison
+    next = {
+      ...next,
+      inPrison: true,
+      prisonSentence: years,
+      career: null,          // the job does not wait
+      // A political conviction is still a conviction, and under the regime that
+      // handed it down it closes the same doors — which is the point of it.
+      criminalRecord: [...(next.criminalRecord ?? []),
+        { crime: charge ?? (political ? 'Political offence' : 'Convicted'), age: next.age, category: political ? 'political' : 'other' }],
+      flags: [...new Set([...(next.flags ?? []), 'imprisoned',
+        ...(political ? ['political_prisoner'] : [])])],
+      mem: { ...(next.mem ?? {}), originalSentence: years, imprisonedYear: next.currentYear },
+    }
+  }
   if (proxy._killParent && next.parents?.[proxy._killParent]) {
     const which = proxy._killParent
     next = { ...next, parents: { ...next.parents, [which]: { ...next.parents[which], alive: false, relationshipQuality: 0 } } }
@@ -1833,6 +1861,9 @@ export function tick(state) {
     if (remaining <= 0) {
       s.inPrison = false; s.prisonSentence = 0
       if (!s.flags.includes('served_prison_time')) s.flags = [...s.flags, 'served_prison_time']
+      // The post-release arc stages itself on years-since; without this stamp it
+      // reads releasedYear as "this year" forever and never advances.
+      s.mem = { ...(s.mem ?? {}), releasedYear: s.currentYear }
       s.log = [...s.log, { age: s.age, text: 'You are released from prison.', isKey: true }]
       // Parole event — queue if sentence was long
       if ((s.mem?.originalSentence ?? 0) >= 3) {
