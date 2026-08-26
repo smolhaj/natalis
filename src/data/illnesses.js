@@ -1,3 +1,15 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Treatment costs are already localised at the point of offer (see gdpCostMult
+// in checkIllnessRisk, tick.js). What was missing was time. A character
+// diagnosed in 1938 was offered chemotherapy, cognitive behavioural therapy and
+// antiretroviral drugs, none of which existed. `minYear` on a treatment is the
+// year that treatment was actually available to an ordinary patient — not the
+// year of the first paper.
+//
+// Every illness keeps at least one treatment with no minYear, so that no year
+// can ever produce an illness event with an empty set of choices. Keep it that
+// way: the pre-modern option is not filler, it is what the year actually had.
+// ─────────────────────────────────────────────────────────────────────────────
 export const ILLNESSES = [
   {
     id: 'cancer',
@@ -14,6 +26,7 @@ export const ILLNESSES = [
       {
         id: 'chemotherapy',
         name: 'Chemotherapy',
+        minYear: 1950,
         cost: 42000,
         successChance: 0.62,
         happinessEffect: -20,
@@ -70,6 +83,7 @@ export const ILLNESSES = [
       {
         id: 'bypass_surgery',
         name: 'Bypass Surgery',
+        minYear: 1968,
         cost: 55000,
         successChance: 0.68,
         happinessEffect: -15,
@@ -96,6 +110,7 @@ export const ILLNESSES = [
       {
         id: 'insulin',
         name: 'Insulin Therapy',
+        minYear: 1923,
         cost: 1800,
         successChance: 0.84,
         happinessEffect: -6,
@@ -132,6 +147,7 @@ export const ILLNESSES = [
       {
         id: 'antidepressants',
         name: 'Antidepressants',
+        minYear: 1958,
         cost: 1000,
         successChance: 0.62,
         happinessEffect: 12,
@@ -142,6 +158,7 @@ export const ILLNESSES = [
       {
         id: 'cbt',
         name: 'Cognitive Behavioural Therapy',
+        minYear: 1970,
         cost: 3500,
         successChance: 0.68,
         happinessEffect: 16,
@@ -152,12 +169,23 @@ export const ILLNESSES = [
       {
         id: 'combined',
         name: 'Medication & Therapy',
+        minYear: 1970,
         cost: 4500,
         successChance: 0.78,
         happinessEffect: 20,
         healthEffect: 6,
         outcomeSuccess: 'The combination works. You recognise yourself again.',
         outcomeFailure: 'Even combined treatment has not been enough. A different approach may be needed.',
+      },
+      {
+        id: 'rest_and_quiet',
+        name: 'Rest and Quiet',
+        cost: 200,
+        successChance: 0.20,
+        happinessEffect: 5,
+        healthEffect: 2,
+        outcomeSuccess: 'You are told to stop working and to walk in the afternoons. It is not treatment, but the weight lifts a little and you take what lifts it.',
+        outcomeFailure: 'You rest for a season. Nothing that is wrong is addressed, and the season ends.',
       },
     ],
     deathRisk: 0.02,
@@ -171,13 +199,28 @@ export const ILLNESSES = [
     triggerConditions: {
       minAge: 14,
       maxAge: null,
+      // Nobody was diagnosed with HIV before there was a name for it. The virus
+      // was isolated in 1983 and a blood test reached clinics in 1985; before
+      // that the illness existed but the diagnosis did not.
+      minYear: 1985,
       flagRequired: 'has_std',
       riskFactors: ['risky_behavior', 'intravenous_drug_use'],
     },
     treatments: [
       {
+        id: 'supportive_care',
+        name: 'Supportive Care',
+        cost: 2000,
+        successChance: 0.12,
+        happinessEffect: -10,
+        healthEffect: 2,
+        outcomeSuccess: 'They treat the infections as they arrive and nothing underneath. It buys time, and time is what is on offer.',
+        outcomeFailure: 'There is nothing to give you but the treatment of whatever comes next. The ward is full of people your age.',
+      },
+      {
         id: 'antiretroviral',
         name: 'Antiretroviral Therapy',
+        minYear: 1987,
         cost: 7500,
         successChance: 0.88,
         happinessEffect: -8,
@@ -204,6 +247,7 @@ export const ILLNESSES = [
       {
         id: 'rehab',
         name: 'Rehabilitation Programme',
+        minYear: 1950,
         cost: 11000,
         successChance: 0.52,
         happinessEffect: 10,

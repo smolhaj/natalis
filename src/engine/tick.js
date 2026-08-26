@@ -642,7 +642,10 @@ export function getNextEvent(state) {
   // A glimpse of a stranger's life, on its own cadence rather than competing
   // for weight against 8,000 other events.
   const lastGlimpse = state.mem?.lastGlimpseYear ?? (state.character?.birthYear ?? currentYear)
-  if (state.age >= 8 && currentYear - lastGlimpse >= GLIMPSE_INTERVAL) {
+  // Age floor at 3, not 8: the glimpse pool now carries early-childhood entries
+  // (a stranger noticed at 3-5, before you have the words for it), and an
+  // age-8 gate meant those could never be scheduled.
+  if (state.age >= 3 && currentYear - lastGlimpse >= GLIMPSE_INTERVAL) {
     const glimpses = pool.filter(e => e.isGlimpse)
     if (glimpses.length && chance(0.55)) return weightedPick(glimpses, G, desire, leaning)
   }

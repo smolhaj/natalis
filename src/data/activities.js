@@ -818,7 +818,10 @@ export const ACTIVITIES = {
         const stake = localCost(20, liveGdp(p))
         p.mo -= stake
         const r = Math.random()
-        if (r < 0.000004) { p.mo += stake * 60000; p.m += 15; p.addFlag('lottery_winner') }
+        // No flag on the jackpot: `lottery_winner` is not in FLAG_REGISTRY and has
+        // no follow-through written for it, and an orphaned flag is a bug here.
+        // See needsOtherFile — this win deserves a memory and cannot have one yet.
+        if (r < 0.000004) { p.mo += stake * 60000; p.m += 15 }
         else if (r < 0.0004) { p.mo += stake * 200; p.m += 6 }
         else if (r < 0.015) { p.mo += stake * 5 }
         else if (r < 0.10) { p.mo += stake }

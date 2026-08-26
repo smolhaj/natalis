@@ -771,7 +771,11 @@ export const RIBBONS = [
     id: 'the_red_guard',
     name: 'The Red Guard',
     description: 'You were young and you believed. What you did in that belief is something you have lived with for the rest of your life.',
-    condition: (G) => G.flags.includes('red_guard_joined'),
+    // 'red_guard_joined' is set nowhere in the codebase, so this ribbon could
+    // never be awarded. The Cultural Revolution arc records the same life through
+    // the flag 'red_guard_era' and the memory key 'chinaRedGuard'
+    // (events_country_arcs_2.js) and 'red_guard' (events_historical.js).
+    condition: (G) => G.flags.includes('red_guard_era') || G.mem?.chinaRedGuard === true || G.mem?.red_guard === true,
     priority: 80,
     color: 'red',
   },
@@ -1380,10 +1384,14 @@ export const RIBBONS = [
     color: 'gold',
   },
   {
-    id: 'the_jakarta_survivor',
+    // Was a second ribbon with the id and condition of 'the_jakarta_survivor'
+    // above (priority 88), so it could never be reached — a duplicate id and a
+    // duplicate guard. Re-pointed at the other half of that year: the person who
+    // was in the country for the fall of Suharto without being the one hunted.
+    id: 'the_reformasi_witness',
     name: 'May 1998',
-    description: 'You were in Jakarta when the city burned. You counted people you could not reach.',
-    condition: (G) => G.flags.includes('jakarta_98_survived'),
+    description: 'You were in the city when it burned. You were not the one they were looking for, and you counted people you could not reach.',
+    condition: (G) => G.flags.includes('reformasi_generation') && G.character?.country?.name === 'Indonesia' && !G.flags.includes('jakarta_98_survived'),
     priority: 78,
     color: 'red',
   },

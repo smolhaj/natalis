@@ -8975,7 +8975,14 @@ for (const mod of CONTEMPLATIVE_MODULES) {
 
 // Guard-source probes. A guard that reads any of these is keyed to something
 // true about this particular life rather than about lives in general.
+// Direct reads of place/era state...
 const ANCHOR_PROBE = /currentCountry|character\s*\.\s*country|\bcountries\b|ethnicity|religion|casteSystem|archetype|currentYear|birthYear|\bregime\b|ruralUrban|currentPlace|\bplace\b|[Nn]eighborhood|lgbtqCriminalized|literacy|childMarriageRisk|\bgdp\b|\bseason\b/
+// ...plus guards that DELEGATE to a shared place/era predicate. The sonder
+// layer's _sonderGuards.js asks "does this life have electricity, piped water,
+// a telephone, a supermarket" rather than naming countries, which is exactly
+// the place-and-era texture the quiet-year design calls for — but it reads as
+// unanchored to a probe that only scans for state property names.
+const ANCHOR_HELPER_PROBE = /\b(?:isRich|isPoor|isUrban|isRural|hasElectricity|hasRunningWater|hasAppliances|hasPhone|hasMobile|hasInternet|hasRadio|hasTV|hasCar|hasMetro|hasElevator|hasFlown|hasSupermarket|hasBank|worksInOffice|hasCinema|isLiterate|wentToSchool|isColdCountry|isMonsoonCountry|isHotCountry|hasHealthcare|hasFormalJob|hasHousingMarket|hasLeisureTravel|hasBooks|hasCafe|hasOwnRoom|hasBus|hasClock|hasWeekend|hasLeisure|hasPhotographs)\s*\(/
 const EARNED_PROBE = /\bflags\b|\bmem\b|\bcareer\b|\bpartner\b|\bchildren\b|\bparents\b|\bsiblings\b|\bfriends\b|conditions|\bdesire\b|political_leaning|currentProject|residencyStatus|\beducation\b|criminalRecord|inPrison|\bmoney\b|\bfame\b|\bkarma\b/
 
 // Classification is lazy: computing it eagerly for all ~8,000 events costs
@@ -8986,7 +8993,7 @@ export function classifyEvent(e) {
   if (e.register !== undefined) return e
   let src = ''
   try { if (typeof e.when === 'function') src = Function.prototype.toString.call(e.when) } catch (_) { src = '' }
-  e.anchored = ANCHOR_PROBE.test(src)
+  e.anchored = ANCHOR_PROBE.test(src) || ANCHOR_HELPER_PROBE.test(src)
   if (e.contemplative) e.register = 'contemplative'
   else if (e.anchored) e.register = 'anchored'
   else if (EARNED_PROBE.test(src)) e.register = 'earned'
