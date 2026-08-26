@@ -75,16 +75,17 @@ export function locate(id) {
 let _corpus = null
 export async function loadCorpus() {
   if (_corpus) return _corpus
-  const [{ EVENTS }, { CAREERS }, { WORLD_EVENTS }, { COUNTRIES }, { HEADLINES }] = await Promise.all([
+  const [{ EVENTS }, { CAREERS }, { WORLD_EVENTS }, { COUNTRIES }, { HEADLINES }, { RIBBONS }] = await Promise.all([
     import('../../src/data/events.js'),
     import('../../src/data/careers.js'),
     import('../../src/data/worldEvents.js'),
     import('../../src/data/countries.js'),
     import('../../src/data/headlines.js'),
+    import('../../src/data/ribbons.js'),
   ])
   const careerEvents = CAREERS.flatMap(c => (c.events ?? []).map(e => ({ ...e, __career: c.id })))
   _corpus = {
-    EVENTS, CAREERS, WORLD_EVENTS, COUNTRIES, HEADLINES,
+    EVENTS, CAREERS, WORLD_EVENTS, COUNTRIES, HEADLINES, RIBBONS,
     careerEvents,
     // Everything the selector can ever draw a character event from.
     allCharacterEvents: [...EVENTS, ...careerEvents],

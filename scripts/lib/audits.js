@@ -1,0 +1,562 @@
+/**
+ * scripts/lib/audits.js
+ *
+ * Reachability audits. Every one of these exists because a specific, verified
+ * defect got all the way through review, the flag auditor and the test suite:
+ *
+ *   1  reverseFlags        a guard requiring a flag nothing ever sets
+ *   2  enumDomain          a string compared against an enum it is not in
+ *                          (including `G.currentCountry === 'Ethiopia'`, which
+ *                          is always false — currentCountry is an object)
+ *   3  unknownGProps       a guard reading a property G does not have
+ *   4  phaseReachability   a phase whose age band its own guard cannot reach
+ *   5  yearWindow          a year window that closes before anyone is old enough
+ *   6  worldEventScope     archetypes[] excluding the countries[] beside it
+ *
+ * Findings are objects: { level, code, where, id, message }.
+ *   level 'error' — the content is unreachable or the comparison is always false
+ *   level 'warn'  — reachable, but narrower or stranger than it looks authored
+ */
+
+import {
+  loadCorpus, vocab, gPropertyNames, sourceFiles, locate,
+  fnSource, stripComments, guardParam,
+} from './corpus.js'
+
+const ERR = 'error'
+const WARN = 'warn'
+
+function finding(level, code, id, where, message) {
+  return { level, code, id, where, message }
+}
+
+// ── Shared source-reading helpers ─────────────────────────────────────────────
+
+const OPS = '>=|<=|===|!==|==|!=|>|<'
+// A string literal, escapes included: 'Côte d\'Ivoire' must read as one value,
+// not as two broken fragments.
+const STR = `'(?:\\\\.|[^'\\\\])*'|"(?:\\\\.|[^"\\\\])*"`
+const unquote = raw => raw.slice(1, -1).replace(/\\(['"\\])/g, '$1')
+
+/** Every string literal compared against `prop`, with the operator used. */
+function literalsComparedTo(src, propPattern) {
+  const out = []
+  const p = propPattern
+  for (const m of src.matchAll(new RegExp(`${p}\\s*(${OPS})\\s*(${STR})`, 'g'))) {
+    out.push({ op: m[1], value: unquote(m[2]) })
+  }
+  for (const m of src.matchAll(new RegExp(`(${STR})\\s*(${OPS})\\s*${p}`, 'g'))) {
+    out.push({ op: m[2], value: unquote(m[1]) })
+  }
+  // [ 'a', 'b' ].includes(prop)  /  ['a','b'].indexOf(prop)
+  for (const m of src.matchAll(new RegExp(`\\[([^\\][]*)\\]\\s*\\.\\s*(?:includes|indexOf)\\(\\s*${p}`, 'g'))) {
+    for (const lit of m[1].matchAll(new RegExp(STR, 'g'))) out.push({ op: '===', value: unquote(lit[0]) })
+  }
+  return out
+}
+
+const negativeOp = op => op === '!==' || op === '!='
+
+/**
+ * The age (or year, or any numeric) bounds a guard actually enforces.
+ *
+ * Two authoring styles are in the corpus and both must be read, because they
+ * mean opposite things with the same operator:
+ *     when: (G) => G.age >= 55 && ...          → requires age >= 55
+ *     when: (G) => { if (G.age < 55) return false; ... } → ALSO requires >= 55
+ * Reading the second one literally is how a naive scan invents bounds that are
+ * not there. Anything it cannot read confidently is left unbounded and never
+ * reported: a false "this is dead" costs more than a missed one.
+ */
+export function numericBounds(rawSrc, propName) {
+  const src = stripComments(rawSrc)
+  // Scope the read to the guard's OWN argument. `G.children.some(c => c.age <= 14)`
+  // is a fact about a child, not about the character, and reading it as an age
+  // bound invents dead events that are perfectly alive.
+  const { name, destructured } = guardParam(rawSrc)
+  if (!name || (destructured && !destructured.includes(propName))) {
+    return { lo: -Infinity, hi: Infinity, sawLo: false, sawHi: false, confident: false }
+  }
+  const propPattern = `\\b${name}\\s*\\??\\s*\\.\\s*${propName}\\b`
+  let lo = -Infinity, hi = Infinity, sawLo = false, sawHi = false, confident = true
+
+  const apply = (op, n, inverted) => {
+    let o = op
+    if (inverted) {
+      o = { '>=': '<', '>': '<=', '<=': '>', '<': '>=', '===': null, '==': null, '!==': '===', '!=': '===' }[op]
+      if (!o) return
+    }
+    if (o === '>=') { if (n > lo) { lo = n; sawLo = true } }
+    else if (o === '>') { if (n + 1 > lo) { lo = n + 1; sawLo = true } }
+    else if (o === '<=') { if (n < hi) { hi = n; sawHi = true } }
+    else if (o === '<') { if (n - 1 < hi) { hi = n - 1; sawHi = true } }
+    else if (o === '===' || o === '==') { lo = Math.max(lo, n); hi = Math.min(hi, n); sawLo = sawHi = true }
+  }
+
+  const scan = (text, inverted) => {
+    for (const m of text.matchAll(new RegExp(`${propPattern}\\s*(${OPS})\\s*(\\d{1,4})\\b`, 'g'))) {
+      apply(m[1], Number(m[2]), inverted)
+    }
+    // reversed operands: `55 <= G.age`
+    const flip = { '>=': '<=', '<=': '>=', '>': '<', '<': '>', '===': '===', '==': '==', '!==': '!==', '!=': '!=' }
+    for (const m of text.matchAll(new RegExp(`(\\d{1,4})\\s*(${OPS})\\s*${propPattern}`, 'g'))) {
+      apply(flip[m[2]], Number(m[1]), inverted)
+    }
+  }
+
+  // Early-exit guards: `if (<cond>) return false` requires NOT cond.
+  let rest = src
+  for (const m of src.matchAll(/if\s*\(([^{;]*?)\)\s*\{?\s*return\s+false/g)) {
+    rest = rest.replace(m[0], ' ')
+    const cond = m[1]
+    // !(A && B) gives no single bound; !(A || B) requires both negations.
+    if (/&&/.test(cond)) continue
+    scan(cond, true)
+  }
+  // What is left is only trustworthy as an AND-chain.
+  if (/\|\|/.test(rest)) confident = false
+  else scan(rest, false)
+
+  return { lo, hi, sawLo, sawHi, confident }
+}
+
+/** Country names a guard positively requires, and every name it mentions. */
+export function countriesInGuard(src) {
+  const required = new Set()
+  const mentioned = new Set()
+  const NAME = `(?:currentCountry|\\.country)\\s*\\??\\s*\\.\\s*name`
+  for (const m of src.matchAll(new RegExp(`${NAME}\\s*(${OPS})\\s*(${STR})`, 'g'))) {
+    const v = unquote(m[2]); mentioned.add(v); if (!negativeOp(m[1])) required.add(v)
+  }
+  for (const m of src.matchAll(new RegExp(`(${STR})\\s*(${OPS})\\s*${NAME}`, 'g'))) {
+    const v = unquote(m[1]); mentioned.add(v); if (!negativeOp(m[2])) required.add(v)
+  }
+  for (const m of src.matchAll(new RegExp(`\\[([^\\][]*)\\]\\s*\\.\\s*includes\\(\\s*[^)]*?${NAME}`, 'g'))) {
+    for (const lit of m[1].matchAll(new RegExp(STR, 'g'))) { const v = unquote(lit[0]); mentioned.add(v); required.add(v) }
+  }
+  return { required, mentioned }
+}
+
+// ── 1. Reverse flag audit ─────────────────────────────────────────────────────
+
+/** Every flag any mechanism in the codebase can actually set. */
+export function collectSetFlags() {
+  const set = new Map() // flag → Set<file>
+  const add = (flag, rel) => {
+    if (!flag) return
+    if (!set.has(flag)) set.set(flag, new Set())
+    set.get(flag).add(rel)
+  }
+  const literals = (block, rel) => {
+    for (const m of block.matchAll(/['"]([A-Za-z_0-9]+)['"]/g)) add(m[1], rel)
+  }
+
+  for (const { rel, content } of sourceFiles()) {
+    // p.addFlag('x')
+    for (const m of content.matchAll(/addFlag\(\s*['"]([A-Za-z_0-9]+)['"]/g)) add(m[1], rel)
+    // addFlags: ['x', 'y']   /   flagsAdded: ['x']
+    for (const m of content.matchAll(/(?:addFlags|flagsAdded)\s*:\s*\[([^\]]*)\]/g)) literals(m[1], rel)
+    // flags.push('x')  — including the birth-time pushes in character.js
+    for (const m of content.matchAll(/flags\s*\.\s*push\(([^)]*)\)/g)) {
+      literals(m[1], rel)
+      // flags.push(GIFT_TYPES[i]) — the literals live in a const array above it,
+      // which is exactly how the five born_gifted_* flags are set.
+      for (const ident of m[1].matchAll(/\b([A-Z][A-Z_0-9]{2,}|[a-z][\w$]*)\b/g)) {
+        const decl = content.match(new RegExp(`(?:const|let|var)\\s+${ident[1]}\\s*=\\s*\\[([\\s\\S]*?)\\]`))
+        if (decl) literals(decl[1], rel)
+      }
+    }
+    // flags: [...state.flags, 'x']  and  [...new Set([...s.flags, 'x'])]
+    for (const m of content.matchAll(/flags\s*(?::|=)\s*\[[\s\S]{0,400}?\]\s*[,;)\n}]/g)) {
+      if (/\.\.\./.test(m[0])) literals(m[0], rel)
+    }
+    for (const m of content.matchAll(/new Set\(\s*\[\s*\.\.\.[^\]]*\]/g)) literals(m[0], rel)
+    // choice.tag becomes a flag verbatim in resolveChoice()
+    for (const m of content.matchAll(/\btag\s*:\s*['"]([A-Za-z_0-9]+)['"]/g)) add(m[1], rel)
+    // Data-file fields consumed by the engine as flags
+    for (const m of content.matchAll(/\b(?:addFlag|flag|survivorFlag|addictionFlag|setsFlag|grantsFlag)\s*:\s*['"]([A-Za-z_0-9]+)['"]/g)) add(m[1], rel)
+  }
+  return set
+}
+
+/**
+ * Flags a guard checks positively, and whether the guard actually DEPENDS on
+ * each one.
+ *
+ * The distinction matters. `G.flags.has('camp_born')` sitting alone in an
+ * AND-chain means the event dies if nothing sets that flag. The same call as
+ * one arm of `(A || B)` means only that arm is dead — the event still fires.
+ * Reporting both as "this can never fire" would be false, and an audit that
+ * cries wolf gets ignored, which is how the corpus got here.
+ *
+ * Ambiguity resolves downward: any `||` anywhere in an enclosing scope demotes
+ * the check to a dead branch rather than a dead event.
+ */
+export function flagChecksWithContext(src) {
+  const out = []
+  const re = /([!\s(&|]{0,3})(?:[A-Za-z_$][\w$]*\s*\??\s*\.\s*)*flags\s*\??\s*\.\s*(?:has|includes)\(\s*['"]([A-Za-z_0-9]+)['"]\s*\)/g
+  for (const m of src.matchAll(re)) {
+    if (/!\s*$/.test(m[1])) continue // !G.flags.has('x') — an absence, not a requirement
+    out.push({ flag: m[2], required: !hasOrInScope(src, m.index) })
+  }
+  return out
+}
+
+/** Does any parenthesised scope enclosing `index` contain a `||`? */
+function hasOrInScope(src, index) {
+  if (/\|\|/.test(src)) {
+    // Cheap pre-test: no `||` anywhere means every check is in an AND-chain.
+    let depth = 0
+    const opens = []
+    for (let i = 0; i < src.length; i++) {
+      if (src[i] === '(') opens.push(i)
+      else if (src[i] === ')') {
+        const start = opens.pop()
+        if (start != null && start < index && i > index) {
+          if (src.slice(start, i).includes('||')) return true
+        }
+      }
+      if (i === index) depth = opens.length
+    }
+    return true // the guard body itself contains `||` somewhere — stay conservative
+  }
+  return false
+}
+
+/** Backwards-compatible: the flags a guard checks positively, context ignored. */
+export function positiveFlagChecks(src) {
+  return new Set(flagChecksWithContext(src).map(c => c.flag))
+}
+
+export async function auditReverseFlags() {
+  const { allCharacterEvents, WORLD_EVENTS, RIBBONS } = await loadCorpus()
+  const setFlags = collectSetFlags()
+  const findings = []
+  const usage = new Map() // flag → { hard: Set<id>, soft: Set<id> }
+
+  const consider = (list, key) => {
+    for (const e of list) {
+      const src = stripComments(fnSource(e[key]))
+      if (!src) continue
+      for (const { flag, required } of flagChecksWithContext(src)) {
+        if (!usage.has(flag)) usage.set(flag, { hard: new Set(), soft: new Set() })
+        usage.get(flag)[required ? 'hard' : 'soft'].add(e.id)
+      }
+    }
+  }
+  consider(allCharacterEvents, 'when')
+  consider(WORLD_EVENTS, 'when')
+  consider(RIBBONS ?? [], 'condition')
+
+  const list = (set) => {
+    const ids = [...set]
+    return ids.slice(0, 4).join(', ') + (ids.length > 4 ? `, … (+${ids.length - 4})` : '')
+  }
+
+  for (const [flag, { hard, soft }] of [...usage].sort()) {
+    if (setFlags.has(flag)) continue
+    if (hard.size) {
+      findings.push(finding(ERR, 'flag-never-set', [...hard][0], locate([...hard][0]),
+        `guard requires flag '${flag}' and nothing in the codebase sets it — ` +
+        `${hard.size} guard${hard.size === 1 ? '' : 's'} can never pass: ${list(hard)}`))
+    } else {
+      findings.push(finding(WARN, 'flag-never-set-branch', [...soft][0], locate([...soft][0]),
+        `flag '${flag}' is checked in ${soft.size} guard${soft.size === 1 ? '' : 's'} but nothing sets it — ` +
+        `a dead branch of an OR, so the event still fires without it: ${list(soft)}`))
+    }
+  }
+  return findings
+}
+
+// ── 2. Enum-domain audit ──────────────────────────────────────────────────────
+
+export async function auditEnumDomains() {
+  const { allCharacterEvents, WORLD_EVENTS, HEADLINES } = await loadCorpus()
+  const V = await vocab()
+  const findings = []
+
+  const DOMAINS = [
+    { prop: '(?:\\bG\\b\\s*\\.|\\.)\\s*ethnicity', name: 'ethnicity', allowed: V.ethnicIds, hint: 'ethnicGroups id in countries.js' },
+    { prop: '(?:\\bG\\b\\s*\\.|\\.)\\s*religion', name: 'religion', allowed: V.religionKeys, hint: 'religionWeights key in countries.js' },
+    { prop: '(?:\\bG\\b\\s*\\.|\\.)\\s*ruralUrban', name: 'ruralUrban', allowed: V.ruralUrban, hint: 'urban | suburban | rural' },
+    { prop: '(?:\\bG\\b\\s*\\.|\\.)\\s*regime', name: 'regime', allowed: V.regimes, hint: 'regime in countries.js' },
+    { prop: '(?:\\bG\\b\\s*\\.|\\.)\\s*archetype', name: 'archetype', allowed: V.archetypes, hint: 'country archetype' },
+    { prop: '(?:\\bG\\b\\s*\\.|\\.)\\s*residencyStatus', name: 'residencyStatus', allowed: V.residency, hint: 'residencyStatus value' },
+  ]
+
+  const scanGuard = (e, kind) => {
+    const src = stripComments(fnSource(e.when))
+    if (!src) return
+    const where = locate(e.id)
+
+    // The comparison that is always false: currentCountry is an object.
+    for (const m of src.matchAll(/(currentCountry|\.\s*country)\s*(===|!==|==|!=)\s*['"]([^'"]+)['"]/g)) {
+      findings.push(finding(ERR, 'country-object-vs-string', e.id, where,
+        `compares ${m[1].replace(/\s+/g, '')} directly to '${m[3]}' — that is always false; ` +
+        `use ${m[1].includes('currentCountry') ? 'G.currentCountry?.name' : 'G.character.country.name'} === '${m[3]}'`))
+    }
+
+    for (const d of DOMAINS) {
+      for (const { op, value } of literalsComparedTo(src, d.prop)) {
+        if (value === '' || d.allowed.has(value)) continue
+        findings.push(finding(negativeOp(op) ? WARN : ERR, `unknown-${d.name}`, e.id, where,
+          `compares ${d.name} ${op} '${value}', which is not a known ${d.hint}` +
+          (negativeOp(op) ? ' — the check is always true' : ' — the guard can never pass')))
+      }
+    }
+
+    const { mentioned } = countriesInGuard(src)
+    for (const name of mentioned) {
+      if (!V.countryNames.has(name)) {
+        findings.push(finding(ERR, 'unknown-country', e.id, where,
+          `guard names country '${name}', which does not exist in countries.js`))
+      }
+    }
+  }
+
+  for (const e of allCharacterEvents) scanGuard(e, 'event')
+  for (const we of WORLD_EVENTS) {
+    scanGuard(we, 'world')
+    for (const name of we.countries ?? []) {
+      if (!V.countryNames.has(name)) {
+        findings.push(finding(ERR, 'unknown-country', we.id, locate(we.id),
+          `world event countries: [...] names '${name}', which does not exist in countries.js`))
+      }
+    }
+    const arche = we.archetypes
+    if (Array.isArray(arche)) {
+      for (const a of arche) {
+        if (!V.archetypes.has(a)) {
+          findings.push(finding(ERR, 'unknown-archetype', we.id, locate(we.id),
+            `world event archetypes: [...] names '${a}', which is not a country archetype`))
+        }
+      }
+    }
+  }
+  for (const h of HEADLINES ?? []) {
+    for (const name of h.countries ?? []) {
+      if (!V.countryNames.has(name)) {
+        findings.push(finding(ERR, 'unknown-country', h.id ?? h.text?.slice(0, 30), 'src/data/headlines.js',
+          `headline countries: [...] names '${name}', which does not exist in countries.js`))
+      }
+    }
+  }
+  return findings
+}
+
+// ── 3. Unknown-G-property audit ───────────────────────────────────────────────
+
+export async function auditUnknownGProps() {
+  const { allCharacterEvents, WORLD_EVENTS } = await loadCorpus()
+  const keys = await gPropertyNames()
+  const findings = []
+
+  const scan = (e) => {
+    const raw = fnSource(e.when)
+    if (!raw) return
+    const src = stripComments(raw)
+    const { name, destructured } = guardParam(raw)
+    const where = locate(e.id)
+
+    if (destructured) {
+      for (const d of destructured) {
+        if (!keys.has(d)) {
+          findings.push(finding(ERR, 'unknown-g-prop', e.id, where,
+            `guard destructures '${d}' from G, which G does not provide`))
+        }
+      }
+      return
+    }
+    if (!name) return
+    const seen = new Set()
+    for (const m of src.matchAll(new RegExp(`\\b${name}\\s*\\??\\s*\\.\\s*([A-Za-z_$][\\w$]*)`, 'g'))) {
+      const prop = m[1]
+      if (keys.has(prop) || seen.has(prop)) continue
+      seen.add(prop)
+      findings.push(finding(ERR, 'unknown-g-prop', e.id, where,
+        `guard reads ${name}.${prop} — G has no such property, so the value is always undefined`))
+    }
+    // character.archetype is the same bug one level down: archetype lives on
+    // character.country, and G exposes it directly as G.archetype.
+    if (/character\s*\??\s*\.\s*archetype\b/.test(src)) {
+      findings.push(finding(ERR, 'unknown-g-prop', e.id, where,
+        `guard reads character.archetype — always undefined; archetype is G.archetype (or character.country.archetype)`))
+    }
+  }
+  for (const e of allCharacterEvents) scan(e)
+  for (const we of WORLD_EVENTS) scan(we)
+  return findings
+}
+
+// ── 4. Phase / guard-age reachability ─────────────────────────────────────────
+
+export async function auditPhaseReachability() {
+  const { EVENTS, careerEvents } = await loadCorpus()
+  const V = await vocab()
+  const findings = []
+
+  for (const e of [...EVENTS, ...careerEvents]) {
+    const band = V.phases[e.phase]
+    if (!band || typeof e.when !== 'function') continue
+    const src = fnSource(e.when)
+    const { lo, hi, sawLo, sawHi, confident } = numericBounds(src, 'age')
+    if (!sawLo && !sawHi) continue
+    const [plo, phi] = band
+    const where = locate(e.id)
+
+    if (hi < plo || lo > phi) {
+      findings.push(finding(ERR, 'phase-unreachable', e.id, where,
+        `phase '${e.phase}' covers ages ${plo}-${phi === 120 ? '120+' : phi} but the guard requires age ` +
+        `${lo === -Infinity ? '≤' + hi : hi === Infinity ? '≥' + lo : lo + '-' + hi} — this event can never fire`))
+      continue
+    }
+    if (!confident) continue
+    const lostBelow = sawLo && lo < plo ? plo - lo : 0
+    const lostAbove = sawHi && hi > phi ? hi - phi : 0
+    if (lostBelow >= 5 || lostAbove >= 5) {
+      const parts = []
+      if (lostBelow >= 5) parts.push(`${lostBelow} years below (guard opens at ${lo}, phase at ${plo})`)
+      if (lostAbove >= 5) parts.push(`${lostAbove} years above (guard runs to ${hi}, phase stops at ${phi})`)
+      findings.push(finding(WARN, 'phase-truncates-guard', e.id, where,
+        `phase '${e.phase}' silently cuts ${parts.join(' and ')} — set phase: null if the guard is self-sufficient`))
+    }
+  }
+  return findings
+}
+
+// ── 5. Year-window reachability ───────────────────────────────────────────────
+
+const OLDEST = 105
+
+export async function auditYearWindows() {
+  const { EVENTS, careerEvents, WORLD_EVENTS } = await loadCorpus()
+  const V = await vocab()
+  const findings = []
+
+  const livedWindow = (countryName, minAge) => {
+    const yr = V.yearRange.get(countryName)
+    if (!yr) return null
+    return [yr[0] + minAge, yr[1] + OLDEST]
+  }
+
+  for (const e of [...EVENTS, ...careerEvents]) {
+    const src = fnSource(e.when)
+    if (!src) continue
+    const { required } = countriesInGuard(stripComments(src))
+    if (required.size === 0) continue
+    const yb = numericBounds(src, 'currentYear')
+    if (!yb.confident || (!yb.sawLo && !yb.sawHi)) continue
+    const ab = numericBounds(src, 'age')
+    const phaseLo = V.phases[e.phase]?.[0] ?? 0
+    const minAge = Math.max(ab.sawLo && ab.lo > -Infinity ? ab.lo : 0, phaseLo)
+
+    const reachable = []
+    const unreachable = []
+    for (const name of required) {
+      const w = livedWindow(name, minAge)
+      if (!w) continue // unknown country — the enum audit reports that separately
+      const overlap = yb.lo <= w[1] && yb.hi >= w[0]
+      ;(overlap ? reachable : unreachable).push(`${name} [${w[0]}-${w[1]}]`)
+    }
+    if (reachable.length === 0 && unreachable.length > 0) {
+      findings.push(finding(ERR, 'year-window-unreachable', e.id, locate(e.id),
+        `guard needs year ${yb.lo === -Infinity ? '≤' + yb.hi : yb.hi === Infinity ? '≥' + yb.lo : yb.lo + '-' + yb.hi}` +
+        ` at age ≥${minAge}, but no required country can supply anyone then: ${unreachable.join(', ')}`))
+    }
+  }
+
+  for (const we of WORLD_EVENTS) {
+    if (!Array.isArray(we.years) || !Array.isArray(we.countries) || we.countries.length === 0) continue
+    const minAge = we.minAge ?? 0
+    const reachable = []
+    const unreachable = []
+    for (const name of we.countries) {
+      const w = livedWindow(name, minAge)
+      if (!w) continue
+      const overlap = we.years[0] <= w[1] && we.years[1] >= w[0]
+      ;(overlap ? reachable : unreachable).push(`${name} [${w[0]}-${w[1]}]`)
+    }
+    if (reachable.length === 0 && unreachable.length > 0) {
+      findings.push(finding(ERR, 'year-window-unreachable', we.id, locate(we.id),
+        `world event years ${we.years[0]}-${we.years[1]} at minAge ${minAge} cannot reach any of its countries: ${unreachable.join(', ')}`))
+    }
+  }
+  return findings
+}
+
+// ── 6. World-event scope ──────────────────────────────────────────────────────
+
+export async function auditWorldEventScope() {
+  const { WORLD_EVENTS, HEADLINES } = await loadCorpus()
+  const V = await vocab()
+  const findings = []
+
+  for (const we of WORLD_EVENTS) {
+    const where = locate(we.id)
+    const arche = we.archetypes
+    // The matcher requires BOTH filters to pass. A country listed in
+    // countries[] whose archetype is absent from archetypes[] is therefore
+    // excluded by the event's own scoping — silently.
+    if (Array.isArray(arche) && Array.isArray(we.countries) && we.countries.length) {
+      const excluded = we.countries.filter(name => {
+        const a = V.archetypeOf.get(name)
+        return a && !arche.includes(a)
+      })
+      if (excluded.length === we.countries.length) {
+        findings.push(finding(ERR, 'world-scope-contradiction', we.id, where,
+          `archetypes ${JSON.stringify(arche)} exclude every country it lists ` +
+          `(${excluded.map(n => `${n}/${V.archetypeOf.get(n)}`).join(', ')}) — both filters must match, so it can never fire`))
+      } else if (excluded.length) {
+        findings.push(finding(WARN, 'world-scope-narrowed', we.id, where,
+          `archetypes ${JSON.stringify(arche)} exclude ${excluded.map(n => `${n}/${V.archetypeOf.get(n)}`).join(', ')} ` +
+          `from its own countries list — those countries never see this event`))
+      }
+    }
+    if (we.minAge != null && we.maxAge != null && we.minAge > we.maxAge) {
+      findings.push(finding(ERR, 'age-window-empty', we.id, where,
+        `minAge ${we.minAge} > maxAge ${we.maxAge} — no age can satisfy both`))
+    }
+    if (Array.isArray(we.years) && we.years[0] > we.years[1]) {
+      findings.push(finding(ERR, 'year-range-reversed', we.id, where,
+        `years [${we.years[0]}, ${we.years[1]}] is reversed — the window is empty`))
+    }
+    if (Array.isArray(we.archetypes) && we.archetypes.length === 0) {
+      findings.push(finding(ERR, 'world-scope-contradiction', we.id, where,
+        `archetypes: [] matches nothing — use 'all' or name the archetypes`))
+    }
+  }
+
+  // Headlines use the same both-must-match matcher.
+  for (const h of HEADLINES ?? []) {
+    if (!Array.isArray(h.archetypes) || !Array.isArray(h.countries) || !h.countries.length) continue
+    const excluded = h.countries.filter(n => {
+      const a = V.archetypeOf.get(n)
+      return a && !h.archetypes.includes(a)
+    })
+    if (excluded.length === h.countries.length) {
+      findings.push(finding(ERR, 'headline-scope-contradiction', h.id ?? h.text?.slice(0, 40), 'src/data/headlines.js',
+        `headline archetypes ${JSON.stringify(h.archetypes)} exclude every country it lists (${excluded.join(', ')})`))
+    }
+  }
+  return findings
+}
+
+// ── Runner ────────────────────────────────────────────────────────────────────
+
+export const AUDITS = [
+  ['reverse-flags', 'flags a guard requires that nothing sets', auditReverseFlags],
+  ['enum-domains', 'string literals compared against an enum they are not in', auditEnumDomains],
+  ['g-properties', 'guards reading properties G does not provide', auditUnknownGProps],
+  ['phase-reach', 'phases whose age band the guard cannot reach', auditPhaseReachability],
+  ['year-windows', 'year windows no living character can be inside', auditYearWindows],
+  ['world-scope', 'world events scoped out of their own countries', auditWorldEventScope],
+]
+
+export async function runAllAudits(only = null) {
+  const results = []
+  for (const [name, description, fn] of AUDITS) {
+    if (only && !only.includes(name)) continue
+    results.push({ name, description, findings: await fn() })
+  }
+  return results
+}
