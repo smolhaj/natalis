@@ -122,7 +122,10 @@ export function proposeMarriage(state) {
 
 export function getMarried(state) {
   if (!state.partner?.engaged) return state
-  const cost = randomBetween(800, 18000)
+  // A wedding is a large expense everywhere and a large expense is a local
+  // quantity. Flat dollars made it 72x annual income in Ethiopia and 45x in
+  // Niger, while every other cost in the engine already localises.
+  const cost = localCost(randomBetween(800, 18000), gdpTierOf(state))
   return {
     ...state,
     partner: { ...state.partner, married: true, engaged: false, relationshipQuality: clamp(state.partner.relationshipQuality + 10, 0, 100) },
@@ -137,7 +140,7 @@ export function fileForDivorce(state) {
   if (!state.partner) return state
   const name = state.partner.name
   const wasMarried = state.partner.married
-  const cost = wasMarried ? randomBetween(2000, 25000) : 0
+  const cost = wasMarried ? localCost(randomBetween(2000, 25000), gdpTierOf(state)) : 0
   const updatedChildren = (state.children ?? []).map(child => ({
     ...child,
     relationshipQuality: clamp((child.relationshipQuality ?? 60) - 12, 0, 100),
@@ -177,7 +180,13 @@ export function tryForChild(state) {
     return {
       ...state,
       flags: [...new Set([...state.flags, 'trying_for_child'])],
-      log: [...state.log, { age: state.age, text: "You try for a child — it doesn't happen this year.", isKey: false }],
+      log: [...state.log, { age: state.age, isKey: false, text: pickFrom([
+        "You try for a child — it doesn't happen this year.",
+        'Another year and no news. Neither of you says the word for it.',
+        'The month passes the way the last one did. You have started counting without deciding to.',
+        'Nothing this year. You are both careful with each other about it, which is its own kind of tiring.',
+        'You had told yourselves you were not counting. You know exactly how many it has been.',
+      ]) }],
     }
   }
   // Conception — store child details in mem; birth will be delivered by tick() ~2 years later
@@ -190,17 +199,40 @@ export function tryForChild(state) {
   // pregnancy-arc events read. Only one of those is true for a male character.
   const flags = [...state.flags, 'expecting', 'trying_for_child']
   if (bearerIsPlayer) flags.push('pregnant')
+  // A first pregnancy and a sixth are not the same event. In a high-fertility
+  // life this line printed nine times, identically, which is both a repetition
+  // bug and a failure to notice that the thing being narrated has changed.
+  const parity = state.children?.length ?? 0
+  const own = parity === 0
+    ? [
+        'You are pregnant. The knowledge of it sits in your body before you have words for it.',
+        'You are pregnant. You tell nobody for a fortnight, and carry it around like something in a coat pocket.',
+      ]
+    : parity <= 2
+      ? [
+          'You are pregnant again. You know the shape of the next two years now, which is a comfort and is also the problem.',
+          'Pregnant. You recognise it a week earlier than last time, from something in the way food smells.',
+        ]
+      : [
+          'Pregnant again. You do the arithmetic of the house — the beds, the pot, the shoes — before you do any of the feeling.',
+          'Another one. Your mother had more than this and said less about it, and you are aware of both facts at once.',
+          'You are pregnant. Nobody in the household is surprised, including you.',
+        ]
+  const theirs = parity === 0
+    ? [
+        `${state.partner.name} is pregnant. You are told in a kitchen, or a corridor, and you do not know what to do with your hands.`,
+        `${state.partner.name} is pregnant. Something in the room reorganises itself and you are standing in the middle of it.`,
+      ]
+    : [
+        `${state.partner.name} is pregnant again. You are better at the news this time and slightly worse at the arithmetic.`,
+        `${state.partner.name} tells you. You have been here before, which does not make it ordinary, only familiar.`,
+        `${state.partner.name} is expecting. You find yourself counting rooms.`,
+      ]
   return {
     ...state,
     flags: [...new Set(flags)],
     mem: { ...(state.mem ?? {}), pregnancyYear: state.age, pendingChild: { name: childName, gender: cGender, traits } },
-    log: [...state.log, {
-      age: state.age,
-      text: bearerIsPlayer
-        ? 'You are pregnant. The knowledge of it sits in your body before you have words for it.'
-        : `${state.partner.name} is pregnant. You are told in a kitchen, or a corridor, and you do not know what to do with your hands.`,
-      isKey: true,
-    }],
+    log: [...state.log, { age: state.age, text: pickFrom(bearerIsPlayer ? own : theirs), isKey: true }],
   }
 }
 

@@ -9035,10 +9035,36 @@ export function guardSpecificity(e) {
   return n
 }
 
+// Prose that only makes sense to someone who attended school. 82 childhood and
+// adolescence events assume a classroom without checking whether this character
+// was ever in one, so a life could print "Your mother walks you to the school
+// gate", "There are sixty children in the classroom" and "You are the first in
+// your family to reach secondary school", and then be told at sixteen that
+// there was never a school to leave. 18% of lives did exactly that.
+//
+// Classified from the prose rather than the guard, because the guard is the
+// thing that is missing. Checked in getNextEvent against G.literate, which
+// reads the literacy roll createCharacter makes at birth — so the answer is
+// known from age 0 and these never have to fire in the first place.
+const SCHOOL_PROSE = /school gate|in the classroom|reach secondary school|your teacher\b|the schoolroom|at school,|school uniform|your classmates|the lesson\b|the exam\b|final exams|your class\b/i
+
+function eventProse(e) {
+  let t = ''
+  if (typeof e.text === 'string') t = e.text
+  else if (typeof e.text === 'function') { try { t = Function.prototype.toString.call(e.text) } catch (_) { t = '' } }
+  for (const c of e.choices ?? []) t += ' ' + (c.text ?? '') + ' ' + (c.outcome ?? '')
+  return t
+}
+
 export function classifyEvent(e) {
   if (e.register !== undefined) return e
   let src = ''
   try { if (typeof e.when === 'function') src = Function.prototype.toString.call(e.when) } catch (_) { src = '' }
+  // An event that already consults literacy or schooling is making its own
+  // decision and is left alone.
+  e.assumesSchool = !/G\.literate|never_schooled|education\?\.level|G\.education/.test(src) &&
+    (e.phase === 'childhood' || e.phase === 'adolescence') &&
+    SCHOOL_PROSE.test(eventProse(e))
   e.anchored = ANCHOR_PROBE.test(src) || ANCHOR_HELPER_PROBE.test(src)
   guardSpecificity(e)
   if (e.contemplative) e.register = 'contemplative'

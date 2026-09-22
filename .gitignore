@@ -7,3 +7,9 @@ dist/
 # Playtest scripts
 playtest*.mjs
 debug_run.mjs
+
+# Scratch scripts a beta-testing pass leaves in the repo root while driving the
+# app with Playwright. Nine of these were committed by an unrelated `git add -A`
+# and had to be removed again.
+/pwtest_*.mjs
+/_*.mjs

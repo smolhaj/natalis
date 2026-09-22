@@ -403,7 +403,14 @@ function resolveProxyExtras(state, proxy) {
     next = { ...next, partner: { ...next.partner, relationshipQuality: clamp((next.partner.relationshipQuality ?? 60) + proxy._partnerRelDelta, 0, 100) } }
   }
   if (proxy._killPartner && next.partner) {
-    next = { ...next, partner: { ...next.partner, alive: false } }
+    // Same as tickPartner's own death path: the marriage ends with the partner,
+    // so `married` must not survive them.
+    next = {
+      ...next,
+      partner: { ...next.partner, alive: false },
+      flags: [...new Set([...(next.flags ?? []).filter(f => f !== 'married' && f !== 'engaged'),
+                          'widowed', 'lost_partner'])],
+    }
   }
   if (proxy._childRelDeltas && next.children) {
     next = { ...next, children: next.children.map((c, i) =>
@@ -521,6 +528,16 @@ function resolveProxyExtras(state, proxy) {
 
 // Cooldown-aware availability check. Events with no cooldown fire at most once.
 // Events with cooldown: N can fire again N or more years after they last fired.
+/**
+ * A character who will never see a classroom should not be told about theirs.
+ * `G.literate` reads the roll createCharacter makes at birth, so this is known
+ * from age 0 — the alternative was printing ten years of school events and then
+ * announcing at sixteen that there was never a school to leave.
+ */
+function schoolProseFits(e, G) {
+  return !e.assumesSchool || G.literate || G.education?.level === 'secondary' || G.education?.enrolled
+}
+
 function isEventAvailable(e, usedEventMap, currentYear) {
   const lastFired = usedEventMap?.get(e.id)
   if (lastFired === undefined) return true
@@ -693,7 +710,7 @@ export function getNextEvent(state) {
   const phaseEvents = [...(EVENTS_BY_PHASE[phase] ?? []), ...(EVENTS_BY_PHASE[null] ?? [])]
   let pool = phaseEvents.filter(e =>
     isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
-    (!state.inPrison || e.prisonOk === true)
+    (!state.inPrison || e.prisonOk === true) && schoolProseFits(classifyEvent(e), G)
   )
 
   if (state.career && !state.inPrison) {
@@ -1606,7 +1623,11 @@ function tickPartner(state) {
     return {
       ...state,
       partner: { ...partner, alive: false },
-      flags: [...new Set([...state.flags, 'widowed', 'lost_partner'])],
+      // `married` has to go with them. It was left set alongside `widowed`, so
+      // every guard reading `flags.includes('married')` still passed for a
+      // widow — measured in 4 of 300 lives that ended carrying both while
+      // `partner` was null and the log showed one marriage.
+      flags: [...new Set([...state.flags.filter(f => f !== 'married' && f !== 'engaged'), 'widowed', 'lost_partner'])],
       mem: updatedMem,
     }
   }
@@ -2239,7 +2260,12 @@ export function tick(state) {
       // and the whole illiteracy arc guards on G.literate.
       const literate = s.character?.literate ?? chance(primaryChance(s))
       s.education = { ...s.education, level: literate ? 'primary' : 'none', enrolled: null }
-      s.flags = [...new Set([...s.flags, 'left_school_early', ...(literate ? [] : ['never_schooled'])])]
+      // A character who attended is one who left early; one who never attended
+      // is `never_schooled`. Setting both made every guard reading either one
+      // true for the same life.
+      const everAttended = literate || s.flags.includes('dropped_out') ||
+        s.flags.includes('left_school_early') || s.mem?.attendedSchool === true
+      s.flags = [...new Set([...s.flags, ...(everAttended ? ['left_school_early'] : ['never_schooled'])])]
       s.log = [...s.log, {
         age: s.age, year: s.currentYear, isKey: true,
         text: literate
@@ -2248,10 +2274,15 @@ export function tick(state) {
               'School ends because the fees do. Nobody in the house says it is permanent and nobody says it is not.',
               'You can read, and write your name, and do the arithmetic that the work requires. That is what the years of it were for, and it turns out to be enough for the life you get.',
             ])
-          : pickFrom([
-              'There was never a school to leave. The nearest one is a long way off and the family needs what you can do here.',
-              'You do not learn to read. It is not a decision anyone makes; it is simply not among the things that were going to happen to you.',
-            ]),
+          : everAttended
+            ? pickFrom([
+                'The reading never took. You were in the room for some of it and the letters stayed letters, and then you were needed elsewhere.',
+                'You leave without the reading. Nobody says this is what has happened; it is simply what you take with you.',
+              ])
+            : pickFrom([
+                'There was never a school to leave. The nearest one is a long way off and the family needs what you can do here.',
+                'You do not learn to read. It is not a decision anyone makes; it is simply not among the things that were going to happen to you.',
+              ]),
       }]
     }
   }
@@ -2452,7 +2483,12 @@ export function tick(state) {
   }
 
   // Career: performance drift, promotion, income, firing
-  if (s.career) {
+  // A sentence interrupts a career; it does not advance one. The event pool and
+  // the household contribution were already prison-guarded and this was not, so
+  // `yearsInRole` accrued, promotions fired and the salary kept arriving —
+  // observed as "You are promoted to Senior Interpreter. New salary: $29,133/yr"
+  // to a character in prison.
+  if (s.career && !s.inPrison) {
     let perfDrift = (70 - (s.career.performance ?? 70)) * 0.05
     if (s.stats.happiness > 65) perfDrift += 1.5
     else if (s.stats.happiness < 35) perfDrift -= 2
@@ -2468,14 +2504,26 @@ export function tick(state) {
   }
 
   // Career income (actual salary → money)
-  if (s.career) {
+  if (s.career && !s.inPrison) {
     let annual = s.career.partTime ? Math.round(s.career.salary * 0.5) : s.career.salary
     // Agriculture: harvest variance ±50% — a good year and a bad year feel completely different
     if (s.career.field === 'agriculture') {
       const harvestFactor = 1 + randomBetween(-50, 60) / 100
       annual = Math.max(0, Math.round(annual * harvestFactor))
-      if (harvestFactor < 0.6) s.log = [...s.log, { age: s.age, text: 'A bad year for the harvest. You earn significantly less than expected.', isKey: false }]
-      else if (harvestFactor > 1.4) s.log = [...s.log, { age: s.age, text: 'A good harvest. The yield is better than most years.', isKey: false }]
+      if (harvestFactor < 0.7) s.log = [...s.log, { age: s.age, isKey: false, text: pickFrom([
+        'A bad year for the harvest. You earn significantly less than expected.',
+        'The rains were wrong — too late, or too much at once — and the yield shows it.',
+        'A poor year. You will be eating into what was put by, and you know exactly how far it goes.',
+        'Less than half of what you planned for. The arithmetic of the next twelve months changes in an afternoon.',
+        'The crop failed in the way crops fail: not all at once, but visibly, for weeks, while you watched.',
+      ]) }]
+      else if (harvestFactor > 1.4) s.log = [...s.log, { age: s.age, isKey: false, text: pickFrom([
+        'A good harvest. The yield is better than most years.',
+        'The rains came when they were supposed to and stopped when they were supposed to. It is not always like this.',
+        'More than the store will hold. There is a decision to make about the surplus and it is a good decision to have.',
+        'A year the ground gave back what was asked of it. You will remember this one when a bad one comes.',
+        'The neighbours had it too, which means the price will be poor. You would still rather have the crop.',
+      ]) }]
     }
     s.money = (s.money ?? 0) + annual
     // Sync wealth stat loosely from money (logarithmic quality-of-life indicator)
