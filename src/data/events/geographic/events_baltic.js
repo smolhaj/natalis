@@ -1,3 +1,4 @@
+import { pickFrom } from '../../../utils/random'
 // Baltic states arc events: Estonia, Latvia, Lithuania
 // Soviet occupation and deportations, Russification, song festival resistance,
 // January 1991 events, independence, Russian minority exclusion, EU emigration wave.
@@ -187,7 +188,7 @@ export const BALTIC_EVENTS = [
   {
     id: 'balt_eu_emigration',
     phase: null,
-    weight: 3,
+    weight: 25,
     when: (G) =>
       BALTIC_COUNTRIES.includes(G.character.country.name) &&
       G.currentYear >= 2004 && G.currentYear <= 2015 &&
@@ -208,7 +209,14 @@ export const BALTIC_EVENTS = [
         text: 'You go. The opportunity is real and so is the distance.',
         tag: null,
         outcome: 'You arrive in Western Europe carrying Baltic independence, Baltic history, and Baltic salary expectations that need adjusting. The adjusting happens.',
-        effect: (p) => { p.mo += 2500; p.w += 5; p.m -= 5; p.addFlag('eu_emigrant_baltic'); p.addFlag('emigrated'); p.setMem('baltEUEmig', true); },
+        effect: (p) => {
+          p.mo += 2500; p.w += 5; p.m -= 5
+          p.addFlag('eu_emigrant_baltic'); p.setMem('baltEUEmig', true)
+          // Ireland, the United Kingdom, Germany, Norway — the text's own list.
+          // `emigrated` is set by the move rather than by hand, so the flag and
+          // the country can no longer disagree.
+          p.emigrateTo(pickFrom(['United Kingdom', 'United Kingdom', 'Ireland', 'Germany', 'Norway']), { tier: 'working_class' })
+        },
       },
       {
         text: 'You stay. You are aware you are among a thinning cohort of people who stay.',

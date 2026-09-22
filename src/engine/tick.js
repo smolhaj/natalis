@@ -8,6 +8,7 @@ import { ILLNESSES } from '../data/illnesses'
 import { localCost } from '../data/activities'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PLACES, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
+import { COUNTRIES } from '../data/countries'
 import { HEADLINES } from '../data/headlines'
 import { SOUNDTRACK } from '../data/soundtrack'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
@@ -334,9 +335,37 @@ function buildEffectProxy(state) {
     if (!proxy._conditionWorsenIds) proxy._conditionWorsenIds = []
     proxy._conditionWorsenIds.push(id)
   }
-  proxy.relocate = (placeId, neighborhoodTier) => {
+  // A place carries a country. `relocate` set `currentPlace` and left
+  // `currentCountry` behind, so an event that moved a family across the 1947
+  // line put them in an Indian village while every guard, salary, world event
+  // and mortality read still said East Pakistan. The destination's own country
+  // is the truth; `opts.residency` is for the crossings that are not migration
+  // in the visa sense — a partition, an expulsion, a flight.
+  proxy.relocate = (placeId, neighborhoodTier, opts = {}) => {
     proxy._relocateTo = placeId
     if (neighborhoodTier) proxy._relocateNeighborhoodTier = neighborhoodTier
+    if (opts.residency) proxy._relocateResidency = opts.residency
+  }
+  // Four events narrated leaving the country and changed nothing but a flag.
+  // `sl_venezuela_professional_collapse` was the worst of them: its exit branch
+  // set `emigrated`, which every downstream consumer reads as "lives abroad",
+  // while `currentCountry` stayed Venezuela — so the character drew a Venezuelan
+  // salary, met Venezuelan world events and died on Venezuelan mortality while
+  // the prose had them in Madrid. `relocate` can cross a border now, but only if
+  // the event knows a place id; this is the version for "they went to Spain",
+  // which is how the prose actually says it.
+  proxy.emigrateTo = (countryName, opts = {}) => {
+    const dest = COUNTRIES.find(c => c.name === countryName)
+    if (!dest) return
+    const order = ['megacity', 'major_city', 'large_city', 'city', 'mid_city', 'town', 'village']
+    const here = PLACES.filter(pl => pl.country === dest.name)
+    const place = opts.placeId
+      ? here.find(pl => pl.id === opts.placeId)
+      : order.map(sc => here.find(pl => pl.scale === sc)).find(Boolean) ?? here[0]
+    if (!place) return
+    proxy._relocateTo = place.id
+    if (opts.tier) proxy._relocateNeighborhoodTier = opts.tier
+    proxy._relocateResidency = opts.residency ?? 'work_visa'
   }
   proxy.practiceHobby = (hobbyId, delta = 1) => {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
@@ -539,12 +568,20 @@ function resolveProxyExtras(state, proxy) {
     if (destPlace) {
       const tier = proxy._relocateNeighborhoodTier ?? pickNeighborhoodTier(next.classTier ?? next.character?.wealthTier ?? 3)
       const nbrName = pickNamedNeighborhood(destPlace, tier, { ethnicity: next.character?.ethnicity, religion: next.religion ?? next.character?.religion })
+      const here = next.currentCountry ?? next.character?.country
+      const destCountry = destPlace.country !== here?.name
+        ? COUNTRIES.find(c => c.name === destPlace.country)
+        : null
       next = {
         ...next,
         currentPlace: destPlace,
         currentNeighborhoodTier: tier,
         currentNeighborhoodName: nbrName,
-        flags: [...new Set([...next.flags, 'relocated'])],
+        flags: [...new Set([...next.flags, 'relocated', ...(destCountry ? ['emigrated'] : [])])],
+        ...(destCountry ? {
+          currentCountry: destCountry,
+          residencyStatus: proxy._relocateResidency ?? next.residencyStatus ?? 'citizen',
+        } : {}),
       }
     }
   }

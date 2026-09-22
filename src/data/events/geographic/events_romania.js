@@ -1,3 +1,4 @@
+import { pickFrom } from '../../../utils/random'
 // Romania-specific arc events
 // Ceaușescu's communist Romania: Securitate, Decree 779, systematization.
 // December 1989 revolution. EU accession and emigration wave 2007+.
@@ -122,7 +123,7 @@ export const ROMANIA_EVENTS = [
   {
     id: 'rom_eu_emigration',
     phase: null,
-    weight: 3,
+    weight: 25,
     when: (G) =>
       G.character.country.name === 'Romania' &&
       G.currentYear >= 2007 && G.currentYear <= 2018 &&
@@ -134,7 +135,13 @@ export const ROMANIA_EVENTS = [
         text: 'You leave. The opportunity is real and you take it.',
         tag: null,
         outcome: 'You arrive in a country where your labour is worth more than it is at home. The worth is a fact. The distance is also a fact.',
-        effect: (p) => { p.w += 6; p.mo += 2000; p.m -= 4; p.addFlag('eu_emigrant_romania'); p.addFlag('sends_remittances'); p.setMem('romEUEmig', true); },
+        effect: (p) => {
+          p.w += 6; p.mo += 2000; p.m -= 4
+          p.addFlag('eu_emigrant_romania'); p.addFlag('sends_remittances')
+          p.setMem('romEUEmig', true)
+          // Spain first, then Italy, then England — the order the text gives.
+          p.emigrateTo(pickFrom(['Spain', 'Spain', 'Italy', 'Italy', 'United Kingdom']), { tier: 'working_class' })
+        },
       },
       {
         text: 'You stay. The people who leave are not wrong but you are not leaving.',

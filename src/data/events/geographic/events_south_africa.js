@@ -1,3 +1,4 @@
+import { pickFrom } from '../../../utils/random'
 // South Africa additional arc events
 // Soweto Uprising 1976, Mandela's release 1990,
 // state capture/Zuma era, white emigration post-apartheid.
@@ -92,7 +93,7 @@ export const SOUTH_AFRICA_EVENTS = [
   {
     id: 'sa_white_emigration',
     phase: null,
-    weight: 3,
+    weight: 25,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
       G.ethnicity === 'white_south_african' &&
@@ -105,7 +106,11 @@ export const SOUTH_AFRICA_EVENTS = [
         text: 'You leave. The country you were offered advantages in is no longer the country you can stay in.',
         tag: null,
         outcome: 'You leave. You arrive in the new country with a South African accent that softens over years and does not disappear.',
-        effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('white_emigrant_sa'); p.setMem('saWhiteEmig', true); },
+        effect: (p) => {
+          p.m -= 6; p.r += 5
+          p.addFlag('white_emigrant_sa'); p.setMem('saWhiteEmig', true)
+          p.emigrateTo(pickFrom(['Australia', 'Australia', 'United Kingdom', 'New Zealand', 'Canada']), { tier: 'middle_class', residency: 'permanent_resident' })
+        },
       },
       {
         text: 'You stay. You were born here and it is yours to work with.',
