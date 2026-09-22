@@ -5,7 +5,7 @@ import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/r
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PHASE_ENTRY_EVENTS } from '../data/events/lifecycle/events_phase_entries'
 import { religionFor } from '../data/identity.js'
-import { pickUnusedName } from './names'
+import { pickUnusedName, surnameFor, nameKey } from './names'
 import { wageIndex, inEraMoney } from '../data/economy.js'
 import { wasWealthy } from '../data/technology.js'
 
@@ -216,10 +216,12 @@ export function createCharacter(overrides = {}) {
   // Assign birth place
   const birthPlace = pickBirthPlace(country, ruralUrban, wealthTier)
   const birthNeighborhoodTier = pickNeighborhoodTier(wealthTier)
-  const birthNeighborhoodName = pickNamedNeighborhood(birthPlace, birthNeighborhoodTier)
+  const birthNeighborhoodName = pickNamedNeighborhood(birthPlace, birthNeighborhoodTier, { ethnicity, religion })
 
   return {
-    firstName, surname, name: `${firstName} ${surname}`,
+    // Slavic family names take a feminine form: the game was producing Yulia
+    // Orlov and her daughters Elena Orlov and Alina Orlov.
+    firstName, surname: surnameFor(country, surname, gender), name: `${firstName} ${surnameFor(country, surname, gender)}`,
     country, gender, birthYear, wealthTier, familyStability, familySize,
     initialStats,
     religion, ethnicity, ruralUrban, literate,
@@ -241,9 +243,12 @@ export function deriveInitialSiblings(char, parents) {
   const count = Math.min(Math.max(0, char.familySize - 1), 5)
   const c = char.country
   const baseQ = { secure: 78, stable: 65, struggling: 50, unstable: 32 }[char.familyStability] ?? 55
-  const used = new Set([String(char.firstName ?? '').toLowerCase()])
+  // Keyed the same way pickUnusedName looks names up. While these were raw
+  // lowercase and the lookup was phonetic, nothing ever matched and family
+  // collisions went straight back to where they were before names.js existed.
+  const used = new Set([nameKey(char.firstName ?? '')])
   for (const p of Object.values(parents ?? {})) {
-    if (p?.name) used.add(String(p.name).split(' ')[0].toLowerCase())
+    if (p?.name) used.add(nameKey(String(p.name).split(' ')[0]))
   }
   // Age gaps were drawn independently, so a family of four routinely produced
   // two siblings the same age who were not twins, and the People tab listed
@@ -266,9 +271,9 @@ export function deriveInitialSiblings(char, parents) {
   return Array.from({ length: count }, () => {
     const gender = chance(0.5) ? 'male' : 'female'
     const firstName = pickUnusedName(gender === 'male' ? c.namePool.male : c.namePool.female, used)
-    used.add(String(firstName).toLowerCase())
+    used.add(nameKey(firstName))
     return {
-      name: `${firstName} ${char.surname}`,
+      name: `${firstName} ${surnameFor(c, char.surname, gender)}`,
       gender,
       ageDiff: nextAgeDiff(),
       alive: true,
@@ -766,9 +771,9 @@ function assignParentOccupation(wealthTier, archetype, birthYear, gender, family
 export function deriveInitialParents(char) {
   const { country, familyStability, wealthTier, birthYear, surname } = char
   const arch = country.archetype
-  const taken = new Set([String(char.firstName ?? '').toLowerCase()])
+  const taken = new Set([nameKey(char.firstName ?? '')])
   const motherFirst = pickUnusedName(country.namePool.female, taken)
-  taken.add(String(motherFirst).toLowerCase())
+  taken.add(nameKey(motherFirst))
   const fatherFirst = pickUnusedName(country.namePool.male, taken)
   // The father used to be given a DIFFERENT surname from his wife and children,
   // deliberately, which in every society and era this game covers reads as a
@@ -781,7 +786,7 @@ export function deriveInitialParents(char) {
   const motherOccupation = assignParentOccupation(wealthTier, arch, birthYear, 'female', familyStability)
   return {
     mother: {
-      name: `${motherFirst} ${surname}`,
+      name: `${motherFirst} ${surnameFor(country, surname, 'female')}`,
       currentAge: randomBetween(22, 34),
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-10, 10), 12, 100),

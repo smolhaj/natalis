@@ -2049,14 +2049,55 @@ export function pickNeighborhoodTier(wealthTier) {
   return Math.random() < 0.7 ? 'elite' : 'middle_class'
 }
 
-export function pickNamedNeighborhood(place, tier) {
+// Some neighbourhood names are not only a wealth tier — they name who lives
+// there. A Brahmin household in the Dalit tola and a Hindu household in the
+// Muslim mohalla are the two residential arrangements an Indian village does
+// not produce, and the game was producing both, because the draw read wealth
+// and nothing else. The prose then compounded it: the same life was told at
+// fourteen that its caste carries a special obligation to scripture, and at
+// twenty that the water in Dalit tola runs until mid-morning.
+//
+// Keyed on the name rather than on a new data field, so a name added later that
+// carries the same freight is caught by the same rule.
+const NEIGHBOURHOOD_IDENTITY = [
+  [/dalit|chamar|harijan/i, (id) => ['dalit', 'dalit_nepal', 'dalit_bangladesh'].includes(id?.ethnicity)],
+  [/brahmin/i,              (id) => id?.ethnicity === 'brahmin'],
+  [/muslim|mohalla/i,       (id) => String(id?.religion ?? '').startsWith('muslim')],
+  [/christian|colony/i,     (id) => String(id?.religion ?? '').startsWith('christian')],
+]
+
+/**
+ * `identity` is optional — `{ ethnicity, religion }`. Without it the draw is
+ * the old one, which is correct for a place whose names carry no such freight.
+ */
+export function pickNamedNeighborhood(place, tier, identity = null) {
   if (!place) return null
-  const list = place.neighborhoods?.[tier]
+  let list = place.neighborhoods?.[tier]
+  if (list?.length && identity) {
+    const allowed = list.filter(n => {
+      for (const [re, fits] of NEIGHBOURHOOD_IDENTITY) {
+        if (re.test(n)) return fits(identity)
+      }
+      return true
+    })
+    // If every name in the tier is somebody else's quarter, the tier is simply
+    // not where this household lives; fall through to the adjacent-tier search
+    // rather than putting them somewhere impossible.
+    list = allowed.length ? allowed : null
+  }
   if (!list || !list.length) {
     // Fallback to adjacent tier
     const fallbackOrder = ['middle_class', 'working_class', 'elite', 'informal']
     for (const t of fallbackOrder) {
-      const fb = place.neighborhoods?.[t]
+      let fb = place.neighborhoods?.[t]
+      if (fb?.length && identity) {
+        fb = fb.filter(n => {
+          for (const [re, fits] of NEIGHBOURHOOD_IDENTITY) {
+            if (re.test(n)) return fits(identity)
+          }
+          return true
+        })
+      }
       if (fb?.length) return fb[Math.floor(Math.random() * fb.length)]
     }
     return null

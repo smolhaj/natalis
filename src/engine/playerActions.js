@@ -728,7 +728,7 @@ export function relocate(state, destPlaceId, destNeighborhoodTier) {
   }
 
   const tier = destNeighborhoodTier ?? pickNeighborhoodTier(state.classTier ?? state.character?.wealthTier ?? 3)
-  const nbrName = pickNamedNeighborhood(destPlace, tier)
+  const nbrName = pickNamedNeighborhood(destPlace, tier, { ethnicity: state.character?.ethnicity, religion: state.religion ?? state.character?.religion })
   const fromName = fromPlace?.name ?? (state.currentCountry ?? state.character?.country)?.name ?? 'where you were'
 
   const isSameCountry = destPlace.country === (state.currentCountry ?? state.character?.country)?.name
@@ -801,7 +801,7 @@ export function emigrate(state, destCountryName, destPlaceId) {
   }
 
   const destTier = pickNeighborhoodTier(state.classTier ?? state.character?.wealthTier ?? 2)
-  const destNbr = destPlace ? pickNamedNeighborhood(destPlace, destTier) : null
+  const destNbr = destPlace ? pickNamedNeighborhood(destPlace, destTier, { ethnicity: state.character?.ethnicity, religion: state.religion ?? state.character?.religion }) : null
 
   const logText = alreadyAbroad
     ? `You move from ${fromName} to ${dest.name}${destPlace ? ` — ${destPlace.name}` : ''}. Moving costs: $${moveCost.toLocaleString()}.`

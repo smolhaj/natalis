@@ -497,10 +497,13 @@ export const CAREERS = [
     title: 'Police Officer',
     field: 'law_enforcement',
     levels: [
-      { title: 'Police Constable', salaryRange: [28000, 42000] },
-      { title: 'Detective Constable', salaryRange: [40000, 58000] },
-      { title: 'Detective Sergeant', salaryRange: [52000, 72000] },
-      { title: 'Inspector', salaryRange: [65000, 90000] },
+      // `ranks` is resolved per country by careerTitle in tick.js. Without it
+      // every force on earth used British ranks, and a New York officer was
+      // promoted to Detective Chief Inspector.
+      { title: 'Police Constable', ranks: { british: 'Police Constable', american: 'Patrol Officer', other: 'Police Officer' }, salaryRange: [28000, 42000] },
+      { title: 'Detective Constable', ranks: { british: 'Detective Constable', american: 'Detective', other: 'Senior Officer' }, salaryRange: [40000, 58000] },
+      { title: 'Detective Sergeant', ranks: { british: 'Detective Sergeant', american: 'Sergeant', other: 'Sergeant' }, salaryRange: [52000, 72000] },
+      { title: 'Inspector', ranks: { british: 'Inspector', american: 'Lieutenant', other: 'Inspector' }, salaryRange: [65000, 90000] },
     ],
     requirements: { education: 'secondary', field: null, minSmarts: 30, minAge: 20 },
     archetypeAvailable: 'all',
@@ -2023,10 +2026,10 @@ export const CAREERS = [
     title: 'Detective',
     field: 'law_enforcement',
     levels: [
-      { title: 'Detective Constable', salaryRange: [35000, 52000] },
-      { title: 'Detective Sergeant', salaryRange: [50000, 72000] },
-      { title: 'Detective Inspector', salaryRange: [70000, 95000] },
-      { title: 'Detective Chief Inspector', salaryRange: [90000, 130000] },
+      { title: 'Detective Constable', ranks: { british: 'Detective Constable', american: 'Detective', other: 'Investigator' }, salaryRange: [35000, 52000] },
+      { title: 'Detective Sergeant', ranks: { british: 'Detective Sergeant', american: 'Detective Sergeant', other: 'Senior Investigator' }, salaryRange: [50000, 72000] },
+      { title: 'Detective Inspector', ranks: { british: 'Detective Inspector', american: 'Lieutenant', other: 'Chief Investigator' }, salaryRange: [70000, 95000] },
+      { title: 'Detective Chief Inspector', ranks: { british: 'Detective Chief Inspector', american: 'Captain', other: 'Head of Criminal Investigation' }, salaryRange: [90000, 130000] },
     ],
     // requirements.field is matched against state.education.field, and the only
     // values that field can ever hold are healthcare / business / science / arts

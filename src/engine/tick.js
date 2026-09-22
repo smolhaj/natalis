@@ -523,7 +523,7 @@ function resolveProxyExtras(state, proxy) {
     const destPlace = PLACES.find(p => p.id === proxy._relocateTo)
     if (destPlace) {
       const tier = proxy._relocateNeighborhoodTier ?? pickNeighborhoodTier(next.classTier ?? next.character?.wealthTier ?? 3)
-      const nbrName = pickNamedNeighborhood(destPlace, tier)
+      const nbrName = pickNamedNeighborhood(destPlace, tier, { ethnicity: next.character?.ethnicity, religion: next.religion ?? next.character?.religion })
       next = {
         ...next,
         currentPlace: destPlace,
@@ -1329,8 +1329,36 @@ export function getAvailableCareers(state) {
  * use for the period; without it the title is the title. The obituary read
  * "She spent the working years as a Foreman", which no obituary has ever said.
  */
+// Police ranks are a national institution, and the corpus had exactly one set:
+// Police Constable, Detective Constable, Detective Sergeant, Detective Chief
+// Inspector. A life in New York went Detective Constable at 55 and Detective
+// Chief Inspector at 60 — a rank no American force has ever had, and the most
+// conspicuous single wrong word in four read-through logs. India, Russia and
+// Nigeria got the same.
+//
+// Three systems cover the roster: the British one (the Commonwealth, and the
+// forces built on it), the American one, and a continental/other one that the
+// rest of the world is closer to than it is to either. A country not listed
+// falls to its archetype, and a level with no `ranks` table keeps its title.
+const BRITISH_POLICE = new Set([
+  'United Kingdom', 'Ireland', 'Australia', 'New Zealand', 'India', 'Pakistan',
+  'Bangladesh', 'Sri Lanka', 'Nigeria', 'Ghana', 'Kenya', 'Uganda', 'Tanzania',
+  'Zambia', 'Zimbabwe', 'Malaysia', 'Singapore', 'Hong Kong', 'Jamaica',
+  'Trinidad and Tobago', 'South Africa', 'Malta', 'Cyprus', 'Botswana', 'Malawi',
+])
+const AMERICAN_POLICE = new Set(['United States', 'Canada', 'Philippines', 'Liberia'])
+
+function rankSystem(state) {
+  const name = (state?.currentCountry ?? state?.character?.country)?.name
+  if (BRITISH_POLICE.has(name)) return 'british'
+  if (AMERICAN_POLICE.has(name)) return 'american'
+  return 'other'
+}
+
 function careerTitle(level, state) {
-  return state?.character?.gender === 'female' && level.titleFemale ? level.titleFemale : level.title
+  const base = state?.character?.gender === 'female' && level.titleFemale ? level.titleFemale : level.title
+  if (!level.ranks) return base
+  return level.ranks[rankSystem(state)] ?? base
 }
 
 export function enterCareer(state, careerId) {
@@ -1534,7 +1562,24 @@ function tickParents(state) {
     else if (newAge > 60) deathProb = 0.008
 
     if (chance(deathProb)) {
-      const inheritance = Math.round(randomBetween(500, 60000) * (parent.relationshipQuality / 100))
+      // The one money path the era layer missed, and the loudest: an informal
+      // market trader in a Dalit tola died in 1998 India and his daughter's
+      // balance went 0 to 17,264, against her own salary the following year of
+      // $442. Thirty-nine years of her income, from a man who sold in a market.
+      //
+      // Two faults. It was present-day dollars written straight into a nominal
+      // balance, and it had no relation to the estate: the same range whether
+      // the parent was a homemaker with no income or a judge. An estate is what
+      // somebody had, so it is read off what they did.
+      const occ = parent.occupation
+      const estateBand = occ?.incomeType === 'none' || occ?.incomeType === 'subsistence' || occ?.incomeType === 'barter'
+        ? [0, 900]                                            // there is a house or there is nothing
+        : occ?.incomeType === 'informal' ? [0, 2500]
+          : [(occ?.annualIncome ?? 6000) * 0.3, (occ?.annualIncome ?? 6000) * 2.5]
+      const inheritance = inEraMoney(
+        Math.round(randomBetween(Math.round(estateBand[0]), Math.round(estateBand[1])) * (parent.relationshipQuality / 100)),
+        liveCountry(state), state.currentYear,
+      )
       money += inheritance
       // Losing a parent is the most common grief in a human life. It used to set
       // no flag at all, so none of the memory, grief or texture layers built to
@@ -1724,6 +1769,25 @@ function tickHyperinflation(state) {
     s.log = [...s.log, { age: s.age, text: msgs[hyperinflation.severity] ?? msgs.severe, isKey: true }]
   }
   return s
+}
+
+/**
+ * A harvest line the character has not just read.
+ *
+ * These fire every year a farming career is held, which is often forty of
+ * them, and they used a bare `pickFrom`: one Nigerian smallholder read "More
+ * than the store will hold" five times. They also carried no layer tag, so the
+ * within-life repetition metric in `npm run sim` could not see them at all —
+ * it reported 0.63% for a run containing that life. The same blind spot
+ * CLAUDE.md's "the instrument must be able to see the thing it measures" is
+ * about.
+ *
+ * Mutates `s.mem`, because the caller is the working state inside tick().
+ */
+function harvestLine(s, pool) {
+  const line = pickFrom(preferUnsaid(s, pool))
+  s.mem = rememberSaid(s.mem, line)
+  return line
 }
 
 // ─── Farming income variance ──────────────────────────────────────────────────
@@ -2827,19 +2891,30 @@ export function tick(state) {
     if (s.career.field === 'agriculture') {
       const harvestFactor = 1 + randomBetween(-50, 60) / 100
       annual = Math.max(0, Math.round(annual * harvestFactor))
-      if (harvestFactor < 0.7) s.log = [...s.log, { age: s.age, isKey: false, text: pickFrom([
+      // A bare pickFrom with no repeat suppression: one Nigerian smallholder
+      // read "More than the store will hold" five times and "A poor year" four,
+      // and because these carry no layer tag the repetition metric in
+      // `npm run sim` could not see a single one of them. It reported 0.63% for
+      // that run. `isTexture` both makes them visible to the instrument and
+      // routes them through the same exhaustion rule as every other prose layer.
+      if (harvestFactor < 0.7) s.log = [...s.log, { age: s.age, isKey: false, isTexture: true, text: harvestLine(s, [
         'A bad year for the harvest. You earn significantly less than expected.',
         'The rains were wrong — too late, or too much at once — and the yield shows it.',
         'A poor year. You will be eating into what was put by, and you know exactly how far it goes.',
         'Less than half of what you planned for. The arithmetic of the next twelve months changes in an afternoon.',
         'The crop failed in the way crops fail: not all at once, but visibly, for weeks, while you watched.',
+        'You go out and look at it every morning for a week, which changes nothing, and you go out and look at it anyway.',
+        'What comes in fills less than half the store. You stand in the doorway doing the division.',
+        'The price is good this year, which is no use to anybody who has nothing to sell.',
       ]) }]
-      else if (harvestFactor > 1.4) s.log = [...s.log, { age: s.age, isKey: false, text: pickFrom([
+      else if (harvestFactor > 1.4) s.log = [...s.log, { age: s.age, isKey: false, isTexture: true, text: harvestLine(s, [
         'A good harvest. The yield is better than most years.',
         'The rains came when they were supposed to and stopped when they were supposed to. It is not always like this.',
         'More than the store will hold. There is a decision to make about the surplus and it is a good decision to have.',
         'A year the ground gave back what was asked of it. You will remember this one when a bad one comes.',
         'The neighbours had it too, which means the price will be poor. You would still rather have the crop.',
+        'Everything came in at once and there were not enough hands, which is the best complaint there is.',
+        'You sell some, keep more than usual, and put a little aside in the way people do when they have had a year like this.',
       ]) }]
     }
     s.money = (s.money ?? 0) + annual

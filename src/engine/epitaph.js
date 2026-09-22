@@ -25,7 +25,7 @@ export function generateIdentityCard(state) {
   const interior = [] // 2 sentences: subjective, formative
 
   // ── EXTERIOR 1: Age + place + occupation ─────────────────────────────────────
-  const place = country?.name ?? 'somewhere'
+  const place = countryWithArticle(country?.name ?? 'somewhere')
   const occupationPhrase = (() => {
     if (state.inPrison) return null // handled in exterior 2
     if (career) return `working as ${withArticle(career.title)}`
@@ -255,9 +255,11 @@ export function generateEpitaph(state) {
   const f = (flag) => flags.includes(flag)
   const any = (...fs) => fs.some(g => flags.includes(g))
 
+  // "James was born in United States and lived to 73." Eight countries on the
+  // roster need the article and none of them were getting it.
   const bornIn = birthCountryName !== country
-    ? `${birthCountryName} (now ${country})`
-    : country
+    ? `${countryWithArticle(birthCountryName)} (now ${countryWithArticle(country)})`
+    : countryWithArticle(country)
 
   // Paragraphs accumulate as string arrays; joined with double newline at end
   const para1 = [] // origin + childhood
@@ -1328,11 +1330,29 @@ function withDefiniteArticle(name) {
   if (/^(The|A|An|El|La|Los|Las) /.test(name)) return name
   // A single proper noun — Apartheid, Chernobyl, Watergate — takes no article.
   if (!/\s/.test(name)) return name
+  // 32 of the 252 world-event names are sentences, possessives or carry a
+  // colon, and "the" in front of one produces "He was alive for The Great
+  // Depression, and then for the Jesse Owens Wins Four Gold Medals in Berlin".
+  // A name with a verb in it is already a sentence; a possessive already has
+  // its determiner; a colon means the name is a title, not a noun phrase.
+  if (/'s\s|\b(wins|dies|falls|opens|ends|begins|returns|arrives|comes|goes|takes|breaks|rises|collapses)\b/i.test(name)) return name
+  if (name.includes(':')) return name
   return `the ${name}`
+}
+
+// The roster's eight countries that take a definite article. "James was born in
+// United States" was printing on every American death screen.
+const ARTICLE_COUNTRIES = new Set([
+  'United States', 'United Kingdom', 'Netherlands', 'Philippines',
+  'Dominican Republic', 'Czech Republic', 'Central African Republic', 'Maldives',
+  'United Arab Emirates', 'Bahamas', 'Gambia',
+])
+export function countryWithArticle(name) {
+  return ARTICLE_COUNTRIES.has(name) ? `the ${name}` : name
 }
 
 // Exported for the tests only: the two tables that key off world-event ids
 // (five of the first version's keys were flag names or inventions and matched
 // nothing) and the article rule, which produced "the september 11 Attacks"
 // when it tried to lowercase a Title Case proper noun.
-export const __testables = { WORLD_EVENT_NOTES, AMBIENT_WORLD_EVENTS, withDefiniteArticle }
+export const __testables = { WORLD_EVENT_NOTES, AMBIENT_WORLD_EVENTS, withDefiniteArticle, countryWithArticle }
