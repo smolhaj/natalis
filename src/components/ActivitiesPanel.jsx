@@ -7,6 +7,7 @@ import { COUNTRIES } from '../data/countries'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { getAvailableCareers, getAvailableBusinessTypes, getPhase, buildPendingTrial } from '../engine/gameEngine'
 import { CAREERS } from '../data/careers'
+import { estimatePrice, estimateCost, eraMoney } from '../engine/playerActions'
 
 const TOP_CATEGORIES = [
   { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself',              group: 'Self' },
@@ -287,7 +288,7 @@ export default function ActivitiesPanel({ onClose }) {
               .filter(a => ['study', 'online_course', 'learn_language', 'philosophy'].includes(a.id))
               .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
               .map(a => (
-                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${a.cost}` : null} />
+                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${estimateCost(state, a.cost).toLocaleString()}` : null} />
               ))
             }
             {state.age >= 10 && state.age <= 18 && (
@@ -848,12 +849,14 @@ export default function ActivitiesPanel({ onClose }) {
             )}
             <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Buy Property</p>
             {PROPERTY_TYPES.map(type => {
-              const downPayment = Math.round(type.basePrice * type.downPaymentRate)
+              // What the engine will actually charge, not the catalogue number.
+              const shown = estimatePrice(state, type.basePrice, 'local')
+              const downPayment = Math.round(shown * type.downPaymentRate)
               return (
                 <Btn key={type.id} disabled={noActions || (state.money ?? 0) < downPayment || state.age < 18 || isHomeless}
                   onClick={() => { buyProperty(type.id); onClose() }}
                   title={type.name} subtitle={type.description}
-                  cost={`~$${type.basePrice.toLocaleString()} · Deposit: $${downPayment.toLocaleString()}`} />
+                  cost={`~$${shown.toLocaleString()} · Deposit: $${downPayment.toLocaleString()}`} />
               )
             })}
             {properties.length > 0 && (
@@ -889,11 +892,11 @@ export default function ActivitiesPanel({ onClose }) {
                   <div key={tier}>
                     <p className="text-natalis-muted text-xs font-semibold px-1 pt-2 pb-1">{TIER_LABELS[tier]}</p>
                     {tierVehicles.map(type => (
-                      <Btn key={type.id} disabled={noActions || (state.money ?? 0) < type.basePrice}
+                      <Btn key={type.id} disabled={noActions || (state.money ?? 0) < estimatePrice(state, type.basePrice, 'imported')}
                         onClick={() => { buyVehicle(type.id); onClose() }}
                         title={`${type.make} ${type.model}`}
                         subtitle={type.description}
-                        cost={`~$${type.basePrice.toLocaleString()} · $${type.annualMaintenance.toLocaleString()}/yr`} />
+                        cost={`~$${estimatePrice(state, type.basePrice, 'imported').toLocaleString()} · $${estimatePrice(state, type.annualMaintenance, 'imported').toLocaleString()}/yr`} />
                     ))}
                   </div>
                 )
@@ -961,7 +964,7 @@ export default function ActivitiesPanel({ onClose }) {
               .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
               .filter(a => !a.condition || a.condition(G))
               .map(a => (
-                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${a.cost.toLocaleString()}` : null} />
+                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${estimateCost(state, a.cost).toLocaleString()}` : null} />
               ))
             }
           </>
@@ -1330,10 +1333,10 @@ export default function ActivitiesPanel({ onClose }) {
                     ⚠️ A severe unmanaged condition is affecting your capacity. Working harder carries additional health risk.
                   </div>
                 )}
-                <Btn onClick={() => go(workHarder)} title="Work Harder" subtitle={anySevereUnmanaged ? "Extra effort — with your condition, this costs more health." : "Extra effort. Costs health and happiness."} />
-                <Btn onClick={() => go(schmoozeBoss)} title="Schmooze the Boss" subtitle="Charisma-based. Results vary." />
-                <Btn onClick={() => go(askForRaise)} title="Ask for a Raise" subtitle="Performance and charisma determine success." />
-                <Btn onClick={() => go(quitJob)} title="Quit Your Job" subtitle={`Leave your position as ${state.career.title}.`} danger />
+                <Btn disabled={noActions} onClick={() => go(workHarder)} title="Work Harder" subtitle={anySevereUnmanaged ? "Extra effort — with your condition, this costs more health." : "Extra effort. Costs health and happiness."} />
+                <Btn disabled={noActions} onClick={() => go(schmoozeBoss)} title="Schmooze the Boss" subtitle="Charisma-based. Results vary." />
+                <Btn disabled={noActions} onClick={() => go(askForRaise)} title="Ask for a Raise" subtitle="Performance and charisma determine success." />
+                <Btn disabled={noActions} onClick={() => go(quitJob)} title="Quit Your Job" subtitle={`Leave your position as ${state.career.title}.`} danger />
               </>
             )}
             {state.age >= 55 && !state.retired && (
@@ -1475,7 +1478,7 @@ export default function ActivitiesPanel({ onClose }) {
               onClick={() => go(() => takeActivity(a.id))}
               title={`${a.emoji} ${a.label}`}
               subtitle={a.desc}
-              cost={a.cost > 0 ? `$${a.cost}` : 'Free'}
+              cost={a.cost > 0 ? `$${estimateCost(state, a.cost).toLocaleString()}` : 'Free'}
             />
           ))
       }
@@ -1509,7 +1512,7 @@ export default function ActivitiesPanel({ onClose }) {
                 <div key={region.key}>
                   <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">{region.label}</p>
                   {dests.map(dest => {
-                    const scaledCost = Math.round(dest.cost * costMult)
+                    const scaledCost = eraMoney(Math.round(dest.cost * costMult), state)
                     const canAfford = (state.money ?? 0) >= scaledCost
                     const timesVisited = visited.filter(id => id === dest.id).length
                     return (
@@ -1594,11 +1597,11 @@ export default function ActivitiesPanel({ onClose }) {
             <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Start a Business</p>
             {available.map(bt => (
               <Btn key={bt.id}
-                disabled={noActions || (state.money ?? 0) < Math.round(bt.startupCost * bizMult)}
+                disabled={noActions || (state.money ?? 0) < eraMoney(Math.round(bt.startupCost * bizMult), state)}
                 onClick={() => { startBusiness(bt.id); onClose() }}
                 title={`${bt.emoji} ${bt.name}`}
                 subtitle={bt.description}
-                cost={`Startup: $${Math.round(bt.startupCost * bizMult).toLocaleString()}`}
+                cost={`Startup: $${eraMoney(Math.round(bt.startupCost * bizMult), state).toLocaleString()}`}
               />
             ))}
             {available.length === 0 && <p className="text-natalis-muted text-sm italic p-3">No business types available yet.</p>}
@@ -1654,15 +1657,15 @@ export default function ActivitiesPanel({ onClose }) {
               <>
                 <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">Upgrade Status</p>
                 <Btn
-                  disabled={noActions || yearsAbroad < path.yearsReq || (state.money ?? 0) < path.fee}
+                  disabled={noActions || yearsAbroad < path.yearsReq || (state.money ?? 0) < eraMoney(path.fee, state)}
                   onClick={() => { doUpgradeResidency(); onClose() }}
                   title={`Apply for ${path.next}`}
                   subtitle={
                     yearsAbroad < path.yearsReq
                       ? `Requires ${path.yearsReq - yearsAbroad} more year${path.yearsReq - yearsAbroad !== 1 ? 's' : ''} of residency`
-                      : path.fee > 0 ? `Application fee: $${path.fee.toLocaleString()}` : 'No fee'
+                      : path.fee > 0 ? `Application fee: $${eraMoney(path.fee, state).toLocaleString()}` : 'No fee'
                   }
-                  cost={path.fee > 0 ? `$${path.fee.toLocaleString()}` : 'Free'}
+                  cost={path.fee > 0 ? `$${eraMoney(path.fee, state).toLocaleString()}` : 'Free'}
                 />
               </>
             )}
@@ -1743,7 +1746,7 @@ export default function ActivitiesPanel({ onClose }) {
         // On the run options
         const gdpIllegalMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
         const illMult = gdpIllegalMult[state.character?.country?.gdp] ?? 1.0
-        const identityCost = Math.round(8000 * illMult)
+        const identityCost = eraMoney(Math.round(8000 * illMult), state)
         const smugglerMin = Math.round(8000 * illMult)
         const smugglerMax = Math.round(20000 * illMult)
 

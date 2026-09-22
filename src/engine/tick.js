@@ -1454,7 +1454,28 @@ export function askForRaise(state) {
     // it back first.
     const base = state.career.baseSalary
       ?? inTodayMoney(state.career.salary, liveCountry(state), state.currentYear)
-    const newBase = Math.round(base * (1 + pct))
+    // A raise has a ceiling, which is roughly the top of the band you are in.
+    // Uncapped and compounding, this produced an army Officer on $778,568
+    // against a top band of $80,000 — and, once the action budget was not being
+    // spent either, $3,455,778,417 from two hundred presses in one year. A good
+    // year gets you to the top of your grade. Getting past it is a promotion.
+    const def = CAREERS.find(c => c.id === state.career.id)
+    const band = def?.levels?.[state.career.level]?.salaryRange?.[1]
+    const ceiling = band
+      // 1.6 rather than 1.25: a character who has had a few good years sits near
+      // the top of their band, and a cap tight against it makes raises
+      // impossible for exactly the people who earned them. This still closes
+      // the exploit, which was unbounded compounding, not a generous ceiling.
+      ? Math.round(band * (gdpSalaryMult[liveCountry(state)?.gdp] ?? 1) * 1.6)
+      : Infinity
+    const newBase = Math.min(Math.round(base * (1 + pct)), ceiling)
+    if (newBase <= base) {
+      return {
+        ...state,
+        career: { ...state.career, performance: clamp(perf - 2, 0, 100) },
+        log: [...state.log, { age: state.age, text: 'You are told, pleasantly, that you are at the top of your grade. The next number is a different job.', isKey: false }],
+      }
+    }
     const newSalary = inEraMoney(newBase, liveCountry(state), state.currentYear)
     const gained = newSalary - state.career.salary
     return {
@@ -1538,7 +1559,16 @@ export function attemptCrime(state, crimeId) {
     updated = applyProxy(updated, proxy)
     const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
     if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
-    updated.log = [...updated.log, { age: state.age, text: `You ${crime.name.toLowerCase()} and get away with it.`, isKey: false }]
+    // Crime names are nouns — "Shoplifting", "Car Theft", "Armed Robbery" — so
+    // this produced "You shoplifting and get away with it." for all 37 of them,
+    // in a game whose stated mechanic is the sentence that lands.
+    const cn = crime.name.toLowerCase()
+    updated.log = [...updated.log, { age: state.age, isKey: false, text: pickFrom([
+      `You get away with it. ${crime.name}, and nobody comes.`,
+      `Nobody comes. You had a version of the next few days ready in your head and you do not need it.`,
+      `It works. You are calm about it for about an hour and then you are not, and then you are again.`,
+      `You get away with the ${cn}. The getting away is its own event and nobody will ever know about that either.`,
+    ]) }]
   }
   return updated
 }

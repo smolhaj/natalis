@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { CAREERS } from '../src/data/careers.js'
 import { tick, checkPromotion, askForRaise } from '../src/engine/tick.js'
 import { makeState, makeAdultState, makeCountry } from './helpers.js'
 import { EVENTS } from '../src/data/events.js'
@@ -190,20 +191,42 @@ describe('askForRaise', () => {
   })
 
   it('on success: increases salary', () => {
-    // Run enough times to guarantee at least one success (success rate is 25-85%)
+    // The old fixture put a Farm Hand on 12,000 nominal in a `high`-GDP country
+    // in 2005, which is above anything that band pays there — so once raises
+    // gained a ceiling the fixture was permanently at it. 3,000 is inside it.
     let gotRaise = false
     for (let i = 0; i < 50; i++) {
       const state = makeAdultState({
-        career: { id: 'farmer', title: 'Farmer', salary: 12000, level: 0, yearsInRole: 3, performance: 90 },
+        career: { id: 'farmer', title: 'Farmer', salary: 3000, level: 0, yearsInRole: 3, performance: 90 },
         stats: { happiness: 70, health: 70, smarts: 70, looks: 55, charisma: 80, wealth: 50 },
       })
       const next = askForRaise(state)
-      if (next.career?.salary > 12000) {
+      if (next.career?.salary > 3000) {
         gotRaise = true
-        expect(next.career.salary).toBeGreaterThan(12000)
+        expect(next.career.salary).toBeGreaterThan(3000)
         break
       }
     }
     expect(gotRaise).toBe(true)
+  })
+
+  // Neither the store action nor its panel button spent the action budget, and
+  // the panel closes on click, so the player could reopen and press again. 200
+  // alternating presses of Work Harder and Ask for a Raise in a single year
+  // took a US character from $3,686/yr to $3,455,778,417/yr.
+  it('will not raise a salary past the top of its grade', () => {
+    let last = 0
+    let state = makeAdultState({
+      career: { id: 'farmer', title: 'Farm Hand', salary: 3000, level: 0, yearsInRole: 3, performance: 95 },
+      stats: { happiness: 70, health: 70, smarts: 70, looks: 55, charisma: 95, wealth: 50 },
+    })
+    for (let i = 0; i < 300; i++) {
+      state = askForRaise(state)
+      last = state.career.salary
+      state = { ...state, career: { ...state.career, performance: 95 } }
+    }
+    const band = CAREERS.find(c => c.id === 'farmer').levels[0].salaryRange[1]
+    expect(last, `300 raises reached $${last.toLocaleString()} against a band top of $${band.toLocaleString()}`)
+      .toBeLessThan(band * 2)
   })
 })

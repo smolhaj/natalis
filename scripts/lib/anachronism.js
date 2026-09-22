@@ -37,8 +37,13 @@ export const TECH_PHRASES = [
   [/\bvoice note\b|\bselfie\b/, 'smartphone'],
   [/\bstreaming\b|\bnetflix\b/, 'streaming'],
   [/\bvideo call\b|\bvideo-call\b|\bzoom call\b|\bskype\b/, 'video_call'],
-  [/\bbroadband\b|\bwi-?fi\b|\bthe internet\b|\bonline\b|\bwebsite\b|\bsearch engine\b/, 'home_internet'],
+  // Ahead of home_internet, because the café is the thing you go to when the
+  // house has no connection, and `\bthe internet\b` matched inside "the
+  // internet café" — reporting an Asmara terminal in 2004 against Eritrea's
+  // home-connection date of 2020. First match wins, so the narrower phrase
+  // has to be listed first.
   [/\binternet caf|\bcyber ?caf/, 'personal_computer'],
+  [/\bbroadband\b|\bwi-?fi\b|\bthe internet\b|\bonline\b|\bwebsite\b|\bsearch engine\b/, 'home_internet'],
   [/\bemail\b|\be-mail\b|\binbox\b/, 'email'],
   [/\bmobile phone\b|\bmobile money\b|\bm-pesa\b|\btext message\b|\bsends a text\b|\bsim card\b/, 'mobile_phone'],
   [/\bpersonal computer\b|\blaptop\b|\bthe computer\b/, 'personal_computer'],
@@ -130,10 +135,26 @@ export function checkLine(text, year, country, opts = {}) {
 }
 
 /** Minimum plausible age for a line that describes doing the thing yourself. */
+// The first three rows are objects. The rest are a REGISTER: prose that looks
+// back over a life, or evaluates a social occasion, or reports a domestic
+// responsibility, told to somebody who has not had one. A browser smoke test
+// caught a one-year-old in 1955 Libya being told "The meal was ordinary and the
+// company was good, or the company was ordinary and the meal was good" — from a
+// bare `add()` in the mundane layer with no age guard at all.
 export const AGE_FLOORS = [
   [/\bemail\b|\binbox\b|\bthe office\b|\byour salary\b|\bthe commute\b|\byour colleagues\b/, 16],
   [/\bsmartphone\b|\bwhatsapp\b|\bthe app\b|\bmobile phone\b/, 10],
   [/\bthe newspaper is folded\b|\bthe mortgage\b|\byour employer\b/, 18],
+  // Looking back over a span nobody that age has had. Deliberately narrow: a
+  // first pass included "the rent", "for decades" and "your marriage", and
+  // those appear in prose ABOUT a child's household, about a historical event
+  // they witnessed, and in the child-marriage arc, where they are correct.
+  // The test is what the CHARACTER has, not what the sentence mentions.
+  [/\bcumulatively\b|\bin retrospect\b|\byears of your life\b|\bwhen you were younger\b/, 22],
+  // Your own tenancy, not your family's
+  [/\byour landlord\b|\byour tenancy\b|\byour own kitchen\b|\byour own place\b|\bthe rent you pay\b/, 17],
+  // An adult social occasion, evaluated afterwards
+  [/\bthe company was (good|ordinary|dreadful)\b|\bdinner party\b|\bhangover\b|\bthe bar closes\b/, 16],
 ]
 
 export function checkAge(text, age) {

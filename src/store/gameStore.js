@@ -605,29 +605,46 @@ export const useGameStore = create((set, get) => ({
   },
 
   // ── Career actions ──────────────────────────────────────────────────────────
+  //
+  // These five neither spent the action budget nor checked it, and the panel
+  // closes on click, so the player could reopen it and press again without
+  // limit. 200 alternating presses of "Work Harder" and "Ask for a Raise" in a
+  // single year took a US character from $3,686/yr to $3,455,778,417/yr, and
+  // even one legitimate press a year ran an army Officer to $778,568 against a
+  // top band of $80,000. Sixty presses of "Work Harder" took health from 89 to
+  // 0 inside one year with no cap and no confirmation.
+  //
+  // A year has two actions in it. These are two of the things you can do with
+  // them.
+  spendAction: () => {
+    const state = get()
+    if (state.dead || state.pendingEvent) return false
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return false
+    return true
+  },
 
   askForRaise: () => {
     const state = get()
-    if (state.dead) return
-    set(askForRaise(state))
+    if (!get().spendAction()) return
+    set({ ...askForRaise(state), actionsThisYear: (state.actionsThisYear ?? 0) + 1 })
   },
 
   quitJob: () => {
     const state = get()
-    if (state.dead) return
-    set(quitJob(state))
+    if (!get().spendAction()) return
+    set({ ...quitJob(state), actionsThisYear: (state.actionsThisYear ?? 0) + 1 })
   },
 
   workHarder: () => {
     const state = get()
-    if (state.dead) return
-    set(workHarder(state))
+    if (!get().spendAction()) return
+    set({ ...workHarder(state), actionsThisYear: (state.actionsThisYear ?? 0) + 1 })
   },
 
   schmoozeBoss: () => {
     const state = get()
-    if (state.dead) return
-    set(schmoozeBoss(state))
+    if (!get().spendAction()) return
+    set({ ...schmoozeBoss(state), actionsThisYear: (state.actionsThisYear ?? 0) + 1 })
   },
 
   retire: () => {
@@ -1082,7 +1099,12 @@ export const useGameStore = create((set, get) => ({
     const regime = getCountryRegime(state.currentCountry ?? state.character?.country, state.currentYear) ?? 'democracy'
     const legalQuality = { democracy: 1.0, federal_republic: 0.95, parliamentary_republic: 0.95, constitutional_monarchy: 0.9, single_party_communist: 0.45, single_party_authoritarian: 0.4, military_dictatorship: 0.35, theocracy: 0.38, absolute_monarchy: 0.5 }[regime] ?? 0.7
     const cost = lawyerCosts?.[lawyerTier] ?? 0
-    if ((state.money ?? 0) < cost) {
+    // Representing yourself is free, and `-2000 < 0` is true, so a character who
+    // reached a negative balance through the ordinary debt path was refused
+    // EVERY tier including the free one — and `pendingTrial` blocks Age Up, so
+    // the game was unrecoverably stuck at the trial screen with no way out but
+    // deleting the save. Nobody is ever too poor to defend themselves.
+    if (cost > 0 && (state.money ?? 0) < cost) {
       set({ log: [...state.log, { age: state.age, text: `You cannot afford this lawyer.`, isKey: false }] })
       return
     }

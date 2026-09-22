@@ -461,7 +461,10 @@ export default function LifeScreen() {
                     { tier: 'mid',  label: 'Hire a local lawyer', sub: `$${(pendingTrial.lawyerCosts?.mid ?? 0).toLocaleString()} · Moderate chance of reduction`, cost: pendingTrial.lawyerCosts?.mid ?? 0 },
                     { tier: 'top',  label: 'Hire a top firm', sub: `$${(pendingTrial.lawyerCosts?.top ?? 0).toLocaleString()} · Best chance of dismissal`, cost: pendingTrial.lawyerCosts?.top ?? 0 },
                   ].map((opt, i) => {
-                    const canAfford = (money ?? 0) >= opt.cost
+                    // A free option is always affordable. With a negative
+                    // balance this disabled all three buttons over a trial that
+                    // blocks Age Up, which is a soft-lock.
+                    const canAfford = opt.cost <= 0 || (money ?? 0) >= opt.cost
                     return (
                       <button
                         key={opt.tier}

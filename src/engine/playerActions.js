@@ -591,7 +591,7 @@ export function buyVehicle(state, typeId) {
     return { ...state, log: [...state.log, { age: state.age, text: "You need a driving licence first.", isKey: false }] }
   }
   // Vehicles are largely imported, so they do NOT scale down as far as housing.
-  const price = $$(localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'import'), state)
+  const price = $$(localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'imported'), state)
   const displayName = type.make ? `${type.make} ${type.model}` : type.name
   if ((state.money ?? 0) < price) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford a ${displayName}.`, isKey: false }] }
@@ -710,6 +710,32 @@ export function schmoozeBoss(state) {
 // Everything a character BUYS has to be converted into the economy they are
 // actually living in, or a studio flat costs a Lagos teacher forty years of
 // salary while the salary itself is already scaled down by GDP.
+/**
+ * What a listed price costs this character, here, this year.
+ *
+ * The engine charges `$$(localisePrice(base, tier, class), state)` — place and
+ * era — and the panels printed `base` raw, so a Studio Flat showed $90,000 in
+ * 1950 Germany against an engine price of $1,260, a factor of 71. Worse, the
+ * `disabled` gates compared a NOMINAL balance to a present-day price, so
+ * property, vehicles, travel, business and the dating app were falsely locked
+ * for every character before about 2000 — the exact "the economy is a
+ * statement about NOW" failure economy.js was written to fix, surviving in the
+ * interface.
+ *
+ * One function, used by the display, the affordability check and the charge.
+ */
+/** A present-day figure in the money of this character's year and place. */
+export function eraMoney(amount, state) { return $$(amount, state) }
+
+export function estimatePrice(state, base, priceClass = 'local') {
+  return $$(localisePrice(base, gdpTierOf(state), priceClass), state)
+}
+
+/** The same, for costs that are localised through `localCost` rather than price class. */
+export function estimateCost(state, base) {
+  return $$(localCost(base, gdpTierOf(state)), state)
+}
+
 function gdpTierOf(state) {
   return (state.currentCountry ?? state.character?.country)?.gdp
 }
@@ -1373,18 +1399,24 @@ export function bookTrip(state, destinationId) {
   const travelEventPool = [
     { id: `travel_food_poison_${state.age}`, phase: getPhase(state.age), weight: 5, text: `You get food poisoning in ${dest.name}. Two days in bed. Still worth it.`, effect: (p) => { p.m -= 10; p.h -= 5 }, choices: null },
     { id: `travel_pickpocket_${state.age}`, phase: getPhase(state.age), weight: 4, text: `Someone picks your pocket in a crowded market. You lose some cash but not your passport.`, effect: (p) => { p.mo -= Math.round(cost * 0.1); p.h -= 5 }, choices: null },
-    { id: `travel_beautiful_${state.age}`, phase: getPhase(state.age), weight: 8, text: `${dest.name} is more beautiful than the photos. You watch the sunset from a hillside and feel genuinely alive.`, effect: (p) => { p.h += 15; p.e += 3 }, choices: null },
-    { id: `travel_culture_${state.age}`, phase: getPhase(state.age), weight: 7, text: `You spend a morning in a local market in ${dest.name}, eating things you can't name and watching how people live. Something shifts in how you see the world.`, effect: (p) => { p.h += 10; p.e += 8 }, choices: null },
-    { id: `travel_romance_${state.age}`, phase: getPhase(state.age), weight: 3, text: `You meet someone interesting on the trip. It doesn't last past the airport, but while it lasted it was perfect.`, effect: (p) => { p.h += 20; p.s += 3 }, choices: null, when: (G) => !G.partner },
+    { id: `travel_beautiful_${state.age}`, phase: getPhase(state.age), weight: 8, text: `${dest.name} is more beautiful than the photos. You watch the sunset from a hillside and feel genuinely alive.`, effect: (p) => { p.m += 15; p.h += 2; p.e += 3 }, choices: null },
+    { id: `travel_culture_${state.age}`, phase: getPhase(state.age), weight: 7, text: `You spend a morning in a local market in ${dest.name}, eating things you can't name and watching how people live. Something shifts in how you see the world.`, effect: (p) => { p.m += 10; p.e += 2; p.e += 8 }, choices: null },
+    { id: `travel_romance_${state.age}`, phase: getPhase(state.age), weight: 3, text: `You meet someone interesting on the trip. It doesn't last past the airport, but while it lasted it was perfect.`, effect: (p) => { p.m += 20; p.s += 3 }, choices: null, when: (G) => !G.partner },
     { id: `travel_delay_${state.age}`, phase: getPhase(state.age), weight: 4, text: `Your flight home is delayed by 18 hours. The airport floor. The single power outlet. The long conversations with strangers.`, effect: (p) => { p.h -= 3; p.e += 5 }, choices: null },
     { id: `travel_adventure_${state.age}`, phase: getPhase(state.age), weight: 6, text: `You do something you've never done before — a hike, a dive, a climb. Your body reminds you what it's for.`, effect: (p) => { p.h += 12; p.m += 5 }, choices: null, when: (G) => dest.type === 'adventure' },
-    { id: `travel_homesick_${state.age}`, phase: getPhase(state.age), weight: 3, text: `Two weeks in, you miss home. Not the place, exactly — the feeling. You book an earlier flight.`, effect: (p) => { p.h -= 5; p.e += 3 }, choices: null },
+    { id: `travel_homesick_${state.age}`, phase: getPhase(state.age), weight: 3, text: `Two weeks in, you miss home. Not the place, exactly — the feeling. You book an earlier flight.`, effect: (p) => { p.m -= 5; p.e += 3 }, choices: null },
   ]
 
   // Pick a random event from pool (filter by when if applicable)
   const G = buildG(state)
   const eligible = travelEventPool.filter(e => !e.when || e.when(G))
-  const travelEvent = eligible[Math.floor(Math.random() * eligible.length)]
+  const travelEvent = (() => {
+      // Each of these declares a weight and the picker drew uniformly.
+      const total = eligible.reduce((a, e) => a + (e.weight ?? 1), 0)
+      let r = Math.random() * total
+      for (const e of eligible) { r -= (e.weight ?? 1); if (r <= 0) return e }
+      return eligible[eligible.length - 1]
+    })()
 
   return {
     ...state,
