@@ -575,7 +575,7 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 197 named places, 252 world events, 8,166 character events
+154 countries, 389 named places, 252 world events, 8,166 character events
 (2,129 of them the contemplative sonder layer, 158 stranger glimpses, 42 prison
 and political-arrest, 30 Gulf, 42 Guyana), 3,075 registered flags, 377 ribbons.
 **0 orphaned, 0 partial flags.**
@@ -759,7 +759,26 @@ in it. Plus the thing the world does know, which is a compound in the North West
 District where 918 people died and almost none of them were Guyanese.
 
 `events_guyana.js` is 42 events, 10 of them follow-through, plus 5 places and
-~27 year-texture blocks. Measured over 520 lives across ten birth cohorts: all
+~27 year-texture blocks. And the place gap turned out not to be
+Guyana's alone: **71 of 154 countries had no `places` entry at all**, including
+Portugal, Greece, Denmark, Mali, Cameroon, Angola, Iraq, Mongolia, Taiwan,
+Malaysia, Jamaica and Ecuador, most of which have large authored modules. A
+country with no place makes `pickBirthPlace` return null, which leaves
+`currentPlace`, `character.birthPlace` and `currentNeighborhoodName` all null,
+and `LifeScreen` renders the whole location bar behind `{livePlace && ...}` — so
+a character in almost half the roster was never told where they lived, and the
+64 guards reading `G.place?.type`, `?.scale` or `?.region` could not fire for
+them. 192 places were written for the other 71, and `tests/places.test.js` fails
+if any country loses its own.
+
+**What makes this one worth recording is that it does not appear in any rate.**
+Measured in matched pairs — Ghana against Mali, Peru against Ecuador, Sweden
+against Denmark, Cuba against the Dominican Republic, 30 lives each — the
+events-per-year and texture-per-year figures were *identical* either side of the
+gap, and so was the anchored register share. `REGISTER_SHARES` reserves 40% of
+each year for `anchored` and fills it from country and era guards whenever the
+place guards cannot answer, so the bucket is always full and the absence is
+perfectly masked. The thing lost was not volume. It was the place. Measured over 520 lives across ten birth cohorts: all
 42 fire, 0 errors, and `p.emigrateTo` puts the 59 diaspora characters in the
 United States and Canada rather than only flagging them.
 
@@ -999,7 +1018,11 @@ src/
   data/
     countries.js              — 154 countries with full demographic data, incl. `historicalNames`
                                 (birth-year keyed: "born in the Gold Coast", "born in East Pakistan") for 103 of them
-    places.js                 — 250+ named places across all countries (scale, region, type, population)
+    places.js                 — 389 named places, at least one for every country on the roster. It was
+                                197 across 83 of 154, and a country with none leaves `currentPlace`,
+                                `birthPlace` and `currentNeighborhoodName` all null — the location
+                                bar renders behind `{livePlace && ...}`, so a character in almost half
+                                the roster was never told where they lived
     headlines.js              — ~130 major historical headlines for life log injection
     technology.js             — when a thing arrived where the character lives, and when the country
                                 became materially rich: 19 technologies, ~218 country overrides.
