@@ -1291,8 +1291,16 @@ export function generateLifeNotes(state) {
   else if (age < 40) add(28, `Died at ${age}.`)
   if (career?.title) add(24, `Worked as ${withArticle(career.title).toLowerCase()}.`)
   else if (f('never_worked')) add(20, 'Never held a job for wages.')
+  // "Never married." printed on the death screen of a man who married at 22
+  // and was widowed at 70, under an epitaph that had just said "The person he
+  // had built a life with went first." Every path that ends a marriage nulls
+  // `partner`, so reading the live object alone asks whether there is someone
+  // here NOW, which is not the question the line is answering.
+  const everMarried = f('married') || f('widowed') || f('divorced') || f('lost_partner') || state.mem?.partnerDied
   if (partner) add(22, `Spent ${partner.years >= 20 ? 'most of a life' : 'years'} with ${String(partner.name).split(' ')[0]}.`)
-  else if (age >= 40) add(18, 'Never married.')
+  else if (f('widowed') || f('lost_partner')) add(22, 'Outlived the person they had built a life with.')
+  else if (f('divorced')) add(20, 'Married, and then not.')
+  else if (age >= 40 && !everMarried) add(18, 'Never married.')
   const kids = children?.length ?? 0
   if (kids > 0) add(22, kids === 1 ? 'Had one child.' : `Had ${kids} children.`)
   else if (age >= 45) add(16, 'Had no children.')

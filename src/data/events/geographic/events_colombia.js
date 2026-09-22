@@ -103,7 +103,12 @@ const COLOMBIA_EVENTS = [
         text: 'You move to the city. The territory is not safe for someone who will not choose.',
         tag: null,
         outcome: 'The city receives you as it has received everyone from the contested territories: with limited interest in the story of how you got here.',
-        effect: (p) => { p.m -= 8; p.addFlag('col_farc_era'); p.addFlag('col_desplazado'); p.addFlag('displaced'); p.setMem('col_farc', true); },
+        effect: (p) => {
+          p.m -= 8
+          p.addFlag('col_farc_era'); p.addFlag('col_desplazado'); p.addFlag('displaced')
+          p.setMem('col_farc', true)
+          p.relocate('co_bogota', 'informal')
+        },
       },
     ],
     effect: null,

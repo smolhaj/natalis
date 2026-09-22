@@ -4,6 +4,14 @@
  */
 export const HEALTH_FLAGS = {
 
+  borrowed_for_treatment: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Took a treatment that cost more than they had — the operation happens and the debt outlives the recovery.',
+    intent: 'year_texture',
+    notes: 'Set by the treatment choices in checkIllnessRisk.',
+  },
+
   widowed: {
     weight: 'major',
     category: 'loss',

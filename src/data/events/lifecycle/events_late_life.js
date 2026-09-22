@@ -221,20 +221,20 @@ export const LATE_LIFE_EVENTS = [
       if (wasCaregiver) {
         return `${name} dies at home, which is what they wanted. You are in the room. There is a sound, and then there is not a sound, and the difference between those two things is the whole of it. You have been preparing for this. The preparation is not preparation. You sit next to the bed for a long time before you call anyone. The house is the same house. Everything in it is wrong.`
       }
-      return `${name} dies. It is sudden, or it is not sudden but it is still a shock when it comes, because nothing about it can be made abstract in advance. You have been with this person for most of your adult life. The shape of every day was built around them. You stand in a room of your own home and do not know what room to go to.`
+      return `${name} dies. There was no warning that counted as one, and nothing about it could be made abstract in advance. You have been with this person for most of your adult life. The shape of every day was built around them. You stand in a room of your own home and do not know what room to go to.`
     },
     choices: [
       {
         text: 'Call your children first',
         tag: null,
         outcome: 'They come. The house fills with people who are grieving alongside you. The company is real even when you are not fully present in it.',
-        effect: (p) => { p.m -= 30; p.h -= 8; p.r += 12; p.clearPartner(); p.setMem('partnerDied', true); p.addFlag('widowed'); p.setMem('latePartnerDeath', true) },
+        effect: (p) => { p.m -= 30; p.h -= 8; p.r += 12; p.killPartner(); p.setMem('partnerDied', true); p.setMem('latePartnerDeath', true) },
       },
       {
         text: 'Sit with them a little longer before the calls begin',
         tag: null,
         outcome: 'You stay. The time is yours. It costs you and you would not exchange it.',
-        effect: (p) => { p.m -= 28; p.h -= 6; p.r += 10; p.clearPartner(); p.setMem('partnerDied', true); p.addFlag('widowed'); p.setMem('latePartnerDeath', true) },
+        effect: (p) => { p.m -= 28; p.h -= 6; p.r += 10; p.killPartner(); p.setMem('partnerDied', true); p.setMem('latePartnerDeath', true) },
       },
     ],
     effect: null,

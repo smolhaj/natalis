@@ -834,6 +834,70 @@ export const PLACES = [
       elite:         ['Rosales', 'El Chicó', 'La Cabrera', 'Cedritos top'],
     },
   },
+  // Colombia had a capital and a countryside and nothing in between, which is
+  // why `col_dep_choco_displaced` could tell an Afro-Colombian family they had
+  // moved to Cali and leave them in the Chocó: the destination the sentence
+  // named did not exist. Medellín and Cali are the second and third cities and
+  // are where the displacement of the 1990s and 2000s actually went.
+  {
+    id: 'co_medellin', name: 'Medellín', country: 'Colombia',
+    type: 'urban', scale: 'major_city', region: 'Antioquia',
+    neighborhoods: {
+      informal:      ['Comuna 13', 'Moravia', 'Popular', 'Santo Domingo Savio'],
+      working_class: ['Aranjuez', 'Belén', 'Manrique', 'Robledo'],
+      middle_class:  ['Laureles', 'Envigado', 'Estadio', 'Conquistadores'],
+      elite:         ['El Poblado', 'Alto de las Palmas', 'Provenza', 'Los Balsos'],
+    },
+  },
+
+  {
+    id: 'co_cali', name: 'Cali', country: 'Colombia',
+    type: 'urban', scale: 'major_city', region: 'Valle del Cauca',
+    neighborhoods: {
+      informal:      ['Aguablanca', 'Charco Azul', 'Potrero Grande', 'Siloé'],
+      working_class: ['El Rodeo', 'Alfonso López', 'Floralia', 'Junín'],
+      middle_class:  ['San Fernando', 'Tequendama', 'El Refugio', 'Versalles'],
+      elite:         ['Ciudad Jardín', 'Pance', 'Santa Teresita', 'Normandía'],
+    },
+  },
+
+  // Fiji had no places at all, so `fj_land_lease_expires` — an event about
+  // leaving cane land for the towns, which is what the 1997-2004 expiries
+  // actually did to the Indo-Fijian farming population — had nowhere to send
+  // anybody.
+  {
+    id: 'fj_suva', name: 'Suva', country: 'Fiji',
+    type: 'urban', scale: 'city', region: 'Viti Levu',
+    neighborhoods: {
+      informal:      ['Jittu Estate', 'Veidogo', 'Wailea', 'Nanuku'],
+      working_class: ['Raiwaqa', 'Nabua', 'Samabula', 'Kinoya'],
+      middle_class:  ['Tamavua', 'Laucala Beach', 'Nasese', 'Flagstaff'],
+      elite:         ['Domain', 'Muanikau', 'Suva Point', 'Princes Road'],
+    },
+  },
+
+  {
+    id: 'fj_lautoka', name: 'Lautoka', country: 'Fiji',
+    type: 'urban', scale: 'town', region: 'Western Viti Levu',
+    neighborhoods: {
+      informal:      ['Field 40', 'Vunato', 'Namoli settlement', 'Koroipita fringe'],
+      working_class: ['Natabua', 'Drasa Avenue', 'Simla', 'Tavakubu'],
+      middle_class:  ['Waiyavi', 'Saweni', 'Tomuka', 'Vitogo Parade'],
+      elite:         ['Marine Drive', 'Drasa Ridge', 'Saweni Beach', 'Bekana view'],
+    },
+  },
+
+  {
+    id: 'fj_rural', name: 'Rural Viti Levu', country: 'Fiji',
+    type: 'rural', scale: 'village', region: 'Sugar Belt',
+    neighborhoods: {
+      informal:      ['Cane-lease shacks', 'Settlement by the mill road', 'Squatter block'],
+      working_class: ['Farm cottages', 'Mill workers\' lines', 'Village houses'],
+      middle_class:  ['Lease-holding farmhouse', 'Shopkeeper\'s house by the road'],
+      elite:         ['Freehold estate house', 'Mill manager\'s bungalow'],
+    },
+  },
+
   {
     id: 'co_rural', name: 'Rural Antioquia', country: 'Colombia',
     type: 'rural', scale: 'village', region: 'Antioquia',

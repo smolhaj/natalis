@@ -703,6 +703,80 @@ export async function auditSeasonInCountry() {
   return findings
 }
 
+/**
+ * A choice that does nothing back.
+ *
+ * `outcome` is the sentence the player reads after pressing the button — the
+ * entire feedback of the choice system, in a game whose stated mechanic is the
+ * sentence that lands. Fifty-one choices in one file carried `outcome: null`
+ * with a live `effect`, so the player chose "Navigate carefully — know the
+ * rules and survive" and the game printed nothing at all. Nothing static could
+ * see it: the event is reachable, the guard is correct, the effect applies.
+ */
+export async function auditSilentChoices() {
+  const { allCharacterEvents } = await loadCorpus()
+  const findings = []
+  for (const e of allCharacterEvents) {
+    if (!Array.isArray(e.choices)) continue
+    for (const [i, c] of e.choices.entries()) {
+      if (!c) continue
+      const hasEffect = typeof c.effect === 'function' || typeof c.inject === 'string'
+      const hasOutcome = typeof c.outcome === 'string' ? c.outcome.trim().length > 0 : typeof c.outcome === 'function'
+      if (hasEffect && !hasOutcome) {
+        findings.push(finding(ERR, 'silent-choice', e.id, locate(e.id),
+          `choice ${i + 1} ("${String(c.text ?? '').slice(0, 48)}") applies an effect and prints no outcome`))
+      }
+    }
+  }
+  return findings
+}
+
+/**
+ * Prose that narrates a move the effect never makes.
+ *
+ * `ya_city_arrival` told a young adult they had left the village for the city
+ * and left them in the village; four emigration events set the `emigrated`
+ * flag and changed no country, so the engine went on paying a Venezuelan
+ * salary while every diaspora line in the game addressed a person in Madrid.
+ * A guard answers "may this fire", never "is this true afterwards".
+ */
+export async function auditNarratedMoves() {
+  const { allCharacterEvents } = await loadCorpus()
+  const findings = []
+  // A destination, not a direction: "you move to help" and "you move to the
+  // things that don't require it" are not migrations. Requires a place — a
+  // proper noun, or one of the handful of common nouns that name one.
+  // Case-SENSITIVE on purpose: `[A-Z]` is how the pattern tells a destination
+  // from a direction, so the subject has to spell both cases itself rather
+  // than lean on an /i flag that would also make [A-Z] meaningless.
+  const MOVES = new RegExp(
+    String.raw`\b[Yy]ou\s+(?:move|relocate)\s+to\s+(?:[A-Z]|the (?:city|capital|coast|mainland|north|south|interior)\b)`
+    + String.raw`|\b[Tt]he family\s+(?:moves|relocates|leaves for|emigrates)\s*(?:to\s+)?(?:[A-Z]|the (?:city|capital|coast)\b)`
+    + String.raw`|\b[Yy]ou emigrate\b|\b[Yy]ou leave the country\b|[Aa]rrange the exit`
+    + String.raw`|\b[Yy]ou board the (?:boat|ship|plane) for\b`,
+  )
+  const bodies = (e) => {
+    const out = []
+    const push = (v) => { if (typeof v === 'string') out.push(v) }
+    push(e.text)
+    for (const c of e.choices ?? []) { push(c?.text); push(c?.outcome) }
+    return out.join(' \n ')
+  }
+  const effectSrc = (e) => {
+    const parts = [e.effect, ...(e.choices ?? []).map(c => c?.effect)]
+    return parts.filter(f => typeof f === 'function').map(f => f.toString()).join(' ')
+  }
+  for (const e of allCharacterEvents) {
+    const prose = bodies(e)
+    if (!MOVES.test(prose)) continue
+    const src = effectSrc(e)
+    if (/relocate\s*\(|emigrateTo\s*\(|setResidency\s*\(/.test(src)) continue
+    findings.push(finding(WARN, 'narrated-move', e.id, locate(e.id),
+      'prose narrates leaving and no effect calls relocate() or emigrateTo()'))
+  }
+  return findings
+}
+
 export const AUDITS = [
   ['reverse-flags', 'flags a guard requires that nothing sets', auditReverseFlags],
   ['enum-domains', 'string literals compared against an enum they are not in', auditEnumDomains],
@@ -712,6 +786,8 @@ export const AUDITS = [
   ['world-scope', 'world events scoped out of their own countries', auditWorldEventScope],
   ['identity-country', 'identity literals absent from the country the guard requires', auditIdentityInCountry],
   ['season-country', 'seasons a guard demands that its country cannot have', auditSeasonInCountry],
+  ['silent-choice', 'choices that apply an effect and print no outcome', auditSilentChoices],
+  ['narrated-move', 'prose that narrates leaving where no effect moves anyone', auditNarratedMoves],
 ]
 
 export async function runAllAudits(only = null) {

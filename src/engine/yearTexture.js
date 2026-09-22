@@ -1788,7 +1788,7 @@ function* textureCandidates(state, opts = {}) {
       const cn = aboadChildren[0].name?.split(' ')[0]
       yield [T.earned, pick([
         `${cn} calls on Sunday. You have learned to hold an entire week of things to say compressed into the duration of a phone call.`,
-        `The grandchildren exist on a screen. You know their voices before you know the weight of them.',`,
+        `The grandchildren exist on a screen. You know their voices before you know the weight of them.`,
         `The distance between you and ${aboadChildren[0].name?.split(' ')[0]} is in kilometres and in the specific things that don't arrive over video call.`,
       ])]
     }
@@ -5925,7 +5925,7 @@ function* textureCandidates(state, opts = {}) {
       const n = yrsAgo(mem.widowedYear)
       yield [T.earned, pick([
         `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} years since ${state.partner ? state.partner.name?.split(' ')[0] : 'them'}. The house still holds the shape of two people.`,
-        `You have learned to do the things that used to be shared. You are still learning.',`,
+        'You have learned to do the things that used to be shared. You are still learning.',
       ])]
     }
     if (mem.partnerDeathYear && yrsAgo(mem.partnerDeathYear) >= 2 && yrsAgo(mem.partnerDeathYear) <= 15) {
@@ -14169,16 +14169,36 @@ function* textureCandidates(state, opts = {}) {
     // decade bucket is kept for the decades it fits; the 1940s get real years.
     if (arch === 'wealthy_west') {
       const OCCUPIED = ['France', 'Belgium', 'Netherlands', 'Denmark', 'Norway', 'Greece', 'Austria', 'Italy', 'Poland', 'Czech Republic']
+      const NEUTRAL = ['Sweden', 'Switzerland', 'Ireland', 'Portugal', 'Spain', 'Iceland', 'Turkey']
+      const UNBOMBED = ['United States', 'Canada', 'Australia', 'New Zealand']
       if (currentYear >= 1939 && currentYear <= 1945 && OCCUPIED.includes(cn)) yield [T.anchored, pick([
         'There is a curfew and a set of rules about who may be out and when, and the rules are not the ones this country wrote.',
         'The rationing is not the rationing of a hard year. It is the rationing of a country whose output belongs to somebody else.',
         'Everyone knows a household that has stopped being talked about. The not-talking is done carefully and by everyone at once.',
         'A language you did not grow up hearing is on the official notices, and the official notices are the ones that matter.',
       ])]
+      // The OCCUPIED list was added because the else-branch told occupied
+      // Europe the war was over during the war. It was one list short: the
+      // NEUTRALS are in the else-branch too, and the 1946-49 pool told Sweden,
+      // Ireland, Switzerland, Portugal, Iceland, Canada, Australia and New
+      // Zealand that "the rubble of last decade is becoming the concrete of
+      // this one". Sweden was never bombed — an intact industrial base selling
+      // into a flattened continent is the entire reason for the Swedish
+      // post-war boom, and the line inverts it.
+      else if (currentYear >= 1939 && currentYear <= 1945 && NEUTRAL.includes(cn)) yield [T.anchored, pick([
+        'The country is not in it, which is a sentence people say with a particular flatness. The trains still run through. Everyone has an opinion about what that means and almost nobody says it at volume.',
+        'The shortages are real and the reason for them is elsewhere. You queue for coffee that has not been coffee for two years, in a country nobody is shooting at.',
+        'The newspapers report the war the way you would report weather in another country. There is a care in the wording that is itself the news.',
+      ])]
       else if (currentYear >= 1939 && currentYear <= 1945) yield [T.anchored, pick([
         'The war is the weather. The blackout, the queue, the list in the newspaper that people read standing up.',
         'Somebody in every street is away, and the word for where they are is vague on purpose.',
         'The factory has been turned over to something else. Everyone knows what and nobody says it on the tram.',
+      ])]
+      else if (currentYear >= 1946 && currentYear <= 1949 && (NEUTRAL.includes(cn) || UNBOMBED.includes(cn))) yield [T.anchored, pick([
+        'Nothing here needs rebuilding, and the factories are running flat out for the places that do. The money is very good and the reason for it is not a thing anybody says out loud.',
+        'People are coming back through, and some of them are not going home. The word for them is new and is being used carefully.',
+        'The argument about what the country did, or did not do, or should have done, starts now that it is safe to have it. It will run for forty years.',
       ])]
       else if (currentYear >= 1946 && currentYear <= 1949) yield [T.anchored, pick([
         'The war is over but its afterimage is everywhere — in the rationing, in the silences, in the things no one wants to explain to people who weren\'t there.',
@@ -14889,6 +14909,14 @@ function* textureCandidates(state, opts = {}) {
     phase === 'late_life'
       ? 'The village is in Bangladesh now. You have not gone back. You are not sure what going back would mean — the house is gone, the family is here, the geography is there. The two things will not reconcile into a clean answer before you die, and you have stopped expecting them to.'
       : 'The rice fields on the other side of the border are not different from the rice fields here. The line went through rice fields, and the rice fields do not know it is there, and this is both obvious and some days the most painful thing you know.',
+  ])]
+
+  if (F.has('borrowed_for_treatment') && Math.random() < 0.13) yield [T.earned, pick([
+    'The operation worked. The arrangement that paid for it is still running, and will be for a while yet, and it is the part you think about in the evenings rather than the scar.',
+    'Somebody asks how you are and you say better, which is true about the body. The rest of the answer is a number and they were not asking about that.',
+    phase === 'late_life'
+      ? 'It was paid off eventually. You could say which year. You could also say what it cost in the years before that, and the two are not the same accounting.'
+      : 'You do the arithmetic about once a month, at night, and it comes out the same every time, and you do it again the following month.',
   ])]
 
   if (F.has('partition_stayed_behind') && Math.random() < 0.13) yield [T.anchored, pick([

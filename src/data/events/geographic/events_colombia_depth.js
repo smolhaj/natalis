@@ -1,3 +1,4 @@
+import { pickFrom } from '../../../utils/random'
 // events_colombia_depth.js
 // Colombia depth: the false positives scandal (falsos positivos), Medellín's
 // transformation from most dangerous city to most innovative, the coca farmer's
@@ -180,6 +181,9 @@ export const COLOMBIA_DEPTH_EVENTS = [
           p.addFlag('col_desplazado')
           p.addFlag('displaced')
           p.setMem('colDepChocoDisplaced', true)
+          // The outcome names the barrio that received the Pacific in earlier
+          // decades, and the character has to actually be in it.
+          p.relocate(pickFrom(['co_cali', 'co_cali', 'co_medellin']), 'informal')
         },
       },
       {

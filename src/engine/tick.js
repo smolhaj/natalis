@@ -101,12 +101,26 @@ function applyProxy(state, proxy) {
   // from a 5,000 inheritance to a 40 bus fare. Denominating them here is what
   // lets all 629 stay as written and still land as money of the right year: a
   // windfall in 1950 Lagos arrives as 1950 Lagos money.
-  const money   = Math.max(0, (state.money ?? 0) + inEraMoney(proxy.mo ?? 0, liveCountry(state), state.currentYear) + (proxy.moNominal ?? 0))
+  // A bill you cannot pay does not stop existing. `Math.max(0, ...)` here meant
+  // no purchase in the game could fail for lack of funds: a Swedish pensioner
+  // holding 42,571 was offered a 63,859 bypass, took it, and the 21,288
+  // shortfall evaporated. Large shortfalls become debt — which the engine
+  // already models, and which the poverty corpus is written about — while
+  // anything small enough to be a bad month is still absorbed, because a
+  // character who cannot make a 40 bus fare has a different problem than a
+  // credit record.
+  const rawMoney = (state.money ?? 0) + inEraMoney(proxy.mo ?? 0, liveCountry(state), state.currentYear) + (proxy.moNominal ?? 0)
+  const shortfall = rawMoney < 0 ? -rawMoney : 0
+  const debtFloor = inEraMoney(250, liveCountry(state), state.currentYear)
+  const money   = Math.max(0, rawMoney)
+  const debt    = shortfall > debtFloor
+    ? Math.round((state.debt ?? 0) + shortfall)
+    : (state.debt ?? 0)
   const karma   = clamp((state.karma ?? 50) + (proxy.karma ?? 0), 0, 100)
   const fame    = clamp((state.fame ?? 0) + (proxy.fame ?? 0), 0, 100)
   const legacy  = clamp((state.legacy ?? 0) + (proxy.legacy ?? 0), 0, 100)
   const flags   = [...new Set(proxy.flags)]
-  return { ...state, stats, regret, money, karma, fame, legacy, flags, mem: proxy.mem }
+  return { ...state, stats, regret, money, debt, karma, fame, legacy, flags, mem: proxy.mem }
 }
 
 // Being caught means going to trial, not straight to a cell. Exported because
@@ -1484,7 +1498,13 @@ export function checkPromotion(state) {
 
   const newLevel = careerDef.levels[nextIdx]
   const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0
-  const baseSalary = Math.round(randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1]) * salaryMult)
+  // Adjacent bands overlap — Senior Agent is [50000, 100000] and Principal
+  // Agent is [90000, 180000] — so a fresh draw from the higher band can come
+  // out below the wage already being paid, and the log read "You are promoted
+  // to Principal Agent. New salary: $6,522/yr" the year after $6,811. A
+  // promotion is not a raise, but it is never a cut with nothing to explain it.
+  const drawn = Math.round(randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1]) * salaryMult)
+  const baseSalary = Math.max(drawn, Math.round((state.career.baseSalary ?? drawn) * 1.04))
   const salary = inEraMoney(baseSalary, liveCountry(state), state.currentYear)
   const career = { ...state.career, level: nextIdx, title: careerTitle(newLevel, state), salary, baseSalary, yearsInRole: 0, startedAge: state.age }
   const log = [...state.log, { age: state.age, text: `You are promoted to ${newLevel.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
@@ -1668,11 +1688,22 @@ function tickParents(state) {
       // balance, and it had no relation to the estate: the same range whether
       // the parent was a homemaker with no income or a judge. An estate is what
       // somebody had, so it is read off what they did.
+      // `annualIncome` on an occupation is a rich-world figure that every other
+      // reader scales by GDP_MULT — tickFamilyIncome and formatParentIncome
+      // both do. This band did not, so it multiplied the UNSCALED number by
+      // 0.3-2.5 and then denominated it, and the distortion was exactly
+      // 1 / GDP_MULT: ten times in `low_medium`, forty in `very_low`. A
+      // Vietnamese doctor whose identity card told the player she earned
+      // $4.9k/yr left an estate of up to $121,770, twenty-five times her own
+      // annual income, and her daughter's balance moved 36,512 on a salary of
+      // 3,820.
       const occ = parent.occupation
+      const gdpMult = GDP_MULT[liveCountry(state)?.gdp] ?? 0.2
+      const parentIncome = (occ?.annualIncome ?? 6000) * gdpMult
       const estateBand = occ?.incomeType === 'none' || occ?.incomeType === 'subsistence' || occ?.incomeType === 'barter'
-        ? [0, 900]                                            // there is a house or there is nothing
-        : occ?.incomeType === 'informal' ? [0, 2500]
-          : [(occ?.annualIncome ?? 6000) * 0.3, (occ?.annualIncome ?? 6000) * 2.5]
+        ? [0, 900 * gdpMult]                                  // there is a house or there is nothing
+        : occ?.incomeType === 'informal' ? [0, 2500 * gdpMult]
+          : [parentIncome * 0.3, parentIncome * 2.5]
       const inheritance = inEraMoney(
         Math.round(randomBetween(Math.round(estateBand[0]), Math.round(estateBand[1])) * (parent.relationshipQuality / 100)),
         liveCountry(state), state.currentYear,
@@ -1724,6 +1755,14 @@ function tickParents(state) {
 function tickPovertyPremium(state) {
   const money = state.money ?? 0
   if (money <= 0) return state
+  // The premium is what it costs to be poor: no float, no bank, the small
+  // borrowing at the bad rate. It read the cash balance alone, so a retiree
+  // living in a house worth 934,534 outright was charged for poverty every
+  // year of a long retirement. Equity is not liquid, but it is the difference
+  // between someone poor and someone with a low current account.
+  const equity = (state.assets?.properties ?? [])
+    .reduce((n, p) => n + Math.max(0, (p.currentValue ?? 0) - (p.mortgage ?? 0)), 0)
+  if (equity > money * 4) return state
   const archetype = state.character?.country?.archetype
   const gdp = state.character?.country?.gdp
   const mult = GDP_MULT[gdp] ?? 0.2
@@ -1772,9 +1811,16 @@ function tickPovertyPremium(state) {
 function tickLivingCosts(state) {
   if (state.inPrison) return state
   const arch = liveCountry(state)?.archetype ?? 'developing_urban'
-  const income = state.career
+  // `income` is what consumption is a share of, and it read the salary alone —
+  // so from the day a character retired, being alive cost nothing. Six
+  // consecutive years of an identical balance on the screen, with no line
+  // explaining any of it, is what that looks like from the player's side. A
+  // retired household still eats; it eats out of the pension and the pile.
+  const salary = state.career
     ? (state.career.partTime ? Math.round(state.career.salary * 0.5) : state.career.salary)
     : 0
+  const retiredBase = state.career ? 0 : Math.round((state.money ?? 0) * 0.06)
+  const income = salary + retiredBase
 
   // Savings rate. The rich-world figures are household saving out of
   // disposable income; the poor-world ones are lower because there is less
@@ -1920,6 +1966,14 @@ function tickAssets(state) {
   // in 2015 rather than the 480,000 its owners would have recognised.
   const drift = eraDrift(liveCountry(state), state.currentYear)
 
+  // A mortgage that amortises on a payment nobody made is the money hole in its
+  // purest form. `money` was clamped at zero on the way out of this function,
+  // so a character sitting on nothing watched the principal fall from 73,466 to
+  // 55,206 over six years while the balance printed the same number every
+  // January. Arrears are the honest version: the payment is not made, the
+  // principal does not fall, the unpaid interest is added to it, and the
+  // shortfall is carried on `debt` where the poverty corpus can see it.
+  let arrears = false
   const updatedProperties = properties.map(p => {
     const type = PROPERTY_TYPES.find(t => t.id === p.typeId)
     if (!type) return p
@@ -1928,8 +1982,13 @@ function tickAssets(state) {
     if (p.mortgage > 0) {
       const interest = Math.round(p.mortgage * 0.04)
       const payment = Math.min(Math.round(p.mortgage / 25) + interest, p.mortgage + interest)
+      if (money >= payment) {
+        money -= payment
+        return { ...p, currentValue: newValue, mortgage: Math.max(0, p.mortgage - (payment - interest)) }
+      }
+      arrears = true
       money -= payment
-      return { ...p, currentValue: newValue, mortgage: Math.max(0, p.mortgage - (payment - interest)) }
+      return { ...p, currentValue: newValue, mortgage: p.mortgage + interest }
     }
     return { ...p, currentValue: newValue }
   })
@@ -1943,7 +2002,18 @@ function tickAssets(state) {
     return { ...v, currentValue: Math.max(100, Math.round(v.currentValue * drift * (1 - type.depreciationRate))) }
   })
 
-  return { ...state, assets: { properties: updatedProperties, vehicles: updatedVehicles }, money: Math.max(0, money) }
+  const owed = money < 0 ? -money : 0
+  const log = arrears && !state.mem?.arrearsToldYear
+    ? [...state.log, { age: state.age, text: 'The payment does not go out this month, and then it does not go out the month after. The letter that follows is polite and the second one is not.', isKey: true }]
+    : state.log
+  return {
+    ...state,
+    assets: { properties: updatedProperties, vehicles: updatedVehicles },
+    money: Math.max(0, money),
+    debt: Math.round((state.debt ?? 0) + owed),
+    mem: arrears && !state.mem?.arrearsToldYear ? { ...(state.mem ?? {}), arrearsToldYear: state.currentYear } : state.mem,
+    log,
+  }
 }
 
 // ─── Pet ticking ──────────────────────────────────────────────────────────────
@@ -1978,6 +2048,18 @@ function tickPets(state) {
 function tickSiblings(state) {
   if (!state.siblings || state.siblings.length === 0) return state
   let log = [...state.log]
+  // The variant pools were drawn with a bare `pickFrom`, so a life with two
+  // siblings who died in the same band got the identical sentence twice — "You
+  // had been meaning to ring" at 82 and again at 84. Worse, the log entry
+  // carries no `isTexture`/`isMundane` tag, so the within-life repetition
+  // metric in `npm run sim` cannot see it: the same blind spot the harvest
+  // lines were fixed for.
+  let mem = state.mem
+  const say = (pool) => {
+    const line = pickFrom(preferUnsaid({ ...state, mem }, pool))
+    mem = rememberSaid(mem, line)
+    return line
+  }
 
   const siblings = state.siblings.map(sib => {
     if (!sib.alive) return sib
@@ -1990,28 +2072,32 @@ function tickSiblings(state) {
       // is the person who remembers the same childhood, and the whole of what
       // is lost is that there is now nobody who does.
       const q = sib.relationshipQuality ?? 60
+      const who = `${sib.name} dies at ${sibAge}.`
       const sibLine = q >= 70
-        ? pickFrom([
-            `${sib.name} dies at ${sibAge}. You spoke every week or you spoke twice a year, and either way there is now nobody alive who remembers the house the way you both remembered it.`,
-            `${sib.name} dies at ${sibAge}. At the funeral you are the one people come to, which you had not expected and do not want.`,
-          ])
+        ? `${who} ${say([
+            'You spoke every week or you spoke twice a year, and either way there is now nobody alive who remembers the house the way you both remembered it.',
+            'At the funeral you are the one people come to, which you had not expected and do not want.',
+            'There is a way of saying a particular family name that only the two of you had, and it goes now.',
+          ])}`
         : q >= 35
-          ? pickFrom([
-              `${sib.name} dies at ${sibAge}. You had been meaning to ring. That is the whole of it and it is not a small thing.`,
-              `${sib.name} dies at ${sibAge}. You go, and the people there are half strangers, and you find you know exactly which of them is which.`,
-            ])
-          : pickFrom([
-              `${sib.name} dies at ${sibAge}. Somebody rings to tell you, and the fact that it had to be somebody else is the part you think about.`,
-              `${sib.name} dies at ${sibAge}. You had not spoken in years and you had both decided that was fine, and now only one of you still has that decision.`,
-            ])
-      log.push({ age: state.age, text: sibLine, isKey: true, isDeath: true })
+          ? `${who} ${say([
+              'You had been meaning to ring. That is the whole of it and it is not a small thing.',
+              'You go, and the people there are half strangers, and you find you know exactly which of them is which.',
+              'The last conversation was about nothing, which you would not change, and which you think about anyway.',
+            ])}`
+          : `${who} ${say([
+              'Somebody rings to tell you, and the fact that it had to be somebody else is the part you think about.',
+              'You had not spoken in years and you had both decided that was fine, and now only one of you still has that decision.',
+              'You do not go. You are clear with yourself about why, and the clarity does not do what you wanted it to do.',
+            ])}`
+      log.push({ age: state.age, text: sibLine, isKey: true, isDeath: true, isTexture: true })
       return { ...sib, alive: false }
     }
     const drift = (60 - sib.relationshipQuality) * 0.01
     return { ...sib, relationshipQuality: clamp(sib.relationshipQuality + drift + randomBetween(-1, 1), 0, 100) }
   })
 
-  return { ...state, siblings, log }
+  return { ...state, siblings, log, mem }
 }
 
 // ─── Fame ticking ─────────────────────────────────────────────────────────────
@@ -2137,7 +2223,24 @@ function checkIllnessRisk(state) {
 
     // Scale treatment costs to country GDP (developing-world costs are lower but so are wages)
     const gdpCostMult = { very_high: 1.4, high: 1.1, medium_high: 0.9, medium: 0.7, low_medium: 0.5, low: 0.35, very_low: 0.2 }
-    const costMult = gdpCostMult[liveCountry(state).gdp] ?? 1.0
+    // What the patient pays is not what the treatment costs. There was no term
+    // for this at all, so a Swedish pensioner was billed 63,859 out of pocket
+    // for a bypass in a country with universal cover — which is not a rounding
+    // error, it is the single most consequential fact about being ill in one
+    // country rather than another, and the game had no opinion about it.
+    // Roughly: the share a patient actually meets, by system.
+    const SYSTEM_SHARE = {
+      wealthy_west: 0.12, wealthy_east: 0.25, post_soviet: 0.45, wealthy_gulf: 0.15,
+      developing_urban: 0.70, developing_unstable: 0.85, subsaharan: 0.90, conflict_zone: 0.95,
+    }
+    const NO_SYSTEM = new Set(['United States'])
+    const patientShare = NO_SYSTEM.has(liveCountry(state)?.name)
+      ? 0.55
+      : SYSTEM_SHARE[liveCountry(state)?.archetype] ?? 0.7
+    // Universal coverage is a post-war invention almost everywhere it exists.
+    const coverageYear = liveCountry(state)?.archetype === 'wealthy_west' ? 1948 : 1960
+    const share = state.currentYear >= coverageYear ? patientShare : Math.min(1, patientShare * 2.2)
+    const costMult = (gdpCostMult[liveCountry(state).gdp] ?? 1.0) * share
     // Also scale treatment success by healthcare quality (poor healthcare = worse outcomes)
     const hcSuccessMod = { excellent: 1.15, good: 1.05, fair: 1.0, poor: 0.85, very_poor: 0.7 }
     const successMod = hcSuccessMod[liveCountry(state).healthcare] ?? 1.0
@@ -2190,19 +2293,30 @@ function checkIllnessRisk(state) {
       choices: illness.treatments.map(t => {
         const adjustedCost = inEraMoney(Math.round(t.cost * costMult), liveCountry(state), state.currentYear)
         const willSucceed = Math.random() < clamp(t.successChance * successMod, 0.05, 0.98)
+        // A price the player cannot meet is still a price, and the option is
+        // still there — that is what borrowing for treatment is. Saying so in
+        // the label is the difference between a choice and a trick.
+        const onCredit = adjustedCost > (state.money ?? 0)
+        const label = adjustedCost <= 0
+          ? `${t.name} (free)`
+          : `${t.name} ($${adjustedCost.toLocaleString()}${onCredit ? ', on credit' : ''})`
         return {
-          text: `${t.name}${adjustedCost > 0 ? ` ($${adjustedCost.toLocaleString()})` : ' (free)'}`,
+          text: label,
           tag: null,
           outcome: willSucceed ? t.outcomeSuccess : t.outcomeFailure,
           effect: (p) => {
             p.moNominal -= adjustedCost
             p.m += t.happinessEffect ?? 0
+            if (onCredit) p.addFlag('borrowed_for_treatment')
             if (willSucceed) {
-              p.h += Math.abs(t.healthEffect ?? 0)
-              // Set survivor flag for illnesses that have one
+              // The illness took `healthEffect` at diagnosis. Treatment gives
+              // most of it back and never more: recovering from a heart attack
+              // used to leave a character healthier than the morning before it,
+              // because the diagnosis cost nothing and the cure paid out.
+              p.h += Math.round(Math.abs(t.healthEffect ?? 0) * 0.85)
               if (illness.survivorFlag) p.addFlag(illness.survivorFlag)
             } else {
-              p.h -= Math.abs(t.healthEffect ?? 0)
+              p.h -= Math.round(Math.abs(t.healthEffect ?? 0) * 0.5)
               p.addFlag(illness.flag)
             }
           },
@@ -2213,8 +2327,23 @@ function checkIllnessRisk(state) {
       when: () => true,
     }
 
+    // Being ill costs health at the point of diagnosis. Nothing deducted it
+    // before, so the only health movement an illness produced was the recovery
+    // — and a diagnosis plus a successful treatment left a character measurably
+    // better off than the year before they fell ill (54.5 to 71.4 in the year
+    // of a heart-disease diagnosis). `checkIllnessRisk` also never created the
+    // chronic condition its own arc is written about: 89% of lives carrying a
+    // `_diagnosed` flag ended with `conditions: []`, so the annual drain,
+    // `G.conditions` and events_condition_arc.js never engaged for anything the
+    // engine diagnosed.
+    const worst = Math.max(...illness.treatments.map(t => Math.abs(t.healthEffect ?? 0)), 8)
+    const severity = worst >= 28 ? 'severe' : worst >= 15 ? 'moderate' : 'mild'
     updated = {
       ...updated,
+      stats: { ...updated.stats, health: clamp(updated.stats.health - Math.round(worst * 0.7), 0, 100) },
+      conditions: (updated.conditions ?? []).some(c => c.id === illness.id)
+        ? updated.conditions
+        : [...(updated.conditions ?? []), { id: illness.id, severity, diagnosedYear: updated.currentYear, managed: false }],
       flags: [...new Set([...updated.flags, `${illness.id}_diagnosed`])],
       queue: [...updated.queue, event],
     }
@@ -2584,10 +2713,16 @@ export function tick(state) {
     const interest = Math.round(s.debt * interestRate)
     s.debt = s.debt + interest
     s.money = (s.money ?? 0) - Math.round(preInterestDebt * 0.05) // minimum payment (5% of pre-interest balance)
-    if (s.money < -8000) {
+    // The insolvency line was a flat -8,000 in nominal money, so it was a
+    // fortune in 1950 and in Lagos and a bad month in 2020 Stockholm. At 18%
+    // compounding with a 5% minimum payment, a debt that can never reach the
+    // threshold is a spiral with no bottom — which is a real thing, but it
+    // should be a real thing everywhere rather than a rich-world one.
+    const insolvency = inEraMoney(localCost(8000, liveCountry(s)?.gdp), liveCountry(s), s.currentYear)
+    if (s.money < -insolvency) {
       s.flags = [...new Set([...s.flags, 'bankrupt', 'declared_bankrupt', 'debt_spiral_survived'])]
       s.debt = 0
-      s.money = -2000
+      s.money = -Math.round(insolvency * 0.25)
       s.creditScore = 320
       s.log = [...s.log, { age: s.age, text: 'You are declared bankrupt. A relief and a shame at once.', isKey: true }]
     }
