@@ -302,6 +302,61 @@ The enum audit checks ethnicity and religion literals against the **global** set
 
 ---
 
+### The prose layer (`src/engine/yearTexture.js`, `mundaneLayer.js`, `prose.js`)
+
+Two systems narrate a quiet year, and they are picked in this order:
+
+`buildYearTexture(state, { specificOnly: true })` collects every line the
+character is eligible for and returns one, by tier:
+
+| tier | what it is | share |
+|---|---|---|
+| `urgent` | grief, a child in a ward, a body in crisis | wins ~72% when live |
+| `glimpse` | the stranger glimpse, which carries its own ~decade cadence | wins when due |
+| `anchored` | place, era, identity — 1,506 of the 2,075 offer sites | 0.46 |
+| `earned` | keyed to what has already happened to this life | 0.39 |
+| `universal` | the phase pools and the final fallback | 0.15 |
+
+`textureCandidates` is the generator holding the guards; `buildYearTexture` is
+the driver. A guard yields `[tier, line]` or `[tier, [variant, variant, ...]]` —
+a variant pool counts as **one** candidate, so a block with thirty alternatives
+cannot outvote a country block with one, it just has thirty ways to say its turn.
+`opts.specificOnly` drops the `universal` tier, which is how the caller asks
+"does anything specific want to speak about *this* life this year" and lets
+`buildMundaneLayer` fill the year when the answer is no.
+
+`prose.js` keeps the hashed record of what this character has already been told.
+Both layers prefer an unheard line. Grief is exempt from the exhaustion rule
+because a feeling that recurs is supposed to recur — but capped, because in the
+same words every year it reads as a broken loop.
+
+**When you add texture, pick the tier deliberately and yield to it.** The tier is
+a literal in the `yield`, not something derived from the section heading. Adding
+to a full tier buries the existing content in it; run `npm run sim` to see the
+live mix, and `npm run sim -- --broad` to see it across the whole roster, since
+the ten default configurations cannot reach the other 144 countries' blocks at
+all.
+
+**Flags never clear, so present-tense prose behind a permanent flag never stops.**
+`cancer_treatment` is set in the same breath as `cancer_survivor`, and the
+active-treatment block told a character treated at 45 that "treatment continues,
+you measure time in appointments now" every eligible year until death. Any block
+whose prose is present-tense needs a time bound — the flag's own
+`mem.[flag]Year`, or an elapsed-years variable — not just the flag.
+
+### Climate and season (`seasonsFor`, `deriveSeason` in `src/engine/character.js`)
+
+A country returns either `dry`/`wet` (monsoon and tropical) or the four temperate
+seasons. `MONSOON_COUNTRIES` lives in `character.js` and `_sonderGuards.js`
+imports it, because two copies of this list existed and disagreed: the engine's
+omitted India, Pakistan, Sri Lanka, Nepal and Malaysia, so every guard reading
+`season === 'wet'` for the subcontinent was unsatisfiable and the monsoon prose
+could not fire in the largest monsoon country on earth. `npm run check-events`
+carries a `season-country` audit for both the fully unsatisfiable guard and the
+partial case — a guard naming twelve countries where four can never match it,
+which fires happily for the other eight while a slice of its audience never sees
+it.
+
 ## The Simulation Contract
 
 Five rules the engine must keep, each of which was broken and is now enforced by
@@ -332,6 +387,25 @@ and `buildMundaneLayer` fills the years when they do not. It used to be reachabl
 only when the event pool came back empty — which, with ~2,000 broadly-guarded
 contemplative events, meant ~2% of years.
 
+**A prose layer's line ordering must not be its priority order.** `yearTexture.js`
+was one 15,104-line function of 2,035 sequential `if (guard) return pick([...])`
+statements, so file position *was* priority: grief at line 20, the body-in-time
+bands (which fire for everyone at 38/42/46/52/70) at line 520, Afghanistan at
+12,564 behind ~1,800 earlier guards. 9.3% of the 7,588 authored lines ever
+reached a player; Peru's 47 fired **zero** times across 3,253 Peruvian years, and
+so did the monsoon texture across 3,382 Indian ones. Guards now OFFER rather than
+return — `textureCandidates` is a generator yielding `[tier, line]` and
+`buildYearTexture` picks by tier (`urgent`, `glimpse`, `anchored`, `earned`,
+`universal`, mirroring `REGISTER_SHARES`). See **The prose layer** below.
+
+**A life must not repeat itself.** 15.6% of all prose a character read was a
+sentence they had already read in the same life, and one life heard the same line
+fourteen times — in a game whose stated mechanic is the sentence that lands.
+`src/engine/prose.js` keeps a hashed, capped record in `mem.saidLines`; both prose
+layers prefer an unheard line, and an exhausted tier says nothing rather than
+repeating, letting `buildMundaneLayer` narrate an ordinary year instead. Now
+0.2%, median life 0.0%.
+
 ## The Immersion Principle
 
 When adding anything — events, world events, career events, country data — ask:
@@ -342,6 +416,53 @@ When adding anything — events, world events, career events, country data — a
 4. **Consequential**: Does it connect to real data fields (`lgbtqCriminalized`, `regime`, `literacyFemale`, `childMarriageRisk`, `casteSystem`, `ruralUrban`, `wealthTier`)?
 
 Generic events are a last resort. Specific events — ones that could only fire for a Dalit woman in India in 1975, or a Chinese teenager during the Cultural Revolution, or a Nigerian kid skipping the landline era for mobile money — are the goal.
+
+---
+
+## The Interface
+
+CLAUDE.md said "literary, not gamey", "invisible systems", "no +5 Happiness!
+framing" and "the prose is the mechanic" — and had no guidance about the
+interface at all, which is why the interface spent two years contradicting all
+four. The theme config described itself as "BitLife-inspired". Choice buttons
+were hardcoded gradients by index (blue, then green, then orange), so the colour
+told the player which answer was right in a game whose premise is that there
+isn't one. The title screen said **"Your choices shape everything"** directly
+under "You don't choose where you begin."
+
+The rules that follow from the design document:
+
+**Paper and ink.** One warm neutral ramp (`natalis-bg` → `natalis-faint`), one
+reserved accent (`natalis-accent`) for things that respond to a press. Saturation
+is reserved for the two places it carries real information: a body in trouble
+(`natalis-alarm`, health under 25) and money moving (`natalis-gain`/`-loss`).
+Tailwind's default scales are **remapped** in `tailwind.config.js` to the same
+muted ramp, so a component reaching for `bg-blue-50` cannot reintroduce the candy
+palette.
+
+**No option may look more correct than another.** Choices are identical
+buttons. No gradient, no colour coding, no ordering cue. The sentence is the
+only signal.
+
+**The prose gets the top of the screen and the largest type.** It is set in
+`font-prose` at `text-prose-lg`. Stats are a hairline row with the WORD leading
+and the number trailing — "Declining 39", not a red bar. The full six live in
+the Stats tab for anyone who wants them.
+
+**No emoji in the reading surface.** The event card, the life log and the
+identity card are prose and stay prose; typographic labels do the work markers
+used to ("AGE 11 · 1950 · IN THE NEWS"). The activities panel keeps its category
+icons, which are wayfinding in a utility screen rather than decoration in a
+narrative one.
+
+**No gradients on controls, and no counts typed by hand.** The title screen's
+figures are derived from `COUNTRIES`, `CAREERS` and `RIBBONS`; the hardcoded
+version had drifted to 145/59/379 against a real 154/49/377.
+
+**Copy must not overclaim the player's agency.** `tickLifeCourse` supplies work,
+a partner, a marriage and children at era- and place-accurate rates precisely
+because a life nobody steers is still a life, and passive mode exists to prove
+it. Interface copy that promises otherwise is contradicting the engine.
 
 ---
 
@@ -358,19 +479,29 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-146 countries, 251 world events, 7,953 character events (2,127 of them the
+154 countries, 251 world events, 8,022 character events (2,127 of them the
 contemplative sonder layer, 156 stranger glimpses, 40 prison and political-arrest),
-2,771 registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
+2,879 registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
 
 Verify with:
 
 ```
-npm run build          # must pass
-npm test               # 240+ tests, including the simulation guardrails
-npm run check-flags    # 2735 covered / 0 partial / 0 orphaned
-npm run check-events   # reachability audits: dead guards, enum domains, phase and year windows
-npm run sim            # firing-rate report — what ACTUALLY fires, per 100 lives
+npm run build            # must pass
+npm test                 # 264 tests, including the simulation guardrails
+npm run test:fast        # unit + static audits, seconds not minutes
+npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
+npm run check-flags      # 2879 covered / 0 partial / 0 orphaned
+npm run check-events     # reachability: dead guards, enum domains, phase/year windows, season/country
+npm run sim              # firing-rate report — what ACTUALLY fires, per 100 lives
+npm run sim -- --broad   # the same over the whole roster, not the ten default configurations
 ```
+
+`npm run sim` reports three things no static audit can see: the register mix, the
+share of each **prose layer** a player actually reads (with `concentration` — how
+many distinct lines supply half of all output), and **within-life repetition**.
+The ten default configurations cannot reach 144 countries' content at all, so a
+coverage number taken over them understates the place-anchored layers by
+construction; `--broad` is the honest read.
 
 ### The 2026 systems rebuild
 
@@ -388,6 +519,10 @@ four now have a test that fails if they return.
 | stranger glimpses per life | 0.3 | 6.2 |
 | longest unbroken contemplative run | 19-21 years | 2 |
 | Nigeria 1962 median death age | 8 | 60s |
+| yearTexture lines a player ever sees | 9.3% of 7,588 | 19.1% |
+| countries whose texture appears in a broad run | 16 | 94 |
+| prose a character reads that they already read | 15.6% | 0.2% |
+| countries rendering a blank flag | 72 of 146 | 0 |
 
 Beyond those: parent death set no flag at all (21+ consumers, zero setters);
 events were consumed at display rather than resolution, so closing the tab ate
@@ -410,7 +545,8 @@ above was invisible to a green flag audit. `npm run sim` is the counter-check.
 ```
 src/
   data/
-    countries.js              — 145 countries with full demographic data
+    countries.js              — 154 countries with full demographic data, incl. `historicalNames`
+                                (birth-year keyed: "born in the Gold Coast", "born in East Pakistan") for 103 of them
     places.js                 — 250+ named places across all countries (scale, region, type, population)
     headlines.js              — ~130 major historical headlines for life log injection
     events.js                 — root event file, imports 463+ modules, exports EVENTS array (~7,550+ total character events)
@@ -418,7 +554,9 @@ src/
 
     worldEvents.js            — 255 world history events (year+country/archetype gated); 20+ events have `context` fields
     headlines.js              — ~130 major historical headline entries (year-matched, injected as log entries)
-    flags/                    — FLAG_REGISTRY split into 6 category files (political, economic, social, personal, historical, identity). 2670 registered flags. Pure data, no imports. Run `npm run check-flags` to derive coverage.
+    flags/                    — FLAG_REGISTRY split into 10 category files (identity, geographic, economic,
+                                health, relationships, political, prison, world_events, lifecycle, new_roster).
+                                2879 registered flags. Pure data, no imports. `npm run check-flags` derives coverage.
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options
@@ -692,6 +830,15 @@ src/
         events_libya_depth.js     — Amazigh identity suppressed, Green Book curriculum, US bombing 1986, post-2011
         events_mexico.js          — Tlatelolco aftermath, EZLN 1994, femicide crisis, cartel expansion, Day of Dead
         events_mongolia_depth.js  — Naadam childhood, Genghis Khan rehabilitation post-1990, script revival, Buddhism revival
+        events_austria.js         — 13 events: Heldenplatz 1938, the bombing of Vienna, four-power
+                                    occupation, the 1955 treaty, the Gemeindebau, Waldheim 1986
+        events_adriatic.js        — 18 events: Croatia and Slovenia, one federation and two 1990s
+                                    (ten days vs. four years, Vukovar, Oluja, the izbrisani, EU departure)
+        events_iceland_moldova.js — 19 events: the two extremes of the small-country range —
+                                    airfield wages to a banking collapse; deportation to Padua
+        events_oman_pacific_bhutan.js — 19 events: three states opened by one decision, and the
+                                    population it was not extended to (Zanzibari returnees,
+                                    the francophone half, the Lhotshampa expulsions)
         events_morocco_depth.js   — Skhirat coup 1971, Western Sahara/Sahrawi, Casablanca 2003, Moudawwana reform 2004
         events_mozambique_depth.js — aldeias comunais 1977–82, reeducation camps, landmine generation, cashew collapse
         events_myanmar_depth.js   — Karen/KNU civil war since 1948, jade miners Hpakant, Kachin ethnic minority arcs
@@ -792,6 +939,11 @@ src/
                                 generateEpitaph, generateIdentityCard, buildYearTexture,
                                 buildEffectProxy, resolveProxyExtras, tickPartner, attemptCrime,
                                 deriveGenerationalFlags, DESIRE_PATTERNS, applySoundtrack
+    yearTexture.js            — the quiet-year prose layer: `textureCandidates` (generator,
+                                yields [tier, line]) + `buildYearTexture` (tiered driver)
+    mundaneLayer.js           — daily-life texture, pooled; fills the years texture declines
+    prose.js                  — what this character has already been told, so a life does not
+                                repeat itself (hashed, capped, stored in mem.saidLines)
     casinoEngine.js
     gangEngine.js
     lotteryEngine.js
@@ -815,8 +967,9 @@ src/
     FlagChip.jsx
     minigames/                — MazeGame, FightGame, HackGame, QuickTime, LockPick
   utils/
-    countryUtils.js           — getCountryFlag, REGIME_LABELS/COLORS, RELIGION_LABELS,
-                                RESIDENCY_LABELS, getCountryNameForYear
+    countryUtils.js           — getCountryFlag (+ FLAGGED_COUNTRIES, asserted against the
+                                roster in tests), REGIME_LABELS/COLORS, RELIGION_LABELS,
+                                RESIDENCY_LABELS, getCountryDisplayName (historical names)
     random.js                 — randomisation utilities
 scripts/
   check-flags.js              — flag audit tool. Scans src/data/, src/engine/, src/store/ to find
