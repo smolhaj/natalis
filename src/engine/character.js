@@ -861,7 +861,19 @@ export function tickFamilyIncome(state) {
   const surplus = Math.round(totalParentalIncome * surplusRate)
   if (surplus <= 0) return state
 
-  const newMoney = (state.money ?? 0) + surplus
+  // A child does not accumulate a bank balance out of the household's surplus.
+  // This paid 5-28% of parental income into the CHILD's money every year and
+  // nothing ever spent it, so a wealthy-tier American born in 1975 reached
+  // eighteen holding $51,084 without having worked a day — and an infant who
+  // died at one had "CASH $5k" on its death screen.
+  //
+  // What a child can actually spend is pocket money: this year's share, not
+  // eighteen years of it. The household's real wealth is already expressed
+  // through `wealthTier`, which decides schooling, marriage age, career access
+  // and half the corpus's guards. Carrying the rest forward as cash was double
+  // counting it, in the most visible place there is.
+  const carried = Math.round(Math.min(state.money ?? 0, surplus * 0.6))
+  const newMoney = carried + surplus
   // Same unit problem as the adult wealth stat in tick.js: read the balance in
   // a currency that means the same thing in every decade.
   const inToday = Math.round(newMoney / (wageIndex(state.character?.country, year) || 1))

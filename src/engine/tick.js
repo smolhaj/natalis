@@ -65,7 +65,15 @@ function createProxy(state) {
 export function earnedGain(current, delta) {
   if (delta <= 0) return delta
   const headroom = Math.max(0, 100 - current) / 100
-  return delta * (0.25 + 0.75 * headroom)
+  // The floor was 0.25, which does not deliver what the paragraph above claims:
+  // at 90 it still passes a third of the gain through, so +3 buys a point and
+  // the last ten cost about what the first ten did. Measured across the
+  // rich-world configurations, half of all adults still ended at 90 or above.
+  //
+  // 0.06 means the top of the scale is genuinely expensive and the middle is
+  // unchanged: at 50 a gain keeps 53% of itself, at 70 38%, at 90 15%, at 98
+  // 8%. "Brilliant" goes back to being a description of a few people.
+  return delta * (0.06 + 0.94 * headroom)
 }
 
 function applyProxy(state, proxy) {
@@ -73,11 +81,18 @@ function applyProxy(state, proxy) {
     health:    clamp(state.stats.health    + proxy.h,  0, 100),
     happiness: clamp(state.stats.happiness + proxy.m,  0, 100),
     wealth:    clamp(state.stats.wealth    + proxy.w,  0, 100),
-    // Rounded, because a scaled gain is fractional and the interface prints
-    // the number. Rounding each application rather than at display keeps the
-    // stored value and the shown value the same thing.
-    smarts:    clamp(Math.round(state.stats.smarts   + earnedGain(state.stats.smarts, proxy.e)),  0, 100),
-    charisma:  clamp(Math.round(state.stats.charisma + earnedGain(state.stats.charisma, proxy.s)), 0, 100),
+    // NOT rounded per application, which is what defeated `earnedGain`. A +3 at
+    // 99 scales to 0.77 and then rounds to 1, so the last point cost the same
+    // as the first and the ratchet survived the fix meant to remove it:
+    // measured adult smarts median 96.7 with 63% at 90 or above across the
+    // rich-world configurations, against the 77 and 23% CLAUDE.md records.
+    //
+    // StatBar already rounds at display, and every guard in the corpus compares
+    // with >= or <=, so a fractional store is invisible everywhere except in
+    // the one place it matters: a gain worth less than half a point now buys
+    // less than half a point.
+    smarts:    clamp(state.stats.smarts   + earnedGain(state.stats.smarts, proxy.e),  0, 100),
+    charisma:  clamp(state.stats.charisma + earnedGain(state.stats.charisma, proxy.s), 0, 100),
     looks:     clamp(state.stats.looks     + proxy.lo, 0, 100),
   }
   const regret  = clamp(state.regret + proxy.r, 0, 100)
@@ -1835,6 +1850,26 @@ function harvestLine(s, pool) {
   return line
 }
 
+/**
+ * How much of a year this person can actually reach.
+ *
+ * Deliberately narrow in range — 1 to 3 — because the budget is a shape, not a
+ * score, and a life that gets four actions a year plays like a different game
+ * from one that gets two.
+ */
+function actionBudget(age, state) {
+  if (age <= 5) return 1                       // somebody else decides the year
+  if (age <= 11) return 2
+  const health = state?.stats?.health ?? 60
+  const failing = health < 30
+  if (failing) return 1                        // the year is spent on the body
+  if (age >= 80) return 1
+  if (state?.retired) return 3                 // the first time the year is yours
+  if (age >= 65) return 3
+  if (age >= 18) return 2
+  return 2
+}
+
 // ─── Farming income variance ──────────────────────────────────────────────────
 // Applied inside tick() directly during career income calculation.
 
@@ -2211,6 +2246,16 @@ export function tick(state) {
     age: state.age + 1,
     currentYear: state.currentYear + 1,
     actionsThisYear: 0,
+    // Two actions, from birth to death, for everybody. A three-year-old and an
+    // eighty-five-year-old got the same allowance and nothing — wealth, health,
+    // retirement, a career — ever changed it, so it was a limit rather than a
+    // resource.
+    //
+    // A year holds as much as the person in it can reach. A small child cannot
+    // reach much; a retired person with their health has more of the year free
+    // than anyone; a body that is failing has less. This is the one number in
+    // the game the player feels every single turn.
+    maxActionsPerYear: actionBudget(state.age + 1, state),
     yearsAbroad: isAbroad ? (state.yearsAbroad ?? 0) + 1 : (state.yearsAbroad ?? 0),
   }
 

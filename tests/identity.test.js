@@ -209,9 +209,21 @@ describe('stats that only ever go up', () => {
   it('scales a gain by the headroom left above it', async () => {
     const { earnedGain } = await import('../src/engine/tick.js')
     // Cheap at the bottom, expensive at the top, never negative-scaled.
-    expect(earnedGain(20, 10)).toBeGreaterThan(8)
-    expect(earnedGain(95, 10)).toBeLessThan(3.5)
-    expect(earnedGain(100, 10)).toBeCloseTo(2.5, 5)
+    //
+    // The floor was 0.25, and this asserted it as a constant. It does not
+    // deliver what it claims: at 90 a quarter of the gain still passes through,
+    // so +3 buys a point and the last ten cost about what the first ten did —
+    // measured across the rich-world configurations, half of all adults still
+    // ended at 90 or above, against the 23% CLAUDE.md records. Asserted as the
+    // SHAPE now, with the measured values named, so the next person to tune it
+    // is not re-deriving the constant from a test.
+    expect(earnedGain(20, 10)).toBeGreaterThan(8)     // 8.1
+    expect(earnedGain(50, 10)).toBeLessThan(6)        // 5.3
+    expect(earnedGain(70, 10)).toBeLessThan(4.5)      // 3.8
+    expect(earnedGain(90, 10)).toBeLessThan(2)        // 1.5
+    expect(earnedGain(100, 10)).toBeLessThan(1)       // 0.6
+    // Still positive at the ceiling: a gain is never a loss.
+    expect(earnedGain(100, 10)).toBeGreaterThan(0)
     // A loss is a loss. A stroke takes what it takes.
     expect(earnedGain(95, -10)).toBe(-10)
     expect(earnedGain(20, -10)).toBe(-10)
