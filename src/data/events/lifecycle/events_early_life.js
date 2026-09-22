@@ -6,6 +6,34 @@
 // Young adult events cover the messy 18–25 years: the self discovered at 17 does not fit
 // the world at 22, and these events name that gap specifically.
 
+import { PLACES } from '../../places'
+
+// The city this character would actually go to: the largest urban place in
+// their own country. `ya_city_arrival` narrated the bus arriving and the
+// address of someone's cousin on a piece of paper, and then moved nobody —
+// `currentPlace` stayed "Rural Uttar Pradesh" for the whole life and the
+// following years printed village texture, while the flag it set drove an
+// epitaph line about the move from village to city. The engine has had
+// `p.relocate` all along and no event had ever called it.
+const SCALE_RANK = { megacity: 4, major_city: 3, large_city: 3, city: 2, town: 1, village: 0 }
+function biggestCityIn(countryName) {
+  const urban = PLACES.filter(pl => pl.country === countryName && pl.type === 'urban')
+  if (!urban.length) return null
+  return urban.slice().sort((a, b) => (SCALE_RANK[b.scale] ?? 0) - (SCALE_RANK[a.scale] ?? 0))[0]
+}
+
+// The move, applied by every branch: this is a migration, not a mood.
+function _goToTheCity(p) {
+  const country = p._state?.currentCountry ?? p._state?.character?.country
+  const dest = biggestCityIn(country?.name)
+  if (!dest) return
+  // Arriving with nothing is the usual way of arriving. The neighbourhood is
+  // the one somebody with the address of a cousin on a piece of paper gets.
+  p.relocate(dest.id, (p._state?.character?.wealthTier ?? 1) >= 3 ? 'working_class' : 'informal')
+}
+
+
+
 import { hasTech } from '../../technology.js'
 
 export const EARLY_LIFE_EVENTS = [
@@ -558,7 +586,8 @@ export const EARLY_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 24 &&
       !G.mem?.yaCityArrival &&
       G.ruralUrban === 'rural' &&
-      !G.flags.has('rural_city_arrival'),
+      !G.flags.has('rural_city_arrival') &&
+      biggestCityIn(G.character.country.name) != null,
     text: (G) => {
       const name = G.character.country.name
       const arch = G.character.country.archetype
@@ -575,19 +604,19 @@ export const EARLY_LIFE_EVENTS = [
         text: 'Embrace it. Learn the city as fast as you can.',
         tag: 'ya_city_embrace',
         outcome: 'You buy a map or memorise a transit line. You eat at a place with no English on the menu. By the end of the month you have a route that is yours.',
-        effect: (p) => { p.m += 6; p.s += 5; p.e += 3; p.addFlag('rural_city_arrival'); p.addFlag('city_adapted'); p.setMem('yaCityArrival', true) },
+        effect: (p) => { p.m += 6; p.s += 5; p.e += 3; _goToTheCity(p); p.addFlag('rural_city_arrival'); p.addFlag('city_adapted'); p.setMem('yaCityArrival', true) },
       },
       {
         text: 'Feel like a fraud for months and work around it.',
         tag: 'ya_city_imposter',
         outcome: 'You navigate but you do not belong yet. You are not sure belonging is available to someone from where you came from. You are not sure that is true either.',
-        effect: (p) => { p.m -= 4; p.e += 4; p.r += 3; p.addFlag('rural_city_arrival'); p.setMem('yaCityArrival', true) },
+        effect: (p) => { _goToTheCity(p); p.m -= 4; p.e += 4; p.r += 3; p.addFlag('rural_city_arrival'); p.setMem('yaCityArrival', true) },
       },
       {
         text: 'Map it carefully, block by block, until it becomes yours.',
         tag: null,
         outcome: 'It takes a year. The city does not hand itself over. You learn it the way you learned everything that mattered — slowly, specifically, by going back.',
-        effect: (p) => { p.m += 3; p.e += 5; p.addFlag('rural_city_arrival'); p.setMem('yaCityArrival', true) },
+        effect: (p) => { _goToTheCity(p); p.m += 3; p.e += 5; p.addFlag('rural_city_arrival'); p.setMem('yaCityArrival', true) },
       },
     ],
     effect: null,
