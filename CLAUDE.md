@@ -359,7 +359,7 @@ it.
 
 ## The Simulation Contract
 
-Five rules the engine must keep, each of which was broken and is now enforced by
+Rules the engine must keep, each of which was broken and is now enforced by
 `tests/` and by simulation:
 
 **Health is not a ratchet.** `healthCeiling(state)` sets a plateau from age, the
@@ -386,6 +386,48 @@ project, place or season layers have something specific to say about *this* life
 and `buildMundaneLayer` fills the years when they do not. It used to be reachable
 only when the event pool came back empty — which, with ~2,000 broadly-guarded
 contemplative events, meant ~2% of years.
+
+**A sentence must be true of the world it is printed into.** `src/data/technology.js`
+answers when a thing arrived where the character lives, and whether the country
+was materially rich that year — because `isWealthyArch` is a statement about
+*now*. Read as history it put a hallway telephone, a weekly cinema trip and a
+folded newspaper into a 1931 Omani household (three schools in the country, ten
+kilometres of paved road, oil not exported until 1967), and a television into an
+Icelandic living room twenty-two years before Icelandic broadcasting existed.
+`src/data/history.js` carries the rest of what a guard cannot infer: independence
+years, coup years, the Soviet republics, malaria elimination dates, which
+countries have rivers, which taught school in a coloniser's language, and
+`INSTITUTIONS_SUSPENDED` — the years a country stopped having schools, wages,
+money, clinics, the post or cities at all. `npm run check-anachronisms` plays
+lives and reads every printed line against that table.
+
+**A character must be a person who could exist.** Ethnicity and religion were two
+independent draws, so the engine made Lhotshampa who were 67% Buddhist (they ARE
+Bhutan's Hindu population, which is the whole reason for the 1990 expulsions),
+Catholic Bosniaks, Muslim Dalits and Sunni Copts — and every guard reading both
+together was silently failing for part of its own population. `src/data/identity.js`
+gives the conditional distribution for the 473 groups where the two are
+entangled and defers to the country marginal for everyone else;
+`impliedMarginal()` holds the result to the declared `religionWeights`, within
+10 points for all 154 countries. Names are drawn once per life through
+`src/engine/names.js`, because ten independent `pickFrom` calls across four files
+gave 13% of families two members with the same first name.
+
+**A stat that only goes up is not a stat.** Health drifts toward a ceiling and
+money, karma and fame all have events that take them away; smarts and charisma
+had neither, so a hundred events adding +3 here and +6 there walked both to 100
+in any life long enough to contain them — smarts had a median of 96 at death and
+58% of characters ended at 90 or above, which makes "Brilliant" a description of
+nearly everyone and opens every `stats.smarts >= 70` guard to the whole
+population. `earnedGain` scales a gain by the headroom above it and never scales
+a loss.
+
+**The instrument must be able to see the thing it measures.** Passive mode
+resolves choice events inside `tick()`, so `pendingEvent` is never set for them,
+and the firing-rate harness — which counted events by reading it — reported
+passive at 52% of years containing an event against active's 98%, with zero
+choice events in the one mode whose entire design is that the character answers
+them. Both resolution paths now stamp the event id onto the log entry.
 
 **A prose layer's line ordering must not be its priority order.** `yearTexture.js`
 was one 15,104-line function of 2,035 sequential `if (guard) return pick([...])`
@@ -479,19 +521,20 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 251 world events, 8,022 character events (2,127 of them the
-contemplative sonder layer, 156 stranger glimpses, 40 prison and political-arrest),
-2,879 registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
+154 countries, 252 world events, 8,025 character events (2,127 of them the
+contemplative sonder layer, 156 stranger glimpses, 42 prison and political-arrest),
+2,887 registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
 
 Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 264 tests, including the simulation guardrails
+npm test                 # 331 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
-npm run check-flags      # 2879 covered / 0 partial / 0 orphaned
+npm run check-flags      # 2887 covered / 0 partial / 0 orphaned
 npm run check-events     # reachability: dead guards, enum domains, phase/year windows, season/country
+npm run check-anachronisms  # plays lives and reads every line against when the world held it
 npm run sim              # firing-rate report — what ACTUALLY fires, per 100 lives
 npm run sim -- --broad   # the same over the whole roster, not the ten default configurations
 ```
@@ -535,6 +578,35 @@ almost no content.
 **The lesson worth keeping: measure what fires, not what exists.** Every failure
 above was invisible to a green flag audit. `npm run sim` is the counter-check.
 
+### The beta pass
+
+A later pass played the game rather than auditing it, and found a second class
+of defect: content that fires correctly and is wrong about the world.
+
+| | before | after |
+|---|---|---|
+| lines naming a technology before it arrived | many | 0, over five consecutive runs |
+| "Life in brief" on the death screen | empty in 67% of lives | 0%, median 8 notes |
+| families with two members sharing a first name | 13% | under 1% |
+| both parents holding the identical job and wage | ~50% at the top tier | 3% |
+| smarts median at death (share ending 90+) | 96 (58%) | 77 (23%) |
+| countries whose religion mix the identity table distorts >12pp | 26 | 0 |
+| passive mode, share of years containing an event | measured at 52% | 88.6% (the 52% was the instrument) |
+
+Every one of these was reachable, correctly guarded and syntactically fine. A
+1931 Omani childhood had a hallway telephone and a weekly trip to the cinema,
+because `wealthy_gulf` describes Oman now. An Icelandic living room had a
+television in 1944, twenty-two years before Icelandic broadcasting. A Cambodian
+in 1977 was drawing a salary, being promoted to Foreman and being referred to a
+psychiatrist, four years into a regime that had abolished money, wages and
+hospitals. A Romanian who lived through Ceaușescu's whole rule got an obituary
+that mentioned neither him nor 1989 — while her own state object had been
+holding `romania_revolution_1989` since the year it happened.
+
+**The lesson worth keeping from this one: a guard answers "may this fire", not
+"is this true".** Nothing static can tell the difference. `npm run
+check-anachronisms` and the simulation tests are the counter-check.
+
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
 
@@ -549,10 +621,23 @@ src/
                                 (birth-year keyed: "born in the Gold Coast", "born in East Pakistan") for 103 of them
     places.js                 — 250+ named places across all countries (scale, region, type, population)
     headlines.js              — ~130 major historical headlines for life log injection
-    events.js                 — root event file, imports 463+ modules, exports EVENTS array (~7,550+ total character events)
+    technology.js             — when a thing arrived where the character lives, and when the country
+                                became materially rich: 19 technologies, ~218 country overrides.
+                                Because `isWealthyArch` describes NOW, and read as history it gave
+                                1931 Oman a hallway telephone and 1944 Iceland a television.
+    identity.js               — religion conditioned on ethnicity for the 473 groups where the two
+                                are entangled (Lhotshampa are Hindu; Bosniaks are Muslim; Malays are
+                                constitutionally Muslim), and silent for the rest. `impliedMarginal()`
+                                holds the joint draw to each country's declared religionWeights.
+    history.js                — the dates and facts the engine was guessing: independence years, coup
+                                years, the fifteen Soviet republics, the Warsaw Pact, malaria
+                                elimination, which countries have rivers, which taught school in a
+                                coloniser's language, and INSTITUTIONS_SUSPENDED — the years a country
+                                stopped having schools, wages, money, clinics, the post or cities
+    events.js                 — root event file, imports 463+ modules, exports EVENTS array (~8,025 total character events)
     [All events are organized into src/data/events/ subdirectories — see below]
 
-    worldEvents.js            — 255 world history events (year+country/archetype gated); 20+ events have `context` fields
+    worldEvents.js            — 252 world history events (year+country/archetype gated); 20+ events have `context` fields
     headlines.js              — ~130 major historical headline entries (year-matched, injected as log entries)
     flags/                    — FLAG_REGISTRY split into 10 category files (identity, geographic, economic,
                                 health, relationships, political, prison, world_events, lifecycle, new_roster).
@@ -944,6 +1029,12 @@ src/
     mundaneLayer.js           — daily-life texture, pooled; fills the years texture declines
     prose.js                  — what this character has already been told, so a life does not
                                 repeat itself (hashed, capped, stored in mem.saidLines)
+    names.js                  — one place to draw a person's name, so two people in one life are not
+                                the same person. Ten independent pickFrom() calls across four files
+                                gave 13% of families two members with the same first name.
+    epitaph.js                — the death screen: generateIdentityCard, generateEpitaph,
+                                generateLifeNotes. The historical spine comes from
+                                `worldEventsFired`, which the engine has been recording all along.
     casinoEngine.js
     gangEngine.js
     lotteryEngine.js
@@ -982,4 +1073,21 @@ scripts/
                                   npm run check-flags -- --weight=major
                                   npm run check-flags -- --unregistered
                                   npm run check-flags -- --world
+  check-events.js             — reachability audits: dead guards, identity literals absent from the
+                                country the guard requires, phases that truncate their own age band,
+                                year windows nobody can be inside, seasons a country cannot have
+  check-anachronisms.js       — plays lives across the eras where a country's present-day category is
+                                least like its past (the Gulf before oil, Iceland before broadcasting,
+                                Korea before the miracle) and reads every printed line against
+                                technology.js. Every line it found on its first run was reachable,
+                                correctly guarded and syntactically fine; it was wrong about when the
+                                world contained the thing it named.
+  sim.js                      — the firing-rate report. The only audit that can see what the game
+                                actually does, and the counter-check on every static one.
+  lib/
+    sim.js                    — the headless harness. `collectLines` records every prose line with the
+                                year and country it printed in; `keepFinalStates` keeps each life's
+                                end state for the death-screen checks.
+    anachronism.js            — the phrase table that gives a sentence's date away, and the age floors
+                                for lines that describe doing something yourself
 ```
