@@ -102,7 +102,7 @@ export default function CuratedBirthScreen() {
 
         {/* Header */}
         <div className="flex items-center gap-2">
-          <button onClick={goToTitle} className="text-bit-blue text-sm font-semibold">← Back</button>
+          <button onClick={goToTitle} className="text-bit-blue text-sm font-semibold">Cancel</button>
           <p className="text-natalis-muted text-xs ml-auto">Step {step} of 4</p>
         </div>
 
@@ -130,6 +130,11 @@ export default function CuratedBirthScreen() {
               />
 
               <div className="max-h-[52vh] overflow-y-auto space-y-1 pr-1">
+                {filteredCountries.length === 0 && (
+                  <p className="text-natalis-muted text-sm px-3 py-6 text-center">
+                    Nothing matches &ldquo;{countrySearch}&rdquo;. There are 154 countries here; try a shorter search.
+                  </p>
+                )}
                 {filteredCountries.map(c => (
                   <button
                     key={c.name}

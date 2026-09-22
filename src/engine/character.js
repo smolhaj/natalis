@@ -243,6 +243,24 @@ export function deriveInitialSiblings(char, parents) {
   for (const p of Object.values(parents ?? {})) {
     if (p?.name) used.add(String(p.name).split(' ')[0].toLowerCase())
   }
+  // Age gaps were drawn independently, so a family of four routinely produced
+  // two siblings the same age who were not twins, and the People tab listed
+  // both with no explanation. Real twins happen; this makes them rare rather
+  // than a quarter of all families.
+  const usedDiffs = new Set([0])
+  const nextAgeDiff = () => {
+    if (chance(0.02)) {
+      const twinOf = [...usedDiffs].filter(d => d !== 0)
+      if (twinOf.length) return pickFrom(twinOf)
+    }
+    for (let i = 0; i < 20; i++) {
+      const d = randomBetween(-3, 8)
+      if (!usedDiffs.has(d)) { usedDiffs.add(d); return d }
+    }
+    const d = randomBetween(-8, 14)
+    usedDiffs.add(d)
+    return d
+  }
   return Array.from({ length: count }, () => {
     const gender = chance(0.5) ? 'male' : 'female'
     const firstName = pickUnusedName(gender === 'male' ? c.namePool.male : c.namePool.female, used)
@@ -250,7 +268,7 @@ export function deriveInitialSiblings(char, parents) {
     return {
       name: `${firstName} ${char.surname}`,
       gender,
-      ageDiff: randomBetween(-3, 8),
+      ageDiff: nextAgeDiff(),
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-15, 15), 10, 100),
     }
@@ -258,8 +276,9 @@ export function deriveInitialSiblings(char, parents) {
 }
 
 export function deriveBirthText(char) {
-  const { country, birthYear, familyStability, familySize, wealthTier, firstName, surname } = char
+  const { country, birthYear, familyStability, familySize, wealthTier, firstName, surname, ruralUrban } = char
   const arch = country.archetype
+  const rural = ruralUrban === 'rural'
   const name = `${firstName} ${surname}`
   const cn = getCountryDisplayName(country, birthYear) // historical name if applicable
 
@@ -270,15 +289,29 @@ export function deriveBirthText(char) {
     unstable: 'into difficult circumstances from the first day',
   }[familyStability] ?? 'into the world'
 
+  // The first sentence of the life used to assume a maternity ward and a city
+  // for every character, and the header beside it would say "Rural Sichuan".
+  // Three quarters of the world was born rural for most of this game's period,
+  // and most of them were not born in a hospital.
   const archCtx = {
-    wealthy_west: `In ${cn} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`,
-    wealthy_east: `${cn}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`,
-    post_soviet: `${cn}, ${birthYear}. The maternity ward smells of disinfectant. Your mother was not allowed to have your father in the room.`,
-    developing_urban: `${cn}, ${birthYear}. The city is enormous and still growing. The neighbourhood you are born into will shape everything that follows.`,
+    wealthy_west: rural
+      ? `In ${cn} in ${birthYear}, the nearest hospital is forty minutes of road away, and you arrive before it is reached.`
+      : `In ${cn} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`,
+    wealthy_east: rural
+      ? `${cn}, ${birthYear}. A village clinic, a midwife who has done this for thirty years, grandparents waiting outside with specific opinions about your name.`
+      : `${cn}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`,
+    post_soviet: rural
+      ? `${cn}, ${birthYear}. A district clinic with one doctor for eleven villages. Your mother walked part of the way.`
+      : `${cn}, ${birthYear}. The maternity ward smells of disinfectant. Your mother was not allowed to have your father in the room.`,
+    developing_urban: rural
+      ? `${cn}, ${birthYear}. The village is a long way from the road and the road is a long way from the city. What happens to you here will be decided mostly by rain and by who your family is.`
+      : `${cn}, ${birthYear}. The city is enormous and still growing. The neighbourhood you are born into will shape everything that follows.`,
     developing_unstable: `${cn}, ${birthYear}. The country is in motion — politically, economically, always. You arrive ${stabilityCtx}.`,
     subsaharan: `${cn}, ${birthYear}. You are born ${stabilityCtx}${familySize > 4 ? ', the newest in a large family' : ''}. The sun is already through the window.`,
     conflict_zone: `${cn}, ${birthYear}. You are born during a time of conflict. Your mother's first priority was keeping you safe.`,
-    wealthy_gulf: `${cn}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`,
+    wealthy_gulf: rural
+      ? `${cn}, ${birthYear}. Away from the coast the heat is a different kind, and the arrangements for a birth are the ones the family has always used.`
+      : `${cn}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`,
   }[arch] ?? `${name} enters the world in ${cn}, ${birthYear}.`
 
   return archCtx
@@ -487,6 +520,62 @@ export function calculateHouseholdContribution(state) {
 }
 
 // ─── Financial reputation display ────────────────────────────────────────────
+//
+// The score is stored on a 300-850 scale, which is FICO — a United States
+// instrument. It was being printed unchanged to a German, a Brazilian and a
+// Korean, none of whose countries use that range or that name, and one of whom
+// has no consumer credit score at all.
+//
+// What a country uses to decide whether you are lendable-to is a real fact
+// about living there, and a different one in each place: Germany's SCHUFA is a
+// percentage, Britain's Experian runs to 999, France keeps no positive score
+// at all and only a register of people who have defaulted, and China's Sesame
+// Credit did not exist before 2015. The stored score is rescaled onto whatever
+// the character's country actually uses.
+export const CREDIT_SYSTEMS = {
+  'United States':  { name: 'FICO score',      min: 300, max: 850, from: 1989 },
+  'Canada':         { name: 'credit score',    min: 300, max: 900, from: 1990 },
+  'United Kingdom': { name: 'Experian score',  min: 0,   max: 999, from: 1980 },
+  'Ireland':        { name: 'credit record',   min: 0,   max: 999, from: 2013 },
+  'Germany':        { name: 'SCHUFA score',    min: 0,   max: 100, suffix: '%', from: 1985 },
+  'Austria':        { name: 'KSV score',       min: 0,   max: 100, suffix: '%', from: 1990 },
+  'Switzerland':    { name: 'ZEK record',      min: 0,   max: 100, suffix: '%', from: 1990 },
+  'Netherlands':    { name: 'BKR registration', negativeOnly: true, from: 1965 },
+  'France':         { name: 'Banque de France file', negativeOnly: true, from: 1989 },
+  'Belgium':        { name: 'Central Credit Register', negativeOnly: true, from: 1985 },
+  'Spain':          { name: 'ASNEF file',      negativeOnly: true, from: 1994 },
+  'Italy':          { name: 'CRIF score',      min: 0,   max: 100, suffix: '%', from: 1995 },
+  'Sweden':         { name: 'UC score',        min: 0,   max: 100, suffix: '%', from: 1990 },
+  'Norway':         { name: 'credit rating',   min: 0,   max: 100, suffix: '%', from: 1990 },
+  'Japan':          { name: 'CIC record',      negativeOnly: true, from: 1985 },
+  'South Korea':    { name: 'NICE score',      min: 1,   max: 1000, from: 2002 },
+  'Taiwan':         { name: 'JCIC score',      min: 200, max: 800, from: 1992 },
+  'Singapore':      { name: 'Credit Bureau grade', min: 1000, max: 2000, from: 2002 },
+  'China':          { name: 'Sesame Credit score', min: 350, max: 950, from: 2015 },
+  'India':          { name: 'CIBIL score',     min: 300, max: 900, from: 2007 },
+  'Brazil':         { name: 'Serasa score',    min: 0,   max: 1000, from: 2012 },
+  'Mexico':         { name: 'Buró de Crédito score', min: 400, max: 850, from: 1996 },
+  'Russia':         { name: 'NBKI score',      min: 300, max: 850, from: 2006 },
+  'Poland':         { name: 'BIK score',       min: 192, max: 631, from: 2007 },
+  'South Africa':   { name: 'credit score',    min: 300, max: 850, from: 1995 },
+  'Australia':      { name: 'credit score',    min: 0,   max: 1200, from: 2014 },
+  'New Zealand':    { name: 'credit score',    min: 0,   max: 1000, from: 2012 },
+}
+
+/** The score as this country would state it, or null where it has no such thing. */
+export function localCreditScore(state) {
+  const name = state.currentCountry?.name ?? state.character?.country?.name
+  const year = state.currentYear ?? 2000
+  const sys = CREDIT_SYSTEMS[name]
+  if (!sys || year < sys.from) return null
+  const raw = state.creditScore ?? 700
+  if (sys.negativeOnly) {
+    return { name: sys.name, negativeOnly: true, value: raw >= 580 ? 'Not on it' : 'On it' }
+  }
+  const t = Math.max(0, Math.min(1, (raw - 300) / 550))
+  return { name: sys.name, value: Math.round(sys.min + t * (sys.max - sys.min)), suffix: sys.suffix ?? '', good: t >= 0.6, fair: t >= 0.4 }
+}
+
 export function getFinancialReputationDisplay(state) {
   const archetype = state.character?.country?.archetype
   const year = state.currentYear ?? 2000
@@ -554,7 +643,7 @@ export function getHyperinflation(countryName, year, flags) {
 // Returns an occupation object for a parent based on wealth tier, archetype, birth year,
 // gender, and family stability. Base salaries are in very_high GDP units; they get
 // scaled by GDP_MULT at display / tick time.
-function assignParentOccupation(wealthTier, archetype, birthYear, gender, familyStability) {
+function assignParentOccupation(wealthTier, archetype, birthYear, gender, familyStability, avoidTitle) {
   // Income types: 'formal' | 'informal' | 'subsistence' | 'barter' | 'none'
   const isMother = gender === 'female'
 
@@ -650,11 +739,17 @@ function assignParentOccupation(wealthTier, archetype, birthYear, gender, family
     ? 'provides food and shelter'
     : incomeType === 'barter' ? 'paid in kind' : null
 
+  // Avoid handing both parents the identical job, and spread the wage: the
+  // tier's base salary is a midpoint, not a national pay scale that two people
+  // in the same household would be paid to the dollar.
+  const choices = avoidTitle && titles.length > 1 ? titles.filter(t => t !== avoidTitle) : titles
+  const spread = baseSalary === 0 ? 0 : Math.round(baseSalary * (0.75 + Math.random() * 0.5) / 100) * 100
+
   return {
-    title: pickFrom(titles),
+    title: pickFrom(choices.length ? choices : titles),
     field,
     incomeType: actualIncomeType,
-    annualIncome: baseSalary,
+    annualIncome: spread,
     incomeNote,
   }
 }
@@ -669,6 +764,7 @@ export function deriveInitialParents(char) {
   const altSurname = pickFrom(country.surnames)
   const baseQ = { secure: 82, stable: 68, struggling: 48, unstable: 28 }[familyStability] ?? 55
   const fatherPresent = familyStability !== 'unstable' || chance(0.55)
+  const motherOccupation = assignParentOccupation(wealthTier, arch, birthYear, 'female', familyStability)
   return {
     mother: {
       name: `${motherFirst} ${surname}`,
@@ -676,7 +772,7 @@ export function deriveInitialParents(char) {
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-10, 10), 12, 100),
       traits: pickTraits(ADULT_TRAITS),
-      occupation: assignParentOccupation(wealthTier, arch, birthYear, 'female', familyStability),
+      occupation: motherOccupation,
     },
     father: {
       name: `${fatherFirst} ${altSurname}`,
@@ -685,7 +781,7 @@ export function deriveInitialParents(char) {
       relationshipQuality: fatherPresent ? clamp(baseQ + randomBetween(-15, 10), 8, 100) : 0,
       traits: fatherPresent ? pickTraits(ADULT_TRAITS) : [],
       occupation: fatherPresent
-        ? assignParentOccupation(wealthTier, arch, birthYear, 'male', familyStability)
+        ? assignParentOccupation(wealthTier, arch, birthYear, 'male', familyStability, motherOccupation?.title)
         : null,
     },
   }

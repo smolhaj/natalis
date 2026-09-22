@@ -26,10 +26,19 @@ const STAT_TIERS = {
   wealth:    ['Destitute', 'Struggling', 'Getting by', 'Comfortable', 'Wealthy'],
 }
 
+/**
+ * 0-4, in twenties. Exported because the Stats tab prints a sentence beside
+ * each bar and was banding it independently — at 60 the bar said "Attractive"
+ * and the caption said "Unremarkable in the best sense". One source of truth.
+ */
+export function statTier(value) {
+  return Math.min(4, Math.max(0, Math.floor(value / 20)))
+}
+
 function getTierLabel(stat, value) {
   const tiers = STAT_TIERS[stat]
   if (!tiers) return ''
-  return tiers[Math.min(4, Math.floor(value / 20))]
+  return tiers[statTier(value)]
 }
 
 export default function StatBar({ stat, label, value, delta }) {
@@ -41,8 +50,12 @@ export default function StatBar({ stat, label, value, delta }) {
 
   return (
     <div>
-      <div className="flex items-baseline justify-between gap-2 mb-1">
-        <span className="text-[11px] font-medium text-natalis-muted uppercase tracking-[0.1em] truncate">
+      {/* "HAPPINESS" needed 71px and had 63, so the longest stat label was
+          clipped to "HAPPI…" at every width including desktop. Less tracking
+          and a tighter gap; `truncate` stays as the backstop rather than the
+          mechanism. */}
+      <div className="flex items-baseline justify-between gap-1.5 mb-1">
+        <span className="text-[11px] font-medium text-natalis-muted uppercase tracking-[0.04em] truncate">
           {name}
         </span>
         <span className="flex items-baseline gap-1.5 flex-shrink-0">

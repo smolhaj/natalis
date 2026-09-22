@@ -578,9 +578,17 @@ export const useGameStore = create((set, get) => ({
     const result = success ? mg.onSuccess : mg.onFailure
     const outcome = typeof result?.outcome === 'string' ? result.outcome : (success ? 'You succeeded.' : 'You failed.')
     const base = { ...state, pendingMinigame: null }
+    const before = base.log?.length ?? 0
     let next = result?.effect ? result.effect(base) : base
     next = { ...next, pendingMinigame: null, lastOutcome: outcome }
-    if (outcome) next.log = [...(next.log ?? []), { age: next.age, text: outcome.slice(0, 120), isKey: true }]
+    // Only log the outcome if the effect did not already narrate it. A crime
+    // caught through a minigame was writing three lines for one event: the
+    // minigame's own outcome, then "You are arrested for burglary", then the
+    // verdict from the trial.
+    const effectLogged = (next.log?.length ?? 0) > before
+    if (outcome && !effectLogged) {
+      next.log = [...(next.log ?? []), { age: next.age, text: outcome.slice(0, 120), isKey: true }]
+    }
     set(next)
   },
 

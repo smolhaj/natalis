@@ -1888,6 +1888,32 @@ export default function ActivitiesPanel({ onClose }) {
 
   // ── Main render ───────────────────────────────────────────────────────────────
 
+  // One predicate, used both to render the list and to decide whether there is
+  // a list at all. It was duplicated, and the copy drifted on six age floors
+  // within minutes of being written: the groups each return null when empty,
+  // so without an accurate answer here the sheet opens onto an 87-pixel header
+  // bar over nothing, which reads as a broken panel rather than as "there is
+  // nothing a one-year-old can choose to do".
+  const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')
+  const prisonBlockedCats = ['love', 'fertility', 'nightlife', 'movies', 'salon', 'shopping', 'social_media', 'plastic_surg', 'race_tracks', 'rehab', 'licenses', 'assets', 'crime', 'travel', 'business', 'career', 'underground', 'immigration']
+  const MIN_AGE = {
+    mind_body: 6, hobbies: 5, education: 8, movies: 5, salon: 12, friends: 5,
+    nightlife: 18, fertility: 14, plastic_surg: 18, licenses: 16, race_tracks: 18,
+    pets: 8, career: 14, assets: 18, money: 14, substances: 14, crime: 12,
+    travel: 16, business: 18, love: 12, social_media: 10, shopping: 10,
+  }
+  const isCategoryVisible = (cat) => {
+    if (MIN_AGE[cat.key] !== undefined && state.age < MIN_AGE[cat.key]) return false
+    if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return false
+    if (cat.key === 'crime' && state.pendingTrial) return false
+    if (cat.key === 'immigration' && state.residencyStatus === 'citizen' && !state.flags.includes('emigrated')) return false
+    if (cat.key === 'underground' && !isUnderground) return false
+    if (cat.key === 'prison' && !state.inPrison) return false
+    if (state.inPrison && prisonBlockedCats.includes(cat.key)) return false
+    return true
+  }
+  const anyCategoryVisible = TOP_CATEGORIES.some(isCategoryVisible)
+
   return (
     <div className="bg-natalis-bg">
       {/* Header */}
@@ -1897,7 +1923,7 @@ export default function ActivitiesPanel({ onClose }) {
             <button onClick={() => setActiveTop(null)} className="text-bit-blue font-semibold text-sm mr-1">← Back</button>
           )}
           <p className="font-bold text-natalis-text text-sm">
-            {activeTop ? TOP_CATEGORIES.find(c => c.key === activeTop)?.label : '⚡ Activities'}
+            {activeTop ? TOP_CATEGORIES.find(c => c.key === activeTop)?.label : 'Activities'}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -1915,45 +1941,15 @@ export default function ActivitiesPanel({ onClose }) {
         {!activeTop ? (
           /* Top-level category list — grouped */
           <div className="p-3 space-y-4">
+            {anyCategoryVisible || (
+              <p className="text-natalis-muted text-sm px-3 py-8 text-center leading-relaxed">
+                {state.age < 5
+                  ? 'Nothing here yet. At this age the year happens to you.'
+                  : 'Nothing available to you right now.'}
+              </p>
+            )}
             {CATEGORY_GROUP_ORDER.map(groupLabel => {
-              const groupCats = TOP_CATEGORIES.filter(c => c.group === groupLabel)
-              const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')
-              const prisonBlockedCats = ['love', 'fertility', 'nightlife', 'movies', 'salon', 'shopping', 'social_media', 'plastic_surg', 'race_tracks', 'rehab', 'licenses', 'assets', 'crime', 'travel', 'business', 'career', 'underground', 'immigration']
-
-              const visibleCats = groupCats.filter(cat => {
-                if (cat.key === 'mind_body' && state.age < 6) return false
-                if (cat.key === 'hobbies' && state.age < 5) return false
-                if (cat.key === 'education' && state.age < 8) return false
-                if (cat.key === 'movies' && state.age < 5) return false
-                if (cat.key === 'salon' && state.age < 12) return false
-                if (cat.key === 'friends' && state.age < 5) return false
-                if (cat.key === 'nightlife' && state.age < 18) return false
-                if (cat.key === 'fertility' && state.age < 14) return false
-                if (cat.key === 'plastic_surg' && state.age < 18) return false
-                if (cat.key === 'licenses' && state.age < 16) return false
-                if (cat.key === 'race_tracks' && state.age < 18) return false
-                if (cat.key === 'pets' && state.age < 8) return false
-                if (cat.key === 'shopping' && state.age < 8) return false
-                if (cat.key === 'social_media' && state.age < 13) return false
-                if (cat.key === 'career' && state.age < 14) return false
-                if (cat.key === 'love' && state.age < 13) return false
-                if (cat.key === 'assets' && state.age < 18) return false
-                if (cat.key === 'money' && state.age < 14) return false
-                if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return false
-                if (cat.key === 'substances' && state.age < 14) return false
-                if (cat.key === 'crime' && state.age < 12) return false
-                // A charge is outstanding: the trial blocks Age Up and blocked
-                // nothing else, so the crime surface stayed open and a second
-                // arrest could overwrite the first charge.
-                if (cat.key === 'crime' && state.pendingTrial) return false
-                if (cat.key === 'travel' && state.age < 16) return false
-                if (cat.key === 'business' && state.age < 18) return false
-                if (cat.key === 'immigration' && state.residencyStatus === 'citizen' && !state.flags.includes('emigrated')) return false
-                if (cat.key === 'underground' && !state.inPrison && !state.wanted && !state.flags.includes('escaped_prisoner')) return false
-                if (cat.key === 'prison' && !state.inPrison) return false
-                if (state.inPrison && prisonBlockedCats.includes(cat.key)) return false
-                return true
-              })
+              const visibleCats = TOP_CATEGORIES.filter(c => c.group === groupLabel).filter(isCategoryVisible)
 
               if (visibleCats.length === 0) return null
 

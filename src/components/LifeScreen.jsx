@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import { useGameStore } from '../store/gameStore'
-import StatBar from './StatBar'
+import StatBar, { statTier } from './StatBar'
 import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
-import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, formatParentIncome, getPhase } from '../engine/gameEngine'
+import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, localCreditScore, formatParentIncome, getPhase } from '../engine/gameEngine'
 import { getPlacesForCountry, getRelocationCost } from '../data/places'
 import ActivitiesPanel from './ActivitiesPanel'
 
@@ -80,11 +80,16 @@ export default function LifeScreen() {
     }
   }, [pendingEvent])
 
-  // Auto-open the current decade when the character enters a new one
+  // Open the current decade, and only the current decade.
+  //
+  // This used to accumulate, so by seventy a character had eight open decades
+  // and the Timeline view was the entire log with headings in it — which is
+  // the Recent view with extra steps, and not an overview of anything. The
+  // player can still open any decade by hand; this just decides where they
+  // start.
   const ageFromStore = useGameStore(s => s.age)
   useEffect(() => {
-    const d = Math.floor(ageFromStore / 10) * 10
-    setOpenDecades(prev => prev.has(d) ? prev : new Set([...prev, d]))
+    setOpenDecades(new Set([Math.floor(ageFromStore / 10) * 10]))
   }, [Math.floor(ageFromStore / 10)])
 
   const [showMoveModal, setShowMoveModal] = useState(false)
@@ -259,7 +264,18 @@ export default function LifeScreen() {
 
   const karmaLabel = karma >= 85 ? 'Lives with deep purpose' : karma >= 70 ? 'More good than not' : karma >= 50 ? 'Navigating, as most do' : karma >= 30 ? 'Compromised by choices' : 'Haunted by what you\'ve done'
   const karmaColor = karma >= 70 ? '#3f6146' : karma >= 50 ? '#8a6635' : '#8c3a2e'
-  const genderMark = (g) => g === 'male' ? <span className="text-blue-400 text-xs ml-1">♂</span> : g === 'female' ? <span className="text-pink-400 text-xs ml-1">♀</span> : null
+  /** ", Region" — unless the place's own name already says it. */
+  const placeRegionSuffix = (place) => {
+    const r = place?.region
+    if (!r) return ''
+    const bare = String(place.name ?? '').replace(/^(Rural|Urban|Greater|Central|Northern|Southern|Eastern|Western)\s+/i, '')
+    if (r === place.name || r.includes(bare) || bare.includes(r)) return ''
+    return `, ${r}`
+  }
+
+  const genderMark = (g) => g === 'male' || g === 'female'
+    ? <span className="text-natalis-faint text-xs ml-1" aria-label={g}>{g === 'male' ? '♂' : '♀'}</span>
+    : null
 
   // Derives a readable status label from relationship quality
   const relStatusLabel = (quality, extraFlags = []) => {
@@ -343,12 +359,31 @@ export default function LifeScreen() {
 
       {/* ── Tab bar ────────────────────────────────────────────────────── */}
       <div className="bg-natalis-surface border-b border-natalis-border flex-shrink-0">
-        <div className="max-w-2xl mx-auto flex" role="tablist">
+        <div
+          className="max-w-2xl mx-auto flex"
+          role="tablist"
+          aria-label="Life sections"
+          onKeyDown={(e) => {
+            const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
+            if (!d) return
+            e.preventDefault()
+            const i = TABS.findIndex(t => t.key === activeTab)
+            const next = TABS[(i + d + TABS.length) % TABS.length]
+            setActiveTab(next.key)
+            setShowActivities(false)
+            document.getElementById(`tab-${next.key}`)?.focus()
+          }}
+        >
           {TABS.map(tab => (
             <button
               key={tab.key}
+              id={`tab-${tab.key}`}
               role="tab"
               aria-selected={activeTab === tab.key}
+              aria-controls={`panel-${tab.key}`}
+              // Roving tabindex: the tab strip is one stop, and the arrows move
+              // within it, which is how a tablist is meant to behave.
+              tabIndex={activeTab === tab.key ? 0 : -1}
               onClick={() => { setActiveTab(tab.key); setShowActivities(false) }}
               className={`flex-1 py-2 text-xs tracking-[0.06em] transition-colors border-b-2 ${
                 activeTab === tab.key
@@ -363,7 +398,16 @@ export default function LifeScreen() {
       </div>
 
       {/* ── Main content area ───────────────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto">
+      {/* The page had exactly one landmark and no <main>, so a screen reader
+          user arriving on it had no way to skip the header, the stat strip and
+          the tab bar to reach the year's prose — which is the entire page. */}
+      <main
+        className="flex-1 overflow-y-auto"
+        id={`panel-${activeTab}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${activeTab}`}
+        tabIndex={-1}
+      >
         <div className="max-w-2xl mx-auto px-4 py-4 space-y-4 pb-28">
 
           {/* Prison banner */}
@@ -481,7 +525,10 @@ export default function LifeScreen() {
                       <span className="text-lg flex-shrink-0">📍</span>
                       <div className="min-w-0">
                         <p className="font-semibold text-natalis-text text-sm truncate">
-                          {livePlace.name}{livePlace.region && livePlace.region !== livePlace.name ? `, ${livePlace.region}` : ''}
+                          {/* 52 places carry a region their own name already
+                              contains, so this read "Rural Eastern Cape,
+                              Eastern Cape" and "Rural Yorkshire, Yorkshire". */}
+                          {livePlace.name}{placeRegionSuffix(livePlace)}
                         </p>
                         <p className="text-natalis-muted text-xs truncate">
                           {liveNbr && <span>{liveNbr} <span className="opacity-60">· neighborhood</span></span>}
@@ -755,8 +802,7 @@ export default function LifeScreen() {
 
                 {log.length === 0 && (
                   <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
-                    <p className="text-4xl mb-2">🌱</p>
-                    <p className="text-natalis-muted text-sm">Your life story begins here.</p>
+                      <p className="text-natalis-muted text-sm">Your life story begins here.</p>
                   </div>
                 )}
               </div>
@@ -775,18 +821,25 @@ export default function LifeScreen() {
                 <div>
                   <StatBar stat="looks" label="Looks" value={stats.looks} />
                   <p className="text-xs text-natalis-muted mt-0.5">
-                    {stats.looks >= 75 ? 'Appearance opens certain doors. Not all of them worth opening.' :
-                     stats.looks >= 50 ? 'Unremarkable in the best sense.' :
-                     'You have learned that appearance carries weight in the world.'}
+                    {[
+                      'You have learned that appearance carries weight in the world.',
+                      'You have learned that appearance carries weight in the world.',
+                      'Unremarkable in the best sense.',
+                      'People look twice, and you have long since stopped noticing that they do.',
+                      'Appearance opens certain doors. Not all of them worth opening.',
+                    ][statTier(stats.looks)]}
                   </p>
                 </div>
                 <div>
                   <StatBar stat="charisma" label="Charisma" value={stats.charisma} />
                   <p className="text-xs text-natalis-muted mt-0.5">
-                    {stats.charisma >= 75 ? 'People are drawn to you. Doors open before you knock.' :
-                     stats.charisma >= 50 ? 'You make friends without difficulty. Rooms feel open to you.' :
-                     stats.charisma >= 30 ? 'Some social situations cost you more than others.' :
-                     'You do better one-on-one than in groups. Groups are exhausting.'}
+                    {[
+                      'You do better one-on-one than in groups. Groups are exhausting.',
+                      'Some social situations cost you more than others.',
+                      'You make friends without difficulty. Rooms feel open to you.',
+                      'You are easy to be around, and people tell you things they did not plan to.',
+                      'People are drawn to you. Doors open before you knock.',
+                    ][statTier(stats.charisma)]}
                   </p>
                 </div>
                 <div>
@@ -802,7 +855,6 @@ export default function LifeScreen() {
                   {/* Karma — shown as prose label, not a number */}
                   <div className="flex items-center justify-between py-0.5">
                     <div className="flex items-center gap-2">
-                      <span>{karma >= 70 ? '😇' : karma >= 50 ? '😐' : '😈'}</span>
                       <span className="text-sm text-natalis-dim font-medium">Karma</span>
                     </div>
                     <span className="text-xs font-semibold" style={{ color: karmaColor }}>{karmaLabel}</span>
@@ -811,7 +863,6 @@ export default function LifeScreen() {
                   {/* Fame — bar */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span>⭐</span>
                       <span className="text-sm text-natalis-dim font-medium">Fame</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -822,11 +873,11 @@ export default function LifeScreen() {
                     </div>
                   </div>
 
-                  {/* Weight — qualitative label, not a raw number */}
+                  {/* Regret. It was labelled "🪨 Weight", which beside Karma
+                      and Fame reads as a body-mass stat. */}
                   <div className="flex items-center justify-between py-0.5">
                     <div className="flex items-center gap-2">
-                      <span>🪨</span>
-                      <span className="text-sm text-natalis-dim font-medium">Weight</span>
+                      <span className="text-sm text-natalis-dim font-medium">What you carry</span>
                     </div>
                     <span className="text-xs font-semibold text-natalis-muted">
                       {regret > 70 ? 'Heavy'
@@ -841,8 +892,7 @@ export default function LifeScreen() {
                   {legacy > 0 && (
                     <div className="flex items-center justify-between py-0.5">
                       <div className="flex items-center gap-2">
-                        <span>🕯️</span>
-                        <span className="text-sm text-natalis-dim font-medium">Legacy</span>
+                          <span className="text-sm text-natalis-dim font-medium">Legacy</span>
                       </div>
                       <span className="text-xs font-semibold text-natalis-muted">
                         {legacy >= 80 ? 'Enduring'
@@ -862,7 +912,7 @@ export default function LifeScreen() {
                 <div className="space-y-2 text-sm">
                   {/* Current country + flag */}
                   <div className="flex justify-between items-center py-1 border-b border-natalis-border">
-                    <span className="text-natalis-muted text-xs">📍 Living in</span>
+                    <span className="text-natalis-muted text-xs">Living in</span>
                     <span className="text-natalis-text font-semibold text-xs">
                       {getCountryFlag(liveCountry)} {liveCountry?.name}
                     </span>
@@ -930,19 +980,18 @@ export default function LifeScreen() {
                 <p className="font-bold text-natalis-text text-sm mb-3">Life Status</p>
                 <div className="space-y-2 text-sm">
                   {[
-                    { label: '📍 Country', value: character.country.name },
-                    { label: '📅 Phase', value: PHASE_LABELS[phase] },
-                    { label: '🎓 Education', value: education.level !== 'none' ? `${education.level.replace('_',' ')}${education.field ? ` · ${education.field}` : ''}` : 'None' },
-                    gpa !== null && { label: '📝 GPA', value: gpa.toFixed(2) },
-                    martialArts?.discipline && { label: '🥋 Martial Arts', value: `${martialArts.discipline} — ${BELT_NAMES[martialArts.belt ?? 0]} belt` },
-                    socialMedia?.followers > 0 && { label: '📱 Followers', value: `${socialMedia.followers >= 1000 ? `${(socialMedia.followers/1000).toFixed(1)}k` : socialMedia.followers}${socialMedia.verified ? ' ✓' : ''}` },
-                    birthControl && { label: '💊 Birth Control', value: 'Active' },
-                    inPrison && { label: '🔒 Prison', value: `${prisonSentence} yr remaining` },
-                    criminalRecord.length > 0 && { label: '⚠️ Criminal Record', value: `${criminalRecord.length} offence${criminalRecord.length !== 1 ? 's' : ''}` },
-                    fitness !== undefined && { label: '💪 Fitness', value: `${Math.round(fitness ?? 50)}/100` },
-                    mentalHealth?.condition && { label: '🧠 Mental Health', value: `${mentalHealth.condition}${mentalHealth.therapy ? ' · therapy' : ''}${mentalHealth.medicating ? ' · medicated' : ''}` },
-                    conditions.length > 0 && { label: '🩺 Conditions', value: conditions.map(c => `${c.id.replace(/_/g, ' ')}${c.managed ? ' (managed)' : ''}`).join(', ') },
-                    (debt ?? 0) > 0 && { label: '💳 Debt', value: formatMoney(debt) },
+                    { label: 'Phase', value: PHASE_LABELS[phase] },
+                    { label: 'Education', value: education.level !== 'none' ? `${education.level.replace('_',' ')}${education.field ? ` · ${education.field}` : ''}` : 'None' },
+                    gpa !== null && { label: 'GPA', value: gpa.toFixed(2) },
+                    martialArts?.discipline && { label: 'Martial arts', value: `${martialArts.discipline} — ${BELT_NAMES[martialArts.belt ?? 0]} belt` },
+                    socialMedia?.followers > 0 && { label: 'Followers', value: `${socialMedia.followers >= 1000 ? `${(socialMedia.followers/1000).toFixed(1)}k` : socialMedia.followers}${socialMedia.verified ? ' ✓' : ''}` },
+                    birthControl && { label: 'Birth control', value: 'Active' },
+                    inPrison && { label: 'Prison', value: `${prisonSentence} yr remaining` },
+                    criminalRecord.length > 0 && { label: 'Criminal record', value: `${criminalRecord.length} offence${criminalRecord.length !== 1 ? 's' : ''}` },
+                    fitness !== undefined && { label: 'Fitness', value: `${Math.round(fitness ?? 50)}/100` },
+                    mentalHealth?.condition && { label: 'Mental health', value: `${mentalHealth.condition}${mentalHealth.therapy ? ' · therapy' : ''}${mentalHealth.medicating ? ' · medicated' : ''}` },
+                    conditions.length > 0 && { label: 'Conditions', value: conditions.map(c => `${c.id.replace(/_/g, ' ')}${c.managed ? ' (managed)' : ''}`).join(', ') },
+                    (debt ?? 0) > 0 && { label: 'Debt', value: formatMoney(debt) },
                   ].filter(Boolean).map(({ label, value }) => (
                     <div key={label} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
                       <span className="text-natalis-muted text-xs">{label}</span>
@@ -955,7 +1004,7 @@ export default function LifeScreen() {
               {/* Criminal Record */}
               {criminalRecord.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-red-200 shadow-card">
-                  <p className="font-bold text-red-600 text-sm mb-3">⚠️ Criminal Record</p>
+                  <p className="font-bold text-red-600 text-sm mb-3">Criminal record</p>
                   <div className="space-y-1">
                     {criminalRecord.map((entry, i) => (
                       <div key={i} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
@@ -1073,7 +1122,7 @@ export default function LifeScreen() {
               {/* Career */}
               {career && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">💼 Career</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Work</p>
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <p className="font-semibold text-natalis-text">{career.title}</p>
@@ -1126,7 +1175,7 @@ export default function LifeScreen() {
                     </div>
                   )}
                   <div className="p-4">
-                    <p className="font-bold text-natalis-text text-sm mb-3">❤️ Partner</p>
+                    <p className="font-bold text-natalis-text text-sm mb-3">Partner</p>
                     <div className="flex justify-between items-center">
                       <div>
                         <p className="font-semibold text-natalis-text">{partner.name}{genderMark(partner.gender)}</p>
@@ -1154,7 +1203,7 @@ export default function LifeScreen() {
               {/* Children */}
               {children.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">👨‍👩‍👧 Children</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Children</p>
                   <div className="space-y-2">
                     {children.map((child, i) => {
                       const childAge = child.ageAtBirth !== undefined ? age - child.ageAtBirth : null
@@ -1187,7 +1236,7 @@ export default function LifeScreen() {
               {/* Parents */}
               {parents && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">👪 Parents</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Parents</p>
                   <div className="space-y-2">
                     {['mother', 'father'].map(key => {
                       const p = parents[key]
@@ -1222,7 +1271,7 @@ export default function LifeScreen() {
               {/* Siblings */}
               {siblings && siblings.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">👫 Siblings</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Siblings</p>
                   <div className="space-y-2">
                     {siblings.filter(sib => sib.ageDiff === undefined || age + sib.ageDiff >= 0).map((sib, i) => {
                       const sibAge = sib.ageDiff !== undefined ? age + sib.ageDiff : null
@@ -1261,7 +1310,7 @@ export default function LifeScreen() {
               {/* Friends */}
               {friends && friends.filter(f => f.alive).length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">👥 Friends</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Friends</p>
                   <div className="space-y-2">
                     {friends.filter(f => f.alive).map((friend, i) => {
                       const fLabels = relStatusLabel(friend.relationshipQuality ?? 60, [])
@@ -1288,7 +1337,7 @@ export default function LifeScreen() {
               {/* Pets */}
               {pets && pets.filter(p => p.alive).length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">🐾 Pets</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Pets</p>
                   <div className="space-y-1">
                     {pets.filter(p => p.alive).map((pet, i) => (
                       <p key={i} className="text-natalis-dim text-sm capitalize">{pet.name} the {pet.species} · age {pet.age}</p>
@@ -1300,7 +1349,7 @@ export default function LifeScreen() {
               {/* Ex-Partners */}
               {exPartners && exPartners.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">💔 Past Relationships</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Before this</p>
                   <div className="space-y-2">
                     {exPartners.map((ex, i) => (
                       <div key={i} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
@@ -1319,7 +1368,6 @@ export default function LifeScreen() {
 
               {!partner && children.length === 0 && (!friends || friends.filter(f=>f.alive).length === 0) && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
-                  <p className="text-4xl mb-2">🤝</p>
                   <p className="text-natalis-muted text-sm">Nobody yet. That changes, or it does not.</p>
                 </div>
               )}
@@ -1329,6 +1377,7 @@ export default function LifeScreen() {
           {/* ── ASSETS TAB ── */}
           {activeTab === 'assets' && (() => {
             const finRep = getFinancialReputationDisplay(fullState)
+            const localCredit = localCreditScore(fullState)
             const isChild = age < 18 && !career
             const familyTierLabel = isChild ? getWealthTierLabel(character.wealthTier ?? 3, character.country?.archetype) : null
             const showHardCurrency = hardCurrencyReserve > 0
@@ -1340,15 +1389,15 @@ export default function LifeScreen() {
               {/* ── Family context (childhood only) ── */}
               {isChild && familyTierLabel && (
                 <div className="bg-amber-50 rounded-2xl p-4 border border-amber-200 shadow-card">
-                  <p className="font-bold text-amber-800 text-sm mb-1">🏡 Family Background</p>
+                  <p className="font-bold text-amber-800 text-sm mb-1">Family background</p>
                   <p className="text-amber-700 text-sm font-semibold">{familyTierLabel}</p>
-                  <p className="text-xs text-amber-500 mt-2">Your personal savings: <span className="font-semibold">{formatMoney(money ?? 0)}</span></p>
+                  <p className="text-xs text-amber-500 mt-2">{isChild ? 'What the household has to hand' : 'Cash to hand'}: <span className="font-semibold">{formatMoney(money ?? 0)}</span></p>
                 </div>
               )}
 
               {/* Net Worth Summary */}
               <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                <p className="font-bold text-natalis-text text-sm mb-3">💰 {isChild ? 'Personal Savings' : 'Net Worth'}</p>
+                <p className="font-bold text-natalis-text text-sm mb-3">{isChild ? 'What the household has' : 'Net worth'}</p>
                 {!isChild && (
                   <div className="text-center mb-4">
                     <p className={`font-black text-2xl ${netWorth >= 0 ? 'text-green-600' : 'text-red-500'}`}>{formatMoney(netWorth)}</p>
@@ -1377,11 +1426,20 @@ export default function LifeScreen() {
                       <p className="font-bold text-blue-700">{formatMoney(career.salary)}</p>
                     </div>
                   )}
-                  {/* Financial reputation: credit score for wealthy_west/east, archetype-appropriate otherwise */}
-                  {finRep && finRep.type === 'credit_score' && creditScore && (
-                    <div className={`rounded-xl p-2.5 ${creditScore >= 700 ? 'bg-green-50' : creditScore >= 600 ? 'bg-yellow-50' : 'bg-red-50'}`}>
-                      <p className={`text-xs font-semibold ${creditScore >= 700 ? 'text-green-600' : creditScore >= 600 ? 'text-yellow-600' : 'text-red-600'}`}>Credit Score</p>
-                      <p className={`font-bold ${creditScore >= 700 ? 'text-green-700' : creditScore >= 600 ? 'text-yellow-700' : 'text-red-700'}`}>{creditScore} <span className="text-xs font-normal">({creditLabel(creditScore)})</span></p>
+                  {/* The score is stored on the 300-850 FICO scale, which is a
+                      United States instrument; it was being printed unchanged
+                      to a German and a Brazilian. `localCreditScore` restates
+                      it as the character's own country would, or says there is
+                      no such thing where a country keeps only a register of
+                      people who have defaulted. */}
+                  {finRep && finRep.type === 'credit_score' && localCredit && (
+                    <div className="rounded-xl p-2.5 bg-gray-50">
+                      <p className="text-xs font-semibold text-natalis-muted capitalize">{localCredit.name}</p>
+                      <p className="font-bold text-natalis-dim">
+                        {localCredit.negativeOnly
+                          ? localCredit.value
+                          : <>{localCredit.value}{localCredit.suffix} <span className="text-xs font-normal">({localCredit.good ? 'Good' : localCredit.fair ? 'Fair' : 'Poor'})</span></>}
+                      </p>
                     </div>
                   )}
                   {finRep && finRep.type !== 'credit_score' && (
@@ -1401,7 +1459,7 @@ export default function LifeScreen() {
               {/* Household contribution */}
               {householdContribution?.annualAmount > 0 && (
                 <div className="bg-orange-50 rounded-2xl p-4 border border-orange-200 shadow-card">
-                  <p className="font-bold text-orange-800 text-sm mb-2">🏠 Family Obligation</p>
+                  <p className="font-bold text-orange-800 text-sm mb-2">Family obligation</p>
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="text-orange-700 text-sm">
@@ -1420,7 +1478,7 @@ export default function LifeScreen() {
               {/* Joint family pool */}
               {jointFamily && jointFamilyPool > 0 && (
                 <div className="bg-amber-50 rounded-2xl p-4 border border-amber-200 shadow-card">
-                  <p className="font-bold text-amber-800 text-sm mb-1">🏘️ Joint Family Pool</p>
+                  <p className="font-bold text-amber-800 text-sm mb-1">Joint family pool</p>
                   <p className="text-amber-700 font-black text-xl">{formatMoney(jointFamilyPool)}</p>
                   <p className="text-xs text-amber-600 mt-1">Shared family property — accessible via partition event</p>
                 </div>
@@ -1430,7 +1488,7 @@ export default function LifeScreen() {
               {rosca && (
                 <div className="bg-purple-50 rounded-2xl p-4 border border-purple-200 shadow-card">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="font-bold text-purple-800 text-sm">🔄 Savings Circle (ROSCA)</p>
+                    <p className="font-bold text-purple-800 text-sm">Savings circle</p>
                     <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-semibold">Active</span>
                   </div>
                   <div className="space-y-1 text-sm">
@@ -1457,7 +1515,7 @@ export default function LifeScreen() {
               {/* Properties */}
               {assets?.properties?.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">🏠 Properties</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Property</p>
                   <div className="space-y-2">
                     {assets.properties.map((prop, i) => (
                       <div key={i} className="flex justify-between items-center py-2 border-b border-natalis-border last:border-0">
@@ -1475,7 +1533,7 @@ export default function LifeScreen() {
               {/* Vehicles */}
               {assets?.vehicles?.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">🚗 Vehicles</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Vehicles</p>
                   <div className="space-y-2">
                     {assets.vehicles.map((v, i) => (
                       <div key={i} className="flex justify-between items-center">
@@ -1577,7 +1635,6 @@ export default function LifeScreen() {
 
               {assets?.properties?.length === 0 && assets?.vehicles?.length === 0 && (debt ?? 0) === 0 && !business?.active && travels?.length === 0 && !rosca && !jointFamily && gold === 0 && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
-                  <p className="text-4xl mb-2">🏦</p>
                   <p className="text-natalis-muted text-sm">Nothing here yet. Most lives take a while to accumulate anything a list can hold.</p>
                 </div>
               )}
@@ -1586,7 +1643,7 @@ export default function LifeScreen() {
           })()}
 
         </div>
-      </div>
+      </main>
 
       {/* ── Activities Panel (slides up) ─────────────────────────────── */}
       {/* Escape closes whichever sheet is open. The Move sheet's confirm step

@@ -29,6 +29,7 @@ export {
   deriveGenerationalFlags,
   calculateHouseholdContribution,
   getFinancialReputationDisplay,
+  localCreditScore,
   getWealthTierLabel,
   formatParentIncome,
   GDP_MULT,
