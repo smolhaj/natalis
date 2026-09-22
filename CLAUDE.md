@@ -595,6 +595,8 @@ npm run check-events     # reachability: dead guards, enum domains, phase/year w
 npm run check-anachronisms  # plays lives and reads every line against when the world held it
 npm run check-bundle     # builds, opens dist in a browser, starts a life — the only
                          # check that exercises the artefact rather than the source
+npm run check-reach      # conditional reach: for a character who IS the person a body of
+                         # work was written for, how much of it ever reaches them
 npm run sim              # firing-rate report — what ACTUALLY fires, per 100 lives
 npm run sim -- --broad   # the same over the whole roster, not the ten default configurations
 ```
@@ -1061,6 +1063,52 @@ the real #ec4899.
 
 **The lesson: play the mode the player plays.** A passive life exercises the
 simulation. It does not touch a single button.
+
+### "Nothing fired" and "nobody was there" print the same number
+
+`npm run sim` reports what fires per 100 lives, and that figure cannot
+distinguish the only two explanations that matter:
+
+- the content is **unreachable** — a broken guard, a chain whose trigger sets a
+  flag its own consumer needs in the same year, a weight of 8 against a field of
+  999s
+- the **population is rare** — a doctor is rare, so doctor events are rare, and
+  that is the engine being correct
+
+A census of the deep career arcs made the problem concrete. Across 280 ordinary
+lives, eight of them — doctor, nurse, lawyer, journalist, engineer, dev,
+accountant, social worker, civil servant, about eighty authored events — fired
+**zero** times. That reads exactly like the prison arc did before it was fixed,
+and it is nothing like it: nobody in that sample ever became a doctor, because
+twenty-two of the forty-nine careers require a degree and about 10% of lives get
+one, which is roughly right for these cohorts.
+
+`npm run check-reach` asks the conditional question instead. It forces the
+condition — hands the character the job and the degree at 24, or draws them from
+the country in question — and measures what share of the body of work reaches
+them. Every career arc passes: 16% of drivers to 79% of software developers see
+one over a forty-year career, and none is dark.
+
+It also gives the honest per-country number, which `sim` cannot: its ten default
+configurations cannot reach 144 countries' modules at all, so a country whose
+module is perfect and a country whose module is broken both report zero. Over 40
+lives each: Germany 1928 93%, Japan 1935 88%, Bosnia 83%, Austria 83%, Qatar 80%,
+Guyana 75% — against Nigeria 1962 at 25% and Peru 1960 at 15%. Nothing there is
+unreachable (the distinct counts climb with `--lives`, which is how you tell),
+but a Nigerian is a quarter as likely to meet their own country's depth module as
+a German, and that is worth knowing.
+
+**The lesson: a small number has two causes and only one of them is a bug.** An
+instrument that shows them identically buries the one that is — the same failure
+as `unwritten-group` reporting a country's own plurality, one level down.
+
+Related, and the reason `tests/careerFit.test.js` exists: `chooseCareer` reads
+`FIELD_FIT[c.field]?.[col] ?? 1`, and that `?? 1` is silent. A career whose
+field has no row is weighted identically for a rural subsistence villager and an
+urban graduate, in every column, and nothing says so. The table is complete
+today — 38 rows for 38 fields — by somebody's diligence and by nothing else, in a
+codebase whose recorded history is of silent fallbacks that were correct until
+they were not.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
@@ -1638,6 +1686,12 @@ scripts/
                                 world contained the thing it named.
   sim.js                      — the firing-rate report. The only audit that can see what the game
                                 actually does, and the counter-check on every static one.
+  check-reach.js              — the conditional counter-check on THAT one. `sim` reports what fires
+                                per 100 lives, which reads the same whether the content is
+                                unreachable or the population is simply rare — eight career arcs fired
+                                zero times across 280 lives because nobody in them became a doctor.
+                                This forces the condition and asks what share of the body of work
+                                reaches the person it was written for.
   lib/
     sim.js                    — the headless harness. `collectLines` records every prose line with the
                                 year and country it printed in; `keepFinalStates` keeps each life's
