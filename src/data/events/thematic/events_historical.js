@@ -1,5 +1,5 @@
 import { randomBetween } from '../../../utils/random.js'
-import { isIndependenceYear, wasSovietRepublic } from '../../history.js'
+import { isIndependenceYear, wasSovietRepublic, colonialSchoolLanguage } from '../../history.js'
 
 export const HISTORICAL_EVENTS = [
 
@@ -361,8 +361,16 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_colonial_language_school',
     phase: 'childhood',
     weight: 6,
-    when: (G) => ['subsaharan', 'developing_unstable'].includes(G.character.country.archetype) && G.currentYear >= 1950 && G.currentYear <= 1980 && G.age >= 7 && G.age <= 15 && !G.mem?.colonial_school_language,
-    text: (G) => `School is taught in French, or English, or Portuguese — the coloniser\'s tongue. You think in ${G.character.country.languages?.[0] ?? 'your own language'} and translate. The children who learn the colonial language best go furthest. This is the arrangement.`,
+    // Was archetype, which put a French or English colonial classroom in
+    // Bhutan, Nepal, Guatemala, Nicaragua and Soviet Tajikistan. It also
+    // offered "French, or English, or Portuguese" as though the character did
+    // not know which, in an event whose entire subject is which one.
+    when: (G) => colonialSchoolLanguage(G.character.country.name, G.currentYear) !== null && G.age >= 7 && G.age <= 15 && !G.mem?.colonial_school_language,
+    text: (G) => {
+      const lang = colonialSchoolLanguage(G.character.country.name, G.currentYear)
+      const own = G.character.country.languages?.find(l => l !== lang) ?? 'your own language'
+      return `School is taught in ${lang} — the coloniser\'s tongue. You think in ${own} and translate. The children whose ${lang} is best go furthest. This is the arrangement.`
+    },
     choices: [
       { text: 'Master the colonial language — it\'s the key to everything', tag: null, outcome: 'You become fluent. The doors it opens are real. The thing it does to your sense of self takes longer to name.', effect: (p) => { p.e += 8; p.m -= 3; p.setMem('colonial_school_language', true) } },
       { text: 'Resist — insist on your own language', tag: 'activist', outcome: 'You are punished. You fall behind. Your mother worries. You learn resistance has costs that fall on others.', effect: (p) => { p.e -= 3; p.karma += 5; p.addFlag('activist'); p.setMem('colonial_school_language', true) } },

@@ -1,3 +1,4 @@
+import { hasTech } from '../../technology.js'
 // events_aid_worker.js — Humanitarian aid worker arc (BUILD 17)
 // Covers: the international staff perspective (from wealthy country into crisis), the local
 // staff perspective (working alongside internationals in your own country), the salary gap,
@@ -70,7 +71,9 @@ export const AID_WORKER_EVENTS = [
       !G.flags.has('ngo_worker') &&
       !G.flags.has('ngo_local_staff') &&
       !G.mem?.awLocalEntry,
-    text: 'The job interview is at a compound with generators and clean water and internet that works, surrounded by a country where most of these things are irregular. The salary is three or four times what the government ministry would pay — in dollar terms, still a fraction of what the international staff receive for the same work, but that is not something anyone has said in this room. You will be the bridge between the organisation and the communities it serves. This is the job description. You accept it. In the first month, you learn what this means in practice.',
+    text: (G) => (hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear)
+      ? 'The job interview is at a compound with generators and clean water and internet that works, surrounded by a country where most of these things are irregular.'
+      : 'The job interview is at a compound with its own generator, its own water tank and a radio room that can reach the capital at any hour, surrounded by a country where none of that is ordinary.') + ' The salary is three or four times what the government ministry would pay — in dollar terms, still a fraction of what the international staff receive for the same work, but that is not something anyone has said in this room. You will be the bridge between the organisation and the communities it serves. This is the job description. You accept it. In the first month, you learn what this means in practice.',
     choices: null,
     effect: (p) => {
       p.m += 3; p.e += 4; p.w += 2;

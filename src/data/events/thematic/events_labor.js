@@ -17,6 +17,12 @@ export const LABOR_EVENTS = [
       G.currentYear >= 1920 && G.currentYear <= 2000 &&
       G.age >= 18 && G.age <= 45 &&
       !G.flags.has('union_member') &&
+      // There is no shop floor, no break and no collective agreement on a
+      // smallholding, and the informal sector has no representative to send.
+      // This was reaching Rwandan subsistence farmers.
+      G.ruralUrban !== 'rural' &&
+      !['farmer', 'informal', 'agriculture'].includes(G.career?.field) &&
+      !G.flags.has('informal_economy') && !G.flags.has('subsistence_farming') &&
       ['wealthy_west', 'post_soviet', 'developing_urban', 'subsaharan'].includes(G.character.country.archetype),
     text: 'A union representative finds you during the break — someone you recognise from the floor, not a stranger. He doesn\'t make a speech. He tells you what the monthly fee is. He tells you what the union got in the last negotiation: two extra days of leave, a grievance process that didn\'t exist before. He slides a card across the table. You have until Friday.',
     choices: [

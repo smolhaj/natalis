@@ -23,6 +23,7 @@ import { buildMundaneLayer } from './mundaneLayer'
 import { rememberSaid } from './prose'
 import { tickLifeCourse, secondaryChance, primaryChance } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
+import { suspendedInstitutions, proseFitsInstitutions, institutionExists } from '../data/history.js'
 
 function createProxy(state) {
   return {
@@ -539,6 +540,19 @@ function schoolProseFits(e, G) {
   return !e.assumesSchool || G.literate || G.education?.level === 'secondary' || G.education?.enrolled
 }
 
+// Does this event's prose assume something that did not exist here this year?
+// See INSTITUTIONS_SUSPENDED in src/data/history.js: Democratic Kampuchea
+// abolished money, wages, schools, hospitals, religion, the post and the cities
+// in 1975, and until this existed a 1977 Cambodian was drawing a salary and
+// being referred to a psychiatrist.
+function institutionsFit(e, G) {
+  const needs = e.assumesInstitutions
+  if (!needs) return true
+  const gone = suspendedInstitutions(G.currentCountry?.name ?? G.character?.country?.name, G.currentYear)
+  if (gone.size === 0) return true
+  return !needs.some(n => gone.has(n))
+}
+
 function isEventAvailable(e, usedEventMap, currentYear) {
   const lastFired = usedEventMap?.get(e.id)
   if (lastFired === undefined) return true
@@ -711,7 +725,8 @@ export function getNextEvent(state) {
   const phaseEvents = [...(EVENTS_BY_PHASE[phase] ?? []), ...(EVENTS_BY_PHASE[null] ?? [])]
   let pool = phaseEvents.filter(e =>
     isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
-    (!state.inPrison || e.prisonOk === true) && schoolProseFits(classifyEvent(e), G)
+    (!state.inPrison || e.prisonOk === true) &&
+    schoolProseFits(classifyEvent(e), G) && institutionsFit(e, G)
   )
 
   if (state.career && !state.inPrison) {
@@ -916,11 +931,16 @@ function applyWorldEvents(state) {
     if (we.minAge && state.age < we.minAge) continue
     if (we.maxAge && state.age > we.maxAge) continue
     if (we.when && !we.when(G)) continue
+    // A world narrative can assume an institution the country does not have
+    // that year: the post-independence disillusionment event, which is about
+    // which families hold the contracts, was reaching Cambodians in 1977.
+    const wnText = typeof we.narrative === 'function' ? we.narrative(G) : we.narrative
+    if (!proseFitsInstitutions(wnText, lived?.name, state.currentYear)) continue
     const proxy = buildEffectProxy(updated)
     we.effect(proxy)
     updated = applyProxy(updated, proxy)
     updated.worldEventsFired = new Set([...updated.worldEventsFired, we.id])
-    const narrativeText = typeof we.narrative === 'function' ? we.narrative(G) : we.narrative
+    const narrativeText = wnText
     updated.log = [...updated.log, { age: updated.age, year: updated.currentYear, text: narrativeText, worldEventName: we.name, isKey: true, isWorld: true }]
     if (we.addFlags) updated.flags = [...new Set([...updated.flags, ...we.addFlags])]
     // Rebuilt only when an event actually fires (rare), so a later event in the
@@ -1222,6 +1242,11 @@ export function getAvailableCareers(state) {
 export function enterCareer(state, careerId) {
   const career = CAREERS.find(c => c.id === careerId)
   if (!career) return state
+  // There are years in which a country has no wage economy to enter. Democratic
+  // Kampuchea abolished money and wages in 1975; a Cambodian in 1976 was
+  // beginning work as a Day Laborer on $656 a year and being promoted to
+  // Foreman the following spring. See INSTITUTIONS_SUSPENDED in history.js.
+  if (!institutionExists(liveCountry(state)?.name, state.currentYear, 'wages')) return state
   // Criminal record blocks certain careers
   const recordBlockedFields = ['law_enforcement', 'military', 'government', 'finance', 'medical']
   const hasRecord = (state.criminalRecord ?? []).length > 0
@@ -1252,6 +1277,7 @@ export function enterCareer(state, careerId) {
 
 export function checkPromotion(state) {
   if (!state.career) return state
+  if (!institutionExists(liveCountry(state)?.name, state.currentYear, 'wages')) return state
   const careerDef = CAREERS.find(c => c.id === state.career.id)
   if (!careerDef) return state
   const nextIdx = state.career.level + 1
@@ -2224,14 +2250,23 @@ export function tick(state) {
   // in about 2% of years. It is a layer now, not a fallback: it speaks first
   // whenever it has something specific to say about THIS life, and the mundane
   // layer fills the years when it does not.
-  const specificTexture = chance(0.6) ? buildYearTexture(s, { specificOnly: true }) : null
+  //
+  // Both layers are filtered through `fitsThisYear`, because a Cambodian in
+  // 1977 was being told that the prices had risen and the wages had not caught
+  // up, four years after Democratic Kampuchea abolished prices and wages. The
+  // event pool is filtered in getNextEvent; these two are filtered here.
+  const fitsThisYear = (t) => t && proseFitsInstitutions(
+    t, s.currentCountry?.name ?? s.character?.country?.name, s.currentYear)
+
+  const drawn = chance(0.6) ? buildYearTexture(s, { specificOnly: true }) : null
+  const specificTexture = fitsThisYear(drawn) ? drawn : null
   if (specificTexture) {
     s.log = [...s.log, { age: s.age, year: s.currentYear, text: specificTexture, isKey: false, isTexture: true }]
     s.mem = rememberSaid(s.mem, specificTexture)
   } else {
     const mundaneText = buildMundaneLayer(s)
-    if (mundaneText) {
-      s.log = [...s.log, { age: s.age, text: mundaneText, isKey: false, isMundane: true }]
+    if (fitsThisYear(mundaneText)) {
+      s.log = [...s.log, { age: s.age, year: s.currentYear, text: mundaneText, isKey: false, isMundane: true }]
       s.mem = rememberSaid(s.mem, mundaneText)
     }
   }
@@ -2288,8 +2323,15 @@ export function tick(state) {
     }
   }
 
-  // High school graduation at 18
-  if (s.age === 18 && !s.flags.includes('graduated_hs') && !s.flags.includes('dropped_out') && !s.flags.includes('child_labor') && !s.flags.includes('left_school_early') && !s.flags.includes('never_schooled') && !s.education?.enrolled && !s.usedEventMap?.has('hs_graduation')) {
+  // High school graduation at 18.
+  //
+  // `institutionExists` because there are years in which nobody in a country
+  // graduated from anything: Democratic Kampuchea closed every school in 1975
+  // and did not reopen one, and a Cambodian eighteen-year-old in 1979 was being
+  // asked what they would like to study at university.
+  const schoolsOpen = institutionExists(
+    s.currentCountry?.name ?? s.character?.country?.name, s.currentYear, 'school')
+  if (schoolsOpen && s.age === 18 && !s.flags.includes('graduated_hs') && !s.flags.includes('dropped_out') && !s.flags.includes('child_labor') && !s.flags.includes('left_school_early') && !s.flags.includes('never_schooled') && !s.education?.enrolled && !s.usedEventMap?.has('hs_graduation')) {
     const rawGpa = Math.min(4.0, parseFloat(((s.gpa ?? 2.0) + 0.1).toFixed(2)))
     s.education = { ...s.education, level: 'secondary' }
     s.flags = [...new Set([...s.flags, 'graduated_hs'])]
@@ -2650,7 +2692,8 @@ export function tick(state) {
   if (!event) {
     s.pendingEvent = null
     const texture = buildYearTexture(s)
-    if (texture) {
+    if (texture && proseFitsInstitutions(
+      texture, s.currentCountry?.name ?? s.character?.country?.name, s.currentYear)) {
       s.log = [...s.log, { age: s.age, year: s.currentYear, text: texture, isKey: false, isTexture: true }]
       s.mem = rememberSaid(s.mem, texture)
     }

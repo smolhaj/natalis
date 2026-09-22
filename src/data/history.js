@@ -231,3 +231,220 @@ export function wasSovietRepublic(countryName) {
 export function wasEasternBloc(countryName) {
   return SOVIET_SET.has(countryName) || PACT_SET.has(countryName)
 }
+
+// ── Malaria ──────────────────────────────────────────────────────────────────
+//
+// `ss_malaria_childhood` gated on archetype, so it gave a malarial childhood to
+// North Korean and Cuban children. Cuba was certified malaria-free in 1973 and
+// had eliminated transmission years before that; the DPRK's vivax is seasonal,
+// northern and was absent entirely between the 1970s and a 1998 re-emergence.
+// Elimination is a dated event and the date is usually the interesting part of
+// the story — Sri Lanka got there in 2016 after a civil war fought across the
+// endemic zone, and Italy and Greece were both malarial within living memory.
+//
+// Value: the year transmission ended. A country absent from this table and
+// inside the endemic band is malarial for the whole period; a country listed
+// with 0 was never endemic in the era this game covers.
+export const MALARIA_FREE_FROM = {
+  'Cuba': 1968, 'Jamaica': 1965, 'Trinidad and Tobago': 1965, 'Barbados': 0,
+  'Puerto Rico': 1962, 'Chile': 0, 'Uruguay': 0, 'Argentina': 2011,
+  'Paraguay': 2018, 'Mexico': 2020, 'El Salvador': 2021, 'Belize': 2023,
+  'North Korea': 1979, 'South Korea': 1979, 'Taiwan': 1965, 'Japan': 1961,
+  'Singapore': 1982, 'Maldives': 1984, 'Sri Lanka': 2016, 'Bhutan': 2023,
+  'Kazakhstan': 1965, 'Kyrgyzstan': 1960, 'Uzbekistan': 1961, 'Tajikistan': 2018,
+  'Turkmenistan': 2010, 'Armenia': 2011, 'Azerbaijan': 2023, 'Georgia': 2010,
+  'Russia': 1960, 'Ukraine': 1960, 'Mongolia': 0, 'Nepal': 9999,
+  'Italy': 1970, 'Greece': 1974, 'Spain': 1964, 'Portugal': 1973,
+  'Israel': 1967, 'Lebanon': 1960, 'Jordan': 2000, 'Syria': 2005,
+  'Morocco': 2010, 'Algeria': 2019, 'Tunisia': 1979, 'Libya': 1973,
+  'Egypt': 1998, 'Iraq': 2008, 'Oman': 9999, 'Bahrain': 1979, 'Qatar': 1970,
+  'UAE': 2007, 'Kuwait': 1963,
+  // Never endemic in this era, or nothing above a handful of imported cases.
+  'Iceland': 0, 'Norway': 0, 'Sweden': 0, 'Denmark': 0, 'Finland': 0,
+  'Kiribati': 0, 'Tuvalu': 0, 'Marshall Islands': 0, 'Samoa': 0, 'Fiji': 0,
+  'New Zealand': 0, 'Australia': 1981, 'Tonga': 0,
+}
+
+/** Was malaria transmitted in this country in this year? */
+export function malariaEndemic(countryName, year) {
+  const end = MALARIA_FREE_FROM[countryName]
+  if (end === undefined) return true     // absent means endemic throughout
+  if (end === 0) return false            // never endemic in this era
+  return year < end
+}
+
+// ── Rivers ───────────────────────────────────────────────────────────────────
+//
+// `ind_river_wrong_colour` — the creek running the wrong colour below the
+// refinery — fired in Kiribati, Tuvalu and the Marshall Islands, which are
+// coral atolls with no surface watercourse of any kind. Several Gulf states
+// have no perennial river either.
+const RIVERLESS = new Set([
+  'Kiribati', 'Tuvalu', 'Marshall Islands', 'Maldives', 'Bahrain', 'Qatar',
+  'UAE', 'Kuwait', 'Saudi Arabia', 'Oman', 'Libya', 'Malta', 'Singapore',
+])
+
+/** Does this country have a river a child could stand beside? */
+export function hasRivers(countryName) {
+  return !RIVERLESS.has(countryName)
+}
+
+// ── The colonial school ──────────────────────────────────────────────────────
+//
+// `hist_colonial_language_school` gated on archetype, which put a French or
+// English colonial classroom in Bhutan, Nepal, Guatemala, Nicaragua and Soviet
+// Tajikistan. It also offered the player "French, or English, or Portuguese"
+// as if the character did not know which one, in an event whose whole subject
+// is which one.
+//
+// Listed here: the countries where a European language was the medium of
+// instruction over a living local one during this game's period. Latin America
+// is absent because independence came in the 1820s and Spanish became the
+// national language — the indigenous-language child facing a Spanish classroom
+// is a real and different event, not this one. Ethiopia, Iran, Nepal, Bhutan,
+// Thailand, China, Japan, Korea and Turkey are absent because they were never
+// colonised and taught in their own languages.
+export const COLONIAL_SCHOOL_LANGUAGE = {
+  // British Africa and Asia
+  'Nigeria': 'English', 'Ghana': 'English', 'Kenya': 'English', 'Uganda': 'English',
+  'Tanzania': 'English', 'Zambia': 'English', 'Zimbabwe': 'English',
+  'Namibia': 'English', 'South Africa': 'English', 'Sudan': 'English',
+  'Sierra Leone': 'English', 'Gambia': 'English', 'Malawi': 'English',
+  'Botswana': 'English', 'India': 'English', 'Pakistan': 'English',
+  'Bangladesh': 'English', 'Sri Lanka': 'English', 'Myanmar': 'English',
+  'Malaysia': 'English', 'Singapore': 'English', 'Fiji': 'English',
+  'Jamaica': 'English', 'Trinidad and Tobago': 'English', 'Guyana': 'English',
+  'Barbados': 'English', 'Belize': 'English',
+  // French Africa, Indochina and the Levant
+  'Senegal': 'French', 'Mali': 'French', 'Guinea': 'French',
+  'Burkina Faso': 'French', 'Ivory Coast': 'French', 'Benin': 'French',
+  'Togo': 'French', 'Niger': 'French', 'Chad': 'French', 'Cameroon': 'French',
+  'Central African Republic': 'French', 'Gabon': 'French', 'Congo': 'French',
+  'DR Congo': 'French', 'Rwanda': 'French', 'Burundi': 'French',
+  'Madagascar': 'French', 'Djibouti': 'French', 'Algeria': 'French',
+  'Morocco': 'French', 'Tunisia': 'French', 'Lebanon': 'French',
+  'Syria': 'French', 'Vietnam': 'French', 'Laos': 'French', 'Cambodia': 'French',
+  'Haiti': 'French',
+  // Portuguese Africa and Timor
+  'Angola': 'Portuguese', 'Mozambique': 'Portuguese', 'Guinea-Bissau': 'Portuguese',
+  'Cape Verde': 'Portuguese', 'East Timor': 'Portuguese',
+  // Dutch
+  'Indonesia': 'Dutch', 'Suriname': 'Dutch',
+  // Belgian Congo used French; the Italian and Spanish colonies were short-lived
+  'Eritrea': 'Italian', 'Libya': 'Italian', 'Somalia': 'Italian',
+  'Equatorial Guinea': 'Spanish', 'Western Sahara': 'Spanish',
+  'Philippines': 'English',
+}
+
+/**
+ * Was school taught in a coloniser's language here this year? True from 1900
+ * until roughly a generation after independence, because the medium of
+ * instruction outlived the flag nearly everywhere — often permanently.
+ */
+export function colonialSchoolLanguage(countryName, year) {
+  const lang = COLONIAL_SCHOOL_LANGUAGE[countryName]
+  if (!lang) return null
+  const indep = INDEPENDENCE_YEAR[countryName]
+  if (indep === undefined) return year >= 1900 ? lang : null
+  return year >= 1900 && year <= indep + 30 ? lang : null
+}
+
+// ── Years in which ordinary institutional life stopped ───────────────────────
+//
+// The corpus has a Khmer Rouge arc, and alongside it a Cambodian character in
+// 1977 was drawing a salary, attending school, being referred to a psychiatrist
+// and worrying about which families held the municipal contracts. Democratic
+// Kampuchea abolished money, markets, wages, schools, hospitals, religion and
+// the postal system in the first weeks of 1975, and did not restore any of them.
+// Nothing in the engine knew that; every guard asked what country and what year
+// and got a true answer to the wrong question.
+//
+// Each entry is a window in which the named facility did not exist in that
+// country. Selection consults it so an event whose prose assumes one is simply
+// not offered — the arc that was written for those years fires instead.
+export const INSTITUTIONS_SUSPENDED = [
+  // Democratic Kampuchea: the most complete case there is.
+  { country: 'Cambodia', from: 1975, to: 1979, what: ['school', 'wages', 'money', 'clinic', 'religion', 'post', 'city'] },
+  // The Somali state ceased to exist in January 1991 and there was no central
+  // government until 2006; schooling and health ran on whatever communities and
+  // NGOs could build.
+  { country: 'Somalia', from: 1991, to: 2005, what: ['school', 'wages', 'clinic', 'post'] },
+  // The Taliban closed girls' secondary schools and most formal employment for
+  // women; the 2021 return did the same again.
+  { country: 'Afghanistan', from: 1996, to: 2001, what: ['school_girls', 'wages_women'] },
+  { country: 'Afghanistan', from: 2022, to: 2030, what: ['school_girls', 'wages_women'] },
+  // The hundred days. Nothing was open.
+  { country: 'Rwanda', from: 1994, to: 1994, what: ['school', 'wages', 'clinic', 'post'] },
+  // Charles Taylor's war closed the schools of most of the country.
+  { country: 'Liberia', from: 1990, to: 1996, what: ['school', 'wages', 'clinic'] },
+  { country: 'Sierra Leone', from: 1997, to: 2001, what: ['school', 'wages', 'clinic'] },
+  // Year Zero of the Chinese Cultural Revolution: universities shut from 1966
+  // and the gaokao was not held again until 1977.
+  { country: 'China', from: 1966, to: 1969, what: ['university'] },
+]
+
+/**
+ * Did `what` exist in this country in this year?
+ * @param {string} countryName
+ * @param {number} year
+ * @param {string} what  one of the tokens used in INSTITUTIONS_SUSPENDED
+ */
+export function institutionExists(countryName, year, what) {
+  for (const w of INSTITUTIONS_SUSPENDED) {
+    if (w.country !== countryName) continue
+    if (year < w.from || year > w.to) continue
+    if (w.what.includes(what)) return false
+  }
+  return true
+}
+
+/** Every token suspended in this country and year, as a Set. */
+export function suspendedInstitutions(countryName, year) {
+  const out = new Set()
+  for (const w of INSTITUTIONS_SUSPENDED) {
+    if (w.country !== countryName) continue
+    if (year < w.from || year > w.to) continue
+    for (const t of w.what) out.add(t)
+  }
+  return out
+}
+
+// The prose that makes the claim. An event or a texture line naming one of
+// these is asserting that the thing exists, so it must not print in a year
+// when it did not.
+export const INSTITUTION_PROSE = [
+  ['school', /\bat school\b|school gate|in the classroom|secondary school|your teacher\b|the schoolroom|school uniform|your classmates|the lesson\b|the exam\b|final exams|university|the headmaster|the principal\b/i],
+  ['wages', /your salary|the salary|a raise\b|payday|your wages|the promotion|your employer|the office\b|paid monthly|your pension|the payslip|the wages have/i],
+  // Deliberately broad. These windows cover a handful of country-years, and in
+  // those years dropping a line that would have been fine costs one sentence,
+  // while printing one costs the player a false fact about the place. "Rent is
+  // owed" slipped through a narrower version of this.
+  ['money', /\bmoney\b|\bcash\b|\brent\b|\bwages?\b|\bsalar(y|ies)\b|the bank\b|your savings|the price of|you can afford|the shop\b|\bmarket\b|the currency|your account\b|the prices\b|who holds the contracts|\bpaid\b/i],
+  ['clinic', /the clinic\b|the hospital\b|your doctor|the pharmacy|a prescription|the psychiatrist|the surgery\b|the nurse\b/i],
+  ['post', /the postman|a letter arrives|in the post\b|the post office/i],
+  ['city', /the city centre|downtown|the traffic\b|the apartment block|the high street|the boulevard|electrif|the power (comes|is) (on|back)|the first light bulb|the grid\b/i],
+]
+
+/**
+ * Which suspended institutions does this line assume? Empty array when none,
+ * which is the overwhelming majority and the fast path.
+ */
+export function institutionsAssumed(text) {
+  if (typeof text !== 'string' || !text) return []
+  const out = []
+  for (const [k, re] of INSTITUTION_PROSE) if (re.test(text)) out.push(k)
+  return out
+}
+
+/**
+ * Can this line be printed for a character in this country in this year?
+ *
+ * Applied to year texture and the mundane layer as well as to events, because
+ * a Cambodian in 1977 was being told that the prices had risen and the wages
+ * had not caught up, four years after Democratic Kampuchea abolished both.
+ */
+export function proseFitsInstitutions(text, countryName, year) {
+  const gone = suspendedInstitutions(countryName, year)
+  if (gone.size === 0) return true
+  return !institutionsAssumed(text).some(k => gone.has(k))
+}
