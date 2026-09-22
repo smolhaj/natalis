@@ -876,7 +876,16 @@ export async function auditUnwrittenGroups() {
       // of the first twenty-eight findings were a country's own largest group,
       // which buries the two that are not. The plurality is the country-generic
       // population whether or not it clears fifty per cent.
-      const largest = (c.ethnicGroups ?? []).reduce((a, b) => ((b.share ?? 0) > (a.share ?? 0) ? b : a), { share: -1 })
+      // ...and `largest` was computed over ALL groups including the catch-all
+      // bucket, so where `other_zambian` (40%) or `other_philippine` (30%) is
+      // the biggest entry, the REAL plurality is not excluded and gets reported
+      // as unwritten — Tagalog at 28% of the Philippines, Bemba at 21% of
+      // Zambia, Kpelle at 20% of Liberia. An audit that reports a false
+      // positive has failed the same way as one that reports none, for the
+      // third time in this function.
+      const named = (c.ethnicGroups ?? []).filter(g2 =>
+        !(/^(other|mixed)(_|$)/.test(g2.id) || /^(other|mixed)\b/i.test(g2.name ?? '')))
+      const largest = named.reduce((a, b) => ((b.share ?? 0) > (a.share ?? 0) ? b : a), { share: -1 })
       const isPlurality = g.id === largest.id
       // A catch-all bucket is not a population anybody can write for. `other`,
       // `other_kenyan`, `mixed_guyanese` — nothing about being 'Other' in

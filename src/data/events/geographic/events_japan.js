@@ -434,18 +434,36 @@ const JAPAN_EVENTS = [
     id: 'jpn_aum_sarin_1995',
     phase: null,
     weight: 4,
+    // No place guard, so a man who had lived in Hiroshima his entire life — the
+    // game told him so at 41 — opened his obituary with "He was on the Tokyo
+    // subway on March 20, 1995." Five of five `aum_proximate` holders were
+    // outside Tokyo. This is the shape CLAUDE.md records fixing for
+    // `jpn_hibakusha` and the Stasi, one event over.
     when: (G) =>
-      G.character.country.name === 'Japan' &&
+      (G.currentCountry?.name ?? G.character.country.name) === 'Japan' &&
       G.currentYear >= 1995 && G.currentYear <= 1997 &&
       G.age >= 20 &&
       !G.mem?.jpn_aum,
     text: 'March 20, 1995. Aum Shinrikyo punctures plastic bags of sarin on five Tokyo subway lines during the morning rush hour. Thirteen people die. Nearly a thousand suffer permanent vision damage. Thousands more require treatment. The attack opens at a place in the Japanese psyche that was supposed to be sealed: the assumption of safety. Japan is a country where violent crime is extremely rare, where the train is on time to the minute, where the implicit social contract includes the subway being safe. That contract is punctured with the bags.',
     choices: [
       {
-        text: 'You were on one of the affected lines that morning, or you know someone who was.',
+        // "or you know someone who was" set `aum_proximate`, a flag that the
+        // obituary and the texture layer both read as literal presence. Two
+        // different facts need two different flags.
+        text: (G) => G.place?.id === 'jp_tokyo'
+          ? 'You were on one of the affected lines that morning.'
+          : 'You know someone who was on one of the lines.',
         tag: null,
-        outcome: 'The morning that reorganised how you take the subway. The reorganisation is permanent — not as fear exactly, but as a kind of knowledge about what the subway is that you did not have before.',
-        effect: (p) => { p.m -= 10; p.h -= 4; p.r += 6; p.addFlag('aum_generation'); p.addFlag('aum_proximate'); p.setMem('jpn_aum', true); },
+        outcome: (G) => G.place?.id === 'jp_tokyo'
+          ? 'The morning that reorganised how you take the subway. The reorganisation is permanent — not as fear exactly, but as a kind of knowledge about what the subway is that you did not have before.'
+          : 'He rings in the evening and his voice is wrong in a way you have not heard it before. He is fine. He keeps saying he is fine.',
+        effect: (p) => {
+          p.m -= 10; p.r += 6
+          p.addFlag('aum_generation')
+          if (p._state?.currentPlace?.id === 'jp_tokyo') { p.h -= 4; p.addFlag('aum_proximate') }
+          else p.addFlag('aum_knew_someone')
+          p.setMem('jpn_aum', true)
+        },
       },
       {
         text: 'You follow it on the news, in a country where this was not supposed to happen.',

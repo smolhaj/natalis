@@ -1605,7 +1605,9 @@ export const WORLD_EVENTS = [
   {
     id: 'yugoslav_wars_impact',
     name: 'Yugoslav Wars: Civilian Experience',
-    years: [1991, 1999],
+    // The war in Bosnia began on 6 April 1992. This fired in 1991 and narrated
+    // the Dayton Agreement — November 1995 — as already past.
+    years: [1992, 1995],
     archetypes: 'all',
     // Serbia's telling is balkan_wars; Croatia, Slovenia, Kosovo and North
     // Macedonia are not yet playable countries, so listing them here is inert.

@@ -4,6 +4,12 @@
 // earthquake April 25, 2015 (Gorkha, 9,000 dead), Gulf labor migration and kafala.
 // Nepal is the youngest federal republic in Asia, formerly a 240-year monarchy.
 
+// Where the ticket actually went. Roughly the real distribution of Nepali
+// labour migration in the 2000s: Qatar and Saudi Arabia take most of it, the
+// UAE a large share, Kuwait and Bahrain the rest.
+const GULF_DESTINATIONS = ['Qatar', 'Qatar', 'Saudi Arabia', 'Saudi Arabia', 'United Arab Emirates', 'United Arab Emirates', 'Kuwait', 'Bahrain']
+const pickGulf = () => GULF_DESTINATIONS[Math.floor(Math.random() * GULF_DESTINATIONS.length)]
+
 export const NEPAL_EVENTS = [
 
   {
@@ -77,13 +83,23 @@ export const NEPAL_EVENTS = [
         text: 'You go.',
         tag: null,
         outcome: 'The work is what the work is. The money arrives home every month. That is the transaction you made. You try to keep it to that.',
-        effect: (p) => { p.m -= 10; p.mo += 2500; p.r += 7; p.addFlag('nepal_gulf_worker'); p.setMem('nepGulfMigration', true) },
+        // "You go" set a flag and moved nobody: the character stayed in Nepal
+        // drawing a Nepali salary while the prose said Doha, and the whole
+        // arriving-in-the-Gulf arc in events_gulf.js could not reach them.
+        effect: (p) => {
+          p.m -= 10; p.mo += 2500; p.r += 7
+          p.addFlag('nepal_gulf_worker'); p.addFlag('gulf_arrived'); p.addFlag('kafala_worker')
+          p.emigrateTo(pickGulf(), { residency: 'work_visa', tier: 'informal' })
+          p.setMem('nepGulfMigration', true)
+        },
       },
       {
         text: 'A relative goes instead. You stay.',
         tag: null,
         outcome: 'The money comes from outside. You are the one who is here. The two roles are different kinds of sacrifice.',
-        effect: (p) => { p.mo += 1000; p.m -= 4; p.addFlag('nepal_gulf_worker'); p.setMem('nepGulfMigration', true) },
+        // And "you stay" set `nepal_gulf_worker` too, so the character who did
+        // not go held the flag for having gone.
+        effect: (p) => { p.mo += 1000; p.m -= 4; p.addFlag('remittance_household'); p.setMem('nepGulfMigration', true) },
       },
     ],
     effect: null,

@@ -182,10 +182,15 @@ export const CENTRAL_AMERICA_EVENTS = [
     id: 'ca_peace_accords_day',
     phase: 'midlife',
     weight: 4,
+    // `&&` binds tighter than `||`, so this parsed as `(country && year && war_childhood)
+    // || (civil_war_lived && !mem)` — and the second branch has no country and no
+    // year. `civil_war_lived` is set by Lebanon, Algeria and three world events,
+    // so a Lebanese man in midlife was told "twelve years. Seventy-five thousand
+    // people. Now what." about the Salvadoran war.
     when: (G) =>
       ((G.character.country.name === 'El Salvador' && G.currentYear >= 1992 && G.currentYear <= 1993) ||
        (G.character.country.name === 'Guatemala'   && G.currentYear >= 1996 && G.currentYear <= 1997)) &&
-      G.flags.includes('war_childhood') || G.flags.includes('civil_war_lived') &&
+      (G.flags.includes('war_childhood') || G.flags.includes('civil_war_lived')) &&
       !G.mem?.peaceAccordsMemo,
     text: 'The date has been announced for weeks. When it arrives it is quieter than you expected. The fireworks happen in the capital. Here, the church bells ring. You sit with people you have known for years and no one says what everyone is thinking, which is: twelve years. Seventy-five thousand people. Now what.',
     choices: null,

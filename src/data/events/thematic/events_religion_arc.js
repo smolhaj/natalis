@@ -232,7 +232,7 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_reading_contradicts_teaching',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 15 && G.age <= 25 && !G.flags.includes('left_religion') && !G.mem?.reading_contradicts,
+    when: (G) => G.age >= 15 && G.age <= 25 && HAS_FAITH(G) && !G.flags.includes('left_religion') && !G.mem?.reading_contradicts,
     text: 'You read something — a book on evolutionary biology, a history of religious texts, a comparative religion course — that contradicts what you were taught. Not at the edges but at the foundation. The information is well-sourced. You cannot dismiss it. You have to decide what to do with it.',
     choices: [
       { text: 'Integrate it — faith can survive facts', tag: null, outcome: 'You find a way to hold both. It requires work. The faith that emerges is less certain and more yours.', effect: (p) => { p.e += 8; p.m -= 3; p.r += 4; p.addFlag('faith_crisis'); p.setMem('reading_contradicts', true) } },
@@ -245,7 +245,13 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_leader_behaves_badly',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 18 && G.age <= 45 && !G.flags.includes('left_religion') && !G.mem?.leader_betrayal,
+    // The entry point of a loss-of-faith arc must require a faith. This one and
+    // `reading_contradicts` had no religion term at all, so a secular Japanese
+    // man and an atheist American both got "The religious leader you trusted",
+    // and then the whole chain behind it — telling the family he no longer
+    // believed at 27, the freedom and the loss at 29, being cultural without
+    // belief at 36, and year texture noticing that he does not pray.
+    when: (G) => G.age >= 18 && G.age <= 45 && HAS_FAITH(G) && !G.flags.includes('left_religion') && !G.mem?.leader_betrayal,
     text: 'The religious leader you trusted is found to have been taking money. It is not a large amount and that is somehow the worst detail. The institution closes ranks around him. The investigation is slow and the apology, when it comes, is insufficient. You are left with the question of whether the institution and the faith are the same thing, and whether you can separate them.',
     choices: [
       { text: 'Leave the institution but not the faith', tag: null, outcome: 'You find a smaller congregation. Or you practice at home. The faith survives the institution, barely.', effect: (p) => { p.m -= 8; p.r += 8; p.setMem('leader_betrayal', true) } },

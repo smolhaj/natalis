@@ -285,6 +285,17 @@ function buildEffectProxy(state) {
       // the one site every event goes through, rather than in six callers.
       const implied = EDUCATION_FLAGS[flag]
       if (implied) proxy.setEducation(implied)
+      // A flag whose name is a claim about WHEN. `war_childhood` is set by two
+      // world events with `minAge: 0` and no upper bound, so a Bosnian who was
+      // 29 in 1991 carried it and the obituary opened "There was a war on for
+      // the whole of her childhood" — on the 1962 cohort, whose childhood was
+      // the most peaceful in that country's century. Nineteen of nineteen
+      // holders in a targeted run had a peaceful childhood. The adult version
+      // of the same fact is a different flag and a different sentence.
+      if (flag === 'war_childhood' && (state.age ?? 0) > 17) {
+        proxy.flags = proxy.flags.filter(f => f !== 'war_childhood')
+        if (!proxy.flags.includes('war_zone_civilian')) proxy.flags.push('war_zone_civilian')
+      }
     }
   }
   proxy.clearFlag = (flag) => { proxy.flags = proxy.flags.filter(f => f !== flag) }
@@ -692,7 +703,14 @@ function resolveProxyExtras(state, proxy) {
  * announcing at sixteen that there was never a school to leave.
  */
 function schoolProseFits(e, G) {
-  return !e.assumesSchool || G.literate || G.education?.level === 'secondary' || G.education?.enrolled
+  if (!e.assumesSchool) return true
+  // `mem.attendedSchool` is the engine's own answer, settled at 7 against the
+  // country's literacy read for this character's gender. It is definitive in
+  // both directions: `G.literate` is only the birth roll, and a character can
+  // be schooled without it.
+  if (G.mem?.attendedSchool === false || G.flags?.includes?.('never_schooled')) return false
+  if (G.mem?.attendedSchool === true) return true
+  return G.literate || G.education?.level === 'secondary' || G.education?.enrolled
 }
 
 // Does this event's prose assume something that did not exist here this year?
@@ -2428,7 +2446,19 @@ function checkIllnessRisk(state) {
     const pool = MIND.has(illness.id)
       ? (mindContext[healthcare] ?? mindContext.fair)
       : (illnessContext[healthcare] ?? illnessContext.fair)
-    const illnessText = `${pickFrom(preferUnsaid(state, pool))} You are diagnosed with ${illness.name}.`
+    // "There is no name for it available to you. There is only the fact of it,
+    // and the way people have started to talk around you rather than to you.
+    // You are diagnosed with Anxiety Disorder." The clinical label was appended
+    // unconditionally to a pool whose poor and very_poor tiers exist precisely
+    // to say that no diagnosis was available — 32 of 175 diagnoses in a
+    // 140-life run contradicted themselves in the same breath, in the
+    // "+5 Happiness" register the design document forbids. Where there is no
+    // one to name it, the game does not name it either: the condition is
+    // recorded, and the character has what they have.
+    const named = !(MIND.has(illness.id) && (healthcare === 'poor' || healthcare === 'very_poor'))
+    const illnessText = named
+      ? `${pickFrom(preferUnsaid(state, pool))} You are diagnosed with ${illness.name}.`
+      : pickFrom(preferUnsaid(state, pool))
 
     const event = {
       id: `illness_${illness.id}_${state.age}`,
@@ -2965,13 +2995,28 @@ export function tick(state) {
     // engine bankrupted two thirds of everyone who ever owed anything, most of
     // them in countries with no such procedure.
     const dischargeable = ['very_high', 'high'].includes(liveCountry(s)?.gdp) && s.currentYear >= 1970
-    if (dischargeable && s.debt > unpayable && missed >= 4) {
+    // A second insolvency needs a cooling-off period and its own sentence. This
+    // had no `bankrupt` term and one fixed string, so four of ten bankrupt
+    // lives were bankrupted more than once — a Japanese salaryman twice in five
+    // years with three promotions in between, both times in the same words.
+    // Real discharge periods bar a repeat for years (six in England and Wales,
+    // eight in the United States), which is also roughly how long it takes for
+    // it to be a different story rather than the same one.
+    const sinceLast = s.currentYear - (s.mem?.bankruptcyYear ?? -99)
+    if (dischargeable && s.debt > unpayable && missed >= 4 && sinceLast >= 8) {
+      const again = s.flags.includes('bankrupt')
       s.flags = [...new Set([...s.flags, 'bankrupt', 'declared_bankrupt', 'debt_spiral_survived'])]
       s.debt = 0
       s.money = Math.max(0, s.money ?? 0)
       s.creditScore = 320
-      s.mem = { ...s.mem, debtMissedYears: 0, debtToldYear: null, debtChargedOffTold: false }
-      s.log = [...s.log, { age: s.age, year: s.currentYear, text: 'You are declared bankrupt. A relief and a shame at once.', isKey: true }]
+      s.mem = { ...s.mem, debtMissedYears: 0, debtToldYear: null, debtChargedOffTold: false, bankruptcyYear: s.currentYear }
+      s.log = [...s.log, { age: s.age, year: s.currentYear, isKey: true, text: again
+        ? 'The second time there is no shame in it, which surprises you. You know the forms. You know which questions they ask and in what order, and you answer them the way a person answers a form.'
+        : pickFrom([
+            'You are declared bankrupt. A relief and a shame at once.',
+            'It is done in a room with a strip light and takes eleven minutes, and the eleven minutes are the end of about four years.',
+            'You are declared bankrupt. What you had expected to feel was humiliation. What you feel, walking out, is that you can hear again.',
+          ]) }]
     }
   }
   // Auto-flag debt spiral when in trouble

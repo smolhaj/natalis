@@ -452,6 +452,20 @@ export const PLACES = [
   // ── SOUTH KOREA ────────────────────────────────────────────────────────────
 
   {
+    id: 'kr_gwangju',
+    name: 'Gwangju',
+    country: 'South Korea',
+    type: 'urban',
+    scale: 'city',
+    region: 'South Jeolla',
+    neighborhoods: {
+      informal: ['Yangdong', 'Daein'],
+      working_class: ['Songjeong', 'Hanam', 'Duam'],
+      middle_class: ['Sangmu', 'Chipyeong', 'Punggam'],
+      elite: ['Suwan', 'Bongseon'],
+    },
+  },
+  {
     id: 'kr_seoul', name: 'Seoul', country: 'South Korea',
     type: 'urban', scale: 'megacity', region: 'Capital Region',
     neighborhoods: {

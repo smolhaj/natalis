@@ -4,6 +4,14 @@
  */
 export const POLITICAL_FLAGS = {
 
+  war_zone_civilian: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Was an adult civilian in a place under attack. The adult counterpart of war_childhood, which is a claim about WHEN and was being set on people in their thirties by two world events with no age bound.',
+    intent: 'both',
+    notes: 'Set by buildEffectProxy when an event asks for war_childhood on a character over 17. Read by the cc_bombardment_* arc and by year texture.',
+  },
+
   bahrain_2011: {
     weight: 'major',
     category: 'political',

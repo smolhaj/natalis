@@ -7254,6 +7254,17 @@ function* textureCandidates(state, opts = {}) {
       ? 'The Aum trial lasted until 2018. Twenty-three years of legal proceedings after eleven dead and six thousand injured on a Tuesday morning. The proceedings lasted longer than some careers.'
       : 'Before March 20, 1995, the language of religious violence in Japan referred to the nineteenth century. The frame changed in a Tuesday morning.',
   ])]
+  if (F.has('war_zone_civilian') && Math.random() < 0.22) yield [T.earned, pick([
+    'A door goes somewhere in the building and you are up and across the room before you have decided anything. You were an adult when it happened, which people assume means you were equipped for it.',
+    'The sound is a lorry on the bridge. It is always a lorry on the bridge. You still count the two seconds.',
+    'You were grown when it started, so nobody has ever asked you about it the way they ask the ones who were children. You have wondered occasionally whether that is a kindness.',
+  ])]
+
+  if (F.has('aum_knew_someone') && Math.random() < 0.2) yield [T.earned, pick([
+    'He went back to the same commute within the week, because the alternative was to move house and change jobs over something that took eight minutes. He told you that once and not again.',
+    'The thing you remember is not the news, which you watched like everybody. It is the sound of his voice on the telephone that evening, saying he was fine, three times, in a row.',
+  ])]
+
   if (F.has('aum_proximate') && Math.random() < 0.3) yield [T.anchored, pick([
     'The delayed medical care, the uncertain diagnosis, the specific chemical and what it does to the eye\'s ability to focus. The nerve agent has a pharmacology and you learned it from the inside.',
     'You were close enough to see what it did to the person beside you. The image is available to recall without your choosing to recall it.',
@@ -16439,13 +16450,30 @@ function* textureCandidates(state, opts = {}) {
     ])]
   }
 
-  if ((countryName === 'Norway' || countryName === 'Sweden' || countryName === 'Finland') && Math.random() < 0.25) {
-    if (season === 'winter') yield [T.anchored, pick([
+  // Polar night and midnight sun need the Arctic Circle, not the country. This
+  // was gated on Norway/Sweden/Finland and the season, so a man who lived his
+  // whole life in Stockholm — 59.3°N, about 800 km south of the circle, where
+  // the sun rises every day of the year — was told in 1999 that it did not get
+  // dark tonight and in 2001 that the sun did not rise today. What Stockholm
+  // and Oslo and Helsinki actually have is a December day of about six hours,
+  // which is its own thing and worth its own sentences.
+  const ABOVE_THE_CIRCLE = new Set(['no_tromso', 'no_north', 'se_north', 'se_kiruna', 'fi_lapland', 'fi_rovaniemi', 'no_finnmark'])
+  if ((countryName === 'Norway' || countryName === 'Sweden' || countryName === 'Finland' || countryName === 'Iceland') && Math.random() < 0.25) {
+    const farNorth = ABOVE_THE_CIRCLE.has(state.currentPlace?.id) ||
+      /Lapland|Finnmark|Troms|Norrbotten|Nordland/i.test(state.currentPlace?.region ?? '')
+    if (season === 'winter') yield [T.anchored, farNorth ? pick([
       'The polar night: the sun does not rise today. People have adapted — lamps with specific wavelengths, walks at noon in the thin blue light, the indoor life that is a second culture.',
+      'Nobody here says it is dark, because dark is not a description of anything at this latitude in January. What people say is how many weeks are left.',
+    ]) : pick([
+      'The light comes up around nine and is going again by three, and the part of the day that is yours happens at both ends of an office window.',
       'February: the long tunnel of the Nordic winter. The candles are lit. The coffee is hot. People have been perfecting indoor comfort out of necessity for generations.',
+      'You leave in the dark and come back in the dark and the day is a rumour somebody else had.',
     ])]
-    if (season === 'summer') yield [T.anchored, pick([
+    if (season === 'summer') yield [T.anchored, farNorth ? pick([
       'The midnight sun: it does not get dark tonight. The light stays, pale and horizontal, well past midnight. Sleep is an exercise in curtains and the agreement to rest even without dark.',
+    ]) : pick([
+      'It is light at half past three in the morning and light again at eleven at night, and for about six weeks the whole country behaves as though sleep is optional.',
+      'The summer is short and everybody knows the number of weeks, and the response to that is not resignation, it is a kind of organised urgency about being outdoors.',
     ])]
   }
 

@@ -50,7 +50,37 @@ const MIGRANT_IDS = new Set([
   'south_asian_uae', 'south_asian_qatar', 'south_asian_kuwait', 'south_asian_bahrain',
   'south_asian_omani', 'south_asian_worker', 'filipino_qatar', 'east_asian_uae',
 ])
-const IS_MIGRANT = (G) => MIGRANT_IDS.has(G.character?.ethnicity)
+const MIGRANT_ORIGIN = (G) => MIGRANT_IDS.has(G.character?.ethnicity)
+
+// `IS_MIGRANT` read ethnicity alone, and the engine draws ethnicity from the
+// BIRTH country's own `ethnicGroups` — so every `south_asian_qatar` character
+// is born in Doha by construction, and a beta read found all seven firings of
+// the arriving arc had gone to Gulf-born characters. One was told he had just
+// landed at the airport; four years later that he had been in the country nine
+// years; at 28 that his house was one he had only seen in photographs, while
+// he was living in it with his wife; and at 34 that he did forty minutes a week
+// of being a father, with his children down the hall.
+//
+// The arriving life needs an arrival, and events_gulf_route.js is the half that
+// was missing: the agent's room, the fee borrowed against the land, and
+// `p.emigrateTo` putting a real person on the plane. Everything about arriving
+// now requires that it happened.
+// Not the ethnicity: a Nepali in Doha is a migrant worker whatever the Gulf
+// roster calls its own South Asian bucket, and the roster's `south_asian_qatar`
+// is the SETTLED population, born there. What makes this arc yours is having
+// come, which is a fact about the life and not about the id.
+const IS_MIGRANT = (G) =>
+  G.flags.includes('gulf_arrived') || G.flags.includes('gulf_migrant_worker') ||
+  (MIGRANT_ORIGIN(G) && G.character?.country?.name !== (G.currentCountry?.name ?? G.character?.country?.name))
+
+// Born here to people who came here. In the UAE and Qatar this is a large
+// population and a strange legal position: a life lived entirely in a country
+// that has no route to membership of it, with a passport for a place you have
+// visited four times.
+const IS_SECOND_GEN = (G) =>
+  MIGRANT_ORIGIN(G) &&
+  !G.flags.includes('gulf_arrived') &&
+  G.character?.country?.name === (G.currentCountry?.name ?? G.character?.country?.name)
 
 // The citizen populations. `other_arab_*` and `western_*` are a third thing —
 // resident, not migrant labour, not national — and this module leaves them out
@@ -62,6 +92,18 @@ const CITIZEN_IDS = new Set([
 const IS_CITIZEN = (G) => CITIZEN_IDS.has(G.character?.ethnicity)
 
 const here = (G) => G.currentCountry?.name ?? G.character?.country?.name
+
+// "You have been in this country nine years" was a literal, printed to a man in
+// his fourth year and to a man in his twentieth alike.
+const ORDINALS = ['no time at all', 'a year', 'two years', 'three years', 'four years', 'five years', 'six years', 'seven years', 'eight years', 'nine years', 'ten years']
+const YEARS_HERE = (G) => {
+  const since = G.mem?.gulfArrivedYear ?? G.mem?.yearsAbroadSince
+  const n = since ? G.currentYear - since : (G.yearsAbroad ?? 0)
+  if (n <= 0) return 'less than a year'
+  if (n <= 10) return ORDINALS[n]
+  if (n < 20) return 'over ten years'
+  return 'most of your adult life'
+}
 
 export const GULF_EVENTS = [
 
@@ -617,7 +659,7 @@ export const GULF_EVENTS = [
       G.age >= 16 &&
       !G.mem?.gulfCrossing,
     text: (G) => IS_MIGRANT(G)
-      ? 'At the lights a car stops beside the bus, close enough that you are looking down into it. A man about your age, in white, air conditioning, a child in the back on a screen. He is not looking up and there is no reason he would. You have been in this country nine years and you have never had a conversation with anybody from it that was not an instruction. The lights change. Both of you go on into two completely different cities that occupy the same road.'
+      ? `At the lights a car stops beside the bus, close enough that you are looking down into it. A man about your age, in white, air conditioning, a child in the back on a screen. He is not looking up and there is no reason he would. You have been in this country ${YEARS_HERE(G)} and you have never had a conversation with anybody from it that was not an instruction. The lights change. Both of you go on into two completely different cities that occupy the same road.`
       : 'At the lights a labour bus stops beside you, high enough that the men in it are looking down. They are going somewhere at an hour that has nothing to do with your hour. One of them meets your eye for a second, without any particular expression, and then the lights change. You have lived here your whole life and the number of those men you could name is a number you find, briefly, that you do not want to say out loud even to yourself.',
     choices: null,
     effect: (p) => { p.setMem('gulfCrossing', true); p.r += 4; p.addFlag('gulf_saw_the_other_city') },
@@ -740,6 +782,106 @@ export const GULF_EVENTS = [
       },
     ],
     effect: null,
+  },
+
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // THE SECOND GENERATION. Born here, to people who came here.
+  //
+  // The engine draws every Gulf character with a migrant ethnicity as born in
+  // the Gulf, and the module had nothing to say to them — so the arriving arc
+  // reached them instead, and told a Doha-born man that he had just landed at
+  // the airport. This is who they actually are: 88% of the UAE, most of Qatar,
+  // in a country with no naturalisation at the end of any of it. Deported at
+  // 18 by a rule about dependants' visas, or not, depending on a job that is
+  // somebody else's.
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'gulf2_the_school',
+    phase: null,
+    weight: 55,
+    when: (G) =>
+      IS_GULF(G) && IS_SECOND_GEN(G) &&
+      G.age >= 9 && G.age <= 15 &&
+      G.currentYear >= 1985 &&
+      !G.mem?.gulf2School,
+    text: (G) => `The school is the Indian school, or the Pakistani school, or the Filipino school, and the curriculum is from a board four thousand kilometres away in a country you have been to four times. The exams are the exams they sit there. The playground is here, and the heat is here, and the road outside is here, and everything the school is FOR is somewhere else. Nobody has decided this or explained it. It is simply the arrangement, and every child in the yard is inside the same one.`,
+    choices: [
+      {
+        text: 'Be from here anyway. It is the only place you know.',
+        tag: 'defiant',
+        outcome: 'You take the accent of the road and the food of the road and the music from the shop under the flat, and you will spend your twenties explaining to people in two countries that you are not what either of them thinks.',
+        effect: (p) => { p.setMem('gulf2School', true); p.s += 4; p.r += 4; p.addFlag('gulf_second_generation'); p.addFlag('gulf_from_nowhere') },
+      },
+      {
+        text: 'Be from there. It is where the exams go.',
+        tag: 'yielding',
+        outcome: 'You work for a place you do not live in, and you are good at it, and when you finally go the people there can tell within one sentence that you did not grow up among them.',
+        effect: (p) => { p.setMem('gulf2School', true); p.e += 6; p.m -= 3; p.addFlag('gulf_second_generation'); p.addFlag('gulf_exam_child') },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'gulf2_the_visa_at_eighteen',
+    phase: null,
+    weight: 75,
+    when: (G) =>
+      IS_GULF(G) && IS_SECOND_GEN(G) &&
+      G.age >= 18 && G.age <= 23 &&
+      G.currentYear >= 1990 &&
+      !G.mem?.gulf2Visa,
+    text: (G) => `You are on your father's visa, and there is an age at which you stop being on your father's visa. Nobody in the family has been treating this as a date, and it has been a date the whole time. Either the country gives you a job that sponsors you, in the next few months, or you go to the place on your passport — which you have seen at weddings, in August, and where you have three cousins and no address. Your sister went last year. You have her number.`,
+    choices: [
+      {
+        text: 'Find the job. Anything that sponsors.',
+        tag: null,
+        outcome: 'It is a desk in an office in a building your father might have helped pour, and it pays badly and it is the whole of your legal existence, and you take it.',
+        effect: (p) => { p.setMem('gulf2Visa', true); p.m -= 4; p.r += 6; p.setResidency('work_visa'); p.addFlag('gulf_second_generation'); p.addFlag('gulf_stayed_on_a_visa') },
+      },
+      {
+        text: 'Go to the country on the passport.',
+        tag: null,
+        outcome: 'You land somewhere you are from and have never lived, in the monsoon, and you are the one with the strange accent for the first time in your life, in the place that is supposed to be the answer to where you are from.',
+        effect: (p) => {
+          const home = { south_asian_uae: 'India', south_asian_qatar: 'India', south_asian_kuwait: 'India',
+            south_asian_bahrain: 'India', south_asian_omani: 'India', south_asian_worker: 'Bangladesh',
+            filipino_qatar: 'Philippines', east_asian_uae: 'Philippines' }[p._state?.character?.ethnicity] ?? 'India'
+          p.setMem('gulf2Visa', true); p.m -= 10; p.r += 8
+          p.emigrateTo(home, { residency: 'citizen', tier: 'middle_class' })
+          p.addFlag('gulf_second_generation'); p.addFlag('gulf_returned_to_a_country_you_never_lived_in')
+        },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'gulf2_where_are_you_from',
+    phase: null,
+    weight: 30,
+    when: (G) =>
+      IS_SECOND_GEN(G) && G.flags.includes('gulf_second_generation') &&
+      G.age >= 26 &&
+      !G.mem?.gulf2From,
+    text: 'The question is asked in good faith and it has no answer, and after about thirty years of it you have three versions ready and you choose by how long you expect the conversation to last. The short one is the country on the document. The medium one is the city, and the year your father came, and the fact that you have never lived anywhere else. The long one you have given twice in your life, both times at two in the morning, both times to somebody who turned out to be from the same nowhere.',
+    choices: null,
+    effect: (p) => { p.setMem('gulf2From', true); p.r += 5; p.addFlag('gulf_from_nowhere') },
+  },
+
+  {
+    id: 'gulf2_the_father_goes_home',
+    phase: null,
+    weight: 45,
+    when: (G) =>
+      IS_GULF(G) && G.flags.includes('gulf_second_generation') &&
+      G.age >= 28 && G.age <= 55 &&
+      !G.mem?.gulf2FatherHome,
+    text: 'His contract ends and there is no version of this country in which a man stops working and stays, so at sixty-three he goes to the house he has been building since before you were born, in a town he left at twenty-six. He has furniture in it he has never sat on. He calls on Fridays and talks about the heat there, which is a different heat, and about the neighbours, who are not the people he remembers. You have lived in this city your whole life and he has lived in it for thirty-seven years and only one of you is allowed to stay, and it is not, on the paperwork, either of you.',
+    choices: null,
+    effect: (p) => { p.setMem('gulf2FatherHome', true); p.m -= 7; p.r += 6; p.addFlag('gulf_parent_repatriated') },
   },
 
 ]
