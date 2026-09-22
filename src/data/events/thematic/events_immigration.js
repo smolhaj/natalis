@@ -4,6 +4,8 @@
 // G.residencyStatus values: 'citizen', 'permanent_resident', 'work_visa',
 //   'undocumented', 'refugee_status', 'asylum_seeker', 'tourist_overstay'
 
+import { hasTech } from '../../technology.js'
+
 export const IMMIGRATION_EVENTS = [
 
   // ── UNDOCUMENTED LIFE ────────────────────────────────────────────────────────
@@ -87,7 +89,11 @@ export const IMMIGRATION_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => (G.residencyStatus === 'asylum_seeker' || G.residencyStatus === 'refugee_status') && G.age >= 18 && !G.flags.includes('asylum_interview_done'),
-    text: 'The caseworker across the table takes notes on a laptop. She has done this many times. You have not. Your story — which is entirely true — must be told in a shape, with dates and named officials and documented proof of things that happened in the middle of the night with no witnesses and no cameras. You tell it. She types. She thanks you. You walk out into a grey afternoon and do not know what just happened.',
+    // The interview is the same interview in 1964 and in 2014; what she takes
+    // the notes on is not, and this had a laptop open in Yemen in 1964.
+    text: (G) => hasTech(G.currentCountry ?? G.character.country, 'personal_computer', G.currentYear)
+      ? 'The caseworker across the table takes notes on a laptop. She has done this many times. You have not. Your story — which is entirely true — must be told in a shape, with dates and named officials and documented proof of things that happened in the middle of the night with no witnesses and no cameras. You tell it. She types. She thanks you. You walk out into a grey afternoon and do not know what just happened.'
+      : 'The caseworker across the table writes in a file by hand. She has done this many times. You have not. Your story — which is entirely true — must be told in a shape, with dates and named officials and documented proof of things that happened in the middle of the night with no witnesses. You tell it. She writes, and asks you to go back over the part you have already said. She thanks you. You walk out into a grey afternoon and do not know what just happened.',
     choices: [
       { text: 'Tell it plainly and completely', tag: null, outcome: 'The account is consistent. The gaps are explained honestly. You can do no more.', effect: (p) => { p.m -= 15; p.r += 5; p.addFlag('asylum_interview_done') } },
       { text: 'Tailor the account to what you think they want to hear', tag: null, outcome: 'The shape is right. Whether it matches the original documents is a question that will resurface.', effect: (p) => { p.m -= 12; p.r += 8; p.karma -= 5; p.addFlag('asylum_interview_done') } },
@@ -312,7 +318,14 @@ export const IMMIGRATION_EVENTS = [
     weight: 3,
     when: (G) => G.flags.includes('emigrated') && G.children && G.children.length > 0 &&
       G.age >= 35 && !G.mem?.secondgenLanguage,
-    text: 'Your child answers in the language of this country. You spoke to them in the language of home — you tried, you were consistent — but the school won and the friends won and the television won. They understand the words you say. They cannot yet say the words you mean.',
+    // The three things that win are whatever this decade's three things are;
+    // the television was winning in 1968 India, sixteen years early.
+    text: (G) => {
+      const third = hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear)
+        ? 'the television won'
+        : 'the street won'
+      return `Your child answers in the language of this country. You spoke to them in the language of home — you tried, you were consistent — but the school won and the friends won and ${third}. They understand the words you say. They cannot yet say the words you mean.`
+    },
     choices: [
       {
         text: 'Accept it — they are building their own life here',

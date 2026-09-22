@@ -229,7 +229,10 @@ export const INTERNET_ERA_EVENTS = [
     id: 'asian_crisis_personal_1997',
     phase: null,
     weight: 3,
+    // A salary, savings and the choice of what to convert them into: the event
+    // is written for someone already earning, and had no age guard at all.
     when: (G) =>
+      G.age >= 18 &&
       G.currentYear >= 1997 && G.currentYear <= 1999 &&
       ['Thailand', 'Indonesia', 'South Korea', 'Malaysia', 'Philippines'].includes(G.character.country.name) &&
       !G.mem?.asianCrisisPersonal,

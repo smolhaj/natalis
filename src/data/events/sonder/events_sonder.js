@@ -9,6 +9,7 @@
 // Weight: 2 — present but not dominant. The goal is ~2–4 per decade across a life.
 
 import { place } from './_sonderGuards.js'
+import { hasTech } from '../../technology.js'
 
 export const SONDER_EVENTS = [
 
@@ -594,7 +595,16 @@ export const SONDER_EVENTS = [
     id: 'mundane_radio_family',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 6 && G.age <= 14 && G.currentYear >= 1930 && G.currentYear <= 1970 && !G.mem?.mundaneRadioFamily,
+    when: (G) => {
+      const here = G.currentCountry ?? G.character.country
+      const rural = { rural: G.ruralUrban === 'rural' }
+      // The evenings belong to the radio between the year it arrives here and
+      // the year the television takes the room. Oman's first broadcast was
+      // 1970; this was firing in 1940.
+      return G.age >= 6 && G.age <= 14 && !G.mem?.mundaneRadioFamily &&
+        hasTech(here, 'radio', G.currentYear, rural) &&
+        !hasTech(here, 'television', G.currentYear, rural)
+    },
     text: 'In the evenings the family gathers around the radio the way your parents once gathered around something else. The radio speaks to everyone and to no one. You do not need to look at it. You listen.',
     effect: (p) => { p.m += 1; p.setMem('mundaneRadioFamily', true); },
   },
@@ -603,7 +613,17 @@ export const SONDER_EVENTS = [
     id: 'mundane_television_first_year',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 6 && G.age <= 16 && G.currentYear >= 1950 && G.currentYear <= 1975 && !G.mem?.mundaneTelevisionFirstYear,
+    when: (G) => {
+      const here = G.currentCountry ?? G.character.country
+      const rural = { rural: G.ruralUrban === 'rural' }
+      // "Arrived this year or last year" is a claim about a date, so it is read
+      // off the arrival table rather than off a window: 1950–1975 put the set in
+      // a Tanzanian living room twenty-four years before the mainland had a
+      // broadcaster, and in a Peruvian one in 1952.
+      return G.age >= 5 && !G.mem?.mundaneTelevisionFirstYear &&
+        hasTech(here, 'television', G.currentYear, rural) &&
+        !hasTech(here, 'television', G.currentYear - 2, rural)
+    },
     text: 'The television arrived this year or last year. The living room has rearranged itself around the fact of it. The evenings are different now. Not better, not worse — different in a way that is already becoming normal.',
     effect: (p) => { p.m += 1; p.setMem('mundaneTelevisionFirstYear', true); },
   },
@@ -612,7 +632,11 @@ export const SONDER_EVENTS = [
     id: 'mundane_internet_first',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 16 && G.age <= 30 && G.currentYear >= 1993 && G.currentYear <= 2002 && !G.mem?.mundaneInternetFirst,
+    // 1993–2002 is when this happened in the countries that had it. Benin's
+    // household connection is 2013, and this was reporting one in 1993.
+    when: (G) => G.age >= 16 && G.age <= 30 && !G.mem?.mundaneInternetFirst &&
+      hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear) &&
+      !hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear - 9),
     text: 'You used the internet for something real this year — something beyond novelty. The understanding that most of what you needed to know was now findable, if you knew the right words to search, arrived gradually and then all at once.',
     effect: (p) => { p.e += 1; p.setMem('mundaneInternetFirst', true); },
   },
@@ -621,8 +645,13 @@ export const SONDER_EVENTS = [
     id: 'mundane_mobile_phone_first',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 16 && G.age <= 35 && G.currentYear >= 1993 && G.currentYear <= 2005 && !G.mem?.mundaneMobilePhoneFirst,
-    text: 'The mobile phone arrived in your pocket this year or last year. The change it made was not dramatic on any given day. Cumulatively it changed everything about being reachable, and therefore everything about the texture of the day.',
+    // "This year or last year" is a date, and 1993–2005 is the date in the
+    // countries that had handsets then — not in Myanmar, where a SIM cost two
+    // thousand dollars until 2013.
+    when: (G) => G.age >= 16 && G.age <= 35 && !G.mem?.mundaneMobilePhoneFirst &&
+      hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear) &&
+      !hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear - 3),
+    text: 'The mobile phone arrived in your pocket this year or last year. The change it made was not dramatic on any given day. Added up, it changed everything about being reachable, and therefore everything about the texture of the day.',
     effect: (p) => { p.m += 1; p.setMem('mundaneMobilePhoneFirst', true); },
   },
 
@@ -1875,7 +1904,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     isGlimpse: true,
-    when: (G) => G.currentYear >= 1995 && G.currentYear <= 2005 && (G.character?.country?.archetype === 'developing_urban' || G.character?.country?.archetype === 'subsaharan') && !G.mem?.sonderInternetCafeFirstEmail,
+    when: (G) => place.isUrban(G) && G.currentYear >= 1995 && G.currentYear <= 2005 && (G.character?.country?.archetype === 'developing_urban' || G.character?.country?.archetype === 'subsaharan') && !G.mem?.sonderInternetCafeFirstEmail,
     text: 'The person at the terminal next to you in the internet café is composing an email with the focused care of someone writing a letter. They reread it twice. The email is going somewhere they cannot go — a family member, a prospective job, a country they have been trying to reach. They send it and sit for a moment before they close the browser.',
     effect: (p) => { p.e += 2; p.setMem('sonderInternetCafeFirstEmail', true); },
   },
@@ -2639,7 +2668,9 @@ export const SONDER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => place.hasPhone(G) && (G.age >= 40 && !G.mem?.sonderGrandmotherPhoneCall),
-    text: 'Your grandmother, or someone else\'s grandmother, on the telephone. She is speaking to someone far away. Her voice on the phone has a quality it does not have in the room — brighter, more deliberate — as if she is performing being fine for the benefit of the distance. When she hangs up she is quiet for a while.',
+    // "The telephone" is a household line, which twelve countries in the
+    // roster never had: in Tanzania and Eritrea she is on a handset.
+    text: 'Your grandmother, or someone else\'s grandmother, is on the phone to someone far away. Her voice has a quality it does not have in the room — brighter, more deliberate — as if she is performing being fine for the benefit of the distance. When she hangs up she is quiet for a while.',
     effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderGrandmotherPhoneCall', true); },
   },
 

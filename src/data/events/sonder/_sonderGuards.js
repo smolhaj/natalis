@@ -9,6 +9,8 @@
 // This file exports NO events. It is a helper imported by the sonder modules
 // themselves; events.js does not need to know about it.
 
+import { hasTech } from '../../technology.js'
+
 export const RICH_ARCHETYPES = ['wealthy_west', 'wealthy_east', 'wealthy_gulf']
 export const POOR_ARCHETYPES = ['subsaharan', 'developing_unstable', 'conflict_zone']
 
@@ -46,13 +48,26 @@ export const hasPhone = (G) =>
     : isUrban(G) ? G.currentYear >= 1980
       : G.currentYear >= 2000
 
-export const hasMobile = (G) => G.currentYear >= (isRich(G) ? 1998 : 2005)
-export const hasInternet = (G) => G.currentYear >= (isRich(G) ? 1997 : 2005)
-export const hasRadio = (G) => G.currentYear >= (isRich(G) ? 1930 : 1950)
+// No rural adjustment on either of these: the mobile and the connection that
+// came with it are the two things that did NOT arrive by wire, and the whole
+// point of the leapfrog is that the village got them at the same time as the
+// city. The country date still matters — Cuban home connections were illegal
+// until 2018, North Korea has an intranet and not an internet — and a flat
+// year threshold could not know that.
+export const hasMobile = (G) =>
+  hasTech(G.currentCountry ?? G.character?.country, 'mobile_phone', G.currentYear)
+export const hasInternet = (G) =>
+  hasTech(G.currentCountry ?? G.character?.country, 'home_internet', G.currentYear)
+
+// Broadcasting is the one place where the archetype is not even approximately
+// the answer, because it is a date a government set. `isRich` gave Oman a
+// radio in 1930 — Radio Oman opened in 1970 — and a television in 1955, and
+// gave Bhutan both decades before either was legal there. These two defer to
+// the arrival table, which holds the per-country dates.
+export const hasRadio = (G) =>
+  hasTech(G.currentCountry ?? G.character?.country, 'radio', G.currentYear, { rural: isRural(G) })
 export const hasTV = (G) =>
-  isRich(G) ? G.currentYear >= 1955
-    : isUrban(G) ? G.currentYear >= 1972
-      : G.currentYear >= 1990
+  hasTech(G.currentCountry ?? G.character?.country, 'television', G.currentYear, { rural: isRural(G) })
 
 // ── Movement ─────────────────────────────────────────────────────────────────
 export const hasCar = (G) =>
@@ -77,7 +92,10 @@ export const hasBank = (G) =>
 // An office: a desk, colleagues, a commute that is not a walk to a field.
 export const worksInOffice = (G) => !!G.career && isUrban(G) && G.currentYear >= 1930
 
-export const hasCinema = (G) => isUrban(G) && G.currentYear >= 1930
+// Saudi Arabia had no cinemas at all between 1983 and 2018, and Oman's first
+// opened around 1980; a year threshold cannot know that.
+export const hasCinema = (G) =>
+  isUrban(G) && hasTech(G.currentCountry ?? G.character?.country, 'cinema', G.currentYear)
 
 // ── Literacy and schooling ───────────────────────────────────────────────────
 // Handwriting, notebooks, newspapers, the letter you wrote — none of these are

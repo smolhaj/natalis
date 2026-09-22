@@ -175,7 +175,7 @@ export const RURAL_TEXTURE_EVENTS = [
     text: (G) => {
       const cn = G.currentCountry?.name
       if (cn === 'Nigeria' || cn === 'Ghana' || cn === 'Kenya' || cn === 'Tanzania') {
-        return `The first mobile phones in the village belong to traders, then everyone. The tower went up two years ago and now the signal reaches as far as the second hill. The phone lets you call your brother in Lagos or Nairobi or London and find out he is alive without waiting three months for a letter. The village skipped the landline entirely. It went from the letter to this.`
+        return `The first mobile phones in the village belong to traders, then everyone. The tower went up two years ago and now the signal reaches as far as the second hill. The phone lets you call your brother in Lagos or Nairobi or London and find out he is alive without waiting three months for a letter. The village skipped the wire entirely. It went from the letter to this.`
       }
       if (cn === 'Bangladesh' || cn === 'India') {
         return `Mobile phones arrive via the young men who go to the city for work and bring one back. The village has no landlines — it went directly from the post office to this. The phone is shared within the family. It is recharged at the shop. It changes the time horizon of information: you know something the same day it happens.`

@@ -4,6 +4,12 @@
 // These events surface the texture of being known, the weight of past choices,
 // the slow reward of craft, and what friends actually do with time.
 
+import { hasTech } from '../../technology.js'
+
+// A public life lived where strangers can read about it from a distance: the
+// same situation, and two different objects to carry it.
+const online = (G) => hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear)
+
 export const FAME_KARMA_EVENTS = [
 
   // ── FAME ─────────────────────────────────────────────────────────────────────
@@ -129,18 +135,28 @@ export const FAME_KARMA_EVENTS = [
     when: (G) =>
       G.fame > 40 &&
       !G.mem.fameObsessiveFan,
-    text: 'Someone has been following you online for years — not maliciously, they would say, just closely. They know which coffee shop you used in an interview three years ago. They have a theory about what your work means that is more detailed than anything you have consciously intended. There is no threat, exactly. There is just the feeling of being someone\'s entire explanation for something.',
+    // Being somebody's entire explanation for something is not a thing the
+    // internet invented — it had no year guard at all, and was reporting an
+    // account in 1935. Before there were accounts there were letters, and a
+    // file kept in a drawer.
+    text: (G) => online(G)
+      ? 'Someone has been following you online for years — not maliciously, they would say, just closely. They know which coffee shop you used in an interview three years ago. They have a theory about what your work means that is more detailed than anything you have consciously intended. There is no threat, exactly. There is just the feeling of being someone\'s entire explanation for something.'
+      : 'Someone has been writing to you for years — not maliciously, they would say, just closely. The letters quote things you said in interviews you have forgotten giving. They know which hotel you stayed in when you came through their town. They have a theory about what your work means that is more detailed than anything you have consciously intended. There is no threat, exactly. There is just the feeling of being someone\'s entire explanation for something.',
     choices: [
       {
         text: 'Ignore it. This is what visibility costs.',
         tag: null,
-        outcome: 'You look for their account periodically and hate that you do.',
+        outcome: (G) => online(G)
+          ? 'You look for their account periodically and hate that you do.'
+          : 'You open the next letter the day it arrives, every time, and hate that you do.',
         effect: (p) => { p.m -= 10; p.addFlag('experienced_obsession'); p.setMem('fameObsessiveFan', true) },
       },
       {
         text: 'Have someone send a calm, firm message.',
         tag: null,
-        outcome: 'The account goes quiet for a while. You are not certain it is gone.',
+        outcome: (G) => online(G)
+          ? 'The account goes quiet for a while. You are not certain it is gone.'
+          : 'The letters stop for a while. You are not certain they are finished.',
         effect: (p) => { p.m -= 6; p.s -= 2; p.setMem('fameObsessiveFan', true) },
       },
     ],

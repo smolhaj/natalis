@@ -1642,7 +1642,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear === 2001 &&
       G.age >= 10 &&
       !G.mem?.argCacerolazos,
-    text: 'December 19. The president declares a state of siege. Within hours, the pots come out — from apartment windows, from balconies, from the street. The cacerolazos: the sound of the middle class turning whatever is in the kitchen into a political statement. The chant becomes "¡Que se vayan todos! ¡Que no quede ni uno solo!" By morning the president has fled the Casa Rosada by helicopter. Five presidents will occupy the office in the next twelve days.',
+    text: 'December 19. The president declares a state of siege. Within hours, the pots come out — from apartment windows, from balconies, from the street. The cacerolazos: the sound of the middle class turning whatever is in the kitchen into a political statement. The chant becomes "¡Que se vayan todos! ¡Que no quede ni uno solo!" By morning the president has fled the Casa Rosada by helicopter. Five presidents will come and go in the next twelve days.',
     choices: null,
     effect: (p) => {
       p.m -= 6

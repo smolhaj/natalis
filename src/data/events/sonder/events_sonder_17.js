@@ -130,9 +130,11 @@ export const EVENTS_SONDER_17 = [
     phase: null,
     weight: 2,
     when: (G) => place.hasBus(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s17TheBus),
-    text: () => pick([
+    // "You spent years of your life on buses" is an accounting that needs the
+    // years to have happened; the other two variants are true from eighteen.
+    text: (G) => pick([
       `The bus is a particular social form. Strangers in forced proximity, the etiquette of not acknowledging the proximity, the way people distribute themselves when the bus is empty versus when it fills. You have taken buses for years and watched the distribution: the window seats fill first, the aisle seats second, the middle seat last. The middle seat is almost always last. This is universal.`,
-      `You spent years of your life on buses — the commute, the journey between cities, the long overnight route that got you somewhere cheaper than the train. The quality of time on a bus is different from other kinds of transit time: the landscape is visible, the pace is slow enough to watch it, and you have nothing to do but sit in it. This turns out to be rare.`,
+      G.age >= 28 && `You spent years of your life on buses — the commute, the journey between cities, the long overnight route that got you somewhere cheaper than the train. The quality of time on a bus is different from other kinds of transit time: the landscape is visible, the pace is slow enough to watch it, and you have nothing to do but sit in it. This turns out to be rare.`,
       `The overnight bus. A specific form of travel that exists between departure and arrival with its own rules: you sleep badly in the seat, you arrive at dawn slightly wrong, the city receives you before it is ready for you. Cheaper than the alternative. You have done this more than once.`,
     ]),
     choices: null,

@@ -7,6 +7,7 @@
 // come." Not "you read about it" but a distinct prose register of told knowledge.
 
 import { colonialSchoolLanguage } from '../../history.js'
+import { hasTech } from '../../technology.js'
 import { STAPLE } from './events_climate.js'
 
 // `rural && smarts < 70` alone handed the whole register — the told story, the
@@ -71,7 +72,11 @@ export const ORAL_TRADITION_EVENTS = [
     weight: 3,
     when: (G) =>
       isOralContext(G) &&
-      G.currentYear >= 1955 && G.currentYear <= 1985 &&
+      // The village's one set is a question about the country, not about the
+      // household — but the country still has to have radio in it, and a flat
+      // 1955 put this set in a Bhutanese village sixteen years early.
+      hasTech(G.currentCountry ?? G.character.country, 'radio', G.currentYear) &&
+      G.currentYear <= 1985 &&
       G.age >= 6 && G.age <= 15 &&
       !G.mem?.oralRadioMan,
     // The colonial-radio premise — a broadcast in a language half the village

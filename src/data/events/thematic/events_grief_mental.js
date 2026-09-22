@@ -4,6 +4,8 @@
 // not clinical taxonomy. Cultural practices are accurate to specific traditions.
 // Grief is non-linear. Stigma is context-specific. Nothing is resolved neatly.
 
+import { hasTech } from '../../technology.js'
+
 export const GRIEF_MENTAL_EVENTS = [
 
   // ──────────────────────────────────────────────────────────────────────────────
@@ -117,7 +119,13 @@ export const GRIEF_MENTAL_EVENTS = [
       !['muslim_sunni', 'muslim_shia'].includes(G.religion) &&
       (G.mem.parentDied || G.flags.includes('bereaved')) &&
       !G.mem.funeral_type_shown,
-    text: 'The service is forty minutes. A humanist celebrant who did not know your mother reads from notes you gave her over the phone last week. Someone plays a song on a laptop through a small Bluetooth speaker. The flower arrangements are correct. At the crematorium you are given a printed order of service. Afterwards everyone goes to a pub and says "she would have wanted this" and drinks more than they planned to. The whole thing is over in one day. You drive home thinking: it was not enough. There should be more of this. It should take longer.',
+    // A humanist celebrant, a song off a laptop, a Bluetooth speaker: that is a
+    // particular decade's funeral, and this event had no year guard at all —
+    // it was burying a mother in 1944 through a Bluetooth speaker. The short
+    // secular service is the older fact; only the equipment has changed.
+    text: (G) => G.currentYear >= 2005
+      ? 'The service is forty minutes. A humanist celebrant who did not know your mother reads from notes you gave her over the phone last week. Someone plays a song on a laptop through a small Bluetooth speaker. The flower arrangements are correct. At the crematorium you are given a printed order of service. Afterwards everyone goes to a pub and says "she would have wanted this" and drinks more than they planned to. The whole thing is over in one day. You drive home thinking: it was not enough. There should be more of this. It should take longer.'
+      : 'The service is forty minutes. A minister who did not know your mother reads out the facts of her life from notes your aunt gave him on Tuesday. The hymn numbers are on the board and only the first two rows sing. The flower arrangements are correct. At the graveside you are given a printed order of service and you keep folding it. Afterwards everyone goes back to the house and says "she would have wanted this" and drinks more than they planned to. The whole thing is over in one day. You walk home thinking: it was not enough. There should be more of this. It should take longer.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 6; p.setMem('funeral_type_shown', true); p.addFlag('cultural_mourning') },
   },
@@ -403,7 +411,9 @@ export const GRIEF_MENTAL_EVENTS = [
       G.mentalHealth.condition === 'depression' &&
       G.age >= 20 &&
       !G.mem.dep_lived3,
-    text: 'There is a thing you have been avoiding. Not a big thing — an email, a phone call, a form to fill out. But it has been sitting there for three weeks, growing. The longer you leave it the more charge it accumulates. The charge is now large enough that thinking about it causes a physical sensation in your chest, so you do not think about it, which is how it gets to six weeks. Eventually someone else follows up. The relief and shame arrive together.',
+    // The avoidance is the event and the object is incidental; with no year
+    // guard it was naming an inbox in 1970.
+    text: (G) => `There is a thing you have been avoiding. Not a big thing — ${hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear) ? 'an email' : 'a letter'}, a phone call, a form to fill out. But it has been sitting there for three weeks, growing. The longer you leave it the more charge it accumulates. The charge is now large enough that thinking about it causes a physical sensation in your chest, so you do not think about it, which is how it gets to six weeks. Eventually someone else follows up. The relief and shame arrive together.`,
     choices: [
       {
         text: 'Do the thing',
@@ -492,7 +502,14 @@ export const GRIEF_MENTAL_EVENTS = [
     when: (G) =>
       G.mentalHealth.condition === 'anxiety' &&
       !G.mem.anx_lived1,
-    text: 'The thought arrives fully formed: what if the thing you sent — the email, the message, the thing you said in the meeting — was misread. What if the way it landed is not the way you intended. The thought runs through the possible interpretations twice and then a third time, each time less charitable. You go back and re-read it. It reads fine. The thought does not trust this assessment and runs the loop again.',
+    // The loop is the event; the thing it runs on is whatever this year sends
+    // messages with. Guarded on the condition only, this put an inbox in 1978.
+    text: (G) => {
+      const sent = hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear)
+        ? 'the email, the message, the thing you said in the meeting'
+        : 'the letter, the message you sent through someone, the thing you said in the room'
+      return `The thought arrives fully formed: what if the thing you sent — ${sent} — was misread. What if the way it landed is not the way you intended. The thought runs through the possible interpretations twice and then a third time, each time less charitable. You go back and re-read it. It reads fine. The thought does not trust this assessment and runs the loop again.`
+    },
     choices: null,
     effect: (p) => { p.m -= 6; p.h -= 2; p.setMem('anx_lived1', true) },
   },

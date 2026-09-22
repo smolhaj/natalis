@@ -6,6 +6,8 @@
 // Young adult events cover the messy 18–25 years: the self discovered at 17 does not fit
 // the world at 22, and these events name that gap specifically.
 
+import { hasTech } from '../../technology.js'
+
 export const EARLY_LIFE_EVENTS = [
 
   // ─── EARLY CHILDHOOD (ages 0–5) ──────────────────────────────────────────────
@@ -216,7 +218,10 @@ export const EARLY_LIFE_EVENTS = [
     when: (G) =>
       G.age >= 3 && G.age <= 5 &&
       !G.mem?.ecTelevisionArrives &&
-      G.currentYear >= 1958 && G.currentYear <= 1985 &&
+      // The window was standing in for an arrival date and carrying the set
+      // into a Mongolian flat in 1958, seventeen years early.
+      hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear, { rural: G.ruralUrban === 'rural' }) &&
+      !hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear - 10, { rural: G.ruralUrban === 'rural' }) &&
       ['wealthy_west', 'developing_urban', 'post_soviet', 'wealthy_east'].includes(G.character.country.archetype),
     text: (G) => {
       if (G.character.country.archetype === 'post_soviet') {

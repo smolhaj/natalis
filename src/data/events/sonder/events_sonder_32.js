@@ -234,7 +234,7 @@ export const EVENTS_SONDER_32 = [
     when: (G) => G.season === 'summer' && (G.age >= 8 && G.age <= 14 && !G.mem?.s32t),
     text: () => pick([
       'You made something with your hands that was not perfect and was yours. The imperfection was part of what made it yours.',
-      'The way the day felt the last time before it ended — the last summer of being young in a particular way, the last year before school changed. The feeling only visible in retrospect.',
+      'The way the day felt the last time before it ended — the last summer of being young in a particular way, the last year before school changed. You did not know it was the last one while it was happening.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s32t', true) },

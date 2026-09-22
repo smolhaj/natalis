@@ -14,6 +14,8 @@
 // A character counts as questioning if the LGBTQ arc has named it, if an
 // earlier event recorded the attraction, or if the recognition event in
 // events_adolescence.js fired. One predicate so the era events stay readable.
+import { hasTech } from '../../technology.js'
+
 const QUESTIONING = (G) =>
   G.flags.includes('questioning_sexuality') ||
   G.flags.includes('lgbtq_identity') ||
@@ -1679,7 +1681,10 @@ export const SPECIFIC_LIFE_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) =>
-      G.currentYear >= 1998 && G.currentYear <= 2008 &&
+      // A window is not an arrival: 1998–2008 is the decade this happened in
+      // the countries that had email, and North Korea is not one of them.
+      hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear) &&
+      G.currentYear <= 2008 &&
       G.age >= 65 && G.age <= 80 &&
       !G.mem?.sl_old_inet,
     text: 'The grandchildren showed you how to use the email. The process of learning was more interesting than they expected and more frustrating than you let them see. What you understood immediately was that the letters your grandchildren wrote to you by email were shorter than the letters they would have written on paper — as if the medium had a maximum length it was comfortable with. You have adapted to the medium. You write short emails. You remember writing long letters.',

@@ -6,6 +6,8 @@
 const authoritarianRegimes = ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy']
 const repressiveRegime = (G) => authoritarianRegimes.includes(G.regime)
 
+import { hasTech } from '../../technology.js'
+
 export const CAREER_REGIME_EVENTS = [
 
   // ── JOURNALIST UNDER AUTHORITARIAN REGIMES ───────────────────────────────────
@@ -512,10 +514,17 @@ export const CAREER_REGIME_EVENTS = [
     weight: 3,
     when: (G) => G.career?.field === 'healthcare' && G.age >= 28 &&
       ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype) && !G.mem.doctorDifficultPatient,
-    text: 'A patient contradicts your diagnosis with something they found on a health website. They have printed it out. They are not wrong to want to be involved in their own care. The website is not a reliable source. You have been doing this for eight years and are, at this moment, very tired.',
+    // A patient who has done their own research predates the search engine by a
+    // century; only the thing in their hand changes. This had no year guard and
+    // was handing a printed web page to a doctor in 1949.
+    text: (G) => hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear)
+      ? 'A patient contradicts your diagnosis with something they found on a health website. They have printed it out. They are not wrong to want to be involved in their own care. The website is not a reliable source. You have been doing this for eight years and are, at this moment, very tired.'
+      : 'A patient contradicts your diagnosis with something a cousin told them, and something else from a magazine article they have folded into quarters and brought with them. They are not wrong to want to be involved in their own care. The article is about a different illness. You have been doing this for eight years and are, at this moment, very tired.',
     choices: [
       { text: 'Walk them through the evidence carefully', tag: null, outcome: 'The conversation takes forty minutes. They leave satisfied. You are fifteen minutes behind on the rest of the day.', effect: (p) => { p.m -= 5; p.s += 4; p.karma += 5; p.setMem('doctorDifficultPatient', true) } },
-      { text: 'Acknowledge their concern and gently redirect', tag: null, outcome: 'They accept the redirect. Whether they followed the advice at home is between them and the internet.', effect: (p) => { p.m -= 3; p.setMem('doctorDifficultPatient', true) } },
+      { text: 'Acknowledge their concern and gently redirect', tag: null, outcome: (G) => hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear)
+        ? 'They accept the redirect. Whether they followed the advice at home is between them and the internet.'
+        : 'They accept the redirect. Whether they followed the advice at home is between them and the cousin.', effect: (p) => { p.m -= 3; p.setMem('doctorDifficultPatient', true) } },
     ],
     effect: null,
   },

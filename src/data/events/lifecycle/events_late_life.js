@@ -3,6 +3,8 @@
 // health decline, legacy, and the slow shrinkage of the social world.
 // Phase: 'late_life' (50+). Some retirement events use 'midlife'.
 
+import { hasTech } from '../../technology.js'
+
 export const LATE_LIFE_EVENTS = [
 
   // ── RETIREMENT ───────────────────────────────────────────────────────────────
@@ -847,6 +849,9 @@ export const LATE_LIFE_EVENTS = [
     when: (G) =>
       !G.mem.lateDigitalLeftBehind &&
       G.age >= 70 &&
+      // Being left behind by the internet requires the country to have one:
+      // North Korea has an intranet, and this was printing there in 2015.
+      hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear) &&
       G.currentYear >= 2005,
     text: (G) => {
       const yearContext = G.currentYear >= 2020

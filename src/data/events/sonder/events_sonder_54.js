@@ -2,6 +2,8 @@
 
 import { place } from './_sonderGuards.js'
 
+import { hasTech } from '../../technology.js'
+
 export const EVENTS_SONDER_54 = [
 
 {
@@ -49,7 +51,9 @@ export const EVENTS_SONDER_54 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => place.hasElectricity(G) && (!G.mem?.s54f),
-    text: 'You are in someone else\'s house — a friend\'s home, a boyfriend\'s flat, a family you\'ve been invited to stay with. The house makes sounds yours doesn\'t. The pipes knock differently. The stairs have a different register. The refrigerator hums on a different note. In the night you can hear the house settling and it is not your house settling, so you don\'t know what it is settling into.',
+    // A house in the night sounds like itself in every era; the appliance in
+    // the list is the only dated part, and it was humming in Oman in 1954.
+    text: (G) => `You are in someone else's house — a friend's home, a boyfriend's flat, a family you've been invited to stay with. The house makes sounds yours doesn't. The pipes knock differently. The stairs have a different register. ${hasTech(G.currentCountry ?? G.character.country, 'refrigerator', G.currentYear, { rural: G.ruralUrban === 'rural' }) ? 'The refrigerator hums on a different note.' : 'A clock somewhere in it keeps a different time.'} In the night you can hear the house settling and it is not your house settling, so you don't know what it is settling into.`,
     choices: null,
     effect: (p) => { p.setMem('s54f', true) },
   },
@@ -119,7 +123,9 @@ export const EVENTS_SONDER_54 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => !G.mem?.s54m,
-    text: 'A habit you picked up from someone who is now dead. You make the coffee the way they made it. You fold the newspaper the way they folded it. You say a particular phrase — the rhythm of it — the way they said it. The habit is in you so completely that you do not think of them when you do it. Then you think of them. The habit is how the dead keep making small appearances in the lives of people who loved them.',
+    // The inherited habit is universal; the object it is performed on is not,
+    // and a folded newspaper reached Bhutan sixteen years before Kuensel.
+    text: (G) => `A habit you picked up from someone who is now dead. You make the coffee the way they made it. ${hasTech(G.currentCountry ?? G.character.country, 'newspaper', G.currentYear) ? 'You fold the newspaper the way they folded it.' : 'You sweep the floor the way they swept it, starting at the far corner.'} You say a particular phrase — the rhythm of it — the way they said it. The habit is in you so completely that you do not think of them when you do it. Then you think of them. The habit is how the dead keep making small appearances in the lives of people who loved them.`,
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s54m', true) },
   },

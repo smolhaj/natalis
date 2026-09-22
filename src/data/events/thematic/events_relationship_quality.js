@@ -4,6 +4,8 @@
 // Partner quality < 40: deterioration arc. > 78: warmth arc.
 // Child/sibling quality thresholds: drift and closeness arcs.
 
+import { hasTech } from '../../technology.js'
+
 export const RELATIONSHIP_QUALITY_EVENTS = [
 
   // ── PARTNER DETERIORATION ────────────────────────────────────────────────────
@@ -250,7 +252,12 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
     when: (G) => (G.friends ?? []).some(f => f.alive !== false && (f.relationshipQuality ?? 50) < 28),
     text: (G) => {
       const f = (G.friends ?? []).find(f => f.alive !== false && (f.relationshipQuality ?? 50) < 28)
-      return `${f?.name ?? 'An old friend'} used to be someone you called. Now you mostly like each other's posts online. When you last spoke it had been seven months, which surprised both of you.`
+      // A friendship thinning out is not a modern condition; what it thins into
+      // is. This was liking posts in 1986.
+      const how = hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear)
+        ? `Now you mostly like each other's posts online.`
+        : `Now you mostly hear about each other from other people.`
+      return `${f?.name ?? 'An old friend'} used to be someone you called. ${how} When you last spoke it had been seven months, which surprised both of you.`
     },
     choices: [
       {

@@ -2,6 +2,8 @@
 // Gated on G.place?.id. 4–5 events per city.
 // Cairo and Moscow get era-split text via text: (G) => fn.
 
+import { hasTech } from '../../technology.js'
+
 export const CITY_EVENTS = [
 
   // ── LAGOS ─────────────────────────────────────────────────────────────────────
@@ -197,7 +199,12 @@ export const CITY_EVENTS = [
     when: (G) => G.place?.id === 'eg_cairo' && !G.mem?.cairoDowntownSeen,
     text: (G) => {
       if (G.currentYear >= 2011) return `Downtown Cairo after the revolution. The Art Deco buildings that Khedive Ismail built in 1869 to make Paris jealous now have pharmacies on the ground floor, photocopying shops, three generations of electrical wire stapled over the original facades. The marble staircases are intact. Upstairs, an NGO shares a floor with a dentist who shares a wall with a family that has lived there since 1953.`
-      return `Downtown Cairo. Talaat Harb Street. The buildings are from a different ambition — Haussmann-wide, marble-lobbied, designed to look like somewhere else. The somewhere else is now history. On the ground floor: a mobile phone shop, a shawarma window, a currency exchange. Upstairs: floors of offices, families, empty rooms. The building does not know it is not still 1930.`
+      // What is on the ground floor dates the street: the handset shop was
+      // trading here in 1955, half a century early.
+      const shopfront = hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear)
+        ? 'a mobile phone shop, a shawarma window, a currency exchange'
+        : 'a tailor, a shawarma window, a money changer behind a grille'
+      return `Downtown Cairo. Talaat Harb Street. The buildings are from a different ambition — Haussmann-wide, marble-lobbied, designed to look like somewhere else. The somewhere else is now history. On the ground floor: ${shopfront}. Upstairs: floors of offices, families, empty rooms. The building does not know it is not still 1930.`
     },
     choices: null,
     effect: (p) => { p.e += 3; p.setMem('cairoDowntownSeen', true) },

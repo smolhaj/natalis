@@ -2,6 +2,8 @@
 // Business arc events: growth, failure, pivotal decisions, and the texture
 // of running something you built yourself. Gate on state.business existing.
 
+import { hasTech } from '../../technology.js'
+
 export const BUSINESS_EVENTS = [
 
   // ── GROWTH ───────────────────────────────────────────────────────────────────
@@ -82,7 +84,9 @@ export const BUSINESS_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.flags.has('entrepreneur') && G.age >= 25 && !G.mem.bizLoseClient,
-    text: 'The largest client sends a termination notice with thirty days. The reason is polite and almost plausible. The actual reason — a cousin of someone senior has started a competing service — is known to you but unactionable. Thirty percent of revenue ends on a Tuesday afternoon in an email.',
+    // Losing the client that was a third of the business is not an artefact of
+    // any decade; the last sentence dates it, and only the last sentence.
+    text: (G) => `The largest client sends a termination notice with thirty days. The reason is polite and almost plausible. The actual reason — a cousin of someone senior has started a competing service — is known to you but unactionable. Thirty percent of revenue ends on a Tuesday afternoon ${hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear) ? 'in an email' : 'in a letter that has been typed and signed'}.`,
     choices: [
       {
         text: 'Diversify immediately — no single client should be this large again',

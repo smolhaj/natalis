@@ -3,6 +3,7 @@
 // Weight 2, mem-gated, no choices, no new flags.
 
 import { place } from './_sonderGuards.js'
+import { hasTech } from '../../technology.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -27,10 +28,14 @@ export const EVENTS_SONDER_22 = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 45 && !G.mem?.sdr22CommuteBody,
-    text: () => pick([
+    // The argument conducted in silence needs two handsets in the carriage; the
+    // other two variants are true of any commute in any decade.
+    text: (G) => pick([
       `Your body knows the commute without you. It boards and finds a standing position and redistributes weight at the turns. You are somewhere else entirely. When you arrive you are surprised, briefly, that you are already here.`,
       `The bus driver knows most of the people who ride every morning. You have watched them greet each other for three years. The driver knows the woman with the green scarf is named Maria. You have never learned the driver's name.`,
-      `Two people on the train are having an argument by text message with each other. You can see both phones from where you are standing. They are not sitting together. They don't look up.`,
+      hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear)
+        ? `Two people on the train are having an argument by text message with each other. You can see both phones from where you are standing. They are not sitting together. They don't look up.`
+        : `Two people on the train are having an argument without speaking. You can read it in the set of their shoulders and in the way one of them is looking out of the window at nothing. They get off at different stops.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22CommuteBody', true) },
@@ -126,7 +131,7 @@ export const EVENTS_SONDER_22 = [
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.mem?.sdr22ArgumentReplayed,
     text: () => pick([
-      `You think of the right thing to say three days after the argument. You think of it in the shower, specifically. The thing you should have said was so obvious, in retrospect, that its absence during the argument feels like a failure of a fundamental system.`,
+      `You think of the right thing to say three days after the argument. You think of it in the shower, specifically. The thing you should have said is so obvious now that its absence during the argument feels like a failure of a fundamental system.`,
       `The argument has been over for a week but you are still having it, internally, with the version of the other person that lives in your head. The head-version has now said several things the real person never said. You are aware of this and do it anyway.`,
       `You replay the exchange at the table, in the car, while trying to sleep. Each replay differs slightly from the one before. By the fourth week you are no longer sure which words were actually said.`,
     ]),

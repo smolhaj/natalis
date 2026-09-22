@@ -69,7 +69,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
       G.age >= 8 && G.age <= 20 &&
       G.character?.gender !== 'female' &&
       !G.mem?.phDepBasketball,
-    text: 'The court is concrete and the ring has no net and the backboard is plywood but none of that matters because this is what the boys of the barangay do in the hours between school and dinner. Basketball is the national sport in a country that the United States gave basketball to the way it gave the Philippines other things — the education system, the names in the telephone directory, the road signs in English — and basketball stayed the way those other things stayed. You are not tall. Most Filipinos are not tall. This does not affect how the game is played. You learn to play with what you have, which is the specific intelligence of the underpowered team.',
+    text: 'The court is concrete and the ring has no net and the backboard is plywood but none of that matters because this is what the boys of the barangay do in the hours between school and dinner. Basketball is the national sport in a country that the United States gave basketball to the way it gave the Philippines other things — the education system, the American first names on a class register, the road signs in English — and basketball stayed the way those other things stayed. You are not tall. Most Filipinos are not tall. This does not affect how the game is played. You learn to play with what you have, which is the specific intelligence of the underpowered team.',
     choices: null,
     effect: (p) => {
       p.m += 4

@@ -4,6 +4,8 @@
 // Kondengui arbitrary detention, Ahidjo era and UPC suppression,
 // Anglophone ghost town Mondays, Cameroonian bushfaller diaspora
 
+import { hasTech } from '../../technology.js'
+
 const IS_CAMEROONIAN = (G) => G.character.country?.name === 'Cameroon'
 const IS_ANGLOPHONE = (G) =>
   G.ethnicity === 'anglophone_northwest' || G.ethnicity === 'anglophone_southwest'
@@ -141,7 +143,8 @@ export const CAMEROON_DEPTH_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 18 && G.age <= 30 &&
       !G.flags.has('cmr_bushfaller_generation'),
-    text: 'The word is "bushfaller" — to fall in the bush, which means to go abroad, which means to go to France or Germany or the United States and send money home and return with a different posture. The bushfaller is both a success story and an evidence of what stays unavailable at home. Your cousin is a bushfaller. Your neighbor\'s son is a bushfaller. The family WhatsApp group has a different section of contacts for the ones in the diaspora. They know what things cost here in a way that reveals they no longer know what things cost here. They send money. The money is the relationship and also the complication.',
+    // The word is from the 1990s; the group on the phone is twenty years later.
+    text: (G) => `The word is "bushfaller" — to fall in the bush, which means to go abroad, which means to go to France or Germany or the United States and send money home and return with a different posture. The bushfaller is both a success story and an evidence of what stays unavailable at home. Your cousin is a bushfaller. Your neighbor's son is a bushfaller. ${hasTech(G.currentCountry ?? G.character.country, 'smartphone', G.currentYear) ? 'The family WhatsApp group has a different section of contacts for the ones in the diaspora.' : 'The letters and the phone cards come with a list of who is where now.'} They know what things cost here in a way that reveals they no longer know what things cost here. They send money. The money is the relationship and also the complication.`,
     choices: null,
     effect: (p) => { p.r += 3; p.m -= 2; p.addFlag('cmr_bushfaller_generation') },
   },

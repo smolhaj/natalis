@@ -192,7 +192,14 @@ const GENERATIONAL_EVENTS = [
       const deadParent = Object.values(G.parents ?? {}).find(p => !p.alive)
       const parentLabel = deadParent?.gender === 'male' ? 'father' : 'mother'
       if (type === 'intellectual') return `Going through your ${parentLabel}'s things you find a notebook. The calculations inside are more sophisticated than anything they would have needed for the life they lived. The margins are full of patterns. You sit with this for a long time. You would like to ask them a question you don't have the words for.`
-      if (type === 'musical') return `Going through your ${parentLabel}'s things you find recordings — not commercial recordings, but cassette tapes of them playing, alone, in what sounds like a room late at night. The playing is extraordinary. You have never heard this before. They never mentioned it.`
+      // The cassette is a 1970s object; a parent who recorded themselves before
+      // that did it on reels, or on a disc cut at a booth.
+      if (type === 'musical') {
+        const medium = hasTech(G.currentCountry ?? G.character.country, 'cassette', G.currentYear)
+          ? 'cassette tapes'
+          : G.currentYear >= 1955 ? 'reels of tape' : 'a few home-cut discs, the lacquer gone grey'
+        return `Going through your ${parentLabel}'s things you find recordings — not commercial recordings, but ${medium} of them playing, alone, in what sounds like a room late at night. The playing is extraordinary. You have never heard this before. They never mentioned it.`
+      }
       if (type === 'athletic') return `An old photograph surfaces — your ${parentLabel} in some kind of competition, young, posture perfect in a way that the body knows. You show it to someone who would understand. They look at it for a while and then they say: who was this?`
       if (type === 'artistic') return `Going through your ${parentLabel}'s things you find drawings — rolled up, in a cardboard tube at the back of a wardrobe. Dozens of them. The work is remarkable: technically sophisticated, observationally precise. They made these alone and kept them hidden and never said a word.`
       return `Going through your ${parentLabel}'s things you find letters they wrote but never sent — drafts of things, the paper full of crossings-out and revisions and a level of attention to language that you recognize. That quality. They had it. They had it and had nowhere to put it.`
@@ -564,7 +571,12 @@ const CONTEXT_EVENTS = [
       if (type === 'musical') return 'You never stopped listening. You never fully stopped playing — there was a period, but that period ended. A music school in the city has adult evening classes. The teacher in the first session pauses mid-class and asks you how long you\'ve been playing. You say: since I was very young. He says: and what happened? You say: life. He nods like this is a complete sentence.'
       if (type === 'athletic') return 'The body is not what it was. It\'s also not what it would have been if you\'d been training for twenty years. What it is: still unusual, still organized differently than most bodies, still carrying the original gift under two decades of normal living. A masters programme, a local team, a coach who takes adult returners. You find your way back.'
       if (type === 'artistic') return 'A life drawing class, an open studio, someone who sees what you can do and says you should be doing more of this. The beginning is awkward because beginnings at forty are awkward. Then it isn\'t. The gift was exactly where you left it.'
-      return 'A night class. A writing group. An online journal that takes submissions from anyone. You submit something you wrote at three in the morning. They publish it. Then they ask for more. You are forty-two years old and the door is open, small and late and yours.'
+      // Somewhere that takes work from anyone, whatever that was in this year:
+      // the open submissions journal was online in 1975 Japan.
+      const where = hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear)
+        ? 'An online journal that takes submissions from anyone.'
+        : 'A small magazine that prints unsolicited work.'
+      return `A night class. A writing group. ${where} You submit something you wrote at three in the morning. They publish it. Then they ask for more. You are forty-two years old and the door is open, small and late and yours.`
     },
     choices: [
       {
@@ -786,6 +798,8 @@ const LATE_GRACE_EVENTS = [
 // ═══════════════════════════════════════════════════════════════════════════════
 // EXPORT
 // ═══════════════════════════════════════════════════════════════════════════════
+
+import { hasTech } from '../../technology.js'
 
 export const GIFTED_2_EVENTS = [
   ...GOULD_ARC_EVENTS,

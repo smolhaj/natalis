@@ -69,7 +69,9 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_g',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s62g,
+    // Two jobs and a lasting acquaintance have to have happened before the
+    // chain can be followed back; this was reaching nineteen.
+    when: (G) => G.age >= 25 && !G.mem?.s62g,
     text: 'The job you did not get led to the job you got, which led to the circumstance in which you met the person you are still in contact with. The chain is visible in retrospect. You have tried to follow it back to the precise point where it diverged from another chain and cannot.',
     choices: null,
     effect: (p) => { p.setMem('s62g', true) },

@@ -21,7 +21,7 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_first_radio',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.currentYear >= 1930 && G.currentYear <= 1958 && G.age >= 5 && G.age <= 12,
+    when: (G) => arrived(G, 'radio') && G.currentYear >= 1930 && G.currentYear <= 1958 && G.age >= 5 && G.age <= 12,
     text: 'Your family gets a radio. A brown wooden box that hisses and crackles and then speaks. You cluster around it after dinner. For the first time, voices from the capital, from other countries, from the world outside your street enter your living room.',
     choices: null,
     effect: (p) => { p.e += 5; p.m += 8; p.addFlag('radio_childhood') },
@@ -54,7 +54,10 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_first_tv_developing',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.currentYear >= 1968 && G.currentYear <= 1985 && (developing(G) || poor(G)) && G.age >= 5 && G.age <= 13,
+    // The window was doing the work the arrival table should: 1968–1985 put the
+    // neighbour's set in a Tanzanian compound in 1968, twenty-eight years early,
+    // and in a Palestinian one in 1970.
+    when: (G) => arrived(G, 'television') && G.currentYear <= 1990 && (developing(G) || poor(G)) && G.age >= 5 && G.age <= 13,
     text: 'The television arrives in your neighborhood. Not in your house — in the neighbor\'s house, or the community center. People gather in the evening to watch. It is not entirely comfortable and it is completely extraordinary. The world is bigger than anyone realized.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 5; p.addFlag('tv_generation') },
@@ -64,7 +67,15 @@ export const TECHNOLOGY_EVENTS = [
     phase: 'childhood',
     weight: 2,
     when: (G) => G.currentYear === 1969 && G.age >= 5,
-    text: 'Your family gathers around the television. There is a grainy grey image and an American voice. A man is walking on the moon. Your father says something you will remember for the rest of your life. You are not sure yet what it means to be alive in a world where this is possible.',
+    // Most of the world did not watch it. It came over the radio, or in a
+    // newspaper photograph days later, and this gave a Beninese family a set
+    // sixteen years before there was one to gather round.
+    text: (G) => {
+      const ending = ' Your father says something you will remember for the rest of your life. You are not sure yet what it means to be alive in a world where this is possible.'
+      if (arrived(G, 'television')) return 'Your family gathers around the television. There is a grainy grey image and an American voice. A man is walking on the moon.' + ending
+      if (arrived(G, 'radio')) return 'The radio is on and the adults have stopped talking. A voice reads out what is happening somewhere no one has ever been: a man is walking on the moon. You look up afterwards, because everyone does.' + ending
+      return 'Someone comes back from the town with the news and it moves through the village by afternoon: a man has walked on the moon. Nobody here has seen a picture of it. You look up anyway, because everyone does.' + ending
+    },
     choices: null,
     effect: (p) => { p.m += 12; p.e += 8; p.addFlag('moon_landing_generation') },
   },
@@ -72,7 +83,10 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_color_tv',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.currentYear >= 1966 && G.currentYear <= 1978 && wealthy(G) && G.age >= 5 && G.age <= 14,
+    // `wealthy` is present-day GDP again, and the window is not an arrival:
+    // this put a colour set in a Chinese living room in 1966, nineteen years
+    // before there was a black-and-white one.
+    when: (G) => arrived(G, 'colour_television') && G.currentYear <= 1990 && G.age >= 5 && G.age <= 14,
     text: 'The new television is in color. You watch a nature documentary and the green of the forest is shocking — you did not know that was the actual color. You think about all the things you saw in black and white that were really something else.',
     choices: null,
     effect: (p) => { p.m += 6; p.e += 3 },

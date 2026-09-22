@@ -3555,7 +3555,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     id: 'kurd_europe_return_question',
     phase: null,
     weight: 3,
-    when: (G) => G.flags.includes('kurd_europe_diaspora') && G.age >= 35 && G.age <= 58 && !G.flags.includes('kurd_europe_question_faced'),
+    // A video of the village passed round a table, and a child asking about
+    // the wifi: the scene is dated by its own props, and had no year guard.
+    when: (G) => G.currentYear >= 2012 && G.flags.includes('kurd_europe_diaspora') && G.age >= 35 && G.age <= 58 && !G.flags.includes('kurd_europe_question_faced'),
     text: 'At the association someone puts a phone on the table with a video of the village: a new road, a mast on the ridge, a house with a blue door that is not your family\'s blue door. Two people have gone back. One has come back from going back and does not talk about why. Your daughter, who was born in Cologne, says the village looks nice, and asks whether they have wifi.',
     choices: [
       {

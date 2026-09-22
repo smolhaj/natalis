@@ -18,6 +18,8 @@
 //  — Student uprising 2024: protests against civil service quota system turned mass
 //    uprising; Sheikh Hasina fled; military took power; democracy in flux.
 
+import { hasTech } from '../../technology.js'
+
 const BANGLADESH_EVENTS = [
 
   // ── BHOLA CYCLONE SHADOW ─────────────────────────────────────────────────────
@@ -174,7 +176,10 @@ const BANGLADESH_EVENTS = [
       G.age >= 20 && G.age <= 45 &&
       G.stats.wealth < 50 &&
       !G.mem?.bng_grameen,
-    text: 'The Grameen Bank offers small loans — taka amounts that the formal banking system would not consider — to women in rural groups who collectively guarantee each other\'s repayment. Muhammad Yunus\'s idea: poor women are creditworthy if you structure the loan correctly. The loan is for a sewing machine, or a phone for mobile money services, or stock for a small shop. The group meets weekly. The repayment rate is ninety-eight percent. What the loan enables — the scale of it, the supply chain of microentrepreneurship across the country — is real. What it sometimes traps people in is also real.',
+    // The village phone ladies are a 1997 programme and mobile money later
+    // still; the bank itself opened in 1983, and this was lending for a
+    // handset in 1986.
+    text: (G) => `The Grameen Bank offers small loans — taka amounts that the formal banking system would not consider — to women in rural groups who collectively guarantee each other\'s repayment. Muhammad Yunus\'s idea: poor women are creditworthy if you structure the loan correctly. The loan is for a sewing machine, or ${hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear) ? 'a handset to rent calls out from' : 'a goat'}, or stock for a small shop. The group meets weekly. The repayment rate is ninety-eight percent. What the loan enables — the scale of it, the supply chain of microentrepreneurship across the country — is real. What it sometimes traps people in is also real.`,
     choices: [
       {
         text: 'You take the loan and build something small but yours',

@@ -15,6 +15,8 @@ const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 // Northeast. So the one audience the event could ever reach was being told it
 // lived in Mato Grosso. The sertão is caatinga, not the frontier; the frontier
 // reaches it as an absence, in the people who leave for it.
+import { hasTech } from '../../technology.js'
+
 const ON_SOY_FRONTIER = (G) => {
   const r = G.place?.country === 'Brazil' ? (G.place?.region ?? '') : ''
   return /Centre-West|Central-West|North Brazil|Amazon|Mato Grosso|Pará|Tocantins/i.test(r)
@@ -55,13 +57,24 @@ export const BRAZIL_DEPTH_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
+      // The trio elétrico is a 1950 invention and the Sambódromo opened in
+      // March 1984; unguarded, this was parading down both in 1948.
+      G.currentYear >= 1950 &&
       G.age >= 12 && G.age <= 35 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.braDepCarnaval,
-    text: () => pick([
-      'Carnaval is not the same thing from inside the morro and from outside it. The Sambódromo is the television version. The morro has its own escolas de samba, its own enredos, the specific months of ensaio in the quadra. The bateria starts in October. By February the whole hill knows the samba-enredo by heart. You have known by heart the story of the slave rebellion or the quilombo or the orixá or the Amazon that the escola chose this year. When the escola enters the Sambódromo you know that the people who made it will not appear in the television coverage of the people who made it.',
-      'The blocos de rua are the carnaval before the television carnaval: the band in the street, the truck of instruments, the crowd that expands to fill whatever street it finds itself in. In Salvador the trio elétrico carries the music on a truck and the crowd follows. In Recife the frevo is specific to the streets of Olinda in a way that cannot be exported. The carnaval that is sold to tourists is made from the carnaval that belongs to someone, which is still there behind the tourist version.',
-    ]),
+    text: (G) => {
+      const sambodromo = G.currentYear >= 1984
+      const televised = hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear)
+      return pick([
+        sambodromo
+          ? 'Carnaval is not the same thing from inside the morro and from outside it. The Sambódromo is the television version. The morro has its own escolas de samba, its own enredos, the specific months of ensaio in the quadra. The bateria starts in October. By February the whole hill knows the samba-enredo by heart. You have known by heart the story of the slave rebellion or the quilombo or the orixá or the Amazon that the escola chose this year. When the escola enters the Sambódromo you know that the people who made it will not appear in the television coverage of the people who made it.'
+          : 'Carnaval is not the same thing from inside the morro and from outside it. The parade on the avenue is the version that gets photographed. The morro has its own escolas de samba, its own enredos, the specific months of ensaio in the quadra. The bateria starts in October. By February the whole hill knows the samba-enredo by heart. You have known by heart the story of the slave rebellion or the quilombo or the orixá or the Amazon that the escola chose this year. When the escola comes down off the hill you know that the people who made it will not be named in anybody\'s account of it.',
+        televised
+          ? 'The blocos de rua are the carnaval before the television carnaval: the band in the street, the truck of instruments, the crowd that expands to fill whatever street it finds itself in. In Salvador the trio elétrico carries the music on a truck and the crowd follows. In Recife the frevo is specific to the streets of Olinda in a way that cannot be exported. The carnaval that is sold to tourists is made from the carnaval that belongs to someone, which is still there behind the tourist version.'
+          : 'The blocos de rua are the carnaval nobody writes about: the band in the street, the truck of instruments, the crowd that expands to fill whatever street it finds itself in. In Salvador the trio elétrico carries the music on a truck and the crowd follows. In Recife the frevo is specific to the streets of Olinda in a way that cannot be exported. The carnaval that is sold to visitors is made from the carnaval that belongs to someone, which is still there behind the version for sale.',
+      ])
+    },
     choices: null,
     effect: (p) => {
       p.m += 7
