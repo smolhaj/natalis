@@ -1,3 +1,4 @@
+import { isIndependenceYear, isCoupYear } from '../../history.js'
 // events_decolonisation.js — BUILD 5
 // Decolonisation era events: independence generation, first coups, structural
 // adjustment, brain drain, mobile leapfrog. Fires for subsaharan and
@@ -11,10 +12,14 @@ export const DECOLONISATION_EVENTS = [
     id: 'dc_independence_morning',
     phase: null,
     weight: 5,
+    // Was: any subsaharan country, 1956–1970, at any age. Five of thirteen
+    // firings were at age 1 — the prose renders "You are 1 years old and you
+    // will remember exactly where you were standing" and offers "Go out into
+    // the street" — and it put Namibian independence 27 years early.
     when: (G) =>
       !G.mem?.dcIndependenceMorning &&
-      G.character.country.archetype === 'subsaharan' &&
-      G.currentYear >= 1956 && G.currentYear <= 1970,
+      G.age >= 6 &&
+      isIndependenceYear(G.character.country.name, G.currentYear),
     text: (G) => {
       const country = G.character.country.name
       const wordMap = {
@@ -102,10 +107,14 @@ export const DECOLONISATION_EVENTS = [
     id: 'dc_first_coup',
     phase: null,
     weight: 4,
+    // Was: any subsaharan country, 1965–1985, at any age. It asserted coups in
+    // Kenya, Tanzania, Zambia and Namibia, which never had one, and in Ivory
+    // Coast sixteen years before its first; fifteen of twenty-eight firings
+    // went to characters aged five or under.
     when: (G) =>
       !G.mem?.dcFirstCoup &&
-      G.character.country.archetype === 'subsaharan' &&
-      G.currentYear >= 1965 && G.currentYear <= 1985,
+      G.age >= 8 &&
+      isCoupYear(G.character.country.name, G.currentYear),
     text: (G) => {
       const country = G.character.country.name
       const leaderHints = {

@@ -2001,7 +2001,7 @@ export function tick(state) {
 
   // Pending birth — deliver child after ~2 age-up cycles from conception
   // This allows pregnancy texture events to fire before the birth year
-  if (s.flags.includes('pregnant')) {
+  if (s.flags.includes('pregnant') || s.flags.includes('expecting')) {
     // Normalise: if pregnancyYear not in mem (e.g. set by IVF event), initialise it
     if (s.mem?.pregnancyYear === undefined) {
       const cGender = chance(0.5) ? 'male' : 'female'
@@ -2017,8 +2017,12 @@ export function tick(state) {
       const isHighRisk = (s.currentYear < 1950) || archetype === 'subsaharan' || archetype === 'conflict_zone' ||
         archetype === 'developing_unstable' || s.flags.includes('high_risk_pregnancy') ||
         healthcare === 'very_poor' || healthcare === 'poor'
-      const deathProb   = isHighRisk ? 0.018 : 0.001
-      const compProb    = isHighRisk ? 0.10  : 0.03
+      // Maternal mortality applies to the person carrying the child. A male
+      // character whose partner is expecting was dying of "Complications in
+      // childbirth" at eight per five hundred lives.
+      const playerIsBearing = s.flags.includes('pregnant')
+      const deathProb   = !playerIsBearing ? 0     : isHighRisk ? 0.018 : 0.001
+      const compProb    = !playerIsBearing ? 0     : isHighRisk ? 0.10  : 0.03
 
       // Generate child if somehow still missing
       const childData = pc ?? (() => {
@@ -2034,16 +2038,16 @@ export function tick(state) {
 
       if (chance(deathProb)) {
         // Maternal death — rare; child survives
-        s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant'), 'parent'])]
+        s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant' && f !== 'expecting'), 'parent'])]
         s.log = [...s.log, { age: s.age, text: `${child.name} is born. You do not survive the labour.`, isKey: true }]
         return { ...s, dead: true, causeOfDeath: 'Complications in childbirth', ribbon: assignRibbon(s), screen: 'death' }
       } else if (chance(compProb)) {
         // Near-miss complication — events will pick this up via birth_complication_survived flag
-        s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant'), 'parent', 'birth_complication_survived'])]
+        s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant' && f !== 'expecting'), 'parent', 'birth_complication_survived'])]
         s.stats = { ...s.stats, health: clamp(s.stats.health - 20, 0, 100) }
         s.log = [...s.log, { age: s.age, text: `${child.name} is born. There were complications. You came close to not surviving.`, isKey: true }]
       } else {
-        s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant'), 'parent'])]
+        s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant' && f !== 'expecting'), 'parent'])]
         s.stats = { ...s.stats, happiness: clamp(s.stats.happiness + 10, 0, 100) }
         s.log = [...s.log, { age: s.age, text: `${child.name} is born. Everything shifts.`, isKey: true }]
       }

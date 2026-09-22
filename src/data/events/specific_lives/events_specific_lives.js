@@ -1719,6 +1719,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) =>
+      G.character.gender === 'female' &&
       G.flags.includes('widowed') &&
       G.ruralUrban === 'rural' &&
       G.age >= 60 &&

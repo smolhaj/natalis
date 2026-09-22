@@ -437,7 +437,7 @@ function courseMarriage(s) {
 /** Children, at the rate the place and the decade actually had them. */
 function courseChildren(s) {
   if (!s.partner || s.inPrison) return s
-  if (s.flags?.includes('pregnant') || s.birthControl) return s
+  if (s.flags?.includes('pregnant') || s.flags?.includes('expecting') || s.birthControl) return s
   if (s.flags?.includes('infertile') || s.flags?.includes('childfree_by_choice')) return s
   const female = s.character?.gender === 'female'
   const bearerAge = female ? s.age : (s.partner.age ?? s.age)
@@ -461,9 +461,9 @@ function courseChildren(s) {
   p /= s.partner.married ? 0.65 : 0.38
   if (!chance(clamp(p, 0, 0.85))) return s
 
-  const before = s.flags?.includes('pregnant')
+  const before = s.flags?.includes('expecting')
   const next = tryForChild(s)
-  if (!before && next.flags?.includes('pregnant')) {
+  if (!before && next.flags?.includes('expecting')) {
     return { ...next, mem: { ...next.mem, lcLastBirthAge: next.age } }
   }
   return next

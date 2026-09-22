@@ -30,4 +30,9 @@ export const LIFECYCLE_FLAGS = {
   windfall_refused: { weight: 'major', category: 'relationship', description: 'Kept it, and lost two people over it.', intent: 'year_texture', notes: 'Set by wf_the_asking.' },
   windfall_work_optional: { weight: 'moderate', category: 'career', description: 'Work became a choice, which made it a different act.', intent: 'year_texture', notes: 'Set by wf_work_question.' },
   windfall_in_proportion: { weight: 'major', category: 'psychological', description: 'Late in life, able to hold the win as one thing that happened rather than the thing that happened.', intent: 'year_texture', notes: 'Set by wf_late_accounting.' },
+  expecting: {
+    weight: 'moderate', category: 'family', intent: 'event',
+    description: 'The couple is expecting a child — the state that drives the birth two years later, held by either partner.',
+    notes: "Split from `pregnant`, which is the player's OWN body and gates maternal mortality and the pregnancy-arc events. A male character was being flagged `pregnant` and dying in childbirth.",
+  },
 }

@@ -1,4 +1,5 @@
 import { randomBetween } from '../../../utils/random.js'
+import { isIndependenceYear, wasSovietRepublic } from '../../history.js'
 
 export const HISTORICAL_EVENTS = [
 
@@ -169,7 +170,7 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_soviet_party_pressure',
     phase: null,
     weight: 7,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.currentYear >= 1950 && G.currentYear <= 1989 && G.age >= 18 && G.age <= 35 && !G.mem?.party_pressure,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.currentYear >= 1950 && G.currentYear <= 1989 && G.age >= 18 && G.age <= 35 && !G.mem?.party_pressure,
     text: 'Your supervisor tells you that joining the Party would be "beneficial for your career." He says it with a smile that means something else entirely.',
     choices: [
       { text: 'Join — you need the career advancement', tag: null, outcome: 'The meetings are dull. The ideology is something you perform. The advancement is real.', effect: (p) => { p.m -= 5; p.w += 8; p.addFlag('party_member'); p.setMem('party_pressure', true) } },
@@ -193,7 +194,7 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_berlin_wall_falls',
     phase: null,
     weight: 8,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.currentYear === 1989 && G.age >= 10 && !G.mem?.berlin_wall,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.currentYear === 1989 && G.age >= 10 && !G.mem?.berlin_wall,
     text: 'November 9, 1989. The television shows crowds on the Berlin Wall with hammers. Men and women are crossing freely for the first time in thirty years. Something that seemed permanent is ending in real time, on a screen.',
     choices: [
       { text: 'Watch in disbelief — could this really be happening?', tag: null, outcome: 'It is really happening. The world that was will not return. You are not sure yet what the world that comes next will be.', effect: (p) => { p.m += 10; p.e += 5; p.setMem('berlin_wall', true) } },
@@ -205,7 +206,7 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_soviet_collapse_hyperinflation',
     phase: null,
     weight: 8,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.currentYear >= 1991 && G.currentYear <= 1995 && G.age >= 18 && !G.mem?.hyperinflation,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.currentYear >= 1991 && G.currentYear <= 1995 && G.age >= 18 && !G.mem?.hyperinflation,
     text: (G) => `The Soviet Union is gone. Your savings — whatever was in the bank — are now worth almost nothing. Prices double each month. The bread line is back. The state that guaranteed your job has stopped existing. You have three days of food in the apartment.`,
     choices: [
       { text: 'Adapt — find whatever work there is', tag: null, outcome: 'You sell things at the street market. You call in every favour. You survive, which is not nothing.', effect: (p) => { p.m -= 15; p.mo -= 2000; p.s += 5; p.setMem('hyperinflation', true) } },
@@ -345,7 +346,11 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_independence_day',
     phase: null,
     weight: 7,
-    when: (G) => ['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype) && G.currentYear >= 1956 && G.currentYear <= 1975 && G.age >= 5 && !G.mem?.independence_day,
+    // Was: any subsaharan/developing/conflict country in any year 1956–1975,
+    // which told Ethiopia (never colonised) that its colonial flag came down in
+    // 1966, and Bangladesh five years before 1971. Of 43 firings, about three
+    // landed in the right year.
+    when: (G) => isIndependenceYear(G.character.country.name, G.currentYear) && G.age >= 5 && !G.mem?.independence_day,
     text: (G) => `The flag of ${G.character.country.name} rises for the first time. The colonial flag comes down. Crowds are singing. Your parents are crying — you have never seen your father cry before. This is what independence looks like.`,
     choices: [
       { text: 'Celebrate with everyone — it\'s a new beginning', tag: null, outcome: 'The feeling lasts weeks. What comes after independence is more complicated — but today is today.', effect: (p) => { p.m += 15; p.karma += 5; p.setMem('independence_day', true) } },

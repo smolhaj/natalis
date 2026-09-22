@@ -19,7 +19,10 @@ function inDisasterZone(character, salt, percent) {
 const SOVIET_SUCCESSOR_STATES = [
   'Russia', 'Ukraine', 'Belarus', 'Estonia', 'Latvia', 'Lithuania',
   'Georgia', 'Armenia', 'Azerbaijan', 'Kazakhstan', 'Uzbekistan',
-  'Kyrgyzstan', 'Turkmenistan', 'Tajikistan',
+  'Kyrgyzstan', 'Turkmenistan', 'Tajikistan', 'Moldova',   // Moldova was missing:
+  // the country whose entire 1990s IS the Soviet collapse received neither
+  // `soviet_collapse` nor `post_soviet_hyperinflation`, while the former's own
+  // context reads "Fifteen successor states emerged".
 ]
 
 export const WORLD_EVENTS = [
@@ -1480,7 +1483,10 @@ export const WORLD_EVENTS = [
   {
     id: 'rwandan_genocide_aftermath',
     name: 'Rwanda: Aftermath',
-    years: [1996, 2001],
+    // Was [1996, 2001]. The narrative is about the gacaca courts, which this
+    // event's own context correctly dates to 2001–2012: legislated 2001,
+    // piloted June 2002, nationwide 2005.
+    years: [2002, 2012],
     archetypes: 'all',
     countries: ['Rwanda'],
     narrative: 'Eight hundred thousand people were killed in a hundred days. Now the survivors live next to the survivors of those who did the killing. The gacaca courts process the cases. You give your testimony. The person who testified before you lost the same things you lost. The country is being asked to reconstitute itself from something that should not have been possible.',
@@ -1496,10 +1502,30 @@ export const WORLD_EVENTS = [
     years: [1994, 1994],
     archetypes: 'all',
     countries: ['Rwanda'],
+    // Rwanda is 85% Hutu, and this narrative is the victim's position —
+    // "the radio names the group you belong to as the enemy… you hide, you run"
+    // — and it set `tutsi_hidden`. With no ethnicity guard, every observed
+    // firing went to a Hutu character. The companion event below carries the
+    // position most Rwandans were actually in.
+    when: (G) => G.ethnicity === 'tutsi' || G.ethnicity === 'twa',
     narrative: 'The radio names the group you belong to as the enemy. The roadblocks go up in the night. Neighbors you have known your whole life are making decisions about you that you did not know they were capable of making. You hide. You run. The hundred days pass and the count that comes after is a number that will not fit inside ordinary language.',
     context: 'Between April and July 1994, an estimated 500,000–800,000 Tutsi and moderate Hutu were killed in Rwanda — roughly 70% of the Tutsi population — in a genocide organized by the Hutu Power government and executed largely by civilian militias called the Interahamwe. The killing was done overwhelmingly at close range, by neighbours, at roadblocks, from lists. The UN peacekeeping force already in the country was ordered not to intervene and was cut from 2,500 troops to 270; foreign governments avoided the word "genocide" precisely because using it would have obliged them to act. France, which had armed and trained the Hutu government, was found by a Rwandan inquiry in 2021 to bear "heavy and overwhelming" responsibility.',
     effect: (p) => { p.m -= 35; p.h -= 20; p.addFlag('genocide_survivor'); p.addFlag('tutsi_hidden'); },
     addFlags: ['genocide_survivor', 'tutsi_hidden', 'war_childhood'],
+    minAge: 0,
+  },
+
+  {
+    id: 'rwandan_genocide_hutu',
+    name: 'Rwandan Genocide',
+    years: [1994, 1994],
+    archetypes: 'all',
+    countries: ['Rwanda'],
+    narrative: 'The radio does not stop. It names people — by name, by street — and it names what is to be done about them. The roadblocks are manned by men you know: the one who sells charcoal, somebody\'s cousin, boys off the football pitch holding machetes the government distributed. What is being asked of you is participation, and the asking is not subtle, and refusing is its own kind of exposure. Whatever you do in the next hundred days, you will be doing it in front of people who will still be here afterwards.',
+    context: 'The killing was carried out largely by ordinary civilians organised into the Interahamwe militia, under pressure from local officials and RTLM radio. Hutu who refused, who hid Tutsi neighbours, or who were known as political moderates were killed early and in large numbers — the Prime Minister, Agathe Uwilingiyimana, was Hutu and was killed on the first day.',
+    when: (G) => G.ethnicity === 'hutu',
+    effect: (p) => { p.m -= 30; p.h -= 10; p.addFlag('genocide_witness'); p.addFlag('war_childhood') },
+    addFlags: ['genocide_witness', 'war_childhood'],
     minAge: 0,
   },
 

@@ -1,5 +1,6 @@
 import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime } from './character'
 import { pickFrom } from '../utils/random'
+import { wasSovietRepublic, INDEPENDENCE_YEAR } from '../data/history.js'
 import { preferUnsaid, hasSaid } from './prose'
 
 // yearTexture — the quiet-year prose layer.
@@ -14017,8 +14018,25 @@ function* textureCandidates(state, opts = {}) {
     const era = Math.floor(currentYear / 10) * 10
 
     // ── wealthy_west era texture ──
+    // The bucket is `Math.floor(year/10)*10`, so `era === 1940` meant 1940–1949
+    // and this block told occupied Belgium, France, Denmark, Greece and Austria
+    // that the war was over, during the war — 87 firings in 1940–45, including
+    // Austria 1942, 1943 and 1944, which was annexed into Nazi Germany. The
+    // decade bucket is kept for the decades it fits; the 1940s get real years.
     if (arch === 'wealthy_west') {
-      if (era === 1940) yield [T.anchored, pick([
+      const OCCUPIED = ['France', 'Belgium', 'Netherlands', 'Denmark', 'Norway', 'Greece', 'Austria', 'Italy', 'Poland', 'Czech Republic']
+      if (currentYear >= 1939 && currentYear <= 1945 && OCCUPIED.includes(cn)) yield [T.anchored, pick([
+        'There is a curfew and a set of rules about who may be out and when, and the rules are not the ones this country wrote.',
+        'The rationing is not the rationing of a hard year. It is the rationing of a country whose output belongs to somebody else.',
+        'Everyone knows a household that has stopped being talked about. The not-talking is done carefully and by everyone at once.',
+        'A language you did not grow up hearing is on the official notices, and the official notices are the ones that matter.',
+      ])]
+      else if (currentYear >= 1939 && currentYear <= 1945) yield [T.anchored, pick([
+        'The war is the weather. The blackout, the queue, the list in the newspaper that people read standing up.',
+        'Somebody in every street is away, and the word for where they are is vague on purpose.',
+        'The factory has been turned over to something else. Everyone knows what and nobody says it on the tram.',
+      ])]
+      else if (currentYear >= 1946 && currentYear <= 1949) yield [T.anchored, pick([
         'The war is over but its afterimage is everywhere — in the rationing, in the silences, in the things no one wants to explain to people who weren\'t there.',
         'Reconstruction is visible everywhere. The rubble of last decade is becoming the concrete of this one.',
         'The welfare state is being assembled out of compromise and exhaustion. People are not sure yet what it will be.',
@@ -14069,17 +14087,28 @@ function* textureCandidates(state, opts = {}) {
 
     // ── post_soviet era texture ──
     if (arch === 'post_soviet') {
-      if (era <= 1980) yield [T.anchored, pick([
+      // `era <= 1980` reached back to 1931, into the Kingdom of Yugoslavia,
+      // Horthy's Hungary, the Kingdom of Romania and the independent Baltic
+      // republics — none of which had central planning before 1945–48. The
+      // dacha and the ruble are Russian institutions besides, so both are now
+      // gated on having actually been in the USSR.
+      const sovietRepublic = wasSovietRepublic(cn)
+      const plannedFrom = sovietRepublic ? 1928 : 1948
+      if (currentYear >= plannedFrom && era <= 1980) yield [T.anchored, pick([
         'Everything is in its correct place according to the plan. The plan is not everything.',
         'The collective has its logic. The individual has their own. They are not always the same logic.',
         'The queue is long. This is ordinary. The ordinariness of the queue is information about the system.',
         'The apartment block is identical to the one beside it and the one beside that. Inside them: particular lives, none of them identical.',
-        'The summer dacha is the real home — the place where the city does not follow you, where the garden has its own logic.',
+        sovietRepublic
+          ? 'The summer dacha is the real home — the place where the city does not follow you, where the garden has its own logic.'
+          : 'The plot outside town is the real home — the place where the city does not follow you, where the garden has its own logic.',
       ])]
       if (era === 1990) yield [T.anchored, pick([
         'The system that organized everything is coming apart. What replaces it is not yet clear.',
         'The shop shelves look different than they did three years ago. Some of this is better. Some of it is worse.',
-        'The ruble has lost something. What it has lost is not just purchasing power. It is a kind of certainty.',
+        sovietRepublic
+          ? 'The ruble has lost something. What it has lost is not just purchasing power. It is a kind of certainty.'
+          : 'The money has lost something. What it has lost is not just purchasing power. It is a kind of certainty.',
         'New things are appearing: privately owned things, dollar stores, people who are suddenly rich. The arithmetic of it is not obvious.',
         'The factories are quiet. The men who ran them are doing something else now, or trying to.',
         'The kiosk has appeared on the corner, stocked with things that were not available before. The prices are in a currency that is still finding its value.',
@@ -14087,7 +14116,12 @@ function* textureCandidates(state, opts = {}) {
       if (era === 2000) yield [T.anchored, pick([
         'Stability is back. It is also the word the television uses. Both of these things are true at the same time.',
         'The oligarchs are visible now in a way they were not before — in the newspapers, in the buildings they own, in the talk at dinner.',
-        'The West is further away than it seemed in the early nineties. Russia is doing something specific with that distance.',
+        // 92 firings in 2000–2009, led by Croatia, Latvia, Bulgaria, Lithuania,
+        // Slovakia, Romania and Estonia — precisely the years in which all of
+        // them joined NATO and the EU, i.e. the opposite claim.
+        sovietRepublic
+          ? 'The West is further away than it seemed in the early nineties. Russia is doing something specific with that distance.'
+          : 'The accession is close enough to plan around now. What it will actually mean is argued about in a way that assumes it is coming.',
         'The pension is not what it was supposed to be, and the generation that worked for it knows this.',
         'The mobile phone arrived and the life reorganised itself around it. This happened everywhere and here it happened at a particular speed.',
       ])]
@@ -14101,9 +14135,15 @@ function* textureCandidates(state, opts = {}) {
 
     // ── developing_urban era texture ──
     if (arch === 'developing_urban') {
+      // `era <= 1960` meant every year up to 1969, and this fired 198 times
+      // from 1931 — telling Tuvalu (1978), Kiribati (1979), Barbados (1966),
+      // Belize (1981), the Marshall Islands (1986), Brazil (1822) and Bhutan
+      // (never colonised) that their independence was recent.
+      const indepYear = INDEPENDENCE_YEAR[cn]
+      const recentlyIndependent = indepYear != null && currentYear >= indepYear && currentYear - indepYear <= 12
       if (era <= 1960) yield [T.anchored, pick([
         'The city is being built. The city is always being built. It arrives before the infrastructure that should have come first.',
-        'Independence is recent. The flags and the buildings are new. The question of what independence actually means is being actively worked out.',
+        recentlyIndependent && 'Independence is recent. The flags and the buildings are new. The question of what independence actually means is being actively worked out, by everyone, at once.',
         'The slum and the new suburb share a drainage ditch. The city was not designed for either of them. The people have improvised past the design.',
       ])]
       if (era === 1970 || era === 1980) yield [T.anchored, pick([

@@ -162,7 +162,7 @@ export function fileForDivorce(state) {
 
 export function tryForChild(state) {
   if (!state.partner) return state
-  if (state.flags.includes('pregnant')) {
+  if (state.flags.includes('pregnant') || state.flags.includes('expecting')) {
     return { ...state, log: [...state.log, { age: state.age, text: 'You are already expecting.', isKey: false }] }
   }
   if (state.birthControl) {
@@ -171,6 +171,7 @@ export function tryForChild(state) {
   if (state.age > 50 || (state.partner.age ?? 30) > 48) {
     return { ...state, log: [...state.log, { age: state.age, text: "Having a biological child is no longer possible.", isKey: false }] }
   }
+  const bearerIsPlayer = state.character?.gender === 'female'
   const fertChance = state.partner.married ? 0.65 : 0.38
   if (!chance(fertChance)) {
     return {
@@ -184,11 +185,22 @@ export function tryForChild(state) {
   const c = state.character.country
   const childName = `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${state.character.surname}`
   const traits = pickTraits(CHILD_TRAITS)
+  // `expecting` is the couple's state and drives the birth in tick(); `pregnant`
+  // is the player's own body and is what the maternal-mortality roll and the
+  // pregnancy-arc events read. Only one of those is true for a male character.
+  const flags = [...state.flags, 'expecting', 'trying_for_child']
+  if (bearerIsPlayer) flags.push('pregnant')
   return {
     ...state,
-    flags: [...new Set([...state.flags, 'pregnant', 'trying_for_child'])],
+    flags: [...new Set(flags)],
     mem: { ...(state.mem ?? {}), pregnancyYear: state.age, pendingChild: { name: childName, gender: cGender, traits } },
-    log: [...state.log, { age: state.age, text: 'You are pregnant. The knowledge of it sits in your body before you have words for it.', isKey: true }],
+    log: [...state.log, {
+      age: state.age,
+      text: bearerIsPlayer
+        ? 'You are pregnant. The knowledge of it sits in your body before you have words for it.'
+        : `${state.partner.name} is pregnant. You are told in a kitchen, or a corridor, and you do not know what to do with your hands.`,
+      isKey: true,
+    }],
   }
 }
 

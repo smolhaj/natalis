@@ -3765,7 +3765,7 @@ const BASE_EVENTS = [
     id: 'ya_unplanned_pregnancy',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => !G.birthControl && G.partner && G.age >= 16 && G.age <= 24 && G.children.length === 0 && !G.mem.hadPregnancyEvent,
+    when: (G) => G.character.gender === 'female' && !G.birthControl && G.partner && G.age >= 16 && G.age <= 24 && G.children.length === 0 && !G.mem.hadPregnancyEvent,
     text: (G) => {
       const country = G.character.country.archetype
       if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(country))
@@ -3887,7 +3887,7 @@ const BASE_EVENTS = [
     id: 'ya_postpartum_depression',
     phase: null,
     weight: 3,
-    when: (G) => G.children.length > 0 && !G.mem.postpartumEvent && G.age <= 35 && G.children.some(c => c.ageAtBirth >= G.age - 2),
+    when: (G) => G.character.gender === 'female' && G.children.length > 0 && !G.mem.postpartumEvent && G.age <= 35 && G.children.some(c => c.ageAtBirth >= G.age - 2),
     text: (G) => {
       if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
         return 'The baby is here and safe, but something in you went dark after the birth. No one has a name for what this is. You feel ashamed of feeling this way.'
@@ -3918,7 +3918,7 @@ const BASE_EVENTS = [
     id: 'mid_pregnancy_late',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.partner && G.age >= 38 && G.age <= 44 && G.children.length === 0 && !G.mem.latePregnancyEvent,
+    when: (G) => G.character.gender === 'female' && G.partner && G.age >= 38 && G.age <= 44 && G.children.length === 0 && !G.mem.latePregnancyEvent,
     text: (G) => {
       if (['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(G.character.country.archetype) && G.currentYear >= 1990)
         return 'Against the odds and your doctor\'s caution, you are pregnant at 40. The monitoring is intensive. The statistics are discussed at every appointment.'
@@ -6336,7 +6336,7 @@ const BASE_EVENTS = [
     phase: 'early_childhood',
     weight: 5,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age <= 1 && !G.mem.ps_birth,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age <= 1 && !G.mem.ps_birth,
     text: (G) => {
       if (G.currentYear < 1992) return 'Born in a Soviet maternity ward, where your mother was given no pain relief and told not to make noise. Your father waited outside for three days. You were wrapped in hospital standard-issue cloth and handed over at the gate.';
       if (G.currentYear <= 2000) return 'The maternity ward smells of disinfectant and old ambition. The Soviet Union is gone and so is the budget. Your mother had to bring her own towels, sheets, and food. Your father bribed a nurse to get a proper room.';
@@ -6350,7 +6350,7 @@ const BASE_EVENTS = [
     id: 'ps_kommunalka',
     phase: 'early_childhood',
     weight: 4,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 2 && G.age <= 5 && G.currentYear >= 1975 && G.currentYear <= 2005 && !G.mem.ps_kommunalka,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 2 && G.age <= 5 && G.currentYear >= 1975 && G.currentYear <= 2005 && !G.mem.ps_kommunalka,
     text: 'Your family shares a kitchen and bathroom with two other families. The schedule for the stove is taped to the wall. Neighbours argue. Adults whisper about things in the hallway. You know every smell, sound, and conflict in this building.',
     choices: null,
     effect: (p) => { p.h -= 3; p.e += 4; p.setMem('ps_kommunalka', true); p.addFlag('communal_childhood'); },
@@ -6360,7 +6360,7 @@ const BASE_EVENTS = [
     id: 'ps_dacha_childhood',
     phase: 'early_childhood',
     weight: 5,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 3 && G.age <= 8 && !G.mem.ps_dacha,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 3 && G.age <= 8 && !G.mem.ps_dacha,
     text: 'Every summer your family loads into a train and goes to the dacha — a small plot two hours outside the city. You eat tomatoes straight from the vine, help carry water from the well, and fall asleep under a sky thick with stars. Your grandparents live here half the year.',
     choices: [
       {
@@ -6386,7 +6386,7 @@ const BASE_EVENTS = [
     id: 'ps_soviet_school_uniform',
     phase: 'childhood',
     weight: 5,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 6 && G.age <= 8 && !G.mem.ps_school_start,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 6 && G.age <= 8 && !G.mem.ps_school_start,
     text: (G) => {
       if (G.currentYear <= 1991) return 'Your school uniform is brown and your bow is white. Every September first there is a ceremony. You carry carnations. The teacher reads aloud from the school charter. Everything feels very serious and exactly the right size.';
       return 'The old Soviet uniform is gone but the September ritual remains. You carry flowers for your teacher on the first day. The school still smells of chalk and floor wax. The portraits on the wall have changed.';
@@ -6415,7 +6415,7 @@ const BASE_EVENTS = [
     phase: 'childhood',
     weight: 5,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 7 && G.age <= 14 && G.currentYear >= 1991 && G.currentYear <= 2001 && !G.mem.ps_nineties,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 7 && G.age <= 14 && G.currentYear >= 1991 && G.currentYear <= 2001 && !G.mem.ps_nineties,
     text: 'The Nineties arrive and your parents\' certainties evaporate. Your father\'s factory closes. A man in a leather jacket starts driving the neighbours\' old Volga. Your mother queues for bread at five in the morning. At the market, people sell their Soviet medals, china, and winter coats. Kiosks sell everything and nothing at the same time.',
     choices: [
       {
@@ -6677,7 +6677,7 @@ const BASE_EVENTS = [
     id: 'ps_dacha_inheritance',
     phase: 'midlife',
     weight: 4,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 35 && G.age <= 50 && G.parents && !G.mem.ps_dacha_inherit,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 35 && G.age <= 50 && G.parents && !G.mem.ps_dacha_inherit,
     text: 'Your parents are passing the dacha to you. The deed is a single typed page from 1967. The roof needs work. The well pump is twenty years old. But in summer it smells exactly as it always has — old wood, hot grass, your grandmother\'s jam.',
     choices: [
       {
@@ -6702,7 +6702,7 @@ const BASE_EVENTS = [
     id: 'ps_soviet_nostalgia',
     phase: 'midlife',
     weight: 4,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 30 && !G.mem.ps_nostalgia,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 30 && !G.mem.ps_nostalgia,
     text: 'Your father says things were better before. The jobs were stable. The streets were safe. People looked after each other. He watches Soviet-era films and talks about Brezhnev as if he were discussing a golden age. You can see both what he means and everything he is forgetting.',
     choices: [
       {
@@ -6734,7 +6734,7 @@ const BASE_EVENTS = [
     id: 'ps_health_system',
     phase: 'midlife',
     weight: 3,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 30 && !G.mem.ps_health && G.stats.health < 70,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 30 && !G.mem.ps_health && G.stats.health < 70,
     text: 'The clinic has Soviet-era equipment, underpaid doctors, and a supply of envelopes for unofficial payments. The doctor is competent — trained under a system that valued medical education — but overwhelmed. You pay for private care if you can. If you can\'t, you wait.',
     choices: [
       {
@@ -6761,7 +6761,7 @@ const BASE_EVENTS = [
     phase: 'late_life',
     weight: 4,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 55 && G.retired && !G.mem.ps_pension,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 55 && G.retired && !G.mem.ps_pension,
     text: 'The pension calculation was based on wages from thirty years ago, before the hyperinflation ate the denomination. What arrives monthly covers utilities and bread. Your garden and the dacha carry the rest of the weight.',
     choices: [
       {
@@ -6787,7 +6787,7 @@ const BASE_EVENTS = [
     phase: 'late_life',
     weight: 4,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 60 && !G.mem.ps_retrospective,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 60 && !G.mem.ps_retrospective,
     text: 'You have lived under the Soviet Union, the chaos of transition, and whatever this is now. Three different passports and three different answers to the question of who you are. The young people have only known one of these worlds.',
     choices: [
       {
@@ -8949,6 +8949,7 @@ import { PRISON_AFTER_EVENTS } from './events/prison/events_prison_after.js'
 import { POLITICAL_PRISON_EVENTS } from './events/prison/events_political_prison.js'
 import { HOUSING_EVENTS } from './events/thematic/events_housing.js'
 import { WINDFALL_EVENTS } from './events/thematic/events_windfall.js'
+import { wasSovietRepublic } from './history.js'
 
 export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...ADOLESCENCE_2_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_ALL_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...VIETNAM_DEPTH_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...LATIN_AMERICA_EVENTS, ...MEXICO_DEPTH_EVENTS, ...COUNTRY_ARC_EVENTS, ...COUNTRY_ARC_2_EVENTS, ...EARLY_LIFE_EVENTS, ...EARLY_CHILDHOOD_2_EVENTS, ...DECOLONISATION_EVENTS, ...LABOR_EVENTS, ...ASIA_ARC_EVENTS, ...CROSSCUTTING_EVENTS, ...DRC_EVENTS, ...INTERNET_ERA_EVENTS, ...ZIMBABWE_EVENTS, ...CLIMATE_EVENTS, ...INDIGENOUS_EVENTS, ...AUTOMATION_EVENTS, ...COUNTRY_ARC_3_EVENTS, ...ARTS_EVENTS, ...INFORMAL_EVENTS, ...NEIGHBORHOOD_EVENTS, ...POSTRELEASE_EVENTS, ...MENTOR_EVENTS, ...FAMILY_SILENCE_EVENTS, ...SOLO_LIFE_EVENTS, ...DYING_ARC_EVENTS, ...BODY_ARC_EVENTS, ...GRANDPARENT_ARC_EVENTS, ...INHERITANCE_ARC_EVENTS, ...EMPTY_NEST_EVENTS, ...COHERENCE_EVENTS, ...POVERTY_EVENTS, ...PREGNANCY_EVENTS, ...MENOPAUSE_EVENTS, ...CAREER_ARC_EVENTS, ...CAREER_LONGEVITY_EVENTS, ...SOCIAL_MEDIA_EVENTS, ...SCANDINAVIA_EVENTS, ...SCANDINAVIA_DEPTH_EVENTS, ...PALESTINE_EVENTS, ...GANG_EVENTS, ...WORLD_RESPONSE_EVENTS, ...SOCIAL_CAPITAL_EVENTS, ...CHILDHOOD_TEXTURE_EVENTS, ...EMIGRANT_INTEGRATION_EVENTS, ...INTIMACY_EVENTS, ...SCHOOL_EVENTS, ...CHILDREN_ABROAD_EVENTS, ...STAYED_EVENTS, ...SPORT_EVENTS, ...DISASTER_EVENTS, ...ACTIVITY_CHOICE_EVENTS, ...PROJECT_ARC_EVENTS, ...INDUSTRIAL_EVENTS, ...LEBANON_EVENTS, ...CENTRAL_AMERICA_EVENTS, ...CENTRAL_ASIA_EVENTS, ...UZBEKISTAN_EVENTS, ...KAZAKHSTAN_EVENTS, ...TAJIKISTAN_EVENTS, ...KYRGYZSTAN_EVENTS, ...TURKMENISTAN_EVENTS, ...OFW_EVENTS, ...ALGERIA_EVENTS, ...INDONESIA_EVENTS, ...INDONESIA_DEPTH_EVENTS, ...KURDISH_EVENTS, ...DEBT_EVENTS, ...HAITI_EVENTS, ...DOMINICAN_REPUBLIC_EVENTS, ...SRI_LANKA_EVENTS, ...SRI_LANKA_DEPTH_EVENTS, ...MOROCCO_EVENTS, ...MOROCCO_DEPTH_EVENTS, ...ROHINGYA_EVENTS, ...TANZANIA_EVENTS, ...TANZANIA_DEPTH_EVENTS, ...MULTILINGUAL_EVENTS, ...SENEGAL_EVENTS, ...ADOPTEE_EVENTS, ...UYGHUR_EVENTS, ...PUERTO_RICO_EVENTS, ...SOLDIER_ARC_EVENTS, ...DOCUMENT_EVENTS, ...CLERGY_EVENTS, ...KENYA_EVENTS, ...KENYA_DEPTH_EVENTS, ...ETHIOPIA_EVENTS, ...ETHIOPIA_DEPTH_EVENTS, ...CONDITION_ARC_EVENTS, ...CONDITION_ARC_2_EVENTS, ...SOUTHEAST_EUROPE_EVENTS, ...PAKISTAN_EVENTS, ...PAKISTAN_DEPTH_EVENTS, ...EGYPT_EVENTS, ...EGYPT_DEPTH_EVENTS, ...INDIA_EVENTS, ...INDIA_DEPTH_EVENTS, ...IRELAND_TURKEY_EVENTS, ...IRELAND_DEPTH_EVENTS, ...WEST_AFRICA_EVENTS, ...NIGERIA_EVENTS, ...NIGERIA_DEPTH_EVENTS, ...GHANA_EVENTS, ...UGANDA_EVENTS, ...SOMALIA_EVENTS, ...THAILAND_EVENTS, ...THAILAND_DEPTH_EVENTS, ...NEPAL_EVENTS, ...NEPAL_DEPTH_EVENTS, ...MYANMAR_EVENTS, ...MYANMAR_DEPTH_EVENTS, ...TUNISIA_EVENTS, ...SUDAN_EVENTS, ...SUDAN_DEPTH_EVENTS, ...ANGOLA_EVENTS, ...ANGOLA_DEPTH_EVENTS, ...JORDAN_EVENTS, ...LIBYA_EVENTS, ...LIBYA_DEPTH_EVENTS, ...ZAMBIA_EVENTS, ...ZAMBIA_DEPTH_EVENTS, ...MOZAMBIQUE_EVENTS, ...MOZAMBIQUE_DEPTH_EVENTS, ...AFGHANISTAN_EVENTS, ...AFGHANISTAN_DEPTH_EVENTS, ...YEMEN_EVENTS, ...GIFTED_EVENTS, ...GIFTED_2_EVENTS, ...GIFTED_3_EVENTS, ...CHINA_EVENTS, ...KOREA_EVENTS, ...KOREA_DEPTH_EVENTS, ...DISABILITY_EVENTS, ...ADDICTION_EVENTS, ...CHILD_SOLDIER_EVENTS, ...WWI_DEPRESSION_EVENTS, ...DIVORCE_EVENTS, ...DEMENTIA_EVENTS, ...CELEBRITY_EVENTS, ...TEACHER_ARC_EVENTS, ...WOUND_COPING_EVENTS, ...PARTNER_WANTS_EVENTS, ...RELATIONSHIP_CROSSOVER_EVENTS, ...SYRIA_EVENTS, ...CHILD_DEATH_ARC_EVENTS, ...ISRAEL_EVENTS, ...PANDEMIC_EVENTS, ...GREECE_PORTUGAL_EVENTS, ...PORTUGAL_DEPTH_EVENTS, ...GREECE_DEPTH_EVENTS, ...SPAIN_EVENTS, ...SPAIN_DEPTH_EVENTS, ...PHILIPPINES_EVENTS, ...PHILIPPINES_DEPTH_EVENTS, ...PHILIPPINES_DEPTH_2_EVENTS, ...UK_EVENTS, ...GERMANY_FRANCE_EVENTS, ...USA_EVENTS, ...AUSTRALIA_EVENTS, ...AUSTRALIA_DEPTH_EVENTS, ...CANADA_EVENTS, ...CANADA_DEPTH_EVENTS, ...ITALY_EVENTS, ...ITALY_DEPTH_EVENTS, ...POLAND_EVENTS, ...POLAND_DEPTH_EVENTS, ...RUSSIA_EVENTS, ...RUSSIA_DEPTH_EVENTS, ...UKRAINE_EVENTS, ...UKRAINE_DEPTH_EVENTS, ...IRAN_DEPTH_EVENTS, ...ARGENTINA_DEPTH_EVENTS, ...SOUTH_AFRICA_EVENTS, ...SOUTH_AFRICA_DEPTH_EVENTS, ...ROMANIA_EVENTS, ...ROMANIA_DEPTH_EVENTS, ...DESIRE_RESOLUTION_EVENTS, ...CENTRAL_EUROPE_EVENTS, ...CZECH_REPUBLIC_EVENTS, ...SWEDEN_EVENTS, ...NORWAY_EVENTS, ...DENMARK_EVENTS, ...BALTIC_EVENTS, ...GEORGIA_EVENTS, ...TAIWAN_MALAYSIA_EVENTS, ...ARMENIA_AZ_EVENTS, ...BELARUS_EVENTS, ...UY_PY_EC_EVENTS, ...ECUADOR_EVENTS, ...EL_SALVADOR_EVENTS, ...GUATEMALA_EVENTS, ...HONDURAS_EVENTS, ...NICARAGUA_EVENTS, ...NORTH_KOREA_EVENTS, ...NORTH_KOREA_DEPTH_EVENTS, ...CUBA_EVENTS, ...CUBA_DEPTH_EVENTS, ...NAMIBIA_EVENTS, ...NAMIBIA_DEPTH_EVENTS, ...LAOS_EVENTS, ...LAOS_DEPTH_EVENTS, ...SINGAPORE_EVENTS, ...SINGAPORE_DEPTH_EVENTS, ...NETHERLANDS_EVENTS, ...NETHERLANDS_DEPTH_EVENTS, ...BRAZIL_EVENTS, ...BRAZIL_DEPTH_EVENTS, ...BANGLADESH_EVENTS, ...BANGLADESH_DEPTH_EVENTS, ...IRAQ_EVENTS, ...IRAQ_DEPTH_EVENTS, ...RWANDA_EVENTS, ...COLOMBIA_EVENTS, ...COLOMBIA_DEPTH_EVENTS, ...VENEZUELA_EVENTS, ...VENEZUELA_DEPTH_EVENTS, ...VENEZUELA_DEPTH_2_EVENTS, ...PERU_EVENTS, ...PERU_DEPTH_EVENTS, ...JAPAN_EVENTS, ...JAPAN_DEPTH_EVENTS, ...SAUDI_EVENTS, ...BEDOUIN_EVENTS, ...IRAN_EVENTS, ...TURKEY_EVENTS, ...TURKEY_DEPTH_EVENTS, ...NOMADIC_EVENTS, ...SICK_CHILD_EVENTS, ...CAMBODIA_EVENTS, ...GUINEA_EVENTS, ...MONGOLIA_EVENTS, ...MONGOLIA_DEPTH_EVENTS, ...CARIBBEAN_EVENTS, ...ERITREA_EVENTS, ...BURKINA_EVENTS, ...POLITICAL_ARC_EVENTS, ...BOLIVIA_EVENTS, ...BOLIVIA_DEPTH_EVENTS, ...NEW_ZEALAND_EVENTS, ...NEW_ZEALAND_DEPTH_EVENTS, ...SONDER_EVENTS, ...AID_WORKER_EVENTS, ...FIJI_EVENTS, ...WATER_INFRA_EVENTS, ...BONDED_LABOR_EVENTS, ...SEX_WORK_EVENTS, ...CULT_EVENTS, ...FGM_EVENTS, ...MALI_EVENTS, ...IVORY_COAST_EVENTS, ...IVORY_COAST_DEPTH_EVENTS, ...CAMEROON_EVENTS, ...CAMEROON_DEPTH_EVENTS, ...LOCAL_EVENTS, ...EVENTS_2010S, ...EVENTS_SONDER_2, ...EVENTS_SONDER_3, ...EVENTS_SONDER_4, ...EVENTS_SONDER_5, ...EVENTS_SONDER_6, ...EVENTS_SONDER_7, ...EVENTS_SONDER_8, ...EVENTS_SONDER_9, ...EVENTS_SONDER_10, ...EVENTS_SONDER_11, ...EVENTS_SONDER_12, ...EVENTS_SONDER_13, ...EVENTS_SONDER_14, ...EVENTS_SONDER_15, ...EVENTS_SONDER_16, ...EVENTS_SONDER_17, ...EVENTS_SONDER_18, ...EVENTS_SONDER_19, ...EVENTS_SONDER_20, ...EVENTS_SONDER_21, ...EVENTS_SONDER_22, ...EVENTS_SONDER_23, ...EVENTS_SONDER_24, ...EVENTS_SONDER_25, ...EVENTS_SONDER_26, ...EVENTS_SONDER_27, ...EVENTS_SONDER_28, ...EVENTS_SONDER_29, ...EVENTS_SONDER_30, ...EVENTS_SONDER_31, ...EVENTS_SONDER_32, ...EVENTS_SONDER_33, ...EVENTS_SONDER_34, ...EVENTS_SONDER_35, ...EVENTS_SONDER_36, ...EVENTS_SONDER_37, ...EVENTS_SONDER_38, ...EVENTS_SONDER_39, ...EVENTS_SONDER_40, ...EVENTS_SONDER_41, ...EVENTS_SONDER_42, ...EVENTS_SONDER_43, ...EVENTS_SONDER_44, ...EVENTS_SONDER_45, ...EVENTS_SONDER_46, ...EVENTS_SONDER_47, ...EVENTS_SONDER_48, ...EVENTS_SONDER_49, ...EVENTS_SONDER_50, ...EVENTS_SONDER_51, ...EVENTS_SONDER_52, ...EVENTS_SONDER_53, ...EVENTS_SONDER_54, ...EVENTS_SONDER_55, ...EVENTS_SONDER_56, ...EVENTS_SONDER_57, ...EVENTS_SONDER_58, ...EVENTS_SONDER_59, ...EVENTS_SONDER_60, ...EVENTS_SONDER_61, ...EVENTS_SONDER_62, ...EVENTS_SONDER_63, ...EVENTS_SONDER_64, ...EVENTS_SONDER_65, ...EVENTS_SONDER_66, ...FOLLOWTHROUGH_30_EVENTS, ...FOLLOWTHROUGH_31_EVENTS, ...FOLLOWTHROUGH_32_EVENTS, ...FOLLOWTHROUGH_33_EVENTS, ...FOLLOWTHROUGH_34_EVENTS, ...FOLLOWTHROUGH_35_EVENTS, ...FOLLOWTHROUGH_36_EVENTS, ...FOLLOWTHROUGH_37_EVENTS, ...FOLLOWTHROUGH_38_EVENTS, ...FOLLOWTHROUGH_39_EVENTS, ...FOLLOWTHROUGH_40_EVENTS, ...FOLLOWTHROUGH_41_EVENTS, ...FOLLOWTHROUGH_42_EVENTS, ...FOLLOWTHROUGH_43_EVENTS, ...FOLLOWTHROUGH_44_EVENTS, ...FOLLOWTHROUGH_45_EVENTS, ...FOLLOWTHROUGH_46_EVENTS, ...FOLLOWTHROUGH_47_EVENTS, ...FOLLOWTHROUGH_48_EVENTS, ...FOLLOWTHROUGH_49_EVENTS, ...FOLLOWTHROUGH_50_EVENTS, ...FOLLOWTHROUGH_51_EVENTS, ...FOLLOWTHROUGH_52_EVENTS, ...FOLLOWTHROUGH_53_EVENTS, ...FOLLOWTHROUGH_54_EVENTS, ...FOLLOWTHROUGH_55_EVENTS, ...FOLLOWTHROUGH_56_EVENTS, ...FOLLOWTHROUGH_57_EVENTS, ...FOLLOWTHROUGH_58_EVENTS, ...FOLLOWTHROUGH_59_EVENTS, ...FOLLOWTHROUGH_60_EVENTS, ...FOLLOWTHROUGH_61_EVENTS, ...FOLLOWTHROUGH_62_EVENTS, ...FOLLOWTHROUGH_63_EVENTS, ...FOLLOWTHROUGH_64_EVENTS, ...FOLLOWTHROUGH_65_EVENTS, ...FOLLOWTHROUGH_66_EVENTS, ...FOLLOWTHROUGH_67_EVENTS, ...FOLLOWTHROUGH_68_EVENTS, ...FOLLOWTHROUGH_69_EVENTS, ...FOLLOWTHROUGH_70_EVENTS, ...FOLLOWTHROUGH_71_EVENTS, ...FOLLOWTHROUGH_72_EVENTS, ...FOLLOWTHROUGH_73_EVENTS, ...FOLLOWTHROUGH_74_EVENTS, ...FOLLOWTHROUGH_75_EVENTS, ...FOLLOWTHROUGH_76_EVENTS, ...FOLLOWTHROUGH_77_EVENTS, ...FOLLOWTHROUGH_78_EVENTS, ...FOLLOWTHROUGH_79_EVENTS, ...FOLLOWTHROUGH_80_EVENTS, ...FOLLOWTHROUGH_81_EVENTS, ...FOLLOWTHROUGH_82_EVENTS, ...FOLLOWTHROUGH_83_EVENTS, ...FOLLOWTHROUGH_84_EVENTS, ...FOLLOWTHROUGH_85_EVENTS, ...FOLLOWTHROUGH_86_EVENTS, ...FOLLOWTHROUGH_87_EVENTS, ...FOLLOWTHROUGH_88_EVENTS, ...FOLLOWTHROUGH_89_EVENTS, ...FOLLOWTHROUGH_90_EVENTS, ...FOLLOWTHROUGH_91_EVENTS, ...FOLLOWTHROUGH_92_EVENTS, ...FOLLOWTHROUGH_93_EVENTS, ...FOLLOWTHROUGH_94_EVENTS, ...FOLLOWTHROUGH_95_EVENTS, ...SPECIFIC_LIFE_EVENTS, ...ERA_GAP_EVENTS, ...TEACHER_POWER_EVENTS, ...DISEASE_ARC_EVENTS, ...SOUTH_SOUTH_EVENTS, ...INTERPRETER_ARC_EVENTS, ...DOCTOR_ARC_EVENTS, ...JOURNALIST_ARC_EVENTS, ...LAWYER_ARC_EVENTS, ...NURSE_ARC_EVENTS, ...FARMER_ARC_EVENTS, ...POLICE_ARC_EVENTS, ...SOCIAL_WORKER_ARC_EVENTS, ...ARTIST_ARC_EVENTS, ...ENGINEER_ARC_EVENTS, ...DEV_ARC_EVENTS, ...FACTORY_ARC_EVENTS, ...LABORER_ARC_EVENTS, ...CIVIL_SERVANT_ARC_EVENTS, ...DRIVER_ARC_EVENTS, ...CHEF_ARC_EVENTS, ...MERCHANT_ARC_EVENTS, ...ACCOUNTANT_ARC_EVENTS, ...PALESTINE_DEPTH_EVENTS, ...MEMORY_LAYER_EVENTS, ...ROADS_NOT_TAKEN_EVENTS, ...LETTER_EVENTS, ...SEASONAL_EVENTS, ...ORAL_TRADITION_EVENTS, ...PRISON_EVENTS, ...PRISON_AFTER_EVENTS, ...POLITICAL_PRISON_EVENTS, ...HOUSING_EVENTS, ...WINDFALL_EVENTS, ...AUSTRIA_EVENTS, ...AUSTRIA_FOLLOWTHROUGH, ...ADRIATIC_EVENTS, ...ADRIATIC_FOLLOWTHROUGH, ...ICELAND_MOLDOVA_EVENTS, ...ICELAND_MOLDOVA_FOLLOWTHROUGH, ...OMAN_PACIFIC_BHUTAN_EVENTS, ...OMAN_PACIFIC_BHUTAN_FOLLOWTHROUGH]
 
