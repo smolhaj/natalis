@@ -2,124 +2,170 @@ import { useState, useEffect, useRef } from 'react'
 
 const NUM_PINS = 5
 const TICK_MS = 40
+const ZONE_TOP = 85
 
-function Pin({ index, onSet, isSet, speed }) {
-  const [pos, setPos] = useState(Math.random() * 80)
-  const [tension, setTension] = useState(0)
+// Base travel per tick, per pin, so the five are never in phase. Scaled by
+// difficulty — which previously changed nothing a player could feel.
+const BASE_SPEEDS = [1.1, 1.6, 1.35, 1.9, 0.95]
+
+const LEVEL = {
+  easy:   { speed: 0.70, zone: 20, attempts: 14 },
+  normal: { speed: 1.00, zone: 15, attempts: 10 },
+  hard:   { speed: 1.25, zone: 13, attempts: 8 },
+}
+
+function Pin({ index, onAttempt, isSet, speed, zone, disabled }) {
+  const [pos, setPos] = useState(() => Math.random() * 80)
+  const [nudged, setNudged] = useState(false)
   const dirRef = useRef(1)
   const posRef = useRef(pos)
-  const intervalRef = useRef(null)
 
   useEffect(() => {
-    if (isSet) return
-    intervalRef.current = setInterval(() => {
+    if (isSet || disabled) return
+    const id = setInterval(() => {
       posRef.current += dirRef.current * speed
       if (posRef.current >= 100) { posRef.current = 100; dirRef.current = -1 }
       if (posRef.current <= 0) { posRef.current = 0; dirRef.current = 1 }
       setPos(posRef.current)
     }, TICK_MS)
-    return () => clearInterval(intervalRef.current)
-  }, [isSet, speed])
+    return () => clearInterval(id)
+  }, [isSet, speed, disabled])
 
-  // Sweet spot is 70–85
-  const inZone = pos >= 70 && pos <= 85
-  const handleClick = () => {
-    if (isSet) return
-    setTension(1)
-    setTimeout(() => setTension(0), 200)
-    if (inZone) {
-      onSet(index)
-    }
+  const zoneBottom = ZONE_TOP - zone
+  const inZone = pos >= zoneBottom && pos <= ZONE_TOP
+
+  const tryIt = () => {
+    if (isSet || disabled) return
+    setNudged(true)
+    setTimeout(() => setNudged(false), 180)
+    // The attempt is reported whether or not it lands. It used to be reported
+    // only on a hit, so the attempt counter could never reach its own limit and
+    // the lock could not be failed: a bot clicking blind opened it every time,
+    // at every difficulty, in about three seconds.
+    onAttempt(index, inZone)
   }
 
   return (
-    <div className="flex flex-col items-center gap-1">
-      <div
-        className="relative w-10 rounded-lg overflow-hidden cursor-pointer select-none"
-        style={{ height: 120, background: isSet ? '#d1fae5' : '#f3f4f6', border: `2px solid ${isSet ? '#4e7159' : tension ? '#9b5445' : '#d1d5db'}`, transition: 'border-color 0.1s' }}
-        onClick={handleClick}
+    <div className="flex flex-col items-center gap-1.5">
+      <button
+        type="button"
+        id={`lockpick-pin-${index}`}
+        onClick={tryIt}
+        disabled={isSet || disabled}
+        aria-label={isSet ? `Pin ${index + 1}, set` : `Set pin ${index + 1}`}
+        className="relative w-10 rounded-lg overflow-hidden select-none disabled:cursor-default
+                   focus:outline-none focus-visible:ring-2 focus-visible:ring-natalis-accent"
+        style={{
+          height: 120,
+          background: isSet ? '#eceef2' : '#f0ede7',
+          border: `1px solid ${isSet ? '#3f5670' : nudged ? '#8c3a2e' : '#d6d0c2'}`,
+          transition: 'border-color 0.12s',
+        }}
       >
-        {/* Sweet spot indicator */}
-        <div
-          className="absolute w-full"
-          style={{ top: `${100 - 85}%`, height: `${85 - 70}%`, background: 'rgba(52,211,153,0.3)' }}
+        {/* The shear line, drawn as a band with a rule at each edge. The pin
+            marker is centred on its own position, so what the eye reads as "in
+            the band" is what the press tests. */}
+        <span
+          className="absolute left-0 w-full"
+          style={{ bottom: `${zoneBottom}%`, height: `${zone}%`, background: 'rgba(63,86,112,0.16)' }}
         />
-        {/* Pin */}
-        <div
-          className="absolute w-6 h-6 rounded-full left-1/2 -translate-x-1/2"
+        <span className="absolute left-0 w-full" style={{ bottom: `${zoneBottom}%`, height: 1, background: '#a9a297' }} />
+        <span className="absolute left-0 w-full" style={{ bottom: `${ZONE_TOP}%`, height: 1, background: '#a9a297' }} />
+        <span
+          className="absolute w-6 h-1.5 rounded-sm left-1/2"
           style={{
-            bottom: `${pos}%`,
+            bottom: `calc(${pos}% - 3px)`,
             transform: 'translateX(-50%)',
-            background: isSet ? '#4e7159' : '#635880',
-            transition: 'background 0.1s',
-            boxShadow: inZone ? '0 0 8px #4e7159' : 'none',
+            background: isSet ? '#3f5670' : inZone ? '#403b33' : '#7d766a',
           }}
         />
-      </div>
-      <span className="text-xs text-gray-500">{isSet ? '✓' : `${index + 1}`}</span>
+      </button>
+      <span className={`text-xs tabular-nums ${isSet ? 'text-natalis-accent' : 'text-natalis-faint'}`}>
+        {isSet ? '—' : index + 1}
+      </span>
     </div>
   )
 }
 
 export default function LockPick({ onComplete, difficulty = 'normal' }) {
-  const [set, setSet] = useState(Array(NUM_PINS).fill(false))
+  const level = LEVEL[difficulty] ?? LEVEL.normal
+  const [set, setSet] = useState(() => Array(NUM_PINS).fill(false))
   const [attempts, setAttempts] = useState(0)
-  const [done, setDone] = useState(false)
-  const maxAttempts = difficulty === 'hard' ? 8 : 12
+  const [outcome, setOutcome] = useState(null) // null | 'open' | 'held'
+  const settled = useRef(false)
 
-  const speeds = [1.2, 1.8, 1.5, 2.2, 1.0]
-
-  const handleSet = (idx) => {
-    if (done) return
-    setAttempts(a => {
-      const na = a + 1
-      if (na >= maxAttempts) {
-        setDone(true)
-        setTimeout(() => onComplete(false), 600)
-      }
-      return na
-    })
-    setSet(prev => {
-      const next = [...prev]
-      next[idx] = true
-      if (next.every(Boolean)) {
-        setDone(true)
-        setTimeout(() => onComplete(true), 600)
-      }
-      return next
-    })
+  const handleAttempt = (idx, hit) => {
+    if (settled.current) return
+    setAttempts(a => a + 1)
+    if (hit) setSet(prev => prev.map((v, i) => (i === idx ? true : v)))
   }
 
-  const attemptsLeft = maxAttempts - attempts
+  useEffect(() => {
+    if (settled.current) return
+    if (set.every(Boolean)) {
+      settled.current = true
+      setOutcome('open')
+      const t = setTimeout(() => onComplete(true), 700)
+      return () => clearTimeout(t)
+    }
+    if (attempts >= level.attempts) {
+      settled.current = true
+      setOutcome('held')
+      const t = setTimeout(() => onComplete(false), 700)
+      return () => clearTimeout(t)
+    }
+  }, [set, attempts, level.attempts, onComplete])
+
+  // Number keys, because the pins were plain divs carrying an onClick: the only
+  // thing a keyboard could reach inside this dialog was the skip link, and
+  // skipping counts as failure.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return
+      const n = Number(e.key)
+      if (!Number.isInteger(n) || n < 1 || n > NUM_PINS) return
+      e.preventDefault()
+      document.getElementById(`lockpick-pin-${n - 1}`)?.click()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const attemptsLeft = Math.max(0, level.attempts - attempts)
+  const pinsSet = set.filter(Boolean).length
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <div className="text-center">
-        <p className="text-sm text-gray-600">Tap each pin when it hits the <span className="text-green-600 font-semibold">green zone</span></p>
-        <p className="text-xs text-gray-400 mt-1">Attempts left: <span className={attemptsLeft <= 3 ? 'text-red-500 font-bold' : 'text-gray-600'}>{attemptsLeft}</span></p>
+    <div className="flex flex-col items-center gap-5">
+      <div className="flex items-baseline justify-between w-full max-w-xs">
+        <span className="text-natalis-muted text-xs uppercase tracking-wider">Tries left</span>
+        <span className={`text-lg tabular-nums ${attemptsLeft <= 2 ? 'text-natalis-alarm' : 'text-natalis-text'}`}>
+          {attemptsLeft}
+        </span>
       </div>
 
-      <div className="flex gap-4 items-end">
+      <div className="flex gap-3 items-end">
         {Array.from({ length: NUM_PINS }, (_, i) => (
           <Pin
             key={i}
             index={i}
             isSet={set[i]}
-            speed={speeds[i]}
-            onSet={handleSet}
+            speed={BASE_SPEEDS[i] * level.speed}
+            zone={level.zone}
+            disabled={!!outcome}
+            onAttempt={handleAttempt}
           />
         ))}
       </div>
 
-      <div className="text-xs text-center text-gray-400">
-        {set.filter(Boolean).length}/{NUM_PINS} pins set
-      </div>
+      <p className="text-natalis-muted text-xs text-center max-w-xs">
+        {outcome === 'open'
+          ? 'The last pin gives and the cylinder turns.'
+          : outcome === 'held'
+            ? 'The lock holds. You have been at it long enough.'
+            : `Press a pin as it crosses the shear line. ${pinsSet} of ${NUM_PINS} set.`}
+      </p>
 
-      {done && (
-        <div className={`text-lg font-bold ${set.every(Boolean) ? 'text-green-600' : 'text-red-500'}`}>
-          {set.every(Boolean) ? '🔓 Lock picked!' : '🔒 Lock held'}
-        </div>
-      )}
+      <p className="text-xs text-natalis-faint">Keys 1–5, or press a pin</p>
     </div>
   )
 }

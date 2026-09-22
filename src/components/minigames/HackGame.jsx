@@ -1,125 +1,179 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
-// Hacking minigame: match a sequence of hex/binary values
-// Shows the sequence briefly, then player recreates it
+// A sequence is shown once and has to be given back. Used for the breach.
 
 const SYMBOLS = ['A1', 'B2', 'C3', 'D4', 'E5', 'F6', '7G', '8H', '9I', '0J']
-const COLORS = ['#635880', '#935264', '#967a3f', '#4e715d', '#4e6180', '#9b5445', '#745880', '#06b6d4', '#84cc16', '#f97316']
+
+// Faint tints from the remapped ramp, purely as a second handle for memory.
+// Three of the originals were raw Tailwind defaults (#06b6d4, #84cc16,
+// #f97316) which the palette remap in tailwind.config.js cannot reach, because
+// they were inline styles.
+const TINTS = [
+  '#dde1e9', '#f0dee2', '#f0e8d7', '#dde7e0', '#dbe5e7',
+  '#f1dfdb', '#e4dee9', '#e0dee9', '#f1ebd4', '#f1e5da',
+]
+
+const LEVEL = {
+  easy:   { len: 3, rounds: 2, perSymbol: 700 },
+  normal: { len: 4, rounds: 2, perSymbol: 560 },
+  hard:   { len: 5, rounds: 3, perSymbol: 440 },
+}
 
 function genSequence(length) {
   return Array.from({ length }, () => Math.floor(Math.random() * SYMBOLS.length))
 }
 
 export default function HackGame({ onComplete, difficulty = 'normal' }) {
-  const seqLen = difficulty === 'hard' ? 6 : difficulty === 'easy' ? 3 : 4
-  const rounds = difficulty === 'hard' ? 3 : 2
-  const showMs = difficulty === 'hard' ? 1500 : 2200
+  const level = LEVEL[difficulty] ?? LEVEL.normal
+  const { rounds } = level
+  const needed = Math.ceil(rounds / 2)
 
-  const [phase, setPhase] = useState('intro') // intro | show | input | result | done
-  const [sequence, setSequence] = useState([])
-  const [input, setInput] = useState([])
   const [round, setRound] = useState(0)
-  const [successes, setSuccesses] = useState(0)
+  const [phase, setPhase] = useState('show') // show | input | result | done
+  const [sequence, setSequence] = useState(() => genSequence(LEVEL[difficulty]?.len ?? LEVEL.normal.len))
+  const [input, setInput] = useState([])
+  const inputRef = useRef([])
+  const [record, setRecord] = useState([])
   const [lastResult, setLastResult] = useState(null)
+  const settled = useRef(false)
+  // A round resolves on a timer; if the dialog closes first that timer still
+  // fires, and an unmounted game reporting a result lands on whatever is
+  // pending next.
+  const alive = useRef(true)
+  useEffect(() => { alive.current = true; return () => { alive.current = false } }, [])
 
-  const startRound = () => {
-    const seq = genSequence(seqLen + round)
-    setSequence(seq)
+  // The round was started from inside the previous round's setTimeout, so it
+  // closed over a stale `round`: the header counted the sequence up while the
+  // sequence itself never grew. It is driven from the round now, which is also
+  // what makes it survive StrictMode's double mount.
+  useEffect(() => {
+    if (settled.current) return
+    const len = level.len + round
+    setSequence(genSequence(len))
     setInput([])
+    inputRef.current = []
     setLastResult(null)
     setPhase('show')
-    setTimeout(() => setPhase('input'), showMs)
-  }
+    const t = setTimeout(() => setPhase('input'), len * level.perSymbol)
+    return () => clearTimeout(t)
+  }, [round, level.len, level.perSymbol])
 
-  useEffect(() => {
-    if (phase === 'intro') {
-      setTimeout(() => startRound(), 500)
-    }
-  }, [])
+  const submit = (next) => {
+    const correct = next.every((v, i) => v === sequence[i])
+    const nextRecord = [...record, correct]
+    setRecord(nextRecord)
+    setLastResult(correct)
+    setPhase('result')
+    setTimeout(() => {
+      if (!alive.current) return
+      if (round + 1 >= rounds) {
+        if (settled.current) return
+        settled.current = true
+        setPhase('done')
+        setTimeout(() => { if (alive.current) onComplete(nextRecord.filter(Boolean).length >= needed) }, 700)
+      } else {
+        setRound(r => r + 1)
+      }
+    }, 900)
+  }
 
   const handlePick = (idx) => {
     if (phase !== 'input') return
-    const next = [...input, idx]
+    if (inputRef.current.length >= sequence.length) return
+    // Read the entered run from a ref, not from state: two presses inside one
+    // render both compute from the same stale array and the first is lost,
+    // which is easy to do on a keypad and impossible to explain.
+    const next = [...inputRef.current, idx]
+    inputRef.current = next
     setInput(next)
-    if (next.length === sequence.length) {
-      const correct = next.every((v, i) => v === sequence[i])
-      const newSuccesses = correct ? successes + 1 : successes
-      setSuccesses(newSuccesses)
-      setLastResult(correct)
-      setPhase('result')
-      setTimeout(() => {
-        if (round + 1 >= rounds) {
-          setPhase('done')
-          setTimeout(() => onComplete(newSuccesses > 0), 600)
-        } else {
-          setRound(r => r + 1)
-          startRound()
-        }
-      }, 800)
-    }
+    if (next.length === sequence.length) submit(next)
   }
 
+  // Ten tabbable buttons is a lot of Tab presses under a memory load. The keys
+  // 1–9 and 0 run along the grid in reading order.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return
+      if (!/^[0-9]$/.test(e.key)) return
+      e.preventDefault()
+      const idx = e.key === '0' ? 9 : Number(e.key) - 1
+      handlePick(idx)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  })
+
+  const banner =
+    phase === 'show' ? 'Hold this.'
+      : phase === 'input' ? 'Give it back.'
+        : phase === 'result' ? (lastResult ? 'That was it.' : 'Not that.')
+          : record.filter(Boolean).length >= needed ? 'You are in.' : 'Something on the other end notices.'
+
   return (
-    <div className="flex flex-col items-center gap-5">
-      <div className="text-center">
-        <p className="text-sm font-mono font-bold text-green-600">SYSTEM BREACH</p>
-        <p className="text-xs text-gray-500 mt-0.5">Round {round + 1}/{rounds} — sequence length: {seqLen + round}</p>
+    <div className="flex flex-col items-center gap-4 w-full">
+      <div className="flex items-baseline justify-between w-full max-w-xs">
+        <span className="text-natalis-muted text-xs uppercase tracking-wider">
+          Round {Math.min(round + 1, rounds)} of {rounds}
+        </span>
+        <span className="text-natalis-faint text-xs">{sequence.length} long</span>
       </div>
 
-      {/* Sequence display */}
-      <div className="bg-gray-900 rounded-xl p-4 w-full max-w-xs min-h-16 flex items-center justify-center gap-2 flex-wrap">
+      {/* The sequence, then what you have typed back */}
+      <div className="w-full max-w-xs min-h-[76px] rounded-xl border border-natalis-border bg-natalis-bg
+                      px-3 py-3 flex items-center justify-center gap-1.5 flex-wrap">
         {phase === 'show' && sequence.map((s, i) => (
-          <div key={i} className="w-12 h-12 rounded-lg flex items-center justify-center text-sm font-mono font-bold text-white"
-            style={{ background: COLORS[s] }}>
+          <span
+            key={i}
+            className="w-11 h-11 rounded-lg flex items-center justify-center font-mono text-sm
+                       text-natalis-text border border-natalis-rule"
+            style={{ background: TINTS[s] }}
+          >
             {SYMBOLS[s]}
-          </div>
+          </span>
         ))}
         {phase === 'input' && (
-          <p className="text-green-400 font-mono text-sm animate-pulse">Recreate the sequence...</p>
+          sequence.map((_, i) => (
+            <span
+              key={i}
+              className={`w-11 h-11 rounded-lg flex items-center justify-center font-mono text-sm
+                          border ${input[i] === undefined ? 'border-dashed border-natalis-rule text-natalis-faint' : 'border-natalis-rule text-natalis-text'}`}
+              style={{ background: input[i] === undefined ? 'transparent' : TINTS[input[i]] }}
+            >
+              {input[i] === undefined ? '·' : SYMBOLS[input[i]]}
+            </span>
+          ))
         )}
-        {phase === 'show' && (
-          <div className="absolute" /> // placeholder to keep layout stable
-        )}
-        {phase === 'result' && (
-          <p className={`font-bold text-lg ${lastResult ? 'text-green-400' : 'text-red-400'}`}>
-            {lastResult ? '✓ CORRECT' : '✗ WRONG'}
+        {(phase === 'result' || phase === 'done') && (
+          <p className={`text-sm ${lastResult === false && phase === 'result' ? 'text-natalis-alarm' : 'text-natalis-dim'}`}>
+            {banner}
           </p>
-        )}
-        {phase === 'intro' && (
-          <p className="text-green-400 font-mono text-sm animate-pulse">Initialising...</p>
-        )}
-        {phase === 'done' && (
-          <p className="text-green-400 font-mono text-sm">ACCESS {successes > 0 ? 'GRANTED' : 'DENIED'}</p>
         )}
       </div>
 
-      {/* Input progress */}
-      {phase === 'input' && (
-        <div className="flex gap-1">
-          {Array.from({ length: sequence.length }, (_, i) => (
-            <div key={i} className={`w-3 h-3 rounded-full ${i < input.length ? 'bg-green-500' : 'bg-gray-300'}`} />
-          ))}
-        </div>
+      {(phase === 'show' || phase === 'input') && (
+        <p className="text-natalis-muted text-xs">{banner}</p>
       )}
 
-      {/* Symbol grid */}
+      {/* Keypad */}
       <div className="grid grid-cols-5 gap-2">
         {SYMBOLS.map((sym, idx) => (
           <button
             key={idx}
+            type="button"
             onClick={() => handlePick(idx)}
             disabled={phase !== 'input'}
-            className="w-14 h-14 rounded-xl font-mono font-bold text-sm text-white transition-all active:scale-90"
-            style={{
-              background: phase === 'input' ? COLORS[idx] : '#d1d5db',
-              opacity: phase === 'input' ? 1 : 0.5,
-              cursor: phase === 'input' ? 'pointer' : 'default',
-            }}
+            aria-keyshortcuts={idx === 9 ? '0' : String(idx + 1)}
+            className="w-[52px] h-[52px] rounded-xl font-mono text-sm text-natalis-text
+                       border border-natalis-rule active:scale-95 transition-all
+                       disabled:opacity-35 disabled:cursor-default"
+            style={{ background: phase === 'input' ? TINTS[idx] : 'transparent' }}
           >
             {sym}
           </button>
         ))}
       </div>
+
+      <p className="text-xs text-natalis-faint">Keys 1–9 and 0, in reading order</p>
     </div>
   )
 }

@@ -7,11 +7,11 @@ import HackGame from './minigames/HackGame'
 import FightGame from './minigames/FightGame'
 
 const GAME_META = {
-  maze:      { title: 'Escape',       icon: '🏃', desc: 'Navigate to the exit before you\'re caught.' },
-  lockpick:  { title: 'Pick the Lock', icon: '🔓', desc: 'Set each pin when it hits the green zone.' },
-  quicktime: { title: 'Quick Hands',  icon: '👋', desc: 'Tap at the right moment.' },
-  hack:      { title: 'System Breach', icon: '💻', desc: 'Memorise and replay the sequence.' },
-  fight:     { title: 'Fight Back',   icon: '👊', desc: 'Read the attack — counter correctly.' },
+  maze:      { title: 'Escape',        icon: '🏃', desc: 'Read the route, then walk it before they reach you.' },
+  lockpick:  { title: 'Pick the Lock', icon: '🔓', desc: 'Set each pin as it crosses the shear line.' },
+  quicktime: { title: 'Quick Hands',   icon: '👋', desc: 'Act at the right moment.' },
+  hack:      { title: 'System Breach', icon: '💻', desc: 'The sequence is on the screen once. Give it back.' },
+  fight:     { title: 'Fight Back',    icon: '👊', desc: 'Read the attack — answer it.' },
 }
 
 export default function MinigameScreen() {
@@ -41,21 +41,51 @@ export default function MinigameScreen() {
  * other two sheets grew an Escape handler in the redesign and this one was
  * missed. Escape counts as a failure, exactly as the visible Skip control does,
  * and is only offered where that control is.
+ *
+ * `aria-modal` is a promise to assistive technology, not a behaviour: two Tabs
+ * from inside the game still walked out of the dialog and into the life screen
+ * underneath it, where the next Tab reaches Menu and the one after that Age Up.
+ * The Tab key is wrapped so focus stays inside the thing that is blocking the
+ * page.
  */
 function MinigameDialog({ meta, type, difficulty, title, description, skipable, pendingMinigame, handleComplete, handleSkip }) {
   const panelRef = useRef(null)
 
   useEffect(() => {
     panelRef.current?.focus()
-    if (!skipable) return
+  }, [])
+
+  useEffect(() => {
     const onKey = (e) => {
-      if (e.key !== 'Escape') return
-      e.preventDefault()
-      handleSkip()
+      if (e.key === 'Escape') {
+        if (!skipable) return
+        e.preventDefault()
+        handleSkip()
+        return
+      }
+      if (e.key !== 'Tab') return
+      const panel = panelRef.current
+      if (!panel) return
+      const stops = [...panel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+        .filter(el => !el.disabled && el.offsetParent !== null)
+      if (stops.length === 0) { e.preventDefault(); panel.focus(); return }
+      const first = stops[0]
+      const last = stops[stops.length - 1]
+      const active = document.activeElement
+      if (e.shiftKey && (active === first || active === panel || !panel.contains(active))) {
+        e.preventDefault(); last.focus()
+      } else if (!e.shiftKey && (active === last || !panel.contains(active))) {
+        e.preventDefault(); first.focus()
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [skipable, handleSkip])
+
+  // A second minigame of the same type mounts into the first one's React
+  // instance and inherits its round, its HP and its maze unless the element is
+  // keyed to the thing being played.
+  const gameKey = `${type}-${difficulty ?? 'normal'}-${title ?? ''}`
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
@@ -81,19 +111,21 @@ function MinigameDialog({ meta, type, difficulty, title, description, skipable, 
 
         {/* Game area */}
         <div className="px-4 py-6 flex flex-col items-center">
-          {type === 'maze' && <MazeGame onComplete={handleComplete} difficulty={difficulty} />}
-          {type === 'lockpick' && <LockPick onComplete={handleComplete} difficulty={difficulty} />}
+          {type === 'maze' && <MazeGame key={gameKey} onComplete={handleComplete} difficulty={difficulty} />}
+          {type === 'lockpick' && <LockPick key={gameKey} onComplete={handleComplete} difficulty={difficulty} />}
           {type === 'quicktime' && (
             <QuickTime
+              key={gameKey}
               onComplete={handleComplete}
               difficulty={difficulty}
-              label={pendingMinigame.actionLabel ?? 'Now!'}
+              label={pendingMinigame.actionLabel ?? 'Now'}
               rounds={pendingMinigame.rounds ?? 3}
             />
           )}
-          {type === 'hack' && <HackGame onComplete={handleComplete} difficulty={difficulty} />}
+          {type === 'hack' && <HackGame key={gameKey} onComplete={handleComplete} difficulty={difficulty} />}
           {type === 'fight' && (
             <FightGame
+              key={gameKey}
               onComplete={handleComplete}
               difficulty={difficulty}
               enemyLabel={pendingMinigame.enemyLabel}

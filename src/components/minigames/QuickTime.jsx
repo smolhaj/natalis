@@ -1,111 +1,142 @@
 import { useState, useEffect, useRef } from 'react'
 
-// Generic quick-time event: a target slides across and player must tap at the right moment
-// Used for: pickpocketing, escaping a mugger, bar fight timing
+// Generic quick-time event: a marker sweeps across and the player acts at the
+// right moment. Used for pickpocketing, hot-wiring, a hand that has to be fast.
 
-export default function QuickTime({ onComplete, difficulty = 'normal', label = 'Grab it!', rounds = 3 }) {
+const ZONE_START = 38
+const ZONE_END = 62
+const TICK_MS = 30
+
+const LEVEL = {
+  easy:   { speed: 1.2, share: 0.34 },
+  normal: { speed: 1.7, share: 0.60 },
+  hard:   { speed: 2.0, share: 1.00 },
+}
+
+export default function QuickTime({ onComplete, difficulty = 'normal', label = 'Now', rounds = 3 }) {
+  const level = LEVEL[difficulty] ?? LEVEL.normal
+  const needed = Math.max(1, Math.ceil(rounds * level.share))
+
   const [round, setRound] = useState(0)
-  const [hits, setHits] = useState(0)
-  const [pos, setPos] = useState(0) // 0-100 across the bar
-  const [dir, setDir] = useState(1)
+  const [record, setRecord] = useState([])   // one entry per round played: true if taken
+  const [pos, setPos] = useState(0)
   const [flash, setFlash] = useState(null) // 'hit' | 'miss'
   const [done, setDone] = useState(false)
   const posRef = useRef(0)
   const dirRef = useRef(1)
   const interval = useRef(null)
+  const settled = useRef(false)
+  // A round resolves on a timer; if the dialog closes first that timer still
+  // fires, and an unmounted game reporting a result lands on whatever is
+  // pending next.
+  const alive = useRef(true)
+  useEffect(() => { alive.current = true; return () => { alive.current = false } }, [])
 
-  const speed = difficulty === 'hard' ? 2.2 : difficulty === 'easy' ? 1.2 : 1.7
-  // Target zone: 40-60 (center 20%)
-  const ZONE_START = 38
-  const ZONE_END = 62
-
-  const startRound = () => {
+  useEffect(() => {
+    if (done) return
     posRef.current = 0
     dirRef.current = 1
     setPos(0)
-    setDir(1)
     setFlash(null)
     interval.current = setInterval(() => {
-      posRef.current += dirRef.current * speed
+      posRef.current += dirRef.current * level.speed
       if (posRef.current >= 100) { posRef.current = 100; dirRef.current = -1 }
       if (posRef.current <= 0) { posRef.current = 0; dirRef.current = 1 }
       setPos(posRef.current)
-    }, 30)
-  }
-
-  useEffect(() => {
-    startRound()
+    }, TICK_MS)
     return () => clearInterval(interval.current)
-  }, [round])
+  }, [round, done, level.speed])
 
   const handleTap = () => {
-    if (done || flash) return
+    if (done || flash || settled.current) return
     clearInterval(interval.current)
     const hit = posRef.current >= ZONE_START && posRef.current <= ZONE_END
     setFlash(hit ? 'hit' : 'miss')
-    const newHits = hit ? hits + 1 : hits
+    const nextRecord = [...record, hit]
+    const newHits = nextRecord.filter(Boolean).length
+    setRecord(nextRecord)
 
     setTimeout(() => {
+      if (!alive.current) return
       if (round + 1 >= rounds) {
         setDone(true)
-        const needed = difficulty === 'hard' ? rounds : Math.ceil(rounds * 0.6)
-        setTimeout(() => onComplete(newHits >= needed), 400)
+        if (settled.current) return
+        settled.current = true
+        setTimeout(() => { if (alive.current) onComplete(newHits >= needed) }, 500)
       } else {
-        setHits(newHits)
         setRound(r => r + 1)
       }
-    }, 500)
-
-    if (hit) setHits(newHits)
+    }, 550)
   }
 
-  const needed = difficulty === 'hard' ? rounds : Math.ceil(rounds * 0.6)
+  // The panel takes focus when the dialog opens, so without this the player has
+  // to Tab to the button before the first round is playable — which costs them
+  // the round.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== ' ' && e.key !== 'Enter') return
+      if (e.metaKey || e.ctrlKey || e.altKey) return
+      e.preventDefault()
+      handleTap()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  })
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <div className="text-center">
-        <p className="text-sm font-semibold text-gray-700">Round {round + 1} of {rounds}</p>
-        <p className="text-xs text-gray-400 mt-0.5">Hit {needed}/{rounds} to succeed</p>
+    <div className="flex flex-col items-center gap-5">
+      <div className="flex items-baseline justify-between w-full max-w-xs">
+        <span className="text-natalis-muted text-xs uppercase tracking-wider">
+          Round {Math.min(round + 1, rounds)} of {rounds}
+        </span>
+        <span className="text-natalis-faint text-xs">{needed} of {rounds} needed</span>
       </div>
 
-      {/* Sliding bar */}
-      <div className="relative w-72 h-14 rounded-xl overflow-hidden" style={{ background: '#f3f4f6' }}>
-        {/* Target zone */}
+      {/* The sweep */}
+      <div className="relative w-64 h-14 rounded-xl overflow-hidden border border-natalis-border bg-natalis-bg">
         <div
-          className="absolute top-0 bottom-0 bg-green-200 opacity-70"
-          style={{ left: `${ZONE_START}%`, width: `${ZONE_END - ZONE_START}%` }}
+          className="absolute top-0 bottom-0 border-x border-natalis-accent"
+          style={{ left: `${ZONE_START}%`, width: `${ZONE_END - ZONE_START}%`, background: 'rgba(63,86,112,0.13)' }}
         />
-        {/* Center line */}
-        <div className="absolute top-0 bottom-0 w-0.5 bg-green-500 opacity-50" style={{ left: '50%' }} />
-        {/* Moving target */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-xl"
+          className="absolute top-1.5 bottom-1.5 w-1 rounded-full"
           style={{
             left: `${pos}%`,
-            transform: `translateX(-50%) translateY(-50%)`,
-            background: flash === 'hit' ? '#4e7159' : flash === 'miss' ? '#9b5445' : '#635880',
-            transition: 'background 0.15s',
-            boxShadow: flash === 'hit' ? '0 0 12px #4e7159' : 'none',
+            transform: 'translateX(-50%)',
+            background: flash === 'miss' ? '#8c3a2e' : flash === 'hit' ? '#3f5670' : '#403b33',
           }}
-        >
-          {flash === 'hit' ? '✓' : flash === 'miss' ? '✗' : '👋'}
-        </div>
+        />
       </div>
 
+      <p className="h-4 text-xs text-natalis-muted">
+        {flash === 'hit' ? 'Clean.' : flash === 'miss' ? 'Too early, or too late.' : '\u00a0'}
+      </p>
+
       <button
+        type="button"
         onClick={handleTap}
         disabled={done || !!flash}
-        className="w-40 py-4 rounded-2xl text-white font-bold text-lg active:scale-95 transition-transform"
-        style={{ background: done ? '#9ca3af' : '#635880', cursor: done ? 'default' : 'pointer' }}
+        className="w-40 py-3.5 rounded-xl border border-natalis-accent text-natalis-accent
+                   hover:bg-natalis-accent-soft active:scale-95 transition-all
+                   disabled:opacity-40 disabled:hover:bg-transparent"
       >
         {label}
       </button>
 
-      <div className="flex gap-2">
+      {/* Round record: filled for a round taken, hollow for one missed. */}
+      <div className="flex gap-2" aria-label={`${record.filter(Boolean).length} of ${rounds} taken`}>
         {Array.from({ length: rounds }, (_, i) => (
-          <div key={i} className={`w-3 h-3 rounded-full ${i < hits ? 'bg-green-400' : i === round && flash === 'miss' ? 'bg-red-400' : 'bg-gray-200'}`} />
+          <div
+            key={i}
+            className={`w-2.5 h-2.5 rounded-full border ${
+              record[i] === true ? 'bg-natalis-accent border-natalis-accent'
+                : record[i] === false ? 'border-natalis-alarm' : 'border-natalis-border'
+            }`}
+          />
         ))}
       </div>
+
+      <p className="text-xs text-natalis-faint">Space, Enter, or press the button</p>
     </div>
   )
 }
