@@ -602,6 +602,16 @@ npm run sim -- --broad   # the same over the whole roster, not the ten default c
 `npm run sim` reports three things no static audit can see: the register mix, the
 share of each **prose layer** a player actually reads (with `concentration` — how
 many distinct lines supply half of all output), and **within-life repetition**.
+
+**The prose-coverage figure is a function of the sample size, and a bare number
+for it is not checkable.** The same code reports yearTexture at 8.2% over the
+default 120 lives and 13.7% over 600, because a life only lives so many years
+and the layer holds 8,126 lines. Quote it with the `--lives` it was taken at or
+it cannot be reproduced, and compare runs only at equal n. The number that does
+not move with sample size, and is therefore the one to watch, is
+**concentration**: about 160 lines supply half of all texture output at both
+sizes, which is the real statement about how much of the layer is doing the
+work.
 The ten default configurations cannot reach 144 countries' content at all, so a
 coverage number taken over them understates the place-anchored layers by
 construction; `--broad` is the honest read.
@@ -622,7 +632,7 @@ four now have a test that fails if they return.
 | stranger glimpses per life | 0.3 | 6.2 |
 | longest unbroken contemplative run | 19-21 years | 2 |
 | Nigeria 1962 median death age (survived childhood) | 8 | 43-51 |
-| yearTexture lines a player ever sees | 9.3% of 7,588 | 19.1% |
+| yearTexture lines a player ever sees | 9.3% of 7,588 | 13.7% of 8,126 at 600 lives (see below) |
 | countries whose texture appears in a broad run | 16 | 94 |
 | prose a character reads that they already read | 15.6% | 0.2% |
 | countries rendering a blank flag | 72 of 146 | 0 |
