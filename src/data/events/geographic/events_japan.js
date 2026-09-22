@@ -356,11 +356,17 @@ const JAPAN_EVENTS = [
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
+      // Where. Hiroshima held ~350,000 people in August 1945 and Nagasaki
+      // ~240,000, out of 72 million: this is about one Japanese life in a
+      // hundred and twenty, not a thing that can happen to anybody. Without a
+      // place test it reached a farmer in rural Tohoku, eight hundred
+      // kilometres away, and became the first line of his epitaph.
+      ['jp_hiroshima', 'jp_nagasaki'].includes(G.place?.id) &&
       G.currentYear >= 1945 && G.currentYear <= 1960 &&
       G.age >= 14 &&
       !G.mem?.jpn_hibakusha,
     text: (G) => {
-      const city = G.currentYear <= 1947 && G.age <= 35 ? 'Hiroshima' : 'a city'
+      const city = G.place?.id === 'jp_nagasaki' ? 'Nagasaki' : 'Hiroshima'
       return `August 1945. The flash. Anyone who could see it was close enough that the seeing was the last clear thing for a long time. The burns. The silence at the hospital — not because people were not in pain but because the pain was past the reach of sound. Hiroshima and Nagasaki: 200,000 dead in the acute phase, more over the years from radiation illness. You survived. The word for what you are is hibakusha — "explosion-affected person." The word carries a stigma that the survivors did not earn: marriage bureaus begin quietly checking A-bomb registries. Employers do the same. The bomb was August 6 and 9; the discrimination begins in the weeks after and continues for decades.`
     },
     choices: [

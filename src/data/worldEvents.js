@@ -1138,7 +1138,11 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m -= 12; p.s -= 5; p.addFlag('stasi_generation'); },
     addFlags: ['stasi_generation'],
     minAge: 10,
-    when: (G) => G.currentYear < 1990 && !G.flags.includes('wall_generation'),
+    when: (G) =>
+      // The roster has one Germany, correctly. These two are about the DDR,
+      // and fired for a woman in rural Bavaria without this.
+      ['de_leipzig', 'de_rural_east', 'de_berlin'].includes(G.place?.id) &&
+      G.currentYear < 1990 && !G.flags.includes('wall_generation'),
   },
   {
     id: 'east_germany_trabant',
@@ -1152,7 +1156,11 @@ export const WORLD_EVENTS = [
     addFlags: ['trabant_owner'],
     minAge: 25,
     maxAge: 65,
-    when: (G) => G.stats.wealth < 65 && G.currentYear < 1990,
+    when: (G) =>
+      // The roster has one Germany, correctly. These two are about the DDR,
+      // and fired for a woman in rural Bavaria without this.
+      ['de_leipzig', 'de_rural_east', 'de_berlin'].includes(G.place?.id) &&
+      G.stats.wealth < 65 && G.currentYear < 1990,
   },
   {
     id: 'cuba_ration_book',

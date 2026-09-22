@@ -13,7 +13,11 @@ export function generateIdentityCard(state) {
   // partner" and means a living one, so a widow was told "You are married to
   // Vikram Joshi" on the card that renders every year for the rest of her life,
   // four years after his death line printed. 9 of 13 widowed lives got this.
-  const { age, children, career, education, desire } = state
+  const { age, children, education, desire } = state
+  // `retire()` nulls the career, so a retiree's whole working life was absent
+  // from the death screen: a Detective Chief Inspector with thirty-one years and
+  // a Celebrated Author with thirty-seven both read as having never worked.
+  const career = state.career ?? state.mem?.retiredFrom ?? null
   const partner = state.partner?.alive === false ? null : state.partner
   const lostPartner = state.partner?.alive === false ? state.partner : null
   const G = buildG(state)
@@ -240,7 +244,11 @@ export function generateIdentityCard(state) {
 const oneOf = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export function generateEpitaph(state) {
-  const { character, flags, stats, regret, age, children, partner, career, money } = state
+  const { character, flags, stats, regret, age, children, partner, money } = state
+  // `retire()` nulls the career, so a retiree's whole working life was absent
+  // from the death screen: a Detective Chief Inspector with thirty-one years and
+  // a Celebrated Author with thirty-seven both read as having never worked.
+  const career = state.career ?? state.mem?.retiredFrom ?? null
   const name = character.firstName
   const He = character.gender === 'male' ? 'He' : 'She'
   const he = He.toLowerCase()
@@ -1197,7 +1205,11 @@ const WORLD_EVENT_NOTES = {
 }
 
 export function generateLifeNotes(state) {
-  const { character, flags, age, children, partner, career, money, siblings, fame } = state
+  const { character, flags, age, children, partner, money, siblings, fame } = state
+  // `retire()` nulls the career, so a retiree's whole working life was absent
+  // from the death screen: a Detective Chief Inspector with thirty-one years and
+  // a Celebrated Author with thirty-seven both read as having never worked.
+  const career = state.career ?? state.mem?.retiredFrom ?? null
   const f = (flag) => flags.includes(flag)
   const any = (...fs) => fs.some(g => flags.includes(g))
   const notes = [] // [{ priority, text }]

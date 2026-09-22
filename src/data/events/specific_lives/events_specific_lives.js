@@ -3908,7 +3908,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     text: 'You are four in Ban Vinai and there are a hundred and forty thousand people in it. The Lutherans in Minnesota agree to sponsor the family and you land in Minneapolis in January. It is fifteen below and the man who meets you at the airport has brought coats in four sizes and gets all four wrong. Your father, who guided American aircrew out of Laos for six years, spends the drive looking out at the snow and saying nothing.',
     context: 'The CIA recruited around 30,000 Hmong in Laos from 1961 for the Secret War. After 1975 roughly a third of the Hmong population fled. Minnesota now has the largest Hmong community outside Southeast Asia, largely through Lutheran and Catholic resettlement sponsorship.',
     choices: null,
-    effect: (p) => { p.setMem('sl_hmong_minn', true); p.m -= 4; p.e += 3; p.h -= 2; p.addFlag('hmong_resettlement') },
+    effect: (p) => { p.setMem('sl_hmong_minn', true); p.m -= 4; p.e += 3; p.h -= 2; p.addFlag('hmong_resettlement'); p.emigrateTo('United States', { residency: 'refugee_status' }) },
   },
 
   // ══════════════════════════════════════════════════════════════════════════

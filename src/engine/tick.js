@@ -471,7 +471,8 @@ function resolveProxyExtras(state, proxy) {
   // retirement because the pension was never recorded either.
   if (!next.retired && proxy.flags.includes('retired')) {
     const pension = state.career ? Math.round(state.career.salary * 0.35) : (next.pensionAnnual ?? 0)
-    next = { ...next, retired: true, career: null, pensionAnnual: pension }
+    next = { ...next, retired: true, career: null, pensionAnnual: pension,
+      mem: { ...(next.mem ?? {}), retiredFrom: { title: next.career?.title, field: next.career?.field, id: next.career?.id } } }
   }
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
@@ -3062,6 +3063,37 @@ export function tick(state) {
   // Education progression
   s = tickEnrollment(s)
 
+  // Whether there was a school at all is decided when a child would start one,
+  // not at sixteen. It used to be decided at sixteen, by the same roll that
+  // decides whether secondary is completed — so a character who failed the
+  // secondary roll and happened to be illiterate was stamped `never_schooled`,
+  // and `epitaph.js` turned that into "Never went to school." on the death
+  // screen. `everAttended` tested `mem.attendedSchool`, which nothing in the
+  // engine or the corpus has ever set.
+  //
+  // A life-log read found it printing to a Cairo middle_class character at
+  // wealthTier 3 who had had school events firing for a decade — the teacher
+  // using her name as the unit of measurement at 10, the birth certificate
+  // asked for at enrolment at 11, community service "through school" at 14 —
+  // and then, in the same year as "You do not learn to read", a library
+  // computer she learned to type on. Not completing secondary and never
+  // attending anything are different facts about a life.
+  if (s.age === 7 && s.mem?.attendedSchool === undefined) {
+    const attended = (s.character?.literate ?? false) || chance(primaryChance(s))
+    s.mem = { ...(s.mem ?? {}), attendedSchool: attended }
+    if (!attended) {
+      s.flags = [...new Set([...s.flags, 'never_schooled'])]
+      s.education = { ...s.education, level: 'none', enrolled: null }
+      s.log = [...s.log, {
+        age: s.age, year: s.currentYear, isKey: true,
+        text: pickFrom([
+          'There is no school to start. The nearest one is a long way off and the family needs what you can do here, and the question does not come up again in any year you can remember.',
+          'The other children go and you do not. Nobody sits you down about it. There is work, and you are old enough for some of it now, and that is the whole of the explanation anybody offers.',
+        ]),
+      }]
+    }
+  }
+
   // Leaving school, at the age and the rate this place and decade actually did.
   // Without this, every character who had not explicitly dropped out graduated
   // secondary school, including in countries where one child in ten did.
@@ -3084,11 +3116,12 @@ export function tick(state) {
       // and the whole illiteracy arc guards on G.literate.
       const literate = s.character?.literate ?? chance(primaryChance(s))
       s.education = { ...s.education, level: literate ? 'primary' : 'none', enrolled: null }
-      // A character who attended is one who left early; one who never attended
-      // is `never_schooled`. Setting both made every guard reading either one
-      // true for the same life.
-      const everAttended = literate || s.flags.includes('dropped_out') ||
-        s.flags.includes('left_school_early') || s.mem?.attendedSchool === true
+      // Attendance was settled at seven. What is settled here is only whether
+      // they finished, so this can set `left_school_early` and never
+      // `never_schooled` — a character who was never at a school is already
+      // carrying that flag and does not reach this branch as a surprise.
+      const everAttended = s.mem?.attendedSchool !== false || literate ||
+        s.flags.includes('dropped_out') || s.flags.includes('left_school_early')
       s.flags = [...new Set([...s.flags, ...(everAttended ? ['left_school_early'] : ['never_schooled'])])]
       s.log = [...s.log, {
         age: s.age, year: s.currentYear, isKey: true,

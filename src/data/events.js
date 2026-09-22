@@ -1115,8 +1115,17 @@ const BASE_EVENTS = [
       {
         text: 'Push to go',
         tag: 'ambitious',
-        outcome: 'The family takes the step. A new world, cold and unfamiliar.',
-        effect: (p) => { p.m -= 5; p.s -= 5; p.e += 5; p.addFlag('emigrated'); p.setResidency('work_visa'); },
+        outcome: 'The family takes the step. A new world, cold and unfamiliar, and a set of papers that say you are allowed to be in it for now.',
+        // `addFlag('emigrated')` and a work visa, and no verb that moves
+        // anybody. A life-log read found a Cairo character holding a work visa
+        // in the country she was born in for forty-two years, collecting
+        // diaspora texture the whole time — "the place you left exists without
+        // you" — under a death screen reading "She left Egypt in search of
+        // something different, and found it, at a cost."
+        effect: (p) => {
+          p.m -= 5; p.s -= 5; p.e += 5
+          p.emigrateTo(p._state?.character?.country?.archetype === 'subsaharan' ? 'United Kingdom' : 'United States', { residency: 'work_visa' })
+        },
         inject: null,
       },
       {

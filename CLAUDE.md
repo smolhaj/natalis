@@ -575,7 +575,7 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 389 named places, 252 world events, 8,228 character events
+154 countries, 393 named places, 252 world events, 8,228 character events
 (2,129 of them the contemplative sonder layer, 158 stranger glimpses, 42 prison
 and political-arrest, 30 Gulf, 42 Guyana, 41 Bosnia, 21 Nigeria 1967-99),
 3,153 registered flags, 377 ribbons.
@@ -1119,6 +1119,56 @@ The touchstone life now reaches **77%, and all 21 of 21 events fire.**
 **Corollary worth keeping: a module can be correct and still be for somebody
 else.** Nothing static can see it, and `sim` cannot either — it reports the
 module firing, because the 1995 cohort is in the sample too.
+
+### The claim the state never checked, again
+
+A fourth beta pass read eight complete life logs end to end. The class it found
+is the one the second pass found — **a claim printed to the player that nothing
+checked against the state** — and four instances of it were on the death screen,
+which is the last thing anybody reads.
+
+| | before | after |
+|---|---|---|
+| a debt's balance after fifty years | $7.1m from a $2,400 bill | $1.0m worst case, median $5,818 |
+| debtor lives the game ever mentions debt to | 0 | 34 of 48 |
+| "Never went to school." after a decade of school events | stamped at 16 | attendance decided at 7 |
+| a retiree's working life on the death screen | absent | named |
+| Japanese lives that could become hibakusha | all of them | the two cities |
+| Bavarians with a Stasi file | all of them | none |
+
+The shapes worth keeping:
+
+**A flag is not a fact about the state.** `never_schooled` was set at sixteen by
+the roll that decides whether *secondary* is completed, from an `everAttended`
+test reading `mem.attendedSchool` — which nothing in the engine or the corpus
+has ever set. Not finishing secondary and never attending anything are different
+facts, and attendance is now decided at seven, when a child would start.
+
+**Nulling a field erases the life that filled it.** `retire()` sets
+`career: null` and all three epitaph readers destructure `career` off state, so
+thirty-one years as a Detective Chief Inspector and thirty-seven as a novelist
+both read as no work at all. The two lives in that sample that died still
+employed got their line, which is how you see it.
+
+**An event with no place guard is a claim about where the character was.**
+`jpn_hibakusha` tested Japan, a year range and an age — so a farmer in rural
+Tohoku, eight hundred kilometres away, became an atomic-bomb survivor and it was
+the first line of his epitaph, "the city unnamed" because there was not one. The
+roster had nowhere to put a guard: Japan carried Tokyo, Osaka and Rural Tohoku.
+Same shape for `east_germany_stasi` and `east_germany_trabant`, which are
+`countries: ['Germany']` — correct, it was one country either side — against a
+roster holding only Berlin and rural Bavaria. Hiroshima, Nagasaki, Leipzig and
+rural Thuringia exist now, and the guards name them.
+
+**And the audit had the same blind spot as the content, for the fourth time.**
+`narrated-move` accepted `setResidency(` as evidence that an event moves
+somebody. It does not — it changes what papers a character holds and leaves them
+exactly where they were, which is how a Cairo character came to hold a work visa
+in her country of birth for forty-two years, collecting diaspora texture under a
+death screen reading "She left Egypt in search of something different." Tightened
+to `relocate` and `emigrateTo` only, and widened past move/relocate/emigrate to
+the shape that hid — "The family takes the step. A new world" — it went from one
+finding to five, all real.
 
 Related, and the reason `tests/careerFit.test.js` exists: `chooseCareer` reads
 `FIELD_FIT[c.field]?.[col] ?? 1`, and that `?? 1` is silent. A career whose

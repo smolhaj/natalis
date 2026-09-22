@@ -67,7 +67,7 @@ const COLOMBIA_EVENTS = [
         text: 'Your family moves to the city. The displacement is called survival.',
         tag: null,
         outcome: 'You arrive in Bogotá or Medellín or Cali to a periphery that is filling with families from every valley. The city is not what it was last decade. You are part of why.',
-        effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('col_violencia_generation'); p.addFlag('col_desplazado'); p.addFlag('displaced'); p.setMem('col_violencia', true); },
+        effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('col_violencia_generation'); p.addFlag('col_desplazado'); p.addFlag('displaced'); p.relocate('co_bogota', 'informal'); p.setMem('col_violencia', true); },
       },
       {
         text: 'You stay. The land belongs to your family. Leaving would mean giving it to them.',

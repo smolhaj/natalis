@@ -753,7 +753,13 @@ export async function auditNarratedMoves() {
     String.raw`\b[Yy]ou\s+(?:move|relocate)\s+to\s+(?:[A-Z]|the (?:city|capital|coast|mainland|north|south|interior)\b)`
     + String.raw`|\b[Tt]he family\s+(?:moves|relocates|leaves for|emigrates)\s*(?:to\s+)?(?:[A-Z]|the (?:city|capital|coast)\b)`
     + String.raw`|\b[Yy]ou emigrate\b|\b[Yy]ou leave the country\b|[Aa]rrange the exit`
-    + String.raw`|\b[Yy]ou board the (?:boat|ship|plane) for\b`,
+    + String.raw`|\b[Yy]ou board the (?:boat|ship|plane) for\b`
+    // The shape that hid: prose that says a family emigrated without using
+    // the word 'move'. `adol_family_migration`'s outcome is "The family takes
+    // the step. A new world, cold and unfamiliar" — unmistakable to a reader
+    // and invisible to a pattern built around move/relocate/emigrate.
+    + String.raw`|\b[Tt]he family takes the step\b|\bA new world\b`
+    + String.raw`|\b[Yy]ou (?:land|arrive) in [A-Z]`,
   )
   const bodies = (e) => {
     const out = []
@@ -770,7 +776,14 @@ export async function auditNarratedMoves() {
     const prose = bodies(e)
     if (!MOVES.test(prose)) continue
     const src = effectSrc(e)
-    if (/relocate\s*\(|emigrateTo\s*\(|setResidency\s*\(/.test(src)) continue
+    // `setResidency` is not a move. It changes what papers the character holds
+    // and leaves them exactly where they were, so accepting it here made the
+    // audit blind to the commonest shape of this defect: a choice whose outcome
+    // reads "The family takes the step. A new world, cold and unfamiliar", whose
+    // effect is `addFlag('emigrated')` plus `setResidency('work_visa')`, and
+    // whose character then holds a work visa in their country of birth for
+    // forty-two years while the death screen says they left it.
+    if (/relocate\s*\(|emigrateTo\s*\(/.test(src)) continue
     findings.push(finding(WARN, 'narrated-move', e.id, locate(e.id),
       'prose narrates leaving and no effect calls relocate() or emigrateTo()'))
   }

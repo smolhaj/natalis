@@ -4336,6 +4336,61 @@ export const PLACES = [
     },
   },
 
+  // ── JAPAN: the two cities ──────────────────────────────────────────────────
+  // `jpn_hibakusha` had no place guard and the roster had nowhere to put one:
+  // Japan carried Tokyo, Osaka and Rural Tohoku, so a farmer eight hundred
+  // kilometres from Hiroshima became an atomic-bomb survivor and it was the
+  // first line of his epitaph — "the city unnamed", because there wasn't one.
+
+  {
+    id: 'jp_hiroshima', name: 'Hiroshima', country: 'Japan',
+    type: 'urban', scale: 'city', region: 'Chugoku',
+    neighborhoods: {
+      informal:      ['The barracks by the river', 'Aioi riverbank', 'Motomachi'],
+      working_class: ['Danbara', 'Eba', 'Ujina', 'Koi'],
+      middle_class:  ['Hatchobori', 'Nobori-cho', 'Ushita'],
+      elite:         ['Near the castle', 'Nakajima', 'Hijiyama'],
+    },
+  },
+  {
+    id: 'jp_nagasaki', name: 'Nagasaki', country: 'Japan',
+    type: 'urban', scale: 'city', region: 'Kyushu',
+    neighborhoods: {
+      informal:      ['The Urakami slopes', 'Near the shipyard gate'],
+      working_class: ['Urakami', 'Inasa', 'Tateyama'],
+      middle_class:  ['Dejima side', 'Nakamachi'],
+      elite:         ['Minamiyamate', 'Higashiyamate'],
+    },
+  },
+
+  // ── GERMANY: the other half ────────────────────────────────────────────────
+  // The roster has one Germany, correctly — it was one country either side of
+  // the forty years — but it carried only Berlin and rural Bavaria, so the
+  // Stasi and Trabant world events, guarded on `countries: ['Germany']`, told a
+  // Bavarian woman about her own informant file and the death screen recorded
+  // "Lived through East Germany".
+
+  {
+    id: 'de_leipzig', name: 'Leipzig', country: 'Germany',
+    type: 'urban', scale: 'city', region: 'Saxony',
+    neighborhoods: {
+      informal:      ['Eisenbahnstrasse', 'Volkmarsdorf', 'The Plattenbau at Grunau edge'],
+      working_class: ['Grunau', 'Paunsdorf', 'Connewitz', 'Lindenau'],
+      middle_class:  ['Sudvorstadt', 'Schleussig', 'Gohlis'],
+      elite:         ['Waldstrassenviertel', 'Musikviertel'],
+    },
+  },
+  {
+    id: 'de_rural_east', name: 'Rural Thuringia', country: 'Germany',
+    type: 'rural', scale: 'village', region: 'Thuringia',
+    neighborhoods: {
+      informal:      ['Die Kate am Waldrand', 'Hinter der LPG'],
+      working_class: ['Dorfstrasse', 'Bei der LPG'],
+      middle_class:  ['Um die Kirche', 'Am Anger'],
+      elite:         ['Das Gutshaus', 'Der grosse Hof'],
+    },
+  },
+
   // ── GUYANA ─────────────────────────────────────────────────────────────────
 
   {
