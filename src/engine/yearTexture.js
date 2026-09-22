@@ -10879,7 +10879,13 @@ function* textureCandidates(state, opts = {}) {
       : 'The generation at the toll gate was not born when Abiola won. You were. You tried to explain June 12 to them. They did not need to understand June 12 to understand what was happening at the toll gate. The argument is the same argument.',
   ])]
   if (F.has('nepa_generation') && Math.random() < 0.28) yield [T.anchored, pick([
-    '"NEPA has taken light." The phrase is muscle memory. You know the power is going before it goes — from the ceiling fan, from the way the fridge hums differently. You have organised your life around this knowledge.',
+    // The fan is true of any house on the grid; the fridge is not. Nigeria's
+    // refrigerator median is 2002, and the block was gated on the flag alone,
+    // so this printed into 1986 and CI caught it. A ceiling fan and a fridge
+    // are two different statements about a household.
+    currentYear >= 1990
+      ? '"NEPA has taken light." The phrase is muscle memory. You know the power is going before it goes — from the ceiling fan, from the way the fridge hums differently. You have organised your life around this knowledge.'
+      : '"NEPA has taken light." The phrase is muscle memory. You know the power is going before it goes — the fan slows a half-turn before the room drops, and you are already reaching for the lamp. You have organised your life around this knowledge.',
     phase === 'late_life'
       ? 'Decades of generators: diesel costs, starting cords, the neighbour\'s generator that runs at 2am. You have calculated the running cost of electricity access more times than you can count. The national grid was never the primary system.'
       : 'The generator has a maintenance schedule, a diesel budget, a noise level you have learned to sleep through. This is domestic life in Nigeria. The infrastructure failure is not a crisis. It is the baseline.',
