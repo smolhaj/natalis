@@ -2,6 +2,7 @@ import { COUNTRIES } from '../data/countries'
 import { DESTINATIONS } from '../data/destinations'
 import { ACTIVITIES, localCost } from '../data/activities'
 import { inEraMoney } from '../data/economy.js'
+import { preferUnsaid } from './prose.js'
 import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
 import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
@@ -182,16 +183,38 @@ export function tryForChild(state) {
   const bearerIsPlayer = state.character?.gender === 'female'
   const fertChance = state.partner.married ? 0.65 : 0.38
   if (!chance(fertChance)) {
+    // All five of the original lines are about years of this — the counting,
+    // the word neither of you says — and all five fired on the FIRST failed
+    // attempt, in the same year a couple met, and to couples who already had
+    // two children. `lifeCourse` calls this annually, so one life read "You had
+    // told yourselves you were not counting" twice, two years apart, verbatim.
+    //
+    // How long it has been is the whole content of these sentences, so it has
+    // to be counted before they can be said.
+    const tryingSince = state.mem?.tryingSinceAge ?? state.age
+    const years = Math.max(1, state.age - tryingSince + 1)
+    const hasChildren = (state.children ?? []).length > 0
+    const pool = hasChildren
+      // A couple who already have a child are not inside the same silence.
+      ? years <= 2
+        ? ["You try for another. It doesn't happen this year.",
+           'Nothing this year. There is already a child asleep down the hall, which changes the shape of it without changing it.']
+        : ['You had assumed it would work the way it worked before. It has not.',
+           'The second one is not arriving. Nobody offers you the sympathy they offered the people who had none, and you do not ask for it.']
+      : years === 1
+        ? ["You try for a child — it doesn't happen this year.",
+           'Nothing yet. Neither of you thinks anything of it.']
+        : years <= 3
+          ? ['Another year and no news. Neither of you says the word for it.',
+             'The month passes the way the last one did. You have started counting without deciding to.']
+          : ['Nothing this year. You are both careful with each other about it, which is its own kind of tiring.',
+             'You had told yourselves you were not counting. You know exactly how many it has been.',
+             'Someone asks, kindly, and you have an answer ready because you have needed one before.']
     return {
       ...state,
       flags: [...new Set([...state.flags, 'trying_for_child'])],
-      log: [...state.log, { age: state.age, isKey: false, text: pickFrom([
-        "You try for a child — it doesn't happen this year.",
-        'Another year and no news. Neither of you says the word for it.',
-        'The month passes the way the last one did. You have started counting without deciding to.',
-        'Nothing this year. You are both careful with each other about it, which is its own kind of tiring.',
-        'You had told yourselves you were not counting. You know exactly how many it has been.',
-      ]) }],
+      mem: { ...(state.mem ?? {}), tryingSinceAge: tryingSince },
+      log: [...state.log, { age: state.age, isKey: false, text: preferUnsaid(state, pool) }],
     }
   }
   // Conception — store child details in mem; birth will be delivered by tick() ~2 years later
@@ -203,6 +226,8 @@ export function tryForChild(state) {
   // is the player's own body and is what the maternal-mortality roll and the
   // pregnancy-arc events read. Only one of those is true for a male character.
   const flags = [...state.flags, 'expecting', 'trying_for_child']
+  // The count is about THIS attempt; a birth ends it.
+  state = { ...state, mem: { ...(state.mem ?? {}), tryingSinceAge: undefined } }
   if (bearerIsPlayer) flags.push('pregnant')
   // A first pregnancy and a sixth are not the same event. In a high-fertility
   // life this line printed nine times, identically, which is both a repetition

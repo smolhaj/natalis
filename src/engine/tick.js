@@ -20,7 +20,7 @@ import {
 } from './character'
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
-import { rememberSaid } from './prose'
+import { rememberSaid, preferUnsaid } from './prose'
 import { tickLifeCourse, secondaryChance, primaryChance } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
 import { suspendedInstitutions, proseFitsInstitutions, institutionExists } from '../data/history.js'
@@ -218,6 +218,7 @@ function buildEffectProxy(state) {
     'chernobyl_liquidator', 'grew_up_polluted', 'industrial_upbringing', 'oil_delta_witness',
     'uyghur_suppressed', 'kafala_documented', 'forced_harvest', 'ebola_survivor',
     'experienced_miscarriage', 'multiple_miscarriage', 'sibling_estranged', 'grief_drinking',
+    'child_seriously_ill', 'sick_child_diagnosed',
   ])
   proxy.addFlag = (flag) => {
     if (!proxy.flags.includes(flag)) {
@@ -393,6 +394,16 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._newEducation)   next = { ...next, education: proxy._newEducation }
   if (proxy._newCareerId)    next = enterCareer(next, proxy._newCareerId)
   if (proxy._clearCareer)    next = { ...next, career: null }
+  // An event that retires the character does it with `p.clearCareer()` and a
+  // `retired` FLAG, but every hook that decides whether to hand out a job reads
+  // the `retired` STATE FIELD. So a life narrated "the working life ends, the
+  // last day comes and goes with less ceremony than expected" was handed a new
+  // job two years later, retired again at 68, and paid nothing for the first
+  // retirement because the pension was never recorded either.
+  if (!next.retired && proxy.flags.includes('retired')) {
+    const pension = state.career ? Math.round(state.career.salary * 0.35) : (next.pensionAnnual ?? 0)
+    next = { ...next, retired: true, career: null, pensionAnnual: pension }
+  }
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
   if (proxy._newChild)       next = { ...next, children: [...next.children, proxy._newChild] }
@@ -1791,19 +1802,34 @@ function tickPartner(state) {
   const partnerAge = (state.partner.age ?? 0) + 1
   // Years together drives marriage timing, the partner-moments memory layer and
   // the relationship-quality arc. Nothing had ever incremented it.
-  let partner = { ...state.partner, age: partnerAge, years: (state.partner.years ?? 0) + 1 }
+  // Living partners were built with no `alive` field at all, so the guards
+  // written as `G.partner?.alive` — which read naturally and appear in two
+  // events — were unsatisfiable for every partner the engine has ever made.
+  let partner = { ...state.partner, age: partnerAge, years: (state.partner.years ?? 0) + 1, alive: state.partner.alive ?? true }
   // Natural death probability increases with age
   let deathProb = 0
   if (partnerAge >= 75) deathProb = 0.04 + (partnerAge - 75) * 0.012
   else if (partnerAge >= 65) deathProb = 0.015 + (partnerAge - 65) * 0.0025
   if (deathProb > 0 && chance(deathProb)) {
-    // Mark dead silently — grief events (grief_partner_death / late_partner_death) fire
-    // in the same tick and provide narrative. Timestamps needed for year-texture arc.
+    // This used to mark the partner dead SILENTLY, on the reasoning that the
+    // grief events fire in the same tick and carry the narrative. Measured over
+    // 120 lives: of 37 widowings, 26 had no line anywhere at or after the death
+    // naming it, and 9 went on to print texture that spoke about the partner in
+    // the present tense — "You and Beatriz own the house free and clear",
+    // fourteen years after Beatriz died. The grief events are follow-through.
+    // The death itself has to be said.
     const updatedMem = {
       ...(state.mem ?? {}),
       widowedYear: state.currentYear,
       partnerDeathYear: state.currentYear,
     }
+    const together = partner.years ?? 0
+    const name = partner.name ?? 'your partner'
+    const line = together >= 40
+      ? `${name} dies at ${partnerAge}. ${together} years. You keep finding yourself about to say something to them, and then not.`
+      : together >= 15
+        ? `${name} dies at ${partnerAge}. The house does the thing houses do afterwards, which is stay exactly as it was.`
+        : `${name} dies at ${partnerAge}. You had not got as far as imagining this part.`
     return {
       ...state,
       partner: { ...partner, alive: false },
@@ -1813,6 +1839,7 @@ function tickPartner(state) {
       // `partner` was null and the log showed one marriage.
       flags: [...new Set([...state.flags.filter(f => f !== 'married' && f !== 'engaged'), 'widowed', 'lost_partner'])],
       mem: updatedMem,
+      log: [...state.log, { age: state.age, text: line, isKey: true, isDeath: true }],
     }
   }
   // Relationship quality drifts slightly based on engagement
@@ -1894,14 +1921,43 @@ function checkIllnessRisk(state) {
 
     const archetype = liveCountry(state).archetype ?? 'wealthy_west'
     const healthcare = liveCountry(state).healthcare ?? 'fair'
+    // One sentence per healthcare tier meant every diagnosis in a life opened
+    // identically. One Egyptian life was told five times, at 39, 48, 51, 71 and
+    // 72, that "the nearest hospital is hours away or the local clinic is
+    // understaffed" — and the "or" is the same defect in miniature, the game
+    // declining to say which. Pools, deduped against what this character has
+    // already been told, so a second diagnosis reads like a second diagnosis.
     const illnessContext = {
-      excellent: `The tests come back quickly. The specialist explains everything clearly. You have options.`,
-      good:      `The GP refers you to a specialist. There is a wait. When you get there, the diagnosis is clear.`,
-      fair:      `The clinic is busy. You wait two hours. The doctor is straightforward. Treatment is available if you can afford it.`,
-      poor:      `The nearest hospital is hours away or the local clinic is understaffed. The diagnosis takes longer than it should.`,
-      very_poor: `There is no specialist here. The diagnosis is made by a doctor managing too many patients with too little. Treatment, if available, is rationed.`,
+      excellent: [
+        'The tests come back quickly. The specialist explains everything clearly. You have options.',
+        'You are seen, scanned and told inside a fortnight. The efficiency is its own kind of shock.',
+        'The consultant turns the screen towards you, which you understand is deliberate, and talks you through it twice.',
+        'There is a leaflet. There is a named nurse. There is a number to ring at any hour. None of it makes the sentence easier to hear.',
+      ],
+      good: [
+        'The GP refers you to a specialist. There is a wait. When you get there, the diagnosis is clear.',
+        'Six weeks between the letter and the appointment. You spend them not looking anything up, and then looking everything up.',
+        'The specialist is running ninety minutes behind. When your turn comes he is unhurried, which you had not expected and are grateful for.',
+      ],
+      fair: [
+        'The clinic is busy. You wait two hours. The doctor is straightforward. Treatment is available if you can afford it.',
+        'You go twice before anyone runs a test. The second doctor listens to the whole thing without interrupting.',
+        'The corridor has a row of plastic chairs and everyone in it has been there longer than you.',
+        'The diagnosis costs less than the treatment will, and you are told both numbers in the same breath.',
+      ],
+      poor: [
+        'The nearest hospital is four hours by road. The diagnosis takes longer than it should.',
+        'The clinic has one doctor for the whole district. He is good. There is only one of him.',
+        'You describe it three times to three people before anyone writes it down.',
+        'The machine that would answer it is in the city. Going to the city is a decision about money.',
+      ],
+      very_poor: [
+        'There is no specialist here. The diagnosis is made by a doctor managing too many patients with too little.',
+        'You are told what it probably is. Nobody can tell you what it definitely is, and that distinction turns out to matter.',
+        'The drugs exist. They are not here. Everyone in the room knows both halves of that.',
+      ],
     }
-    const illnessText = `${illnessContext[healthcare] ?? illnessContext.fair} You are diagnosed with ${illness.name}.`
+    const illnessText = `${preferUnsaid(state, illnessContext[healthcare] ?? illnessContext.fair)} You are diagnosed with ${illness.name}.`
 
     const event = {
       id: `illness_${illness.id}_${state.age}`,

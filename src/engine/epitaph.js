@@ -75,7 +75,17 @@ export function generateIdentityCard(state) {
     if (F.has('gulag_survived')) return 'You survived the camps. That knowledge lives in your body.'
     if (F.has('lost_child')) return 'You lost a child. That does not become a past thing.'
     if (F.has('child_illness_chronic')) return age >= 55 ? 'Your child has lived with a serious condition their whole life. You have been alongside it — not in front of it, not behind it. Alongside.' : 'Your child is seriously ill. Life reorganizes itself around that. Everything else continues from somewhere else inside you.'
-    if (F.has('child_seriously_ill') && !F.has('child_illness_recovery') && !F.has('child_illness_chronic')) return 'Your child is seriously ill. You are managing an impossible equation of care, cost, presence, and fear. You are doing it anyway.'
+    // Present tense behind a permanent flag. An Egyptian whose daughter was
+    // diagnosed in 1993 read, on the death screen in 2034, that his child is
+    // seriously ill and he is managing an impossible equation of care — about
+    // a woman of fifty-three, forty-one years later. Exactly the failure mode
+    // CLAUDE.md documents for `cancer_treatment`, still live here.
+    if (F.has('child_seriously_ill') && !F.has('child_illness_recovery') && !F.has('child_illness_chronic')) {
+      const since = state.currentYear - (state.mem?.child_seriously_illYear ?? state.mem?.sick_child_diagnosedYear ?? state.currentYear)
+      return since <= 8
+        ? 'Your child is seriously ill. You are managing an impossible equation of care, cost, presence, and fear. You are doing it anyway.'
+        : 'There was a year your child was seriously ill. You learned the corridors, the names of the staff, the particular quality of waiting. It is not the largest fact about your life. It is the one you can still feel in your hands.'
+    }
     if (F.has('partition_survivor') || F.has('partition_refugee')) return 'You crossed the border during the Partition, carrying what you could.'
     // Heavy personal facts
     if (F.has('cancer_survivor')) return 'You are a cancer survivor. The word still sits differently than you expected.'
@@ -701,7 +711,16 @@ export function generateEpitaph(state) {
     // An event that names this character's country was written about the place
     // they actually lived, and is the one an obituary would reach for.
     const ownCountry = fired.filter(w => w.countries?.includes(country))
-    const pick2 = (ownCountry.length >= 2 ? ownCountry : [...ownCountry, ...fired.filter(w => !ownCountry.includes(w))]).slice(0, 2)
+    // `worldEventsFired` is in the order the events reached this character, so
+    // the order is already the chronology. Preferring own-country events threw
+    // it away, and three of the four sentences below assert a sequence: one
+    // Japanese obituary read "The century handed him the Japanese Asset Bubble
+    // Collapse and then the 1973 Oil Shock", which is 1991 and then 1973.
+    // Choose by relevance, then put the two back in the order they happened.
+    const order = new Map(fired.map((w, i) => [w.id, i]))
+    const pick2 = (ownCountry.length >= 2 ? ownCountry : [...ownCountry, ...fired.filter(w => !ownCountry.includes(w))])
+      .slice(0, 2)
+      .sort((a, b) => order.get(a.id) - order.get(b.id))
     if (pick2.length >= 2) {
       para2.push(oneOf([
         `${He} lived through ${withDefiniteArticle(pick2[0].name)} and ${withDefiniteArticle(pick2[1].name)}. Nobody ever asked ${him} about either.`,
