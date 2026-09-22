@@ -14982,6 +14982,208 @@ function* textureCandidates(state, opts = {}) {
       : 'The house is yours to arrange. That is a smaller thing than people think and it is not nothing.',
   ])]
 
+  // ── The Gulf: the two cities in one square kilometre ──────────────────────
+  // Eleven Gulf ethnic ids and one reference between them, before this. The
+  // migrant half of these societies is 36-60% of the population depending on
+  // the country, and had nothing written about it at all.
+
+  if (F.has('gulf_migrant_worker') && Math.random() < 0.14) yield [T.anchored, pick([
+    'The bus at half past four. The same eleven men, the same order they get on in, nobody speaking for the first twenty minutes because there is nothing yet to say about a day that has not happened.',
+    'You have learned the country as a set of sites. You could not draw it, and you could take anybody to the gate of any compound you have worked on.',
+    phase === 'late_life'
+      ? 'Your knees go first and then your back and then the heat stops being survivable in the way it used to be, and all of that arrives about fifteen years before the calendar says it should.'
+      : 'Friday is the one that is yours. You wash things, you queue at the exchange, you walk with three men to a shop and back, and the walk is not about the shop.',
+  ])]
+
+  if (F.has('gulf_labour_accommodation') && Math.random() < 0.12) yield [T.anchored, pick([
+    'The shelf is a foot and a half of laminate and everything you own that is not on your body is on it, and in nine years nobody has ever touched anything on anybody\'s.',
+    'The air conditioner is off or it is catastrophic. There is no third setting and there never has been.',
+    'Somebody cooks at the tiled end and the whole room smells of somewhere else for two hours, and everybody is quieter than usual afterwards.',
+  ])]
+
+  if (F.has('gulf_sends_remittance') && Math.random() < 0.12) yield [T.earned, pick([
+    'You know the rate. Everyone in the queue knows the rate. It is the one number in this country that four hundred men can quote to the second decimal.',
+    'The message afterwards is two words and a tick, and then a photograph an hour later of something bought, which is the receipt that matters.',
+  ])]
+
+  if (F.has('gulf_recruitment_debt') && !F.has('gulf_debt_cleared') && Math.random() < 0.12) yield [T.earned, pick([
+    'The interest is the first thing out and the accommodation is the second and what is left is the thing you came for. You do the sum on a Friday with a pencil and it comes out the same as last month.',
+    'The agent is a man in an office in a town you have been to twice. He was pleasant. Everything he said was technically true.',
+  ])]
+
+  if (F.has('gulf_long_stayer') && Math.random() < 0.13) yield [T.earned, pick([
+    'You have been here longer than the buildings you helped put up have been standing, and you are on a document that says you are visiting.',
+    phase === 'late_life'
+      ? 'Two thirds of your adult life happened in a country you were never from, and the part of it you will be able to describe to anyone afterwards is about four anecdotes long.'
+      : 'A new man arrives in the room and asks how long you have been here and you tell him, and you watch him do the arithmetic about himself and decide it will be different.',
+  ])]
+
+  if (F.has('gulf_parent_by_phone') && Math.random() < 0.12) yield [T.earned, pick([
+    'The phone stays propped up against the water bottle while they do their homework and you sit on the edge of the bunk. Neither of you is talking. This is the closest thing available.',
+    'You learn that they are taller in steps rather than continuously, which is not the way a parent is supposed to find out.',
+  ])]
+
+  if (F.has('gulf_built_it_from_here') && Math.random() < 0.11) yield [T.earned, pick([
+    'There is a house four thousand kilometres away with your name on the deed and a room in it that is yours, and you know the tiles from a photograph.',
+    phase === 'late_life'
+      ? 'You stood in it eventually. It was smaller than the photographs and entirely correct, and you sat down in the room that was yours and did not say anything for a while.'
+      : 'Your mother sends a photograph from the doorway about twice a year, standing very straight because somebody has told her to.',
+  ])]
+
+  if (F.has('gulf_worked_the_heat') && Math.random() < 0.11) yield [T.anchored, pick([
+    'You drink before you are thirsty. It took one bad afternoon in your second year to learn it and you have never once forgotten since.',
+    'There is a particular way a man talks in the twenty minutes before it goes wrong — too easy, too pleased — and you can hear it across a site.',
+  ])]
+
+  if (F.has('gulf_domestic_worker') && Math.random() < 0.13) yield [T.anchored, pick([
+    'The hours have no edge. There is no hour at which you are not, technically, at work, and the question of whether that is bearable is entirely a question about them and not at all about the law.',
+    'The grandmother is kind to you in a way the mother is not, and the two of them have an arrangement about this that neither has ever stated.',
+    phase === 'late_life'
+      ? 'Somebody else\'s children are grown now and you know exactly how old each of them is. None of them has your number.'
+      : 'You are in the room for most of the family\'s life and in none of the photographs of it.',
+  ])]
+
+  if (F.has('gulf_raised_their_children') && Math.random() < 0.11) yield [T.earned, pick([
+    'The youngest calls you by a word that is not quite an aunt and not quite a title, invented by a three-year-old and used by the whole house ever since.',
+    'You will not see her again after she is eleven. You know this the entire time and it does not help at all.',
+  ])]
+
+  if (F.has('gulf_remittance_pride') && Math.random() < 0.10) yield [T.earned,
+    'For about an hour after the exchange you are the most useful man in your family, and you walk back to the room differently, and nobody in the room comments because everybody has the same hour.']
+
+  if (F.has('gulf_reform_too_late') && Math.random() < 0.11) yield [T.earned, pick([
+    'You could change employer now, in principle. You are forty-six. The arithmetic of starting again is not the arithmetic of a young man and everybody in the room knows which of them it is actually for.',
+    'The rules have changed four times since the oldest man in the room came, and the work has not changed once. He says it as a joke and it is not entirely one.',
+  ])]
+
+  if (F.has('gulf_could_not_settle') && Math.random() < 0.12) yield [T.earned, pick([
+    'You look for the shade at half past twelve in a country where it is not necessary, and your wife has stopped mentioning it.',
+    'There is nobody here to say the Industrial Area words to. They were not a language exactly. They were about forty words and they were the whole of how you talked for twenty years.',
+  ])]
+
+  if (F.has('gulf_returned') && Math.random() < 0.11) yield [T.earned, pick([
+    'You were a guest in your own house for about three weeks and then you were furniture, which is what you wanted and is still strange.',
+    phase === 'late_life'
+      ? 'Somebody at a wedding asks what you did and you say you were in the Gulf, and that is the entire answer anybody wants, and there are twenty-three years inside it.'
+      : 'The money did what it was for. That is not in dispute by anyone and you find you still want somebody to say it.',
+  ])]
+
+  if (F.has('gulf_citizen_minority') && Math.random() < 0.12) yield [T.anchored, pick([
+    'The whole day conducted in English with people who will be in another country in five years. It is entirely normal until somebody from outside remarks on it.',
+    'One person in nine here is from here. You did not learn that as a fact, you learned it as the texture of a shopping centre.',
+    phase === 'late_life'
+      ? 'The country you are a citizen of is substantially populated by people who are not allowed to become citizens of it, and you have never once heard that sentence said aloud in this language.'
+      : 'Your grandmother\'s neighbourhood is still her neighbourhood. Everywhere outside it is a place where you are in a small minority of people who cannot be asked to leave.',
+  ])]
+
+  if (F.has('gulf_watched_it_built') && Math.random() < 0.12) yield [T.anchored, pick([
+    'You drive past a district that did not exist and you cannot name the road, and you were born here.',
+    'The thing outsiders get wrong is not the wealth. It is the speed. A country was delivered, more or less complete, inside one life.',
+    phase === 'late_life'
+      ? 'There is a photograph in the ministry corridor of this street in 1968 and it is a dirt road with four buildings, and you can place exactly where you are standing in it.'
+      : 'Your father can remember when the road was a track and the track was the only one, and he tells it without nostalgia, as a fact about distance.',
+  ])]
+
+  if (F.has('gulf_pearl_generation') && Math.random() < 0.13) yield [T.anchored, pick([
+    'The boats are pulled up and not repaired. Nobody says the season is not happening; it simply does not happen, and then it does not happen the year after.',
+    'Your grandfather\'s hands and ears are a diver\'s and there is no longer any such job. He is fifty-one.',
+    phase === 'late_life'
+      ? 'People here say the hunger the way other people say a year. They do not elaborate and nobody asks them to, and the ones who were children in it are the ones who say it least.'
+      : 'The merchant who owned the season owns the house now. It was all done with paper and it was all entirely legal.',
+  ])]
+
+  if (F.has('gulf_oil_generation') && Math.random() < 0.11) yield [T.anchored, pick([
+    'The company compound has a fence and electric light and a cinema, and the wage inside it is a number this coast had no category for.',
+    'What arrives first is not money. It is a graded road where the camel route was, and then a school, and then a clinic.',
+  ])]
+
+  if (F.has('gulf_three_generations') && Math.random() < 0.11) yield [T.earned,
+    'Your grandfather dived, your father was hungry, and you have a card that pays for things. Three men, one family, about seventy years, and no one of them could have described the next one.']
+
+  if (F.has('gulf_majlis_raised') && Math.random() < 0.10) yield [T.anchored, pick([
+    'You sat at the young end and said nothing for six years and came out fluent in a grammar nobody ever stated a rule of.',
+    'A job, a marriage, a wall, a word to somebody who knows somebody. The formal government is elsewhere and is mostly not where this happens.',
+  ])]
+
+  if (F.has('gulf_made_it_a_career') && Math.random() < 0.10) yield [T.earned,
+    'There is real work inside the ministry available to anybody who goes and looks for it, and a small quiet group of people who have, and you know all of them by name.']
+
+  if (F.has('gulf_took_the_stipend') && Math.random() < 0.10) yield [T.earned, pick([
+    'The elsewhere is real — the family, the majlis, the boat, the farm — and it is a defensible way to spend a life, and at three in the morning you are occasionally not sure.',
+    'You are at the desk until two and after that the day is yours, and it has been that way for nineteen years, and nobody has ever once asked about it.',
+  ])]
+
+  if (F.has('gulf_spoke_against_it') && Math.random() < 0.11) yield [T.earned, pick([
+    'The conversation was entirely courteous. That is the part people from elsewhere do not understand about how it works here.',
+    'You are invited to slightly fewer things. Nothing is ever said and the list is not written down anywhere, and you could name most of it.',
+  ])]
+
+  if (F.has('gulf_looked_at_it') && Math.random() < 0.10) yield [T.earned,
+    'You know her village and the number of her children and the name of the eldest. It changed nothing about the arrangement and it changed the house, and your mother was doing it herself inside a year.']
+
+  if (F.has('gulf_saw_the_other_city') && Math.random() < 0.10) yield [T.anchored,
+    'Two cities on one road, at the same set of lights, for about four seconds. You have thought about it more than the four seconds would suggest.']
+
+  if (F.has('kuwait_occupation') && Math.random() < 0.13) yield [T.anchored, pick([
+    'The sky was black at noon and the rain came down oily, and everyone who was here can still produce the smell on request and would rather not.',
+    'For seven months the maps said something else. You were not confused about where you were and it did something to the year all the same.',
+    phase === 'late_life'
+      ? 'The museum was emptied and some of it came back and some of it did not, and there is a particular list that people of your generation can recite.'
+      : 'They took the wiring out of the walls. Not the cars, not only the cars — the wiring, out of the walls.',
+  ])]
+
+  if (F.has('gulf_expelled_1991') && Math.random() < 0.13) yield [T.anchored, pick([
+    'Four hundred thousand before August and thirty thousand after, and the world had just spent six months on the subject of Kuwait and did not much cover this part.',
+    phase === 'late_life'
+      ? 'You were born in Hawalli and you speak with that accent and you have never seen Palestine, and the country you were undone by is the only one you remember.'
+      : 'It was decided about you by an announcement somebody else made about a position somebody else took.',
+  ])]
+
+  if (F.has('bahrain_2011') && Math.random() < 0.13) yield [T.anchored, pick([
+    'They demolished the monument so that there would be nothing left for anyone to mean by it, and took it off the map and off the banknote.',
+    'For a few weeks it was the only place in the country where everything was sayable out loud, and then it was a roundabout, and then it was not even that.',
+    phase === 'late_life'
+      ? 'The division that everybody says is not sectarian is one that everybody can describe to you precisely, including exactly where it runs through their own street.'
+      : 'Everybody knows somebody who went. That is the whole of the country\'s arithmetic afterwards.',
+  ])]
+
+  if (F.has('gulf_built_the_tournament') && Math.random() < 0.11) yield [T.earned, pick([
+    'Eight stadiums, a metro and a city that was not there, and you were in the middle of it with a number on a hard hat.',
+    'The room watched it on the television and the feeling in the room was complicated and was mostly not bitter, which visitors find difficult to believe.',
+  ])]
+
+  if (F.has('gulf_protected_them_from_it') && Math.random() < 0.10) yield [T.earned,
+    'You decided early what a letter home was for, and you have never once revised the decision, and it is the single longest-running thing you have done.']
+
+  if (F.has('gulf_told_them_the_truth') && Math.random() < 0.10) yield [T.earned,
+    'He did not reply for a month and then he replied about the rain. You understood that you had moved the weight rather than shared it.']
+
+  if (F.has('gulf_complained_formally') && Math.random() < 0.10) yield [T.earned,
+    'It worked, partially, after a long day of forms. Two of the men who came with you were not on the site the following month and nobody said anything about why.']
+
+  if (F.has('gulf_waited_it_out') && Math.random() < 0.10) yield [T.earned,
+    'They said of course, don\'t worry. The not-worrying was something they did for you and you both knew it and neither of you said so.']
+
+  if (F.has('gulf_asked_out_loud') && Math.random() < 0.10) yield [T.earned,
+    'You were the one who asked. The man beside you looked straight ahead and told you afterwards, kindly, not to be that one again.']
+
+  if (F.has('gulf_fled_1990') && Math.random() < 0.10) yield [T.earned,
+    'Four days on the road south and a relative\'s floor in a city you had only ever visited, and a house in March that strangers had been living in.']
+
+  if (F.has('gulf_stayed_1990') && Math.random() < 0.10) yield [T.earned,
+    'Seven months of a very small life. The bread, the radio at low volume, and a boy at the checkpoint who was younger than your son.']
+
+  if (F.has('gulf_was_at_the_roundabout') && Math.random() < 0.11) yield [T.earned, pick([
+    'Eleven days. You could account for every one of them and nobody has ever asked you to.',
+    'You apply for something ordinary and get a decision with no reasons in it, and that is how a person finds out.',
+  ])]
+
+  if (F.has('gulf_accepted_it') && Math.random() < 0.09) yield [T.earned,
+    'It is how the country works and it holds comfortably for years at a time, and then somebody from outside asks a direct question at a dinner and the table handles it smoothly.']
+
+  if (F.has('gulf_minority_reflection') && Math.random() < 0.09) yield [T.earned,
+    'A cousin visits from abroad and says something about it, and you hear your own street freshly for an afternoon and then stop.']
+
   if (F.has('partition_stayed_behind') && Math.random() < 0.13) yield [T.anchored, pick([
     'The house four doors down changed hands in 1947 and the village still calls it by the name of the family that left it. Nobody who uses the name has met them. The people living in it now have been there longer than the people who built it.',
     phase === 'late_life'

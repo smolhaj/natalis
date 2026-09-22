@@ -777,6 +777,90 @@ export async function auditNarratedMoves() {
   return findings
 }
 
+/**
+ * A population the roster models and the corpus has never addressed.
+ *
+ * `wealthy_gulf` was the worst-covered archetype in the roster, and the reason
+ * was not the citizens: the UAE is 59% South Asian in the data, Qatar 60%,
+ * Kuwait 40%, every migrant group flagged `disadvantaged` — and across eleven
+ * Gulf ethnic ids the corpus contained ONE reference. The engine drew those
+ * characters correctly and had nothing to say to them.
+ *
+ * Nothing else here can see that. `check-flags` audits flags, `check-events`
+ * audits guards, `npm run sim` audits what fires — and a group nothing was ever
+ * written for fires nothing, which is indistinguishable from a group that is
+ * simply rare. So walk the roster's own `ethnicGroups` and report the ids that
+ * no guard, in the whole corpus, has ever named.
+ *
+ * A warning rather than an error: 154 countries is a lot of groups and nobody
+ * is obliged to write every one. The number it reports is the shape of the
+ * next content decision, and a group with a large `share` is the one to look
+ * at first.
+ */
+export async function auditUnwrittenGroups() {
+  const { COUNTRIES } = await import('../../src/data/countries.js')
+
+  // Read the SOURCE, not the function bodies. A module that lifts its ids into
+  // a shared constant — `const MIGRANT_IDS = new Set([...])`, which is the
+  // natural way to write a guard that covers eight of them — has those ids
+  // nowhere in `when.toString()`, and a body-only scan reported a module of
+  // thirty events about those exact groups as still unwritten. That is the
+  // wrong direction for this audit to be wrong in: it would tell you the gap
+  // is still there after somebody has closed it.
+  //
+  // And exclude the files that merely DECLARE the ids. `countries.js` defines
+  // every one of them and `identity.js` gives their religion distribution, so
+  // scanning those makes every id trivially "named" and the audit reports zero
+  // forever — the same shape as the negation exemption that made
+  // check-anachronisms blind to the sentences worth auditing. Scan the files
+  // that would USE an id.
+  const DECLARES = /src[/\\]data[/\\](countries|identity)\.js$/
+  let corpus = ''
+  for (const { rel, content } of sourceFiles()) {
+    if (DECLARES.test(rel)) continue
+    corpus += content
+  }
+
+  // Naming the id is not the only way to write for a group. An event guarded on
+  // `country === 'Greece'` addresses the 94% of Greeks who are Greek perfectly
+  // well, and reporting that as a gap produced 328 warnings and no signal.
+  //
+  // The case worth reporting is the one the Gulf turned out to be: a group
+  // whose experience of its own country is NOT the country-generic one, which
+  // is exactly what `disadvantaged` marks — or a large minority inside a
+  // country that is plainly not one people. Those are the characters for whom
+  // the country's own content is about somebody else.
+  const nameCount = new Map()
+  for (const c of COUNTRIES) {
+    const cited = (corpus.match(new RegExp(`['"]${c.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"]`, 'g')) ?? []).length
+    nameCount.set(c.name, cited)
+  }
+
+  const findings = []
+  for (const c of COUNTRIES) {
+    // A country nobody has written for at all is a different finding, and the
+    // roster owner already knows which those are.
+    if ((nameCount.get(c.name) ?? 0) < 5) continue
+    for (const g of c.ethnicGroups ?? []) {
+      if (!g?.id) continue
+      if (corpus.includes(`'${g.id}'`) || corpus.includes(`"${g.id}"`)) continue
+      const share = g.share ?? 0
+      const majority = share >= 0.5
+      // The two shapes that matter, and nothing else.
+      const distinct = g.disadvantaged === true
+      const largeMinority = !majority && share >= 0.2
+      if (!distinct && !largeMinority) continue
+      if (share < 0.1) continue
+      findings.push(finding(WARN, 'unwritten-group', `${c.name}:${g.id}`, null,
+        `${Math.round(share * 100)}% of ${c.name} (${g.name ?? g.id})` +
+        `${g.disadvantaged ? ', flagged disadvantaged' : ''} — the country has content and ` +
+        'no guard or line in it names this group'))
+    }
+  }
+  findings.sort((a, b) => (parseInt(b.message) || 0) - (parseInt(a.message) || 0))
+  return findings
+}
+
 export const AUDITS = [
   ['reverse-flags', 'flags a guard requires that nothing sets', auditReverseFlags],
   ['enum-domains', 'string literals compared against an enum they are not in', auditEnumDomains],
@@ -788,6 +872,7 @@ export const AUDITS = [
   ['season-country', 'seasons a guard demands that its country cannot have', auditSeasonInCountry],
   ['silent-choice', 'choices that apply an effect and print no outcome', auditSilentChoices],
   ['narrated-move', 'prose that narrates leaving where no effect moves anyone', auditNarratedMoves],
+  ['unwritten-group', 'populations the roster models that no guard has ever named', auditUnwrittenGroups],
 ]
 
 export async function runAllAudits(only = null) {

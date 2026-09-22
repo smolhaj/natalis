@@ -1503,6 +1503,112 @@ export const PLACES = [
 
   // ── SAUDI ARABIA ───────────────────────────────────────────────────────────
 
+  // ── THE GULF ───────────────────────────────────────────────────────────────
+  // Qatar, Kuwait, Bahrain and Oman had no places at all, and the UAE had only
+  // Dubai. The neighbourhood tiers here are not a wealth gradient in the usual
+  // sense: they are the two cities the UAE's own country note describes, where
+  // "an Emirati and a Bangladeshi construction worker live in the same square
+  // kilometre but inhabit entirely different cities". The `informal` tier is
+  // labour accommodation — real places, named as they are named.
+  {
+    id: 'ae_abudhabi', name: 'Abu Dhabi', country: 'UAE',
+    type: 'urban', scale: 'major_city', region: 'Abu Dhabi',
+    neighborhoods: {
+      informal:      ['Mussafah labour accommodation', 'ICAD worker housing', 'Shahama camp', 'Mafraq labour village'],
+      working_class: ['Musaffah Shabiya', 'Al Shahama', 'Baniyas', 'Mohammed Bin Zayed City'],
+      middle_class:  ['Khalidiya', 'Al Nahyan', 'Mussafah Gardens', 'Al Mushrif'],
+      elite:         ['Saadiyat', 'Al Bateen', 'Khalifa City A', 'Al Raha Beach'],
+    },
+  },
+
+  {
+    id: 'ae_sharjah', name: 'Sharjah', country: 'UAE',
+    type: 'urban', scale: 'city', region: 'Sharjah',
+    neighborhoods: {
+      informal:      ['Industrial Area 12 accommodation', 'Sajaa camp', 'Al Sajaa worker housing'],
+      working_class: ['Al Nahda', 'Rolla', 'Al Qasimia', 'Abu Shagara'],
+      middle_class:  ['Al Majaz', 'Al Khan', 'Al Taawun', 'Muwaileh'],
+      elite:         ['Al Ramtha', 'Sharqan', 'Al Noaf', 'Tilal City'],
+    },
+  },
+
+  {
+    id: 'qa_doha', name: 'Doha', country: 'Qatar',
+    type: 'urban', scale: 'major_city', region: 'Ad Dawhah',
+    neighborhoods: {
+      informal:      ['Industrial Area Street 18', 'Sanaiya labour camp', 'Barwa Al Baraha', 'Asian Town'],
+      working_class: ['Najma', 'Al Mansoura', 'Umm Ghuwailina', 'Doha Al Jadeed'],
+      middle_class:  ['Al Sadd', 'Bin Mahmoud', 'Al Hilal', 'Madinat Khalifa'],
+      elite:         ['Al Waab', 'West Bay Lagoon', 'The Pearl', 'Onaiza'],
+    },
+  },
+
+  {
+    id: 'qa_alkhor', name: 'Al Khor', country: 'Qatar',
+    type: 'urban', scale: 'town', region: 'Al Khor',
+    neighborhoods: {
+      informal:      ['Contractor accommodation', 'Ras Laffan worker housing'],
+      working_class: ['Al Khor town centre', 'Al Thakhira'],
+      middle_class:  ['Al Khor Community', 'Barzan'],
+      elite:         ['Al Khor Resort villas'],
+    },
+  },
+
+  {
+    id: 'kw_kuwaitcity', name: 'Kuwait City', country: 'Kuwait',
+    type: 'urban', scale: 'major_city', region: 'Al Asimah',
+    neighborhoods: {
+      informal:      ['Jleeb Al-Shuyoukh', 'Khaitan bachelor blocks', 'Mahboula worker flats', 'Fahaheel labour housing'],
+      working_class: ['Farwaniya', 'Hawalli', 'Salmiya inland', 'Jahra'],
+      middle_class:  ['Salmiya', 'Rumaithiya', 'Qadsiya', 'Adailiya'],
+      elite:         ['Bayan', 'Mishref', 'Shuwaikh Residential', 'Abdullah Al-Salem'],
+    },
+  },
+
+  {
+    id: 'bh_manama', name: 'Manama', country: 'Bahrain',
+    type: 'urban', scale: 'city', region: 'Capital Governorate',
+    neighborhoods: {
+      informal:      ['Gudaibiya bachelor flats', 'Ma\'ameer labour housing', 'Salmabad accommodation'],
+      working_class: ['Sanabis', 'Bilad Al Qadeem', 'Naim', 'Sitra'],
+      middle_class:  ['Adliya', 'Mahooz', 'Umm Al Hassam', 'Juffair'],
+      elite:         ['Seef', 'Bu Ghazal', 'Amwaj', 'Riffa Views'],
+    },
+  },
+
+  {
+    id: 'bh_muharraq', name: 'Muharraq', country: 'Bahrain',
+    type: 'urban', scale: 'town', region: 'Muharraq',
+    neighborhoods: {
+      informal:      ['Old Muharraq bachelor rooms', 'Hidd worker housing'],
+      working_class: ['Halat Bu Maher', 'Arad', 'Busaiteen'],
+      middle_class:  ['Muharraq souq quarter', 'Dair'],
+      elite:         ['Amwaj Islands', 'Diyar Al Muharraq'],
+    },
+  },
+
+  {
+    id: 'om_muscat', name: 'Muscat', country: 'Oman',
+    type: 'urban', scale: 'city', region: 'Muscat',
+    neighborhoods: {
+      informal:      ['Ruwi bachelor rooms', 'Wadi Kabir labour housing', 'Ghala industrial accommodation'],
+      working_class: ['Ruwi', 'Wadi Kabir', 'Al Amerat', 'Mabela'],
+      middle_class:  ['Al Khuwair', 'Ghubrah', 'Azaiba', 'Bawshar'],
+      elite:         ['Shatti Al Qurum', 'Qurum Heights', 'Madinat Al Sultan Qaboos', 'The Wave'],
+    },
+  },
+
+  {
+    id: 'om_interior', name: 'Rural Al Dakhiliyah', country: 'Oman',
+    type: 'rural', scale: 'village', region: 'Interior',
+    neighborhoods: {
+      informal:      ['Date-garden shacks', 'Falaj-edge houses'],
+      working_class: ['Village houses by the falaj', 'Mudbrick quarter'],
+      middle_class:  ['The new block houses', 'Houses on the graded road'],
+      elite:         ['The sheikh\'s house', 'The fort quarter'],
+    },
+  },
+
   {
     id: 'sa_riyadh', name: 'Riyadh', country: 'Saudi Arabia',
     type: 'urban', scale: 'megacity', region: 'Najd',

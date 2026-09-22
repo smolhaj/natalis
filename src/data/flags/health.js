@@ -4,6 +4,14 @@
  */
 export const HEALTH_FLAGS = {
 
+  gulf_worked_the_heat: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Worked outdoors through Gulf summers, and can recognise in another man the moment before it goes wrong.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
   borrowed_for_treatment: {
     weight: 'moderate',
     category: 'health',

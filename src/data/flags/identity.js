@@ -4,6 +4,62 @@
  */
 export const IDENTITY_FLAGS = {
 
+  gulf_accepted_it: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Feels nothing in particular about the arrangement, which is the majority position and holds for years at a time.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_asked_out_loud: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Was the one who asked, out loud, whether the passport comes back.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_citizen_minority: {
+    weight: 'major',
+    category: 'identity',
+    description: 'A national of a Gulf state, and therefore a minority at home — eleven per cent in the UAE and Qatar, thirty in Kuwait.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_looked_at_it: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned her name, her village and how many children she has. It changes nothing structural and it changes the house.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_majlis_raised: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Absorbed the entire grammar of the majlis by sitting at the end where the young sit and saying nothing for six years.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_minority_reflection: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Has noticed, freshly and only occasionally, that almost nobody in the street is from here.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_saw_the_other_city: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Looked, once, across the gap between the two cities that share the same road, from whichever side they are on.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
   tibetan_exile_family: {
     weight: 'moderate',
     category: 'identity',

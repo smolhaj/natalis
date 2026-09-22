@@ -4,6 +4,54 @@
  */
 export const GEOGRAPHIC_FLAGS = {
 
+  gulf_could_not_settle: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Home, and looking for the shade at the wrong time of day, with nobody to say the Industrial Area words to.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_expelled_1991: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'One of the roughly four hundred thousand Palestinians undone in Kuwait after 1991, a community of teachers and engineers and second-generation children erased inside two years.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_fled_1990: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Left Kuwait on the road south in the first week of August 1990, and came back in March to a house strangers had lived in.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_long_stayer: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Has said "two more years" for more than a decade. Every extension had a real reason and none of them was the last one.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_migrant_worker: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Went to the Gulf on a work visa tied to an employer — the arriving half of the kafala story, which the corpus had only ever written from the village that was left.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_returned: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Went home for good, because there is no retirement on a work visa: the visa is the job and when the job ends the country ends.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
   emigrated: {
     weight: 'major',
     category: 'displacement',

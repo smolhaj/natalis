@@ -575,21 +575,22 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 183 named places, 252 world events, 8,094 character events
-(2,129 of them the contemplative sonder layer, 157 stranger glimpses, 42 prison
-and political-arrest), 2,986 registered flags, 377 ribbons.
+154 countries, 192 named places, 252 world events, 8,124 character events
+(2,129 of them the contemplative sonder layer, 158 stranger glimpses, 42 prison
+and political-arrest, 30 Gulf), 3,025 registered flags, 377 ribbons.
 **0 orphaned, 0 partial flags.**
 
 Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 346 tests, including the simulation guardrails
+npm test                 # 350 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
-npm run check-flags      # 2964 covered / 0 partial / 0 orphaned
+npm run check-flags      # 3025 covered / 0 partial / 0 orphaned
 npm run check-events     # reachability: dead guards, enum domains, phase/year windows,
-                         # season/country, silent choices, narrated moves that move nobody
+                         # season/country, silent choices, narrated moves that move nobody,
+                         # populations the roster models that the corpus never addresses
 npm run check-anachronisms  # plays lives and reads every line against when the world held it
 npm run check-bundle     # builds, opens dist in a browser, starts a life — the only
                          # check that exercises the artefact rather than the source
@@ -695,6 +696,47 @@ character with a `retired` FLAG while every hook that hands out a job reads the
 **The lesson worth keeping: read the log in order.** Every one of these is
 invisible to a guard audit, invisible to `npm run sim`, and obvious within
 thirty seconds of reading a life as a player reads it.
+
+### The population the game could not reach
+
+`npm run sim -- --broad` and a per-country coverage census put `wealthy_gulf`
+last of the eight archetypes. The reason turned out not to be the citizens.
+
+The roster already modelled these societies correctly — the UAE is 59% South
+Asian in the data, Qatar 60%, Kuwait 40%, Bahrain 36%, every migrant group
+flagged `disadvantaged`, and the UAE's own country note says in plain words that
+"an Emirati and a Bangladeshi construction worker live in the same square
+kilometre but inhabit entirely different cities". Across **eleven Gulf ethnic
+ids the corpus contained one reference.** The engine was drawing those
+characters correctly and had nothing to say to them.
+
+The kafala content that did exist was written from the *sending* side — a
+Nepali village, a broker, a one-way ticket — which is the half a writer reaches
+for first. The arriving life, and the life of the citizen watching it arrive,
+were both unwritten. Qatar, Kuwait, Bahrain and Oman also had no `places` at
+all, so nobody there had a neighbourhood.
+
+`npm run check-events` carries `unwritten-group` for it now, and getting that
+audit right took three attempts in three different wrong directions, which is
+the useful part. Reporting every unnamed id gave **328** warnings, because an
+event guarded on `country === 'Greece'` addresses the 94% of Greeks who are
+Greek perfectly well; the case that matters is a group whose experience of its
+own country is not the country-generic one, which is what `disadvantaged`
+marks, or a large minority in a country that is plainly not one people.
+Scanning function bodies then reported the Gulf as **still unwritten after
+thirty events had been written for it**, because the module lifts its ids into
+a shared `const MIGRANT_IDS = new Set([...])` that never appears in
+`when.toString()` — wrong in the worst direction, telling you a gap is open
+after somebody closed it. And scanning all of `src/data` reported **zero**
+forever, because `countries.js` declares every id and made each one trivially
+"named".
+
+**The lesson worth keeping: a demographic the data models and the corpus never
+addresses is invisible to every audit here.** `check-flags` is about flags,
+`check-events` about guards, `npm run sim` about what fires — and a population
+nothing was ever written for fires nothing, which looks exactly like a
+population that is simply rare. The counter-check is to walk the roster's own
+`ethnicGroups` and ask which ids the corpus has never once named.
 
 ### `isRich` is a statement about now, for the third time
 
@@ -1191,6 +1233,23 @@ src/
                                     away, the ninth of March, the broadcast at noon on the fifteenth
                                     of August, blacking out your own textbook with your calligraphy
                                     brush, the bamboo-shoot existence. 14 of the 32 are follow-through
+        events_gulf.js            — 30 events: the two cities in one square kilometre. The roster
+                                    already modelled the demography correctly — UAE 59% South Asian,
+                                    Qatar 60%, Kuwait 40%, Bahrain 36%, every migrant group flagged
+                                    disadvantaged — and across ELEVEN Gulf ethnic ids the corpus
+                                    contained ONE reference, with `wealthy_gulf` the worst-covered
+                                    archetype in the roster. The kafala content that existed was
+                                    written from the sending side (a Nepali village, a broker, a
+                                    one-way ticket); the arriving life and the citizen's life were
+                                    both unwritten. Both positions, neither as a cartoon: the fee
+                                    that becomes the debt, the passport into the bag at the airport,
+                                    the shelf that is your whole private property and that nobody
+                                    ever touches, the house you built and have only seen in
+                                    photographs, forty minutes a week of being a father — and the
+                                    pearl collapse of the 1930s, the first shipment, the majlis,
+                                    being eleven per cent of your own country, Kuwait 1990 and the
+                                    expulsion that followed it, and the Pearl Roundabout demolished
+                                    so that nothing was left for anyone to mean by it
         events_korea.js           — 14 events: hagwon, suneung, military service, Gwangju 1980, chaebol, Hallyu, DMZ families
         events_india.js           — 7 events: Emergency 1975–77, Sikh massacre 1984, liberalisation 1991, demonetisation
         events_india_depth.js     — 12 events: arranged marriage, joint family economy, dowry pressure, NRI question

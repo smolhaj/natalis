@@ -4,6 +4,94 @@
  */
 export const POLITICAL_FLAGS = {
 
+  bahrain_2011: {
+    weight: 'major',
+    category: 'political',
+    description: 'In Bahrain in February 2011, when the roundabout filled — and in March, when the monument was demolished so that nothing was left for anyone to mean by it.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_built_the_tournament: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Built the stadiums, the metro and the city that was not there, and watched the tournament on the television in the room.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_oil_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was there for the first shipment, when the number in the newspaper meant nothing because there was no scale to compare it to.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_pearl_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the pearl collapse of the 1930s, when Japanese cultured pearls destroyed the only economy this coast had and the years that followed were called, simply, the hunger.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_reform_too_late: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'The thing they wanted at twenty-eight arrived at forty-six, addressed to somebody else.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_spoke_against_it: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Said in public, in an absolute monarchy, that the arrangement was indefensible — which is not a debating position there, it is a category of person.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_stayed_1990: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Stayed in occupied Kuwait for seven months: the bread, the radio at low volume, the checkpoint manned by a conscript younger than their son.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_three_generations: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'A grandfather who dived for pearls, a father who remembers hunger, and a card that pays for things — one family, about seventy years.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_was_at_the_roundabout: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was at the Pearl Roundabout for eleven days in 2011, and afterwards on a list.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_watched_it_built: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was alive while the country arrived: a graded track where the camel route was, then a school, then a clinic, then a city nobody has a precedent for.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  kuwait_occupation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'In Kuwait for the seven months of 1990-91: the new name on the maps, the wiring taken out of the walls, six hundred burning wells and the sky black at noon.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
   suffrage_inheritance: {
     weight: 'moderate',
     category: 'political',

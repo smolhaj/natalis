@@ -4,6 +4,86 @@
  */
 export const ECONOMIC_FLAGS = {
 
+  gulf_built_it_from_here: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'The house exists because of eleven years in a shared room, and they have seen it only in photographs.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_complained_formally: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Went to the labour office over unpaid wages. It worked, partially. Two of the men who went were not on the site the next month.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_domestic_worker: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Lives in the house rather than the camp, where the hours have no edge and whether the life is bearable depends entirely on what kind of people they turn out to be.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_labour_accommodation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Eight bunks, one window, a shelf each — and the shelf is respected absolutely, which is a small thing and is not a small thing.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_made_it_a_career: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Found that there is real work available inside the ministry to anyone who goes looking for it, and went looking.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_recruitment_debt: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Arrived already owing a year of wages to the agent who arranged the job, so the first years are worked for the fact of having come rather than for the family.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_remittance_pride: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'For about an hour after the exchange, the most useful person in the family, and walks differently.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_sends_remittance: {
+    weight: 'major',
+    category: 'economic',
+    description: 'The transfer on the last Friday of the month, which is the entire point of the arrangement and is worth a term of school fees at the other end.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_took_the_stipend: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Took the salary and put the life elsewhere — the family, the majlis, the boat — and is occasionally uneasy about it at three in the morning.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_waited_it_out: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Waited for the wages and sent home that this month was thin, and was told not to worry by people doing the not-worrying on purpose.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
   held_the_flat_through_it: {
     weight: 'major',
     category: 'economic',

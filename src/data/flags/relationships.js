@@ -4,6 +4,38 @@
  */
 export const RELATIONSHIP_FLAGS = {
 
+  gulf_parent_by_phone: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Does about forty minutes a week of being a parent, on a propped-up phone, and has got very good at it.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_protected_them_from_it: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Decided what a letter home is for, and made the same decision for fifteen years.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_raised_their_children: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Raised another family\'s children for eleven hours a day, and was called a name that is not quite an aunt and not quite a title.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_told_them_the_truth: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Wrote home exactly what the numbers were, and transferred the weight rather than sharing it.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
   interfaith_partnership: {
     weight: 'moderate',
     category: 'relationship',
