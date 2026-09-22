@@ -701,4 +701,114 @@ export const NEW_ROSTER_FLAGS = {
     weight: 'major', category: 'economic', intent: 'year_texture',
     description: 'A new kitchen and a fortnight in Italy, and the subject that was not the subject.',
   },
+
+  // -- Japan 1937-1952, the home front (events_japan_war.js) --------------
+  jp_speaks_up_now: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Started saying things at sixty that they could not say at twelve.',
+  },
+  jp_war_home_front: {
+    weight: 'moderate', category: 'world_events', intent: 'event',
+    description: 'The war reached them as a street, a flag, and a belt of a thousand stitches.',
+  },
+  jp_kokumin_gakko: {
+    weight: 'major', category: 'identity', intent: 'event',
+    description: 'Schooled as a little citizen of the empire; can still recite the rescript.',
+  },
+  jp_believed_it: {
+    weight: 'major', category: 'identity', intent: 'event',
+    description: 'Believed every word of it, at eight, and has never settled what to do with that.',
+  },
+  jp_tonarigumi: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'The neighbourhood association: the rice, the bucket chain, the bamboo spear.',
+  },
+  jp_austerity_years: {
+    weight: 'moderate', category: 'economic', intent: 'event',
+    description: 'Luxury is the enemy. The perm stopped; the trousers started.',
+  },
+  jp_dec8: {
+    weight: 'moderate', category: 'world_events', intent: 'event',
+    description: 'The eighth of December, and the relief of a war with a name.',
+  },
+  jp_hunger_years: {
+    weight: 'major', category: 'health', intent: 'event',
+    description: 'Barley, then sweet potato, then the vine. Cannot leave rice in a bowl.',
+  },
+  jp_metal_collection: {
+    weight: 'moderate', category: 'world_events', intent: 'event',
+    description: 'The temple bell, the railings, one of the two good pots.',
+  },
+  jp_factory_child: {
+    weight: 'major', category: 'economic', intent: 'event',
+    description: 'Pulled out of school into a factory at thirteen; the hands still know it.',
+  },
+  jp_saw_through_it: {
+    weight: 'major', category: 'political', intent: 'event',
+    description: 'Worked out what it was for, and did not say so.',
+  },
+  jp_sokai_child: {
+    weight: 'major', category: 'geographic', intent: 'event',
+    description: 'Evacuated by school to a country temple, three prefectures from home.',
+  },
+  jp_sokai_hunger: {
+    weight: 'moderate', category: 'health', intent: 'event',
+    description: 'A hunger that was a separate thing from wanting food.',
+  },
+  jp_saw_the_burned_city: {
+    weight: 'major', category: 'world_events', intent: 'event',
+    description: 'Went to look at the low city the morning after, and has never been able to describe it.',
+  },
+  jp_firebombing: {
+    weight: 'major', category: 'world_events', intent: 'event',
+    description: 'Was in a city on a night the wind made its own fire.',
+  },
+  jp_burned_out: {
+    weight: 'major', category: 'economic', intent: 'event',
+    description: 'The shape of where the house was: the step, the well, the scorched safe.',
+  },
+  jp_surrender_relief: {
+    weight: 'moderate', category: 'world_events', intent: 'event',
+    description: 'Felt relief first on the fifteenth of August, and was ashamed within the hour.',
+  },
+  jp_heard_the_broadcast: {
+    weight: 'major', category: 'world_events', intent: 'event',
+    description: 'Heard the voice nobody had heard before, over the cicadas.',
+  },
+  jp_occupation_child: {
+    weight: 'moderate', category: 'world_events', intent: 'event',
+    description: 'Was a child when the jeeps came, and the gum was the problem.',
+  },
+  jp_refused_the_gum: {
+    weight: 'moderate', category: 'identity', intent: 'event',
+    description: 'Walked past with their chin up and has never been able to say what they were right about.',
+  },
+  jp_sumi_nuri: {
+    weight: 'major', category: 'identity', intent: 'event',
+    description: 'Blacked out their own textbook, at their own desk, with their calligraphy brush.',
+  },
+  jp_takenoko: {
+    weight: 'major', category: 'economic', intent: 'event',
+    description: 'The bamboo-shoot existence: the kimono, then the other kimono, then the scrolls.',
+  },
+  jp_repatriation_years: {
+    weight: 'moderate', category: 'world_events', intent: 'event',
+    description: 'Watched the lists go up at the ward office, and who came back different.',
+  },
+  jp_article_nine_generation: {
+    weight: 'major', category: 'political', intent: 'event',
+    description: 'Taught the new constitution as a subject, and heard the length of the pause.',
+  },
+  jp_told_the_child: {
+    weight: 'major', category: 'relationships', intent: 'event',
+    description: 'Told it properly, in the order it happened, including the happy part.',
+  },
+  jp_war_never_told: {
+    weight: 'major', category: 'relationships', intent: 'event',
+    description: 'Gave the short answer, knowing it would be all the grandchildren ever had.',
+  },
+  jp_gave_testimony: {
+    weight: 'major', category: 'legacy', intent: 'event',
+    description: 'Talked for an hour into a recorder, and said the bit about the sky twice.',
+  },
 }

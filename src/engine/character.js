@@ -7,6 +7,7 @@ import { PHASE_ENTRY_EVENTS } from '../data/events/lifecycle/events_phase_entrie
 import { religionFor } from '../data/identity.js'
 import { pickUnusedName } from './names'
 import { wageIndex, inEraMoney } from '../data/economy.js'
+import { wasWealthy } from '../data/technology.js'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
 // Extends Set with Array.prototype.includes as an alias for has(), so existing
@@ -931,16 +932,145 @@ export const DESIRE_LABELS = {
   redemption: 'You want to undo something.',
 }
 
+// What the person you are with does.
+//
+// This was a flat list of forty-three modern Western job titles drawn with a
+// bare `pickFrom`, so a woman married in rural Upper Egypt in 1969 was a
+// Barista and a woman married in Tokyo in 1959 was a Personal Trainer. It is
+// the same fault `chooseCareer` was written to fix on the player's side:
+// a list answers "does this job exist", which is not "is this what someone
+// like this, here, then, actually does".
+//
+// `at` is the year the occupation begins to exist anywhere; `rich` restricts
+// it to materially wealthy years, `urban` to towns and cities. `w` is a
+// weight, and the largest weights are deliberately the ones the original list
+// did not contain at all — farm work, household work, trade, labour — because
+// for most people across most of this game's range that is the answer.
 export const PARTNER_OCCUPATIONS = [
-  'Software Engineer', 'Teacher', 'Nurse', 'Doctor', 'Lawyer', 'Accountant',
-  'Graphic Designer', 'Chef', 'Bartender', 'Sales Manager', 'Marketing Director',
-  'Real Estate Agent', 'Police Officer', 'Firefighter', 'Architect', 'Journalist',
-  'Pharmacist', 'Social Worker', 'Personal Trainer', 'Electrician', 'Plumber',
-  'Mechanic', 'Store Manager', 'Bank Teller', 'Dental Hygienist', 'Librarian',
-  'Barista', 'Photographer', 'Event Planner', 'Insurance Agent', 'Veterinarian',
-  'Student', 'Freelancer', 'Artist', 'Musician', 'Actor', 'Model',
-  'Entrepreneur', 'Consultant', 'Waiter', 'Driver', 'Cleaner', 'Security Guard',
+  // The great majority, nearly everywhere, for nearly the whole period.
+  { folk: true, t: 'Farmer',            at: 0,    w: 10, ruralOnly: true },
+  { folk: true, t: 'Runs the household', at: 0,   w: 10, female: true },
+  { folk: true, t: 'Market Trader',     at: 0,    w: 7 },
+  { folk: true, t: 'Labourer',          at: 0,    w: 7 },
+  { folk: true, t: 'Seamstress',        at: 0,    w: 4, female: true },
+  { folk: true, t: 'Domestic Worker',   at: 0,    w: 4 },
+  { folk: true, t: 'Shopkeeper',        at: 0,    w: 5 },
+  { t: 'Driver',            at: 1920, w: 4 },
+  { t: 'Factory Worker',    at: 1900, w: 6, urban: true },
+  { t: 'Clerk',             at: 0,    w: 5, urban: true },
+  { folk: true, t: 'Fisherman',         at: 0,    w: 2, ruralOnly: true },
+  { folk: true, t: 'Herder',            at: 0,    w: 2, ruralOnly: true },
+  { t: 'Miner',             at: 0,    w: 2 },
+  { t: 'Soldier',           at: 0,    w: 3 },
+  { folk: true, t: 'Cleaner',           at: 0,    w: 3 },
+  { t: 'Security Guard',    at: 1950, w: 3 },
+  { t: 'Waiter',            at: 1900, w: 3, urban: true },
+  { folk: true, t: 'Cook',              at: 0,    w: 3 },
+  // Professions, which exist early but reach few people.
+  { t: 'Teacher',           at: 0,    w: 6 },
+  { t: 'Nurse',             at: 1900, w: 5 },
+  { t: 'Doctor',            at: 0,    w: 2 },
+  { t: 'Lawyer',            at: 0,    w: 2, urban: true },
+  { t: 'Accountant',        at: 1900, w: 2, urban: true },
+  { t: 'Pharmacist',        at: 1900, w: 2, urban: true },
+  { t: 'Journalist',        at: 1900, w: 2, urban: true },
+  { t: 'Architect',         at: 1900, w: 1, urban: true },
+  { t: 'Librarian',         at: 1900, w: 1, urban: true },
+  { t: 'Civil Servant',     at: 1900, w: 4, urban: true },
+  { t: 'Police Officer',    at: 1900, w: 3 },
+  { t: 'Electrician',       at: 1930, w: 3 },
+  { t: 'Plumber',           at: 1920, w: 3 },
+  { t: 'Mechanic',          at: 1925, w: 3 },
+  { folk: true, t: 'Carpenter',         at: 0,    w: 4 },
+  { folk: true, t: 'Tailor',            at: 0,    w: 3 },
+  { t: 'Bank Teller',       at: 1920, w: 2, urban: true },
+  { t: 'Firefighter',       at: 1920, w: 1, urban: true },
+  { t: 'Social Worker',     at: 1950, w: 2, rich: true, urban: true },
+  { t: 'Veterinarian',      at: 1930, w: 1 },
+  // The original list, kept, and now confined to the years it belongs to.
+  { t: 'Chef',              at: 1950, w: 2, urban: true },
+  { t: 'Bartender',         at: 1900, w: 2, urban: true },
+  { t: 'Sales Manager',     at: 1950, w: 2, rich: true },
+  { t: 'Store Manager',     at: 1950, w: 2, urban: true },
+  { t: 'Real Estate Agent', at: 1950, w: 2, rich: true, urban: true },
+  { t: 'Photographer',      at: 1920, w: 1, urban: true },
+  { t: 'Graphic Designer',  at: 1970, w: 2, rich: true, urban: true },
+  { t: 'Dental Hygienist',  at: 1955, w: 1, rich: true, urban: true },
+  { t: 'Insurance Agent',   at: 1950, w: 2, urban: true },
+  { t: 'Marketing Director', at: 1970, w: 1, rich: true, urban: true },
+  { t: 'Consultant',        at: 1975, w: 2, rich: true, urban: true },
+  { t: 'Software Engineer', at: 1985, w: 3, rich: true, urban: true },
+  { t: 'Personal Trainer',  at: 1985, w: 1, rich: true, urban: true },
+  { t: 'Barista',           at: 1990, w: 2, rich: true, urban: true },
+  { t: 'Event Planner',     at: 1985, w: 1, rich: true, urban: true },
+  { t: 'Freelancer',        at: 1995, w: 2, rich: true, urban: true },
+  // Present in every era and rare in every era.
+  { t: 'Artist',            at: 0,    w: 1 },
+  { t: 'Musician',          at: 0,    w: 2 },
+  { t: 'Actor',             at: 0,    w: 1, urban: true },
+  { t: 'Entrepreneur',      at: 1900, w: 2 },
+  { t: 'Student',           at: 0,    w: 2 },
 ]
+
+/**
+ * Draw an occupation for a partner that could plausibly be held by someone of
+ * that gender, in that country, in that year.
+ */
+export function partnerOccupation(state, gender = null) {
+  const country = state?.currentCountry ?? state?.character?.country
+  const year = state?.currentYear ?? country?.yearRange?.[0] ?? 1980
+  const rural = (state?.ruralUrban ?? state?.character?.ruralUrban) === 'rural'
+  const rich = wasWealthy(country, year)
+  const isFemale = gender === 'female'
+  const pool = []
+  for (const o of PARTNER_OCCUPATIONS) {
+    if (year < (o.at ?? 0)) continue
+    if (o.rich && !rich) continue
+    if (o.urban && rural) continue
+    if (o.ruralOnly && !rural) continue
+    if (o.female && !isFemale) continue
+    // Women's paid work outside the household was the exception across most of
+    // this range; femaleWorkChance in lifeCourse.js carries the real rates and
+    // this leans on the same fact rather than restating it job by job.
+    let w = o.w ?? 1
+    // How many salaried professionals a place actually had. A rural district in
+    // 1962 Nigeria held a handful of teachers and one clinic; flat weights gave
+    // farm, household and trade work only 36% of draws there, against a reality
+    // nearer nine in ten.
+    if (o.folk) {
+      // Subsistence, trade and piecework go the other way: they are most of the
+      // labour force in a poor country early and a small remainder in a rich
+      // one late. Without this term a woman partnered in Chicago in 2015 came
+      // out a Seamstress or a Market Trader.
+      const tier = { very_high: 0.16, high: 0.3, medium_high: 0.5, medium: 0.7, low_medium: 0.9, low: 1.0, very_low: 1.0 }[country?.gdp] ?? 0.7
+      const era = year < 1950 ? 1.2 : year < 1980 ? 1.0 : 0.7
+      w *= tier * era * (rural ? 1.6 : 1)
+    } else {
+      // How many salaried professionals a place actually had. A rural district
+      // in 1962 Nigeria held a handful of teachers and one clinic; flat weights
+      // gave farm, household and trade work only 36% of draws there, against a
+      // reality nearer nine in ten.
+      const tier = { very_high: 1.0, high: 0.85, medium_high: 0.6, medium: 0.4, low_medium: 0.22, low: 0.13, very_low: 0.08 }[country?.gdp] ?? 0.4
+      const era = year < 1950 ? 0.45 : year < 1980 ? 0.7 : 1.0
+      w *= tier * era * (rural ? 0.3 : 1)
+    }
+    // Unpaid household work is the single largest answer for women across most
+    // of this range and a shrinking one after about 1970. femaleWorkChance in
+    // lifeCourse.js carries the real participation rates; this leans on the
+    // same fact rather than restating it.
+    if (o.t === 'Runs the household') {
+      w *= year < 1950 ? 1.4 : year < 1970 ? 1.1 : year < 1990 ? 0.7 : 0.4
+      if (['very_high', 'high'].includes(country?.gdp)) w *= 0.55
+    }
+    if (isFemale && !o.female && year < 1970) w *= 0.45
+    pool.push({ t: o.t, w })
+  }
+  if (!pool.length) return 'Farmer'
+  const total = pool.reduce((a, b) => a + b.w, 0)
+  let r = Math.random() * total
+  for (const o of pool) { r -= o.w; if (r <= 0) return o.t }
+  return pool[pool.length - 1].t
+}
 
 const BUSINESS_TYPES = [
   { id: 'corner_shop',    name: 'Corner Shop',       emoji: '🏪', startupCost: 5000,   baseRevenue: [8000, 18000],   minAge: 21, description: 'A small retail shop. Low risk, steady income.' },

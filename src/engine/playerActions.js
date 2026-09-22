@@ -8,7 +8,7 @@ import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhoo
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 import {
   getPhase, GDP_MULT,
-  ADULT_TRAITS, CHILD_TRAITS, pickTraits, PARTNER_OCCUPATIONS, BUSINESS_TYPES,
+  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES,
 } from './character'
 import {
   buildG, buildEffectProxy, applyProxy, resolveProxyExtras,
@@ -47,7 +47,7 @@ export function generatePartnerProfile(state, overrides = {}) {
 
   return {
     name, gender, birthGender, age,
-    occupation: pickFrom(PARTNER_OCCUPATIONS),
+    occupation: partnerOccupation(state, gender),
     looks, smarts, wealthStat, craziness,
     relationshipQuality: randomBetween(45, 72),
     married: false, engaged: false, years: 0, alive: true,

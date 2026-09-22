@@ -44,6 +44,7 @@ export {
   pickTraits,
   DESIRE_LABELS,
   PARTNER_OCCUPATIONS,
+  partnerOccupation,
   BUSINESS_TYPES,
   weightedRandom,
   weightedRandomFromArray,

@@ -36,7 +36,7 @@ export const GERMANY_REICH_EVENTS = [
   {
     id: 'dereich_machtergreifung',
     phase: null,
-    weight: 9,
+    weight: 40,
     when: (G) =>
       IS_DE(G) &&
       G.currentYear >= 1933 && G.currentYear <= 1934 &&
@@ -96,7 +96,7 @@ export const GERMANY_REICH_EVENTS = [
   {
     id: 'dereich_kristallnacht',
     phase: null,
-    weight: 10,
+    weight: 40,
     when: (G) =>
       IS_DE(G) &&
       G.currentYear === 1938 &&
@@ -225,7 +225,11 @@ export const GERMANY_REICH_EVENTS = [
   {
     id: 'dereich_arrival_1945',
     phase: null,
-    weight: 10,
+
+    // What arrives in 1945 arrived for everybody who was there, so this uses
+    // the corpus convention for a beat that must land rather than competing on
+    // weight against eight thousand events.
+    weight: 999,
     when: (G) =>
       IS_DE(G) &&
       G.currentYear >= 1945 && G.currentYear <= 1946 &&

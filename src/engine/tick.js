@@ -15,7 +15,7 @@ import {
   FlagSet, getPhase, getCountryRegime, isLgbtqCriminalized,
   GDP_MULT, HYPERINFLATION_DRAIN, getHyperinflation,
   calculateHouseholdContribution, tickFamilyIncome,
-  ADULT_TRAITS, CHILD_TRAITS, pickTraits, TRAIT_PROSE, BUSINESS_TYPES, PARTNER_OCCUPATIONS,
+  ADULT_TRAITS, CHILD_TRAITS, pickTraits, TRAIT_PROSE, BUSINESS_TYPES, partnerOccupation,
   getLifeSkeletonMap, getPhaseEntryMap, deriveSeason,
 } from './character'
 import { buildYearTexture } from './yearTexture'
@@ -365,7 +365,7 @@ function buildEffectProxy(state) {
     const age = clamp(randomBetween(Math.max(18, state.age - 5), state.age + 5), 16, 60)
     proxy._newPartner = {
       name, gender, birthGender: gender, age,
-      occupation: pickFrom(PARTNER_OCCUPATIONS),
+      occupation: partnerOccupation(state, nameGender),
       looks: randomBetween(30, 90),
       smarts: randomBetween(30, 90),
       wealthStat: randomBetween(20, 80),

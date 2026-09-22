@@ -5,6 +5,13 @@
 // rural depopulation, Article 9 rearmament debate.
 // Complements events_japan.js.
 
+// The fields where the salaryman contract in `jpn_karoshi` is the actual shape of
+// the job: a section, a floor that stays lit, a last train home.
+const SALARIED_FIELDS = [
+  'finance', 'technology', 'IT', 'engineering', 'law', 'media', 'government',
+  'architecture', 'manufacturing', 'science', 'real_estate',
+]
+
 export const JAPAN_DEPTH_EVENTS = [
 
   {
@@ -66,14 +73,26 @@ export const JAPAN_DEPTH_EVENTS = [
     id: 'jpn_karoshi',
     phase: null,
     weight: 3,
+    // `G.career.field` alone let this fire for a Novelist: the last train, the
+    // section and the lit floor are a salaried office (or a plant), not a desk
+    // at home with a manuscript on it.
     when: (G) =>
       G.character.country.name === 'Japan' &&
-      G.currentYear >= 1985 && G.currentYear <= 2010 &&
-      G.career && G.career.field &&
+      G.currentYear >= 1987 && G.currentYear <= 2010 &&
+      G.career && SALARIED_FIELDS.includes(G.career.field) &&
       G.age >= 28 && G.age <= 55 &&
       !G.mem?.jpnKaroshi,
-    text: 'The last train is at 12:04 and you know which carriage puts you nearest the stairs at your station. At ten the floor is still fully lit and there is a politeness at that hour that exists at no other. Your thinking after nine is worse and you produce more of it. The legal ceiling is forty-five overtime hours a month and nobody in this section has been under it since you arrived. The other word is on the news, and it is a word for people who die.',
-    context: 'Japan\'s Labour Ministry formally recognised karoshi — death from overwork, usually by stroke or heart attack — as a compensable category in 1987. Statutory overtime was capped at 45 hours a month, but the cap carried no penalty until the work-style reform legislation of 2018. Government surveys through the 2010s found roughly a fifth of firms with employees exceeding 80 overtime hours a month.',
+    // The forty-five hours is a Ministry of Labour notification of 1998, in force
+    // from 1999, and it was guidance with nothing behind it; the cap that can be
+    // prosecuted is the 2018 reform, in force from 2019. Before 1999 the only
+    // number that existed was the one in the firm's own Article 36 agreement.
+    text: (G) => {
+      const ceiling = G.currentYear >= 1999
+        ? 'The ministry has put out a figure — forty-five overtime hours a month — and it is a notification rather than a law, which everyone understands to mean that nothing happens.'
+        : 'There is a figure in the agreement the company files with the workers\' side every year, and nobody in this section has been under it since you arrived.'
+      return 'The last train is at 12:04 and you know which carriage puts you nearest the stairs at your station. At ten the floor is still fully lit and there is a politeness at that hour that exists at no other. Your thinking after nine is worse and you produce more of it. ' + ceiling + ' The other word is on the news, and it is a word for people who die.'
+    },
+    context: 'Japan\'s Labour Ministry formally recognised karoshi — death from overwork, usually by stroke or heart attack — as a compensable category in 1987, and the first karoshi hotline opened the following year. Overtime itself was governed by the Article 36 labour-management agreement, which carried no statutory ceiling; a 1998 ministry notification set 45 hours a month and 360 a year as a limit standard from 1999, with no penalty attached. Caps that could actually be prosecuted arrived only with the work-style reform legislation of 2018, in force from April 2019. Government surveys through the 2010s found roughly a fifth of firms with employees exceeding 80 overtime hours a month.',
     choices: [
       {
         text: 'You manage it. The hours are part of the contract that isn\'t written anywhere.',
@@ -100,7 +119,12 @@ export const JAPAN_DEPTH_EVENTS = [
       G.currentYear >= 1995 && G.currentYear <= 1996 &&
       G.age >= 10 &&
       !G.mem?.jpnKobe95,
-    text: 'It is quarter to six in the morning and the room moves in a way rooms are not supposed to move. On the television the elevated expressway is lying on its side with the road surface vertical. The wooden houses that came through the war burn all morning because the mains have gone and there is nothing to put on them. Within two days there are ordinary people driving vans of water down from Osaka, because they got there before anybody official did.',
+    // 5:46 a.m., 17 January 1995. Written in the present tense against a
+    // two-year window, it printed the morning itself into 1996; the year after
+    // is a different room and gets its own sentences.
+    text: (G) => G.currentYear === 1995
+      ? 'It is quarter to six in the morning and the room moves in a way rooms are not supposed to move. On the television the elevated expressway is lying on its side with the road surface vertical. The wooden houses that came through the war burn all morning because the mains have gone and there is nothing to put on them. Within two days there are ordinary people driving vans of water down from Osaka, because they got there before anybody official did.'
+      : 'In January they run the footage again: the expressway on its side, the road surface vertical, the smoke over Nagata going up all morning. A year on, the prefabricated housing is still standing in rows on what used to be a playing field, and the people in it are mostly old. What gets said about that morning now is not the shaking. It is the vans of water that came down from Osaka on the second day, driven by people nobody had asked.',
     context: 'The Great Hanshin earthquake struck at 5:46 a.m. on 17 January 1995 with a magnitude of 6.9 and its epicentre near Awaji Island. 6,434 people died, most in the collapse of older wooden housing, and post-quake fires spread unchecked because water mains had ruptured. The slow official response and the improvised civilian relief effort that filled the gap gave 1995 its name in Japan as the first year of the volunteer era.',
     choices: [
       {

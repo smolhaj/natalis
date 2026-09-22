@@ -143,8 +143,20 @@ export const GULF_EAST_EVENTS = [
       G.age >= 22 && G.age <= 35,
     text: (G) => {
       const yr = G.currentYear
-      if (yr >= 1960 && yr <= 1989) {
-        return 'The company provides housing, healthcare, a pension, and a social structure that extends to the weekend. The implicit contract: you give it your working life and it gives you security and identity. You drink with your colleagues on Friday in a bar where the hierarchy does not change but is temporarily more porous. You sing at karaoke. The second face — the one for after work — is real too.'
+      // Daisuke Inoue's Juke-8 is 1971 and the machines only reach ordinary
+      // bars through the mid-seventies. Before that the man who accompanied
+      // your singing was a person: the nagashi, working the street with a
+      // guitar, who is precisely what karaoke put out of work.
+      if (yr < 1960) {
+        return 'The company has a dormitory and a bathhouse and a canteen, and the wage is small and arrives whole. What it is really handing you is a place inside something, at a time when a great many people your age do not have one. You stay until the section chief stands up. Afterwards there is a stall under the railway arches with a curtain and four stools, and the men there do not talk about where they were in 1945.'
+      }
+      if (yr <= 1989) {
+        const afterHours = yr >= 1980
+          ? 'You sing at karaoke.'
+          : yr >= 1976
+            ? 'There is a machine in the corner now that plays the accompaniment while you sing over it, and the older men have not decided about it yet.'
+            : 'A nagashi comes through with a guitar and plays whatever you tell him you can sing, and you sing it, and you put the money in his hand yourself.'
+        return 'The company provides housing, healthcare, a pension, and a social structure that extends to the weekend. The implicit contract: you give it your working life and it gives you security and identity. You drink with your colleagues on Friday in a bar where the hierarchy does not change but is temporarily more porous. ' + afterHours + ' The second face — the one for after work — is real too.'
       }
       return 'The job culture is demanding in ways that are structural and expected. Overtime is unspoken and universal. Leaving at five would be noticed. You stay. Most people do. The word for dying from overwork exists in your language because the condition is common enough to require naming.'
     },

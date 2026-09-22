@@ -13,7 +13,12 @@ export const EGYPT_EVENTS = [
       G.currentYear >= 1956 && G.currentYear <= 1967 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem.egyNasser,
-    text: 'Nasser is on the radio. His voice has a quality that makes people stop what they are doing. The Suez Canal is being nationalized — Egypt\'s canal, returned to Egypt after seventy-five years of foreign operation. Britain and France and Israel will invade and then withdraw, which is what happens when America tells them to withdraw, which Nasser does not explain but which everyone understands. The Arab world is watching Egypt. Egypt is watching Nasser. You are watching both.',
+    // The tripartite invasion is October 1956 and the withdrawal is March 1957.
+    // Narrated in the future tense to a child in 1963 it reads as prophecy; the
+    // year window is eleven years long because Nasserism is, so the text moves.
+    text: (G) => G.currentYear <= 1957
+      ? 'Nasser is on the radio and your father turns the volume up instead of down. He says the name of the Frenchman who dug the canal and somewhere in Egypt that is a signal, and the canal is Egypt\'s. Then the planes come. Blue paint on the windows, Port Said burning in the newspaper photographs, the British and the French and the Israelis in Sinai — and then, before the winter is over, gone. The canal is still Egypt\'s. The street below does not stop singing for a week.'
+      : 'Sawt al-Arab is on in the coffeehouse and in the window above it and in the shop at the corner, so that walking the length of the street you hear one unbroken sentence. The canal is Egypt\'s. The Americans would not pay for the dam at Aswan and the dam will be built anyway, with Russian money. The land is coming off the pashas in feddans. Your teacher says karama the way other men say the name of God, and on the first Thursday of the month nobody in the building sleeps, because Umm Kulthum is singing and the singing runs past midnight.',
     choices: null,
     effect: (p) => { p.m += 6; p.addFlag('nasser_generation'); p.setMem('egyNasser', true) },
   },
