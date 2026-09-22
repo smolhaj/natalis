@@ -21,6 +21,7 @@ import {
 } from './character'
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
+import { rememberSaid } from './prose'
 import { tickLifeCourse, secondaryChance, primaryChance } from './lifeCourse'
 
 function createProxy(state) {
@@ -167,7 +168,7 @@ function buildEffectProxy(state) {
     'art_in_drawer', 'runner_habit', 'music_private', 'writing_in_drawer',
     'lost_parent_father', 'lost_parent_mother', 'lost_friend', 'widowed', 'lost_child',
     'famine_memory', 'experienced_racism', 'lgbtq_family_rejection',
-    'boarding_school', 'first_love_over', 'cancer_survivor',
+    'boarding_school', 'first_love_over', 'cancer_survivor', 'cancer_treatment',
     'affair_brief_secret', 'affair_not_taken', 'emigrated',
     'divorced', 'business_failed', 'graduated',
     'chernobyl_liquidator', 'grew_up_polluted', 'industrial_upbringing', 'oil_delta_witness',
@@ -2201,10 +2202,12 @@ export function tick(state) {
   const specificTexture = chance(0.6) ? buildYearTexture(s, { specificOnly: true }) : null
   if (specificTexture) {
     s.log = [...s.log, { age: s.age, year: s.currentYear, text: specificTexture, isKey: false, isTexture: true }]
+    s.mem = rememberSaid(s.mem, specificTexture)
   } else {
     const mundaneText = buildMundaneLayer(s)
     if (mundaneText) {
       s.log = [...s.log, { age: s.age, text: mundaneText, isKey: false, isMundane: true }]
+      s.mem = rememberSaid(s.mem, mundaneText)
     }
   }
 
@@ -2595,7 +2598,10 @@ export function tick(state) {
   if (!event) {
     s.pendingEvent = null
     const texture = buildYearTexture(s)
-    if (texture) s.log = [...s.log, { age: s.age, year: s.currentYear, text: texture, isKey: false, isTexture: true }]
+    if (texture) {
+      s.log = [...s.log, { age: s.age, year: s.currentYear, text: texture, isKey: false, isTexture: true }]
+      s.mem = rememberSaid(s.mem, texture)
+    }
     return s
   }
 

@@ -1,3 +1,4 @@
+import { preferUnsaid } from './prose'
 // mundaneLayer.js — Daily-life texture that fires alongside main events every year.
 //
 // buildMundaneLayer(state) is called from advanceYear() regardless of whether
@@ -2936,5 +2937,10 @@ export function buildMundaneLayer(state) {
   )
 
   if (pool.length === 0) return null
-  return pool[Math.floor(Math.random() * pool.length)]
+  // Prefer a line this character has not heard. The mundane layer draws from a
+  // flat pool, so over a long life it re-served the same sentence often enough
+  // to be noticeable — and the layer's whole job is to feel like ordinary time
+  // passing, which repetition destroys.
+  const fresh = preferUnsaid(state, pool)
+  return fresh[Math.floor(Math.random() * fresh.length)]
 }

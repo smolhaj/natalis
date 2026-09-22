@@ -648,6 +648,61 @@ export async function auditIdentityInCountry() {
   return findings
 }
 
+// ── 8. Season-in-country audit ────────────────────────────────────────────────
+
+/**
+ * A guard asking for a season the country cannot have.
+ *
+ * `deriveSeason` returns wet/dry for monsoon and tropical countries and the
+ * four temperate seasons everywhere else, so `season === 'wet'` in a guard that
+ * also requires a four-season country can never pass. This was not theoretical:
+ * two lists of "which countries are monsoon countries" existed and disagreed,
+ * and the one deriveSeason consulted omitted India, Pakistan, Sri Lanka, Nepal
+ * and Malaysia — so the monsoon prose written for the subcontinent was
+ * unreachable in the largest monsoon country on earth.
+ */
+export async function auditSeasonInCountry() {
+  const { allCharacterEvents, WORLD_EVENTS } = await loadCorpus()
+  const V = await vocab()
+  const { seasonsFor } = await import('../../src/engine/character.js')
+  const findings = []
+
+  const scan = (e) => {
+    const src = stripComments(fnSource(e.when))
+    if (!src) return
+    const required = [...countriesInGuard(src).required].filter(n => V.countryNames.has(n))
+    if (required.length === 0) return
+    const positives = literalsComparedTo(src, '(?:\\bG\\b\\s*\\.|\\.)\\s*season').filter(l => !negativeOp(l.op))
+    if (positives.length === 0) return
+    // A guard may offer alternatives, and a country list may be mixed-climate.
+    // Only flag when NO required country can produce ANY demanded season.
+    const want = [...new Set(positives.map(l => l.value))]
+    const anyPossible = want.some(v => required.some(n => seasonsFor(n).includes(v)))
+    if (!anyPossible) {
+      const can = [...new Set(required.flatMap(n => seasonsFor(n)))]
+      findings.push(finding(ERR, 'season-not-in-country', e.id, locate(e.id),
+        `guard requires ${required.map(n => `'${n}'`).join(' or ')} and season ` +
+        `${want.map(v => `'${v}'`).join(' or ')}, but those countries only have ${can.join('/')}`))
+      return
+    }
+    // The interesting case is PARTIAL: a guard naming twelve countries where
+    // four of them can never satisfy it fires happily for the other eight, so
+    // nothing looks broken and a slice of the intended audience silently never
+    // sees the event. That is how the subcontinent lost its monsoon.
+    if (required.length < 2) return
+    const excluded = required.filter(n => !want.some(v => seasonsFor(n).includes(v)))
+    if (excluded.length === 0) return
+    findings.push(finding(WARN, 'season-excludes-some-countries', e.id, locate(e.id),
+      `guard asks for season ${want.map(v => `'${v}'`).join(' or ')} and lists ` +
+      `${required.length} countries, but ${excluded.length} of them can never have it: ` +
+      `${excluded.map(n => `${n} (${seasonsFor(n).join('/')})`).join(', ')}`))
+  }
+
+  for (const e of allCharacterEvents) scan(e)
+  for (const we of WORLD_EVENTS) scan(we)
+  return findings
+}
+
 export const AUDITS = [
   ['reverse-flags', 'flags a guard requires that nothing sets', auditReverseFlags],
   ['enum-domains', 'string literals compared against an enum they are not in', auditEnumDomains],
@@ -656,6 +711,7 @@ export const AUDITS = [
   ['year-windows', 'year windows no living character can be inside', auditYearWindows],
   ['world-scope', 'world events scoped out of their own countries', auditWorldEventScope],
   ['identity-country', 'identity literals absent from the country the guard requires', auditIdentityInCountry],
+  ['season-country', 'seasons a guard demands that its country cannot have', auditSeasonInCountry],
 ]
 
 export async function runAllAudits(only = null) {

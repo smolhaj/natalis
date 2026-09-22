@@ -357,7 +357,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_heat_afternoon',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.season === 'summer' && (!G.mem?.s4_heatAfternoon &&
+    when: (G) => (G.season === 'summer' || G.season === 'dry') && (!G.mem?.s4_heatAfternoon &&
       G.age >= 6 && G.age <= 16 &&
       (G.character.country?.archetype === 'wealthy_gulf' ||
        G.character.country?.archetype === 'developing_unstable' ||

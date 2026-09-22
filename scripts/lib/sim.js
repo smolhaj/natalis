@@ -17,6 +17,8 @@
  * no numbers at all.
  */
 
+import fs from 'node:fs'
+import path from 'node:path'
 import { registerResolveHooks } from './register.js'
 import { idIndex } from './corpus.js'
 
@@ -34,6 +36,33 @@ function stubStorage() {
     clear: () => mem.clear(),
   }
 }
+
+/**
+ * The distinct prose lines authored in a file.
+ *
+ * Needed because the prose layers are the one body of writing no audit could
+ * see: yearTexture.js held 7,588 lines behind a first-match-wins if-chain and
+ * 9.3% of them ever reached a player. Static analysis says a guard COULD pass.
+ * Only running the engine says which line a year actually printed.
+ */
+function prosePool(rel) {
+  const abs = path.join(process.cwd(), rel)
+  if (!fs.existsSync(abs)) return new Set()
+  const src = fs.readFileSync(abs, 'utf8')
+  const out = new Set()
+  for (const m of src.matchAll(/(['"`])((?:\\.|(?!\1)[^\\])*?)\1/gs)) {
+    const t = m[2]
+    if (t.length > 40 && /[a-z] [a-z]/.test(t) && !t.includes('\\n')) {
+      out.add(t.replace(/\\'/g, "'").replace(/\\"/g, '"').replace(/\\`/g, '`'))
+    }
+  }
+  return out
+}
+
+export const PROSE_LAYERS = [
+  ['yearTexture', 'src/engine/yearTexture.js'],
+  ['mundaneLayer', 'src/engine/mundaneLayer.js'],
+]
 
 export const DEFAULT_CONFIGS = [
   ['Nigeria', 1962],        // the life the whole project is named for
@@ -111,6 +140,13 @@ export async function runSimulation({
   }
   const byBucket = new Map()
   const countriesSeen = new Set()
+  const textureFired = new Map()   // prose line → times it printed
+  const mundaneFired = new Map()
+  // Repetition is a per-LIFE property: the same sentence twice across two
+  // characters is fine, twice to one character is the defect. Measured at 15.6%
+  // of all prose output before the prose layers began preferring unheard lines,
+  // with one life hearing the same sentence fourteen times.
+  const repeat = { printed: 0, repeated: 0, worst: 0, worstLine: '' }
   const unlocated = new Map()   // event id → times fired, for ids the index cannot place
   const otherFiles = new Map()
   const perConfig = []
@@ -134,6 +170,7 @@ export async function runSimulation({
       }
       totals.lives++; rec.lives++
       let run = 0
+      const saidThisLife = new Map()
 
       for (let y = 0; y < maxYears && !s.dead; y++) {
         const before = s.log.length
@@ -193,8 +230,21 @@ export async function runSimulation({
         }
         totals.years++; rec.years++
         for (const entry of s.log.slice(before)) {
-          if (entry.isTexture) { totals.texture++; rec.texture++ }
-          if (entry.isMundane) totals.mundane++
+          if (entry.isTexture) {
+            totals.texture++; rec.texture++
+            textureFired.set(entry.text, (textureFired.get(entry.text) ?? 0) + 1)
+          }
+          if (entry.isMundane) {
+            totals.mundane++
+            mundaneFired.set(entry.text, (mundaneFired.get(entry.text) ?? 0) + 1)
+          }
+          if (entry.isTexture || entry.isMundane) {
+            const n = (saidThisLife.get(entry.text) ?? 0) + 1
+            saidThisLife.set(entry.text, n)
+            repeat.printed++
+            if (n > 1) repeat.repeated++
+            if (n > repeat.worst) { repeat.worst = n; repeat.worstLine = entry.text }
+          }
           if (entry.isWorld) totals.world++
           if (entry.isHeadline) totals.headline++
         }
@@ -235,5 +285,40 @@ export async function runSimulation({
       [...byBucket].map(([k, v]) => [k, totals.lives ? Math.round((100 * v) / totals.lives) : 0])
     ),
     glimpsesPerLife: totals.lives ? totals.glimpse / totals.lives : 0,
+    prose: proseCoverage([['yearTexture', textureFired], ['mundaneLayer', mundaneFired]]),
+    repetition: {
+      ...repeat,
+      share: repeat.printed ? (100 * repeat.repeated) / repeat.printed : 0,
+    },
   }
+}
+
+/**
+ * How much of each prose layer a run actually printed.
+ *
+ * `concentration` is the number of distinct lines supplying half of all output
+ * from that layer — the number that made the old yearTexture's problem legible
+ * when the coverage percentage alone still looked survivable. 122 lines out of
+ * 7,588 were carrying half of every life.
+ */
+function proseCoverage(layers) {
+  const out = {}
+  for (const [name, fired] of layers) {
+    const rel = PROSE_LAYERS.find(([n]) => n === name)?.[1]
+    const pool = rel ? prosePool(rel) : new Set()
+    const matched = [...fired.keys()].filter(k => pool.has(k)).length
+    const counts = [...fired.values()].sort((a, b) => b - a)
+    const total = counts.reduce((a, b) => a + b, 0)
+    let acc = 0, concentration = 0
+    while (concentration < counts.length && acc < total / 2) acc += counts[concentration++]
+    out[name] = {
+      authored: pool.size,
+      fired: fired.size,
+      matched,
+      coverage: pool.size ? (100 * matched) / pool.size : 0,
+      concentration,
+      printed: total,
+    }
+  }
+  return out
 }

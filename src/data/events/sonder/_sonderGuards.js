@@ -99,10 +99,13 @@ export const SNOW_COUNTRIES = [
 ]
 export const isColdCountry = (G) => SNOW_COUNTRIES.includes(G.currentCountry?.name)
 
-export const MONSOON_COUNTRIES = [
-  'India', 'Bangladesh', 'Pakistan', 'Sri Lanka', 'Nepal', 'Myanmar', 'Thailand',
-  'Vietnam', 'Cambodia', 'Laos', 'Philippines', 'Indonesia', 'Malaysia',
-]
+// The engine owns the climate classification, because deriveSeason has to agree
+// with it. Two copies of this list existed and disagreed — the engine's omitted
+// India, Pakistan, Sri Lanka, Nepal and Malaysia — which is how the
+// subcontinent's monsoon prose became unreachable. Imported rather than
+// re-exported so the name is in local scope for the predicate below.
+import { MONSOON_COUNTRIES } from '../../../engine/character'
+export { MONSOON_COUNTRIES }
 export const isMonsoonCountry = (G) => MONSOON_COUNTRIES.includes(G.currentCountry?.name)
 
 // The tropics and the Sahel: heat as a governing fact rather than a season.

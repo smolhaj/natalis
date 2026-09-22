@@ -33,7 +33,24 @@ const mode = arg('mode', 'active')
 const asJson = argv.includes('--json')
 const country = arg('country', null)
 const year = arg('year', null)
-const configs = country ? [[country, Number(year ?? 1970)]] : DEFAULT_CONFIGS
+// The ten default configurations cannot reach the other 144 countries' content
+// at all, so a coverage number taken over them understates the place-anchored
+// layers by construction. --broad walks the whole roster instead, which is the
+// number a population of players would actually see.
+const broad = argv.includes('--broad')
+const configs = country ? [[country, Number(year ?? 1970)]]
+  : broad ? await rosterConfigs()
+  : DEFAULT_CONFIGS
+
+async function rosterConfigs() {
+  const { COUNTRIES } = await import('../src/data/countries.js')
+  const YEARS = [1935, 1950, 1962, 1975, 1988, 2000]
+  return COUNTRIES.map((c, i) => {
+    const [lo, hi] = c.yearRange ?? [1930, 2025]
+    const y = YEARS[i % YEARS.length]
+    return [c.name, Math.min(Math.max(y, lo), hi - 20)]
+  })
+}
 
 const bar = (share, width = 28) => {
   const n = Math.max(0, Math.min(width, Math.round((share / 100) * width)))
@@ -76,6 +93,22 @@ if (asJson) {
   for (const [bucket, n] of Object.entries(result.per100Lives).sort((a, b) => b[1] - a[1])) {
     console.log(`  ${bucket.padEnd(16)} ${String(n).padStart(5)}`)
   }
+  console.log(`\n${B('How much of the prose layers a player sees')}  ${DIM('(distinct authored lines printed)')}\n`)
+  for (const [name, p] of Object.entries(result.prose ?? {})) {
+    const flag = p.coverage < 10 ? RED('!') : p.coverage < 25 ? YEL('~') : ' '
+    console.log(
+      `  ${flag}${name.padEnd(14)} ${String(p.coverage.toFixed(1)).padStart(5)}%  ${bar(p.coverage)}  ` +
+      DIM(`${p.matched}/${p.authored} lines · half the output from ${p.concentration}`)
+    )
+  }
+
+  const rep = result.repetition
+  if (rep) {
+    const flag = rep.share > 6 ? RED('!') : rep.share > 3 ? YEL('~') : GRN('\u2713')
+    console.log(`\n  ${flag} ${String(rep.share.toFixed(1)).padStart(4)}% of prose a character read was a line they had already read` +
+      DIM(`  (worst: the same sentence ${rep.worst}x in one life)`))
+  }
+
   console.log(`\n  distinct countries whose dedicated content appeared: ${B(result.countriesSeen.size)}`)
   console.log(`  ${DIM([...result.countriesSeen].sort().join(', ') || '(none)')}`)
 

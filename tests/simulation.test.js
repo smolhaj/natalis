@@ -99,6 +99,66 @@ describe('firing rates', () => {
   }, 600000)
 })
 
+describe('the prose layers', () => {
+  // yearTexture.js was a 15,104-line function of 2,035 sequential
+  // `if (guard) return pick([...])` statements, so the file's own line order was
+  // its priority order. 9.3% of the 7,588 authored lines ever reached a player;
+  // Peru's 47 lines fired zero times in 3,253 Peruvian years. Both numbers were
+  // invisible to a green test suite, because every guard was correct.
+  it('prints a real share of the prose it contains', async () => {
+    const r = await sim()
+    const yt = r.prose.yearTexture
+    expect(yt.authored).toBeGreaterThan(5000)
+    // Deliberately a floor well under the measured ~19% on a broad roster run,
+    // not a pin: the default ten configurations cannot reach the other 144
+    // countries' blocks at all, so this number is structurally lower than the
+    // population one. It is here to catch a return to first-match-wins, which
+    // would put it back under 10%.
+    expect(yt.coverage, `yearTexture coverage ${yt.coverage.toFixed(1)}% of ${yt.authored} lines`)
+      .toBeGreaterThan(9)
+  })
+
+  it('does not concentrate every life into the same few sentences', async () => {
+    const r = await sim()
+    // The number of distinct lines supplying half of all texture output. Under
+    // the old ordering this was 122 lines out of 7,588 — the tell that made the
+    // coverage percentage legible as a defect rather than a small number.
+    expect(r.prose.yearTexture.concentration,
+      `half of all texture output came from ${r.prose.yearTexture.concentration} lines`)
+      .toBeGreaterThan(40)
+  })
+
+  it('keeps the mundane layer reaching most of its pool', async () => {
+    const r = await sim()
+    // This layer always built a pool and picked from it, which is why it was
+    // reaching ~55% of its lines while yearTexture reached 9%. It is the control
+    // group: if it drops, something broke in the shared prose machinery.
+    expect(r.prose.mundaneLayer.coverage).toBeGreaterThan(30)
+  })
+
+  it('does not tell one character the same sentence twice', async () => {
+    const r = await sim()
+    // 15.6% before the layers began preferring unheard lines, with a worst case
+    // of the same sentence fourteen times in one life. Some recurrence is
+    // deliberate — the grief fog is supposed to come back — so this is a ceiling
+    // on the share, not a ban.
+    expect(r.repetition.share,
+      `${r.repetition.share.toFixed(1)}% repeated; worst ${r.repetition.worst}x: "${r.repetition.worstLine.slice(0, 80)}"`)
+      .toBeLessThan(4)
+    // Measured at 0.2% and a worst case of 5 after the fix; 15.6% and 14 before
+    // it. The ceiling sits above the measured tail because the tail grows with
+    // sample size, and below the defect it exists to catch.
+    expect(r.repetition.worst).toBeLessThan(12)
+  })
+
+  it('narrates a year in the large majority of years lived', async () => {
+    const r = await sim()
+    const anyProse = r.share.texture + r.share.mundane
+    expect(anyProse, `texture ${r.share.texture.toFixed(1)}% + mundane ${r.share.mundane.toFixed(1)}%`)
+      .toBeGreaterThan(75)
+  })
+})
+
 describe('lifespan', () => {
   it('lands every configuration in a plausible historical band', async () => {
     const r = await sim()
