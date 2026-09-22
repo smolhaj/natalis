@@ -57,11 +57,17 @@ export const EGYPT_DEPTH_EVENTS = [
     weight: 4,
     when: (G) =>
       IS_EGYPTIAN(G) &&
-      G.currentYear >= 1977 && G.currentYear <= 1982 &&
+      G.currentYear >= 1977 && G.currentYear <= 1980 &&
       G.age >= 18 &&
       !G.mem?.egyCampDavid,
-    text: 'Your father does not turn the radio off for three days. Sadat lands in Tel Aviv and the men in the coffeehouse on the corner stop playing tawla to argue, and the argument is still going in April. In the summer the Arab League moves out of Cairo and the building on the corniche stands with its shutters closed. A cousin who fought at the canal in 1973 will not say the word peace out loud, and will not say anything against it either.',
-    context: 'Sadat addressed the Knesset in November 1977, signed the Camp David Accords with Begin and Carter in 1978 and the peace treaty in 1979. Egypt recovered Sinai and was suspended from the Arab League, whose headquarters moved from Cairo to Tunis. Sadat and Begin shared the 1978 Nobel Peace Prize. In October 1981 soldiers taking part in the parade marking the canal crossing fired on the reviewing stand and killed him.',
+    // He flew to Israel on 19 November 1977 and spoke in the Knesset, in Jerusalem,
+    // in Arabic, the next day — the destination is the whole argument. The League
+    // did not leave Cairo until 1979, after the treaty, so the two halves of this
+    // are two years apart and the prose has to know which one it is standing in.
+    text: (G) => G.currentYear <= 1978
+      ? 'Your father does not turn the radio off for three days. Sadat goes up to Jerusalem and stands in the Knesset and speaks in Arabic, and the men in the coffeehouse on the corner stop playing tawla to argue, and the argument is still going in April. A cousin who fought at the canal in 1973 will not say the word peace out loud, and will not say anything against it either. Your father says only that he has seen four wars and would like to see no more.'
+      : 'The treaty is signed in Washington and the Arab states meet in Baghdad and vote Egypt out of its own league. The headquarters goes to Tunis and the building on Tahrir stands with its shutters closed, and men your father\'s age walk past it slowly on purpose. The argument that started in the coffeehouse the week Sadat went up to Jerusalem has not finished; it has only gone quiet in public. A cousin who fought at the canal in 1973 will not say the word peace out loud, and will not say anything against it either.',
+    context: 'Sadat flew to Israel on 19 November 1977 and addressed the Knesset in Jerusalem the following day — the first Arab head of state to visit. The Camp David Accords with Begin and Carter followed in September 1978 and the peace treaty was signed in Washington in March 1979. Egypt recovered Sinai; days after the signing the Arab League met in Baghdad, suspended Egypt\'s membership and moved its headquarters from Cairo to Tunis, where it stayed until 1990. Sadat and Begin shared the 1978 Nobel Peace Prize. In October 1981 soldiers taking part in the parade marking the canal crossing fired on the reviewing stand and killed him.',
     choices: [
       {
         text: `The peace was the right decision. Four wars in thirty years. The Sinai is back.`,

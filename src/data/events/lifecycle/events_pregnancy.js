@@ -16,9 +16,11 @@ const justBornThisYear = (G) =>
 const bornLastYear = (G) =>
   G.children.length > 0 && G.children[G.children.length - 1].ageAtBirth === G.age - 1
 
-// Pregnancy year guard (not birth year — pregnant flag still present)
+// The conception year: the flag is set and the birth has not happened yet.
+// Was `pregnancyYear + 1`, which is the birth year now that gestation takes one
+// age-up rather than two.
 const inPregnancyYear = (G) =>
-  G.flags.has('pregnant') && G.age === (G.mem?.pregnancyYear ?? -99) + 1
+  G.flags.has('pregnant') && G.age === (G.mem?.pregnancyYear ?? -99)
 
 // Archetype-branched birth setting text
 function birthSettingText(G) {

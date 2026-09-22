@@ -5,8 +5,9 @@ import { DESTINATIONS } from '../data/destinations'
 import { CRIMES, VIOLENT_TARGETS, HOMICIDE_METHODS, crimePayout } from '../data/crimes'
 import { COUNTRIES } from '../data/countries'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
-import { getAvailableCareers, dropOutOfSchool, BUSINESS_TYPES, getAvailableBusinessTypes, getPhase, buildPendingTrial } from '../engine/gameEngine'
+import { getAvailableCareers, getAvailableBusinessTypes, getPhase, buildPendingTrial } from '../engine/gameEngine'
 import { CAREERS } from '../data/careers'
+import { estimatePrice, estimateCost, eraMoney } from '../engine/playerActions'
 
 const TOP_CATEGORIES = [
   { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself',              group: 'Self' },
@@ -55,7 +56,7 @@ function Btn({ onClick, disabled, title, subtitle, cost, danger }) {
     >
       <p className={`text-sm font-semibold ${danger ? 'text-bit-red' : 'text-natalis-text'}`}>{title}</p>
       {subtitle && <p className="text-natalis-muted text-xs">{subtitle}</p>}
-      {cost && <p className="text-xs font-medium" style={{ color: '#007aff' }}>{cost}</p>}
+      {cost && <p className="text-xs font-medium" style={{ color: '#3f5670' }}>{cost}</p>}
     </button>
   )
 }
@@ -264,14 +265,14 @@ export default function ActivitiesPanel({ onClose }) {
                   {enrolled.type === 'university' ? '🎓' : '🔧'} {enrolled.field} — Year {(enrolled.year ?? 0) + 1} of {enrolled.type === 'university' ? 4 : 2}
                 </p>
                 <div className="w-full h-2 bg-natalis-bg rounded-full overflow-hidden mt-1">
-                  <div className="h-full rounded-full" style={{ width: `${((enrolled.year ?? 0) / (enrolled.type === 'university' ? 4 : 2)) * 100}%`, background: 'linear-gradient(90deg, #007aff, #5ac8fa)' }} />
+                  <div className="h-full rounded-full" style={{ width: `${((enrolled.year ?? 0) / (enrolled.type === 'university' ? 4 : 2)) * 100}%`, background: '#3f5670' }} />
                 </div>
               </div>
             )}
             {gpa !== null && (
               <div className="flex items-center justify-between bg-white rounded-xl border border-natalis-border px-4 py-3">
                 <span className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">🎓 GPA</span>
-                <span className="font-bold text-sm" style={{ color: gpa >= 3.5 ? '#34c759' : gpa >= 2.5 ? '#ff9500' : '#ff3b30' }}>{gpa.toFixed(2)}</span>
+                <span className="font-bold text-sm" style={{ color: gpa >= 3.5 ? '#3f6146' : gpa >= 2.5 ? '#8a6635' : '#8c3a2e' }}>{gpa.toFixed(2)}</span>
               </div>
             )}
             {state.age >= 10 && state.age <= 25 && (
@@ -287,7 +288,7 @@ export default function ActivitiesPanel({ onClose }) {
               .filter(a => ['study', 'online_course', 'learn_language', 'philosophy'].includes(a.id))
               .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
               .map(a => (
-                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${a.cost}` : null} />
+                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${estimateCost(state, a.cost).toLocaleString()}` : null} />
               ))
             }
             {state.age >= 10 && state.age <= 18 && (
@@ -315,73 +316,59 @@ export default function ActivitiesPanel({ onClose }) {
 
       case 'love': {
         // ── Partner profile card (organic meet or dating app match) ──────────
-        const PartnerProfileCard = ({ profile, onAccept, onDecline, acceptLabel = 'Go on a Date', declineLabel = 'Not Interested' }) => {
-          const genderEmojis = { male: '👨', female: '👩', 'non-binary': '🧑' }
-          const faceEmoji = genderEmojis[profile.gender] ?? '🧑'
-          const StatBarRow = ({ label, value, color }) => (
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-natalis-muted w-16 shrink-0">{label}</span>
-              <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full rounded-full transition-all" style={{ width: `${value}%`, backgroundColor: color }} />
-              </div>
-              <span className="text-xs font-bold w-8 text-right" style={{ color }}>{value}</span>
-            </div>
-          )
-          return (
-            <div className="bg-white rounded-2xl border border-natalis-border shadow-sm overflow-hidden mb-2">
-              {/* Header */}
-              <div className="bg-gradient-to-br from-pink-500 to-rose-400 px-5 py-4 flex items-center gap-4">
-                <span className="text-5xl">{faceEmoji}</span>
-                <div>
-                  <p className="text-white font-bold text-lg leading-tight">{profile.name}</p>
-                  <p className="text-pink-100 text-xs mt-0.5">{profile.occupation}</p>
-                </div>
-              </div>
-              {/* Info fields */}
-              <div className="px-4 pt-3 pb-1 grid grid-cols-2 gap-x-4 gap-y-1.5">
-                <div>
-                  <p className="text-natalis-muted text-xs">Gender</p>
-                  <p className="text-natalis-text text-sm font-semibold capitalize">{profile.gender}</p>
-                </div>
-                <div>
-                  <p className="text-natalis-muted text-xs">Birth Gender</p>
-                  <p className="text-natalis-text text-sm font-semibold capitalize">{profile.birthGender}</p>
-                </div>
-                <div>
-                  <p className="text-natalis-muted text-xs">Age</p>
-                  <p className="text-natalis-text text-sm font-semibold">{profile.age}</p>
-                </div>
-                <div>
-                  <p className="text-natalis-muted text-xs">Occupation</p>
-                  <p className="text-natalis-text text-sm font-semibold truncate">{profile.occupation}</p>
-                </div>
-              </div>
-              {/* Stat bars */}
-              <div className="px-4 pt-2 pb-3 space-y-2">
-                <StatBarRow label="Looks" value={profile.looks} color="#ff6b81" />
-                <StatBarRow label="Smarts" value={profile.smarts} color="#007aff" />
-                <StatBarRow label="Money" value={profile.wealthStat} color="#34c759" />
-                <StatBarRow label="Craziness" value={profile.craziness} color="#ff9500" />
-              </div>
-              {/* Action buttons */}
-              <div className="px-4 pb-4 grid grid-cols-2 gap-2">
-                <button
-                  onClick={onAccept}
-                  className="py-3 rounded-xl font-bold text-white text-sm active:scale-95 transition-all"
-                  style={{ background: 'linear-gradient(135deg,#ff6b81,#c44569)' }}
-                >
-                  {acceptLabel}
-                </button>
-                <button
-                  onClick={onDecline}
-                  className="py-3 rounded-xl font-bold text-sm border border-natalis-border bg-natalis-bg text-natalis-muted active:scale-95 transition-all"
-                >
-                  {declineLabel}
-                </button>
-              </div>
-            </div>
-          )
+        // The partner card was a BitLife stat sheet: four coloured bars —
+        // Looks, Smarts, Money and CRAZINESS — a "Birth Gender" field, a
+        // five-times-size emoji face and a hot-pink gradient header, in a
+        // paper-and-ink game whose design document says "Invisible systems.
+        // Partner traits... none of these appear in the UI" and rules out
+        // gradients on controls. (`pink` is also one of two Tailwind scales the
+        // remap misses, so it was the real #ec4899.)
+        //
+        // The numbers still decide everything they decided. They are now a
+        // sentence, which is the whole principle: a system that makes a
+        // sentence land differently has succeeded.
+        const impressionOf = (pr) => {
+          const bits = []
+          if (pr.looks >= 78) bits.push('People look at them twice and they have clearly known that for years')
+          else if (pr.looks >= 55) bits.push('Good-looking in a way you would not have been able to describe afterwards')
+          else if (pr.looks <= 30) bits.push('Not the first person you would have noticed in the room')
+          if (pr.smarts >= 78) bits.push('quick, and slightly impatient with people who are not')
+          else if (pr.smarts <= 32) bits.push('not interested in being clever about anything, which is restful')
+          if (pr.wealthStat >= 75) bits.push('comfortable in a way that has never had to be thought about')
+          else if (pr.wealthStat <= 25) bits.push('counting, and not hiding it')
+          if (pr.craziness >= 75) bits.push('and there is something going on there that you cannot place yet')
+          else if (pr.craziness <= 20) bits.push('and entirely steady, which you will either love or find dull')
+          if (!bits.length) bits.push('Perfectly ordinary, which is most people, which is the point')
+          return bits.join(', ') + '.'
         }
+
+        const PartnerProfileCard = ({ profile, onAccept, onDecline, acceptLabel = 'Go on a Date', declineLabel = 'Not Interested' }) => (
+          <div className="bg-natalis-surface rounded-2xl border border-natalis-border overflow-hidden mb-2">
+            <div className="px-5 pt-4 pb-3 border-b border-natalis-rule">
+              <p className="text-natalis-text font-prose text-prose-lg leading-tight">{profile.name}</p>
+              <p className="text-natalis-muted text-xs mt-1">
+                {profile.occupation}{profile.age ? ` · ${profile.age}` : ''}
+              </p>
+            </div>
+            <p className="px-5 py-4 text-natalis-dim font-prose text-sm leading-relaxed">
+              {impressionOf(profile)}
+            </p>
+            <div className="px-4 pb-4 grid grid-cols-2 gap-2">
+              <button
+                onClick={onAccept}
+                className="py-3 rounded-xl text-sm border border-natalis-accent text-natalis-accent active:scale-95 transition-all"
+              >
+                {acceptLabel}
+              </button>
+              <button
+                onClick={onDecline}
+                className="py-3 rounded-xl text-sm border border-natalis-border bg-natalis-bg text-natalis-muted active:scale-95 transition-all"
+              >
+                {declineLabel}
+              </button>
+            </div>
+          </div>
+        )
 
         // ── Pending partner (organic meet) ───────────────────────────────────
         if (pendingPartner && !state.partner) {
@@ -422,9 +409,9 @@ export default function ActivitiesPanel({ onClose }) {
             <>
               <button onClick={() => setDatingAppStep(null)} className="text-bit-blue text-sm font-semibold mb-3">← Back</button>
               {/* Dating app header card */}
-              <div className="bg-gradient-to-br from-pink-500 to-rose-400 rounded-2xl px-5 py-4 mb-4 text-white">
+              <div className="bg-natalis-bg border border-natalis-rule rounded-2xl px-5 py-4 mb-4">
                 <p className="font-bold text-lg">💘 Dating App</p>
-                <p className="text-pink-100 text-xs mt-0.5">$100 per search · Find your match</p>
+                <p className="text-natalis-muted text-xs mt-0.5">A fee per search. Whether that is a good way to meet somebody is a separate question.</p>
               </div>
 
               <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Pick your desired age</p>
@@ -433,9 +420,9 @@ export default function ActivitiesPanel({ onClose }) {
                   <button key={r.value} onClick={() => setDatingFilters(f => ({ ...f, ageRange: r.value }))}
                     className="py-2 px-2 rounded-xl border text-xs font-semibold transition-all active:scale-95"
                     style={{
-                      background: datingFilters.ageRange === r.value ? '#ff6b81' : 'white',
-                      color: datingFilters.ageRange === r.value ? 'white' : '#8e8e93',
-                      borderColor: datingFilters.ageRange === r.value ? '#ff6b81' : '#e5e5ea',
+                      background: datingFilters.ageRange === r.value ? '#7b4356' : 'white',
+                      color: datingFilters.ageRange === r.value ? 'white' : '#7d766a',
+                      borderColor: datingFilters.ageRange === r.value ? '#7b4356' : '#e2ddd2',
                     }}>
                     {r.label}
                   </button>
@@ -448,9 +435,9 @@ export default function ActivitiesPanel({ onClose }) {
                   <button key={r.value} onClick={() => setDatingFilters(f => ({ ...f, netWorth: r.value }))}
                     className="w-full text-left px-4 py-2.5 rounded-xl border text-sm font-semibold transition-all active:scale-95"
                     style={{
-                      background: datingFilters.netWorth === r.value ? '#fff0f3' : 'white',
-                      color: datingFilters.netWorth === r.value ? '#c44569' : '#3a3a3c',
-                      borderColor: datingFilters.netWorth === r.value ? '#ff6b81' : '#e5e5ea',
+                      background: datingFilters.netWorth === r.value ? '#f8eef0' : 'white',
+                      color: datingFilters.netWorth === r.value ? '#663747' : '#403b33',
+                      borderColor: datingFilters.netWorth === r.value ? '#7b4356' : '#e2ddd2',
                     }}>
                     {r.label}
                     {datingFilters.netWorth === r.value && <span className="float-right text-pink-400">✓</span>}
@@ -467,7 +454,7 @@ export default function ActivitiesPanel({ onClose }) {
                   setDatingAppStep('match')
                 }}
                 className="w-full py-3 rounded-xl font-bold text-white text-sm active:scale-95 disabled:opacity-40 transition-all"
-                style={{ background: 'linear-gradient(135deg,#ff6b81,#c44569)' }}
+                style={{ background: '#7b4356' }}
               >
                 💘 Let's try it · ${(state.money ?? 0) >= 100 ? '100' : 'Need $100'}
               </button>
@@ -579,7 +566,7 @@ export default function ActivitiesPanel({ onClose }) {
           <>
             <div className="flex items-center justify-between bg-white rounded-xl border border-natalis-border px-4 py-3 mb-1">
               <span className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">Birth Control</span>
-              <span className="text-xs font-bold px-2.5 py-1 rounded-full text-white" style={{ backgroundColor: state.birthControl ? '#34c759' : '#ff3b30' }}>
+              <span className="text-xs font-bold px-2.5 py-1 rounded-full text-white" style={{ backgroundColor: state.birthControl ? '#3f6146' : '#8c3a2e' }}>
                 {state.birthControl ? 'ON' : 'OFF'}
               </span>
             </div>
@@ -595,10 +582,7 @@ export default function ActivitiesPanel({ onClose }) {
             {state.age >= 18 && !state.flags.includes('vasectomy') && !state.flags.includes('tubal_ligation') && (
               <Btn
                 disabled={noActions}
-                onClick={() => go(() => {
-                  const flag = state.character?.gender === 'male' ? 'vasectomy' : 'tubal_ligation'
-                  useGameStore.getState().takeActivity('sterilization')
-                })}
+                onClick={() => go(() => takeActivity('sterilization'))}
                 title={state.character?.gender === 'male' ? 'Vasectomy' : 'Tubal Ligation'}
                 subtitle="Permanent sterilisation."
                 cost="Cost: $1,500"
@@ -739,9 +723,9 @@ export default function ActivitiesPanel({ onClose }) {
                 onClick={() => setHorseIdx(i)}
                 className="w-full text-left px-4 py-3 rounded-xl border transition-all text-sm font-semibold active:scale-95"
                 style={{
-                  background: horseIdx === i ? 'linear-gradient(135deg,#ff9500,#ff6b00)' : 'white',
-                  color: horseIdx === i ? 'white' : '#3a3a3c',
-                  borderColor: horseIdx === i ? '#ff9500' : '#e5e5ea',
+                  background: horseIdx === i ? '#8a6635' : 'white',
+                  color: horseIdx === i ? 'white' : '#403b33',
+                  borderColor: horseIdx === i ? '#8a6635' : '#e2ddd2',
                 }}
               >
                 #{i + 1} — {horse} {horseIdx === i ? '✓' : ''}
@@ -754,9 +738,9 @@ export default function ActivitiesPanel({ onClose }) {
                   <button key={amt} onClick={() => setBetAmount(amt)}
                     className="flex-1 py-2 text-xs font-bold rounded-xl border transition-all active:scale-95"
                     style={{
-                      background: betAmount === amt ? '#007aff' : 'white',
-                      color: betAmount === amt ? 'white' : '#8e8e93',
-                      borderColor: betAmount === amt ? '#007aff' : '#e5e5ea',
+                      background: betAmount === amt ? '#3f5670' : 'white',
+                      color: betAmount === amt ? 'white' : '#7d766a',
+                      borderColor: betAmount === amt ? '#3f5670' : '#e2ddd2',
                     }}>
                     ${amt}
                   </button>
@@ -775,7 +759,7 @@ export default function ActivitiesPanel({ onClose }) {
                 disabled={noActions || (state.money ?? 0) < betAmount}
                 onClick={() => go(() => betOnHorses(horseIdx, betAmount))}
                 className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all active:scale-95 disabled:opacity-40"
-                style={{ background: 'linear-gradient(135deg,#34c759,#28a046)' }}
+                style={{ background: '#3f6146' }}
               >
                 🎰 Bet ${betAmount.toLocaleString()} on {raceHorses[horseIdx]}
               </button>
@@ -848,12 +832,14 @@ export default function ActivitiesPanel({ onClose }) {
             )}
             <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Buy Property</p>
             {PROPERTY_TYPES.map(type => {
-              const downPayment = Math.round(type.basePrice * type.downPaymentRate)
+              // What the engine will actually charge, not the catalogue number.
+              const shown = estimatePrice(state, type.basePrice, 'local')
+              const downPayment = Math.round(shown * type.downPaymentRate)
               return (
                 <Btn key={type.id} disabled={noActions || (state.money ?? 0) < downPayment || state.age < 18 || isHomeless}
                   onClick={() => { buyProperty(type.id); onClose() }}
                   title={type.name} subtitle={type.description}
-                  cost={`~$${type.basePrice.toLocaleString()} · Deposit: $${downPayment.toLocaleString()}`} />
+                  cost={`~$${shown.toLocaleString()} · Deposit: $${downPayment.toLocaleString()}`} />
               )
             })}
             {properties.length > 0 && (
@@ -889,11 +875,11 @@ export default function ActivitiesPanel({ onClose }) {
                   <div key={tier}>
                     <p className="text-natalis-muted text-xs font-semibold px-1 pt-2 pb-1">{TIER_LABELS[tier]}</p>
                     {tierVehicles.map(type => (
-                      <Btn key={type.id} disabled={noActions || (state.money ?? 0) < type.basePrice}
+                      <Btn key={type.id} disabled={noActions || (state.money ?? 0) < estimatePrice(state, type.basePrice, 'imported')}
                         onClick={() => { buyVehicle(type.id); onClose() }}
                         title={`${type.make} ${type.model}`}
                         subtitle={type.description}
-                        cost={`~$${type.basePrice.toLocaleString()} · $${type.annualMaintenance.toLocaleString()}/yr`} />
+                        cost={`~$${estimatePrice(state, type.basePrice, 'imported').toLocaleString()} · $${estimatePrice(state, type.annualMaintenance, 'imported').toLocaleString()}/yr`} />
                     ))}
                   </div>
                 )
@@ -961,7 +947,7 @@ export default function ActivitiesPanel({ onClose }) {
               .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
               .filter(a => !a.condition || a.condition(G))
               .map(a => (
-                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${a.cost.toLocaleString()}` : null} />
+                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${estimateCost(state, a.cost).toLocaleString()}` : null} />
               ))
             }
           </>
@@ -1036,7 +1022,7 @@ export default function ActivitiesPanel({ onClose }) {
                         // the regime's legal quality never applied to minigame crimes.
                         const sent = calcSentence(assaultCrime)
                         return { ...s, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                          pendingTrial: sent > 0 ? buildPendingTrial(s, assaultCrime, sent) : null,
+                          pendingTrial: sent > 0 ? buildPendingTrial(s, assaultCrime, sent) : s.pendingTrial,   // never discard a charge that has not been tried
                           criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime.criminalRecordEntry, age: s.age, category: 'violent' }],
                           log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${assaultCrime.name.toLowerCase()}.`, isKey: true }] }
                       },
@@ -1071,7 +1057,7 @@ export default function ActivitiesPanel({ onClose }) {
                         if (Math.random() < adjustedRisk) {
                           const sent = calcSentence(assaultCrime)
                           return { ...s, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                            pendingTrial: sent > 0 && assaultCrime ? buildPendingTrial(s, assaultCrime, sent) : null,
+                            pendingTrial: sent > 0 && assaultCrime ? buildPendingTrial(s, assaultCrime, sent) : s.pendingTrial,   // never discard a charge that has not been tried
                             criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime?.criminalRecordEntry ?? 'Assault', age: s.age, category: 'violent' }],
                             log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${(assaultCrime?.name ?? 'assault').toLowerCase()}.`, isKey: true }] }
                         }
@@ -1176,7 +1162,7 @@ export default function ActivitiesPanel({ onClose }) {
                           karma: Math.max(0, (s.karma ?? 50) - 20),
                           pendingTrial: failSentence > 0
                             ? buildPendingTrial(s, { name: 'Attempted murder', category: 'violent' }, failSentence)
-                            : null,
+                            : s.pendingTrial,
                           criminalRecord: [...(s.criminalRecord ?? []), { crime: 'Attempted murder', age: s.age, category: 'violent' }],
                           log: [...(s.log ?? []), { age: s.age, text: 'You are arrested for attempted murder.', isKey: true }],
                         }),
@@ -1244,7 +1230,7 @@ export default function ActivitiesPanel({ onClose }) {
                       return {
                         ...s,
                         actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                        pendingTrial: sentence > 0 ? buildPendingTrial(s, crime, sentence) : null,
+                        pendingTrial: sentence > 0 ? buildPendingTrial(s, crime, sentence) : s.pendingTrial,   // never discard a charge that has not been tried
                         criminalRecord: [...(s.criminalRecord ?? []), { crime: crime.criminalRecordEntry ?? crime.name, age: s.age, category: crime.category ?? 'other' }],
                         log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }],
                       }
@@ -1330,10 +1316,10 @@ export default function ActivitiesPanel({ onClose }) {
                     ⚠️ A severe unmanaged condition is affecting your capacity. Working harder carries additional health risk.
                   </div>
                 )}
-                <Btn onClick={() => go(workHarder)} title="Work Harder" subtitle={anySevereUnmanaged ? "Extra effort — with your condition, this costs more health." : "Extra effort. Costs health and happiness."} />
-                <Btn onClick={() => go(schmoozeBoss)} title="Schmooze the Boss" subtitle="Charisma-based. Results vary." />
-                <Btn onClick={() => go(askForRaise)} title="Ask for a Raise" subtitle="Performance and charisma determine success." />
-                <Btn onClick={() => go(quitJob)} title="Quit Your Job" subtitle={`Leave your position as ${state.career.title}.`} danger />
+                <Btn disabled={noActions} onClick={() => go(workHarder)} title="Work Harder" subtitle={anySevereUnmanaged ? "Extra effort — with your condition, this costs more health." : "Extra effort. Costs health and happiness."} />
+                <Btn disabled={noActions} onClick={() => go(schmoozeBoss)} title="Schmooze the Boss" subtitle="Charisma-based. Results vary." />
+                <Btn disabled={noActions} onClick={() => go(askForRaise)} title="Ask for a Raise" subtitle="Performance and charisma determine success." />
+                <Btn disabled={noActions} onClick={() => go(quitJob)} title="Quit Your Job" subtitle={`Leave your position as ${state.career.title}.`} danger />
               </>
             )}
             {state.age >= 55 && !state.retired && (
@@ -1393,7 +1379,7 @@ export default function ActivitiesPanel({ onClose }) {
         return aliveFriends.map((friend, i) => {
           const realIdx = friends.indexOf(friend)
           const q = friend.relationshipQuality
-          const qColor = q > 65 ? '#34c759' : q > 35 ? '#ff9500' : '#ff3b30'
+          const qColor = q > 65 ? '#3f6146' : q > 35 ? '#8a6635' : '#8c3a2e'
           return (
             <div key={i} className="bg-white rounded-xl border border-natalis-border p-4 space-y-3 shadow-sm">
               <div className="flex justify-between items-center">
@@ -1475,7 +1461,7 @@ export default function ActivitiesPanel({ onClose }) {
               onClick={() => go(() => takeActivity(a.id))}
               title={`${a.emoji} ${a.label}`}
               subtitle={a.desc}
-              cost={a.cost > 0 ? `$${a.cost}` : 'Free'}
+              cost={a.cost > 0 ? `$${estimateCost(state, a.cost).toLocaleString()}` : 'Free'}
             />
           ))
       }
@@ -1509,7 +1495,7 @@ export default function ActivitiesPanel({ onClose }) {
                 <div key={region.key}>
                   <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">{region.label}</p>
                   {dests.map(dest => {
-                    const scaledCost = Math.round(dest.cost * costMult)
+                    const scaledCost = eraMoney(Math.round(dest.cost * costMult), state)
                     const canAfford = (state.money ?? 0) >= scaledCost
                     const timesVisited = visited.filter(id => id === dest.id).length
                     return (
@@ -1559,7 +1545,7 @@ export default function ActivitiesPanel({ onClose }) {
         const biz = state.business
         if (biz?.active) {
           const perf = biz.performance ?? 50
-          const perfColor = perf > 65 ? '#34c759' : perf > 35 ? '#ff9500' : '#ff3b30'
+          const perfColor = perf > 65 ? '#3f6146' : perf > 35 ? '#8a6635' : '#8c3a2e'
           return (
             <>
               <div className="bg-white rounded-xl border border-natalis-border p-4 space-y-2 mb-2">
@@ -1594,11 +1580,11 @@ export default function ActivitiesPanel({ onClose }) {
             <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Start a Business</p>
             {available.map(bt => (
               <Btn key={bt.id}
-                disabled={noActions || (state.money ?? 0) < Math.round(bt.startupCost * bizMult)}
+                disabled={noActions || (state.money ?? 0) < eraMoney(Math.round(bt.startupCost * bizMult), state)}
                 onClick={() => { startBusiness(bt.id); onClose() }}
                 title={`${bt.emoji} ${bt.name}`}
                 subtitle={bt.description}
-                cost={`Startup: $${Math.round(bt.startupCost * bizMult).toLocaleString()}`}
+                cost={`Startup: $${eraMoney(Math.round(bt.startupCost * bizMult), state).toLocaleString()}`}
               />
             ))}
             {available.length === 0 && <p className="text-natalis-muted text-sm italic p-3">No business types available yet.</p>}
@@ -1626,9 +1612,9 @@ export default function ActivitiesPanel({ onClose }) {
           tourist_overstay: 'Overstayed Visa',
         }
         const RS_COLORS = {
-          citizen: '#34c759', permanent_resident: '#34c759', work_visa: '#ff9500',
-          undocumented: '#ff3b30', refugee_status: '#ff9500', asylum_seeker: '#ff9500',
-          tourist_overstay: '#ff3b30',
+          citizen: '#3f6146', permanent_resident: '#3f6146', work_visa: '#8a6635',
+          undocumented: '#8c3a2e', refugee_status: '#8a6635', asylum_seeker: '#8a6635',
+          tourist_overstay: '#8c3a2e',
         }
 
         return (
@@ -1636,7 +1622,7 @@ export default function ActivitiesPanel({ onClose }) {
             <div className="bg-white rounded-xl border border-natalis-border p-4 mb-2 space-y-1">
               <div className="flex justify-between items-center">
                 <span className="text-xs text-natalis-muted font-semibold uppercase tracking-wider">Current Status</span>
-                <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ color: RS_COLORS[rs] ?? '#8e8e93', backgroundColor: `${RS_COLORS[rs]}18` ?? '#8e8e9318' }}>
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ color: RS_COLORS[rs] ?? '#7d766a', backgroundColor: `${RS_COLORS[rs] ?? '#7d766a'}18` }}>
                   {RS_LABELS[rs] ?? rs}
                 </span>
               </div>
@@ -1654,15 +1640,15 @@ export default function ActivitiesPanel({ onClose }) {
               <>
                 <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">Upgrade Status</p>
                 <Btn
-                  disabled={noActions || yearsAbroad < path.yearsReq || (state.money ?? 0) < path.fee}
+                  disabled={noActions || yearsAbroad < path.yearsReq || (state.money ?? 0) < eraMoney(path.fee, state)}
                   onClick={() => { doUpgradeResidency(); onClose() }}
                   title={`Apply for ${path.next}`}
                   subtitle={
                     yearsAbroad < path.yearsReq
                       ? `Requires ${path.yearsReq - yearsAbroad} more year${path.yearsReq - yearsAbroad !== 1 ? 's' : ''} of residency`
-                      : path.fee > 0 ? `Application fee: $${path.fee.toLocaleString()}` : 'No fee'
+                      : path.fee > 0 ? `Application fee: $${eraMoney(path.fee, state).toLocaleString()}` : 'No fee'
                   }
-                  cost={path.fee > 0 ? `$${path.fee.toLocaleString()}` : 'Free'}
+                  cost={path.fee > 0 ? `$${eraMoney(path.fee, state).toLocaleString()}` : 'Free'}
                 />
               </>
             )}
@@ -1743,7 +1729,7 @@ export default function ActivitiesPanel({ onClose }) {
         // On the run options
         const gdpIllegalMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
         const illMult = gdpIllegalMult[state.character?.country?.gdp] ?? 1.0
-        const identityCost = Math.round(8000 * illMult)
+        const identityCost = eraMoney(Math.round(8000 * illMult), state)
         const smugglerMin = Math.round(8000 * illMult)
         const smugglerMax = Math.round(20000 * illMult)
 
@@ -1888,6 +1874,32 @@ export default function ActivitiesPanel({ onClose }) {
 
   // ── Main render ───────────────────────────────────────────────────────────────
 
+  // One predicate, used both to render the list and to decide whether there is
+  // a list at all. It was duplicated, and the copy drifted on six age floors
+  // within minutes of being written: the groups each return null when empty,
+  // so without an accurate answer here the sheet opens onto an 87-pixel header
+  // bar over nothing, which reads as a broken panel rather than as "there is
+  // nothing a one-year-old can choose to do".
+  const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')
+  const prisonBlockedCats = ['love', 'fertility', 'nightlife', 'movies', 'salon', 'shopping', 'social_media', 'plastic_surg', 'race_tracks', 'rehab', 'licenses', 'assets', 'crime', 'travel', 'business', 'career', 'underground', 'immigration']
+  const MIN_AGE = {
+    mind_body: 6, hobbies: 5, education: 8, movies: 5, salon: 12, friends: 5,
+    nightlife: 18, fertility: 14, plastic_surg: 18, licenses: 16, race_tracks: 18,
+    pets: 8, career: 14, assets: 18, money: 14, substances: 14, crime: 12,
+    travel: 16, business: 18, love: 12, social_media: 10, shopping: 10,
+  }
+  const isCategoryVisible = (cat) => {
+    if (MIN_AGE[cat.key] !== undefined && state.age < MIN_AGE[cat.key]) return false
+    if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return false
+    if (cat.key === 'crime' && state.pendingTrial) return false
+    if (cat.key === 'immigration' && state.residencyStatus === 'citizen' && !state.flags.includes('emigrated')) return false
+    if (cat.key === 'underground' && !isUnderground) return false
+    if (cat.key === 'prison' && !state.inPrison) return false
+    if (state.inPrison && prisonBlockedCats.includes(cat.key)) return false
+    return true
+  }
+  const anyCategoryVisible = TOP_CATEGORIES.some(isCategoryVisible)
+
   return (
     <div className="bg-natalis-bg">
       {/* Header */}
@@ -1897,13 +1909,13 @@ export default function ActivitiesPanel({ onClose }) {
             <button onClick={() => setActiveTop(null)} className="text-bit-blue font-semibold text-sm mr-1">← Back</button>
           )}
           <p className="font-bold text-natalis-text text-sm">
-            {activeTop ? TOP_CATEGORIES.find(c => c.key === activeTop)?.label : '⚡ Activities'}
+            {activeTop ? TOP_CATEGORIES.find(c => c.key === activeTop)?.label : 'Activities'}
           </p>
         </div>
         <div className="flex items-center gap-3">
           <div className="flex gap-1">
             {Array.from({ length: state.maxActionsPerYear }).map((_, i) => (
-              <div key={i} className="w-2 h-2 rounded-full" style={{ backgroundColor: i < state.actionsThisYear ? '#e5e5ea' : '#007aff' }} />
+              <div key={i} className="w-2 h-2 rounded-full" style={{ backgroundColor: i < state.actionsThisYear ? '#e2ddd2' : '#3f5670' }} />
             ))}
           </div>
           <button onClick={onClose} className="text-natalis-muted text-lg leading-none">✕</button>
@@ -1915,41 +1927,15 @@ export default function ActivitiesPanel({ onClose }) {
         {!activeTop ? (
           /* Top-level category list — grouped */
           <div className="p-3 space-y-4">
+            {anyCategoryVisible || (
+              <p className="text-natalis-muted text-sm px-3 py-8 text-center leading-relaxed">
+                {state.age < 5
+                  ? 'Nothing here yet. At this age the year happens to you.'
+                  : 'Nothing available to you right now.'}
+              </p>
+            )}
             {CATEGORY_GROUP_ORDER.map(groupLabel => {
-              const groupCats = TOP_CATEGORIES.filter(c => c.group === groupLabel)
-              const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')
-              const prisonBlockedCats = ['love', 'fertility', 'nightlife', 'movies', 'salon', 'shopping', 'social_media', 'plastic_surg', 'race_tracks', 'rehab', 'licenses', 'assets', 'crime', 'travel', 'business', 'career', 'underground', 'immigration']
-
-              const visibleCats = groupCats.filter(cat => {
-                if (cat.key === 'mind_body' && state.age < 6) return false
-                if (cat.key === 'hobbies' && state.age < 5) return false
-                if (cat.key === 'education' && state.age < 8) return false
-                if (cat.key === 'movies' && state.age < 5) return false
-                if (cat.key === 'salon' && state.age < 12) return false
-                if (cat.key === 'friends' && state.age < 5) return false
-                if (cat.key === 'nightlife' && state.age < 18) return false
-                if (cat.key === 'fertility' && state.age < 14) return false
-                if (cat.key === 'plastic_surg' && state.age < 18) return false
-                if (cat.key === 'licenses' && state.age < 16) return false
-                if (cat.key === 'race_tracks' && state.age < 18) return false
-                if (cat.key === 'pets' && state.age < 8) return false
-                if (cat.key === 'shopping' && state.age < 8) return false
-                if (cat.key === 'social_media' && state.age < 13) return false
-                if (cat.key === 'career' && state.age < 14) return false
-                if (cat.key === 'love' && state.age < 13) return false
-                if (cat.key === 'assets' && state.age < 18) return false
-                if (cat.key === 'money' && state.age < 14) return false
-                if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return false
-                if (cat.key === 'substances' && state.age < 14) return false
-                if (cat.key === 'crime' && state.age < 12) return false
-                if (cat.key === 'travel' && state.age < 16) return false
-                if (cat.key === 'business' && state.age < 18) return false
-                if (cat.key === 'immigration' && state.residencyStatus === 'citizen' && !state.flags.includes('emigrated')) return false
-                if (cat.key === 'underground' && !state.inPrison && !state.wanted && !state.flags.includes('escaped_prisoner')) return false
-                if (cat.key === 'prison' && !state.inPrison) return false
-                if (state.inPrison && prisonBlockedCats.includes(cat.key)) return false
-                return true
-              })
+              const visibleCats = TOP_CATEGORIES.filter(c => c.group === groupLabel).filter(isCategoryVisible)
 
               if (visibleCats.length === 0) return null
 
@@ -1958,13 +1944,13 @@ export default function ActivitiesPanel({ onClose }) {
                   <p className="text-[10px] font-bold uppercase tracking-widest text-natalis-muted px-1 pb-1">{groupLabel}</p>
                   <div className="space-y-1.5">
                     {visibleCats.map(cat => {
-                      const badge = cat.key === 'prison' && state.inPrison ? { text: `${state.prisonSentence}yr`, color: '#ff3b30' } :
-                                    cat.key === 'underground' && isUnderground ? { text: '!', color: '#ff3b30' } :
-                                    cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
-                                    cat.key === 'mind_body' && anySevereUnmanaged ? { text: '⚕', color: '#ff9500' } :
-                                    cat.key === 'love' && pendingPartner && !state.partner ? { text: '💘', color: '#ff6b81' } :
-                                    cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#007aff' } :
-                                    cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#34c759' } :
+                      const badge = cat.key === 'prison' && state.inPrison ? { text: `${state.prisonSentence}yr`, color: '#8c3a2e' } :
+                                    cat.key === 'underground' && isUnderground ? { text: '!', color: '#8c3a2e' } :
+                                    cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#8c3a2e' } :
+                                    cat.key === 'mind_body' && anySevereUnmanaged ? { text: '⚕', color: '#8a6635' } :
+                                    cat.key === 'love' && pendingPartner && !state.partner ? { text: '💘', color: '#7b4356' } :
+                                    cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#3f5670' } :
+                                    cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#3f6146' } :
                                     null
                       return (
                         <button

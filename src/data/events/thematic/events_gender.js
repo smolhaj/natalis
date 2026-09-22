@@ -1,3 +1,5 @@
+import { hasTech } from '../../technology.js'
+
 export const GENDER_EVENTS = [
 
   // ── FEMALE EDUCATION GATEKEEPING ───────────────────────────────────────────
@@ -951,7 +953,9 @@ export const GENDER_EVENTS = [
         (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 1950 && G.currentYear <= 1975) ||
         G.character.country.genderGap > 0.30
       ),
-    text: 'The doctor sets down his pen. "I\'ll need your husband\'s written consent before I can proceed." You are thirty-four years old. You are the one sitting in the chair. He is not here.',
+    // The age was written into the sentence, and the event fires from the
+    // twenties to the fifties: a 23-year-old was told she was thirty-four.
+    text: (G) => `The doctor sets down his pen. "I'll need your husband's written consent before I can proceed." You are ${G.age} years old. You are the one sitting in the chair. He is not here.`,
     context: null,
     choices: [
       {
@@ -1145,7 +1149,7 @@ export const GENDER_EVENTS = [
       G.character.gender === 'female' &&
       G.career &&
       G.stats.smarts >= 55,
-    text: 'You were the top performer in your department this year. Everyone knew the promotion was between you and a male colleague who joined two years after you. They gave it to him. In the announcement email, his "leadership potential" is mentioned.',
+    text: 'You were the top performer in your department this year. Everyone knew the promotion was between you and a male colleague who joined two years after you. They gave it to him. His "leadership potential" is mentioned when it is announced, and nothing of yours is raised at any point.',
     context: null,
     choices: [
       {
@@ -1177,9 +1181,16 @@ export const GENDER_EVENTS = [
     id: 'wd_sexual_harassment',
     phase: 'young_adult',
     weight: 4,
+    // A manager, an office door, a notebook and — in the outcomes — an HR
+    // panel. All four require a formal employer and a grievance procedure to
+    // take it to. This was reaching a self-employed market trader in rural
+    // Nigeria in 1981, who has no manager and no HR.
     when: (G) =>
       G.character.gender === 'female' &&
-      G.career,
+      G.career && !['agriculture', 'informal', 'trade'].includes(G.career.field) &&
+      !G.flags.has('informal_economy') && !G.flags.has('self_employed') &&
+      G.ruralUrban !== 'rural' &&
+      G.currentYear >= 1975,
     text: 'Your manager has been making comments for six months. Last week he closed the office door. You have been documenting the dates and times in a notebook you keep at home. You know what this is. You are deciding what to do about it.',
     context: null,
     choices: [
@@ -1279,7 +1290,11 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'female' &&
       G.career,
-    text: 'The presentation you stayed late to build was delivered by your male colleague to the senior team. The follow-up email names him as the lead. Your name does not appear. He has not corrected anyone.',
+    // The credit being taken is true of every era. The follow-up email is not:
+    // this fired for a woman in Britain in 1963, thirty-three years early.
+    text: (G) => hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear)
+      ? 'The presentation you stayed late to build was delivered by your male colleague to the senior team. The follow-up email names him as the lead. Your name does not appear. He has not corrected anyone.'
+      : 'The work you stayed late to finish was put in front of the senior men by your male colleague, who presented it well. The minute records him as having prepared it. Your name is not in the minute. He has not corrected anyone, and the room has already moved on to the next item.',
     context: null,
     choices: [
       {

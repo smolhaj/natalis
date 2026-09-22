@@ -4,6 +4,8 @@
 // Uses G.mentalHealth ({ condition, medicating, therapy }), G.stats.happiness,
 // G.mem, G.character.country.archetype, G.flags, G.age, G.children, G.partner.
 
+import { hasTech } from '../../technology.js'
+
 export const MENTAL_HEALTH_EVENTS = [
 
   // ── ONSET AND RECOGNITION ────────────────────────────────────────────────────
@@ -566,6 +568,10 @@ export const MENTAL_HEALTH_EVENTS = [
       if (!G.mentalHealth.condition) return false
       if (G.mem.mhAbroadHelp) return false
       const arch = G.character.country.archetype
+      // The route in this event IS the connection — forums, a therapist in
+      // another country, video sessions — and the guard named no year at all,
+      // so it was arranging them in 1968.
+      if (!hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear)) return false
       return ['subsaharan', 'conflict_zone', 'post_soviet', 'developing_unstable'].includes(arch) && G.age >= 20
     },
     text: 'Therapy as a formal practice does not exist in your community. But there are online forums and a therapist in another country who offers video sessions at sliding scale fees. The internet connection is unreliable. The therapy is imperfect. It is also the only kind available to you and you take it.',

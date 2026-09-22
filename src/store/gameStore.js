@@ -1,83 +1,11 @@
 import { create } from 'zustand'
-import {
-  createCharacter,
-  deriveInitialStats,
-  deriveInitialMoney,
-  deriveInitialParents,
-  deriveInitialSiblings,
-  deriveBirthText,
-  deriveInitialGold,
-  initializeBanked,
-  initializeJointFamily,
-  deriveGenerationalFlags,
-  tick,
-  resolveChoice,
-  applyActivity,
-  attemptCrime,
-  enterCareer,
-  generateEpitaph,
-  askForRaise,
-  quitJob,
-  workHarder,
-  schmoozeBoss,
-  retire,
-  emigrate,
-  meetPotentialPartner,
-  generatePartnerProfile,
-  hookUp,
-  goOnDate,
-  complimentPartner,
-  proposeMarriage,
-  getMarried,
-  fileForDivorce,
-  tryForChild,
-  spendTimeWithChild,
-  callParent,
-  callSibling,
-  adoptChild,
-  getPlasticSurgery,
-  buyProperty,
-  sellProperty,
-  buyVehicle,
-  sellVehicle,
-  adoptPet,
-  visitVet,
-  studyHarder,
-  goToMovies,
-  goClubbing,
-  goShopping,
-  visitSalonSpa,
-  postSocialMedia,
-  promoteSocialMedia,
-  betOnHorses,
-  goToRehab,
-  toggleBirthControl,
-  practiceMartalArts,
-  obtainLicense,
-  interactWithFriend,
-  dropOutOfSchool,
-  abandonChild,
-  useSubstance,
-  bookTrip,
-  startBusiness,
-  manageBusiness,
-  hireEmployee,
-  closeBusiness,
-  BUSINESS_TYPES,
-  prisonWork,
-  prisonCry,
-  prisonConjugalVisit,
-  prisonBribeGuard,
-  prisonStartRiot,
-  upgradeResidency,
-  seekAsylum,
-  relocate,
-  buildG,
-  resolveAutoEvent as applyAutoEventEffect,
-  getCountryRegime,
-} from '../engine/gameEngine'
+import { createCharacter, deriveInitialStats, deriveInitialMoney, deriveInitialParents, deriveInitialSiblings, deriveBirthText, deriveInitialGold, initializeBanked, initializeJointFamily, deriveGenerationalFlags, tick, resolveChoice, applyActivity, attemptCrime, enterCareer, generateEpitaph, askForRaise, quitJob, workHarder, schmoozeBoss, retire, emigrate, meetPotentialPartner, generatePartnerProfile, hookUp, goOnDate, complimentPartner, proposeMarriage, getMarried, fileForDivorce, tryForChild, spendTimeWithChild, callParent, callSibling, adoptChild, getPlasticSurgery, buyProperty, sellProperty, buyVehicle, sellVehicle, adoptPet, visitVet, studyHarder, goToMovies, goClubbing, goShopping, visitSalonSpa, postSocialMedia, promoteSocialMedia, betOnHorses, goToRehab, toggleBirthControl, practiceMartalArts, obtainLicense, interactWithFriend, dropOutOfSchool, abandonChild, useSubstance, bookTrip, startBusiness, manageBusiness, hireEmployee, closeBusiness, prisonWork, prisonCry, prisonConjugalVisit, prisonBribeGuard, prisonStartRiot, upgradeResidency, seekAsylum, relocate, buildG, resolveAutoEvent as applyAutoEventEffect, getCountryRegime } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
-import { CRIMES } from '../data/crimes'
+import { inEraMoney } from '../data/economy.js'
+
+// Present-day dollars into the money of the year and place. See economy.js —
+// applied at the definition of a cost, never at the deduction.
+const $$ = (amount, state) => inEraMoney(amount, state.currentCountry ?? state.character?.country, state.currentYear)
 
 const SLOT_KEYS = ['natalis_v1', 'natalis_v2', 'natalis_v3']
 const META_KEYS = ['natalis_meta_0', 'natalis_meta_1', 'natalis_meta_2']
@@ -343,7 +271,7 @@ export const useGameStore = create((set, get) => ({
     const stats = deriveInitialStats(character)
     const money = deriveInitialMoney(character)
     const parents = deriveInitialParents(character)
-    const siblings = deriveInitialSiblings(character)
+    const siblings = deriveInitialSiblings(character, parents)
     const initialGpa = parseFloat(Math.min(4.0, 1.5 + stats.smarts * 0.02).toFixed(2))
     const flags = deriveGenerationalFlags(character)
     const slot = findAvailableSlot()
@@ -459,7 +387,7 @@ export const useGameStore = create((set, get) => ({
     const stats = deriveInitialStats(character)
     const money = deriveInitialMoney(character)
     const parents = deriveInitialParents(character)
-    const siblings = deriveInitialSiblings(character)
+    const siblings = deriveInitialSiblings(character, parents)
     const initialGpa = parseFloat(Math.min(4.0, 1.5 + stats.smarts * 0.02).toFixed(2))
     const flags = deriveGenerationalFlags(character)
     const slot = findAvailableSlot()
@@ -655,9 +583,17 @@ export const useGameStore = create((set, get) => ({
     const result = success ? mg.onSuccess : mg.onFailure
     const outcome = typeof result?.outcome === 'string' ? result.outcome : (success ? 'You succeeded.' : 'You failed.')
     const base = { ...state, pendingMinigame: null }
+    const before = base.log?.length ?? 0
     let next = result?.effect ? result.effect(base) : base
     next = { ...next, pendingMinigame: null, lastOutcome: outcome }
-    if (outcome) next.log = [...(next.log ?? []), { age: next.age, text: outcome.slice(0, 120), isKey: true }]
+    // Only log the outcome if the effect did not already narrate it. A crime
+    // caught through a minigame was writing three lines for one event: the
+    // minigame's own outcome, then "You are arrested for burglary", then the
+    // verdict from the trial.
+    const effectLogged = (next.log?.length ?? 0) > before
+    if (outcome && !effectLogged) {
+      next.log = [...(next.log ?? []), { age: next.age, text: outcome.slice(0, 120), isKey: true }]
+    }
     set(next)
   },
 
@@ -669,29 +605,46 @@ export const useGameStore = create((set, get) => ({
   },
 
   // ── Career actions ──────────────────────────────────────────────────────────
+  //
+  // These five neither spent the action budget nor checked it, and the panel
+  // closes on click, so the player could reopen it and press again without
+  // limit. 200 alternating presses of "Work Harder" and "Ask for a Raise" in a
+  // single year took a US character from $3,686/yr to $3,455,778,417/yr, and
+  // even one legitimate press a year ran an army Officer to $778,568 against a
+  // top band of $80,000. Sixty presses of "Work Harder" took health from 89 to
+  // 0 inside one year with no cap and no confirmation.
+  //
+  // A year has two actions in it. These are two of the things you can do with
+  // them.
+  spendAction: () => {
+    const state = get()
+    if (state.dead || state.pendingEvent) return false
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return false
+    return true
+  },
 
   askForRaise: () => {
     const state = get()
-    if (state.dead) return
-    set(askForRaise(state))
+    if (!get().spendAction()) return
+    set({ ...askForRaise(state), actionsThisYear: (state.actionsThisYear ?? 0) + 1 })
   },
 
   quitJob: () => {
     const state = get()
-    if (state.dead) return
-    set(quitJob(state))
+    if (!get().spendAction()) return
+    set({ ...quitJob(state), actionsThisYear: (state.actionsThisYear ?? 0) + 1 })
   },
 
   workHarder: () => {
     const state = get()
-    if (state.dead) return
-    set(workHarder(state))
+    if (!get().spendAction()) return
+    set({ ...workHarder(state), actionsThisYear: (state.actionsThisYear ?? 0) + 1 })
   },
 
   schmoozeBoss: () => {
     const state = get()
-    if (state.dead) return
-    set(schmoozeBoss(state))
+    if (!get().spendAction()) return
+    set({ ...schmoozeBoss(state), actionsThisYear: (state.actionsThisYear ?? 0) + 1 })
   },
 
   retire: () => {
@@ -756,7 +709,7 @@ export const useGameStore = create((set, get) => ({
     const profile = generatePartnerProfile(state, overrides)
     set({
       ...state,
-      money: (state.money ?? 0) - 100,
+      money: (state.money ?? 0) - $$(100, state),
       pendingPartner: profile,
       log: [...state.log, { age: state.age, text: `Dating app match: ${profile.name}, ${profile.age}.`, isKey: false }],
     })
@@ -848,8 +801,8 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     if ((state.money ?? 0) >= 300) return
-    const received = 300
-    const repayDebt = 420
+    const received = $$(300, state)
+    const repayDebt = $$(420, state)
     set({
       ...state,
       money: (state.money ?? 0) + received,
@@ -862,8 +815,8 @@ export const useGameStore = create((set, get) => ({
   applyForBenefits: () => {
     const state = get()
     if (state.dead) return
-    if (state.career || (state.money ?? 0) >= 500) return
-    const payment = 400
+    if (state.career || (state.money ?? 0) >= $$(500, state)) return
+    const payment = $$(400, state)
     set({
       ...state,
       money: (state.money ?? 0) + payment,
@@ -1146,7 +1099,12 @@ export const useGameStore = create((set, get) => ({
     const regime = getCountryRegime(state.currentCountry ?? state.character?.country, state.currentYear) ?? 'democracy'
     const legalQuality = { democracy: 1.0, federal_republic: 0.95, parliamentary_republic: 0.95, constitutional_monarchy: 0.9, single_party_communist: 0.45, single_party_authoritarian: 0.4, military_dictatorship: 0.35, theocracy: 0.38, absolute_monarchy: 0.5 }[regime] ?? 0.7
     const cost = lawyerCosts?.[lawyerTier] ?? 0
-    if ((state.money ?? 0) < cost) {
+    // Representing yourself is free, and `-2000 < 0` is true, so a character who
+    // reached a negative balance through the ordinary debt path was refused
+    // EVERY tier including the free one — and `pendingTrial` blocks Age Up, so
+    // the game was unrecoverably stuck at the trial screen with no way out but
+    // deleting the save. Nobody is ever too poor to defend themselves.
+    if (cost > 0 && (state.money ?? 0) < cost) {
       set({ log: [...state.log, { age: state.age, text: `You cannot afford this lawyer.`, isKey: false }] })
       return
     }
@@ -1186,6 +1144,14 @@ export const useGameStore = create((set, get) => ({
       next.prisonSentence = finalSentence
       next.mem = { ...next.mem, originalSentence: finalSentence, prisonYearStart: state.age }
       if (state.career && ['petty','property','violent','drug','organized','financial','organised'].includes(crimeCategory)) {
+        // This happened silently. A criminal life read "You are promoted to
+        // Teacher. New salary: $21,600" → "You are arrested for burglary" →
+        // next year "You begin working as a Teaching Assistant", five times
+        // over, with nothing in between. It is the most consequential
+        // downstream effect in the crime system and it had no prose.
+        const lost = state.career.title
+        next.log = [...next.log, { age: state.age, isKey: true, text:
+          `The letter about your position as ${lost} arrives before the sentence does. They are careful with the wording and it does not take long to read.` }]
         next.career = null
       }
     }
@@ -1214,7 +1180,7 @@ export const useGameStore = create((set, get) => ({
     if (state.flags.includes('assumed_identity')) return
     const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
     const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-    const cost = Math.round(8000 * mult)
+    const cost = $$(Math.round(8000 * mult), state)
     if ((state.money ?? 0) < cost) {
       set({ log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} for forged documents.`, isKey: false }] })
       return
@@ -1241,7 +1207,7 @@ export const useGameStore = create((set, get) => ({
     if (!dest) return
     const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
     const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-    const fee = Math.round((8000 + Math.floor(Math.random() * 12000)) * mult)
+    const fee = $$(Math.round((8000 + Math.floor(Math.random() * 12000)) * mult), state)
     if ((state.money ?? 0) < fee) {
       set({ log: [...state.log, { age: state.age, text: `The smuggler wants $${fee.toLocaleString()}. You can't afford it.`, isKey: false }] })
       return

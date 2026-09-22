@@ -2,6 +2,8 @@
 // Universal recurring texture (cooldown 6–8) + one-time escalation choice per category.
 // Gated on G.currentCountry?.name and G.place type/scale.
 
+import { hasTech } from '../../technology.js'
+
 const POWER_CUT_COUNTRIES = new Set([
   'Nigeria', 'Lebanon', 'Zimbabwe', 'Pakistan', 'Bangladesh', 'Iraq',
   'Sudan', 'South Africa', 'Venezuela', 'Myanmar', 'Ghana', 'Ethiopia',
@@ -40,9 +42,12 @@ export const INFRASTRUCTURE_EVENTS = [
     phase: 'midlife',
     weight: 4,
     cooldown: 7,
+    // A power cut requires power. Guarded on the country and the city alone,
+    // this was cutting the light in households that had never been connected.
     when: (G) =>
       POWER_CUT_COUNTRIES.has(G.currentCountry?.name) &&
-      G.place?.type === 'urban',
+      G.place?.type === 'urban' &&
+      hasTech(G.currentCountry, 'electricity', G.currentYear),
     text: (G) => {
       const city = G.place?.name ?? G.currentCountry?.name
       const cn = G.currentCountry?.name
@@ -51,7 +56,8 @@ export const INFRASTRUCTURE_EVENTS = [
       if (cn === 'Zimbabwe') return `The load-shedding schedule said eighteen hours today. It said eight hours last week. No one keeps the schedule anymore. You keep candles.`
       if (cn === 'India') return `The power cut lasts three hours, which is normal. You have arranged the day around it by habit: cooking before noon, charging everything in the evening. A neighbour has rigged an inverter from two car batteries and a welded frame — *jugaad*, the improvised solution, which in India is not a workaround but an engineering tradition. You use it twice a week.`
       if (cn === 'Pakistan') return `Twelve hours on, twelve off. The WAPDA schedule is posted and observed loosely. You time the cooking, the charging, the laundry around the hours when power will actually come.`
-      if (cn === 'South Africa') return `Stage 4 load-shedding: four hours on, four hours off. Eskom's schedule has its own app now, which is something, though the app is not always right. The inverter beeps when the power cuts. After a while you stop hearing it.`
+      if (cn === 'South Africa' && G.currentYear >= 2015) return `Stage 4 load-shedding: four hours on, four hours off. Eskom's schedule has its own app now, which is something, though the app is not always right. The inverter beeps when the power cuts. After a while you stop hearing it.`
+      if (cn === 'South Africa' && G.currentYear >= 2008) return `Load-shedding is the new word for it: four hours on, four hours off, printed in the paper as a schedule and observed approximately. The candles live in the third drawer now, where everyone can find them in the dark.`
       return `The electricity goes out again. In ${city} this is weather — you plan around it, you remember which businesses have generators, you keep the phone charged before noon.`
     },
     choices: null,
@@ -63,9 +69,13 @@ export const INFRASTRUCTURE_EVENTS = [
     phase: 'midlife',
     weight: 2,
     cooldown: 0,
+    // The freezer being lost is the cost in this event, so it needs a freezer:
+    // this was losing one in Cape Town in 1966, sixteen years before the set
+    // reached an ordinary South African kitchen.
     when: (G) =>
       POWER_CUT_COUNTRIES.has(G.currentCountry?.name) &&
       G.place?.type === 'urban' &&
+      hasTech(G.currentCountry, 'refrigerator', G.currentYear) &&
       !G.mem?.powerEscalated,
     text: (G) => {
       const city = G.place?.name ?? G.currentCountry?.name

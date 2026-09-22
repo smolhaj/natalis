@@ -1,3 +1,5 @@
+import { wasEasternBloc } from '../../history.js'
+
 // events_culture.js
 // Regime-, ethnicity-, religion-, and identity-gated events.
 // These are what make playing in 1970s Chile feel different from 2020s Canada.
@@ -96,7 +98,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_com_pioneer_scarf',
     phase: 'childhood',
     weight: 4,
-    when: (G) => G.regime === 'single_party_communist' && G.age >= 7 && G.age <= 12,
+    when: (G) => G.regime === 'single_party_communist' && wasEasternBloc(G.currentCountry?.name ?? G.character.country.name) && G.age >= 7 && G.age <= 12,
     text: 'You receive your Pioneer neckerchief at a school ceremony. Your parents stand in the back looking proud. You recite the oath. Some children believe every word. Most just know it is expected. You tie the knot every morning before school for three years.',
     choices: null,
     effect: (p) => { p.e += 2; p.m -= 3; p.addFlag('communist_childhood') },
@@ -117,7 +119,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_com_housing_queue',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.regime === 'single_party_communist' && G.age >= 20,
+    when: (G) => G.regime === 'single_party_communist' && wasEasternBloc(G.currentCountry?.name ?? G.character.country.name) && G.age >= 20,
     text: 'You register for state housing. The wait is 5 to 8 years. You are told to be patient. You move in with your parents. You are married by the time the assignment comes, and the apartment is smaller than described, on the 11th floor of a building with a frequently broken elevator. You are deeply grateful.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 8; p.addFlag('state_housing') },
@@ -127,7 +129,9 @@ export const CULTURE_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => G.regime === 'single_party_communist' && G.age >= 14,
-    text: 'Someone at school has a cassette tape. Western music — American rock, British pop. It is technically contraband. You listen to it in someone\'s bedroom with the volume down, and for 45 minutes the world seems larger than it is.',
+    text: (G) => G.currentYear >= 1972
+      ? 'Someone at school has a cassette tape. Western music — American rock, British pop. It is technically contraband. You listen to it in someone\'s bedroom with the volume down, and for 45 minutes the world seems larger than it is.'
+      : 'Someone at school has a record cut into a used X-ray plate — you can see the ribs through it. Western music, one side, four or five plays before it wears out. It is technically contraband. You listen with the volume down and for a few minutes the world is larger than it is.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 5; p.addFlag('counter_culture') },
   },
@@ -567,8 +571,8 @@ export const CULTURE_EVENTS = [
     id: 'cult_rural_no_electricity',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.ruralUrban === 'rural' && G.currentYear >= 1950 && G.currentYear <= 1990 && G.character.country.gdp !== 'very_high' && G.character.country.gdp !== 'high',
-    text: 'The village gets electricity. You are nine years old. Before that, evenings were oil lamp and moonlight. You watch the first light bulb flicker on in your house and your mother covers her face with her hands and laughs.',
+    when: (G) => G.ruralUrban === 'rural' && G.age >= 5 && G.age <= 14 && G.currentYear >= 1950 && G.currentYear <= 1990 && G.character.country.gdp !== 'very_high' && G.character.country.gdp !== 'high',
+    text: (G) => `The village gets electricity. You are ${G.age} years old. Before that, evenings were oil lamp and moonlight. You watch the first light bulb flicker on in your house and your mother covers her face with her hands and laughs.`,
     choices: null,
     effect: (p) => { p.m += 10; p.e += 5; p.addFlag('first_electricity') },
   },

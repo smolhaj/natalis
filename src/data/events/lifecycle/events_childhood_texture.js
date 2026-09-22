@@ -4,6 +4,8 @@
 // The goal: at least one event can fire per year, ages 6–17.
 // Prose: second-person present tense, specific objects, no editorialising.
 
+import { hasTech } from '../../technology.js'
+
 export const CHILDHOOD_TEXTURE_EVENTS = [
 
   // ─── CHILDHOOD (ages 6–11) ────────────────────────────────────────────────
@@ -205,7 +207,12 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       if (yr < 1960) {
-        return 'You hear something on the radio — a voice, an arrangement — that seems to have been made specifically for you, for this exact feeling you did not have words for. You listen to it when no one is in the room. You memorise it without meaning to.'
+        // Oman's first broadcast was 1970 and Bhutan's 1973; this was putting a
+        // set in the room in 1940. Where there is no radio the music is still
+        // there, and it is coming out of somebody.
+        return hasTech(G.currentCountry ?? G.character.country, 'radio', yr, { rural: G.ruralUrban === 'rural' })
+          ? 'You hear something on the radio — a voice, an arrangement — that seems to have been made specifically for you, for this exact feeling you did not have words for. You listen to it when no one is in the room. You memorise it without meaning to.'
+          : 'You hear someone singing at a wedding — a voice, an ornament turned at the end of a line — that seems to have been made specifically for you, for this exact feeling you did not have words for. You sing it under your breath when no one is near enough to hear. You memorise it without meaning to.'
       }
       if (yr < 1990) {
         return 'There is a record. You play one side of it until you can predict the scratch at the same point each time. The music is doing something to the air in your room. You do not tell anyone how much it matters, because you do not have the words for it yet and also because you are protecting it.'
@@ -225,7 +232,8 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => G.age >= 14 && G.age <= 16 && !G.mem?.adolAdultConvAck,
-    text: 'An adult speaks to you as if you are also an adult. They use the kind of language they would use to another adult — not simplified, not protective — and they listen to what you say back in the same way. You are not sure what has changed. You are fourteen, or fifteen, and you have been waiting for this without knowing it.',
+    // The age was in the sentence and the guard runs to sixteen.
+    text: (G) => `An adult speaks to you as if you are also an adult. They use the kind of language they would use to another adult — not simplified, not protective — and they listen to what you say back in the same way. You are not sure what has changed. You are ${G.age}, and you have been waiting for this without knowing it.`,
     choices: null,
     effect: (p) => {
       p.m += 4

@@ -69,7 +69,7 @@ export const MOROCCO_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => IS_AMAZIGH(G) && IS_MOROCCO(G) && G.currentYear <= 1996 && G.age >= 6 && G.age <= 14 && !G.mem.morAmazighName,
-    text: 'The civil registrar refused your cousin\'s name. Amazigh names were not on the approved list until 1996 — you had to have an Arab-Islamic name, or a name from the French list, or a name that sounded ambiguous enough. Your aunt renamed her son on the way out of the office and gave him his real name at home. He has two names. Most people in the High Atlas have two names.',
+    text: 'The civil registrar refused your cousin\'s name. Amazigh names were not on the approved list until 1996 — you had to have an Arab-Islamic name, or a name from the French list, or a name that sounded ambiguous enough. Your aunt renamed her son on the way out of the registry and gave him his real name at home. He has two names. Most people in the High Atlas have two names.',
     effect: (p) => { p.m -= 5; p.addFlag('amazigh_identity'); p.addFlag('double_consciousness'); p.setMem('morAmazighName', true) },
   },
 

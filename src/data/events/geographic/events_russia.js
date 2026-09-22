@@ -153,7 +153,10 @@ export const RUSSIA_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Russia' &&
-      G.currentYear >= 2024 &&
+      // An event that opens "February 16, 2024" is news, and news has an upper
+      // bound. Unbounded it narrated the death as it happened in 2035, eleven
+      // years late.
+      G.currentYear >= 2024 && G.currentYear <= 2026 &&
       G.age >= 30 &&
       (G.flags.includes('bolotnaya_generation') || G.flags.includes('russia_2022_generation') || G.flags.includes('russia_ukraine_exile')) &&
       !G.mem?.ruNavalny,

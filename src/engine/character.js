@@ -1,9 +1,13 @@
 import { COUNTRIES } from '../data/countries'
 import { getCountryDisplayName } from '../utils/countryUtils'
-import { PLACES, pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
+import { pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PHASE_ENTRY_EVENTS } from '../data/events/lifecycle/events_phase_entries'
+import { religionFor } from '../data/identity.js'
+import { pickUnusedName, surnameFor, nameKey } from './names'
+import { wageIndex, inEraMoney } from '../data/economy.js'
+import { wasWealthy } from '../data/technology.js'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
 // Extends Set with Array.prototype.includes as an alias for has(), so existing
@@ -182,20 +186,23 @@ export function createCharacter(overrides = {}) {
   const wealth = clamp(wealthTier * 18 + randomBetween(-4, 4), 0, 100)
   const initialStats = { happiness, health, smarts, looks, charisma, wealth }
 
-  // Assign religion
-  const religion = overrides.religion ?? (() => {
-    const weights = country.religionWeights
-    if (!weights) return 'secular'
-    return weightedRandom(weights)
-  })()
-
-  // Assign ethnicity
+  // Ethnicity first, then religion CONDITIONED on it. These were two
+  // independent draws, which produced people who cannot exist: Lhotshampa who
+  // are Buddhist (they are Bhutan's Hindu population, which is the whole reason
+  // for the 1990 expulsions), Bosniaks who are Catholic, Dalits who are Muslim,
+  // Copts who are Sunni. Identity-gated content is a large share of the corpus
+  // and every one of those guards was silently failing for part of its own
+  // population. See src/data/identity.js — it speaks only for the groups where
+  // the two facts are genuinely entangled and defers to the country marginal
+  // for everyone else.
   const ethnicity = (() => {
     const groups = country.ethnicGroups
     if (!groups || groups.length === 0) return 'local'
     const group = weightedRandomFromArray(groups, 'share')
     return group.id
   })()
+
+  const religion = overrides.religion ?? religionFor(ethnicity, country, weightedRandom)
 
   // Rural/urban from the country's historical urbanisation series
   const adjustedUrbanRate = urbanChanceFor(country, birthYear)
@@ -209,10 +216,12 @@ export function createCharacter(overrides = {}) {
   // Assign birth place
   const birthPlace = pickBirthPlace(country, ruralUrban, wealthTier)
   const birthNeighborhoodTier = pickNeighborhoodTier(wealthTier)
-  const birthNeighborhoodName = pickNamedNeighborhood(birthPlace, birthNeighborhoodTier)
+  const birthNeighborhoodName = pickNamedNeighborhood(birthPlace, birthNeighborhoodTier, { ethnicity, religion })
 
   return {
-    firstName, surname, name: `${firstName} ${surname}`,
+    // Slavic family names take a feminine form: the game was producing Yulia
+    // Orlov and her daughters Elena Orlov and Alina Orlov.
+    firstName, surname: surnameFor(country, surname, gender), name: `${firstName} ${surnameFor(country, surname, gender)}`,
     country, gender, birthYear, wealthTier, familyStability, familySize,
     initialStats,
     religion, ethnicity, ruralUrban, literate,
@@ -224,17 +233,49 @@ export function deriveInitialStats(char) {
   return { ...char.initialStats }
 }
 
-export function deriveInitialSiblings(char) {
+/**
+ * @param {object} char
+ * @param {object} [parents]  so a sister is not given her own mother's name.
+ *   The two derive functions ran independently and 13% of families came out of
+ *   it with a mother and a daughter sharing a first name.
+ */
+export function deriveInitialSiblings(char, parents) {
   const count = Math.min(Math.max(0, char.familySize - 1), 5)
   const c = char.country
   const baseQ = { secure: 78, stable: 65, struggling: 50, unstable: 32 }[char.familyStability] ?? 55
+  // Keyed the same way pickUnusedName looks names up. While these were raw
+  // lowercase and the lookup was phonetic, nothing ever matched and family
+  // collisions went straight back to where they were before names.js existed.
+  const used = new Set([nameKey(char.firstName ?? '')])
+  for (const p of Object.values(parents ?? {})) {
+    if (p?.name) used.add(nameKey(String(p.name).split(' ')[0]))
+  }
+  // Age gaps were drawn independently, so a family of four routinely produced
+  // two siblings the same age who were not twins, and the People tab listed
+  // both with no explanation. Real twins happen; this makes them rare rather
+  // than a quarter of all families.
+  const usedDiffs = new Set([0])
+  const nextAgeDiff = () => {
+    if (chance(0.02)) {
+      const twinOf = [...usedDiffs].filter(d => d !== 0)
+      if (twinOf.length) return pickFrom(twinOf)
+    }
+    for (let i = 0; i < 20; i++) {
+      const d = randomBetween(-3, 8)
+      if (!usedDiffs.has(d)) { usedDiffs.add(d); return d }
+    }
+    const d = randomBetween(-8, 14)
+    usedDiffs.add(d)
+    return d
+  }
   return Array.from({ length: count }, () => {
     const gender = chance(0.5) ? 'male' : 'female'
-    const firstName = pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)
+    const firstName = pickUnusedName(gender === 'male' ? c.namePool.male : c.namePool.female, used)
+    used.add(nameKey(firstName))
     return {
-      name: `${firstName} ${char.surname}`,
+      name: `${firstName} ${surnameFor(c, char.surname, gender)}`,
       gender,
-      ageDiff: randomBetween(-3, 8),
+      ageDiff: nextAgeDiff(),
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-15, 15), 10, 100),
     }
@@ -242,8 +283,9 @@ export function deriveInitialSiblings(char) {
 }
 
 export function deriveBirthText(char) {
-  const { country, birthYear, familyStability, familySize, wealthTier, firstName, surname } = char
+  const { country, birthYear, familyStability, familySize, wealthTier, firstName, surname, ruralUrban } = char
   const arch = country.archetype
+  const rural = ruralUrban === 'rural'
   const name = `${firstName} ${surname}`
   const cn = getCountryDisplayName(country, birthYear) // historical name if applicable
 
@@ -254,15 +296,29 @@ export function deriveBirthText(char) {
     unstable: 'into difficult circumstances from the first day',
   }[familyStability] ?? 'into the world'
 
+  // The first sentence of the life used to assume a maternity ward and a city
+  // for every character, and the header beside it would say "Rural Sichuan".
+  // Three quarters of the world was born rural for most of this game's period,
+  // and most of them were not born in a hospital.
   const archCtx = {
-    wealthy_west: `In ${cn} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`,
-    wealthy_east: `${cn}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`,
-    post_soviet: `${cn}, ${birthYear}. The maternity ward smells of disinfectant. Your mother was not allowed to have your father in the room.`,
-    developing_urban: `${cn}, ${birthYear}. The city is enormous and still growing. The neighbourhood you are born into will shape everything that follows.`,
+    wealthy_west: rural
+      ? `In ${cn} in ${birthYear}, the nearest hospital is forty minutes of road away, and you arrive before it is reached.`
+      : `In ${cn} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`,
+    wealthy_east: rural
+      ? `${cn}, ${birthYear}. A village clinic, a midwife who has done this for thirty years, grandparents waiting outside with specific opinions about your name.`
+      : `${cn}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`,
+    post_soviet: rural
+      ? `${cn}, ${birthYear}. A district clinic with one doctor for eleven villages. Your mother walked part of the way.`
+      : `${cn}, ${birthYear}. The maternity ward smells of disinfectant. Your mother was not allowed to have your father in the room.`,
+    developing_urban: rural
+      ? `${cn}, ${birthYear}. The village is a long way from the road and the road is a long way from the city. What happens to you here will be decided mostly by rain and by who your family is.`
+      : `${cn}, ${birthYear}. The city is enormous and still growing. The neighbourhood you are born into will shape everything that follows.`,
     developing_unstable: `${cn}, ${birthYear}. The country is in motion — politically, economically, always. You arrive ${stabilityCtx}.`,
     subsaharan: `${cn}, ${birthYear}. You are born ${stabilityCtx}${familySize > 4 ? ', the newest in a large family' : ''}. The sun is already through the window.`,
     conflict_zone: `${cn}, ${birthYear}. You are born during a time of conflict. Your mother's first priority was keeping you safe.`,
-    wealthy_gulf: `${cn}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`,
+    wealthy_gulf: rural
+      ? `${cn}, ${birthYear}. Away from the coast the heat is a different kind, and the arrangements for a birth are the ones the family has always used.`
+      : `${cn}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`,
   }[arch] ?? `${name} enters the world in ${cn}, ${birthYear}.`
 
   return archCtx
@@ -272,7 +328,14 @@ export function deriveInitialMoney(char) {
   const base = { 0: 0, 1: 300, 2: 2000, 3: 12000, 4: 60000 }
   const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
   const mult = gdpMult[char.country.gdp] ?? 1.0
-  return Math.round(((base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier) * mult)
+  // Denominated, or a child born in 1935 Tokyo starts with $11,664 and reaches
+  // $296,213 by the age of eighteen, at which point their first wage — which IS
+  // denominated — arrives at about $150/yr. Two numbers two thousand times
+  // apart, in the same life, on the same screen.
+  return inEraMoney(
+    Math.round(((base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier) * mult),
+    char.country, char.birthYear,
+  )
 }
 
 // ─── GDP multiplier (shared across wealth mechanics) ─────────────────────────
@@ -471,6 +534,62 @@ export function calculateHouseholdContribution(state) {
 }
 
 // ─── Financial reputation display ────────────────────────────────────────────
+//
+// The score is stored on a 300-850 scale, which is FICO — a United States
+// instrument. It was being printed unchanged to a German, a Brazilian and a
+// Korean, none of whose countries use that range or that name, and one of whom
+// has no consumer credit score at all.
+//
+// What a country uses to decide whether you are lendable-to is a real fact
+// about living there, and a different one in each place: Germany's SCHUFA is a
+// percentage, Britain's Experian runs to 999, France keeps no positive score
+// at all and only a register of people who have defaulted, and China's Sesame
+// Credit did not exist before 2015. The stored score is rescaled onto whatever
+// the character's country actually uses.
+export const CREDIT_SYSTEMS = {
+  'United States':  { name: 'FICO score',      min: 300, max: 850, from: 1989 },
+  'Canada':         { name: 'credit score',    min: 300, max: 900, from: 1990 },
+  'United Kingdom': { name: 'Experian score',  min: 0,   max: 999, from: 1980 },
+  'Ireland':        { name: 'credit record',   min: 0,   max: 999, from: 2013 },
+  'Germany':        { name: 'SCHUFA score',    min: 0,   max: 100, suffix: '%', from: 1985 },
+  'Austria':        { name: 'KSV score',       min: 0,   max: 100, suffix: '%', from: 1990 },
+  'Switzerland':    { name: 'ZEK record',      min: 0,   max: 100, suffix: '%', from: 1990 },
+  'Netherlands':    { name: 'BKR registration', negativeOnly: true, from: 1965 },
+  'France':         { name: 'Banque de France file', negativeOnly: true, from: 1989 },
+  'Belgium':        { name: 'Central Credit Register', negativeOnly: true, from: 1985 },
+  'Spain':          { name: 'ASNEF file',      negativeOnly: true, from: 1994 },
+  'Italy':          { name: 'CRIF score',      min: 0,   max: 100, suffix: '%', from: 1995 },
+  'Sweden':         { name: 'UC score',        min: 0,   max: 100, suffix: '%', from: 1990 },
+  'Norway':         { name: 'credit rating',   min: 0,   max: 100, suffix: '%', from: 1990 },
+  'Japan':          { name: 'CIC record',      negativeOnly: true, from: 1985 },
+  'South Korea':    { name: 'NICE score',      min: 1,   max: 1000, from: 2002 },
+  'Taiwan':         { name: 'JCIC score',      min: 200, max: 800, from: 1992 },
+  'Singapore':      { name: 'Credit Bureau grade', min: 1000, max: 2000, from: 2002 },
+  'China':          { name: 'Sesame Credit score', min: 350, max: 950, from: 2015 },
+  'India':          { name: 'CIBIL score',     min: 300, max: 900, from: 2007 },
+  'Brazil':         { name: 'Serasa score',    min: 0,   max: 1000, from: 2012 },
+  'Mexico':         { name: 'Buró de Crédito score', min: 400, max: 850, from: 1996 },
+  'Russia':         { name: 'NBKI score',      min: 300, max: 850, from: 2006 },
+  'Poland':         { name: 'BIK score',       min: 192, max: 631, from: 2007 },
+  'South Africa':   { name: 'credit score',    min: 300, max: 850, from: 1995 },
+  'Australia':      { name: 'credit score',    min: 0,   max: 1200, from: 2014 },
+  'New Zealand':    { name: 'credit score',    min: 0,   max: 1000, from: 2012 },
+}
+
+/** The score as this country would state it, or null where it has no such thing. */
+export function localCreditScore(state) {
+  const name = state.currentCountry?.name ?? state.character?.country?.name
+  const year = state.currentYear ?? 2000
+  const sys = CREDIT_SYSTEMS[name]
+  if (!sys || year < sys.from) return null
+  const raw = state.creditScore ?? 700
+  if (sys.negativeOnly) {
+    return { name: sys.name, negativeOnly: true, value: raw >= 580 ? 'Not on it' : 'On it' }
+  }
+  const t = Math.max(0, Math.min(1, (raw - 300) / 550))
+  return { name: sys.name, value: Math.round(sys.min + t * (sys.max - sys.min)), suffix: sys.suffix ?? '', good: t >= 0.6, fair: t >= 0.4 }
+}
+
 export function getFinancialReputationDisplay(state) {
   const archetype = state.character?.country?.archetype
   const year = state.currentYear ?? 2000
@@ -538,7 +657,7 @@ export function getHyperinflation(countryName, year, flags) {
 // Returns an occupation object for a parent based on wealth tier, archetype, birth year,
 // gender, and family stability. Base salaries are in very_high GDP units; they get
 // scaled by GDP_MULT at display / tick time.
-function assignParentOccupation(wealthTier, archetype, birthYear, gender, familyStability) {
+function assignParentOccupation(wealthTier, archetype, birthYear, gender, familyStability, avoidTitle) {
   // Income types: 'formal' | 'informal' | 'subsistence' | 'barter' | 'none'
   const isMother = gender === 'female'
 
@@ -634,11 +753,17 @@ function assignParentOccupation(wealthTier, archetype, birthYear, gender, family
     ? 'provides food and shelter'
     : incomeType === 'barter' ? 'paid in kind' : null
 
+  // Avoid handing both parents the identical job, and spread the wage: the
+  // tier's base salary is a midpoint, not a national pay scale that two people
+  // in the same household would be paid to the dollar.
+  const choices = avoidTitle && titles.length > 1 ? titles.filter(t => t !== avoidTitle) : titles
+  const spread = baseSalary === 0 ? 0 : Math.round(baseSalary * (0.75 + Math.random() * 0.5) / 100) * 100
+
   return {
-    title: pickFrom(titles),
+    title: pickFrom(choices.length ? choices : titles),
     field,
     incomeType: actualIncomeType,
-    annualIncome: baseSalary,
+    annualIncome: spread,
     incomeNote,
   }
 }
@@ -646,19 +771,27 @@ function assignParentOccupation(wealthTier, archetype, birthYear, gender, family
 export function deriveInitialParents(char) {
   const { country, familyStability, wealthTier, birthYear, surname } = char
   const arch = country.archetype
-  const motherFirst = pickFrom(country.namePool.female)
-  const fatherFirst = pickFrom(country.namePool.male)
-  const altSurname = pickFrom(country.surnames)
+  const taken = new Set([nameKey(char.firstName ?? '')])
+  const motherFirst = pickUnusedName(country.namePool.female, taken)
+  taken.add(nameKey(motherFirst))
+  const fatherFirst = pickUnusedName(country.namePool.male, taken)
+  // The father used to be given a DIFFERENT surname from his wife and children,
+  // deliberately, which in every society and era this game covers reads as a
+  // data bug: "Your father, Robert Carter, dies at 81" in an obituary for James
+  // Young. A household where the parents' names differ is a real thing and a
+  // minority one; it needs to be the exception, not the rule.
+  const altSurname = chance(0.08) ? pickFrom(country.surnames) : surname
   const baseQ = { secure: 82, stable: 68, struggling: 48, unstable: 28 }[familyStability] ?? 55
   const fatherPresent = familyStability !== 'unstable' || chance(0.55)
+  const motherOccupation = assignParentOccupation(wealthTier, arch, birthYear, 'female', familyStability)
   return {
     mother: {
-      name: `${motherFirst} ${surname}`,
+      name: `${motherFirst} ${surnameFor(country, surname, 'female')}`,
       currentAge: randomBetween(22, 34),
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-10, 10), 12, 100),
       traits: pickTraits(ADULT_TRAITS),
-      occupation: assignParentOccupation(wealthTier, arch, birthYear, 'female', familyStability),
+      occupation: motherOccupation,
     },
     father: {
       name: `${fatherFirst} ${altSurname}`,
@@ -667,7 +800,7 @@ export function deriveInitialParents(char) {
       relationshipQuality: fatherPresent ? clamp(baseQ + randomBetween(-15, 10), 8, 100) : 0,
       traits: fatherPresent ? pickTraits(ADULT_TRAITS) : [],
       occupation: fatherPresent
-        ? assignParentOccupation(wealthTier, arch, birthYear, 'male', familyStability)
+        ? assignParentOccupation(wealthTier, arch, birthYear, 'male', familyStability, motherOccupation?.title)
         : null,
     },
   }
@@ -701,8 +834,10 @@ export function tickFamilyIncome(state) {
     const occ = parent.occupation
     if (occ.incomeType === 'none' || occ.incomeType === 'subsistence' || occ.incomeType === 'barter') continue
 
-    // Apply GDP scaling and annual variance
-    const scaled = Math.round(occ.annualIncome * mult)
+    // GDP scaling says where the wage is paid; the era term says when. A
+    // mother listed as an Engineer on $42,500/yr in 1936 Japan is the same
+    // defect as a taxi driver on $19,540 in 1948 Germany.
+    const scaled = Math.round(occ.annualIncome * mult * wageIndex(state.character?.country, year))
     const variancePct = occ.incomeType === 'informal' ? randomBetween(-35, 50) : randomBetween(-12, 18)
     const annual = Math.max(0, Math.round(scaled * (1 + variancePct / 100)))
     totalParentalIncome += annual
@@ -723,11 +858,42 @@ export function tickFamilyIncome(state) {
     totalParentalIncome = Math.round(totalParentalIncome * 0.35)
   }
 
-  const surplus = Math.round(totalParentalIncome * surplusRate)
-  if (surplus <= 0) return state
+  // The wealth stat is a reading of how much money is AROUND this person, and
+  // for a child that is the household's, not their own. It was derived from the
+  // child's cash — which, once a child stopped banking eighteen years of
+  // household surplus, is one year's pocket money. On a log scale that pinned
+  // it at the clamp floor of 5 for every non-rich-world child in the game:
+  // Indonesia, Mexico, Vietnam, India and Brazil all read 5 at age 5 and 5 at
+  // age 12, elite and landless alike, while 71 guards in the corpus read this
+  // number and `ec2_poverty_known` gated the whole poverty arc off it.
+  //
+  // Read the household's annual income instead, in present-day money so the
+  // scale means the same thing in 1936 as in 2020, with a floor from the
+  // family's own tier — because a subsistence household books no cash income at
+  // all and is not therefore of unknown wealth.
+  const incomeToday = totalParentalIncome / (wageIndex(state.character?.country, year) || 1)
+  const TIER_FLOOR = { 0: 5, 1: 14, 2: 28, 3: 45, 4: 62 }
+  const fromIncome = incomeToday >= 1 ? (Math.log10(incomeToday) - 2.3) * 27 : 0
+  const wealthLevel = clamp(Math.round(Math.max(fromIncome, TIER_FLOOR[tier] ?? 28)), 2, 98)
 
-  const newMoney = (state.money ?? 0) + surplus
-  const wealthLevel = clamp(Math.round((Math.log10(Math.max(1, newMoney)) - 2.5) * 22), 5, 98)
+  const surplus = Math.round(totalParentalIncome * surplusRate)
+  if (surplus <= 0) {
+    return { ...state, stats: { ...state.stats, wealth: wealthLevel } }
+  }
+
+  // A child does not accumulate a bank balance out of the household's surplus.
+  // This paid 5-28% of parental income into the CHILD's money every year and
+  // nothing ever spent it, so a wealthy-tier American born in 1975 reached
+  // eighteen holding $51,084 without having worked a day — and an infant who
+  // died at one had "CASH $5k" on its death screen.
+  //
+  // What a child can actually spend is pocket money: this year's share, not
+  // eighteen years of it. The household's real wealth is already expressed
+  // through `wealthTier`, which decides schooling, marriage age, career access
+  // and half the corpus's guards. Carrying the rest forward as cash was double
+  // counting it, in the most visible place there is.
+  const carried = Math.round(Math.min(state.money ?? 0, surplus * 0.6))
+  const newMoney = carried + surplus
   return {
     ...state,
     money: newMoney,
@@ -735,9 +901,28 @@ export function tickFamilyIncome(state) {
   }
 }
 
+/**
+ * Rural or urban NOW, not at birth.
+ *
+ * `character.ruralUrban` is frozen at birth, and every prose layer and every
+ * guard read it directly — so a character who moved to Jakarta at 26 was still
+ * being told, at 53, that the firewood needed collecting, and a 68-year-old
+ * forty years into city life still had a hallway telephone. `homeCountry` on
+ * the very next line of those files already followed the character; the rural
+ * dimension did not.
+ *
+ * `currentPlace.type` is the answer whenever there is a place, and the birth
+ * value is the fallback, which is what it was always meant to be.
+ */
+export function livingRuralUrban(state) {
+  const t = state?.currentPlace?.type
+  if (t === 'rural' || t === 'urban') return t
+  return state?.character?.ruralUrban ?? 'urban'
+}
+
 // ─── Formatted parent income display ─────────────────────────────────────────
 // Returns a human-readable income string for the UI.
-export function formatParentIncome(occupation, gdp) {
+export function formatParentIncome(occupation, gdp, country = null, year = null) {
   if (!occupation) return null
   const { incomeType, annualIncome, incomeNote, title } = occupation
   if (incomeType === 'none') return 'No income'
@@ -745,7 +930,7 @@ export function formatParentIncome(occupation, gdp) {
   if (incomeType === 'barter') return incomeNote ?? 'paid in kind'
   if (!annualIncome) return null
   const mult = GDP_MULT[gdp] ?? 0.2
-  const scaled = Math.round(annualIncome * mult)
+  const scaled = Math.round(annualIncome * mult * (country && year ? wageIndex(country, year) : 1))
   if (scaled < 50) return '< $50/yr'
   const fmt = scaled >= 1000 ? `$${(scaled / 1000).toFixed(1)}k/yr` : `$${scaled}/yr`
   return incomeType === 'informal' ? `~${fmt}` : fmt
@@ -804,16 +989,145 @@ export const DESIRE_LABELS = {
   redemption: 'You want to undo something.',
 }
 
+// What the person you are with does.
+//
+// This was a flat list of forty-three modern Western job titles drawn with a
+// bare `pickFrom`, so a woman married in rural Upper Egypt in 1969 was a
+// Barista and a woman married in Tokyo in 1959 was a Personal Trainer. It is
+// the same fault `chooseCareer` was written to fix on the player's side:
+// a list answers "does this job exist", which is not "is this what someone
+// like this, here, then, actually does".
+//
+// `at` is the year the occupation begins to exist anywhere; `rich` restricts
+// it to materially wealthy years, `urban` to towns and cities. `w` is a
+// weight, and the largest weights are deliberately the ones the original list
+// did not contain at all — farm work, household work, trade, labour — because
+// for most people across most of this game's range that is the answer.
 export const PARTNER_OCCUPATIONS = [
-  'Software Engineer', 'Teacher', 'Nurse', 'Doctor', 'Lawyer', 'Accountant',
-  'Graphic Designer', 'Chef', 'Bartender', 'Sales Manager', 'Marketing Director',
-  'Real Estate Agent', 'Police Officer', 'Firefighter', 'Architect', 'Journalist',
-  'Pharmacist', 'Social Worker', 'Personal Trainer', 'Electrician', 'Plumber',
-  'Mechanic', 'Store Manager', 'Bank Teller', 'Dental Hygienist', 'Librarian',
-  'Barista', 'Photographer', 'Event Planner', 'Insurance Agent', 'Veterinarian',
-  'Student', 'Freelancer', 'Artist', 'Musician', 'Actor', 'Model',
-  'Entrepreneur', 'Consultant', 'Waiter', 'Driver', 'Cleaner', 'Security Guard',
+  // The great majority, nearly everywhere, for nearly the whole period.
+  { folk: true, t: 'Farmer',            at: 0,    w: 10, ruralOnly: true },
+  { folk: true, t: 'Runs the household', at: 0,   w: 10, female: true },
+  { folk: true, t: 'Market Trader',     at: 0,    w: 7 },
+  { folk: true, t: 'Labourer',          at: 0,    w: 7 },
+  { folk: true, t: 'Seamstress',        at: 0,    w: 4, female: true },
+  { folk: true, t: 'Domestic Worker',   at: 0,    w: 4 },
+  { folk: true, t: 'Shopkeeper',        at: 0,    w: 5 },
+  { t: 'Driver',            at: 1920, w: 4 },
+  { t: 'Factory Worker',    at: 1900, w: 6, urban: true },
+  { t: 'Clerk',             at: 0,    w: 5, urban: true },
+  { folk: true, t: 'Fisherman',         at: 0,    w: 2, ruralOnly: true },
+  { folk: true, t: 'Herder',            at: 0,    w: 2, ruralOnly: true },
+  { t: 'Miner',             at: 0,    w: 2 },
+  { t: 'Soldier',           at: 0,    w: 3 },
+  { folk: true, t: 'Cleaner',           at: 0,    w: 3 },
+  { t: 'Security Guard',    at: 1950, w: 3 },
+  { t: 'Waiter',            at: 1900, w: 3, urban: true },
+  { folk: true, t: 'Cook',              at: 0,    w: 3 },
+  // Professions, which exist early but reach few people.
+  { t: 'Teacher',           at: 0,    w: 6 },
+  { t: 'Nurse',             at: 1900, w: 5 },
+  { t: 'Doctor',            at: 0,    w: 2 },
+  { t: 'Lawyer',            at: 0,    w: 2, urban: true },
+  { t: 'Accountant',        at: 1900, w: 2, urban: true },
+  { t: 'Pharmacist',        at: 1900, w: 2, urban: true },
+  { t: 'Journalist',        at: 1900, w: 2, urban: true },
+  { t: 'Architect',         at: 1900, w: 1, urban: true },
+  { t: 'Librarian',         at: 1900, w: 1, urban: true },
+  { t: 'Civil Servant',     at: 1900, w: 4, urban: true },
+  { t: 'Police Officer',    at: 1900, w: 3 },
+  { t: 'Electrician',       at: 1930, w: 3 },
+  { t: 'Plumber',           at: 1920, w: 3 },
+  { t: 'Mechanic',          at: 1925, w: 3 },
+  { folk: true, t: 'Carpenter',         at: 0,    w: 4 },
+  { folk: true, t: 'Tailor',            at: 0,    w: 3 },
+  { t: 'Bank Teller',       at: 1920, w: 2, urban: true },
+  { t: 'Firefighter',       at: 1920, w: 1, urban: true },
+  { t: 'Social Worker',     at: 1950, w: 2, rich: true, urban: true },
+  { t: 'Veterinarian',      at: 1930, w: 1 },
+  // The original list, kept, and now confined to the years it belongs to.
+  { t: 'Chef',              at: 1950, w: 2, urban: true },
+  { t: 'Bartender',         at: 1900, w: 2, urban: true },
+  { t: 'Sales Manager',     at: 1950, w: 2, rich: true },
+  { t: 'Store Manager',     at: 1950, w: 2, urban: true },
+  { t: 'Real Estate Agent', at: 1950, w: 2, rich: true, urban: true },
+  { t: 'Photographer',      at: 1920, w: 1, urban: true },
+  { t: 'Graphic Designer',  at: 1970, w: 2, rich: true, urban: true },
+  { t: 'Dental Hygienist',  at: 1955, w: 1, rich: true, urban: true },
+  { t: 'Insurance Agent',   at: 1950, w: 2, urban: true },
+  { t: 'Marketing Director', at: 1970, w: 1, rich: true, urban: true },
+  { t: 'Consultant',        at: 1975, w: 2, rich: true, urban: true },
+  { t: 'Software Engineer', at: 1985, w: 3, rich: true, urban: true },
+  { t: 'Personal Trainer',  at: 1985, w: 1, rich: true, urban: true },
+  { t: 'Barista',           at: 1990, w: 2, rich: true, urban: true },
+  { t: 'Event Planner',     at: 1985, w: 1, rich: true, urban: true },
+  { t: 'Freelancer',        at: 1995, w: 2, rich: true, urban: true },
+  // Present in every era and rare in every era.
+  { t: 'Artist',            at: 0,    w: 1 },
+  { t: 'Musician',          at: 0,    w: 2 },
+  { t: 'Actor',             at: 0,    w: 1, urban: true },
+  { t: 'Entrepreneur',      at: 1900, w: 2 },
+  { t: 'Student',           at: 0,    w: 2 },
 ]
+
+/**
+ * Draw an occupation for a partner that could plausibly be held by someone of
+ * that gender, in that country, in that year.
+ */
+export function partnerOccupation(state, gender = null) {
+  const country = state?.currentCountry ?? state?.character?.country
+  const year = state?.currentYear ?? country?.yearRange?.[0] ?? 1980
+  const rural = (state?.ruralUrban ?? state?.character?.ruralUrban) === 'rural'
+  const rich = wasWealthy(country, year)
+  const isFemale = gender === 'female'
+  const pool = []
+  for (const o of PARTNER_OCCUPATIONS) {
+    if (year < (o.at ?? 0)) continue
+    if (o.rich && !rich) continue
+    if (o.urban && rural) continue
+    if (o.ruralOnly && !rural) continue
+    if (o.female && !isFemale) continue
+    // Women's paid work outside the household was the exception across most of
+    // this range; femaleWorkChance in lifeCourse.js carries the real rates and
+    // this leans on the same fact rather than restating it job by job.
+    let w = o.w ?? 1
+    // How many salaried professionals a place actually had. A rural district in
+    // 1962 Nigeria held a handful of teachers and one clinic; flat weights gave
+    // farm, household and trade work only 36% of draws there, against a reality
+    // nearer nine in ten.
+    if (o.folk) {
+      // Subsistence, trade and piecework go the other way: they are most of the
+      // labour force in a poor country early and a small remainder in a rich
+      // one late. Without this term a woman partnered in Chicago in 2015 came
+      // out a Seamstress or a Market Trader.
+      const tier = { very_high: 0.16, high: 0.3, medium_high: 0.5, medium: 0.7, low_medium: 0.9, low: 1.0, very_low: 1.0 }[country?.gdp] ?? 0.7
+      const era = year < 1950 ? 1.2 : year < 1980 ? 1.0 : 0.7
+      w *= tier * era * (rural ? 1.6 : 1)
+    } else {
+      // How many salaried professionals a place actually had. A rural district
+      // in 1962 Nigeria held a handful of teachers and one clinic; flat weights
+      // gave farm, household and trade work only 36% of draws there, against a
+      // reality nearer nine in ten.
+      const tier = { very_high: 1.0, high: 0.85, medium_high: 0.6, medium: 0.4, low_medium: 0.22, low: 0.13, very_low: 0.08 }[country?.gdp] ?? 0.4
+      const era = year < 1950 ? 0.45 : year < 1980 ? 0.7 : 1.0
+      w *= tier * era * (rural ? 0.3 : 1)
+    }
+    // Unpaid household work is the single largest answer for women across most
+    // of this range and a shrinking one after about 1970. femaleWorkChance in
+    // lifeCourse.js carries the real participation rates; this leans on the
+    // same fact rather than restating it.
+    if (o.t === 'Runs the household') {
+      w *= year < 1950 ? 1.4 : year < 1970 ? 1.1 : year < 1990 ? 0.7 : 0.4
+      if (['very_high', 'high'].includes(country?.gdp)) w *= 0.55
+    }
+    if (isFemale && !o.female && year < 1970) w *= 0.45
+    pool.push({ t: o.t, w })
+  }
+  if (!pool.length) return 'Farmer'
+  const total = pool.reduce((a, b) => a + b.w, 0)
+  let r = Math.random() * total
+  for (const o of pool) { r -= o.w; if (r <= 0) return o.t }
+  return pool[pool.length - 1].t
+}
 
 const BUSINESS_TYPES = [
   { id: 'corner_shop',    name: 'Corner Shop',       emoji: '🏪', startupCost: 5000,   baseRevenue: [8000, 18000],   minAge: 21, description: 'A small retail shop. Low risk, steady income.' },
@@ -832,24 +1146,62 @@ export { BUSINESS_TYPES }
 // same way. Southern-hemisphere countries swap summer/winter; tropical countries
 // run dry/wet instead of four seasons. Shared by buildG and the year-texture
 // layer so seasonal prose and seasonal event guards always agree.
+// ─── Climate and season ───────────────────────────────────────────────────────
+// A season is what the prose has to be true about, so the classification is
+// driven by what the writing asks for. There were two lists of this fact and
+// they disagreed: _sonderGuards.js knew India, Pakistan, Sri Lanka, Nepal and
+// Malaysia were monsoon countries, and deriveSeason did not — so every guard
+// reading `season === 'wet'` for the subcontinent was unsatisfiable, and the
+// monsoon prose in events_seasonal.js and yearTexture.js could not fire in the
+// largest monsoon country on earth. MONSOON_COUNTRIES now lives here and
+// _sonderGuards.js imports it, so there is one list.
+
+// Wet/dry, in the monsoon vocabulary: the rains arrive, the rains fail.
+export const MONSOON_COUNTRIES = [
+  'India', 'Bangladesh', 'Pakistan', 'Sri Lanka', 'Nepal', 'Bhutan', 'Myanmar',
+  'Thailand', 'Vietnam', 'Cambodia', 'Laos', 'Philippines', 'Indonesia',
+  'Malaysia', 'Singapore', 'East Timor', 'Maldives',
+]
+
+// Wet/dry without the monsoon's arrival: the tropics and the Sahel, where the
+// year turns on whether there is water, not on whether it is cold.
+const TROPICAL_COUNTRIES = [
+  // West and Central Africa
+  'Nigeria', 'Ghana', 'Senegal', 'Guinea', 'Burkina Faso', 'Mali', 'Ivory Coast',
+  'Liberia', 'Sierra Leone', 'Niger', 'Togo', 'Benin', 'DR Congo', 'Cameroon',
+  'Chad', 'Central African Republic', 'Angola',
+  // East and Southern Africa
+  'Ethiopia', 'Kenya', 'Rwanda', 'Somalia', 'Tanzania', 'Uganda', 'Eritrea',
+  'Djibouti', 'Sudan', 'Mozambique', 'Zambia', 'Zimbabwe', 'Namibia',
+  // Tropical Americas
+  'Colombia', 'Venezuela', 'Ecuador', 'Bolivia', 'Brazil', 'Guyana',
+  'Guatemala', 'Honduras', 'Nicaragua', 'El Salvador', 'Belize', 'Cuba', 'Haiti',
+  'Dominican Republic', 'Puerto Rico', 'Jamaica', 'Trinidad and Tobago', 'Barbados',
+  // Pacific
+  'Fiji', 'Papua New Guinea', 'Samoa', 'Kiribati', 'Tuvalu', 'Marshall Islands',
+  'Vanuatu',
+]
+
+const WET_DRY = new Set([...MONSOON_COUNTRIES, ...TROPICAL_COUNTRIES])
+
+// Only consulted for the four-season countries, so a tropical southern-
+// hemisphere country (Tanzania, Angola, Brazil) is classified by climate above
+// rather than getting a Kenyan winter.
 const SOUTHERN_HEMISPHERE = new Set([
-  'Australia','New Zealand','Argentina','Brazil','Chile','South Africa','Peru',
-  'Bolivia','Uruguay','Paraguay','Zimbabwe','Zambia','Mozambique','Angola',
-  'Namibia','Tanzania','Kenya','Rwanda','Burundi','Madagascar','Malawi',
+  'Australia', 'New Zealand', 'Argentina', 'Chile', 'South Africa', 'Peru',
+  'Uruguay', 'Paraguay',
 ])
-const TROPICAL = new Set([
-  'Nigeria','Ghana','Ivory Coast','Cameroon','DR Congo','Uganda','Ethiopia',
-  'Somalia','Sudan','Guinea','Mali','Burkina Faso','Senegal','Bangladesh',
-  'Thailand','Vietnam','Indonesia','Philippines','Cambodia','Myanmar','Laos',
-  'Colombia','Venezuela','Ecuador','Guatemala','Honduras','Nicaragua',
-  'El Salvador','Dominican Republic','Haiti','Cuba','Puerto Rico','Panama',
-])
+
+/** The seasons a country can actually produce — exported so audits can check guards. */
+export function seasonsFor(countryName) {
+  return WET_DRY.has(countryName) ? ['dry', 'wet'] : ['winter', 'spring', 'summer', 'autumn']
+}
 
 export function deriveSeason(state) {
   const currentYear = state.currentYear ?? 0
   const countryName = (state.currentCountry ?? state.character?.country)?.name ?? ''
   const raw = ((state.character?.birthYear ?? 1960) * 7 + currentYear * 3) % 4
-  if (TROPICAL.has(countryName)) return raw % 2 === 0 ? 'dry' : 'wet'
+  if (WET_DRY.has(countryName)) return raw % 2 === 0 ? 'dry' : 'wet'
   const seasons = ['winter', 'spring', 'summer', 'autumn']
   const idx = SOUTHERN_HEMISPHERE.has(countryName) ? (raw + 2) % 4 : raw
   return seasons[idx]

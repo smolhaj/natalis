@@ -6,6 +6,8 @@
 
 const OFW_ARCHETYPES = ['subsaharan', 'developing_urban', 'developing_unstable']
 
+import { hasTech } from '../../technology.js'
+
 export const CHILDREN_ABROAD_EVENTS = [
 
   // ── THE DEPARTURE ─────────────────────────────────────────────────────────────
@@ -86,7 +88,15 @@ export const CHILDREN_ABROAD_EVENTS = [
       if (year >= 2005) {
         return 'The call comes at a difficult hour because of the time difference. The voice is clear on some days and crackling on others. You hold the phone and say the things you rehearsed because there is not enough time to say anything real, and you are not sure what real would sound like anymore across this distance.'
       }
-      return 'The international call costs money, so it is short and precisely timed. You stand near the telephone and wait. When the voice comes through the static it is recognisable but wrong somehow — thin, far away, not quite present. You say very little. There is no language yet for what you want to say, and the minutes are running.'
+      // The pre-2005 branch assumed a telephone to stand near, which most of
+      // the world did not have a household line to: this was standing a 1943
+      // Indian child and a 1959 ni-Vanuatu one next to one. Where there is no
+      // line, the contact is the post, and it is slower in a way the child can
+      // feel.
+      if (hasTech(G.currentCountry ?? G.character.country, 'landline', G.currentYear, { rural: G.ruralUrban === 'rural' })) {
+        return 'The international call costs money, so it is short and precisely timed. You stand near the telephone and wait. When the voice comes through the static it is recognisable but wrong somehow — thin, far away, not quite present. You say very little. There is no language yet for what you want to say, and the minutes are running.'
+      }
+      return 'The letter arrives weeks after it was written, in the handwriting you know better than you know the voice. It asks whether you have grown, whether the roof held, whether you are helping your mother — questions posed so far in advance that answering them is a kind of guessing. You read it twice and put it with the others. There is no way to answer at the speed at which you want to answer.'
     },
     choices: null,
     effect: (p) => {

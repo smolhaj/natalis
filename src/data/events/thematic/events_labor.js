@@ -1,3 +1,24 @@
+// A shop floor, a break and a bargaining unit exist in some kinds of work and
+// not in others. These are the fields that actually had a union culture in the
+// twentieth century, in the countries and years this module covers.
+const UNIONISED_FIELDS = new Set([
+  'manufacturing', 'construction', 'transport', 'trade', 'electrician', 'plumber',
+  'healthcare', 'education', 'government', 'law_enforcement', 'casual', 'aviation',
+  'hospitality', 'media', 'social_services',
+])
+
+// Work a machine could take over one-for-one, and — from 1995 — the desk jobs
+// software arrived for.
+const MECHANISABLE_FIELDS = new Set([
+  'manufacturing', 'construction', 'transport', 'trade', 'agriculture', 'casual',
+  'electrician', 'plumber',
+])
+const DESK_FIELDS = new Set([
+  'finance', 'media', 'government', 'writing', 'real_estate', 'IT', 'technology',
+  'architecture', 'science',
+])
+
+
 // events_labor.js — BUILD 20
 // Labor and strikes: the union card, the picket line, collective action,
 // the machine that does your job, solidarity. Fires across archetypes,
@@ -17,6 +38,19 @@ export const LABOR_EVENTS = [
       G.currentYear >= 1920 && G.currentYear <= 2000 &&
       G.age >= 18 && G.age <= 45 &&
       !G.flags.has('union_member') &&
+      // There is no shop floor, no break and no collective agreement on a
+      // smallholding, and the informal sector has no representative to send.
+      // This was reaching Rwandan subsistence farmers.
+      G.ruralUrban !== 'rural' &&
+      // A negative list let everything it had not thought of through, and "a
+      // union representative finds you during the break — someone you
+      // recognise from the floor" reached an Agency Director at a property
+      // agency. There is a floor, a break and a bargaining unit in some kinds
+      // of work and not in others, so name the ones there are.
+      UNIONISED_FIELDS.has(G.career?.field) &&
+      // And not from above it: a director is who the union negotiates with.
+      (G.career?.level ?? 0) <= 3 &&
+      !G.flags.has('informal_economy') && !G.flags.has('subsistence_farming') &&
       ['wealthy_west', 'post_soviet', 'developing_urban', 'subsaharan'].includes(G.character.country.archetype),
     text: 'A union representative finds you during the break — someone you recognise from the floor, not a stranger. He doesn\'t make a speech. He tells you what the monthly fee is. He tells you what the union got in the last negotiation: two extra days of leave, a grievance process that didn\'t exist before. He slides a card across the table. You have until Friday.',
     choices: [
@@ -180,6 +214,12 @@ export const LABOR_EVENTS = [
     when: (G) =>
       !G.mem?.labLuddite &&
       G.career &&
+      // "The machine arrives in a crate and takes three men to uninstall it...
+      // It does what six workers did before it" requires a job a machine can
+      // replace one-for-one. The 1995+ branch generalises to office work; the
+      // earlier branches do not generalise at all.
+      (MECHANISABLE_FIELDS.has(G.career?.field) ||
+        (G.currentYear >= 1995 && DESK_FIELDS.has(G.career?.field))) &&
       G.currentYear >= 1880 &&
       G.age >= 22,
     text: (G) => {
@@ -196,7 +236,19 @@ export const LABOR_EVENTS = [
       if (year < 1995) {
         return 'The software arrives on a disc. It runs on the new computer they installed last month. The thing it does — ' + (field === 'finance' ? 'the ledger work, the reconciliations' : field === 'media' ? 'the typesetting, the layout' : 'the filing, the calculations') + ' — took three people before. It takes one now, and a different kind of one. You are the kind who did it before.'
       }
-      return 'The article is in the trade publication you get sent. The headline is about efficiency. The headline is also, if you read it again, about you. The system they are describing does what you do, faster, without needing the commute. The article uses the word "transition." You have a mortgage.'
+      // "You have a mortgage" was asserted flat, and was false in every life it
+      // fired in — a Brazilian nine years before he bought anything, an
+      // Egyptian smallholder who also got sent a trade publication.
+      const owns = (G.assets?.properties?.length ?? 0) > 0
+      const stake = owns && G.debt > 0 ? 'You are still paying for the house.'
+        : G.children?.length ? 'You have children.'
+          : G.debt > 0 ? 'You owe money that comes due whether or not this happens.'
+            : `You are ${G.age}.`
+      const arrival = G.ruralUrban === 'rural'
+        ? 'Someone reads it out in the shade at the hottest part of the day, half as a joke.'
+        : 'The article is in the trade publication you get sent.'
+      const away = G.ruralUrban === 'rural' ? 'without anyone having to be there at all' : 'without needing the commute'
+      return arrival + ' The headline is about efficiency. The headline is also, if you read it again, about you. The system they are describing does what you do, faster, ' + away + '. The article uses the word "transition." ' + stake
     },
     choices: [
       {

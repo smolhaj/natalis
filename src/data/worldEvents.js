@@ -19,7 +19,10 @@ function inDisasterZone(character, salt, percent) {
 const SOVIET_SUCCESSOR_STATES = [
   'Russia', 'Ukraine', 'Belarus', 'Estonia', 'Latvia', 'Lithuania',
   'Georgia', 'Armenia', 'Azerbaijan', 'Kazakhstan', 'Uzbekistan',
-  'Kyrgyzstan', 'Turkmenistan', 'Tajikistan',
+  'Kyrgyzstan', 'Turkmenistan', 'Tajikistan', 'Moldova',   // Moldova was missing:
+  // the country whose entire 1990s IS the Soviet collapse received neither
+  // `soviet_collapse` nor `post_soviet_hyperinflation`, while the former's own
+  // context reads "Fifteen successor states emerged".
 ]
 
 export const WORLD_EVENTS = [
@@ -110,7 +113,25 @@ export const WORLD_EVENTS = [
     years: [2001, 2001],
     archetypes: 'all',
     countries: null,
-    narrative: 'In the morning, two planes hit the towers. By afternoon, a third hits the Pentagon and a fourth goes down in a Pennsylvania field. The tallest buildings in New York are gone. You watch the footage repeat on television. What follows — the security lines, the databases, the wars — will outlast everyone alive today.',
+    // One narrative for the planet, and it was written from an American
+    // living room: "The tallest buildings in New York are gone. You watch the
+    // footage repeat on television." It printed to a man who had lived in
+    // Tribeca since birth, within sight of the site, and to a Nigerian
+    // villager with no television. `narrative` takes a function of G, so it
+    // can reach everybody without reaching them identically.
+    narrative: (G) => {
+      const here = (G.currentCountry ?? G.character.country)?.name
+      if (here === 'United States') {
+        const nyc = /New York|Manhattan|Brooklyn|Bronx|Queens/i.test(G.place?.name ?? '')
+        return nyc
+          ? 'The sound is wrong before anything else is. Then the street fills with people walking north, all of them covered in the same grey, none of them running. The phones do not work. You walk home, however far home is, and the air smells like that for weeks afterwards and you will know that smell for the rest of your life.'
+          : 'Someone puts a television on in a room that does not normally have one on. By the afternoon every road out of every city is full and nobody can say what they are driving away from. You know somebody who knows somebody. Everyone does, by the end of the week.'
+      }
+      if (G.ruralUrban === 'rural' && !['wealthy_west', 'wealthy_east'].includes((G.currentCountry ?? G.character.country)?.archetype)) {
+        return 'It arrives as a thing somebody heard. By the second day there is a number attached and by the third there is a name, and a man with a radio says it again more slowly for the people at the back. Nobody here has been to America. Everybody here has an opinion by Friday, and the opinions do not all run the same way.'
+      }
+      return 'You watch it on a screen with other people watching it on a screen. The buildings are in a city you have seen in films. What follows over the next two years — the airports, the queues, the word terrorism entering ordinary conversation, the war that is announced as though it were a consequence — reaches your country too, and nobody asked.'
+    },
     context: 'On September 11, 2001, al-Qaeda hijackers flew four commercial aircraft into the World Trade Center, the Pentagon, and a Pennsylvania field, killing 2,977 people. The attacks triggered the US-led "War on Terror," the invasion of Afghanistan in 2001 and Iraq in 2003, and a permanent transformation of global airport security, surveillance law, and the public experience of civil liberties.',
     effect: (p) => { p.m -= 5; },
     addFlags: ['post_9_11_world'],
@@ -148,7 +169,7 @@ export const WORLD_EVENTS = [
     name: 'Arab Spring',
     years: [2010, 2013],
     archetypes: 'all',
-    countries: ['Egypt', 'Syria', 'Yemen', 'Jordan', 'Morocco'],
+    countries: ['Tunisia', 'Egypt', 'Libya', 'Syria', 'Yemen', 'Bahrain', 'Jordan', 'Morocco'],
     narrative: 'The protests start in Tunisia — a young man sets himself on fire over a confiscated fruit cart — and they don\'t stop. Egypt. Libya. Syria. Yemen. Bahrain. For a moment it looks like the region is changing. Some governments fall. Others crack down and hold. What comes after the falling is, in most places, worse or simply different.',
     context: 'The Arab Spring began December 17, 2010 when Mohamed Bouazizi, a Tunisian street vendor, set himself on fire after police confiscated his cart. Ben Ali fled Tunisia (January 2011); Mubarak resigned in Egypt (February 2011); Gaddafi was killed in Libya (October 2011). In Syria, peaceful protests became a civil war that killed 500,000+ and displaced half the population. In Bahrain, Saudi troops helped suppress the uprising. Of the major Arab Spring countries, only Tunisia initially achieved a democratic transition — and that reversed in 2021 under President Saïed. The broader regional upheaval ended without producing the democratic opening that the first weeks suggested.',
     effect: (p) => { p.m -= 6; p.addFlag('lived_through_revolution'); },
@@ -228,8 +249,20 @@ export const WORLD_EVENTS = [
     countries: ['Ukraine', 'Russia', 'Poland', 'Romania', 'Georgia'],
     narrative: 'Russian tanks cross into Ukraine in the early morning. The capital is shelled. Refugees — millions of them — move westward. The war that everyone said wouldn\'t happen is happening. Food prices, fuel prices, the order of Europe: all of it shifts. You watch this on a phone, in a world that is no longer arranged the way it was yesterday.',
     context: 'Russia launched a full-scale invasion of Ukraine on February 24, 2022, following its 2014 annexation of Crimea and intervention in the Donbas. By 2025, over 10 million Ukrainians had been internally displaced and 6 million had fled abroad — the largest European refugee crisis since 1945. Ukrainian civilian infrastructure was systematically targeted. Western nations imposed unprecedented economic sanctions on Russia. Both sides sustained casualties estimated at over half a million by 2024, making this the deadliest war in Europe since World War II. No peace settlement was in sight.',
-    effect: (p) => { p.h -= 10; p.m -= 15; p.w -= 8; p.addFlag('war_generation'); },
-    addFlags: ['war_generation', 'displaced'],
+    // `displaced` is read by the epitaph as "A refugee" and "carried across
+    // borders by forces larger than any single life". It used to be in
+    // `addFlags`, which hands it to everyone alive in all five countries — so a
+    // Siberian villager who never left her district was a refugee on her own
+    // death screen, measured in 13 of 48 lives. The war generation is everyone
+    // in those countries. Displacement is not.
+    addFlags: ['war_generation'],
+    effect: (p) => {
+      p.h -= 10; p.m -= 15; p.w -= 8
+      // Ukraine is where the displacement happened. Elsewhere in the region the
+      // war is news, conscription, sanctions and someone else's relatives.
+      const here = p._state?.currentCountry?.name ?? p._state?.character?.country?.name
+      if (here === 'Ukraine' && Math.random() < 0.35) p.addFlag('displaced')
+    },
     minAge: 0,
   },
   {
@@ -331,7 +364,7 @@ export const WORLD_EVENTS = [
     context: 'HIV/AIDS spread primarily through heterosexual transmission in sub-Saharan Africa from the 1970s. By 2000, the region held 70% of global HIV cases with 10% of world population. Zimbabwe peaked at 25% adult prevalence; Botswana at 37%. Life expectancy in several Southern African countries fell 15–20 years between 1990 and 2005. Antiretroviral therapy, available in wealthy countries after 1996, was largely inaccessible in Africa until the early 2000s. PEPFAR, the US programme launched in 2003, eventually funded treatment for millions. The epidemic created a generation of AIDS orphans estimated at 11 million by 2006.',
     effect: (p) => { p.h -= 10; p.m -= 12; p.addFlag('aids_generation'); },
     addFlags: ['aids_generation'],
-    minAge: 0,
+    minAge: 12,
   },
   {
     id: 'khmer_rouge',
@@ -1085,7 +1118,7 @@ export const WORLD_EVENTS = [
     years: [1976, 1985],
     archetypes: ['wealthy_gulf'],
     countries: null,
-    narrative: 'The money arrives faster than the infrastructure to spend it. A country that had no paved roads in 1960 builds a six-lane highway to a city that is still mostly construction sites. Your father remembers fishing. Your children will not know what that word means in this context.',
+    narrative: 'The money arrives faster than the infrastructure to spend it. A country that had no paved roads in 1960 builds a six-lane highway to a city that is still mostly construction sites. The older men in the family remember fishing, and say so often. The children growing up now will not know what that word means in this context.',
     context: 'The Gulf oil boom accelerated dramatically after the 1973 embargo quadrupled oil prices. Saudi Arabia, Kuwait, the UAE, and Qatar transformed from subsistence fishing and pearl-diving economies to among the world\'s wealthiest states per capita within a generation. The transformation was extraordinarily rapid: populations moved from tents to air-conditioned apartments in a decade. Millions of migrant workers — from South Asia, Egypt, and the Philippines — were imported under the kafala sponsorship system to build the infrastructure. Traditional family structures, gender roles, and relationships to land and labour were reorganised by oil wealth within a single lifetime.',
     effect: (p) => { p.w += 15; p.e += 3; p.addFlag('oil_boom_generation'); },
     addFlags: ['oil_boom_generation'],
@@ -1480,7 +1513,10 @@ export const WORLD_EVENTS = [
   {
     id: 'rwandan_genocide_aftermath',
     name: 'Rwanda: Aftermath',
-    years: [1996, 2001],
+    // Was [1996, 2001]. The narrative is about the gacaca courts, which this
+    // event's own context correctly dates to 2001–2012: legislated 2001,
+    // piloted June 2002, nationwide 2005.
+    years: [2002, 2012],
     archetypes: 'all',
     countries: ['Rwanda'],
     narrative: 'Eight hundred thousand people were killed in a hundred days. Now the survivors live next to the survivors of those who did the killing. The gacaca courts process the cases. You give your testimony. The person who testified before you lost the same things you lost. The country is being asked to reconstitute itself from something that should not have been possible.',
@@ -1496,10 +1532,30 @@ export const WORLD_EVENTS = [
     years: [1994, 1994],
     archetypes: 'all',
     countries: ['Rwanda'],
+    // Rwanda is 85% Hutu, and this narrative is the victim's position —
+    // "the radio names the group you belong to as the enemy… you hide, you run"
+    // — and it set `tutsi_hidden`. With no ethnicity guard, every observed
+    // firing went to a Hutu character. The companion event below carries the
+    // position most Rwandans were actually in.
+    when: (G) => G.ethnicity === 'tutsi' || G.ethnicity === 'twa',
     narrative: 'The radio names the group you belong to as the enemy. The roadblocks go up in the night. Neighbors you have known your whole life are making decisions about you that you did not know they were capable of making. You hide. You run. The hundred days pass and the count that comes after is a number that will not fit inside ordinary language.',
     context: 'Between April and July 1994, an estimated 500,000–800,000 Tutsi and moderate Hutu were killed in Rwanda — roughly 70% of the Tutsi population — in a genocide organized by the Hutu Power government and executed largely by civilian militias called the Interahamwe. The killing was done overwhelmingly at close range, by neighbours, at roadblocks, from lists. The UN peacekeeping force already in the country was ordered not to intervene and was cut from 2,500 troops to 270; foreign governments avoided the word "genocide" precisely because using it would have obliged them to act. France, which had armed and trained the Hutu government, was found by a Rwandan inquiry in 2021 to bear "heavy and overwhelming" responsibility.',
     effect: (p) => { p.m -= 35; p.h -= 20; p.addFlag('genocide_survivor'); p.addFlag('tutsi_hidden'); },
     addFlags: ['genocide_survivor', 'tutsi_hidden', 'war_childhood'],
+    minAge: 0,
+  },
+
+  {
+    id: 'rwandan_genocide_hutu',
+    name: 'Rwandan Genocide',
+    years: [1994, 1994],
+    archetypes: 'all',
+    countries: ['Rwanda'],
+    narrative: 'The radio does not stop. It names people — by name, by street — and it names what is to be done about them. The roadblocks are manned by men you know: the one who sells charcoal, somebody\'s cousin, boys off the football pitch holding machetes the government distributed. What is being asked of you is participation, and the asking is not subtle, and refusing is its own kind of exposure. Whatever you do in the next hundred days, you will be doing it in front of people who will still be here afterwards.',
+    context: 'The killing was carried out largely by ordinary civilians organised into the Interahamwe militia, under pressure from local officials and RTLM radio. Hutu who refused, who hid Tutsi neighbours, or who were known as political moderates were killed early and in large numbers — the Prime Minister, Agathe Uwilingiyimana, was Hutu and was killed on the first day.',
+    when: (G) => G.ethnicity === 'hutu',
+    effect: (p) => { p.m -= 30; p.h -= 10; p.addFlag('genocide_witness'); p.addFlag('war_childhood') },
+    addFlags: ['genocide_witness', 'war_childhood'],
     minAge: 0,
   },
 
@@ -3041,7 +3097,7 @@ export const WORLD_EVENTS = [
     years: [1988, 1989],
     archetypes: null,
     countries: ['Iraq'],
-    narrative: 'On 16 March 1988, Iraqi aircraft drop mustard gas and nerve agents on the town of Halabja. Five thousand people die within hours. Tens of thousands more will die in the months that follow as the Anfal campaign moves through Kurdish villages and valleys — helicopters, chemical weapons, mass executions at ravines in the desert. The Iraqi government calls it a military operation against traitors who collaborated with Iran. The word genocide will be applied later, in retrospect, by people who were not there. The people who were there did not need a word for it.',
+    narrative: 'On 16 March 1988, Iraqi aircraft drop mustard gas and nerve agents on the town of Halabja. Five thousand people die within hours. Tens of thousands more will die in the months that follow as the Anfal campaign moves through Kurdish villages and valleys — helicopters, chemical weapons, mass executions at ravines in the desert. The Iraqi government calls it a military operation against traitors who collaborated with Iran. The word genocide will be applied later, by people who were not there. The people who were there did not need a word for it.',
     context: 'The Anfal campaign was an Iraqi government military offensive against Kurdish populations in northern Iraq carried out by the Ba\'athist regime from February to September 1988. Named after a Quranic verse concerning war spoils, it involved chemical weapons attacks (including the Halabja massacre on 16 March 1988), mass executions, and the forced displacement of 500,000–1,000,000 people. Estimates of the death toll range from 50,000 to 182,000. The campaign was ordered by Saddam Hussein and personally supervised by his cousin Ali Hassan al-Majid (known as "Chemical Ali"). In 2006, an Iraqi tribunal found the campaign constituted genocide.',
     effect: (p) => { p.m -= 20; p.h -= 5; p.addFlag('anfal_generation'); },
     addFlags: ['anfal_generation'],

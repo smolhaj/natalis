@@ -416,9 +416,21 @@ describe('BUSINESS_TYPES', () => {
 })
 
 describe('PARTNER_OCCUPATIONS', () => {
-  it('is a non-empty array of strings', () => {
+  // Each entry carries the year the occupation begins to exist and where it
+  // can be held, because a flat list of strings made a woman married in rural
+  // Upper Egypt in 1969 a Barista. The draw itself is tested in
+  // tests/partnerOccupation.test.js.
+  it('is a non-empty table of well-formed entries', () => {
     expect(Array.isArray(PARTNER_OCCUPATIONS)).toBe(true)
     expect(PARTNER_OCCUPATIONS.length).toBeGreaterThan(0)
-    for (const o of PARTNER_OCCUPATIONS) expect(typeof o).toBe('string')
+    for (const o of PARTNER_OCCUPATIONS) {
+      expect(typeof o.t, `title of ${JSON.stringify(o)}`).toBe('string')
+      expect(o.t.length).toBeGreaterThan(0)
+      expect(typeof o.w, `weight of ${o.t}`).toBe('number')
+      expect(o.w, `weight of ${o.t}`).toBeGreaterThan(0)
+      expect(Number.isFinite(o.at ?? 0), `year of ${o.t}`).toBe(true)
+      // An occupation cannot be both village-only and town-only.
+      expect(!(o.urban && o.ruralOnly), `${o.t} is both urban and rural-only`).toBe(true)
+    }
   })
 })

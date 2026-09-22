@@ -2,8 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Natalis</title>
+    <meta name="description" content="A life simulator about the part you don't choose. You are born somewhere, in some year, to someone, and the life runs forward." />
+    <meta name="theme-color" content="#f4f2ed" />
+    <meta name="color-scheme" content="light" />
+    <!-- Nothing declared one, so every load logged a 404 for /natalis/favicon.ico. -->
+    <link rel="icon" type="image/svg+xml" href="/natalis/favicon.svg" />
+
+    <!-- The prose is the product, so it gets a real text face. Source Serif for
+         event text and Inter for the chrome; both preconnected because the
+         first paint is a page of writing. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="root"></div>

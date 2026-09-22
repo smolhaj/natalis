@@ -174,6 +174,12 @@ export const HOUSING_EVENTS = [
       ['wealthy_west', 'wealthy_east'].includes(G.archetype) &&
       G.age >= 52 &&
       !G.flags.has('homeowner') &&
+      // "The question of buying stopped being a plan being deferred and became
+      // a thing that was not going to happen" fired for a character holding
+      // 424,860 who had been told at 40 "You have more than you will spend" —
+      // and who bought a house nine years later. It is an event about not
+      // having the deposit.
+      G.money < 60000 &&
       !G.mem?.housingNeverOwned,
     text: 'The rent goes up again by a number that is described in the letter as modest. You have lived here eleven years. Somewhere in your forties the question of buying stopped being a plan being deferred and became a thing that was not going to happen, and there was no particular day on which that changed, which is why you cannot point to the mistake.',
     choices: [
@@ -202,6 +208,11 @@ export const HOUSING_EVENTS = [
     when: (G) =>
       G.flags.has('mortgaged') &&
       (G.currentYear - (G.mem?.lcHomeYear ?? G.currentYear)) >= 24 &&
+      // "The last payment goes out on a Tuesday" fired while the property still
+      // carried 7,642 outstanding, and the life ended holding both `mortgaged`
+      // and `mortgage_cleared`. Elapsed years is not the same question as
+      // whether it is paid off.
+      !(G.assets?.properties ?? []).some(p => (p.mortgage ?? 0) > 0) &&
       !G.mem?.housingMortgageEnds,
     text: 'The last payment goes out on a Tuesday and nothing happens. No letter for six weeks, and then one that is mostly about data protection. You had assumed there would be a moment. What there is instead is a Tuesday, and a house that has been yours in every practical sense for twenty-five years and is now yours in the other sense as well.',
     choices: null,

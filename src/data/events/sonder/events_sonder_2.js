@@ -396,7 +396,9 @@ export const EVENTS_SONDER_2 = [
     when: (G) =>
       !G.mem?.s2_don &&
       G.age >= 36 &&
-      G.currentYear >= 2005,
+      // 2005 is a date in the countries that were online in 2005. North Korea
+      // is not one of them, and this was reporting the search there in 2010.
+      place.hasInternet(G),
     text: 'Someone from the old neighbourhood found you on the internet. They are exactly like themselves. You are — according to their messages — exactly like yourself. You have become strangers who remember the same intersection.',
     choices: null,
     effect: (p) => { p.setMem('s2_don', true) },

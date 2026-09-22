@@ -3,6 +3,8 @@
 // Covers: illiteracy, post-9/11 Muslim discrimination, years abroad,
 // COVID downstream, late-life smoking, driving licence, STI arc.
 
+import { hasTech } from '../../technology.js'
+
 export const CONSEQUENCE_EVENTS = [
 
   // ── ILLITERACY ──────────────────────────────────────────────────────────────
@@ -166,7 +168,9 @@ export const CONSEQUENCE_EVENTS = [
     id: 'pandemic_economic_loss',
     phase: null,
     weight: 4,
-    when: (G) => G.flags.includes('lived_through_pandemic') && G.career && G.currentYear >= 2020 && G.currentYear <= 2022 && !G.mem?.pandemic_economic,
+    // The email arrives on a Tuesday — in North Korea, where it does not.
+    when: (G) => G.flags.includes('lived_through_pandemic') && G.career && G.currentYear >= 2020 && G.currentYear <= 2022 && !G.mem?.pandemic_economic &&
+      hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear),
     text: 'The industry closes or contracts or pivots in a direction that does not include your role. The email arrives on a Tuesday. The company is "restructuring." The redundancy package is legal and inadequate. You are forty-three and your CV has not needed updating in six years.',
     choices: [
       { text: 'Retrain — this is the forced pivot you never chose', tag: null, outcome: 'The new direction takes two years to pay off. The years are difficult and the direction is yours.', effect: (p) => { p.m -= 10; p.e += 6; p.mo -= 4000; p.addFlag('pandemic_reborn'); p.setMem('pandemic_economic', true) } },

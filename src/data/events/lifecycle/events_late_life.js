@@ -3,6 +3,8 @@
 // health decline, legacy, and the slow shrinkage of the social world.
 // Phase: 'late_life' (50+). Some retirement events use 'midlife'.
 
+import { hasTech } from '../../technology.js'
+
 export const LATE_LIFE_EVENTS = [
 
   // ── RETIREMENT ───────────────────────────────────────────────────────────────
@@ -219,20 +221,20 @@ export const LATE_LIFE_EVENTS = [
       if (wasCaregiver) {
         return `${name} dies at home, which is what they wanted. You are in the room. There is a sound, and then there is not a sound, and the difference between those two things is the whole of it. You have been preparing for this. The preparation is not preparation. You sit next to the bed for a long time before you call anyone. The house is the same house. Everything in it is wrong.`
       }
-      return `${name} dies. It is sudden, or it is not sudden but it is still a shock when it comes, because nothing about it can be made abstract in advance. You have been with this person for most of your adult life. The shape of every day was built around them. You stand in a room of your own home and do not know what room to go to.`
+      return `${name} dies. There was no warning that counted as one, and nothing about it could be made abstract in advance. You have been with this person for most of your adult life. The shape of every day was built around them. You stand in a room of your own home and do not know what room to go to.`
     },
     choices: [
       {
         text: 'Call your children first',
         tag: null,
         outcome: 'They come. The house fills with people who are grieving alongside you. The company is real even when you are not fully present in it.',
-        effect: (p) => { p.m -= 30; p.h -= 8; p.r += 12; p.clearPartner(); p.setMem('partnerDied', true); p.addFlag('widowed'); p.setMem('latePartnerDeath', true) },
+        effect: (p) => { p.m -= 30; p.h -= 8; p.r += 12; p.killPartner(); p.setMem('partnerDied', true); p.setMem('latePartnerDeath', true) },
       },
       {
         text: 'Sit with them a little longer before the calls begin',
         tag: null,
         outcome: 'You stay. The time is yours. It costs you and you would not exchange it.',
-        effect: (p) => { p.m -= 28; p.h -= 6; p.r += 10; p.clearPartner(); p.setMem('partnerDied', true); p.addFlag('widowed'); p.setMem('latePartnerDeath', true) },
+        effect: (p) => { p.m -= 28; p.h -= 6; p.r += 10; p.killPartner(); p.setMem('partnerDied', true); p.setMem('latePartnerDeath', true) },
       },
     ],
     effect: null,
@@ -796,13 +798,20 @@ export const LATE_LIFE_EVENTS = [
     id: 'retire_pension_decision',
     phase: null,
     weight: 3,
+    // An employer's retirement plan needs an employer with a plan. This fired
+    // for a self-employed trading-company owner, and for characters in
+    // countries and decades that had no such thing.
     when: (G) =>
       G.career &&
+      !G.flags.includes('entrepreneur') &&
+      !G.flags.includes('self_employed') &&
+      ['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(G.currentCountry?.archetype ?? G.character.country.archetype) &&
+      G.currentYear >= 1960 &&
       !G.flags.includes('retired') &&
       !G.mem.retirePensionDecision &&
       G.age >= 40 && G.age <= 55 &&
       G.money > 5000,
-    text: 'Your employer\'s retirement plan documentation arrives for the annual review. You can increase your contribution to the maximum — it means less now, but considerably more compounding over the remaining twenty years. Or you can keep the current rate and have more available each month.',
+    text: 'The retirement plan documentation arrives for the annual review. You can increase your contribution to the maximum — it means less now, but considerably more compounding over the remaining twenty years. Or you can keep the current rate and have more available each month.',
     choices: [
       {
         text: 'Maximise the pension contribution',
@@ -840,6 +849,9 @@ export const LATE_LIFE_EVENTS = [
     when: (G) =>
       !G.mem.lateDigitalLeftBehind &&
       G.age >= 70 &&
+      // Being left behind by the internet requires the country to have one:
+      // North Korea has an intranet, and this was printing there in 2015.
+      hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear) &&
       G.currentYear >= 2005,
     text: (G) => {
       const yearContext = G.currentYear >= 2020

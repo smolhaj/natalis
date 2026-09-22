@@ -1,4 +1,5 @@
 import { randomBetween } from '../utils/random.js'
+import { hasTech } from './technology.js'
 import { FOLLOWTHROUGH_ALL_EVENTS } from './events/followthrough/events_followthrough_all.js'
 import { GENDER_EVENTS } from './events/thematic/events_gender.js'
 import { RELIGION_EVENTS } from './events/thematic/events_religion.js'
@@ -265,6 +266,7 @@ import PERU_EVENTS from './events/geographic/events_peru.js'
 import { PERU_DEPTH_EVENTS } from './events/geographic/events_peru_depth.js'
 import JAPAN_EVENTS from './events/geographic/events_japan.js'
 import { JAPAN_DEPTH_EVENTS } from './events/geographic/events_japan_depth.js'
+import { JAPAN_WAR_EVENTS } from './events/geographic/events_japan_war.js'
 import SAUDI_EVENTS from './events/geographic/events_saudi.js'
 import { BEDOUIN_EVENTS } from './events/geographic/events_bedouin.js'
 import IRAN_EVENTS from './events/geographic/events_iran.js'
@@ -274,6 +276,14 @@ import { NOMADIC_EVENTS } from './events/geographic/events_nomadic.js'
 import { SICK_CHILD_EVENTS } from './events/thematic/events_sick_child.js'
 import { CAMBODIA_EVENTS } from './events/geographic/events_cambodia.js'
 import { GUINEA_EVENTS } from './events/geographic/events_guinea.js'
+import { AUSTRIA_EVENTS, AUSTRIA_FOLLOWTHROUGH } from './events/geographic/events_austria.js'
+import { ADRIATIC_EVENTS, ADRIATIC_FOLLOWTHROUGH } from './events/geographic/events_adriatic.js'
+import { ICELAND_MOLDOVA_EVENTS, ICELAND_MOLDOVA_FOLLOWTHROUGH } from './events/geographic/events_iceland_moldova.js'
+import { OMAN_PACIFIC_BHUTAN_EVENTS, OMAN_PACIFIC_BHUTAN_FOLLOWTHROUGH } from './events/geographic/events_oman_pacific_bhutan.js'
+import { GULF_EVENTS } from './events/geographic/events_gulf.js'
+import { GUYANA_EVENTS, GUYANA_FOLLOWTHROUGH } from './events/geographic/events_guyana.js'
+import { BOSNIA_EVENTS, BOSNIA_FOLLOWTHROUGH } from './events/geographic/events_bosnia.js'
+import { GERMANY_REICH_EVENTS, GERMANY_REICH_FOLLOWTHROUGH } from './events/geographic/events_germany_reich.js'
 import { MONGOLIA_EVENTS } from './events/geographic/events_mongolia.js'
 import { MONGOLIA_DEPTH_EVENTS } from './events/geographic/events_mongolia_depth.js'
 import { CARIBBEAN_EVENTS } from './events/geographic/events_caribbean.js'
@@ -1313,7 +1323,9 @@ const BASE_EVENTS = [
     phase: 'adolescence',
     weight: 2,
     when: (G) => G.age >= 13,
-    text: 'Someone posts something unflattering about you online. It\'s spreading fast.',
+    text: (G) => hasTech(G.currentCountry, 'home_internet', G.currentYear)
+      ? 'Someone posts something unflattering about you online. It\'s spreading fast.'
+      : 'Someone has said something about you and by lunchtime it has been to every corner of the school and come back altered. You can tell who has heard it by how they look at the floor.',
     context: null,
     choices: [
       {
@@ -1706,8 +1718,15 @@ const BASE_EVENTS = [
     id: 'ya_military_service',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.stats.health >= 50 && !G.flags.includes('refugee'),
-    text: 'Military service — required or voluntary — is in front of you.',
+    // No country, no age, no gender. "Military service — required or voluntary"
+    // is the game declining to say which, in a question that is settled by
+    // where you were born and what year it is.
+    when: (G) => G.stats.health >= 50 && !G.flags.includes('refugee') &&
+      G.age >= 18 && G.age <= 24 && !G.mem.militaryService &&
+      (CONSCRIPTS(G) || G.character.gender === 'male' || G.currentYear >= 1980),
+    text: (G) => CONSCRIPTS(G)
+      ? 'The letter comes because it comes. Everybody born in your year gets one and everybody knows roughly when. There is a medical, and a list, and a date, and the date is not negotiable in any way that anybody you know has managed.'
+      : 'There is a recruiting office on the road into town and a poster in the window that has been there for years. Nobody is making you. Somebody you were at school with went last year and came back at Christmas looking older and very pleased with himself.',
     context: null,
     choices: [
       {
@@ -1922,7 +1941,9 @@ const BASE_EVENTS = [
     id: 'mid_children_leave',
     phase: 'midlife',
     weight: 3,
-    when: (G) => G.children.length > 0,
+    // Fired for a 31-year-old whose children were 12, 2 and 1. Somebody has to
+    // be old enough to leave.
+    when: (G) => (G.children ?? []).some(c => c.alive !== false && (c.age ?? 0) >= 17),
     text: 'Your children leave home. The house rearranges itself around their absence.',
     context: null,
     choices: [
@@ -2190,14 +2211,20 @@ const BASE_EVENTS = [
     id: 'late_retirement',
     phase: 'late_life',
     weight: 4,
-    when: (G) => G.career !== null,
-    text: 'The working life ends. The last day comes and goes with less ceremony than expected.',
+    // `late_life` starts at 50, so "The working life ends" was landing on a
+    // 52-year-old — who then took "Keep working", which makes the opening
+    // sentence false in its own event. The age is now the country's own
+    // retirement age where there is one, and the text does not assert the
+    // ending before the player has chosen it.
+    when: (G) => G.career !== null && !G.flags.includes('retired') &&
+      G.retirementAge != null && G.age >= G.retirementAge - 2,
+    text: 'The question arrives as a form to sign rather than as a decision: how much longer, and on what terms. The people who left before you describe it in two completely different ways depending on which of them you ask.',
     context: null,
     choices: [
       {
-        text: 'Embrace retirement',
+        text: 'Sign it. The working life ends.',
         tag: 'retired',
-        outcome: 'Time opens up in ways you had forgotten were possible.',
+        outcome: 'The last day comes and goes with less ceremony than expected. Time opens up in ways you had forgotten were possible.',
         effect: (p) => { p.m += 7; p.h += 3; p.clearCareer(); p.addFlag('retired'); },
         inject: null,
       },
@@ -2883,24 +2910,35 @@ const BASE_EVENTS = [
   },
 
   // ── GRIEF ARC ─────────────────────────────────────────────────────────────
+  // Both of these narrated a parent's death and then did not kill a parent.
+  // The character carried `orphan` from thirteen while both parents went on
+  // living, and at fifty-two the engine printed, back to back and word for
+  // word identically, "Your mother, Koharu Okamoto, dies at 74" and "Your
+  // father, Sota Okamoto, dies at 79". Each parent died twice.
   {
     id: 'parent_death_young',
     phase: 'adolescence',
     weight: 3,
-    when: (G) => G.age >= 13 && G.age <= 17 && !G.flags.includes('orphan') && Math.random() < 0.08,
-    text: 'Your parent dies. The circumstances vary — illness, accident, violence — but the fact is the same. The person who was supposed to be there is not.',
+    when: (G) => G.age >= 13 && G.age <= 17 && !G.flags.includes('orphan') && _livingParents(G).length > 0 && Math.random() < 0.08,
+    // "The circumstances vary — illness, accident, violence" was the designer
+    // telling the player the game does not know. It knows who died.
+    text: (G) => {
+      const living = _livingParents(G)
+      const who = living.includes('mother') && living.includes('father') ? 'One of your parents' : living.includes('mother') ? 'Your mother' : 'Your father'
+      return `${who} dies. The house fills with people who bring food and do not know where anything goes. Afterwards it is very quiet and you are expected to go back to school.`
+    },
     choices: null,
-    effect: (p) => { p.m -= 20; p.h -= 8; p.r += 10; p.addFlag('orphan'); p.addFlag('early_grief'); p.setMem('parentDied', true) },
+    effect: (p) => { _takeAParent(p); p.m -= 20; p.h -= 8; p.r += 10; p.addFlag('orphan'); p.addFlag('early_grief'); p.setMem('parentDied', true) },
   },
   {
     id: 'parent_death_adult',
     phase: null,
     weight: 4,
-    when: (G) => G.age >= 22 && G.age <= 35 && !G.flags.includes('orphan') && !G.mem.parentDied && Math.random() < 0.07,
-    text: 'You get the call. Your parent is gone. You knew it would happen someday. It still feels like the floor has dropped away.',
+    when: (G) => G.age >= 22 && G.age <= 35 && !G.flags.includes('orphan') && !G.mem.parentDied && _livingParents(G).length > 0 && Math.random() < 0.07,
+    text: 'You get the call. You knew it would happen someday. It still feels like the floor has dropped away.',
     choices: [
-      { text: 'Take time to grieve properly', tag: null, outcome: 'You take leave. You allow yourself to feel it.', effect: (p) => { p.m -= 15; p.r += 6; p.addFlag('processed_grief') }, inject: null },
-      { text: 'Keep working, keep moving', tag: null, outcome: 'Grief waits. It finds you later, in stranger moments.', effect: (p) => { p.m -= 8; p.r += 12; p.h -= 4 }, inject: null },
+      { text: 'Take time to grieve properly', tag: null, outcome: 'You take leave. You allow yourself to feel it.', effect: (p) => { _takeAParent(p); p.m -= 15; p.r += 6; p.addFlag('processed_grief') }, inject: null },
+      { text: 'Keep working, keep moving', tag: null, outcome: 'Grief waits. It finds you later, in stranger moments.', effect: (p) => { _takeAParent(p); p.m -= 8; p.r += 12; p.h -= 4 }, inject: null },
     ],
     effect: (p) => { p.setMem('parentDied', true) },
   },
@@ -3761,7 +3799,7 @@ const BASE_EVENTS = [
     id: 'ya_unplanned_pregnancy',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => !G.birthControl && G.partner && G.age >= 16 && G.age <= 24 && G.children.length === 0 && !G.mem.hadPregnancyEvent,
+    when: (G) => G.character.gender === 'female' && !G.birthControl && G.partner && G.age >= 16 && G.age <= 24 && G.children.length === 0 && !G.mem.hadPregnancyEvent,
     text: (G) => {
       const country = G.character.country.archetype
       if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(country))
@@ -3883,7 +3921,7 @@ const BASE_EVENTS = [
     id: 'ya_postpartum_depression',
     phase: null,
     weight: 3,
-    when: (G) => G.children.length > 0 && !G.mem.postpartumEvent && G.age <= 35 && G.children.some(c => c.ageAtBirth >= G.age - 2),
+    when: (G) => G.character.gender === 'female' && G.children.length > 0 && !G.mem.postpartumEvent && G.age <= 35 && G.children.some(c => c.ageAtBirth >= G.age - 2),
     text: (G) => {
       if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
         return 'The baby is here and safe, but something in you went dark after the birth. No one has a name for what this is. You feel ashamed of feeling this way.'
@@ -3914,7 +3952,7 @@ const BASE_EVENTS = [
     id: 'mid_pregnancy_late',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.partner && G.age >= 38 && G.age <= 44 && G.children.length === 0 && !G.mem.latePregnancyEvent,
+    when: (G) => G.character.gender === 'female' && G.partner && G.age >= 38 && G.age <= 44 && G.children.length === 0 && !G.mem.latePregnancyEvent,
     text: (G) => {
       if (['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(G.character.country.archetype) && G.currentYear >= 1990)
         return 'Against the odds and your doctor\'s caution, you are pregnant at 40. The monitoring is intensive. The statistics are discussed at every appointment.'
@@ -4387,7 +4425,7 @@ const BASE_EVENTS = [
     when: (G) => G.currentYear >= 1995 && !G.hobbies.coding && G.stats.smarts >= 55,
     text: (G) => G.currentYear >= 2010
       ? 'A free coding bootcamp opens nearby. You attend out of curiosity.'
-      : `You start teaching yourself to program from library books${G.currentYear >= 2000 ? ' and online forums' : ''}.`,
+      : `You start teaching yourself to program from library books${hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear) ? ' and online forums' : ''}.`,
     choices: [
       { text: 'Invest serious time in it', tag: null, outcome: 'The logic clicks. You build small things that actually work. The satisfaction is unlike anything else.', effect: (p) => { p.practiceHobby('coding', 20); p.e += 8; p.m += 5; }, inject: null },
       { text: 'Try it and move on', tag: null, outcome: 'Not for you — at least not right now.', effect: (p) => { p.practiceHobby('coding', 5); p.e += 2; }, inject: null },
@@ -4894,7 +4932,9 @@ const BASE_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => !G.mem.friendReconnect && G.age >= 35,
-    text: 'A message arrives from someone you knew decades ago — a childhood friend, a college roommate, someone who disappeared from your life. They found you online.',
+    text: (G) => hasTech(G.currentCountry, 'home_internet', G.currentYear)
+      ? 'A message arrives from someone you knew decades ago — a childhood friend, a college roommate, someone who disappeared from your life. They found you online.'
+      : 'A letter arrives from someone you knew decades ago — a childhood friend, someone who disappeared from your life. They got the address from a cousin of a cousin. It took four months and two wrong houses to reach you.',
     choices: [
       { text: 'Respond and meet up', tag: null, outcome: 'The catch-up is strange and warm. You remember a version of yourself through them.', effect: (p) => { p.m += 8; p.makeFriend(60); p.setMem('friendReconnect', true); }, inject: null },
       { text: 'Reply warmly but keep it to messages', tag: null, outcome: 'The connection is real, if contained.', effect: (p) => { p.m += 4; p.setMem('friendReconnect', true); }, inject: null },
@@ -5357,7 +5397,19 @@ const BASE_EVENTS = [
     phase: 'early_childhood',
     weight: 4,
     when: (G) => G.age <= 2 && !G.mem.first_steps,
-    text: 'You take your first wobbly steps across the living room floor. Your parents beam with pride.',
+    // 552 of 726 firings were non-Western, and most of the world's children do
+    // not take their first steps across a living room floor. The moment is
+    // universal; the room is not.
+    text: (G) => {
+      const rural = G.character?.ruralUrban === 'rural'
+      const poor = ['very_low', 'low', 'low_medium'].includes(G.character?.country?.gdp)
+      const where = rural
+        ? 'across the swept ground of the yard'
+        : poor
+          ? 'across the one room the family lives in'
+          : 'across the living room floor'
+      return `You take your first wobbly steps ${where}. Whoever is watching stops what they are doing.`
+    },
     isKey: true,
     choices: [
       {
@@ -5376,13 +5428,21 @@ const BASE_EVENTS = [
     phase: 'early_childhood',
     weight: 3,
     when: (G) => G.age <= 2 && !G.mem.first_word && G.mem.first_steps,
-    text: 'You open your mouth and say your first real word. It comes out a little garbled, but everyone in the room understands. "Mama." "Dada." The sound changes everything.',
+    // The word was "Mama" or "Dada" in every language, and the household
+    // photographed it and telephoned relatives in every decade since 1900.
+    text: (G) => {
+      const lang = G.character?.country?.languages?.[0]
+      const named = lang && lang !== 'English' ? `the word for mother, in ${lang}` : 'the word for mother'
+      return `You open your mouth and say your first real word. It comes out a little garbled, but everyone in the room understands: ${named}. The sound changes everything.`
+    },
     isKey: true,
     choices: [
       {
         text: 'Say it again',
         tag: null,
-        outcome: 'They photograph you. They call relatives. You don\'t know why everyone is so excited, but their joy becomes yours.',
+        outcome: (G) => hasTech(G.currentCountry ?? G.character?.country, 'personal_computer', G.currentYear)
+          ? 'They photograph you. They send it to everyone. You do not know why they are so excited, but their joy becomes yours.'
+          : 'It is repeated back to you, and then told to whoever comes through the door next, several times, for days. You do not know why they are so excited, but their joy becomes yours.',
         effect: (p) => { p.e += 2; p.h += 5; p.setMem('first_word', true); },
         inject: null,
       },
@@ -5446,9 +5506,14 @@ const BASE_EVENTS = [
     weight: 4,
     when: (G) => {
       if (G.age < 5 || G.age > 7 || G.mem.school_first_day) return false
-      // Gate on literacy: if the country's gender-appropriate literacy is very low, school may not exist
+      // This used to roll its own answer off the country's literacy rate, which
+      // is a different question from whether THIS character goes to school. A
+      // life got a first day of school at five, a morning-before-school line at
+      // seven, and at sixteen "There was never a school to leave" — and a death
+      // screen that said "Never went to school."
+      if (!G.literate) return false
       const litRate = G.character.gender === 'female' ? (G.character.country.literacyFemale ?? 1) : (G.character.country.literacyMale ?? 1)
-      if (litRate < 0.25) return false  // extremely low literacy countries in early eras: school likely absent
+      if (litRate < 0.25) return false
       return true
     },
     text: G => {
@@ -5465,7 +5530,7 @@ const BASE_EVENTS = [
         text: 'Make a friend',
         tag: null,
         outcome: 'You sit next to someone with bright eyes and introduce yourself. By lunch you have an ally.',
-        effect: (p) => { p.h += 12; p.e += 3; p.setMem('school_first_day', true); p.addFlag('first_school_friend'); },
+        effect: (p) => { p.h += 12; p.e += 3; p.setMem('school_first_day', true); p.setMem('attendedSchool', true); p.addFlag('first_school_friend'); },
         inject: null,
       },
       {
@@ -5784,7 +5849,9 @@ const BASE_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.career !== null && !G.mem.company_bankrupt && G.age >= 22,
-    text: 'The email arrives at 7am on a Monday. The company is entering administration. HR will be in touch. The office plants are still alive. The coffee machine is still on. Everything else is over.',
+    text: (G) => hasTech(G.currentCountry, 'email', G.currentYear)
+      ? 'The email arrives at 7am on a Monday. The company is entering administration. HR will be in touch. The office plants are still alive. The coffee machine is still on. Everything else is over.'
+      : 'The notice is on the door on Monday morning and there are eleven of you reading it at once. The company is finished. Somebody has already gone in for their tools. The kettle is still warm from Friday.',
     choices: [
       { text: 'Start job searching immediately', tag: null, outcome: 'You update the CV that night. The search is brutal but you stay ahead of the market. Something comes through eventually.', effect: (p) => { p.m -= 15; p.setMem('company_bankrupt', true); }, inject: null },
       { text: 'File for unemployment benefits', tag: null, outcome: 'The paperwork takes three weeks. The payments arrive. They are not enough but they are something.', effect: (p) => { p.mo += 500; p.m -= 20; p.setMem('company_bankrupt', true); }, inject: null },
@@ -5805,7 +5872,9 @@ const BASE_EVENTS = [
         return 'The dot-com bubble has burst spectacularly. Your sector — so recently untouchable — is haemorrhaging jobs. The whole floor has been called to a "brief update" meeting.'
       if (G.character.country.archetype === 'post_soviet' && G.currentYear >= 1991 && G.currentYear <= 1999)
         return 'The post-Soviet economic collapse is hitting your sector hard. State enterprises are dissolving. Entire industries have evaporated in a year. Payroll has not arrived in three months.'
-      return 'A sector-wide downturn has triggered a wave of layoffs. The industry press is calling it a correction. Your mortgage does not care what the press calls it.'
+      return (G.flags.includes('mortgaged')
+        ? 'A sector-wide downturn has triggered a wave of layoffs. The industry press is calling it a correction. Your mortgage does not care what the press calls it.'
+        : 'A sector-wide downturn has triggered a wave of layoffs. The industry press is calling it a correction. The rent is due on the same day it was always due.')
     },
     choices: [
       { text: 'Volunteer for the redundancy package', tag: null, outcome: 'The payout is reasonable. You take it and use the space to think. The uncertainty is the price.', effect: (p) => { p.mo += 2000; p.m -= 10; p.setMem('industry_layoffs', true); }, inject: null },
@@ -6332,7 +6401,7 @@ const BASE_EVENTS = [
     phase: 'early_childhood',
     weight: 5,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age <= 1 && !G.mem.ps_birth,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age <= 1 && !G.mem.ps_birth,
     text: (G) => {
       if (G.currentYear < 1992) return 'Born in a Soviet maternity ward, where your mother was given no pain relief and told not to make noise. Your father waited outside for three days. You were wrapped in hospital standard-issue cloth and handed over at the gate.';
       if (G.currentYear <= 2000) return 'The maternity ward smells of disinfectant and old ambition. The Soviet Union is gone and so is the budget. Your mother had to bring her own towels, sheets, and food. Your father bribed a nurse to get a proper room.';
@@ -6346,7 +6415,7 @@ const BASE_EVENTS = [
     id: 'ps_kommunalka',
     phase: 'early_childhood',
     weight: 4,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 2 && G.age <= 5 && G.currentYear >= 1975 && G.currentYear <= 2005 && !G.mem.ps_kommunalka,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 2 && G.age <= 5 && G.currentYear >= 1975 && G.currentYear <= 2005 && !G.mem.ps_kommunalka,
     text: 'Your family shares a kitchen and bathroom with two other families. The schedule for the stove is taped to the wall. Neighbours argue. Adults whisper about things in the hallway. You know every smell, sound, and conflict in this building.',
     choices: null,
     effect: (p) => { p.h -= 3; p.e += 4; p.setMem('ps_kommunalka', true); p.addFlag('communal_childhood'); },
@@ -6356,7 +6425,7 @@ const BASE_EVENTS = [
     id: 'ps_dacha_childhood',
     phase: 'early_childhood',
     weight: 5,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 3 && G.age <= 8 && !G.mem.ps_dacha,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 3 && G.age <= 8 && !G.mem.ps_dacha,
     text: 'Every summer your family loads into a train and goes to the dacha — a small plot two hours outside the city. You eat tomatoes straight from the vine, help carry water from the well, and fall asleep under a sky thick with stars. Your grandparents live here half the year.',
     choices: [
       {
@@ -6382,7 +6451,7 @@ const BASE_EVENTS = [
     id: 'ps_soviet_school_uniform',
     phase: 'childhood',
     weight: 5,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 6 && G.age <= 8 && !G.mem.ps_school_start,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 6 && G.age <= 8 && !G.mem.ps_school_start,
     text: (G) => {
       if (G.currentYear <= 1991) return 'Your school uniform is brown and your bow is white. Every September first there is a ceremony. You carry carnations. The teacher reads aloud from the school charter. Everything feels very serious and exactly the right size.';
       return 'The old Soviet uniform is gone but the September ritual remains. You carry flowers for your teacher on the first day. The school still smells of chalk and floor wax. The portraits on the wall have changed.';
@@ -6411,7 +6480,7 @@ const BASE_EVENTS = [
     phase: 'childhood',
     weight: 5,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 7 && G.age <= 14 && G.currentYear >= 1991 && G.currentYear <= 2001 && !G.mem.ps_nineties,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 7 && G.age <= 14 && G.currentYear >= 1991 && G.currentYear <= 2001 && !G.mem.ps_nineties,
     text: 'The Nineties arrive and your parents\' certainties evaporate. Your father\'s factory closes. A man in a leather jacket starts driving the neighbours\' old Volga. Your mother queues for bread at five in the morning. At the market, people sell their Soviet medals, china, and winter coats. Kiosks sell everything and nothing at the same time.',
     choices: [
       {
@@ -6673,7 +6742,7 @@ const BASE_EVENTS = [
     id: 'ps_dacha_inheritance',
     phase: 'midlife',
     weight: 4,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 35 && G.age <= 50 && G.parents && !G.mem.ps_dacha_inherit,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 35 && G.age <= 50 && G.parents && !G.mem.ps_dacha_inherit,
     text: 'Your parents are passing the dacha to you. The deed is a single typed page from 1967. The roof needs work. The well pump is twenty years old. But in summer it smells exactly as it always has — old wood, hot grass, your grandmother\'s jam.',
     choices: [
       {
@@ -6698,7 +6767,7 @@ const BASE_EVENTS = [
     id: 'ps_soviet_nostalgia',
     phase: 'midlife',
     weight: 4,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 30 && !G.mem.ps_nostalgia,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 30 && !G.mem.ps_nostalgia,
     text: 'Your father says things were better before. The jobs were stable. The streets were safe. People looked after each other. He watches Soviet-era films and talks about Brezhnev as if he were discussing a golden age. You can see both what he means and everything he is forgetting.',
     choices: [
       {
@@ -6730,7 +6799,7 @@ const BASE_EVENTS = [
     id: 'ps_health_system',
     phase: 'midlife',
     weight: 3,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 30 && !G.mem.ps_health && G.stats.health < 70,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 30 && !G.mem.ps_health && G.stats.health < 70,
     text: 'The clinic has Soviet-era equipment, underpaid doctors, and a supply of envelopes for unofficial payments. The doctor is competent — trained under a system that valued medical education — but overwhelmed. You pay for private care if you can. If you can\'t, you wait.',
     choices: [
       {
@@ -6757,7 +6826,7 @@ const BASE_EVENTS = [
     phase: 'late_life',
     weight: 4,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 55 && G.retired && !G.mem.ps_pension,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 55 && G.retired && !G.mem.ps_pension,
     text: 'The pension calculation was based on wages from thirty years ago, before the hyperinflation ate the denomination. What arrives monthly covers utilities and bread. Your garden and the dacha carry the rest of the weight.',
     choices: [
       {
@@ -6783,7 +6852,7 @@ const BASE_EVENTS = [
     phase: 'late_life',
     weight: 4,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 60 && !G.mem.ps_retrospective,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 60 && !G.mem.ps_retrospective,
     text: 'You have lived under the Soviet Union, the chaos of transition, and whatever this is now. Three different passports and three different answers to the question of who you are. The young people have only known one of these worlds.',
     choices: [
       {
@@ -6910,7 +6979,12 @@ const BASE_EVENTS = [
       G.currentYear >= 2022 && G.currentYear <= 2025 &&
       G.age >= 16 &&
       !G.mem?.ruUkraineInvasion,
-    text: 'February 24, 2022. You wake to the news that Russia has launched a full-scale invasion of Ukraine. The television uses the word "операция" — operation. The word war is legally banned within days. In your phone, in private chats, in careful conversations with people you trust, the word that is not permitted is used. The anti-war protests in Moscow and Petersburg are broken up within hours; three thousand arrested in the first week. The borders to Georgia, Finland, Kazakhstan are at capacity with Russians leaving.',
+    // "You wake to the news" is one morning. Left running to 2025 it narrated
+    // the invasion in the present tense in 2024, two years after the world
+    // event had already narrated it to the same character.
+    text: (G) => G.currentYear <= 2022
+      ? 'February 24, 2022. You wake to the news that Russia has launched a full-scale invasion of Ukraine. The television uses the word "операция" — operation. The word war is legally banned within days. In your phone, in private chats, in careful conversations with people you trust, the word that is not permitted is used. The anti-war protests in Moscow and Petersburg are broken up within hours; three thousand arrested in the first week. The borders to Georgia, Finland, Kazakhstan are at capacity with Russians leaving.'
+      : 'It has been going on long enough now to have a shape. The television still says operation. The word war is still legally an offence to use about it, and you have learned, without deciding to, which of the people you know you can say it in front of.',
     choices: [
       {
         text: 'You leave. You are not going to live in a country doing this.',
@@ -6975,7 +7049,7 @@ const BASE_EVENTS = [
     phase: 'childhood',
     weight: 3,
     isKey: true,
-    when: (G) => ['subsaharan', 'developing_unstable'].includes(G.character.country.archetype) && G.age >= 2 && G.age <= 12 && !G.mem.ss_malaria,
+    when: (G) => ['subsaharan', 'developing_unstable'].includes(G.character.country.archetype) && malariaEndemic(G.currentCountry?.name ?? G.character.country.name, G.currentYear) && G.age >= 2 && G.age <= 12 && !G.mem.ss_malaria,
     text: 'The fever comes in the night. Your body shakes even under blankets in the heat. Your mother puts wet cloth on your forehead and sits with you through the dark hours. At the clinic, they tell her what she already knows — malaria again. The yellow pills. Three days of bed. You recover. Not everyone in your neighbourhood does.',
     context: null,
     choices: null,
@@ -7018,14 +7092,14 @@ const BASE_EVENTS = [
       {
         text: 'Carry the full load without complaint',
         tag: null,
-        outcome: null,
+        outcome: 'Your mother says nothing about it, which is how she says it. The strength stays in your arms for the rest of your life and you will not be able to explain where it came from.',
         effect: (p) => { p.m += 3; p.h -= 3; p.karma += 5; p.setMem('ss_water', true); },
         inject: null,
       },
       {
         text: 'Arrive at school late because of the queue',
         tag: null,
-        outcome: null,
+        outcome: 'The teacher stops asking why. Being marked late twice a week becomes a fact about you rather than a thing that happened.',
         effect: (p) => { p.m -= 3; p.e -= 2; p.setMem('ss_water', true); },
         inject: null,
       },
@@ -7044,21 +7118,21 @@ const BASE_EVENTS = [
       {
         text: 'Find part-time work to help cover fees',
         tag: null,
-        outcome: null,
+        outcome: 'You are back in the classroom and you are tired in it. The two facts do not cancel.',
         effect: (p) => { p.e -= 5; p.w += 5; p.h -= 8; p.setMem('ss_fees', true); p.addFlag('child_worker'); },
         inject: null,
       },
       {
         text: 'Your family scrapes it together',
         tag: null,
-        outcome: null,
+        outcome: 'Somebody gave something up for this and nobody will say who. You go back in and the other students have stopped looking.',
         effect: (p) => { p.h -= 5; p.m -= 3; p.setMem('ss_fees', true); },
         inject: null,
       },
       {
         text: 'You drop out this term',
         tag: null,
-        outcome: null,
+        outcome: 'The term becomes two terms. The word everyone uses is temporary and nobody is using it about the arrangement any more.',
         effect: (p) => { p.e -= 10; p.h -= 15; p.setMem('ss_fees', true); p.addFlag('education_interrupted'); },
         inject: null,
       },
@@ -7070,7 +7144,14 @@ const BASE_EVENTS = [
     phase: 'adolescence',
     weight: 2,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 10 && G.age <= 20 && !G.mem.ss_maternal,
-    text: 'A woman in your neighbourhood dies in childbirth. The nearest hospital is four hours away and the ambulance did not come. The baby survives. Your own mother delivered you at home with a traditional birth attendant. The gap between this world and what you see on the television has a name now.',
+    // The television is not the point of this event and the event has no year
+    // guard, so it was naming a set in a Nigerian living room in 1954 and a
+    // Namibian one in 1958. The gap is the point; the screen is one way of
+    // seeing it.
+    text: (G) => 'A woman in your neighbourhood dies in childbirth. The nearest hospital is four hours away and the ambulance did not come. The baby survives. Your own mother delivered you at home with a traditional birth attendant. ' +
+      (hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear, { rural: G.ruralUrban === 'rural' })
+        ? 'The gap between this world and what you see on the television has a name now.'
+        : 'The gap between this world and the one four hours away has a name now.'),
     context: null,
     choices: null,
     effect: (p) => { p.e += 5; p.h -= 8; p.karma += 3; p.setMem('ss_maternal', true); p.addFlag('health_aware'); },
@@ -7086,14 +7167,14 @@ const BASE_EVENTS = [
       {
         text: 'Set up your own account and start building savings',
         tag: null,
-        outcome: null,
+        outcome: 'The balance is small and it is yours and nobody has to be asked. That last part is most of what it is for.',
         effect: (p) => { p.w += 5; p.e += 5; p.setMem('ss_mobile_money', true); },
         inject: null,
       },
       {
         text: 'Help your parents set up accounts',
         tag: null,
-        outcome: null,
+        outcome: 'Your mother makes you watch her do it herself four times before she trusts it. The fifth time she does not tell you she has.',
         effect: (p) => { p.karma += 8; p.h += 5; p.setMem('ss_mobile_money', true); },
         inject: null,
       },
@@ -7111,21 +7192,21 @@ const BASE_EVENTS = [
       {
         text: 'Throw yourself into the community',
         tag: null,
-        outcome: null,
+        outcome: 'You are on three committees by the end of the year. It is where the neighbourhood actually happens, and you are inside it.',
         effect: (p) => { p.h += 10; p.karma += 8; p.setMem('ss_church', true); },
         inject: null,
       },
       {
         text: 'Participate but keep your own counsel',
         tag: null,
-        outcome: null,
+        outcome: 'You are there every Sunday and nobody could tell you anything about what you believe. This suits you and occasionally it does not.',
         effect: (p) => { p.h += 3; p.setMem('ss_church', true); },
         inject: null,
       },
       {
         text: 'As you get older, question the faith',
         tag: null,
-        outcome: null,
+        outcome: 'You stop going in stages rather than at once. Nobody confronts you about it, which is somehow harder than being confronted.',
         effect: (p) => { p.e += 5; p.h -= 5; p.r += 3; p.setMem('ss_church', true); },
         inject: null,
       },
@@ -7144,21 +7225,21 @@ const BASE_EVENTS = [
       {
         text: 'Help generously — this is what it means to succeed here',
         tag: null,
-        outcome: null,
+        outcome: 'The money goes. So does the position it bought you, which was never only about the money — you are the one the family calls now, and that is a standing as well as a bill.',
         effect: (p) => { p.mo -= 2000; p.h += 5; p.karma += 10; p.setMem('ss_family_obligation', true); },
         inject: null,
       },
       {
         text: 'Help selectively, set limits',
         tag: null,
-        outcome: null,
+        outcome: 'Two of them understand and one of them tells the others. You find out roughly what you are worth in the family\'s account of itself.',
         effect: (p) => { p.mo -= 800; p.karma += 5; p.setMem('ss_family_obligation', true); },
         inject: null,
       },
       {
         text: 'Protect your savings — explain your limits',
         tag: null,
-        outcome: null,
+        outcome: 'The explanation is reasonable and it is heard and it changes nothing about how it lands. Certain calls stop coming.',
         effect: (p) => { p.r += 8; p.karma -= 5; p.setMem('ss_family_obligation', true); },
         inject: null,
       },
@@ -7178,14 +7259,14 @@ const BASE_EVENTS = [
       {
         text: 'Cross quickly, keep eyes down',
         tag: null,
-        outcome: null,
+        outcome: 'Nothing happens. Nothing happens the next time either. The nothing is what your shoulders remember.',
         effect: (p) => { p.m -= 5; p.setMem('cz_checkpoint', true); },
         inject: null,
       },
       {
         text: "Know someone's name — navigate the relationship",
         tag: null,
-        outcome: null,
+        outcome: 'It works. You have also now agreed to something, and the terms of it are not written down anywhere.',
         effect: (p) => { p.w += 3; p.karma -= 3; p.setMem('cz_checkpoint', true); },
         inject: null,
       },
@@ -7214,14 +7295,14 @@ const BASE_EVENTS = [
       {
         text: 'Accept what comes — there is dignity in surviving',
         tag: null,
-        outcome: null,
+        outcome: 'There is. There is also the queue, every Tuesday, in front of everyone, and both of those are true at once for years.',
         effect: (p) => { p.setMem('cz_aid', true); },
         inject: null,
       },
       {
         text: "Find ways to contribute to the community's self-sufficiency",
         tag: null,
-        outcome: null,
+        outcome: 'The garden behind the block feeds four families by the second year. It is not enough and it is not the point.',
         effect: (p) => { p.karma += 8; p.e += 3; p.setMem('cz_aid', true); },
         inject: null,
       },
@@ -7240,14 +7321,14 @@ const BASE_EVENTS = [
       {
         text: 'Hold the family together — take on more responsibility',
         tag: null,
-        outcome: null,
+        outcome: 'You are fourteen and you are the one who decides about money. Nobody says this out loud, which is how it becomes permanent.',
         effect: (p) => { p.m -= 5; p.h += 3; p.karma += 8; p.setMem('cz_separation', true); },
         inject: null,
       },
       {
         text: 'Carry the absence as anger',
         tag: null,
-        outcome: null,
+        outcome: 'It goes somewhere. It goes into school, into a door, into people who had nothing to do with it, and it does not go down.',
         effect: (p) => { p.h -= 10; p.r += 5; p.setMem('cz_separation', true); },
         inject: null,
       },
@@ -7268,14 +7349,14 @@ const BASE_EVENTS = [
       {
         text: 'Stay in school — your teacher helps you navigate the pressure',
         tag: null,
-        outcome: null,
+        outcome: 'She talks to your father twice. You never learn what she said. You sit the exams.',
         effect: (p) => { p.e += 8; p.h -= 5; p.karma += 5; p.setMem('gender_school_pressure', true); p.addFlag('educated_against_odds'); },
         inject: null,
       },
       {
         text: 'Leave school — the family pressure is too great',
         tag: null,
-        outcome: null,
+        outcome: 'The books are in the house for about a year and then they are not. You can still do the mathematics in your head, in a market, faster than anyone there.',
         effect: (p) => { p.e -= 10; p.h -= 10; p.setMem('gender_school_pressure', true); },
         inject: null,
       },
@@ -7293,14 +7374,14 @@ const BASE_EVENTS = [
       {
         text: 'Build the knowledge — learn to navigate',
         tag: null,
-        outcome: null,
+        outcome: 'You get very good at it. Being very good at it is a skill you would trade immediately for not needing it.',
         effect: (p) => { p.e += 3; p.karma += 3; p.setMem('gender_safety', true); },
         inject: null,
       },
       {
         text: 'The constant calculation exhausts and angers you',
         tag: null,
-        outcome: null,
+        outcome: 'You say it out loud once, to your mother, and she agrees with you completely and then tells you the route to take.',
         effect: (p) => { p.m -= 5; p.h -= 5; p.r += 5; p.setMem('gender_safety', true); },
         inject: null,
       },
@@ -7351,14 +7432,14 @@ const BASE_EVENTS = [
       {
         text: 'Plan to emigrate yourself and send money back',
         tag: null,
-        outcome: null,
+        outcome: 'The plan has a shape now. It sits underneath everything else you do for the next several years.',
         effect: (p) => { p.e += 5; p.setMem('ss_remittance', true); p.addFlag('considers_emigration'); },
         inject: null,
       },
       {
         text: 'Build something here instead of leaving',
         tag: null,
-        outcome: null,
+        outcome: 'It is harder and it is here. Some of the family think you are noble about it and some think you are slow.',
         effect: (p) => { p.h += 5; p.karma += 5; p.setMem('ss_remittance', true); },
         inject: null,
       },
@@ -7377,21 +7458,31 @@ const BASE_EVENTS = [
       const name = G.character.country.name;
       if (['Brazil', 'Colombia', 'Peru'].includes(name)) return 'The favela has its own geography. The alleys so narrow two people can\'t pass. Electricity tapped from the main line overhead. The view from the hilltop over the city below is genuinely beautiful and you know it even then.';
       if (['Egypt', 'Morocco', 'Jordan'].includes(name)) return 'The city grew faster than the pipes. Your neighbourhood has electricity but shared water. The building was put up quickly by a relative thirty years ago and has been expanded room by room ever since.';
-      if (['Philippines', 'Indonesia', 'Vietnam'].includes(name)) return 'Your barangay floods every monsoon season. Everything important is stored high — documents in plastic, shoes on the shelf, the television on a table. Your family has lived in this house for twenty years, which makes you established.';
+      // One branch for three countries, and the one it was written for lent
+      // the other two its word for a neighbourhood and its television: this
+      // printed a barangay and a set on a table into 1940s Vietnam.
+      if (name === 'Philippines') {
+        const high = hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear, { rural: G.ruralUrban === 'rural' })
+          ? 'the television on a table'
+          : 'the sack of rice up on the bench';
+        return `Your barangay floods every monsoon season. Everything important is stored high — documents in plastic, shoes on the shelf, ${high}. Your family has lived in this house for twenty years, which makes you established.`;
+      }
+      if (name === 'Indonesia') return 'The kampung floods every wet season. The water comes up through the floor before it comes under the door. Everything that matters lives on the top shelf: the papers in plastic, the photographs, the mattress rolled and lifted. Your family has been in this house for twenty years, which makes you established.';
+      if (name === 'Vietnam') return 'The alley floods every wet season and the water arrives the colour of the canal. The bed goes up on bricks each time, and the bricks stay under it the rest of the year in case. Your family has been in this house for twenty years, which makes you established.';
       return 'The city has a formal face and an informal one. You grew up in the informal one — improvised, resourceful, dense with life and noise and the specific intimacy of people living closely.';
     },
     choices: [
       {
         text: 'You know every shortcut, every face — this place is home',
         tag: null,
-        outcome: null,
+        outcome: 'You can cross it at night without thinking. People from outside describe where you live in words you would not use.',
         effect: (p) => { p.h += 10; p.e += 3; p.setMem('du_shantytown', true); p.addFlag('urban_survivor'); },
         inject: null,
       },
       {
         text: 'You want out. You study harder than anyone.',
         tag: null,
-        outcome: null,
+        outcome: 'You are the one with the light on. It works or it does not work, but nobody will ever be able to say it was not attempted.',
         effect: (p) => { p.e += 8; p.h -= 3; p.setMem('du_shantytown', true); },
         inject: null,
       },
@@ -7409,14 +7500,14 @@ const BASE_EVENTS = [
       {
         text: 'Help at the stall — learn the rhythms of trade',
         tag: null,
-        outcome: null,
+        outcome: 'You learn what things cost and what people will pay, which are two different numbers, and the gap between them is a living.',
         effect: (p) => { p.w += 5; p.e += 3; p.h += 3; p.setMem('du_market', true); },
         inject: null,
       },
       {
         text: 'Study on your own while they work',
         tag: null,
-        outcome: null,
+        outcome: 'You do the reading at the back of the stall with one eye on the goods. Neither task gets all of you and both get done.',
         effect: (p) => { p.e += 8; p.setMem('du_market', true); },
         inject: null,
       },
@@ -7442,7 +7533,7 @@ const BASE_EVENTS = [
       {
         text: 'Navigate carefully — know the rules and survive',
         tag: null,
-        outcome: null,
+        outcome: 'You learn the rules the way you learn a language, without noticing, and you can no longer explain them to anyone who does not already know.',
         effect: (p) => { p.m -= 5; p.e += 5; p.setMem('du_violence', true); p.addFlag('street_smart'); },
         inject: null,
       },
@@ -7468,14 +7559,14 @@ const BASE_EVENTS = [
       {
         text: 'You\'re as ready as you\'ll ever be — trust the preparation',
         tag: null,
-        outcome: null,
+        outcome: 'Three days. You come out of the last paper unable to remember any of it, which everyone tells you is normal.',
         effect: (p) => { p.e += 12; p.h -= 5; p.setMem('du_gaokao', true); p.addFlag('gaokao_survivor'); },
         inject: null,
       },
       {
         text: 'The pressure breaks you — you perform below your ability',
         tag: null,
-        outcome: null,
+        outcome: 'You know what you could have scored. Everyone is careful around the subject, which keeps it present.',
         effect: (p) => { p.e += 3; p.h -= 15; p.m -= 8; p.setMem('du_gaokao', true); },
         inject: null,
       },
@@ -7493,14 +7584,14 @@ const BASE_EVENTS = [
       {
         text: 'Send reliably — it\'s the right thing to do',
         tag: null,
-        outcome: null,
+        outcome: 'The transfers go out the same week every month for years. The house at the other end gets a roof and you do not see it.',
         effect: (p) => { p.mo -= 1500; p.karma += 10; p.h += 5; p.setMem('du_remittance', true); },
         inject: null,
       },
       {
         text: 'Send less than expected — you need to build something here',
         tag: null,
-        outcome: null,
+        outcome: 'Nobody says anything about the amount. The not-saying arrives in every call for the next decade.',
         effect: (p) => { p.mo -= 500; p.r += 8; p.setMem('du_remittance', true); },
         inject: null,
       },
@@ -7512,7 +7603,12 @@ const BASE_EVENTS = [
     id: 'du_megacity_commute',
     phase: null,
     weight: 4,
-    when: (G) => G.character.country.archetype === 'developing_urban' && G.career && G.age >= 22 && G.age <= 55 && !G.mem.du_commute,
+    // `developing_urban` is a statement about a country, not about where this
+    // character stands in it. This fired for a man in Rural Bahia (sertao):
+    // "The traffic in this city was not designed. It grew."
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.ruralUrban !== 'rural'
+      && (G.place?.scale === 'megacity' || G.place?.scale === 'large_city' || G.place?.type === 'city')
+      && G.career && G.age >= 22 && G.age <= 55 && !G.mem.du_commute,
     text: (G) => {
       const name = G.character.country.name;
       if (name === 'China') return 'Three hours a day on the metro. Standing in the crush. The packed carriages at 8am are a full body of people pressing in the same direction. You read, you sleep standing, you arrive at work already used up.';
@@ -7524,14 +7620,14 @@ const BASE_EVENTS = [
       {
         text: 'Find ways to use the time — read, learn, think',
         tag: null,
-        outcome: null,
+        outcome: 'Four hours a day for twenty years is a education somebody would pay for. You read standing up, holding a rail.',
         effect: (p) => { p.e += 5; p.setMem('du_commute', true); },
         inject: null,
       },
       {
         text: 'The commute grinds you down over years',
         tag: null,
-        outcome: null,
+        outcome: 'You do not notice it happening. You notice, one day, that you have nothing left over by the time you are through the door.',
         effect: (p) => { p.m -= 8; p.h -= 5; p.r += 3; p.setMem('du_commute', true); },
         inject: null,
       },
@@ -7545,19 +7641,24 @@ const BASE_EVENTS = [
     weight: 4,
     when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 28 && G.age <= 45 && G.career && G.money > 5000 && !G.mem.du_middle_class,
     isKey: true,
-    text: 'Your parents had nothing. You have a salary, an apartment, a motorbike that is actually yours. The refrigerator works. The children will go to private school. You are the first person in your family to own property. The generation above you has no vocabulary for what you have done — it didn\'t exist as a category.',
+    // The objects that mark arrival change with the decade. A refrigerator in
+    // 1966 Brazil is nineteen years early; a sewing machine and a concrete
+    // floor are not.
+    text: (G) => hasTech(G.currentCountry ?? G.character.country, 'refrigerator', G.currentYear)
+      ? 'Your parents had nothing. You have a salary, an apartment, a motorbike that is actually yours. The refrigerator works. The children will go to private school. You are the first person in your family to own property. The generation above you has no vocabulary for what you have done — it didn\'t exist as a category.'
+      : 'Your parents had nothing. You have a wage that comes on the same day every month, two rooms with a concrete floor, a bicycle that is actually yours. The children will go to the school you pay for. You are the first person in your family whose name is on a paper about a place to live. The generation above you has no vocabulary for what you have done — it didn\'t exist as a category.',
     choices: [
       {
         text: 'Celebrate quietly — this is significant',
         tag: null,
-        outcome: null,
+        outcome: 'Your mother cries and will not say why, and you know exactly why, and neither of you says it.',
         effect: (p) => { p.h += 15; p.karma += 5; p.setMem('du_middle_class', true); p.addFlag('first_gen_middle_class'); },
         inject: null,
       },
       {
         text: 'The ladder goes further — you want more',
         tag: null,
-        outcome: null,
+        outcome: 'You are already looking at the next rung by the time anyone congratulates you about this one.',
         effect: (p) => { p.w += 5; p.setMem('du_middle_class', true); },
         inject: null,
       },
@@ -7578,21 +7679,21 @@ const BASE_EVENTS = [
       {
         text: 'Seek professional help — this is a real injury',
         tag: null,
-        outcome: null,
+        outcome: 'It takes months and it is not a cure. It is a set of things to do when it happens, which turns out to be most of what was missing.',
         effect: (p) => { p.m += 8; p.h -= 5; p.setMentalHealth({ condition: 'ptsd', therapy: true }); p.setMem('trauma_shown', true); },
         inject: null,
       },
       {
         text: 'Manage alone — you always have',
         tag: null,
-        outcome: null,
+        outcome: 'You have, and you do. It costs what it costs and you pay it in a currency nobody around you can see.',
         effect: (p) => { p.m -= 8; p.h -= 10; p.setMentalHealth({ condition: 'ptsd' }); p.setMem('trauma_shown', true); },
         inject: null,
       },
       {
         text: 'Talk to someone who went through the same thing',
         tag: null,
-        outcome: null,
+        outcome: 'They do not need the background explained. That alone takes something off you that you did not know you were holding.',
         effect: (p) => { p.h += 5; p.m += 3; p.setMentalHealth({ condition: 'ptsd', therapy: true }); p.setMem('trauma_shown', true); },
         inject: null,
       },
@@ -7610,14 +7711,14 @@ const BASE_EVENTS = [
       {
         text: 'Mark the day consciously — acknowledge it',
         tag: null,
-        outcome: null,
+        outcome: 'You give it the day. It takes the day and leaves the rest of the year mostly alone, which is the bargain.',
         effect: (p) => { p.m += 5; p.h -= 5; p.karma += 5; p.setMem('trauma_anniversary', true); },
         inject: null,
       },
       {
         text: 'Work through it — keep moving',
         tag: null,
-        outcome: null,
+        outcome: 'You get to the evening. Something in the week afterwards goes wrong for no reason you can name.',
         effect: (p) => { p.h -= 8; p.setMem('trauma_anniversary', true); },
         inject: null,
       },
@@ -7636,21 +7737,21 @@ const BASE_EVENTS = [
       {
         text: 'The exile is permanent — make peace with it',
         tag: null,
-        outcome: null,
+        outcome: 'You stop reading the news from there daily. It is an act of will for about two years and then it is just how things are.',
         effect: (p) => { p.h += 5; p.r += 8; p.karma += 8; p.setMem('cz_exile_old', true); },
         inject: null,
       },
       {
         text: 'Return — whatever state it is in now',
         tag: null,
-        outcome: null,
+        outcome: 'The street is there. The building is not, or it is and it is full of people you do not know. You are glad you went and you do not go again.',
         effect: (p) => { p.h += 15; p.r -= 5; p.setMem('cz_exile_old', true); },
         inject: null,
       },
       {
         text: 'Teach the children the old language before it is gone',
         tag: null,
-        outcome: null,
+        outcome: 'They learn the words for food and family and weather. They will not read the poetry. It is more than nothing and you know exactly how much more.',
         effect: (p) => { p.h += 8; p.karma += 10; p.setMem('cz_exile_old', true); },
         inject: null,
       },
@@ -7679,21 +7780,21 @@ const BASE_EVENTS = [
       {
         text: 'The system angers you — you push back where you can',
         tag: null,
-        outcome: null,
+        outcome: 'You push back in small rooms, mostly. It changes very little and it changes something about you.',
         effect: (p) => { p.karma += 8; p.h -= 5; p.e += 3; p.setMem('india_caste', true); p.addFlag('politically_aware'); },
         inject: null,
       },
       {
         text: 'Navigate it — the cost of confrontation is too high',
         tag: null,
-        outcome: null,
+        outcome: 'You know precisely when to say nothing. The precision is the thing you would most like not to have.',
         effect: (p) => { p.r += 8; p.h -= 8; p.setMem('india_caste', true); },
         inject: null,
       },
       {
         text: 'Your family is from a higher caste — you benefit from it',
         tag: null,
-        outcome: null,
+        outcome: 'You had not thought of it as benefiting. That is the form the benefit takes.',
         effect: (p) => { p.w += 3; p.karma -= 5; p.setMem('india_caste', true); },
         inject: null,
       },
@@ -7716,14 +7817,14 @@ const BASE_EVENTS = [
       {
         text: 'Convert savings to hard currency immediately',
         tag: null,
-        outcome: null,
+        outcome: 'The queue at the exchange is two hours and everyone in it is doing the same arithmetic. You keep what you have.',
         effect: (p) => { p.w += 8; p.e += 3; p.setMem('du_currency', true); },
         inject: null,
       },
       {
         text: 'You wait too long — the savings are gone',
         tag: null,
-        outcome: null,
+        outcome: 'The number in the account does not change. What it buys does, by the week, and then by the day.',
         effect: (p) => { p.mo -= 3000; p.h -= 10; p.setMem('du_currency', true); },
         inject: null,
       },
@@ -8242,7 +8343,7 @@ const BASE_EVENTS = [
     id: 'childhood_move_schools',
     phase: 'childhood',
     weight: 4,
-    when: (G) => G.age >= 7 && G.age <= 13 && !G.mem.moved_schools,
+    when: (G) => G.age >= 7 && G.age <= 13 && !G.mem.moved_schools && G.literate,
     text: 'Your family is moving. New house, new neighborhood, new school in September. You look at the map and try to calculate the distance from everyone you know.',
     choices: [
       { text: 'Promise to stay in touch with old friends', tag: null, outcome: 'For a while, you do. Then the calls get shorter. Then they stop. Then one resurfaces on social media fifteen years later.', effect: (p) => { p.m -= 5; p.s += 2; p.setMem('moved_schools', true) } },
@@ -8297,7 +8398,9 @@ const BASE_EVENTS = [
     id: 'late_life_driving_concern',
     phase: 'late_life',
     weight: 5,
-    when: (G) => G.age >= 78 && !G.mem.driving_concern,
+    // Fired to characters whose `assets.vehicles` is empty and always has been.
+    when: (G) => G.age >= 78 && !G.mem.driving_concern &&
+      ((G.assets?.vehicles?.length ?? 0) > 0 || G.flags.includes('has_licence')),
     text: 'Your children have been having a conversation without you, you suspect. Small incidents — a dent on the bumper you don\'t remember, a near-miss on the highway. They want to talk about the driving.',
     isKey: true,
     choices: [
@@ -8533,7 +8636,9 @@ const BASE_EVENTS = [
     id: 'rel_children_disagreement_partner',
     phase: null,
     weight: 3,
-    when: (G) => G.partner !== null && G.age >= 26 && G.age <= 38 && !G.mem.children_disagreement,
+    // Fired to a Nigerian father of five: Folake, Joke, Ronke, Ekene and
+    // Ikenna. The guard never looked at whether the question was still open.
+    when: (G) => G.partner !== null && G.children.length === 0 && G.age >= 26 && G.age <= 38 && !G.mem.children_disagreement,
     text: 'One of you wants children. The other is not sure, or is sure in a different direction. This has come up before and been deferred. It is no longer deferrable. The conversation that happens is the longest and most honest one you have had in years. It does not resolve cleanly.',
     choices: [
       { text: 'Commit to having children — you both deserve certainty', tag: null, outcome: 'The decision is made together, imperfectly. It is a real decision and not everyone gets to make it clearly.', effect: (p) => { p.m += 5; p.r += 8; p.addFlag('family_planned'); p.setMem('children_disagreement', true) } },
@@ -8588,7 +8693,14 @@ const BASE_EVENTS = [
     id: 'lawsuit_slip_fall',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 25 && !G.mem.lawsuit_slip && (G.career || G.flags.includes('entrepreneur')),
+    // "Premises you're responsible for" and "let insurance handle it" are two
+    // assumptions — that this character owns or runs something, and that they
+    // live inside a tort system with liability cover. This fired for a Crew
+    // Member on $575/yr in rural Upper Egypt and took every penny he had.
+    when: (G) => G.age >= 25 && !G.mem.lawsuit_slip
+      && (G.flags.includes('entrepreneur') || (G.career?.level ?? 0) >= 2)
+      && ['wealthy_west', 'wealthy_east'].includes(G.currentCountry?.archetype ?? G.character.country.archetype)
+      && G.currentYear >= 1960,
     text: 'A letter arrives from a law firm. Someone fell on premises you\'re responsible for — a sidewalk, a staircase, a wet floor. They are seeking damages of significant size.',
     isKey: true,
     choices: [
@@ -8616,7 +8728,13 @@ const BASE_EVENTS = [
     id: 'lawsuit_neighbor_dispute',
     phase: null,
     weight: 4,
-    when: (G) => G.age >= 28 && G.flags.includes('homeowner') && !G.mem.lawsuit_neighbor,
+    // A civil suit over a boundary line, with a contradictory surveyor's report
+    // and a law firm's letter, fired in rural Benue in 2056 and rural Siberia in
+    // 2065. A registered title and a court that hears boundary disputes are two
+    // more assumptions than the guard was making.
+    when: (G) => G.age >= 28 && G.flags.includes('homeowner') && !G.flags.includes('home_without_a_deed') &&
+      ['wealthy_west', 'wealthy_east', 'post_soviet'].includes(G.currentCountry?.archetype ?? G.character.country.archetype) &&
+      G.ruralUrban !== 'rural' && !G.mem.lawsuit_neighbor,
     text: 'The fence dispute with next door has escalated beyond neighborly conversation. They\'ve filed a civil suit over a boundary line. The surveyor\'s report is contradictory.',
     choices: [
       { text: 'Mediate — you don\'t want to be at war with your neighbor', tag: null, outcome: 'Three sessions. An agreement. It costs both of you less and you can still wave across the fence.', effect: (p) => { p.mo -= 2000; p.m += 3; p.karma += 3; p.setMem('lawsuit_neighbor', true) } },
@@ -8700,9 +8818,20 @@ const BASE_EVENTS = [
     id: 'inlaw_first_meeting',
     phase: null,
     weight: 7,
-    when: (G) => G.partner && !G.mem.inlaw_met && G.age >= 20,
+    // Nothing here asked how long the partnership had existed, so this arrived
+    // at 64 to a man married 37 years, and at 65 to one married 45 — both of
+    // whom had buried their own parents by then. It is a first-meeting event;
+    // it has to fire near the start.
+    when: (G) => G.partner && !G.mem.inlaw_met && G.age >= 20 && (G.partner.years ?? 0) <= 2,
     isKey: true,
-    text: 'Dinner at your partner\'s parents\' house. You\'ve prepared. You know their professions, their politics (roughly), their dog\'s name. You bring wine and hope it\'s the right kind.',
+    // Bringing wine is not a universal courtesy, and in most of the countries
+    // this game covers it is the wrong thing to arrive holding.
+    text: (G) => {
+      const dry = /muslim|hindu/.test(G.religion ?? '')
+      return dry
+        ? 'Dinner at your partner\'s parents\' house. You\'ve prepared. You know their professions, their politics (roughly), which of them does the talking. You bring sweets from the good place and hope it is the right good place.'
+        : 'Dinner at your partner\'s parents\' house. You\'ve prepared. You know their professions, their politics (roughly), their dog\'s name. You bring wine and hope it\'s the right kind.'
+    },
     choices: [
       { text: 'Be charming and attentive', tag: null, outcome: 'They like you, cautiously. The father makes a joke you don\'t fully understand and you laugh anyway. Acceptable.', effect: (p) => { p.s += 3; p.m += 5; p.partnerRel(4); p.setMem('inlaw_met', true) } },
       { text: 'Be quiet and let your partner lead', tag: null, outcome: 'You say the right things when you say them. The mother calls you "well-mannered." It\'s a start.', effect: (p) => { p.m += 3; p.partnerRel(2); p.setMem('inlaw_met', true) } },
@@ -8793,7 +8922,7 @@ const BASE_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => (G.friends ?? []).length > 0 && G.stats.wealth < 55,
-    text: 'A friend announces something large — a promotion, a house, a baby, a book deal. The congratulations you offer are genuine and also cost you something. You sit with that for a while.',
+    text: 'A friend announces a promotion you did not know they were up for. The congratulations you offer are genuine and also cost you something. You sit with that for a while.',
     choices: [
       { text: 'Be genuinely happy for them', tag: null, outcome: 'The envy fades. The friendship deepens. You are proud of yourself.', effect: (p) => { p.m += 5; p.karma += 5 } },
       { text: 'Smile, then go home and feel the envy fully', tag: null, outcome: 'Honesty with yourself about this turns out to be useful.', effect: (p) => { p.m -= 4; p.r += 3; p.e += 3 } },
@@ -8945,8 +9074,50 @@ import { PRISON_AFTER_EVENTS } from './events/prison/events_prison_after.js'
 import { POLITICAL_PRISON_EVENTS } from './events/prison/events_political_prison.js'
 import { HOUSING_EVENTS } from './events/thematic/events_housing.js'
 import { WINDFALL_EVENTS } from './events/thematic/events_windfall.js'
+import { wasSovietRepublic, malariaEndemic, institutionsAssumed } from './history.js'
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...ADOLESCENCE_2_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_ALL_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...VIETNAM_DEPTH_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...LATIN_AMERICA_EVENTS, ...MEXICO_DEPTH_EVENTS, ...COUNTRY_ARC_EVENTS, ...COUNTRY_ARC_2_EVENTS, ...EARLY_LIFE_EVENTS, ...EARLY_CHILDHOOD_2_EVENTS, ...DECOLONISATION_EVENTS, ...LABOR_EVENTS, ...ASIA_ARC_EVENTS, ...CROSSCUTTING_EVENTS, ...DRC_EVENTS, ...INTERNET_ERA_EVENTS, ...ZIMBABWE_EVENTS, ...CLIMATE_EVENTS, ...INDIGENOUS_EVENTS, ...AUTOMATION_EVENTS, ...COUNTRY_ARC_3_EVENTS, ...ARTS_EVENTS, ...INFORMAL_EVENTS, ...NEIGHBORHOOD_EVENTS, ...POSTRELEASE_EVENTS, ...MENTOR_EVENTS, ...FAMILY_SILENCE_EVENTS, ...SOLO_LIFE_EVENTS, ...DYING_ARC_EVENTS, ...BODY_ARC_EVENTS, ...GRANDPARENT_ARC_EVENTS, ...INHERITANCE_ARC_EVENTS, ...EMPTY_NEST_EVENTS, ...COHERENCE_EVENTS, ...POVERTY_EVENTS, ...PREGNANCY_EVENTS, ...MENOPAUSE_EVENTS, ...CAREER_ARC_EVENTS, ...CAREER_LONGEVITY_EVENTS, ...SOCIAL_MEDIA_EVENTS, ...SCANDINAVIA_EVENTS, ...SCANDINAVIA_DEPTH_EVENTS, ...PALESTINE_EVENTS, ...GANG_EVENTS, ...WORLD_RESPONSE_EVENTS, ...SOCIAL_CAPITAL_EVENTS, ...CHILDHOOD_TEXTURE_EVENTS, ...EMIGRANT_INTEGRATION_EVENTS, ...INTIMACY_EVENTS, ...SCHOOL_EVENTS, ...CHILDREN_ABROAD_EVENTS, ...STAYED_EVENTS, ...SPORT_EVENTS, ...DISASTER_EVENTS, ...ACTIVITY_CHOICE_EVENTS, ...PROJECT_ARC_EVENTS, ...INDUSTRIAL_EVENTS, ...LEBANON_EVENTS, ...CENTRAL_AMERICA_EVENTS, ...CENTRAL_ASIA_EVENTS, ...UZBEKISTAN_EVENTS, ...KAZAKHSTAN_EVENTS, ...TAJIKISTAN_EVENTS, ...KYRGYZSTAN_EVENTS, ...TURKMENISTAN_EVENTS, ...OFW_EVENTS, ...ALGERIA_EVENTS, ...INDONESIA_EVENTS, ...INDONESIA_DEPTH_EVENTS, ...KURDISH_EVENTS, ...DEBT_EVENTS, ...HAITI_EVENTS, ...DOMINICAN_REPUBLIC_EVENTS, ...SRI_LANKA_EVENTS, ...SRI_LANKA_DEPTH_EVENTS, ...MOROCCO_EVENTS, ...MOROCCO_DEPTH_EVENTS, ...ROHINGYA_EVENTS, ...TANZANIA_EVENTS, ...TANZANIA_DEPTH_EVENTS, ...MULTILINGUAL_EVENTS, ...SENEGAL_EVENTS, ...ADOPTEE_EVENTS, ...UYGHUR_EVENTS, ...PUERTO_RICO_EVENTS, ...SOLDIER_ARC_EVENTS, ...DOCUMENT_EVENTS, ...CLERGY_EVENTS, ...KENYA_EVENTS, ...KENYA_DEPTH_EVENTS, ...ETHIOPIA_EVENTS, ...ETHIOPIA_DEPTH_EVENTS, ...CONDITION_ARC_EVENTS, ...CONDITION_ARC_2_EVENTS, ...SOUTHEAST_EUROPE_EVENTS, ...PAKISTAN_EVENTS, ...PAKISTAN_DEPTH_EVENTS, ...EGYPT_EVENTS, ...EGYPT_DEPTH_EVENTS, ...INDIA_EVENTS, ...INDIA_DEPTH_EVENTS, ...IRELAND_TURKEY_EVENTS, ...IRELAND_DEPTH_EVENTS, ...WEST_AFRICA_EVENTS, ...NIGERIA_EVENTS, ...NIGERIA_DEPTH_EVENTS, ...GHANA_EVENTS, ...UGANDA_EVENTS, ...SOMALIA_EVENTS, ...THAILAND_EVENTS, ...THAILAND_DEPTH_EVENTS, ...NEPAL_EVENTS, ...NEPAL_DEPTH_EVENTS, ...MYANMAR_EVENTS, ...MYANMAR_DEPTH_EVENTS, ...TUNISIA_EVENTS, ...SUDAN_EVENTS, ...SUDAN_DEPTH_EVENTS, ...ANGOLA_EVENTS, ...ANGOLA_DEPTH_EVENTS, ...JORDAN_EVENTS, ...LIBYA_EVENTS, ...LIBYA_DEPTH_EVENTS, ...ZAMBIA_EVENTS, ...ZAMBIA_DEPTH_EVENTS, ...MOZAMBIQUE_EVENTS, ...MOZAMBIQUE_DEPTH_EVENTS, ...AFGHANISTAN_EVENTS, ...AFGHANISTAN_DEPTH_EVENTS, ...YEMEN_EVENTS, ...GIFTED_EVENTS, ...GIFTED_2_EVENTS, ...GIFTED_3_EVENTS, ...CHINA_EVENTS, ...KOREA_EVENTS, ...KOREA_DEPTH_EVENTS, ...DISABILITY_EVENTS, ...ADDICTION_EVENTS, ...CHILD_SOLDIER_EVENTS, ...WWI_DEPRESSION_EVENTS, ...DIVORCE_EVENTS, ...DEMENTIA_EVENTS, ...CELEBRITY_EVENTS, ...TEACHER_ARC_EVENTS, ...WOUND_COPING_EVENTS, ...PARTNER_WANTS_EVENTS, ...RELATIONSHIP_CROSSOVER_EVENTS, ...SYRIA_EVENTS, ...CHILD_DEATH_ARC_EVENTS, ...ISRAEL_EVENTS, ...PANDEMIC_EVENTS, ...GREECE_PORTUGAL_EVENTS, ...PORTUGAL_DEPTH_EVENTS, ...GREECE_DEPTH_EVENTS, ...SPAIN_EVENTS, ...SPAIN_DEPTH_EVENTS, ...PHILIPPINES_EVENTS, ...PHILIPPINES_DEPTH_EVENTS, ...PHILIPPINES_DEPTH_2_EVENTS, ...UK_EVENTS, ...GERMANY_FRANCE_EVENTS, ...USA_EVENTS, ...AUSTRALIA_EVENTS, ...AUSTRALIA_DEPTH_EVENTS, ...CANADA_EVENTS, ...CANADA_DEPTH_EVENTS, ...ITALY_EVENTS, ...ITALY_DEPTH_EVENTS, ...POLAND_EVENTS, ...POLAND_DEPTH_EVENTS, ...RUSSIA_EVENTS, ...RUSSIA_DEPTH_EVENTS, ...UKRAINE_EVENTS, ...UKRAINE_DEPTH_EVENTS, ...IRAN_DEPTH_EVENTS, ...ARGENTINA_DEPTH_EVENTS, ...SOUTH_AFRICA_EVENTS, ...SOUTH_AFRICA_DEPTH_EVENTS, ...ROMANIA_EVENTS, ...ROMANIA_DEPTH_EVENTS, ...DESIRE_RESOLUTION_EVENTS, ...CENTRAL_EUROPE_EVENTS, ...CZECH_REPUBLIC_EVENTS, ...SWEDEN_EVENTS, ...NORWAY_EVENTS, ...DENMARK_EVENTS, ...BALTIC_EVENTS, ...GEORGIA_EVENTS, ...TAIWAN_MALAYSIA_EVENTS, ...ARMENIA_AZ_EVENTS, ...BELARUS_EVENTS, ...UY_PY_EC_EVENTS, ...ECUADOR_EVENTS, ...EL_SALVADOR_EVENTS, ...GUATEMALA_EVENTS, ...HONDURAS_EVENTS, ...NICARAGUA_EVENTS, ...NORTH_KOREA_EVENTS, ...NORTH_KOREA_DEPTH_EVENTS, ...CUBA_EVENTS, ...CUBA_DEPTH_EVENTS, ...NAMIBIA_EVENTS, ...NAMIBIA_DEPTH_EVENTS, ...LAOS_EVENTS, ...LAOS_DEPTH_EVENTS, ...SINGAPORE_EVENTS, ...SINGAPORE_DEPTH_EVENTS, ...NETHERLANDS_EVENTS, ...NETHERLANDS_DEPTH_EVENTS, ...BRAZIL_EVENTS, ...BRAZIL_DEPTH_EVENTS, ...BANGLADESH_EVENTS, ...BANGLADESH_DEPTH_EVENTS, ...IRAQ_EVENTS, ...IRAQ_DEPTH_EVENTS, ...RWANDA_EVENTS, ...COLOMBIA_EVENTS, ...COLOMBIA_DEPTH_EVENTS, ...VENEZUELA_EVENTS, ...VENEZUELA_DEPTH_EVENTS, ...VENEZUELA_DEPTH_2_EVENTS, ...PERU_EVENTS, ...PERU_DEPTH_EVENTS, ...JAPAN_EVENTS, ...JAPAN_DEPTH_EVENTS, ...SAUDI_EVENTS, ...BEDOUIN_EVENTS, ...IRAN_EVENTS, ...TURKEY_EVENTS, ...TURKEY_DEPTH_EVENTS, ...NOMADIC_EVENTS, ...SICK_CHILD_EVENTS, ...CAMBODIA_EVENTS, ...GUINEA_EVENTS, ...MONGOLIA_EVENTS, ...MONGOLIA_DEPTH_EVENTS, ...CARIBBEAN_EVENTS, ...ERITREA_EVENTS, ...BURKINA_EVENTS, ...POLITICAL_ARC_EVENTS, ...BOLIVIA_EVENTS, ...BOLIVIA_DEPTH_EVENTS, ...NEW_ZEALAND_EVENTS, ...NEW_ZEALAND_DEPTH_EVENTS, ...SONDER_EVENTS, ...AID_WORKER_EVENTS, ...FIJI_EVENTS, ...WATER_INFRA_EVENTS, ...BONDED_LABOR_EVENTS, ...SEX_WORK_EVENTS, ...CULT_EVENTS, ...FGM_EVENTS, ...MALI_EVENTS, ...IVORY_COAST_EVENTS, ...IVORY_COAST_DEPTH_EVENTS, ...CAMEROON_EVENTS, ...CAMEROON_DEPTH_EVENTS, ...LOCAL_EVENTS, ...EVENTS_2010S, ...EVENTS_SONDER_2, ...EVENTS_SONDER_3, ...EVENTS_SONDER_4, ...EVENTS_SONDER_5, ...EVENTS_SONDER_6, ...EVENTS_SONDER_7, ...EVENTS_SONDER_8, ...EVENTS_SONDER_9, ...EVENTS_SONDER_10, ...EVENTS_SONDER_11, ...EVENTS_SONDER_12, ...EVENTS_SONDER_13, ...EVENTS_SONDER_14, ...EVENTS_SONDER_15, ...EVENTS_SONDER_16, ...EVENTS_SONDER_17, ...EVENTS_SONDER_18, ...EVENTS_SONDER_19, ...EVENTS_SONDER_20, ...EVENTS_SONDER_21, ...EVENTS_SONDER_22, ...EVENTS_SONDER_23, ...EVENTS_SONDER_24, ...EVENTS_SONDER_25, ...EVENTS_SONDER_26, ...EVENTS_SONDER_27, ...EVENTS_SONDER_28, ...EVENTS_SONDER_29, ...EVENTS_SONDER_30, ...EVENTS_SONDER_31, ...EVENTS_SONDER_32, ...EVENTS_SONDER_33, ...EVENTS_SONDER_34, ...EVENTS_SONDER_35, ...EVENTS_SONDER_36, ...EVENTS_SONDER_37, ...EVENTS_SONDER_38, ...EVENTS_SONDER_39, ...EVENTS_SONDER_40, ...EVENTS_SONDER_41, ...EVENTS_SONDER_42, ...EVENTS_SONDER_43, ...EVENTS_SONDER_44, ...EVENTS_SONDER_45, ...EVENTS_SONDER_46, ...EVENTS_SONDER_47, ...EVENTS_SONDER_48, ...EVENTS_SONDER_49, ...EVENTS_SONDER_50, ...EVENTS_SONDER_51, ...EVENTS_SONDER_52, ...EVENTS_SONDER_53, ...EVENTS_SONDER_54, ...EVENTS_SONDER_55, ...EVENTS_SONDER_56, ...EVENTS_SONDER_57, ...EVENTS_SONDER_58, ...EVENTS_SONDER_59, ...EVENTS_SONDER_60, ...EVENTS_SONDER_61, ...EVENTS_SONDER_62, ...EVENTS_SONDER_63, ...EVENTS_SONDER_64, ...EVENTS_SONDER_65, ...EVENTS_SONDER_66, ...FOLLOWTHROUGH_30_EVENTS, ...FOLLOWTHROUGH_31_EVENTS, ...FOLLOWTHROUGH_32_EVENTS, ...FOLLOWTHROUGH_33_EVENTS, ...FOLLOWTHROUGH_34_EVENTS, ...FOLLOWTHROUGH_35_EVENTS, ...FOLLOWTHROUGH_36_EVENTS, ...FOLLOWTHROUGH_37_EVENTS, ...FOLLOWTHROUGH_38_EVENTS, ...FOLLOWTHROUGH_39_EVENTS, ...FOLLOWTHROUGH_40_EVENTS, ...FOLLOWTHROUGH_41_EVENTS, ...FOLLOWTHROUGH_42_EVENTS, ...FOLLOWTHROUGH_43_EVENTS, ...FOLLOWTHROUGH_44_EVENTS, ...FOLLOWTHROUGH_45_EVENTS, ...FOLLOWTHROUGH_46_EVENTS, ...FOLLOWTHROUGH_47_EVENTS, ...FOLLOWTHROUGH_48_EVENTS, ...FOLLOWTHROUGH_49_EVENTS, ...FOLLOWTHROUGH_50_EVENTS, ...FOLLOWTHROUGH_51_EVENTS, ...FOLLOWTHROUGH_52_EVENTS, ...FOLLOWTHROUGH_53_EVENTS, ...FOLLOWTHROUGH_54_EVENTS, ...FOLLOWTHROUGH_55_EVENTS, ...FOLLOWTHROUGH_56_EVENTS, ...FOLLOWTHROUGH_57_EVENTS, ...FOLLOWTHROUGH_58_EVENTS, ...FOLLOWTHROUGH_59_EVENTS, ...FOLLOWTHROUGH_60_EVENTS, ...FOLLOWTHROUGH_61_EVENTS, ...FOLLOWTHROUGH_62_EVENTS, ...FOLLOWTHROUGH_63_EVENTS, ...FOLLOWTHROUGH_64_EVENTS, ...FOLLOWTHROUGH_65_EVENTS, ...FOLLOWTHROUGH_66_EVENTS, ...FOLLOWTHROUGH_67_EVENTS, ...FOLLOWTHROUGH_68_EVENTS, ...FOLLOWTHROUGH_69_EVENTS, ...FOLLOWTHROUGH_70_EVENTS, ...FOLLOWTHROUGH_71_EVENTS, ...FOLLOWTHROUGH_72_EVENTS, ...FOLLOWTHROUGH_73_EVENTS, ...FOLLOWTHROUGH_74_EVENTS, ...FOLLOWTHROUGH_75_EVENTS, ...FOLLOWTHROUGH_76_EVENTS, ...FOLLOWTHROUGH_77_EVENTS, ...FOLLOWTHROUGH_78_EVENTS, ...FOLLOWTHROUGH_79_EVENTS, ...FOLLOWTHROUGH_80_EVENTS, ...FOLLOWTHROUGH_81_EVENTS, ...FOLLOWTHROUGH_82_EVENTS, ...FOLLOWTHROUGH_83_EVENTS, ...FOLLOWTHROUGH_84_EVENTS, ...FOLLOWTHROUGH_85_EVENTS, ...FOLLOWTHROUGH_86_EVENTS, ...FOLLOWTHROUGH_87_EVENTS, ...FOLLOWTHROUGH_88_EVENTS, ...FOLLOWTHROUGH_89_EVENTS, ...FOLLOWTHROUGH_90_EVENTS, ...FOLLOWTHROUGH_91_EVENTS, ...FOLLOWTHROUGH_92_EVENTS, ...FOLLOWTHROUGH_93_EVENTS, ...FOLLOWTHROUGH_94_EVENTS, ...FOLLOWTHROUGH_95_EVENTS, ...SPECIFIC_LIFE_EVENTS, ...ERA_GAP_EVENTS, ...TEACHER_POWER_EVENTS, ...DISEASE_ARC_EVENTS, ...SOUTH_SOUTH_EVENTS, ...INTERPRETER_ARC_EVENTS, ...DOCTOR_ARC_EVENTS, ...JOURNALIST_ARC_EVENTS, ...LAWYER_ARC_EVENTS, ...NURSE_ARC_EVENTS, ...FARMER_ARC_EVENTS, ...POLICE_ARC_EVENTS, ...SOCIAL_WORKER_ARC_EVENTS, ...ARTIST_ARC_EVENTS, ...ENGINEER_ARC_EVENTS, ...DEV_ARC_EVENTS, ...FACTORY_ARC_EVENTS, ...LABORER_ARC_EVENTS, ...CIVIL_SERVANT_ARC_EVENTS, ...DRIVER_ARC_EVENTS, ...CHEF_ARC_EVENTS, ...MERCHANT_ARC_EVENTS, ...ACCOUNTANT_ARC_EVENTS, ...PALESTINE_DEPTH_EVENTS, ...MEMORY_LAYER_EVENTS, ...ROADS_NOT_TAKEN_EVENTS, ...LETTER_EVENTS, ...SEASONAL_EVENTS, ...ORAL_TRADITION_EVENTS, ...PRISON_EVENTS, ...PRISON_AFTER_EVENTS, ...POLITICAL_PRISON_EVENTS, ...HOUSING_EVENTS, ...WINDFALL_EVENTS]
+// Which parent is still alive, and the name to use for them. `effect` receives
+// only `p`, so the choice of which parent dies has to be made from `p._state`.
+// Where and when military service was compulsory rather than a choice. Not
+// exhaustive — a country not listed is treated as volunteer, which is the
+// safer wrong answer — but it covers the roster's large conscript systems and
+// the years they ran. Women are conscripted in only a handful of them.
+const CONSCRIPTION = {
+  'South Korea': [1957, 2100], 'Israel': [1948, 2100], 'Russia': [1918, 2100],
+  'Ukraine': [1991, 2100], 'Belarus': [1991, 2100], 'Turkey': [1927, 2100],
+  'Greece': [1914, 2100], 'Egypt': [1955, 2100], 'Iran': [1925, 2100],
+  'Vietnam': [1954, 2100], 'North Korea': [1948, 2100], 'Cuba': [1963, 2100],
+  'Brazil': [1908, 2100], 'Mexico': [1940, 2100], 'Colombia': [1945, 2100],
+  'Switzerland': [1848, 2100], 'Austria': [1955, 2100], 'Finland': [1918, 2100],
+  'Norway': [1897, 2100], 'Denmark': [1849, 2100], 'Sweden': [1901, 2010],
+  'Germany': [1935, 2011], 'France': [1905, 1997], 'Italy': [1861, 2005],
+  'Spain': [1912, 2001], 'Poland': [1918, 2009], 'Portugal': [1911, 2004],
+  'Netherlands': [1898, 1997], 'Czech Republic': [1993, 2004],
+  'Singapore': [1967, 2100], 'Taiwan': [1949, 2100], 'Thailand': [1905, 2100],
+  'Eritrea': [1995, 2100], 'Algeria': [1969, 2100], 'Morocco': [1966, 2006],
+  'Tunisia': [1957, 2100], 'Syria': [1946, 2100], 'Sudan': [1992, 2100],
+  'Angola': [1975, 2100], 'Mozambique': [1975, 2100], 'Bolivia': [1904, 2100],
+  'Venezuela': [1936, 2100], 'United States': [1917, 1973],
+}
+// The ones that conscript women too.
+const CONSCRIPTS_WOMEN = new Set(['Israel', 'Eritrea', 'North Korea', 'Norway', 'Sweden'])
+const CONSCRIPTS = (G) => {
+  const name = (G.currentCountry ?? G.character.country)?.name
+  const span = CONSCRIPTION[name]
+  if (!span || G.currentYear < span[0] || G.currentYear > span[1]) return false
+  return G.character.gender === 'male' || CONSCRIPTS_WOMEN.has(name)
+}
+
+const _livingParents = (o) => ['father', 'mother'].filter(k => o?.parents?.[k]?.alive)
+const _takeAParent = (p) => {
+  const living = _livingParents(p._state)
+  if (!living.length) return
+  p.killParent(living[Math.floor(Math.random() * living.length)])
+}
+
+
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...ADOLESCENCE_2_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_ALL_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...VIETNAM_DEPTH_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...LATIN_AMERICA_EVENTS, ...MEXICO_DEPTH_EVENTS, ...COUNTRY_ARC_EVENTS, ...COUNTRY_ARC_2_EVENTS, ...EARLY_LIFE_EVENTS, ...EARLY_CHILDHOOD_2_EVENTS, ...DECOLONISATION_EVENTS, ...LABOR_EVENTS, ...ASIA_ARC_EVENTS, ...CROSSCUTTING_EVENTS, ...DRC_EVENTS, ...INTERNET_ERA_EVENTS, ...ZIMBABWE_EVENTS, ...CLIMATE_EVENTS, ...INDIGENOUS_EVENTS, ...AUTOMATION_EVENTS, ...COUNTRY_ARC_3_EVENTS, ...ARTS_EVENTS, ...INFORMAL_EVENTS, ...NEIGHBORHOOD_EVENTS, ...POSTRELEASE_EVENTS, ...MENTOR_EVENTS, ...FAMILY_SILENCE_EVENTS, ...SOLO_LIFE_EVENTS, ...DYING_ARC_EVENTS, ...BODY_ARC_EVENTS, ...GRANDPARENT_ARC_EVENTS, ...INHERITANCE_ARC_EVENTS, ...EMPTY_NEST_EVENTS, ...COHERENCE_EVENTS, ...POVERTY_EVENTS, ...PREGNANCY_EVENTS, ...MENOPAUSE_EVENTS, ...CAREER_ARC_EVENTS, ...CAREER_LONGEVITY_EVENTS, ...SOCIAL_MEDIA_EVENTS, ...SCANDINAVIA_EVENTS, ...SCANDINAVIA_DEPTH_EVENTS, ...PALESTINE_EVENTS, ...GANG_EVENTS, ...WORLD_RESPONSE_EVENTS, ...SOCIAL_CAPITAL_EVENTS, ...CHILDHOOD_TEXTURE_EVENTS, ...EMIGRANT_INTEGRATION_EVENTS, ...INTIMACY_EVENTS, ...SCHOOL_EVENTS, ...CHILDREN_ABROAD_EVENTS, ...STAYED_EVENTS, ...SPORT_EVENTS, ...DISASTER_EVENTS, ...ACTIVITY_CHOICE_EVENTS, ...PROJECT_ARC_EVENTS, ...INDUSTRIAL_EVENTS, ...LEBANON_EVENTS, ...CENTRAL_AMERICA_EVENTS, ...CENTRAL_ASIA_EVENTS, ...UZBEKISTAN_EVENTS, ...KAZAKHSTAN_EVENTS, ...TAJIKISTAN_EVENTS, ...KYRGYZSTAN_EVENTS, ...TURKMENISTAN_EVENTS, ...OFW_EVENTS, ...ALGERIA_EVENTS, ...INDONESIA_EVENTS, ...INDONESIA_DEPTH_EVENTS, ...KURDISH_EVENTS, ...DEBT_EVENTS, ...HAITI_EVENTS, ...DOMINICAN_REPUBLIC_EVENTS, ...SRI_LANKA_EVENTS, ...SRI_LANKA_DEPTH_EVENTS, ...MOROCCO_EVENTS, ...MOROCCO_DEPTH_EVENTS, ...ROHINGYA_EVENTS, ...TANZANIA_EVENTS, ...TANZANIA_DEPTH_EVENTS, ...MULTILINGUAL_EVENTS, ...SENEGAL_EVENTS, ...ADOPTEE_EVENTS, ...UYGHUR_EVENTS, ...PUERTO_RICO_EVENTS, ...SOLDIER_ARC_EVENTS, ...DOCUMENT_EVENTS, ...CLERGY_EVENTS, ...KENYA_EVENTS, ...KENYA_DEPTH_EVENTS, ...ETHIOPIA_EVENTS, ...ETHIOPIA_DEPTH_EVENTS, ...CONDITION_ARC_EVENTS, ...CONDITION_ARC_2_EVENTS, ...SOUTHEAST_EUROPE_EVENTS, ...PAKISTAN_EVENTS, ...PAKISTAN_DEPTH_EVENTS, ...EGYPT_EVENTS, ...EGYPT_DEPTH_EVENTS, ...INDIA_EVENTS, ...INDIA_DEPTH_EVENTS, ...IRELAND_TURKEY_EVENTS, ...IRELAND_DEPTH_EVENTS, ...WEST_AFRICA_EVENTS, ...NIGERIA_EVENTS, ...NIGERIA_DEPTH_EVENTS, ...GHANA_EVENTS, ...UGANDA_EVENTS, ...SOMALIA_EVENTS, ...THAILAND_EVENTS, ...THAILAND_DEPTH_EVENTS, ...NEPAL_EVENTS, ...NEPAL_DEPTH_EVENTS, ...MYANMAR_EVENTS, ...MYANMAR_DEPTH_EVENTS, ...TUNISIA_EVENTS, ...SUDAN_EVENTS, ...SUDAN_DEPTH_EVENTS, ...ANGOLA_EVENTS, ...ANGOLA_DEPTH_EVENTS, ...JORDAN_EVENTS, ...LIBYA_EVENTS, ...LIBYA_DEPTH_EVENTS, ...ZAMBIA_EVENTS, ...ZAMBIA_DEPTH_EVENTS, ...MOZAMBIQUE_EVENTS, ...MOZAMBIQUE_DEPTH_EVENTS, ...AFGHANISTAN_EVENTS, ...AFGHANISTAN_DEPTH_EVENTS, ...YEMEN_EVENTS, ...GIFTED_EVENTS, ...GIFTED_2_EVENTS, ...GIFTED_3_EVENTS, ...CHINA_EVENTS, ...KOREA_EVENTS, ...KOREA_DEPTH_EVENTS, ...DISABILITY_EVENTS, ...ADDICTION_EVENTS, ...CHILD_SOLDIER_EVENTS, ...WWI_DEPRESSION_EVENTS, ...DIVORCE_EVENTS, ...DEMENTIA_EVENTS, ...CELEBRITY_EVENTS, ...TEACHER_ARC_EVENTS, ...WOUND_COPING_EVENTS, ...PARTNER_WANTS_EVENTS, ...RELATIONSHIP_CROSSOVER_EVENTS, ...SYRIA_EVENTS, ...CHILD_DEATH_ARC_EVENTS, ...ISRAEL_EVENTS, ...PANDEMIC_EVENTS, ...GREECE_PORTUGAL_EVENTS, ...PORTUGAL_DEPTH_EVENTS, ...GREECE_DEPTH_EVENTS, ...SPAIN_EVENTS, ...SPAIN_DEPTH_EVENTS, ...PHILIPPINES_EVENTS, ...PHILIPPINES_DEPTH_EVENTS, ...PHILIPPINES_DEPTH_2_EVENTS, ...UK_EVENTS, ...GERMANY_FRANCE_EVENTS, ...USA_EVENTS, ...AUSTRALIA_EVENTS, ...AUSTRALIA_DEPTH_EVENTS, ...CANADA_EVENTS, ...CANADA_DEPTH_EVENTS, ...ITALY_EVENTS, ...ITALY_DEPTH_EVENTS, ...POLAND_EVENTS, ...POLAND_DEPTH_EVENTS, ...RUSSIA_EVENTS, ...RUSSIA_DEPTH_EVENTS, ...UKRAINE_EVENTS, ...UKRAINE_DEPTH_EVENTS, ...IRAN_DEPTH_EVENTS, ...ARGENTINA_DEPTH_EVENTS, ...SOUTH_AFRICA_EVENTS, ...SOUTH_AFRICA_DEPTH_EVENTS, ...ROMANIA_EVENTS, ...ROMANIA_DEPTH_EVENTS, ...DESIRE_RESOLUTION_EVENTS, ...CENTRAL_EUROPE_EVENTS, ...CZECH_REPUBLIC_EVENTS, ...SWEDEN_EVENTS, ...NORWAY_EVENTS, ...DENMARK_EVENTS, ...BALTIC_EVENTS, ...GEORGIA_EVENTS, ...TAIWAN_MALAYSIA_EVENTS, ...ARMENIA_AZ_EVENTS, ...BELARUS_EVENTS, ...UY_PY_EC_EVENTS, ...ECUADOR_EVENTS, ...EL_SALVADOR_EVENTS, ...GUATEMALA_EVENTS, ...HONDURAS_EVENTS, ...NICARAGUA_EVENTS, ...NORTH_KOREA_EVENTS, ...NORTH_KOREA_DEPTH_EVENTS, ...CUBA_EVENTS, ...CUBA_DEPTH_EVENTS, ...NAMIBIA_EVENTS, ...NAMIBIA_DEPTH_EVENTS, ...LAOS_EVENTS, ...LAOS_DEPTH_EVENTS, ...SINGAPORE_EVENTS, ...SINGAPORE_DEPTH_EVENTS, ...NETHERLANDS_EVENTS, ...NETHERLANDS_DEPTH_EVENTS, ...BRAZIL_EVENTS, ...BRAZIL_DEPTH_EVENTS, ...BANGLADESH_EVENTS, ...BANGLADESH_DEPTH_EVENTS, ...IRAQ_EVENTS, ...IRAQ_DEPTH_EVENTS, ...RWANDA_EVENTS, ...COLOMBIA_EVENTS, ...COLOMBIA_DEPTH_EVENTS, ...VENEZUELA_EVENTS, ...VENEZUELA_DEPTH_EVENTS, ...VENEZUELA_DEPTH_2_EVENTS, ...PERU_EVENTS, ...PERU_DEPTH_EVENTS, ...JAPAN_EVENTS, ...JAPAN_DEPTH_EVENTS,
+  ...JAPAN_WAR_EVENTS, ...SAUDI_EVENTS, ...BEDOUIN_EVENTS, ...IRAN_EVENTS, ...TURKEY_EVENTS, ...TURKEY_DEPTH_EVENTS, ...NOMADIC_EVENTS, ...SICK_CHILD_EVENTS, ...CAMBODIA_EVENTS, ...GUINEA_EVENTS, ...MONGOLIA_EVENTS, ...MONGOLIA_DEPTH_EVENTS, ...CARIBBEAN_EVENTS, ...ERITREA_EVENTS, ...BURKINA_EVENTS, ...POLITICAL_ARC_EVENTS, ...BOLIVIA_EVENTS, ...BOLIVIA_DEPTH_EVENTS, ...NEW_ZEALAND_EVENTS, ...NEW_ZEALAND_DEPTH_EVENTS, ...SONDER_EVENTS, ...AID_WORKER_EVENTS, ...FIJI_EVENTS, ...WATER_INFRA_EVENTS, ...BONDED_LABOR_EVENTS, ...SEX_WORK_EVENTS, ...CULT_EVENTS, ...FGM_EVENTS, ...MALI_EVENTS, ...IVORY_COAST_EVENTS, ...IVORY_COAST_DEPTH_EVENTS, ...CAMEROON_EVENTS, ...CAMEROON_DEPTH_EVENTS, ...LOCAL_EVENTS, ...EVENTS_2010S, ...EVENTS_SONDER_2, ...EVENTS_SONDER_3, ...EVENTS_SONDER_4, ...EVENTS_SONDER_5, ...EVENTS_SONDER_6, ...EVENTS_SONDER_7, ...EVENTS_SONDER_8, ...EVENTS_SONDER_9, ...EVENTS_SONDER_10, ...EVENTS_SONDER_11, ...EVENTS_SONDER_12, ...EVENTS_SONDER_13, ...EVENTS_SONDER_14, ...EVENTS_SONDER_15, ...EVENTS_SONDER_16, ...EVENTS_SONDER_17, ...EVENTS_SONDER_18, ...EVENTS_SONDER_19, ...EVENTS_SONDER_20, ...EVENTS_SONDER_21, ...EVENTS_SONDER_22, ...EVENTS_SONDER_23, ...EVENTS_SONDER_24, ...EVENTS_SONDER_25, ...EVENTS_SONDER_26, ...EVENTS_SONDER_27, ...EVENTS_SONDER_28, ...EVENTS_SONDER_29, ...EVENTS_SONDER_30, ...EVENTS_SONDER_31, ...EVENTS_SONDER_32, ...EVENTS_SONDER_33, ...EVENTS_SONDER_34, ...EVENTS_SONDER_35, ...EVENTS_SONDER_36, ...EVENTS_SONDER_37, ...EVENTS_SONDER_38, ...EVENTS_SONDER_39, ...EVENTS_SONDER_40, ...EVENTS_SONDER_41, ...EVENTS_SONDER_42, ...EVENTS_SONDER_43, ...EVENTS_SONDER_44, ...EVENTS_SONDER_45, ...EVENTS_SONDER_46, ...EVENTS_SONDER_47, ...EVENTS_SONDER_48, ...EVENTS_SONDER_49, ...EVENTS_SONDER_50, ...EVENTS_SONDER_51, ...EVENTS_SONDER_52, ...EVENTS_SONDER_53, ...EVENTS_SONDER_54, ...EVENTS_SONDER_55, ...EVENTS_SONDER_56, ...EVENTS_SONDER_57, ...EVENTS_SONDER_58, ...EVENTS_SONDER_59, ...EVENTS_SONDER_60, ...EVENTS_SONDER_61, ...EVENTS_SONDER_62, ...EVENTS_SONDER_63, ...EVENTS_SONDER_64, ...EVENTS_SONDER_65, ...EVENTS_SONDER_66, ...FOLLOWTHROUGH_30_EVENTS, ...FOLLOWTHROUGH_31_EVENTS, ...FOLLOWTHROUGH_32_EVENTS, ...FOLLOWTHROUGH_33_EVENTS, ...FOLLOWTHROUGH_34_EVENTS, ...FOLLOWTHROUGH_35_EVENTS, ...FOLLOWTHROUGH_36_EVENTS, ...FOLLOWTHROUGH_37_EVENTS, ...FOLLOWTHROUGH_38_EVENTS, ...FOLLOWTHROUGH_39_EVENTS, ...FOLLOWTHROUGH_40_EVENTS, ...FOLLOWTHROUGH_41_EVENTS, ...FOLLOWTHROUGH_42_EVENTS, ...FOLLOWTHROUGH_43_EVENTS, ...FOLLOWTHROUGH_44_EVENTS, ...FOLLOWTHROUGH_45_EVENTS, ...FOLLOWTHROUGH_46_EVENTS, ...FOLLOWTHROUGH_47_EVENTS, ...FOLLOWTHROUGH_48_EVENTS, ...FOLLOWTHROUGH_49_EVENTS, ...FOLLOWTHROUGH_50_EVENTS, ...FOLLOWTHROUGH_51_EVENTS, ...FOLLOWTHROUGH_52_EVENTS, ...FOLLOWTHROUGH_53_EVENTS, ...FOLLOWTHROUGH_54_EVENTS, ...FOLLOWTHROUGH_55_EVENTS, ...FOLLOWTHROUGH_56_EVENTS, ...FOLLOWTHROUGH_57_EVENTS, ...FOLLOWTHROUGH_58_EVENTS, ...FOLLOWTHROUGH_59_EVENTS, ...FOLLOWTHROUGH_60_EVENTS, ...FOLLOWTHROUGH_61_EVENTS, ...FOLLOWTHROUGH_62_EVENTS, ...FOLLOWTHROUGH_63_EVENTS, ...FOLLOWTHROUGH_64_EVENTS, ...FOLLOWTHROUGH_65_EVENTS, ...FOLLOWTHROUGH_66_EVENTS, ...FOLLOWTHROUGH_67_EVENTS, ...FOLLOWTHROUGH_68_EVENTS, ...FOLLOWTHROUGH_69_EVENTS, ...FOLLOWTHROUGH_70_EVENTS, ...FOLLOWTHROUGH_71_EVENTS, ...FOLLOWTHROUGH_72_EVENTS, ...FOLLOWTHROUGH_73_EVENTS, ...FOLLOWTHROUGH_74_EVENTS, ...FOLLOWTHROUGH_75_EVENTS, ...FOLLOWTHROUGH_76_EVENTS, ...FOLLOWTHROUGH_77_EVENTS, ...FOLLOWTHROUGH_78_EVENTS, ...FOLLOWTHROUGH_79_EVENTS, ...FOLLOWTHROUGH_80_EVENTS, ...FOLLOWTHROUGH_81_EVENTS, ...FOLLOWTHROUGH_82_EVENTS, ...FOLLOWTHROUGH_83_EVENTS, ...FOLLOWTHROUGH_84_EVENTS, ...FOLLOWTHROUGH_85_EVENTS, ...FOLLOWTHROUGH_86_EVENTS, ...FOLLOWTHROUGH_87_EVENTS, ...FOLLOWTHROUGH_88_EVENTS, ...FOLLOWTHROUGH_89_EVENTS, ...FOLLOWTHROUGH_90_EVENTS, ...FOLLOWTHROUGH_91_EVENTS, ...FOLLOWTHROUGH_92_EVENTS, ...FOLLOWTHROUGH_93_EVENTS, ...FOLLOWTHROUGH_94_EVENTS, ...FOLLOWTHROUGH_95_EVENTS, ...SPECIFIC_LIFE_EVENTS, ...ERA_GAP_EVENTS, ...TEACHER_POWER_EVENTS, ...DISEASE_ARC_EVENTS, ...SOUTH_SOUTH_EVENTS, ...INTERPRETER_ARC_EVENTS, ...DOCTOR_ARC_EVENTS, ...JOURNALIST_ARC_EVENTS, ...LAWYER_ARC_EVENTS, ...NURSE_ARC_EVENTS, ...FARMER_ARC_EVENTS, ...POLICE_ARC_EVENTS, ...SOCIAL_WORKER_ARC_EVENTS, ...ARTIST_ARC_EVENTS, ...ENGINEER_ARC_EVENTS, ...DEV_ARC_EVENTS, ...FACTORY_ARC_EVENTS, ...LABORER_ARC_EVENTS, ...CIVIL_SERVANT_ARC_EVENTS, ...DRIVER_ARC_EVENTS, ...CHEF_ARC_EVENTS, ...MERCHANT_ARC_EVENTS, ...ACCOUNTANT_ARC_EVENTS, ...PALESTINE_DEPTH_EVENTS, ...MEMORY_LAYER_EVENTS, ...ROADS_NOT_TAKEN_EVENTS, ...LETTER_EVENTS, ...SEASONAL_EVENTS, ...ORAL_TRADITION_EVENTS, ...PRISON_EVENTS, ...PRISON_AFTER_EVENTS, ...POLITICAL_PRISON_EVENTS, ...HOUSING_EVENTS, ...WINDFALL_EVENTS, ...AUSTRIA_EVENTS, ...AUSTRIA_FOLLOWTHROUGH, ...ADRIATIC_EVENTS, ...ADRIATIC_FOLLOWTHROUGH, ...ICELAND_MOLDOVA_EVENTS, ...ICELAND_MOLDOVA_FOLLOWTHROUGH, ...OMAN_PACIFIC_BHUTAN_EVENTS, ...OMAN_PACIFIC_BHUTAN_FOLLOWTHROUGH, ...GERMANY_REICH_EVENTS, ...GERMANY_REICH_FOLLOWTHROUGH, ...GULF_EVENTS, ...GUYANA_EVENTS, ...GUYANA_FOLLOWTHROUGH, ...BOSNIA_EVENTS, ...BOSNIA_FOLLOWTHROUGH]
 
 // ─── Event classification ─────────────────────────────────────────────────────
 // Two facts about every event, computed once at module load, used by
@@ -9030,11 +9201,130 @@ export function guardSpecificity(e) {
   return n
 }
 
+// Prose that only makes sense to someone who attended school. 82 childhood and
+// adolescence events assume a classroom without checking whether this character
+// was ever in one, so a life could print "Your mother walks you to the school
+// gate", "There are sixty children in the classroom" and "You are the first in
+// your family to reach secondary school", and then be told at sixteen that
+// there was never a school to leave. 18% of lives did exactly that.
+//
+// Classified from the prose rather than the guard, because the guard is the
+// thing that is missing. Checked in getNextEvent against G.literate, which
+// reads the literacy roll createCharacter makes at birth — so the answer is
+// known from age 0 and these never have to fire in the first place.
+const SCHOOL_PROSE = /school gate|in the classroom|reach secondary school|your teacher\b|the schoolroom|at school,|school uniform|your classmates|the lesson\b|the exam\b|final exams|your class\b/i
+
+// The same idea, one level up: prose that assumes an institution exists at all.
+// A Cambodian character in 1977 was drawing a salary, going to school, being
+// referred to a psychiatrist and worrying about municipal contracts, four years
+// into a regime that had abolished money, wages, schools, hospitals, religion,
+// the post and the cities themselves. Every guard asked what country and what
+// year and got a true answer to the wrong question.
+//
+// Classified from the prose, because the prose is what makes the claim;
+// INSTITUTION_PROSE and INSTITUTIONS_SUSPENDED both live in history.js.
+
+function eventProse(e) {
+  let t = ''
+  if (typeof e.text === 'string') t = e.text
+  else if (typeof e.text === 'function') { try { t = Function.prototype.toString.call(e.text) } catch (_) { t = '' } }
+  for (const c of e.choices ?? []) t += ' ' + (c.text ?? '') + ' ' + (c.outcome ?? '')
+  return t
+}
+
+// Every mem key that some event's effect writes. A guard reading a key nobody
+// sets is not a chain link, it is a dead branch, and boosting it would boost
+// nothing.
+let _memSetters = null
+let _uniqueFlags = null
+function scanEffects() {
+  if (_memSetters) return
+  _memSetters = new Set()
+  const flagSetters = new Map()
+  for (const e of EVENTS) {
+    if (!e) continue
+    let eff = ''
+    try {
+      eff = String(e.effect ?? '')
+      for (const c of e.choices ?? []) eff += String(c?.effect ?? '')
+    } catch (_) { eff = '' }
+    for (const m of eff.matchAll(/setMem\(\s*['"]([^'"]+)['"]/g)) _memSetters.add(m[1])
+    for (const m of eff.matchAll(/addFlag\(\s*['"]([^'"]+)['"]/g)) {
+      if (!flagSetters.has(m[1])) flagSetters.set(m[1], new Set())
+      flagSetters.get(m[1]).add(e.id)
+    }
+  }
+  // A flag exactly one event sets is an arc marker: it names a specific thing
+  // that happened to this character. A flag twenty events set is a category,
+  // and boosting on it would boost a category rather than a follow-through.
+  _uniqueFlags = new Set([...flagSetters].filter(([, ids]) => ids.size === 1).map(([f]) => f))
+}
+function memSetters() { scanEffects(); return _memSetters }
+function uniqueFlags() { scanEffects(); return _uniqueFlags }
+
+const MEM_POS = /G\.mem[?]?\.([A-Za-z_][A-Za-z0-9_]*)/g
+const MEM_NEG = /!\s*G\.mem[?]?\.([A-Za-z_][A-Za-z0-9_]*)/g
+const FLAG_POS = /G\.flags\.(?:includes|has)\(\s*['"]([^'"]+)['"]/g
+const FLAG_NEG = /!\s*G\.flags\.(?:includes|has)\(\s*['"]([^'"]+)['"]/g
+
+function memPrerequisites(src) {
+  if (!src) return null
+  const neg = new Set([...src.matchAll(MEM_NEG)].map(m => m[1]))
+  const setters = memSetters()
+  const req = [...new Set([...src.matchAll(MEM_POS)].map(m => m[1]))]
+    .filter(k => !neg.has(k) && setters.has(k))
+  return req.length ? req : null
+}
+
+function flagPrerequisites(src) {
+  if (!src) return null
+  const neg = new Set([...src.matchAll(FLAG_NEG)].map(m => m[1]))
+  const arcFlags = uniqueFlags()
+  const req = [...new Set([...src.matchAll(FLAG_POS)].map(m => m[1]))]
+    .filter(f => !neg.has(f) && arcFlags.has(f))
+  return req.length ? req : null
+}
+
 export function classifyEvent(e) {
   if (e.register !== undefined) return e
   let src = ''
   try { if (typeof e.when === 'function') src = Function.prototype.toString.call(e.when) } catch (_) { src = '' }
+  // An event that already consults literacy or schooling is making its own
+  // decision and is left alone.
+  const prose = eventProse(e)
+  e.assumesSchool = !/G\.literate|never_schooled|education\?\.level|G\.education/.test(src) &&
+    (e.phase === 'childhood' || e.phase === 'adolescence') &&
+    SCHOOL_PROSE.test(prose)
+  // An event written ABOUT one of these years is making its own decision — the
+  // Khmer Rouge arc says "there is no money now" on purpose — so it opts out,
+  // either by consulting the table itself or by carrying one of the flags that
+  // only exist inside such a period. `G.currentYear` is deliberately NOT in
+  // this list: nearly every event in the corpus reads the year, so treating
+  // that as self-awareness exempted almost all of them.
+  const selfAware = e.assumesInstitutions === false ||
+    /institutionExists|suspendedInstitutions|khmer_rouge|year_zero|kr_|angkar/.test(src)
+  e.assumesInstitutions = selfAware ? null : institutionsAssumed(prose)
+  if (e.assumesInstitutions?.length === 0) e.assumesInstitutions = null
   e.anchored = ANCHOR_PROBE.test(src) || ANCHOR_HELPER_PROBE.test(src)
+  // Is this event the NEXT LINK in an arc the character is already inside?
+  //
+  // 194 events in the corpus require a `mem` key that another event sets, and
+  // 190 of them sit at weight 1-6 — competing on equal terms with the whole
+  // eight-thousand-event pool even for a character who is three links into the
+  // arc. The parent-care arc is eight such links, each two years apart, each at
+  // weight 3, against a parent who will die within about fifteen years: the
+  // chance of reaching the end was close to zero, and "follow-through first" is
+  // the first design principle in CLAUDE.md.
+  //
+  // The keys required POSITIVELY, minus the ones the guard negates (a `!mem.x`
+  // is a once-only latch, not a prerequisite). Recorded here; the boost is
+  // applied in tick.js, where it can see whether they are actually set.
+  e.continuesMem = memPrerequisites(src)
+  // The same question asked of flags. 1,562 events — a fifth of the corpus —
+  // require a flag exactly one other event sets, and they sit at weight 1-10.
+  // That is the follow-through layer, and it was competing with the open pool
+  // for a character who is already inside the arc.
+  e.continuesFlag = flagPrerequisites(src)
   guardSpecificity(e)
   if (e.contemplative) e.register = 'contemplative'
   else if (e.anchored) e.register = 'anchored'
@@ -9049,6 +9339,7 @@ export function classifyEvent(e) {
 // they must be identifiable: a module may opt in with `isGlimpse: true`, and the
 // long-standing id convention is honoured as a fallback. Cheap enough to run eagerly.
 for (const e of EVENTS) {
+  if (!e) continue
   if (e.isGlimpse === undefined && /glimpse|stranger|_window_lit|passerby/.test(e.id ?? '')) e.isGlimpse = true
 }
 
@@ -9057,8 +9348,17 @@ export const EVENT_REGISTERS = ['anchored', 'earned', 'universal', 'contemplativ
 
 // Phase index: pre-computed at module load so getNextEvent() only evaluates
 // guards for events in the current phase rather than scanning the entire array.
+//
+// Both loops skip holes. A trailing comma too many in any of the 460+ event
+// modules puts an `undefined` in the array, and reading `.id` off it here
+// throws during module evaluation — which is not a failed event, it is the
+// entire corpus failing to load, with a stack trace pointing at this file
+// rather than at the typo. One sparse array did exactly that in September.
+// `npm run check-events` reports the hole itself; this keeps the game running
+// while somebody finds it.
 export const EVENTS_BY_PHASE = {}
 for (const e of EVENTS) {
+  if (!e) continue
   if (!EVENTS_BY_PHASE[e.phase]) EVENTS_BY_PHASE[e.phase] = []
   EVENTS_BY_PHASE[e.phase].push(e)
 }

@@ -14,7 +14,6 @@ export const CANADA_EVENTS = [
       G.age >= 14 &&
       !G.mem?.canOctoberCrisis,
     text: (G) => {
-      const isQuebec = G.place?.region === 'Quebec' || G.character.country.name === 'Canada'
       return 'October 1970. The Front de libération du Québec kidnaps James Cross, the British trade commissioner, and then Pierre Laporte, the Quebec Labour Minister. Trudeau invokes the War Measures Act — suspended civil liberties, mass arrests. Nearly five hundred people detained without charge. "Just watch me," Trudeau said when asked how far he would go. Laporte is found dead in the trunk of a car on October 17. Cross is released in December. The War Measures Act is the only time Canada has suspended civil liberties in peacetime. The FLQ is broken. The question of Quebec is not.'
     },
     choices: [

@@ -21,14 +21,31 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      # jsdom 30 declares engines.node "^22.22.2 || ^24.15.0 || >=26.0.0" and
+      # pulls undici 8, which needs >=22.19.0 and calls
+      # worker_threads.markAsUncloneable — a function that does not exist before
+      # Node 22.10. On Node 20 the jsdom worker died on start with
+      # "webidl.util.markAsUncloneable is not a function", which vitest reports
+      # as an unhandled error after every other test has passed, so the run read
+      # "276 passed, 1 error". The pin predates jsdom being a dependency at all.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
 
       - name: Build
         run: npm run build
+
+      # There was no linter until September 2026, and two of that pass's defects
+      # were exactly what one reports for free: a variable computed from an OR
+      # and never used, and a re-export that left a name unbound and killed 180
+      # of 200 simulated lives while all 224 unit tests passed. The config is
+      # narrow on purpose — the rules that catch a real bug at error level and
+      # nothing stylistic — so this step failing means something is actually
+      # wrong. Inherited dead code reports as a warning and does not gate.
+      - name: Lint
+        run: npm run lint
 
       # Content integrity: every registered flag must be set somewhere and
       # consumed in the way its declared intent promises.
@@ -74,7 +91,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
 

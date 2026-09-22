@@ -3,6 +3,55 @@
 // Religion is assigned at birth but mostly dormant in events_religion.js (rites).
 // This file builds the arc across the whole life: doubt, departure, return, interfaith.
 
+// Countries where personal status — marriage, divorce, a child's religion — is
+// decided by religious law rather than a civil code. A household that practises
+// two traditions side by side and lets the child choose is not a thing that can
+// exist here: the child follows the father, as a matter of registration. Without
+// this the two-traditions event was firing for Coptic families in Egypt.
+const RELIGIOUS_PERSONAL_STATUS = [
+  'Egypt', 'Saudi Arabia', 'Iran', 'Iraq', 'Jordan', 'Syria', 'Lebanon', 'Yemen',
+  'Kuwait', 'Qatar', 'Bahrain', 'UAE', 'Oman', 'Libya', 'Sudan', 'Algeria',
+  'Morocco', 'Tunisia', 'Pakistan', 'Bangladesh', 'Afghanistan', 'Malaysia',
+  'Brunei', 'Mauritania', 'Somalia', 'Israel',
+]
+
+// The congregation that is deliberately more than one tradition — a Unitarian
+// church, an interfaith group, a mosque that describes itself as progressive —
+// is a specific institution of the post-1965 Anglosphere and Western Europe. It
+// is not a thing a folk-religion household in 1981 Japan could walk into.
+const PLURALIST_CONGREGATION_COUNTRIES = [
+  'United States', 'Canada', 'United Kingdom', 'Ireland', 'Australia',
+  'New Zealand', 'Netherlands', 'Germany', 'France', 'Sweden', 'Norway',
+  'Denmark', 'Belgium', 'Switzerland', 'Austria', 'Finland',
+]
+
+// Whether a mixed marriage is a thing that happens here at all. Nothing on the
+// partner object holds a religion, so the country's own mix is the only
+// evidence available — and it is enough to separate Egypt, Nigeria, Germany and
+// Brazil, where a couple really can come from two traditions, from Japan, where
+// "the person you are with does not share your religion" was being printed at a
+// household that keeps a Shinto shelf and a Buddhist altar and sees no conflict
+// in it. Buddhism, Shinto and folk practice are counted as one tradition for
+// exactly that reason; Christian denominations are not, because Catholic and
+// Protestant marrying was the interfaith event across most of the West.
+const TRADITION = (rel) =>
+  rel?.startsWith('muslim') ? 'muslim'
+    : ['buddhist', 'shinto', 'folk_religion', 'confucian', 'taoist'].includes(rel) ? 'east_asian'
+      : ['secular', 'atheist', 'agnostic'].includes(rel) ? 'none'
+        : rel
+
+export const canBeInterfaithHere = (G) => {
+  const mine = TRADITION(G.religion)
+  if (!mine || mine === 'none') return false
+  const weights = (G.currentCountry ?? G.character.country)?.religionWeights ?? {}
+  let other = 0
+  for (const [rel, share] of Object.entries(weights)) {
+    const t = TRADITION(rel)
+    if (t !== mine && t !== 'none') other += share
+  }
+  return other >= 0.15
+}
+
 export const RELIGION_ARC_EVENTS = [
 
   // ── RELIGIOUS RITES OF PASSAGE ───────────────────────────────────────────────
@@ -176,7 +225,7 @@ export const RELIGION_ARC_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.flags.includes('left_religion') && !G.mem?.leader_betrayal,
-    text: 'The religious leader you trusted is found to have done something — financial, sexual, or both. The institution closes ranks around him. The investigation is slow and the apology, when it comes, is insufficient. You are left with the question of whether the institution and the faith are the same thing, and whether you can separate them.',
+    text: 'The religious leader you trusted is found to have been taking money. It is not a large amount and that is somehow the worst detail. The institution closes ranks around him. The investigation is slow and the apology, when it comes, is insufficient. You are left with the question of whether the institution and the faith are the same thing, and whether you can separate them.',
     choices: [
       { text: 'Leave the institution but not the faith', tag: null, outcome: 'You find a smaller congregation. Or you practice at home. The faith survives the institution, barely.', effect: (p) => { p.m -= 8; p.r += 8; p.setMem('leader_betrayal', true) } },
       { text: 'Leave both — they cannot be separated', tag: null, outcome: 'You stop. The question of what you believe is still open. You will return to it, differently.', effect: (p) => { p.m -= 12; p.e += 5; p.addFlag('left_religion'); p.setMem('leader_betrayal', true) } },
@@ -289,11 +338,15 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_interfaith_relationship_arc',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 20 && G.age <= 38 && G.partner && !G.mem?.interfaith_arc,
+    // Sets `interfaith_partnership`: nothing on the partner object records a
+    // religion, so this event and its sibling in events_religion.js are the only
+    // places the game learns that a couple is actually mixed. The downstream
+    // events read the flag rather than assuming it.
+    when: (G) => G.age >= 20 && G.age <= 38 && G.partner && canBeInterfaithHere(G) && !G.mem?.interfaith_arc,
     text: 'The person you are with does not share your religion. This was not planned. The families have opinions that are conveyed through specific silences and specific questions. Your grandmother asks, at a family meal, what the children will be raised as. The question is not unreasonable. You have not answered it between yourselves yet.',
     choices: [
-      { text: 'Discuss it honestly and find an agreement', tag: null, outcome: 'You disagree for a while and then you find a position you can both stand on. The conversation required of you was real.', effect: (p) => { p.m += 8; p.partnerRel(10); p.setMem('interfaith_arc', true) } },
-      { text: 'Defer it — you will figure it out when it is relevant', tag: null, outcome: 'The question returns. It is always more complicated when it is relevant. But you are still together. That is something.', effect: (p) => { p.m += 3; p.r += 5; p.setMem('interfaith_arc', true) } },
+      { text: 'Discuss it honestly and find an agreement', tag: null, outcome: 'You disagree for a while and then you find a position you can both stand on. The conversation required of you was real.', effect: (p) => { p.m += 8; p.partnerRel(10); p.addFlag('interfaith_partnership'); p.setMem('interfaith_arc', true) } },
+      { text: 'Defer it — you will figure it out when it is relevant', tag: null, outcome: 'The question returns. It is always more complicated when it is relevant. But you are still together. That is something.', effect: (p) => { p.m += 3; p.r += 5; p.addFlag('interfaith_partnership'); p.setMem('interfaith_arc', true) } },
     ],
     effect: null,
   },
@@ -302,7 +355,13 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_raising_interfaith_children',
     phase: 'midlife',
     weight: 3,
-    when: (G) => G.children && G.children.length > 0 && G.partner && G.age >= 28 && G.age <= 50 && !G.mem?.interfaith_children,
+    // Nothing here read the partner's religion, so "you attend your tradition,
+    // your partner attends theirs" was printed for every married parent in the
+    // game, including in countries where that household cannot legally exist.
+    when: (G) => G.children && G.children.length > 0 && G.partner &&
+      G.flags.includes('interfaith_partnership') &&
+      !RELIGIOUS_PERSONAL_STATUS.includes(G.currentCountry?.name ?? G.character.country.name) &&
+      G.age >= 28 && G.age <= 50 && !G.mem?.interfaith_children,
     text: 'The question of the children. You attend your tradition, your partner attends theirs, and your child looks between the two and asks which one is true. You give an honest answer or an evasive one, and either way you understand that you are transmitting something, and that what you transmit is not only theology.',
     choices: [
       { text: 'Raise them in both — let them choose later', tag: null, outcome: 'They will choose, or they won\'t. What they have is a wider map than either of you had alone.', effect: (p) => { p.m += 8; p.partnerRel(6); p.setMem('interfaith_children', true) } },
@@ -312,10 +371,51 @@ export const RELIGION_ARC_EVENTS = [
   },
 
   {
+    id: 'rela_conversion_comes_due',
+    phase: 'late_life',
+    weight: 3,
+    // Follow-through on the conversion that got the marriage registered. The
+    // paperwork was a formality for thirty years and then it decides where you
+    // are buried and who is permitted to say the words over you.
+    when: (G) => G.flags.includes('marriage_across_the_register') &&
+      G.age >= 55 && !G.mem?.conversionComesDue,
+    text: 'A cousin dies and the arrangements are made by people who consult the register, not the family, and you watch how quickly the question is settled by a line written down decades ago. Then you think about your own line. The conversion was a formality; you signed it in an office with a man who did not look up. It has sat quietly for thirty years and it will decide which ground you are put in, and which words are said, and who among your own children is permitted to say them.',
+    choices: [
+      { text: 'Say out loud what you want done', tag: null, outcome: 'You tell the one child who will actually argue for it. Saying it does not guarantee it. Not saying it guarantees the other thing.', effect: (p) => { p.m -= 3; p.karma += 4; p.r += 3; p.setMem('conversionComesDue', true) } },
+      { text: 'Leave it. The living will need the easier answer', tag: null, outcome: 'You decide this is the last thing you can give them: no argument at the graveside. You are not sure whether that is generosity or the habit of forty years.', effect: (p) => { p.m -= 5; p.r += 7; p.setMem('conversionComesDue', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rela_children_of_a_registered_faith',
+    phase: 'midlife',
+    weight: 3,
+    // The version that fits where the household above cannot exist. In Egypt a
+    // mixed marriage is possible in one direction and the children are
+    // registered to the father's religion at birth; the mother's tradition
+    // survives in the house, not on the paper.
+    when: (G) => G.children && G.children.length > 0 && G.partner &&
+      G.flags.includes('interfaith_partnership') &&
+      RELIGIOUS_PERSONAL_STATUS.includes(G.currentCountry?.name ?? G.character.country.name) &&
+      G.age >= 28 && G.age <= 50 && !G.mem?.interfaith_children,
+    text: 'The question of the children was decided before it was asked. It is on the identity papers, in the line that does not have a box for what your household is actually like. What happens at home is another matter: one of you keeps the fast the other does not keep, and both of you are quiet about it, and the child grows up fluent in two sets of manners without being told that this is unusual. At some point the child works out which line the state has written down, and asks about the other one.',
+    choices: [
+      { text: 'Tell them plainly what was signed and why', tag: null, outcome: 'They take it better than you expected. What they want is not a position. It is to be told the truth about their own house.', effect: (p) => { p.m += 6; p.e += 3; p.karma += 3; p.setMem('interfaith_children', true) } },
+      { text: 'Let the house keep teaching what the paper cannot', tag: null, outcome: 'Nothing is declared. The child learns both anyway, by being in the rooms where both happen. Whether that is enough is a question you will not settle.', effect: (p) => { p.m += 3; p.r += 5; p.setMem('interfaith_children', true) } },
+    ],
+    effect: null,
+  },
+
+  {
     id: 'rela_interfaith_congregation',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.interfaith_congregation && ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype),
+    when: (G) => G.age >= 30 && !G.mem?.interfaith_congregation &&
+      PLURALIST_CONGREGATION_COUNTRIES.includes(G.currentCountry?.name ?? G.character.country.name) &&
+      G.currentYear >= 1968 &&
+      G.ruralUrban !== 'rural' &&
+      ['christian_protestant', 'christian_catholic', 'jewish', 'secular', 'muslim_sunni', 'buddhist'].includes(G.religion),
     text: 'You find a congregation or a community that is not one tradition — a Unitarian church, an interfaith dialogue group, a progressive mosque where multiple practices are honored. The theology is less precise. The community is stranger. There is something specific about worshipping alongside people who pray differently, who are trying at the same question by a different road.',
     choices: null,
     effect: (p) => { p.m += 10; p.s += 6; p.setMem('interfaith_congregation', true) },

@@ -24,7 +24,7 @@ export const HEADLINES = [
   { year: 1953, text: 'KOREAN WAR ARMISTICE SIGNED', archetypes: 'all', countries: null, minAge: 1 },
   { year: 1953, text: 'STALIN IS DEAD', archetypes: ['post_soviet'], countries: null, minAge: 1 },
   { year: 1955, text: 'ROSA PARKS REFUSES TO GIVE UP HER SEAT', archetypes: ['wealthy_west'], countries: ['United States'], minAge: 5 },
-  { year: 1957, text: 'GHANA INDEPENDENT — AFRICA\'S FIRST', archetypes: ['subsaharan'], countries: ['Ghana'], minAge: 1 },
+  { year: 1957, text: 'GHANA INDEPENDENT — FIRST OF THE BRITISH COLONIES IN AFRICA', archetypes: ['subsaharan'], countries: ['Ghana'], minAge: 1 },
   { year: 1957, text: 'SOVIETS LAUNCH SPUTNIK — SPACE AGE BEGINS', archetypes: 'all', countries: null, minAge: 5 },
   { year: 1959, text: 'FIDEL CASTRO TAKES HAVANA — BATISTA FLEES', archetypes: 'all', countries: ['Cuba'], minAge: 1 },
 
@@ -71,7 +71,7 @@ export const HEADLINES = [
   { year: 1991, text: 'THE SOVIET UNION IS DISSOLVED', archetypes: ['post_soviet', 'wealthy_west'], countries: null, minAge: 1 },
   { year: 1992, text: 'YUGOSLAVIA TEARS ITSELF APART — WAR IN BOSNIA', archetypes: ['post_soviet', 'wealthy_west'], countries: null, minAge: 5 },
   { year: 1993, text: 'OSLO ACCORDS SIGNED — PALESTINIANS AND ISRAELIS SHAKE HANDS', archetypes: 'all', countries: null, minAge: 5 },
-  { year: 1994, text: 'GENOCIDE IN RWANDA — ONE MILLION DEAD IN A HUNDRED DAYS', archetypes: 'all', countries: null, minAge: 5 },
+  { year: 1994, text: 'GENOCIDE IN RWANDA — HUNDREDS OF THOUSANDS DEAD IN A HUNDRED DAYS', archetypes: 'all', countries: null, minAge: 5 },
   { year: 1994, text: 'MANDELA VOTES — SOUTH AFRICA\'S FIRST FREE ELECTION', archetypes: 'all', countries: ['South Africa'], minAge: 1 },
   { year: 1995, text: 'SREBRENICA MASSACRE — WORST ATROCITY IN EUROPE SINCE WORLD WAR II', archetypes: ['post_soviet', 'wealthy_west'], countries: null, minAge: 5 },
   { year: 1997, text: 'HONG KONG RETURNED TO CHINA', archetypes: 'all', countries: ['China'], minAge: 1 },
@@ -91,12 +91,12 @@ export const HEADLINES = [
   { year: 2008, text: 'BANKS COLLAPSE — GLOBAL FINANCIAL CRISIS', archetypes: ['wealthy_west', 'wealthy_east', 'post_soviet'], countries: null, minAge: 5 },
   { year: 2008, text: 'BARACK OBAMA ELECTED PRESIDENT OF THE UNITED STATES', archetypes: 'all', countries: ['United States'], minAge: 5 },
   { year: 2007, text: 'M-PESA LAUNCHES IN KENYA — MOBILE MONEY CHANGES AFRICA', archetypes: ['subsaharan'], countries: ['Kenya'], minAge: 5 },
-  { year: 2008, text: 'ZIMBABWE PRINTS ONE HUNDRED TRILLION DOLLAR NOTES. THE EXCHANGE RATE CHANGES HOURLY.', archetypes: 'all', countries: ['Zimbabwe'], minAge: 1 },
-  { year: 2009, text: 'IRAN: MILLIONS TAKE TO THE STREETS — GREEN REVOLUTION CRUSHED', archetypes: 'all', countries: ['Iran'], minAge: 5 },
+  { year: 2009, text: 'ZIMBABWE PRINTS ONE HUNDRED TRILLION DOLLAR NOTES. THE EXCHANGE RATE CHANGES HOURLY.', archetypes: 'all', countries: ['Zimbabwe'], minAge: 1 },
+  { year: 2009, text: 'IRAN: MILLIONS TAKE TO THE STREETS — GREEN MOVEMENT CRUSHED', archetypes: 'all', countries: ['Iran'], minAge: 5 },
 
   // ── 2010s ────────────────────────────────────────────────────────────────────
   { year: 2010, text: 'EARTHQUAKE KILLS TWO HUNDRED THOUSAND IN HAITI', archetypes: 'all', countries: null, minAge: 1 },
-  { year: 2010, text: 'ARAB SPRING: PRESIDENT OF TUNISIA FLEES', archetypes: 'all', countries: null, minAge: 5 },
+  { year: 2011, text: 'ARAB SPRING: PRESIDENT OF TUNISIA FLEES', archetypes: 'all', countries: null, minAge: 5 },
   { year: 2011, text: 'HOSNI MUBARAK RESIGNS — EGYPT\'S REVOLUTION SUCCEEDS', archetypes: 'all', countries: ['Egypt'], minAge: 5 },
   { year: 2011, text: 'OSAMA BIN LADEN KILLED IN PAKISTAN', archetypes: 'all', countries: null, minAge: 5 },
   { year: 2011, text: 'SOUTH SUDAN BECOMES THE WORLD\'S NEWEST COUNTRY', archetypes: 'all', countries: null, minAge: 5 },

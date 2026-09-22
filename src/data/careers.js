@@ -99,7 +99,7 @@ export const CAREERS = [
     levels: [
       { title: 'Day Laborer', salaryRange: [8000, 15000] },
       { title: 'Skilled Laborer', salaryRange: [15000, 25000] },
-      { title: 'Foreman', salaryRange: [25000, 40000] },
+      { title: 'Foreman', titleFemale: 'Forewoman', salaryRange: [25000, 40000] },
     ],
     requirements: { education: 'none', field: null, minSmarts: null, minAge: 16 },
     archetypeAvailable: 'all',
@@ -497,10 +497,13 @@ export const CAREERS = [
     title: 'Police Officer',
     field: 'law_enforcement',
     levels: [
-      { title: 'Police Constable', salaryRange: [28000, 42000] },
-      { title: 'Detective Constable', salaryRange: [40000, 58000] },
-      { title: 'Detective Sergeant', salaryRange: [52000, 72000] },
-      { title: 'Inspector', salaryRange: [65000, 90000] },
+      // `ranks` is resolved per country by careerTitle in tick.js. Without it
+      // every force on earth used British ranks, and a New York officer was
+      // promoted to Detective Chief Inspector.
+      { title: 'Police Constable', ranks: { british: 'Police Constable', american: 'Patrol Officer', other: 'Police Officer' }, salaryRange: [28000, 42000] },
+      { title: 'Detective Constable', ranks: { british: 'Detective Constable', american: 'Detective', other: 'Senior Officer' }, salaryRange: [40000, 58000] },
+      { title: 'Detective Sergeant', ranks: { british: 'Detective Sergeant', american: 'Sergeant', other: 'Sergeant' }, salaryRange: [52000, 72000] },
+      { title: 'Inspector', ranks: { british: 'Inspector', american: 'Lieutenant', other: 'Inspector' }, salaryRange: [65000, 90000] },
     ],
     requirements: { education: 'secondary', field: null, minSmarts: 30, minAge: 20 },
     archetypeAvailable: 'all',
@@ -953,7 +956,7 @@ export const CAREERS = [
     field: 'casual',
     partTime: true,
     levels: [
-      { title: 'Paper Boy / Girl', salaryRange: [1500, 3000] },
+      { title: 'Paper Boy', titleFemale: 'Paper Girl', salaryRange: [1500, 3000] },
     ],
     requirements: { education: 'none', field: null, minSmarts: null, minAge: 13, maxAge: 17 },
     archetypeAvailable: ['wealthy_west', 'wealthy_east'],
@@ -1773,7 +1776,7 @@ export const CAREERS = [
   {
     id: 'content_creator',
     title: 'Content Creator',
-    field: 'media',
+    field: 'digital_media',
     minYear: 2012,
     levels: [
       { title: 'Micro Creator', salaryRange: [5000, 20000] },
@@ -2023,10 +2026,10 @@ export const CAREERS = [
     title: 'Detective',
     field: 'law_enforcement',
     levels: [
-      { title: 'Detective Constable', salaryRange: [35000, 52000] },
-      { title: 'Detective Sergeant', salaryRange: [50000, 72000] },
-      { title: 'Detective Inspector', salaryRange: [70000, 95000] },
-      { title: 'Detective Chief Inspector', salaryRange: [90000, 130000] },
+      { title: 'Detective Constable', ranks: { british: 'Detective Constable', american: 'Detective', other: 'Investigator' }, salaryRange: [35000, 52000] },
+      { title: 'Detective Sergeant', ranks: { british: 'Detective Sergeant', american: 'Detective Sergeant', other: 'Senior Investigator' }, salaryRange: [50000, 72000] },
+      { title: 'Detective Inspector', ranks: { british: 'Detective Inspector', american: 'Lieutenant', other: 'Chief Investigator' }, salaryRange: [70000, 95000] },
+      { title: 'Detective Chief Inspector', ranks: { british: 'Detective Chief Inspector', american: 'Captain', other: 'Head of Criminal Investigation' }, salaryRange: [90000, 130000] },
     ],
     // requirements.field is matched against state.education.field, and the only
     // values that field can ever hold are healthcare / business / science / arts

@@ -184,5 +184,21 @@ export const NOMADIC_EVENTS = [
     choices: null,
     effect: (p) => { p.h -= 5; p.r += 7; p.m -= 4; p.addFlag('nomadic_heritage'); p.setMem('mongolUB', true) },
   },
+  {
+    id: 'nom_dzud_after',
+    phase: null,
+    weight: 6,
+    when: (G) =>
+      G.flags.has('mongolian_dzud_survived') &&
+      G.currentYear - (G.mem?.mongolDzudYear ?? G.currentYear - 6) >= 4 &&
+      G.age >= 18 &&
+      !G.mem?.nomDzudAfter,
+    text: 'The herd is back to about a third of what it was, which took four years, and the arithmetic of rebuilding is not the arithmetic of keeping. You count in a different unit now — not animals but the number of bad winters you could survive in a row, and the answer is one. Everyone in the valley is doing the same sum. The ones who stopped doing it are in the ger district on the edge of Ulaanbaatar, in a fenced plot with a stove, and they send photographs.',
+    choices: [
+      { text: 'Rebuild the herd. This is what the family does.', tag: 'defiant', outcome: 'You buy back in. Two good winters and you are nearly whole, and you know exactly what nearly is worth.', effect: (p) => { p.m += 7; p.h -= 4; p.mo -= 900; p.addFlag('nomadic_rebuilt') } },
+      { text: 'Sell what is left and take the plot on the edge of the city', tag: 'yielding', outcome: 'A fence, a stove, a water kiosk four hundred metres away. Your children will not know how to read a sky.', effect: (p) => { p.mo += 1400; p.m -= 8; p.r += 7; p.addFlag('rural_to_urban'); p.addFlag('nomadic_left_the_steppe') } },
+    ],
+    effect: null,
+  },
 
 ]

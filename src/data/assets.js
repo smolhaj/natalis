@@ -540,7 +540,6 @@ export const VEHICLE_TYPES = [
     priceClass: 'imported',
     minYear: 2017,
     description: 'The EV benchmark. No dealerships, over-the-air updates, and that giant touchscreen that controls everything.',
-    minYear: 2017,
   },
   {
     id: 'car_new_mazda_cx5',
@@ -660,7 +659,6 @@ export const VEHICLE_TYPES = [
     priceClass: 'imported',
     minYear: 2012,
     description: 'Zero to 60 in under two seconds, from a four-door sedan. The future arrived and it\'s slightly too fast.',
-    minYear: 2012,
   },
 
   // ── SUPERCARS ────────────────────────────────────────────────────────────────

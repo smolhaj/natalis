@@ -1,3 +1,16 @@
+
+// The prose says a parent has died. Effects only receive `p`, so read the
+// living parents off `p._state` — the established escape hatch — and kill one.
+// `p.killParent` sets the canonical flags and the memory timestamp that the
+// grief layer keys off; `addFlag('lost_parent')` alone did neither, and left
+// `tickParents` free to kill the same parent again two years later.
+function killTheNamedParent(p) {
+  const parents = p._state?.parents ?? {}
+  const living = ['father', 'mother'].filter(k => parents[k]?.alive)
+  if (living.length === 0) return
+  p.killParent(living[Math.floor(Math.random() * living.length)])
+}
+
 // events_grief.js
 // The full arc of grief — parents, partner, children, siblings, friends, prolonged.
 // These are the highest-emotional-weight events in the game.
@@ -19,26 +32,44 @@ export const GRIEF_EVENTS = [
       G.parents &&
       (G.parents.father?.alive || G.parents.mother?.alive) &&
       Math.random() < 0.08,
+    // The parent died in the prose and stayed alive in the state, so
+    // `tickParents` killed them again later: one life was told at 55 "Your
+    // mother is gone" and at 57 "Your mother, Hesti Andriansyah, dies at 84."
+    // And the caller was hardcoded to a brother, in a life with no siblings.
     text: (G) => {
       const which = G.parents.father?.alive && G.parents.mother?.alive
         ? (Math.random() < 0.5 ? 'father' : 'mother')
         : (G.parents.father?.alive ? 'father' : 'mother')
+      const sib = (G.siblings ?? []).find(s => s.alive !== false)
+      const caller = which === 'father'
+        ? 'your mother'
+        : G.parents.father?.alive ? 'your father'
+          : sib ? (sib.name?.split(' ')[0] ?? 'your brother')
+            : 'a cousin you have not spoken to in years'
       return which === 'father'
-        ? 'The call comes from your mother. She says your father collapsed this morning. He is gone before you can get there. You are driving when you hear and you pull over onto the shoulder and sit there for a long time.'
-        : 'Your brother calls. Your mother is gone. She was fine two weeks ago. He does not have many details yet. You find yourself standing in your kitchen not understanding what you are supposed to do with your hands.'
+        ? `The call comes from ${caller}. ${caller === 'your mother' ? 'She says' : 'They say'} your father collapsed this morning. He is gone before you can get there. You pull over onto the shoulder and sit there for a long time.`
+        : `${caller.charAt(0).toUpperCase() + caller.slice(1)} calls. Your mother is gone. She was fine two weeks ago. There are not many details yet. You find yourself standing in the middle of a room with the phone still in your hand.`
     },
     choices: [
       {
-        text: 'Get in the car and go',
+        text: 'Go now. Drive through the night if you have to.',
         tag: null,
         outcome: 'The drive is long. You arrive to a house that already feels different — the same objects, the wrong order.',
-        effect: (p) => { p.m -= 20; p.r += 8; p.addFlag('lost_parent'); p.setMem('griefParentCall', true) },
+        effect: (p) => {
+          p.m -= 20; p.r += 8
+          p.setMem('griefParentCall', true)
+          killTheNamedParent(p)
+        },
       },
       {
         text: 'Sit with it first. You will be no use to anyone like this.',
         tag: null,
         outcome: 'You give yourself an hour. Then you pack a bag and go.',
-        effect: (p) => { p.m -= 18; p.r += 6; p.addFlag('lost_parent'); p.setMem('griefParentCall', true) },
+        effect: (p) => {
+          p.m -= 18; p.r += 6
+          p.setMem('griefParentCall', true)
+          killTheNamedParent(p)
+        },
       },
     ],
     effect: null,
@@ -161,14 +192,29 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_partner_death',
-    phase: 'midlife',
-    weight: 2,
+    // `midlife` is 30-49 and the declared phase overrules the age guard, while
+    // tickPartner only kills a partner from 65. The first-grief event of the
+    // partner-death arc could therefore almost never fire for a partner who
+    // died of old age, which is most of them — which is a large part of why a
+    // widowing read as silent.
+    phase: null,
+    // The year a partner dies is not a year to leave to the draw. At weight 8
+    // this reached 1 widowing in 33, against a guard that was true in all of
+    // them, because a widow of seventy is competing with eight thousand
+    // events for the few years she has left.
+    weight: 999,
+    // `G.partner` is the LIVING partner; the one who has died is
+    // `G.deceasedPartner`, so that the 304 guards written as `G.partner` mean
+    // what their authors meant.
     when: (G) =>
-      G.partner &&
-      G.partner.alive === false &&
+      G.deceasedPartner &&
       !G.mem.griefPartnerFirst &&
       G.age >= 35,
-    text: 'They are gone. You are in the hospital, or you are at home, or you are in the car in the hospital car park. The specific arrangement of the world without them is something you cannot yet picture. You understood, abstractly, that this day existed in the future. The abstract is now the present tense.',
+    // "You are in the hospital, or you are at home, or you are in the car in
+    // the hospital car park" is the game declining to say which. It knows how
+    // long they were together, which is the thing that is actually different
+    // between one of these and another.
+    text: (G) => `They are gone.${(G.deceasedPartner?.years ?? 0) >= 30 ? ` ${G.deceasedPartner.years} years.` : ''} The specific arrangement of the world without them is something you cannot yet picture. You understood, abstractly, that this day existed in the future. The abstract is now the present tense.`,
     choices: [
       {
         text: 'Call someone — you should not be alone right now',
@@ -188,8 +234,12 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_partner_first_night',
-    phase: 'midlife',
-    weight: 3,
+    // Gated on mem.griefPartnerFirst, which grief_partner_death sets — and
+    // that fires whenever the partner dies, which is usually after 65.
+    // `midlife` caps this at 49, so the whole follow-through was out of
+    // reach of its own trigger. The age guard already says 35+.
+    phase: null,
+    weight: 40,
     when: (G) =>
       G.mem.griefPartnerFirst &&
       !G.mem.griefPartnerNight &&
@@ -201,8 +251,12 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_partner_wrong_words',
-    phase: 'midlife',
-    weight: 3,
+    // Gated on mem.griefPartnerFirst, which grief_partner_death sets — and
+    // that fires whenever the partner dies, which is usually after 65.
+    // `midlife` caps this at 49, so the whole follow-through was out of
+    // reach of its own trigger. The age guard already says 35+.
+    phase: null,
+    weight: 40,
     when: (G) =>
       G.mem.griefPartnerFirst &&
       !G.mem.griefPartnerWrongWords &&
@@ -214,8 +268,12 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_partner_in_laws',
-    phase: 'midlife',
-    weight: 2,
+    // Gated on mem.griefPartnerFirst, which grief_partner_death sets — and
+    // that fires whenever the partner dies, which is usually after 65.
+    // `midlife` caps this at 49, so the whole follow-through was out of
+    // reach of its own trigger. The age guard already says 35+.
+    phase: null,
+    weight: 40,
     when: (G) =>
       G.mem.griefPartnerFirst &&
       !G.mem.griefPartnerInLaws &&
@@ -665,4 +723,129 @@ export const GRIEF_EVENTS = [
     effect: null,
   },
 
+  // ══════════════════════════════════════════════════════════════════════════
+  // WIDOWED YOUNG
+  //
+  // `tickPartner` started the partner death hazard at 65 everywhere, so nobody
+  // in a 1962 Nigerian or 1974 Ethiopian life could be widowed before their
+  // partner's sixties — in countries whose life expectancy at the time was in
+  // the forties. The hazard now follows the country, which makes this the
+  // commonest shape of the loss in most of the world for most of this period:
+  // a widow of thirty-eight with children at home, and no pension, and a
+  // household that has to be reassembled inside a month.
+  //
+  // The existing widowhood arc is written for a widow of seventy-two, and the
+  // two are not the same event. That one is about the shape of the days. This
+  // one is about the shape of the arithmetic.
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'grief_widowed_young_arithmetic',
+    phase: null,
+    weight: 999,
+    when: (G) =>
+      (G.flags.includes('widowed') || G.flags.includes('lost_partner')) &&
+      // "Young" here is about the arithmetic, not a birthday: children still at
+      // home, or still years short of a pension there may not be. A flat cap of
+      // 52 excluded most of the widows in the countries this is written for —
+      // Nigeria's median age at widowhood is 56 — which is the same mistake as
+      // reading a rich-world table for the mortality that causes it.
+      ((G.children ?? []).some(c => c.alive !== false && (c.age ?? 99) < 18) ||
+        G.age <= (G.retirementAge ?? 62) - 5) &&
+      // The death year itself belongs to `grief_partner_death`, which fires at
+      // weight 999 and takes it. Measured: 1 of 6 eligible widowings reached
+      // this event with a one-year window, because its only chance was a year
+      // that was already spoken for.
+      (G.mem?.partnerDeathYear == null || G.currentYear - G.mem.partnerDeathYear <= 4) &&
+      !G.mem?.griefWidowedYoung,
+    text: (G) => {
+      const kids = (G.children ?? []).filter(c => c.alive !== false && (c.age ?? 99) < 18).length
+      const poor = ['very_low', 'low', 'low_medium'].includes(G.currentCountry?.gdp ?? G.character?.country?.gdp)
+      if (kids > 0 && poor) {
+        return `There is a period of about three weeks in which people come, and then there is the rest of it. The arithmetic arrives before the grief has finished arriving: ${kids === 1 ? 'a child' : `${kids} children`} in the house, the fees due at the start of term, and one income where there were two, except that it was never quite two. Somebody's relative suggests, kindly, that the eldest could stop at the end of this year. You say you will think about it. You do think about it.`
+      }
+      if (kids > 0) {
+        return `The house does not become quiet, which is what you had somehow expected. There are ${kids === 1 ? 'a child' : `${kids} children`} in it and they need feeding at the usual times, and the ordinary machinery of a week turns out to be the thing that gets you from one end of it to the other. You are grateful for that and you also resent it, and both of those are true at four in the afternoon on the same Tuesday.`
+      }
+      return 'You are too young for this in a way that other people keep saying out loud. There is no established role for what you are. The widows in this place are thirty years older than you and they are kind and they are not, in the end, describing the same thing.'
+    },
+    choices: [
+      {
+        text: 'Take whatever work there is. The arithmetic does not wait.',
+        tag: 'yielding',
+        outcome: 'You are working within the month. People say you are coping remarkably. You are doing the only available thing, which is not the same and is easier than explaining.',
+        effect: (p) => {
+          p.setMem('griefWidowedYoung', true)
+          p.m -= 12; p.h -= 5; p.r += 6
+          p.addFlag('widowed_young')
+          p.addFlag('held_the_household')
+        },
+      },
+      {
+        text: 'Go back to the family. It is what the family is for.',
+        tag: 'yielding',
+        outcome: 'You are absorbed, which is a relief and is also the end of a household you had spent years making. Your own kitchen is somebody else\'s now.',
+        effect: (p) => {
+          p.setMem('griefWidowedYoung', true)
+          p.m -= 8; p.r += 8
+          p.addFlag('widowed_young')
+          p.addFlag('returned_to_family')
+        },
+      },
+      {
+        text: 'Refuse all of it for a while. Let the arrangements wait.',
+        tag: 'defiant',
+        outcome: 'It costs you something material that you could name if you wanted to. You do not want to. The weeks were yours.',
+        effect: (p) => {
+          p.setMem('griefWidowedYoung', true)
+          p.m -= 15; p.wipeMoney(0.2); p.r += 4
+          p.addFlag('widowed_young')
+          p.addFlag('grieved_out_loud')
+        },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'grief_widowed_young_remarriage_question',
+    phase: null,
+    weight: 30,
+    when: (G) =>
+      G.flags.includes('widowed_young') &&
+      !G.partner &&
+      G.mem?.partnerDeathYear != null &&
+      G.currentYear - G.mem.partnerDeathYear >= 2 &&
+      G.currentYear - G.mem.partnerDeathYear <= 8 &&
+      !G.mem?.griefWidowedYoungAgain,
+    text: (G) => {
+      const woman = G.character?.gender === 'female'
+      return woman
+        ? 'It is raised as a practical matter, by somebody who means well, and the practicality is the part that lands badly. There is a man. He is not unkind and he is not young and what is being proposed is an arrangement rather than a feeling, and everybody in the conversation knows it and nobody says so.'
+        : 'Your mother raises it and then your sister raises it and the two of them have clearly discussed it. The word they use is the children, and they are not wrong about the children, and you find you cannot get from that sentence to the other one.'
+    },
+    choices: [
+      {
+        text: 'Agree to it. The arrangement is an arrangement and it holds.',
+        tag: 'yielding',
+        outcome: 'It is not what the first one was. It is a household that functions, and after a few years there is something in it that neither of you would have predicted and neither of you names.',
+        effect: (p) => {
+          p.setMem('griefWidowedYoungAgain', true)
+          p.m += 5; p.r += 5
+          p.addFlag('remarried_practically')
+        },
+      },
+      {
+        text: 'No. Not this, and not as a practical matter.',
+        tag: 'defiant',
+        outcome: 'The subject is dropped and raised again twice more over the next decade, more gently each time, until it stops.',
+        effect: (p) => {
+          p.setMem('griefWidowedYoungAgain', true)
+          p.m -= 3; p.r += 7
+          p.addFlag('did_not_remarry')
+        },
+      },
+    ],
+    effect: null,
+  },
 ]

@@ -4,6 +4,8 @@
 // Arc 2: City Under Bombardment (8 events) — cc_bombardment_*
 // Arc 3: Refugee Camp as Childhood (7 events) — cc_camp_*
 
+import { hasTech } from '../../technology.js'
+
 export const CROSSCUTTING_EVENTS = [
 
   // ── ARC 1: DOMESTIC WORKER ───────────────────────────────────────────────────
@@ -263,7 +265,11 @@ export const CROSSCUTTING_EVENTS = [
       !G.mem?.ccBombardmentCeasefire &&
       G.flags.includes('city_under_bombardment') &&
       G.age >= 5,
-    text: 'The ceasefire is announced on the radio in the early afternoon. For the first hour after the announcement there is silence where there had been shelling, and the silence is not peaceful — it is the sound of a condition you do not yet trust. You wait. People open windows and look out at the street. No one goes down immediately. The second hour passes. The silence holds. A child somewhere nearby begins to cry, which is the first ordinary sound in a long time.',
+    // A ceasefire reaches a street by whatever carries news to it; the radio
+    // was carrying it in 1937 Myanmar, eighteen years before there were sets.
+    text: (G) => (hasTech(G.currentCountry ?? G.character.country, 'radio', G.currentYear)
+      ? 'The ceasefire is announced on the radio in the early afternoon.'
+      : 'Word of the ceasefire comes down the street in the early afternoon, from a neighbour who had it from someone at the depot.') + ' For the first hour after the announcement there is silence where there had been shelling, and the silence is not peaceful — it is the sound of a condition you do not yet trust. You wait. People open windows and look out at the street. No one goes down immediately. The second hour passes. The silence holds. A child somewhere nearby begins to cry, which is the first ordinary sound in a long time.',
     choices: null,
     effect: (p) => { p.m += 10; p.h += 4; p.setMem('ccBombardmentCeasefire', true) },
   },

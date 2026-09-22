@@ -336,7 +336,7 @@ export const EVENTS_SONDER_28 = [
     weight: 2,
     when: (G) => G.age >= 14 && !G.mem?.sdr28LateAtNight,
     text: () => pick([
-      'The house at 2am or 3am — the particular quality of it. Every sound has a different scale at that hour. The refrigerator, a branch against a window, someone outside at a distance. You are the only one awake. This is a different version of the same place.',
+      'The house at 2am or 3am — the particular quality of it. Every sound has a different scale at that hour. The roof settling, a branch against a window, someone outside at a distance. You are the only one awake. This is a different version of the same place.',
       'You woke up in the middle of the night and could not go back to sleep for a while. You lay there. The dark was its own thing — not frightening, not peaceful, just the dark doing its usual work. Eventually sleep came back.',
       'The silence after midnight is not the same silence as midday. Something is resting in it, or the city is resting, and you happen to be awake inside the rest. You do not know what to do with it except wait for morning.',
     ]),

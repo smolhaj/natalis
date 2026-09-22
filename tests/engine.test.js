@@ -109,11 +109,27 @@ describe('applyProxy', () => {
     expect(next.stats.health).toBe(0)
   })
 
-  it('applies money changes', () => {
-    const state = makeState({ money: 1000 })
-    const proxy = { h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 500, karma: 0, fame: 0, legacy: 0, flags: [], mem: {} }
-    const next = applyProxy(state, proxy)
-    expect(next.money).toBe(1500)
+  // `p.mo` is present-day money — that is how all 629 of them in the corpus are
+  // written — and applyProxy denominates it into the money of the year. A 500
+  // windfall is 500 today and a fraction of that in 1950, which is the whole
+  // point: the authored figure stays as written and still lands correctly.
+  it('denominates a money change into the money of the year', () => {
+    const now = makeState({ money: 1000, currentYear: 2025 })
+    const proxy = () => ({ h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 500, moNominal: 0, karma: 0, fame: 0, legacy: 0, flags: [], mem: {} })
+    expect(applyProxy(now, proxy()).money).toBe(1500)
+
+    const then = makeState({ money: 1000, currentYear: 1950 })
+    const gained = applyProxy(then, proxy()).money - 1000
+    expect(gained, 'a 500 windfall in 1950').toBeGreaterThan(0)
+    expect(gained, 'a 500 windfall in 1950 is worth far less than 500 of 2025 money').toBeLessThan(200)
+  })
+
+  // The escape hatch for engine sites that show the player a price before they
+  // charge it. Scaling it twice would charge a different number than the button.
+  it('leaves an already-denominated amount alone', () => {
+    const then = makeState({ money: 1000, currentYear: 1950 })
+    const proxy = { h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 0, moNominal: -40, karma: 0, fame: 0, legacy: 0, flags: [], mem: {} }
+    expect(applyProxy(then, proxy).money).toBe(960)
   })
 
   it('applies karma changes', () => {

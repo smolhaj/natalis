@@ -1,3 +1,5 @@
+import { hasTech } from '../../technology.js'
+
 // events_followthrough_56.js
 // Sibling arc depth: late midlife and late_life follow-throughs for the sibling
 // relationship flags set in events_siblings.js. Covers the emigrated sibling
@@ -22,7 +24,16 @@ export const FOLLOWTHROUGH_56_EVENTS = [
       !G.mem?.ft56SibEmigLater,
     text: (G) => {
       const s = G.siblings[0]
-      return `${s?.name ?? 'Your sibling'} has been gone long enough now that the absence has become a kind of presence. You talk on the phone — WhatsApp now, video calls on holidays — and the connection is real and also partial in a way that wasn't true at the beginning. They have a life you cannot imagine completely. You have a life they know in the edited version. The strangeness is that neither of you notices this most of the time. Then occasionally you do.`
+      const where = G.currentCountry ?? G.character.country
+      // The distance is the point and the medium is not, but the medium dates
+      // the sentence: this was reaching a Peruvian character in 1978 with a
+      // line about WhatsApp and video calls.
+      const channel = hasTech(where, 'smartphone', G.currentYear)
+        ? 'You talk on the phone — WhatsApp now, video calls on holidays — and the connection is real and also partial'
+        : hasTech(where, 'landline', G.currentYear) || hasTech(where, 'mobile_phone', G.currentYear)
+          ? 'You speak at Christmas and when somebody is ill, and the call is short because it costs what it costs, and the connection is real and also partial'
+          : 'The letters come three or four times a year and are read aloud to whoever is in the house, and the connection is real and also partial'
+      return `${s?.name ?? 'Your sibling'} has been gone long enough now that the absence has become a kind of presence. ${channel} in a way that wasn't true at the beginning. They have a life you cannot imagine completely. You have a life they know in the edited version. The strangeness is that neither of you notices this most of the time. Then occasionally you do.`
     },
     choices: [
       {

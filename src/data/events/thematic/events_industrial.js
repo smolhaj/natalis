@@ -1,3 +1,4 @@
+import { hasRivers } from '../../history.js'
 // events_industrial.js
 // BUILD 21 — Industrial disasters as biography
 // Chernobyl personal arc (liquidators, dosimeter confiscation, the silence)
@@ -147,6 +148,7 @@ export const INDUSTRIAL_EVENTS = [
     when: (G) =>
       ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country?.archetype) &&
       G.ruralUrban === 'rural' &&
+      hasRivers(G.character.country?.name) &&
       G.currentYear >= 1960 && G.currentYear <= 2020 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.riverWrongColour,

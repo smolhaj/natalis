@@ -3,6 +3,8 @@
 
 import { place } from './_sonderGuards.js'
 
+import { hasTech } from '../../technology.js'
+
 export const EVENTS_SONDER_12 = [
 
   // ─── SOUND ───────────────────────────────────────────────────────────────
@@ -72,7 +74,9 @@ export const EVENTS_SONDER_12 = [
     when: (G) => place.hasElectricity(G) && ((G.character.country?.archetype === 'subsaharan' || G.character.country?.archetype === 'developing_urban' || G.character.country?.archetype === 'developing_unstable') &&
       G.age >= 15 &&
       !G.mem?.s12SoundPowerCut),
-    text: 'The power goes and the silence is total and then you discover how loud the refrigerator was, and the fan, and the ambient hum of anything electrical. The city sounds without electricity are the city as it was before electricity: voices, vehicles, a dog, wind. You sit in it. The candle takes a minute to find. The silence before it is its own experience.',
+    // What you hear stop is whatever the house was running; a Djiboutian
+    // kitchen in 1982 had a fan in it and not a refrigerator.
+    text: (G) => `The power goes and the silence is total and then you discover how loud ${hasTech(G.currentCountry ?? G.character.country, 'refrigerator', G.currentYear, { rural: G.ruralUrban === 'rural' }) ? 'the refrigerator was, and the fan' : 'the fan was, and the pump'}, and the ambient hum of anything electrical. The city sounds without electricity are the city as it was before electricity: voices, vehicles, a dog, wind. You sit in it. The candle takes a minute to find. The silence before it is its own experience.`,
     choices: null,
     effect: (p) => { p.r += 2; p.m += 1; p.setMem('s12SoundPowerCut', true) },
   },

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { attemptCrime, buildEffectProxy, applyProxy } from '../src/engine/tick.js'
+import { attemptCrime } from '../src/engine/tick.js'
 import { makeAdultState } from './helpers.js'
 
 describe('attemptCrime', () => {

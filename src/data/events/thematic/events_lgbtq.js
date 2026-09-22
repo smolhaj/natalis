@@ -12,7 +12,9 @@ export const LGBTQ_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => !G.flags.includes('lgbtq_identity') && G.age >= 11 && G.age <= 14 && !G.mem?.lgbtq_unnamed,
-    text: 'There is something you notice about yourself that you do not have a word for yet. It is not like what the boys talk about in the locker room or what the girls whisper about during lunch. You do not know if it is wrong or simply different. You file it somewhere deep and return to it at night.',
+    // The locker room and the lunch hall are an American high school, and this
+    // fires for every twelve-year-old on earth from 1920 on.
+    text: 'There is something you notice about yourself that you do not have a word for yet. It is not what the other boys talk about, or what the girls say to each other when they think nobody is listening. You do not know if it is wrong or simply different. You file it somewhere deep and return to it at night.',
     choices: null,
     effect: (p) => { p.e += 3; p.m -= 4; p.setMem('lgbtq_unnamed', true) },
   },
@@ -413,5 +415,117 @@ export const LGBTQ_EVENTS = [
     },
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 8; p.karma += 8; p.setMem('lgbtq_deathbed_convo', true) },
+  },
+  // ══════════════════════════════════════════════════════════════════════════
+  // THE LIFE THAT DID NOT OPEN
+  //
+  // `same_sex_attracted` was set at seventeen and every follow-through in the
+  // corpus was either country-specific (Section 28, the Netherlands, a
+  // Muslim-majority coming out) or capped at thirty. A Vietnamese woman flagged
+  // at 17 married a man at 25, stayed fifty-three years and died at 71, and
+  // nothing in eight thousand events ever came back to it.
+  //
+  // For most people in most of this period that IS the arc: it does not become
+  // a coming out, or a community, or a persecution. It becomes a thing carried
+  // quietly inside an ordinary life, which is both the most common version and
+  // the one nobody had written.
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'lgbtq_the_marriage_that_happened',
+    phase: null,
+    weight: 22,
+    when: (G) =>
+      G.flags.includes('same_sex_attracted') &&
+      !G.flags.includes('lgbtq_had_relationship') &&
+      G.partner && (G.partner.years ?? 0) >= 3 &&
+      G.age >= 28 && G.age <= 48 &&
+      !G.mem?.lgbtqMarriageHappened,
+    text: (G) => {
+      const name = G.partner?.name?.split(' ')[0] ?? 'your husband'
+      return `${name} is a good person. That is the part that makes it complicated rather than simple. There is no cruelty in the house, no secret being kept from you, nothing you could point at and call a reason. There is only the specific, unremarkable fact that a whole register of feeling has never been in the room, and you have stopped expecting it to be, and you are thirty-four, and this is the arrangement.`
+    },
+    choices: [
+      {
+        text: 'Decide, without announcing it to anybody, that this is the life.',
+        tag: 'yielding',
+        outcome: 'You are good at it. That is not the same as it being a lie, which is what people who have not done it assume.',
+        effect: (p) => {
+          p.setMem('lgbtqMarriageHappened', true)
+          p.m -= 4; p.r += 7
+          p.addFlag('lgbtq_life_not_lived')
+        },
+      },
+      {
+        text: 'Tell one person. Not a confession — just one person who knows.',
+        tag: 'defiant',
+        outcome: 'She says almost nothing, which turns out to be the right thing to say, and afterwards the fact exists somewhere outside your own head.',
+        effect: (p) => {
+          p.setMem('lgbtqMarriageHappened', true)
+          p.m += 3; p.r += 4
+          p.addFlag('lgbtq_one_person_knows')
+          p.addFlag('lgbtq_life_not_lived')
+        },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'lgbtq_the_world_changes_too_late',
+    phase: null,
+    weight: 18,
+    when: (G) =>
+      G.flags.includes('lgbtq_life_not_lived') &&
+      G.age >= 52 &&
+      G.currentYear >= 1995 &&
+      !G.mem?.lgbtqTooLate,
+    text: (G) => {
+      const legal = G.character?.country?.lgbtqLegalYear
+      const here = legal && G.currentYear >= legal
+      return here
+        ? 'It is on the television and nobody in the room reacts. Two people you have never met are describing an ordinary domestic arrangement in an ordinary tone, and your daughter-in-law says something mildly approving and changes the channel. You had built an entire architecture around the impossibility of that sentence being ordinary. The architecture is still standing. It just is not holding anything up any more.'
+        : 'It is not legal here and it is legal in places you can see from your phone. A young person at the market is dressed in a way that would have been unsurvivable in your twenties and is not, apparently, unsurvivable now. You are glad. You are also doing an arithmetic you do not intend to say out loud about which decade you were born in.'
+    },
+    choices: null,
+    effect: (p) => {
+      p.setMem('lgbtqTooLate', true)
+      p.m -= 3; p.r += 8
+      p.addFlag('lgbtq_outlived_the_law')
+    },
+  },
+
+  {
+    id: 'lgbtq_the_late_admission',
+    phase: 'late_life',
+    weight: 16,
+    when: (G) =>
+      G.flags.includes('lgbtq_life_not_lived') &&
+      G.age >= 62 &&
+      !G.mem?.lgbtqLateAdmission,
+    text: 'There is a version of this where you say it out loud at sixty-eight, to your children, and there is a version where you do not, and you have rehearsed both often enough to know how each of them goes. What neither version changes is the forty years. That is the part that is not available for revision, and it took you a long time to stop treating that as a problem to be solved.',
+    choices: [
+      {
+        text: 'Say it. Once, plainly, and then let them do what they do with it.',
+        tag: 'defiant',
+        outcome: 'One of them cries and one of them says they had wondered, and the third asks a practical question about your mother, and it is smaller and stranger than anything you rehearsed.',
+        effect: (p) => {
+          p.setMem('lgbtqLateAdmission', true)
+          p.m += 10; p.r -= 8
+          p.addFlag('lgbtq_said_it_late')
+        },
+      },
+      {
+        text: 'Leave it. It is yours, and it was always going to be.',
+        tag: 'yielding',
+        outcome: 'You keep it. It is not a burden by now; it is more like a room in the house that nobody else has been into, and you go in sometimes.',
+        effect: (p) => {
+          p.setMem('lgbtqLateAdmission', true)
+          p.m += 2; p.r += 5
+          p.addFlag('lgbtq_kept_it')
+        },
+      },
+    ],
+    effect: null,
   },
 ]

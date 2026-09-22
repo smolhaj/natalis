@@ -13,7 +13,12 @@ export const EGYPT_EVENTS = [
       G.currentYear >= 1956 && G.currentYear <= 1967 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem.egyNasser,
-    text: 'Nasser is on the radio. His voice has a quality that makes people stop what they are doing. The Suez Canal is being nationalized — Egypt\'s canal, returned to Egypt after seventy-five years of foreign operation. Britain and France and Israel will invade and then withdraw, which is what happens when America tells them to withdraw, which Nasser does not explain but which everyone understands. The Arab world is watching Egypt. Egypt is watching Nasser. You are watching both.',
+    // The tripartite invasion is October 1956 and the withdrawal is March 1957.
+    // Narrated in the future tense to a child in 1963 it reads as prophecy; the
+    // year window is eleven years long because Nasserism is, so the text moves.
+    text: (G) => G.currentYear <= 1957
+      ? 'Nasser is on the radio and your father turns the volume up instead of down. He says the name of the Frenchman who dug the canal and somewhere in Egypt that is a signal, and the canal is Egypt\'s. Then the planes come. Blue paint on the windows, Port Said burning in the newspaper photographs, the British and the French and the Israelis in Sinai — and then, before the winter is over, gone. The canal is still Egypt\'s. The street below does not stop singing for a week.'
+      : 'Sawt al-Arab is on in the coffeehouse and in the window above it and in the shop at the corner, so that walking the length of the street you hear one unbroken sentence. The canal is Egypt\'s. The Americans would not pay for the dam at Aswan and the dam will be built anyway, with Russian money. The land is coming off the pashas in feddans. Your teacher says karama the way other men say the name of God, and on the first Thursday of the month nobody in the building sleeps, because Umm Kulthum is singing and the singing runs past midnight.',
     choices: null,
     effect: (p) => { p.m += 6; p.addFlag('nasser_generation'); p.setMem('egyNasser', true) },
   },
@@ -210,7 +215,13 @@ export const EGYPT_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2011 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.egyCooptic,
-    text: 'The church is where the community is. Sunday mass, the saint\'s day celebrations, the specific social world of a Coptic family in Cairo — the weddings, the funerals, the network of who is related to whom through three generations of the same neighbourhood. In the university, in the workplace, you navigate the gap between your Coptic social world and the national one. You don\'t hide it — your name announces it. You don\'t advertise it — the calculus of when it helps and when it doesn\'t is something you learned without being taught.',
+    // Most Copts are rural Upper Egyptians, and this was written about a
+    // Cairene graduate: "a Coptic family in Cairo", "in the university, in the
+    // workplace". It reached a farmer in a village in Sohag with secondary
+    // schooling and told him about his university.
+    text: (G) => G.ruralUrban === 'rural'
+      ? 'The church is where the community is, and here the community is also the village — the same forty families, the same names, the saint\'s day when the whole of it walks up to the monastery on the escarpment and back. Upper Egypt is where most of you have always been, whatever anyone in Cairo assumes. Your name announces it before you do. At the market, at the government office in the town, you know within about four seconds which kind of morning it is going to be, and you learned that without anybody teaching you.'
+      : 'The church is where the community is. Sunday mass, the saint\'s day celebrations, the specific social world of a Coptic family in the city — the weddings, the funerals, the network of who is related to whom through three generations of the same neighbourhood. At work, in the queue for a permit, you navigate the gap between that world and the national one. You don\'t hide it — your name announces it. You don\'t advertise it — the calculus of when it helps and when it doesn\'t is something you learned without being taught.',
     choices: [
       {
         text: 'The navigation is unremarkable. You\'ve done it your whole life.',

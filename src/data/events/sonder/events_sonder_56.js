@@ -1,6 +1,7 @@
 // events_sonder_56.js — contemplative layer, weight 2, all mem-gated
 
 import { place } from './_sonderGuards.js'
+import { hasTech } from '../../technology.js'
 
 export const EVENTS_SONDER_56 = [
 
@@ -119,7 +120,9 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_m',
     phase: 'childhood',
     weight: 2,
-    when: (G) => place.hasElectricity(G) && (G.age >= 7 && G.age <= 12 && !G.mem?.s56m),
+    // Electricity is not a refrigerator. This hummed in 1940 Japan, where the
+    // fridge does not arrive until 1968.
+    when: (G) => place.hasElectricity(G) && hasTech(G.currentCountry ?? G.character.country, 'refrigerator', G.currentYear) && (G.age >= 7 && G.age <= 12 && !G.mem?.s56m),
     text: 'The sound of a particular house at night: the pipes, the particular creak, the way the refrigerator hums. These are sounds you will be able to reproduce in your mind thirty years later with perfect fidelity, though you will not know you remember them until you hear something similar.',
     choices: null,
     effect: (p) => { p.setMem('s56m', true) },

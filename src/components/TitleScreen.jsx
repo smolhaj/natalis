@@ -1,6 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useGameStore, getAllSlotMeta } from '../store/gameStore'
 import { getCountryFlag } from '../utils/countryUtils'
+import { COUNTRIES } from '../data/countries'
+import { CAREERS } from '../data/careers'
+import { RIBBONS } from '../data/ribbons'
+
+// Derived, not typed. The hardcoded version had drifted to 145/59/379 against a
+// real 146/49/377 — the careers figure was out by a fifth.
+const FEATURE_PILLS = [
+  `${COUNTRIES.length} Countries`,
+  `${CAREERS.length} Careers`,
+  `${RIBBONS.length} Ribbons`,
+  'Real History',
+]
 
 function SlotCard({ meta, onContinue, onDelete }) {
   const [confirmDelete, setConfirmDelete] = useState(false)
@@ -52,7 +64,7 @@ function SlotCard({ meta, onContinue, onDelete }) {
               <button
                 onClick={onContinue}
                 className="px-3 py-1.5 rounded-xl text-xs font-bold text-white"
-                style={{ background: 'linear-gradient(135deg, #34c759, #248a3d)' }}
+                style={{ background: '#3f6146' }}
               >
                 Continue
               </button>
@@ -91,16 +103,13 @@ export default function TitleScreen() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-natalis-bg px-6">
       <div className="w-full max-w-sm text-center space-y-8">
 
-        {/* Logo area */}
-        <div className="space-y-4">
-          <div className="w-24 h-24 rounded-3xl mx-auto flex items-center justify-center shadow-card-lg"
-            style={{ background: 'linear-gradient(135deg, #007aff, #af52de)' }}>
-            <span className="text-5xl">🌱</span>
-          </div>
-          <div className="space-y-1">
-            <h1 className="text-4xl font-black text-natalis-text tracking-tight">Natalis</h1>
-            <p className="text-natalis-muted text-sm font-medium">A Life Simulator</p>
-          </div>
+        {/* The blue-to-purple app-store tile and the 🌱 are gone. So is "A Life
+            Simulator", which describes the genre rather than the game. */}
+        <div className="space-y-2 pt-2">
+          <h1 className="font-prose text-5xl text-natalis-text tracking-tight">natalis</h1>
+          <p className="font-prose text-natalis-muted text-sm italic">
+            from <span className="not-italic">natalis</span> — of a birth
+          </p>
         </div>
 
         {/* Saved lives */}
@@ -120,28 +129,28 @@ export default function TitleScreen() {
 
         {/* Tagline — only when no saves */}
         {!hasSave && (
-          <div className="bg-white rounded-2xl p-5 shadow-card border border-natalis-border space-y-2">
-            <p className="text-natalis-text text-sm font-medium leading-relaxed">
+          <div className="space-y-3 px-1">
+            {/* "Make choices. Build a life. See how it turns out." used to sit
+                directly under this line, undoing it. */}
+            <p className="font-prose text-natalis-text text-prose">
               You don't choose where you begin.
             </p>
-            <p className="text-natalis-muted text-xs leading-relaxed">
-              Make choices. Build a life. See how it turns out.
+            <p className="font-prose text-natalis-muted text-sm leading-relaxed">
+              A country, a year, a household, a body. The life runs forward from
+              there, one year at a time, in the world as it actually was.
             </p>
           </div>
         )}
 
-        {/* Feature pills */}
-        <div className="flex flex-wrap gap-2 justify-center">
-          {['145 Countries', '59 Careers', '379 Ribbons', 'Real History'].map(tag => (
-            <span key={tag} className="px-3 py-1 bg-white rounded-full text-xs font-semibold text-natalis-dim border border-natalis-border shadow-sm">
-              {tag}
-            </span>
-          ))}
-        </div>
+        {/* Was a row of rounded badges lifted off a store page. One quiet line
+            of figures says the same thing without the packaging. */}
+        <p className="text-natalis-faint text-[11px] tracking-[0.08em] tabular-nums">
+          {FEATURE_PILLS.join('   ·   ')}
+        </p>
 
         {/* How you want to live it. Fixed for the run once it begins. */}
         <div className="space-y-2 text-left">
-          <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1">How you'll live it</p>
+          <p className="text-natalis-muted text-[11px] font-medium uppercase tracking-[0.14em] px-1">How you'll live it</p>
           <div className="grid grid-cols-2 gap-2">
             {[
               { id: 'active', name: 'Inhabit', blurb: 'You make the choices. Work, money, risk, who you keep.' },
@@ -151,13 +160,13 @@ export default function TitleScreen() {
                 key={m.id}
                 onClick={() => setMode(m.id)}
                 aria-pressed={mode === m.id}
-                className={`text-left px-3 py-3 rounded-2xl border-2 transition-all active:scale-95 ${
+                className={`text-left px-3 py-3 rounded-xl border transition-colors active:scale-[0.99] ${
                   mode === m.id
-                    ? 'border-bit-blue bg-white shadow-card'
-                    : 'border-natalis-border bg-white/60 hover:border-natalis-dim'
+                    ? 'border-natalis-text bg-natalis-surface'
+                    : 'border-natalis-border bg-natalis-surface/50 hover:border-natalis-rule'
                 }`}
               >
-                <p className={`font-bold text-sm ${mode === m.id ? 'text-bit-blue' : 'text-natalis-text'}`}>{m.name}</p>
+                <p className={`font-prose text-[0.9375rem] ${mode === m.id ? 'text-natalis-text' : 'text-natalis-dim'}`}>{m.name}</p>
                 <p className="text-natalis-muted text-[11px] leading-snug mt-1">{m.blurb}</p>
               </button>
             ))}
@@ -168,23 +177,30 @@ export default function TitleScreen() {
         <div className="space-y-3">
           <button
             onClick={goToBirth}
-            className="w-full py-3 rounded-2xl text-white font-bold text-sm shadow-card-lg transition-all active:scale-95"
-            style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
+            className="w-full py-3 rounded-xl bg-natalis-text text-natalis-surface font-prose text-[0.9375rem]
+                       hover:bg-natalis-dim transition-colors active:scale-[0.99]"
           >
-            {hasSave ? 'New Life' : 'Random Life'}
+            {hasSave ? 'Begin another life' : 'Begin a life'}
           </button>
           <button
             onClick={goToCuratedBirth}
-            className="w-full py-3 rounded-2xl font-bold text-bit-blue text-sm border-2 border-bit-blue bg-white transition-all active:scale-95"
+            className="w-full py-3 rounded-xl border border-natalis-rule text-natalis-dim font-prose text-[0.9375rem]
+                       bg-natalis-surface hover:border-natalis-text hover:text-natalis-text
+                       transition-colors active:scale-[0.99]"
           >
-            Craft a Life
+            Choose where it starts
           </button>
         </div>
 
-        <p className="text-natalis-muted text-xs">
+        {/* "Your choices shape everything" was the previous line here, which is
+            the negation of the game's own thesis AND of what the engine models:
+            tickLifeCourse supplies work, a partner, a marriage and children at
+            era- and place-accurate rates precisely because a life nobody steers
+            is still a life. */}
+        <p className="font-prose text-natalis-muted text-xs italic leading-relaxed">
           {mode === 'passive'
             ? 'Nobody chooses where they begin. Most of it happens anyway.'
-            : 'Your choices shape everything.'}
+            : 'Your choices matter. They are not the largest thing in the room.'}
         </p>
       </div>
     </div>

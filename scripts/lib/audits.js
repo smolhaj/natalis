@@ -648,6 +648,247 @@ export async function auditIdentityInCountry() {
   return findings
 }
 
+// ── 8. Season-in-country audit ────────────────────────────────────────────────
+
+/**
+ * A guard asking for a season the country cannot have.
+ *
+ * `deriveSeason` returns wet/dry for monsoon and tropical countries and the
+ * four temperate seasons everywhere else, so `season === 'wet'` in a guard that
+ * also requires a four-season country can never pass. This was not theoretical:
+ * two lists of "which countries are monsoon countries" existed and disagreed,
+ * and the one deriveSeason consulted omitted India, Pakistan, Sri Lanka, Nepal
+ * and Malaysia — so the monsoon prose written for the subcontinent was
+ * unreachable in the largest monsoon country on earth.
+ */
+export async function auditSeasonInCountry() {
+  const { allCharacterEvents, WORLD_EVENTS } = await loadCorpus()
+  const V = await vocab()
+  const { seasonsFor } = await import('../../src/engine/character.js')
+  const findings = []
+
+  const scan = (e) => {
+    const src = stripComments(fnSource(e.when))
+    if (!src) return
+    const required = [...countriesInGuard(src).required].filter(n => V.countryNames.has(n))
+    if (required.length === 0) return
+    const positives = literalsComparedTo(src, '(?:\\bG\\b\\s*\\.|\\.)\\s*season').filter(l => !negativeOp(l.op))
+    if (positives.length === 0) return
+    // A guard may offer alternatives, and a country list may be mixed-climate.
+    // Only flag when NO required country can produce ANY demanded season.
+    const want = [...new Set(positives.map(l => l.value))]
+    const anyPossible = want.some(v => required.some(n => seasonsFor(n).includes(v)))
+    if (!anyPossible) {
+      const can = [...new Set(required.flatMap(n => seasonsFor(n)))]
+      findings.push(finding(ERR, 'season-not-in-country', e.id, locate(e.id),
+        `guard requires ${required.map(n => `'${n}'`).join(' or ')} and season ` +
+        `${want.map(v => `'${v}'`).join(' or ')}, but those countries only have ${can.join('/')}`))
+      return
+    }
+    // The interesting case is PARTIAL: a guard naming twelve countries where
+    // four of them can never satisfy it fires happily for the other eight, so
+    // nothing looks broken and a slice of the intended audience silently never
+    // sees the event. That is how the subcontinent lost its monsoon.
+    if (required.length < 2) return
+    const excluded = required.filter(n => !want.some(v => seasonsFor(n).includes(v)))
+    if (excluded.length === 0) return
+    findings.push(finding(WARN, 'season-excludes-some-countries', e.id, locate(e.id),
+      `guard asks for season ${want.map(v => `'${v}'`).join(' or ')} and lists ` +
+      `${required.length} countries, but ${excluded.length} of them can never have it: ` +
+      `${excluded.map(n => `${n} (${seasonsFor(n).join('/')})`).join(', ')}`))
+  }
+
+  for (const e of allCharacterEvents) scan(e)
+  for (const we of WORLD_EVENTS) scan(we)
+  return findings
+}
+
+/**
+ * A choice that does nothing back.
+ *
+ * `outcome` is the sentence the player reads after pressing the button — the
+ * entire feedback of the choice system, in a game whose stated mechanic is the
+ * sentence that lands. Fifty-one choices in one file carried `outcome: null`
+ * with a live `effect`, so the player chose "Navigate carefully — know the
+ * rules and survive" and the game printed nothing at all. Nothing static could
+ * see it: the event is reachable, the guard is correct, the effect applies.
+ */
+export async function auditSilentChoices() {
+  const { allCharacterEvents } = await loadCorpus()
+  const findings = []
+  for (const e of allCharacterEvents) {
+    if (!Array.isArray(e.choices)) continue
+    for (const [i, c] of e.choices.entries()) {
+      if (!c) continue
+      const hasEffect = typeof c.effect === 'function' || typeof c.inject === 'string'
+      const hasOutcome = typeof c.outcome === 'string' ? c.outcome.trim().length > 0 : typeof c.outcome === 'function'
+      if (hasEffect && !hasOutcome) {
+        findings.push(finding(ERR, 'silent-choice', e.id, locate(e.id),
+          `choice ${i + 1} ("${String(c.text ?? '').slice(0, 48)}") applies an effect and prints no outcome`))
+      }
+    }
+  }
+  return findings
+}
+
+/**
+ * Prose that narrates a move the effect never makes.
+ *
+ * `ya_city_arrival` told a young adult they had left the village for the city
+ * and left them in the village; four emigration events set the `emigrated`
+ * flag and changed no country, so the engine went on paying a Venezuelan
+ * salary while every diaspora line in the game addressed a person in Madrid.
+ * A guard answers "may this fire", never "is this true afterwards".
+ */
+export async function auditNarratedMoves() {
+  const { allCharacterEvents } = await loadCorpus()
+  const findings = []
+  // A destination, not a direction: "you move to help" and "you move to the
+  // things that don't require it" are not migrations. Requires a place — a
+  // proper noun, or one of the handful of common nouns that name one.
+  // Case-SENSITIVE on purpose: `[A-Z]` is how the pattern tells a destination
+  // from a direction, so the subject has to spell both cases itself rather
+  // than lean on an /i flag that would also make [A-Z] meaningless.
+  const MOVES = new RegExp(
+    String.raw`\b[Yy]ou\s+(?:move|relocate)\s+to\s+(?:[A-Z]|the (?:city|capital|coast|mainland|north|south|interior)\b)`
+    + String.raw`|\b[Tt]he family\s+(?:moves|relocates|leaves for|emigrates)\s*(?:to\s+)?(?:[A-Z]|the (?:city|capital|coast)\b)`
+    + String.raw`|\b[Yy]ou emigrate\b|\b[Yy]ou leave the country\b|[Aa]rrange the exit`
+    + String.raw`|\b[Yy]ou board the (?:boat|ship|plane) for\b`,
+  )
+  const bodies = (e) => {
+    const out = []
+    const push = (v) => { if (typeof v === 'string') out.push(v) }
+    push(e.text)
+    for (const c of e.choices ?? []) { push(c?.text); push(c?.outcome) }
+    return out.join(' \n ')
+  }
+  const effectSrc = (e) => {
+    const parts = [e.effect, ...(e.choices ?? []).map(c => c?.effect)]
+    return parts.filter(f => typeof f === 'function').map(f => f.toString()).join(' ')
+  }
+  for (const e of allCharacterEvents) {
+    const prose = bodies(e)
+    if (!MOVES.test(prose)) continue
+    const src = effectSrc(e)
+    if (/relocate\s*\(|emigrateTo\s*\(|setResidency\s*\(/.test(src)) continue
+    findings.push(finding(WARN, 'narrated-move', e.id, locate(e.id),
+      'prose narrates leaving and no effect calls relocate() or emigrateTo()'))
+  }
+  return findings
+}
+
+/**
+ * A population the roster models and the corpus has never addressed.
+ *
+ * `wealthy_gulf` was the worst-covered archetype in the roster, and the reason
+ * was not the citizens: the UAE is 59% South Asian in the data, Qatar 60%,
+ * Kuwait 40%, every migrant group flagged `disadvantaged` — and across eleven
+ * Gulf ethnic ids the corpus contained ONE reference. The engine drew those
+ * characters correctly and had nothing to say to them.
+ *
+ * Nothing else here can see that. `check-flags` audits flags, `check-events`
+ * audits guards, `npm run sim` audits what fires — and a group nothing was ever
+ * written for fires nothing, which is indistinguishable from a group that is
+ * simply rare. So walk the roster's own `ethnicGroups` and report the ids that
+ * no guard, in the whole corpus, has ever named.
+ *
+ * A warning rather than an error: 154 countries is a lot of groups and nobody
+ * is obliged to write every one. The number it reports is the shape of the
+ * next content decision, and a group with a large `share` is the one to look
+ * at first.
+ */
+export async function auditUnwrittenGroups() {
+  const { COUNTRIES } = await import('../../src/data/countries.js')
+
+  // Read the SOURCE, not the function bodies. A module that lifts its ids into
+  // a shared constant — `const MIGRANT_IDS = new Set([...])`, which is the
+  // natural way to write a guard that covers eight of them — has those ids
+  // nowhere in `when.toString()`, and a body-only scan reported a module of
+  // thirty events about those exact groups as still unwritten. That is the
+  // wrong direction for this audit to be wrong in: it would tell you the gap
+  // is still there after somebody has closed it.
+  //
+  // And exclude the files that merely DECLARE the ids. `countries.js` defines
+  // every one of them and `identity.js` gives their religion distribution, so
+  // scanning those makes every id trivially "named" and the audit reports zero
+  // forever — the same shape as the negation exemption that made
+  // check-anachronisms blind to the sentences worth auditing. Scan the files
+  // that would USE an id.
+  const DECLARES = /src[/\\]data[/\\](countries|identity)\.js$/
+  let corpus = ''
+  for (const { rel, content } of sourceFiles()) {
+    if (DECLARES.test(rel)) continue
+    corpus += content
+  }
+
+  // Naming the id is not the only way to write for a group. An event guarded on
+  // `country === 'Greece'` addresses the 94% of Greeks who are Greek perfectly
+  // well, and reporting that as a gap produced 328 warnings and no signal.
+  //
+  // The case worth reporting is the one the Gulf turned out to be: a group
+  // whose experience of its own country is NOT the country-generic one, which
+  // is exactly what `disadvantaged` marks — or a large minority inside a
+  // country that is plainly not one people. Those are the characters for whom
+  // the country's own content is about somebody else.
+  // Prefixes any guard tests with startsWith/endsWith/includes, so a group
+  // reached by shape rather than by name is not reported as unwritten.
+  const prefixed = [...corpus.matchAll(/\.(?:startsWith|includes|endsWith)\(\s*['"]([a-z][a-z0-9_]{3,})['"]\s*\)/g)]
+    .map(m => m[1])
+
+  const nameCount = new Map()
+  for (const c of COUNTRIES) {
+    const cited = (corpus.match(new RegExp(`['"]${c.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"]`, 'g')) ?? []).length
+    nameCount.set(c.name, cited)
+  }
+
+  const findings = []
+  for (const c of COUNTRIES) {
+    // A country nobody has written for at all is a different finding, and the
+    // roster owner already knows which those are.
+    if ((nameCount.get(c.name) ?? 0) < 5) continue
+    for (const g of c.ethnicGroups ?? []) {
+      if (!g?.id) continue
+      if (corpus.includes(`'${g.id}'`) || corpus.includes(`"${g.id}"`)) continue
+      // A guard can reach a group without naming its id. The Baltic module
+      // writes `id.startsWith('russian_')` to cover russian_latvian,
+      // russian_estonian and russian_lithuanian at once, and a literal scan
+      // calls all three unwritten — the same shape as the shared-Set miss
+      // above, and the same wrong direction: reporting a gap somebody closed.
+      if (prefixed.some(pre => g.id.startsWith(pre))) continue
+      const share = g.share ?? 0
+      // `>= 0.5` is the wrong test for "is this the country-generic
+      // population". Colombia's Mestizo plurality is 49%, Brazil's White
+      // Brazilian 48%, Pakistan's Punjabi 45% — all under half and all the
+      // group an event guarded on the country alone is already about. Twenty-five
+      // of the first twenty-eight findings were a country's own largest group,
+      // which buries the two that are not. The plurality is the country-generic
+      // population whether or not it clears fifty per cent.
+      const largest = (c.ethnicGroups ?? []).reduce((a, b) => ((b.share ?? 0) > (a.share ?? 0) ? b : a), { share: -1 })
+      const isPlurality = g.id === largest.id
+      // A catch-all bucket is not a population anybody can write for. `other`,
+      // `other_kenyan`, `mixed_guyanese` — nothing about being 'Other' in
+      // Uganda is a shared experience, and reporting it asks for an event that
+      // should not exist.
+      const isCatchAll = /^(other|mixed)(_|$)/.test(g.id) || /^(other|mixed)\b/i.test(g.name ?? '')
+      // The two shapes that matter, and nothing else: a group the data itself
+      // marks as having a different experience of its own country, or a
+      // substantial minority that is not the one the country-generic content is
+      // already about.
+      const distinct = g.disadvantaged === true
+      const largeMinority = !isPlurality && share >= 0.2
+      if (isCatchAll) continue
+      if (!distinct && !largeMinority) continue
+      if (share < 0.1) continue
+      findings.push(finding(WARN, 'unwritten-group', `${c.name}:${g.id}`, null,
+        `${Math.round(share * 100)}% of ${c.name} (${g.name ?? g.id})` +
+        `${g.disadvantaged ? ', flagged disadvantaged' : ''} — the country has content and ` +
+        'no guard or line in it names this group'))
+    }
+  }
+  findings.sort((a, b) => (parseInt(b.message) || 0) - (parseInt(a.message) || 0))
+  return findings
+}
+
 export const AUDITS = [
   ['reverse-flags', 'flags a guard requires that nothing sets', auditReverseFlags],
   ['enum-domains', 'string literals compared against an enum they are not in', auditEnumDomains],
@@ -656,6 +897,10 @@ export const AUDITS = [
   ['year-windows', 'year windows no living character can be inside', auditYearWindows],
   ['world-scope', 'world events scoped out of their own countries', auditWorldEventScope],
   ['identity-country', 'identity literals absent from the country the guard requires', auditIdentityInCountry],
+  ['season-country', 'seasons a guard demands that its country cannot have', auditSeasonInCountry],
+  ['silent-choice', 'choices that apply an effect and print no outcome', auditSilentChoices],
+  ['narrated-move', 'prose that narrates leaving where no effect moves anyone', auditNarratedMoves],
+  ['unwritten-group', 'populations the roster models that no guard has ever named', auditUnwrittenGroups],
 ]
 
 export async function runAllAudits(only = null) {

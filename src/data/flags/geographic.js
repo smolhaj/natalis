@@ -4,6 +4,54 @@
  */
 export const GEOGRAPHIC_FLAGS = {
 
+  gulf_could_not_settle: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Home, and looking for the shade at the wrong time of day, with nobody to say the Industrial Area words to.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_expelled_1991: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'One of the roughly four hundred thousand Palestinians undone in Kuwait after 1991, a community of teachers and engineers and second-generation children erased inside two years.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_fled_1990: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Left Kuwait on the road south in the first week of August 1990, and came back in March to a house strangers had lived in.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_long_stayer: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Has said "two more years" for more than a decade. Every extension had a real reason and none of them was the last one.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_migrant_worker: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Went to the Gulf on a work visa tied to an employer — the arriving half of the kafala story, which the corpus had only ever written from the village that was left.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_returned: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Went home for good, because there is no retirement on a work visa: the visa is the job and when the job ends the country ends.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
   emigrated: {
     weight: 'major',
     category: 'displacement',
@@ -11,22 +59,6 @@ export const GEOGRAPHIC_FLAGS = {
     intent: 'both',
     timestamped: true,
     notes: 'Has extensive year texture (yearsAbroad gates), integration arc, memory layer. Well covered.',
-  },
-
-  refugee: {
-    weight: 'major',
-    category: 'displacement',
-    description: 'Character fled their country as a refugee, with that legal/identity status.',
-    intent: 'both',
-    notes: 'Has resettlement events and ribbon. No year texture for the decade after resettlement.',
-  },
-
-  displaced: {
-    weight: 'major',
-    category: 'displacement',
-    description: 'Character was internally displaced — moved within their country by conflict or disaster.',
-    intent: 'year_texture',
-    notes: 'Clear orphan. Set in conflict/disaster events, never specifically followed up.',
   },
 
   climate_displaced: {
@@ -67,14 +99,6 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Character lived through a mass departure from their community or country.',
     intent: 'event',
     notes: 'events_stayed.js and followthrough_6 cover this.',
-  },
-
-  internally_displaced: {
-    weight: 'moderate',
-    category: 'displacement',
-    description: 'Character was forced to move within their country\'s borders.',
-    intent: 'year_texture',
-    notes: 'Variant of displaced; both need year texture.',
   },
 
   white_emigrant_sa: {
@@ -1563,8 +1587,8 @@ export const GEOGRAPHIC_FLAGS = {
     weight: 'moderate',
     category: 'conflict',
     description: 'Witnessed the Rainbow Warrior bombing in Auckland harbour — the specific education of state terrorism conducted by a nominal ally, and the world shrugging.',
-    intent: 'event', notes: 'Follow-through: ft46_nz_rainbow_warrior_late.',
-    notes: 'Set by nz_rainbow_warrior_1985. New Zealand only.',
+    intent: 'event',
+    notes: 'Set by nz_rainbow_warrior_1985. New Zealand only. Follow-through: ft46_nz_rainbow_warrior_late.',
   },
 
   nz_left_for_australia: {
@@ -1839,6 +1863,30 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'A Tibetan born in exile — knows the geography of a country never seen, oriented toward a return the adults around them have awaited for decades without it arriving.',
     intent: 'year_texture',
     notes: 'Set by sl_tibetan_dharamsala_childhood.',
+  },
+
+  partition_stayed_behind: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Was in a district the 1947 line went around — the neighbours who sold the buffalo and went, the family given the empty house, the word "refugee" that outlives the people it was first used about.',
+    intent: 'year_texture',
+    notes: 'Set by sl_up_partition_hindu and the stay branch of sl_up_partition_muslim.',
+  },
+
+  muhajir_generation: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Migrated from the United Provinces to Karachi in 1947-48 — went to the country that was made for them and found it already had people in it. Urdu-speaking, provincially homeless, and about to be on the wrong side of a quota.',
+    intent: 'both',
+    notes: 'Set by ca_pakistan_muhajir_arrival and the Karachi branch of sl_up_partition_muslim.',
+  },
+
+  sindhi_hindu_refugee: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Left Sindh for Bombay in 1947-48 — a province that emptied rather than burned, and a trading community that arrived intact and rebuilt itself out of a room.',
+    intent: 'both',
+    notes: 'Set by sl_sindh_hindu_departure; gates sl_sindhi_hindu_refugee.',
   },
 
   bengal_partition_displaced: {
@@ -2315,6 +2363,854 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Lived through the Castillo 2021 election and its aftermath — the first serrano president, the sixty dead in the south when the police fired on protesters who had voted for him.',
     intent: 'year_texture',
     notes: 'Set by per_dep_castillo_2021.',
+  },
+
+
+  // ── GUYANA ─────────────────────────────────────────────────────────────────
+  // Set by events_guyana.js — the country with one mention.
+
+  logie_childhood: {
+    weight: 'moderate',
+    category: 'housing',
+    description: 'Grew up in estate barrack housing — one room, a wall that stops short of the roof, and a landlord who is also the employer.',
+    intent: 'year_texture',
+    notes: 'Set by gy_logie_room.',
+  },
+
+  booker_colony: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived inside a single-company economy: the wage, the shop, the drugstore, the ship out, all one name.',
+    intent: 'year_texture',
+    notes: 'Set by gy_bookers_everything.',
+  },
+
+  backdam_cane: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Cut cane in the backdam — the four o\'clock start, the cutlass sharpened daily, the trench water warm as blood.',
+    intent: 'year_texture',
+    notes: 'Set by gy_backdam_cutlass.',
+  },
+
+  enmore_martyrs: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was in the road behind the coffins after Enmore, 16 June 1948 — the founding act of Guyanese labour politics.',
+    intent: 'event',
+    notes: 'Set by gy_enmore_1948. Consumed by gy_ft_enmore_name.',
+  },
+
+  ethnic_vote: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Votes the way their street votes, in a country where the surname answers the question before it is asked.',
+    intent: 'year_texture',
+    notes: 'Set by gy_vote_known_before_spoken.',
+  },
+
+  refused_ethnic_vote: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Said out loud that both parties were using the split, and was not thanked for it.',
+    intent: 'none',
+    notes: 'Set by gy_vote_known_before_spoken (defiant choice). No downstream event needed.',
+  },
+
+  constitution_suspended_1953: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Was there when Britain suspended British Guiana\'s constitution 133 days after the first universal-suffrage election, troops off HMS Superb.',
+    intent: 'none',
+    notes: 'Set by gy_1953_suspension. No downstream event needed.',
+  },
+
+  black_friday_1962: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Georgetown\'s commercial district burned on 16 February 1962, and afterwards the two halves of the country looked at each other differently.',
+    intent: 'none',
+    notes: 'Set by gy_black_friday_1962. No downstream event needed.',
+  },
+
+  displaced_1964: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Moved, or took in the people who were moved, in the 1962-64 disturbances — about 2,600 families relocating into villages whose surnames matched theirs.',
+    intent: 'both',
+    notes: 'Set by gy_1964_displacement. Consumed by gy_ft_displaced_house and the year-texture layer.',
+  },
+
+  sheltered_the_displaced: {
+    weight: 'minor',
+    category: 'moral',
+    description: 'Eleven people in a house built for five, for most of a year, and would agree to it again.',
+    intent: 'none',
+    notes: 'Set by gy_1964_displacement (defiant choice). No downstream event needed.',
+  },
+
+  moved_for_safety: {
+    weight: 'minor',
+    category: 'displacement',
+    description: 'Went where the surnames matched, and never quite stopped calling the old place home.',
+    intent: 'none',
+    notes: 'Set by gy_1964_displacement (yielding choice). No downstream event needed.',
+  },
+
+  election_engineered: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Watched an electoral system changed from outside specifically to remove the man who would otherwise have won.',
+    intent: 'none',
+    notes: 'Set by gy_1964_pr_election. No downstream event needed.',
+  },
+
+  dougla_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Mixed Indo- and Afro-Guyanese in a country whose two parties are each one of those halves, and which has no party for both.',
+    intent: 'year_texture',
+    notes: 'Set by gy_dougla_household.',
+  },
+
+  golden_arrowhead: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched the flag go up in May 1966 and can still recite what all five colours stand for.',
+    intent: 'year_texture',
+    notes: 'Set by gy_independence_1966.',
+  },
+
+  co_operative_republic: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived in the only co-operative republic in the world, which sounded like a distinction and turned out to describe who owned the shops.',
+    intent: 'year_texture',
+    notes: 'Set by gy_republic_1970.',
+  },
+
+  nationalised_industry: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Present when the company that ran the town became the government that ran the town, and the machines and the houses stayed exactly as they were.',
+    intent: 'none',
+    notes: 'Set by gy_nationalisation. No downstream event needed.',
+  },
+
+  rigged_ballot: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Voted, or stopped voting, in elections where the boxes went to the army to be counted.',
+    intent: 'year_texture',
+    notes: 'Set by gy_rigged_ballot.',
+  },
+
+  political_disillusioned: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Stopped taking part, having established that taking part changed nothing, and found that not taking part changed nothing either.',
+    intent: 'year_texture',
+    notes: 'Set by gy_rigged_ballot (withdrawal choice) and available to any arc that needs the withdrawal rather than the anger.',
+  },
+
+  bread_ban_years: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Lived through the Guyanese import bans of the 1980s — no wheat flour, no split peas, no onions — and learned to bake with cassava.',
+    intent: 'event',
+    notes: 'Set by gy_flour_ban. Consumed by gy_ft_bread.',
+  },
+
+  backtrack_trade: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Crossed the Corentyne at night for flour and sold it on; a smuggler in the legal sense and a shopkeeper in every other.',
+    intent: 'year_texture',
+    notes: 'Set by gy_flour_ban (defiant choice).',
+  },
+
+  rodney_killed: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was in Guyana when Walter Rodney was killed by a bomb on 13 June 1980, in a country where everybody had the information the government said it lacked.',
+    intent: 'both',
+    notes: 'Set by gy_rodney_1980. Consumed by gy_ft_rodney_inquiry and the year-texture layer.',
+  },
+
+  jonestown_year: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'In Guyana in November 1978, and spent the rest of their life hearing one word said back whenever they named their country abroad.',
+    intent: 'none',
+    notes: 'Set by gy_jonestown_1978. No downstream event needed.',
+  },
+
+  mission_school: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Taken at six to an interior mission school four river-days from the village, taught well, and taught in one language only.',
+    intent: 'year_texture',
+    notes: 'Set by gy_mission_school.',
+  },
+
+  kept_language: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Held onto the first language deliberately through a schooling designed to remove it, and can still talk to the old people.',
+    intent: 'year_texture',
+    notes: 'Set by gy_mission_school (defiant choice).',
+  },
+
+  language_lost: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Can hear every word of the first language and cannot make the mouth produce it.',
+    intent: 'event',
+    notes: 'Set by gy_mission_school (yielding choice). Consumed by gy_ft_mission_language.',
+  },
+
+  rupununi_uprising: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'In the savannah in January 1969, when the rising ended in days and the soldiers stayed.',
+    intent: 'none',
+    notes: 'Set by gy_rupununi_1969. No downstream event needed.',
+  },
+
+  porkknocker: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Went into the Guyanese interior after gold with a dredge, a shotgun and a barrel of salt pork. One trip in four pays.',
+    intent: 'event',
+    notes: 'Set by gy_porkknocker. Consumed by gy_ft_porkknocker_body.',
+  },
+
+  mercury_river: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'The river came down brown and stayed brown, and the fish is what the village eats and has always eaten.',
+    intent: 'year_texture',
+    notes: 'Set by gy_mercury_river.',
+  },
+
+  seawall_coast: {
+    weight: 'moderate',
+    category: 'place',
+    description: 'Lives below the Atlantic behind a Dutch seawall, on a coast that drains through kokers at low tide.',
+    intent: 'year_texture',
+    notes: 'Set by gy_seawall_koker.',
+  },
+
+  great_flood_2005: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Was on the Guyanese coast in January 2005 when the conservancy went over and a third of the country stood in the water for weeks.',
+    intent: 'event',
+    notes: 'Set by gy_flood_2005. Consumed by gy_ft_flood_ground_floor.',
+  },
+
+  bourda_cricket: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Test cricket at Bourda: five days a year in which nobody asked whose grandparents came on which ship.',
+    intent: 'year_texture',
+    notes: 'Set by gy_bourda_test.',
+  },
+
+  phagwah_street: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Phagwah in the road rather than the yard, in a country with public holidays for three faiths and no expectation that you hold any of them.',
+    intent: 'year_texture',
+    notes: 'Set by gy_phagwah_street.',
+  },
+
+  bottom_house: {
+    weight: 'moderate',
+    category: 'place',
+    description: 'The life of the house happens underneath it: the table, the washing line, the domino game that runs until the mosquitoes.',
+    intent: 'year_texture',
+    notes: 'Set by gy_bottom_house.',
+  },
+
+  barrel_from_abroad: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'The barrel from Brooklyn, opened with everybody present, which is the most reliable income this house has.',
+    intent: 'year_texture',
+    notes: 'Set by gy_the_barrel.',
+  },
+
+  guyanese_diaspora: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left Guyana for New York or Toronto, in a departure so general that the street measured itself by who was still on it.',
+    intent: 'event',
+    notes: 'Set by gy_leaving. Consumed by gy_ft_diaspora_return.',
+  },
+
+  guyana_stayer: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Stayed, and was right to, and by the time it turned the people who would have celebrated it were in three other countries.',
+    intent: 'event',
+    notes: 'Set by gy_leaving (defiant choice). Consumed by gy_ft_stayer_vindicated.',
+  },
+
+  emptied_village: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Lives on a street where four houses hold one person each, all of them over seventy, with a man who comes to cut the yards.',
+    intent: 'year_texture',
+    notes: 'Set by gy_house_with_one_person.',
+  },
+
+  free_election_1992: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Stood in the queue on 5 October 1992, the first certified free vote in twenty-eight years.',
+    intent: 'year_texture',
+    notes: 'Set by gy_1992_election.',
+  },
+
+  oil_found_2015: {
+    weight: 'major',
+    category: 'economic',
+    description: 'In Guyana when the offshore oil was confirmed and the country became the fastest-growing economy on earth on the radio.',
+    intent: 'event',
+    notes: 'Set by gy_oil_2015. Consumed by gy_ft_oil_arrives_or_not.',
+  },
+
+  essequibo_claim: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Learned the map with the line down it before learning most things, as every Guyanese child does.',
+    intent: 'year_texture',
+    notes: 'Set by gy_essequibo_map.',
+  },
+
+  carries_enmore: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Can still say the five names in order and has never once had to practise them.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_enmore_name.',
+  },
+
+  returned_to_the_village: {
+    weight: 'minor',
+    category: 'displacement',
+    description: 'Drove past the house they were put out of in 1964 and did not stop the car.',
+    intent: 'none',
+    notes: 'Set by gy_ft_displaced_house. Terminal; suppresses the displacement texture.',
+  },
+
+  rodney_inquiry_lived_to_see: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Alive in 2016 when the commission said what everybody had said since the week it happened.',
+    intent: 'none',
+    notes: 'Set by gy_ft_rodney_inquiry. No downstream event needed.',
+  },
+
+  shortage_habits: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Buys two. There has been bread in the shop for thirty years and they buy two.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_bread.',
+  },
+
+  returned_as_visitor: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Went home for three weeks and was called, without malice, a foreigner.',
+    intent: 'none',
+    notes: 'Set by gy_ft_diaspora_return. No downstream event needed.',
+  },
+
+  stayer_vindicated: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'The ones who left are back for two weeks at a time to look at land, and are asking them the questions.',
+    intent: 'none',
+    notes: 'Set by gy_ft_stayer_vindicated. No downstream event needed.',
+  },
+
+  flood_wary: {
+    weight: 'moderate',
+    category: 'disaster',
+    description: 'Nothing of value lives below waist height in this house and nothing ever will again.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_flood_ground_floor.',
+  },
+
+  language_loss_reckoning: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Sat in the recording as the person who understands the language and cannot answer in it.',
+    intent: 'none',
+    notes: 'Set by gy_ft_mission_language. No downstream event needed.',
+  },
+
+  oil_boom_lived_through: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Present for the boom, on one side or the other of whether it reached the house.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_oil_arrives_or_not.',
+  },
+
+  bush_body: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'The malaria comes back when they get run down, and they can spot a man who has been in the bush from across a room.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_porkknocker_body.',
+  },
+
+
+  // ── BOSNIA AND HERZEGOVINA ─────────────────────────────────────────────────
+  // Set by events_bosnia.js — three peoples, one country.
+
+  komsiluk: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Grew up inside komsiluk — neighbourliness as an institution with obligations, in the most mixed republic in Yugoslavia.',
+    intent: 'year_texture',
+    notes: 'Set by ba_komsiluk. Suppressed in texture once komsiluk_after is set.',
+  },
+
+  mixed_bosnian_family: {
+    weight: 'major',
+    category: 'identity',
+    description: 'One grandmother of one people and one of another, in a country that decided the question was solved and was wrong.',
+    intent: 'event',
+    notes: 'Set by ba_mixed_family. Consumed by ba_ft_mixed_after.',
+  },
+
+  declared_yugoslav: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Family wrote Yugoslav in the nationality box every year, deliberately, until there was no such box.',
+    intent: 'none',
+    notes: 'Set by ba_mixed_family. No downstream event needed.',
+  },
+
+  sarajevo_olympics: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was in Sarajevo in February 1984, when the world came and liked it here.',
+    intent: 'year_texture',
+    notes: 'Set by ba_olympics_1984.',
+  },
+
+  voted_national_party: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted for one of the three national parties in 1990, the way you would take an umbrella.',
+    intent: 'none',
+    notes: 'Set by ba_1990_election. No downstream event needed.',
+  },
+
+  voted_non_national: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted for the Reformists in 1990. They got thirteen per cent.',
+    intent: 'none',
+    notes: 'Set by ba_1990_election. No downstream event needed.',
+  },
+
+  bosnia_referendum_1992: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Present for the independence referendum of February 1992, on one side or the other of the boycott.',
+    intent: 'none',
+    notes: 'Set by ba_referendum_1992. No downstream event needed.',
+  },
+
+  vrbanja_bridge: {
+    weight: 'major',
+    category: 'historical',
+    description: 'On the Vrbanja bridge on 5 April 1992, when the first two people the siege killed were killed at a demonstration for keeping the country together.',
+    intent: 'none',
+    notes: 'Set by ba_vrbanja_bridge. No downstream event needed; war_began carries the arc.',
+  },
+
+  war_began: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'The year the shooting started where they live.',
+    intent: 'none',
+    notes: 'Set by ba_vrbanja_bridge.',
+  },
+
+  sarajevo_siege: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Inside the 1,425-day siege of Sarajevo: no water in the pipes, the parquet in the stove, and a map of the corners in everybody\'s head that nobody drew.',
+    intent: 'both',
+    notes: 'Set by the siege events. Consumed by ba_ft_siege_habits and the year-texture layer.',
+  },
+
+  sent_the_child: {
+    weight: 'major',
+    category: 'family',
+    description: 'Sent the boy to the pump because everybody believed they did not shoot at children. He came back every time.',
+    intent: 'year_texture',
+    notes: 'Set by ba_siege_water (yielding choice).',
+  },
+
+  burned_the_books: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Burned the furniture, then the parquet, then the books, in an order the household agreed on.',
+    intent: 'year_texture',
+    notes: 'Set by ba_siege_burning.',
+  },
+
+  sarajevo_tunnel: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Went under the airport runway bent double, eight hundred metres, carrying something for somebody.',
+    intent: 'year_texture',
+    notes: 'Set by ba_siege_tunnel.',
+  },
+
+  markale: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'In Sarajevo when a shell landed in the market at midday, and afterwards an argument in foreign capitals about the angle of the crater.',
+    intent: 'none',
+    notes: 'Set by ba_markale. No downstream event needed.',
+  },
+
+  siege_culture: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'A film festival in a basement and a beauty contest with a banner reading DON\'T LET THEM KILL US: a city insisting, in the grammar it had left, on being a city.',
+    intent: 'none',
+    notes: 'Set by ba_siege_normal. No downstream event needed.',
+  },
+
+  white_armband: {
+    weight: 'major',
+    category: 'discrimination',
+    description: 'Ordered to mark the house with a sheet and the arm with a strip of it, and then the buses came for people.',
+    intent: 'year_texture',
+    notes: 'Set by ba_white_armbands. Gates ba_camp.',
+  },
+
+  ethnic_cleansing_survivor: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Came through the 1992 clearances of the Bosnian northwest.',
+    intent: 'event',
+    notes: 'Set by ba_white_armbands. Gates ba_dna_identification.',
+  },
+
+  fled_the_northwest: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left the district at two in the morning on the back road, a week before it stopped being possible.',
+    intent: 'event',
+    notes: 'Set by ba_white_armbands (defiant choice). Gates ba_return.',
+  },
+
+  bosnia_camp_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Held in one of the 1992 camps in the Prijedor district for eleven weeks that they have never described to anybody.',
+    intent: 'both',
+    notes: 'Set by ba_camp. Consumed by ba_ft_camp_statement and the year-texture layer.',
+  },
+
+  mosques_dynamited: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'In Banja Luka in May 1993, when the Ferhadija and the Arnaudija were dynamited and the stone pushed into the river.',
+    intent: 'year_texture',
+    notes: 'Set by ba_banja_luka_mosques.',
+  },
+
+  stari_most_destroyed: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched the Stari Most go into the Neretva on 9 November 1993, after four hundred and twenty-seven years.',
+    intent: 'year_texture',
+    notes: 'Set by ba_stari_most.',
+  },
+
+  croat_bosniak_war: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Lived through the other war, the one inside the first one, when the front line moved to a boulevard in Mostar.',
+    intent: 'none',
+    notes: 'Set by ba_croat_bosniak_war. No downstream event needed.',
+  },
+
+  vrs_conscript: {
+    weight: 'major',
+    category: 'military',
+    description: 'Conscripted into the Army of Republika Srpska at nineteen, off a list with their address on it.',
+    intent: 'both',
+    notes: 'Set by ba_vrs_conscript. Consumed by ba_ft_vrs_account and the year-texture layer.',
+  },
+
+  vrs_deserter: {
+    weight: 'major',
+    category: 'military',
+    description: 'Left the country rather than the list: a draft evader to one set of people and a refugee to another.',
+    intent: 'none',
+    notes: 'Set by ba_vrs_conscript (defiant choice). No downstream event needed.',
+  },
+
+  bosnia_exile: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left Bosnia during the war rather than after it.',
+    intent: 'event',
+    notes: 'Set by ba_vrs_conscript. Gates ba_return.',
+  },
+
+  serb_dissent: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Said the rest of it out loud, in their own town, and was called a traitor by somebody they had known since primary school.',
+    intent: 'year_texture',
+    notes: 'Set by ba_serb_shame (defiant choice).',
+  },
+
+  serb_silence: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Said nothing for three years, and then the not-saying set, the way a thing sets.',
+    intent: 'both',
+    notes: 'Set by ba_serb_shame (yielding choice). Consumed by ba_ft_serb_silence_late.',
+  },
+
+  srebrenica: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the fall of Srebrenica in July 1995, on the buses to Tuzla or in the column through the woods.',
+    intent: 'both',
+    notes: 'Set by ba_srebrenica_july. Consumed by ba_ft_srebrenica_july, gates ba_dna_identification, and speaks in the urgent tier.',
+  },
+
+  dayton_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lives under a constitution that is an annex to a treaty, with two entities, three presidents and a foreign official who can sack the elected ones.',
+    intent: 'year_texture',
+    notes: 'Set by ba_dayton.',
+  },
+
+  stayed_in_sarajevo: {
+    weight: 'major',
+    category: 'moral',
+    description: 'One of the few thousand Serbs who stayed in the transferred suburbs in March 1996, which was harder than leaving in ways nobody warned about.',
+    intent: 'none',
+    notes: 'Set by ba_suburbs_transfer (defiant choice). No downstream event needed.',
+  },
+
+  left_the_suburbs: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left Grbavica in March 1996 with sixty thousand others, a refugee inside their own country from a city eleven miles away.',
+    intent: 'both',
+    notes: 'Set by ba_suburbs_transfer. Consumed by ba_ft_suburbs_visit and the year-texture layer.',
+  },
+
+  two_schools_one_roof: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Schooled in a building with two head teachers, two curricula and two histories of the same decade.',
+    intent: 'year_texture',
+    notes: 'Set by ba_two_schools.',
+  },
+
+  minority_return: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Took the house back after four years of paper and fixed the roof, among people who mostly did not want them there.',
+    intent: 'year_texture',
+    notes: 'Set by ba_return (defiant choice).',
+  },
+
+  sold_the_house: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Sold the house they grew up in to somebody from the majority in that town, which is the transaction the war was fought to produce.',
+    intent: 'none',
+    notes: 'Set by ba_return (yielding choice). No downstream event needed.',
+  },
+
+  dna_identification: {
+    weight: 'major',
+    category: 'loss',
+    description: 'Gave blood to a database and waited years for a laboratory to say that bones from two graves are one person and the person is theirs.',
+    intent: 'none',
+    notes: 'Set by ba_dna_identification. No downstream event needed; potocari_every_july carries the annual shape.',
+  },
+
+  hague_verdicts: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive for the arrests and the convictions, and for the fact that the absurdity of the arrests was the wrong size for the charges.',
+    intent: 'none',
+    notes: 'Set by ba_hague. No downstream event needed.',
+  },
+
+  bosnia_diaspora: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left for Germany with everybody else, out of a country that had four and a half million people in 1991.',
+    intent: 'both',
+    notes: 'Set by ba_leaving. Consumed by ba_ft_diaspora_august and the year-texture layer.',
+  },
+
+  bosnia_stayer: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Stayed, and is good at the job, in an institution that answers to whichever party holds this entity.',
+    intent: 'both',
+    notes: 'Set by ba_leaving (defiant choice). Consumed by ba_ft_stayer_late and the year-texture layer.',
+  },
+
+  komsiluk_after: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Uses the word in the past tense and the present tense in the same conversation, and means both.',
+    intent: 'year_texture',
+    notes: 'Set by ba_ft_komsiluk_after. Suppresses the pre-war komsiluk texture.',
+  },
+
+  siege_habits: {
+    weight: 'moderate',
+    category: 'psychological',
+    description: 'Fills things. Walks on the inside of a pavement. Is already moving before deciding anything.',
+    intent: 'year_texture',
+    notes: 'Set by ba_ft_siege_habits.',
+  },
+
+  potocari_every_july: {
+    weight: 'major',
+    category: 'loss',
+    description: 'The run-up, the day, the week after. It is the shape of the year, and has been for nineteen of them.',
+    intent: 'year_texture',
+    notes: 'Set by ba_ft_srebrenica_july.',
+  },
+
+  told_the_son: {
+    weight: 'major',
+    category: 'family',
+    description: 'Gave the true version to a son old enough to be entitled to it, and handed him something carried for thirty years.',
+    intent: 'none',
+    notes: 'Set by ba_ft_vrs_account. No downstream event needed.',
+  },
+
+  silence_recognised: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Understands, at this distance, that a whole town saying the careful sentence for thirty years is how a thing gets to stay unsaid.',
+    intent: 'none',
+    notes: 'Set by ba_ft_serb_silence_late. No downstream event needed.',
+  },
+
+  went_back_to_grbavica: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Stood on a pavement in front of their own flat, the only person on the street who knew it.',
+    intent: 'none',
+    notes: 'Set by ba_ft_suburbs_visit. Suppresses the displacement texture.',
+  },
+
+  testified_at_the_hague: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Gave an accurate statement with things left out, and a man was convicted partly on it.',
+    intent: 'none',
+    notes: 'Set by ba_ft_camp_statement. No downstream event needed.',
+  },
+
+  august_return: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Drives down in August with foreign plates, in the fortnight when the villages are briefly at their 1990 population.',
+    intent: 'none',
+    notes: 'Set by ba_ft_diaspora_august. No downstream event needed.',
+  },
+
+  stayer_accounting: {
+    weight: 'moderate',
+    category: 'psychological',
+    description: 'Has an honest answer about whether staying was worth it, which is longer than anyone wants and does not resolve.',
+    intent: 'none',
+    notes: 'Set by ba_ft_stayer_late. No downstream event needed.',
+  },
+
+  none_of_the_three: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Not one of the three constituent peoples, on every form, in a state whose constitution reserves half its offices for them.',
+    intent: 'year_texture',
+    notes: 'Set by ba_ft_mixed_after.',
+  },
+
+  village_cleared: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'The village they lived in was cleared in 1992 by men who came from outside it, and afterwards the village agreed a version with nobody in it responsible.',
+    intent: 'both',
+    notes: 'Set by ba_village_divides. Gates ba_collective_centre and the year-texture layer.',
+  },
+
+  helped_them_out: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Drove the family out in the dark with the lights off, twice, and never asked the man at the checkpoint whether he recognised them.',
+    intent: 'year_texture',
+    notes: 'Set by ba_village_divides (defiant choice).',
+  },
+
+  stayed_indoors: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Stayed indoors, which was true — one house cannot stop it — and is the sentence they examine at three in the morning.',
+    intent: 'year_texture',
+    notes: 'Set by ba_village_divides (yielding choice).',
+  },
+
+  collective_centre: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Lived in a school with blankets hung on wire for walls, on a rota, for what was supposed to be a few months.',
+    intent: 'year_texture',
+    notes: 'Set by ba_collective_centre.',
+  },
+
+  humanitarian_ration: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Fed by convoy: oil, flour, a yeast that did not work and a tin of meat this whole country still makes jokes about.',
+    intent: 'year_texture',
+    notes: 'Set by ba_convoy.',
+  },
+
+  mined_land: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Can see good land from the house that has a sign on it with a skull and a date, and has had since 1998.',
+    intent: 'year_texture',
+    notes: 'Set by ba_minefield.',
+  },
+
+  village_emptied: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'A village of eleven hundred in 1991 with a hundred and forty left, four houses lived in year-round and eleven opened in August.',
+    intent: 'year_texture',
+    notes: 'Set by ba_village_empty.',
   },
 
 }

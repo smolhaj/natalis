@@ -168,7 +168,9 @@ export const EVENTS_SONDER_53 = [
     id: 'sonder_53_r',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s53r,
+    // The whole line is written from after the stretch of months, with the map
+    // of a life to put it on; `phase: 'young_adult'` gave it to nineteen.
+    when: (G) => G.age >= 25 && !G.mem?.s53r,
     text: 'For a stretch of months everything was difficult and nothing was wrong in a way you could identify. Not depression exactly — the diffuse difficulty that attaches to a particular stretch of months for reasons that remain unclear. It lifted eventually, without explanation, the way it arrived. In retrospect you cannot locate a cause or a resolution. The period is in the map of your life as a territory with a different climate from the territories around it.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s53r', true) },

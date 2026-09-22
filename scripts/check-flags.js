@@ -156,9 +156,17 @@ function coverage(flag) {
   }
 }
 
+const VALID_INTENTS = new Set(['none', 'both', 'year_texture', 'event'])
+
 function statusFor(flag, entry) {
   const c = coverage(flag)
   const { intent } = entry
+  // A misspelt intent used to fall through the chain below and come out
+  // `partial` no matter what the flag actually had, so the only way to fix it
+  // was to guess that the value itself was wrong. `followthrough` is the one
+  // that keeps getting written, because it is what the field means; it is not
+  // what the field accepts. Say so instead of quietly marking the flag broken.
+  if (!VALID_INTENTS.has(intent)) return 'bad_intent'
   // Texture labels need no follow-through — always covered regardless of check count
   if (intent === 'none') return 'covered'
   // epitaph/identity-card only does NOT count as covered — it's the eulogy, not the life
@@ -190,6 +198,7 @@ const statuses = entries.map(([flag, entry]) => [flag, entry, statusFor(flag, en
 const orphaned = statuses.filter(([,,s]) => s === 'orphaned')
 const partial  = statuses.filter(([,,s]) => s === 'partial')
 const covered  = statuses.filter(([,,s]) => s === 'covered')
+const badIntent = statuses.filter(([,,s]) => s === 'bad_intent')
 
 // ── Header ────────────────────────────────────────────────────────────────────
 console.log(`\n${B('natalis flag audit')} — ${new Date().toISOString().slice(0, 10)}`)
@@ -202,9 +211,20 @@ console.log(
 console.log(
   `Coverage: ${GRN(covered.length + ' covered')}  ` +
   `${YEL(partial.length + ' partial')}  ` +
-  `${RED(orphaned.length + ' orphaned')}`
+  `${RED(orphaned.length + ' orphaned')}` +
+  (badIntent.length ? `  ${RED(badIntent.length + ' with an unknown intent')}` : '')
 )
 console.log('─'.repeat(62))
+
+// ── Registry entries the audit cannot read ────────────────────────────────────
+if (badIntent.length) {
+  console.log(`\n${B(RED('UNKNOWN INTENT'))} — must be one of ${[...VALID_INTENTS].join(', ')}\n`)
+  for (const [flag, entry] of badIntent) {
+    console.log(`  ${RED('[' + entry.weight + '/' + entry.category + ']')} ${B(flag)}  intent: ${JSON.stringify(entry.intent)}`)
+    console.log(`    ${DIM(entry.description ?? '')}`)
+  }
+  console.log()
+}
 
 // ── Orphaned flags ────────────────────────────────────────────────────────────
 if (orphaned.length && !showWorld && !showUnreg) {

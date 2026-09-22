@@ -1,3 +1,6 @@
+import { hasTech } from '../../technology.js'
+import { INDEPENDENCE_YEAR } from '../../history.js'
+
 // events_texture.js
 // Lived-texture events: the grain of ordinary life in specific times and places.
 // Rural developing world, pre-1960 era, and career arc events.
@@ -498,14 +501,39 @@ export const TEXTURE_EVENTS = [
     id: 'era_decolonization',
     phase: 'childhood',
     weight: 3,
+    // Independence has a date, and it is not "sometime between 1945 and 1970".
+    // The old window handed an Egyptian child an independence ceremony in 1958 —
+    // thirty-six years after 1922, five years after the republic and two after
+    // the last British troops left the Canal Zone.
     when: (G) =>
       ['subsaharan', 'developing_urban'].includes(G.character.country.archetype) &&
-      G.currentYear >= 1945 && G.currentYear <= 1970 &&
+      INDEPENDENCE_YEAR[G.character.country.name] === G.currentYear &&
       G.age >= 5 &&
       !G.flags.includes('era_decolonization_done'),
     text: 'Independence comes. There are ceremonies: a flag lowered, a flag raised, speeches in a language you are still learning. The street names are changed. The portraits in the school are changed. The word for your country is changed, or the way it is said is changed, or who says it has changed. On an ordinary Tuesday you are told that the country belongs to itself now. You are not entirely sure what was happening before or what happens next. The adults in your life seem to be feeling something you do not yet have words for.',
     choices: null,
     effect: (p) => { p.e += 5; p.m += 8; p.addFlag('independence_generation'); p.addFlag('era_decolonization_done') },
+  },
+
+  {
+    id: 'era_independence_before_you',
+    phase: 'childhood',
+    weight: 3,
+    // The counterpart to the event above, for the countries whose independence
+    // is older than the character: Egypt, Iraq, Turkey, most of Latin America.
+    // The flag came down before they were born and the furniture is still here.
+    when: (G) => {
+      const indep = INDEPENDENCE_YEAR[G.character.country.name]
+      if (indep === undefined) return false
+      if (!['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype)) return false
+      const born = G.currentYear - G.age
+      return born - indep >= 8 && born - indep <= 60 &&
+        G.age >= 8 && G.age <= 14 &&
+        !G.mem?.independenceBeforeYou
+    },
+    text: (G) => `The country was already its own before you were born. You learn the date in school the way you learn any date. But the old arrangement is still standing in places: a building everyone calls by the name of a company that no longer exists, a road that goes where the foreigners needed it to go, a word for a thing that is not a word in your language. The men your grandfather's age say the year — ${INDEPENDENCE_YEAR[G.character.country.name]} — as if it explains something, and to them it does. To you it is a number on a page you have to remember for the examination.`,
+    choices: null,
+    effect: (p) => { p.e += 4; p.setMem('independenceBeforeYou', true) },
   },
 
   {
@@ -707,7 +735,7 @@ export const TEXTURE_EVENTS = [
       G.career &&
       G.age >= 38 && G.age <= 55 &&
       !G.flags.includes('career_passed_over_done'),
-    text: 'The promotion you expected goes to someone else. The announcement is made by email on a Friday afternoon. The person who gets it is less experienced than you and, depending on how honest you are with yourself, possibly less qualified. Your manager calls to say that your contribution is valued. You say the right things. On the train home you think about what "valued" actually means in practice.',
+    text: (G) => 'The promotion you expected goes to someone else. ' + (hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear) ? 'The announcement is made by email on a Friday afternoon.' : 'You hear it in the corridor on a Friday afternoon, from someone who assumed you already knew.') + '  The person who gets it is less experienced than you and, depending on how honest you are with yourself, possibly less qualified. Your manager calls to say that your contribution is valued. You say the right things. On the train home you think about what "valued" actually means in practice.',
     choices: [
       {
         text: 'Accept it and recommit — you can still move up from here',
@@ -760,18 +788,35 @@ export const TEXTURE_EVENTS = [
       G.age >= 40 && G.age <= 65 &&
       !G.flags.includes('laid_off') &&
       ['federal_republic', 'parliamentary_republic', 'constitutional_monarchy', 'democracy'].includes(G.regime),
-    text: 'A company restructure. Your role is eliminated, which is the word they use. The HR representative is kind and reads from a document and uses words like "transition" and "package." You are given a box. You have been at this company for a specific number of years and the cardboard box is the same size regardless. You carry it to the car. In the parking lot you sit for a while before driving.',
+    // An HR representative, a severance package, a cardboard box and a car in a
+    // parking lot are four separate assumptions, and this fired for a
+    // construction foreman in 1984 Tokyo under lifetime employment. The job
+    // ending is universal; the shape of the ending is not.
+    text: (G) => {
+      const arch = G.currentCountry?.archetype ?? G.character.country.archetype
+      const rich = ['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(arch)
+      const DESK_FIELDS = ['finance', 'technology', 'media', 'law', 'government', 'real_estate', 'academia', 'science', 'writing', 'architecture', 'politics', 'education']
+      const office = DESK_FIELDS.includes(G.career?.field)
+      const hasCar = (G.assets?.vehicles?.length ?? 0) > 0
+      if (!rich) {
+        return 'The work stops. There is no meeting and no document — you are told at the end of the day, the way you would be told about the weather, and what you are told is that there is nothing next week. You ask about next month and the answer is that nobody knows, which is truthful and also the end of the conversation. You go home at the normal time. That is the strangest part: the day is the same length.'
+      }
+      if (!office) {
+        return 'Nobody says the word for what this is. Your name is simply not on the list for next month, and the people whose names are on it do not look at you while they read it. You hand back what belongs to the company — the pass, the keys, the coat with the company name on it. Someone says they will call you. You walk to the ' + (hasCar ? 'car' : 'gate') + ' at the hour you always walk to it, and this time there is no reason to hurry.'
+      }
+      return 'A company restructure. Your role is eliminated, which is the word they use. The person from personnel is kind and reads from a document and uses words like "transition" and "package." You are given a box. You have been at this company for a specific number of years and the cardboard box is the same size regardless. You carry it out. ' + (hasCar ? 'In the car park you sit for a while before driving.' : 'You stand outside for a while before deciding which way to walk.')
+    },
     choices: [
       {
-        text: 'Begin the job search immediately — momentum over grief',
+        text: 'Begin looking immediately — momentum over grief',
         tag: null,
-        outcome: 'You have a position within five months. It is not the same as the one you had. Few things are.',
+        outcome: 'You are working again within five months. It is not the same as what you had. Few things are.',
         effect: (p) => { p.m -= 10; p.mo -= 4000; p.s += 4; p.clearCareer(); p.addFlag('laid_off'); p.addFlag('redundancy_survivor') },
       },
       {
         text: 'Take time first — you need to understand what happened',
         tag: null,
-        outcome: 'Three months pass. The gap in the resume is noted in interviews but not disqualifying. You come back to work knowing yourself better, for whatever that is worth.',
+        outcome: 'Three months pass. The gap is noticed, by the people who notice such things, and is not fatal. You go back knowing yourself better, for whatever that is worth.',
         effect: (p) => { p.m -= 6; p.mo -= 9000; p.r += 6; p.clearCareer(); p.addFlag('laid_off'); p.addFlag('redundancy_survivor') },
       },
     ],
@@ -822,8 +867,12 @@ export const TEXTURE_EVENTS = [
     id: 'career_legacy_project',
     phase: 'late_life',
     weight: 2,
+    // Leading something that outlasts you requires being in a position to lead
+    // something. Without a seniority gate this fired for a crew member on $575 a
+    // year whose job title had not changed in forty-one years.
     when: (G) =>
       G.career &&
+      (G.career.level ?? 0) >= 2 &&
       G.age >= 50 && G.age <= 65 &&
       G.stats.smarts >= 55 &&
       !G.flags.includes('career_legacy_done'),

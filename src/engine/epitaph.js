@@ -1,13 +1,21 @@
 import { FlagSet, getPhase } from './character'
 import { buildG } from './tick'
-import { getCountryDisplayName } from '../utils/countryUtils'
+import { getCountryDisplayName, withArticle } from '../utils/countryUtils'
+import { WORLD_EVENTS } from '../data/worldEvents'
 
 // ─── Living identity card ─────────────────────────────────────────────────────
 // 4 sentences in two pairs: exterior (place/era/situation) + interior (wound/desire).
 // Displayed in the Stats tab, regenerated each year.
 export function generateIdentityCard(state) {
   const F = new FlagSet(state.flags ?? [])
-  const { age, partner, children, career, education, desire } = state
+  // The partner object is kept on state after they die, because the grief and
+  // memory layers need the name. Every branch below asks "do they have a
+  // partner" and means a living one, so a widow was told "You are married to
+  // Vikram Joshi" on the card that renders every year for the rest of her life,
+  // four years after his death line printed. 9 of 13 widowed lives got this.
+  const { age, children, career, education, desire } = state
+  const partner = state.partner?.alive === false ? null : state.partner
+  const lostPartner = state.partner?.alive === false ? state.partner : null
   const G = buildG(state)
   const country = G.currentCountry ?? state.character?.country
   const birthCountry = state.character?.country
@@ -17,10 +25,10 @@ export function generateIdentityCard(state) {
   const interior = [] // 2 sentences: subjective, formative
 
   // ── EXTERIOR 1: Age + place + occupation ─────────────────────────────────────
-  const place = country?.name ?? 'somewhere'
+  const place = countryWithArticle(country?.name ?? 'somewhere')
   const occupationPhrase = (() => {
     if (state.inPrison) return null // handled in exterior 2
-    if (career) return `working as a ${career.title}`
+    if (career) return `working as ${withArticle(career.title)}`
     if (state.retired) return 'retired'
     if (education?.enrolled) return 'studying'
     if (phase === 'early_childhood' || phase === 'childhood') return 'still a child'
@@ -53,11 +61,21 @@ export function generateIdentityCard(state) {
     exterior.push(c > 0
       ? `You are with ${partner.name} and have ${c === 1 ? 'a child' : `${c} children`}.`
       : `You are with ${partner.name}.`)
-  } else if (F.has('widowed') || F.has('partner_died')) {
-    const c = (children ?? []).length
-    exterior.push(c > 0
-      ? `You are widowed, raising ${c === 1 ? 'a child' : `${c} children`}.`
-      : 'You are widowed.')
+  } else if (lostPartner || F.has('widowed') || F.has('partner_died')) {
+    const kids = children ?? []
+    const c = kids.length
+    // "Raising five children" was printed to an eighty-one-year-old whose
+    // youngest was fifty.
+    const stillRaising = kids.some(k => (k.age ?? 99) < 18)
+    const name = lostPartner?.name
+    exterior.push(
+      c > 0 && stillRaising
+        ? `You are widowed, raising ${c === 1 ? 'a child' : `${c} children`}.`
+        : c > 0
+          ? (name
+              ? `You are widowed. ${name} is who you had the ${c === 1 ? 'child' : c + ' children'} with.`
+              : `You are widowed, with ${c === 1 ? 'a grown child' : c + ' grown children'}.`)
+          : (name ? `You are widowed. ${name} was who you had.` : 'You are widowed.'))
   } else if (F.has('divorced')) {
     exterior.push('You are divorced.')
   } else if ((children ?? []).length > 0) {
@@ -74,7 +92,17 @@ export function generateIdentityCard(state) {
     if (F.has('gulag_survived')) return 'You survived the camps. That knowledge lives in your body.'
     if (F.has('lost_child')) return 'You lost a child. That does not become a past thing.'
     if (F.has('child_illness_chronic')) return age >= 55 ? 'Your child has lived with a serious condition their whole life. You have been alongside it — not in front of it, not behind it. Alongside.' : 'Your child is seriously ill. Life reorganizes itself around that. Everything else continues from somewhere else inside you.'
-    if (F.has('child_seriously_ill') && !F.has('child_illness_recovery') && !F.has('child_illness_chronic')) return 'Your child is seriously ill. You are managing an impossible equation of care, cost, presence, and fear. You are doing it anyway.'
+    // Present tense behind a permanent flag. An Egyptian whose daughter was
+    // diagnosed in 1993 read, on the death screen in 2034, that his child is
+    // seriously ill and he is managing an impossible equation of care — about
+    // a woman of fifty-three, forty-one years later. Exactly the failure mode
+    // CLAUDE.md documents for `cancer_treatment`, still live here.
+    if (F.has('child_seriously_ill') && !F.has('child_illness_recovery') && !F.has('child_illness_chronic')) {
+      const since = state.currentYear - (state.mem?.child_seriously_illYear ?? state.mem?.sick_child_diagnosedYear ?? state.currentYear)
+      return since <= 8
+        ? 'Your child is seriously ill. You are managing an impossible equation of care, cost, presence, and fear. You are doing it anyway.'
+        : 'There was a year your child was seriously ill. You learned the corridors, the names of the staff, the particular quality of waiting. It is not the largest fact about your life. It is the one you can still feel in your hands.'
+    }
     if (F.has('partition_survivor') || F.has('partition_refugee')) return 'You crossed the border during the Partition, carrying what you could.'
     // Heavy personal facts
     if (F.has('cancer_survivor')) return 'You are a cancer survivor. The word still sits differently than you expected.'
@@ -219,6 +247,7 @@ export function generateEpitaph(state) {
   const His = character.gender === 'male' ? 'His' : 'Her'
   const his = His.toLowerCase()
   const him = character.gender === 'male' ? 'him' : 'her'
+  const himself = character.gender === 'male' ? 'himself' : 'herself'
   const country = character.country.name
   const birthCountryName = getCountryDisplayName(character.country, character.birthYear)
   const { fame, assets, siblings } = state
@@ -226,9 +255,11 @@ export function generateEpitaph(state) {
   const f = (flag) => flags.includes(flag)
   const any = (...fs) => fs.some(g => flags.includes(g))
 
+  // "James was born in United States and lived to 73." Eight countries on the
+  // roster need the article and none of them were getting it.
   const bornIn = birthCountryName !== country
-    ? `${birthCountryName} (now ${country})`
-    : country
+    ? `${countryWithArticle(birthCountryName)} (now ${countryWithArticle(country)})`
+    : countryWithArticle(country)
 
   // Paragraphs accumulate as string arrays; joined with double newline at end
   const para1 = [] // origin + childhood
@@ -250,7 +281,11 @@ export function generateEpitaph(state) {
   const hadHardChildhood = any('war_childhood', 'conflict_zone_birth', 'poverty_childhood', 'food_insecurity', 'lost_parent_young', 'orphaned')
   const hadWarmChildhood = f('secure_childhood')
   if (any('war_childhood', 'conflict_zone_birth')) {
-    para1.push(`The first years were shaped by conflict before ${he} had language for it.`)
+    para1.push(oneOf([
+      `The first years were shaped by conflict before ${he} had language for it.`,
+      `${He} learned to read a night by its sounds before ${he} learned to read anything else.`,
+      `There was a war on for the whole of ${his} childhood, and ${he} did not know that this was unusual.`,
+    ]))
   } else if (any('lost_parent_young', 'orphaned')) {
     if (any('poverty_childhood', 'food_insecurity')) {
       para1.push(`A parent was gone before there was a clear memory of them, and the early years were lean.`)
@@ -258,9 +293,18 @@ export function generateEpitaph(state) {
       para1.push(`A parent was gone before there was a clear memory of them — a founding absence.`)
     }
   } else if (any('poverty_childhood', 'food_insecurity')) {
-    para1.push(`The early years were lean. Hunger was part of the childhood.`)
+    para1.push(oneOf([
+      `The early years were lean. Hunger was part of the childhood.`,
+      `There were years when the food ran out before the month did, and ${he} learned what that does to a household.`,
+      `${He} grew up counting things that other children did not have to count.`,
+      `The early years were lean, and it showed in ${his} teeth and ${his} height for the rest of ${his} life.`,
+    ]))
   } else if (hadWarmChildhood) {
-    para1.push(`${He} had a childhood with warmth in it — something ${he} would spend the rest of ${his} life trying to pass on.`)
+    para1.push(oneOf([
+      `${He} had a childhood with warmth in it — something ${he} would spend the rest of ${his} life trying to pass on.`,
+      `The childhood was a good one, and ${he} knew it late rather than at the time.`,
+      `There was enough, and there were people who noticed ${him}. Not everyone gets that first.`,
+    ]))
   }
 
   if (f('water_walk_childhood')) {
@@ -393,6 +437,8 @@ export function generateEpitaph(state) {
     para2.push(`${He} was in Hungary for the 1956 uprising — the twelve days, then November 4th and the Soviet tanks. ${He} carried the twelve days as a measurement for the rest of ${his} life.`)
   } else if (f('taiwan_228_generation')) {
     para2.push(`${He} was in Taiwan for the February 28 Massacre of 1947. The event was forbidden in public memory for forty years. ${He} carried it privately in the years when no other carrying was possible.`)
+  } else if (f('geo_testigo_generation') && f('april_9_generation')) {
+    para2.push(`${He} was on Rustaveli Avenue on April 9, 1989 and on Rustaveli Avenue again in 2024 with a different kind of crowd carrying the EU flag. The avenue had seen everything in between. So had ${he}.`)
   } else if (f('april_9_generation')) {
     para2.push(`${He} was on Rustaveli Avenue on April 9, 1989, when Soviet troops turned on the crowd. The event became the founding memory of Georgian independence.`)
   } else if (f('normalization_generation') && f('charter_77_generation') && f('political_dissident')) {
@@ -583,8 +629,6 @@ export function generateEpitaph(state) {
     para2.push(`${He} lived both the JCPOA and its collapse — the delegations, the Boeing deal, the rial improving, and then May 2018, and the rial falling sixty percent in three months. The hope and the answer to the hope are the same story.`)
   } else if (f('irn_sanctions_generation') && f('irn_double_life')) {
     para2.push(`${He} navigated the sanctions economy and the Republic's private geography simultaneously — dollar prices and official rates, rooftop parties and street-facing silences. The arithmetic of both became second nature.`)
-  } else if (f('geo_testigo_generation') && f('april_9_generation')) {
-    para2.push(`${He} was on Rustaveli Avenue on April 9, 1989 and on Rustaveli Avenue again in 2024 with a different kind of crowd carrying the EU flag. The avenue had seen everything in between. So had ${he}.`)
   } else if (f('geo_1990s_generation') && f('georgian_war_2008')) {
     para2.push(`${He} survived the Georgian 1990s — the seventy-percent collapse, the four-hour power, the warlords — and then August 2008, five days, Russian tanks forty kilometres out. What survived the decade and survived the week is the country ${he} still lives in.`)
   } else if (f('geo_1990s_generation')) {
@@ -643,12 +687,20 @@ export function generateEpitaph(state) {
     para2.push(`${He} lived in a divided Germany — the Wirtschaftswunder on one side, the Trabant queue on the other — and lived to see it reunified. Both Germanys were built from the same rubble by the same generation asking different questions about what came before.`)
   }
 
-  // Displacement / migration
+  // Displacement / migration.
+  //
+  // `displaced` does not mean a border was crossed — it is also the flag for
+  // being moved inside your own country, which is most displacement — and the
+  // state already knows the difference. A woman who lived her whole life in one
+  // Siberian district was being told she had been carried across borders.
+  const leftTheCountry = (state.currentCountry?.name ?? state.character?.country?.name) !== state.character?.country?.name
   if (any('refugee', 'displaced') && !any('genocide_survivor', 'tutsi_hidden')) {
     if (any('sought_asylum', 'refugee_status')) {
       para2.push(`${He} fled and was eventually granted refuge. The years of waiting between were their own kind of sentence.`)
-    } else {
+    } else if (leftTheCountry || any('refugee')) {
       para2.push(`${He} was carried across borders by forces larger than any single life.`)
+    } else {
+      para2.push(`${He} was moved by forces larger than any single life, though never out of the country ${he} was born in. Most displacement looks like that.`)
     }
   } else if (any('emigrated', 'diaspora') && para2.length === 0) {
     // Only add emigration if no heavy history already took up this paragraph
@@ -666,6 +718,50 @@ export function generateEpitaph(state) {
   }
   if (f('kolkhoz_dissolved')) {
     para2.push(`${He} lived through the dissolution of collective farming — the paper that said you owned land, and the reality that was more complicated.`)
+  }
+
+  // The historical spine, when nothing above has already named it.
+  //
+  // `worldEventsFired` is the record of what actually reached this character,
+  // written year by year by the engine, and the obituary was ignoring every
+  // entry in it. A Romanian born in 1934 who lived through Ceausescu's whole
+  // rule and died the year after the revolution got an obituary that did not
+  // mention either — while her own state object held `romania_revolution_1989`
+  // and `cold_war_end`.
+  //
+  // Only the last two are named, and only when the paragraph is otherwise
+  // empty: a list of everything is a timeline, not an obituary.
+  if (para2.length === 0) {
+    const fired = [...(state.worldEventsFired ?? [])]
+      .map(id => WORLD_EVENTS.find(w => w.id === id))
+      .filter(w => w?.name && !AMBIENT_WORLD_EVENTS.has(w.id))
+    // An event that names this character's country was written about the place
+    // they actually lived, and is the one an obituary would reach for.
+    const ownCountry = fired.filter(w => w.countries?.includes(country))
+    // `worldEventsFired` is in the order the events reached this character, so
+    // the order is already the chronology. Preferring own-country events threw
+    // it away, and three of the four sentences below assert a sequence: one
+    // Japanese obituary read "The century handed him the Japanese Asset Bubble
+    // Collapse and then the 1973 Oil Shock", which is 1991 and then 1973.
+    // Choose by relevance, then put the two back in the order they happened.
+    const order = new Map(fired.map((w, i) => [w.id, i]))
+    const pick2 = (ownCountry.length >= 2 ? ownCountry : [...ownCountry, ...fired.filter(w => !ownCountry.includes(w))])
+      .slice(0, 2)
+      .sort((a, b) => order.get(a.id) - order.get(b.id))
+    if (pick2.length >= 2) {
+      para2.push(oneOf([
+        `${He} lived through ${withDefiniteArticle(pick2[0].name)} and ${withDefiniteArticle(pick2[1].name)}. Nobody ever asked ${him} about either.`,
+        `${He} was alive for ${withDefiniteArticle(pick2[0].name)}, and then for ${withDefiniteArticle(pick2[1].name)}, and was not consulted about either.`,
+        `The century handed ${him} ${withDefiniteArticle(pick2[0].name)} and then ${withDefiniteArticle(pick2[1].name)}, and ${he} went on getting up in the morning.`,
+        `${He} saw ${withDefiniteArticle(pick2[0].name)} and ${withDefiniteArticle(pick2[1].name)} from the inside, which is not the same as understanding them.`,
+      ]))
+    } else if (pick2.length === 1) {
+      para2.push(oneOf([
+        `${He} lived through ${withDefiniteArticle(pick2[0].name)}, which is the part of ${his} life a stranger would recognise and the smallest part of it to ${him}.`,
+        `${He} was there for ${withDefiniteArticle(pick2[0].name)}. It is the only year of ${his} life anybody else can date.`,
+        `${He} lived through ${withDefiniteArticle(pick2[0].name)}, and spent far more of ${his} attention on other things.`,
+      ]))
+    }
   }
 
   // ── PARAGRAPH 3: Dark path, work, ethics, identity ────────────────────────────
@@ -833,9 +929,17 @@ export function generateEpitaph(state) {
     para3.push(`In certain circles, ${name} was well-known.`)
   }
   if (money > 5000000) {
-    para3.push(`${He} accumulated serious wealth, though what it cost is harder to measure than what it came to.`)
+    para3.push(oneOf([
+      `${He} accumulated serious wealth, though what it cost is harder to measure than what it came to.`,
+      `${He} became rich. The people who knew ${him} before disagree about when ${he} changed.`,
+      `There was a great deal of money by the end, and a shorter list of people who called without wanting some.`,
+    ]))
   } else if (money > 1000000) {
-    para3.push(`${He} left behind more than most.`)
+    para3.push(oneOf([
+      `${He} left behind more than most.`,
+      `There was money at the end, and a family who knew roughly how much.`,
+      `${He} died comfortable, which was not how ${he} started.`,
+    ]))
   } else if (any('destitute', 'homeless')) {
     para3.push(`${He} died with almost nothing. The circumstances were not entirely of ${his} making.`)
   }
@@ -874,7 +978,12 @@ export function generateEpitaph(state) {
   } else if (f('long_marriage') && partner) {
     para4.push(`${He} and ${partner.name} were married for a long time. The length of it was its own statement.`)
   } else if (any('lost_partner', 'widowed')) {
-    para4.push(`${He} lost the person ${he} had built a life with, and had to learn what came after.`)
+    para4.push(oneOf([
+      `${He} lost the person ${he} had built a life with, and had to learn what came after.`,
+      `${He} outlived ${his} partner, and the years after were a different arrangement entirely.`,
+      `The person ${he} had built a life with went first. ${He} kept the house running anyway.`,
+      `${He} was widowed, and never quite got used to the size of the bed.`,
+    ]))
   } else if (partner && !any('divorced', 'divorce')) {
     para4.push(`${He} shared ${his} life with ${partner.name}.`)
   } else if (any('divorced', 'divorce')) {
@@ -943,7 +1052,11 @@ export function generateEpitaph(state) {
   } else if (f('priced_out_permanently')) {
     para4.push(`${He} never owned the place ${he} lived. There was no day on which that was decided.`)
   } else if (f('home_without_a_deed')) {
-    para4.push(`The house was built in stages, as money allowed, and stands as an accurate record of when there was any.`)
+    para4.push(oneOf([
+      `The house was built in stages, as money allowed, and stands as an accurate record of when there was any.`,
+      `The house went up over twenty years, one room at a time, and was finished about a decade after it stopped mattering.`,
+      `${He} built the house ${himself}, slowly, and the upper floor never got its windows.`,
+    ]))
   }
 
   // ── LEGACY: what outlasted the life ──────────────────────────────────────────
@@ -958,12 +1071,28 @@ export function generateEpitaph(state) {
 
   // ── PARAGRAPH 5: Closing ──────────────────────────────────────────────────────
   // Age-bracket guards first — different language for different life lengths
+  // The early-death closers had one line each. In a country with real under-five
+  // mortality they are the most frequently read sentences in the game, and a
+  // player running several lives met the same one every time.
   if (age < 5) {
-    para5.push(`${name} was too young for a story. ${He} had a name, and people who held it.`)
+    para5.push(oneOf([
+      `${name} was too young for a story. ${He} had a name, and people who held it.`,
+      `There is not much to record. There was a name, chosen carefully, and a house that had been getting ready.`,
+      `${He} was here for ${age === 0 ? 'part of a year' : `${age} ${age === 1 ? 'year' : 'years'}`}. The people who were there still count it as a life.`,
+      `What ${he} was going to be is not a question anyone in the family ever stopped asking.`,
+    ]))
   } else if (age < 12) {
-    para5.push(`${He} had a childhood — not all of it, but enough that the people who knew ${him} carry something specific.`)
+    para5.push(oneOf([
+      `${He} had a childhood — not all of it, but enough that the people who knew ${him} carry something specific.`,
+      `There was a particular laugh, and a particular way of standing in a doorway, and both are still described.`,
+      `${He} got as far as being a person with opinions, and no further.`,
+    ]))
   } else if (age < 18) {
-    para5.push(`${He} was still becoming something. What it would have been, no one will know.`)
+    para5.push(oneOf([
+      `${He} was still becoming something. What it would have been, no one will know.`,
+      `${He} had just started to be interesting to ${himself}, which is the age it happens.`,
+      `The plans were real and specific and had a year attached, and the year came anyway.`,
+    ]))
   } else if (any('found_meaning', 'acceptance', 'peace')) {
     para5.push(oneOf([
       `Near the end, ${name} seemed at peace with the shape of the life.`,
@@ -1015,17 +1144,62 @@ export function generateEpitaph(state) {
 }
 
 // ─── Life notes generator ─────────────────────────────────────────────────────
-// Returns up to 8 short factual fragments for the death screen's "Life in brief"
-// section. Prioritises the most significant flags; filters out minor ones.
+//
+// The short factual fragments under "Life in brief" on the death screen — the
+// last thing a player reads, and for a long time the thinnest.
+//
+// It consulted about thirty-five hand-listed flags out of a registry of 2,887,
+// and nothing else. Over thirty simulated lives it came back EMPTY 67% of the
+// time, and its median was zero notes. A Romanian who was born in 1934, lived
+// through Ceausescu's whole rule and died in the year after the revolution got
+// a blank panel, because none of the thirty-five happened to be hers.
+//
+// Two layers were missing and both were already sitting in state:
+//
+//   `worldEventsFired` is the historical spine of the life — the engine has
+//   recorded every world event that reached this character, by id, since the
+//   first year. That Romanian's set reads `romania_revolution_1989,
+//   cold_war_end, cuban_missile_crisis`, and the obituary was ignoring all of
+//   it. A world event may now carry an `obituary` clause; where it does not,
+//   its own `name` reads perfectly well as one.
+//
+//   The ordinary shape of a life — where it started, where it ended, the work,
+//   the partner, the children, how long it ran — is the part an actual
+//   obituary opens with, and none of it was here at all.
+//
+// A flag-derived note still outranks both, because a specific fact about a
+// specific person is always the better sentence.
+
+/**
+ * World events too ambient to be a fact about one person's life. Everybody
+ * alive in 1999 lived through the rise of the internet.
+ */
+const AMBIENT_WORLD_EVENTS = new Set([
+  'internet_revolution', 'corruption_developing', 'paris_agreement_2015',
+])
+
+/** The clause an obituary would use for a world event, in priority order. */
+const WORLD_EVENT_NOTES = {
+  // The ones whose own name is not a sentence a person would write.
+  conscription_south_korea: 'Did his military service.',
+  internet_revolution: null,             // too ambient to be an obituary line
+  corruption_developing: null,
+  oil_shock_1973_west: 'Lived through the 1973 oil shock.',
+  cuban_missile_crisis: 'Was alive for the Cuban Missile Crisis.',
+  cold_war_end: 'Saw the Cold War end.',
+  soviet_collapse: 'Saw the Soviet Union dissolve.',
+  romania_revolution_1989: 'Was there in December 1989.',
+  berlin_wall_fall: 'Was alive the night the Berlin Wall came down.',
+  nine_eleven: 'Remembered where they were on the eleventh of September.',
+  covid_19: 'Lived through the pandemic.',
+  post_soviet_shock_therapy: 'Lost the value of everything saved, in a year.',
+  financial_crisis_2008: 'Was working when the banks failed in 2008.',
+}
 
 export function generateLifeNotes(state) {
   const { character, flags, age, children, partner, career, money, siblings, fame } = state
   const f = (flag) => flags.includes(flag)
   const any = (...fs) => fs.some(g => flags.includes(g))
-  const He = character.gender === 'male' ? 'He' : 'She'
-  const he = He.toLowerCase()
-  const his = character.gender === 'male' ? 'his' : 'her'
-
   const notes = [] // [{ priority, text }]
 
   const add = (priority, text) => notes.push({ priority, text })
@@ -1053,7 +1227,11 @@ export function generateLifeNotes(state) {
   if (f('first_gen_graduate')) add(70, 'First in the family to graduate university.')
   if (any('lgbtq_persecuted', 'arrested_for_orientation')) add(70, 'Persecuted for who they were.')
   if (any('served_prison_time', 'incarcerated', 'served_time')) add(70, 'Served time in prison.')
-  if (any('refugee', 'displaced') && !any('genocide_survivor', 'tutsi_hidden')) add(70, 'A refugee.')
+  // Same distinction as the epitaph: "A refugee" for a life that never left the
+  // country is simply wrong, and it was printing on 13 of 48 lives.
+  const crossed = (state.currentCountry?.name ?? state.character?.country?.name) !== state.character?.country?.name
+  if (any('refugee') && !any('genocide_survivor', 'tutsi_hidden')) add(70, 'A refugee.')
+  else if (f('displaced') && !any('genocide_survivor', 'tutsi_hidden')) add(70, crossed ? 'A refugee.' : 'Displaced, inside their own country.')
   if (f('famine_memory') || f('famine_survivor')) add(70, 'Survived famine.')
 
   // Notable choices (priority 60)
@@ -1075,7 +1253,114 @@ export function generateLifeNotes(state) {
   if (f('water_walk_childhood')) add(50, 'Carried water before school for years.')
   if (f('village_electrified')) add(50, 'Present when the first light came on in the village.')
 
-  // Sort by priority, take top 8
+  // ── The historical spine (priority 45) ──────────────────────────────────
+  //
+  // What actually reached this character, recorded year by year by the engine.
+  // Capped, and deliberately BELOW the life-shape notes below, because a life
+  // in a busy century collects eight or ten of these and they crowded out
+  // everything else: a Nigerian woman who had four children, built a business
+  // and died in childbirth at 25 got eight lines, all of them "Lived through
+  // the Sahel Drought". A history reel is not an obituary.
+  const history = []
+  for (const id of state.worldEventsFired ?? []) {
+    if (Object.prototype.hasOwnProperty.call(WORLD_EVENT_NOTES, id)) {
+      const line = WORLD_EVENT_NOTES[id]
+      if (line) history.push([46, line])
+      continue
+    }
+    if (AMBIENT_WORLD_EVENTS.has(id)) continue
+    const we = WORLD_EVENTS.find(w => w.id === id)
+    if (we?.name) history.push([45, `Lived through ${withDefiniteArticle(we.name)}.`])
+  }
+  // The ones written for this character's own country first: an event that
+  // names where they lived is a fact about them, not about the decade.
+  const here = state.character?.country?.name
+  history.sort((a, b) => b[0] - a[0])
+  const own = history.filter(h => WORLD_EVENTS.find(w => w.name && h[1].includes(w.name))?.countries?.includes(here))
+  for (const [, line] of [...own, ...history.filter(h => !own.includes(h))].slice(0, 3)) add(21, line)
+
+  // ── The ordinary shape of the life (priority 10-30) ─────────────────────
+  // So the panel is never blank. An obituary opens with these.
+  const born = getCountryDisplayName(character.country, character.birthYear)
+  const died = state.currentCountry?.name ?? character.country?.name
+  add(30, died && died !== character.country?.name
+    ? `Born in ${born}; died in ${died}.`
+    : `Born in ${born}.`)
+  if (age >= 85) add(28, `Lived to ${age}.`)
+  else if (age < 5) add(28, `Did not reach five.`)
+  else if (age < 40) add(28, `Died at ${age}.`)
+  if (career?.title) add(24, `Worked as ${withArticle(career.title).toLowerCase()}.`)
+  else if (f('never_worked')) add(20, 'Never held a job for wages.')
+  // "Never married." printed on the death screen of a man who married at 22
+  // and was widowed at 70, under an epitaph that had just said "The person he
+  // had built a life with went first." Every path that ends a marriage nulls
+  // `partner`, so reading the live object alone asks whether there is someone
+  // here NOW, which is not the question the line is answering.
+  const everMarried = f('married') || f('widowed') || f('divorced') || f('lost_partner') || state.mem?.partnerDied
+  if (partner) add(22, `Spent ${partner.years >= 20 ? 'most of a life' : 'years'} with ${String(partner.name).split(' ')[0]}.`)
+  else if (f('widowed') || f('lost_partner')) add(22, 'Outlived the person they had built a life with.')
+  else if (f('divorced')) add(20, 'Married, and then not.')
+  else if (age >= 40 && !everMarried) add(18, 'Never married.')
+  const kids = children?.length ?? 0
+  if (kids > 0) add(22, kids === 1 ? 'Had one child.' : `Had ${kids} children.`)
+  else if (age >= 45) add(16, 'Had no children.')
+  if ((siblings?.length ?? 0) >= 4) add(14, `One of ${siblings.length + 1}.`)
+  if (f('never_schooled')) add(26, 'Never went to school.')
+  else if (f('left_school_early')) add(20, 'Left school early.')
+  if (money >= 1_000_000) add(18, 'Died wealthy.')
+  else if (money < 500 && age >= 40) add(18, 'Died with nothing.')
+
+  // Sort by priority, dedupe, take top 8. Duplicates are possible because the
+  // world-event layer and the flag layer can name the same fact.
   notes.sort((a, b) => b.priority - a.priority)
-  return notes.slice(0, 8).map(n => n.text)
+  const seen = new Set()
+  const out = []
+  for (const n of notes) {
+    const k = n.text.toLowerCase()
+    if (seen.has(k)) continue
+    seen.add(k)
+    out.push(n.text)
+    if (out.length === 8) break
+  }
+  return out
 }
+
+/**
+ * "Lived through the Cuban Missile Crisis", "Lived through Apartheid",
+ * "Lived through El Caracazo".
+ *
+ * The names are Title Case proper nouns, so lowercasing the first letter to
+ * make them read as common nouns produces "the september 11 Attacks" and "the
+ * post-Soviet Shock Therapy". The only decision to make is whether the phrase
+ * takes a definite article; the name itself is left exactly as written.
+ */
+function withDefiniteArticle(name) {
+  if (/^(The|A|An|El|La|Los|Las) /.test(name)) return name
+  // A single proper noun — Apartheid, Chernobyl, Watergate — takes no article.
+  if (!/\s/.test(name)) return name
+  // 32 of the 252 world-event names are sentences, possessives or carry a
+  // colon, and "the" in front of one produces "He was alive for The Great
+  // Depression, and then for the Jesse Owens Wins Four Gold Medals in Berlin".
+  // A name with a verb in it is already a sentence; a possessive already has
+  // its determiner; a colon means the name is a title, not a noun phrase.
+  if (/'s\s|\b(wins|dies|falls|opens|ends|begins|returns|arrives|comes|goes|takes|breaks|rises|collapses)\b/i.test(name)) return name
+  if (name.includes(':')) return name
+  return `the ${name}`
+}
+
+// The roster's eight countries that take a definite article. "James was born in
+// United States" was printing on every American death screen.
+const ARTICLE_COUNTRIES = new Set([
+  'United States', 'United Kingdom', 'Netherlands', 'Philippines',
+  'Dominican Republic', 'Czech Republic', 'Central African Republic', 'Maldives',
+  'United Arab Emirates', 'Bahamas', 'Gambia',
+])
+export function countryWithArticle(name) {
+  return ARTICLE_COUNTRIES.has(name) ? `the ${name}` : name
+}
+
+// Exported for the tests only: the two tables that key off world-event ids
+// (five of the first version's keys were flag names or inventions and matched
+// nothing) and the article rule, which produced "the september 11 Attacks"
+// when it tried to lowercase a Title Case proper noun.
+export const __testables = { WORLD_EVENT_NOTES, AMBIENT_WORLD_EVENTS, withDefiniteArticle, countryWithArticle }

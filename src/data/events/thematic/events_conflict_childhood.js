@@ -11,6 +11,8 @@ const inConflict = (G) =>
   CONFLICT_COUNTRIES.includes(G.character.country.name) ||
   (G.character.country.archetype === 'developing_unstable' && G.flags.includes('lived_through_coup'))
 
+import { hasTech } from '../../technology.js'
+
 export const CONFLICT_CHILDHOOD_EVENTS = [
 
   // ── EARLY CHILDHOOD IN CONFLICT ───────────────────────────────────────────────
@@ -164,7 +166,16 @@ export const CONFLICT_CHILDHOOD_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => inConflict(G) && G.age >= 8 && G.age <= 14,
-    text: 'First the jewelry — your mother\'s earrings, a gold chain from her own mother. Then the good furniture. Then the television. Each time, your parents do not discuss it in front of you, but you notice the absences. You learn very early what things are actually worth when you need what they can buy.',
+    // The order things are sold in is the point; the television is only the
+    // last item, and it was being sold in 1956 Yemen and 1959 Myanmar. The
+    // sewing machine is the durable good a poor household parts with last,
+    // because it is the one that earns.
+    text: (G) => {
+      const last = hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear, { rural: G.ruralUrban === 'rural' })
+        ? 'Then the television.'
+        : 'Then the sewing machine.'
+      return `First the jewelry — your mother's earrings, a gold chain from her own mother. Then the good furniture. ${last} Each time, your parents do not discuss it in front of you, but you notice the absences. You learn very early what things are actually worth when you need what they can buy.`
+    },
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 6; p.e += 4; p.addFlag('conflict_childhood'); p.addFlag('food_insecurity') },
   },

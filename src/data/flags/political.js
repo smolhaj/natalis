@@ -4,6 +4,94 @@
  */
 export const POLITICAL_FLAGS = {
 
+  bahrain_2011: {
+    weight: 'major',
+    category: 'political',
+    description: 'In Bahrain in February 2011, when the roundabout filled — and in March, when the monument was demolished so that nothing was left for anyone to mean by it.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_built_the_tournament: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Built the stadiums, the metro and the city that was not there, and watched the tournament on the television in the room.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_oil_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was there for the first shipment, when the number in the newspaper meant nothing because there was no scale to compare it to.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_pearl_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the pearl collapse of the 1930s, when Japanese cultured pearls destroyed the only economy this coast had and the years that followed were called, simply, the hunger.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_reform_too_late: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'The thing they wanted at twenty-eight arrived at forty-six, addressed to somebody else.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_spoke_against_it: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Said in public, in an absolute monarchy, that the arrangement was indefensible — which is not a debating position there, it is a category of person.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_stayed_1990: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Stayed in occupied Kuwait for seven months: the bread, the radio at low volume, the checkpoint manned by a conscript younger than their son.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_three_generations: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'A grandfather who dived for pearls, a father who remembers hunger, and a card that pays for things — one family, about seventy years.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_was_at_the_roundabout: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was at the Pearl Roundabout for eleven days in 2011, and afterwards on a list.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_watched_it_built: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was alive while the country arrived: a graded track where the camel route was, then a school, then a clinic, then a city nobody has a precedent for.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  kuwait_occupation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'In Kuwait for the seven months of 1990-91: the new name on the maps, the wiring taken out of the walls, six hundred burning wells and the sky black at noon.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
   suffrage_inheritance: {
     weight: 'moderate',
     category: 'political',
@@ -696,14 +784,6 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ft10_intellectual_target_midlife. Gates ft10_intellectual_target_late.',
   },
 
-  reformasi_generation: {
-    weight: 'moderate',
-    category: 'political',
-    description: 'Character witnessed or participated in Indonesia\'s democratic transition after Suharto\'s resignation (May 1998).',
-    intent: 'event',
-    notes: 'Set by id98_suharto_falls. Ribbon: the_reformasi_generation.',
-  },
-
   id98_reckoned: {
     weight: 'moderate',
     category: 'historical',
@@ -1094,14 +1174,6 @@ export const POLITICAL_FLAGS = {
     description: 'Grew up in occupied Japan (1946–52) or the immediate postwar years — chocolate from American soldiers, rubble becoming concrete, trains running through the ruins, the emperor\'s voice on the radio.',
     intent: 'year_texture',
     notes: 'Set by jpn_postwar_childhood.',
-  },
-
-  anpo_generation: {
-    weight: 'moderate',
-    category: 'political',
-    description: 'Was in Japan during the 1960 Anpo protests — hundreds of thousands around the Diet building opposing the US security treaty, the Zengakuren students, the democracy testing its limits.',
-    intent: 'year_texture',
-    notes: 'Set by jpn_anpo_protests (both choices).',
   },
 
   showa_generation: {
@@ -2871,6 +2943,38 @@ export const POLITICAL_FLAGS = {
     description: 'Lived through the 1975-77 Emergency — opposition arrests, press censorship, sterilization programmes, the parenthesis in Indian democracy',
     intent: 'year_texture',
     notes: 'Set by ind_emergency_1975. Two branches: adapted, or knew someone detained.',
+  },
+
+  quota_ceiling: {
+    weight: 'moderate',
+    category: 'discrimination',
+    description: 'Held below a level by an allocation rule rather than by a person — a domicile, a district, a box on a form that is written down and therefore unarguable.',
+    intent: 'year_texture',
+    notes: 'Set by sl_muhajir_quota_1973.',
+  },
+
+  ethnic_political_organiser: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was in the rooms where an ethnic grievance became a political organisation — early enough to remember when the people at the front were the ones who argued best.',
+    intent: 'year_texture',
+    notes: 'Set by sl_muhajir_quota_1973.',
+  },
+
+  citizenship_protest: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Sat in the road over a citizenship law — a hundred days, mostly women, a library built out of donated books, and no win at the end of it.',
+    intent: 'year_texture',
+    notes: 'Set by sl_muslim_india_citizenship_2019.',
+  },
+
+  documented_defensively: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Put the household on paper before being asked to — the grandmother whose name is spelled three ways, the tin box gone through twice, the copies kept somewhere else.',
+    intent: 'year_texture',
+    notes: 'Set by sl_muslim_india_citizenship_2019.',
   },
 
   babri_generation: {
@@ -6872,22 +6976,6 @@ export const POLITICAL_FLAGS = {
     description: 'Refused to pay the PFDJ diaspora tax — refusal noted, family in Eritrea potentially facing consequences, the collector moving on to the next family.',
     intent: 'none',
     notes: 'Set by eri_diaspora_tax (refused choice).',
-  },
-
-  activist: {
-    weight: 'moderate',
-    category: 'political',
-    description: 'Engaged in organised civic or political activism — protests, campaigns, labour organising — beyond passive awareness.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by political awakening events across multiple regions.',
-  },
-
-  regime_self_censorship: {
-    weight: 'moderate',
-    category: 'political',
-    description: 'Learned to self-censor under authoritarian pressure — the habitual pause before speaking that becomes second nature.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set in authoritarian-context events. The learned silence that outlasts the regime.',
   },
 
   scholarship_recipient: {

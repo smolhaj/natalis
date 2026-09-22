@@ -11,7 +11,7 @@
 // an arcade layer pulls against the literary tone the rest of the game keeps.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
+import { chance } from '../utils/random'
 
 // ─── Lottery ticket draw helpers ──────────────────────────────────────────────
 

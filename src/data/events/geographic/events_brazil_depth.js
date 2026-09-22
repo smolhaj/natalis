@@ -10,6 +10,20 @@
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
+// `ruralUrban === 'rural'` was the whole of the geography in bra_dep_soy, and the
+// only rural place Brazil has is br_rural — Rural Bahia (sertão), in the
+// Northeast. So the one audience the event could ever reach was being told it
+// lived in Mato Grosso. The sertão is caatinga, not the frontier; the frontier
+// reaches it as an absence, in the people who leave for it.
+import { hasTech } from '../../technology.js'
+
+const ON_SOY_FRONTIER = (G) => {
+  const r = G.place?.country === 'Brazil' ? (G.place?.region ?? '') : ''
+  return /Centre-West|Central-West|North Brazil|Amazon|Mato Grosso|Pará|Tocantins/i.test(r)
+}
+const IN_SERTAO = (G) =>
+  G.place?.country === 'Brazil' && (G.place?.region ?? '').includes('Northeast')
+
 export const BRAZIL_DEPTH_EVENTS = [
 
   // ── CANDOMBLÉ AND SYNCRETIC FAITH ────────────────────────────────────────
@@ -43,13 +57,24 @@ export const BRAZIL_DEPTH_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
+      // The trio elétrico is a 1950 invention and the Sambódromo opened in
+      // March 1984; unguarded, this was parading down both in 1948.
+      G.currentYear >= 1950 &&
       G.age >= 12 && G.age <= 35 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.braDepCarnaval,
-    text: () => pick([
-      'Carnaval is not the same thing from inside the morro and from outside it. The Sambódromo is the television version. The morro has its own escolas de samba, its own enredos, the specific months of ensaio in the quadra. The bateria starts in October. By February the whole hill knows the samba-enredo by heart. You have known by heart the story of the slave rebellion or the quilombo or the orixá or the Amazon that the escola chose this year. When the escola enters the Sambódromo you know that the people who made it will not appear in the television coverage of the people who made it.',
-      'The blocos de rua are the carnaval before the television carnaval: the band in the street, the truck of instruments, the crowd that expands to fill whatever street it finds itself in. In Salvador the trio elétrico carries the music on a truck and the crowd follows. In Recife the frevo is specific to the streets of Olinda in a way that cannot be exported. The carnaval that is sold to tourists is made from the carnaval that belongs to someone, which is still there behind the tourist version.',
-    ]),
+    text: (G) => {
+      const sambodromo = G.currentYear >= 1984
+      const televised = hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear)
+      return pick([
+        sambodromo
+          ? 'Carnaval is not the same thing from inside the morro and from outside it. The Sambódromo is the television version. The morro has its own escolas de samba, its own enredos, the specific months of ensaio in the quadra. The bateria starts in October. By February the whole hill knows the samba-enredo by heart. You have known by heart the story of the slave rebellion or the quilombo or the orixá or the Amazon that the escola chose this year. When the escola enters the Sambódromo you know that the people who made it will not appear in the television coverage of the people who made it.'
+          : 'Carnaval is not the same thing from inside the morro and from outside it. The parade on the avenue is the version that gets photographed. The morro has its own escolas de samba, its own enredos, the specific months of ensaio in the quadra. The bateria starts in October. By February the whole hill knows the samba-enredo by heart. You have known by heart the story of the slave rebellion or the quilombo or the orixá or the Amazon that the escola chose this year. When the escola comes down off the hill you know that the people who made it will not be named in anybody\'s account of it.',
+        televised
+          ? 'The blocos de rua are the carnaval before the television carnaval: the band in the street, the truck of instruments, the crowd that expands to fill whatever street it finds itself in. In Salvador the trio elétrico carries the music on a truck and the crowd follows. In Recife the frevo is specific to the streets of Olinda in a way that cannot be exported. The carnaval that is sold to tourists is made from the carnaval that belongs to someone, which is still there behind the tourist version.'
+          : 'The blocos de rua are the carnaval nobody writes about: the band in the street, the truck of instruments, the crowd that expands to fill whatever street it finds itself in. In Salvador the trio elétrico carries the music on a truck and the crowd follows. In Recife the frevo is specific to the streets of Olinda in a way that cannot be exported. The carnaval that is sold to visitors is made from the carnaval that belongs to someone, which is still there behind the version for sale.',
+      ])
+    },
     choices: null,
     effect: (p) => {
       p.m += 7
@@ -189,12 +214,21 @@ export const BRAZIL_DEPTH_EVENTS = [
     id: 'bra_dep_quilombo',
     phase: null,
     weight: 3,
+    // "You are from one of these communities" is the event, not a detail in it,
+    // and with no ethnicity in the guard it was being said to white paulistanos.
+    // Brazil's roster has no quilombola id; Afro-Brazilian and rural is the
+    // closest honest read, and it is where the communities and the titling are.
     when: (G) =>
       G.character.country.name === 'Brazil' &&
-      G.currentYear >= 1988 &&
+      (G.currentCountry?.name ?? 'Brazil') === 'Brazil' &&
+      G.ethnicity === 'black_brazilian' &&
+      G.ruralUrban === 'rural' &&
+      // The 1988 article existed from 1988; the first title was issued in 1995,
+      // which is when "the title is under review" starts being a true sentence.
+      G.currentYear >= 1995 &&
       G.age >= 6 && G.age <= 25 &&
       !G.mem?.braDepQuilombo,
-    text: 'The quilombo was the community the enslaved built when they escaped the senzala. Palmares, the largest: 30,000 people, forty years of resistance, destroyed in 1694. The 1988 Constitution recognizes quilombola communities as having collective land rights over the territory they have historically occupied. Titling is slow and contested: the rural landowners\' lobby blocks the process in Congress; FUNAI and INCRA are underfunded. Thousands of quilombola communities exist; fewer than three hundred have full title. You are from one of these communities. The title is under review. The land has been yours for three hundred years.',
+    text: 'The quilombo was what the enslaved built when they got out of the senzala, and your community is one, and has been for three hundred years. Palmares was the largest: thirty thousand people, forty years of it, finished in 1694. Since 1988 the constitution says the land of a quilombo belongs collectively to the people who have always been on it. The title is under review, and under review is a condition rather than a stage: INCRA has no money for the surveys, the Palmares foundation has no money for the certificates, and the bancada ruralista in Brasília has no reason to hurry. Thousands of communities; fewer than three hundred with the paper in hand.',
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -216,16 +250,27 @@ export const BRAZIL_DEPTH_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 20 &&
       G.ruralUrban === 'rural' &&
+      G.place?.type === 'rural' &&
+      (ON_SOY_FRONTIER(G) || IN_SERTAO(G)) &&
       !G.mem?.braDepSoy,
-    text: () => pick([
-      'The cerrado is being converted to soy at a rate that satellite photos make visible from space. The soy goes to China: Brazilian soy feeds Chinese pigs. The fazendeiro who plants soy in what was cerrado three years ago employs fewer workers per hectare than any other crop and more machinery per hectare than almost any other. You are on the agricultural frontier — Mato Grosso, Pará, the transitional zone — where the forest is the thing that is converted into money before it disappears.',
-      'The logging road comes first. Then the cattle, clearing the brush. Then the soy, planted in what the cattle cleared. This is the sequence of deforestation: each step makes the next step easier and more profitable. The forest does not come back in the same generation. The carbon it was holding is in the atmosphere. The global temperature is the ledger that records it.',
-    ]),
+    text: (G) => ON_SOY_FRONTIER(G)
+      ? pick([
+        'The cerrado is being converted to soy at a rate that satellite photos make visible from space. The soy goes to China: Brazilian soy feeds Chinese pigs. The fazendeiro who plants soy in what was cerrado three years ago employs fewer workers per hectare than any other crop and more machinery per hectare than almost any other. You are on the agricultural frontier, where the forest is the thing that is converted into money before it disappears.',
+        'The logging road comes first. Then the cattle, clearing the brush. Then the soy, planted in what the cattle cleared. This is the sequence: each step makes the next step easier and more profitable. The forest does not come back in the same generation. The carbon it was holding is in the air over the road.',
+      ])
+      : pick([
+        'The soy is not here. Here is caatinga, the roçado, the goats, and whatever the rain decides in January. The soy is in the far west of the state, where the land is flat and the gaúchos came down from the south and bought it in blocks of a thousand hectares, and it is in Mato Grosso, where your cousin went. The men leave after a harvest that failed and come back in December with money, a telephone, and a way of saying the word hectare. The bus goes when it is full.',
+        'A man from Salvador has been asking in the cartório about the fundo de pasto — the grazing everyone has always used because everyone has always used it, which turns out not to be the same as a registered title. Nobody here signed anything. Out west they are putting in the pivots that turn all night, and the price of land has walked east along the road towards you, and this is what it looks like when it arrives: a man with a folder, asking polite questions in the town hall.',
+      ]),
     choices: [
       {
-        text: 'The frontier economy is real employment — your family works the agronegócio',
+        text: (G) => ON_SOY_FRONTIER(G)
+          ? 'The frontier economy is real employment. Your family works the agronegócio.'
+          : 'You go west for the season, with the others.',
         tag: null,
-        outcome: 'The employment is real. The frontier moves. When the frontier moves past your area, the employment structure changes. The land that was forest is now soy and will be soy until the soil degrades.',
+        outcome: (G) => ON_SOY_FRONTIER(G)
+          ? 'The employment is real. The frontier moves. When it moves past your area the employment structure changes, and the land that was forest is soy until the soil is finished.'
+          : 'The farm is the size of your municipality and you never meet the man who owns it. You come back in December with money that lasts until the rain does not come, and then you go again. Your mother counts the year by who is in the house at Christmas.',
         effect: (p) => {
           p.w += 3
           p.addFlag('bra_soy_generation')
@@ -233,9 +278,13 @@ export const BRAZIL_DEPTH_EVENTS = [
         },
       },
       {
-        text: 'The cerrado was the water that fed the rivers that fed the cities downstream',
+        text: (G) => ON_SOY_FRONTIER(G)
+          ? 'The cerrado was the water that fed the rivers that fed the cities downstream.'
+          : 'You stay, and you watch the road.',
         tag: null,
-        outcome: 'The cerrado stores more water in its deep root systems than any other ecosystem. The cities that depend on rivers that originate in the cerrado are beginning to experience the consequences. The science is clear and the political economy of soy is also clear and the two operate in different timescales.',
+        outcome: (G) => ON_SOY_FRONTIER(G)
+          ? 'The cerrado holds water in root systems that go down further than the trees go up. The cities on the rivers that start in it are beginning to find this out. The science and the price of soy operate on different timescales.'
+          : 'The ones who go come back with more than they left with and less patience for the place. The ones who stay get older alongside the village. Neither of these is a decision anybody announces.',
         effect: (p) => {
           p.e += 3
           p.r += 3

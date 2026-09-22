@@ -15,7 +15,20 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (!id.includes('/src/') && id.includes('node_modules')) {
-            if (id.includes('react')) return 'vendor-react'
+            // `id.includes('react')` is a substring test on a path, and the
+            // packages React needs at module-init time do not all have "react"
+            // in their names. `scheduler` went to `vendor` while react-dom went
+            // to `vendor-react`, and the two chunks import each other — Vite
+            // says so, in a warning on a build that exits 0:
+            //
+            //   Circular chunk: vendor -> vendor-react -> vendor
+            //
+            // `index` loads `vendor-react` first, react-dom reaches for a
+            // scheduler that has not initialised, and the deployed page throws
+            // "Cannot read properties of undefined (reading 'useState')" and
+            // renders nothing. Every check in this repo passed the whole time.
+            // Match the package directory, not the substring.
+            if (/node_modules\/(react|react-dom|scheduler|use-sync-external-store)\//.test(id)) return 'vendor-react'
             return 'vendor'
           }
           if (id.includes('/src/data/events/geographic/')) return 'content-geographic'
@@ -37,7 +50,10 @@ export default defineConfig({
   test: {
     environment: 'node',
     globals: true,
-    include: ['tests/**/*.test.js'],
+    // .jsx so the component tests are picked up; each declares
+    // `@vitest-environment jsdom` at the top of the file, because the engine
+    // and data tests are far faster in node and there are 264 of them.
+    include: ['tests/**/*.test.{js,jsx}'],
     coverage: {
       provider: 'v8',
       include: ['src/engine/**', 'src/data/**', 'src/store/**'],

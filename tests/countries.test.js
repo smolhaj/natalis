@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { COUNTRIES } from '../src/data/countries.js'
+import { getCountryFlag, FLAGGED_COUNTRIES, RELIGION_LABELS } from '../src/utils/countryUtils.js'
 
 const VALID_ARCHETYPES = new Set([
   'wealthy_west', 'wealthy_east', 'wealthy_gulf', 'post_soviet',
@@ -186,5 +187,36 @@ describe('COUNTRIES array', () => {
       console.error('Countries with ethnicGroups not summing to 1:', failures.slice(0, 5))
     }
     expect(failures.length).toBe(0)
+  })
+
+  // Half the roster (72 of 146 countries) had no ISO entry, so the header
+  // rendered a blank white flag for every year of those lives. A missing entry
+  // is invisible in play — it looks like a design choice — so it gets a test.
+  it('every playable country has a flag', () => {
+    const missing = COUNTRIES.filter(c => getCountryFlag(c.name) === '\u{1F3F3}').map(c => c.name)
+    if (missing.length) console.error('Countries rendering a blank flag:', missing)
+    expect(missing).toEqual([])
+  })
+
+  it('the flag table has no entries the roster does not contain', () => {
+    const roster = new Set(COUNTRIES.map(c => c.name))
+    const stale = FLAGGED_COUNTRIES.filter(n => !roster.has(n))
+    if (stale.length) console.error('ISO entries with no matching country:', stale)
+    expect(stale).toEqual([])
+  })
+
+  // The wizard's religion picker read "Sunni Muslim / Protestant /
+  // christian_pentecostal / Animist / Catholic" in Nigeria — 18 of 31 ids had
+  // no label and were shown to the player as raw enum values.
+  it('has a display label for every religion in the data', () => {
+    const used = new Set(COUNTRIES.flatMap(c => Object.keys(c.religionWeights ?? {})))
+    const missing = [...used].filter(k => !RELIGION_LABELS[k])
+    if (missing.length) console.error('Religions shown to the player as raw ids:', missing)
+    expect(missing).toEqual([])
+  })
+
+  it('has no religion label the data never uses', () => {
+    const used = new Set(COUNTRIES.flatMap(c => Object.keys(c.religionWeights ?? {})))
+    expect(Object.keys(RELIGION_LABELS).filter(k => !used.has(k))).toEqual([])
   })
 })

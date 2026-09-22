@@ -1,9 +1,16 @@
+import { hasTech } from '../../technology.js'
+
 // events_technology.js
 // Era-defining technology moments that mark when you lived.
 // A character born in 1955 experiences these differently than one born in 1985.
 // All gate on G.currentYear and G.character.country.gdp / archetype.
 
 const wealthy = (G) => ['very_high','high','medium_high'].includes(G.character.country.gdp)
+// `wealthy` above reads present-day GDP, which is not a statement about the
+// year the character is living in: it put the first television into a Korean
+// living room in 1951 and a Portuguese one in 1953. `arrived` asks when the
+// thing actually reached this country. See src/data/technology.js.
+const arrived = (G, t) => hasTech(G.currentCountry ?? G.character.country, t, G.currentYear)
 const developing = (G) => ['low_medium','medium'].includes(G.character.country.gdp)
 const poor = (G) => ['very_low','low'].includes(G.character.country.gdp)
 
@@ -14,7 +21,7 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_first_radio',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.currentYear >= 1930 && G.currentYear <= 1958 && G.age >= 5 && G.age <= 12,
+    when: (G) => arrived(G, 'radio') && G.currentYear >= 1930 && G.currentYear <= 1958 && G.age >= 5 && G.age <= 12,
     text: 'Your family gets a radio. A brown wooden box that hisses and crackles and then speaks. You cluster around it after dinner. For the first time, voices from the capital, from other countries, from the world outside your street enter your living room.',
     choices: null,
     effect: (p) => { p.e += 5; p.m += 8; p.addFlag('radio_childhood') },
@@ -23,7 +30,11 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_radio_war_news',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.currentYear >= 1939 && G.currentYear <= 1946 && G.age >= 5,
+    // A year window is not an arrival. Oman's first broadcast is 1972, and
+    // this put a radio in an Omani room in 1940 with the adults gathered
+    // round it.
+    when: (G) => G.currentYear >= 1939 && G.currentYear <= 1946 && G.age >= 5 &&
+      hasTech(G.currentCountry ?? G.character.country, 'radio', G.currentYear),
     text: 'The radio is on all the time now. The adults gather around it in a way that has a different quality from before. You cannot follow all the words but you understand from their faces that something serious is happening somewhere larger than here.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 4; p.addFlag('war_radio_childhood') },
@@ -34,7 +45,7 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_first_tv_wealthy',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.currentYear >= 1951 && G.currentYear <= 1968 && wealthy(G) && G.age >= 5 && G.age <= 13,
+    when: (G) => arrived(G, 'television') && G.currentYear <= 1972 && wealthy(G) && G.age >= 5 && G.age <= 13,
     text: 'The television arrives. It takes two men to carry it in. Your father positions it like a piece of furniture and your mother puts a doily on top. The screen is small. The picture is black and white. The whole family sits in front of it in the evenings and watches the test pattern come on at 11 PM.',
     choices: null,
     effect: (p) => { p.m += 10; p.e += 4; p.addFlag('tv_generation') },
@@ -43,7 +54,10 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_first_tv_developing',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.currentYear >= 1968 && G.currentYear <= 1985 && (developing(G) || poor(G)) && G.age >= 5 && G.age <= 13,
+    // The window was doing the work the arrival table should: 1968–1985 put the
+    // neighbour's set in a Tanzanian compound in 1968, twenty-eight years early,
+    // and in a Palestinian one in 1970.
+    when: (G) => arrived(G, 'television') && G.currentYear <= 1990 && (developing(G) || poor(G)) && G.age >= 5 && G.age <= 13,
     text: 'The television arrives in your neighborhood. Not in your house — in the neighbor\'s house, or the community center. People gather in the evening to watch. It is not entirely comfortable and it is completely extraordinary. The world is bigger than anyone realized.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 5; p.addFlag('tv_generation') },
@@ -53,7 +67,15 @@ export const TECHNOLOGY_EVENTS = [
     phase: 'childhood',
     weight: 2,
     when: (G) => G.currentYear === 1969 && G.age >= 5,
-    text: 'Your family gathers around the television. There is a grainy grey image and an American voice. A man is walking on the moon. Your father says something you will remember for the rest of your life. You are not sure yet what it means to be alive in a world where this is possible.',
+    // Most of the world did not watch it. It came over the radio, or in a
+    // newspaper photograph days later, and this gave a Beninese family a set
+    // sixteen years before there was one to gather round.
+    text: (G) => {
+      const ending = ' Your father says something you will remember for the rest of your life. You are not sure yet what it means to be alive in a world where this is possible.'
+      if (arrived(G, 'television')) return 'Your family gathers around the television. There is a grainy grey image and an American voice. A man is walking on the moon.' + ending
+      if (arrived(G, 'radio')) return 'The radio is on and the adults have stopped talking. A voice reads out what is happening somewhere no one has ever been: a man is walking on the moon. You look up afterwards, because everyone does.' + ending
+      return 'Someone comes back from the town with the news and it moves through the village by afternoon: a man has walked on the moon. Nobody here has seen a picture of it. You look up anyway, because everyone does.' + ending
+    },
     choices: null,
     effect: (p) => { p.m += 12; p.e += 8; p.addFlag('moon_landing_generation') },
   },
@@ -61,7 +83,10 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_color_tv',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.currentYear >= 1966 && G.currentYear <= 1978 && wealthy(G) && G.age >= 5 && G.age <= 14,
+    // `wealthy` is present-day GDP again, and the window is not an arrival:
+    // this put a colour set in a Chinese living room in 1966, nineteen years
+    // before there was a black-and-white one.
+    when: (G) => arrived(G, 'colour_television') && G.currentYear <= 1990 && G.age >= 5 && G.age <= 14,
     text: 'The new television is in color. You watch a nature documentary and the green of the forest is shocking — you did not know that was the actual color. You think about all the things you saw in black and white that were really something else.',
     choices: null,
     effect: (p) => { p.m += 6; p.e += 3 },

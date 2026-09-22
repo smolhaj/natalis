@@ -1,15 +1,14 @@
 import { COUNTRIES } from '../data/countries'
 import { DESTINATIONS } from '../data/destinations'
-import { CAREERS } from '../data/careers'
 import { ACTIVITIES, localCost } from '../data/activities'
-import { CRIMES } from '../data/crimes'
+import { inEraMoney } from '../data/economy.js'
+import { preferUnsaid, rememberSaid } from './prose.js'
 import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
-import { ILLNESSES } from '../data/illnesses'
 import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 import {
   getPhase, GDP_MULT,
-  ADULT_TRAITS, CHILD_TRAITS, pickTraits, PARTNER_OCCUPATIONS, BUSINESS_TYPES,
+  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES,
 } from './character'
 import {
   buildG, buildEffectProxy, applyProxy, resolveProxyExtras,
@@ -17,10 +16,14 @@ import {
 
 // Re-export enterCareer and getAvailableCareers so callers that import from gameEngine still work
 export { enterCareer, getAvailableCareers } from './tick'
+import { earnedGain } from './tick'
 
 function genPartnerName(state, gender) {
-  const c = state.character.country
-  return `${pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)} ${pickFrom(c.surnames)}`
+  // A partner met as an adult has their own family behind them, so the surname
+  // is drawn rather than inherited — and the first name avoids everyone
+  // already in this life. See names.js: ten independent draws across four
+  // files produced a partner and a father both called Patrick.
+  return personName(state.currentCountry ?? state.character.country, gender, state)
 }
 
 export function generatePartnerProfile(state, overrides = {}) {
@@ -44,7 +47,7 @@ export function generatePartnerProfile(state, overrides = {}) {
 
   return {
     name, gender, birthGender, age,
-    occupation: pickFrom(PARTNER_OCCUPATIONS),
+    occupation: partnerOccupation(state, gender),
     looks, smarts, wealthStat, craziness,
     relationshipQuality: randomBetween(45, 72),
     married: false, engaged: false, years: 0, alive: true,
@@ -90,7 +93,7 @@ export function hookUp(state) {
 export function goOnDate(state) {
   if (!state.partner) return state
   const gain = randomBetween(5, 14)
-  const cost = randomBetween(40, 180)
+  const cost = $$(randomBetween(40, 180), state)
   return {
     ...state,
     partner: { ...state.partner, relationshipQuality: clamp(state.partner.relationshipQuality + gain, 0, 100) },
@@ -125,7 +128,10 @@ export function proposeMarriage(state) {
 
 export function getMarried(state) {
   if (!state.partner?.engaged) return state
-  const cost = randomBetween(800, 18000)
+  // A wedding is a large expense everywhere and a large expense is a local
+  // quantity. Flat dollars made it 72x annual income in Ethiopia and 45x in
+  // Niger, while every other cost in the engine already localises.
+  const cost = $$(localCost(randomBetween(800, 18000), gdpTierOf(state)), state)
   return {
     ...state,
     partner: { ...state.partner, married: true, engaged: false, relationshipQuality: clamp(state.partner.relationshipQuality + 10, 0, 100) },
@@ -140,7 +146,7 @@ export function fileForDivorce(state) {
   if (!state.partner) return state
   const name = state.partner.name
   const wasMarried = state.partner.married
-  const cost = wasMarried ? randomBetween(2000, 25000) : 0
+  const cost = wasMarried ? $$(localCost(randomBetween(2000, 25000), gdpTierOf(state)), state) : 0
   const updatedChildren = (state.children ?? []).map(child => ({
     ...child,
     relationshipQuality: clamp((child.relationshipQuality ?? 60) - 12, 0, 100),
@@ -165,7 +171,7 @@ export function fileForDivorce(state) {
 
 export function tryForChild(state) {
   if (!state.partner) return state
-  if (state.flags.includes('pregnant')) {
+  if (state.flags.includes('pregnant') || state.flags.includes('expecting')) {
     return { ...state, log: [...state.log, { age: state.age, text: 'You are already expecting.', isKey: false }] }
   }
   if (state.birthControl) {
@@ -174,24 +180,106 @@ export function tryForChild(state) {
   if (state.age > 50 || (state.partner.age ?? 30) > 48) {
     return { ...state, log: [...state.log, { age: state.age, text: "Having a biological child is no longer possible.", isKey: false }] }
   }
+  const bearerIsPlayer = state.character?.gender === 'female'
   const fertChance = state.partner.married ? 0.65 : 0.38
   if (!chance(fertChance)) {
+    // All five of the original lines are about years of this — the counting,
+    // the word neither of you says — and all five fired on the FIRST failed
+    // attempt, in the same year a couple met, and to couples who already had
+    // two children. `lifeCourse` calls this annually, so one life read "You had
+    // told yourselves you were not counting" twice, two years apart, verbatim.
+    //
+    // How long it has been is the whole content of these sentences, so it has
+    // to be counted before they can be said.
+    const tryingSince = state.mem?.tryingSinceAge ?? state.age
+    const years = Math.max(1, state.age - tryingSince + 1)
+    const hasChildren = (state.children ?? []).length > 0
+    const pool = hasChildren
+      // A couple who already have a child are not inside the same silence.
+      ? years <= 2
+        ? ["You try for another. It doesn't happen this year.",
+           'Nothing this year. There is already a child asleep down the hall, which changes the shape of it without changing it.',
+           'Not this year. You are not worried, and you notice that you have had to decide not to be.']
+        : ['You had assumed it would work the way it worked before. It has not.',
+           'The second one is not arriving. Nobody offers you the sympathy they offered the people who had none, and you do not ask for it.',
+           'You have started to think of the one you have as the only one, and then to take the thought back, and then to have it again.',
+           'Somebody asks when the next one is coming and you give the light answer, and you are getting better at the light answer.']
+      : years === 1
+        ? ["You try for a child — it doesn't happen this year.",
+           'Nothing yet. Neither of you thinks anything of it.']
+        : years <= 3
+          ? ['Another year and no news. Neither of you says the word for it.',
+             'The month passes the way the last one did. You have started counting without deciding to.']
+          : ['Nothing this year. You are both careful with each other about it, which is its own kind of tiring.',
+             'You had told yourselves you were not counting. You know exactly how many it has been.',
+             'Someone asks, kindly, and you have an answer ready because you have needed one before.']
     return {
       ...state,
       flags: [...new Set([...state.flags, 'trying_for_child'])],
-      log: [...state.log, { age: state.age, text: "You try for a child — it doesn't happen this year.", isKey: false }],
+      mem: { ...(state.mem ?? {}), tryingSinceAge: tryingSince },
+      log: [...state.log, { age: state.age, isKey: false, text: pickFrom(preferUnsaid(state, pool)) }],
     }
   }
   // Conception — store child details in mem; birth will be delivered by tick() ~2 years later
   const cGender = chance(0.5) ? 'male' : 'female'
-  const c = state.character.country
-  const childName = `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${state.character.surname}`
+  const c = state.currentCountry ?? state.character.country
+  const childName = personName(c, cGender, state, { surname: state.character.surname })
   const traits = pickTraits(CHILD_TRAITS)
+  // `expecting` is the couple's state and drives the birth in tick(); `pregnant`
+  // is the player's own body and is what the maternal-mortality roll and the
+  // pregnancy-arc events read. Only one of those is true for a male character.
+  const flags = [...state.flags, 'expecting', 'trying_for_child']
+  // The count is about THIS attempt; a birth ends it.
+  state = { ...state, mem: { ...(state.mem ?? {}), tryingSinceAge: undefined } }
+  if (bearerIsPlayer) flags.push('pregnant')
+  // A first pregnancy and a sixth are not the same event. In a high-fertility
+  // life this line printed nine times, identically, which is both a repetition
+  // bug and a failure to notice that the thing being narrated has changed.
+  const parity = state.children?.length ?? 0
+  const own = parity === 0
+    ? [
+        'You are pregnant. The knowledge of it sits in your body before you have words for it.',
+        'You are pregnant. You tell nobody for a fortnight, and carry it around like something in a coat pocket.',
+      ]
+    : parity <= 2
+      ? [
+          'You are pregnant again. You know the shape of the next two years now, which is a comfort and is also the problem.',
+          'Pregnant. You recognise it a week earlier than last time, from something in the way food smells.',
+        ]
+      : [
+          'Pregnant again. You do the arithmetic of the house — the beds, the pot, the shoes — before you do any of the feeling.',
+          'Another one. Your mother had more than this and said less about it, and you are aware of both facts at once.',
+          'You are pregnant. Nobody in the household is surprised, including you.',
+        ]
+  // A life can hold six of these and there were three sentences for it, so one
+  // family heard "You find yourself counting rooms" four times. "You are told
+  // in a kitchen, or a corridor" is also the game declining to say which.
+  const theirs = parity === 0
+    ? [
+        `${state.partner.name} is pregnant. You are told in the kitchen, standing up, and you do not know what to do with your hands.`,
+        `${state.partner.name} is pregnant. Something in the room reorganises itself and you are standing in the middle of it.`,
+        `${state.partner.name} tells you and then watches your face, which you understand afterwards was the whole of the test.`,
+        `${state.partner.name} is pregnant. You say the wrong thing first and the right thing about four seconds later, and both of them get remembered.`,
+      ]
+    : [
+        `${state.partner.name} is pregnant again. You are better at the news this time and slightly worse at the arithmetic.`,
+        `${state.partner.name} tells you. You have been here before, which does not make it ordinary, only familiar.`,
+        `${state.partner.name} is expecting. You find yourself counting rooms.`,
+        `${state.partner.name} is pregnant again and tells you in the middle of something else, which is how the second and third ones arrive.`,
+        `${state.partner.name} is expecting. Neither of you says anything for a moment and then one of you laughs, and it is not entirely a happy laugh, and that is fine.`,
+        `${state.partner.name} is pregnant again. The older one is in the next room and does not know yet, and for one day you are the only two people who do.`,
+      ]
+  // A life can hold six pregnancies against six sentences, so drawing blind gave
+  // one family the same announcement four times.
+  const announcement = pickFrom(preferUnsaid(state, bearerIsPlayer ? own : theirs))
   return {
     ...state,
-    flags: [...new Set([...state.flags, 'pregnant', 'trying_for_child'])],
-    mem: { ...(state.mem ?? {}), pregnancyYear: state.age, pendingChild: { name: childName, gender: cGender, traits } },
-    log: [...state.log, { age: state.age, text: 'You are pregnant. The knowledge of it sits in your body before you have words for it.', isKey: true }],
+    flags: [...new Set(flags)],
+    mem: rememberSaid(
+      { ...(state.mem ?? {}), pregnancyYear: state.age, pendingChild: { name: childName, gender: cGender, traits } },
+      announcement,
+    ),
+    log: [...state.log, { age: state.age, text: announcement, isKey: true }],
   }
 }
 
@@ -230,19 +318,20 @@ export function getPlasticSurgery(state, surgeryType) {
   }
   const s = surgeries[surgeryType] ?? surgeries.minor
   const money = state.money ?? 0
-  if (money < s.cost) {
+  const surgeryCost = $$(s.cost, state)
+  if (money < surgeryCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that surgery.", isKey: false }] }
   }
   if (chance(s.successChance)) {
     return {
-      ...state, money: money - s.cost,
+      ...state, money: money - surgeryCost,
       stats: { ...state.stats, looks: clamp(state.stats.looks + s.looksGain, 0, 100), happiness: clamp(state.stats.happiness + 5, 0, 100) },
       flags: [...new Set([...state.flags, 'plastic_surgery'])],
       log: [...state.log, { age: state.age, text: `The surgery is a success. You look noticeably different.`, isKey: false }],
     }
   }
   return {
-    ...state, money: money - s.cost,
+    ...state, money: money - surgeryCost,
     stats: { ...state.stats, looks: clamp(state.stats.looks - 15, 0, 100), health: clamp(state.stats.health - 10, 0, 100), happiness: clamp(state.stats.happiness - 20, 0, 100) },
     log: [...state.log, { age: state.age, text: `The surgery is botched. The results are worse than before.`, isKey: true }],
   }
@@ -256,7 +345,7 @@ export function applyActivity(state, activityId) {
   const hobbyActivity = (ACTIVITIES.hobbies ?? []).find(a => a.id === activityId)
   if (hobbyActivity) {
     let updated = { ...state }
-    const cost = hobbyActivity.cost ?? 0
+    const cost = $$(hobbyActivity.cost ?? 0, state)
     if (cost > 0 && (updated.money ?? 0) < cost) {
       return { ...updated, log: [...updated.log, { age: updated.age, text: `You can't afford the ${hobbyActivity.label} ($${cost}).`, isKey: false }] }
     }
@@ -272,12 +361,18 @@ export function applyActivity(state, activityId) {
     // Apply stat bonuses
     const b = hobbyActivity.statBonus ?? {}
     const s = updated.stats
+    // `s` is charisma everywhere else in the effect vocabulary, and this line
+    // was adding it to looks — so the only activity that grants it, training a
+    // sport, made the character better-looking rather than better with people.
+    // `earnedGain` for the same reason it exists in applyProxy: a player who
+    // studies every year for fifty years had smarts pinned at 100 by thirty.
     updated.stats = {
       ...s,
       happiness: Math.min(100, (s.happiness ?? 80) + (b.m ?? 0)),
       health:    Math.min(100, (s.health    ?? 80) + (b.h ?? 0)),
-      smarts:    Math.min(100, (s.smarts    ?? 50) + (b.e ?? 0)),
-      looks:     Math.min(100, (s.looks     ?? 50) + (b.s ?? 0)),
+      smarts:    Math.round(Math.min(100, (s.smarts   ?? 50) + earnedGain(s.smarts ?? 50, b.e ?? 0))),
+      charisma:  Math.round(Math.min(100, (s.charisma ?? 50) + earnedGain(s.charisma ?? 50, b.s ?? 0))),
+      looks:     Math.min(100, (s.looks     ?? 50) + (b.lo ?? 0)),
     }
     const newLevel = updated.hobbies[hobbyActivity.hobbyId]
     const _hobbyProse = {
@@ -299,7 +394,7 @@ export function applyActivity(state, activityId) {
 
   // ── Therapy booking ──────────────────────────────────────────────────────────
   if (activityId === 'book_therapy') {
-    const cost = 120
+    const cost = $$(120, state)
     if ((state.money ?? 0) < cost) {
       return { ...state, log: [...state.log, { age: state.age, text: "You can't afford therapy right now.", isKey: false }] }
     }
@@ -337,7 +432,7 @@ export function applyActivity(state, activityId) {
   if (activityId === 'take_loan') {
     let updated = { ...state }
     const maxLoan = Math.max(1000, Math.round((updated.money ?? 0) * 3 + 5000))
-    const amount = Math.min(maxLoan, 10000)
+    const amount = Math.min(maxLoan, $$(10000, state))
     updated.money = (updated.money ?? 0) + amount
     updated.debt = (updated.debt ?? 0) + amount
     updated.mem = { ...(updated.mem ?? {}), debtType: 'personal' }
@@ -383,7 +478,7 @@ export function applyActivity(state, activityId) {
   if (activityId === 'buy_gold') {
     const gdp = state.character?.country?.gdp
     const mult = GDP_MULT[gdp] ?? 0.2
-    const amount = Math.round(200 * mult)
+    const amount = $$(Math.round(200 * mult), state)
     if ((state.money ?? 0) < amount) return { ...state, log: [...state.log, { age: state.age, text: `You can't afford to buy gold right now ($${amount} needed).`, isKey: false }] }
     return {
       ...state,
@@ -426,7 +521,7 @@ export function applyActivity(state, activityId) {
 
   const proxy = buildEffectProxy(state)
   // Deduct actual money for activities with a dollar cost
-  if (activity.cost) proxy.mo -= localCost(activity.cost, gdpTierOf(state))
+  if (activity.cost) proxy.moNominal -= $$(localCost(activity.cost, gdpTierOf(state)), state)
   activity.effect(proxy)
   let updated = applyProxy(state, proxy)
   updated = resolveProxyExtras(updated, proxy)
@@ -455,7 +550,7 @@ export function buyProperty(state, typeId) {
   const type = PROPERTY_TYPES.find(t => t.id === typeId)
   if (!type) return state
   // Property is a local good: a flat costs what flats cost where you live.
-  const price = localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'local')
+  const price = $$(localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'local'), state)
   const downPayment = Math.round(price * type.downPaymentRate)
   if ((state.money ?? 0) < downPayment) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the down payment for a ${type.name}.`, isKey: false }] }
@@ -496,7 +591,7 @@ export function buyVehicle(state, typeId) {
     return { ...state, log: [...state.log, { age: state.age, text: "You need a driving licence first.", isKey: false }] }
   }
   // Vehicles are largely imported, so they do NOT scale down as far as housing.
-  const price = localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'import')
+  const price = $$(localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'imported'), state)
   const displayName = type.make ? `${type.make} ${type.model}` : type.name
   if ((state.money ?? 0) < price) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford a ${displayName}.`, isKey: false }] }
@@ -549,7 +644,7 @@ const PET_NAMES = ['Buddy', 'Luna', 'Max', 'Bella', 'Charlie', 'Milo', 'Daisy', 
 export function adoptPet(state, species) {
   if (state.age < 8) return state
   const name = pickFrom(PET_NAMES)
-  const adoptionCost = { dog: 400, cat: 200, rabbit: 80, hamster: 30, parrot: 300, fish: 20, bird: 150 }[species] ?? 200
+  const adoptionCost = $$({ dog: 400, cat: 200, rabbit: 80, hamster: 30, parrot: 300, fish: 20, bird: 150 }[species] ?? 200, state)
   if ((state.money ?? 0) < adoptionCost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the adoption fee.`, isKey: false }] }
   }
@@ -568,7 +663,7 @@ export function visitVet(state, petIdx) {
   const pets = state.pets ?? []
   const pet = pets[petIdx]
   if (!pet?.alive) return state
-  const cost = randomBetween(150, 600)
+  const cost = $$(randomBetween(150, 600), state)
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the vet bill right now.`, isKey: false }] }
   }
@@ -615,6 +710,32 @@ export function schmoozeBoss(state) {
 // Everything a character BUYS has to be converted into the economy they are
 // actually living in, or a studio flat costs a Lagos teacher forty years of
 // salary while the salary itself is already scaled down by GDP.
+/**
+ * What a listed price costs this character, here, this year.
+ *
+ * The engine charges `$$(localisePrice(base, tier, class), state)` — place and
+ * era — and the panels printed `base` raw, so a Studio Flat showed $90,000 in
+ * 1950 Germany against an engine price of $1,260, a factor of 71. Worse, the
+ * `disabled` gates compared a NOMINAL balance to a present-day price, so
+ * property, vehicles, travel, business and the dating app were falsely locked
+ * for every character before about 2000 — the exact "the economy is a
+ * statement about NOW" failure economy.js was written to fix, surviving in the
+ * interface.
+ *
+ * One function, used by the display, the affordability check and the charge.
+ */
+/** A present-day figure in the money of this character's year and place. */
+export function eraMoney(amount, state) { return $$(amount, state) }
+
+export function estimatePrice(state, base, priceClass = 'local') {
+  return $$(localisePrice(base, gdpTierOf(state), priceClass), state)
+}
+
+/** The same, for costs that are localised through `localCost` rather than price class. */
+export function estimateCost(state, base) {
+  return $$(localCost(base, gdpTierOf(state)), state)
+}
+
 function gdpTierOf(state) {
   return (state.currentCountry ?? state.character?.country)?.gdp
 }
@@ -644,13 +765,13 @@ export function relocate(state, destPlaceId, destNeighborhoodTier) {
   const fromPlace = state.currentPlace ?? state.character?.birthPlace
   if (fromPlace?.id === destPlace.id) return state
 
-  const moveCost = getRelocationCost(fromPlace, destPlace)
+  const moveCost = $$(getRelocationCost(fromPlace, destPlace), state)
   if ((state.money ?? 0) < moveCost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You need $${moveCost.toLocaleString()} to move to ${destPlace.name}. You can't afford it right now.`, isKey: false }] }
   }
 
   const tier = destNeighborhoodTier ?? pickNeighborhoodTier(state.classTier ?? state.character?.wealthTier ?? 3)
-  const nbrName = pickNamedNeighborhood(destPlace, tier)
+  const nbrName = pickNamedNeighborhood(destPlace, tier, { ethnicity: state.character?.ethnicity, religion: state.religion ?? state.character?.religion })
   const fromName = fromPlace?.name ?? (state.currentCountry ?? state.character?.country)?.name ?? 'where you were'
 
   const isSameCountry = destPlace.country === (state.currentCountry ?? state.character?.country)?.name
@@ -700,7 +821,7 @@ export function emigrate(state, destCountryName, destPlaceId) {
   if (!dest) return state
   const alreadyAbroad = state.flags.includes('emigrated')
   if (alreadyAbroad && state.currentCountry?.name === dest.name) return state
-  const moveCost = randomBetween(3000, 15000)
+  const moveCost = $$(randomBetween(3000, 15000), state)
   const isRefugee = state.flags.includes('refugee') || state.flags.includes('displaced')
   const isIllegal = state.flags.includes('illegal_immigrant')
   const initialStatus = isRefugee ? 'refugee_status' : isIllegal ? 'undocumented' : 'work_visa'
@@ -723,7 +844,7 @@ export function emigrate(state, destCountryName, destPlaceId) {
   }
 
   const destTier = pickNeighborhoodTier(state.classTier ?? state.character?.wealthTier ?? 2)
-  const destNbr = destPlace ? pickNamedNeighborhood(destPlace, destTier) : null
+  const destNbr = destPlace ? pickNamedNeighborhood(destPlace, destTier, { ethnicity: state.character?.ethnicity, religion: state.religion ?? state.character?.religion }) : null
 
   const logText = alreadyAbroad
     ? `You move from ${fromName} to ${dest.name}${destPlace ? ` — ${destPlace.name}` : ''}. Moving costs: $${moveCost.toLocaleString()}.`
@@ -771,8 +892,9 @@ export function upgradeResidency(state) {
     const rem = path.yearsRequired - yearsAbroad
     return { ...state, log: [...state.log, { age: state.age, text: `You need ${rem} more year${rem !== 1 ? 's' : ''} of residency before you can apply.`, isKey: false }] }
   }
-  if ((state.money ?? 0) < path.fee) {
-    return { ...state, log: [...state.log, { age: state.age, text: `The application fee is $${path.fee.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
+  const fee = $$(path.fee, state)
+  if ((state.money ?? 0) < fee) {
+    return { ...state, log: [...state.log, { age: state.age, text: `The application fee is $${fee.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
   }
 
   const hasSeriousCrime = (state.criminalRecord ?? []).some(r => {
@@ -786,7 +908,7 @@ export function upgradeResidency(state) {
   if (Math.random() > successChance) {
     return {
       ...state,
-      money: Math.max(0, (state.money ?? 0) - path.fee),
+      money: Math.max(0, (state.money ?? 0) - fee),
       log: [...state.log, { age: state.age, text: `Your application for ${path.next.replace(/_/g, ' ')} was rejected. The fee is gone. You can try again later.`, isKey: true }],
     }
   }
@@ -801,7 +923,7 @@ export function upgradeResidency(state) {
   return {
     ...state,
     residencyStatus: path.next,
-    money: Math.max(0, (state.money ?? 0) - path.fee),
+    money: Math.max(0, (state.money ?? 0) - fee),
     flags: [...new Set([...state.flags, `achieved_${path.next}`])],
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 10, 0, 100) },
     log: [...state.log, { age: state.age, text: msgs[path.next] ?? `Status upgraded to ${path.next.replace(/_/g, ' ')}.`, isKey: true }],
@@ -856,13 +978,13 @@ export function callSibling(state, siblingIdx) {
 
 export function adoptChild(state) {
   if (state.age < 25 || state.age > 55) return state
-  const adoptionCost = randomBetween(8000, 35000)
+  const adoptionCost = $$(randomBetween(8000, 35000), state)
   if ((state.money ?? 0) < adoptionCost) {
     return { ...state, log: [...state.log, { age: state.age, text: `The adoption process requires funds you don't currently have.`, isKey: false }] }
   }
   const cGender = chance(0.5) ? 'male' : 'female'
-  const c = state.character.country
-  const childName = `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${state.character.surname}`
+  const c = state.currentCountry ?? state.character.country
+  const childName = personName(c, cGender, state, { surname: state.character.surname })
   const childAge = randomBetween(0, 8)
   const child = { name: childName, gender: cGender, ageAtBirth: state.age - childAge, relationshipQuality: 75, adopted: true }
   return {
@@ -892,7 +1014,7 @@ export function studyHarder(state) {
 // ─── Movie theater ────────────────────────────────────────────────────────────
 
 export function goToMovies(state) {
-  const cost = randomBetween(15, 25)
+  const cost = $$(randomBetween(15, 25), state)
   const genres = ['action blockbuster', 'indie drama', 'horror film', 'romantic comedy', 'documentary']
   const genre = pickFrom(genres)
   return {
@@ -908,7 +1030,7 @@ export function goToMovies(state) {
 
 export function goClubbing(state) {
   if (state.age < 18) return { ...state, log: [...state.log, { age: state.age, text: "You're not old enough to go clubbing.", isKey: false }] }
-  const cost = randomBetween(50, 120)
+  const cost = $$(randomBetween(50, 120), state)
   const newFlags = [...state.flags]
   if (!newFlags.includes('heavy_drinker') && chance(0.15)) newFlags.push('heavy_drinker')
   if (newFlags.includes('heavy_drinker') && !newFlags.includes('alcohol_addiction') && chance(0.08)) newFlags.push('alcohol_addiction')
@@ -936,15 +1058,16 @@ export function goShopping(state, category) {
     luxury:      { cost: 3000, happiness: 10, looks: 3, text: 'A luxury purchase. Worth every penny.' },
   }
   const opt = opts[category] ?? opts.clothes
-  if ((state.money ?? 0) < opt.cost) {
+  const optCost = $$(opt.cost, state)
+  if ((state.money ?? 0) < optCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that right now.", isKey: false }] }
   }
   return {
     ...state,
-    money: (state.money ?? 0) - opt.cost,
+    money: (state.money ?? 0) - optCost,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + opt.happiness, 0, 100), looks: clamp(state.stats.looks + opt.looks, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
-    log: [...state.log, { age: state.age, text: `${opt.text} $${opt.cost.toLocaleString()} spent.`, isKey: false }],
+    log: [...state.log, { age: state.age, text: `${opt.text} $${optCost.toLocaleString()} spent.`, isKey: false }],
   }
 }
 
@@ -960,12 +1083,13 @@ export function visitSalonSpa(state, service) {
   }
   const svc = services[service]
   if (!svc) return state
-  if ((state.money ?? 0) < svc.cost) {
+  const svcCost = $$(svc.cost, state)
+  if ((state.money ?? 0) < svcCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that service right now.", isKey: false }] }
   }
   return {
     ...state,
-    money: (state.money ?? 0) - svc.cost,
+    money: (state.money ?? 0) - svcCost,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + svc.happiness, 0, 100), looks: clamp(state.stats.looks + svc.looks, 0, 100), health: clamp(state.stats.health + svc.health, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: svc.text, isKey: false }],
@@ -1074,7 +1198,7 @@ export function goToRehab(state) {
   if (addictions.length === 0) {
     return { ...state, log: [...state.log, { age: state.age, text: "You don't have any active addictions to treat.", isKey: false }] }
   }
-  const cost = localCost(randomBetween(5000, 25000), gdpTierOf(state))
+  const cost = $$(localCost(randomBetween(5000, 25000), gdpTierOf(state)), state)
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `Rehab would cost about $${cost.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
   }
@@ -1111,7 +1235,8 @@ export function useSubstance(state, substance) {
   }
   const opt = opts[substance]
   if (!opt) return state
-  if ((state.money ?? 0) < opt.cost) {
+  const optCost = $$(opt.cost, state)
+  if ((state.money ?? 0) < optCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that right now.", isKey: false }] }
   }
   const newFlags = [...state.flags]
@@ -1128,7 +1253,7 @@ export function useSubstance(state, substance) {
   if (chance(overdoseRisk)) {
     return {
       ...state,
-      money: Math.max(0, (state.money ?? 0) - opt.cost),
+      money: Math.max(0, (state.money ?? 0) - optCost),
       flags: [...new Set([...newFlags, 'overdosed'])],
       mem: newMem,
       stats: { ...state.stats, health: clamp(state.stats.health - 25, 0, 100), happiness: clamp(state.stats.happiness - 10, 0, 100) },
@@ -1138,7 +1263,7 @@ export function useSubstance(state, substance) {
   }
   return {
     ...state,
-    money: Math.max(0, (state.money ?? 0) - opt.cost),
+    money: Math.max(0, (state.money ?? 0) - optCost),
     flags: [...new Set(newFlags)],
     mem: newMem,
     stats: { ...state.stats, health: clamp(state.stats.health + opt.hDelta, 0, 100), happiness: clamp(state.stats.happiness + opt.mDelta, 0, 100) },
@@ -1189,10 +1314,11 @@ export function obtainLicense(state, licType) {
   if (!lic) return state
   if (state.age < lic.minAge) return { ...state, log: [...state.log, { age: state.age, text: "You're not old enough for that licence yet.", isKey: false }] }
   if (state.flags.includes(lic.flag)) return { ...state, log: [...state.log, { age: state.age, text: "You already have that licence.", isKey: false }] }
-  if ((state.money ?? 0) < lic.cost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford the licence fees right now.", isKey: false }] }
+  const licCost = $$(lic.cost, state)
+  if ((state.money ?? 0) < licCost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford the licence fees right now.", isKey: false }] }
   return {
     ...state,
-    money: (state.money ?? 0) - lic.cost,
+    money: (state.money ?? 0) - licCost,
     flags: [...new Set([...state.flags, lic.flag])],
     licenceObtained: licType === 'driver' ? true : (state.licenceObtained ?? false),
     actionsThisYear: state.actionsThisYear + 1,
@@ -1219,12 +1345,13 @@ export function interactWithFriend(state, friendIdx, action) {
   }
   const act = acts[action]
   if (!act) return state
-  if ((state.money ?? 0) < act.cost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford to do that right now.", isKey: false }] }
+  const actCost = $$(act.cost, state)
+  if ((state.money ?? 0) < actCost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford to do that right now.", isKey: false }] }
   const updatedFriends = friends.map((f, i) => i === friendIdx ? { ...f, relationshipQuality: clamp(f.relationshipQuality + act.rqDelta, 0, 100) } : f)
   return {
     ...state,
     friends: updatedFriends,
-    money: Math.max(0, (state.money ?? 0) - act.cost),
+    money: Math.max(0, (state.money ?? 0) - actCost),
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + act.happiness, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: act.text, isKey: false }],
@@ -1257,7 +1384,7 @@ export function bookTrip(state, destinationId) {
   // Scale cost by GDP
   const gdpCostMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
   const costMult = gdpCostMult[state.character?.country?.gdp] ?? 1.0
-  const cost = Math.round(dest.cost * costMult)
+  const cost = $$(Math.round(dest.cost * costMult), state)
 
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford ${dest.name} right now ($${cost.toLocaleString()}).`, isKey: false }] }
@@ -1272,18 +1399,24 @@ export function bookTrip(state, destinationId) {
   const travelEventPool = [
     { id: `travel_food_poison_${state.age}`, phase: getPhase(state.age), weight: 5, text: `You get food poisoning in ${dest.name}. Two days in bed. Still worth it.`, effect: (p) => { p.m -= 10; p.h -= 5 }, choices: null },
     { id: `travel_pickpocket_${state.age}`, phase: getPhase(state.age), weight: 4, text: `Someone picks your pocket in a crowded market. You lose some cash but not your passport.`, effect: (p) => { p.mo -= Math.round(cost * 0.1); p.h -= 5 }, choices: null },
-    { id: `travel_beautiful_${state.age}`, phase: getPhase(state.age), weight: 8, text: `${dest.name} is more beautiful than the photos. You watch the sunset from a hillside and feel genuinely alive.`, effect: (p) => { p.h += 15; p.e += 3 }, choices: null },
-    { id: `travel_culture_${state.age}`, phase: getPhase(state.age), weight: 7, text: `You spend a morning in a local market in ${dest.name}, eating things you can't name and watching how people live. Something shifts in how you see the world.`, effect: (p) => { p.h += 10; p.e += 8 }, choices: null },
-    { id: `travel_romance_${state.age}`, phase: getPhase(state.age), weight: 3, text: `You meet someone interesting on the trip. It doesn't last past the airport, but while it lasted it was perfect.`, effect: (p) => { p.h += 20; p.s += 3 }, choices: null, when: (G) => !G.partner },
+    { id: `travel_beautiful_${state.age}`, phase: getPhase(state.age), weight: 8, text: `${dest.name} is more beautiful than the photos. You watch the sunset from a hillside and feel genuinely alive.`, effect: (p) => { p.m += 15; p.h += 2; p.e += 3 }, choices: null },
+    { id: `travel_culture_${state.age}`, phase: getPhase(state.age), weight: 7, text: `You spend a morning in a local market in ${dest.name}, eating things you can't name and watching how people live. Something shifts in how you see the world.`, effect: (p) => { p.m += 10; p.e += 2; p.e += 8 }, choices: null },
+    { id: `travel_romance_${state.age}`, phase: getPhase(state.age), weight: 3, text: `You meet someone interesting on the trip. It doesn't last past the airport, but while it lasted it was perfect.`, effect: (p) => { p.m += 20; p.s += 3 }, choices: null, when: (G) => !G.partner },
     { id: `travel_delay_${state.age}`, phase: getPhase(state.age), weight: 4, text: `Your flight home is delayed by 18 hours. The airport floor. The single power outlet. The long conversations with strangers.`, effect: (p) => { p.h -= 3; p.e += 5 }, choices: null },
     { id: `travel_adventure_${state.age}`, phase: getPhase(state.age), weight: 6, text: `You do something you've never done before — a hike, a dive, a climb. Your body reminds you what it's for.`, effect: (p) => { p.h += 12; p.m += 5 }, choices: null, when: (G) => dest.type === 'adventure' },
-    { id: `travel_homesick_${state.age}`, phase: getPhase(state.age), weight: 3, text: `Two weeks in, you miss home. Not the place, exactly — the feeling. You book an earlier flight.`, effect: (p) => { p.h -= 5; p.e += 3 }, choices: null },
+    { id: `travel_homesick_${state.age}`, phase: getPhase(state.age), weight: 3, text: `Two weeks in, you miss home. Not the place, exactly — the feeling. You book an earlier flight.`, effect: (p) => { p.m -= 5; p.e += 3 }, choices: null },
   ]
 
   // Pick a random event from pool (filter by when if applicable)
   const G = buildG(state)
   const eligible = travelEventPool.filter(e => !e.when || e.when(G))
-  const travelEvent = eligible[Math.floor(Math.random() * eligible.length)]
+  const travelEvent = (() => {
+      // Each of these declares a weight and the picker drew uniformly.
+      const total = eligible.reduce((a, e) => a + (e.weight ?? 1), 0)
+      let r = Math.random() * total
+      for (const e of eligible) { r -= (e.weight ?? 1); if (r <= 0) return e }
+      return eligible[eligible.length - 1]
+    })()
 
   return {
     ...state,
@@ -1300,6 +1433,20 @@ export function bookTrip(state, destinationId) {
 
 // BUSINESS_TYPES is imported from './character' and re-exported via gameEngine.js
 export { BUSINESS_TYPES } from './character'
+import { personName } from './names'
+
+// Every price in this file is written in present-day dollars, and until
+// economy.js existed that is what the player was charged and shown, in every
+// year the game covers. `$$` denominates one into the money of the year and
+// country the character is standing in.
+//
+// It is applied at the DEFINITION of a cost and never at the deduction, so
+// that the figure printed in the log, the affordability check and the amount
+// taken out of the balance are all necessarily the same number. Costs that
+// travel through `proxy.mo` are denominated by applyProxy instead and must NOT
+// be passed through here.
+const $$ = (amount, state) => inEraMoney(amount, state.currentCountry ?? state.character?.country, state.currentYear)
+
 
 export function getAvailableBusinessTypes(state) {
   return BUSINESS_TYPES.filter(bt => {
@@ -1320,7 +1467,7 @@ export function startBusiness(state, typeId) {
   // Scale startup cost to country GDP
   const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
   const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-  const cost = Math.round(bt.startupCost * mult)
+  const cost = $$(Math.round(bt.startupCost * mult), state)
 
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} to start a ${bt.name}.`, isKey: false }] }
@@ -1361,7 +1508,7 @@ export function hireEmployee(state) {
   if (!state.business?.active) return state
   const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
   const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-  const hiringCost = Math.round(2000 * mult)
+  const hiringCost = $$(Math.round(2000 * mult), state)
   if ((state.money ?? 0) < hiringCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford to hire right now.", isKey: false }] }
   }
@@ -1393,7 +1540,7 @@ export function closeBusiness(state) {
 
 export function prisonWork(state) {
   if (!state.inPrison) return state
-  const earned = randomBetween(50, 200)
+  const earned = $$(randomBetween(50, 200), state)
   let healthDelta = -2
   let logText = `You put in hours in the prison laundry/kitchen. $${earned} earned.`
   const injured = chance(0.05)
@@ -1471,7 +1618,7 @@ export function prisonConjugalVisit(state) {
 
 export function prisonBribeGuard(state) {
   if (!state.inPrison) return state
-  const bribe = randomBetween(500, 3000)
+  const bribe = $$(randomBetween(500, 3000), state)
   if ((state.money ?? 0) < bribe) {
     return {
       ...state,

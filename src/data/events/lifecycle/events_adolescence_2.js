@@ -6,6 +6,8 @@
 // leaving question, scholarship test, family honour pressure, religion doubt at home,
 // smoking first try, shoplifting, first taste of privilege, community service.
 
+import { pickFrom } from '../../../utils/random'
+
 export const ADOLESCENCE_2_EVENTS = [
 
   // ── WORK AND MONEY ──────────────────────────────────────────────────────────
@@ -277,7 +279,11 @@ export const ADOLESCENCE_2_EVENTS = [
       if (arch === 'conflict_zone' || arch === 'developing_unstable') {
         return 'A boy from your school does not come back. The reason is specific and the specific reason matters and no one talks about it directly. It is the first time you understand that young people die.'
       }
-      return 'Someone your age dies. An accident, or an illness, or something else. You were not close to them but you knew them. The funeral is the first one you attend where the person in the coffin is your age.'
+      return pickFrom([
+        'Someone your age dies on a road, on a Tuesday, four streets from where you both live. You were not close to them but you knew them, and the funeral is the first one you attend where the person in the coffin is your age.',
+        'Someone your age is ill for a long time and then is not there, and the school handles it badly, and the assembly is on a Thursday. You knew their handwriting. That is the detail that stays.',
+        'Someone your age dies and nobody will say how. The not-saying is its own information and everybody in the year has worked it out by the end of the week. You go to the funeral.',
+      ])
     },
     choices: null,
     effect: (p) => {

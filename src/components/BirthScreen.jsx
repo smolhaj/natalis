@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useGameStore } from '../store/gameStore'
-import { COUNTRIES } from '../data/countries'
 import StatBar from './StatBar'
 
 const WEALTH_LABELS = ['Destitute', 'Poor', 'Working Class', 'Middle Class', 'Wealthy']
@@ -11,10 +10,10 @@ const STABILITY_LABELS = {
   secure: 'Secure',
 }
 const STABILITY_COLORS = {
-  unstable: '#ff3b30',
-  struggling: '#ff9500',
-  stable: '#34c759',
-  secure: '#007aff',
+  unstable: '#8c3a2e',
+  struggling: '#8a6635',
+  stable: '#3f6146',
+  secure: '#3f5670',
 }
 
 const STAT_LABELS = [
@@ -53,7 +52,6 @@ export default function BirthScreen() {
     startGame()
   }
 
-  const genderEmoji = gender === 'male' ? '👦' : '👧'
 
   return (
     <div className="min-h-screen bg-natalis-bg flex items-center justify-center px-4 py-10">
@@ -66,9 +64,9 @@ export default function BirthScreen() {
 
         {/* Identity card */}
         <div className="bg-white rounded-2xl shadow-card overflow-hidden border border-natalis-border">
-          <div className="px-5 py-4 flex items-center gap-4" style={{ background: 'linear-gradient(135deg, #007aff22, #af52de22)' }}>
+          <div className="px-5 py-4 flex items-center gap-4" style={{ background: '#3f5670' }}>
             <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl bg-white shadow-sm">
-              {genderEmoji}
+              
             </div>
             <div>
               <p className="text-xl font-bold text-natalis-text">{firstName} {surname}</p>
@@ -88,8 +86,8 @@ export default function BirthScreen() {
                     onClick={() => { setBirthYearMode(mode); if (mode === 'choose') setManualYear(birthYear) }}
                     className="flex-1 py-2 rounded-xl text-xs font-bold transition-all"
                     style={{
-                      background: birthYearMode === mode ? '#007aff' : '#f2f2f7',
-                      color: birthYearMode === mode ? 'white' : '#8e8e93',
+                      background: birthYearMode === mode ? '#3f5670' : '#f4f2ed',
+                      color: birthYearMode === mode ? 'white' : '#7d766a',
                     }}
                   >
                     {mode === 'random' ? 'Random Year' : 'Choose Year'}
@@ -159,12 +157,12 @@ export default function BirthScreen() {
             onClick={rerollCharacter}
             className="flex-1 py-4 rounded-2xl font-bold text-natalis-dim border-2 border-natalis-border bg-white text-sm transition-all active:scale-95"
           >
-            🎲 Reroll
+            Someone else
           </button>
           <button
             onClick={handleBegin}
             className="flex-[2] py-4 rounded-2xl font-bold text-white text-sm shadow-card-lg transition-all active:scale-95"
-            style={{ background: 'linear-gradient(135deg, #34c759, #28a046)' }}
+            style={{ background: '#1c1a16' }}
           >
             Begin This Life →
           </button>

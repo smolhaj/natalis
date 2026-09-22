@@ -1,3 +1,4 @@
+import { pickFrom } from '../../../utils/random'
 // events_fiji.js — Fiji arc
 // Two communities sharing one island group: iTaukei (Indigenous Fijian, communal land,
 // Christian majority) and Indo-Fijian (descended from girmitiya indentured laborers
@@ -113,7 +114,11 @@ export const FIJI_EVENTS = [
         text: 'You sell the equipment and leave. The lease has ended.',
         tag: 'leave_land',
         outcome: 'The equipment goes for less than it cost. You move to Suva or Lautoka. The field is someone else\'s problem now — or no one\'s.',
-        effect: (p) => { p.m -= 25; p.r += 10; p.w -= 3; p.mo -= 3000; p.addFlag('fiji_land_lost'); p.setMem('fjLeaseExp', true) },
+        effect: (p) => {
+          p.m -= 25; p.r += 10; p.w -= 3; p.mo -= 3000
+          p.addFlag('fiji_land_lost'); p.setMem('fjLeaseExp', true)
+          p.relocate(pickFrom(['fj_suva', 'fj_suva', 'fj_lautoka']), 'working_class')
+        },
       },
       {
         text: 'You petition for renewal. Other families have managed it.',

@@ -71,13 +71,22 @@ export const EVENTS_SONDER_17 = [
     id: 's17_public_library',
     phase: null,
     weight: 2,
-    when: (G) => place.hasFormalJob(G) && (G.age >= 8 && G.age <= 18 &&
+    // A municipal lending library is not a human constant. The old guard asked
+    // only whether the child had a job, so this printed a reading room with
+    // teenagers at computers into 1969 rural Upper Egypt. It needs a town, a
+    // reader, and an era in which the building exists.
+    when: (G) => place.wentToSchool(G) && place.isUrban(G) && place.hasBooks(G) &&
+      (place.isRich(G) ? G.currentYear >= 1935 : G.currentYear >= 1975) &&
+      (G.age >= 8 && G.age <= 18 &&
       G.character.country?.archetype !== 'conflict_zone' &&
       !G.mem?.s17PublicLibrary),
-    text: () => pick([
-      `The public library of your childhood had a smell — paper, dust, a faint industrial carpet, the quiet that is not silence but the sound of multiple people being silent simultaneously. You were allowed to take home seven books at a time, or three, or an unlimited number — this varied — and you took as many as you could carry. The library was the first place that implied you could have whatever you could read, which was a different relationship with abundance than any other institution offered.`,
-      `The library was public, which meant it was everyone's, which meant on Saturday mornings it was full of everyone: the retired men reading newspapers they had not paid for, the mothers with small children in the section that had low shelves, the teenagers at computers. You were in the section for your age for a while and then you were in the adult section and the transition was not marked, you simply walked over one day and stayed. Nobody stopped you. This was also a thing the library did.`,
-    ]),
+    text: (G) => {
+      const hasComputers = G.currentYear >= (place.isRich(G) ? 1997 : 2006)
+      return pick([
+        `The public library of your childhood had a smell — paper, dust, the quiet that is not silence but the sound of multiple people being silent simultaneously. You were allowed to take home seven books at a time, or three, or an unlimited number — this varied — and you took as many as you could carry. The library was the first place that implied you could have whatever you could read, which was a different relationship with abundance than any other institution offered.`,
+        `The library was public, which meant it was everyone's, which meant on the mornings it filled up it was full of everyone: the old men reading newspapers they had not paid for, the mothers with small children in the section that had low shelves, ${hasComputers ? 'the teenagers at the computers' : 'the students at the long tables copying what they could not take home'}. You were in the section for your age for a while and then you were in the adult section and the transition was not marked, you simply walked over one day and stayed. Nobody stopped you. This was also a thing the library did.`,
+      ])
+    },
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s17PublicLibrary', true) },
   },
@@ -121,9 +130,11 @@ export const EVENTS_SONDER_17 = [
     phase: null,
     weight: 2,
     when: (G) => place.hasBus(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s17TheBus),
-    text: () => pick([
+    // "You spent years of your life on buses" is an accounting that needs the
+    // years to have happened; the other two variants are true from eighteen.
+    text: (G) => pick([
       `The bus is a particular social form. Strangers in forced proximity, the etiquette of not acknowledging the proximity, the way people distribute themselves when the bus is empty versus when it fills. You have taken buses for years and watched the distribution: the window seats fill first, the aisle seats second, the middle seat last. The middle seat is almost always last. This is universal.`,
-      `You spent years of your life on buses — the commute, the journey between cities, the long overnight route that got you somewhere cheaper than the train. The quality of time on a bus is different from other kinds of transit time: the landscape is visible, the pace is slow enough to watch it, and you have nothing to do but sit in it. This turns out to be rare.`,
+      G.age >= 28 && `You spent years of your life on buses — the commute, the journey between cities, the long overnight route that got you somewhere cheaper than the train. The quality of time on a bus is different from other kinds of transit time: the landscape is visible, the pace is slow enough to watch it, and you have nothing to do but sit in it. This turns out to be rare.`,
       `The overnight bus. A specific form of travel that exists between departure and arrival with its own rules: you sleep badly in the seat, you arrive at dawn slightly wrong, the city receives you before it is ready for you. Cheaper than the alternative. You have done this more than once.`,
     ]),
     choices: null,

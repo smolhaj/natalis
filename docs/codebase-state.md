@@ -1,6 +1,18 @@
 # natalis — Codebase State
 
-Current snapshot: **145 countries**, **255 world events**, **463+ event modules** (~7,550+ events), **2672 registered flags** (0 orphaned, 0 partial), **379 ribbons**. Run `npm run check-flags` to verify.
+Current snapshot: **154 countries**, **251 world events**, **474 event modules** (8,023 events), **2881 registered flags** (0 orphaned, 0 partial), **377 ribbons**. Run `npm run check-flags` to verify.
+
+What a player actually reaches, which is the number that matters and the one no
+static audit can see (`npm run sim -- --broad`):
+
+| | |
+|---|---|
+| `yearTexture.js` lines ever printed | **19.1%** of 7,749 (was 9.3%) |
+| countries whose texture appears in a broad run | **94** (was 16) |
+| `mundaneLayer.js` lines ever printed | ~60% of 1,491 |
+| prose a character reads that they already read | **0.2%** (was 15.6%) |
+| register mix per year | anchored 36% · earned 35% · contemplative 18% · universal 9% |
+| years narrated by a prose layer | ~92% (texture 53% + mundane 39%) |
 
 ---
 
@@ -12,7 +24,7 @@ Events organized under `src/data/events/`:
 events/
   thematic/      — cross-cutting arcs (culture, gender, religion, labor, career, etc.) + all followthrough_30–95 files
   lifecycle/     — phase-specific (adolescence, pregnancy, menopause, desires, body arc, empty nest, grandparent, inheritance)
-  geographic/    — country and region arcs (184 files: base arcs + _depth.js companions for most countries)
+  geographic/    — country and region arcs (188 files: base arcs + _depth.js companions for most countries)
   sonder/        — contemplative layer (66 modules, ~1,980+ events)
   specific_lives/ — events_specific_lives.js (221 micro-specific events)
   followthrough/ — events_followthrough_all.js (317 consolidated events from original 29 files)

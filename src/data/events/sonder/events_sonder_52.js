@@ -198,7 +198,9 @@ export const EVENTS_SONDER_52 = [
     id: 'sonder_52_x',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s52x,
+    // The whole line is a verdict delivered later on a decision already taken;
+    // `phase: 'young_adult'` let it reach a nineteen-year-old mid-decision.
+    when: (G) => G.age >= 25 && !G.mem?.s52x,
     text: 'You were afraid you were making the wrong choice. Not a crisis — the ordinary persistent fear that attaches to decisions that matter and cannot be reversed immediately. The job, the city, the person, the direction. The fear was present even when the direction was correct. In retrospect the fear was not a reliable signal about the quality of the choice; it was a reliable signal about the fact that the choice was real.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s52x', true) },

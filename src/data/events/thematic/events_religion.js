@@ -1,3 +1,5 @@
+import { canBeInterfaithHere } from './events_religion_arc.js'
+
 export const RELIGION_EVENTS = [
 
   // ── CHRISTIAN PROTESTANT ────────────────────────────────────────────────────
@@ -451,12 +453,12 @@ export const RELIGION_EVENTS = [
     id: 'rel_interfaith_relationship',
     phase: 'young_adult',
     weight: 5,
-    when: (G) => G.age >= 18 && G.age <= 32 && !G.mem?.interfaith_relationship && G.partner && !G.mem?.partner_religion_conflict && ['hindu', 'muslim_sunni', 'jewish', 'christian_catholic', 'christian_orthodox', 'sikh'].includes(G.religion),
+    when: (G) => G.age >= 18 && G.age <= 32 && !G.mem?.interfaith_relationship && G.partner && canBeInterfaithHere(G) && !G.mem?.partner_religion_conflict && ['hindu', 'muslim_sunni', 'jewish', 'christian_catholic', 'christian_orthodox', 'sikh'].includes(G.religion),
     text: 'The person you love does not share your religion. Your families have strong opinions about this. Both families do.',
     choices: [
-      { text: 'Choose your partner — love over family approval', tag: null, outcome: 'Some family members stop speaking to you. The wedding is complicated. The marriage, against expectation, is not.', effect: (p) => { p.m += 5; p.partnerRel(15); p.karma += 3; p.setMem('interfaith_relationship', true) } },
+      { text: 'Choose your partner — love over family approval', tag: null, outcome: 'Some family members stop speaking to you. The wedding is complicated. The marriage, against expectation, is not.', effect: (p) => { p.m += 5; p.partnerRel(15); p.karma += 3; p.addFlag('interfaith_partnership'); p.setMem('interfaith_relationship', true) } },
       { text: 'End it to avoid the conflict', tag: null, outcome: 'You do the expected thing. The expected thing leaves a scar.', effect: (p) => { p.m -= 15; p.r += 12; p.setMem('interfaith_relationship', true) } },
-      { text: 'One of you converts — or pretends to', tag: null, outcome: 'A version of peace is achieved. Whether it\'s the real thing depends on the day.', effect: (p) => { p.m -= 5; p.partnerRel(5); p.setMem('interfaith_relationship', true) } },
+      { text: 'One of you converts — or pretends to', tag: null, outcome: 'A version of peace is achieved. Whether it\'s the real thing depends on the day.', effect: (p) => { p.m -= 5; p.partnerRel(5); p.addFlag('interfaith_partnership'); p.addFlag('marriage_across_the_register'); p.setMem('interfaith_relationship', true) } },
     ],
   },
 

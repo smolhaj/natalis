@@ -1,15 +1,17 @@
 import { useGameStore } from '../store/gameStore'
 import { generateLifeNotes } from '../engine/gameEngine'
 
+// The ribbon palette bypassed the muted remap with raw saturated hexes. The
+// ribbon is a one-line verdict on a life; it does not need to be a colour.
 const RIBBON_STYLES = {
-  gold:   { border: '#d97706', text: '#92400e', accent: '#fbbf24' },
-  green:  { border: '#16a34a', text: '#14532d', accent: '#4ade80' },
-  red:    { border: '#dc2626', text: '#7f1d1d', accent: '#f87171' },
-  blue:   { border: '#2563eb', text: '#1e3a8a', accent: '#60a5fa' },
-  purple: { border: '#9333ea', text: '#581c87', accent: '#c084fc' },
-  gray:   { border: '#6b7280', text: '#374151', accent: '#9ca3af' },
-  orange: { border: '#ea580c', text: '#7c2d12', accent: '#fb923c' },
-  pink:   { border: '#db2777', text: '#831843', accent: '#f472b6' },
+  gold:   { border: '#8a7435', text: '#403b33', accent: '#b6a256' },
+  green:  { border: '#3f6146', text: '#403b33', accent: '#6b8f79' },
+  red:    { border: '#8c3a2e', text: '#403b33', accent: '#9b5445' },
+  blue:   { border: '#3f5670', text: '#403b33', accent: '#6e7e96' },
+  purple: { border: '#5b4a6b', text: '#403b33', accent: '#8f739a' },
+  gray:   { border: '#615b52', text: '#403b33', accent: '#a9a297' },
+  orange: { border: '#8a6635', text: '#403b33', accent: '#b18660' },
+  pink:   { border: '#7b4356', text: '#403b33', accent: '#ae7182' },
 }
 
 export default function DeathScreen() {
@@ -55,29 +57,29 @@ export default function DeathScreen() {
       <div className="w-full max-w-sm space-y-4">
 
         {/* ── Masthead ── */}
-        <div className="rounded-2xl overflow-hidden border border-stone-300" style={{ background: '#faf7f2' }}>
+        <div className="rounded-2xl overflow-hidden border border-natalis-border" style={{ background: '#fdfcf9' }}>
           {/* Thin decorative top rule */}
-          <div className="h-1" style={{ background: '#1c1c1e' }} />
+          <div className="h-1" style={{ background: '#1c1a16' }} />
 
           {/* Publication line */}
-          <div className="flex items-center justify-between px-5 pt-3 pb-2 border-b border-stone-200">
-            <span className="text-xs font-black uppercase tracking-widest text-stone-500">Natalis</span>
-            <span className="text-xs font-semibold uppercase tracking-wider text-stone-400">Obituaries</span>
+          <div className="flex items-center justify-between px-5 pt-3 pb-2 border-b border-natalis-border">
+            <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-natalis-muted">natalis</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-natalis-faint">Obituaries</span>
           </div>
 
           {/* Name block */}
           <div className="px-5 pt-4 pb-2 text-center">
-            <h1 className="text-2xl font-black text-stone-900 leading-tight">
+            <h1 className="font-prose text-3xl text-natalis-text leading-tight">
               {character.firstName} {character.surname}
             </h1>
             <div className="flex items-center justify-center gap-2 mt-1.5">
-              <span className="text-xs text-stone-500">{birthYear}</span>
-              <span className="text-stone-300">—</span>
-              <span className="text-xs text-stone-500">{deathYear}</span>
+              <span className="text-xs text-natalis-muted">{birthYear}</span>
+              <span className="text-natalis-faint">—</span>
+              <span className="text-xs text-natalis-muted">{deathYear}</span>
             </div>
-            <p className="text-xs text-stone-400 mt-0.5">{character.country.name} · Died aged {age}</p>
+            <p className="text-xs text-natalis-faint mt-0.5">{character.country.name} · Died aged {age}</p>
             {causeOfDeath && (
-              <p className="text-xs text-stone-400 italic mt-1">{causeOfDeath}</p>
+              <p className="text-xs text-natalis-faint italic mt-1">{causeOfDeath}</p>
             )}
           </div>
 
@@ -87,19 +89,19 @@ export default function DeathScreen() {
               <p className="text-xs font-bold uppercase tracking-wider mb-0.5" style={{ color: rs.text, opacity: 0.6 }}>
                 Life Archetype
               </p>
-              <p className="text-base font-black" style={{ color: rs.text }}>{ribbon.name}</p>
-              <p className="text-xs italic mt-0.5" style={{ color: rs.text, opacity: 0.7 }}>{ribbon.description}</p>
+              <p className="font-prose text-[1.0625rem] text-natalis-text">{ribbon.name}</p>
+              <p className="font-prose text-sm italic mt-1 text-natalis-dim leading-relaxed">{ribbon.description}</p>
             </div>
           )}
         </div>
 
         {/* ── Epitaph ── */}
         {epitaphParagraphs.length > 0 && (
-          <div className="rounded-2xl p-5 border border-stone-300" style={{ background: '#faf7f2' }}>
-            <p className="text-xs font-bold uppercase tracking-wider text-stone-400 mb-3">Obituary</p>
+          <div className="rounded-2xl p-5 border border-natalis-border" style={{ background: '#fdfcf9' }}>
+            <p className="text-xs font-bold uppercase tracking-wider text-natalis-faint mb-3">Obituary</p>
             <div className="space-y-3">
               {epitaphParagraphs.map((para, i) => (
-                <p key={i} className="text-sm leading-relaxed text-stone-800" style={{ fontStyle: i === 0 ? 'normal' : 'italic' }}>
+                <p key={i} className="font-prose text-prose text-natalis-text" style={{ fontStyle: i === 0 ? 'normal' : 'italic' }}>
                   {para}
                 </p>
               ))}
@@ -108,33 +110,33 @@ export default function DeathScreen() {
         )}
 
         {/* ── Final stats — compact inline ── */}
-        <div className="rounded-2xl px-5 py-4 border border-stone-300" style={{ background: '#faf7f2' }}>
-          <p className="text-xs font-bold uppercase tracking-wider text-stone-400 mb-3">At death</p>
+        <div className="rounded-2xl px-5 py-4 border border-natalis-border" style={{ background: '#fdfcf9' }}>
+          <p className="text-xs font-bold uppercase tracking-wider text-natalis-faint mb-3">At death</p>
           <div className="grid grid-cols-2 gap-x-4 gap-y-2">
             {statItems.map(([label, val]) => (
               <div key={label} className="flex items-center gap-2">
                 <div className="flex-1">
                   <div className="flex justify-between items-center mb-0.5">
-                    <span className="text-xs text-stone-500">{label}</span>
-                    <span className="text-xs font-bold text-stone-700">{Math.round(val)}</span>
+                    <span className="text-xs text-natalis-muted">{label}</span>
+                    <span className="text-xs font-bold text-natalis-dim">{Math.round(val)}</span>
                   </div>
-                  <div className="h-1.5 bg-stone-200 rounded-full overflow-hidden">
-                    <div className="h-full rounded-full bg-stone-600" style={{ width: `${val}%`, opacity: 0.6 }} />
+                  <div className="h-1.5 bg-natalis-border rounded-full overflow-hidden">
+                    <div className="h-full rounded-full bg-natalis-dim" style={{ width: `${val}%`, opacity: 0.6 }} />
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="mt-3 pt-3 border-t border-stone-200 grid grid-cols-2 gap-x-4 gap-y-1.5">
+          <div className="mt-3 pt-3 border-t border-natalis-border grid grid-cols-2 gap-x-4 gap-y-1.5">
             {[
-              ['Net Worth',    formatMoney(money)],
+              ['Cash', formatMoney(money)],
               career && ['Career',      career.title],
               children.length > 0 && ['Children', children.length.toString()],
               criminalRecord.length > 0 && ['Offences', criminalRecord.length.toString()],
             ].filter(Boolean).map(([label, value]) => (
               <div key={label} className="flex flex-col">
-                <span className="text-xs text-stone-400 uppercase tracking-wide" style={{ fontSize: '0.6rem' }}>{label}</span>
-                <span className="text-xs font-bold text-stone-700 truncate">{value}</span>
+                <span className="text-xs text-natalis-faint uppercase tracking-wide" style={{ fontSize: '0.6rem' }}>{label}</span>
+                <span className="text-xs font-bold text-natalis-dim truncate">{value}</span>
               </div>
             ))}
           </div>
@@ -142,12 +144,12 @@ export default function DeathScreen() {
 
         {/* ── Life in brief ── */}
         {lifeNotes.length > 0 && (
-          <div className="rounded-2xl px-5 py-4 border border-stone-300" style={{ background: '#faf7f2' }}>
-            <p className="text-xs font-bold uppercase tracking-wider text-stone-400 mb-3">Life in brief</p>
+          <div className="rounded-2xl px-5 py-4 border border-natalis-border" style={{ background: '#fdfcf9' }}>
+            <p className="text-xs font-bold uppercase tracking-wider text-natalis-faint mb-3">Life in brief</p>
             <ul className="space-y-1.5">
               {lifeNotes.map((note, i) => (
-                <li key={i} className="text-sm text-stone-700 flex items-start gap-2">
-                  <span className="text-stone-300 mt-0.5 shrink-0 font-bold">—</span>
+                <li key={i} className="text-sm text-natalis-dim flex items-start gap-2">
+                  <span className="text-natalis-faint mt-0.5 shrink-0 font-bold">—</span>
                   <span>{note}</span>
                 </li>
               ))}
@@ -159,9 +161,9 @@ export default function DeathScreen() {
         <button
           onClick={startNewLife}
           className="w-full py-4 rounded-2xl font-bold text-white text-base shadow-card-lg transition-all active:scale-95"
-          style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
+          style={{ background: '#3f5670' }}
         >
-          🌱 Start Another Life
+          Begin another life
         </button>
 
       </div>

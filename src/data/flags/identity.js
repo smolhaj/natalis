@@ -4,6 +4,62 @@
  */
 export const IDENTITY_FLAGS = {
 
+  gulf_accepted_it: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Feels nothing in particular about the arrangement, which is the majority position and holds for years at a time.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_asked_out_loud: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Was the one who asked, out loud, whether the passport comes back.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_citizen_minority: {
+    weight: 'major',
+    category: 'identity',
+    description: 'A national of a Gulf state, and therefore a minority at home — eleven per cent in the UAE and Qatar, thirty in Kuwait.',
+    intent: 'both',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_looked_at_it: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned her name, her village and how many children she has. It changes nothing structural and it changes the house.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_majlis_raised: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Absorbed the entire grammar of the majlis by sitting at the end where the young sit and saying nothing for six years.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_minority_reflection: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Has noticed, freshly and only occasionally, that almost nobody in the street is from here.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_saw_the_other_city: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Looked, once, across the gap between the two cities that share the same road, from whichever side they are on.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
   tibetan_exile_family: {
     weight: 'moderate',
     category: 'identity',
@@ -122,6 +178,46 @@ export const IDENTITY_FLAGS = {
     description: 'Character was rejected by their family upon coming out.',
     intent: 'both',
     timestamped: true,
+  },
+
+  lgbtq_life_not_lived: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Same-sex attracted and married the other way, in a place and decade where that was the available life — carried quietly inside an ordinary one, for forty years.',
+    intent: 'both',
+    notes: 'Set by lgbtq_the_marriage_that_happened. The commonest version of the arc and the one nobody had written: every other follow-through was country-specific or capped at 30.',
+  },
+
+  lgbtq_one_person_knows: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Told exactly one person, once, and never again — so the fact exists somewhere outside their own head.',
+    intent: 'year_texture',
+    notes: 'Set by lgbtq_the_marriage_that_happened.',
+  },
+
+  lgbtq_outlived_the_law: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Watched the thing become ordinary, on a television, in a room where nobody reacted — decades after the architecture built around its impossibility stopped holding anything up.',
+    intent: 'year_texture',
+    notes: 'Set by lgbtq_the_world_changes_too_late.',
+  },
+
+  lgbtq_said_it_late: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Said it out loud at sixty-eight, once, plainly — and it was smaller and stranger than anything rehearsed.',
+    intent: 'year_texture',
+    notes: 'Set by lgbtq_the_late_admission.',
+  },
+
+  lgbtq_kept_it: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Never said it. Not a burden by the end; more like a room in the house nobody else has been into.',
+    intent: 'year_texture',
+    notes: 'Set by lgbtq_the_late_admission.',
   },
 
   lgbtq_had_relationship: {
@@ -610,38 +706,6 @@ export const IDENTITY_FLAGS = {
     description: 'Character lived in a displacement camp after the 2010 earthquake — blue UNHCR tarpaulins, twice-weekly water trucks, UN cholera.',
     intent: 'event',
     notes: 'Set by hai_earthquake_camp.',
-  },
-
-  earthquake_survivor: {
-    weight: 'moderate',
-    category: 'trauma',
-    description: 'Survived a major earthquake — the thirty-five seconds that reorganised the city and the memory.',
-    intent: 'year_texture',
-    notes: 'Set by Haiti earthquake events and worldEvents Tangshan/Nepal/Mexico/Japan earthquake world events.',
-  },
-
-  dual_identity: {
-    weight: 'moderate',
-    category: 'identity',
-    description: 'Carries two cultural identities simultaneously — the community inside the community, the code-switching that is not a choice but a lived competence.',
-    intent: 'year_texture',
-    notes: 'Set by events_culture.js (minority community finding) and events_society.js (dual name/identity). Rich year texture potential.',
-  },
-
-  class_awareness: {
-    weight: 'minor',
-    category: 'identity',
-    description: 'Developed early class consciousness — noticing the domestic workers\' names, the arrangement others find unusual, the thing that was taken for granted.',
-    intent: 'year_texture',
-    notes: 'Set by events_culture.js (wealthy Gulf/developing) and events_texture.js (domestic service observation).',
-  },
-
-  failure_integrated: {
-    weight: 'minor',
-    category: 'identity',
-    description: 'Metabolised a major failure and carried it forward as information rather than shame — the specific work of making a failure useful.',
-    intent: 'year_texture',
-    notes: 'Set by events_coherence.js and events_early_life.js (first real failure choice).',
   },
 
   bolivarian_collapse_lived: {
@@ -5333,14 +5397,6 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by mn_stalinist_purge_family. Hidden thangkas, official story of "illness."',
   },
 
-  dzud_survivor: {
-    weight: 'major',
-    category: 'survival',
-    description: 'Survived a dzud — catastrophic winter when snow seals the grass and livestock die by thousands; the 2000 dzud killed a third of Mongolia\'s national herd.',
-    intent: 'year_texture',
-    notes: 'Set by mn_dzud_winter. Permanent relationship to winter weather; climate arc texture.',
-  },
-
   sankara_mourner: {
     weight: 'major',
     category: 'trauma',
@@ -5419,30 +5475,6 @@ export const IDENTITY_FLAGS = {
     description: 'Adherent faith practice — prayer, observance, community — that guides daily decisions rather than being nominal.',
     intent: 'none',
     notes: 'Cross-cutting. Set by various religion and cultural events. Checked 6x across event guards.',
-  },
-
-  acceptance: {
-    weight: 'minor',
-    category: 'identity',
-    description: 'Reached a state of genuine acceptance after hardship — not forgetting, but no longer fighting what cannot be changed.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by late-life reflection and grief events.',
-  },
-
-  found_meaning: {
-    weight: 'moderate',
-    category: 'identity',
-    description: 'Located meaning or purpose — in work, faith, family, or community — that makes the difficult years coherent in retrospect.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by desire-resolution, religion-arc, and community events.',
-  },
-
-  integrity: {
-    weight: 'moderate',
-    category: 'moral',
-    description: 'Maintained moral integrity under conditions designed to compromise it — the refusal that cost something real.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by corruption, authoritarian, and career events.',
   },
 
   principled: {
@@ -5579,10 +5611,6 @@ export const IDENTITY_FLAGS = {
     description: 'A Mongolian herder who survived a dzud winter catastrophe — the combined drought and freeze that kills livestock en masse and can wipe out a family\'s entire herd.',
     intent: 'both',
     notes: 'Set by nom_mongol_dzud event. Has year texture in nomadic section of buildYearTexture.',
-   category: 'economics',
-    description: 'Family income includes remittances from a member working abroad — the arithmetic of absence built into the household budget.',
-    intent: 'year_texture',
-    notes: 'Cross-cutting. Set by OFW, Tajik remittance, migration, and emigrant events. Already in buildYearTexture.',
   },
 
   moral_injury: {
@@ -6581,6 +6609,30 @@ export const IDENTITY_FLAGS = {
     description: 'Born in or to a parent imprisoned in the Gulag — the camp nursery for children of female prisoners, the orphanage, the reunion years later that one person remembers and the other does not.',
     intent: 'none',
     notes: 'Set by sl_gulag_camp_born.',
+  },
+
+  muslim_minority_india: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Muslim in India after 1947 — inside a decision somebody else made about whether to go, and inside a constitution that has to be believed in a little harder than the people around you have to believe in it.',
+    intent: 'both',
+    notes: 'Set by the stay branch of sl_up_partition_muslim.',
+  },
+
+  split_family_correspondence: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Keeps up a correspondence with the branch of the family that went the other way in 1947 — forty years of harvests and weddings, and the subject raised once or not at all.',
+    intent: 'year_texture',
+    notes: 'Set by sl_partition_the_other_branch.',
+  },
+
+  family_history_transmitted: {
+    weight: 'moderate',
+    category: 'legacy',
+    description: 'Told the family story to someone young enough to keep it, and watched it come back shorter, tidier and now permanent.',
+    intent: 'year_texture',
+    notes: 'Set by sl_partition_late_reckoning.',
   },
 
   refugee_rebuilt_network: {

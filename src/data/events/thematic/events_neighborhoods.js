@@ -3,6 +3,8 @@
 // Expands on the handful of events in events_places.js.
 // Uses local-language words sparingly where they add payload.
 
+import { hasTech } from '../../technology.js'
+
 export const NEIGHBORHOOD_EVENTS = [
 
   // ── INFORMAL TIER ──────────────────────────────────────────────────────────
@@ -95,7 +97,14 @@ export const NEIGHBORHOOD_EVENTS = [
     cooldown: 5,
     when: (G) =>
       G.neighborhoodTier === 'informal' && G.age >= 6 && G.age <= 16,
-    text: 'The walls are corrugated iron, or concrete block without plaster, or plywood. You hear everything next door — the arguments, the radio programme, the crying that goes on and then stops. You learn to sleep through sound. You learn which sounds mean nothing and which ones mean something is happening that you should not hear.',
+    // Everything through the wall is the point. The radio is one of the things
+    // coming through it, and only where there is one to come through.
+    text: (G) => {
+      const heard = hasTech(G.currentCountry ?? G.character.country, 'radio', G.currentYear, { rural: G.ruralUrban === 'rural' })
+        ? 'the radio programme'
+        : 'the singing'
+      return `The walls are corrugated iron, or concrete block without plaster, or plywood. You hear everything next door — the arguments, ${heard}, the crying that goes on and then stops. You learn to sleep through sound. You learn which sounds mean nothing and which ones mean something is happening that you should not hear.`
+    },
     choices: null,
     effect: (p) => { p.m -= 2; p.e += 2 },
   },

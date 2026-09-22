@@ -9,6 +9,8 @@ import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
+import { hasTech } from '../../technology.js'
+
 export const EVENTS_SONDER_26 = [
 
   // ── BUREAUCRACY AND WAITING ────────────────────────────────────────────────────
@@ -294,8 +296,12 @@ export const EVENTS_SONDER_26 = [
     phase: null,
     weight: 2,
     when: (G) => place.hasElectricity(G) && (G.age >= 18 && !G.mem?.sdr26LateAlone),
-    text: () => pick([
-      'The hour after everyone else is asleep belongs to you in a way that other hours do not. You do not always use it for anything. Sometimes you sit in it. The house makes its own sounds in this hour — settling, the refrigerator cycling, the heating adjusting to the drop in temperature. You know all of them.',
+    text: (G) => pick([
+      // The hour is universal; the sounds in it are not. A house with no
+      // refrigerator in it still settles and still ticks.
+      hasTech(G.currentCountry ?? G.character.country, 'refrigerator', G.currentYear, { rural: G.ruralUrban === 'rural' })
+        ? 'The hour after everyone else is asleep belongs to you in a way that other hours do not. You do not always use it for anything. Sometimes you sit in it. The house makes its own sounds in this hour — settling, the refrigerator cycling, the heating adjusting to the drop in temperature. You know all of them.'
+        : 'The hour after everyone else is asleep belongs to you in a way that other hours do not. You do not always use it for anything. Sometimes you sit in it. The house makes its own sounds in this hour — the roof contracting, an animal in the yard, someone turning over in the next room. You know all of them.',
       'An hour of doing nothing in particular: not resting, not working, not waiting for something. Just — the afternoon moving through the window, the sounds from outside, your own thoughts going where they go. Nothing is required of you in this hour. This is rarer than it sounds.',
     ]),
     choices: null,

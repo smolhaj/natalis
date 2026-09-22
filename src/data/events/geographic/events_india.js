@@ -97,7 +97,12 @@ export const INDIA_EVENTS = [
       G.currentYear === 1992 &&
       G.age >= 18 &&
       !G.mem.indBabri,
-    text: 'December 6, 1992. The Babri Masjid in Ayodhya is demolished by a crowd of several hundred thousand people. The mosque was built in 1528. The claim that a Ram temple stood there before the mosque is the disputed point that the law courts have been considering for decades and that the crowd has now settled by force. The riots that follow kill approximately two thousand people across India. The question of what the demolition means for the constitutional principle of secularism is one that will structure Indian politics for the next three decades.',
+    // The single most consequential fact about December 1992 is which side of
+    // it you were on, and the event used to report it in the third person to
+    // everybody — including to the people the riots were looking for.
+    text: (G) => (G.religion === 'muslim_sunni' || G.religion === 'muslim_shia')
+      ? 'December 6, 1992. The mosque at Ayodhya is brought down by hand, by a crowd of several hundred thousand, while the police stand at the edge of it. It was built in 1528. Within a day the riots have reached your city and the arithmetic in your house is not about the constitution: it is about the nameplate on the door, about whether the shop should open, about which of the neighbours would be a problem and which would be the opposite. Some of them come and stand outside for three nights, which is the part you will find hardest to explain afterwards, because it was both true and not enough.'
+      : 'December 6, 1992. The Babri Masjid in Ayodhya is demolished by a crowd of several hundred thousand people. The mosque was built in 1528. The claim that a Ram temple stood there before the mosque is the disputed point that the law courts have been considering for decades and that the crowd has now settled by force. The riots that follow kill approximately two thousand people across India. The question of what the demolition means for the constitutional principle of secularism is one that will structure Indian politics for the next three decades.',
     choices: [
       {
         text: 'The demolition was the dividing line. You choose a side.',
@@ -124,7 +129,9 @@ export const INDIA_EVENTS = [
       G.currentYear === 2002 &&
       G.age >= 25 &&
       !G.mem.indGujarat,
-    text: "February 2002. A train carrying Hindu pilgrims returning from Ayodhya is set on fire near Godhra. Fifty-nine people die. What follows in Gujarat over the next three months is reported variously as riots, as pogrom, as organised violence. The official figure is 790 Muslims killed. Other counts are higher. The state government's role will be investigated by the courts for years. Narendra Modi is chief minister of Gujarat. The violence and his response to it will be a permanent part of the account.",
+    text: (G) => (G.religion === 'muslim_sunni' || G.religion === 'muslim_shia')
+      ? 'February 2002. A train carrying pilgrims back from Ayodhya burns near Godhra and fifty-nine people die, and by the evening of the next day the lists are being used. That is the detail that stays: not a mob finding a street, but a mob arriving at addresses. The official figure will be 790 Muslims killed and the other counts will be higher and the courts will spend twenty years on the question of what the state government did and did not do. You spend the three months after it deciding, every single morning, whether it is a day to be out of doors.'
+      : "February 2002. A train carrying Hindu pilgrims returning from Ayodhya is set on fire near Godhra. Fifty-nine people die. What follows in Gujarat over the next three months is reported variously as riots, as pogrom, as organised violence. The official figure is 790 Muslims killed. Other counts are higher. The state government's role will be investigated by the courts for years. Narendra Modi is chief minister of Gujarat. The violence and his response to it will be a permanent part of the account.",
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('gujarat_2002_generation'); p.setMem('indGujarat', true) },
   },

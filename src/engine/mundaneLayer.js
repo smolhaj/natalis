@@ -1,3 +1,6 @@
+import { livingRuralUrban } from './character'
+import { preferUnsaid } from './prose'
+import { hasTech, wasWealthy, techYear } from '../data/technology'
 // mundaneLayer.js — Daily-life texture that fires alongside main events every year.
 //
 // buildMundaneLayer(state) is called from advanceYear() regardless of whether
@@ -16,7 +19,7 @@ export function buildMundaneLayer(state) {
 
   const flags = new Set(state.flags ?? [])
   const F = (f) => flags.has(f)
-  const { age, currentYear, partner, children, career, mem } = state
+  const { age, currentYear, partner, children, career } = state
   const phase = age <= 5 ? 'early_childhood'
     : age <= 11 ? 'childhood'
     : age <= 17 ? 'adolescence'
@@ -29,7 +32,7 @@ export function buildMundaneLayer(state) {
   const gender = state.character?.gender ?? 'male'
   const religion = state.character?.religion ?? ''
   const gdp = state.character?.country?.gdp ?? 'medium'
-  const ruralUrban = state.character?.ruralUrban ?? 'urban'
+  const ruralUrban = livingRuralUrban(state)
   const careerField = career?.field ?? null
   const isMuslim = religion?.startsWith('muslim')
   const isChristian = religion?.startsWith('christian')
@@ -45,6 +48,24 @@ export function buildMundaneLayer(state) {
   const isRural = ruralUrban === 'rural'
   const isUrban = ruralUrban === 'urban'
   const isWealthyArch = ['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(arch)
+  // `isWealthyArch` says where a country sits now. The domestic-interior and
+  // technology lines below need to know where it sat THEN, which is a different
+  // question and is why a 1931 Omani childhood was getting a telephone in the
+  // hallway and a weekly trip to the cinema. `wealthyNow` and `tech` answer the
+  // year's version of it; see src/data/technology.js.
+  const homeCountry = state.currentCountry ?? state.character?.country ?? null
+  const wealthyNow = wasWealthy(homeCountry, currentYear)
+  const richHousehold = (state.character?.wealthTier ?? 2) >= 4   // 0-4 index into wealthTierWeights
+  const tech = (t) => hasTech(homeCountry, t, currentYear, { rural: isRural, rich: richHousehold })
+  // The bare arrival year, for lines that are only true while a thing is new.
+  const techArrival = (t) => {
+    let y = techYear(homeCountry, t)
+    if (y >= 9000) return y
+    const poor = !isWealthyArch
+    if (isRural) y += poor ? 12 : 5
+    if (richHousehold) y -= poor ? 12 : 5
+    return y
+  }
   const isSubsaharan = arch === 'subsaharan'
   const isDeveloping = ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(arch)
   const isPostSoviet = arch === 'post_soviet'
@@ -131,87 +152,145 @@ export function buildMundaneLayer(state) {
   )
 
   // ── ERA TECHNOLOGY ─────────────────────────────────────────────────────────
-  // Gated by decade + archetype. The texture of which tools the world provides.
+  //
+  // Was: decade + archetype. Archetype is a statement about now, so `era ===
+  // 1950 && isWealthyArch` put a television in an Icelandic living room sixteen
+  // years before Iceland had broadcasting, and `era === 1930 && isWealthyArch`
+  // gave a 1931 Omani household a hallway telephone, a folded newspaper and a
+  // weekly trip to the cinema, in a country that had none of those things and
+  // would not for forty years.
+  //
+  // Now: `tech(x)` asks when x actually arrived where this character lives,
+  // adjusted for rural and for a wealthy household, and `wealthyNow` asks
+  // whether the domestic-comfort register was true of the country that year.
+  // See src/data/technology.js. The `notYoung` gate exists because several of
+  // these are lines about somebody's working life or their commute and were
+  // firing for three-year-olds.
 
-  addIf(era <= 1919 && !isWealthyArch && phase !== 'early_childhood',
+  const notYoung = phase !== 'early_childhood'
+  const working = age >= 16
+  const adult = age >= 18
+
+  // These are about electricity and piped water, not about national wealth.
+  // Gated on `!wealthyNow`, they trimmed an oil lamp and fetched water from a
+  // standpipe in 1942 and 1950 Berlin — a city lit since the 1900s — because
+  // Germany does not cross the material-wealth line until 1958.
+  addIf(!tech('electricity') && notYoung,
     'The lamp needs trimming. This is the work of the evening.',
-    'News of what has happened elsewhere takes days to arrive.',
+  )
+  addIf(!tech('piped_water') && notYoung,
     'Water is fetched, not delivered. The fetching organises the morning.',
   )
-  addIf(era <= 1919 && isWealthyArch,
+  addIf(!tech('radio') && notYoung,
+    'News of what has happened elsewhere takes days to arrive.',
+  )
+  addIf(wealthyNow && notYoung && currentYear <= 1925,
     'The telegram arrived. Its brevity is the result of the cost, not the emotion.',
     'The horse-drawn cart is still the dominant technology of the street. The automobile is a novelty for the wealthy.',
   )
-  addIf(era === 1920 || era === 1930,
+  addIf(tech('radio') && !tech('television') && notYoung,
     'The radio in the front room gathers the family in the evenings as though it were a fire.',
     'The gramophone plays the same records again. You know them by heart now.',
   )
-  addIf((era === 1920 || era === 1930) && isWealthyArch,
+  addIf(tech('cinema') && notYoung && currentYear <= 1965,
     'The cinema is a weekly ritual. The darkness and the screen.',
+  )
+  addIf(tech('landline') && !tech('mobile_phone') && notYoung,
     'The telephone is in the hallway. Calls are brief and considered before making them.',
+    'The telephone rings. It is for one specific person. Everyone else finds out later.',
+  )
+  addIf(tech('newspaper') && adult && currentYear <= 1995,
     'The newspaper is folded and read in a specific order. The order has not changed.',
   )
-  addIf(era === 1940 && isWealthyArch,
+  addIf(currentYear >= 1939 && currentYear <= 1946 && wealthyNow && notYoung,
     'Rationing means the meal is considered before it is prepared.',
     'The letter from abroad is opened carefully. The news could be anything.',
     'The radio announces things that were not announced yesterday. You listen with particular attention.',
   )
-  addIf(era === 1950 && isWealthyArch,
+  // The television within about six years of arriving is still an event; after
+  // that it is furniture, and the line stops being true.
+  addIf(tech('television') && currentYear <= techArrival('television') + 6 && notYoung,
     'The television has arrived in the living room. The evenings have reorganised themselves around it.',
+    'The television is new in the house or almost in the house. Everything it changes will take a generation to see.',
+  )
+  addIf(tech('washing_machine') && currentYear <= techArrival('washing_machine') + 8 && notYoung,
     'The washing machine is still the subject of comment — at how much easier it has made the day.',
+  )
+  addIf(tech('automobile') && currentYear <= techArrival('automobile') + 10 && notYoung,
     'The car is the new fact of the neighbourhood. The street sounds different on weekend mornings.',
   )
-  addIf(era === 1960,
-    'The record player is the household\'s second intelligence. It knows what the afternoon needs.',
-    'The telephone rings. It is for one specific person. Everyone else finds out later.',
-  )
-  addIf(era === 1960 && isWealthyArch,
+  addIf(tech('colour_television') && currentYear <= techArrival('colour_television') + 8 && notYoung,
     'The colour television is in some houses, not yet all. The question of whether to get one is a category of conversation.',
   )
-  addIf(era === 1970,
+  addIf(tech('radio') && notYoung && currentYear >= 1955 && currentYear <= 1985,
+    'The record player is the household\'s second intelligence. It knows what the afternoon needs.',
+  )
+  addIf(tech('cassette') && notYoung && currentYear <= 1995,
     'The cassette tape has the advantage of being skippable. You have recorded a side that is entirely what you want.',
   )
-  addIf(era === 1970 && isWealthyArch,
+  addIf(tech('microwave') && currentYear <= techArrival('microwave') + 8 && notYoung,
     'The microwave is in some kitchens — a machine that does what a pot does, faster, and no one is entirely sure what this means for cooking.',
   )
-  addIf(era === 1980,
+  // Both of these say a thing is NEW, and both were the only lines in this
+  // stretch without an upper bound — so the VCR went on being a novelty in
+  // 2021 Brazil and 2031 Egypt, thirty and forty years after it arrived, long
+  // after the thing itself had gone. Same window as the neighbours above.
+  addIf(tech('vcr') && currentYear <= techArrival('vcr') + 10 && notYoung,
     'The VCR means the film can be watched again, which changes what watching a film means.',
+  )
+  addIf(tech('personal_computer') && currentYear <= techArrival('personal_computer') + 10 && age >= 10,
     'The personal computer is at the desk. Most of what it does is still being discovered.',
   )
-  addIf(era === 1980 && isWealthyArch,
+  addIf(tech('cassette') && working && wealthyNow && currentYear >= 1980 && currentYear <= 1998,
     'The Walkman has made the commute private. The city continues outside the headphones.',
+  )
+  addIf(working && wealthyNow && currentYear >= 1985 && currentYear <= 2002,
     'The fax machine has arrived at the office. A document that took days now arrives instantly.',
   )
-  addIf(era === 1990,
+  addIf(tech('personal_computer') && notYoung && currentYear >= 1992 && currentYear <= 2006,
     'The CD player has replaced the cassette. The skip protection is still imperfect.',
   )
-  addIf(era === 1990 && isWealthyArch,
+  addIf(tech('mobile_phone') && currentYear <= techArrival('mobile_phone') + 4 && age >= 14,
     'The mobile phone is the size of a small brick and calls cost significantly. You use it for genuine emergencies.',
+  )
+  addIf(tech('email') && working,
     'Email has arrived at the office. The volume of communication has increased without prior consultation.',
   )
-  addIf(era === 1990 && isDeveloping,
+  addIf(isDeveloping && !tech('home_internet') && tech('personal_computer') && age >= 12,
     'The internet café has opened. The internet is accessed as a destination, not a permanent condition.',
   )
-  addIf(era === 2000,
+  addIf(tech('mobile_phone') && !tech('smartphone') && age >= 12,
     'The phone in your pocket sends a text in the time it once took to compose a letter.',
+  )
+  addIf(tech('home_internet') && notYoung,
     'Broadband has made the internet a permanent fact of the home. It is not turned on and off. It is simply there.',
   )
-  addIf(era === 2000 && isWealthyArch,
+  addIf(tech('home_internet') && adult && currentYear <= 2012,
     'The DVD means you own the film, not just the memory of having watched it.',
     'The search engine means most questions have answers available in seconds. The questions have not changed. The seconds have.',
   )
-  addIf(era === 2010,
+  addIf(tech('smartphone') && age >= 12,
     'The smartphone is the last thing checked at night and the first thing checked in the morning. You have noticed this.',
     'WhatsApp has replaced the phone call as default communication. The voice note is somewhere between a call and a text.',
-    'Streaming means there is no schedule for the film or the series. You watch when you want. You watch more.',
     'The photograph is no longer a significant commitment. You take dozens. The dozens accumulate.',
   )
-  addIf(era === 2010 && isDeveloping,
+  addIf(tech('streaming') && age >= 10,
+    'Streaming means there is no schedule for the film or the series. You watch when you want. You watch more.',
+  )
+  addIf(tech('smartphone') && (isSubsaharan || isPoor) && age >= 12,
     'The smartphone arrived before the electricity is reliable. Solar charging is a business now.',
+  )
+  // Mobile money is a real institution across sub-Saharan Africa, South and
+  // South-East Asia and Egypt, and it is not how anyone in Latin America pays
+  // for anything — this was gated on `isDeveloping`, which is 90 countries.
+  addIf(tech('smartphone') && age >= 12 && (isSubsaharan ||
+      ['Bangladesh', 'Pakistan', 'India', 'Philippines', 'Indonesia', 'Egypt', 'Cambodia', 'Myanmar', 'Nepal', 'Sri Lanka'].includes(cn)),
     'Mobile money means the transaction happens on the phone. No bank required.',
   )
-  addIf(era >= 2020,
+  addIf(tech('video_call') && age >= 10,
     'The video call is now indistinguishable from ordinary communication. The face on the screen is as real as the face in the room.',
+  )
+  addIf(tech('smartphone') && wealthyNow && adult,
     'Most things can be delivered. The option is taken more often than expected.',
     'The algorithm knows what you will want to read before you know you want to read it. You are still deciding how to feel about this.',
   )
@@ -223,7 +302,7 @@ export function buildMundaneLayer(state) {
     'You do the laundry, the shopping, the correspondence. This is called being at home.',
     'There are rooms not intended for you — the meeting, the club, the conversation about money. You manage around them.',
   )
-  addIf(gender === 'female' && era >= 1960 && era <= 1979 && isWealthyArch,
+  addIf(gender === 'female' && era >= 1960 && era <= 1979 && isWealthyArch && working,
     'The job you have was not available to women at this level ten years ago. You are the first, or among the first.',
     'The equal pay conversation is happening in the office. The happening is not the same as the resolution.',
   )
@@ -259,7 +338,11 @@ export function buildMundaneLayer(state) {
   // ── RELIGION-SPECIFIC DAILY RHYTHMS ────────────────────────────────────────
 
   addIf(isMuslim && phase !== 'early_childhood',
-    'The adhan sounds from the minaret or the phone or the radio, and the day organises itself around it.',
+    tech('mobile_phone')
+      ? 'The adhan sounds from the minaret or the phone or the radio, and the day organises itself around it.'
+      : tech('radio')
+        ? 'The adhan sounds from the minaret and from a radio in somebody\'s window, and the day organises itself around it.'
+        : 'The adhan comes from the minaret and from further off, a second one a beat behind the first, and the day organises itself around it.',
     'The five prayers are the architecture of the day. The architecture is invisible to people who do not share it.',
     'The wudu before prayer — the washing — is a ritual boundary between the world and the prayer.',
   )
@@ -358,7 +441,7 @@ export function buildMundaneLayer(state) {
     'The cleaner comes on a scheduled day. Their name is known. The arrangement is professional and also human.',
     'The annual leave is taken. The destination was agreed months ago. The planning was part of the pleasure.',
   )
-  addIf(arch === 'wealthy_west' && (gdp === 'medium' || gdp === 'medium_high'),
+  addIf(arch === 'wealthy_west' && (gdp === 'medium' || gdp === 'medium_high') && age >= 25,
     'The mortgage is the number that lives in the back of the mind. Not urgently. Persistently.',
     'There are two options and both are reasonable. This is a new situation relative to earlier decades.',
     'The car needs a service. This is handled.',
@@ -378,13 +461,15 @@ export function buildMundaneLayer(state) {
     'The conductor is calling the route from the window. The route is the route you take.',
     'Standing on a bus for an hour is its own form of being in the city.',
   )
-  addIf(isWealthyArch && era >= 1950 && career,
+  addIf(tech('automobile') && career,
     'The commute is the only part of the day that belongs entirely to you.',
-    'The radio in the car is the hour between the job and the home.',
     'The traffic is the constant. Your relationship with it has evolved from irritation to acceptance.',
     'The parking is found. This registers as a small win reported to no one.',
   )
-  addIf(isWealthyArch && era >= 1950 && isUrban,
+  addIf(tech('automobile') && tech('radio') && career,
+    'The radio in the car is the hour between the job and the home.',
+  )
+  addIf(wealthyNow && era >= 1950 && isUrban && working,
     'The specific rush of hot air before the underground train arrives. You know the timing of this now.',
     'The platform at rush hour is a managed compression of people. The management is mostly polite.',
     'The seat you prefer is at the end of the car. When it is available, the day begins differently.',
@@ -393,14 +478,20 @@ export function buildMundaneLayer(state) {
     'The bicycle is the fastest route through the morning streets.',
     'You walk somewhere today that most people take a vehicle to. The walking is the point.',
   )
-  addIf(era >= 1960 && phase !== 'early_childhood',
+  // Days of your life, cumulatively, in airports: an arithmetic a six-year-old
+  // has not had time to do. `phase !== 'early_childhood'` starts at six.
+  addIf(era >= 1960 && age >= 25,
     'The airport is a country that belongs to everywhere and nowhere. You have spent days of your life in it cumulatively.',
   )
 
   // ── FOOD AND EATING ────────────────────────────────────────────────────────
 
-  add(
+  // A meal weighed against its company afterwards is an adult's account of an
+  // evening; the bare add() was telling it to one-year-olds.
+  addIf(age >= 16,
     'The meal was ordinary and the company was good, or the company was ordinary and the meal was good. One or the other.',
+  )
+  add(
     'The smell of something cooking is the first announcement that someone is home.',
     'Food prepared by someone else always tastes differently than food you prepared yourself.',
     'The recipe came from someone who is not here to explain what they meant by "a handful."',
@@ -435,7 +526,25 @@ export function buildMundaneLayer(state) {
     'Rice is the base of the meal in the way that mathematics is the base of the equation.',
     'Tea is poured before conversation begins. The conversation can wait for the pouring.',
     'The night market is lit and noisy and sells everything. The eating happens standing.',
-    'The communal pot — hot pot, jjigae, shabu-shabu — is also the communal meeting.',
+  )
+  // The pot in the middle of the table is shared across all of these places and
+  // the dish in it is not. One line named hot pot, jjigae and shabu-shabu at
+  // once, so a Japanese life was handed a Korean stew, and shabu-shabu — named
+  // in an Osaka restaurant in 1952 — was on the table in 1945.
+  addIf(cn === 'China' || cn === 'Taiwan',
+    'The pot sits in the middle and everyone cooks out of it as they eat. The meal and the meeting are the same event.',
+  )
+  addIf(cn === 'Japan' && currentYear >= 1952,
+    'The donabe goes on the burner in the middle of the table and everyone reaches into it. Shabu-shabu, since the restaurants started calling it that. The pot is also the meeting.',
+  )
+  addIf(cn === 'Japan' && currentYear < 1952,
+    'The donabe goes over the heat in the middle of the table and everyone reaches into it. Whatever is in it that week, the arrangement is the same: one pot, and everyone around it.',
+  )
+  addIf(cn === 'South Korea',
+    'The jjigae comes to the table still boiling and nobody is given their own bowl of it. The spoons go into the same pot.',
+  )
+  addIf(['Vietnam', 'Thailand', 'Malaysia', 'Singapore'].includes(cn),
+    'The steamboat is set down and the raw things are set around it and the eating takes the whole evening because it is meant to.',
   )
   addIf(isWealthyArch && era >= 1960,
     'The supermarket is the weekly ritual. The trolley follows the same route. The choices are stable.',
@@ -536,7 +645,7 @@ export function buildMundaneLayer(state) {
     'The knee that was fine last year now has opinions about stairs.',
     'You are sleeping less deeply than you once did. The depth has been changing slowly for years.',
     'Something that took two days to recover from now takes four. The body is recalibrating.',
-    'The reading glasses appeared this year, or last year, or are imminent. The print that was fine is now borderline.',
+    'The reading glasses appeared this year. The print that was fine is now borderline and you hold the page at a distance you have started to notice yourself holding it at.',
     'The grey in the hair has reached a percentage people comment on. You have decided how to respond.',
     'The blood pressure was checked. The number is what it is. You are doing what the number requires.',
   )
@@ -555,27 +664,37 @@ export function buildMundaneLayer(state) {
 
   // ── COMMUNICATION AND MEDIA ────────────────────────────────────────────────
 
-  addIf(era <= 1939,
+  addIf(currentYear <= 1950 && adult,
     'The letter took two weeks to arrive and another two weeks to receive a response. The slow conversation has its own rhythm.',
+  )
+  addIf(tech('newspaper') && adult && currentYear <= 1990,
     'The newspaper is read in a specific order. The order has not changed.',
   )
-  addIf(era >= 1930 && era <= 1959,
+  addIf(tech('radio') && !tech('television') && notYoung,
     'The radio in the evening is not just information. It is company.',
+  )
+  addIf(tech('landline') && !tech('mobile_phone') && adult,
     'The telephone call is short because it costs money. The shortness is efficient and slightly brutal.',
   )
-  addIf(era >= 1940 && era <= 1979 && isWealthyArch,
+  addIf(adult && currentYear <= 1995,
     'The letter is written by hand. The handwriting reveals the mood of the writing.',
+  )
+  addIf(tech('television') && !tech('streaming') && notYoung,
     'The television schedule is fixed. You are there for the programme or you miss it.',
   )
-  addIf(era >= 1970 && era <= 1989 && isWealthyArch,
+  addIf(tech('landline') && !tech('mobile_phone') && adult && currentYear >= 1975,
     'The answering machine message was left. You have been playing it back to check the tone.',
   )
-  addIf(era >= 1990 && era <= 2009,
+  addIf(tech('mobile_phone') && !tech('smartphone') && age >= 12,
     'The text message arrives. Its abbreviations are now fluent to you.',
+  )
+  addIf(tech('email') && working,
     'The email inbox has tripled in a year. The management of it is its own task.',
   )
-  addIf(era >= 2010,
+  addIf(era >= 2010 && age >= 12,
     'The WhatsApp message was sent at 11pm and read at 11pm. Both people know this.',
+  )
+  addIf(era >= 2010,
     'The group chat has many unread messages. You scroll up to find the one relevant to you.',
     'The phone was on the table during the meal. This is noted. The meal continues.',
     'A conversation that once required a letter now takes four minutes. The efficiency is not only a gain.',
@@ -641,9 +760,12 @@ export function buildMundaneLayer(state) {
     'Kelewele from the roadside vendor: the fried plantain at that temperature, in that paper.',
   )
   addIf(cn === 'Kenya',
-    'M-Pesa means the transaction happens on the phone. No bank required.',
     'Harambee — the collection for the funeral, the school fees, the hospital bill. You give what you can.',
     'The matatu has a conductor and a volume level that is non-negotiable.',
+  )
+  // M-Pesa launched in March 2007, into a country that already had the handsets.
+  addIf(cn === 'Kenya' && currentYear >= 2007,
+    'M-Pesa means the transaction happens on the phone. No bank required.',
   )
   addIf(cn === 'Ethiopia',
     'The coffee ceremony takes time it is not in a hurry about. The time is given.',
@@ -745,8 +867,10 @@ export function buildMundaneLayer(state) {
     'You have seen things you do not take home. The not-taking-home requires practice.',
     'The patient you remember from last week. The update on what happened to them.',
   )
-  addIf(careerField === 'business' || careerField === 'finance',
+  addIf((careerField === 'business' || careerField === 'finance') && tech('email'),
     'The meeting could have been an email. It was a meeting.',
+  )
+  addIf(careerField === 'business' || careerField === 'finance',
     'The desk has a particular arrangement. When someone moves something, you notice.',
     'Lunch is a demarcation. The thirty minutes are the owned part of the workday.',
   )
@@ -1063,7 +1187,7 @@ export function buildMundaneLayer(state) {
     'Russian was the language of the job. The language of the job is changing. The change is not without cost.',
   )
   addIf(cn === 'Morocco' || cn === 'Algeria' || cn === 'Tunisia',
-    'The Arabic of the mosque, the French of the office, the Darija of the house: three registers and you navigate all of them.',
+    'The Arabic of the mosque, the French of the ministry, the Darija of the house: three registers and you navigate all of them.',
     'Amazigh — Tamazight, Kabyle, Tachelhit — is your home language and until recently was not official. The officiality is new. The language is old.',
   )
   addIf(cn === 'Belgium' || cn === 'Switzerland',
@@ -1162,6 +1286,9 @@ export function buildMundaneLayer(state) {
   addIf(cn === 'Zimbabwe',
     'The hundred trillion dollar note is a museum piece now. But the memory of what a hundred trillion dollars could not buy is not a museum piece.',
     'Braai on Sunday: the fire, the meat, the longer afternoon.',
+  )
+  // EcoCash opened in 2011, three years after the currency stopped working.
+  addIf(cn === 'Zimbabwe' && currentYear >= 2011,
     'The mobile money fills the gap the cash used to fill. The gap never fully closed.',
   )
   addIf(cn === 'Argentina',
@@ -1596,6 +1723,8 @@ export function buildMundaneLayer(state) {
   )
   addIf(isRural && era <= 1960 && !isWealthyArch,
     'No electricity means the evening is lit by fire or lamp. The evening has a size that electricity did not give it.',
+  )
+  addIf(isRural && era <= 1960 && !isWealthyArch && currentYear >= techYear(homeCountry, 'radio'),
     'The radio, if there is one, is the village\'s shared newspaper.',
   )
 
@@ -1663,7 +1792,7 @@ export function buildMundaneLayer(state) {
   addIf(F('emigrated') || F('first_generation_immigrant'),
     'The form: the small box for the country of origin, the question of which address is permanent.',
     'The friend who is also from there: the relief of speaking without choosing words carefully.',
-    'The first winter here, or the first summer, or the first season that is not a season from before.',
+    'The first winter here. It is not the winter you have a word for, and you find yourself dressing for the one you remember.',
     'You are learning the bureaucracy. The bureaucracy is specific to this country and has its own logic.',
     'The job you have here is not the job you had there. The here job is the available job.',
     'Sunday is different here. The day has a different shape. The shape requires adjustment.',
@@ -1945,6 +2074,8 @@ export function buildMundaneLayer(state) {
   // ── ERA-SPECIFIC: 1940S NON-WESTERN ───────────────────────────────────────
   addIf(!isWealthyArch && era >= 1940 && era <= 1949,
     'The war is elsewhere and also here: in the prices, in what is not available, in the letters.',
+  )
+  addIf(!isWealthyArch && era >= 1940 && era <= 1949 && currentYear >= techYear(homeCountry, 'radio'),
     'The radio brings a voice from a distance saying what is happening somewhere you cannot see.',
   )
 
@@ -2193,16 +2324,18 @@ export function buildMundaneLayer(state) {
   )
 
   // ── 1920S–1930S TEXTURE ───────────────────────────────────────────────────
-  addIf(era >= 1920 && era <= 1939 && phase !== 'early_childhood',
+  addIf(era >= 1920 && era <= 1939 && phase !== 'early_childhood' &&
+        currentYear >= techYear(homeCountry, 'radio') && currentYear >= techYear(homeCountry, 'newspaper'),
     'The newspapers are the source. The radio is new. Both are how the world arrives.',
+  )
+  addIf(era >= 1920 && era <= 1939 && phase !== 'early_childhood',
     'The money that disappeared: not everyone\'s, but enough people\'s that its absence is a fact of the decade.',
     'The sense that something has changed permanently since the last war. Everyone is still working out what.',
   )
 
   // ── 1950S COLD WAR TEXTURE ────────────────────────────────────────────────
-  addIf(era === 1950 && phase !== 'early_childhood',
+  addIf(era === 1950 && notYoung,
     'The bomb is the thing no one discusses directly. It is in the architecture of every conversation about the future.',
-    'The television is new in the house or almost in the house. Everything it changes will take a generation to see.',
   )
   addIf(era === 1950 && isPostSoviet && phase !== 'early_childhood',
     'The official optimism and the private accounting are not the same document.',
@@ -2669,7 +2802,7 @@ export function buildMundaneLayer(state) {
   // ── PAKISTAN SPECIFIC ─────────────────────────────────────────────────────
   addIf(cn === 'Pakistan',
     'The load shedding: the schedule that is a schedule until it isn\'t. The generator that runs until the generator\'s fuel runs out.',
-    'The wasta: the cousin who knows someone at the office. The office where the form is stuck. The cousin as infrastructure.',
+    'The wasta: the cousin who knows someone in the department. The department where the form is stuck. The cousin as infrastructure.',
   )
   addIf(cn === 'Pakistan' && isMuslim && phase !== 'early_childhood',
     'Eid and the meat and the distribution: the portion to family, the portion to the poor, the sequence of obligation.',
@@ -2880,11 +3013,11 @@ export function buildMundaneLayer(state) {
   )
 
   // ── TECHNOLOGY ADOPTION — DEVELOPING WORLD ────────────────────────────────
-  addIf(isDeveloping && currentYear >= 2005 && currentYear <= 2015,
+  addIf(isDeveloping && age >= 12 && currentYear >= 2005 && currentYear <= 2015,
     'The mobile phone arrived before the road did, before the reliable electricity did. The mobile phone has reorganised things that the road and electricity would also have reorganised, but differently.',
     'M-Pesa or the equivalent: money sent by phone to someone who does not have a bank account. The bank account was never necessary. The phone was.',
   )
-  addIf(isSubsaharan && currentYear >= 2010,
+  addIf(isSubsaharan && age >= 20 && currentYear >= 2010,
     'The smartphone generation: younger people who have never sent a letter and are surprised that sending a letter was ever the thing.',
   )
 
@@ -2915,7 +3048,7 @@ export function buildMundaneLayer(state) {
   )
 
   // ── FIRST GENERATION PROFESSIONAL ─────────────────────────────────────────
-  addIf((F('first_gen_educated') || F('poverty_childhood')) && phase !== 'early_childhood',
+  addIf((F('first_gen_educated') || F('poverty_childhood')) && working,
     'The office and the accent and the clothes and the calibration of how much to explain about where you started.',
     'The things that your colleagues assume as given that you did not come with. You learned them. The learning is invisible now.',
   )
@@ -2936,5 +3069,10 @@ export function buildMundaneLayer(state) {
   )
 
   if (pool.length === 0) return null
-  return pool[Math.floor(Math.random() * pool.length)]
+  // Prefer a line this character has not heard. The mundane layer draws from a
+  // flat pool, so over a long life it re-served the same sentence often enough
+  // to be noticeable — and the layer's whole job is to feel like ordinary time
+  // passing, which repetition destroys.
+  const fresh = preferUnsaid(state, pool)
+  return fresh[Math.floor(Math.random() * fresh.length)]
 }

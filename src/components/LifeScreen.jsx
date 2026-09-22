@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { useGameStore } from '../store/gameStore'
-import StatBar from './StatBar'
+import StatBar, { statTier } from './StatBar'
 import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
-import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, formatParentIncome, getPhase } from '../engine/gameEngine'
-import { PLACES, getPlacesForCountry, getRelocationCost } from '../data/places'
+import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, localCreditScore, formatParentIncome, getPhase } from '../engine/gameEngine'
+import { getPlacesForCountry, getRelocationCost } from '../data/places'
 import ActivitiesPanel from './ActivitiesPanel'
 
 const PHASE_CHAPTER_LABELS = {
@@ -36,16 +36,30 @@ function RelBar({ value, color }) {
   )
 }
 
+/** Escape dismisses the open sheet. Both sheets render a full-screen scrim. */
+function EscapeCloses({ active, onClose }) {
+  useEffect(() => {
+    if (!active) return
+    const onKey = (e) => { if (e.key === 'Escape') { e.stopPropagation(); onClose() } }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [active, onClose])
+  return null
+}
+
 function relColor(q) {
-  return q > 65 ? '#34c759' : q > 35 ? '#ff9500' : '#ff3b30'
+  return q > 65 ? '#3f6146' : q > 35 ? '#8a6635' : '#8c3a2e'
 }
 
 // Tab panels
+// Emoji removed. An emoji tab bar is the single loudest "this is a mobile game"
+// signal available, and the design document asks for the opposite four times
+// over. The words were always doing the work.
 const TABS = [
-  { key: 'life',   label: 'Life',   emoji: '📖' },
-  { key: 'stats',  label: 'Stats',  emoji: '📊' },
-  { key: 'people', label: 'People', emoji: '👥' },
-  { key: 'assets', label: 'Assets', emoji: '🏠' },
+  { key: 'life',   label: 'Life' },
+  { key: 'stats',  label: 'Stats' },
+  { key: 'people', label: 'People' },
+  { key: 'assets', label: 'Assets' },
 ]
 
 export default function LifeScreen() {
@@ -66,19 +80,22 @@ export default function LifeScreen() {
     }
   }, [pendingEvent])
 
-  // Auto-open the current decade when the character enters a new one
+  // Open the current decade, and only the current decade.
+  //
+  // This used to accumulate, so by seventy a character had eight open decades
+  // and the Timeline view was the entire log with headings in it — which is
+  // the Recent view with extra steps, and not an overview of anything. The
+  // player can still open any decade by hand; this just decides where they
+  // start.
   const ageFromStore = useGameStore(s => s.age)
   useEffect(() => {
-    const d = Math.floor(ageFromStore / 10) * 10
-    setOpenDecades(prev => prev.has(d) ? prev : new Set([...prev, d]))
+    setOpenDecades(new Set([Math.floor(ageFromStore / 10) * 10]))
   }, [Math.floor(ageFromStore / 10)])
 
   const [showMoveModal, setShowMoveModal] = useState(false)
   const [moveStep, setMoveStep] = useState('pick') // 'pick' | 'confirm'
   const [selectedPlace, setSelectedPlace] = useState(null)
-  const [flashDeltas, setFlashDeltas] = useState({})
   const prevStatsRef = useRef(null)
-  const flashTimerRef = useRef(null)
 
   const resolveAutoEvent = useGameStore(s => s.resolveAutoEvent)
   const resolveChoice = useGameStore(s => s.resolveChoice)
@@ -124,33 +141,42 @@ export default function LifeScreen() {
   const hobbies      = useGameStore(s => s.hobbies)
   const fitness      = useGameStore(s => s.fitness)
   const debt         = useGameStore(s => s.debt)
-  const creditScore  = useGameStore(s => s.creditScore)
   const pendingMinigame = useGameStore(s => s.pendingMinigame)
   const ageUp        = useGameStore(s => s.ageUp)
   const goToTitle    = useGameStore(s => s.goToTitle)
 
-  // Stat delta flash — shows +/- on stat bars when values change
+  // The stat strip used to flash a coloured "+2" / "−4" beside each stat for
+  // two seconds after any change, which is the one thing CLAUDE.md rules out by
+  // name: "No 'You gain +5 Happiness!' framing." The prose is the mechanic.
+  //
+  // The movement is still worth showing — a stat that changed is information —
+  // so the WORD changes and the number underneath it changes, which is what the
+  // design document already asks the strip to do. The arithmetic does not
+  // appear. The ref is kept because the change detection is still wanted if a
+  // future surface wants to animate the word.
   useEffect(() => {
-    if (!prevStatsRef.current) { prevStatsRef.current = stats; return }
-    const prev = prevStatsRef.current
-    const deltas = {}
-    let changed = false
-    for (const key of ['happiness', 'health', 'smarts', 'looks']) {
-      const d = Math.round((stats[key] ?? 0) - (prev[key] ?? 0))
-      if (d !== 0) { deltas[key] = d; changed = true }
-    }
     prevStatsRef.current = { ...stats }
-    if (changed) {
-      setFlashDeltas(deltas)
-      if (flashTimerRef.current) clearTimeout(flashTimerRef.current)
-      flashTimerRef.current = setTimeout(() => setFlashDeltas({}), 2000)
-    }
   }, [stats.happiness, stats.health, stats.smarts, stats.looks])
 
-  // Keyboard shortcuts: Space/Enter → age up or continue; 1/2/3 → choices
+  // Keyboard shortcuts: Space/Enter → age up or continue; 1/2/3 → choices.
+  //
+  // The handler used to exempt only INPUT/TEXTAREA/SELECT and then call
+  // preventDefault, which made the game unusable by keyboard: with a button
+  // focused, Space both activated the button AND aged the character (focus
+  // "Timeline", press Space, the view changes and a year passes), while Enter
+  // was swallowed entirely so no button in the game could ever be activated
+  // with it. A keyboard-only player could not reach Menu, the tabs, Move or
+  // Activities without burning a year each time.
+  //
+  // So: anything focusable handles its own keys, and these shortcuts apply only
+  // when the focus is on the page rather than on a control.
   useEffect(() => {
     const handleKey = (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return
+      const t = e.target
+      if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT') return
+      // A focused button, link, or anything with a tabindex owns Space and Enter.
+      if (typeof t.closest === 'function' &&
+          t.closest('button, a, [role="button"], [role="tab"], [tabindex]:not([tabindex="-1"])')) return
       if (e.metaKey || e.ctrlKey || e.altKey) return
       if (pendingEvent?.isAutomatic) {
         if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); resolveAutoEvent() }
@@ -176,7 +202,7 @@ export default function LifeScreen() {
   const isAbroad = liveCountry?.name !== birthCountry?.name
   const regime = getCountryRegime(liveCountry, currentYear)
   const regimeLabel = REGIME_LABELS[regime] ?? regime
-  const regimeColor = REGIME_COLORS[regime] ?? '#8e8e93'
+  const regimeColor = REGIME_COLORS[regime] ?? '#7d766a'
   const religionLabel = RELIGION_LABELS[character.religion] ?? character.religion ?? 'Unknown'
   const ethnicName = character.country.ethnicGroups?.find(eg => eg.id === character.ethnicity)?.name ?? character.ethnicity ?? 'Unknown'
   const residencyLabel = RESIDENCY_LABELS[residencyStatus] ?? residencyStatus
@@ -212,10 +238,10 @@ export default function LifeScreen() {
     const uses = (mem?.alcoholUses ?? 0) + (mem?.drugUses ?? 0)
     const isAddicted = flags.includes('alcohol_addiction') || flags.includes('drug_addiction') || flags.includes('gambling_addiction')
     const isOverdosed = flags.includes('overdosed')
-    if (isOverdosed || (isAddicted && uses > 20)) return { label: 'Stage 4 — Crisis', color: '#ff3b30' }
-    if (isAddicted) return { label: 'Stage 3 — Dependent', color: '#ff3b30' }
-    if (uses >= 5) return { label: 'Stage 2 — Heavy Use', color: '#ff9500' }
-    return { label: 'Stage 1 — Casual Use', color: '#ff9500' }
+    if (isOverdosed || (isAddicted && uses > 20)) return { label: 'Stage 4 — Crisis', color: '#8c3a2e' }
+    if (isAddicted) return { label: 'Stage 3 — Dependent', color: '#8c3a2e' }
+    if (uses >= 5) return { label: 'Stage 2 — Heavy Use', color: '#8a6635' }
+    return { label: 'Stage 1 — Casual Use', color: '#8a6635' }
   }
   const addictionStage = getAddictionStage()
 
@@ -229,23 +255,34 @@ export default function LifeScreen() {
   }
 
   const karmaLabel = karma >= 85 ? 'Lives with deep purpose' : karma >= 70 ? 'More good than not' : karma >= 50 ? 'Navigating, as most do' : karma >= 30 ? 'Compromised by choices' : 'Haunted by what you\'ve done'
-  const karmaColor = karma >= 70 ? '#34c759' : karma >= 50 ? '#ff9500' : '#ff3b30'
-  const genderMark = (g) => g === 'male' ? <span className="text-blue-400 text-xs ml-1">♂</span> : g === 'female' ? <span className="text-pink-400 text-xs ml-1">♀</span> : null
+  const karmaColor = karma >= 70 ? '#3f6146' : karma >= 50 ? '#8a6635' : '#8c3a2e'
+  /** ", Region" — unless the place's own name already says it. */
+  const placeRegionSuffix = (place) => {
+    const r = place?.region
+    if (!r) return ''
+    const bare = String(place.name ?? '').replace(/^(Rural|Urban|Greater|Central|Northern|Southern|Eastern|Western)\s+/i, '')
+    if (r === place.name || r.includes(bare) || bare.includes(r)) return ''
+    return `, ${r}`
+  }
+
+  const genderMark = (g) => g === 'male' || g === 'female'
+    ? <span className="text-natalis-faint text-xs ml-1" aria-label={g}>{g === 'male' ? '♂' : '♀'}</span>
+    : null
 
   // Derives a readable status label from relationship quality
   const relStatusLabel = (quality, extraFlags = []) => {
     const labels = []
-    if (extraFlags.includes('estranged')) labels.push({ text: 'Estranged', color: '#ff3b30' })
-    else if (extraFlags.includes('reconciled')) labels.push({ text: 'Reconciled', color: '#34c759' })
-    else if (extraFlags.includes('abroad')) labels.push({ text: 'Lives abroad', color: '#8e8e93' })
-    else if (quality <= 24) labels.push({ text: 'Estranged', color: '#ff3b30' })
-    else if (quality <= 39) labels.push({ text: 'Strained', color: '#ff9500' })
-    else if (quality <= 55) labels.push({ text: 'Steady', color: '#8e8e93' })
-    else if (quality <= 75) labels.push({ text: 'Good', color: '#5ac8fa' })
-    else if (quality >= 90) labels.push({ text: 'Very close', color: '#34c759' })
-    else if (quality >= 76) labels.push({ text: 'Close', color: '#34c759' })
-    if (extraFlags.includes('caretaker')) labels.push({ text: 'You\'re their carer', color: '#007aff' })
-    if (extraFlags.includes('therapy')) labels.push({ text: 'In couples therapy', color: '#007aff' })
+    if (extraFlags.includes('estranged')) labels.push({ text: 'Estranged', color: '#8c3a2e' })
+    else if (extraFlags.includes('reconciled')) labels.push({ text: 'Reconciled', color: '#3f6146' })
+    else if (extraFlags.includes('abroad')) labels.push({ text: 'Lives abroad', color: '#7d766a' })
+    else if (quality <= 24) labels.push({ text: 'Estranged', color: '#8c3a2e' })
+    else if (quality <= 39) labels.push({ text: 'Strained', color: '#8a6635' })
+    else if (quality <= 55) labels.push({ text: 'Steady', color: '#7d766a' })
+    else if (quality <= 75) labels.push({ text: 'Good', color: '#3f6470' })
+    else if (quality >= 90) labels.push({ text: 'Very close', color: '#3f6146' })
+    else if (quality >= 76) labels.push({ text: 'Close', color: '#3f6146' })
+    if (extraFlags.includes('caretaker')) labels.push({ text: 'You\'re their carer', color: '#3f5670' })
+    if (extraFlags.includes('therapy')) labels.push({ text: 'In couples therapy', color: '#3f5670' })
     return labels
   }
 
@@ -253,42 +290,35 @@ export default function LifeScreen() {
   const vehicleValue = (assets?.vehicles ?? []).reduce((sum, v) => sum + (v.currentValue ?? 0), 0)
   const netWorth = (money ?? 0) + propertyEquity + vehicleValue + gold + hardCurrencyReserve - (debt ?? 0)
 
-  const creditLabel = (cs) => {
-    if (!cs) return 'Unknown'
-    if (cs >= 750) return 'Excellent'
-    if (cs >= 700) return 'Good'
-    if (cs >= 650) return 'Fair'
-    if (cs >= 600) return 'Poor'
-    return 'Very Poor'
-  }
 
   return (
     <div className="h-screen bg-natalis-bg flex flex-col overflow-hidden">
 
       {/* ── Top Header ─────────────────────────────────────────────────── */}
-      <header className="bg-white border-b border-natalis-border flex-shrink-0 shadow-sm">
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-xl"
-              style={{ background: character.gender === 'male' ? 'linear-gradient(135deg,#5ac8fa,#007aff)' : 'linear-gradient(135deg,#ff2d55,#af52de)' }}>
-              {character.gender === 'male' ? '👦' : '👧'}
-            </div>
-            <div>
-              <p className="font-bold text-natalis-text text-sm leading-tight">{character.firstName} {character.surname}</p>
-              <p className="text-natalis-muted text-xs">{career ? career.title : (retired ? 'Retired' : PHASE_LABELS[phase])}</p>
-            </div>
+      {/* The gendered gradient emoji avatar is gone. A game that models what it
+          was to be a woman in a particular place and decade should not open by
+          reducing her to a pink bubble. The name and the year do the work. */}
+      <header className="bg-natalis-surface border-b border-natalis-border flex-shrink-0">
+        <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-baseline justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="font-prose text-natalis-text text-base leading-tight truncate">
+              {character.firstName} {character.surname}
+            </h1>
+            <p className="text-natalis-muted text-xs truncate">
+              {career ? career.title : (retired ? 'Retired' : PHASE_LABELS[phase])}
+            </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-baseline gap-3 flex-shrink-0">
             <div className="text-right">
-              <p className="font-bold text-bit-green text-base leading-tight">{formatMoney(money)}</p>
-              <p className="text-natalis-muted text-xs">
-                <span className="mr-1">{getCountryFlag(currentCountry ?? character.country)}</span>
-                Age {age} · {currentYear}
+              <p className="text-natalis-dim text-sm leading-tight tabular-nums">
+                <span className="mr-1.5" aria-hidden="true">{getCountryFlag(currentCountry ?? character.country)}</span>
+                {currentYear} · age {age}
               </p>
+              <p className="text-natalis-muted text-xs tabular-nums">{formatMoney(money)}</p>
             </div>
             <button
               onClick={goToTitle}
-              className="text-natalis-muted text-xs font-semibold border border-natalis-border rounded-lg px-2 py-1.5 hover:bg-natalis-bg transition-colors"
+              className="text-natalis-muted text-xs border border-natalis-border rounded-lg px-2 py-1 hover:bg-natalis-bg transition-colors"
               title="Save and return to title"
             >
               Menu
@@ -298,67 +328,98 @@ export default function LifeScreen() {
       </header>
 
       {/* ── Stats strip ────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-natalis-border flex-shrink-0">
-        <div className="max-w-2xl mx-auto px-4 py-3 grid grid-cols-2 gap-x-6 gap-y-2">
-          <StatBar stat="happiness" label="Happiness" value={stats.happiness} delta={flashDeltas.happiness} />
-          <StatBar stat="health"    label="Health"    value={stats.health}    delta={flashDeltas.health} />
-          <StatBar stat="smarts"    label="Smarts"    value={stats.smarts}    delta={flashDeltas.smarts} />
-          <StatBar stat="looks"     label="Looks"     value={stats.looks}     delta={flashDeltas.looks} />
+      {/* Was a 2×2 grid of large saturated bars taking roughly a third of the
+          screen, above the prose. Now one quiet row: four columns of hairline
+          bars, so the writing starts near the top of the page where it belongs.
+          The full six live in the Stats tab for anyone who wants them. */}
+      <div className="bg-natalis-surface border-b border-natalis-border flex-shrink-0">
+        <div className="max-w-2xl mx-auto px-4 py-2 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-1.5">
+          <StatBar stat="happiness" value={stats.happiness} />
+          <StatBar stat="health"    value={stats.health}    />
+          <StatBar stat="smarts"    value={stats.smarts}    />
+          <StatBar stat="looks"     value={stats.looks}     />
         </div>
       </div>
 
       {/* ── Tab bar ────────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-natalis-border flex-shrink-0">
-        <div className="max-w-2xl mx-auto flex">
+      <div className="bg-natalis-surface border-b border-natalis-border flex-shrink-0">
+        <div
+          className="max-w-2xl mx-auto flex"
+          role="tablist"
+          aria-label="Life sections"
+          onKeyDown={(e) => {
+            const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
+            if (!d) return
+            e.preventDefault()
+            const i = TABS.findIndex(t => t.key === activeTab)
+            const next = TABS[(i + d + TABS.length) % TABS.length]
+            setActiveTab(next.key)
+            setShowActivities(false)
+            document.getElementById(`tab-${next.key}`)?.focus()
+          }}
+        >
           {TABS.map(tab => (
             <button
               key={tab.key}
+              id={`tab-${tab.key}`}
+              role="tab"
+              aria-selected={activeTab === tab.key}
+              aria-controls={`panel-${tab.key}`}
+              // Roving tabindex: the tab strip is one stop, and the arrows move
+              // within it, which is how a tablist is meant to behave.
+              tabIndex={activeTab === tab.key ? 0 : -1}
               onClick={() => { setActiveTab(tab.key); setShowActivities(false) }}
-              className="flex-1 py-2.5 flex flex-col items-center gap-0.5 transition-all"
-              style={{ borderBottom: activeTab === tab.key ? '2.5px solid #007aff' : '2.5px solid transparent' }}
+              className={`flex-1 py-2 text-xs tracking-[0.06em] transition-colors border-b-2 ${
+                activeTab === tab.key
+                  ? 'border-natalis-text text-natalis-text font-medium'
+                  : 'border-transparent text-natalis-muted hover:text-natalis-dim'
+              }`}
             >
-              <span className="text-base">{tab.emoji}</span>
-              <span className="text-xs font-semibold" style={{ color: activeTab === tab.key ? '#007aff' : '#8e8e93' }}>
-                {tab.label}
-              </span>
+              {tab.label}
             </button>
           ))}
         </div>
       </div>
 
       {/* ── Main content area ───────────────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto">
+      {/* The page had exactly one landmark and no <main>, so a screen reader
+          user arriving on it had no way to skip the header, the stat strip and
+          the tab bar to reach the year's prose — which is the entire page. */}
+      <main
+        className="flex-1 overflow-y-auto"
+        id={`panel-${activeTab}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${activeTab}`}
+        tabIndex={-1}
+      >
         <div className="max-w-2xl mx-auto px-4 py-4 space-y-4 pb-28">
 
           {/* Prison banner */}
           {inPrison && (
-            <div className="bg-red-50 border border-red-200 rounded-2xl px-4 py-3 flex items-center gap-3">
-              <span className="text-2xl">🔒</span>
+            <div className="bg-natalis-bg border border-natalis-rule rounded-2xl px-4 py-3">
               <div>
-                <p className="font-bold text-red-600 text-sm">In Prison</p>
-                <p className="text-red-500 text-xs">{prisonSentence} year{prisonSentence !== 1 ? 's' : ''} remaining</p>
+                <p className="text-[11px] font-medium text-natalis-muted uppercase tracking-[0.14em]">Inside</p>
+                <p className="text-natalis-dim text-sm mt-0.5 font-prose">{prisonSentence} year{prisonSentence !== 1 ? 's' : ''} left of the sentence.</p>
               </div>
             </div>
           )}
 
           {/* Wanted / fugitive banner */}
           {wanted && !inPrison && (
-            <div className="bg-red-600 rounded-2xl px-4 py-3 flex items-center gap-3">
-              <span className="text-2xl">🚨</span>
+            <div className="bg-natalis-bg border border-natalis-alarm rounded-2xl px-4 py-3">
               <div>
-                <p className="font-bold text-white text-sm">WANTED FUGITIVE</p>
-                <p className="text-red-200 text-xs">{assumedIdentity ? `Living as ${assumedIdentity.name}` : 'Police are actively searching for you'}</p>
+                <p className="text-[11px] font-medium text-natalis-alarm uppercase tracking-[0.14em]">Wanted</p>
+                <p className="text-natalis-dim text-sm mt-0.5 font-prose">{assumedIdentity ? `Living as ${assumedIdentity.name}` : 'Police are actively searching for you'}</p>
               </div>
             </div>
           )}
 
           {/* Addiction warning */}
           {hasAddiction && addictionStage && (
-            <div className="bg-orange-50 border border-orange-200 rounded-2xl px-4 py-3 flex items-center gap-3">
-              <span className="text-2xl">⚠️</span>
+            <div className="bg-natalis-bg border border-natalis-rule rounded-2xl px-4 py-3">
               <div className="flex-1">
                 <div className="flex items-center justify-between">
-                  <p className="font-bold text-orange-600 text-sm">Active Addiction</p>
+                  <p className="text-[11px] font-medium text-natalis-muted uppercase tracking-[0.14em]">Using</p>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: addictionStage.color + '22', color: addictionStage.color }}>
                     {addictionStage.label}
                   </span>
@@ -375,33 +436,38 @@ export default function LifeScreen() {
 
           {/* Trial modal — blocks Age Up until resolved */}
           {pendingTrial && (
-            <div className="bg-white rounded-2xl shadow-card-lg overflow-hidden border border-red-200">
-              <div className="bg-red-600 px-5 py-3 flex items-center gap-2">
-                <span className="text-xl">⚖️</span>
-                <p className="text-white text-xs font-semibold uppercase tracking-widest">On Trial</p>
+            <div className="bg-natalis-surface rounded-2xl shadow-card overflow-hidden border border-natalis-border border-l-2 border-l-natalis-alarm">
+              <div className="px-5 pt-5 pb-1">
+                <p className="text-natalis-muted text-[11px] font-medium uppercase tracking-[0.14em]">On trial</p>
               </div>
-              <div className="p-5 space-y-4">
-                <p className="text-natalis-text text-base font-medium leading-relaxed">
-                  You are charged with <strong>{pendingTrial.crimeName.toLowerCase()}</strong> and facing up to {pendingTrial.sentence} year{pendingTrial.sentence !== 1 ? 's' : ''} in prison. Choose your defense.
+              <div className="px-5 pt-3 pb-5 space-y-4">
+                <p className="font-prose text-natalis-text text-prose-lg">
+                  You are charged with <strong>{pendingTrial.crimeName.toLowerCase()}</strong> and facing up to {pendingTrial.sentence} year{pendingTrial.sentence !== 1 ? 's' : ''} in prison.
                 </p>
                 <div className="space-y-2 pt-1">
-                  <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">Choose your defense</p>
+                  <p className="text-natalis-muted text-[11px] font-medium uppercase tracking-[0.14em]">How you answer it</p>
                   {[
                     { tier: 'none', label: 'Represent yourself', sub: 'Free · Low chance of leniency', cost: 0 },
                     { tier: 'mid',  label: 'Hire a local lawyer', sub: `$${(pendingTrial.lawyerCosts?.mid ?? 0).toLocaleString()} · Moderate chance of reduction`, cost: pendingTrial.lawyerCosts?.mid ?? 0 },
                     { tier: 'top',  label: 'Hire a top firm', sub: `$${(pendingTrial.lawyerCosts?.top ?? 0).toLocaleString()} · Best chance of dismissal`, cost: pendingTrial.lawyerCosts?.top ?? 0 },
                   ].map((opt, i) => {
-                    const canAfford = (money ?? 0) >= opt.cost
+                    // A free option is always affordable. With a negative
+                    // balance this disabled all three buttons over a trial that
+                    // blocks Age Up, which is a soft-lock.
+                    const canAfford = opt.cost <= 0 || (money ?? 0) >= opt.cost
                     return (
                       <button
                         key={opt.tier}
                         disabled={!canAfford}
                         onClick={() => resolveTrial(opt.tier)}
-                        className="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-150 active:scale-95 disabled:opacity-40"
-                        style={{ background: !canAfford ? '#e5e5ea' : i === 0 ? 'linear-gradient(135deg,#636366,#48484a)' : i === 1 ? 'linear-gradient(135deg,#007aff,#0055cc)' : 'linear-gradient(135deg,#ff9500,#e07800)', color: !canAfford ? '#8e8e93' : 'white' }}
+                        className="w-full text-left px-4 py-3 rounded-xl border border-natalis-rule
+                                   bg-natalis-raised text-natalis-text font-prose text-[0.9375rem]
+                                   hover:border-natalis-accent hover:bg-natalis-accent-soft
+                                   transition-colors duration-150 active:scale-[0.99]
+                                   disabled:opacity-40 disabled:hover:border-natalis-rule"
                       >
                         <div>{opt.label}</div>
-                        <div className="text-xs font-normal opacity-80 mt-0.5">{opt.sub}</div>
+                        <div className="text-xs text-natalis-muted mt-0.5">{opt.sub}</div>
                       </button>
                     )
                   })}
@@ -415,13 +481,13 @@ export default function LifeScreen() {
             {pendingEvent && <EventBox event={pendingEvent} />}
           </div>
 
-          {/* Last outcome flash */}
-          {lastOutcome && !pendingEvent && (
-            <div className="bg-white rounded-xl px-4 py-3 border border-natalis-border shadow-sm flex items-start gap-2">
-              <span className="text-base">💬</span>
-              <p className="text-natalis-dim text-sm italic leading-relaxed">{lastOutcome}</p>
-            </div>
-          )}
+          {/* The outcome of the last choice used to be printed HERE and again in
+              the log entry a few hundred pixels below, so the same sentence
+              appeared twice on one screen — in a game that has just spent an
+              engineering pass driving within-life repetition from 15.6% to
+              0.3%. The log is the record and it already carries it. The emoji
+              went with it: the reading surface is prose.
+              (The removed block is the only thing `lastOutcome` fed.) */}
 
           {/* ── LIFE TAB ── */}
           {activeTab === 'life' && (() => {
@@ -430,7 +496,7 @@ export default function LifeScreen() {
             const phaseLabel = { early_childhood: 'Early Childhood (0–5)', childhood: 'Childhood (6–11)', adolescence: 'Adolescence (12–17)', young_adult: 'Young Adult (18–29)', midlife: 'Midlife (30–49)', late_life: 'Late Life (50+)' }
             const livePlace = currentPlace ?? character.birthPlace
             const liveNbr = currentNeighborhoodName ?? character.birthNeighborhoodName
-            const tierColors = { informal: '#ff3b30', working_class: '#ff9500', middle_class: '#34c759', elite: '#007aff' }
+            const tierColors = { informal: '#8c3a2e', working_class: '#8a6635', middle_class: '#3f6146', elite: '#3f5670' }
             const tierLabel = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }
             const nbTier = currentNeighborhoodTier ?? character.birthNeighborhoodTier
             return (
@@ -440,10 +506,13 @@ export default function LifeScreen() {
                 {livePlace && (
                   <div className="bg-white rounded-2xl border border-natalis-border px-4 py-3 flex items-center justify-between">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-lg flex-shrink-0">📍</span>
+                      
                       <div className="min-w-0">
                         <p className="font-semibold text-natalis-text text-sm truncate">
-                          {livePlace.name}{livePlace.region && livePlace.region !== livePlace.name ? `, ${livePlace.region}` : ''}
+                          {/* 52 places carry a region their own name already
+                              contains, so this read "Rural Eastern Cape,
+                              Eastern Cape" and "Rural Yorkshire, Yorkshire". */}
+                          {livePlace.name}{placeRegionSuffix(livePlace)}
                         </p>
                         <p className="text-natalis-muted text-xs truncate">
                           {liveNbr && <span>{liveNbr} <span className="opacity-60">· neighborhood</span></span>}
@@ -473,16 +542,16 @@ export default function LifeScreen() {
                   const card = generateIdentityCard(fullState)
                   if (!card) return null
                   return (
-                    <div className="bg-blue-50 rounded-2xl px-4 py-3 border border-blue-100">
-                      <p className="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-1">Who you are</p>
-                      <p className="text-sm text-blue-900 leading-relaxed italic">{card}</p>
+                    <div className="px-4 py-3 border-l-2 border-natalis-rule">
+                      <p className="text-[11px] font-medium text-natalis-muted uppercase tracking-[0.14em] mb-1.5">Who you are</p>
+                      <p className="font-prose text-natalis-dim text-[0.9375rem] leading-relaxed">{card}</p>
                     </div>
                   )
                 })()}
 
                 {/* Toggle */}
                 <div className="flex gap-1.5 bg-white rounded-2xl p-1.5 border border-natalis-border">
-                  {[['recent','Recent'],['decades','Timeline'],['search','🔍 Search']].map(([mode, label]) => (
+                  {[['recent','Recent'],['decades','Timeline'],['search','Search']].map(([mode, label]) => (
                     <button key={mode}
                       onClick={() => {
                         setLogMode(mode)
@@ -491,8 +560,11 @@ export default function LifeScreen() {
                           setOpenDecades(prev => prev.has(d) ? prev : new Set([...prev, d]))
                         }
                       }}
-                      className="flex-1 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                      style={{ background: logMode === mode ? '#007aff' : 'transparent', color: logMode === mode ? 'white' : '#8e8e93' }}>
+                      className={`flex-1 py-1.5 rounded-lg text-xs transition-colors ${
+                        logMode === mode
+                          ? 'bg-natalis-accent-soft text-natalis-text font-medium'
+                          : 'text-natalis-muted hover:text-natalis-dim'
+                      }`}>
                       {label}
                     </button>
                   ))}
@@ -533,23 +605,23 @@ export default function LifeScreen() {
                         <div className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">{ageLabel}</div>
                       )}
                       {entry.isHeadline && (
-                        <div className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">📰 {ageLabel}</div>
+                        <div className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">{ageLabel} · in the news</div>
                       )}
                       {entry.isSoundtrack && (
-                        <div className="text-xs font-semibold uppercase tracking-wider text-violet-500 mb-1">🎵 {ageLabel}</div>
+                        <div className="text-xs font-semibold uppercase tracking-wider text-violet-500 mb-1">{ageLabel} · what was playing</div>
                       )}
                       {entry.isWorld && entry.worldEventName && (
-                        <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">🌐 {entry.worldEventName}</div>
+                        <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">{entry.worldEventName}</div>
                       )}
                       {entry.isLetter && (
-                        <div className="text-xs font-semibold uppercase tracking-wider text-amber-700 mb-2">✉ {ageLabel}</div>
+                        <div className="text-xs font-semibold uppercase tracking-wider text-amber-700 mb-2">{ageLabel} · a letter</div>
                       )}
                       {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && (
                         <span className={`font-bold mr-2 text-xs uppercase tracking-wider ${entry.isKey ? 'text-blue-500 opacity-100' : 'opacity-60'}`}>{ageLabel}</span>
                       )}
-                      <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''} ${entry.isLetter ? 'italic block ml-2 border-l-2 border-amber-400 pl-3' : ''} ${entry.isKey && !entry.isWorld ? 'font-medium' : ''}`}>{entry.text}</span>
+                      <span className={`font-prose ${entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''} ${entry.isLetter ? 'italic block ml-2 border-l-2 border-amber-300 pl-3' : ''} ${entry.isKey && !entry.isWorld ? 'text-natalis-text' : ''}`}>{entry.text}</span>
                       {entry.outcome && (
-                        <span className="block mt-1.5 pl-3 border-l-2 border-natalis-border text-natalis-dim">{entry.outcome}</span>
+                        <span className="block mt-1.5 pl-3 border-l border-natalis-rule text-natalis-muted font-prose">{entry.outcome}</span>
                       )}
                     </div>
                   )
@@ -644,10 +716,10 @@ export default function LifeScreen() {
                                 }`}>
                                   {entry.isDeath && <span className="font-semibold mr-1.5 text-xs text-zinc-400 uppercase">{al} — </span>}
                                   {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && <span className={`font-bold mr-2 text-xs ${entry.isKey ? 'text-blue-500' : 'opacity-50'}`}>{al}</span>}
-                                  {entry.isHeadline && <span className="text-xs font-semibold mr-1 text-stone-500">📰 {al} — </span>}
-                                  {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 {al} — </span>}
-                                  {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
-                                  {entry.isLetter && <span className="text-xs font-semibold mr-1 text-amber-700">✉ {al} — </span>}
+                                  {entry.isHeadline && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{al} · In the news — </span>}
+                                  {entry.isSoundtrack && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{al} · Heard that year — </span>}
+                                  {entry.isWorld && entry.worldEventName && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{entry.worldEventName} — </span>}
+                                  {entry.isLetter && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{al} · A letter — </span>}
                                   <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic' : ''} ${entry.isLetter ? 'italic' : ''} ${entry.isKey && !entry.isWorld ? 'font-medium' : ''}`}>{entry.text}</span>
                                   {entry.outcome && (
                                     <span className="block mt-1 pl-2 border-l-2 border-natalis-border text-natalis-dim">{entry.outcome}</span>
@@ -698,8 +770,8 @@ export default function LifeScreen() {
                               'bg-white border-natalis-border text-natalis-dim'
                             }`}>
                               <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>
-                              {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 </span>}
-                              {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
+                              {entry.isSoundtrack && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">Heard that year — </span>}
+                              {entry.isWorld && entry.worldEventName && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{entry.worldEventName} — </span>}
                               <span className={entry.isHeadline || entry.isSoundtrack ? 'italic' : ''}>{entry.text}</span>
                               {entry.outcome && <span className="block mt-1 text-natalis-dim">{entry.outcome}</span>}
                             </div>
@@ -714,8 +786,7 @@ export default function LifeScreen() {
 
                 {log.length === 0 && (
                   <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
-                    <p className="text-4xl mb-2">🌱</p>
-                    <p className="text-natalis-muted text-sm">Your life story begins here.</p>
+                      <p className="text-natalis-muted text-sm">Your life story begins here.</p>
                   </div>
                 )}
               </div>
@@ -734,18 +805,25 @@ export default function LifeScreen() {
                 <div>
                   <StatBar stat="looks" label="Looks" value={stats.looks} />
                   <p className="text-xs text-natalis-muted mt-0.5">
-                    {stats.looks >= 75 ? 'Appearance opens certain doors. Not all of them worth opening.' :
-                     stats.looks >= 50 ? 'Unremarkable in the best sense.' :
-                     'You have learned that appearance carries weight in the world.'}
+                    {[
+                      'You have learned that appearance carries weight in the world.',
+                      'You have learned that appearance carries weight in the world.',
+                      'Unremarkable in the best sense.',
+                      'People look twice, and you have long since stopped noticing that they do.',
+                      'Appearance opens certain doors. Not all of them worth opening.',
+                    ][statTier(stats.looks)]}
                   </p>
                 </div>
                 <div>
                   <StatBar stat="charisma" label="Charisma" value={stats.charisma} />
                   <p className="text-xs text-natalis-muted mt-0.5">
-                    {stats.charisma >= 75 ? 'People are drawn to you. Doors open before you knock.' :
-                     stats.charisma >= 50 ? 'You make friends without difficulty. Rooms feel open to you.' :
-                     stats.charisma >= 30 ? 'Some social situations cost you more than others.' :
-                     'You do better one-on-one than in groups. Groups are exhausting.'}
+                    {[
+                      'You do better one-on-one than in groups. Groups are exhausting.',
+                      'Some social situations cost you more than others.',
+                      'You make friends without difficulty. Rooms feel open to you.',
+                      'You are easy to be around, and people tell you things they did not plan to.',
+                      'People are drawn to you. Doors open before you knock.',
+                    ][statTier(stats.charisma)]}
                   </p>
                 </div>
                 <div>
@@ -761,7 +839,6 @@ export default function LifeScreen() {
                   {/* Karma — shown as prose label, not a number */}
                   <div className="flex items-center justify-between py-0.5">
                     <div className="flex items-center gap-2">
-                      <span>{karma >= 70 ? '😇' : karma >= 50 ? '😐' : '😈'}</span>
                       <span className="text-sm text-natalis-dim font-medium">Karma</span>
                     </div>
                     <span className="text-xs font-semibold" style={{ color: karmaColor }}>{karmaLabel}</span>
@@ -770,22 +847,21 @@ export default function LifeScreen() {
                   {/* Fame — bar */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span>⭐</span>
                       <span className="text-sm text-natalis-dim font-medium">Fame</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: `${fame}%`, backgroundColor: '#ffcc00' }} />
+                        <div className="h-full rounded-full" style={{ width: `${fame}%`, backgroundColor: '#8a7435' }} />
                       </div>
                       <span className="text-xs font-bold text-natalis-muted w-8 text-right">{Math.round(fame)}</span>
                     </div>
                   </div>
 
-                  {/* Weight — qualitative label, not a raw number */}
+                  {/* Regret. It was labelled "🪨 Weight", which beside Karma
+                      and Fame reads as a body-mass stat. */}
                   <div className="flex items-center justify-between py-0.5">
                     <div className="flex items-center gap-2">
-                      <span>🪨</span>
-                      <span className="text-sm text-natalis-dim font-medium">Weight</span>
+                      <span className="text-sm text-natalis-dim font-medium">What you carry</span>
                     </div>
                     <span className="text-xs font-semibold text-natalis-muted">
                       {regret > 70 ? 'Heavy'
@@ -800,8 +876,7 @@ export default function LifeScreen() {
                   {legacy > 0 && (
                     <div className="flex items-center justify-between py-0.5">
                       <div className="flex items-center gap-2">
-                        <span>🕯️</span>
-                        <span className="text-sm text-natalis-dim font-medium">Legacy</span>
+                          <span className="text-sm text-natalis-dim font-medium">Legacy</span>
                       </div>
                       <span className="text-xs font-semibold text-natalis-muted">
                         {legacy >= 80 ? 'Enduring'
@@ -821,7 +896,7 @@ export default function LifeScreen() {
                 <div className="space-y-2 text-sm">
                   {/* Current country + flag */}
                   <div className="flex justify-between items-center py-1 border-b border-natalis-border">
-                    <span className="text-natalis-muted text-xs">📍 Living in</span>
+                    <span className="text-natalis-muted text-xs">Living in</span>
                     <span className="text-natalis-text font-semibold text-xs">
                       {getCountryFlag(liveCountry)} {liveCountry?.name}
                     </span>
@@ -837,7 +912,7 @@ export default function LifeScreen() {
                   {isAbroad && residencyStatus !== 'citizen' && (
                     <div className="flex justify-between items-center py-1 border-b border-natalis-border">
                       <span className="text-natalis-muted text-xs">📋 Status</span>
-                      <span className="font-semibold text-xs" style={{ color: residencyStatus === 'undocumented' || residencyStatus === 'tourist_overstay' ? '#ff3b30' : residencyStatus === 'refugee_status' || residencyStatus === 'asylum_seeker' ? '#ff9500' : '#007aff' }}>
+                      <span className="font-semibold text-xs" style={{ color: residencyStatus === 'undocumented' || residencyStatus === 'tourist_overstay' ? '#8c3a2e' : residencyStatus === 'refugee_status' || residencyStatus === 'asylum_seeker' ? '#8a6635' : '#3f5670' }}>
                         {residencyLabel}
                       </span>
                     </div>
@@ -873,11 +948,11 @@ export default function LifeScreen() {
                     <div className="flex justify-between items-center py-1">
                       <span className="text-natalis-muted text-xs">🗳️ Politics</span>
                       <span className="font-semibold text-xs capitalize" style={{
-                        color: political_leaning === 'left' ? '#34c759' :
-                               political_leaning === 'right' ? '#ff3b30' :
-                               political_leaning === 'nationalist' ? '#ff3b30' :
-                               political_leaning === 'dissident' ? '#ff9500' :
-                               '#007aff'
+                        color: political_leaning === 'left' ? '#3f6146' :
+                               political_leaning === 'right' ? '#8c3a2e' :
+                               political_leaning === 'nationalist' ? '#8c3a2e' :
+                               political_leaning === 'dissident' ? '#8a6635' :
+                               '#3f5670'
                       }}>{political_leaning.replace('_', ' ')}</span>
                     </div>
                   )}
@@ -889,19 +964,18 @@ export default function LifeScreen() {
                 <p className="font-bold text-natalis-text text-sm mb-3">Life Status</p>
                 <div className="space-y-2 text-sm">
                   {[
-                    { label: '📍 Country', value: character.country.name },
-                    { label: '📅 Phase', value: PHASE_LABELS[phase] },
-                    { label: '🎓 Education', value: education.level !== 'none' ? `${education.level.replace('_',' ')}${education.field ? ` · ${education.field}` : ''}` : 'None' },
-                    gpa !== null && { label: '📝 GPA', value: gpa.toFixed(2) },
-                    martialArts?.discipline && { label: '🥋 Martial Arts', value: `${martialArts.discipline} — ${BELT_NAMES[martialArts.belt ?? 0]} belt` },
-                    socialMedia?.followers > 0 && { label: '📱 Followers', value: `${socialMedia.followers >= 1000 ? `${(socialMedia.followers/1000).toFixed(1)}k` : socialMedia.followers}${socialMedia.verified ? ' ✓' : ''}` },
-                    birthControl && { label: '💊 Birth Control', value: 'Active' },
-                    inPrison && { label: '🔒 Prison', value: `${prisonSentence} yr remaining` },
-                    criminalRecord.length > 0 && { label: '⚠️ Criminal Record', value: `${criminalRecord.length} offence${criminalRecord.length !== 1 ? 's' : ''}` },
-                    fitness !== undefined && { label: '💪 Fitness', value: `${Math.round(fitness ?? 50)}/100` },
-                    mentalHealth?.condition && { label: '🧠 Mental Health', value: `${mentalHealth.condition}${mentalHealth.therapy ? ' · therapy' : ''}${mentalHealth.medicating ? ' · medicated' : ''}` },
-                    conditions.length > 0 && { label: '🩺 Conditions', value: conditions.map(c => `${c.id.replace(/_/g, ' ')}${c.managed ? ' (managed)' : ''}`).join(', ') },
-                    (debt ?? 0) > 0 && { label: '💳 Debt', value: formatMoney(debt) },
+                    { label: 'Phase', value: PHASE_LABELS[phase] },
+                    { label: 'Education', value: education.level !== 'none' ? `${education.level.replace('_',' ')}${education.field ? ` · ${education.field}` : ''}` : 'None' },
+                    gpa !== null && { label: 'GPA', value: gpa.toFixed(2) },
+                    martialArts?.discipline && { label: 'Martial arts', value: `${martialArts.discipline} — ${BELT_NAMES[martialArts.belt ?? 0]} belt` },
+                    socialMedia?.followers > 0 && { label: 'Followers', value: `${socialMedia.followers >= 1000 ? `${(socialMedia.followers/1000).toFixed(1)}k` : socialMedia.followers}${socialMedia.verified ? ' ✓' : ''}` },
+                    birthControl && { label: 'Birth control', value: 'Active' },
+                    inPrison && { label: 'Prison', value: `${prisonSentence} yr remaining` },
+                    criminalRecord.length > 0 && { label: 'Criminal record', value: `${criminalRecord.length} offence${criminalRecord.length !== 1 ? 's' : ''}` },
+                    fitness !== undefined && { label: 'Fitness', value: `${Math.round(fitness ?? 50)}/100` },
+                    mentalHealth?.condition && { label: 'Mental health', value: `${mentalHealth.condition}${mentalHealth.therapy ? ' · therapy' : ''}${mentalHealth.medicating ? ' · medicated' : ''}` },
+                    conditions.length > 0 && { label: 'Conditions', value: conditions.map(c => `${c.id.replace(/_/g, ' ')}${c.managed ? ' (managed)' : ''}`).join(', ') },
+                    (debt ?? 0) > 0 && { label: 'Debt', value: formatMoney(debt) },
                   ].filter(Boolean).map(({ label, value }) => (
                     <div key={label} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
                       <span className="text-natalis-muted text-xs">{label}</span>
@@ -914,7 +988,7 @@ export default function LifeScreen() {
               {/* Criminal Record */}
               {criminalRecord.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-red-200 shadow-card">
-                  <p className="font-bold text-red-600 text-sm mb-3">⚠️ Criminal Record</p>
+                  <p className="font-bold text-red-600 text-sm mb-3">Criminal record</p>
                   <div className="space-y-1">
                     {criminalRecord.map((entry, i) => (
                       <div key={i} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
@@ -1032,7 +1106,7 @@ export default function LifeScreen() {
               {/* Career */}
               {career && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">💼 Career</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Work</p>
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <p className="font-semibold text-natalis-text">{career.title}</p>
@@ -1049,7 +1123,7 @@ export default function LifeScreen() {
                     </div>
                     <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                       <div className="h-full rounded-full transition-all"
-                        style={{ width: `${career.performance ?? 70}%`, backgroundColor: (career.performance ?? 70) > 60 ? '#34c759' : (career.performance ?? 70) > 30 ? '#ff9500' : '#ff3b30' }} />
+                        style={{ width: `${career.performance ?? 70}%`, backgroundColor: (career.performance ?? 70) > 60 ? '#3f6146' : (career.performance ?? 70) > 30 ? '#8a6635' : '#8c3a2e' }} />
                     </div>
                   </div>
                   {career.level < (career.maxLevel ?? 99) && (() => {
@@ -1064,7 +1138,7 @@ export default function LifeScreen() {
                     return (
                       <div className="mt-2 pt-2 border-t border-natalis-border flex justify-between items-center">
                         <span className="text-xs text-natalis-muted">Promotion chance</span>
-                        <span className="text-xs font-semibold" style={{ color: effectivePct > 0.2 ? '#34c759' : effectivePct > 0.1 ? '#ff9500' : '#8e8e93' }}>
+                        <span className="text-xs font-semibold" style={{ color: effectivePct > 0.2 ? '#3f6146' : effectivePct > 0.1 ? '#8a6635' : '#7d766a' }}>
                           ~{Math.round(effectivePct * 100)}%/yr{estYears ? ` · ~${estYears}yr avg` : ''}
                         </span>
                       </div>
@@ -1078,14 +1152,14 @@ export default function LifeScreen() {
                 <div className="bg-white rounded-2xl overflow-hidden border border-natalis-border shadow-card">
                   {/* Partner moment — shown prominently at top when available */}
                   {mem?.partnerMoments?.length > 0 && (
-                    <div className="px-4 pt-4 pb-3" style={{ background: 'linear-gradient(135deg, #fff0f3, #fff5f7)' }}>
-                      <p className="text-[13px] italic leading-relaxed" style={{ color: '#9d174d' }}>
+                    <div className="px-4 pt-4 pb-3" style={{ background: '#f8eef0' }}>
+                      <p className="text-[13px] italic leading-relaxed" style={{ color: '#7b4356' }}>
                         &ldquo;{mem.partnerMoments.at(-1)}&rdquo;
                       </p>
                     </div>
                   )}
                   <div className="p-4">
-                    <p className="font-bold text-natalis-text text-sm mb-3">❤️ Partner</p>
+                    <p className="font-bold text-natalis-text text-sm mb-3">Partner</p>
                     <div className="flex justify-between items-center">
                       <div>
                         <p className="font-semibold text-natalis-text">{partner.name}{genderMark(partner.gender)}</p>
@@ -1113,7 +1187,7 @@ export default function LifeScreen() {
               {/* Children */}
               {children.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">👨‍👩‍👧 Children</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Children</p>
                   <div className="space-y-2">
                     {children.map((child, i) => {
                       const childAge = child.ageAtBirth !== undefined ? age - child.ageAtBirth : null
@@ -1146,12 +1220,12 @@ export default function LifeScreen() {
               {/* Parents */}
               {parents && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">👪 Parents</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Parents</p>
                   <div className="space-y-2">
                     {['mother', 'father'].map(key => {
                       const p = parents[key]
                       if (!p) return null
-                      const parentIncome = p.occupation ? formatParentIncome(p.occupation, character?.country?.gdp) : null
+                      const parentIncome = p.occupation ? formatParentIncome(p.occupation, character?.country?.gdp, character?.country, currentYear) : null
                       return (
                         <div key={key} className="flex justify-between items-center">
                           <div>
@@ -1181,7 +1255,7 @@ export default function LifeScreen() {
               {/* Siblings */}
               {siblings && siblings.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">👫 Siblings</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Siblings</p>
                   <div className="space-y-2">
                     {siblings.filter(sib => sib.ageDiff === undefined || age + sib.ageDiff >= 0).map((sib, i) => {
                       const sibAge = sib.ageDiff !== undefined ? age + sib.ageDiff : null
@@ -1220,7 +1294,7 @@ export default function LifeScreen() {
               {/* Friends */}
               {friends && friends.filter(f => f.alive).length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">👥 Friends</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Friends</p>
                   <div className="space-y-2">
                     {friends.filter(f => f.alive).map((friend, i) => {
                       const fLabels = relStatusLabel(friend.relationshipQuality ?? 60, [])
@@ -1247,7 +1321,7 @@ export default function LifeScreen() {
               {/* Pets */}
               {pets && pets.filter(p => p.alive).length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">🐾 Pets</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Pets</p>
                   <div className="space-y-1">
                     {pets.filter(p => p.alive).map((pet, i) => (
                       <p key={i} className="text-natalis-dim text-sm capitalize">{pet.name} the {pet.species} · age {pet.age}</p>
@@ -1259,7 +1333,7 @@ export default function LifeScreen() {
               {/* Ex-Partners */}
               {exPartners && exPartners.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">💔 Past Relationships</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Before this</p>
                   <div className="space-y-2">
                     {exPartners.map((ex, i) => (
                       <div key={i} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
@@ -1278,8 +1352,7 @@ export default function LifeScreen() {
 
               {!partner && children.length === 0 && (!friends || friends.filter(f=>f.alive).length === 0) && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
-                  <p className="text-4xl mb-2">🤝</p>
-                  <p className="text-natalis-muted text-sm">No relationships yet. Get out there!</p>
+                  <p className="text-natalis-muted text-sm">Nobody yet. That changes, or it does not.</p>
                 </div>
               )}
             </div>
@@ -1288,6 +1361,7 @@ export default function LifeScreen() {
           {/* ── ASSETS TAB ── */}
           {activeTab === 'assets' && (() => {
             const finRep = getFinancialReputationDisplay(fullState)
+            const localCredit = localCreditScore(fullState)
             const isChild = age < 18 && !career
             const familyTierLabel = isChild ? getWealthTierLabel(character.wealthTier ?? 3, character.country?.archetype) : null
             const showHardCurrency = hardCurrencyReserve > 0
@@ -1299,15 +1373,15 @@ export default function LifeScreen() {
               {/* ── Family context (childhood only) ── */}
               {isChild && familyTierLabel && (
                 <div className="bg-amber-50 rounded-2xl p-4 border border-amber-200 shadow-card">
-                  <p className="font-bold text-amber-800 text-sm mb-1">🏡 Family Background</p>
+                  <p className="font-bold text-amber-800 text-sm mb-1">Family background</p>
                   <p className="text-amber-700 text-sm font-semibold">{familyTierLabel}</p>
-                  <p className="text-xs text-amber-500 mt-2">Your personal savings: <span className="font-semibold">{formatMoney(money ?? 0)}</span></p>
+                  <p className="text-xs text-amber-500 mt-2">{isChild ? 'What the household has to hand' : 'Cash to hand'}: <span className="font-semibold">{formatMoney(money ?? 0)}</span></p>
                 </div>
               )}
 
               {/* Net Worth Summary */}
               <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                <p className="font-bold text-natalis-text text-sm mb-3">💰 {isChild ? 'Personal Savings' : 'Net Worth'}</p>
+                <p className="font-bold text-natalis-text text-sm mb-3">{isChild ? 'What the household has' : 'Net worth'}</p>
                 {!isChild && (
                   <div className="text-center mb-4">
                     <p className={`font-black text-2xl ${netWorth >= 0 ? 'text-green-600' : 'text-red-500'}`}>{formatMoney(netWorth)}</p>
@@ -1336,11 +1410,20 @@ export default function LifeScreen() {
                       <p className="font-bold text-blue-700">{formatMoney(career.salary)}</p>
                     </div>
                   )}
-                  {/* Financial reputation: credit score for wealthy_west/east, archetype-appropriate otherwise */}
-                  {finRep && finRep.type === 'credit_score' && creditScore && (
-                    <div className={`rounded-xl p-2.5 ${creditScore >= 700 ? 'bg-green-50' : creditScore >= 600 ? 'bg-yellow-50' : 'bg-red-50'}`}>
-                      <p className={`text-xs font-semibold ${creditScore >= 700 ? 'text-green-600' : creditScore >= 600 ? 'text-yellow-600' : 'text-red-600'}`}>Credit Score</p>
-                      <p className={`font-bold ${creditScore >= 700 ? 'text-green-700' : creditScore >= 600 ? 'text-yellow-700' : 'text-red-700'}`}>{creditScore} <span className="text-xs font-normal">({creditLabel(creditScore)})</span></p>
+                  {/* The score is stored on the 300-850 FICO scale, which is a
+                      United States instrument; it was being printed unchanged
+                      to a German and a Brazilian. `localCreditScore` restates
+                      it as the character's own country would, or says there is
+                      no such thing where a country keeps only a register of
+                      people who have defaulted. */}
+                  {finRep && finRep.type === 'credit_score' && localCredit && (
+                    <div className="rounded-xl p-2.5 bg-gray-50">
+                      <p className="text-xs font-semibold text-natalis-muted capitalize">{localCredit.name}</p>
+                      <p className="font-bold text-natalis-dim">
+                        {localCredit.negativeOnly
+                          ? localCredit.value
+                          : <>{localCredit.value}{localCredit.suffix} <span className="text-xs font-normal">({localCredit.good ? 'Good' : localCredit.fair ? 'Fair' : 'Poor'})</span></>}
+                      </p>
                     </div>
                   )}
                   {finRep && finRep.type !== 'credit_score' && (
@@ -1360,7 +1443,7 @@ export default function LifeScreen() {
               {/* Household contribution */}
               {householdContribution?.annualAmount > 0 && (
                 <div className="bg-orange-50 rounded-2xl p-4 border border-orange-200 shadow-card">
-                  <p className="font-bold text-orange-800 text-sm mb-2">🏠 Family Obligation</p>
+                  <p className="font-bold text-orange-800 text-sm mb-2">Family obligation</p>
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="text-orange-700 text-sm">
@@ -1379,7 +1462,7 @@ export default function LifeScreen() {
               {/* Joint family pool */}
               {jointFamily && jointFamilyPool > 0 && (
                 <div className="bg-amber-50 rounded-2xl p-4 border border-amber-200 shadow-card">
-                  <p className="font-bold text-amber-800 text-sm mb-1">🏘️ Joint Family Pool</p>
+                  <p className="font-bold text-amber-800 text-sm mb-1">Joint family pool</p>
                   <p className="text-amber-700 font-black text-xl">{formatMoney(jointFamilyPool)}</p>
                   <p className="text-xs text-amber-600 mt-1">Shared family property — accessible via partition event</p>
                 </div>
@@ -1389,7 +1472,7 @@ export default function LifeScreen() {
               {rosca && (
                 <div className="bg-purple-50 rounded-2xl p-4 border border-purple-200 shadow-card">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="font-bold text-purple-800 text-sm">🔄 Savings Circle (ROSCA)</p>
+                    <p className="font-bold text-purple-800 text-sm">Savings circle</p>
                     <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-semibold">Active</span>
                   </div>
                   <div className="space-y-1 text-sm">
@@ -1416,7 +1499,7 @@ export default function LifeScreen() {
               {/* Properties */}
               {assets?.properties?.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">🏠 Properties</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Property</p>
                   <div className="space-y-2">
                     {assets.properties.map((prop, i) => (
                       <div key={i} className="flex justify-between items-center py-2 border-b border-natalis-border last:border-0">
@@ -1434,7 +1517,7 @@ export default function LifeScreen() {
               {/* Vehicles */}
               {assets?.vehicles?.length > 0 && (
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">🚗 Vehicles</p>
+                  <p className="font-bold text-natalis-text text-sm mb-3">Vehicles</p>
                   <div className="space-y-2">
                     {assets.vehicles.map((v, i) => (
                       <div key={i} className="flex justify-between items-center">
@@ -1496,14 +1579,14 @@ export default function LifeScreen() {
                     </div>
                     <div className="text-center">
                       <p className="text-xs text-natalis-muted">Performance</p>
-                      <p className="font-bold text-sm" style={{ color: (business.performance ?? 50) > 60 ? '#34c759' : (business.performance ?? 50) > 35 ? '#ff9500' : '#ff3b30' }}>
+                      <p className="font-bold text-sm" style={{ color: (business.performance ?? 50) > 60 ? '#3f6146' : (business.performance ?? 50) > 35 ? '#8a6635' : '#8c3a2e' }}>
                         {Math.round(business.performance ?? 50)}%
                       </p>
                     </div>
                   </div>
                   <div className="mt-2">
                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full transition-all" style={{ width: `${business.performance ?? 50}%`, backgroundColor: (business.performance ?? 50) > 60 ? '#34c759' : (business.performance ?? 50) > 35 ? '#ff9500' : '#ff3b30' }} />
+                      <div className="h-full rounded-full transition-all" style={{ width: `${business.performance ?? 50}%`, backgroundColor: (business.performance ?? 50) > 60 ? '#3f6146' : (business.performance ?? 50) > 35 ? '#8a6635' : '#8c3a2e' }} />
                     </div>
                   </div>
                 </div>
@@ -1536,8 +1619,7 @@ export default function LifeScreen() {
 
               {assets?.properties?.length === 0 && assets?.vehicles?.length === 0 && (debt ?? 0) === 0 && !business?.active && travels?.length === 0 && !rosca && !jointFamily && gold === 0 && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
-                  <p className="text-4xl mb-2">🏦</p>
-                  <p className="text-natalis-muted text-sm">No assets yet. Start saving!</p>
+                  <p className="text-natalis-muted text-sm">Nothing here yet. Most lives take a while to accumulate anything a list can hold.</p>
                 </div>
               )}
             </div>
@@ -1545,9 +1627,17 @@ export default function LifeScreen() {
           })()}
 
         </div>
-      </div>
+      </main>
 
       {/* ── Activities Panel (slides up) ─────────────────────────────── */}
+      {/* Escape closes whichever sheet is open. The Move sheet's confirm step
+          had no close control at all, so Escape left a full-screen scrim over
+          the app with no way out but reloading. */}
+      <EscapeCloses
+        active={showActivities || showMoveModal}
+        onClose={() => { setShowActivities(false); setShowMoveModal(false) }}
+      />
+
       {showActivities && !pendingEvent && !isPassive && (
         <div className="fixed inset-0 z-40 flex flex-col justify-end" onClick={() => setShowActivities(false)}>
           <div className="absolute inset-0 bg-black/20" />
@@ -1575,7 +1665,7 @@ export default function LifeScreen() {
                 const liveCountry = currentCountry ?? character.country
                 const samePlaces = getPlacesForCountry(liveCountry.name).filter(p => p.id !== (currentPlace ?? character.birthPlace)?.id)
                 const fromPlace = currentPlace ?? character.birthPlace
-                const tierColors = { informal: '#ff3b30', working_class: '#ff9500', middle_class: '#34c759', elite: '#007aff' }
+                const tierColors = { informal: '#8c3a2e', working_class: '#8a6635', middle_class: '#3f6146', elite: '#3f5670' }
                 const tierLabel = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }
                 const scaleLabel = { village: 'Village', town: 'Town', mid_city: 'City', major_city: 'Major City', megacity: 'Megacity' }
                 return (
@@ -1605,7 +1695,7 @@ export default function LifeScreen() {
                                 <p className="text-natalis-muted text-xs">{place.region} · {scaleLabel[place.scale] ?? place.scale}</p>
                               </div>
                               <div className="text-right ml-3 flex-shrink-0">
-                                <p className="font-bold text-sm" style={{ color: canAfford ? '#34c759' : '#ff3b30' }}>
+                                <p className="font-bold text-sm" style={{ color: canAfford ? '#3f6146' : '#8c3a2e' }}>
                                   {cost === 0 ? 'Free' : `$${cost.toLocaleString()}`}
                                 </p>
                                 <p className="text-xs text-natalis-muted">{canAfford ? 'Can afford' : 'Too expensive'}</p>
@@ -1622,7 +1712,7 @@ export default function LifeScreen() {
                 const fromPlace = currentPlace ?? character.birthPlace
                 const cost = getRelocationCost(fromPlace, selectedPlace)
                 const canAfford = (money ?? 0) >= cost
-                const nbTierColors = { informal: '#ff3b30', working_class: '#ff9500', middle_class: '#34c759', elite: '#007aff' }
+                const nbTierColors = { informal: '#8c3a2e', working_class: '#8a6635', middle_class: '#3f6146', elite: '#3f5670' }
                 const nbTierLabels = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }
                 const affordableNbrs = Object.entries(selectedPlace.neighborhoods ?? {}).map(([tier, names]) => ({
                   tier, names, label: nbTierLabels[tier], color: nbTierColors[tier],
@@ -1687,10 +1777,12 @@ export default function LifeScreen() {
           <div className="max-w-2xl mx-auto px-4 py-3">
             <button
               onClick={() => eventRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })}
-              className="w-full py-3 rounded-xl font-bold text-sm text-white transition-all active:scale-95"
-              style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
+              className="w-full py-2.5 rounded-xl text-sm font-prose text-natalis-dim
+                         border border-natalis-rule bg-natalis-surface
+                         hover:border-natalis-text hover:text-natalis-text
+                         transition-colors active:scale-[0.99]"
             >
-              ↑ A life event needs your decision
+              Something is waiting for you &uarr;
             </button>
           </div>
         </div>
@@ -1705,10 +1797,10 @@ export default function LifeScreen() {
             <div className={`flex-col items-center gap-1 min-w-[36px] ${isPassive ? 'hidden' : 'flex'}`}>
               <div className="flex gap-1">
                 {Array.from({ length: maxActionsPerYear }).map((_, i) => (
-                  <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: i < actionsThisYear ? '#e5e5ea' : '#007aff' }} />
+                  <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: i < actionsThisYear ? '#e2ddd2' : '#3f5670' }} />
                 ))}
               </div>
-              <span className="text-[9px] font-medium leading-none" style={{ color: actionsLeft > 0 ? '#007aff' : '#8e8e93' }}>
+              <span className="text-[9px] font-medium leading-none" style={{ color: actionsLeft > 0 ? '#3f5670' : '#7d766a' }}>
                 {actionsLeft > 0 ? `${actionsLeft} left` : 'none left'}
               </span>
             </div>
@@ -1718,21 +1810,19 @@ export default function LifeScreen() {
               <button
                 onClick={() => setShowActivities(v => !v)}
                 className="flex-1 py-3 rounded-xl font-bold text-sm transition-all active:scale-95"
-                style={{ background: showActivities ? '#636366' : 'linear-gradient(135deg,#ff3b30,#c0392b)', color: 'white' }}
+                style={{ background: showActivities ? '#4a453e' : '#8c3a2e', color: '#fdfcf9' }}
               >
-                {showActivities ? '✕ Close' : '🔒 Prison Life'}
+                Prison life
               </button>
             ) : (
               <button
                 onClick={() => setShowActivities(v => !v)}
                 disabled={actionsLeft <= 0}
-                className="flex-1 py-3 rounded-xl font-bold text-sm transition-all active:scale-95 disabled:opacity-40"
-                style={{
-                  background: actionsLeft > 0 ? 'linear-gradient(135deg,#af52de,#007aff)' : '#e5e5ea',
-                  color: actionsLeft > 0 ? 'white' : '#8e8e93',
-                }}
+                className="flex-1 py-3 rounded-xl text-sm font-prose border transition-colors active:scale-[0.99]
+                           disabled:opacity-40 border-natalis-rule bg-natalis-surface text-natalis-dim
+                           hover:border-natalis-text hover:text-natalis-text"
               >
-                {showActivities ? '✕ Close' : '⚡ Activities'}
+                Activities
               </button>
             )}
 
@@ -1747,9 +1837,9 @@ export default function LifeScreen() {
                 onClick={ageUp}
                 disabled={!!pendingTrial}
                 className="w-full py-3 rounded-xl font-black text-lg text-white transition-all active:scale-95 shadow-card disabled:opacity-50"
-                style={{ background: pendingTrial ? '#e5e5ea' : 'linear-gradient(135deg, #34c759, #28a046)', color: pendingTrial ? '#8e8e93' : 'white' }}
+                style={{ background: pendingTrial ? '#e2ddd2' : '#1c1a16', color: pendingTrial ? '#7d766a' : '#fdfcf9' }}
               >
-                {pendingTrial ? 'On Trial...' : 'Age Up +'}
+                {pendingTrial ? 'On trial' : 'Another year'}
               </button>
             </div>
           </div>

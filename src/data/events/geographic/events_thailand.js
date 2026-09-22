@@ -4,6 +4,8 @@
 // 1997 Asian Financial Crisis trigger, Thai middle-income economy.
 // Thailand is the only mainland Southeast Asian country to avoid colonization.
 
+import { hasTech } from '../../technology.js'
+
 export const THAILAND_EVENTS = [
 
   {
@@ -28,7 +30,9 @@ export const THAILAND_EVENTS = [
       G.currentYear >= 1976 &&
       G.age >= 18 &&
       !G.mem.thaLeseMajeste,
-    text: 'Article 112 of the Criminal Code: insulting, defaming, or threatening the king, queen, heir apparent, or regent carries a penalty of three to fifteen years per count. The counts accumulate: criticise a royal speech, share a critical article, write something online — each can be a separate count. You know of cases where this added to decades. The law shapes not what you say but how you think before you speak, the pause before the opinion, the specific texture of self-censorship in a country where the law does not require you to actually insult anyone — only to be accused of it.',
+    // The law is older than the medium: the counts that accumulate are whatever
+    // the year can be accused through, and this was listing a post in 1982.
+    text: (G) => `Article 112 of the Criminal Code: insulting, defaming, or threatening the king, queen, heir apparent, or regent carries a penalty of three to fifteen years per count. The counts accumulate: criticise a royal speech, share a critical article, ${hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear) ? 'write something online' : 'repeat what you heard to the wrong person'} — each can be a separate count. You know of cases where this added to decades. The law shapes not what you say but how you think before you speak, the pause before the opinion, the specific texture of self-censorship in a country where the law does not require you to actually insult anyone — only to be accused of it.`,
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('thai_lese_majeste_awareness'); p.setMem('thaLeseMajeste', true) },
   },

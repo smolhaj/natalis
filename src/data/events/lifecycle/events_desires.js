@@ -4,6 +4,8 @@
 // Decade reflections (20, 30, 40, 50, 60, 70) are the arc mechanism: the player
 // feels where they are in the life through these events, shaped by their desire.
 
+import { hasTech } from '../../technology.js'
+
 export const DESIRES_EVENTS = [
 
   // ── WOUND EVENTS ─────────────────────────────────────────────────────────────
@@ -62,7 +64,11 @@ export const DESIRES_EVENTS = [
     cooldown: 0,
     when: (G) => G.age >= 6 && G.age <= 11 && !G.mem?.woundFired &&
       (G.flags.has('food_insecurity') || G.character?.wealthTier <= 1),
-    text: 'There is a week when dinner is smaller each day. No one explains this. You learn to read the refrigerator like weather. You file something away: you will never let this happen again.',
+    // Most children who have known a week like this have not had a refrigerator
+    // to read. The thing they read is the sack, the shelf, the tin.
+    text: (G) => hasTech(G.currentCountry ?? G.character.country, 'refrigerator', G.currentYear, { rural: G.ruralUrban === 'rural' })
+      ? 'There is a week when dinner is smaller each day. No one explains this. You learn to read the refrigerator like weather. You file something away: you will never let this happen again.'
+      : 'There is a week when dinner is smaller each day. No one explains this. You learn to read the sack in the corner the way other people read weather — how far down it is, how far down it was on Monday. You file something away: you will never let this happen again.',
     choices: null,
     effect: (p) => { p.setDesire('safety'); p.setMem('woundFired', true) },
   },

@@ -34,6 +34,8 @@
 //    A generation that hoped the deal would integrate Iran into the global economy,
 //    and then watched it collapse.
 
+import { hasTech } from '../../technology.js'
+
 const IRAN_EVENTS = [
 
   // ── KHATAMI REFORM ERA ────────────────────────────────────────────────────────
@@ -162,7 +164,9 @@ const IRAN_EVENTS = [
       G.age >= 22 && G.age <= 38 &&
       G.stats.smarts > 50 &&
       !G.mem?.irn_brain_drain,
-    text: 'The IMF calls it the highest brain drain rate in the world: 150,000 educated Iranians leave each year. The number is the abstraction. The specific version is your group: the WhatsApp group of your university cohort, and how many of the names have country flags next to them now — Canadian flag, German flag, Turkish flag, British flag. The decision is constant because it is never quite final. You have the skills that travel. The question is whether you are a person who leaves or a person who stays, and the question is answered differently in different years depending on what year it is and what the rial rate is and whether the reformists won the last election.',
+    // The cohort keeps in touch on whatever the decade has; the group with the
+    // flags beside the names is a 2015 object, and this ran from 2000.
+    text: (G) => `The IMF calls it the highest brain drain rate in the world: 150,000 educated Iranians leave each year. The number is the abstraction. The specific version is your group: ${hasTech(G.currentCountry ?? G.character.country, 'smartphone', G.currentYear) ? 'the WhatsApp group of your university cohort, and how many of the names have country flags next to them now — Canadian flag, German flag, Turkish flag, British flag' : 'the cohort you graduated with, and how many of the addresses you write to now end somewhere else — Toronto, Cologne, Istanbul, London'}. The decision is constant because it is never quite final. You have the skills that travel. The question is whether you are a person who leaves or a person who stays, and the question is answered differently in different years depending on what year it is and what the rial rate is and whether the reformists won the last election.`,
     choices: [
       {
         text: 'You go. Turkey first, then wherever the visa comes through.',

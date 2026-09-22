@@ -168,7 +168,7 @@ Event shape:
 **Critical**: `effect` functions receive only `p` (the proxy). `G` is only available in `when` guards. Never put G-dependent logic in effects.
 
 The `G` object (built by `buildG()`) exposes everything event conditions need:
-`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null)
+`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
 
 Effect proxy shorthands (all are additive deltas):
 - `p.m` → happiness, `p.h` → health, `p.e` → smarts, `p.s` → charisma, `p.w` → wealth stat, `p.lo` → looks
@@ -251,7 +251,21 @@ Legal quality scales by regime: democracies have fair courts (1.0×), military d
 
 ### Partner Lifecycle (`src/engine/tick.js: tickPartner`)
 
-Called each year via `advanceYear`. Partner ages +1/year and `partner.years` increments. At age 75+ there's a death probability (increases with age). On death: partner removed, `widowed` or `lost_partner` flags set, death logged in lifeLog. Relationship quality drifts ±1 per year.
+Called each year via `advanceYear`. Partner ages +1/year and `partner.years`
+increments. On death: partner kept on state as `{alive: false}` (so
+`G.deceasedPartner` can speak and `G.partner` cannot), `widowed` or
+`lost_partner` set, the death logged. Relationship quality drifts ±1 per year.
+
+**The death hazard follows the country, not a rich-world table.** It started at
+65 everywhere, so nobody in a 1962 Nigerian or 1974 Ethiopian life could be
+widowed before their partner's sixties, in countries whose life expectancy at
+the time was in the forties — and a widow of thirty-eight with children at home
+and no pension is the commonest shape the loss took in most of the world for
+most of this period. The onset and the steep band now shift with
+`lifeExpectancy`. Measured over 70 lives per country: median age at widowhood
+Nigeria 56, India 60, Ethiopia 64, Germany 74, Japan and Sweden 78. The young
+arc (`grief_widowed_young_*`) is about the arithmetic; the existing late arc is
+about the shape of the days, and they are not the same event.
 
 Note: this function was a no-op for every partner in the game until August 2026. It bailed on `!state.partner.alive`, and no partner was ever constructed with an `alive` field — so partners never aged, never died, quality never drifted, and `partner.years` (which gates marriage timing and the partner-moments memory layer) stayed at 0 forever. The guard is now `alive === false`, so a partner from an older save counts as alive.
 
@@ -302,9 +316,64 @@ The enum audit checks ethnicity and religion literals against the **global** set
 
 ---
 
+### The prose layer (`src/engine/yearTexture.js`, `mundaneLayer.js`, `prose.js`)
+
+Two systems narrate a quiet year, and they are picked in this order:
+
+`buildYearTexture(state, { specificOnly: true })` collects every line the
+character is eligible for and returns one, by tier:
+
+| tier | what it is | share |
+|---|---|---|
+| `urgent` | grief, a child in a ward, a body in crisis | wins ~72% when live |
+| `glimpse` | the stranger glimpse, which carries its own ~decade cadence | wins when due |
+| `anchored` | place, era, identity — 1,506 of the 2,075 offer sites | 0.46 |
+| `earned` | keyed to what has already happened to this life | 0.39 |
+| `universal` | the phase pools and the final fallback | 0.15 |
+
+`textureCandidates` is the generator holding the guards; `buildYearTexture` is
+the driver. A guard yields `[tier, line]` or `[tier, [variant, variant, ...]]` —
+a variant pool counts as **one** candidate, so a block with thirty alternatives
+cannot outvote a country block with one, it just has thirty ways to say its turn.
+`opts.specificOnly` drops the `universal` tier, which is how the caller asks
+"does anything specific want to speak about *this* life this year" and lets
+`buildMundaneLayer` fill the year when the answer is no.
+
+`prose.js` keeps the hashed record of what this character has already been told.
+Both layers prefer an unheard line. Grief is exempt from the exhaustion rule
+because a feeling that recurs is supposed to recur — but capped, because in the
+same words every year it reads as a broken loop.
+
+**When you add texture, pick the tier deliberately and yield to it.** The tier is
+a literal in the `yield`, not something derived from the section heading. Adding
+to a full tier buries the existing content in it; run `npm run sim` to see the
+live mix, and `npm run sim -- --broad` to see it across the whole roster, since
+the ten default configurations cannot reach the other 144 countries' blocks at
+all.
+
+**Flags never clear, so present-tense prose behind a permanent flag never stops.**
+`cancer_treatment` is set in the same breath as `cancer_survivor`, and the
+active-treatment block told a character treated at 45 that "treatment continues,
+you measure time in appointments now" every eligible year until death. Any block
+whose prose is present-tense needs a time bound — the flag's own
+`mem.[flag]Year`, or an elapsed-years variable — not just the flag.
+
+### Climate and season (`seasonsFor`, `deriveSeason` in `src/engine/character.js`)
+
+A country returns either `dry`/`wet` (monsoon and tropical) or the four temperate
+seasons. `MONSOON_COUNTRIES` lives in `character.js` and `_sonderGuards.js`
+imports it, because two copies of this list existed and disagreed: the engine's
+omitted India, Pakistan, Sri Lanka, Nepal and Malaysia, so every guard reading
+`season === 'wet'` for the subcontinent was unsatisfiable and the monsoon prose
+could not fire in the largest monsoon country on earth. `npm run check-events`
+carries a `season-country` audit for both the fully unsatisfiable guard and the
+partial case — a guard naming twelve countries where four can never match it,
+which fires happily for the other eight while a slice of its audience never sees
+it.
+
 ## The Simulation Contract
 
-Five rules the engine must keep, each of which was broken and is now enforced by
+Rules the engine must keep, each of which was broken and is now enforced by
 `tests/` and by simulation:
 
 **Health is not a ratchet.** `healthCeiling(state)` sets a plateau from age, the
@@ -312,8 +381,11 @@ healthcare of the country the character *actually lives in*, fitness and chronic
 conditions; health drifts toward it each year. A shock still hurts and a chronic
 condition still lowers the plateau permanently, but a life nobody intervenes in
 does not walk to zero. Before this, a passively-read 1962 Nigerian life had a
-median death age of **8**; it is now ~66 with ~29% under-5 mortality, which is
-what the historical record actually says.
+median death age of **8**; a Nigerian who survives childhood now reaches a median of
+43-51, against a 20-33% under-5 rate — both wide, because a median taken from
+forty lives of a distribution this heavy-tailed moves by ten years between
+samples. The instrument is the constraint, not the engine: the same code
+measured at n=150 gives a survivor median of 51 and an oldest of 82.
 
 **Where you live is where you live.** `liveCountry(state)` — not the frozen
 birth country — drives salary, promotion pay, healthcare mortality, illness risk,
@@ -332,6 +404,104 @@ and `buildMundaneLayer` fills the years when they do not. It used to be reachabl
 only when the event pool came back empty — which, with ~2,000 broadly-guarded
 contemplative events, meant ~2% of years.
 
+**A sentence must be true of the world it is printed into.** `src/data/technology.js`
+answers when a thing arrived where the character lives, and whether the country
+was materially rich that year — because `isWealthyArch` is a statement about
+*now*. Read as history it put a hallway telephone, a weekly cinema trip and a
+folded newspaper into a 1931 Omani household (three schools in the country, ten
+kilometres of paved road, oil not exported until 1967), and a television into an
+Icelandic living room twenty-two years before Icelandic broadcasting existed.
+`src/data/history.js` carries the rest of what a guard cannot infer: independence
+years, coup years, the Soviet republics, malaria elimination dates, which
+countries have rivers, which taught school in a coloniser's language, and
+`INSTITUTIONS_SUSPENDED` — the years a country stopped having schools, wages,
+money, clinics, the post or cities at all. `npm run check-anachronisms` plays
+lives and reads every printed line against that table.
+
+**A character must be a person who could exist.** Ethnicity and religion were two
+independent draws, so the engine made Lhotshampa who were 67% Buddhist (they ARE
+Bhutan's Hindu population, which is the whole reason for the 1990 expulsions),
+Catholic Bosniaks, Muslim Dalits and Sunni Copts — and every guard reading both
+together was silently failing for part of its own population. `src/data/identity.js`
+gives the conditional distribution for the 473 groups where the two are
+entangled and defers to the country marginal for everyone else;
+`impliedMarginal()` holds the result to the declared `religionWeights`, within
+10 points for all 154 countries. Names are drawn once per life through
+`src/engine/names.js`, because ten independent `pickFrom` calls across four files
+gave 13% of families two members with the same first name.
+
+**A stat that only goes up is not a stat.** Health drifts toward a ceiling and
+money, karma and fame all have events that take them away; smarts and charisma
+had neither, so a hundred events adding +3 here and +6 there walked both to 100
+in any life long enough to contain them — smarts had a median of 96 at death and
+58% of characters ended at 90 or above, which makes "Brilliant" a description of
+nearly everyone and opens every `stats.smarts >= 70` guard to the whole
+population. `earnedGain` scales a gain by the headroom above it and never scales
+a loss.
+
+**A bill you cannot pay does not stop existing.** `Math.max(0, ...)` on the
+balance meant no purchase in the game could fail for lack of funds — a Swedish
+pensioner holding $42,571 was offered a $63,859 bypass, took it, and the
+shortfall evaporated — and `tickAssets` clamped it a second time while still
+amortising the mortgage, so a character on nothing watched the principal fall
+from 73,466 to 55,206 over six years. A shortfall large enough to matter now
+becomes `debt`, and an unpaid mortgage goes into arrears rather than paying
+itself off. Related: consumption was a share of the SALARY, so being alive cost
+a retiree nothing; the poverty premium read the cash balance, so a retiree in a
+house worth 934,534 was charged for poverty; and the insolvency line was a flat
+-8,000 nominal, a fortune in 1950 Lagos and a bad month in 2020 Stockholm.
+
+**A guard answers "may this fire", not "is this true afterwards".**
+`ya_city_arrival` narrated a young adult leaving the village and left them in
+it; eighty-three events set `emigrated` and not one could change a country,
+because `relocate` did not carry the destination's own country and there was no
+verb for "they went to Spain". `p.emigrateTo(country, opts)` is that verb, and
+`relocate` now carries the country, so the Venezuelan physician who arranges the
+exit stops drawing a Venezuelan salary. `npm run check-events` carries
+`narrated-move` and `silent-choice` for both halves of this: prose that
+describes a move no effect makes, and a choice that applies an effect and
+prints nothing back — fifty-one of those existed, so the player pressed
+"Navigate carefully — know the rules and survive" and the game said nothing.
+
+**A flag about the past is not a statement about now.** `poverty_childhood`
+gated "You did not eat lunch for three days" onto a character earning 71,991
+with 25,161 in the bank; `character.ruralUrban` is frozen at birth and every
+prose layer read it directly, so a character who moved to Jakarta at 26 was
+still collecting firewood at 53. `livingRuralUrban(state)` reads
+`currentPlace.type` and falls back to birth, and the events that describe a
+present condition test the present one. Same class: a negative field list let
+"a union representative finds you during the break — someone you recognise from
+the floor" reach an Agency Director at a property agency, and `content_creator`
+shared the `media` field with `journalist`, so a TikTok influencer got the
+editor's office, the ministry call, and an epitaph reading "She worked in
+journalism and learned what it costs to tell the truth."
+
+**The instrument must be able to see the thing it measures.** Passive mode
+resolves choice events inside `tick()`, so `pendingEvent` is never set for them,
+and the firing-rate harness — which counted events by reading it — reported
+passive at 52% of years containing an event against active's 98%, with zero
+choice events in the one mode whose entire design is that the character answers
+them. Both resolution paths now stamp the event id onto the log entry.
+
+**A prose layer's line ordering must not be its priority order.** `yearTexture.js`
+was one 15,104-line function of 2,035 sequential `if (guard) return pick([...])`
+statements, so file position *was* priority: grief at line 20, the body-in-time
+bands (which fire for everyone at 38/42/46/52/70) at line 520, Afghanistan at
+12,564 behind ~1,800 earlier guards. 9.3% of the 7,588 authored lines ever
+reached a player; Peru's 47 fired **zero** times across 3,253 Peruvian years, and
+so did the monsoon texture across 3,382 Indian ones. Guards now OFFER rather than
+return — `textureCandidates` is a generator yielding `[tier, line]` and
+`buildYearTexture` picks by tier (`urgent`, `glimpse`, `anchored`, `earned`,
+`universal`, mirroring `REGISTER_SHARES`). See **The prose layer** below.
+
+**A life must not repeat itself.** 15.6% of all prose a character read was a
+sentence they had already read in the same life, and one life heard the same line
+fourteen times — in a game whose stated mechanic is the sentence that lands.
+`src/engine/prose.js` keeps a hashed, capped record in `mem.saidLines`; both prose
+layers prefer an unheard line, and an exhausted tier says nothing rather than
+repeating, letting `buildMundaneLayer` narrate an ordinary year instead. Now
+0.2%, median life 0.0%.
+
 ## The Immersion Principle
 
 When adding anything — events, world events, career events, country data — ask:
@@ -342,6 +512,53 @@ When adding anything — events, world events, career events, country data — a
 4. **Consequential**: Does it connect to real data fields (`lgbtqCriminalized`, `regime`, `literacyFemale`, `childMarriageRisk`, `casteSystem`, `ruralUrban`, `wealthTier`)?
 
 Generic events are a last resort. Specific events — ones that could only fire for a Dalit woman in India in 1975, or a Chinese teenager during the Cultural Revolution, or a Nigerian kid skipping the landline era for mobile money — are the goal.
+
+---
+
+## The Interface
+
+CLAUDE.md said "literary, not gamey", "invisible systems", "no +5 Happiness!
+framing" and "the prose is the mechanic" — and had no guidance about the
+interface at all, which is why the interface spent two years contradicting all
+four. The theme config described itself as "BitLife-inspired". Choice buttons
+were hardcoded gradients by index (blue, then green, then orange), so the colour
+told the player which answer was right in a game whose premise is that there
+isn't one. The title screen said **"Your choices shape everything"** directly
+under "You don't choose where you begin."
+
+The rules that follow from the design document:
+
+**Paper and ink.** One warm neutral ramp (`natalis-bg` → `natalis-faint`), one
+reserved accent (`natalis-accent`) for things that respond to a press. Saturation
+is reserved for the two places it carries real information: a body in trouble
+(`natalis-alarm`, health under 25) and money moving (`natalis-gain`/`-loss`).
+Tailwind's default scales are **remapped** in `tailwind.config.js` to the same
+muted ramp, so a component reaching for `bg-blue-50` cannot reintroduce the candy
+palette.
+
+**No option may look more correct than another.** Choices are identical
+buttons. No gradient, no colour coding, no ordering cue. The sentence is the
+only signal.
+
+**The prose gets the top of the screen and the largest type.** It is set in
+`font-prose` at `text-prose-lg`. Stats are a hairline row with the WORD leading
+and the number trailing — "Declining 39", not a red bar. The full six live in
+the Stats tab for anyone who wants them.
+
+**No emoji in the reading surface.** The event card, the life log and the
+identity card are prose and stay prose; typographic labels do the work markers
+used to ("AGE 11 · 1950 · IN THE NEWS"). The activities panel keeps its category
+icons, which are wayfinding in a utility screen rather than decoration in a
+narrative one.
+
+**No gradients on controls, and no counts typed by hand.** The title screen's
+figures are derived from `COUNTRIES`, `CAREERS` and `RIBBONS`; the hardcoded
+version had drifted to 145/59/379 against a real 154/49/377.
+
+**Copy must not overclaim the player's agency.** `tickLifeCourse` supplies work,
+a partner, a marriage and children at era- and place-accurate rates precisely
+because a life nobody steers is still a life, and passive mode exists to prove
+it. Interface copy that promises otherwise is contradicting the engine.
 
 ---
 
@@ -358,19 +575,46 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-146 countries, 251 world events, 7,953 character events (2,127 of them the
-contemplative sonder layer, 156 stranger glimpses, 40 prison and political-arrest),
-2,771 registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
+154 countries, 389 named places, 252 world events, 8,207 character events
+(2,129 of them the contemplative sonder layer, 158 stranger glimpses, 42 prison
+and political-arrest, 30 Gulf, 42 Guyana, 41 Bosnia), 3,130 registered flags,
+377 ribbons.
+**0 orphaned, 0 partial flags.**
 
 Verify with:
 
 ```
-npm run build          # must pass
-npm test               # 240+ tests, including the simulation guardrails
-npm run check-flags    # 2735 covered / 0 partial / 0 orphaned
-npm run check-events   # reachability audits: dead guards, enum domains, phase and year windows
-npm run sim            # firing-rate report — what ACTUALLY fires, per 100 lives
+npm run build            # must pass
+npm test                 # 350 tests, including the simulation guardrails
+npm run test:fast        # unit + static audits, seconds not minutes
+npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
+npm run check-flags      # 3025 covered / 0 partial / 0 orphaned
+npm run check-events     # reachability: dead guards, enum domains, phase/year windows,
+                         # season/country, silent choices, narrated moves that move nobody,
+                         # populations the roster models that the corpus never addresses
+npm run check-anachronisms  # plays lives and reads every line against when the world held it
+npm run check-bundle     # builds, opens dist in a browser, starts a life — the only
+                         # check that exercises the artefact rather than the source
+npm run sim              # firing-rate report — what ACTUALLY fires, per 100 lives
+npm run sim -- --broad   # the same over the whole roster, not the ten default configurations
 ```
+
+`npm run sim` reports three things no static audit can see: the register mix, the
+share of each **prose layer** a player actually reads (with `concentration` — how
+many distinct lines supply half of all output), and **within-life repetition**.
+
+**The prose-coverage figure is a function of the sample size, and a bare number
+for it is not checkable.** The same code reports yearTexture at 8.2% over the
+default 120 lives and 13.7% over 600, because a life only lives so many years
+and the layer holds 8,126 lines. Quote it with the `--lives` it was taken at or
+it cannot be reproduced, and compare runs only at equal n. The number that does
+not move with sample size, and is therefore the one to watch, is
+**concentration**: about 160 lines supply half of all texture output at both
+sizes, which is the real statement about how much of the layer is doing the
+work.
+The ten default configurations cannot reach 144 countries' content at all, so a
+coverage number taken over them understates the place-anchored layers by
+construction; `--broad` is the honest read.
 
 ### The 2026 systems rebuild
 
@@ -387,7 +631,11 @@ four now have a test that fails if they return.
 | `buildYearTexture` reachability | ~2% of years | 59.7% |
 | stranger glimpses per life | 0.3 | 6.2 |
 | longest unbroken contemplative run | 19-21 years | 2 |
-| Nigeria 1962 median death age | 8 | 60s |
+| Nigeria 1962 median death age (survived childhood) | 8 | 43-51 |
+| yearTexture lines a player ever sees | 9.3% of 7,588 | 13.7% of 8,126 at 600 lives (see below) |
+| countries whose texture appears in a broad run | 16 | 94 |
+| prose a character reads that they already read | 15.6% | 0.2% |
+| countries rendering a blank flag | 72 of 146 | 0 |
 
 Beyond those: parent death set no flag at all (21+ consumers, zero setters);
 events were consumed at display rather than resolution, so closing the tab ate
@@ -400,6 +648,420 @@ almost no content.
 **The lesson worth keeping: measure what fires, not what exists.** Every failure
 above was invisible to a green flag audit. `npm run sim` is the counter-check.
 
+### The beta pass
+
+A later pass played the game rather than auditing it, and found a second class
+of defect: content that fires correctly and is wrong about the world.
+
+| | before | after |
+|---|---|---|
+| lines naming a technology before it arrived | many | 0, over five consecutive runs |
+| "Life in brief" on the death screen | empty in 67% of lives | 0%, median 8 notes |
+| families with two members sharing a first name | 13% | under 1% |
+| both parents holding the identical job and wage | ~50% at the top tier | 3% |
+| smarts median at death (share ending 90+) | 96 (58%) | 74-78 (9-11%) |
+| countries whose religion mix the identity table distorts >12pp | 26 | 0 |
+| passive mode, share of years containing an event | measured at 52% | 88.6% (the 52% was the instrument) |
+
+Every one of these was reachable, correctly guarded and syntactically fine. A
+1931 Omani childhood had a hallway telephone and a weekly trip to the cinema,
+because `wealthy_gulf` describes Oman now. An Icelandic living room had a
+television in 1944, twenty-two years before Icelandic broadcasting. A Cambodian
+in 1977 was drawing a salary, being promoted to Foreman and being referred to a
+psychiatrist, four years into a regime that had abolished money, wages and
+hospitals. A Romanian who lived through Ceaușescu's whole rule got an obituary
+that mentioned neither him nor 1989 — while her own state object had been
+holding `romania_revolution_1989` since the year it happened.
+
+**The lesson worth keeping from this one: a guard answers "may this fire", not
+"is this true".** Nothing static can tell the difference. `npm run
+check-anachronisms` and the simulation tests are the counter-check.
+
+### The second beta pass
+
+The first beta pass audited. The second one **read complete life logs end to
+end**, in sequence, as a player does — and found a third class of defect that
+neither a static audit nor a firing-rate report can see: **the narration and the
+state disagreeing.**
+
+| | before | after |
+|---|---|---|
+| widowings the game never mentioned | 26 of 37 | 1 of 45 |
+| lives naming a dead partner as present afterwards | 9 of 37 | 0 of 140 |
+| lives in which a parent dies twice | common | 0 of 140 |
+| retirements the engine then undid | every flag-only one | 2 of 57 |
+| dollar figures before 1995 | wrong by 1-2 orders of magnitude | era-denominated |
+| final balance, median passive life | millions | $35,527 |
+| partner occupations possible in the year | a flat modern Western list | gated by year, place, gender |
+
+The pattern: a log line is a **claim about the state**, and nothing was checking
+that the state agreed. `tickPartner` marked a partner dead silently on the
+reasoning that the grief events would carry it; they carried it 30% of the time,
+and meanwhile 304 guards read `G.partner` without asking whether they were
+alive. Two generic parent-death events narrated a death and called no
+`killParent`, so the character carried `orphan` from thirteen while both parents
+lived, and each of them died again, by name, decades later. An event retired the
+character with a `retired` FLAG while every hook that hands out a job reads the
+`retired` STATE FIELD.
+
+**The lesson worth keeping: read the log in order.** Every one of these is
+invisible to a guard audit, invisible to `npm run sim`, and obvious within
+thirty seconds of reading a life as a player reads it.
+
+### The population the game could not reach
+
+`npm run sim -- --broad` and a per-country coverage census put `wealthy_gulf`
+last of the eight archetypes. The reason turned out not to be the citizens.
+
+The roster already modelled these societies correctly — the UAE is 59% South
+Asian in the data, Qatar 60%, Kuwait 40%, Bahrain 36%, every migrant group
+flagged `disadvantaged`, and the UAE's own country note says in plain words that
+"an Emirati and a Bangladeshi construction worker live in the same square
+kilometre but inhabit entirely different cities". Across **eleven Gulf ethnic
+ids the corpus contained one reference.** The engine was drawing those
+characters correctly and had nothing to say to them.
+
+The kafala content that did exist was written from the *sending* side — a
+Nepali village, a broker, a one-way ticket — which is the half a writer reaches
+for first. The arriving life, and the life of the citizen watching it arrive,
+were both unwritten. Qatar, Kuwait, Bahrain and Oman also had no `places` at
+all, so nobody there had a neighbourhood.
+
+`npm run check-events` carries `unwritten-group` for it now, and getting that
+audit right took three attempts in three different wrong directions, which is
+the useful part. Reporting every unnamed id gave **328** warnings, because an
+event guarded on `country === 'Greece'` addresses the 94% of Greeks who are
+Greek perfectly well; the case that matters is a group whose experience of its
+own country is not the country-generic one, which is what `disadvantaged`
+marks, or a large minority in a country that is plainly not one people.
+Scanning function bodies then reported the Gulf as **still unwritten after
+thirty events had been written for it**, because the module lifts its ids into
+a shared `const MIGRANT_IDS = new Set([...])` that never appears in
+`when.toString()` — wrong in the worst direction, telling you a gap is open
+after somebody closed it. And scanning all of `src/data` reported **zero**
+forever, because `countries.js` declares every id and made each one trivially
+"named".
+
+**The lesson worth keeping: a demographic the data models and the corpus never
+addresses is invisible to every audit here.** `check-flags` is about flags,
+`check-events` about guards, `npm run sim` about what fires — and a population
+nothing was ever written for fires nothing, which looks exactly like a
+population that is simply rare. The counter-check is to walk the roster's own
+`ethnicGroups` and ask which ids the corpus has never once named.
+
+### And the same hole, one scale up: a country
+
+The audit's next report was not a group inside a country. It was Guyana, whose
+four main populations were all on the list at once, because the corpus contained
+**one guard naming the country**, in a list of five Caribbean states. Nobody
+born there had a place either — `places.js` had no Guyanese entry, so a Guyanese
+character was born nowhere and the neighbourhood tiers had nothing to draw from.
+
+It is a small country to have missed and a strange one to miss, because its
+twentieth century holds, in one place, almost every force this project is
+otherwise writing about one at a time: indenture, a single company owning the
+wage and the shop and the ship, a constitution suspended by warship 133 days
+after the first universal-suffrage election, a party split in 1955 that made a
+surname answer the ballot for sixty years, a voting system changed from outside
+specifically to remove the man who would have won, two decades of rigged boxes
+and a ban on wheat flour, a historian killed by a bomb in a walkie-talkie, and
+an emigration so complete that there are more Guyanese outside the country than
+in it. Plus the thing the world does know, which is a compound in the North West
+District where 918 people died and almost none of them were Guyanese.
+
+`events_guyana.js` is 42 events, 10 of them follow-through, plus 5 places and
+~27 year-texture blocks. And the place gap turned out not to be
+Guyana's alone: **71 of 154 countries had no `places` entry at all**, including
+Portugal, Greece, Denmark, Mali, Cameroon, Angola, Iraq, Mongolia, Taiwan,
+Malaysia, Jamaica and Ecuador, most of which have large authored modules. A
+country with no place makes `pickBirthPlace` return null, which leaves
+`currentPlace`, `character.birthPlace` and `currentNeighborhoodName` all null,
+and `LifeScreen` renders the whole location bar behind `{livePlace && ...}` — so
+a character in almost half the roster was never told where they lived, and the
+64 guards reading `G.place?.type`, `?.scale` or `?.region` could not fire for
+them. 192 places were written for the other 71, and `tests/places.test.js` fails
+if any country loses its own.
+
+**What makes this one worth recording is that it does not appear in any rate.**
+Measured in matched pairs — Ghana against Mali, Peru against Ecuador, Sweden
+against Denmark, Cuba against the Dominican Republic, 30 lives each — the
+events-per-year and texture-per-year figures were *identical* either side of the
+gap, and so was the anchored register share. `REGISTER_SHARES` reserves 40% of
+each year for `anchored` and fills it from country and era guards whenever the
+place guards cannot answer, so the bucket is always full and the absence is
+perfectly masked. The thing lost was not volume. It was the place.
+
+### The audit that cried wolf, and Bosnia
+
+With the places closed, `unwritten-group` was still reporting 145 findings and
+the top twenty-five of them were a country's own plurality: Colombia's Mestizo
+at 49%, Brazil's White Brazilian at 48%, Pakistan's Punjabi at 45%. The filter
+tested `share >= 0.5` for "is this the group a country-generic event is already
+about", which is the wrong test — a plurality is the country-generic population
+whether or not it clears half — and it was also reporting catch-all buckets,
+asking for an event about the shared experience of being *Other* in Uganda. It
+was additionally blind to a guard that reaches a group by shape rather than by
+name: the Baltic module writes `id.startsWith('russian_')` to cover three
+countries' Russian minorities at once, and a literal scan called all three
+unwritten. Fixed, the queue is 25 findings and every one is real.
+
+**The lesson, which is the mirror of the one two sections up: an audit that
+reports twenty-five false positives has failed in the same way as one that
+reports none.** Both leave you unable to see the two findings that matter.
+
+What the clean queue put at the top was Bosnia and Herzegovina — six mentions in
+the whole corpus, `bosnian_serb` unwritten at 31%, and no module, for a country
+whose twentieth century is among the heaviest on the roster.
+`events_southeast_europe.js`, which this file's own source tree described as
+covering "Yugoslav collapse, Bosnian War, Kosovo, tribunal", contains four
+Romanian events and five Serbian ones and not one Bosnian guard.
+
+Two things came out of writing it that generalise.
+
+**A module can be written for the famous version of a country.** The first pass
+put the siege of Sarajevo at the centre, and the engine draws 73% of Bosnians
+rural — correctly, the country was 39% urban in 1990. Sixteen per cent of
+characters are in Sarajevo. The war most Bosnians actually had was a village
+that men arrived at from somewhere else, a school with blankets hung on wire for
+walls, a convoy, a field you can see from the house with a skull on the sign,
+and a census that says a hundred and forty where 1991 said eleven hundred. Five
+events, and they are now the most-fired in the module.
+
+**`weight: 999` means nothing when everything is 999.** Five of them were
+eligible in 1992 alone and one event fires per year, so the chains behind them
+starved: `ba_camp` required a flag its own trigger set *in the same year*, which
+no character could ever satisfy, and the Bosnian Serb arc reached 5% of Serb
+men. Widening each event to the years it actually ran in, and keeping the
+referendum and the village clearance off a conscript's 1992 because the call-up
+owns that year, fixed all of it. Measured over 1,400 lives: all 41 fire, 0
+errors. Measured over 520 lives across ten birth cohorts: all
+42 fire, 0 errors, and `p.emigrateTo` puts the 59 diaspora characters in the
+United States and Canada rather than only flagging them.
+
+Two calibration notes worth keeping. The weight a narrow guard needs is not the
+weight a broad one needs: `gy_logie_room` (Indo-Guyanese, childhood, before
+1965) reached 5 of 520 lives at weight 8 and 26 at weight 30, and the
+follow-throughs gate on flags only 16-76 characters ever hold, so at the
+module-typical weight of 8 they lost to the general pool and the echo never
+landed for the life it was written for. And `check-anachronisms` now runs two
+Guyanese cohorts (1932 and 1955), because an estate colony on the sugar coast
+is exactly the case that audit exists for — a country whose present-day
+category says nothing about what was in the house.
+
+### `isRich` is a statement about now, for the third time
+
+CLAUDE.md has recorded this defect twice — `isWealthyArch` giving 1931 Oman a
+hallway telephone, then `place.hasRadio`/`hasTV`/`hasCinema` giving it a radio
+in 1930 — and both times the fix was applied to the predicates in front of it
+rather than to the predicate itself. CI then found a daily bus route with stops
+in a fixed order in **1951 Oman**, a country with ten kilometres of paved road
+and three schools, sixteen years before it exported oil. `isRich` was still
+`RICH_ARCHETYPES.includes(G.archetype)`, and eighteen predicates read it as
+"did this place have the thing early".
+
+The repair is three tests, not one, because they are three different questions:
+
+- **a table where there is one.** Electricity, piped water, a refrigerator, a
+  landline, a car all have arrival years per country. `wasWealthy` is the wrong
+  proxy for them: 1951 Germany was not materially rich — it was in ruins — and
+  had been electrified since the 1920s.
+- **`wasWealthy(country, year)`** for what genuinely tracks money and has no
+  table: a bank account, a clock in the house, a weekend, photographs.
+- **`cityEnough(G, share)`** for municipal infrastructure — a bus, a lift, an
+  underground, a supermarket — which follows urbanisation and not wealth.
+  Germany was 58% urban in 1935 and had municipal buses from 1905; Oman was
+  13% urban in 1951. Every country carries its own `urbanHistory`.
+
+**The lesson worth keeping: fix the predicate, not its callers.** Both earlier
+passes patched the symptom one guard at a time, and the wrong answer stayed in
+the definition waiting for the next sentence that asked it.
+
+### Thresholds are instruments, and a noisy one fails on nothing
+
+Three assertions failed during this pass and none of them had found a defect.
+The max of ~32 survivor ages, the median of ~20, and a proportion on a group
+that draws a few hundred times out of 30,000 births are all statistics that
+swing by more than their own bound between identical runs: a survivor median
+that measured **48 at n=150** came out **30** on one twenty-life draw, and a
+declared 0.88 share landed at 0.798 against a flat floor of 0.8.
+
+The rule that came out of it: **assert the contract, at the sample size you are
+actually taking.** The identity test now reads the declared share from the
+table and allows the ±10pp reconciliation `impliedMarginal()` documents, plus
+sampling room — so it cannot drift out of step with the module it tests. The
+mortality bounds are set for a twenty-life sample, with a stable companion
+(the share of a cohort reaching 60, pooled percentiles) carrying the real
+claim. Both still fail by a wide margin on the defect they were written for.
+
+A test that fails at random gets read as noise, and then the one real failure
+gets read as noise too. The trap is not subtle and it is easy to walk into
+twice: the replacement bound I wrote for the mortality test — "more than 10% of
+this cohort reaches 60" — failed on the next run at exactly 2 of 20, in the same
+commit as this paragraph. A tail share over twenty draws is no more stable than
+the max it replaced. Per-country assertions are sanity bounds; the real claim
+belongs in a statistic pooled over every country and every life in the run.
+
+### The check that loads a page
+
+`npm run build` exits 0 on a bundle that throws on load, and did for an
+unknown number of deploys. `manualChunks` matched the substring `'react'`
+against a module path; `scheduler` — which react-dom reaches for at
+module-init time, and whose path contains no "react" — went to a different
+chunk from React, and the two chunks imported each other. Rollup says so, on a
+successful build:
+
+```
+Circular chunk: vendor -> vendor-react -> vendor
+```
+
+and the page throws `Cannot read properties of undefined (reading 'useState')`
+and renders an empty div. Measured on both sides: with the old config `#root`
+holds **0** characters; with the fix it holds 2,485, a life starts and ages.
+
+Every other check here was green the whole time — 350 tests, 0 flag orphans, 0
+reachability errors, 0 anachronisms over 11,000 lines of prose — because not
+one of them loads a page. `npm run check-bundle` builds, serves `dist`, opens
+it in a browser, starts a life, ages ten years and fails on any console or page
+error, and it reproduces the original defect when the old config is put back.
+
+**The lesson worth keeping: test the artefact, not only the source.** Every
+audit in this repo reads code or runs the engine in Node. The thing the player
+receives is a bundle, and nothing was opening it.
+
+### The third beta pass
+
+The second pass read four lives. The third read four more, after the money
+layer went in, and found a fourth class: **a rule that is correct in one place
+and silently wrong in every other place it is read from.**
+
+| | before | after |
+|---|---|---|
+| diagnosed lives ending with `conditions: []` | 89% | 0.7% |
+| a child's wealth stat, outside the rich world | 5 (the clamp floor) for every tier | 5 / 14 / 28 / 45 / 62 by tier |
+| adult-years resting on the money clamp | 5.8%, with bills forgiven | 8.4%, carrying debt |
+| choices that print nothing back | 51 | 0, audited |
+| emigration events that move anybody | 0 of 83 flag-setters | `p.emigrateTo`, audited |
+| "Never married." on a widower's death screen | 6 of 200 married lives | 0 |
+| the empty-nest event's youngest trigger | children aged 12, 2 and 1 | somebody 17 or over |
+| retirement narrated as over, then declined | fired at 50 | 60, and the text does not assert it |
+
+The pattern is one rule read from several places, fixed in one of them. A
+promotion that pays less was fixed in the re-denomination path and in
+`askForRaise` and left in `checkPromotion`. `occupation.annualIncome` is scaled
+by `GDP_MULT` in `tickFamilyIncome` and in `formatParentIncome` and not in the
+estate band, so an inheritance was wrong by exactly `1 / GDP_MULT` — forty times
+in a `very_low` country. `character.ruralUrban` is frozen at birth and four
+separate prose sites read it directly while `homeCountry`, on the next line of
+the same files, correctly followed the character.
+
+**The lesson worth keeping: when you fix a rule, grep for every reader of it.**
+The one you do not fix is the one that will print into a life.
+
+### Money is a statement about when
+
+`careers.js` carries salary ranges in present-day dollars, `assets.js` carries
+prices in present-day dollars, and both were scaled by the country's
+present-day GDP tier and by nothing else — which is `isWealthyArch` again, one
+layer down. Read as history it printed `Starting salary: $19,540/yr` into 1948
+Germany, four months after the currency was reissued.
+
+`src/data/economy.js` supplies the missing dimension, and it is applied at
+**four chokepoints, all four of which are load-bearing**:
+
+1. salaries where they are set, plus `career.baseSalary` in present-day money,
+   so a career held from 1950 to 1990 does not pay 1950 wages into 1990 prices
+2. prices where they are charged — denominated at the DEFINITION of a cost,
+   never at the deduction, so the figure shown, the affordability check and the
+   amount taken are necessarily the same number
+3. `p.mo` in `applyProxy` — one site, 629 authored money deltas, all of which
+   stay exactly as written
+4. `G.money`, which is **divided** by it, so the ~76 guards reading
+   `G.money > 5000` keep meaning "comfortable" instead of quietly becoming
+   "alive after 1990"
+
+Income and prices carry the same factor, so affordability does not move.
+`tickLivingCosts` is the other half: nothing was ever spent on living, so a
+character banked 100% of gross income for sixty years. Its rates are calibrated
+against home ownership, the one outflow measured against the record — at true
+national-accounts saving rates ownership fell from 72% to 43% in the 1950
+American cohort, because nobody could assemble a deposit.
+
+**When you add a dollar figure anywhere, write it in present-day money and let
+the chokepoint denominate it.** A figure denominated twice is worse than one
+denominated never, because it looks right.
+
+### The auditors have the same failure mode as the content
+
+Both static audits were quietly exempting the thing they were built to catch.
+
+`check-anachronisms` skipped any line containing a negation **anywhere in the
+line**, so "Mobile money has made it possible to send money without a bank
+account" — which asserts mobile money and negates the bank — was invisible, and
+printed into 1990 Nigeria seventeen years before M-Pesa. Any sentence that
+mentions what a technology replaced was exempt, which is most of the sentences
+worth auditing. Negation is now scoped to the clause, with a matching FUTURE
+exemption so "When the refrigerator arrives" stays correctly ignored.
+
+`check-flags` fell through to `partial` for any `intent` it did not recognise,
+so a misspelling made a flag look broken and gave no way to tell why.
+`followthrough` is the value that keeps getting written, because it is what the
+field means and not what the field accepts. Unknown intents are now reported by
+name. **Valid values are `none`, `both`, `year_texture`, `event`, and nothing
+else.**
+
+**The lesson: an audit that cannot fail is not an audit.** When one reports
+zero, check that it can still report one.
+
+### Nobody had played the mode with play in it
+
+Every pass before this one tested **passive** mode. Active mode — the choice
+surface, the yearly action budget, the activities panel, crime, the trial, the
+minigames — had never been driven. Pacing came out good: 45% of years contain a
+real decision, 0-2% contain nothing, and choices measurably change a life
+(always-first against always-last, 14 lives each: US median death 71 vs 82,
+Nigeria 52 vs 25). Three things made it unplayable anyway.
+
+| | before | after |
+|---|---|---|
+| a negative balance at the trial screen | permanent soft-lock | recoverable |
+| salary reachable from one unbudgeted button | $3,455,778,417/yr | the top of your grade |
+| panel price vs engine price, 1950 Germany | $90,000 vs $1,260 | equal |
+| adult smarts, rich-world (share at 90+) | 96.7 (63%) | 83 (18%) |
+| money a child holds at eighteen, having never worked | $51,084 | pocket money |
+| world events reaching a prisoner over a ten-year sentence | 0 | 14 |
+| Money-category activities that do anything | 0 of 7 | 7 |
+| crimes the panel can reach | 30 of 37 | 37 |
+
+Two of those are worth naming as rules.
+
+**A price shown must be the price charged.** `economy.js` went in at the four
+engine chokepoints and not into the interface, so the panels printed
+present-day catalogue numbers while the engine charged era-denominated ones —
+and the `disabled` gates compared a nominal balance to a present-day price,
+falsely locking property, vehicles, travel and business for every character
+before about 2000. In 2024 the two numbers finally agreed, which is the "the
+economy is a statement about NOW" failure surviving one layer above where it
+was fixed. `estimatePrice`/`estimateCost` in `playerActions.js` now serve the
+display, the affordability check and the charge.
+
+**A verb offered is a verb that works.** Seven Money activities moved the
+wealth STAT, which `tick()` recomputes from `money` every year, so none of them
+did anything and two were strictly harmful. The sterilisation button called an
+activity id no pool defined. Seven crimes were not listed in the panel at all.
+Losing a career to a conviction had no prose. An arrest with a zero-length
+sentence had no consequence whatsoever.
+
+And the interface was contradicting four of the rules its own section states
+most explicitly: a "+2 / −4" flash on the stat strip, a partner card with a
+CRAZINESS bar behind a hot-pink gradient, emoji in one of the two log views but
+not the other, and the outcome of a choice printed twice on one screen. The
+Tailwind remap that exists so a component cannot reach a candy colour was
+missing exactly two scales, `pink` and `purple`, which is why the gradient was
+the real #ec4899.
+
+**The lesson: play the mode the player plays.** A passive life exercises the
+simulation. It does not touch a single button.
+
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
 
@@ -410,15 +1072,43 @@ above was invisible to a green flag audit. `npm run sim` is the counter-check.
 ```
 src/
   data/
-    countries.js              — 145 countries with full demographic data
-    places.js                 — 250+ named places across all countries (scale, region, type, population)
+    countries.js              — 154 countries with full demographic data, incl. `historicalNames`
+                                (birth-year keyed: "born in the Gold Coast", "born in East Pakistan") for 103 of them
+    places.js                 — 389 named places, at least one for every country on the roster. It was
+                                197 across 83 of 154, and a country with none leaves `currentPlace`,
+                                `birthPlace` and `currentNeighborhoodName` all null — the location
+                                bar renders behind `{livePlace && ...}`, so a character in almost half
+                                the roster was never told where they lived
     headlines.js              — ~130 major historical headlines for life log injection
-    events.js                 — root event file, imports 463+ modules, exports EVENTS array (~7,550+ total character events)
+    technology.js             — when a thing arrived where the character lives, and when the country
+                                became materially rich: 19 technologies, ~218 country overrides.
+                                Because `isWealthyArch` describes NOW, and read as history it gave
+                                1931 Oman a hallway telephone and 1944 Iceland a television.
+    economy.js                — what the money was worth, when and where. The same fault as
+                                `isWealthyArch`, one layer down: salaries and prices are written in
+                                present-day dollars and were scaled by the country's present-day GDP
+                                tier and by nothing else, so 1948 Germany printed a taxi driver on
+                                $19,540/yr. Eight archetype rows, 21 country overrides, two deliberate
+                                reversals (Nigeria's dollar wages peaked in the 1980 oil boom; the
+                                post-Soviet row loses two thirds of itself 1990-95), and the fact that
+                                makes it worth having: in 1960 Ghana pays better than South Korea
+    identity.js               — religion conditioned on ethnicity for the 473 groups where the two
+                                are entangled (Lhotshampa are Hindu; Bosniaks are Muslim; Malays are
+                                constitutionally Muslim), and silent for the rest. `impliedMarginal()`
+                                holds the joint draw to each country's declared religionWeights.
+    history.js                — the dates and facts the engine was guessing: independence years, coup
+                                years, the fifteen Soviet republics, the Warsaw Pact, malaria
+                                elimination, which countries have rivers, which taught school in a
+                                coloniser's language, and INSTITUTIONS_SUSPENDED — the years a country
+                                stopped having schools, wages, money, clinics, the post or cities
+    events.js                 — root event file, imports 463+ modules, exports EVENTS array (~8,025 total character events)
     [All events are organized into src/data/events/ subdirectories — see below]
 
-    worldEvents.js            — 255 world history events (year+country/archetype gated); 20+ events have `context` fields
+    worldEvents.js            — 252 world history events (year+country/archetype gated); 20+ events have `context` fields
     headlines.js              — ~130 major historical headline entries (year-matched, injected as log entries)
-    flags/                    — FLAG_REGISTRY split into 6 category files (political, economic, social, personal, historical, identity). 2670 registered flags. Pure data, no imports. Run `npm run check-flags` to derive coverage.
+    flags/                    — FLAG_REGISTRY split into 10 category files (identity, geographic, economic,
+                                health, relationships, political, prison, world_events, lifecycle, new_roster).
+                                2879 registered flags. Pure data, no imports. `npm run check-flags` derives coverage.
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options
@@ -443,7 +1133,6 @@ src/
         events_grief.js           — grief and loss events
         events_grief_mental.js    — grief-mental health intersection events
         events_religion_arc.js    — faith arc events
-        events_late_life.js       — late-life events (retirement, partner decline, health decline, legacy)
         events_children_arc.js    — children arc events
         events_fame_karma.js      — fame/karma/hobby/friendship events
         events_texture.js         — rural/pre-1960/career texture events
@@ -525,6 +1214,9 @@ src/
         events_child_death_arc.js — 11 events: infant death trigger through late-life reckoning
         events_israel.js          — 13 events: founding, Mizrahi, IDF, Rabin, intifadas, Oct 7 2023
         events_germany_france.js  — 9 events: Gastarbeiter, DDR, reunification; France Algerian war, banlieue
+        events_germany_reich.js   — 20 events: Germany 1933-49, the same gap one country over. The
+                                    Hitler Youth is written as enjoyable, because it was, and the
+                                    reckoning arrives in 1968 as a question from a child to a parent
         events_india_depth.js     — 12 events: arranged marriage, joint family, dowry, NRI question
         events_iran.js            — 7 events: Khatami reform era, sanctions economy, hijab, brain drain
         events_sick_child.js      — 9 events: parent of seriously ill child arc
@@ -583,6 +1275,7 @@ src/
         events_desires.js         — formative wound events + decade reflections (30/40/50/60)
         events_life_skeleton.js   — 4 guaranteed narrative beats at ages 15/30/40/55
         events_phase_entries.js   — 3 life phase transition events (adolescence/young_adult/midlife)
+        events_late_life.js       — late-life events (retirement, partner decline, health decline, legacy)
         events_partner_wants.js   — 8 relationship desire tension events
         events_relationship_crossover.js — 8 partnership arc events
         events_fertility.js       — fertility depth events
@@ -647,6 +1340,63 @@ src/
         events_turkmenistan.js    — 10 events: Niyazov Turkmenbashi cult, Gurbanguly reforms, gas wealth, Ashgabat marble city
         events_china.js           — 26 events: Cultural Revolution, gaokao, Tiananmen, rural-urban migration, social credit, lying flat
         events_japan.js           — 12 events: 1945 defeat, occupation, economic miracle, salaryman/karoshi, Fukushima
+        events_japan_war.js       — 32 events: Japan 1937-1952 from inside an ordinary life. The
+                                    corpus had 29 Japanese-guarded events and the earliest began in
+                                    1945. The national school and the rescript, the tonarigumi, the
+                                    temple bell on the cart, the class evacuated three prefectures
+                                    away, the ninth of March, the broadcast at noon on the fifteenth
+                                    of August, blacking out your own textbook with your calligraphy
+                                    brush, the bamboo-shoot existence. 14 of the 32 are follow-through
+        events_gulf.js            — 30 events: the two cities in one square kilometre. The roster
+                                    already modelled the demography correctly — UAE 59% South Asian,
+                                    Qatar 60%, Kuwait 40%, Bahrain 36%, every migrant group flagged
+                                    disadvantaged — and across ELEVEN Gulf ethnic ids the corpus
+                                    contained ONE reference, with `wealthy_gulf` the worst-covered
+                                    archetype in the roster. The kafala content that existed was
+                                    written from the sending side (a Nepali village, a broker, a
+                                    one-way ticket); the arriving life and the citizen's life were
+                                    both unwritten. Both positions, neither as a cartoon: the fee
+                                    that becomes the debt, the passport into the bag at the airport,
+                                    the shelf that is your whole private property and that nobody
+                                    ever touches, the house you built and have only seen in
+                                    photographs, forty minutes a week of being a father — and the
+                                    pearl collapse of the 1930s, the first shipment, the majlis,
+                                    being eleven per cent of your own country, Kuwait 1990 and the
+                                    expulsion that followed it, and the Pearl Roundabout demolished
+                                    so that nothing was left for anyone to mean by it
+        events_guyana.js          — 42 events: the country with one mention. Guyana had a single
+                                    guard anywhere in 8,124 events, and that guard named it in a
+                                    list of five Caribbean states — for a country whose twentieth
+                                    century contains, in one place, most of the forces this game is
+                                    about. Indenture from 1838 and the logie with the wall that
+                                    stops short of the roof; a single company owning the wage, the
+                                    shop, the ship and the estate hospital; the five shot at Enmore
+                                    in 1948 and the funeral walk that made Jagan; a constitution
+                                    suspended by warship 133 days after the first free vote; a
+                                    party split in 1955 that made the surname answer the ballot; the
+                                    2,600 families who moved in 1964; a voting system changed from
+                                    outside to remove one man; twenty years of rigged boxes and a
+                                    ban on wheat flour; Rodney and the bomb in the walkie-talkie;
+                                    Jonestown, which is the one word the world knows; the departure
+                                    that emptied the villages; and oil in 2015, which so far is a
+                                    number on the news. Plus the parts that are not politics: the
+                                    seawall with the Atlantic above the road, the bottom house, the
+                                    abeer in the street, Bourda. 10 of the 42 are follow-through.
+        events_bosnia.js          — 41 events: three peoples, one country, and the thing that is not
+                                    symmetrical. Bosnia was named six times in the entire corpus and
+                                    had no module; `events_southeast_europe.js`, which the source
+                                    tree described as covering the Bosnian war, turns out to hold
+                                    four Romanian events and five Serbian ones and no Bosnian guard
+                                    at all. Komšiluk and the 1984 Olympics before it; the water
+                                    queue, the parquet in the stove, the tunnel under the runway and
+                                    Markale inside it; the white armbands and the camps at Prijedor;
+                                    the Ferhadija; the Stari Most; Srebrenica; and, because a third
+                                    of the characters the engine draws here are Bosnian Serbs, the
+                                    conscript on the hillside and the sixty thousand who left the
+                                    Sarajevo suburbs in March 1996 with their own dead. Afterwards:
+                                    Dayton, two schools under one roof, minority return, the DNA
+                                    laboratory, The Hague, and Germany. 11 of the 41 are
+                                    follow-through.
         events_korea.js           — 14 events: hagwon, suneung, military service, Gwangju 1980, chaebol, Hallyu, DMZ families
         events_india.js           — 7 events: Emergency 1975–77, Sikh massacre 1984, liberalisation 1991, demonetisation
         events_india_depth.js     — 12 events: arranged marriage, joint family economy, dowry pressure, NRI question
@@ -692,6 +1442,15 @@ src/
         events_libya_depth.js     — Amazigh identity suppressed, Green Book curriculum, US bombing 1986, post-2011
         events_mexico.js          — Tlatelolco aftermath, EZLN 1994, femicide crisis, cartel expansion, Day of Dead
         events_mongolia_depth.js  — Naadam childhood, Genghis Khan rehabilitation post-1990, script revival, Buddhism revival
+        events_austria.js         — 13 events: Heldenplatz 1938, the bombing of Vienna, four-power
+                                    occupation, the 1955 treaty, the Gemeindebau, Waldheim 1986
+        events_adriatic.js        — 18 events: Croatia and Slovenia, one federation and two 1990s
+                                    (ten days vs. four years, Vukovar, Oluja, the izbrisani, EU departure)
+        events_iceland_moldova.js — 19 events: the two extremes of the small-country range —
+                                    airfield wages to a banking collapse; deportation to Padua
+        events_oman_pacific_bhutan.js — 19 events: three states opened by one decision, and the
+                                    population it was not extended to (Zanzibari returnees,
+                                    the francophone half, the Lhotshampa expulsions)
         events_morocco_depth.js   — Skhirat coup 1971, Western Sahara/Sahrawi, Casablanca 2003, Moudawwana reform 2004
         events_mozambique_depth.js — aldeias comunais 1977–82, reeducation camps, landmine generation, cashew collapse
         events_myanmar_depth.js   — Karen/KNU civil war since 1948, jade miners Hpakant, Kachin ethnic minority arcs
@@ -792,9 +1551,40 @@ src/
                                 generateEpitaph, generateIdentityCard, buildYearTexture,
                                 buildEffectProxy, resolveProxyExtras, tickPartner, attemptCrime,
                                 deriveGenerationalFlags, DESIRE_PATTERNS, applySoundtrack
-    casinoEngine.js
-    gangEngine.js
-    lotteryEngine.js
+    yearTexture.js            — the quiet-year prose layer: `textureCandidates` (generator,
+                                yields [tier, line]) + `buildYearTexture` (tiered driver)
+    mundaneLayer.js           — daily-life texture, pooled; fills the years texture declines
+    prose.js                  — what this character has already been told, so a life does not
+                                repeat itself (hashed, capped, stored in mem.saidLines)
+    names.js                  — one place to draw a person's name, so two people in one life are not
+                                the same person. Ten independent pickFrom() calls across four files
+                                gave 13% of families two members with the same first name.
+    epitaph.js                — the death screen: generateIdentityCard, generateEpitaph,
+                                generateLifeNotes. The historical spine comes from
+                                `worldEventsFired`, which the engine has been recording all along.
+    casinoEngine.js           — UNWIRED. 441 lines of blackjack with hit/stand, slots and
+                                roulette. Nothing imports it.
+    gangEngine.js             — UNWIRED. 432 lines: ranks, activities, prison gangs, a tick.
+                                Nothing imports it.
+    lotteryEngine.js          — UNWIRED. 170 lines. Nothing imports it.
+                                ─────────────────────────────────────────────────────────
+                                These three, plus the stock market in playerActions.js
+                                (`buyStock`/`sellStock`/`tickStocks`/`getAvailableStocks`,
+                                complete and era-gated), are ~1,150 lines of implemented
+                                play that no import reaches. They are from the earlier
+                                design — the theme config used to describe itself as
+                                "BitLife-inspired" — and the interface rules the project
+                                has since committed to argue against a blackjack table and
+                                a crypto ticker in a game whose stated mechanic is the
+                                sentence that lands. The need they served, that money can
+                                move by risk, is met by the gambling and investment
+                                activities, which now move real money rather than the
+                                wealth stat.
+                                Left in place rather than deleted, because that is a call
+                                for whoever owns the design. If they are wired, the prices
+                                need the era treatment like everything else, and the
+                                instrument names ("TechCorp", "CryptoCoin") need to belong
+                                to a place and a decade.
   store/
     gameStore.js              — Zustand store, INITIAL_STATE, all actions including
                                 resolveTrial, pendingTrial state, relocateTo,
@@ -815,8 +1605,9 @@ src/
     FlagChip.jsx
     minigames/                — MazeGame, FightGame, HackGame, QuickTime, LockPick
   utils/
-    countryUtils.js           — getCountryFlag, REGIME_LABELS/COLORS, RELIGION_LABELS,
-                                RESIDENCY_LABELS, getCountryNameForYear
+    countryUtils.js           — getCountryFlag (+ FLAGGED_COUNTRIES, asserted against the
+                                roster in tests), REGIME_LABELS/COLORS, RELIGION_LABELS,
+                                RESIDENCY_LABELS, getCountryDisplayName (historical names)
     random.js                 — randomisation utilities
 scripts/
   check-flags.js              — flag audit tool. Scans src/data/, src/engine/, src/store/ to find
@@ -829,4 +1620,28 @@ scripts/
                                   npm run check-flags -- --weight=major
                                   npm run check-flags -- --unregistered
                                   npm run check-flags -- --world
+  check-events.js             — reachability audits: dead guards, identity literals absent from the
+                                country the guard requires, phases that truncate their own age band,
+                                year windows nobody can be inside, seasons a country cannot have,
+                                and `unwritten-group` — populations the roster models that no guard
+                                has ever named. That last one has now been wrong in four directions
+                                (every unnamed id; shared-`Set` ids invisible to a body scan; every
+                                id trivially named because `countries.js` declares them; and a
+                                country's own plurality, which is what the country-generic content
+                                is already about). It currently skips the plurality, catch-all
+                                buckets, and ids reached by a `startsWith` rather than a literal.
+  check-anachronisms.js       — plays lives across the eras where a country's present-day category is
+                                least like its past (the Gulf before oil, Iceland before broadcasting,
+                                Korea before the miracle) and reads every printed line against
+                                technology.js. Every line it found on its first run was reachable,
+                                correctly guarded and syntactically fine; it was wrong about when the
+                                world contained the thing it named.
+  sim.js                      — the firing-rate report. The only audit that can see what the game
+                                actually does, and the counter-check on every static one.
+  lib/
+    sim.js                    — the headless harness. `collectLines` records every prose line with the
+                                year and country it printed in; `keepFinalStates` keeps each life's
+                                end state for the death-screen checks.
+    anachronism.js            — the phrase table that gives a sentence's date away, and the age floors
+                                for lines that describe doing something yourself
 ```

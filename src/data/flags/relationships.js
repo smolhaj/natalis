@@ -4,6 +4,54 @@
  */
 export const RELATIONSHIP_FLAGS = {
 
+  gulf_parent_by_phone: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Does about forty minutes a week of being a parent, on a propped-up phone, and has got very good at it.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_protected_them_from_it: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Decided what a letter home is for, and made the same decision for fifteen years.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_raised_their_children: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Raised another family\'s children for eleven hours a day, and was called a name that is not quite an aunt and not quite a title.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  gulf_told_them_the_truth: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Wrote home exactly what the numbers were, and transferred the weight rather than sharing it.',
+    intent: 'year_texture',
+    notes: 'Set in events_gulf.js — the two cities in one square kilometre.',
+  },
+
+  interfaith_partnership: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'The partnership is across two religious traditions — recorded because nothing on the partner object holds a religion.',
+    intent: 'event',
+    notes: 'Set by rel_interfaith_relationship and rela_interfaith_relationship_arc. Checked by rela_raising_interfaith_children and rela_children_of_a_registered_faith, which used to assume it.',
+  },
+
+  marriage_across_the_register: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'The marriage required a conversion, real or nominal, to be registered at all.',
+    intent: 'event',
+    notes: 'Set by rel_interfaith_relationship (conversion choice). Checked in the religion arc follow-through.',
+  },
+
   permanently_estranged: {
     weight: 'major',
     category: 'relationship',
@@ -580,14 +628,6 @@ export const RELATIONSHIP_FLAGS = {
     description: 'Has or had a friendship deep enough that the person knows the real version — not a social contact but a witness.',
     intent: 'none',
     notes: 'Cross-cutting. Set by friendship arc and small life events.',
-  },
-
-  strong_marriage: {
-    weight: 'moderate',
-    category: 'relationship',
-    description: 'Enduring partnership that has weathered years and remains genuinely close — the marriage that worked.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by romance arc and long-marriage events.',
   },
 
   estranged_family: {

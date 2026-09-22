@@ -41,9 +41,9 @@ const POSITIVE_FLAGS = new Set([
 ])
 
 function flagStyle(flag) {
-  if (NEGATIVE_FLAGS.has(flag)) return { bg: '#fff0ef', text: '#c0392b', border: '#ffcdd2' }
-  if (POSITIVE_FLAGS.has(flag)) return { bg: '#f0fdf4', text: '#166534', border: '#bbf7d0' }
-  return { bg: '#f0f4ff', text: '#1e40af', border: '#bfdbfe' }
+  if (NEGATIVE_FLAGS.has(flag)) return { bg: '#f8efed', text: '#733026', border: '#ffcdd2' }
+  if (POSITIVE_FLAGS.has(flag)) return { bg: '#edf2ee', text: '#34503a', border: '#bdcfc3' }
+  return { bg: '#eceef2', text: '#35485d', border: '#c3cad6' }
 }
 
 function flagLabel(flag) {

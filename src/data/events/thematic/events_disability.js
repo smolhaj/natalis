@@ -11,6 +11,8 @@
 //
 // Disability flags set here gate year texture and epitaph lines in gameEngine.
 
+import { hasTech } from '../../technology.js'
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // § 1 — BIRTH DISABILITY
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -229,7 +231,12 @@ const DEAF_ARC_EVENTS = [
       G.flags.has('born_deaf') &&
       !G.flags.has('deaf_family') &&
       !G.mem?.disDeafCommFired,
-    text: 'The school for the Deaf, or the club, or the online community for BSL/ASL speakers — whatever the route, you find the others. The feeling of being in a room where the primary language is yours — where you do not need to ask anyone to face you when they speak, where the communication is complete rather than approximate — is not something you had a word for before you experienced it. You have a word for it now: home.',
+    // Deaf clubs are nineteenth-century institutions and the route to them is
+    // whatever the year offers; the online one was reaching 1942.
+    text: (G) => (hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear)
+      ? 'The school for the Deaf, or the club, or the online community for BSL/ASL speakers — whatever the route, you find the others. '
+      : 'The school for the Deaf, or the club above the shop where they meet on Thursdays, or the family three streets over who sign at the table — whatever the route, you find the others. ') +
+      'The feeling of being in a room where the primary language is yours — where you do not need to ask anyone to face you when they speak, where the communication is complete rather than approximate — is not something you had a word for before you experienced it. You have a word for it now: home.',
     choices: null,
     effect: (p) => { p.m += 12; p.s += 5; p.addFlag('deaf_community_found'); p.setMem('disDeafCommFired', true) },
   },
@@ -417,7 +424,14 @@ const DISABILITY_CROSSCUTTING = [
       (G.flags.has('born_with_disability') || G.flags.has('born_deaf')) &&
       G.currentYear >= 1970 &&
       !G.mem?.disCureFired,
-    text: 'Someone offers a cure — a treatment, a surgery, a programme, a therapy that promises improvement. The offering comes from a place of love, or from the internet, or from a relative who read something. The question it raises is not simple: whether the condition is a thing to be fixed, or a condition of the life, or both, or neither.',
+    // Where the offer comes from is the only dated part of this: guarded on
+    // 1970 onward, it was citing the internet in 1982.
+    text: (G) => {
+      const source = hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear)
+        ? 'or from the internet, or from a relative who read something'
+        : 'or from a pamphlet someone pressed on your mother, or from a relative who read something'
+      return `Someone offers a cure — a treatment, a surgery, a programme, a therapy that promises improvement. The offering comes from a place of love, ${source}. The question it raises is not simple: whether the condition is a thing to be fixed, or a condition of the life, or both, or neither.`
+    },
     choices: [
       {
         text: 'Worth trying — if it helps, it helps',

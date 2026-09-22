@@ -1,3 +1,4 @@
+import { wasSovietRepublic } from '../../history.js'
 // BUILD 25 — The census, documents, and official identity
 // The state's power to define you — and to deny that definition.
 // Identity documents as fate. Statelessness. Colonial categories.
@@ -29,9 +30,9 @@ export const DOCUMENT_EVENTS = [
 
   {
     id: 'doc_propiska_moscow',
-    phase: 'young_adult',
+    phase: null,   // guard runs to 35; 'young_adult' was cutting six years off it
     weight: 3,
-    when: (G) => (G.character.country?.name === 'Russia' || G.character.country?.archetype === 'post_soviet') && G.currentYear >= 1960 && G.currentYear <= 2000 && G.age >= 18 && G.age <= 35 && !G.mem.docPropiska,
+    when: (G) => (G.character.country?.name === wasSovietRepublic(G.character.country.name)) && G.currentYear >= 1960 && G.currentYear <= 2000 && G.age >= 18 && G.age <= 35 && !G.mem.docPropiska,
     text: 'To live in Moscow you need a *propiska* — a residence permit. Without it you cannot register for work, housing, or healthcare in the city. The permit is issued by the city you want to live in. The city does not want you, or the person who could issue the permit wants something from you first. You are in a city of eight million people and you do not legally exist in it.',
     choices: [
       {
