@@ -37,7 +37,10 @@ export default defineConfig({
   test: {
     environment: 'node',
     globals: true,
-    include: ['tests/**/*.test.js'],
+    // .jsx so the component tests are picked up; each declares
+    // `@vitest-environment jsdom` at the top of the file, because the engine
+    // and data tests are far faster in node and there are 264 of them.
+    include: ['tests/**/*.test.{js,jsx}'],
     coverage: {
       provider: 'v8',
       include: ['src/engine/**', 'src/data/**', 'src/store/**'],
