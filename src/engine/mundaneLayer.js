@@ -18,7 +18,7 @@ export function buildMundaneLayer(state) {
 
   const flags = new Set(state.flags ?? [])
   const F = (f) => flags.has(f)
-  const { age, currentYear, partner, children, career, mem } = state
+  const { age, currentYear, partner, children, career } = state
   const phase = age <= 5 ? 'early_childhood'
     : age <= 11 ? 'childhood'
     : age <= 17 ? 'adolescence'
@@ -170,10 +170,18 @@ export function buildMundaneLayer(state) {
   const working = age >= 16
   const adult = age >= 18
 
-  addIf(!wealthyNow && notYoung && currentYear <= 1950,
+  // These are about electricity and piped water, not about national wealth.
+  // Gated on `!wealthyNow`, they trimmed an oil lamp and fetched water from a
+  // standpipe in 1942 and 1950 Berlin — a city lit since the 1900s — because
+  // Germany does not cross the material-wealth line until 1958.
+  addIf(!tech('electricity') && notYoung,
     'The lamp needs trimming. This is the work of the evening.',
-    'News of what has happened elsewhere takes days to arrive.',
+  )
+  addIf(!tech('piped_water') && notYoung,
     'Water is fetched, not delivered. The fetching organises the morning.',
+  )
+  addIf(!tech('radio') && notYoung,
+    'News of what has happened elsewhere takes days to arrive.',
   )
   addIf(wealthyNow && notYoung && currentYear <= 1925,
     'The telegram arrived. Its brevity is the result of the cost, not the emotion.',

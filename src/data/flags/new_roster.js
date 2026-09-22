@@ -501,4 +501,204 @@ export const NEW_ROSTER_FLAGS = {
     weight: 'major', category: 'migration', intent: 'year_texture',
     description: 'Sold what the dzud left and took a fenced plot on the edge of Ulaanbaatar.',
   },
+
+  // ── Germany 1933-49: the twelve years and the fifty-year argument after them
+  // See src/data/events/geographic/events_germany_reich.js. The corpus had one
+  // event touching the German 1930s before this.
+
+  de_reich_child: {
+    weight: 'major', category: 'historical', intent: 'both',
+    description: 'A German childhood inside the twelve years.',
+    notes: 'Follow-through: dereich_ft_1968_question, dereich_ft_photograph, dereich_ft_last_one.',
+  },
+  de_reich_family_approved: {
+    weight: 'major', category: 'political', intent: 'year_texture',
+    description: 'The household was relieved. The word at the table was order.',
+  },
+  de_reich_family_quiet: {
+    weight: 'major', category: 'political', intent: 'year_texture',
+    description: 'The household went quiet and turned the radio down.',
+  },
+  de_reich_family_opposed: {
+    weight: 'major', category: 'political', intent: 'year_texture',
+    description: 'Somebody in the house said the wrong thing out loud, once.',
+  },
+  de_hj_enthusiast: {
+    weight: 'major', category: 'identity', intent: 'year_texture',
+    description: 'Loved the Jungvolk or the Jungmädel, and was good at it.',
+    notes: 'The hardest fact in the arc and the reason it is worth having.',
+  },
+  de_hj_attended: {
+    weight: 'moderate', category: 'identity', intent: 'year_texture',
+    description: 'Went, sang at the right volume, was never in trouble.',
+  },
+  de_hj_avoided: {
+    weight: 'moderate', category: 'identity', intent: 'year_texture',
+    description: 'Parents found a reason, at a cost to the father at work.',
+  },
+  de_classmate_vanished: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'A classmate was not there in the autumn and the register had been rewritten.',
+  },
+  de_asked_once: {
+    weight: 'moderate', category: 'personal', intent: 'year_texture',
+    description: 'Asked where she went, once, and got a hand flat on the table.',
+  },
+  de_said_it_too: {
+    weight: 'major', category: 'moral', intent: 'year_texture',
+    description: 'Repeated what the radio said, in a playground, and was agreed with.',
+  },
+  de_kristallnacht_witness: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'Saw the street in the morning of 10 November 1938.',
+  },
+  de_small_decency: {
+    weight: 'major', category: 'moral', intent: 'year_texture',
+    description: 'A door left unlocked and a bag kept in a cupboard.',
+  },
+  de_believed_it: {
+    weight: 'major', category: 'political', intent: 'year_texture',
+    description: 'Believed it — not all of it, and the part believed was believed completely.',
+  },
+  de_listened_abroad: {
+    weight: 'major', category: 'political', intent: 'year_texture',
+    description: 'The household tuned past the end of the dial, which was a capital offence from 1943.',
+  },
+  de_denunciation_climate: {
+    weight: 'moderate', category: 'political', intent: 'year_texture',
+    description: 'The block warden on the second floor, who was neither paid nor threatened.',
+  },
+  de_marked_unreliable: {
+    weight: 'moderate', category: 'political', intent: 'year_texture',
+    description: 'A file with a word in it that shaped which jobs were available until about 1952.',
+  },
+  de_war_family: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'A father or brother called up; the ordinary condition of every street.',
+  },
+  de_father_lost_east: {
+    weight: 'major', category: 'loss', intent: 'both',
+    description: 'Missing in the east. No grave, no date.',
+    notes: 'Follow-through: dereich_ft_father_never_found.',
+  },
+  de_no_grave: {
+    weight: 'major', category: 'loss', intent: 'year_texture',
+    description: 'The Red Cross card: date unknown, place unknown, case closed.',
+  },
+  de_father_returned_late: {
+    weight: 'major', category: 'loss', intent: 'year_texture',
+    description: 'Came back from Soviet captivity in 1949, and was somebody else.',
+  },
+  de_bombing_survivor: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'The siren, the cellar, the case packed by the door since 1942.',
+  },
+  de_bombed_out: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'Dug out; everything the family owned in a handcart by morning.',
+  },
+  de_klv_evacuated: {
+    weight: 'moderate', category: 'historical', intent: 'year_texture',
+    description: 'Sent away with the school to the mountains, with a label on the coat.',
+  },
+  de_child_soldier_reich: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'Flakhelfer, or a Panzerfaust in a park at fifteen.',
+  },
+  de_walked_away: {
+    weight: 'major', category: 'moral', intent: 'year_texture',
+    description: 'Put the weapon in a ditch and walked home through fields at night.',
+  },
+  de_zero_hour: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'May 1945: the flags into the stove and the street smelling of burning cloth.',
+  },
+  de_belief_collapsed: {
+    weight: 'major', category: 'identity', intent: 'year_texture',
+    description: 'Every instrument for telling true from false had been calibrated by the same people.',
+  },
+  de_relief_unspeakable: {
+    weight: 'major', category: 'identity', intent: 'year_texture',
+    description: 'It was relief, and the word could never be said out loud in this country.',
+  },
+  de_1945_violence: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'What happened in the town in those weeks, unwritten anywhere for fifty years.',
+  },
+  de_hunger_winter: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: '1946-47: the banisters into the stove, the tablecloth out to a farm.',
+  },
+  de_coal_child: {
+    weight: 'moderate', category: 'historical', intent: 'year_texture',
+    description: 'Took coal off the wagons, like every child in the street.',
+  },
+  de_truemmerfrau: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'Passed bricks and knocked the mortar off them, for a better ration card.',
+  },
+  de_rebuilt_it: {
+    weight: 'moderate', category: 'legacy', intent: 'year_texture',
+    description: 'Knows which parts of the city they put back by hand, and has never said.',
+  },
+  de_occupation_work: {
+    weight: 'moderate', category: 'economic', intent: 'year_texture',
+    description: 'Office work for the occupation, paid in cigarettes.',
+  },
+  de_vertriebene: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'One of the twelve million who came west, from a farm on no buyable map.',
+  },
+  de_billeted_strangers: {
+    weight: 'moderate', category: 'social', intent: 'year_texture',
+    description: 'Four strangers in two rooms by order, and a mother who was civil and never warm.',
+  },
+  de_persilschein: {
+    weight: 'major', category: 'moral', intent: 'year_texture',
+    description: 'Two neighbours signed for you and you signed for two neighbours.',
+  },
+  de_denazified_honestly: {
+    weight: 'major', category: 'moral', intent: 'year_texture',
+    description: 'Answered the questionnaire accurately, at eighteen months and a career.',
+  },
+  de_reckoning_begun: {
+    weight: 'major', category: 'identity', intent: 'year_texture',
+    description: 'Thinks the arguing is right, and is one of the exhibits.',
+  },
+  de_reckoning_deferred: {
+    weight: 'major', category: 'identity', intent: 'year_texture',
+    description: 'It was wound up quietly around 1950 and the bill arrived in 1968.',
+  },
+  de_told_the_children: {
+    weight: 'major', category: 'legacy', intent: 'year_texture',
+    description: 'Told them, over four hours, and was not forgiven.',
+  },
+  de_deflected_the_children: {
+    weight: 'major', category: 'legacy', intent: 'year_texture',
+    description: 'Said they were a child, which was true and was not an answer.',
+  },
+  de_refused_the_children: {
+    weight: 'major', category: 'legacy', intent: 'year_texture',
+    description: 'Told them they had no idea. The conversation resumed eleven years later.',
+  },
+  de_named_it: {
+    weight: 'major', category: 'legacy', intent: 'year_texture',
+    description: 'Said the place-name on the back of the photograph out loud, with the family in the room.',
+  },
+  de_left_it_in_the_box: {
+    weight: 'major', category: 'legacy', intent: 'year_texture',
+    description: 'Said he was kind to you, which was true, as the last person who could say otherwise.',
+  },
+  de_told_it_straight: {
+    weight: 'major', category: 'legacy', intent: 'year_texture',
+    description: 'Told a room of fourteen-year-olds that the camping was good.',
+  },
+  de_gave_the_speech: {
+    weight: 'moderate', category: 'legacy', intent: 'year_texture',
+    description: 'Gave the answer they came for, which changed nothing, including them.',
+  },
+  de_wunder_bargain: {
+    weight: 'major', category: 'economic', intent: 'year_texture',
+    description: 'A new kitchen and a fortnight in Italy, and the subject that was not the subject.',
+  },
 }

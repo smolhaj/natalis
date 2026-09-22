@@ -225,7 +225,8 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => G.age >= 14 && G.age <= 16 && !G.mem?.adolAdultConvAck,
-    text: 'An adult speaks to you as if you are also an adult. They use the kind of language they would use to another adult — not simplified, not protective — and they listen to what you say back in the same way. You are not sure what has changed. You are fourteen, or fifteen, and you have been waiting for this without knowing it.',
+    // The age was in the sentence and the guard runs to sixteen.
+    text: (G) => `An adult speaks to you as if you are also an adult. They use the kind of language they would use to another adult — not simplified, not protective — and they listen to what you say back in the same way. You are not sure what has changed. You are ${G.age}, and you have been waiting for this without knowing it.`,
     choices: null,
     effect: (p) => {
       p.m += 4

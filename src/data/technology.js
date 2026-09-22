@@ -114,6 +114,12 @@ export function wasWealthy(country, year) {
 
 const BASE = {
   //                  w_west w_east w_gulf p_sov d_urb d_unst subsah conflict
+  // Household electricity and piped water. Both are overwhelmingly a question
+  // of city versus countryside rather than of national wealth, which the
+  // `rural` adjustment in hasTech() carries: Berlin was lit in the 1900s and
+  // parts of rural Bavaria were not until the 1950s.
+  electricity:       [1925, 1940, 1960, 1935, 1955, 1965, 1985, 1985],
+  piped_water:       [1930, 1945, 1965, 1940, 1965, 1975, 1995, 1995],
   radio:             [1925, 1935, 1950, 1935, 1945, 1950, 1955, 1955],
   cinema:            [1920, 1935, 1955, 1930, 1940, 1950, 1955, 1960],
   newspaper:         [1900, 1920, 1955, 1920, 1930, 1940, 1955, 1955],
@@ -180,6 +186,25 @@ export const TECH_OVERRIDES = {
     'Eritrea': 1995, 'Namibia': 1985, 'Zimbabwe': 1975,
     'Afghanistan': 1980, 'Somalia': 1985, 'Yemen': 1978, 'Syria': 1970,
     'Myanmar': 1985, 'Palestine': 1995, 'Haiti': 1985,
+  },
+  electricity: {
+    'United States': 1920, 'United Kingdom': 1925, 'Germany': 1920, 'France': 1930,
+    'Netherlands': 1925, 'Belgium': 1928, 'Switzerland': 1915, 'Austria': 1925,
+    'Sweden': 1925, 'Norway': 1920, 'Iceland': 1930, 'Ireland': 1946,
+    'Italy': 1935, 'Spain': 1940, 'Portugal': 1955, 'Greece': 1950,
+    'Japan': 1935, 'South Korea': 1968, 'Taiwan': 1965, 'Singapore': 1960,
+    'Russia': 1935, 'Poland': 1945, 'Czech Republic': 1935, 'Hungary': 1940,
+    'Oman': 1975, 'Saudi Arabia': 1965, 'Kuwait': 1955, 'Qatar': 1965, 'UAE': 1968,
+    'Bhutan': 1995, 'Nepal': 1990, 'Ethiopia': 1998, 'Nigeria': 1985,
+    'India': 1985, 'China': 1980, 'Brazil': 1970, 'Mexico': 1970,
+  },
+  piped_water: {
+    'United States': 1925, 'United Kingdom': 1925, 'Germany': 1925, 'France': 1935,
+    'Netherlands': 1925, 'Switzerland': 1920, 'Austria': 1930, 'Sweden': 1930,
+    'Iceland': 1935, 'Ireland': 1955, 'Italy': 1945, 'Spain': 1955,
+    'Portugal': 1965, 'Greece': 1960, 'Japan': 1950, 'South Korea': 1975,
+    'Russia': 1955, 'Poland': 1960, 'Oman': 1980, 'Kuwait': 1960,
+    'Bhutan': 2000, 'Nepal': 1998, 'Ethiopia': 2005, 'Nigeria': 1995,
   },
   radio: {
     'Oman': 1972,                 // Radio Oman opened in 1970; sets were rare before

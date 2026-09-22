@@ -13651,7 +13651,22 @@ function* textureCandidates(state, opts = {}) {
   {
     const nbhTier = state.currentNeighborhoodTier
     const nbhName = state.currentNeighborhoodName
-    if (nbhTier === 'informal' && Math.random() < 0.3) yield [T.anchored, pick([
+    // `informal` means an unplanned settlement — a standpipe at the corner,
+    // land with no title, electricity spliced off the main. In a wealthy
+    // country the same tier is the deprived end of a planned one: Gropiusstadt
+    // and Märkisches Viertel are West Berlin social housing from the 1960s and
+    // 70s, and a 1933 Berlin childhood was being told it fetched water from a
+    // standpipe in an estate that would not exist for thirty years.
+    const informalIsPossible = !['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(
+      (state.currentCountry ?? state.character?.country)?.archetype)
+    if (nbhTier === 'informal' && !informalIsPossible && Math.random() < 0.28) yield [T.anchored, pick([
+      nbhName
+        ? `${nbhName} is the address people's faces change at. The buildings are solid and the lifts work about half the time and none of that is what the face is about.`
+        : 'It is the address people\'s faces change at. The buildings are solid and the lifts work about half the time and none of that is what the face is about.',
+      'The estate was built quickly and with intent, and the intent was that people like your family would live somewhere and not somewhere else.',
+      'Everything works. The heating, the water, the lifts more often than not. What does not work is the thing nobody will name, which is the postcode on a form.',
+    ])]
+    if (nbhTier === 'informal' && informalIsPossible && Math.random() < 0.3) yield [T.anchored, pick([
       nbhName
         ? `The water in ${nbhName} runs from the standpipe at the corner until mid-morning. You have arranged your life around this.`
         : 'The water runs from the standpipe until mid-morning. You have arranged your life around this.',
@@ -15029,6 +15044,157 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('omn_two_countries_carried') && Math.random() < 0.22) yield [T.anchored,
     'You are the only person in the room who feels it as distance rather than as history, and there is no way to hand that over.']
+  // ─── GERMANY 1933-49 ────────────────────────────────────────────────────────
+  // The twelve years do not end in 1945 for anybody who was in them. These are
+  // the quiet-year presence of that: what a German life carries at forty, at
+  // sixty, at eighty, in a country that spent two generations arranging not to
+  // be asked.
+
+  if (F.has('de_reich_child') && Math.random() < 0.2) yield [T.anchored, pick([
+    phase === 'late_life'
+      ? 'You were eleven. That is the whole of your defence and it is a real one, and you have never once been able to say it without hearing how it sounds.'
+      : 'There are four years of your childhood you can describe in detail and have never described to anybody.',
+    'The songs are still there, whole, with all the verses. That is the thing nobody warns you about: what a child learns by singing does not come out.',
+    phase === 'late_life'
+      ? 'Everyone who could contradict you is dead. You are careful in a way that has nothing to do with being caught.'
+      : 'Somebody says the years were terrible and you agree, and you are agreeing to a different sentence than the one they said.',
+  ])]
+  if (F.has('de_hj_enthusiast') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You were good at it and you were happy, and you have spent fifty years putting those two facts down in a place where nobody will pick them up.',
+    'There was a week in the summer with a lake in it that was the best week of your life until you were thirty, and you know exactly what it was for.',
+    phase === 'late_life'
+      ? 'The uniform fitted and the knife had words on it and you were eleven years old and proud, and you are ninety, and it has not stopped being true.'
+      : 'The shape of the thing that felt like belonging is the same shape as the thing your grandchildren join now, and you notice it, and you say nothing.',
+  ])]
+  if (F.has('de_hj_attended') && Math.random() < 0.18) yield [T.anchored, pick([
+    'You sang at the right volume for four years and were never once in trouble, and you could not have explained then or now what you thought you were doing.',
+    'You were in it and not of it, which sounds like a position and was closer to a habit, and it is the thing you are least able to describe.',
+  ])]
+  if (F.has('de_hj_avoided') && Math.random() < 0.18) yield [T.anchored,
+    'Your father found a reason every year for four years. You did not understand what it cost him at the works until you were forty and he was dead.']
+  if (F.has('de_classmate_vanished') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You can see the desk. Second row, by the window, two along. You cannot see her face any more and you have not been able to for about thirty years.',
+    'The register was rewritten. Somebody sat down and copied out a list of names leaving one off, and that person was a teacher, and had a name too.',
+  ])]
+  if (F.has('de_said_it_too') && Math.random() < 0.24) yield [T.anchored, pick([
+    'You said it in a playground and the other children agreed with you, and the warmth of being agreed with is the specific thing you remember, not the words.',
+    'You were nine. It is not a defence and you have never offered it as one, and it is also the only true thing you can say about it.',
+  ])]
+  if (F.has('de_kristallnacht_witness') && Math.random() < 0.22) yield [T.anchored, pick([
+    'Glass, the length of a street, further than you would think one window could go. It is the sound of it being swept that comes back, not the sight.',
+    'A man was sweeping his own frontage before opening because the glass was in the way, and that is the detail that has never let go.',
+  ])]
+  if (F.has('de_small_decency') && Math.random() < 0.2) yield [T.anchored,
+    'A door left unlocked and a bag in a cupboard. It was not heroism and it was not nothing, and you have never told it in a way that made it sound like either.']
+  if (F.has('de_believed_it') && Math.random() < 0.2) yield [T.anchored, pick([
+    'You believed it. Not all of it and not all the time, and the part you believed you believed completely, and you know which part.',
+    'Everything you were taught was said in the same tone by the same people and none of it was true, and you have never fully trusted a confident voice since.',
+  ])]
+  if (F.has('de_listened_abroad') && Math.random() < 0.2) yield [T.anchored,
+    'A blanket over the set and a child at the door. You knew what was actually happening about four months before the street did, and could tell nobody.']
+  if (F.has('de_denunciation_climate') && Math.random() < 0.18) yield [T.anchored,
+    'It was not the secret police. It was the man from the second floor, who was not paid and was not threatened, and who asked after your mother in the stairwell.']
+  if (F.has('de_bombing_survivor') && Math.random() < 0.24) yield [T.anchored, pick([
+    'You can still make the sound of the siren with your mouth. You have never done it in front of anyone.',
+    'Coal dust and other people, and a bucket by the door. You can read what a street looks like from the quality of the light before you reach the top of the stairs.',
+    phase === 'late_life'
+      ? 'A car alarm in a certain key takes two full seconds off you, at eighty-four, in a supermarket car park.'
+      : 'There is a note some machinery makes that you have to walk away from, and you have stopped trying to explain why.',
+  ])]
+  if (F.has('de_bombed_out') && Math.random() < 0.2) yield [T.anchored,
+    'Everything the family owned went into a handcart by morning. You have never since owned anything you could not carry without thinking about whether you could carry it.']
+  if (F.has('de_klv_evacuated') && Math.random() < 0.18) yield [T.anchored,
+    'Fourteen months in the mountains with a label on your coat and letters that were read before they were sent. There was a lake. It was the best year of the war.']
+  if (F.has('de_child_soldier_reich') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You were at war for two years before you had ever had a job, and school was two mornings a week and then none.',
+    'A boy from your class was killed on the position in March and there was a small ceremony, and you cannot now remember his surname.',
+    phase === 'late_life'
+      ? 'The bridge you were told to hold was a bridge you used to fish off. It is still there. You have driven over it perhaps four hundred times.'
+      : 'They gave you the weapon in a park and the man teaching you had one arm. You were fifteen.',
+  ])]
+  if (F.has('de_walked_away') && Math.random() < 0.18) yield [T.anchored,
+    'You put it in a ditch and walked home at night through fields. Men were hanged from lampposts that month for exactly that, with a sign round the neck.']
+  if (F.has('de_zero_hour') && Math.random() < 0.2) yield [T.anchored, pick([
+    'The whole street smelled of burning cloth for an afternoon. Flags, armbands, photographs. Everyone was doing it and nobody mentioned that everyone was doing it.',
+    'A man on the corner who was somebody was nobody by the Friday, and a man who was nobody had a white armband and a list.',
+  ])]
+  if (F.has('de_belief_collapsed') && Math.random() < 0.2) yield [T.anchored,
+    'You were seventeen and every instrument you had for telling true from false had been calibrated by the same people, and they were all wrong, and you had to start again with nothing.']
+  if (F.has('de_relief_unspeakable') && Math.random() < 0.18) yield [T.anchored,
+    'It was relief. You have never once said the word out loud in this country, because saying it would mean admitting you had been waiting.']
+  if (F.has('de_1945_violence') && Math.random() < 0.18) yield [T.anchored,
+    'What happened in the town in those weeks was not written down anywhere for fifty years. You were in it. The women of your mother\'s age never discussed it, with anyone, ever.']
+  if (F.has('de_hunger_winter') && Math.random() < 0.22) yield [T.anchored, pick([
+    'The banisters went, and then the furniture, and then people went out to the woods at night with a saw. Forty-six was the coldest winter anybody could remember.',
+    'You took the good tablecloth out to a farm on a train roof, and the farmer had three sets of silver already and did not need a fourth, and told you so at the door.',
+    'You have never in your life left food on a plate and you have never once explained why to anybody who asked.',
+  ])]
+  if (F.has('de_coal_child') && Math.random() < 0.18) yield [T.anchored,
+    'Every child in the street took coal off the wagons and the railway police chased you without much conviction, and once a driver slowed on the curve on purpose.']
+  if (F.has('de_truemmerfrau') && Math.random() < 0.2) yield [T.anchored, pick([
+    'A hammer, a brick, the old mortar off, into the pile. A few hundred on a good day, and a rate per thousand, and a better ration card, which was the actual reason.',
+    'Your hands are a different shape. Permanently. When they put the statue up in the seventies you had opinions about it that you kept to yourself.',
+  ])]
+  if (F.has('de_vertriebene') && Math.random() < 0.24) yield [T.anchored, pick([
+    'Home is a farm with a name you will say for the rest of your life, on no map you can buy in this country.',
+    'You were called a foreigner to your face, in German, in Germany, by people who had also lost everything.',
+    phase === 'late_life'
+      ? 'You went back once, after 1990. The house is there and somebody lives in it and they were kind to you and you have not been again.'
+      : 'It took twenty years to stop being the new family. Twenty years is a specific number and you counted it.',
+  ])]
+  if (F.has('de_billeted_strangers') && Math.random() < 0.16) yield [T.anchored,
+    'Four of them in two rooms by order, for four years. Your mother was civil to them the entire time and never once warm, and you were old enough to see it.']
+  if (F.has('de_persilschein') && Math.random() < 0.2) yield [T.anchored,
+    'Two neighbours signed for you and you signed for two neighbours. The certificate was named after a laundry detergent, which is the most honest thing anybody said about it.']
+  if (F.has('de_denazified_honestly') && Math.random() < 0.18) yield [T.anchored,
+    'You answered the questionnaire accurately. It cost eighteen months and a career, and the category they put you in followed the file around for thirty years.']
+  if (F.has('de_marked_unreliable') && Math.random() < 0.16) yield [T.anchored,
+    'There was a file with a word in it, and the word was not a crime, and it shaped which jobs were available to you until about 1952.']
+  if (F.has('de_father_lost_east') && Math.random() < 0.22) yield [T.anchored, pick([
+    'Missing, in the east. No grave, no date. Your mother would not wear black, because wearing black would have been agreeing to something.',
+    phase === 'late_life'
+      ? 'You are older now than he ever got to be, by forty years, and the photograph on the shelf is of a young man you have to work to think of as your father.'
+      : 'There is a shelf with a photograph on it of a man in a uniform that did not fit him yet.',
+  ])]
+  if (F.has('de_no_grave') && Math.random() < 0.2) yield [T.anchored,
+    'The card said the date is unknown and the place is unknown and the case is closed. You had been waiting for it since you were eleven, and the waiting had a shape.']
+  if (F.has('de_father_returned_late') && Math.random() < 0.2) yield [T.anchored,
+    'He came back in 1949 weighing what he weighed, and did not talk about it and did not sleep much, and the man in the photograph on the shelf was somebody else.']
+  if (F.has('de_war_family') && Math.random() < 0.16) yield [T.anchored,
+    'Every family in the street had one of it — a missing one, a late one, a changed one — and the absolute ordinariness of that is the part that does not travel.']
+  if (F.has('de_told_the_children') && Math.random() < 0.2) yield [T.anchored,
+    'It took four hours and you were not forgiven at the end of it, and the house was different afterwards in a way that was better.']
+  if (F.has('de_deflected_the_children') && Math.random() < 0.2) yield [T.anchored,
+    'You said you were a child, which was true, and was not an answer, and they stopped asking. You have wanted to be asked again ever since.']
+  if (F.has('de_refused_the_children') && Math.random() < 0.2) yield [T.anchored,
+    'They left the table in 1968 and the conversation did not resume for eleven years, and by then neither of you could remember how to start it.']
+  if (F.has('de_named_it') && Math.random() < 0.18) yield [T.anchored,
+    'You said the place-name out loud with the family in the room, and what had happened there, and the photograph went back in the box and stayed in the house.']
+  if (F.has('de_left_it_in_the_box') && Math.random() < 0.18) yield [T.anchored,
+    'You said he was kind to you. It was true. You were the last person who could have said anything else and you knew it while you were speaking.']
+  if (F.has('de_told_it_straight') && Math.random() < 0.18) yield [T.anchored,
+    'You told a room of fourteen-year-olds that the camping was good, and one of them asked a follow-up nobody had ever asked you, and you thought about it all year.']
+  if (F.has('de_gave_the_speech') && Math.random() < 0.16) yield [T.anchored,
+    'It is a good answer and you have given it many times and nothing in the room has ever been changed by it, including you.']
+  if (F.has('de_wunder_bargain') && Math.random() < 0.18) yield [T.anchored,
+    'A new kitchen, a small car, a fortnight in Italy. The deal was never written down and everybody had signed it: the work is the subject and the other thing is not.']
+  if (F.has('de_rebuilt_it') && Math.random() < 0.16) yield [T.anchored,
+    'You know which parts of this city you put back, by hand, brick by brick, and you have never pointed any of them out to anybody.']
+  if (F.has('de_occupation_work') && Math.random() < 0.16) yield [T.anchored,
+    'You were paid in cigarettes, which was the only currency that held its value until 1948, and you did not smoke, which made you rich for about a year.']
+  if (F.has('de_asked_once') && Math.random() < 0.16) yield [T.anchored,
+    'You asked once and your mother put her hand flat on the table, and that was the answer, and you have remembered the hand for seventy years.']
+  if (F.has('de_reich_family_opposed') && Math.random() < 0.16) yield [T.anchored,
+    'It was said once, in the kitchen, and the person who said it was told never to say it again by somebody who agreed with them entirely.']
+  if (F.has('de_reich_family_approved') && Math.random() < 0.18) yield [T.anchored,
+    'The word at the table was order, and for about five years the word kept working, and you have never been able to decide how much your parents knew.']
+  if (F.has('de_reich_family_quiet') && Math.random() < 0.16) yield [T.anchored,
+    'The radio was turned down when certain things came on. You learned where the volume knob was before you learned what it was for.']
+  if (F.has('de_reckoning_begun') && Math.random() < 0.14) yield [T.anchored,
+    'This country has been arguing with itself about one decade for longer than the decade lasted, and you are one of the exhibits, and you think the arguing is right.']
+  if (F.has('de_reckoning_deferred') && Math.random() < 0.14) yield [T.anchored,
+    'It was wound up quietly around 1950 and everybody went back to work, and the bill for that arrived in 1968 addressed to your generation.']
+
   if (F.has('omn_imamate_family') && Math.random() < 0.22) yield [T.anchored, pick([
     'There is a word for what the interior had before 1959 and it is not printed anywhere in this country, and your family knows it and does not use it.',
     phase === 'late_life'
