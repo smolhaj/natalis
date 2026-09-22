@@ -114,9 +114,16 @@ if (asJson) {
 
   console.log(`\n${B('Lifespan by configuration')}\n`)
   console.log(DIM('  configuration        median  q1  q3   survived-childhood  died<5   contemplative/yr'))
+  if (lives < 40) console.log(DIM(`  ${YEL('?')} = median under 20 at only ${lives} lives — too few to distinguish from noise. Re-run with --lives=60.`))
   for (const c of result.configs) {
     const contShare = c.years ? (100 * c.contemplative) / c.years : 0
-    const flag = c.medianDeathAge != null && c.medianDeathAge < 20 ? RED('!') : ' '
+    // The default run is 12 lives per configuration, and the median of twelve
+    // swings hard: Nigeria 1962 reported a median of 5 at 12 lives and 37 at
+    // 200, so the flag fired on every single default run and stopped meaning
+    // anything. Below the sample threshold it reports the number and asks for
+    // more lives instead of crying wolf.
+    const lowMedian = c.medianDeathAge != null && c.medianDeathAge < 20
+    const flag = !lowMedian ? ' ' : c.lives >= 40 ? RED('!') : YEL('?')
     console.log(
       `  ${flag}${(c.country + ' ' + c.birthYear).padEnd(20)}` +
       `${String(c.medianDeathAge).padStart(5)} ${String(c.q1DeathAge).padStart(4)} ${String(c.q3DeathAge).padStart(4)}` +
