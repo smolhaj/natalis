@@ -1,5 +1,6 @@
 import js from '@eslint/js'
 import globals from 'globals'
+import react from 'eslint-plugin-react'
 
 // The project had no linter, and two of the defects found in the September 2026
 // pass were exactly what a linter reports for free:
@@ -32,12 +33,16 @@ export default [
       // ── The rules that catch real defects ────────────────────────────────
       'no-undef': 'error',
 
-      // Dead code, not a defect — and there are ~140 of them inherited, mostly
-      // unused React components and useState pairs nothing reads. At 'error'
-      // the gate would be permanently red and nobody would read it, so it
-      // reports at 'warn': the count is visible, it is tracked below, and a new
-      // one shows up in the diff of the pull request that introduced it.
-      // Unused *imports* were removed outright; these are unused locals.
+      // Dead code, not a defect. At 'error' the gate would be red for inherited
+      // findings and nobody would read it, so it reports at 'warn': the count
+      // is visible and a new one shows up in the diff of the pull request that
+      // introduced it.
+      //
+      // Most of the ~140 were not dead code at all. ESLint has no built-in JSX
+      // reference tracking, so every React component imported and used only in
+      // markup reported as unused — LifeScreen's own EscapeCloses, all five
+      // minigames, MinigameDialog. `react/jsx-uses-vars` below fixes that, and
+      // the remainder are genuine.
       'no-unused-vars': ['warn', {
         args: 'none',                 // `(G) => ...` guards often ignore G
         varsIgnorePattern: '^_',
@@ -72,6 +77,17 @@ export default [
       // clearer next to the hundreds of single-quoted strings around it.
       'no-useless-escape': 'off',
     },
+  },
+
+  // JSX counts as a reference. Without this every component used only in markup
+  // reports as unused, which is ~95% of the no-unused-vars findings in this
+  // project and is exactly the noise that buries a real one — a broken arrow
+  // function (`const f = (g) = expr`, valid in sloppy mode, so the build
+  // passed) was found by this rule's no-undef sibling in a run of 144 warnings.
+  {
+    files: ['**/*.jsx'],
+    plugins: { react },
+    rules: { 'react/jsx-uses-vars': 'error', 'react/jsx-uses-react': 'error' },
   },
 
   // Scripts and tests run in node and use the console on purpose.

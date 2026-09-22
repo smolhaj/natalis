@@ -143,7 +143,6 @@ export default function LifeScreen() {
   const hobbies      = useGameStore(s => s.hobbies)
   const fitness      = useGameStore(s => s.fitness)
   const debt         = useGameStore(s => s.debt)
-  const creditScore  = useGameStore(s => s.creditScore)
   const pendingMinigame = useGameStore(s => s.pendingMinigame)
   const ageUp        = useGameStore(s => s.ageUp)
   const goToTitle    = useGameStore(s => s.goToTitle)
@@ -298,14 +297,6 @@ export default function LifeScreen() {
   const vehicleValue = (assets?.vehicles ?? []).reduce((sum, v) => sum + (v.currentValue ?? 0), 0)
   const netWorth = (money ?? 0) + propertyEquity + vehicleValue + gold + hardCurrencyReserve - (debt ?? 0)
 
-  const creditLabel = (cs) => {
-    if (!cs) return 'Unknown'
-    if (cs >= 750) return 'Excellent'
-    if (cs >= 700) return 'Good'
-    if (cs >= 650) return 'Fair'
-    if (cs >= 600) return 'Poor'
-    return 'Very Poor'
-  }
 
   return (
     <div className="h-screen bg-natalis-bg flex flex-col overflow-hidden">
