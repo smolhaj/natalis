@@ -2805,25 +2805,101 @@ export function tick(state) {
   // Family income during childhood (before career income, no career yet)
   if (s.age < 18 && !s.career) s = tickFamilyIncome(s)
 
-  // Debt interest accrual
+  // Debt: interest, and a payment that actually reaches the principal.
+  //
+  // It did not. `s.debt = s.debt + interest` and then the minimum payment came
+  // off `money` and was never subtracted from `debt`, so a balance grew by 18%
+  // every year forever while the character paid 5% of it annually into nothing.
+  // The comment that stood here reasoned about "a spiral with no bottom", which
+  // is the right thing to model and was not what the code did: it is only a
+  // spiral if the payment is too small to keep up, and this payment was not
+  // small, it was absent. A life-log read found a novelist on $223,895/yr
+  // carrying $7.1m of debt from a $2,400 medical bill at 28, and three of the
+  // other seven lives read the same way — $202,732 on a $6,603 pension,
+  // $288,016 next to $471,768 in the bank.
+  //
+  // The player was never told either way. Debt appears in no prose, so the only
+  // line any of those lives ever saw was the bankruptcy notice, forty-eight
+  // years after the bill.
   if (s.debt > 0) {
     const interestRate = (s.mem?.debtType === 'mortgage') ? 0.06 : 0.18
     const preInterestDebt = s.debt
-    const interest = Math.round(s.debt * interestRate)
-    s.debt = s.debt + interest
-    s.money = (s.money ?? 0) - Math.round(preInterestDebt * 0.05) // minimum payment (5% of pre-interest balance)
-    // The insolvency line was a flat -8,000 in nominal money, so it was a
-    // fortune in 1950 and in Lagos and a bad month in 2020 Stockholm. At 18%
-    // compounding with a 5% minimum payment, a debt that can never reach the
-    // threshold is a spiral with no bottom — which is a real thing, but it
-    // should be a real thing everywhere rather than a rich-world one.
+    // A debt nobody has serviced for five years has been charged off. Real
+    // creditors stop compounding and start writing down, and informal lenders
+    // stop lending and start remembering — what continues is the relationship
+    // damage, not an exponential. Left compounding, a $500 balance in a country
+    // with no insolvency procedure reached $61m over a life, which is the same
+    // runaway one layer along from the one this block was fixed for.
+    const chargedOff = (s.mem?.debtMissedYears ?? 0) >= 5
+    const interest = chargedOff ? 0 : Math.round(s.debt * interestRate)
+    // Service the interest and 5% of the principal, which clears an ordinary
+    // debt in about twenty years — and pay what there is, because a payment you
+    // cannot make is where the spiral genuinely starts.
+    const due = interest + Math.round(preInterestDebt * 0.05)
+    const paid = Math.min(due, Math.max(0, s.money ?? 0))
+    s.debt = Math.max(0, preInterestDebt + interest - paid)
+    s.money = (s.money ?? 0) - paid
+
+    const serviced = paid >= due
+    const missed = serviced ? 0 : (s.mem?.debtMissedYears ?? 0) + 1
+    s.mem = { ...s.mem, debtMissedYears: missed }
+
+    // Say it. Once when the debt becomes a fact of the household, once when it
+    // is gone — the two moments a person would actually notice.
+    if (!s.mem?.debtToldYear && s.debt > 0 && !serviced && missed >= 2) {
+      s.mem = { ...s.mem, debtToldYear: s.currentYear }
+      s.log = [...s.log, { age: s.age, year: s.currentYear, isKey: true, text: pickFrom([
+        'The balance has stopped being a number you are paying down and started being a number that is there. You know it to the nearest hundred without looking.',
+        'You make the payment you can make, which is not the payment that was due, and the difference goes on the end of it. This has been true for two years now.',
+        'The arithmetic has turned around: the interest is more than you are putting against it, and you understood that the first time you saw it written down.',
+      ]) }]
+    }
+    if (chargedOff && !s.mem?.debtChargedOffTold && s.debt > 0) {
+      s.mem = { ...s.mem, debtChargedOffTold: true }
+      s.flags = [...new Set([...s.flags, 'debt_defaulted'])]
+      s.log = [...s.log, { age: s.age, year: s.currentYear, isKey: true, text: pickFrom([
+        'The letters stop. That is not the same as the debt stopping, and you know the difference, and for about a month you keep expecting the next one.',
+        'Nobody has asked you for it in over a year. It has not been forgiven. It has been given up on, which is a different thing and leaves a different mark.',
+        'The man does not come any more. You still cross the road at his shop, out of a habit you formed in a year you would rather not itemise.',
+      ]) }]
+    }
+    if (s.debt === 0 && s.mem?.debtToldYear) {
+      s.mem = { ...s.mem, debtToldYear: null, debtMissedYears: 0 }
+      s.log = [...s.log, { age: s.age, year: s.currentYear, isKey: true, text: pickFrom([
+        'The last of it goes. You had expected to feel something larger than you do, and what you actually feel is the absence of a background noise.',
+        'It is paid. Nobody writes to tell you; you simply do the sum one month and there is nothing on the other side of it.',
+      ]) }]
+    }
+
+    // Bankruptcy is about the debt, not the cash balance. The old test read
+    // `money < -insolvency`, and once the payment stops draining money below
+    // zero the cash balance is the wrong instrument: what bankrupts a person is
+    // a debt they have not been able to service, for years, that is larger than
+    // they can earn their way out of.
+    // Against an absolute era floor alone this fired for two thirds of everyone
+    // who ever carried a debt, because in a poor country almost any balance
+    // clears $8,000-equivalent and a character with no cash misses the payment
+    // every year by construction. What bankrupts a person is a debt large
+    // against their own means, unserviced for years — so take the floor or a
+    // year and a half of income, whichever is larger.
     const insolvency = inEraMoney(localCost(8000, liveCountry(s)?.gdp), liveCountry(s), s.currentYear)
-    if (s.money < -insolvency) {
+    const income = (s.career?.salary ?? 0) + (s.pensionAnnual ?? 0)
+    const unpayable = Math.max(insolvency, Math.round(income * 1.5))
+    // Being declared bankrupt requires somewhere to be declared it. A personal
+    // insolvency procedure an ordinary person can actually reach is a rich-world
+    // institution of the second half of this period; everywhere else an
+    // unpayable debt is not discharged by a court, it is carried, or absorbed by
+    // the family, or defaulted on privately and remembered. Without this the
+    // engine bankrupted two thirds of everyone who ever owed anything, most of
+    // them in countries with no such procedure.
+    const dischargeable = ['very_high', 'high'].includes(liveCountry(s)?.gdp) && s.currentYear >= 1970
+    if (dischargeable && s.debt > unpayable && missed >= 4) {
       s.flags = [...new Set([...s.flags, 'bankrupt', 'declared_bankrupt', 'debt_spiral_survived'])]
       s.debt = 0
-      s.money = -Math.round(insolvency * 0.25)
+      s.money = Math.max(0, s.money ?? 0)
       s.creditScore = 320
-      s.log = [...s.log, { age: s.age, text: 'You are declared bankrupt. A relief and a shame at once.', isKey: true }]
+      s.mem = { ...s.mem, debtMissedYears: 0, debtToldYear: null, debtChargedOffTold: false }
+      s.log = [...s.log, { age: s.age, year: s.currentYear, text: 'You are declared bankrupt. A relief and a shame at once.', isKey: true }]
     }
   }
   // Auto-flag debt spiral when in trouble

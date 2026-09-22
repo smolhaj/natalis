@@ -15192,6 +15192,77 @@ function* textureCandidates(state, opts = {}) {
 
 
 
+
+  // ── Nigeria 1967-1999: the decades the touchstone life actually lives ─────
+  // check-reach put a 1962 Nigerian at 20% of their own depth module, against
+  // 70% for one born in 1995. Five of its thirteen events need year >= 2030.
+
+  if (F.has('biafra_child') && Math.random() < 0.13) yield [T.anchored, pick([
+    'The word was kwashiorkor and you learned it the way you learn any word, by hearing it about somebody you knew.',
+    phase === 'late_life'
+      ? 'You were five when it started and eight when it stopped, and the whole of it is four or five images and a song about the night planes. That is what three years does to a child: it does not become a memory, it becomes a shape.'
+      : 'They gave the children the food first. Every time, as a rule. You were old enough to notice it was a rule and not old enough to ask what the rule was for.',
+  ])]
+
+  if (F.has('biafra_carried') && Math.random() < 0.12) yield [T.earned, pick([
+    'You do not leave food. Not as a principle. You have never once decided it.',
+    'Your children leave food on the plate and you have never said a word about it in twenty years, because the word would have to start somewhere.',
+  ])]
+
+  if (F.has('no_victor_no_vanquished') && !F.has('the_subtraction') && Math.random() < 0.11) yield [T.anchored,
+    'No victor, no vanquished. People say it generously and mean it generously, and it is not a sentence you can be against, and you have never once found it to be a description of anything.']
+
+  if (F.has('the_subtraction') && Math.random() < 0.11) yield [T.earned,
+    'Twenty pounds. A man with four lorries and a man with nothing, the same twenty pounds, and the government called it a fresh start.']
+
+  if (F.has('nigeria_1966') && Math.random() < 0.10) yield [T.anchored,
+    'September 1966, and the trains coming in with people on them who had left everything, and the adults stopping mid-sentence when a child came into the room.']
+
+  if (F.has('oil_boom_windfall') && Math.random() < 0.11) yield [T.anchored, pick([
+    'For about a year you were a family with a car. Everybody on that street was a family with something. By 1977 the prices had met the money halfway and settled above it.',
+    'There was so much money that a four-hundred-ship mistake was a story rather than a scandal.',
+  ])]
+
+  if (F.has('festac_77') && Math.random() < 0.09) yield [T.anchored,
+    'For four weeks in 1977 this was the capital of something, and the commemorative cloth is still in the house.']
+
+  if (F.has('ghana_must_go') && Math.random() < 0.10) yield [T.anchored,
+    'The bag is still called a Ghana-Must-Go. Children are packed off to boarding school in one by people who have no idea why it is called that.']
+
+  if (F.has('war_against_indiscipline') && !F.has('wai_reckoning') && Math.random() < 0.11) yield [T.earned,
+    'Soldiers at the bus stop with whips, and the queues worked, and a great many people were in favour. That sentence is hard to say now and it was true then.']
+
+  if (F.has('sap_generation') && Math.random() < 0.13) yield [T.earned, pick([
+    'The naira was one to the dollar in 1985. That is not nostalgia, it is a fact, and saying it out loud in 1993 sounded like a lie.',
+    'The arithmetic at the end of the month stopped being arithmetic and became a decision about which of two things the house did without.',
+  ])]
+
+  if (F.has('naira_distrust') && Math.random() < 0.11) yield [T.earned,
+    'Whatever there is sits in something — a plot, a container, dollars in the house. Your son calls it superstition. Your son was four in 1986.']
+
+  if (F.has('fuel_queue_years') && Math.random() < 0.11) yield [T.anchored,
+    'Sleeping in the car in the queue, in the sixth largest oil producer on earth, twenty yards from a man selling it out of a jerry can at four times the pump price.']
+
+  if (F.has('asuu_strike_generation') && Math.random() < 0.10) yield [T.anchored,
+    'Four years of degree taking seven, and everybody in that year ageing out of something while they waited — a scholarship, a job advert, somebody.']
+
+  if (F.has('saro_wiwa_1995') && Math.random() < 0.09) yield [T.anchored,
+    'He wrote the comedy everybody watched, and then he wrote about the creeks, and it was the second one that killed him.']
+
+  if (F.has('andrew_checking_out') && Math.random() < 0.10) yield [T.earned,
+    'Andrew is checking out. A government advert meant to shame people into staying, and the country took the phrase and used it, cheerfully, for forty years.']
+
+  if (F.has('the_ones_who_stayed') && Math.random() < 0.11) yield [T.earned,
+    'Four of the six went. One came back at sixty. You are the one who never tried, and there are two honest accounts of why, and you give the good one.']
+
+  if (F.has('democracy_1999_lived') && Math.random() < 0.10) yield [T.earned, pick([
+    'Thirty-seven years in this country and about nine of them under anybody elected.',
+    'What actually marked it was that the nine o\'clock news stopped being frightening to have on while somebody was visiting.',
+  ])]
+
+  if (F.has('ordinary_is_the_achievement') && Math.random() < 0.10) yield [T.earned,
+    'The complaints are ordinary complaints now — the roads, the power, the thieving. Ordinary is the achievement, and nobody under thirty can hear it that way.']
+
   // ── Bosnia: three peoples, one country ────────────────────────────────────
   // Six mentions in the whole corpus before this, and no module.
 
@@ -15231,7 +15302,7 @@ function* textureCandidates(state, opts = {}) {
     'There is still a Vučko somewhere in the flat. A keyring, or the sticker on the inside of a cupboard door that nobody has scraped off.',
     phase === 'late_life'
       ? 'Two weeks in February 1984 when the world came and liked it here. It is one of the two things anybody abroad knows about this city and it is not the one they mention.'
-      : 'Torvill and Dean got nines across the board at Zetra and the whole country behaved as though it had personally arranged it.',
+      : 'Every one of the nine judges gave Torvill and Dean a six at Zetra, and the whole country behaved as though it had personally arranged it.',
   ])]
 
   if (F.has('sarajevo_siege') && !F.has('siege_habits') && Math.random() < 0.14) yield [T.anchored, pick([

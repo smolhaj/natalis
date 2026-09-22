@@ -228,7 +228,7 @@ export const GULF_EVENTS = [
       G.age >= 30 &&
       !G.mem?.gulfMinorityEcho,
     text: (G) => here(G) === 'Kuwait'
-      ? 'You are thirty per cent of your own country and that is the high figure in this region. The mall is not in your language. The clinic is not in your language. It is not resentment exactly — the arrangement was built deliberately and your family is on the side of it that benefits — but there is a specific small disorientation in being from a place and being outnumbered in it four to one by people who cannot stay.'
+      ? 'You are thirty per cent of your own country, which in this region is neither the highest nor the lowest. The mall is not in your language. The clinic is not in your language. It is not resentment exactly — the arrangement was built deliberately and your family is on the side of it that benefits — but there is a specific small disorientation in being from a place and being outnumbered in it better than two to one by people who cannot stay.'
       : 'Roughly one person in nine here is from here. You have gone whole days conducting your business in English with people who will be in another country within five years, and it is entirely normal, and then a cousin visits from abroad and says something about it and you hear it freshly for an afternoon.',
     choices: null,
     effect: (p) => { p.setMem('gulfMinorityEcho', true); p.r += 4; p.addFlag('gulf_minority_reflection') },
@@ -420,7 +420,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 70,
     when: (G) => {
-      const OIL = { Bahrain: 1932, Kuwait: 1946, 'Saudi Arabia': 1946, Qatar: 1949, UAE: 1962, Oman: 1967 }
+      const OIL = { Bahrain: 1932, Kuwait: 1946, 'Saudi Arabia': 1939, Qatar: 1949, UAE: 1962, Oman: 1967 }
       const y = OIL[here(G)]
       return IS_GULF(G) && IS_CITIZEN(G) && y != null &&
         G.currentYear >= y && G.currentYear <= y + 12 &&

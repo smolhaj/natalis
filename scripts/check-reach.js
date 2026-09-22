@@ -189,6 +189,8 @@ async function main() {
       ['Austria', 1930, 'geographic/events_austria.js'],
       ['Iceland', 1935, 'geographic/events_iceland_moldova.js'],
       ['Nigeria', 1962, 'geographic/events_nigeria_depth.js'],
+      ['Nigeria', 1995, 'geographic/events_nigeria_depth.js'],
+      ['Nigeria', 1962, 'geographic/events_nigeria_midcentury.js'],
       ['India', 1955, 'geographic/events_india_depth.js'],
       ['Peru', 1960, 'geographic/events_peru_depth.js'],
     ]

@@ -575,10 +575,10 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 389 named places, 252 world events, 8,207 character events
+154 countries, 389 named places, 252 world events, 8,228 character events
 (2,129 of them the contemplative sonder layer, 158 stranger glimpses, 42 prison
-and political-arrest, 30 Gulf, 42 Guyana, 41 Bosnia), 3,130 registered flags,
-377 ribbons.
+and political-arrest, 30 Gulf, 42 Guyana, 41 Bosnia, 21 Nigeria 1967-99),
+3,153 registered flags, 377 ribbons.
 **0 orphaned, 0 partial flags.**
 
 Verify with:
@@ -1101,6 +1101,24 @@ a German, and that is worth knowing.
 **The lesson: a small number has two causes and only one of them is a bug.** An
 instrument that shows them identically buries the one that is — the same failure
 as `unwritten-group` reporting a country's own plurality, one level down.
+
+The first thing it found was about the country this document opens by naming.
+`events_nigeria_depth.js` measured **20%, three of its thirteen events**, for a
+Nigerian born in 1962 — and **70%** for one born in 1995. Nothing was broken:
+five of its thirteen events require `currentYear >= 2030`, and a 1962 Nigerian
+would be sixty-eight then against a national life expectancy of 54. Solar after
+NEPA, the last cash, Lagos at thirty million — all correct, all written for
+somebody born thirty years after the person the Vision statement is about.
+
+`events_nigeria_midcentury.js` is 1967 to 1999, which for that character is ages
+five to thirty-seven: Biafra as a child under the blockade, the Udoji arrears and
+the cement armada and FESTAC, Ghana-Must-Go, the whips at the bus stop,
+adjustment, the fuel queue in an oil state, Saro-Wiwa, and the year it stopped.
+The touchstone life now reaches **77%, and all 21 of 21 events fire.**
+
+**Corollary worth keeping: a module can be correct and still be for somebody
+else.** Nothing static can see it, and `sim` cannot either — it reports the
+module firing, because the 1995 cohort is in the sample too.
 
 Related, and the reason `tests/careerFit.test.js` exists: `chooseCareer` reads
 `FIELD_FIT[c.field]?.[col] ?? 1`, and that `?? 1` is silent. A career whose
