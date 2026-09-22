@@ -97,7 +97,7 @@ export const COUNTRIES = [
 
   {
     name: 'Germany', capital: 'Berlin', currency: 'euro', region: 'Western Europe', archetype: 'wealthy_west',
-    historicalNames: [{ until: 1990, name: 'West Germany' }],
+    historicalNames: [{ until: 1932, name: 'the Weimar Republic' }, { from: 1933, until: 1945, name: 'Nazi Germany' }, { from: 1946, until: 1948, name: 'occupied Germany' }, { from: 1949, until: 1990, name: 'West Germany' }],
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 81,
     conflictRisk: 0.01, genderGap: 0.13, socialMobility: 'medium',
     wealthTierWeights: [0.06, 0.12, 0.28, 0.38, 0.16],
@@ -1350,7 +1350,7 @@ export const COUNTRIES = [
 
   {
     name: 'Vietnam', capital: 'Hanoi', currency: 'Vietnamese đồng', region: 'Southeast Asia', archetype: 'developing_urban',
-    historicalNames: [{ until: 1975, name: 'South Vietnam' }],
+    historicalNames: [{ until: 1954, name: 'French Indochina' }, { from: 1955, until: 1975, name: 'South Vietnam' }],
     gdp: 'low_medium', healthcare: 'fair', lifeExpectancy: 73,
     conflictRisk: 0.02, genderGap: 0.25, socialMobility: 'medium',
     wealthTierWeights: [0.16, 0.24, 0.32, 0.21, 0.07],
@@ -2658,7 +2658,7 @@ export const COUNTRIES = [
 
   {
     name: 'Estonia', capital: 'Tallinn', currency: 'euro (kroon before 2011)', region: 'Northern Europe', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'Soviet Estonia' }],
+    historicalNames: [{ until: 1939, name: 'the Republic of Estonia' }, { from: 1940, until: 1991, name: 'Soviet Estonia' }],
     gdp: 'high', healthcare: 'good', lifeExpectancy: 78,
     conflictRisk: 0.01, genderGap: 0.16, socialMobility: 'high',
     wealthTierWeights: [0.05, 0.12, 0.33, 0.36, 0.14],
@@ -2689,7 +2689,7 @@ export const COUNTRIES = [
 
   {
     name: 'Latvia', capital: 'Riga', currency: 'euro (lats before 2014)', region: 'Northern Europe', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'Soviet Latvia' }],
+    historicalNames: [{ until: 1939, name: 'the Republic of Latvia' }, { from: 1940, until: 1991, name: 'Soviet Latvia' }],
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 76,
     conflictRisk: 0.01, genderGap: 0.17, socialMobility: 'medium',
     wealthTierWeights: [0.07, 0.15, 0.33, 0.33, 0.12],
@@ -2720,7 +2720,7 @@ export const COUNTRIES = [
 
   {
     name: 'Lithuania', capital: 'Vilnius', currency: 'euro (litas before 2015)', region: 'Northern Europe', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'Soviet Lithuania' }],
+    historicalNames: [{ until: 1939, name: 'the Republic of Lithuania' }, { from: 1940, until: 1991, name: 'Soviet Lithuania' }],
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 76,
     conflictRisk: 0.01, genderGap: 0.18, socialMobility: 'medium',
     wealthTierWeights: [0.07, 0.15, 0.32, 0.34, 0.12],
@@ -2849,7 +2849,7 @@ export const COUNTRIES = [
 
   {
     name: 'Ecuador', capital: 'Quito', currency: 'US dollar (sucre before 2000)', region: 'South America', archetype: 'developing_urban',
-    historicalNames: [{ until: 2000, currency: 'Ecuadorian sucre' }],
+    historicalNames: [],   // no name change; the sucre's 2000 withdrawal is a currency event. The key here was `currency`, not `name`, so getCountryDisplayName returned undefined and the birth screen read "Ecuador (then undefined)" for 61 of 86 birth years
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 77,
     conflictRisk: 0.04, genderGap: 0.21, socialMobility: 'low',
     wealthTierWeights: [0.20, 0.28, 0.30, 0.17, 0.05],
@@ -5060,8 +5060,14 @@ export const COUNTRIES = [
     yearRange: [1920, 2025],
     historicalNames: [{ until: 1918, name: 'Austria-Hungary' }, { from: 1938, until: 1945, name: 'the German Reich' }],
     regime: 'parliamentary_republic',
+    // The 1938 entry is a no-op onto the same value, and deliberately so: the
+    // regime taxonomy describes a political system, and the Ständestaat and
+    // Nazi rule are both single-party authoritarian ones — what changed in 1938
+    // was WHOSE, which the taxonomy has no way to say. The Anschluss is carried
+    // by historicalNames ('the German Reich', 1938–45) and by the content, not
+    // by this field.
     regimeHistory: [{ year: 1934, to: 'single_party_authoritarian' }, { year: 1938, to: 'single_party_authoritarian' }, { year: 1945, to: 'parliamentary_republic' }],
-    religionWeights: { christian_catholic: 0.55, christian_protestant: 0.03, secular: 0.22, atheist: 0.12, muslim_sunni: 0.075, jewish: 0.005 },
+    religionWeights: { christian_catholic: 0.55, christian_orthodox: 0.05, christian_protestant: 0.04, christian_other: 0.04, secular: 0.145, atheist: 0.08, muslim_sunni: 0.084, jewish: 0.001 },
     ethnicGroups: [
       { id: 'austrian', name: 'Austrian', share: 0.80 },
       { id: 'german_austrian', name: 'German', share: 0.03 },
@@ -5092,12 +5098,18 @@ export const COUNTRIES = [
     context: 'Croatia was Yugoslav for most of the century and spent the 1990s becoming something else at close range. The Ustaša state of 1941–45 ran the Jasenovac camp and is the fact every subsequent Croatian politics has had to position itself against or around. Titoist Yugoslavia brought the Adriatic tourism boom, gastarbeiter remittances from Germany, and a standard of living visibly better than the Eastern bloc proper — a passport that worked in both directions. The 1991 war arrived as shelling of Vukovar and Dubrovnik and lasted four years, ending in Operation Storm and the departure of most of the Serb population. Independence produced a country of four million with a thousand-kilometre coastline, an emptying interior, and a diaspora larger than the resident population. EU accession in 2013 opened the labour market and the young left; whole Slavonian villages now have more houses than households. Catholicism is national identity as much as faith, the coast and the inland are different countries in temperament, and the language question with Serbian remains a matter of insistence rather than mutual intelligibility.',
     yearRange: [1920, 2025],
     historicalNames: [{ until: 1991, name: 'Yugoslavia' }],
-    regime: 'parliamentary_republic',
-    regimeHistory: [{ year: 1929, to: 'constitutional_monarchy' }, { year: 1941, to: 'single_party_authoritarian' }, { year: 1945, to: 'single_party_communist' }, { year: 1991, to: 'parliamentary_republic' }],
+    // 1920–28 was the Kingdom of Serbs, Croats and Slovenes, a constitutional
+    // monarchy; 6 January 1929 was King Alexander's royal dictatorship. The
+    // record had the starting point wrong and the transition backwards.
+    regime: 'constitutional_monarchy',
+    regimeHistory: [{ year: 1929, to: 'single_party_authoritarian' }, { year: 1941, to: 'single_party_authoritarian' }, { year: 1945, to: 'single_party_communist' }, { year: 1991, to: 'parliamentary_republic' }],
     religionWeights: { christian_catholic: 0.79, christian_orthodox: 0.04, secular: 0.10, atheist: 0.045, muslim_sunni: 0.02, jewish: 0.005 },
     ethnicGroups: [
-      { id: 'croat', name: 'Croat', share: 0.90 },
-      { id: 'serb_croatia', name: 'Serb', share: 0.04, disadvantaged: true },
+      { id: 'croat', name: 'Croat', share: 0.83 },
+      // 1991 census: 12.2%. 2011: 4.4%. Birth identity is drawn across the
+      // whole yearRange, so the post-war snapshot made the Serb-in-Croatia arc
+      // reachable at a third of its rate and hid the war's central demographic fact.
+      { id: 'serb_croatia', name: 'Serb', share: 0.11, disadvantaged: true },
       { id: 'bosniak_croatia', name: 'Bosniak', share: 0.01, disadvantaged: true },
       { id: 'italian_croatia', name: 'Istrian Italian', share: 0.005 },
       { id: 'roma_croatia', name: 'Roma', share: 0.005, disadvantaged: true },
@@ -5124,8 +5136,11 @@ export const COUNTRIES = [
     context: 'Slovenia was the wealthy northern corner of Yugoslavia and left it in ten days of fighting in 1991, which is the shortest independence war in the region and the reason its 1990s look nothing like Croatia\'s or Bosnia\'s. Habsburg until 1918, the territory spent the interwar years in a Serb-dominated kingdom and the war partitioned between Germany, Italy and Hungary, with a Partisan resistance that was also a civil war settled by the Kočevski Rog killings in 1945. Titoist self-management gave Slovenes factories, Alpine tourism and a border they could cross to shop in Trieste, and by the 1980s Ljubljana produced punk, Laibach and the constitutional arguments that unpicked the federation. Independence, EU and NATO in 2004, the euro in 2007: the fastest post-Yugoslav convergence, then the 2013 banking crisis that nearly required a bailout. Two million people, a language nobody else speaks, mountains in the north and vineyards in the east, and a culture that treats the countryside cottage, the Sunday walk and a very specific quiet competence as the point of the whole arrangement.',
     yearRange: [1920, 2025],
     historicalNames: [{ until: 1991, name: 'Yugoslavia' }],
-    regime: 'parliamentary_republic',
-    regimeHistory: [{ year: 1929, to: 'constitutional_monarchy' }, { year: 1941, to: 'single_party_authoritarian' }, { year: 1945, to: 'single_party_communist' }, { year: 1991, to: 'parliamentary_republic' }],
+    // 1920–28 was the Kingdom of Serbs, Croats and Slovenes, a constitutional
+    // monarchy; 6 January 1929 was King Alexander's royal dictatorship. The
+    // record had the starting point wrong and the transition backwards.
+    regime: 'constitutional_monarchy',
+    regimeHistory: [{ year: 1929, to: 'single_party_authoritarian' }, { year: 1941, to: 'single_party_authoritarian' }, { year: 1945, to: 'single_party_communist' }, { year: 1991, to: 'parliamentary_republic' }],
     religionWeights: { christian_catholic: 0.58, christian_orthodox: 0.02, secular: 0.22, atheist: 0.15, muslim_sunni: 0.025, jewish: 0.005 },
     ethnicGroups: [
       { id: 'slovene', name: 'Slovene', share: 0.83 },
@@ -5158,7 +5173,9 @@ export const COUNTRIES = [
     context: 'Iceland began the century as a Danish dependency of fewer than a hundred thousand people living mostly on turf farms and became, within one lifetime, among the richest countries on earth. The British and then American occupation of 1940–45 built the roads and the airfield and paid wages in cash, which did more to end the farming economy than any policy; independence came in 1944 while Denmark was itself occupied. The cod wars with Britain, fought four times between 1952 and 1976 over an expanding exclusive zone, are the founding story of a state that has no army and won anyway. Herring built the towns and then vanished in 1968. The quota system privatised the fish and made a small number of families very rich. In 2008 three banks holding assets ten times national GDP collapsed in a week, the currency halved, and the country put bankers on trial rather than bailing them out — then rebuilt on tourism, aluminium smelting and geothermal power. Everyone is related, the phone book is alphabetised by first name, patronymics mean a family shares no surname, and the language has changed so little that medieval sagas read as contemporary prose.',
     yearRange: [1920, 2025],
     historicalNames: [{ until: 1944, name: 'the Kingdom of Iceland' }],
-    regime: 'parliamentary_republic',
+    // A sovereign kingdom in personal union with Denmark from 1918 until the
+    // republic of 17 June 1944 — which this entry's own historicalNames says.
+    regime: 'constitutional_monarchy',
     regimeHistory: [{ year: 1944, to: 'parliamentary_republic' }],
     religionWeights: { christian_protestant: 0.62, christian_catholic: 0.04, secular: 0.20, atheist: 0.13, folk_religion: 0.01 },
     ethnicGroups: [
@@ -5187,9 +5204,10 @@ export const COUNTRIES = [
     languages: ['Romanian', 'Russian', 'Gagauz'],
     context: 'Moldova is the piece of Bessarabia that kept changing hands: Russian imperial until 1918, Romanian between the wars, annexed by the USSR in 1940, reoccupied by Romania under Antonescu, retaken by the Soviets in 1944. The deportations of 1949 and the famine of 1946–47 removed a substantial share of the rural population. Soviet rule brought Cyrillic script imposed on a Romance language, wine cooperatives, canning plants and Russian as the language of advancement. Independence in 1991 came with a war in Transnistria that froze rather than ended, leaving an unrecognised Russian-garrisoned strip along the Dniester that is still there. What followed was the poorest decade in Europe: the industry was on the far bank, the vineyards lost the Russian market to periodic embargoes, and roughly a quarter of working-age citizens left for Italy, Russia or Israel, sending back a third of GDP. Villages run on remittances and grandparents raising grandchildren. The Romanian passport is available to most people and widely held. The question of whether the country is Romanian, Moldovan or simply post-Soviet is not settled and is asked at every election.',
     yearRange: [1920, 2025],
-    historicalNames: [{ until: 1940, name: 'Bessarabia' }, { from: 1941, until: 1991, name: 'the Moldavian SSR' }],
-    regime: 'parliamentary_republic',
-    regimeHistory: [{ year: 1940, to: 'single_party_communist' }, { year: 1941, to: 'single_party_authoritarian' }, { year: 1944, to: 'single_party_communist' }, { year: 1991, to: 'parliamentary_republic' }],
+    historicalNames: [{ until: 1939, name: 'Bessarabia' }, { from: 1940, until: 1940, name: 'the Moldavian SSR' }, { from: 1941, until: 1944, name: 'Romanian-occupied Bessarabia' }, { from: 1945, until: 1991, name: 'the Moldavian SSR' }],
+    // Interwar Bessarabia was part of the Kingdom of Romania.
+    regime: 'constitutional_monarchy',
+    regimeHistory: [{ year: 1938, to: 'single_party_authoritarian' }, { year: 1940, to: 'single_party_communist' }, { year: 1941, to: 'single_party_authoritarian' }, { year: 1944, to: 'single_party_communist' }, { year: 1991, to: 'parliamentary_republic' }],
     religionWeights: { christian_orthodox: 0.86, christian_protestant: 0.02, secular: 0.06, atheist: 0.04, jewish: 0.01, muslim_sunni: 0.01 },
     ethnicGroups: [
       { id: 'moldovan', name: 'Moldovan', share: 0.75 },
@@ -5240,7 +5258,7 @@ export const COUNTRIES = [
     urbanRate: 0.87,
     literacyMale: 0.97,
     literacyFemale: 0.93,
-    literacyHistory: { 1900: { m: 0.08, f: 0.02 }, 1930: { m: 0.10, f: 0.02 }, 1960: { m: 0.15, f: 0.03 }, 1990: { m: 0.75, f: 0.55 }, 2020: { m: 0.97, f: 0.94 } },
+    literacyHistory: { 1900: { m: 0.08, f: 0.02 }, 1930: { m: 0.10, f: 0.02 }, 1960: { m: 0.15, f: 0.03 }, 1990: { m: 0.67, f: 0.38 }, 2020: { m: 0.97, f: 0.94 } },
     urbanHistory: { 1900: 0.08, 1930: 0.10, 1960: 0.16, 1990: 0.66, 2020: 0.87 },
   },
   {
@@ -5264,8 +5282,12 @@ export const COUNTRIES = [
       { id: 'other_pacific_vanuatu', name: 'Other Pacific Islander', share: 0.02 },
     ],
     casteSystem: false,
-    lgbtqCriminalized: true,
-    lgbtqLegalYear: 2007,
+    // Never criminalised since independence in 1980. The 2007 amendment
+    // repealed s.99 and equalised the age of consent; it was not a
+    // decriminalisation, and `true` here gated prosecution events for
+    // something that was not a crime.
+    lgbtqCriminalized: false,
+    lgbtqLegalYear: null,
     childMarriageRisk: 0.21,
     urbanRate: 0.26,
     literacyMale: 0.89,
