@@ -6,14 +6,23 @@
 // Design principle: "Your grandmother tells you about the year the rains didn't
 // come." Not "you read about it" but a distinct prose register of told knowledge.
 
-const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
+import { colonialSchoolLanguage } from '../../history.js'
+import { STAPLE } from './events_climate.js'
 
-const isOralContext = (G) =>
-  (G.archetype === 'subsaharan' ||
-   G.archetype === 'developing_unstable' ||
-   G.archetype === 'conflict_zone' ||
-   G.ruralUrban === 'rural') &&
-  G.stats.smarts < 70
+// `rural && smarts < 70` alone handed the whole register — the told story, the
+// market news carried by truck drivers, the one radio in the village — to every
+// rural character in every country, including rural Sweden and rural Japan.
+const RICH_ARCHETYPES = ['wealthy_west', 'wealthy_east', 'wealthy_gulf']
+
+const isOralContext = (G) => {
+  const arch = G.archetype
+  const poorArch = arch === 'subsaharan' || arch === 'developing_unstable' || arch === 'conflict_zone'
+  if (RICH_ARCHETYPES.includes(arch)) return false
+  return (poorArch || G.ruralUrban === 'rural') && G.stats.smarts < 70
+}
+
+// The grain whose failure is the one the story is about.
+const stapleOf = (G) => STAPLE[G.character?.country?.name] ?? 'the grain'
 
 export const ORAL_TRADITION_EVENTS = [
 
@@ -28,7 +37,7 @@ export const ORAL_TRADITION_EVENTS = [
       G.age >= 6 && G.age <= 13 &&
       G.parents?.mother &&
       !G.mem?.oralGrandFamine,
-    text: `Your grandmother tells you about the year the rains didn't come. She tells it the same way each time, which means it is one of the true stories — the true stories get told the same way because something in the telling has fixed. The millet that came up and then stopped. The second planting that also stopped. The animals before the people. Your grandfather walking two days to the next village to find a man who had grain. What the man asked for the grain. Whether your grandfather paid it. Your grandmother pauses the same way each time she reaches this part.`,
+    text: (G) => `Your grandmother tells you about the year the rains didn't come. She tells it the same way each time, which means it is one of the true stories — the true stories get told the same way because something in the telling has fixed. The ${stapleOf(G)} that came up and then stopped. The second planting that also stopped. The animals before the people. Your grandfather walking two days to the next village to find a man who had grain. What the man asked for the grain. Whether your grandfather paid it. Your grandmother pauses the same way each time she reaches this part.`,
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -46,7 +55,7 @@ export const ORAL_TRADITION_EVENTS = [
       isOralContext(G) &&
       G.age >= 7 && G.age <= 14 &&
       !G.mem?.oralMarketNews,
-    text: `Your father or uncle comes back from the market in the nearest town. The market is where news arrives — carried by the truck drivers, by the traders, by the people who have been somewhere you haven't been. This week the price of sorghum is up. There was a meeting in the district capital about the new road. Someone says the government is changing, which could mean many things. You know how to read the adult faces when the market news is bad: the specific stillness, the way the conversation stops and starts in a different direction. You cannot always hear the market news. You always learn the face that reads it.`,
+    text: (G) => `Your father or uncle comes back from the market in the nearest town. The market is where news arrives — carried by the truck drivers, by the traders, by the people who have been somewhere you haven't been. This week the price of ${stapleOf(G)} is up. There was a meeting in the district capital about the new road. Someone says the government is changing, which could mean many things. You know how to read the adult faces when the market news is bad: the specific stillness, the way the conversation stops and starts in a different direction. You cannot always hear the market news. You always learn the face that reads it.`,
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -65,7 +74,18 @@ export const ORAL_TRADITION_EVENTS = [
       G.currentYear >= 1955 && G.currentYear <= 1985 &&
       G.age >= 6 && G.age <= 15 &&
       !G.mem?.oralRadioMan,
-    text: `There is one radio in the village. It belongs to the man who was a soldier and came back with money and a radio. He keeps it at his house but brings it out for important events — football matches, political speeches, announcements. People crowd around it. The radio speaks in the official language, which some people understand well and others understand partially and some don't understand at all. The man with the radio translates the important parts into the local language. Or he doesn't translate and someone else does. Or the translation is a summary that is not quite what the radio said, adjusted for what the translator thinks people should know.`,
+    // The colonial-radio premise — a broadcast in a language half the village
+    // cannot follow — is true where school was taught in the coloniser's
+    // language and false where it was not. In Egypt the radio spoke Arabic, and
+    // the man beside it was translating something else: the announcement into
+    // what the announcement meant.
+    text: (G) => {
+      const lang = colonialSchoolLanguage(G.character.country.name, G.currentYear)
+      if (lang) {
+        return `There is one radio in the village. It belongs to the man who was a soldier and came back with money and a radio. He keeps it at his house but brings it out for important events — football matches, political speeches, announcements. People crowd around it. The radio speaks ${lang}, which some people understand well and others understand partially and some don't understand at all. The man with the radio translates the important parts. Or he doesn't translate and someone else does. Or the translation is a summary that is not quite what the radio said, adjusted for what the translator thinks people should know.`
+      }
+      return `There is one radio in the village. It belongs to the man who was a soldier and came back with money and a radio. He keeps it at his house but brings it out for important events — football matches, political speeches, announcements. People crowd around it. The radio speaks the language properly, in the way of the capital and the newsreader, and everyone can follow the words. What has to be translated is the other thing: what the announcement means, who it is aimed at, what will follow from it. The man with the radio does that part, and people take his version home with them. Sometimes his version is not what the radio said at all.`
+    },
     choices: null,
     effect: (p) => {
       p.e += 3

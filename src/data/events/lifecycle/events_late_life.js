@@ -796,13 +796,20 @@ export const LATE_LIFE_EVENTS = [
     id: 'retire_pension_decision',
     phase: null,
     weight: 3,
+    // An employer's retirement plan needs an employer with a plan. This fired
+    // for a self-employed trading-company owner, and for characters in
+    // countries and decades that had no such thing.
     when: (G) =>
       G.career &&
+      !G.flags.includes('entrepreneur') &&
+      !G.flags.includes('self_employed') &&
+      ['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(G.currentCountry?.archetype ?? G.character.country.archetype) &&
+      G.currentYear >= 1960 &&
       !G.flags.includes('retired') &&
       !G.mem.retirePensionDecision &&
       G.age >= 40 && G.age <= 55 &&
       G.money > 5000,
-    text: 'Your employer\'s retirement plan documentation arrives for the annual review. You can increase your contribution to the maximum — it means less now, but considerably more compounding over the remaining twenty years. Or you can keep the current rate and have more available each month.',
+    text: 'The retirement plan documentation arrives for the annual review. You can increase your contribution to the maximum — it means less now, but considerably more compounding over the remaining twenty years. Or you can keep the current rate and have more available each month.',
     choices: [
       {
         text: 'Maximise the pension contribution',

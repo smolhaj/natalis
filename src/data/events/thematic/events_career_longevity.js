@@ -181,7 +181,10 @@ export const CAREER_LONGEVITY_EVENTS = [
       G.career &&
       G.age >= 55 && G.age <= 68 &&
       !G.mem?.clInstitutionalMemory,
-    text: `You are the memory now. When people need to know why a decision was made fifteen years ago, or why a process works the way it does, or what was tried in 2007 and why it didn't work — they come to you. The role is not formal. It has no title. It is simply the function of having been here longer than everyone else. You are the record of things that were not written down, which is most of what was learned.`,
+    // The year has to be derived: the point of the event is that it is in the
+    // past and inside this character's own tenure. Written as a literal it once
+    // told a man in 1991 what had been tried in 2007.
+    text: (G) => `You are the memory now. When people need to know why a decision was made fifteen years ago, or why a process works the way it does, or what was tried in ${G.currentYear - 18} and why it didn't work — they come to you. The role is not formal. It has no title. It is simply the function of having been here longer than everyone else. You are the record of things that were not written down, which is most of what was learned.`,
     choices: null,
     effect: (p) => { p.s += 3; p.r += 3; p.karma += 3; p.setMem('clInstitutionalMemory', true) },
   },

@@ -18,10 +18,25 @@ export const EVENTS_SONDER_58 = [
     id: 'sonder_58_c',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 58 && !G.mem?.s58c,
+    // A chemist that became a coffee shop needs a street with shops on it. This
+    // fired for a man in a village in Upper Egypt and told him he had lived in
+    // this city a long time.
+    when: (G) => place.isUrban(G) && G.age >= 58 && !G.mem?.s58c,
     text: 'You have lived in this city long enough that you navigate it by the invisible map of what things used to be — the chemist that is now a coffee shop, the alley that no longer exists, the building whose previous tenant you knew better than the current one. The invisible city and the visible city overlap perfectly. To newcomers the place looks one way. To you it looks like two places superimposed.',
     choices: null,
     effect: (p) => { p.setMem('s58c', true) },
+  },
+
+  {
+    id: 'sonder_58_c_rural',
+    phase: 'late_life',
+    weight: 2,
+    // The same observation where there are no shopfronts to change hands: the
+    // map is made of houses, families and a tree, and it is just as double.
+    when: (G) => place.isRural(G) && G.age >= 58 && !G.mem?.s58cRural,
+    text: 'You know this place by what has gone out of it. The house at the end that fell in and was not rebuilt, the family whose name is still on the land they sold, the tree that was the thing everyone gave directions by until the year it came down. You give directions by it still, sometimes, and people younger than you wait politely for the part they can use. Two places stand in the same fields. You are one of the last who can see both.',
+    choices: null,
+    effect: (p) => { p.setMem('s58cRural', true) },
   },
 
   {

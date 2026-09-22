@@ -9625,13 +9625,74 @@ function* textureCandidates(state, opts = {}) {
       ? 'You have spent your life in a country that called your community\'s murdered members drug dealers for a decade. The parliamentary inquiry found failures at every level. The shredded files are in the finding. The finding did not bring back who was taken.'
       : 'The NSU committee has been running for years. The pattern of Verfassungsschutz involvement is still not fully established. The families of the killed have been waiting for a full accounting since 2011. You are still waiting with them.',
   ])]
-  if (F.has('oil_shock_generation') && Math.random() < 0.22) yield [T.anchored, pick([
-    '1973. The petrol queue stretches from the garage to the main road. The odd/even number plate rule applies every other day. The German government bans driving on Sundays. The Dutch see Amsterdam with no cars. Everyone learns what the price of oil is.',
-    'The first oil shock produced the second car in one move: the small car, the fuel-efficient car, the car that was not the American car. The shock changed the design of things.',
-    phase === 'late_life'
-      ? 'The oil shock of 1973 was the first time you understood that the energy that kept the lights on came from somewhere specific, run by someone specific, for reasons that included but were not limited to your convenience. The education stuck.'
-      : 'The price of petrol doubled in three months. The queue was the daily fact. The shortage was the first shortage you had experienced in a wealthy country and it had the specific effect of making the wealth feel conditional.',
-  ])]
+  // `oil_shock_generation` is set by three separate world events — one for the
+  // wealthy west, one for the wealthy east, one for the oil-importing
+  // developing world — and this block was written for the first of them only,
+  // with no country guard and no year bound. It gave a Japanese character in
+  // 1986 the German Sunday driving ban, the empty streets of Amsterdam and the
+  // American consumer's discovery of the small car, which Japan built; and it
+  // told an Egyptian in 2017 that 1973 was the first shortage he had
+  // experienced in a wealthy country, in a village that had had electricity
+  // for nine years and in a country on the other side of the embargo its own
+  // war had triggered. Birth country rather than current, because the question
+  // the line answers is where this person stood in 1973.
+  if (F.has('oil_shock_generation') && currentYear >= 1973 && Math.random() < 0.22) {
+    const oilArch = state.character?.country?.archetype
+    const oilCn = state.character?.country?.name
+    const stillIn1973 = currentYear <= 1976
+    // The countries that sold the oil the embargo made expensive. For these the
+    // shock arrived as money rather than as a queue.
+    const EXPORTER = ['Nigeria', 'Venezuela', 'Iran', 'Iraq', 'Algeria', 'Libya', 'Indonesia', 'Ecuador', 'Angola',
+      'Saudi Arabia', 'Kuwait', 'United Arab Emirates', 'Qatar', 'Oman', 'Bahrain', 'Trinidad and Tobago']
+
+    if (oilCn === 'Egypt' || oilCn === 'Syria') {
+      // The war the embargo was declared over was this country's war.
+      yield [T.anchored, pick([
+        stillIn1973
+          ? 'The war in October is everyone\'s war, and the oil the Gulf will not sell is being withheld on your behalf. The withholding happens elsewhere. What happens here is the queue at the co-operative and the price of the bus.'
+          : 'The embargo was declared for your country\'s sake and the money it made went to other countries. What came back was the road out: the men went to the Gulf and to Libya for the wages, and sent home what they could.',
+        phase === 'late_life' && 'Nineteen seventy-three is in the schoolbooks as the crossing and the war. What it actually changed in this house was the address of the person sending the money.',
+      ])]
+    } else if (EXPORTER.includes(oilCn)) {
+      yield [T.anchored, pick([
+        stillIn1973
+          ? 'The price of the thing under the ground has quadrupled in a season and the money is arriving faster than anything can be built with it. The cranes came first. What they are for is being decided after.'
+          : 'The boom came and the boom went and it did not leave behind what a boom is supposed to leave behind. The buildings that were started then are still the ones being pointed at.',
+        phase === 'late_life' && 'You have watched the money arrive and leave more than once now. Each time the argument is that this time it will be spent on something that lasts.',
+      ])]
+    } else if (oilArch === 'wealthy_east') {
+      yield [T.anchored, pick([
+        oilCn === 'Japan' && stillIn1973
+          ? 'The shelves that empty first are the ones nobody predicted: toilet paper, detergent, sugar. The queue forms because there is a queue. Everything else moves in price the same week.'
+          : oilCn === 'Japan'
+            ? 'Nineteen seventy-three is the year the prices went mad. That is the phrase for it and it is not a figure of speech — a quarter more for everything, inside a year. The growth that had run since the war stopped, and nobody had a procedure for that.'
+            : 'The price of everything that moves by truck moved, and this country imports every barrel it burns. The answer the government arrives at is to send men to build in the countries that have the oil.',
+        oilCn === 'Japan' && stillIn1973 && 'The neon is off and the broadcast ends early to save the power. The city at night looks like a city that has been told something.',
+        oilCn === 'Japan' && currentYear >= 1977 && currentYear <= 1992 && 'The small cars this country makes are suddenly the cars the Americans want. The shock that emptied the shelves here filled the order books.',
+        phase === 'late_life' && 'The oil shock of 1973 was the first time you understood that the energy keeping the lights on came from somewhere specific, run by someone specific, for reasons that included but were not limited to your convenience. The education stuck.',
+      ])]
+    } else if (oilArch === 'wealthy_west') {
+      yield [T.anchored, pick([
+        stillIn1973 && oilCn === 'United States'
+          ? 'The line at the filling station runs down the block and you are in it on the days your number plate allows. The country is being told to drive slower to save fuel. The newspaper explains where the oil comes from as though this were new information, which for most people it is.'
+          : stillIn1973
+            ? 'There is a Sunday when the motorway is empty enough to walk on, because driving on it has been banned. People walk on it and photograph it, because it will not happen twice. Everyone learns what the price of oil is and who sets it.'
+            : '1973. The petrol queue from the garage to the main road. The odd and even number plates. The Sunday the roads were closed and people walked on them. Everyone learned what the price of oil was.',
+        oilCn === 'United States' && !stillIn1973 && 'The first oil shock produced the second car in one move: the small car, the fuel-efficient car, the car that was not the American car. The shock changed the design of things.',
+        phase === 'late_life'
+          ? 'The oil shock of 1973 was the first time you understood that the energy that kept the lights on came from somewhere specific, run by someone specific, for reasons that included but were not limited to your convenience. The education stuck.'
+          : 'The price of petrol doubled in three months. The queue was the daily fact. The shortage was the first shortage you had experienced in a wealthy country and it had the specific effect of making the wealth feel conditional.',
+      ])]
+    } else {
+      // The oil-importing developing world: the side that borrowed.
+      yield [T.anchored, pick([
+        stillIn1973
+          ? 'The fare went up and then the price of everything the bus carries went up. Nobody here has seen a barrel of oil. Everybody here is paying for one.'
+          : 'The kerosene went up the year of the embargo and did not come back down. The year everyone started going to bed earlier was never announced as a policy and worked like one.',
+        phase === 'late_life' && 'The year the price of oil quadrupled is the year the country started borrowing, and the borrowing is what the next twenty years were about. The word for it came later: adjustment.',
+      ])]
+    }
+  }
   if (F.has('syrian_crisis_witnessed') && Math.random() < 0.2) yield [T.anchored, pick([
     'The photograph of Alan Kurdi on the Turkish beach — September 2, 2015 — was the image that the European debate could not look away from for one news cycle. Then it found ways to look away.',
     phase === 'late_life'
@@ -14083,7 +14144,9 @@ function* textureCandidates(state, opts = {}) {
         'Affluence and unease in the same decade. The contradiction is not being resolved.',
       ])]
       if (era === 1970) yield [T.anchored, pick([
-        'The oil shock changed the price of everything. The certainty of abundance that characterized the sixties is over.',
+        // Same decade-bucket fault as the wealthy_east block: `era === 1970` is
+        // 1970–79, and the shock was October 1973.
+        currentYear >= 1974 && 'The oil shock changed the price of everything. The certainty of abundance that characterized the sixties is over.',
         'Stagflation. The economists have a word for it now. The people living it had words for it already.',
         'The social contract of the postwar years is under renegotiation. The outcome is not yet clear.',
       ])]
@@ -14171,35 +14234,64 @@ function* textureCandidates(state, opts = {}) {
       // (never colonised) that their independence was recent.
       const indepYear = INDEPENDENCE_YEAR[cn]
       const recentlyIndependent = indepYear != null && currentYear >= indepYear && currentYear - indepYear <= 12
+      // This whole block is written from a street in a big city, and its only
+      // guard was the archetype and the decade — so it printed the drainage
+      // ditch between the slum and the new suburb to a child in rural Upper
+      // Egypt, and the call centre at two in the morning, mobile money,
+      // Chinese machinery at the port and a city the size of a small country
+      // to a five-year-old in the Bahian sertão, in a country that had none of
+      // the four. `inTown` keeps the city lines in the city; the claims that
+      // are true of one part of this 38-country archetype and not the rest now
+      // name the countries they are true of, and the countryside gets its own
+      // decades rather than the city's.
+      const inTown = (state.character?.ruralUrban ?? 'urban') !== 'rural'
+      // Cities that really are the size of a small country, and the two places
+      // whose night shift is answering another continent's telephones.
+      const MEGACITY = ['India', 'China', 'Brazil', 'Mexico', 'Indonesia', 'Philippines', 'Egypt', 'Turkey', 'Argentina', 'Colombia', 'Thailand', 'Peru', 'Vietnam']
+      const CALL_CENTRE = ['India', 'Philippines']
+      // Where a Chinese construction presence was a fact on the ground in the
+      // 2000s rather than a commodity contract signed somewhere else.
+      const CHINA_BUILT = ['Algeria', 'Libya', 'Peru', 'Ecuador', 'Indonesia']
       if (era <= 1960) yield [T.anchored, pick([
-        'The city is being built. The city is always being built. It arrives before the infrastructure that should have come first.',
+        inTown && 'The city is being built. The city is always being built. It arrives before the infrastructure that should have come first.',
         recentlyIndependent && 'Independence is recent. The flags and the buildings are new. The question of what independence actually means is being actively worked out, by everyone, at once.',
-        'The slum and the new suburb share a drainage ditch. The city was not designed for either of them. The people have improvised past the design.',
+        inTown && 'The slum and the new suburb share a drainage ditch. The city was not designed for either of them. The people have improvised past the design.',
+        !inTown && 'The land is worked by people who do not hold the paper that says it is theirs. The paper exists. It is held somewhere else, by someone who has not been here.',
+        !inTown && 'The government reaches this place when it wants something — the tax, the census, the men for the road gang. The rest of the year it is an idea in the capital.',
       ])]
       if (era === 1970 || era === 1980) yield [T.anchored, pick([
         'The IMF has opinions about how the economy should be run. The people living in the economy have different opinions.',
-        'Structural adjustment is the term. The structure being adjusted is the daily life of ordinary people.',
-        'The city has grown faster than the roads, the water, the electricity. The gap between the plan and the reality is visible from the street.',
+        // Structural adjustment is a word of the 1980s; the 1970s had the
+        // standby arrangement and the subsidy cut without the vocabulary.
+        currentYear >= 1980 && 'Structural adjustment is the term. The structure being adjusted is the daily life of ordinary people.',
+        inTown && 'The city has grown faster than the roads, the water, the electricity. The gap between the plan and the reality is visible from the street.',
         'The informal sector employs more people than the formal sector. This is not in the official statistics.',
         'The family who moved to the city sends money back to the village and sends news. The village knows what city life is from this relay. Most of what it knows is accurate.',
+        !inTown && 'The price of fertiliser is set somewhere you have never been and announced here. The weather is the other variable and you control neither.',
+        !inTown && 'The sons go down for the season and come back with money and a way of talking that is new. The way of talking is what the mothers notice.',
       ])]
       if (era === 1990) yield [T.anchored, pick([
-        'The mobile phone is arriving before the landline arrived. This is either a paradox or a bypass. Either way, things work.',
+        currentYear >= 1996 && 'The mobile phone is arriving before the landline arrived. This is either a paradox or a bypass. Either way, things work.',
         'Democracy is the official story now — elections, campaigns, the whole machinery. The substance of it is still being negotiated.',
-        'The middle class is emerging. It is visible in the cars, in the private schools, in the kind of shopping now available.',
-        'The family that buys a car this year is purchasing mobility and also membership in something — a tier of city life with its own traffic problems.',
+        inTown && 'The middle class is emerging. It is visible in the cars, in the private schools, in the kind of shopping now available.',
+        inTown && 'The family that buys a car this year is purchasing mobility and also membership in something — a tier of city life with its own traffic problems.',
+        !inTown && 'The road was graded this year and the bus comes most days now. What it mostly carries out is people.',
       ])]
       if (era === 2000) yield [T.anchored, pick([
-        'The mobile phone is in everyone\'s pocket. Mobile money has made banking possible for people who never had an account.',
-        'Chinese investment is visible in the roads, in the buildings, in the machinery at the port. The terms of the investment are less visible.',
-        'The city is the size of a small country. Its problems are the size of a small country\'s.',
-        'The call centre at two in the morning, full of young people speaking across time zones. A whole economy organised around the gap between clocks.',
+        inTown && currentYear >= 2003 && 'The mobile phone is in everyone\'s pocket, and the pocket belongs to people who were never going to be given a telephone line.',
+        CALL_CENTRE.includes(cn) && inTown && currentYear >= 2000 && 'The call centre at two in the morning, full of young people speaking across time zones. A whole economy organised around the gap between clocks.',
+        CHINA_BUILT.includes(cn) && currentYear >= 2005 && 'Chinese investment is visible in the roads, in the buildings, in the machinery on the site. The terms of the investment are less visible.',
+        MEGACITY.includes(cn) && inTown && 'The city is the size of a small country. Its problems are the size of a small country\'s.',
+        inTown && 'The mall opened on the ring road and the air conditioning is on its own a reason to go. People go and buy nothing and this is understood.',
+        !inTown && currentYear >= 2004 && 'The mast went up on the hill and there is a signal in the upper field. What the signal is mostly used for is calling the people who left.',
+        !inTown && 'The dish is on the roof of the house that has one, and on the evening of a match the house is not that family\'s house.',
       ])]
       if (era >= 2010) yield [T.anchored, pick([
         'The young population bulge is visible everywhere — in the schools, in the unemployment statistics, in the food stalls that appear each year.',
         'The smartphone has arrived. The politics are faster now and more visible and less controllable by the people who used to control them.',
         'The diaspora money is a significant part of the economy. The people who send it do not always get credit for what they are sustaining.',
-        'The ride-share platform arrived and the informal drivers are on apps now. The platform takes its share. This is visible to no one in the car.',
+        inTown && currentYear >= 2013 && 'The ride-share platform arrived and the informal drivers are on apps now. The platform takes its share. This is visible to no one in the car.',
+        !inTown && 'The young people are on the phone to a city they have not been to. They know what the rent is there before they know the way.',
       ])]
     }
 
@@ -14210,18 +14302,24 @@ function* textureCandidates(state, opts = {}) {
         'The harvest determines most things. This is not said aloud in the town but it is understood.',
         'The extended family is the welfare system. It works through obligation rather than taxation. Both have costs.',
         'The corrugated iron roof amplifies rain in a way no architect planned and the occupant long since stopped noticing.',
-        'The compound at evening. All the kitchens going at once, the competing smells, the television through a thin wall. A life not designed for privacy and not missing it.',
+        'The compound at evening. All the kitchens going at once, the competing smells, someone\'s argument through a thin wall. A life not designed for privacy and not missing it.',
       ])]
       if (era === 1970 || era === 1980) yield [T.anchored, pick([
         'The drought years leave marks that last. The body remembers scarcity even when the shelves are full.',
-        'The SAP — structural adjustment programme — has arrived. The health clinic has fewer medications. The school has fewer teachers.',
+        // The decade bucket again: the SAPs are a thing of the 1980s, and this
+        // was reaching 1970 — and handing Nigeria one twelve years early.
+        currentYear >= 1980 && 'The SAP — structural adjustment programme — has arrived. The health clinic has fewer medications. The school has fewer teachers.',
         'The extended family absorbs the shock that the state cannot. This is efficient and also exhausting.',
         'The church or the mosque is also the mutual aid society, the news network, the credit system. The attendance has reasons beyond the theological.',
         'The informal sector employs more people than the formal sector, and it is not informal to the people working in it.',
       ])]
       if (era === 1990 || era === 2000) yield [T.anchored, pick([
-        'Mobile money has made it possible to send and receive money in ways that did not exist a decade ago. This is not a small thing.',
-        'The Chinese traders have a shop on the main road now. They sell things that were not available before. The prices are different.',
+        // Same two-decade bucket, same fault as the developing_urban block:
+        // mobile money is M-Pesa onward, 2007, not 1990; and the Chinese
+        // trader on the main road is a thing of the late nineties at the
+        // earliest.
+        currentYear >= 2007 && 'Mobile money has made it possible to send and receive money in ways that did not exist a decade ago. This is not a small thing.',
+        currentYear >= 1998 && 'The Chinese traders have a shop on the main road now. They sell things that were not available before. The prices are different.',
         'The pastor\'s church has a bigger congregation than last year\'s. The church is the community center, the loan office, the safety net.',
         'The young people are saving for the journey. The journey is to the city, or to Europe, or to the Gulf. The direction is away.',
         'The matatu, the tro-tro, the danfo: the shared minibus that connects the city to itself. The driver knows the system better than any map. The system is not in any map.',
@@ -14269,20 +14367,101 @@ function* textureCandidates(state, opts = {}) {
     }
 
     // ── wealthy_east era texture ──
+    // `era <= 1970` is every year from 1900 to 1979, so the economic miracle
+    // was visible in the new buildings of 1939 Tokyo, which was mobilising,
+    // and of 1945 Tokyo, which was ash. `era === 1980 || era === 1990` put the
+    // bubble in the past tense in 1983, three years before it started and
+    // eight before it burst. And five countries share this archetype for what
+    // they are now: each boom has its own dates, and Slovenia's century is
+    // Yugoslavia's, not the Pacific's.
     if (arch === 'wealthy_east') {
-      if (era <= 1970) yield [T.anchored, pick([
+      const MIRACLE = { Japan: [1955, 1973], 'South Korea': [1962, 1996], Taiwan: [1963, 1995], Singapore: [1965, 1995] }
+      const boom = MIRACLE[cn]
+      const inBoom = boom != null && currentYear >= boom[0] && currentYear <= boom[1]
+      const eastAsia = boom != null
+
+      if (inBoom) yield [T.anchored, pick([
         'The economic miracle is real and visible in the new buildings, the new factories, the sheer speed of the reconstruction.',
         'Work is the social contract. There is a generation being made by this ethos that will not entirely understand the generation that follows.',
       ])]
-      if (era === 1980 || era === 1990) yield [T.anchored, pick([
+
+      // Japan before and after the boom: mobilisation, then the ruins.
+      if (cn === 'Japan' && currentYear >= 1937 && currentYear <= 1945) yield [T.anchored, pick([
+        currentYear >= 1940 && 'The neighbourhood association passes down the rationing, the drills and the collection of metal. Everyone is enrolled in it. Nobody was asked.',
+        'The radio gives the announcements in a register that does not admit of doubt. What is not announced is the part people have learned to read.',
+        currentYear >= 1944 && 'Houses are being pulled down in rows to make firebreaks. The people in them are told the week before. There is no argument available.',
+      ])]
+      if (cn === 'Japan' && currentYear >= 1946 && currentYear <= 1954) yield [T.anchored, pick([
+        'The market by the station sells what the ration does not cover, at what things actually cost. Everyone uses it and nobody calls it by its name.',
+        'The occupation is the jeeps, the English on the signs at the important buildings, and a constitution nobody here wrote. It is scheduled to end. What that will mean is not agreed on.',
+        'Whole districts are flat. People are living in what can be assembled out of what the fire left behind.',
+      ])]
+
+      if (cn === 'South Korea' && currentYear >= 1940 && currentYear <= 1945) yield [T.anchored, pick([
+        'School is taught in Japanese and the name on the register is the Japanese one, since the year they were all changed. At home your grandmother uses the other name and does not explain why.',
+      ])]
+      if (cn === 'South Korea' && currentYear >= 1950 && currentYear <= 1953) yield [T.anchored, pick([
+        'The front has come through this town twice. Which army holds it decides what it was safe to have said last year.',
+        'The road south is people. Everyone is carrying what they decided in one hour was worth carrying.',
+      ])]
+      if (cn === 'South Korea' && currentYear >= 1954 && currentYear <= 1961) yield [T.anchored, pick([
+        'The aid flour comes in printed sacks. The sacks become trousers. Nothing here is thrown away, and the printing is still faintly on the cloth.',
+      ])]
+
+      if (cn === 'Taiwan' && currentYear >= 1945 && currentYear <= 1952) yield [T.anchored, pick([
+        'The island changed governments and the new one brought its own language. What you were taught to write in is not what the offices use.',
+        currentYear >= 1949 && 'There are a great many new people. They arrived with the government and they speak about all of this as though it were temporary.',
+      ])]
+      if (cn === 'Taiwan' && currentYear >= 1949 && currentYear <= 1987) yield [T.anchored, pick([
+        'A man from this street was taken for questioning. He came back, or he did not. Either way it is not discussed in front of children.',
+      ])]
+
+      if (cn === 'Singapore' && currentYear >= 1942 && currentYear <= 1945) yield [T.anchored, pick([
+        'The island has a different name this year, and a different calendar, and the soldier at the checkpoint decides who goes through it.',
+      ])]
+      if (cn === 'Singapore' && currentYear >= 1946 && currentYear <= 1964) yield [T.anchored, pick([
+        'The harbour is the reason the place exists. What is being argued over in the streets is who it will belong to when the flag comes down.',
+      ])]
+
+      // Slovenia: in this archetype for what it is now, and in Yugoslavia for
+      // most of the century this layer covers.
+      if (cn === 'Slovenia' && currentYear >= 1950 && currentYear <= 1990) yield [T.anchored, pick([
+        'The factory is worker-managed, on paper and partly in fact. This republic is the one that puts most into the federal fund, and the arithmetic of that gets done at kitchen tables.',
+        currentYear >= 1965 && 'The passport is the good one. You can drive to Trieste for coffee and jeans and be home the same evening, and people in both directions find this normal.',
+      ])]
+      if (cn === 'Slovenia' && currentYear >= 1991 && currentYear <= 1999) yield [T.anchored, pick([
+        'The war here lasted ten days and the wars further south did not stop for years. The distance between those two facts is the whole of this decade in this country.',
+        'The country is new and very small, and the argument is over which capital it should be measured against. Most of the answers are Vienna.',
+      ])]
+
+      // Japan between the oil shock and the bubble: slower growth, and the
+      // largest trade surplus anyone had ever run.
+      if (cn === 'Japan' && currentYear >= 1975 && currentYear <= 1985) yield [T.anchored, pick([
+        'The growth is slower than it was and the country is richer than it has ever been, and both of those are in the same newspaper. What is made here is unloaded in ports on the other side of the world, and the men on those docks are angry about it.',
+        currentYear >= 1980 && 'The things this country makes have become small and precise — the camera, the recorder, the player you carry. Abroad this is treated as a national character. Here it is a job with a shift pattern.',
+      ])]
+
+      // The bubble was Japanese, ran 1986–91 and burst in 1991. The present
+      // tense and the past tense are two different lines.
+      if (cn === 'Japan' && currentYear >= 1986 && currentYear <= 1991) yield [T.anchored, pick([
+        'The newspaper prints the arithmetic: the ground inside the palace moat is valued above the whole of California. Nobody is behaving as though this stops.',
+        'The money is spending itself. The taxi at two in the morning goes to whoever holds up the most notes, and there is always someone holding up more.',
+      ])]
+      if (cn === 'Japan' && currentYear >= 1992) yield [T.anchored, pick([
         'The bubble, before it burst, was extraordinary. The city was spending at a speed that felt permanent.',
         'After the bubble, a different kind of decade. The old certainties about employment and security are being renegotiated.',
+      ])]
+      if (cn === 'South Korea' && currentYear >= 1997 && currentYear <= 1999) yield [T.anchored, pick([
+        'The country joined the club of rich countries and went to the Fund for money inside two years. People are queuing at the bank to hand in gold.',
+      ])]
+      if (eastAsia && currentYear >= 1955) yield [T.anchored, pick([
         'The work hours are not discussed as unusual. They are discussed as necessary. This is a distinction with a cost.',
       ])]
+
       if (era >= 2000) yield [T.anchored, pick([
         'The aging population is the demographic challenge that the economists keep discussing. The people getting older are less interested in being discussed.',
         'The birth rate is the number that appears in the policy documents. The young people have reasons for it that the policy documents do not fully capture.',
-        'The smartphone is the device through which most things happen now. Including things that used to happen differently.',
+        currentYear >= 2010 && 'The smartphone is the device through which most things happen now. Including things that used to happen differently.',
       ])]
     }
 
@@ -14310,7 +14489,11 @@ function* textureCandidates(state, opts = {}) {
     if (cn === 'Nigeria' && era === 1970) yield [T.anchored, 'The oil is a promise and a complication. The wealth it generates does not reach the same places the complications do.']
     if (cn === 'India' && era === 1990) yield [T.anchored, 'Liberalisation has arrived. The middle class is growing in ways that were not possible before 1991. What is being built is genuinely uncertain.']
     if (cn === 'Brazil' && era === 1980) yield [T.anchored, 'The hyperinflation is a fact of daily life. Prices change between morning and afternoon. The adaptation required is exhausting and also, after a while, ordinary.']
-    if (cn === 'Brazil' && era === 2000) yield [T.anchored, 'The Bolsa Família has pulled people out of a kind of poverty that was considered fixed. The fact of this is underreported outside Brazil.']
+    // `era === 2000` is 2000–2009, and Bolsa Família was created in October
+    // 2003 and paying at scale from 2004. The years it displaced have their
+    // own story: the run on the real in the months before the 2002 election.
+    if (cn === 'Brazil' && currentYear >= 2000 && currentYear <= 2003) yield [T.anchored, 'The real is falling against the dollar over what the markets think an election might do. The election has not happened. The price of everything imported has moved anyway.']
+    if (cn === 'Brazil' && currentYear >= 2004 && currentYear <= 2013) yield [T.anchored, 'The Bolsa Família has pulled people out of a kind of poverty that was considered fixed. The fact of this is underreported outside Brazil.']
   }
 
   if (F.has('left_faith_community') && Math.random() < 0.18) yield [T.anchored, pick([

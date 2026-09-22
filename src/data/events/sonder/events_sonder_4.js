@@ -7,6 +7,7 @@
 // All mem-gated single-fire, weight 2, no choices, no new flags, minimal effects.
 
 import { place } from './_sonderGuards.js'
+import { hasTech } from '../../technology.js'
 
 export const EVENTS_SONDER_4 = [
 
@@ -21,6 +22,10 @@ export const EVENTS_SONDER_4 = [
     when: (G) =>
       !G.mem?.s4_tv &&
       G.currentYear >= 1955 && G.currentYear <= 1975 &&
+      // An event about the television arriving has to fire in a year the
+      // television had arrived. Ethiopian broadcasting begins in 1964 and the
+      // set reaches a household around 1980; this fired in 1956.
+      hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear) &&
       G.age >= 5 && G.age <= 14,
     text: 'The television arrives. It is large and has one channel and the image is not always clear and your father adjusts the aerial by moving it a degree at a time while you call out from across the room whether it is better or worse. The show that is on when the image finally resolves: you still remember it.',
     choices: null,

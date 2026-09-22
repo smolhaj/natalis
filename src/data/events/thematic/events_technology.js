@@ -30,7 +30,11 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_radio_war_news',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.currentYear >= 1939 && G.currentYear <= 1946 && G.age >= 5,
+    // A year window is not an arrival. Oman's first broadcast is 1972, and
+    // this put a radio in an Omani room in 1940 with the adults gathered
+    // round it.
+    when: (G) => G.currentYear >= 1939 && G.currentYear <= 1946 && G.age >= 5 &&
+      hasTech(G.currentCountry ?? G.character.country, 'radio', G.currentYear),
     text: 'The radio is on all the time now. The adults gather around it in a way that has a different quality from before. You cannot follow all the words but you understand from their faces that something serious is happening somewhere larger than here.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 4; p.addFlag('war_radio_childhood') },

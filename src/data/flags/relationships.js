@@ -4,6 +4,22 @@
  */
 export const RELATIONSHIP_FLAGS = {
 
+  interfaith_partnership: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'The partnership is across two religious traditions — recorded because nothing on the partner object holds a religion.',
+    intent: 'event',
+    notes: 'Set by rel_interfaith_relationship and rela_interfaith_relationship_arc. Checked by rela_raising_interfaith_children and rela_children_of_a_registered_faith, which used to assume it.',
+  },
+
+  marriage_across_the_register: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'The marriage required a conversion, real or nominal, to be registered at all.',
+    intent: 'event',
+    notes: 'Set by rel_interfaith_relationship (conversion choice). Checked in the religion arc follow-through.',
+  },
+
   permanently_estranged: {
     weight: 'major',
     category: 'relationship',

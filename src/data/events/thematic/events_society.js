@@ -3,6 +3,29 @@
 // These are educational moments — the player learns when and where things changed,
 // told from the perspective of someone living through the change.
 
+// The year each country's universal scheme actually took effect. A guard reading
+// only "rich country, not the United States" told a Japanese character in 1958
+// that the doctor cost nothing — three years before universal coverage, and in a
+// system that has never had a zero co-payment. These belong in src/data/history.js
+// with the other dates the engine was guessing; that file is owned elsewhere, so
+// the table sits here until it can be moved.
+const UNIVERSAL_HEALTHCARE_FROM = {
+  'New Zealand': 1938, 'United Kingdom': 1948, 'Belgium': 1945, 'France': 1945,
+  'Germany': 1950, 'Sweden': 1955, 'Iceland': 1956, 'Norway': 1956,
+  'Austria': 1956, 'Japan': 1961, 'Finland': 1964, 'Netherlands': 1966,
+  'Ireland': 1970, 'Canada': 1972, 'Denmark': 1973, 'Australia': 1975,
+  'Italy': 1978, 'Portugal': 1979, 'Greece': 1983, 'Singapore': 1984,
+  'Spain': 1986, 'South Korea': 1989, 'Slovenia': 1992, 'Puerto Rico': 1993,
+  'Taiwan': 1995, 'Israel': 1995, 'Switzerland': 1996, 'Cyprus': 2019,
+}
+
+// Where the money never passes through the patient's hands at all, as against
+// the systems built on an insurance card and a share of the bill.
+const FREE_AT_POINT_OF_USE = [
+  'United Kingdom', 'Sweden', 'Norway', 'Denmark', 'Finland', 'Iceland',
+  'Italy', 'Spain', 'Portugal', 'Greece', 'Canada', 'Australia', 'New Zealand',
+]
+
 export const SOCIETY_EVENTS = [
 
   // ── WOMEN'S RIGHTS — VOTING ──────────────────────────────────────────────────
@@ -467,12 +490,21 @@ export const SOCIETY_EVENTS = [
     id: 'healthcare_universal_system',
     phase: 'young_adult',
     weight: 4,
-    when: (G) =>
-      G.age >= 18 && G.age <= 28 &&
-      ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype) &&
-      G.character.country.name !== 'United States' &&
-      !G.mem?.healthcare_system_encountered,
-    text: 'The doctor sees you the same day. You leave without a bill. This is not remarkable here — it is simply how it works. You have grown up knowing this. You will not understand what it means until you meet someone who grew up without it.',
+    when: (G) => {
+      if (G.age < 18 || G.age > 28) return false
+      if (G.mem?.healthcare_system_encountered) return false
+      const country = G.currentCountry?.name ?? G.character.country.name
+      const from = UNIVERSAL_HEALTHCARE_FROM[country]
+      // No entry means no universal system to have grown up inside.
+      return from !== undefined && G.currentYear >= from
+    },
+    text: (G) => {
+      const country = G.currentCountry?.name ?? G.character.country.name
+      if (FREE_AT_POINT_OF_USE.includes(country)) {
+        return 'The doctor sees you and there is nothing to settle afterwards. No card, no estimate, no arithmetic done in the corridor. This is not remarkable here — it is simply how it works. You have grown up knowing this. You will not understand what it means until you meet someone who grew up without it.'
+      }
+      return 'The doctor sees you. You hand over a card and pay a share of what it cost, and the share is small enough that it was never a question whether to come. The rest is settled somewhere else, between institutions, without you. This is not remarkable here — it is simply how it works. You will not understand what it means until you meet someone who grew up without it.'
+    },
     choices: null,
     effect: (p) => {
       p.m += 5

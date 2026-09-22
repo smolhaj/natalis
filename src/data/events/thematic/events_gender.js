@@ -1,3 +1,5 @@
+import { hasTech } from '../../technology.js'
+
 export const GENDER_EVENTS = [
 
   // ── FEMALE EDUCATION GATEKEEPING ───────────────────────────────────────────
@@ -1288,7 +1290,11 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'female' &&
       G.career,
-    text: 'The presentation you stayed late to build was delivered by your male colleague to the senior team. The follow-up email names him as the lead. Your name does not appear. He has not corrected anyone.',
+    // The credit being taken is true of every era. The follow-up email is not:
+    // this fired for a woman in Britain in 1963, thirty-three years early.
+    text: (G) => hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear)
+      ? 'The presentation you stayed late to build was delivered by your male colleague to the senior team. The follow-up email names him as the lead. Your name does not appear. He has not corrected anyone.'
+      : 'The work you stayed late to finish was put in front of the senior men by your male colleague, who presented it well. The minute records him as having prepared it. Your name is not in the minute. He has not corrected anyone, and the room has already moved on to the next item.',
     context: null,
     choices: [
       {

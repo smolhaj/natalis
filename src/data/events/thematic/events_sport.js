@@ -350,7 +350,7 @@ export const SPORT_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => G.age >= 13 && G.age <= 17 && G.stats.health >= 45 && !G.mem?.ordSwim,
-    text: `The water is colder than anyone admits for the first ninety seconds and then it is not. There is a sign somewhere behind you that says something. Your body does the thing bodies do when they are seventeen and in water: everything works, nothing hurts, you can go under and stay under. Someone shouts your name from the bank and you do not answer, just to be underneath a while longer.`,
+    text: `The water is colder than anyone admits for the first ninety seconds and then it is not. There is a sign somewhere behind you that says something. Your body does the thing a body does before it starts keeping accounts: everything works, nothing hurts, you can go under and stay under. Someone shouts your name from the bank and you do not answer, just to be underneath a while longer.`,
     choices: null,
     effect: (p) => { p.m += 10; p.h += 4; p.setMem('ordSwim', true) },
   },

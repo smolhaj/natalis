@@ -202,7 +202,19 @@ export const LABOR_EVENTS = [
       if (year < 1995) {
         return 'The software arrives on a disc. It runs on the new computer they installed last month. The thing it does — ' + (field === 'finance' ? 'the ledger work, the reconciliations' : field === 'media' ? 'the typesetting, the layout' : 'the filing, the calculations') + ' — took three people before. It takes one now, and a different kind of one. You are the kind who did it before.'
       }
-      return 'The article is in the trade publication you get sent. The headline is about efficiency. The headline is also, if you read it again, about you. The system they are describing does what you do, faster, without needing the commute. The article uses the word "transition." You have a mortgage.'
+      // "You have a mortgage" was asserted flat, and was false in every life it
+      // fired in — a Brazilian nine years before he bought anything, an
+      // Egyptian smallholder who also got sent a trade publication.
+      const owns = (G.assets?.properties?.length ?? 0) > 0
+      const stake = owns && G.debt > 0 ? 'You are still paying for the house.'
+        : G.children?.length ? 'You have children.'
+          : G.debt > 0 ? 'You owe money that comes due whether or not this happens.'
+            : `You are ${G.age}.`
+      const arrival = G.ruralUrban === 'rural'
+        ? 'Someone reads it out in the shade at the hottest part of the day, half as a joke.'
+        : 'The article is in the trade publication you get sent.'
+      const away = G.ruralUrban === 'rural' ? 'without anyone having to be there at all' : 'without needing the commute'
+      return arrival + ' The headline is about efficiency. The headline is also, if you read it again, about you. The system they are describing does what you do, faster, ' + away + '. The article uses the word "transition." ' + stake
     },
     choices: [
       {

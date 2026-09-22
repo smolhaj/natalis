@@ -230,10 +230,14 @@ export function buildMundaneLayer(state) {
   addIf(tech('microwave') && currentYear <= techArrival('microwave') + 8 && notYoung,
     'The microwave is in some kitchens — a machine that does what a pot does, faster, and no one is entirely sure what this means for cooking.',
   )
-  addIf(tech('vcr') && notYoung,
+  // Both of these say a thing is NEW, and both were the only lines in this
+  // stretch without an upper bound — so the VCR went on being a novelty in
+  // 2021 Brazil and 2031 Egypt, thirty and forty years after it arrived, long
+  // after the thing itself had gone. Same window as the neighbours above.
+  addIf(tech('vcr') && currentYear <= techArrival('vcr') + 10 && notYoung,
     'The VCR means the film can be watched again, which changes what watching a film means.',
   )
-  addIf(tech('personal_computer') && age >= 10,
+  addIf(tech('personal_computer') && currentYear <= techArrival('personal_computer') + 10 && age >= 10,
     'The personal computer is at the desk. Most of what it does is still being discovered.',
   )
   addIf(tech('cassette') && working && wealthyNow && currentYear >= 1980 && currentYear <= 1998,
@@ -272,8 +276,14 @@ export function buildMundaneLayer(state) {
   addIf(tech('streaming') && age >= 10,
     'Streaming means there is no schedule for the film or the series. You watch when you want. You watch more.',
   )
-  addIf(tech('smartphone') && isDeveloping && age >= 12,
+  addIf(tech('smartphone') && (isSubsaharan || isPoor) && age >= 12,
     'The smartphone arrived before the electricity is reliable. Solar charging is a business now.',
+  )
+  // Mobile money is a real institution across sub-Saharan Africa, South and
+  // South-East Asia and Egypt, and it is not how anyone in Latin America pays
+  // for anything — this was gated on `isDeveloping`, which is 90 countries.
+  addIf(tech('smartphone') && age >= 12 && (isSubsaharan ||
+      ['Bangladesh', 'Pakistan', 'India', 'Philippines', 'Indonesia', 'Egypt', 'Cambodia', 'Myanmar', 'Nepal', 'Sri Lanka'].includes(cn)),
     'Mobile money means the transaction happens on the phone. No bank required.',
   )
   addIf(tech('video_call') && age >= 10,
@@ -509,7 +519,25 @@ export function buildMundaneLayer(state) {
     'Rice is the base of the meal in the way that mathematics is the base of the equation.',
     'Tea is poured before conversation begins. The conversation can wait for the pouring.',
     'The night market is lit and noisy and sells everything. The eating happens standing.',
-    'The communal pot — hot pot, jjigae, shabu-shabu — is also the communal meeting.',
+  )
+  // The pot in the middle of the table is shared across all of these places and
+  // the dish in it is not. One line named hot pot, jjigae and shabu-shabu at
+  // once, so a Japanese life was handed a Korean stew, and shabu-shabu — named
+  // in an Osaka restaurant in 1952 — was on the table in 1945.
+  addIf(cn === 'China' || cn === 'Taiwan',
+    'The pot sits in the middle and everyone cooks out of it as they eat. The meal and the meeting are the same event.',
+  )
+  addIf(cn === 'Japan' && currentYear >= 1952,
+    'The donabe goes on the burner in the middle of the table and everyone reaches into it. Shabu-shabu, since the restaurants started calling it that. The pot is also the meeting.',
+  )
+  addIf(cn === 'Japan' && currentYear < 1952,
+    'The donabe goes over the heat in the middle of the table and everyone reaches into it. Whatever is in it that week, the arrangement is the same: one pot, and everyone around it.',
+  )
+  addIf(cn === 'South Korea',
+    'The jjigae comes to the table still boiling and nobody is given their own bowl of it. The spoons go into the same pot.',
+  )
+  addIf(['Vietnam', 'Thailand', 'Malaysia', 'Singapore'].includes(cn),
+    'The steamboat is set down and the raw things are set around it and the eating takes the whole evening because it is meant to.',
   )
   addIf(isWealthyArch && era >= 1960,
     'The supermarket is the weekly ritual. The trolley follows the same route. The choices are stable.',

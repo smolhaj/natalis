@@ -215,7 +215,13 @@ export const EGYPT_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2011 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.egyCooptic,
-    text: 'The church is where the community is. Sunday mass, the saint\'s day celebrations, the specific social world of a Coptic family in Cairo — the weddings, the funerals, the network of who is related to whom through three generations of the same neighbourhood. In the university, in the workplace, you navigate the gap between your Coptic social world and the national one. You don\'t hide it — your name announces it. You don\'t advertise it — the calculus of when it helps and when it doesn\'t is something you learned without being taught.',
+    // Most Copts are rural Upper Egyptians, and this was written about a
+    // Cairene graduate: "a Coptic family in Cairo", "in the university, in the
+    // workplace". It reached a farmer in a village in Sohag with secondary
+    // schooling and told him about his university.
+    text: (G) => G.ruralUrban === 'rural'
+      ? 'The church is where the community is, and here the community is also the village — the same forty families, the same names, the saint\'s day when the whole of it walks up to the monastery on the escarpment and back. Upper Egypt is where most of you have always been, whatever anyone in Cairo assumes. Your name announces it before you do. At the market, at the government office in the town, you know within about four seconds which kind of morning it is going to be, and you learned that without anybody teaching you.'
+      : 'The church is where the community is. Sunday mass, the saint\'s day celebrations, the specific social world of a Coptic family in the city — the weddings, the funerals, the network of who is related to whom through three generations of the same neighbourhood. At work, in the queue for a permit, you navigate the gap between that world and the national one. You don\'t hide it — your name announces it. You don\'t advertise it — the calculus of when it helps and when it doesn\'t is something you learned without being taught.',
     choices: [
       {
         text: 'The navigation is unremarkable. You\'ve done it your whole life.',

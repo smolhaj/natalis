@@ -58,7 +58,46 @@ export const TECH_PHRASES = [
 // Some lines legitimately name a thing the character does NOT have — an
 // emigrant describing what home lacks, a memory, a refusal. Skip those rather
 // than report them, because the alternative is an audit nobody can get to zero.
+//
+// But the negation has to govern the PHRASE, not merely appear somewhere in the
+// sentence. Tested against the whole line this exempted
+//
+//     Mobile money has made it possible to send and receive money without a
+//     bank account.
+//
+// which asserts mobile money and negates the bank, and which was printing into
+// 1990 Nigeria, seventeen years before M-Pesa. Any sentence that mentions what
+// something replaced was invisible to this audit, which is most of the
+// sentences worth auditing.
 const NEGATED = /\b(no|not|never|without|before|until|had not|hasn't|doesn't|there is no|nobody has|none of|lacks|absence of|would not|didn't|did not)\b/
+
+// A line may also name a thing that has not arrived YET, which is not an
+// anachronism but the opposite — "When the refrigerator arrives, a white
+// enamelled box, it will change what a week is" is exactly the sentence a 1921
+// American childhood should contain. Scoped to the clause like the negation,
+// so a future clause does not exempt a present-tense claim beside it.
+const FUTURE = /\b(when|will|one day|eventually|years later|by the time|some day|someday|is coming|are coming)\b/
+
+// Clause boundaries, so a negation in one clause does not exempt a claim in the
+// next. Em dashes and semicolons separate two statements as reliably as a full
+// stop does in this prose.
+const CLAUSE = /[.;:—]|,\s+(?:and|but|though|while|which|who)\b|\s+(?:but|though|whereas)\s+/g
+
+/** The clause `index` falls inside, so negation can be scoped to it. */
+function clauseAround(lower, index) {
+  let start = 0
+  CLAUSE.lastIndex = 0
+  let m
+  while ((m = CLAUSE.exec(lower)) !== null) {
+    if (m.index >= index) break
+    start = m.index + m[0].length
+  }
+  const rest = lower.slice(index)
+  CLAUSE.lastIndex = 0
+  const endM = CLAUSE.exec(rest)
+  const end = endM ? index + endM.index : lower.length
+  return lower.slice(start, end)
+}
 
 /**
  * @param {object} entry   a log entry: { text, year, age, isMundane, isTexture }
@@ -68,9 +107,14 @@ const NEGATED = /\b(no|not|never|without|before|until|had not|hasn't|doesn't|the
 export function checkLine(text, year, country, opts = {}) {
   if (typeof text !== 'string' || !text) return null
   const lower = text.toLowerCase()
-  if (!opts.strict && NEGATED.test(lower)) return null
   for (const [re, tech] of TECH_PHRASES) {
-    if (!re.test(lower)) continue
+    const m = lower.match(re)
+    if (!m) continue
+    // Scoped to the clause the phrase is actually in.
+    if (!opts.strict) {
+      const clause = clauseAround(lower, m.index)
+      if (NEGATED.test(clause) || FUTURE.test(clause)) return null
+    }
     const arrived = techYear(country, tech)
     // A grace margin, because a wealthy household in a capital city really is
     // early and the arrival table is a median, not a floor. Anything inside the

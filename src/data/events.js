@@ -7594,7 +7594,12 @@ const BASE_EVENTS = [
     weight: 4,
     when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 28 && G.age <= 45 && G.career && G.money > 5000 && !G.mem.du_middle_class,
     isKey: true,
-    text: 'Your parents had nothing. You have a salary, an apartment, a motorbike that is actually yours. The refrigerator works. The children will go to private school. You are the first person in your family to own property. The generation above you has no vocabulary for what you have done — it didn\'t exist as a category.',
+    // The objects that mark arrival change with the decade. A refrigerator in
+    // 1966 Brazil is nineteen years early; a sewing machine and a concrete
+    // floor are not.
+    text: (G) => hasTech(G.currentCountry ?? G.character.country, 'refrigerator', G.currentYear)
+      ? 'Your parents had nothing. You have a salary, an apartment, a motorbike that is actually yours. The refrigerator works. The children will go to private school. You are the first person in your family to own property. The generation above you has no vocabulary for what you have done — it didn\'t exist as a category.'
+      : 'Your parents had nothing. You have a wage that comes on the same day every month, two rooms with a concrete floor, a bicycle that is actually yours. The children will go to the school you pay for. You are the first person in your family whose name is on a paper about a place to live. The generation above you has no vocabulary for what you have done — it didn\'t exist as a category.',
     choices: [
       {
         text: 'Celebrate quietly — this is significant',

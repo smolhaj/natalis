@@ -71,13 +71,22 @@ export const EVENTS_SONDER_17 = [
     id: 's17_public_library',
     phase: null,
     weight: 2,
-    when: (G) => place.hasFormalJob(G) && (G.age >= 8 && G.age <= 18 &&
+    // A municipal lending library is not a human constant. The old guard asked
+    // only whether the child had a job, so this printed a reading room with
+    // teenagers at computers into 1969 rural Upper Egypt. It needs a town, a
+    // reader, and an era in which the building exists.
+    when: (G) => place.wentToSchool(G) && place.isUrban(G) && place.hasBooks(G) &&
+      (place.isRich(G) ? G.currentYear >= 1935 : G.currentYear >= 1975) &&
+      (G.age >= 8 && G.age <= 18 &&
       G.character.country?.archetype !== 'conflict_zone' &&
       !G.mem?.s17PublicLibrary),
-    text: () => pick([
-      `The public library of your childhood had a smell — paper, dust, a faint industrial carpet, the quiet that is not silence but the sound of multiple people being silent simultaneously. You were allowed to take home seven books at a time, or three, or an unlimited number — this varied — and you took as many as you could carry. The library was the first place that implied you could have whatever you could read, which was a different relationship with abundance than any other institution offered.`,
-      `The library was public, which meant it was everyone's, which meant on Saturday mornings it was full of everyone: the retired men reading newspapers they had not paid for, the mothers with small children in the section that had low shelves, the teenagers at computers. You were in the section for your age for a while and then you were in the adult section and the transition was not marked, you simply walked over one day and stayed. Nobody stopped you. This was also a thing the library did.`,
-    ]),
+    text: (G) => {
+      const hasComputers = G.currentYear >= (place.isRich(G) ? 1997 : 2006)
+      return pick([
+        `The public library of your childhood had a smell — paper, dust, the quiet that is not silence but the sound of multiple people being silent simultaneously. You were allowed to take home seven books at a time, or three, or an unlimited number — this varied — and you took as many as you could carry. The library was the first place that implied you could have whatever you could read, which was a different relationship with abundance than any other institution offered.`,
+        `The library was public, which meant it was everyone's, which meant on the mornings it filled up it was full of everyone: the old men reading newspapers they had not paid for, the mothers with small children in the section that had low shelves, ${hasComputers ? 'the teenagers at the computers' : 'the students at the long tables copying what they could not take home'}. You were in the section for your age for a while and then you were in the adult section and the transition was not marked, you simply walked over one day and stayed. Nobody stopped you. This was also a thing the library did.`,
+      ])
+    },
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s17PublicLibrary', true) },
   },

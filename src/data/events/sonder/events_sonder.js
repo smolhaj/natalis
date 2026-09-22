@@ -2876,9 +2876,26 @@ export const SONDER_EVENTS = [
     phase: 'early_childhood',
     weight: 2,
     isGlimpse: true,
-    when: (G) => G.age >= 3 && !G.mem?.sonderGlimpseEcCarried,
+    // The comment above says these are anchored to a place or an era. This one
+    // was not, so it put a woman carrying a load on her head down a street in
+    // middle-class Tokyo in 1938. Correct and vivid in rural Bahia; wrong there.
+    when: (G) => (place.isPoor(G) || (place.isRural(G) && !place.isRich(G))) &&
+      G.age >= 3 && !G.mem?.sonderGlimpseEcCarried,
     text: 'From the doorway you watch a woman go past carrying something on her head. She does not look down, and she does not look at you. The load stays where she put it. She is going somewhere that is not here and you do not know where it is.',
     effect: (p) => { p.e += 1; p.setMem('sonderGlimpseEcCarried', true); },
+  },
+
+  {
+    id: 'sonder_glimpse_ec_delivery_street',
+    phase: 'early_childhood',
+    weight: 2,
+    isGlimpse: true,
+    // The replacement for the phase where the one above no longer reaches: a
+    // city street, a working morning, a stranger who is already at work.
+    when: (G) => place.isUrban(G) && place.isRich(G) &&
+      G.age >= 3 && !G.mem?.sonderGlimpseEcDelivery,
+    text: 'A man goes by with the morning delivery, one hand steadying the load and the other already reaching for the next gate. He has been awake longer than anyone in your house. He does not look up at the window. You watch until he is past the corner and then there is only the street again, which is what the street is like when nobody is crossing it.',
+    effect: (p) => { p.e += 1; p.setMem('sonderGlimpseEcDelivery', true); },
   },
 
   {
