@@ -2805,7 +2805,7 @@ export function resolveAutoEvent(state) {
   s = trackCadence(s, pendingEvent, state.currentYear)
   s = markEventUsed(s, pendingEvent)
 
-  s.log = [...s.log, { age: state.age, year: state.currentYear, text: pendingEvent.text, isKey: pendingEvent.isKey ?? false, isLetter: pendingEvent.isLetter ?? false, isPhaseTransition: pendingEvent.isPhaseTransition ?? false }]
+  s.log = [...s.log, { age: state.age, year: state.currentYear, eventId: pendingEvent.id ?? null, text: pendingEvent.text, isKey: pendingEvent.isKey ?? false, isLetter: pendingEvent.isLetter ?? false, isPhaseTransition: pendingEvent.isPhaseTransition ?? false }]
   s.pendingEvent = null
   return s
 }
@@ -2833,7 +2833,7 @@ export function resolveChoice(state, choiceIndex) {
   // The moments the player actually shaped used to be the ONLY truncated
   // entries in the log. Keep the full prose and carry the outcome alongside it.
   s.log = [...s.log, {
-    age: state.age, year: state.currentYear,
+    age: state.age, year: state.currentYear, eventId: pendingEvent.id ?? null,
     text: evtText, outcome: outcomeText, choiceText: choice.text ?? null,
     isKey: true, isChoice: true, isLetter: pendingEvent.isLetter ?? false,
   }]

@@ -139,6 +139,11 @@ export async function runSimulation({
     }
   }
   const index = idIndex()
+  const EVENTS_BY_ID = new Map()
+  try {
+    const { EVENTS } = await import('../../src/data/events.js')
+    for (const e of EVENTS) if (e?.id) EVENTS_BY_ID.set(e.id, e)
+  } catch { /* the register breakdown degrades; the run still reports */ }
 
   const totals = {
     lives: 0, years: 0, errors: [],
@@ -187,8 +192,14 @@ export async function runSimulation({
       for (let y = 0; y < maxYears && !s.dead; y++) {
         const before = s.log.length
         try {
+          const beforeLog = s.log.length
           s = tick(s)
-          const ev = s.pendingEvent
+          // In passive mode tick() resolves the event itself, so read the id it
+          // stamped on the log entry and recover the event object from there.
+          const autoResolvedId = mode === 'passive'
+            ? s.log.slice(beforeLog).find(e => e.eventId)?.eventId ?? null
+            : null
+          const ev = s.pendingEvent ?? (autoResolvedId ? EVENTS_BY_ID.get(autoResolvedId) : null)
           if (ev) {
             totals.events++; rec.events++
             // Classify before reading the register. Events reached through the
@@ -224,10 +235,12 @@ export async function runSimulation({
               if (slug) countriesSeen.add(slug)
             }
 
-            s = ev.isAutomatic || !ev.choices?.length
-              ? resolveAutoEvent(s)
-              : resolveChoice(s, Math.floor(Math.random() * ev.choices.length))
-            if (s.pendingEvent) s = { ...s, pendingEvent: null } // never stall the run
+            if (s.pendingEvent) {
+              s = ev.isAutomatic || !ev.choices?.length
+                ? resolveAutoEvent(s)
+                : resolveChoice(s, Math.floor(Math.random() * ev.choices.length))
+              if (s.pendingEvent) s = { ...s, pendingEvent: null } // never stall the run
+            }
           }
           if (s.pendingMinigame) s = { ...s, pendingMinigame: null }
           if (s.pendingTrial) {

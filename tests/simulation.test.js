@@ -224,3 +224,33 @@ describe('lifespan', () => {
     }
   }, 600000)
 })
+
+describe('passive mode is measurable', () => {
+  // CLAUDE.md calls passive mode a correctness contract: "a life that nobody
+  // steers must still reach a plausible age and a full arc. If passive medians
+  // drift, the simulation is wrong, not the mode."
+  //
+  // The instrument could not see it. Passive resolves choice events inside
+  // tick(), so `pendingEvent` is never set for them, and the harness — which
+  // counted events by reading it — reported passive at 52% of years containing
+  // an event against active's 98%, with ZERO choice events in the one mode
+  // whose entire design is that the character answers them. The engine was
+  // right; the blind spot was exactly the size of the choice-event share.
+  //
+  // Both resolution paths now stamp the event id onto the log entry.
+  it('sees the events the character answered for itself', async () => {
+    const { runSimulation } = await import('../scripts/lib/sim.js')
+    const r = await runSimulation({ lives: 4, mode: 'passive', maxYears: 100 })
+    expect(r.fatal).toBeNull()
+    expect(r.totals.errors).toEqual([])
+    // A passive life is still mostly events, and a good share of them are
+    // choices somebody had to answer.
+    expect(r.share.anyEvent).toBeGreaterThan(70)
+    expect(r.share.choice).toBeGreaterThan(20)
+    // And the register mix stays in the same country as active mode rather
+    // than collapsing into the broadest bucket.
+    expect(r.share.contemplative).toBeLessThan(32)
+    expect(r.share.anchored).toBeGreaterThan(20)
+    expect(r.share.universal).toBeLessThan(15)
+  }, 300_000)
+})
