@@ -145,10 +145,17 @@ describe('the prose layers', () => {
     expect(r.repetition.share,
       `${r.repetition.share.toFixed(1)}% repeated; worst ${r.repetition.worst}x: "${r.repetition.worstLine.slice(0, 80)}"`)
       .toBeLessThan(4)
-    // Measured at 0.2% and a worst case of 5 after the fix; 15.6% and 14 before
-    // it. The ceiling sits above the measured tail because the tail grows with
-    // sample size, and below the defect it exists to catch.
-    expect(r.repetition.worst).toBeLessThan(12)
+    // A ceiling of 12 was loose enough that the very line prose.js was written
+    // about went on printing SEVEN times and passed — a single sentence in the
+    // `urgent` tier, which wins most years it is live, and which the grief
+    // exemption deliberately spares from exhaustion. Measured at 0.3% and a
+    // worst of 3 once that line and four other thin pools were widened.
+    //
+    // The ceiling sits above the measured tail, because the tail grows with
+    // sample size, and below the defect it exists to catch. When this fails,
+    // the failure message names the line: the answer is almost always more
+    // ways to say it, not a tighter guard.
+    expect(r.repetition.worst).toBeLessThan(7)
   })
 
   it('narrates a year in the large majority of years lived', async () => {
