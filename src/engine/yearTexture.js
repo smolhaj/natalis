@@ -759,14 +759,18 @@ function* textureCandidates(state, opts = {}) {
       'The woman at the coffee counter has been smiling at customers for four hours. Something that is not the smile is happening behind it. You tip and leave.',
       'Your neighbor\'s door opens and closes at two in the morning. You don\'t know what schedule that belongs to. You have been curious about it for months and will never ask.',
       'A couple at the restaurant is not speaking — not in the bad way, in the other way. The specific silence of people who don\'t need to. You watch them for a moment without meaning to.',
-      'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.',
+      currentYear >= 2005
+        ? 'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.'
+        : 'The man across the carriage has taken the same photograph out of his wallet three times in four stops. He does not look at anything else in there.',
       _isNonWest ? 'The woman at the standpipe is organising who goes first. There is no official system. There is her, and the system she makes.' : 'The man in the café has been writing in the same notebook for an hour. The pages are covered. Something is being worked out in there that is not available to you.',
       _isNonWest ? 'A man on a motorbike is carrying something too large for a motorbike, slowly, with complete certainty about how to do it.' : 'The couple at the next table is having the specific argument that is about everything except what they are arguing about.',
     ] : (phase === 'young_adult') ? [
       'The person who has the desk across from yours: you know what they eat for lunch and nothing else about them. An entire life is visible from there and inaccessible.',
       'Your neighbor comes home at the same time every night. You know this the way you know everything about people you have never spoken to — by the sound of it through the wall.',
       'A woman on the platform is crying without covering her face. No one speaks to her. The train comes and she gets on. You will never know what that was.',
-      'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
+      currentYear >= 2005
+        ? 'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.'
+        : 'The man at the next table has been looking at an unopened letter for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
       _isNonWest ? 'A young woman at the bus stop has a single bag and the posture of someone who has just made a decision. You don\'t know what the decision was.' : 'The woman at the desk next to yours leaves at exactly five every day. You have been curious about what that is about for months and have not asked.',
       _isNonWest ? 'Someone sleeping on the pavement outside the bus station. Their things are arranged around them with a precision that makes it clear this is not the first time.' : 'The two people at the corner table have been speaking quietly for two hours. You can\'t tell if this is love or negotiation or both.',
     ] : [

@@ -8,6 +8,24 @@
 // two traditions side by side and lets the child choose is not a thing that can
 // exist here: the child follows the father, as a matter of registration. Without
 // this the two-traditions event was firing for Coptic families in Egypt.
+// Whether there is a faith here to doubt, leave or return to. The arc's entry
+// door — `rela_first_genuine_doubt` — tested only that the character had not
+// already lost one, which a secular character passes trivially by never having
+// had one, and "Resolve it back toward faith" then set `devout` and unlocked
+// the observance, scripture and congregation events behind it. A secular
+// Chicagoan ran a full religious life on it and died holding `devout`,
+// `lost_faith` and `faith_returned` at the same time.
+const NO_FAITH = new Set(['secular', 'atheist'])
+const HAS_FAITH = (G) =>
+  (!NO_FAITH.has(G.religion) && G.religion != null) ||
+  G.flags.includes('devout') || G.flags.includes('religious_upbringing')
+
+// The theodicy question — if God is good, why did this happen — belongs to the
+// traditions organised around a good and intervening God. It was being put to
+// Buddhists.
+const NON_THEISTIC = new Set(['buddhist', 'jain', 'folk_religion', 'animist'])
+const THEISTIC = (G) => !NON_THEISTIC.has(G.religion)
+
 const RELIGIOUS_PERSONAL_STATUS = [
   'Egypt', 'Saudi Arabia', 'Iran', 'Iraq', 'Jordan', 'Syria', 'Lebanon', 'Yemen',
   'Kuwait', 'Qatar', 'Bahrain', 'UAE', 'Oman', 'Libya', 'Sudan', 'Algeria',
@@ -185,7 +203,8 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_first_genuine_doubt',
     phase: null,
     weight: 4,
-    when: (G) => G.age >= 14 && G.age <= 22 && !G.flags.includes('left_religion') && !G.flags.includes('lost_faith') && !G.mem?.first_doubt,
+    when: (G) => G.age >= 14 && G.age <= 22 && HAS_FAITH(G) && THEISTIC(G) &&
+      !G.flags.includes('left_religion') && !G.flags.includes('lost_faith') && !G.mem?.first_doubt,
     text: 'The question arrives and it is not rhetorical. If God exists and is good, then why did this particular thing happen — the thing, the one that happened last month, that everyone who knows you knows about. The answer your faith gives you does not fit. You sit with the gap.',
     choices: [
       { text: 'Stay in the question — doubt is part of it', tag: null, outcome: 'You do not find an answer. You find that living with the question is different from having an answer and not necessarily worse.', effect: (p) => { p.e += 6; p.r += 5; p.addFlag('faith_crisis'); p.setMem('first_doubt', true) } },

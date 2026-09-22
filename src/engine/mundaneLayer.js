@@ -306,12 +306,22 @@ export function buildMundaneLayer(state) {
     'The job you have was not available to women at this level ten years ago. You are the first, or among the first.',
     'The equal pay conversation is happening in the office. The happening is not the same as the resolution.',
   )
-  addIf(gender === 'female' && isDeveloping,
+  // Running a household is not something a three-year-old does. This block had
+  // no age or phase term at all, unlike the one directly below it, so it told a
+  // Nigerian of three that the in-law visit fell to her and a five-year-old in
+  // Cairo that the market was her domain. And the water line has no wealth or
+  // urban term either: it printed into a Cairo middle_class household and to a
+  // Senior Property Agent in Fortaleza.
+  const runsAHousehold = gender === 'female' && isDeveloping &&
+    phase !== 'early_childhood' && phase !== 'childhood'
+  addIf(runsAHousehold,
     'The day begins before sunrise. By the time the rest of the household wakes, several things are already done.',
     'The market is your domain — the price-checking, the weight, the recognition of freshness. The vendor knows you.',
-    'The water is fetched. The fetching is not counted as work because it happens before work begins.',
     'The children\'s illness falls to you. The school appointment falls to you. The in-law visit falls to you.',
     'You are responsible for more of the visible daily life than the accounting would suggest.',
+  )
+  addIf(runsAHousehold && !tech('piped_water'),
+    'The water is fetched. The fetching is not counted as work because it happens before work begins.',
   )
   addIf(gender === 'female' && phase !== 'early_childhood' && phase !== 'childhood',
     'The list in your head does not empty. It reconfigures. By the time one thing is done, three others have moved up.',

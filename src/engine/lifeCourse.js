@@ -331,6 +331,15 @@ export function chooseCareer(state) {
     // A rural Sundanese seventeen-year-old in 1977 was picked for Busker and
     // promoted to Superstar by twenty-two, with a twenty-six-year tenure.
     if ((c.fameCareer || ['entertainment', 'sports'].includes(c.field)) && col === 0) fit *= 0.25
+    // Nobody farms in a megacity. `agriculture` is weighted 1 in the urban-poor
+    // column, which is low and is not zero, so the engine made a man who had
+    // moved to Mumbai at nineteen a Smallholder at twenty and an Agricultural
+    // Business Owner until sixty-nine — and then ran both arcs past each other
+    // for four decades: the three-hour commute and the local train at rush hour
+    // in the same life as "the neighbours had it too, which means the price
+    // will be poor". Peri-urban farming around a town or a small city is real,
+    // so the cut is at the two largest scales rather than at "urban".
+    if (c.field === 'agriculture' && ['megacity', 'major_city'].includes(state?.currentPlace?.scale)) fit = 0
     // Smarts open the doors that require them; they do not open the doors that
     // require capital or a name, which the requirements already model.
     const req = c.requirements?.minSmarts ?? 0

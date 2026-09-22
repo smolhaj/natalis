@@ -20,7 +20,8 @@ export const EVENTS_SONDER_64 = [
     phase: 'late_life',
     weight: 2,
     isGlimpse: true,
-    when: (G) => place.hasPhone(G) && (!G.mem?.s64b),
+    // Laughing at something on a screen in their hand — hasPhone is a landline.
+    when: (G) => place.hasMobile(G) && (!G.mem?.s64b),
     text: 'At the next table someone is laughing at something on their phone. The laugh is real and private and has nothing to do with you and is still briefly pleasant to be near. Unearned proximity to other people\'s joy is a small resource.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s64b', true) },

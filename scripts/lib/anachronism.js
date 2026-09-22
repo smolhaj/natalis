@@ -34,6 +34,15 @@ export const TECH_PHRASES = [
   [/\bwhatsapp\b/, 'smartphone'],
   [/\binstagram\b|\bfacebook\b|\btiktok\b|\btwitter\b/, 'smartphone'],
   [/\bthe app\b|\ban app\b|\bthe algorithm\b/, 'smartphone'],
+  // A phone somebody looks at, scrolls, or carries in a pocket. The table
+  // named the brands and the word `smartphone` and missed the phrasing the
+  // prose actually uses, so a glimpse of a man "looking at a photograph on
+  // his phone for the past four stops" printed into 1958 rural Bavaria.
+  // Possessive only. "on a phone with a queue behind you" is a public call
+  // office and "the phone" is the instrument in the hall; both are ordinary
+  // in 1960 and neither is a pocket screen. Including them made this cry
+  // wolf on an OFW ringing home from Mexico in 1984.
+  [/\b(?:on|at|to) (?:his|her|their|your) phone\b|\bchecking (?:his|her|their|your) phone\b|\bscroll(?:s|ing|ed)\b/, 'mobile_phone'],
   [/\bvoice note\b|\bselfie\b/, 'smartphone'],
   [/\bstreaming\b|\bnetflix\b/, 'streaming'],
   [/\bvideo call\b|\bvideo-call\b|\bzoom call\b|\bskype\b/, 'video_call'],

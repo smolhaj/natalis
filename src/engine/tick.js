@@ -287,7 +287,7 @@ function buildEffectProxy(state) {
       const country = state.currentCountry ?? state.character?.country
       const pool = c.gender === 'male' ? country?.namePool?.male : country?.namePool?.female
       const first = pool?.length ? pickFrom(pool) : null
-      c.name = first ? `${first} ${state.character?.surname ?? ''}`.trim() : 'Your child'
+      c.name = first ? `${first} ${surnameFor(state.character?.country, state.character?.surnameBase ?? state.character?.surname, c.gender)}`.trim() : 'Your child'
     }
     // ageAtBirth is the PARENT's age when the child arrived, so 0 is never a
     // real value — treat it as "not supplied" and default to a newborn.
@@ -2756,7 +2756,7 @@ export function tick(state) {
     if (s.mem?.pregnancyYear === undefined) {
       const cGender = chance(0.5) ? 'male' : 'female'
       const c = s.character?.country
-      const childName = c ? personName(c, cGender, s, { surname: s.character.surname }) : 'Baby'
+      const childName = c ? personName(c, cGender, s, { surname: s.character.surnameBase ?? s.character.surname }) : 'Baby'
       s.mem = { ...(s.mem ?? {}), pregnancyYear: s.age - 1, pendingChild: { name: childName, gender: cGender, traits: pickTraits(CHILD_TRAITS) } }
     }
     if (s.age >= (s.mem.pregnancyYear ?? 0) + 1) {
@@ -2777,7 +2777,7 @@ export function tick(state) {
       const childData = pc ?? (() => {
         const cg = chance(0.5) ? 'male' : 'female'
         const cc = s.character?.country
-        const cn = cc ? personName(cc, cg, s, { surname: s.character.surname }) : 'Baby'
+        const cn = cc ? personName(cc, cg, s, { surname: s.character.surnameBase ?? s.character.surname }) : 'Baby'
         return { name: cn, gender: cg, traits: pickTraits(CHILD_TRAITS) }
       })()
 
@@ -2842,7 +2842,14 @@ export function tick(state) {
     s.money = (s.money ?? 0) - paid
 
     const serviced = paid >= due
-    const missed = serviced ? 0 : (s.mem?.debtMissedYears ?? 0) + 1
+    // Decay, not reset. Requiring five CONSECUTIVE missed years meant a
+    // character who managed one payment in five never charged off and
+    // compounded for the rest of their life: tests/debt.test.js took a $500
+    // balance to $210,696 over fifty years on exactly that sawtooth. A
+    // creditor's patience is not restored by one payment either.
+    const missed = serviced
+      ? Math.max(0, (s.mem?.debtMissedYears ?? 0) - 1)
+      : (s.mem?.debtMissedYears ?? 0) + 1
     s.mem = { ...s.mem, debtMissedYears: missed }
 
     // Say it. Once when the debt becomes a fact of the household, once when it
@@ -3812,4 +3819,4 @@ export function pickChoiceAutomatically(event, G) {
 
 // Internal functions needed by playerActions.js
 export { buildEffectProxy, applyProxy, resolveProxyExtras }
-import { personName } from './names'
+import { personName, surnameFor } from './names'
