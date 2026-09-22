@@ -2050,6 +2050,20 @@ function tickAssets(state) {
   // next year, forever: a $500 balance at 39 reached $257,327 by 60 with the
   // interest rate nowhere near able to explain it. A lender who is not being
   // paid does not extend credit indefinitely. They take the house.
+  // `tickAssets` runs at the top of the year and salary is credited ~500 lines
+  // later in the same tick, so the balance it sees is last year's remainder,
+  // not this year's means. While arrears only set a flag and a log line that
+  // mis-ordering was invisible; the moment three years of them took the house,
+  // it repossessed 26% of American and 32% of German owners, clustered at
+  // 44-49 — working people, mid-career, who could comfortably afford the
+  // payment out of a salary the function had not been shown yet.
+  //
+  // Ask the question that was always meant: can this household service the
+  // payment out of the year's MEANS. The deduction still comes off the balance
+  // and a shortfall still lands on `debt` below, which is where an unpayable
+  // bill belongs.
+  const yearMeans = (state.money ?? 0) + (state.career?.salary ?? 0) + (state.pensionAnnual ?? 0)
+  let spentAgainstMeans = 0
   const repossessed = []
   const updatedProperties = []
   for (const p of properties) {
@@ -2060,8 +2074,9 @@ function tickAssets(state) {
     if (p.mortgage > 0) {
       const interest = Math.round(p.mortgage * 0.04)
       const payment = Math.min(Math.round(p.mortgage / 25) + interest, p.mortgage + interest)
-      if (money >= payment) {
+      if (yearMeans - spentAgainstMeans >= payment) {
         money -= payment
+        spentAgainstMeans += payment
         updatedProperties.push({ ...p, currentValue: newValue, mortgage: Math.max(0, p.mortgage - (payment - interest)), arrearsYears: 0 })
         continue
       }

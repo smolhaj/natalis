@@ -38,18 +38,41 @@ const year = arg('year', null)
 // layers by construction. --broad walks the whole roster instead, which is the
 // number a population of players would actually see.
 const broad = argv.includes('--broad')
+const ROSTER_COHORTS = [1935, 1950, 1962, 1975, 1988, 2000]
+
 const configs = country ? [[country, Number(year ?? 1970)]]
   : broad ? await rosterConfigs()
   : DEFAULT_CONFIGS
 
+// Every country, at EVERY cohort — not one cohort per country.
+//
+// This gave each country exactly one birth year, picked by its index in the
+// roster, and the country list it printed was then read as "which modules ever
+// fire". It cannot answer that, and reading it as if it could produced a false
+// alarm about Indonesia and six other modules: Germany and Japan both drew
+// 1975, so `germany_reich` (1933-49) and `japan_war` (1937-52) were reported as
+// never firing; Belarus drew 1935 and Armenia 2000; Burkina Faso drew 1962 and
+// its earliest event needs age <= 5 in 1984. Every one of them fires for the
+// cohort it was written for.
+//
+// That is "a module can be correct and still be for somebody else" — the trap
+// this file's own report exists to catch — sitting inside the instrument rather
+// than the content. `npm run check-reach` is the tool that answers the
+// conditional question; this one now at least stops asking it wrongly.
 async function rosterConfigs() {
   const { COUNTRIES } = await import('../src/data/countries.js')
-  const YEARS = [1935, 1950, 1962, 1975, 1988, 2000]
-  return COUNTRIES.map((c, i) => {
+  const out = []
+  for (const c of COUNTRIES) {
     const [lo, hi] = c.yearRange ?? [1930, 2025]
-    const y = YEARS[i % YEARS.length]
-    return [c.name, Math.min(Math.max(y, lo), hi - 20)]
-  })
+    const seen = new Set()
+    for (const y of ROSTER_COHORTS) {
+      const year = Math.min(Math.max(y, lo), hi - 20)
+      if (seen.has(year)) continue      // a short yearRange collapses cohorts
+      seen.add(year)
+      out.push([c.name, year])
+    }
+  }
+  return out
 }
 
 const bar = (share, width = 28) => {
@@ -57,7 +80,15 @@ const bar = (share, width = 28) => {
   return '█'.repeat(n) + DIM('·'.repeat(width - n))
 }
 
-const result = await runSimulation({ configs, lives, mode })
+// `--lives` is per configuration, and --broad now has six configurations per
+// country where it had one, so spread the request rather than multiplying the
+// run by six. `--lives-per-cohort` opts out when you actually want the depth.
+const perCohort = argv.includes('--lives-per-cohort')
+const effectiveLives = (broad && !perCohort)
+  ? Math.max(1, Math.round(lives / ROSTER_COHORTS.length))
+  : lives
+
+const result = await runSimulation({ configs, lives: effectiveLives, mode })
 
 if (asJson) {
   console.log(JSON.stringify({
@@ -110,6 +141,11 @@ if (asJson) {
   }
 
   console.log(`\n  distinct countries whose dedicated content appeared: ${B(result.countriesSeen.size)}`)
+  if (broad) {
+    console.log(DIM(`  (${ROSTER_COHORTS.length} cohorts per country. A country missing from this list was not`))
+    console.log(DIM(`   reached in THIS sample — it is not a claim that its module cannot fire.`))
+    console.log(DIM(`   npm run check-reach answers that; this report cannot.)`))
+  }
   console.log(`  ${DIM([...result.countriesSeen].sort().join(', ') || '(none)')}`)
 
   console.log(`\n${B('Lifespan by configuration')}\n`)

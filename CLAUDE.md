@@ -1178,6 +1178,45 @@ today — 38 rows for 38 fields — by somebody's diligence and by nothing else,
 codebase whose recorded history is of silent fallbacks that were correct until
 they were not.
 
+### The instrument assigned each country one birth year
+
+`npm run sim -- --broad` walks the whole roster, and it gave each country
+exactly ONE birth year, picked by the country's index in `COUNTRIES`. The
+report then printed "distinct countries whose dedicated content appeared", and
+that list was read as which modules ever fire.
+
+It cannot answer that question, and reading it as if it could produced a false
+alarm on seven modules at a sample of 38,500 lives. Germany and Japan both drew
+1975, so `germany_reich` (1933-49) and `japan_war` (1937-52) were reported dark.
+Belarus drew 1935 and Armenia drew 2000. Burkina Faso drew 1962, and that
+module's earliest event needs age ≤ 5 in 1984, so it is written for a cohort
+born about 1965-1980. Every one of them fires for the cohort it was written for,
+and `events_indonesia.js` — singled out as "the one worth looking at" — fires
+perfectly well.
+
+This is **"a module can be correct and still be for somebody else" sitting
+inside the instrument rather than the content**, which is the fourth distinct
+audit in this repo to fail in the same shape as the thing it audits. `--broad`
+now runs every country at all six cohorts (825 configurations, up from 154),
+divides the requested `--lives` across them so the run does not cost six times
+as much (`--lives-per-cohort` opts out), and the report says in as many words
+that a country's absence from that list is a statement about the sample and not
+about the module. `npm run check-reach` is the tool that answers the conditional
+question.
+
+**What the 38,500-life run does confirm**, unchanged from a sample an eighth the
+size: the register mix (contemplative 18.4 / anchored 35.6 / earned 35.1 /
+universal 8.8), repetition at 0.2%, glimpses at 5.17 per life — and
+`geographic` at **158 events per 100 lives**, identical at both sizes. The
+entire country-depth project, 194 modules, reaches a player 1.6 times in a life,
+against 17.7 for `thematic`. No module is dark. The corpus is under-delivered,
+not broken, and that is a different problem with a different fix.
+
+It also demonstrates the prose-coverage caveat across an 8× range: yearTexture
+coverage moved 36.0% → 53.3% while **concentration moved 177 → 179 lines
+supplying half the output**. Coverage is a function of n and is meaningless
+without one; concentration is the real statement.
+
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
 
