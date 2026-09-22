@@ -20,7 +20,8 @@
     "check-flags": "node scripts/check-flags.js",
     "check-events": "node scripts/check-events.js",
     "sim": "node scripts/sim.js",
-    "check-anachronisms": "node scripts/check-anachronisms.js"
+    "check-anachronisms": "node scripts/check-anachronisms.js",
+    "check-bundle": "node scripts/check-bundle.js"
   },
   "dependencies": {
     "react": "^18.3.1",
