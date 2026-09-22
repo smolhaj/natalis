@@ -24,10 +24,22 @@ import { rememberSaid } from './prose'
 import { tickLifeCourse, secondaryChance, primaryChance } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
 import { suspendedInstitutions, proseFitsInstitutions, institutionExists } from '../data/history.js'
+import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
+
+// What a listed salary is worth where it is paid. The companion question —
+// what it is worth WHEN it is paid — is `wageIndex` in economy.js, and the two
+// are always applied together.
+const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
 
 function createProxy(state) {
   return {
     h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 0, karma: 0, fame: 0, legacy: 0,
+    // `mo` is present-day money and is denominated by applyProxy. `moNominal`
+    // is money that has ALREADY been denominated — the escape hatch for the
+    // handful of engine sites that must show the player a price before they
+    // charge it, where scaling twice would charge a different number than the
+    // one on the button.
+    moNominal: 0,
     flags: [...state.flags],
     mem: { ...(state.mem ?? {}) },
   }
@@ -68,7 +80,11 @@ function applyProxy(state, proxy) {
     looks:     clamp(state.stats.looks     + proxy.lo, 0, 100),
   }
   const regret  = clamp(state.regret + proxy.r, 0, 100)
-  const money   = Math.max(0, (state.money ?? 0) + (proxy.mo ?? 0))
+  // Every `p.mo` in the corpus is written in present-day dollars — 629 of them,
+  // from a 5,000 inheritance to a 40 bus fare. Denominating them here is what
+  // lets all 629 stay as written and still land as money of the right year: a
+  // windfall in 1950 Lagos arrives as 1950 Lagos money.
+  const money   = Math.max(0, (state.money ?? 0) + inEraMoney(proxy.mo ?? 0, liveCountry(state), state.currentYear) + (proxy.moNominal ?? 0))
   const karma   = clamp((state.karma ?? 50) + (proxy.karma ?? 0), 0, 100)
   const fame    = clamp((state.fame ?? 0) + (proxy.fame ?? 0), 0, 100)
   const legacy  = clamp((state.legacy ?? 0) + (proxy.legacy ?? 0), 0, 100)
@@ -84,8 +100,10 @@ export function buildPendingTrial(state, crime, sentence) {
   // Lawyer fees scale to the economy the character is actually living in.
   const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.18, low_medium: 0.08, low: 0.04, very_low: 0.02 }
   const mult = gdpMult[liveCountry(state)?.gdp] ?? 1.0
-  const midFee = Math.round(clamp(2500 * mult, 100, 25000) / 100) * 100
-  const topFee = Math.round(clamp(15000 * mult, 500, 150000) / 500) * 500
+  // Denominated, because the figure goes onto a button the player presses and
+  // is then taken out of a balance that is already in the money of the year.
+  const midFee = inEraMoney(Math.round(clamp(2500 * mult, 100, 25000) / 100) * 100, liveCountry(state), state.currentYear)
+  const topFee = inEraMoney(Math.round(clamp(15000 * mult, 500, 150000) / 500) * 500, liveCountry(state), state.currentYear)
   return {
     crimeName: crime.name,
     crimeCategory: crime.category,
@@ -388,7 +406,7 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._grantHome && (next.assets?.properties?.length ?? 0) === 0) {
     const { typeId, valueFactor } = proxy._grantHome
     const type = PROPERTY_TYPES.find(t => t.id === typeId) ?? PROPERTY_TYPES[0]
-    const value = Math.max(400, Math.round(localisePrice(type.basePrice, liveCountry(next)?.gdp, 'local') * valueFactor))
+    const value = Math.max(400, inEraMoney(Math.round(localisePrice(type.basePrice, liveCountry(next)?.gdp, 'local') * valueFactor), liveCountry(next), next.currentYear))
     next = {
       ...next,
       assets: { ...next.assets, properties: [...(next.assets?.properties ?? []), {
@@ -846,7 +864,13 @@ export function buildG(state) {
     inPrison: state.inPrison,
     wanted: state.wanted ?? false,
     prisonSentence: state.prisonSentence ?? 0,
-    money: state.money ?? 0,
+    // State stores the nominal amount; G exposes it in a stable unit. The ~76
+    // guards in the corpus that read `G.money > 5000` or `G.money < 400` were
+    // written as statements about comfort and hardship, and dividing here is
+    // what keeps them saying that instead of quietly becoming statements about
+    // which decade the character is standing in.
+    money: inTodayMoney(state.money ?? 0, liveCountry(state), state.currentYear),
+    moneyNominal: state.money ?? 0,
     debt: state.debt ?? 0,
     creditScore: state.creditScore ?? 700,
     fitness: state.fitness ?? 50,
@@ -1294,13 +1318,20 @@ export function enterCareer(state, careerId) {
     return { ...state, log: [...state.log, { age: state.age, text: `Your criminal record disqualifies you from a career in ${career.field.replace(/_/g, ' ')}.`, isKey: false }] }
   }
   const level = career.levels[0]
-  const baseSalary = randomBetween(level.salaryRange[0], level.salaryRange[1])
-  // Scale salary to country purchasing power
-  const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
+  const listed = randomBetween(level.salaryRange[0], level.salaryRange[1])
+  // Two scalings, and the game only ever had the first. `gdpSalaryMult` asks
+  // where the wage is paid; `wageIndex` asks when. Without the second, a 1948
+  // German taxi driver started on $19,540/yr — a figure from a country that at
+  // that moment had had its currency for four months.
+  //
+  // `baseSalary` is kept in present-day money so the wage can be re-denominated
+  // every year. A career held from 1950 to 1990 otherwise pays 1950 wages into
+  // 1990 prices, and the character starves in a job they were never fired from.
   const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0
-  const salary = Math.round(baseSalary * salaryMult)
+  const baseSalary = Math.round(listed * salaryMult)
+  const salary = inEraMoney(baseSalary, liveCountry(state), state.currentYear)
   const newCareer = {
-    id: career.id, title: careerTitle(level, state), level: 0, salary,
+    id: career.id, title: careerTitle(level, state), level: 0, salary, baseSalary,
     field: career.field, yearsInRole: 0, startedAge: state.age, performance: 70,
     partTime: career.partTime ?? false,
     promotionChance: career.promotionChance ?? 0.10,
@@ -1337,10 +1368,10 @@ export function checkPromotion(state) {
   if (!chance(baseChance + smartsBonus + perfBonus + yearsBonus + charismaBonus)) return state
 
   const newLevel = careerDef.levels[nextIdx]
-  const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
   const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0
-  const salary = Math.round(randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1]) * salaryMult)
-  const career = { ...state.career, level: nextIdx, title: careerTitle(newLevel, state), salary, yearsInRole: 0, startedAge: state.age }
+  const baseSalary = Math.round(randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1]) * salaryMult)
+  const salary = inEraMoney(baseSalary, liveCountry(state), state.currentYear)
+  const career = { ...state.career, level: nextIdx, title: careerTitle(newLevel, state), salary, baseSalary, yearsInRole: 0, startedAge: state.age }
   const log = [...state.log, { age: state.age, text: `You are promoted to ${newLevel.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career, log }
 }
@@ -1354,11 +1385,18 @@ export function askForRaise(state) {
   const successChance = clamp(0.25 + (perf - 50) * 0.006 + (state.stats.charisma - 50) * 0.004, 0.05, 0.85)
   if (chance(successChance)) {
     const pct = randomBetween(5, 20) / 100
-    const newSalary = Math.round(state.career.salary * (1 + pct))
+    // A career from before `baseSalary` existed carries only a nominal wage.
+    // Reading that as a present-day base makes the raise re-denominate an
+    // already-denominated figure and hands the character a pay CUT, so convert
+    // it back first.
+    const base = state.career.baseSalary
+      ?? inTodayMoney(state.career.salary, liveCountry(state), state.currentYear)
+    const newBase = Math.round(base * (1 + pct))
+    const newSalary = inEraMoney(newBase, liveCountry(state), state.currentYear)
     const gained = newSalary - state.career.salary
     return {
       ...state,
-      career: { ...state.career, salary: newSalary },
+      career: { ...state.career, salary: newSalary, baseSalary: newBase },
       log: [...state.log, { age: state.age, text: `Raise approved — salary up $${gained.toLocaleString()} to $${newSalary.toLocaleString()}/yr.`, isKey: true }],
     }
   }
@@ -1514,15 +1552,82 @@ function tickPovertyPremium(state) {
   const mult = GDP_MULT[gdp] ?? 0.2
   // Welfare states reduce (but don't eliminate) the poverty premium
   const welfareReduction = ['wealthy_west', 'wealthy_east'].includes(archetype) ? 0.4 : 1.0
+  // The bands are present-day dollars and the balance is not, so without the
+  // era term every character before about 1990 read as destitute and paid the
+  // maximum premium on money that was simply denominated differently.
+  const era = wageIndex(liveCountry(state), state.currentYear)
   let rate = 0
-  if      (money < 500   * mult) rate = 0.18
-  else if (money < 2000  * mult) rate = 0.12
-  else if (money < 8000  * mult) rate = 0.07
-  else if (money < 20000 * mult) rate = 0.03
+  if      (money < 500   * mult * era) rate = 0.18
+  else if (money < 2000  * mult * era) rate = 0.12
+  else if (money < 8000  * mult * era) rate = 0.07
+  else if (money < 20000 * mult * era) rate = 0.03
   else return state
   const premium = Math.round(money * rate * welfareReduction)
   if (premium <= 0) return state
   return { ...state, money: Math.max(0, money - premium) }
+}
+
+/**
+ * What it costs to be alive for a year.
+ *
+ * Nothing in the engine ever spent money on living. Rent, food, fuel, clothes,
+ * school, the bus — none of it existed, so a character banked one hundred per
+ * cent of gross income for sixty years and died with millions: a retired sous
+ * chef on $7,092,762, a smallholder who never earned more than $1,400 a year
+ * holding $19,260 at thirty-three. The poverty premium took a slice off the
+ * very poor and nobody else paid for anything.
+ *
+ * Two terms, because households do two different things:
+ *
+ *   CONSUMPTION — a share of this year's income, straight back out. The share
+ *   is near total where there is no margin and falls as there is one, which is
+ *   why a savings RATE is a luxury good and not a virtue.
+ *
+ *   DRAWDOWN — a share of whatever has piled up beyond a few years' buffer.
+ *   People with a surplus spend it: a bigger place, school fees, a parent's
+ *   operation, the wedding. This is the term that stops the balance running
+ *   away, and it settles a life at roughly five years of income rather than
+ *   sixty.
+ *
+ * Both are proportional, so neither needs the era treatment — they are already
+ * denominated by whatever they are a share of.
+ */
+function tickLivingCosts(state) {
+  if (state.inPrison) return state
+  const arch = liveCountry(state)?.archetype ?? 'developing_urban'
+  const income = state.career
+    ? (state.career.partTime ? Math.round(state.career.salary * 0.5) : state.career.salary)
+    : 0
+
+  // Savings rate. The rich-world figures are household saving out of
+  // disposable income; the poor-world ones are lower because there is less
+  // left after eating, not because anybody wanted it that way.
+  //
+  // These are deliberately well above national-accounts household saving,
+  // because the game's `money` is not a household's cash: it is the only
+  // account there is, and the house, the deposit, the dowry, the passage and
+  // the business all come out of it. Calibrated against home ownership, which
+  // is the one outflow measured against the historical record — at true
+  // saving rates ownership fell from 72% to 43% in the 1950 American cohort
+  // and from 88% to 12% in the 1995 Brazilian one, because nobody could ever
+  // assemble a deposit.
+  const saveRate = {
+    wealthy_west: 0.34, wealthy_east: 0.40, wealthy_gulf: 0.36,
+    post_soviet: 0.30, developing_urban: 0.30, developing_unstable: 0.26,
+    subsaharan: 0.24, conflict_zone: 0.20,
+  }[arch] ?? 0.30
+  // Children and a partner are the largest single claim on a household and the
+  // one every life in this game has.
+  const dependants = (state.children ?? []).filter(c => c.alive !== false && (c.age ?? 99) < 20).length
+  const consumption = Math.round(income * (1 - saveRate) * (1 + 0.04 * dependants))
+
+  const buffer = Math.max(income * 5, 0)
+  const excess = Math.max(0, (state.money ?? 0) - buffer)
+  const drawdown = Math.round(excess * 0.05)
+
+  const spent = consumption + drawdown
+  if (spent <= 0) return state
+  return { ...state, money: Math.max(0, (state.money ?? 0) - spent) }
 }
 
 // ─── Household contribution tick ──────────────────────────────────────────────
@@ -1593,12 +1698,17 @@ function tickAssets(state) {
   if (!state.assets) return state
   const { properties, vehicles } = state.assets
   let money = state.money ?? 0
+  // `appreciationRate` is a real return. What a house actually did over fifty
+  // years is a real return ON TOP OF the money changing underneath it, and
+  // without the second term a house bought in 1965 for 8,000 was worth 35,000
+  // in 2015 rather than the 480,000 its owners would have recognised.
+  const drift = eraDrift(liveCountry(state), state.currentYear)
 
   const updatedProperties = properties.map(p => {
     const type = PROPERTY_TYPES.find(t => t.id === p.typeId)
     if (!type) return p
-    const newValue = Math.round(p.currentValue * (1 + type.appreciationRate + randomBetween(-2, 2) / 100))
-    money -= type.annualMaintenance
+    const newValue = Math.round(p.currentValue * drift * (1 + type.appreciationRate + randomBetween(-2, 2) / 100))
+    money -= inEraMoney(type.annualMaintenance, liveCountry(state), state.currentYear)
     if (p.mortgage > 0) {
       const interest = Math.round(p.mortgage * 0.04)
       const payment = Math.min(Math.round(p.mortgage / 25) + interest, p.mortgage + interest)
@@ -1611,8 +1721,10 @@ function tickAssets(state) {
   const updatedVehicles = vehicles.map(v => {
     const type = VEHICLE_TYPES.find(t => t.id === v.typeId)
     if (!type) return v
-    money -= type.annualMaintenance
-    return { ...v, currentValue: Math.max(100, Math.round(v.currentValue * (1 - type.depreciationRate))) }
+    money -= inEraMoney(type.annualMaintenance, liveCountry(state), state.currentYear)
+    // A car loses value faster than money does, which is the whole of what a
+    // car is, so the drift never rescues it above its depreciation.
+    return { ...v, currentValue: Math.max(100, Math.round(v.currentValue * drift * (1 - type.depreciationRate))) }
   })
 
   return { ...state, assets: { properties: updatedProperties, vehicles: updatedVehicles }, money: Math.max(0, money) }
@@ -1797,14 +1909,14 @@ function checkIllnessRisk(state) {
       weight: 10,
       text: illnessText,
       choices: illness.treatments.map(t => {
-        const adjustedCost = Math.round(t.cost * costMult)
+        const adjustedCost = inEraMoney(Math.round(t.cost * costMult), liveCountry(state), state.currentYear)
         const willSucceed = Math.random() < clamp(t.successChance * successMod, 0.05, 0.98)
         return {
           text: `${t.name}${adjustedCost > 0 ? ` ($${adjustedCost.toLocaleString()})` : ' (free)'}`,
           tag: null,
           outcome: willSucceed ? t.outcomeSuccess : t.outcomeFailure,
           effect: (p) => {
-            p.mo -= adjustedCost
+            p.moNominal -= adjustedCost
             p.m += t.happinessEffect ?? 0
             if (willSucceed) {
               p.h += Math.abs(t.healthEffect ?? 0)
@@ -1847,7 +1959,7 @@ function tickEnrollment(state) {
       // Tuition was flat worldwide while salaries scale down to 0.03, so a
       // degree cost a Lagos family what it costs a Boston one.
       const baseTuition = { healthcare: 12000, business: 9000, science: 10000, arts: 7000, general: 8000 }[field] ?? 8000
-      const tuition = localCost(baseTuition, liveCountry(s)?.gdp)
+      const tuition = inEraMoney(localCost(baseTuition, liveCountry(s)?.gdp), liveCountry(s), s.currentYear)
       s.money = Math.max(0, (s.money ?? 0) - tuition)
     }
     s.gpa = Math.min(4.0, parseFloat(((s.gpa ?? 2.5) + randomBetween(-5, 10) / 100).toFixed(2)))
@@ -2218,13 +2330,19 @@ export function tick(state) {
   // Undocumented / overstay annual pressure
   if (s.residencyStatus === 'undocumented' || s.residencyStatus === 'tourist_overstay') {
     s.stats = { ...s.stats, health: clamp((s.stats.health ?? 80) - 2, 0, 100), happiness: clamp((s.stats.happiness ?? 50) - 3, 0, 100) }
-    s.money = (s.money ?? 0) - 200
+    // Denominated, and floored: this is a undocumented life paying for its own
+    // precarity, not an overdraft facility. Unclamped it drove balances
+    // negative, which the interface has no way to mean.
+    s.money = Math.max(0, (s.money ?? 0) - inEraMoney(200, liveCountry(s), s.currentYear))
   }
 
   // Climate-displaced pressure (limbo residency — no legal status, limited services)
   if (s.residencyStatus === 'climate_displaced') {
     s.stats = { ...s.stats, health: clamp((s.stats.health ?? 80) - 2, 0, 100), happiness: clamp((s.stats.happiness ?? 50) - 4, 0, 100) }
-    s.money = (s.money ?? 0) - 150
+    // Denominated, and floored: this is a climate-displaced life paying for its own
+    // precarity, not an overdraft facility. Unclamped it drove balances
+    // negative, which the interface has no way to mean.
+    s.money = Math.max(0, (s.money ?? 0) - inEraMoney(150, liveCountry(s), s.currentYear))
   }
 
   // Extreme heat drain — Gulf/MENA countries post-2055 (wet-bulb seasonal uninhabitability)
@@ -2598,6 +2716,14 @@ export function tick(state) {
 
   // Career income (actual salary → money)
   if (s.career && !s.inPrison) {
+    // Cost-of-living re-denomination. The stored wage is nominal, so a wage set
+    // in 1950 and never promoted was still paying 1950 money in 1990 — the
+    // character was not fired, they were simply left behind by the arithmetic.
+    if (!s.career.baseSalary) {
+      s.career = { ...s.career, baseSalary: inTodayMoney(s.career.salary, liveCountry(s), s.currentYear) }
+    }
+    const redenominated = inEraMoney(s.career.baseSalary, liveCountry(s), s.currentYear)
+    if (redenominated !== s.career.salary) s.career = { ...s.career, salary: redenominated }
     let annual = s.career.partTime ? Math.round(s.career.salary * 0.5) : s.career.salary
     // Agriculture: harvest variance ±50% — a good year and a bad year feel completely different
     if (s.career.field === 'agriculture') {
@@ -2619,8 +2745,13 @@ export function tick(state) {
       ]) }]
     }
     s.money = (s.money ?? 0) + annual
-    // Sync wealth stat loosely from money (logarithmic quality-of-life indicator)
-    const wealthLevel = clamp(Math.round((Math.log10(Math.max(1, s.money)) - 2.5) * 22), 5, 98)
+    // The wealth stat is a quality-of-life reading, so it has to be taken in a
+    // unit that means the same thing in 1950 as in 2020. Off the nominal
+    // balance it collapsed the moment money was denominated: a comfortable 1950
+    // household holding $800 read as Destitute, which is not a cosmetic problem
+    // — the stat gates event weighting and the whole poverty branch of the
+    // corpus.
+    const wealthLevel = clamp(Math.round((Math.log10(Math.max(1, inTodayMoney(s.money, liveCountry(s), s.currentYear))) - 2.5) * 22), 5, 98)
     s.stats = { ...s.stats, wealth: wealthLevel }
     // Fame accumulation for entertainment/sports careers
     if (s.career.field === 'entertainment' || s.career.field === 'sports') {
@@ -2628,6 +2759,8 @@ export function tick(state) {
       s.fame = clamp((s.fame ?? 0) + fameGain, 0, 100)
     }
   }
+
+  s = tickLivingCosts(s)
 
   // Household contribution (filial / extended family / zakat)
   s = tickHouseholdContribution(s)

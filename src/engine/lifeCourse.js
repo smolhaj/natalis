@@ -30,6 +30,7 @@
  */
 
 import { PROPERTY_TYPES, localisePrice } from '../data/assets'
+import { inEraMoney } from '../data/economy.js'
 import { generatePartnerProfile, getMarried, proposeMarriage, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'
 
@@ -615,7 +616,7 @@ function courseHousing(s) {
   const type = PROPERTY_TYPES.find(t => t.id === tier) ?? PROPERTY_TYPES[0]
 
   if (formal) {
-    const price = localisePrice(type.basePrice, c?.gdp, 'local')
+    const price = inEraMoney(localisePrice(type.basePrice, c?.gdp, 'local'), c, s.currentYear)
     const deposit = Math.round(price * (type.downPaymentRate ?? 0.2))
     if ((s.money ?? 0) < deposit) return s
     s = {
@@ -636,7 +637,7 @@ function courseHousing(s) {
 
   // The unfinanced route: family land, a self-build, an allocated flat that
   // became yours. No mortgage, because there was never a bank in it.
-  const value = Math.max(400, Math.round(localisePrice(type.basePrice, c?.gdp, 'local') * 0.45))
+  const value = Math.max(400, inEraMoney(Math.round(localisePrice(type.basePrice, c?.gdp, 'local') * 0.45), c, s.currentYear))
   s = {
     ...s,
     assets: { ...s.assets, properties: [...(s.assets?.properties ?? []), {

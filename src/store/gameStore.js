@@ -1,6 +1,11 @@
 import { create } from 'zustand'
 import { createCharacter, deriveInitialStats, deriveInitialMoney, deriveInitialParents, deriveInitialSiblings, deriveBirthText, deriveInitialGold, initializeBanked, initializeJointFamily, deriveGenerationalFlags, tick, resolveChoice, applyActivity, attemptCrime, enterCareer, generateEpitaph, askForRaise, quitJob, workHarder, schmoozeBoss, retire, emigrate, meetPotentialPartner, generatePartnerProfile, hookUp, goOnDate, complimentPartner, proposeMarriage, getMarried, fileForDivorce, tryForChild, spendTimeWithChild, callParent, callSibling, adoptChild, getPlasticSurgery, buyProperty, sellProperty, buyVehicle, sellVehicle, adoptPet, visitVet, studyHarder, goToMovies, goClubbing, goShopping, visitSalonSpa, postSocialMedia, promoteSocialMedia, betOnHorses, goToRehab, toggleBirthControl, practiceMartalArts, obtainLicense, interactWithFriend, dropOutOfSchool, abandonChild, useSubstance, bookTrip, startBusiness, manageBusiness, hireEmployee, closeBusiness, prisonWork, prisonCry, prisonConjugalVisit, prisonBribeGuard, prisonStartRiot, upgradeResidency, seekAsylum, relocate, buildG, resolveAutoEvent as applyAutoEventEffect, getCountryRegime } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
+import { inEraMoney } from '../data/economy.js'
+
+// Present-day dollars into the money of the year and place. See economy.js —
+// applied at the definition of a cost, never at the deduction.
+const $$ = (amount, state) => inEraMoney(amount, state.currentCountry ?? state.character?.country, state.currentYear)
 
 const SLOT_KEYS = ['natalis_v1', 'natalis_v2', 'natalis_v3']
 const META_KEYS = ['natalis_meta_0', 'natalis_meta_1', 'natalis_meta_2']
@@ -687,7 +692,7 @@ export const useGameStore = create((set, get) => ({
     const profile = generatePartnerProfile(state, overrides)
     set({
       ...state,
-      money: (state.money ?? 0) - 100,
+      money: (state.money ?? 0) - $$(100, state),
       pendingPartner: profile,
       log: [...state.log, { age: state.age, text: `Dating app match: ${profile.name}, ${profile.age}.`, isKey: false }],
     })
@@ -779,8 +784,8 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     if ((state.money ?? 0) >= 300) return
-    const received = 300
-    const repayDebt = 420
+    const received = $$(300, state)
+    const repayDebt = $$(420, state)
     set({
       ...state,
       money: (state.money ?? 0) + received,
@@ -793,8 +798,8 @@ export const useGameStore = create((set, get) => ({
   applyForBenefits: () => {
     const state = get()
     if (state.dead) return
-    if (state.career || (state.money ?? 0) >= 500) return
-    const payment = 400
+    if (state.career || (state.money ?? 0) >= $$(500, state)) return
+    const payment = $$(400, state)
     set({
       ...state,
       money: (state.money ?? 0) + payment,
@@ -1145,7 +1150,7 @@ export const useGameStore = create((set, get) => ({
     if (state.flags.includes('assumed_identity')) return
     const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
     const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-    const cost = Math.round(8000 * mult)
+    const cost = $$(Math.round(8000 * mult), state)
     if ((state.money ?? 0) < cost) {
       set({ log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} for forged documents.`, isKey: false }] })
       return
@@ -1172,7 +1177,7 @@ export const useGameStore = create((set, get) => ({
     if (!dest) return
     const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
     const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-    const fee = Math.round((8000 + Math.floor(Math.random() * 12000)) * mult)
+    const fee = $$(Math.round((8000 + Math.floor(Math.random() * 12000)) * mult), state)
     if ((state.money ?? 0) < fee) {
       set({ log: [...state.log, { age: state.age, text: `The smuggler wants $${fee.toLocaleString()}. You can't afford it.`, isKey: false }] })
       return

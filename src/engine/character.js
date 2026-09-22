@@ -6,6 +6,7 @@ import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skele
 import { PHASE_ENTRY_EVENTS } from '../data/events/lifecycle/events_phase_entries'
 import { religionFor } from '../data/identity.js'
 import { pickUnusedName } from './names'
+import { wageIndex, inEraMoney } from '../data/economy.js'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
 // Extends Set with Array.prototype.includes as an alias for has(), so existing
@@ -321,7 +322,14 @@ export function deriveInitialMoney(char) {
   const base = { 0: 0, 1: 300, 2: 2000, 3: 12000, 4: 60000 }
   const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
   const mult = gdpMult[char.country.gdp] ?? 1.0
-  return Math.round(((base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier) * mult)
+  // Denominated, or a child born in 1935 Tokyo starts with $11,664 and reaches
+  // $296,213 by the age of eighteen, at which point their first wage — which IS
+  // denominated — arrives at about $150/yr. Two numbers two thousand times
+  // apart, in the same life, on the same screen.
+  return inEraMoney(
+    Math.round(((base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier) * mult),
+    char.country, char.birthYear,
+  )
 }
 
 // ─── GDP multiplier (shared across wealth mechanics) ─────────────────────────
@@ -815,8 +823,10 @@ export function tickFamilyIncome(state) {
     const occ = parent.occupation
     if (occ.incomeType === 'none' || occ.incomeType === 'subsistence' || occ.incomeType === 'barter') continue
 
-    // Apply GDP scaling and annual variance
-    const scaled = Math.round(occ.annualIncome * mult)
+    // GDP scaling says where the wage is paid; the era term says when. A
+    // mother listed as an Engineer on $42,500/yr in 1936 Japan is the same
+    // defect as a taxi driver on $19,540 in 1948 Germany.
+    const scaled = Math.round(occ.annualIncome * mult * wageIndex(state.character?.country, year))
     const variancePct = occ.incomeType === 'informal' ? randomBetween(-35, 50) : randomBetween(-12, 18)
     const annual = Math.max(0, Math.round(scaled * (1 + variancePct / 100)))
     totalParentalIncome += annual
@@ -841,7 +851,10 @@ export function tickFamilyIncome(state) {
   if (surplus <= 0) return state
 
   const newMoney = (state.money ?? 0) + surplus
-  const wealthLevel = clamp(Math.round((Math.log10(Math.max(1, newMoney)) - 2.5) * 22), 5, 98)
+  // Same unit problem as the adult wealth stat in tick.js: read the balance in
+  // a currency that means the same thing in every decade.
+  const inToday = Math.round(newMoney / (wageIndex(state.character?.country, year) || 1))
+  const wealthLevel = clamp(Math.round((Math.log10(Math.max(1, inToday)) - 2.5) * 22), 5, 98)
   return {
     ...state,
     money: newMoney,
@@ -851,7 +864,7 @@ export function tickFamilyIncome(state) {
 
 // ─── Formatted parent income display ─────────────────────────────────────────
 // Returns a human-readable income string for the UI.
-export function formatParentIncome(occupation, gdp) {
+export function formatParentIncome(occupation, gdp, country = null, year = null) {
   if (!occupation) return null
   const { incomeType, annualIncome, incomeNote, title } = occupation
   if (incomeType === 'none') return 'No income'
@@ -859,7 +872,7 @@ export function formatParentIncome(occupation, gdp) {
   if (incomeType === 'barter') return incomeNote ?? 'paid in kind'
   if (!annualIncome) return null
   const mult = GDP_MULT[gdp] ?? 0.2
-  const scaled = Math.round(annualIncome * mult)
+  const scaled = Math.round(annualIncome * mult * (country && year ? wageIndex(country, year) : 1))
   if (scaled < 50) return '< $50/yr'
   const fmt = scaled >= 1000 ? `$${(scaled / 1000).toFixed(1)}k/yr` : `$${scaled}/yr`
   return incomeType === 'informal' ? `~${fmt}` : fmt

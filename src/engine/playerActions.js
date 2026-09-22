@@ -1,6 +1,7 @@
 import { COUNTRIES } from '../data/countries'
 import { DESTINATIONS } from '../data/destinations'
 import { ACTIVITIES, localCost } from '../data/activities'
+import { inEraMoney } from '../data/economy.js'
 import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
 import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
@@ -91,7 +92,7 @@ export function hookUp(state) {
 export function goOnDate(state) {
   if (!state.partner) return state
   const gain = randomBetween(5, 14)
-  const cost = randomBetween(40, 180)
+  const cost = $$(randomBetween(40, 180), state)
   return {
     ...state,
     partner: { ...state.partner, relationshipQuality: clamp(state.partner.relationshipQuality + gain, 0, 100) },
@@ -129,7 +130,7 @@ export function getMarried(state) {
   // A wedding is a large expense everywhere and a large expense is a local
   // quantity. Flat dollars made it 72x annual income in Ethiopia and 45x in
   // Niger, while every other cost in the engine already localises.
-  const cost = localCost(randomBetween(800, 18000), gdpTierOf(state))
+  const cost = $$(localCost(randomBetween(800, 18000), gdpTierOf(state)), state)
   return {
     ...state,
     partner: { ...state.partner, married: true, engaged: false, relationshipQuality: clamp(state.partner.relationshipQuality + 10, 0, 100) },
@@ -144,7 +145,7 @@ export function fileForDivorce(state) {
   if (!state.partner) return state
   const name = state.partner.name
   const wasMarried = state.partner.married
-  const cost = wasMarried ? localCost(randomBetween(2000, 25000), gdpTierOf(state)) : 0
+  const cost = wasMarried ? $$(localCost(randomBetween(2000, 25000), gdpTierOf(state)), state) : 0
   const updatedChildren = (state.children ?? []).map(child => ({
     ...child,
     relationshipQuality: clamp((child.relationshipQuality ?? 60) - 12, 0, 100),
@@ -275,19 +276,20 @@ export function getPlasticSurgery(state, surgeryType) {
   }
   const s = surgeries[surgeryType] ?? surgeries.minor
   const money = state.money ?? 0
-  if (money < s.cost) {
+  const surgeryCost = $$(s.cost, state)
+  if (money < surgeryCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that surgery.", isKey: false }] }
   }
   if (chance(s.successChance)) {
     return {
-      ...state, money: money - s.cost,
+      ...state, money: money - surgeryCost,
       stats: { ...state.stats, looks: clamp(state.stats.looks + s.looksGain, 0, 100), happiness: clamp(state.stats.happiness + 5, 0, 100) },
       flags: [...new Set([...state.flags, 'plastic_surgery'])],
       log: [...state.log, { age: state.age, text: `The surgery is a success. You look noticeably different.`, isKey: false }],
     }
   }
   return {
-    ...state, money: money - s.cost,
+    ...state, money: money - surgeryCost,
     stats: { ...state.stats, looks: clamp(state.stats.looks - 15, 0, 100), health: clamp(state.stats.health - 10, 0, 100), happiness: clamp(state.stats.happiness - 20, 0, 100) },
     log: [...state.log, { age: state.age, text: `The surgery is botched. The results are worse than before.`, isKey: true }],
   }
@@ -301,7 +303,7 @@ export function applyActivity(state, activityId) {
   const hobbyActivity = (ACTIVITIES.hobbies ?? []).find(a => a.id === activityId)
   if (hobbyActivity) {
     let updated = { ...state }
-    const cost = hobbyActivity.cost ?? 0
+    const cost = $$(hobbyActivity.cost ?? 0, state)
     if (cost > 0 && (updated.money ?? 0) < cost) {
       return { ...updated, log: [...updated.log, { age: updated.age, text: `You can't afford the ${hobbyActivity.label} ($${cost}).`, isKey: false }] }
     }
@@ -350,7 +352,7 @@ export function applyActivity(state, activityId) {
 
   // ── Therapy booking ──────────────────────────────────────────────────────────
   if (activityId === 'book_therapy') {
-    const cost = 120
+    const cost = $$(120, state)
     if ((state.money ?? 0) < cost) {
       return { ...state, log: [...state.log, { age: state.age, text: "You can't afford therapy right now.", isKey: false }] }
     }
@@ -388,7 +390,7 @@ export function applyActivity(state, activityId) {
   if (activityId === 'take_loan') {
     let updated = { ...state }
     const maxLoan = Math.max(1000, Math.round((updated.money ?? 0) * 3 + 5000))
-    const amount = Math.min(maxLoan, 10000)
+    const amount = Math.min(maxLoan, $$(10000, state))
     updated.money = (updated.money ?? 0) + amount
     updated.debt = (updated.debt ?? 0) + amount
     updated.mem = { ...(updated.mem ?? {}), debtType: 'personal' }
@@ -434,7 +436,7 @@ export function applyActivity(state, activityId) {
   if (activityId === 'buy_gold') {
     const gdp = state.character?.country?.gdp
     const mult = GDP_MULT[gdp] ?? 0.2
-    const amount = Math.round(200 * mult)
+    const amount = $$(Math.round(200 * mult), state)
     if ((state.money ?? 0) < amount) return { ...state, log: [...state.log, { age: state.age, text: `You can't afford to buy gold right now ($${amount} needed).`, isKey: false }] }
     return {
       ...state,
@@ -477,7 +479,7 @@ export function applyActivity(state, activityId) {
 
   const proxy = buildEffectProxy(state)
   // Deduct actual money for activities with a dollar cost
-  if (activity.cost) proxy.mo -= localCost(activity.cost, gdpTierOf(state))
+  if (activity.cost) proxy.moNominal -= $$(localCost(activity.cost, gdpTierOf(state)), state)
   activity.effect(proxy)
   let updated = applyProxy(state, proxy)
   updated = resolveProxyExtras(updated, proxy)
@@ -506,7 +508,7 @@ export function buyProperty(state, typeId) {
   const type = PROPERTY_TYPES.find(t => t.id === typeId)
   if (!type) return state
   // Property is a local good: a flat costs what flats cost where you live.
-  const price = localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'local')
+  const price = $$(localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'local'), state)
   const downPayment = Math.round(price * type.downPaymentRate)
   if ((state.money ?? 0) < downPayment) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the down payment for a ${type.name}.`, isKey: false }] }
@@ -547,7 +549,7 @@ export function buyVehicle(state, typeId) {
     return { ...state, log: [...state.log, { age: state.age, text: "You need a driving licence first.", isKey: false }] }
   }
   // Vehicles are largely imported, so they do NOT scale down as far as housing.
-  const price = localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'import')
+  const price = $$(localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'import'), state)
   const displayName = type.make ? `${type.make} ${type.model}` : type.name
   if ((state.money ?? 0) < price) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford a ${displayName}.`, isKey: false }] }
@@ -600,7 +602,7 @@ const PET_NAMES = ['Buddy', 'Luna', 'Max', 'Bella', 'Charlie', 'Milo', 'Daisy', 
 export function adoptPet(state, species) {
   if (state.age < 8) return state
   const name = pickFrom(PET_NAMES)
-  const adoptionCost = { dog: 400, cat: 200, rabbit: 80, hamster: 30, parrot: 300, fish: 20, bird: 150 }[species] ?? 200
+  const adoptionCost = $$({ dog: 400, cat: 200, rabbit: 80, hamster: 30, parrot: 300, fish: 20, bird: 150 }[species] ?? 200, state)
   if ((state.money ?? 0) < adoptionCost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the adoption fee.`, isKey: false }] }
   }
@@ -619,7 +621,7 @@ export function visitVet(state, petIdx) {
   const pets = state.pets ?? []
   const pet = pets[petIdx]
   if (!pet?.alive) return state
-  const cost = randomBetween(150, 600)
+  const cost = $$(randomBetween(150, 600), state)
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the vet bill right now.`, isKey: false }] }
   }
@@ -695,7 +697,7 @@ export function relocate(state, destPlaceId, destNeighborhoodTier) {
   const fromPlace = state.currentPlace ?? state.character?.birthPlace
   if (fromPlace?.id === destPlace.id) return state
 
-  const moveCost = getRelocationCost(fromPlace, destPlace)
+  const moveCost = $$(getRelocationCost(fromPlace, destPlace), state)
   if ((state.money ?? 0) < moveCost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You need $${moveCost.toLocaleString()} to move to ${destPlace.name}. You can't afford it right now.`, isKey: false }] }
   }
@@ -751,7 +753,7 @@ export function emigrate(state, destCountryName, destPlaceId) {
   if (!dest) return state
   const alreadyAbroad = state.flags.includes('emigrated')
   if (alreadyAbroad && state.currentCountry?.name === dest.name) return state
-  const moveCost = randomBetween(3000, 15000)
+  const moveCost = $$(randomBetween(3000, 15000), state)
   const isRefugee = state.flags.includes('refugee') || state.flags.includes('displaced')
   const isIllegal = state.flags.includes('illegal_immigrant')
   const initialStatus = isRefugee ? 'refugee_status' : isIllegal ? 'undocumented' : 'work_visa'
@@ -822,8 +824,9 @@ export function upgradeResidency(state) {
     const rem = path.yearsRequired - yearsAbroad
     return { ...state, log: [...state.log, { age: state.age, text: `You need ${rem} more year${rem !== 1 ? 's' : ''} of residency before you can apply.`, isKey: false }] }
   }
-  if ((state.money ?? 0) < path.fee) {
-    return { ...state, log: [...state.log, { age: state.age, text: `The application fee is $${path.fee.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
+  const fee = $$(path.fee, state)
+  if ((state.money ?? 0) < fee) {
+    return { ...state, log: [...state.log, { age: state.age, text: `The application fee is $${fee.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
   }
 
   const hasSeriousCrime = (state.criminalRecord ?? []).some(r => {
@@ -837,7 +840,7 @@ export function upgradeResidency(state) {
   if (Math.random() > successChance) {
     return {
       ...state,
-      money: Math.max(0, (state.money ?? 0) - path.fee),
+      money: Math.max(0, (state.money ?? 0) - fee),
       log: [...state.log, { age: state.age, text: `Your application for ${path.next.replace(/_/g, ' ')} was rejected. The fee is gone. You can try again later.`, isKey: true }],
     }
   }
@@ -852,7 +855,7 @@ export function upgradeResidency(state) {
   return {
     ...state,
     residencyStatus: path.next,
-    money: Math.max(0, (state.money ?? 0) - path.fee),
+    money: Math.max(0, (state.money ?? 0) - fee),
     flags: [...new Set([...state.flags, `achieved_${path.next}`])],
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 10, 0, 100) },
     log: [...state.log, { age: state.age, text: msgs[path.next] ?? `Status upgraded to ${path.next.replace(/_/g, ' ')}.`, isKey: true }],
@@ -907,7 +910,7 @@ export function callSibling(state, siblingIdx) {
 
 export function adoptChild(state) {
   if (state.age < 25 || state.age > 55) return state
-  const adoptionCost = randomBetween(8000, 35000)
+  const adoptionCost = $$(randomBetween(8000, 35000), state)
   if ((state.money ?? 0) < adoptionCost) {
     return { ...state, log: [...state.log, { age: state.age, text: `The adoption process requires funds you don't currently have.`, isKey: false }] }
   }
@@ -943,7 +946,7 @@ export function studyHarder(state) {
 // ─── Movie theater ────────────────────────────────────────────────────────────
 
 export function goToMovies(state) {
-  const cost = randomBetween(15, 25)
+  const cost = $$(randomBetween(15, 25), state)
   const genres = ['action blockbuster', 'indie drama', 'horror film', 'romantic comedy', 'documentary']
   const genre = pickFrom(genres)
   return {
@@ -959,7 +962,7 @@ export function goToMovies(state) {
 
 export function goClubbing(state) {
   if (state.age < 18) return { ...state, log: [...state.log, { age: state.age, text: "You're not old enough to go clubbing.", isKey: false }] }
-  const cost = randomBetween(50, 120)
+  const cost = $$(randomBetween(50, 120), state)
   const newFlags = [...state.flags]
   if (!newFlags.includes('heavy_drinker') && chance(0.15)) newFlags.push('heavy_drinker')
   if (newFlags.includes('heavy_drinker') && !newFlags.includes('alcohol_addiction') && chance(0.08)) newFlags.push('alcohol_addiction')
@@ -987,15 +990,16 @@ export function goShopping(state, category) {
     luxury:      { cost: 3000, happiness: 10, looks: 3, text: 'A luxury purchase. Worth every penny.' },
   }
   const opt = opts[category] ?? opts.clothes
-  if ((state.money ?? 0) < opt.cost) {
+  const optCost = $$(opt.cost, state)
+  if ((state.money ?? 0) < optCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that right now.", isKey: false }] }
   }
   return {
     ...state,
-    money: (state.money ?? 0) - opt.cost,
+    money: (state.money ?? 0) - optCost,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + opt.happiness, 0, 100), looks: clamp(state.stats.looks + opt.looks, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
-    log: [...state.log, { age: state.age, text: `${opt.text} $${opt.cost.toLocaleString()} spent.`, isKey: false }],
+    log: [...state.log, { age: state.age, text: `${opt.text} $${optCost.toLocaleString()} spent.`, isKey: false }],
   }
 }
 
@@ -1011,12 +1015,13 @@ export function visitSalonSpa(state, service) {
   }
   const svc = services[service]
   if (!svc) return state
-  if ((state.money ?? 0) < svc.cost) {
+  const svcCost = $$(svc.cost, state)
+  if ((state.money ?? 0) < svcCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that service right now.", isKey: false }] }
   }
   return {
     ...state,
-    money: (state.money ?? 0) - svc.cost,
+    money: (state.money ?? 0) - svcCost,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + svc.happiness, 0, 100), looks: clamp(state.stats.looks + svc.looks, 0, 100), health: clamp(state.stats.health + svc.health, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: svc.text, isKey: false }],
@@ -1125,7 +1130,7 @@ export function goToRehab(state) {
   if (addictions.length === 0) {
     return { ...state, log: [...state.log, { age: state.age, text: "You don't have any active addictions to treat.", isKey: false }] }
   }
-  const cost = localCost(randomBetween(5000, 25000), gdpTierOf(state))
+  const cost = $$(localCost(randomBetween(5000, 25000), gdpTierOf(state)), state)
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `Rehab would cost about $${cost.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
   }
@@ -1162,7 +1167,8 @@ export function useSubstance(state, substance) {
   }
   const opt = opts[substance]
   if (!opt) return state
-  if ((state.money ?? 0) < opt.cost) {
+  const optCost = $$(opt.cost, state)
+  if ((state.money ?? 0) < optCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that right now.", isKey: false }] }
   }
   const newFlags = [...state.flags]
@@ -1179,7 +1185,7 @@ export function useSubstance(state, substance) {
   if (chance(overdoseRisk)) {
     return {
       ...state,
-      money: Math.max(0, (state.money ?? 0) - opt.cost),
+      money: Math.max(0, (state.money ?? 0) - optCost),
       flags: [...new Set([...newFlags, 'overdosed'])],
       mem: newMem,
       stats: { ...state.stats, health: clamp(state.stats.health - 25, 0, 100), happiness: clamp(state.stats.happiness - 10, 0, 100) },
@@ -1189,7 +1195,7 @@ export function useSubstance(state, substance) {
   }
   return {
     ...state,
-    money: Math.max(0, (state.money ?? 0) - opt.cost),
+    money: Math.max(0, (state.money ?? 0) - optCost),
     flags: [...new Set(newFlags)],
     mem: newMem,
     stats: { ...state.stats, health: clamp(state.stats.health + opt.hDelta, 0, 100), happiness: clamp(state.stats.happiness + opt.mDelta, 0, 100) },
@@ -1240,10 +1246,11 @@ export function obtainLicense(state, licType) {
   if (!lic) return state
   if (state.age < lic.minAge) return { ...state, log: [...state.log, { age: state.age, text: "You're not old enough for that licence yet.", isKey: false }] }
   if (state.flags.includes(lic.flag)) return { ...state, log: [...state.log, { age: state.age, text: "You already have that licence.", isKey: false }] }
-  if ((state.money ?? 0) < lic.cost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford the licence fees right now.", isKey: false }] }
+  const licCost = $$(lic.cost, state)
+  if ((state.money ?? 0) < licCost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford the licence fees right now.", isKey: false }] }
   return {
     ...state,
-    money: (state.money ?? 0) - lic.cost,
+    money: (state.money ?? 0) - licCost,
     flags: [...new Set([...state.flags, lic.flag])],
     licenceObtained: licType === 'driver' ? true : (state.licenceObtained ?? false),
     actionsThisYear: state.actionsThisYear + 1,
@@ -1270,12 +1277,13 @@ export function interactWithFriend(state, friendIdx, action) {
   }
   const act = acts[action]
   if (!act) return state
-  if ((state.money ?? 0) < act.cost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford to do that right now.", isKey: false }] }
+  const actCost = $$(act.cost, state)
+  if ((state.money ?? 0) < actCost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford to do that right now.", isKey: false }] }
   const updatedFriends = friends.map((f, i) => i === friendIdx ? { ...f, relationshipQuality: clamp(f.relationshipQuality + act.rqDelta, 0, 100) } : f)
   return {
     ...state,
     friends: updatedFriends,
-    money: Math.max(0, (state.money ?? 0) - act.cost),
+    money: Math.max(0, (state.money ?? 0) - actCost),
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + act.happiness, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: act.text, isKey: false }],
@@ -1308,7 +1316,7 @@ export function bookTrip(state, destinationId) {
   // Scale cost by GDP
   const gdpCostMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
   const costMult = gdpCostMult[state.character?.country?.gdp] ?? 1.0
-  const cost = Math.round(dest.cost * costMult)
+  const cost = $$(Math.round(dest.cost * costMult), state)
 
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford ${dest.name} right now ($${cost.toLocaleString()}).`, isKey: false }] }
@@ -1353,6 +1361,19 @@ export function bookTrip(state, destinationId) {
 export { BUSINESS_TYPES } from './character'
 import { personName } from './names'
 
+// Every price in this file is written in present-day dollars, and until
+// economy.js existed that is what the player was charged and shown, in every
+// year the game covers. `$$` denominates one into the money of the year and
+// country the character is standing in.
+//
+// It is applied at the DEFINITION of a cost and never at the deduction, so
+// that the figure printed in the log, the affordability check and the amount
+// taken out of the balance are all necessarily the same number. Costs that
+// travel through `proxy.mo` are denominated by applyProxy instead and must NOT
+// be passed through here.
+const $$ = (amount, state) => inEraMoney(amount, state.currentCountry ?? state.character?.country, state.currentYear)
+
+
 export function getAvailableBusinessTypes(state) {
   return BUSINESS_TYPES.filter(bt => {
     if (state.age < bt.minAge) return false
@@ -1372,7 +1393,7 @@ export function startBusiness(state, typeId) {
   // Scale startup cost to country GDP
   const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
   const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-  const cost = Math.round(bt.startupCost * mult)
+  const cost = $$(Math.round(bt.startupCost * mult), state)
 
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} to start a ${bt.name}.`, isKey: false }] }
@@ -1413,7 +1434,7 @@ export function hireEmployee(state) {
   if (!state.business?.active) return state
   const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
   const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-  const hiringCost = Math.round(2000 * mult)
+  const hiringCost = $$(Math.round(2000 * mult), state)
   if ((state.money ?? 0) < hiringCost) {
     return { ...state, log: [...state.log, { age: state.age, text: "You can't afford to hire right now.", isKey: false }] }
   }
@@ -1445,7 +1466,7 @@ export function closeBusiness(state) {
 
 export function prisonWork(state) {
   if (!state.inPrison) return state
-  const earned = randomBetween(50, 200)
+  const earned = $$(randomBetween(50, 200), state)
   let healthDelta = -2
   let logText = `You put in hours in the prison laundry/kitchen. $${earned} earned.`
   const injured = chance(0.05)
@@ -1523,7 +1544,7 @@ export function prisonConjugalVisit(state) {
 
 export function prisonBribeGuard(state) {
   if (!state.inPrison) return state
-  const bribe = randomBetween(500, 3000)
+  const bribe = $$(randomBetween(500, 3000), state)
   if ((state.money ?? 0) < bribe) {
     return {
       ...state,

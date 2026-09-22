@@ -1232,7 +1232,7 @@ export default function LifeScreen() {
                     {['mother', 'father'].map(key => {
                       const p = parents[key]
                       if (!p) return null
-                      const parentIncome = p.occupation ? formatParentIncome(p.occupation, character?.country?.gdp) : null
+                      const parentIncome = p.occupation ? formatParentIncome(p.occupation, character?.country?.gdp, character?.country, currentYear) : null
                       return (
                         <div key={key} className="flex justify-between items-center">
                           <div>
