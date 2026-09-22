@@ -7,27 +7,65 @@ function codeToFlag(code) {
 }
 
 const COUNTRY_ISO = {
+  // Every playable country needs an entry here; `tests/countries.test.js`
+  // asserts the table covers the roster, because a missing code renders as a
+  // blank white flag in the header for every year of that life — and half the
+  // roster was doing exactly that.
   'United States': 'US', 'Canada': 'CA', 'United Kingdom': 'GB',
   'Germany': 'DE', 'France': 'FR', 'Sweden': 'SE', 'Norway': 'NO',
-  'Netherlands': 'NL', 'Australia': 'AU', 'New Zealand': 'NZ',
-  'Spain': 'ES', 'Italy': 'IT', 'Ireland': 'IE', 'Japan': 'JP',
-  'South Korea': 'KR', 'Singapore': 'SG', 'Russia': 'RU', 'Ukraine': 'UA',
-  'Poland': 'PL', 'Romania': 'RO', 'Serbia': 'RS', 'Hungary': 'HU',
-  'Georgia': 'GE', 'Kazakhstan': 'KZ', 'Uzbekistan': 'UZ',
-  'Brazil': 'BR', 'Mexico': 'MX', 'Turkey': 'TR', 'China': 'CN',
-  'Colombia': 'CO', 'Argentina': 'AR', 'South Africa': 'ZA',
-  'Vietnam': 'VN', 'Philippines': 'PH', 'Indonesia': 'ID', 'Thailand': 'TH',
-  'Venezuela': 'VE', 'Haiti': 'HT', 'Zimbabwe': 'ZW', 'Bangladesh': 'BD',
-  'Cambodia': 'KH', 'Nigeria': 'NG', 'Ethiopia': 'ET', 'Kenya': 'KE',
-  'DR Congo': 'CD', 'Ghana': 'GH', 'Senegal': 'SN', 'Mozambique': 'MZ',
-  'Rwanda': 'RW', 'Afghanistan': 'AF', 'Syria': 'SY', 'Somalia': 'SO',
-  'Yemen': 'YE', 'Myanmar': 'MM', 'Saudi Arabia': 'SA', 'UAE': 'AE',
-  'India': 'IN', 'Pakistan': 'PK', 'Iran': 'IR', 'Egypt': 'EG',
-  'Morocco': 'MA', 'Cuba': 'CU', 'Peru': 'PE', 'Sri Lanka': 'LK',
-  'Nepal': 'NP', 'Chile': 'CL', 'Jordan': 'JO', 'Tanzania': 'TZ',
-  'Uganda': 'UG', 'Namibia': 'NA', 'Czech Republic': 'CZ', 'Bolivia': 'BO',
-  'Laos': 'LA', 'Guatemala': 'GT',
+  'Denmark': 'DK', 'Finland': 'FI', 'Netherlands': 'NL', 'Belgium': 'BE',
+  'Switzerland': 'CH', 'Austria': 'AT', 'Spain': 'ES', 'Portugal': 'PT',
+  'Italy': 'IT', 'Greece': 'GR', 'Ireland': 'IE', 'Cyprus': 'CY',
+  'Iceland': 'IS',
+  'Australia': 'AU', 'New Zealand': 'NZ', 'Fiji': 'FJ',
+  'Papua New Guinea': 'PG', 'Samoa': 'WS', 'Kiribati': 'KI',
+  'Tuvalu': 'TV', 'Marshall Islands': 'MH', 'Vanuatu': 'VU',
+
+  'Japan': 'JP', 'South Korea': 'KR', 'North Korea': 'KP', 'Taiwan': 'TW',
+  'China': 'CN', 'Mongolia': 'MN', 'Singapore': 'SG', 'Malaysia': 'MY',
+  'Vietnam': 'VN', 'Laos': 'LA', 'Cambodia': 'KH', 'Thailand': 'TH',
+  'Myanmar': 'MM', 'Philippines': 'PH', 'Indonesia': 'ID',
+  'East Timor': 'TL', 'Maldives': 'MV',
+
+  'Russia': 'RU', 'Ukraine': 'UA', 'Belarus': 'BY', 'Poland': 'PL',
+  'Czech Republic': 'CZ', 'Slovakia': 'SK', 'Hungary': 'HU',
+  'Romania': 'RO', 'Bulgaria': 'BG', 'Serbia': 'RS', 'Albania': 'AL',
+  'Bosnia and Herzegovina': 'BA', 'Estonia': 'EE', 'Latvia': 'LV',
+  'Lithuania': 'LT', 'Moldova': 'MD', 'Croatia': 'HR', 'Slovenia': 'SI',
+  'Georgia': 'GE', 'Armenia': 'AM', 'Azerbaijan': 'AZ',
+  'Kazakhstan': 'KZ', 'Uzbekistan': 'UZ', 'Kyrgyzstan': 'KG',
+  'Tajikistan': 'TJ', 'Turkmenistan': 'TM',
+
+  'India': 'IN', 'Pakistan': 'PK', 'Bangladesh': 'BD', 'Sri Lanka': 'LK',
+  'Nepal': 'NP', 'Bhutan': 'BT', 'Afghanistan': 'AF',
+
+  'Turkey': 'TR', 'Iran': 'IR', 'Iraq': 'IQ', 'Syria': 'SY',
+  'Lebanon': 'LB', 'Israel': 'IL', 'Palestine': 'PS', 'Jordan': 'JO',
+  'Saudi Arabia': 'SA', 'UAE': 'AE', 'Qatar': 'QA', 'Bahrain': 'BH',
+  'Kuwait': 'KW', 'Oman': 'OM', 'Yemen': 'YE',
+
+  'Egypt': 'EG', 'Libya': 'LY', 'Tunisia': 'TN', 'Algeria': 'DZ',
+  'Morocco': 'MA', 'Sudan': 'SD', 'Ethiopia': 'ET', 'Eritrea': 'ER',
+  'Djibouti': 'DJ', 'Somalia': 'SO', 'Kenya': 'KE', 'Uganda': 'UG',
+  'Tanzania': 'TZ', 'Rwanda': 'RW', 'DR Congo': 'CD', 'Angola': 'AO',
+  'Zambia': 'ZM', 'Zimbabwe': 'ZW', 'Mozambique': 'MZ', 'Namibia': 'NA',
+  'South Africa': 'ZA', 'Nigeria': 'NG', 'Ghana': 'GH', 'Senegal': 'SN',
+  'Mali': 'ML', 'Guinea': 'GN', 'Burkina Faso': 'BF', 'Ivory Coast': 'CI',
+  'Cameroon': 'CM', 'Liberia': 'LR', 'Sierra Leone': 'SL', 'Chad': 'TD',
+  'Niger': 'NE', 'Togo': 'TG', 'Benin': 'BJ',
+  'Central African Republic': 'CF',
+
+  'Brazil': 'BR', 'Mexico': 'MX', 'Argentina': 'AR', 'Chile': 'CL',
+  'Colombia': 'CO', 'Venezuela': 'VE', 'Peru': 'PE', 'Bolivia': 'BO',
+  'Ecuador': 'EC', 'Uruguay': 'UY', 'Paraguay': 'PY', 'Guyana': 'GY',
+  'Guatemala': 'GT', 'El Salvador': 'SV', 'Honduras': 'HN',
+  'Nicaragua': 'NI', 'Belize': 'BZ', 'Cuba': 'CU', 'Haiti': 'HT',
+  'Dominican Republic': 'DO', 'Jamaica': 'JM', 'Barbados': 'BB',
+  'Trinidad and Tobago': 'TT', 'Puerto Rico': 'PR',
 }
+
+/** Exposed so the test suite can assert this table covers the roster. */
+export const FLAGGED_COUNTRIES = Object.keys(COUNTRY_ISO)
 
 // Returns the country's name as it was known at `birthYear`, if different from current name.
 // Uses `historicalNames: [{ from?, until, name }]` array on country objects.

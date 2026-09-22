@@ -18,7 +18,7 @@ export const CLIMATE_EVENTS = [
     text: (G) => {
       const arch = G.currentCountry?.archetype ?? G.character.country.archetype
       const country = G.currentCountry?.name ?? G.character.country.name
-      const isGulf = ['United Arab Emirates', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman'].includes(country)
+      const isGulf = ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman'].includes(country)
       const isDev = ['subsaharan', 'developing_unstable', 'developing_urban', 'conflict_zone'].includes(arch)
       if (isGulf) {
         return 'Forty-nine degrees for two weeks. The old men say they have never felt anything like it. The outdoor workers are on mandatory rest from ten in the morning until four. Three die anyway — unofficial, unreported. The air conditioning runs continuously through the night and the city hums.'

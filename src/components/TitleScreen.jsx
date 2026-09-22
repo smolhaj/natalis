@@ -1,6 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useGameStore, getAllSlotMeta } from '../store/gameStore'
 import { getCountryFlag } from '../utils/countryUtils'
+import { COUNTRIES } from '../data/countries'
+import { CAREERS } from '../data/careers'
+import { RIBBONS } from '../data/ribbons'
+
+// Derived, not typed. The hardcoded version had drifted to 145/59/379 against a
+// real 146/49/377 — the careers figure was out by a fifth.
+const FEATURE_PILLS = [
+  `${COUNTRIES.length} Countries`,
+  `${CAREERS.length} Careers`,
+  `${RIBBONS.length} Ribbons`,
+  'Real History',
+]
 
 function SlotCard({ meta, onContinue, onDelete }) {
   const [confirmDelete, setConfirmDelete] = useState(false)
@@ -132,7 +144,7 @@ export default function TitleScreen() {
 
         {/* Feature pills */}
         <div className="flex flex-wrap gap-2 justify-center">
-          {['145 Countries', '59 Careers', '379 Ribbons', 'Real History'].map(tag => (
+          {FEATURE_PILLS.map(tag => (
             <span key={tag} className="px-3 py-1 bg-white rounded-full text-xs font-semibold text-natalis-dim border border-natalis-border shadow-sm">
               {tag}
             </span>

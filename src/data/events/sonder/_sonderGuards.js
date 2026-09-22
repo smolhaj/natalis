@@ -93,7 +93,8 @@ export const SNOW_COUNTRIES = [
   'Finland', 'Denmark', 'Estonia', 'Latvia', 'Lithuania', 'Czech Republic', 'Slovakia',
   'Hungary', 'Romania', 'Bulgaria', 'Austria', 'Switzerland', 'Mongolia', 'Kazakhstan',
   'Kyrgyzstan', 'Tajikistan', 'Georgia', 'Armenia', 'Afghanistan', 'North Korea',
-  'South Korea', 'Japan', 'China', 'United States', 'Iceland', 'Netherlands', 'Bosnia',
+  'South Korea', 'Japan', 'China', 'United States', 'Iceland', 'Netherlands',
+  'Bosnia and Herzegovina',
   'Serbia', 'Croatia', 'Slovenia', 'Moldova', 'Turkey', 'Iran', 'Nepal', 'Bhutan',
 ]
 export const isColdCountry = (G) => SNOW_COUNTRIES.includes(G.currentCountry?.name)
