@@ -14948,6 +14948,40 @@ function* textureCandidates(state, opts = {}) {
     'You go into the room sometimes. It is quiet in there and it is entirely yours, and by now that is most of what it is for.',
   ])]
 
+  if (F.has('widowed_young') && Math.random() < 0.13) yield [T.earned, pick([
+    'You are the youngest person in the room who has done this. It confers nothing. People are kind and they are also, faintly, superstitious about you.',
+    phase === 'late_life'
+      ? 'You have now been without them for longer than you were with them. You worked that out on a Tuesday, doing something else, and it sat down next to you and stayed for the afternoon.'
+      : 'The forms want a status and the status they have is not the shape of it. You tick the box. You have been ticking it since you were thirty-eight.',
+  ])]
+
+  if (F.has('held_the_household') && Math.random() < 0.11) yield [T.earned, pick([
+    'Somebody says you coped remarkably. There was nothing else available to do, which is a different sentence, and you have stopped correcting it.',
+    'The children got through school. That is the ledger you keep and it is the only one you have ever cared about balancing.',
+  ])]
+
+  if (F.has('returned_to_family') && Math.random() < 0.11) yield [T.earned, pick([
+    'You are fed and housed and consulted about nothing. It is generous and it is complete and there is no door in it you could open.',
+    'Your own kitchen, the one you had for eleven years, belongs to someone else. You think about the arrangement of it sometimes, which cupboard held what.',
+  ])]
+
+  if (F.has('grieved_out_loud') && Math.random() < 0.11) yield [T.earned, pick([
+    'It cost you something material. You know what and you know roughly how much, and you have never once wished the weeks back.',
+    'People were uncomfortable with how you did it. Their discomfort was the price and it was, in the end, an affordable one.',
+  ])]
+
+  if (F.has('remarried_practically') && Math.random() < 0.11) yield [T.earned, pick([
+    'It was an arrangement. Somewhere in the fourth or fifth year it stopped being only that, and neither of you has ever put a word to the difference.',
+    'You do not compare them. You did at first, constantly, and then one day you noticed you had stopped, and that felt like a small betrayal and then like nothing.',
+  ])]
+
+  if (F.has('did_not_remarry') && Math.random() < 0.11) yield [T.earned, pick([
+    'They stopped asking about eight years ago. You were relieved, and then for a week or so you were not.',
+    phase === 'late_life'
+      ? 'It was the right decision and it was also a long time to be the only adult in a house. Both, without either cancelling the other.'
+      : 'The house is yours to arrange. That is a smaller thing than people think and it is not nothing.',
+  ])]
+
   if (F.has('partition_stayed_behind') && Math.random() < 0.13) yield [T.anchored, pick([
     'The house four doors down changed hands in 1947 and the village still calls it by the name of the family that left it. Nobody who uses the name has met them. The people living in it now have been there longer than the people who built it.',
     phase === 'late_life'

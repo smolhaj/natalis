@@ -168,7 +168,7 @@ Event shape:
 **Critical**: `effect` functions receive only `p` (the proxy). `G` is only available in `when` guards. Never put G-dependent logic in effects.
 
 The `G` object (built by `buildG()`) exposes everything event conditions need:
-`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null)
+`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
 
 Effect proxy shorthands (all are additive deltas):
 - `p.m` → happiness, `p.h` → health, `p.e` → smarts, `p.s` → charisma, `p.w` → wealth stat, `p.lo` → looks
@@ -251,7 +251,21 @@ Legal quality scales by regime: democracies have fair courts (1.0×), military d
 
 ### Partner Lifecycle (`src/engine/tick.js: tickPartner`)
 
-Called each year via `advanceYear`. Partner ages +1/year and `partner.years` increments. At age 75+ there's a death probability (increases with age). On death: partner removed, `widowed` or `lost_partner` flags set, death logged in lifeLog. Relationship quality drifts ±1 per year.
+Called each year via `advanceYear`. Partner ages +1/year and `partner.years`
+increments. On death: partner kept on state as `{alive: false}` (so
+`G.deceasedPartner` can speak and `G.partner` cannot), `widowed` or
+`lost_partner` set, the death logged. Relationship quality drifts ±1 per year.
+
+**The death hazard follows the country, not a rich-world table.** It started at
+65 everywhere, so nobody in a 1962 Nigerian or 1974 Ethiopian life could be
+widowed before their partner's sixties, in countries whose life expectancy at
+the time was in the forties — and a widow of thirty-eight with children at home
+and no pension is the commonest shape the loss took in most of the world for
+most of this period. The onset and the steep band now shift with
+`lifeExpectancy`. Measured over 70 lives per country: median age at widowhood
+Nigeria 56, India 60, Ethiopia 64, Germany 74, Japan and Sweden 78. The young
+arc (`grief_widowed_young_*`) is about the arithmetic; the existing late arc is
+about the shape of the days, and they are not the same event.
 
 Note: this function was a no-op for every partner in the game until August 2026. It bailed on `!state.partner.alive`, and no partner was ever constructed with an `alive` field — so partners never aged, never died, quality never drifted, and `partner.years` (which gates marriage timing and the partner-moments memory layer) stayed at 0 forever. The guard is now `alive === false`, so a partner from an older save counts as alive.
 
@@ -367,8 +381,11 @@ healthcare of the country the character *actually lives in*, fitness and chronic
 conditions; health drifts toward it each year. A shock still hurts and a chronic
 condition still lowers the plateau permanently, but a life nobody intervenes in
 does not walk to zero. Before this, a passively-read 1962 Nigerian life had a
-median death age of **8**; it is now ~66 with ~29% under-5 mortality, which is
-what the historical record actually says.
+median death age of **8**; a Nigerian who survives childhood now reaches a median of
+43-51, against a 20-33% under-5 rate — both wide, because a median taken from
+forty lives of a distribution this heavy-tailed moves by ten years between
+samples. The instrument is the constraint, not the engine: the same code
+measured at n=150 gives a survivor median of 51 and an oldest of 82.
 
 **Where you live is where you live.** `liveCountry(state)` — not the frozen
 birth country — drives salary, promotion pay, healthcare mortality, illness risk,
@@ -558,9 +575,9 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 183 named places, 252 world events, 8,089 character events
+154 countries, 183 named places, 252 world events, 8,094 character events
 (2,129 of them the contemplative sonder layer, 157 stranger glimpses, 42 prison
-and political-arrest), 2,975 registered flags, 377 ribbons.
+and political-arrest), 2,986 registered flags, 377 ribbons.
 **0 orphaned, 0 partial flags.**
 
 Verify with:
@@ -574,6 +591,8 @@ npm run check-flags      # 2964 covered / 0 partial / 0 orphaned
 npm run check-events     # reachability: dead guards, enum domains, phase/year windows,
                          # season/country, silent choices, narrated moves that move nobody
 npm run check-anachronisms  # plays lives and reads every line against when the world held it
+npm run check-bundle     # builds, opens dist in a browser, starts a life — the only
+                         # check that exercises the artefact rather than the source
 npm run sim              # firing-rate report — what ACTUALLY fires, per 100 lives
 npm run sim -- --broad   # the same over the whole roster, not the ten default configurations
 ```
@@ -600,7 +619,7 @@ four now have a test that fails if they return.
 | `buildYearTexture` reachability | ~2% of years | 59.7% |
 | stranger glimpses per life | 0.3 | 6.2 |
 | longest unbroken contemplative run | 19-21 years | 2 |
-| Nigeria 1962 median death age | 8 | 60s |
+| Nigeria 1962 median death age (survived childhood) | 8 | 43-51 |
 | yearTexture lines a player ever sees | 9.3% of 7,588 | 19.1% |
 | countries whose texture appears in a broad run | 16 | 94 |
 | prose a character reads that they already read | 15.6% | 0.2% |
@@ -628,7 +647,7 @@ of defect: content that fires correctly and is wrong about the world.
 | "Life in brief" on the death screen | empty in 67% of lives | 0%, median 8 notes |
 | families with two members sharing a first name | 13% | under 1% |
 | both parents holding the identical job and wage | ~50% at the top tier | 3% |
-| smarts median at death (share ending 90+) | 96 (58%) | 77 (11%) |
+| smarts median at death (share ending 90+) | 96 (58%) | 74-78 (9-11%) |
 | countries whose religion mix the identity table distorts >12pp | 26 | 0 |
 | passive mode, share of years containing an event | measured at 52% | 88.6% (the 52% was the instrument) |
 
@@ -676,6 +695,58 @@ character with a `retired` FLAG while every hook that hands out a job reads the
 **The lesson worth keeping: read the log in order.** Every one of these is
 invisible to a guard audit, invisible to `npm run sim`, and obvious within
 thirty seconds of reading a life as a player reads it.
+
+### Thresholds are instruments, and a noisy one fails on nothing
+
+Three assertions failed during this pass and none of them had found a defect.
+The max of ~32 survivor ages, the median of ~20, and a proportion on a group
+that draws a few hundred times out of 30,000 births are all statistics that
+swing by more than their own bound between identical runs: a survivor median
+that measured **48 at n=150** came out **30** on one twenty-life draw, and a
+declared 0.88 share landed at 0.798 against a flat floor of 0.8.
+
+The rule that came out of it: **assert the contract, at the sample size you are
+actually taking.** The identity test now reads the declared share from the
+table and allows the ±10pp reconciliation `impliedMarginal()` documents, plus
+sampling room — so it cannot drift out of step with the module it tests. The
+mortality bounds are set for a twenty-life sample, with a stable companion
+(the share of a cohort reaching 60, pooled percentiles) carrying the real
+claim. Both still fail by a wide margin on the defect they were written for.
+
+A test that fails at random gets read as noise, and then the one real failure
+gets read as noise too. The trap is not subtle and it is easy to walk into
+twice: the replacement bound I wrote for the mortality test — "more than 10% of
+this cohort reaches 60" — failed on the next run at exactly 2 of 20, in the same
+commit as this paragraph. A tail share over twenty draws is no more stable than
+the max it replaced. Per-country assertions are sanity bounds; the real claim
+belongs in a statistic pooled over every country and every life in the run.
+
+### The check that loads a page
+
+`npm run build` exits 0 on a bundle that throws on load, and did for an
+unknown number of deploys. `manualChunks` matched the substring `'react'`
+against a module path; `scheduler` — which react-dom reaches for at
+module-init time, and whose path contains no "react" — went to a different
+chunk from React, and the two chunks imported each other. Rollup says so, on a
+successful build:
+
+```
+Circular chunk: vendor -> vendor-react -> vendor
+```
+
+and the page throws `Cannot read properties of undefined (reading 'useState')`
+and renders an empty div. Measured on both sides: with the old config `#root`
+holds **0** characters; with the fix it holds 2,485, a life starts and ages.
+
+Every other check here was green the whole time — 350 tests, 0 flag orphans, 0
+reachability errors, 0 anachronisms over 11,000 lines of prose — because not
+one of them loads a page. `npm run check-bundle` builds, serves `dist`, opens
+it in a browser, starts a life, ages ten years and fails on any console or page
+error, and it reproduces the original defect when the old config is put back.
+
+**The lesson worth keeping: test the artefact, not only the source.** Every
+audit in this repo reads code or runs the engine in Node. The thing the player
+receives is a bundle, and nothing was opening it.
 
 ### The third beta pass
 

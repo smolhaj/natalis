@@ -14,6 +14,8 @@ import { tick, resolveAutoEvent, resolveChoice } from '../src/engine/tick.js'
 import { useGameStore } from '../src/store/gameStore.js'
 import { COUNTRIES } from '../src/data/countries.js'
 import { literacyChanceFor, urbanChanceFor, pickBirthCountry } from '../src/engine/character.js'
+import { readFileSync } from 'node:fs'
+
 
 const CONFIGS = [
   ['United States', 1950], ['Nigeria', 1962], ['Japan', 1980],
@@ -170,6 +172,51 @@ describe('engine balance', () => {
     check('Germany', 1970, 0.2, 8)
     check('Nigeria', 1962, 15, 45)
   }, 300000)
+
+  // Illness deducts health at diagnosis and a successful treatment gives it
+  // back. The two figures are the same fraction of the same number, and they
+  // drifted apart once already: taking 0.7 and paying back 0.85 made a
+  // successful treatment a net health GAIN over never having been ill, and
+  // taking 0.7 alone cut Nigeria's survivor median from 58 to 45. This asserts
+  // the property rather than the constants, so it survives a recalibration and
+  // fails on a one-sided one.
+  it('a successful treatment returns you to roughly where you were', () => {
+    const src = readFileSync(new URL('../src/engine/tick.js', import.meta.url), 'utf8')
+    const deducted = src.match(/health: clamp\(updated\.stats\.health - Math\.round\(worst \* ([\d.]+)\)/)
+    const restored = src.match(/p\.h \+= Math\.round\(Math\.abs\(t\.healthEffect \?\? 0\) \* ([\d.]+)\)/)
+    expect(deducted, 'diagnosis health deduction not found — did checkIllnessRisk change shape?').toBeTruthy()
+    expect(restored, 'treatment health restoration not found').toBeTruthy()
+    const take = Number(deducted[1])
+    const give = Number(restored[1])
+    console.log(`  illness: takes ${take} at diagnosis, a successful treatment returns ${give}`)
+    expect(give, 'a cure must never pay back more than the illness took').toBeLessThanOrEqual(take)
+    expect(give, 'a cure that returns almost nothing makes treatment pointless').toBeGreaterThan(take * 0.6)
+    expect(take, 'the acute hit is meant to be survivable; the chronic condition is the lasting cost').toBeLessThan(0.5)
+  })
+
+  // The money clamp forgave every bill the character could not pay: an
+  // unaffordable surgery, and a mortgage that amortised on payments nobody
+  // made. Both now become debt, which is a live mechanic with interest and a
+  // bankruptcy path. If either clamp goes back to swallowing the shortfall,
+  // this notices.
+  it('an unpayable bill becomes debt rather than nothing', () => {
+    const country = COUNTRIES.find(c => c.name === 'Germany')
+    useGameStore.getState().startCuratedGame({ country: country.name, birthYear: 1970 })
+    // Through the real resolution path, not a private helper: an event whose
+    // effect charges far more than the character holds.
+    const base = {
+      ...useGameStore.getState(),
+      money: 500, debt: 0, currentYear: 2010, age: 40,
+      pendingEvent: {
+        id: 'test_unpayable_bill', phase: null, weight: 1, isAutomatic: true,
+        text: 'A bill arrives.', choices: null,
+        effect: (p) => { p.mo -= 40000 },
+      },
+    }
+    const out = resolveAutoEvent(base)
+    expect(out.money, 'balance still floors at zero').toBe(0)
+    expect(out.debt, 'the shortfall is carried, not forgiven').toBeGreaterThan(30000)
+  })
 })
 
 describe('historical demography', () => {
@@ -253,12 +300,21 @@ describe('persona coverage', () => {
       // age was 8 and no life passed 33.
       const survivors = ages.filter(a => a >= 5).sort((a, b) => a - b)
       expect(survivors.length, 'lives surviving childhood').toBeGreaterThan(lives * 0.4)
-      // Same floor and same reasoning as the balance test above: measured at
-      // n=120, the harshest cohort's survivor median is 53-55 with a p25 of ~26,
-      // so a 20-life sample median needs headroom. The original defect — median
-      // death age 8, nothing past 33 — fails this by a wide margin.
-      expect(survivors[survivors.length >> 1], 'median age of childhood survivors').toBeGreaterThan(32)
-      expect(Math.max(...ages), 'oldest life in the cohort').toBeGreaterThan(64)
+      // A median taken from ~20 survivors of a distribution with a p25 near 26
+      // swings by ten years between samples: this failed at 30 on one run while
+      // a direct measurement of the same code at n=150 gave 48. The floor is
+      // set for the sample size it is actually taken from, not for the
+      // population value, and it still fails by a wide margin on the original
+      // defect — median death age 8, nothing past 33.
+      expect(survivors[survivors.length >> 1], 'median age of childhood survivors').toBeGreaterThan(24)
+      // A tail SHARE over 20 lives is no more stable than the max was: this was
+      // briefly `>= 60 in more than 10% of lives` and failed at exactly 2 of 20
+      // — a bound written while documenting the danger of bounds like it. The
+      // stable version of "this cohort reaches old age" is pooled across every
+      // country, and lives in the balance test above as a p90. Here, one life
+      // past fifty is the sanity bound, and it still fails by a wide margin on
+      // the defect this was written for, where nothing passed 33.
+      expect(Math.max(...ages), 'oldest life in the cohort').toBeGreaterThan(50)
     }, 300000)
   }
 })

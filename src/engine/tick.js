@@ -22,7 +22,7 @@ import {
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
 import { rememberSaid, preferUnsaid } from './prose'
-import { tickLifeCourse, secondaryChance, primaryChance, unpurchasedHomeName } from './lifeCourse'
+import { tickLifeCourse, secondaryChance, primaryChance, unpurchasedHomeName, retirementAge } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
 import { suspendedInstitutions, proseFitsInstitutions, institutionExists } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
@@ -1024,6 +1024,11 @@ export function buildG(state) {
     })(),
     ethnicity: state.character?.ethnicity ?? 'local',
     ruralUrban: livingRuralUrban(state),
+    // Retirement is an institution, not an age: `retirementAge` already knows
+    // where there is a pension to be inside and where a smallholder simply
+    // works until somebody else is doing it, and returns null for the second.
+    // `late_retirement` was guessing at a flat age and firing at 50.
+    retirementAge: retirementAge(state),
     literate: flagSet.has('became_literate') ? true
       : flagSet.has('never_schooled') ? false
       : (state.character?.literate ?? true),
@@ -2137,10 +2142,25 @@ function tickPartner(state) {
   // written as `G.partner?.alive` — which read naturally and appear in two
   // events — were unsatisfiable for every partner the engine has ever made.
   let partner = { ...state.partner, age: partnerAge, years: (state.partner.years ?? 0) + 1, alive: state.partner.alive ?? true }
-  // Natural death probability increases with age
+  // Natural death probability increases with age — against the life expectancy
+  // of the country the household actually lives in, not a flat rich-world
+  // table. Starting the hazard at 65 everywhere meant nobody in a 1962 Nigerian
+  // or 1974 Ethiopian life could be widowed before their partner's sixties, in
+  // countries whose life expectancy at the time was in the forties. Widowhood
+  // at 38 with four children is one of the most common shapes a life took in
+  // most of the world for most of this period, and the engine could not produce
+  // it. Same principle as `liveCountry` everywhere else: where you live is
+  // where you live.
+  const le = liveCountry(state)?.lifeExpectancy ?? 72
+  // Shift the whole curve by the gap from a rich-world baseline, and steepen it
+  // where the gap is large.
+  const shift = Math.round((72 - le) * 0.8)
+  const steep = 1 + Math.max(0, (72 - le)) * 0.03
+  const onset = Math.max(38, 65 - shift)
+  const steepOnset = Math.max(48, 75 - shift)
   let deathProb = 0
-  if (partnerAge >= 75) deathProb = 0.04 + (partnerAge - 75) * 0.012
-  else if (partnerAge >= 65) deathProb = 0.015 + (partnerAge - 65) * 0.0025
+  if (partnerAge >= steepOnset) deathProb = (0.04 + (partnerAge - steepOnset) * 0.012) * steep
+  else if (partnerAge >= onset) deathProb = (0.015 + (partnerAge - onset) * 0.0025) * steep
   if (deathProb > 0 && chance(deathProb)) {
     // This used to mark the partner dead SILENTLY, on the reasoning that the
     // grief events fire in the same tick and carry the narrative. Measured over
@@ -2316,7 +2336,39 @@ function checkIllnessRisk(state) {
         'The drugs exist. They are not here. Everyone in the room knows both halves of that.',
       ],
     }
-    const illnessText = `${pickFrom(preferUnsaid(state, illnessContext[healthcare] ?? illnessContext.fair))} You are diagnosed with ${illness.name}.`
+    // The context pool is about scans, machines and specialists, and it was
+    // illness-agnostic — so a character was told "The machine that would
+    // answer it is in the city. Going to the city is a decision about money.
+    // You are diagnosed with Addiction." Nothing in a mental-health diagnosis
+    // arrives by machine, and where the diagnosis comes from is most of the
+    // difference between the tiers here too.
+    const MIND = new Set(['clinical_depression', 'anxiety_disorder', 'addiction'])
+    const mindContext = {
+      excellent: [
+        'The assessment takes an hour and a half and nobody looks at the clock. At the end of it there is a word for what you have been doing, which is not the same as a solution and is not nothing.',
+        'The GP asks nine questions off a sheet, and you answer the first six honestly and then hear yourself lying on the seventh, and she waits.',
+      ],
+      good: [
+        'You are on a waiting list for eleven weeks and you spend them deciding it has passed, and then the appointment comes and it has not.',
+        'It is named out loud for the first time by somebody who is not in your family. The naming is a smaller event than you had imagined and it does not undo itself afterwards.',
+      ],
+      fair: [
+        'The doctor is kind and has four minutes. What you get is a word, a suggestion to come back, and the sense that he has said the same thing before lunch.',
+        'You go about something else entirely and it comes out sideways at the end of the appointment, and he sits back down.',
+      ],
+      poor: [
+        'There is one person in the district who could say what this is and they are not a doctor. What you get instead is a set of opinions from people who love you.',
+        'Nobody uses a word for it. There is a description — that you have not been yourself, that you are not eating — and the description does all the work a diagnosis would.',
+      ],
+      very_poor: [
+        'There is no name for it available to you. There is only the fact of it, and the way people have started to talk around you rather than to you.',
+        'The nearest person who would understand it as an illness is a long way off, in a place you have no reason to be going. It stays what it is.',
+      ],
+    }
+    const pool = MIND.has(illness.id)
+      ? (mindContext[healthcare] ?? mindContext.fair)
+      : (illnessContext[healthcare] ?? illnessContext.fair)
+    const illnessText = `${pickFrom(preferUnsaid(state, pool))} You are diagnosed with ${illness.name}.`
 
     const event = {
       id: `illness_${illness.id}_${state.age}`,
@@ -2342,14 +2394,23 @@ function checkIllnessRisk(state) {
             p.m += t.happinessEffect ?? 0
             if (onCredit) p.addFlag('borrowed_for_treatment')
             if (willSucceed) {
-              // The illness took `healthEffect` at diagnosis. Treatment gives
-              // most of it back and never more: recovering from a heart attack
-              // used to leave a character healthier than the morning before it,
-              // because the diagnosis cost nothing and the cure paid out.
-              p.h += Math.round(Math.abs(t.healthEffect ?? 0) * 0.85)
+              // Being ill costs health at diagnosis (see below) and a
+              // successful treatment gives that back — so recovering returns
+              // you to roughly where you were, minus the money, rather than
+              // leaving you better off than the morning before you fell ill.
+              // It must not give back MORE than was taken: the deduction and
+              // this figure are the same fraction of the same number.
+              p.h += Math.round(Math.abs(t.healthEffect ?? 0) * 0.35)
+              // A treatment that worked leaves a MANAGED condition, not an
+              // untreated one. `healthCeiling` charges an unmanaged condition
+              // more than twice what it charges a managed one, permanently, so
+              // leaving every successfully-treated illness unmanaged was a
+              // lifelong penalty for having been cured — and it took the
+              // Nigerian survivor median down about seven years.
+              p.manageCondition(illness.id, true)
               if (illness.survivorFlag) p.addFlag(illness.survivorFlag)
             } else {
-              p.h -= Math.round(Math.abs(t.healthEffect ?? 0) * 0.5)
+              p.h -= Math.round(Math.abs(t.healthEffect ?? 0) * 0.4)
               p.addFlag(illness.flag)
             }
           },
@@ -2371,9 +2432,14 @@ function checkIllnessRisk(state) {
     // engine diagnosed.
     const worst = Math.max(...illness.treatments.map(t => Math.abs(t.healthEffect ?? 0)), 8)
     const severity = worst >= 28 ? 'severe' : worst >= 15 ? 'moderate' : 'mild'
+    // 0.35, matching what a successful treatment gives back. The first pass
+    // took 0.7 here and paid 0.85 back, which double-counted the illness
+    // against the treatment and took Nigeria's survivor median from 58 to 45.
+    // The chronic condition this adds is the lasting cost; the acute hit is
+    // meant to be recoverable.
     updated = {
       ...updated,
-      stats: { ...updated.stats, health: clamp(updated.stats.health - Math.round(worst * 0.7), 0, 100) },
+      stats: { ...updated.stats, health: clamp(updated.stats.health - Math.round(worst * 0.35), 0, 100) },
       conditions: (updated.conditions ?? []).some(c => c.id === illness.id)
         ? updated.conditions
         : [...(updated.conditions ?? []), { id: illness.id, severity, diagnosedYear: updated.currentYear, managed: false }],

@@ -12,6 +12,54 @@ export const HEALTH_FLAGS = {
     notes: 'Set by the treatment choices in checkIllnessRisk.',
   },
 
+  widowed_young: {
+    weight: 'major',
+    category: 'relationships',
+    description: 'Widowed before fifty-two, usually with children at home and no pension — the commonest shape of the loss in most of the world for most of this period, and unreachable until the partner mortality hazard started following the country rather than a rich-world table.',
+    intent: 'both',
+    notes: 'Set by grief_widowed_young_arithmetic. Gates grief_widowed_young_remarriage_question.',
+  },
+
+  held_the_household: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Took whatever work there was inside a month of being widowed, because the arithmetic does not wait. People call it coping remarkably.',
+    intent: 'year_texture',
+    notes: 'Set by grief_widowed_young_arithmetic.',
+  },
+
+  returned_to_family: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Absorbed back into the family household after a bereavement — a relief, and the end of a household they had spent years making.',
+    intent: 'year_texture',
+    notes: 'Set by grief_widowed_young_arithmetic.',
+  },
+
+  grieved_out_loud: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Let the arrangements wait and took the weeks. It cost something material that they could name and choose not to.',
+    intent: 'year_texture',
+    notes: 'Set by grief_widowed_young_arithmetic.',
+  },
+
+  remarried_practically: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Remarried as an arrangement rather than a feeling, and found something in it after a few years that neither of them names.',
+    intent: 'year_texture',
+    notes: 'Set by grief_widowed_young_remarriage_question.',
+  },
+
+  did_not_remarry: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Refused the practical second marriage. The subject was raised twice more over a decade, more gently each time, and then stopped.',
+    intent: 'year_texture',
+    notes: 'Set by grief_widowed_young_remarriage_question.',
+  },
+
   widowed: {
     weight: 'major',
     category: 'loss',

@@ -2213,7 +2213,8 @@ const BASE_EVENTS = [
     // sentence false in its own event. The age is now the country's own
     // retirement age where there is one, and the text does not assert the
     // ending before the player has chosen it.
-    when: (G) => G.career !== null && G.age >= 60 && !G.flags.includes('retired'),
+    when: (G) => G.career !== null && !G.flags.includes('retired') &&
+      G.retirementAge != null && G.age >= G.retirementAge - 2,
     text: 'The question arrives as a form to sign rather than as a decision: how much longer, and on what terms. The people who left before you describe it in two completely different ways depending on which of them you ask.',
     context: null,
     choices: [
