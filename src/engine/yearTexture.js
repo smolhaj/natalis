@@ -8200,12 +8200,28 @@ function* textureCandidates(state, opts = {}) {
     'You tried to reduce the demand. The attempt was heard and partially successful. You are still deciding whether the something that left the room when the number dropped was worth the money.',
   ])]
 
-  if (F.has('india_tech_generation') && Math.random() < 0.25) yield [T.anchored, pick([
+  // `india_tech_generation` is set by the world event, which means "you were
+  // alive in India while this happened" — and this block reads it as "you were
+  // in it". A never-schooled village market trader was told she was the first
+  // in her family to work for a foreign company and to live in a suburb built
+  // for people like her.
+  const inTheBoom = F.has('india_tech_generation') &&
+    (state.career?.field === 'technology' || state.education?.level === 'university' ||
+     F.has('software_career') || F.has('call_centre_work'))
+  if (inTheBoom && Math.random() < 0.25) yield [T.anchored, pick([
     'Bangalore in the nineties: the MNC campuses, the call center buildings going up, the salary that was four times what your father earned in government service. The transformation had a specific postal code.',
     'The IT generation: the generation that made India legible to the world as a place of engineers and English and overnight shifts. You were inside this. Whether you are proud of it depends on what else it produced.',
     phase === 'midlife' || phase === 'late_life'
       ? 'You were the first person in your family to work for a foreign company, the first to live in a suburb built specifically for people like you, the first to have a salary denominated in rupees that translated cleanly into dollars. The firsts have accumulated. Their meaning is still being settled.'
       : 'The software corridor, the outsourcing economy, the generation of Indians who rewired global capital flows through their labour — you are one of them. The rewiring was real. The beneficiaries were not evenly distributed.',
+  ])]
+  // The other side of the same fact: most Indians were not in it, and watching
+  // it from outside is its own specific experience.
+  if (F.has('india_tech_generation') && !inTheBoom && Math.random() < 0.2) yield [T.anchored, pick([
+    'Somebody from the village went to Bangalore and the money started coming back, and within four years their mother had a concrete house and a particular way of not mentioning it.',
+    'The country is being described, in the newspapers and on the radio, as a place of engineers and English and overnight shifts. It is not a description of here. You are pleased about it anyway, in a complicated way.',
+    'The word for it is software and nobody you know can explain what it actually is. What is visible is the road being resurfaced on the way to the city, and the price of everything in the city.',
+    'Your cousin\'s son has a salary that would take you eleven years. He is twenty-three. Nobody in the family says the number out loud and everybody knows it.',
   ])]
   if (F.has('caa_protest_generation') && Math.random() < 0.22) yield [T.anchored, pick([
     'The Citizenship Amendment Act: the first time in India\'s secular constitutional history that religion was made an explicit criterion for citizenship. Shaheen Bagh: women on a road in Delhi, in winter, for a hundred days. Both facts belong to the same year.',

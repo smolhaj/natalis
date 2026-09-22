@@ -202,6 +202,11 @@ export const HOUSING_EVENTS = [
     when: (G) =>
       G.flags.has('mortgaged') &&
       (G.currentYear - (G.mem?.lcHomeYear ?? G.currentYear)) >= 24 &&
+      // "The last payment goes out on a Tuesday" fired while the property still
+      // carried 7,642 outstanding, and the life ended holding both `mortgaged`
+      // and `mortgage_cleared`. Elapsed years is not the same question as
+      // whether it is paid off.
+      !(G.assets?.properties ?? []).some(p => (p.mortgage ?? 0) > 0) &&
       !G.mem?.housingMortgageEnds,
     text: 'The last payment goes out on a Tuesday and nothing happens. No letter for six weeks, and then one that is mostly about data protection. You had assumed there would be a moment. What there is instead is a Tuesday, and a house that has been yours in every practical sense for twenty-five years and is now yours in the other sense as well.',
     choices: null,

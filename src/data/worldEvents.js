@@ -113,7 +113,25 @@ export const WORLD_EVENTS = [
     years: [2001, 2001],
     archetypes: 'all',
     countries: null,
-    narrative: 'In the morning, two planes hit the towers. By afternoon, a third hits the Pentagon and a fourth goes down in a Pennsylvania field. The tallest buildings in New York are gone. You watch the footage repeat on television. What follows — the security lines, the databases, the wars — will outlast everyone alive today.',
+    // One narrative for the planet, and it was written from an American
+    // living room: "The tallest buildings in New York are gone. You watch the
+    // footage repeat on television." It printed to a man who had lived in
+    // Tribeca since birth, within sight of the site, and to a Nigerian
+    // villager with no television. `narrative` takes a function of G, so it
+    // can reach everybody without reaching them identically.
+    narrative: (G) => {
+      const here = (G.currentCountry ?? G.character.country)?.name
+      if (here === 'United States') {
+        const nyc = /New York|Manhattan|Brooklyn|Bronx|Queens/i.test(G.place?.name ?? '')
+        return nyc
+          ? 'The sound is wrong before anything else is. Then the street fills with people walking north, all of them covered in the same grey, none of them running. The phones do not work. You walk home, however far home is, and the air smells like that for weeks afterwards and you will know that smell for the rest of your life.'
+          : 'Someone puts a television on in a room that does not normally have one on. By the afternoon every road out of every city is full and nobody can say what they are driving away from. You know somebody who knows somebody. Everyone does, by the end of the week.'
+      }
+      if (G.ruralUrban === 'rural' && !['wealthy_west', 'wealthy_east'].includes((G.currentCountry ?? G.character.country)?.archetype)) {
+        return 'It arrives as a thing somebody heard. By the second day there is a number attached and by the third there is a name, and a man with a radio says it again more slowly for the people at the back. Nobody here has been to America. Everybody here has an opinion by Friday, and the opinions do not all run the same way.'
+      }
+      return 'You watch it on a screen with other people watching it on a screen. The buildings are in a city you have seen in films. What follows over the next two years — the airports, the queues, the word terrorism entering ordinary conversation, the war that is announced as though it were a consequence — reaches your country too, and nobody asked.'
+    },
     context: 'On September 11, 2001, al-Qaeda hijackers flew four commercial aircraft into the World Trade Center, the Pentagon, and a Pennsylvania field, killing 2,977 people. The attacks triggered the US-led "War on Terror," the invasion of Afghanistan in 2001 and Iraq in 2003, and a permanent transformation of global airport security, surveillance law, and the public experience of civil liberties.',
     effect: (p) => { p.m -= 5; },
     addFlags: ['post_9_11_world'],

@@ -906,10 +906,6 @@ export function buildG(state) {
     // which decade the character is standing in.
     money: inTodayMoney(state.money ?? 0, liveCountry(state), state.currentYear),
     moneyNominal: state.money ?? 0,
-    // Guards that ask whether the character owns a car or a house had nothing
-    // to read, so "Your family is worried about your driving" reached people
-    // who never owned one.
-    assets: state.assets ?? { properties: [], vehicles: [] },
     debt: state.debt ?? 0,
     creditScore: state.creditScore ?? 700,
     fitness: state.fitness ?? 50,
@@ -1873,7 +1869,25 @@ function tickSiblings(state) {
     if (sibAge > 80) deathProb = 0.06 + (sibAge - 80) * 0.01
     else if (sibAge > 65) deathProb = 0.015
     if (chance(deathProb)) {
-      log.push({ age: state.age, text: `Your sibling ${sib.name} passes away.`, isKey: true, isDeath: true })
+      // One flat line, against three authored variants for a parent. A sibling
+      // is the person who remembers the same childhood, and the whole of what
+      // is lost is that there is now nobody who does.
+      const q = sib.relationshipQuality ?? 60
+      const sibLine = q >= 70
+        ? pickFrom([
+            `${sib.name} dies at ${sibAge}. You spoke every week or you spoke twice a year, and either way there is now nobody alive who remembers the house the way you both remembered it.`,
+            `${sib.name} dies at ${sibAge}. At the funeral you are the one people come to, which you had not expected and do not want.`,
+          ])
+        : q >= 35
+          ? pickFrom([
+              `${sib.name} dies at ${sibAge}. You had been meaning to ring. That is the whole of it and it is not a small thing.`,
+              `${sib.name} dies at ${sibAge}. You go, and the people there are half strangers, and you find you know exactly which of them is which.`,
+            ])
+          : pickFrom([
+              `${sib.name} dies at ${sibAge}. Somebody rings to tell you, and the fact that it had to be somebody else is the part you think about.`,
+              `${sib.name} dies at ${sibAge}. You had not spoken in years and you had both decided that was fine, and now only one of you still has that decision.`,
+            ])
+      log.push({ age: state.age, text: sibLine, isKey: true, isDeath: true })
       return { ...sib, alive: false }
     }
     const drift = (60 - sib.relationshipQuality) * 0.01
