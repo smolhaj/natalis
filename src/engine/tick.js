@@ -868,13 +868,19 @@ export function buildG(state) {
     currentYear,
     career: state.career,
     education: state.education,
-    partner: state.partner,
     children: state.children,
     mem: state.mem ?? {},
     criminalRecord: state.criminalRecord ?? [],
     inPrison: state.inPrison,
     wanted: state.wanted ?? false,
     prisonSentence: state.prisonSentence ?? 0,
+    // 304 guards in the corpus read `G.partner` bare and every one of them means
+    // "you have a partner". Nine read `.alive`. tickPartner keeps the dead
+    // partner on state — the grief and memory layers need the name — so the
+    // bare 304 were all quietly firing for widows. The default is the living
+    // partner; the dead one is still here under its own name.
+    partner: state.partner?.alive === false ? null : state.partner,
+    deceasedPartner: state.partner?.alive === false ? state.partner : null,
     // State stores the nominal amount; G exposes it in a stable unit. The ~76
     // guards in the corpus that read `G.money > 5000` or `G.money < 400` were
     // written as statements about comfort and hardship, and dividing here is

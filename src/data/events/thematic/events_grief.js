@@ -161,14 +161,29 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_partner_death',
-    phase: 'midlife',
-    weight: 2,
+    // `midlife` is 30-49 and the declared phase overrules the age guard, while
+    // tickPartner only kills a partner from 65. The first-grief event of the
+    // partner-death arc could therefore almost never fire for a partner who
+    // died of old age, which is most of them — which is a large part of why a
+    // widowing read as silent.
+    phase: null,
+    // The year a partner dies is not a year to leave to the draw. At weight 8
+    // this reached 1 widowing in 33, against a guard that was true in all of
+    // them, because a widow of seventy is competing with eight thousand
+    // events for the few years she has left.
+    weight: 999,
+    // `G.partner` is the LIVING partner; the one who has died is
+    // `G.deceasedPartner`, so that the 304 guards written as `G.partner` mean
+    // what their authors meant.
     when: (G) =>
-      G.partner &&
-      G.partner.alive === false &&
+      G.deceasedPartner &&
       !G.mem.griefPartnerFirst &&
       G.age >= 35,
-    text: 'They are gone. You are in the hospital, or you are at home, or you are in the car in the hospital car park. The specific arrangement of the world without them is something you cannot yet picture. You understood, abstractly, that this day existed in the future. The abstract is now the present tense.',
+    // "You are in the hospital, or you are at home, or you are in the car in
+    // the hospital car park" is the game declining to say which. It knows how
+    // long they were together, which is the thing that is actually different
+    // between one of these and another.
+    text: (G) => `They are gone.${(G.deceasedPartner?.years ?? 0) >= 30 ? ` ${G.deceasedPartner.years} years.` : ''} The specific arrangement of the world without them is something you cannot yet picture. You understood, abstractly, that this day existed in the future. The abstract is now the present tense.`,
     choices: [
       {
         text: 'Call someone — you should not be alone right now',
@@ -188,8 +203,12 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_partner_first_night',
-    phase: 'midlife',
-    weight: 3,
+    // Gated on mem.griefPartnerFirst, which grief_partner_death sets — and
+    // that fires whenever the partner dies, which is usually after 65.
+    // `midlife` caps this at 49, so the whole follow-through was out of
+    // reach of its own trigger. The age guard already says 35+.
+    phase: null,
+    weight: 40,
     when: (G) =>
       G.mem.griefPartnerFirst &&
       !G.mem.griefPartnerNight &&
@@ -201,8 +220,12 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_partner_wrong_words',
-    phase: 'midlife',
-    weight: 3,
+    // Gated on mem.griefPartnerFirst, which grief_partner_death sets — and
+    // that fires whenever the partner dies, which is usually after 65.
+    // `midlife` caps this at 49, so the whole follow-through was out of
+    // reach of its own trigger. The age guard already says 35+.
+    phase: null,
+    weight: 40,
     when: (G) =>
       G.mem.griefPartnerFirst &&
       !G.mem.griefPartnerWrongWords &&
@@ -214,8 +237,12 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_partner_in_laws',
-    phase: 'midlife',
-    weight: 2,
+    // Gated on mem.griefPartnerFirst, which grief_partner_death sets — and
+    // that fires whenever the partner dies, which is usually after 65.
+    // `midlife` caps this at 49, so the whole follow-through was out of
+    // reach of its own trigger. The age guard already says 35+.
+    phase: null,
+    weight: 40,
     when: (G) =>
       G.mem.griefPartnerFirst &&
       !G.mem.griefPartnerInLaws &&
