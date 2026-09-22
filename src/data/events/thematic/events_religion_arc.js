@@ -225,7 +225,7 @@ export const RELIGION_ARC_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.flags.includes('left_religion') && !G.mem?.leader_betrayal,
-    text: 'The religious leader you trusted is found to have done something — financial, sexual, or both. The institution closes ranks around him. The investigation is slow and the apology, when it comes, is insufficient. You are left with the question of whether the institution and the faith are the same thing, and whether you can separate them.',
+    text: 'The religious leader you trusted is found to have been taking money. It is not a large amount and that is somehow the worst detail. The institution closes ranks around him. The investigation is slow and the apology, when it comes, is insufficient. You are left with the question of whether the institution and the faith are the same thing, and whether you can separate them.',
     choices: [
       { text: 'Leave the institution but not the faith', tag: null, outcome: 'You find a smaller congregation. Or you practice at home. The faith survives the institution, barely.', effect: (p) => { p.m -= 8; p.r += 8; p.setMem('leader_betrayal', true) } },
       { text: 'Leave both — they cannot be separated', tag: null, outcome: 'You stop. The question of what you believe is still open. You will return to it, differently.', effect: (p) => { p.m -= 12; p.e += 5; p.addFlag('left_religion'); p.setMem('leader_betrayal', true) } },

@@ -440,7 +440,7 @@ export const EVENTS_SONDER_7 = [
     when: (G) =>
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.s7SoundInstrument,
-    text: 'You played once. It might have been piano, or guitar, or something with strings or keys. You stopped when you got busy — when the lessons ended, or when you moved, or when you had children, or when the instrument just stopped being a thing you did. You still know how to hold it. Your hands know where to go. You play occasionally, badly, and the knowledge is still there even though you have not maintained it. This is how skills keep you: they degrade slowly enough to pretend they\'re intact.',
+    text: 'You played once. The instrument is in a cupboard at the top of the stairs, in a case with a broken catch. You stopped when you got busy — when the lessons ended, or when you moved, or when you had children, or when the instrument just stopped being a thing you did. You still know how to hold it. Your hands know where to go. You play occasionally, badly, and the knowledge is still there even though you have not maintained it. This is how skills keep you: they degrade slowly enough to pretend they\'re intact.',
     choices: null,
     effect: (p) => { p.r += 3; p.m -= 1; p.setMem('s7SoundInstrument', true) },
   },

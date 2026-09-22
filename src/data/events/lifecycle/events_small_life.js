@@ -2,6 +2,8 @@
 // formative teachers, small triumphs, stranger kindness, a first place of your own.
 // Every person here gets a name. That name lives in G.mem and comes back.
 
+import { pickFrom } from '../../../utils/random'
+
 export const SMALL_LIFE_EVENTS = [
 
   // ── CHILDHOOD FRIENDSHIP ─────────────────────────────────────────────────────
@@ -518,7 +520,11 @@ export const SMALL_LIFE_EVENTS = [
     when: (G) =>
       !G.mem?.neighbourFence &&
       G.age >= 32 && G.age <= 58,
-    text: 'It starts with the fence, or the car, or the music at eleven at night. These things have histories. You have been tolerant for two years. This time you knock.',
+    text: pickFrom([
+      'It starts with the fence, which has been leaning into your side for two years and is now definitively on it. You have been tolerant. This time you knock.',
+      'It starts with the music at eleven at night, three nights running, and the particular bass note that comes up through the floor. You have been tolerant for two years. This time you knock.',
+      'It starts with where they park, which is not a thing you ever imagined caring about, and which you now care about with a clarity that alarms you. This time you knock.',
+    ]),
     choices: [
       {
         text: 'Speak plainly',

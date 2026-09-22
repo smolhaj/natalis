@@ -90,7 +90,14 @@ export const DEMENTIA_EVENTS = [
       G.age >= 40 && G.age <= 65 &&
       !G.flags.has('dementia_parent') &&
       !G.mem?.demParentSignsFired,
-    text: 'Your mother — or your father — calls you by your sibling\'s name. This has happened before, occasionally, and is not unusual. But then you notice: the story she has already told is told again, beginning from the same place, with the same pauses, as if it is new. You mention this to your sibling. Your sibling says they have noticed too. You do not yet say the word.',
+    // "Your mother — or your father —" is the game declining to say which, in a
+    // guard that already knows: it requires one of them to be alive.
+    text: (G) => {
+      const mum = G.parents?.mother?.alive
+      const who = mum ? (G.parents.mother.name ?? 'Your mother') : (G.parents?.father?.name ?? 'Your father')
+      const they = mum ? 'she' : 'he'
+      return `${who} calls you by your sibling's name. This has happened before, occasionally, and is not unusual. But then you notice: the story ${they} has already told is told again, beginning from the same place, with the same pauses, as if it is new. You mention this to your sibling. Your sibling says they have noticed too. You do not yet say the word.`
+    },
     choices: null,
     effect: (p) => { p.m -= 8; p.addFlag('dementia_parent'); p.setMem('demParentSignsFired', true) },
   },

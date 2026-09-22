@@ -384,7 +384,7 @@ export const ROMANCE_ARC_EVENTS = [
       G.age >= 40 && G.age <= 58 &&
       !G.mem?.romancePartnerIllnessEarly,
     text: (G) =>
-      `${G.partner?.name ?? 'Your partner'} receives a diagnosis that is not immediately terminal but is not minor. The next several months involve appointments and waiting rooms and the competence that crisis requires. The marriage becomes a different kind of partnership — practical, close, more honest than it has been in a while.`,
+      `${G.partner?.name ?? 'Your partner'} receives a diagnosis with a name you have to look up and a number attached to it that nobody says out loud. The next several months involve appointments and waiting rooms and the competence that crisis requires. The marriage becomes a different kind of partnership — practical, close, more honest than it has been in a while.`,
     choices: [
       {
         text: 'Step fully into the caretaking role',

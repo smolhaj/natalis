@@ -906,6 +906,10 @@ export function buildG(state) {
     // which decade the character is standing in.
     money: inTodayMoney(state.money ?? 0, liveCountry(state), state.currentYear),
     moneyNominal: state.money ?? 0,
+    // Guards that ask whether the character owns a car or a house had nothing
+    // to read, so "Your family is worried about your driving" reached people
+    // who never owned one.
+    assets: state.assets ?? { properties: [], vehicles: [] },
     debt: state.debt ?? 0,
     creditScore: state.creditScore ?? 700,
     fitness: state.fitness ?? 50,

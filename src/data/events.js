@@ -1715,8 +1715,15 @@ const BASE_EVENTS = [
     id: 'ya_military_service',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.stats.health >= 50 && !G.flags.includes('refugee'),
-    text: 'Military service — required or voluntary — is in front of you.',
+    // No country, no age, no gender. "Military service — required or voluntary"
+    // is the game declining to say which, in a question that is settled by
+    // where you were born and what year it is.
+    when: (G) => G.stats.health >= 50 && !G.flags.includes('refugee') &&
+      G.age >= 18 && G.age <= 24 && !G.mem.militaryService &&
+      (CONSCRIPTS(G) || G.character.gender === 'male' || G.currentYear >= 1980),
+    text: (G) => CONSCRIPTS(G)
+      ? 'The letter comes because it comes. Everybody born in your year gets one and everybody knows roughly when. There is a medical, and a list, and a date, and the date is not negotiable in any way that anybody you know has managed.'
+      : 'There is a recruiting office on the road into town and a poster in the window that has been there for years. Nobody is making you. Somebody you were at school with went last year and came back at Christmas looking older and very pleased with himself.',
     context: null,
     choices: [
       {
@@ -5854,7 +5861,9 @@ const BASE_EVENTS = [
         return 'The dot-com bubble has burst spectacularly. Your sector — so recently untouchable — is haemorrhaging jobs. The whole floor has been called to a "brief update" meeting.'
       if (G.character.country.archetype === 'post_soviet' && G.currentYear >= 1991 && G.currentYear <= 1999)
         return 'The post-Soviet economic collapse is hitting your sector hard. State enterprises are dissolving. Entire industries have evaporated in a year. Payroll has not arrived in three months.'
-      return 'A sector-wide downturn has triggered a wave of layoffs. The industry press is calling it a correction. Your mortgage does not care what the press calls it.'
+      return (G.flags.includes('mortgaged')
+        ? 'A sector-wide downturn has triggered a wave of layoffs. The industry press is calling it a correction. Your mortgage does not care what the press calls it.'
+        : 'A sector-wide downturn has triggered a wave of layoffs. The industry press is calling it a correction. The rent is due on the same day it was always due.')
     },
     choices: [
       { text: 'Volunteer for the redundancy package', tag: null, outcome: 'The payout is reasonable. You take it and use the space to think. The uncertainty is the price.', effect: (p) => { p.mo += 2000; p.m -= 10; p.setMem('industry_layoffs', true); }, inject: null },
@@ -6959,7 +6968,12 @@ const BASE_EVENTS = [
       G.currentYear >= 2022 && G.currentYear <= 2025 &&
       G.age >= 16 &&
       !G.mem?.ruUkraineInvasion,
-    text: 'February 24, 2022. You wake to the news that Russia has launched a full-scale invasion of Ukraine. The television uses the word "операция" — operation. The word war is legally banned within days. In your phone, in private chats, in careful conversations with people you trust, the word that is not permitted is used. The anti-war protests in Moscow and Petersburg are broken up within hours; three thousand arrested in the first week. The borders to Georgia, Finland, Kazakhstan are at capacity with Russians leaving.',
+    // "You wake to the news" is one morning. Left running to 2025 it narrated
+    // the invasion in the present tense in 2024, two years after the world
+    // event had already narrated it to the same character.
+    text: (G) => G.currentYear <= 2022
+      ? 'February 24, 2022. You wake to the news that Russia has launched a full-scale invasion of Ukraine. The television uses the word "операция" — operation. The word war is legally banned within days. In your phone, in private chats, in careful conversations with people you trust, the word that is not permitted is used. The anti-war protests in Moscow and Petersburg are broken up within hours; three thousand arrested in the first week. The borders to Georgia, Finland, Kazakhstan are at capacity with Russians leaving.'
+      : 'It has been going on long enough now to have a shape. The television still says operation. The word war is still legally an offence to use about it, and you have learned, without deciding to, which of the people you know you can say it in front of.',
     choices: [
       {
         text: 'You leave. You are not going to live in a country doing this.',
@@ -8373,7 +8387,9 @@ const BASE_EVENTS = [
     id: 'late_life_driving_concern',
     phase: 'late_life',
     weight: 5,
-    when: (G) => G.age >= 78 && !G.mem.driving_concern,
+    // Fired to characters whose `assets.vehicles` is empty and always has been.
+    when: (G) => G.age >= 78 && !G.mem.driving_concern &&
+      ((G.assets?.vehicles?.length ?? 0) > 0 || G.flags.includes('has_licence')),
     text: 'Your children have been having a conversation without you, you suspect. Small incidents — a dent on the bumper you don\'t remember, a near-miss on the highway. They want to talk about the driving.',
     isKey: true,
     choices: [
@@ -8609,7 +8625,9 @@ const BASE_EVENTS = [
     id: 'rel_children_disagreement_partner',
     phase: null,
     weight: 3,
-    when: (G) => G.partner !== null && G.age >= 26 && G.age <= 38 && !G.mem.children_disagreement,
+    // Fired to a Nigerian father of five: Folake, Joke, Ronke, Ekene and
+    // Ikenna. The guard never looked at whether the question was still open.
+    when: (G) => G.partner !== null && G.children.length === 0 && G.age >= 26 && G.age <= 38 && !G.mem.children_disagreement,
     text: 'One of you wants children. The other is not sure, or is sure in a different direction. This has come up before and been deferred. It is no longer deferrable. The conversation that happens is the longest and most honest one you have had in years. It does not resolve cleanly.',
     choices: [
       { text: 'Commit to having children — you both deserve certainty', tag: null, outcome: 'The decision is made together, imperfectly. It is a real decision and not everyone gets to make it clearly.', effect: (p) => { p.m += 5; p.r += 8; p.addFlag('family_planned'); p.setMem('children_disagreement', true) } },
@@ -8699,7 +8717,13 @@ const BASE_EVENTS = [
     id: 'lawsuit_neighbor_dispute',
     phase: null,
     weight: 4,
-    when: (G) => G.age >= 28 && G.flags.includes('homeowner') && !G.mem.lawsuit_neighbor,
+    // A civil suit over a boundary line, with a contradictory surveyor's report
+    // and a law firm's letter, fired in rural Benue in 2056 and rural Siberia in
+    // 2065. A registered title and a court that hears boundary disputes are two
+    // more assumptions than the guard was making.
+    when: (G) => G.age >= 28 && G.flags.includes('homeowner') && !G.flags.includes('home_without_a_deed') &&
+      ['wealthy_west', 'wealthy_east', 'post_soviet'].includes(G.currentCountry?.archetype ?? G.character.country.archetype) &&
+      G.ruralUrban !== 'rural' && !G.mem.lawsuit_neighbor,
     text: 'The fence dispute with next door has escalated beyond neighborly conversation. They\'ve filed a civil suit over a boundary line. The surveyor\'s report is contradictory.',
     choices: [
       { text: 'Mediate — you don\'t want to be at war with your neighbor', tag: null, outcome: 'Three sessions. An agreement. It costs both of you less and you can still wave across the fence.', effect: (p) => { p.mo -= 2000; p.m += 3; p.karma += 3; p.setMem('lawsuit_neighbor', true) } },
@@ -8887,7 +8911,7 @@ const BASE_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => (G.friends ?? []).length > 0 && G.stats.wealth < 55,
-    text: 'A friend announces something large — a promotion, a house, a baby, a book deal. The congratulations you offer are genuine and also cost you something. You sit with that for a while.',
+    text: 'A friend announces a promotion you did not know they were up for. The congratulations you offer are genuine and also cost you something. You sit with that for a while.',
     choices: [
       { text: 'Be genuinely happy for them', tag: null, outcome: 'The envy fades. The friendship deepens. You are proud of yourself.', effect: (p) => { p.m += 5; p.karma += 5 } },
       { text: 'Smile, then go home and feel the envy fully', tag: null, outcome: 'Honesty with yourself about this turns out to be useful.', effect: (p) => { p.m -= 4; p.r += 3; p.e += 3 } },
@@ -9043,6 +9067,36 @@ import { wasSovietRepublic, malariaEndemic, institutionsAssumed } from './histor
 
 // Which parent is still alive, and the name to use for them. `effect` receives
 // only `p`, so the choice of which parent dies has to be made from `p._state`.
+// Where and when military service was compulsory rather than a choice. Not
+// exhaustive — a country not listed is treated as volunteer, which is the
+// safer wrong answer — but it covers the roster's large conscript systems and
+// the years they ran. Women are conscripted in only a handful of them.
+const CONSCRIPTION = {
+  'South Korea': [1957, 2100], 'Israel': [1948, 2100], 'Russia': [1918, 2100],
+  'Ukraine': [1991, 2100], 'Belarus': [1991, 2100], 'Turkey': [1927, 2100],
+  'Greece': [1914, 2100], 'Egypt': [1955, 2100], 'Iran': [1925, 2100],
+  'Vietnam': [1954, 2100], 'North Korea': [1948, 2100], 'Cuba': [1963, 2100],
+  'Brazil': [1908, 2100], 'Mexico': [1940, 2100], 'Colombia': [1945, 2100],
+  'Switzerland': [1848, 2100], 'Austria': [1955, 2100], 'Finland': [1918, 2100],
+  'Norway': [1897, 2100], 'Denmark': [1849, 2100], 'Sweden': [1901, 2010],
+  'Germany': [1935, 2011], 'France': [1905, 1997], 'Italy': [1861, 2005],
+  'Spain': [1912, 2001], 'Poland': [1918, 2009], 'Portugal': [1911, 2004],
+  'Netherlands': [1898, 1997], 'Czech Republic': [1993, 2004],
+  'Singapore': [1967, 2100], 'Taiwan': [1949, 2100], 'Thailand': [1905, 2100],
+  'Eritrea': [1995, 2100], 'Algeria': [1969, 2100], 'Morocco': [1966, 2006],
+  'Tunisia': [1957, 2100], 'Syria': [1946, 2100], 'Sudan': [1992, 2100],
+  'Angola': [1975, 2100], 'Mozambique': [1975, 2100], 'Bolivia': [1904, 2100],
+  'Venezuela': [1936, 2100], 'United States': [1917, 1973],
+}
+// The ones that conscript women too.
+const CONSCRIPTS_WOMEN = new Set(['Israel', 'Eritrea', 'North Korea', 'Norway', 'Sweden'])
+const CONSCRIPTS = (G) => {
+  const name = (G.currentCountry ?? G.character.country)?.name
+  const span = CONSCRIPTION[name]
+  if (!span || G.currentYear < span[0] || G.currentYear > span[1]) return false
+  return G.character.gender === 'male' || CONSCRIPTS_WOMEN.has(name)
+}
+
 const _livingParents = (o) => ['father', 'mother'].filter(k => o?.parents?.[k]?.alive)
 const _takeAParent = (p) => {
   const living = _livingParents(p._state)
