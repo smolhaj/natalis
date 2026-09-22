@@ -33,13 +33,38 @@ function createProxy(state) {
   }
 }
 
+/**
+ * Diminishing returns for the stats that only ever go up.
+ *
+ * Health has a ceiling it drifts towards, and money, karma and fame all have
+ * events that take them away. Smarts and charisma have neither: a hundred
+ * events add +3 here and +6 there across seventy years and nothing subtracts,
+ * so both walked to 100 in any life long enough to contain them. Measured over
+ * 150 whole lives, smarts had a median of 96 at death and 58% of characters
+ * ended at 90 or above — which makes "Brilliant" a description of nearly
+ * everyone, and quietly opens every `stats.smarts >= 70` guard in the corpus to
+ * the entire population.
+ *
+ * A gain is scaled by the headroom left above it, so the first ten points cost
+ * what they always did and the last ten are most of a life's work. Losses are
+ * never scaled: a stroke or a decade of drinking takes what it takes.
+ */
+export function earnedGain(current, delta) {
+  if (delta <= 0) return delta
+  const headroom = Math.max(0, 100 - current) / 100
+  return delta * (0.25 + 0.75 * headroom)
+}
+
 function applyProxy(state, proxy) {
   const stats = {
     health:    clamp(state.stats.health    + proxy.h,  0, 100),
     happiness: clamp(state.stats.happiness + proxy.m,  0, 100),
     wealth:    clamp(state.stats.wealth    + proxy.w,  0, 100),
-    smarts:    clamp(state.stats.smarts    + proxy.e,  0, 100),
-    charisma:  clamp(state.stats.charisma  + proxy.s,  0, 100),
+    // Rounded, because a scaled gain is fractional and the interface prints
+    // the number. Rounding each application rather than at display keeps the
+    // stored value and the shown value the same thing.
+    smarts:    clamp(Math.round(state.stats.smarts   + earnedGain(state.stats.smarts, proxy.e)),  0, 100),
+    charisma:  clamp(Math.round(state.stats.charisma + earnedGain(state.stats.charisma, proxy.s)), 0, 100),
     looks:     clamp(state.stats.looks     + proxy.lo, 0, 100),
   }
   const regret  = clamp(state.regret + proxy.r, 0, 100)
@@ -218,7 +243,7 @@ function buildEffectProxy(state) {
   proxy.makeFriend = (quality = 65) => {
     const c = state.character.country
     const gender = chance(0.5) ? 'male' : 'female'
-    const name = `${pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)} ${pickFrom(c.surnames)}`
+    const name = personName(c, gender, state)
     if (!proxy._newFriends) proxy._newFriends = []
     proxy._newFriends.push({ name, alive: true, relationshipQuality: clamp(quality + randomBetween(-10, 10), 20, 95) })
   }
@@ -317,7 +342,7 @@ function buildEffectProxy(state) {
     const gender = overrides.gender ?? preferredGender
     const nameGender = gender === 'non-binary' ? pickFrom(['male', 'female']) : gender
     const c = state.character.country
-    const name = `${pickFrom(nameGender === 'male' ? c.namePool.male : c.namePool.female)} ${pickFrom(c.surnames)}`
+    const name = personName(c, nameGender, state)
     const age = clamp(randomBetween(Math.max(18, state.age - 5), state.age + 5), 16, 60)
     proxy._newPartner = {
       name, gender, birthGender: gender, age,
@@ -342,7 +367,7 @@ function buildEffectProxy(state) {
 function genFriendName(state) {
   const c = state.character.country
   const gender = chance(0.5) ? 'male' : 'female'
-  return `${pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)} ${pickFrom(c.surnames)}`
+  return personName(c, gender, state)
 }
 
 function resolveProxyExtras(state, proxy) {
@@ -1239,6 +1264,16 @@ export function getAvailableCareers(state) {
   })
 }
 
+/**
+ * The job title as this character would be described. A level may declare
+ * `titleFemale` where English has a distinct feminine form that was in ordinary
+ * use for the period; without it the title is the title. The obituary read
+ * "She spent the working years as a Foreman", which no obituary has ever said.
+ */
+function careerTitle(level, state) {
+  return state?.character?.gender === 'female' && level.titleFemale ? level.titleFemale : level.title
+}
+
 export function enterCareer(state, careerId) {
   const career = CAREERS.find(c => c.id === careerId)
   if (!career) return state
@@ -1265,7 +1300,7 @@ export function enterCareer(state, careerId) {
   const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0
   const salary = Math.round(baseSalary * salaryMult)
   const newCareer = {
-    id: career.id, title: level.title, level: 0, salary,
+    id: career.id, title: careerTitle(level, state), level: 0, salary,
     field: career.field, yearsInRole: 0, performance: 70,
     partTime: career.partTime ?? false,
     promotionChance: career.promotionChance ?? 0.10,
@@ -1295,7 +1330,7 @@ export function checkPromotion(state) {
   const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
   const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0
   const salary = Math.round(randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1]) * salaryMult)
-  const career = { ...state.career, level: nextIdx, title: newLevel.title, salary, yearsInRole: 0 }
+  const career = { ...state.career, level: nextIdx, title: careerTitle(newLevel, state), salary, yearsInRole: 0 }
   const log = [...state.log, { age: state.age, text: `You are promoted to ${newLevel.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career, log }
 }
@@ -2054,7 +2089,7 @@ export function tick(state) {
     if (s.mem?.pregnancyYear === undefined) {
       const cGender = chance(0.5) ? 'male' : 'female'
       const c = s.character?.country
-      const childName = c ? `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${s.character.surname}` : 'Baby'
+      const childName = c ? personName(c, cGender, s, { surname: s.character.surname }) : 'Baby'
       s.mem = { ...(s.mem ?? {}), pregnancyYear: s.age - 1, pendingChild: { name: childName, gender: cGender, traits: pickTraits(CHILD_TRAITS) } }
     }
     // Birth fires when age >= pregnancyYear + 2 (one year of pregnancy events, then birth)
@@ -2076,7 +2111,7 @@ export function tick(state) {
       const childData = pc ?? (() => {
         const cg = chance(0.5) ? 'male' : 'female'
         const cc = s.character?.country
-        const cn = cc ? `${pickFrom(cg === 'male' ? cc.namePool.male : cc.namePool.female)} ${s.character.surname}` : 'Baby'
+        const cn = cc ? personName(cc, cg, s, { surname: s.character.surname }) : 'Baby'
         return { name: cn, gender: cg, traits: pickTraits(CHILD_TRAITS) }
       })()
 
@@ -2921,3 +2956,4 @@ export function pickChoiceAutomatically(event, G) {
 
 // Internal functions needed by playerActions.js
 export { buildEffectProxy, applyProxy, resolveProxyExtras }
+import { personName } from './names'

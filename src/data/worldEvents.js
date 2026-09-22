@@ -334,7 +334,7 @@ export const WORLD_EVENTS = [
     context: 'HIV/AIDS spread primarily through heterosexual transmission in sub-Saharan Africa from the 1970s. By 2000, the region held 70% of global HIV cases with 10% of world population. Zimbabwe peaked at 25% adult prevalence; Botswana at 37%. Life expectancy in several Southern African countries fell 15–20 years between 1990 and 2005. Antiretroviral therapy, available in wealthy countries after 1996, was largely inaccessible in Africa until the early 2000s. PEPFAR, the US programme launched in 2003, eventually funded treatment for millions. The epidemic created a generation of AIDS orphans estimated at 11 million by 2006.',
     effect: (p) => { p.h -= 10; p.m -= 12; p.addFlag('aids_generation'); },
     addFlags: ['aids_generation'],
-    minAge: 0,
+    minAge: 12,
   },
   {
     id: 'khmer_rouge',
@@ -1088,7 +1088,7 @@ export const WORLD_EVENTS = [
     years: [1976, 1985],
     archetypes: ['wealthy_gulf'],
     countries: null,
-    narrative: 'The money arrives faster than the infrastructure to spend it. A country that had no paved roads in 1960 builds a six-lane highway to a city that is still mostly construction sites. Your father remembers fishing. Your children will not know what that word means in this context.',
+    narrative: 'The money arrives faster than the infrastructure to spend it. A country that had no paved roads in 1960 builds a six-lane highway to a city that is still mostly construction sites. The older men in the family remember fishing, and say so often. The children growing up now will not know what that word means in this context.',
     context: 'The Gulf oil boom accelerated dramatically after the 1973 embargo quadrupled oil prices. Saudi Arabia, Kuwait, the UAE, and Qatar transformed from subsistence fishing and pearl-diving economies to among the world\'s wealthiest states per capita within a generation. The transformation was extraordinarily rapid: populations moved from tents to air-conditioned apartments in a decade. Millions of migrant workers — from South Asia, Egypt, and the Philippines — were imported under the kafala sponsorship system to build the infrastructure. Traditional family structures, gender roles, and relationships to land and labour were reorganised by oil wealth within a single lifetime.',
     effect: (p) => { p.w += 15; p.e += 3; p.addFlag('oil_boom_generation'); },
     addFlags: ['oil_boom_generation'],

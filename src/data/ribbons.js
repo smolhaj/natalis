@@ -741,7 +741,12 @@ export const RIBBONS = [
     id: 'the_aids_witness',
     name: 'The Lost Generation',
     description: 'You watched your friends die one by one from something that had no name, then a name, then a treatment that arrived too late for some of them.',
-    condition: (G) => G.flags.includes('aids_crisis_generation') || G.flags.includes('aids_generation'),
+    // Was awarded to people born in 1991 and 1993, who were toddlers when the
+    // flag was set. The belt-and-braces birth-year floor is here as well as on
+    // the world event because a ribbon is the last thing a player reads and
+    // there is no recovering from it being wrong.
+    condition: (G) => (G.flags.includes('aids_crisis_generation') || G.flags.includes('aids_generation')) &&
+      G.character.birthYear <= 1980,
     priority: 85,
     color: 'purple',
   },

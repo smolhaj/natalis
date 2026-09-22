@@ -5,6 +5,7 @@ import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/r
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PHASE_ENTRY_EVENTS } from '../data/events/lifecycle/events_phase_entries'
 import { religionFor } from '../data/identity.js'
+import { pickUnusedName } from './names'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
 // Extends Set with Array.prototype.includes as an alias for has(), so existing
@@ -228,13 +229,24 @@ export function deriveInitialStats(char) {
   return { ...char.initialStats }
 }
 
-export function deriveInitialSiblings(char) {
+/**
+ * @param {object} char
+ * @param {object} [parents]  so a sister is not given her own mother's name.
+ *   The two derive functions ran independently and 13% of families came out of
+ *   it with a mother and a daughter sharing a first name.
+ */
+export function deriveInitialSiblings(char, parents) {
   const count = Math.min(Math.max(0, char.familySize - 1), 5)
   const c = char.country
   const baseQ = { secure: 78, stable: 65, struggling: 50, unstable: 32 }[char.familyStability] ?? 55
+  const used = new Set([String(char.firstName ?? '').toLowerCase()])
+  for (const p of Object.values(parents ?? {})) {
+    if (p?.name) used.add(String(p.name).split(' ')[0].toLowerCase())
+  }
   return Array.from({ length: count }, () => {
     const gender = chance(0.5) ? 'male' : 'female'
-    const firstName = pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)
+    const firstName = pickUnusedName(gender === 'male' ? c.namePool.male : c.namePool.female, used)
+    used.add(String(firstName).toLowerCase())
     return {
       name: `${firstName} ${char.surname}`,
       gender,
@@ -650,8 +662,10 @@ function assignParentOccupation(wealthTier, archetype, birthYear, gender, family
 export function deriveInitialParents(char) {
   const { country, familyStability, wealthTier, birthYear, surname } = char
   const arch = country.archetype
-  const motherFirst = pickFrom(country.namePool.female)
-  const fatherFirst = pickFrom(country.namePool.male)
+  const taken = new Set([String(char.firstName ?? '').toLowerCase()])
+  const motherFirst = pickUnusedName(country.namePool.female, taken)
+  taken.add(String(motherFirst).toLowerCase())
+  const fatherFirst = pickUnusedName(country.namePool.male, taken)
   const altSurname = pickFrom(country.surnames)
   const baseQ = { secure: 82, stable: 68, struggling: 48, unstable: 28 }[familyStability] ?? 55
   const fatherPresent = familyStability !== 'unstable' || chance(0.55)

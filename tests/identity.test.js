@@ -159,3 +159,57 @@ describe('end to end, through the real generator', () => {
     }
   }, 60_000)
 })
+
+describe('two people in one life are not the same person', () => {
+  it('draws a family without a collision', async () => {
+    // Names were drawn by ten independent pickFrom() calls across four files,
+    // each with no idea what the others had produced. Over 120 simulated lives
+    // that gave 13% of families two immediate members sharing a first name — a
+    // player and their own sister, a mother and a daughter — which is the
+    // birthday problem with a thirty-name year.
+    const { deriveInitialParents, deriveInitialSiblings } = await import('../src/engine/character.js')
+    let collisions = 0
+    for (let i = 0; i < 400; i++) {
+      const char = createCharacter({ familySize: 4 })
+      const parents = deriveInitialParents(char)
+      const siblings = deriveInitialSiblings(char, parents)
+      const names = [char.firstName,
+                     ...Object.values(parents).filter(Boolean).map(p => p.name),
+                     ...siblings.map(x => x.name)]
+        .filter(Boolean).map(n => String(n).split(' ')[0].toLowerCase())
+      if (new Set(names).size !== names.length) collisions++
+    }
+    expect(collisions).toBe(0)
+  })
+
+  it('has no name pool with a duplicate, and no Ghanaian man named Akua', () => {
+    for (const c of COUNTRIES) {
+      for (const k of ['male', 'female']) {
+        const pool = c.namePool?.[k] ?? []
+        expect(new Set(pool).size, `${c.name}.namePool.${k} repeats a name`).toBe(pool.length)
+        expect(pool.length, `${c.name}.namePool.${k} is too small to draw from`).toBeGreaterThan(11)
+      }
+    }
+    // Abena and Akua are Akan day-names for a girl born on Tuesday and
+    // Wednesday. They were in the male pool, along with sixteen surnames —
+    // six of which appear verbatim in Ghana's own `surnames` array.
+    const ghana = COUNTRIES.find(c => c.name === 'Ghana')
+    for (const n of ['Abena', 'Akua', 'Adwoa', 'Afia']) {
+      expect(ghana.namePool.male, `${n} is a female day-name`).not.toContain(n)
+    }
+    expect(ghana.namePool.male.filter(n => ghana.surnames.includes(n))).toEqual([])
+  })
+})
+
+describe('stats that only ever go up', () => {
+  it('scales a gain by the headroom left above it', async () => {
+    const { earnedGain } = await import('../src/engine/tick.js')
+    // Cheap at the bottom, expensive at the top, never negative-scaled.
+    expect(earnedGain(20, 10)).toBeGreaterThan(8)
+    expect(earnedGain(95, 10)).toBeLessThan(3.5)
+    expect(earnedGain(100, 10)).toBeCloseTo(2.5, 5)
+    // A loss is a loss. A stroke takes what it takes.
+    expect(earnedGain(95, -10)).toBe(-10)
+    expect(earnedGain(20, -10)).toBe(-10)
+  }, 60_000)   // importing tick.js pulls the whole 8,000-event corpus in
+})

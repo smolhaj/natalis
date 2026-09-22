@@ -14,10 +14,14 @@ import {
 
 // Re-export enterCareer and getAvailableCareers so callers that import from gameEngine still work
 export { enterCareer, getAvailableCareers } from './tick'
+import { earnedGain } from './tick'
 
 function genPartnerName(state, gender) {
-  const c = state.character.country
-  return `${pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)} ${pickFrom(c.surnames)}`
+  // A partner met as an adult has their own family behind them, so the surname
+  // is drawn rather than inherited — and the first name avoids everyone
+  // already in this life. See names.js: ten independent draws across four
+  // files produced a partner and a father both called Patrick.
+  return personName(state.currentCountry ?? state.character.country, gender, state)
 }
 
 export function generatePartnerProfile(state, overrides = {}) {
@@ -191,8 +195,8 @@ export function tryForChild(state) {
   }
   // Conception — store child details in mem; birth will be delivered by tick() ~2 years later
   const cGender = chance(0.5) ? 'male' : 'female'
-  const c = state.character.country
-  const childName = `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${state.character.surname}`
+  const c = state.currentCountry ?? state.character.country
+  const childName = personName(c, cGender, state, { surname: state.character.surname })
   const traits = pickTraits(CHILD_TRAITS)
   // `expecting` is the couple's state and drives the birth in tick(); `pregnant`
   // is the player's own body and is what the maternal-mortality roll and the
@@ -313,12 +317,18 @@ export function applyActivity(state, activityId) {
     // Apply stat bonuses
     const b = hobbyActivity.statBonus ?? {}
     const s = updated.stats
+    // `s` is charisma everywhere else in the effect vocabulary, and this line
+    // was adding it to looks — so the only activity that grants it, training a
+    // sport, made the character better-looking rather than better with people.
+    // `earnedGain` for the same reason it exists in applyProxy: a player who
+    // studies every year for fifty years had smarts pinned at 100 by thirty.
     updated.stats = {
       ...s,
       happiness: Math.min(100, (s.happiness ?? 80) + (b.m ?? 0)),
       health:    Math.min(100, (s.health    ?? 80) + (b.h ?? 0)),
-      smarts:    Math.min(100, (s.smarts    ?? 50) + (b.e ?? 0)),
-      looks:     Math.min(100, (s.looks     ?? 50) + (b.s ?? 0)),
+      smarts:    Math.round(Math.min(100, (s.smarts   ?? 50) + earnedGain(s.smarts ?? 50, b.e ?? 0))),
+      charisma:  Math.round(Math.min(100, (s.charisma ?? 50) + earnedGain(s.charisma ?? 50, b.s ?? 0))),
+      looks:     Math.min(100, (s.looks     ?? 50) + (b.lo ?? 0)),
     }
     const newLevel = updated.hobbies[hobbyActivity.hobbyId]
     const _hobbyProse = {
@@ -902,8 +912,8 @@ export function adoptChild(state) {
     return { ...state, log: [...state.log, { age: state.age, text: `The adoption process requires funds you don't currently have.`, isKey: false }] }
   }
   const cGender = chance(0.5) ? 'male' : 'female'
-  const c = state.character.country
-  const childName = `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${state.character.surname}`
+  const c = state.currentCountry ?? state.character.country
+  const childName = personName(c, cGender, state, { surname: state.character.surname })
   const childAge = randomBetween(0, 8)
   const child = { name: childName, gender: cGender, ageAtBirth: state.age - childAge, relationshipQuality: 75, adopted: true }
   return {
@@ -1341,6 +1351,7 @@ export function bookTrip(state, destinationId) {
 
 // BUSINESS_TYPES is imported from './character' and re-exported via gameEngine.js
 export { BUSINESS_TYPES } from './character'
+import { personName } from './names'
 
 export function getAvailableBusinessTypes(state) {
   return BUSINESS_TYPES.filter(bt => {

@@ -99,7 +99,7 @@ export const CAREERS = [
     levels: [
       { title: 'Day Laborer', salaryRange: [8000, 15000] },
       { title: 'Skilled Laborer', salaryRange: [15000, 25000] },
-      { title: 'Foreman', salaryRange: [25000, 40000] },
+      { title: 'Foreman', titleFemale: 'Forewoman', salaryRange: [25000, 40000] },
     ],
     requirements: { education: 'none', field: null, minSmarts: null, minAge: 16 },
     archetypeAvailable: 'all',
@@ -953,7 +953,7 @@ export const CAREERS = [
     field: 'casual',
     partTime: true,
     levels: [
-      { title: 'Paper Boy / Girl', salaryRange: [1500, 3000] },
+      { title: 'Paper Boy', titleFemale: 'Paper Girl', salaryRange: [1500, 3000] },
     ],
     requirements: { education: 'none', field: null, minSmarts: null, minAge: 13, maxAge: 17 },
     archetypeAvailable: ['wealthy_west', 'wealthy_east'],
