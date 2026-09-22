@@ -21,7 +21,7 @@ import {
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
 import { rememberSaid, preferUnsaid } from './prose'
-import { tickLifeCourse, secondaryChance, primaryChance } from './lifeCourse'
+import { tickLifeCourse, secondaryChance, primaryChance, unpurchasedHomeName } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
 import { suspendedInstitutions, proseFitsInstitutions, institutionExists } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
@@ -422,7 +422,7 @@ function resolveProxyExtras(state, proxy) {
     next = {
       ...next,
       assets: { ...next.assets, properties: [...(next.assets?.properties ?? []), {
-        typeId: type.id, name: type.name, purchasePrice: 0, currentValue: value, mortgage: 0,
+        typeId: type.id, name: unpurchasedHomeName(liveCountry(next), next.flags), purchasePrice: 0, currentValue: value, mortgage: 0,
       }] },
       flags: [...new Set([...(next.flags ?? []), 'homeowner'])],
       mem: { ...(next.mem ?? {}), lcHousingSettled: true, lcHomeYear: next.currentYear },
@@ -2903,7 +2903,28 @@ export function tick(state) {
       s.career = { ...s.career, baseSalary: inTodayMoney(s.career.salary, liveCountry(s), s.currentYear) }
     }
     const redenominated = inEraMoney(s.career.baseSalary, liveCountry(s), s.currentYear)
-    if (redenominated !== s.career.salary) s.career = { ...s.career, salary: redenominated }
+    if (redenominated !== s.career.salary) {
+      // A silent re-denomination reads as a bug when the money is moving fast.
+      // A Russian kitchen hand went $821 in 1992, silently to $667 in 1993, and
+      // then "You are promoted to Line Cook. New salary: $651/yr." A promotion
+      // that pays less than the job before it, with nothing to explain it. The
+      // number is historically right; the presentation was not.
+      const prev = s.career.salary
+      const ratio = prev > 0 ? redenominated / prev : 1
+      if (ratio <= 0.8 || ratio >= 1.35) {
+        s.log = [...s.log, { age: s.age, isKey: false, text: ratio < 1
+          ? pickFrom([
+              'The wage is the same wage and it buys less than it did in the spring. Nobody has cut it. It has simply stopped meaning what it meant.',
+              'The number on the slip has not changed. Everything the number is for has.',
+              'You do the arithmetic twice because it cannot be right, and it is right, and the second time is worse.',
+            ])
+          : pickFrom([
+              'Wages move this year. Yours moves with them, which is not the same as being paid more, though for a few months it feels like it.',
+              'Everything costs more and the wage has gone up to meet it, and the two facts arrive close enough together that you cannot say which is which.',
+            ]) }]
+      }
+      s.career = { ...s.career, salary: redenominated }
+    }
     let annual = s.career.partTime ? Math.round(s.career.salary * 0.5) : s.career.salary
     // Agriculture: harvest variance ±50% — a good year and a bad year feel completely different
     if (s.career.field === 'agriculture') {

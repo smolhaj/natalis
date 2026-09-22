@@ -641,7 +641,7 @@ function courseHousing(s) {
   s = {
     ...s,
     assets: { ...s.assets, properties: [...(s.assets?.properties ?? []), {
-      typeId: type.id, name: type.name, purchasePrice: 0, currentValue: value, mortgage: 0,
+      typeId: type.id, name: unpurchasedHomeName(c, s.flags), purchasePrice: 0, currentValue: value, mortgage: 0,
     }] },
     flags: [...new Set([...s.flags, 'homeowner', 'home_without_a_deed'])],
     mem: { ...s.mem, lcHousingSettled: true, lcHomeYear: s.currentYear },
@@ -668,4 +668,17 @@ export function tickLifeCourse(state) {
   s = courseHousing(s)
   s = courseRetirement(s)
   return s
+}
+
+// A home that arrived without a purchase — family land, a self-build, an
+// allocated flat — carries the name of the thing it actually is. The catalogue
+// entry is a financed transaction's name, and the prose beside it describes
+// rebar and an unfinished upper floor, so a life ended holding an asset called
+// "Studio Flat" while the epitaph described the house they built.
+export function unpurchasedHomeName(country, flags = []) {
+  if (flags.includes?.('privatised_flat') || flags.includes?.('soviet_flat')) return 'The flat, privatised'
+  const arch = country?.archetype
+  if (arch === 'post_soviet') return 'The flat you were given the deed to'
+  if (['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(arch)) return 'The house that came to you'
+  return 'The house you built'
 }
