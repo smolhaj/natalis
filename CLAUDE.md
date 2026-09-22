@@ -521,18 +521,18 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 252 world events, 8,025 character events (2,127 of them the
-contemplative sonder layer, 156 stranger glimpses, 42 prison and political-arrest),
-2,887 registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
+154 countries, 252 world events, 8,082 character events (2,129 of them the
+contemplative sonder layer, 157 stranger glimpses, 42 prison and political-arrest),
+2,964 registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
 
 Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 331 tests, including the simulation guardrails
+npm test                 # 346 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
-npm run check-flags      # 2887 covered / 0 partial / 0 orphaned
+npm run check-flags      # 2964 covered / 0 partial / 0 orphaned
 npm run check-events     # reachability: dead guards, enum domains, phase/year windows, season/country
 npm run check-anachronisms  # plays lives and reads every line against when the world held it
 npm run sim              # firing-rate report — what ACTUALLY fires, per 100 lives
@@ -607,6 +607,92 @@ holding `romania_revolution_1989` since the year it happened.
 "is this true".** Nothing static can tell the difference. `npm run
 check-anachronisms` and the simulation tests are the counter-check.
 
+### The second beta pass
+
+The first beta pass audited. The second one **read complete life logs end to
+end**, in sequence, as a player does — and found a third class of defect that
+neither a static audit nor a firing-rate report can see: **the narration and the
+state disagreeing.**
+
+| | before | after |
+|---|---|---|
+| widowings the game never mentioned | 26 of 37 | 1 of 45 |
+| lives naming a dead partner as present afterwards | 9 of 37 | 0 of 140 |
+| lives in which a parent dies twice | common | 0 of 140 |
+| retirements the engine then undid | every flag-only one | 2 of 57 |
+| dollar figures before 1995 | wrong by 1-2 orders of magnitude | era-denominated |
+| final balance, median passive life | millions | $35,527 |
+| partner occupations possible in the year | a flat modern Western list | gated by year, place, gender |
+
+The pattern: a log line is a **claim about the state**, and nothing was checking
+that the state agreed. `tickPartner` marked a partner dead silently on the
+reasoning that the grief events would carry it; they carried it 30% of the time,
+and meanwhile 304 guards read `G.partner` without asking whether they were
+alive. Two generic parent-death events narrated a death and called no
+`killParent`, so the character carried `orphan` from thirteen while both parents
+lived, and each of them died again, by name, decades later. An event retired the
+character with a `retired` FLAG while every hook that hands out a job reads the
+`retired` STATE FIELD.
+
+**The lesson worth keeping: read the log in order.** Every one of these is
+invisible to a guard audit, invisible to `npm run sim`, and obvious within
+thirty seconds of reading a life as a player reads it.
+
+### Money is a statement about when
+
+`careers.js` carries salary ranges in present-day dollars, `assets.js` carries
+prices in present-day dollars, and both were scaled by the country's
+present-day GDP tier and by nothing else — which is `isWealthyArch` again, one
+layer down. Read as history it printed `Starting salary: $19,540/yr` into 1948
+Germany, four months after the currency was reissued.
+
+`src/data/economy.js` supplies the missing dimension, and it is applied at
+**four chokepoints, all four of which are load-bearing**:
+
+1. salaries where they are set, plus `career.baseSalary` in present-day money,
+   so a career held from 1950 to 1990 does not pay 1950 wages into 1990 prices
+2. prices where they are charged — denominated at the DEFINITION of a cost,
+   never at the deduction, so the figure shown, the affordability check and the
+   amount taken are necessarily the same number
+3. `p.mo` in `applyProxy` — one site, 629 authored money deltas, all of which
+   stay exactly as written
+4. `G.money`, which is **divided** by it, so the ~76 guards reading
+   `G.money > 5000` keep meaning "comfortable" instead of quietly becoming
+   "alive after 1990"
+
+Income and prices carry the same factor, so affordability does not move.
+`tickLivingCosts` is the other half: nothing was ever spent on living, so a
+character banked 100% of gross income for sixty years. Its rates are calibrated
+against home ownership, the one outflow measured against the record — at true
+national-accounts saving rates ownership fell from 72% to 43% in the 1950
+American cohort, because nobody could assemble a deposit.
+
+**When you add a dollar figure anywhere, write it in present-day money and let
+the chokepoint denominate it.** A figure denominated twice is worse than one
+denominated never, because it looks right.
+
+### The auditors have the same failure mode as the content
+
+Both static audits were quietly exempting the thing they were built to catch.
+
+`check-anachronisms` skipped any line containing a negation **anywhere in the
+line**, so "Mobile money has made it possible to send money without a bank
+account" — which asserts mobile money and negates the bank — was invisible, and
+printed into 1990 Nigeria seventeen years before M-Pesa. Any sentence that
+mentions what a technology replaced was exempt, which is most of the sentences
+worth auditing. Negation is now scoped to the clause, with a matching FUTURE
+exemption so "When the refrigerator arrives" stays correctly ignored.
+
+`check-flags` fell through to `partial` for any `intent` it did not recognise,
+so a misspelling made a flag look broken and gave no way to tell why.
+`followthrough` is the value that keeps getting written, because it is what the
+field means and not what the field accepts. Unknown intents are now reported by
+name. **Valid values are `none`, `both`, `year_texture`, `event`, and nothing
+else.**
+
+**The lesson: an audit that cannot fail is not an audit.** When one reports
+zero, check that it can still report one.
+
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
 
@@ -625,6 +711,14 @@ src/
                                 became materially rich: 19 technologies, ~218 country overrides.
                                 Because `isWealthyArch` describes NOW, and read as history it gave
                                 1931 Oman a hallway telephone and 1944 Iceland a television.
+    economy.js                — what the money was worth, when and where. The same fault as
+                                `isWealthyArch`, one layer down: salaries and prices are written in
+                                present-day dollars and were scaled by the country's present-day GDP
+                                tier and by nothing else, so 1948 Germany printed a taxi driver on
+                                $19,540/yr. Eight archetype rows, 21 country overrides, two deliberate
+                                reversals (Nigeria's dollar wages peaked in the 1980 oil boom; the
+                                post-Soviet row loses two thirds of itself 1990-95), and the fact that
+                                makes it worth having: in 1960 Ghana pays better than South Korea
     identity.js               — religion conditioned on ethnicity for the 473 groups where the two
                                 are entangled (Lhotshampa are Hindu; Bosniaks are Muslim; Malays are
                                 constitutionally Muslim), and silent for the rest. `impliedMarginal()`
@@ -666,7 +760,6 @@ src/
         events_grief.js           — grief and loss events
         events_grief_mental.js    — grief-mental health intersection events
         events_religion_arc.js    — faith arc events
-        events_late_life.js       — late-life events (retirement, partner decline, health decline, legacy)
         events_children_arc.js    — children arc events
         events_fame_karma.js      — fame/karma/hobby/friendship events
         events_texture.js         — rural/pre-1960/career texture events
@@ -748,6 +841,9 @@ src/
         events_child_death_arc.js — 11 events: infant death trigger through late-life reckoning
         events_israel.js          — 13 events: founding, Mizrahi, IDF, Rabin, intifadas, Oct 7 2023
         events_germany_france.js  — 9 events: Gastarbeiter, DDR, reunification; France Algerian war, banlieue
+        events_germany_reich.js   — 20 events: Germany 1933-49, the same gap one country over. The
+                                    Hitler Youth is written as enjoyable, because it was, and the
+                                    reckoning arrives in 1968 as a question from a child to a parent
         events_india_depth.js     — 12 events: arranged marriage, joint family, dowry, NRI question
         events_iran.js            — 7 events: Khatami reform era, sanctions economy, hijab, brain drain
         events_sick_child.js      — 9 events: parent of seriously ill child arc
@@ -806,6 +902,7 @@ src/
         events_desires.js         — formative wound events + decade reflections (30/40/50/60)
         events_life_skeleton.js   — 4 guaranteed narrative beats at ages 15/30/40/55
         events_phase_entries.js   — 3 life phase transition events (adolescence/young_adult/midlife)
+        events_late_life.js       — late-life events (retirement, partner decline, health decline, legacy)
         events_partner_wants.js   — 8 relationship desire tension events
         events_relationship_crossover.js — 8 partnership arc events
         events_fertility.js       — fertility depth events
@@ -870,6 +967,13 @@ src/
         events_turkmenistan.js    — 10 events: Niyazov Turkmenbashi cult, Gurbanguly reforms, gas wealth, Ashgabat marble city
         events_china.js           — 26 events: Cultural Revolution, gaokao, Tiananmen, rural-urban migration, social credit, lying flat
         events_japan.js           — 12 events: 1945 defeat, occupation, economic miracle, salaryman/karoshi, Fukushima
+        events_japan_war.js       — 32 events: Japan 1937-1952 from inside an ordinary life. The
+                                    corpus had 29 Japanese-guarded events and the earliest began in
+                                    1945. The national school and the rescript, the tonarigumi, the
+                                    temple bell on the cart, the class evacuated three prefectures
+                                    away, the ninth of March, the broadcast at noon on the fifteenth
+                                    of August, blacking out your own textbook with your calligraphy
+                                    brush, the bamboo-shoot existence. 14 of the 32 are follow-through
         events_korea.js           — 14 events: hagwon, suneung, military service, Gwangju 1980, chaebol, Hallyu, DMZ families
         events_india.js           — 7 events: Emergency 1975–77, Sikh massacre 1984, liberalisation 1991, demonetisation
         events_india_depth.js     — 12 events: arranged marriage, joint family economy, dowry pressure, NRI question
