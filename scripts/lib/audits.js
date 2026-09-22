@@ -830,6 +830,11 @@ export async function auditUnwrittenGroups() {
   // is exactly what `disadvantaged` marks — or a large minority inside a
   // country that is plainly not one people. Those are the characters for whom
   // the country's own content is about somebody else.
+  // Prefixes any guard tests with startsWith/endsWith/includes, so a group
+  // reached by shape rather than by name is not reported as unwritten.
+  const prefixed = [...corpus.matchAll(/\.(?:startsWith|includes|endsWith)\(\s*['"]([a-z][a-z0-9_]{3,})['"]\s*\)/g)]
+    .map(m => m[1])
+
   const nameCount = new Map()
   for (const c of COUNTRIES) {
     const cited = (corpus.match(new RegExp(`['"]${c.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"]`, 'g')) ?? []).length
@@ -844,11 +849,34 @@ export async function auditUnwrittenGroups() {
     for (const g of c.ethnicGroups ?? []) {
       if (!g?.id) continue
       if (corpus.includes(`'${g.id}'`) || corpus.includes(`"${g.id}"`)) continue
+      // A guard can reach a group without naming its id. The Baltic module
+      // writes `id.startsWith('russian_')` to cover russian_latvian,
+      // russian_estonian and russian_lithuanian at once, and a literal scan
+      // calls all three unwritten — the same shape as the shared-Set miss
+      // above, and the same wrong direction: reporting a gap somebody closed.
+      if (prefixed.some(pre => g.id.startsWith(pre))) continue
       const share = g.share ?? 0
-      const majority = share >= 0.5
-      // The two shapes that matter, and nothing else.
+      // `>= 0.5` is the wrong test for "is this the country-generic
+      // population". Colombia's Mestizo plurality is 49%, Brazil's White
+      // Brazilian 48%, Pakistan's Punjabi 45% — all under half and all the
+      // group an event guarded on the country alone is already about. Twenty-five
+      // of the first twenty-eight findings were a country's own largest group,
+      // which buries the two that are not. The plurality is the country-generic
+      // population whether or not it clears fifty per cent.
+      const largest = (c.ethnicGroups ?? []).reduce((a, b) => ((b.share ?? 0) > (a.share ?? 0) ? b : a), { share: -1 })
+      const isPlurality = g.id === largest.id
+      // A catch-all bucket is not a population anybody can write for. `other`,
+      // `other_kenyan`, `mixed_guyanese` — nothing about being 'Other' in
+      // Uganda is a shared experience, and reporting it asks for an event that
+      // should not exist.
+      const isCatchAll = /^(other|mixed)(_|$)/.test(g.id) || /^(other|mixed)\b/i.test(g.name ?? '')
+      // The two shapes that matter, and nothing else: a group the data itself
+      // marks as having a different experience of its own country, or a
+      // substantial minority that is not the one the country-generic content is
+      // already about.
       const distinct = g.disadvantaged === true
-      const largeMinority = !majority && share >= 0.2
+      const largeMinority = !isPlurality && share >= 0.2
+      if (isCatchAll) continue
       if (!distinct && !largeMinority) continue
       if (share < 0.1) continue
       findings.push(finding(WARN, 'unwritten-group', `${c.name}:${g.id}`, null,

@@ -2769,4 +2769,448 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by gy_ft_porkknocker_body.',
   },
 
+
+  // ── BOSNIA AND HERZEGOVINA ─────────────────────────────────────────────────
+  // Set by events_bosnia.js — three peoples, one country.
+
+  komsiluk: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Grew up inside komsiluk — neighbourliness as an institution with obligations, in the most mixed republic in Yugoslavia.',
+    intent: 'year_texture',
+    notes: 'Set by ba_komsiluk. Suppressed in texture once komsiluk_after is set.',
+  },
+
+  mixed_bosnian_family: {
+    weight: 'major',
+    category: 'identity',
+    description: 'One grandmother of one people and one of another, in a country that decided the question was solved and was wrong.',
+    intent: 'event',
+    notes: 'Set by ba_mixed_family. Consumed by ba_ft_mixed_after.',
+  },
+
+  declared_yugoslav: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Family wrote Yugoslav in the nationality box every year, deliberately, until there was no such box.',
+    intent: 'none',
+    notes: 'Set by ba_mixed_family. No downstream event needed.',
+  },
+
+  sarajevo_olympics: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was in Sarajevo in February 1984, when the world came and liked it here.',
+    intent: 'year_texture',
+    notes: 'Set by ba_olympics_1984.',
+  },
+
+  voted_national_party: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted for one of the three national parties in 1990, the way you would take an umbrella.',
+    intent: 'none',
+    notes: 'Set by ba_1990_election. No downstream event needed.',
+  },
+
+  voted_non_national: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted for the Reformists in 1990. They got thirteen per cent.',
+    intent: 'none',
+    notes: 'Set by ba_1990_election. No downstream event needed.',
+  },
+
+  bosnia_referendum_1992: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Present for the independence referendum of February 1992, on one side or the other of the boycott.',
+    intent: 'none',
+    notes: 'Set by ba_referendum_1992. No downstream event needed.',
+  },
+
+  vrbanja_bridge: {
+    weight: 'major',
+    category: 'historical',
+    description: 'On the Vrbanja bridge on 5 April 1992, when the first two people the siege killed were killed at a demonstration for keeping the country together.',
+    intent: 'none',
+    notes: 'Set by ba_vrbanja_bridge. No downstream event needed; war_began carries the arc.',
+  },
+
+  war_began: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'The year the shooting started where they live.',
+    intent: 'none',
+    notes: 'Set by ba_vrbanja_bridge.',
+  },
+
+  sarajevo_siege: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Inside the 1,425-day siege of Sarajevo: no water in the pipes, the parquet in the stove, and a map of the corners in everybody\'s head that nobody drew.',
+    intent: 'both',
+    notes: 'Set by the siege events. Consumed by ba_ft_siege_habits and the year-texture layer.',
+  },
+
+  sent_the_child: {
+    weight: 'major',
+    category: 'family',
+    description: 'Sent the boy to the pump because everybody believed they did not shoot at children. He came back every time.',
+    intent: 'year_texture',
+    notes: 'Set by ba_siege_water (yielding choice).',
+  },
+
+  burned_the_books: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Burned the furniture, then the parquet, then the books, in an order the household agreed on.',
+    intent: 'year_texture',
+    notes: 'Set by ba_siege_burning.',
+  },
+
+  sarajevo_tunnel: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Went under the airport runway bent double, eight hundred metres, carrying something for somebody.',
+    intent: 'year_texture',
+    notes: 'Set by ba_siege_tunnel.',
+  },
+
+  markale: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'In Sarajevo when a shell landed in the market at midday, and afterwards an argument in foreign capitals about the angle of the crater.',
+    intent: 'none',
+    notes: 'Set by ba_markale. No downstream event needed.',
+  },
+
+  siege_culture: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'A film festival in a basement and a beauty contest with a banner reading DON\'T LET THEM KILL US: a city insisting, in the grammar it had left, on being a city.',
+    intent: 'none',
+    notes: 'Set by ba_siege_normal. No downstream event needed.',
+  },
+
+  white_armband: {
+    weight: 'major',
+    category: 'discrimination',
+    description: 'Ordered to mark the house with a sheet and the arm with a strip of it, and then the buses came for people.',
+    intent: 'year_texture',
+    notes: 'Set by ba_white_armbands. Gates ba_camp.',
+  },
+
+  ethnic_cleansing_survivor: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Came through the 1992 clearances of the Bosnian northwest.',
+    intent: 'event',
+    notes: 'Set by ba_white_armbands. Gates ba_dna_identification.',
+  },
+
+  fled_the_northwest: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left the district at two in the morning on the back road, a week before it stopped being possible.',
+    intent: 'event',
+    notes: 'Set by ba_white_armbands (defiant choice). Gates ba_return.',
+  },
+
+  bosnia_camp_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Held in one of the 1992 camps in the Prijedor district for eleven weeks that they have never described to anybody.',
+    intent: 'both',
+    notes: 'Set by ba_camp. Consumed by ba_ft_camp_statement and the year-texture layer.',
+  },
+
+  mosques_dynamited: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'In Banja Luka in May 1993, when the Ferhadija and the Arnaudija were dynamited and the stone pushed into the river.',
+    intent: 'year_texture',
+    notes: 'Set by ba_banja_luka_mosques.',
+  },
+
+  stari_most_destroyed: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched the Stari Most go into the Neretva on 9 November 1993, after four hundred and twenty-seven years.',
+    intent: 'year_texture',
+    notes: 'Set by ba_stari_most.',
+  },
+
+  croat_bosniak_war: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Lived through the other war, the one inside the first one, when the front line moved to a boulevard in Mostar.',
+    intent: 'none',
+    notes: 'Set by ba_croat_bosniak_war. No downstream event needed.',
+  },
+
+  vrs_conscript: {
+    weight: 'major',
+    category: 'military',
+    description: 'Conscripted into the Army of Republika Srpska at nineteen, off a list with their address on it.',
+    intent: 'both',
+    notes: 'Set by ba_vrs_conscript. Consumed by ba_ft_vrs_account and the year-texture layer.',
+  },
+
+  vrs_deserter: {
+    weight: 'major',
+    category: 'military',
+    description: 'Left the country rather than the list: a draft evader to one set of people and a refugee to another.',
+    intent: 'none',
+    notes: 'Set by ba_vrs_conscript (defiant choice). No downstream event needed.',
+  },
+
+  bosnia_exile: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left Bosnia during the war rather than after it.',
+    intent: 'event',
+    notes: 'Set by ba_vrs_conscript. Gates ba_return.',
+  },
+
+  serb_dissent: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Said the rest of it out loud, in their own town, and was called a traitor by somebody they had known since primary school.',
+    intent: 'year_texture',
+    notes: 'Set by ba_serb_shame (defiant choice).',
+  },
+
+  serb_silence: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Said nothing for three years, and then the not-saying set, the way a thing sets.',
+    intent: 'both',
+    notes: 'Set by ba_serb_shame (yielding choice). Consumed by ba_ft_serb_silence_late.',
+  },
+
+  srebrenica: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the fall of Srebrenica in July 1995, on the buses to Tuzla or in the column through the woods.',
+    intent: 'both',
+    notes: 'Set by ba_srebrenica_july. Consumed by ba_ft_srebrenica_july, gates ba_dna_identification, and speaks in the urgent tier.',
+  },
+
+  dayton_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lives under a constitution that is an annex to a treaty, with two entities, three presidents and a foreign official who can sack the elected ones.',
+    intent: 'year_texture',
+    notes: 'Set by ba_dayton.',
+  },
+
+  stayed_in_sarajevo: {
+    weight: 'major',
+    category: 'moral',
+    description: 'One of the few thousand Serbs who stayed in the transferred suburbs in March 1996, which was harder than leaving in ways nobody warned about.',
+    intent: 'none',
+    notes: 'Set by ba_suburbs_transfer (defiant choice). No downstream event needed.',
+  },
+
+  left_the_suburbs: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left Grbavica in March 1996 with sixty thousand others, a refugee inside their own country from a city eleven miles away.',
+    intent: 'both',
+    notes: 'Set by ba_suburbs_transfer. Consumed by ba_ft_suburbs_visit and the year-texture layer.',
+  },
+
+  two_schools_one_roof: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Schooled in a building with two head teachers, two curricula and two histories of the same decade.',
+    intent: 'year_texture',
+    notes: 'Set by ba_two_schools.',
+  },
+
+  minority_return: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Took the house back after four years of paper and fixed the roof, among people who mostly did not want them there.',
+    intent: 'year_texture',
+    notes: 'Set by ba_return (defiant choice).',
+  },
+
+  sold_the_house: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Sold the house they grew up in to somebody from the majority in that town, which is the transaction the war was fought to produce.',
+    intent: 'none',
+    notes: 'Set by ba_return (yielding choice). No downstream event needed.',
+  },
+
+  dna_identification: {
+    weight: 'major',
+    category: 'loss',
+    description: 'Gave blood to a database and waited years for a laboratory to say that bones from two graves are one person and the person is theirs.',
+    intent: 'none',
+    notes: 'Set by ba_dna_identification. No downstream event needed; potocari_every_july carries the annual shape.',
+  },
+
+  hague_verdicts: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive for the arrests and the convictions, and for the fact that the absurdity of the arrests was the wrong size for the charges.',
+    intent: 'none',
+    notes: 'Set by ba_hague. No downstream event needed.',
+  },
+
+  bosnia_diaspora: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left for Germany with everybody else, out of a country that had four and a half million people in 1991.',
+    intent: 'both',
+    notes: 'Set by ba_leaving. Consumed by ba_ft_diaspora_august and the year-texture layer.',
+  },
+
+  bosnia_stayer: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Stayed, and is good at the job, in an institution that answers to whichever party holds this entity.',
+    intent: 'both',
+    notes: 'Set by ba_leaving (defiant choice). Consumed by ba_ft_stayer_late and the year-texture layer.',
+  },
+
+  komsiluk_after: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Uses the word in the past tense and the present tense in the same conversation, and means both.',
+    intent: 'year_texture',
+    notes: 'Set by ba_ft_komsiluk_after. Suppresses the pre-war komsiluk texture.',
+  },
+
+  siege_habits: {
+    weight: 'moderate',
+    category: 'psychological',
+    description: 'Fills things. Walks on the inside of a pavement. Is already moving before deciding anything.',
+    intent: 'year_texture',
+    notes: 'Set by ba_ft_siege_habits.',
+  },
+
+  potocari_every_july: {
+    weight: 'major',
+    category: 'loss',
+    description: 'The run-up, the day, the week after. It is the shape of the year, and has been for nineteen of them.',
+    intent: 'year_texture',
+    notes: 'Set by ba_ft_srebrenica_july.',
+  },
+
+  told_the_son: {
+    weight: 'major',
+    category: 'family',
+    description: 'Gave the true version to a son old enough to be entitled to it, and handed him something carried for thirty years.',
+    intent: 'none',
+    notes: 'Set by ba_ft_vrs_account. No downstream event needed.',
+  },
+
+  silence_recognised: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Understands, at this distance, that a whole town saying the careful sentence for thirty years is how a thing gets to stay unsaid.',
+    intent: 'none',
+    notes: 'Set by ba_ft_serb_silence_late. No downstream event needed.',
+  },
+
+  went_back_to_grbavica: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Stood on a pavement in front of their own flat, the only person on the street who knew it.',
+    intent: 'none',
+    notes: 'Set by ba_ft_suburbs_visit. Suppresses the displacement texture.',
+  },
+
+  testified_at_the_hague: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Gave an accurate statement with things left out, and a man was convicted partly on it.',
+    intent: 'none',
+    notes: 'Set by ba_ft_camp_statement. No downstream event needed.',
+  },
+
+  august_return: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Drives down in August with foreign plates, in the fortnight when the villages are briefly at their 1990 population.',
+    intent: 'none',
+    notes: 'Set by ba_ft_diaspora_august. No downstream event needed.',
+  },
+
+  stayer_accounting: {
+    weight: 'moderate',
+    category: 'psychological',
+    description: 'Has an honest answer about whether staying was worth it, which is longer than anyone wants and does not resolve.',
+    intent: 'none',
+    notes: 'Set by ba_ft_stayer_late. No downstream event needed.',
+  },
+
+  none_of_the_three: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Not one of the three constituent peoples, on every form, in a state whose constitution reserves half its offices for them.',
+    intent: 'year_texture',
+    notes: 'Set by ba_ft_mixed_after.',
+  },
+
+  village_cleared: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'The village they lived in was cleared in 1992 by men who came from outside it, and afterwards the village agreed a version with nobody in it responsible.',
+    intent: 'both',
+    notes: 'Set by ba_village_divides. Gates ba_collective_centre and the year-texture layer.',
+  },
+
+  helped_them_out: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Drove the family out in the dark with the lights off, twice, and never asked the man at the checkpoint whether he recognised them.',
+    intent: 'year_texture',
+    notes: 'Set by ba_village_divides (defiant choice).',
+  },
+
+  stayed_indoors: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Stayed indoors, which was true — one house cannot stop it — and is the sentence they examine at three in the morning.',
+    intent: 'year_texture',
+    notes: 'Set by ba_village_divides (yielding choice).',
+  },
+
+  collective_centre: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Lived in a school with blankets hung on wire for walls, on a rota, for what was supposed to be a few months.',
+    intent: 'year_texture',
+    notes: 'Set by ba_collective_centre.',
+  },
+
+  humanitarian_ration: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Fed by convoy: oil, flour, a yeast that did not work and a tin of meat this whole country still makes jokes about.',
+    intent: 'year_texture',
+    notes: 'Set by ba_convoy.',
+  },
+
+  mined_land: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Can see good land from the house that has a sign on it with a skull and a date, and has had since 1998.',
+    intent: 'year_texture',
+    notes: 'Set by ba_minefield.',
+  },
+
+  village_emptied: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'A village of eleven hundred in 1991 with a hundred and forty left, four houses lived in year-round and eleven opened in August.',
+    intent: 'year_texture',
+    notes: 'Set by ba_village_empty.',
+  },
+
 }

@@ -575,9 +575,10 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 389 named places, 252 world events, 8,166 character events
+154 countries, 389 named places, 252 world events, 8,207 character events
 (2,129 of them the contemplative sonder layer, 158 stranger glimpses, 42 prison
-and political-arrest, 30 Gulf, 42 Guyana), 3,075 registered flags, 377 ribbons.
+and political-arrest, 30 Gulf, 42 Guyana, 41 Bosnia), 3,130 registered flags,
+377 ribbons.
 **0 orphaned, 0 partial flags.**
 
 Verify with:
@@ -778,7 +779,52 @@ events-per-year and texture-per-year figures were *identical* either side of the
 gap, and so was the anchored register share. `REGISTER_SHARES` reserves 40% of
 each year for `anchored` and fills it from country and era guards whenever the
 place guards cannot answer, so the bucket is always full and the absence is
-perfectly masked. The thing lost was not volume. It was the place. Measured over 520 lives across ten birth cohorts: all
+perfectly masked. The thing lost was not volume. It was the place.
+
+### The audit that cried wolf, and Bosnia
+
+With the places closed, `unwritten-group` was still reporting 145 findings and
+the top twenty-five of them were a country's own plurality: Colombia's Mestizo
+at 49%, Brazil's White Brazilian at 48%, Pakistan's Punjabi at 45%. The filter
+tested `share >= 0.5` for "is this the group a country-generic event is already
+about", which is the wrong test — a plurality is the country-generic population
+whether or not it clears half — and it was also reporting catch-all buckets,
+asking for an event about the shared experience of being *Other* in Uganda. It
+was additionally blind to a guard that reaches a group by shape rather than by
+name: the Baltic module writes `id.startsWith('russian_')` to cover three
+countries' Russian minorities at once, and a literal scan called all three
+unwritten. Fixed, the queue is 25 findings and every one is real.
+
+**The lesson, which is the mirror of the one two sections up: an audit that
+reports twenty-five false positives has failed in the same way as one that
+reports none.** Both leave you unable to see the two findings that matter.
+
+What the clean queue put at the top was Bosnia and Herzegovina — six mentions in
+the whole corpus, `bosnian_serb` unwritten at 31%, and no module, for a country
+whose twentieth century is among the heaviest on the roster.
+`events_southeast_europe.js`, which this file's own source tree described as
+covering "Yugoslav collapse, Bosnian War, Kosovo, tribunal", contains four
+Romanian events and five Serbian ones and not one Bosnian guard.
+
+Two things came out of writing it that generalise.
+
+**A module can be written for the famous version of a country.** The first pass
+put the siege of Sarajevo at the centre, and the engine draws 73% of Bosnians
+rural — correctly, the country was 39% urban in 1990. Sixteen per cent of
+characters are in Sarajevo. The war most Bosnians actually had was a village
+that men arrived at from somewhere else, a school with blankets hung on wire for
+walls, a convoy, a field you can see from the house with a skull on the sign,
+and a census that says a hundred and forty where 1991 said eleven hundred. Five
+events, and they are now the most-fired in the module.
+
+**`weight: 999` means nothing when everything is 999.** Five of them were
+eligible in 1992 alone and one event fires per year, so the chains behind them
+starved: `ba_camp` required a flag its own trigger set *in the same year*, which
+no character could ever satisfy, and the Bosnian Serb arc reached 5% of Serb
+men. Widening each event to the years it actually ran in, and keeping the
+referendum and the village clearance off a conscript's 1992 because the call-up
+owns that year, fixed all of it. Measured over 1,400 lives: all 41 fire, 0
+errors. Measured over 520 lives across ten birth cohorts: all
 42 fire, 0 errors, and `p.emigrateTo` puts the 59 diaspora characters in the
 United States and Canada rather than only flagging them.
 
@@ -1326,6 +1372,21 @@ src/
                                     number on the news. Plus the parts that are not politics: the
                                     seawall with the Atlantic above the road, the bottom house, the
                                     abeer in the street, Bourda. 10 of the 42 are follow-through.
+        events_bosnia.js          — 41 events: three peoples, one country, and the thing that is not
+                                    symmetrical. Bosnia was named six times in the entire corpus and
+                                    had no module; `events_southeast_europe.js`, which the source
+                                    tree described as covering the Bosnian war, turns out to hold
+                                    four Romanian events and five Serbian ones and no Bosnian guard
+                                    at all. Komšiluk and the 1984 Olympics before it; the water
+                                    queue, the parquet in the stove, the tunnel under the runway and
+                                    Markale inside it; the white armbands and the camps at Prijedor;
+                                    the Ferhadija; the Stari Most; Srebrenica; and, because a third
+                                    of the characters the engine draws here are Bosnian Serbs, the
+                                    conscript on the hillside and the sixty thousand who left the
+                                    Sarajevo suburbs in March 1996 with their own dead. Afterwards:
+                                    Dayton, two schools under one roof, minority return, the DNA
+                                    laboratory, The Hague, and Germany. 11 of the 41 are
+                                    follow-through.
         events_korea.js           — 14 events: hagwon, suneung, military service, Gwangju 1980, chaebol, Hallyu, DMZ families
         events_india.js           — 7 events: Emergency 1975–77, Sikh massacre 1984, liberalisation 1991, demonetisation
         events_india_depth.js     — 12 events: arranged marriage, joint family economy, dowry pressure, NRI question
@@ -1551,7 +1612,14 @@ scripts/
                                   npm run check-flags -- --world
   check-events.js             — reachability audits: dead guards, identity literals absent from the
                                 country the guard requires, phases that truncate their own age band,
-                                year windows nobody can be inside, seasons a country cannot have
+                                year windows nobody can be inside, seasons a country cannot have,
+                                and `unwritten-group` — populations the roster models that no guard
+                                has ever named. That last one has now been wrong in four directions
+                                (every unnamed id; shared-`Set` ids invisible to a body scan; every
+                                id trivially named because `countries.js` declares them; and a
+                                country's own plurality, which is what the country-generic content
+                                is already about). It currently skips the plurality, catch-all
+                                buckets, and ids reached by a `startsWith` rather than a literal.
   check-anachronisms.js       — plays lives across the eras where a country's present-day category is
                                 least like its past (the Gulf before oil, Iceland before broadcasting,
                                 Korea before the miracle) and reads every printed line against

@@ -15185,6 +15185,137 @@ function* textureCandidates(state, opts = {}) {
     'A cousin visits from abroad and says something about it, and you hear your own street freshly for an afternoon and then stop.']
 
 
+
+  // ── Bosnia: three peoples, one country ────────────────────────────────────
+  // Six mentions in the whole corpus before this, and no module.
+
+  if (F.has('village_cleared') && Math.random() < 0.12) yield [T.anchored, pick([
+    'Three houses emptied in one night and the family on the corner had been there since before anyone. The village has a version of it now, and the version has nobody in it.',
+    'The men came in a bus with no plates and did not know whose field was whose. The men who did know either went with them or went indoors.',
+  ])]
+
+  if (F.has('helped_them_out') && Math.random() < 0.11) yield [T.earned,
+    'You have never asked him whether he recognised you at the checkpoint that night. You have seen him most weeks for thirty years and you have never asked.']
+
+  if (F.has('stayed_indoors') && Math.random() < 0.11) yield [T.earned,
+    'One house cannot stop it. That is true, and it is also the sentence, and three in the morning is when it comes up.']
+
+  if (F.has('collective_centre') && Math.random() < 0.12) yield [T.earned, pick([
+    'Four families to a classroom with blankets on wire for walls, and a man who used to run a sawmill taking the kitchen rota extremely seriously.',
+    'It was going to be a few months. Some of the people in that building were still in it eleven years later.',
+  ])]
+
+  if (F.has('humanitarian_ration') && Math.random() < 0.09) yield [T.anchored,
+    'Oil, flour, a yeast that did not rise, and a tin of meat that this entire country is still making the same joke about.']
+
+  if (F.has('mined_land') && Math.random() < 0.11) yield [T.anchored,
+    'Good land, visible from the house, with a sign on it carrying a skull and a date. Somebody will come and clear it. There are a lot of fields.']
+
+  if (F.has('village_emptied') && Math.random() < 0.12) yield [T.anchored, pick([
+    'Eleven hundred in 1991 and a hundred and forty now. The school went in 2002 and the shop went after the school and the bus comes on Tuesdays.',
+    'Four houses lived in all year and eleven that open for a fortnight in August, and for the fortnight it is a village again.',
+  ])]
+
+  if (F.has('komsiluk') && !F.has('komsiluk_after') && Math.random() < 0.12) yield [T.anchored, pick([
+    'You could not name the religion of every family on this street if somebody asked. Nobody has ever asked.',
+    'Bajram at theirs, slava at yours, and rakija at ten in the morning at Christmas whether you want it or not.',
+  ])]
+
+  if (F.has('sarajevo_olympics') && Math.random() < 0.09) yield [T.anchored, pick([
+    'There is still a Vučko somewhere in the flat. A keyring, or the sticker on the inside of a cupboard door that nobody has scraped off.',
+    phase === 'late_life'
+      ? 'Two weeks in February 1984 when the world came and liked it here. It is one of the two things anybody abroad knows about this city and it is not the one they mention.'
+      : 'Torvill and Dean got nines across the board at Zetra and the whole country behaved as though it had personally arranged it.',
+  ])]
+
+  if (F.has('sarajevo_siege') && !F.has('siege_habits') && Math.random() < 0.14) yield [T.anchored, pick([
+    'Twenty litres in two canisters, up the stairs, and the queue at the pump is the most dangerous place in the city because they know it is a queue and they know when.',
+    'You have a map in your head of which corners are crossed at a walk and which at a run. Three hundred thousand people have the same map and nobody drew it.',
+    'The parquet came up strip by strip and went into the stove, and after the parquet there was a conversation about the books.',
+  ])]
+
+  if (F.has('siege_habits') && Math.random() < 0.13) yield [T.earned, pick([
+    'There is water in the taps and there are still five-litre bottles under the sink that nobody drinks from and that you rotate.',
+    'You do not walk on the outside of a pavement if there is an inside. You have never once decided this.',
+    'A loud noise and you are already moving, and the deciding happens afterwards, in front of people who were somewhere else in the nineties.',
+  ])]
+
+  if (F.has('sent_the_child') && Math.random() < 0.12) yield [T.earned, pick([
+    'He came back every time. You were sick every time until he did, and that is the thing you have never been able to say out loud to him.',
+    phase === 'late_life'
+      ? 'He is fifty-one and has children of his own and has never once mentioned the canisters, which you take to mean he remembers it exactly.'
+      : 'Everybody believed they did not shoot at children. Everybody was wrong about that, and you sent him anyway, and he came back.',
+  ])]
+
+  if (F.has('sarajevo_tunnel') && Math.random() < 0.10) yield [T.anchored,
+    'Eight hundred metres bent double with water to your ankles, and a man behind you carrying flour, and that was the supply line for a capital city.']
+
+  if (F.has('burned_the_books') && Math.random() < 0.10) yield [T.earned,
+    'The encyclopaedias went first because they were dense and burned slowly. There was one book on the third floor that a man would not put in the stove and everybody knew which one and nobody said anything.']
+
+  if (F.has('white_armband') && Math.random() < 0.12) yield [T.anchored,
+    'Your mother tearing a bedsheet into strips at the kitchen table, measuring by eye, the way she would for anything. It is the ordinariness of her hands that stayed.']
+
+  if (F.has('bosnia_camp_survivor') && Math.random() < 0.12) yield [T.earned, pick([
+    'Eleven weeks that you have never described to anybody, including in a statement that is accurate and leaves things out.',
+    phase === 'late_life'
+      ? 'The shoulder and the hip are from there. Nobody at the clinic writes down what did it and it would not change the treatment.'
+      : 'There is a particular kind of room — long, high, concrete — that you do not go into. You have arranged a life around not going into them.',
+  ])]
+
+  if (F.has('srebrenica') && Math.random() < 0.14) yield [T.urgent, pick([
+    'July, and a green field, and a line of coffins, and the number of them this year.',
+    'They separated them at Potočari in front of everybody, with the Dutch soldiers standing there, and the buses went to Tuzla.',
+    'A laboratory rings to say that bones from two graves thirty kilometres apart are one person and the person is yours. The second grave was dug to hide the first.',
+  ])]
+
+  if (F.has('vrs_conscript') && !F.has('told_the_son') && Math.random() < 0.12) yield [T.earned, pick([
+    'Two years on a hillside above a valley, cold and bored and occasionally very frightened, doing what you were told at the scale of a rifle.',
+    'Men you were at school with were somewhere below you. You thought about it at night and less than you would expect during the day, and it is the second part you have to account for.',
+  ])]
+
+  if (F.has('serb_silence') && Math.random() < 0.11) yield [T.earned,
+    'Everyone in the town says a version of the same careful sentence, and has for thirty years, and that is how a thing gets to stay unsaid.']
+
+  if (F.has('serb_dissent') && Math.random() < 0.11) yield [T.earned,
+    'A man you have known since primary school called you a traitor in a café in 1994. He was not the last. You kept the friends you kept.']
+
+  if (F.has('left_the_suburbs') && !F.has('went_back_to_grbavica') && Math.random() < 0.12) yield [T.earned, pick([
+    'Grbavica is twenty minutes away on a tram. You have not been for nineteen years.',
+    'People went to the cemeteries with tools in March 1996 and took their dead with them. It reads as rhetoric. It was several days of practical activity by ordinary families.',
+  ])]
+
+  if (F.has('stari_most_destroyed') && Math.random() < 0.09) yield [T.anchored,
+    'Four hundred and twenty-seven years, and then the stone went into the Neretva in one piece of motion, and the river was a river with two towers on it.']
+
+  if (F.has('mosques_dynamited') && Math.random() < 0.09) yield [T.anchored,
+    'A flat place at the end of the street where a building had been since 1579. The quiet in the town the next morning was a lot of people deciding separately to say nothing.']
+
+  if (F.has('dayton_generation') && Math.random() < 0.10) yield [T.anchored, pick([
+    'A constitution that is an annex to a treaty, whose authoritative text is in English, and that nobody in this country voted for.',
+    'Two entities, three presidents, and a foreign official who can sack the elected ones. It stopped the shooting. It is also why nothing has moved since.',
+  ])]
+
+  if (F.has('two_schools_one_roof') && Math.random() < 0.10) yield [T.anchored,
+    'Two head teachers, two curricula, two histories of the same decade, one caretaker, and a timetable arranged so the children use the corridor at different times.']
+
+  if (F.has('none_of_the_three') && Math.random() < 0.11) yield [T.earned,
+    'Every form has three boxes and you are not one of them. There is a fourth option and taking it costs you the right to stand for half the offices in the country.']
+
+  if (F.has('bosnia_diaspora') && Math.random() < 0.11) yield [T.earned, pick([
+    'August, German plates, and the whole country back at its 1990 population for a fortnight.',
+    'The group chat has members in six countries and is, functionally, where your class lives now.',
+  ])]
+
+  if (F.has('bosnia_stayer') && Math.random() < 0.11) yield [T.earned,
+    'You are good at this and the institution answers to whichever party holds this entity, and you train people who then leave.']
+
+  if (F.has('minority_return') && Math.random() < 0.11) yield [T.earned,
+    'Two thirds of the names on this street are different. A few of the old ones are still here and they are the reason you managed it.']
+
+  if (F.has('potocari_every_july') && Math.random() < 0.12) yield [T.earned,
+    'The run-up, the day, the week after. It is the shape of the year. You are not sure what you would do in a July without one.']
+
   // Withdrawal rather than anger — the shape political feeling takes when a
   // person has established, by experiment, that taking part changes nothing.
   // Not Guyana-specific: any arc that needs the quiet version can set it.
