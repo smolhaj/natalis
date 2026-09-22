@@ -1139,9 +1139,29 @@ src/
     epitaph.js                — the death screen: generateIdentityCard, generateEpitaph,
                                 generateLifeNotes. The historical spine comes from
                                 `worldEventsFired`, which the engine has been recording all along.
-    casinoEngine.js
-    gangEngine.js
-    lotteryEngine.js
+    casinoEngine.js           — UNWIRED. 441 lines of blackjack with hit/stand, slots and
+                                roulette. Nothing imports it.
+    gangEngine.js             — UNWIRED. 432 lines: ranks, activities, prison gangs, a tick.
+                                Nothing imports it.
+    lotteryEngine.js          — UNWIRED. 170 lines. Nothing imports it.
+                                ─────────────────────────────────────────────────────────
+                                These three, plus the stock market in playerActions.js
+                                (`buyStock`/`sellStock`/`tickStocks`/`getAvailableStocks`,
+                                complete and era-gated), are ~1,150 lines of implemented
+                                play that no import reaches. They are from the earlier
+                                design — the theme config used to describe itself as
+                                "BitLife-inspired" — and the interface rules the project
+                                has since committed to argue against a blackjack table and
+                                a crypto ticker in a game whose stated mechanic is the
+                                sentence that lands. The need they served, that money can
+                                move by risk, is met by the gambling and investment
+                                activities, which now move real money rather than the
+                                wealth stat.
+                                Left in place rather than deleted, because that is a call
+                                for whoever owns the design. If they are wired, the prices
+                                need the era treatment like everything else, and the
+                                instrument names ("TechCorp", "CryptoCoin") need to belong
+                                to a place and a decade.
   store/
     gameStore.js              — Zustand store, INITIAL_STATE, all actions including
                                 resolveTrial, pendingTrial state, relocateTo,
