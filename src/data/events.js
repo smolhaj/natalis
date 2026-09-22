@@ -4407,7 +4407,7 @@ const BASE_EVENTS = [
     when: (G) => G.currentYear >= 1995 && !G.hobbies.coding && G.stats.smarts >= 55,
     text: (G) => G.currentYear >= 2010
       ? 'A free coding bootcamp opens nearby. You attend out of curiosity.'
-      : `You start teaching yourself to program from library books${G.currentYear >= 2000 ? ' and online forums' : ''}.`,
+      : `You start teaching yourself to program from library books${hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear) ? ' and online forums' : ''}.`,
     choices: [
       { text: 'Invest serious time in it', tag: null, outcome: 'The logic clicks. You build small things that actually work. The satisfaction is unlike anything else.', effect: (p) => { p.practiceHobby('coding', 20); p.e += 8; p.m += 5; }, inject: null },
       { text: 'Try it and move on', tag: null, outcome: 'Not for you — at least not right now.', effect: (p) => { p.practiceHobby('coding', 5); p.e += 2; }, inject: null },
@@ -5488,9 +5488,14 @@ const BASE_EVENTS = [
     weight: 4,
     when: (G) => {
       if (G.age < 5 || G.age > 7 || G.mem.school_first_day) return false
-      // Gate on literacy: if the country's gender-appropriate literacy is very low, school may not exist
+      // This used to roll its own answer off the country's literacy rate, which
+      // is a different question from whether THIS character goes to school. A
+      // life got a first day of school at five, a morning-before-school line at
+      // seven, and at sixteen "There was never a school to leave" — and a death
+      // screen that said "Never went to school."
+      if (!G.literate) return false
       const litRate = G.character.gender === 'female' ? (G.character.country.literacyFemale ?? 1) : (G.character.country.literacyMale ?? 1)
-      if (litRate < 0.25) return false  // extremely low literacy countries in early eras: school likely absent
+      if (litRate < 0.25) return false
       return true
     },
     text: G => {
@@ -5507,7 +5512,7 @@ const BASE_EVENTS = [
         text: 'Make a friend',
         tag: null,
         outcome: 'You sit next to someone with bright eyes and introduce yourself. By lunch you have an ally.',
-        effect: (p) => { p.h += 12; p.e += 3; p.setMem('school_first_day', true); p.addFlag('first_school_friend'); },
+        effect: (p) => { p.h += 12; p.e += 3; p.setMem('school_first_day', true); p.setMem('attendedSchool', true); p.addFlag('first_school_friend'); },
         inject: null,
       },
       {
@@ -7114,7 +7119,14 @@ const BASE_EVENTS = [
     phase: 'adolescence',
     weight: 2,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 10 && G.age <= 20 && !G.mem.ss_maternal,
-    text: 'A woman in your neighbourhood dies in childbirth. The nearest hospital is four hours away and the ambulance did not come. The baby survives. Your own mother delivered you at home with a traditional birth attendant. The gap between this world and what you see on the television has a name now.',
+    // The television is not the point of this event and the event has no year
+    // guard, so it was naming a set in a Nigerian living room in 1954 and a
+    // Namibian one in 1958. The gap is the point; the screen is one way of
+    // seeing it.
+    text: (G) => 'A woman in your neighbourhood dies in childbirth. The nearest hospital is four hours away and the ambulance did not come. The baby survives. Your own mother delivered you at home with a traditional birth attendant. ' +
+      (hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear, { rural: G.ruralUrban === 'rural' })
+        ? 'The gap between this world and what you see on the television has a name now.'
+        : 'The gap between this world and the one four hours away has a name now.'),
     context: null,
     choices: null,
     effect: (p) => { p.e += 5; p.h -= 8; p.karma += 3; p.setMem('ss_maternal', true); p.addFlag('health_aware'); },
@@ -7421,7 +7433,17 @@ const BASE_EVENTS = [
       const name = G.character.country.name;
       if (['Brazil', 'Colombia', 'Peru'].includes(name)) return 'The favela has its own geography. The alleys so narrow two people can\'t pass. Electricity tapped from the main line overhead. The view from the hilltop over the city below is genuinely beautiful and you know it even then.';
       if (['Egypt', 'Morocco', 'Jordan'].includes(name)) return 'The city grew faster than the pipes. Your neighbourhood has electricity but shared water. The building was put up quickly by a relative thirty years ago and has been expanded room by room ever since.';
-      if (['Philippines', 'Indonesia', 'Vietnam'].includes(name)) return 'Your barangay floods every monsoon season. Everything important is stored high — documents in plastic, shoes on the shelf, the television on a table. Your family has lived in this house for twenty years, which makes you established.';
+      // One branch for three countries, and the one it was written for lent
+      // the other two its word for a neighbourhood and its television: this
+      // printed a barangay and a set on a table into 1940s Vietnam.
+      if (name === 'Philippines') {
+        const high = hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear, { rural: G.ruralUrban === 'rural' })
+          ? 'the television on a table'
+          : 'the sack of rice up on the bench';
+        return `Your barangay floods every monsoon season. Everything important is stored high — documents in plastic, shoes on the shelf, ${high}. Your family has lived in this house for twenty years, which makes you established.`;
+      }
+      if (name === 'Indonesia') return 'The kampung floods every wet season. The water comes up through the floor before it comes under the door. Everything that matters lives on the top shelf: the papers in plastic, the photographs, the mattress rolled and lifted. Your family has been in this house for twenty years, which makes you established.';
+      if (name === 'Vietnam') return 'The alley floods every wet season and the water arrives the colour of the canal. The bed goes up on bricks each time, and the bricks stay under it the rest of the year in case. Your family has been in this house for twenty years, which makes you established.';
       return 'The city has a formal face and an informal one. You grew up in the informal one — improvised, resourceful, dense with life and noise and the specific intimacy of people living closely.';
     },
     choices: [
@@ -8296,7 +8318,7 @@ const BASE_EVENTS = [
     id: 'childhood_move_schools',
     phase: 'childhood',
     weight: 4,
-    when: (G) => G.age >= 7 && G.age <= 13 && !G.mem.moved_schools,
+    when: (G) => G.age >= 7 && G.age <= 13 && !G.mem.moved_schools && G.literate,
     text: 'Your family is moving. New house, new neighborhood, new school in September. You look at the map and try to calculate the distance from everyone you know.',
     choices: [
       { text: 'Promise to stay in touch with old friends', tag: null, outcome: 'For a while, you do. Then the calls get shorter. Then they stop. Then one resurfaces on social media fifteen years later.', effect: (p) => { p.m -= 5; p.s += 2; p.setMem('moved_schools', true) } },
@@ -9145,6 +9167,59 @@ function eventProse(e) {
   return t
 }
 
+// Every mem key that some event's effect writes. A guard reading a key nobody
+// sets is not a chain link, it is a dead branch, and boosting it would boost
+// nothing.
+let _memSetters = null
+let _uniqueFlags = null
+function scanEffects() {
+  if (_memSetters) return
+  _memSetters = new Set()
+  const flagSetters = new Map()
+  for (const e of EVENTS) {
+    if (!e) continue
+    let eff = ''
+    try {
+      eff = String(e.effect ?? '')
+      for (const c of e.choices ?? []) eff += String(c?.effect ?? '')
+    } catch (_) { eff = '' }
+    for (const m of eff.matchAll(/setMem\(\s*['"]([^'"]+)['"]/g)) _memSetters.add(m[1])
+    for (const m of eff.matchAll(/addFlag\(\s*['"]([^'"]+)['"]/g)) {
+      if (!flagSetters.has(m[1])) flagSetters.set(m[1], new Set())
+      flagSetters.get(m[1]).add(e.id)
+    }
+  }
+  // A flag exactly one event sets is an arc marker: it names a specific thing
+  // that happened to this character. A flag twenty events set is a category,
+  // and boosting on it would boost a category rather than a follow-through.
+  _uniqueFlags = new Set([...flagSetters].filter(([, ids]) => ids.size === 1).map(([f]) => f))
+}
+function memSetters() { scanEffects(); return _memSetters }
+function uniqueFlags() { scanEffects(); return _uniqueFlags }
+
+const MEM_POS = /G\.mem[?]?\.([A-Za-z_][A-Za-z0-9_]*)/g
+const MEM_NEG = /!\s*G\.mem[?]?\.([A-Za-z_][A-Za-z0-9_]*)/g
+const FLAG_POS = /G\.flags\.(?:includes|has)\(\s*['"]([^'"]+)['"]/g
+const FLAG_NEG = /!\s*G\.flags\.(?:includes|has)\(\s*['"]([^'"]+)['"]/g
+
+function memPrerequisites(src) {
+  if (!src) return null
+  const neg = new Set([...src.matchAll(MEM_NEG)].map(m => m[1]))
+  const setters = memSetters()
+  const req = [...new Set([...src.matchAll(MEM_POS)].map(m => m[1]))]
+    .filter(k => !neg.has(k) && setters.has(k))
+  return req.length ? req : null
+}
+
+function flagPrerequisites(src) {
+  if (!src) return null
+  const neg = new Set([...src.matchAll(FLAG_NEG)].map(m => m[1]))
+  const arcFlags = uniqueFlags()
+  const req = [...new Set([...src.matchAll(FLAG_POS)].map(m => m[1]))]
+    .filter(f => !neg.has(f) && arcFlags.has(f))
+  return req.length ? req : null
+}
+
 export function classifyEvent(e) {
   if (e.register !== undefined) return e
   let src = ''
@@ -9166,6 +9241,25 @@ export function classifyEvent(e) {
   e.assumesInstitutions = selfAware ? null : institutionsAssumed(prose)
   if (e.assumesInstitutions?.length === 0) e.assumesInstitutions = null
   e.anchored = ANCHOR_PROBE.test(src) || ANCHOR_HELPER_PROBE.test(src)
+  // Is this event the NEXT LINK in an arc the character is already inside?
+  //
+  // 194 events in the corpus require a `mem` key that another event sets, and
+  // 190 of them sit at weight 1-6 — competing on equal terms with the whole
+  // eight-thousand-event pool even for a character who is three links into the
+  // arc. The parent-care arc is eight such links, each two years apart, each at
+  // weight 3, against a parent who will die within about fifteen years: the
+  // chance of reaching the end was close to zero, and "follow-through first" is
+  // the first design principle in CLAUDE.md.
+  //
+  // The keys required POSITIVELY, minus the ones the guard negates (a `!mem.x`
+  // is a once-only latch, not a prerequisite). Recorded here; the boost is
+  // applied in tick.js, where it can see whether they are actually set.
+  e.continuesMem = memPrerequisites(src)
+  // The same question asked of flags. 1,562 events — a fifth of the corpus —
+  // require a flag exactly one other event sets, and they sit at weight 1-10.
+  // That is the follow-through layer, and it was competing with the open pool
+  // for a character who is already inside the arc.
+  e.continuesFlag = flagPrerequisites(src)
   guardSpecificity(e)
   if (e.contemplative) e.register = 'contemplative'
   else if (e.anchored) e.register = 'anchored'

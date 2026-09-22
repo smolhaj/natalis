@@ -46,6 +46,15 @@ export function hasSaid(state, text) {
  * filter descends into pools and drops only the exhausted ones.
  */
 export function preferUnsaid(state, candidates) {
+  // This returns a LIST. Two callers interpolated it straight into a template
+  // and printed the whole pool — "The nearest hospital is four hours by
+  // road…,The clinic has one doctor for the whole district…,You describe it
+  // three times…" — onto every chronic diagnosis and every failed-conception
+  // year in the game. Callers that want one line must pick from the result;
+  // `pickUnsaid` below does both and is the one to reach for.
+  if (!Array.isArray(candidates)) {
+    throw new TypeError('preferUnsaid takes a list of candidates and returns a list')
+  }
   const said = state?.mem?.saidLines
   if (!Array.isArray(said) || said.length === 0) return candidates
   const seen = new Set(said)
@@ -68,4 +77,14 @@ export function rememberSaid(mem, text) {
   const key = lineKey(text)
   const next = prev[prev.length - 1] === key ? prev : [...prev, key]
   return { ...mem, saidLines: next.length > SAID_MEMORY ? next.slice(-SAID_MEMORY) : next }
+}
+
+/**
+ * One line the character has not heard, or one they have if that is all there
+ * is. The safe shape for a caller that wants a sentence rather than a pool.
+ */
+export function pickUnsaid(state, candidates, pick) {
+  const fresh = preferUnsaid(state, candidates)
+  const one = pick ? pick(fresh) : fresh[Math.floor(Math.random() * fresh.length)]
+  return Array.isArray(one) ? one[Math.floor(Math.random() * one.length)] : one
 }

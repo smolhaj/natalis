@@ -770,7 +770,12 @@ export function deriveInitialParents(char) {
   const motherFirst = pickUnusedName(country.namePool.female, taken)
   taken.add(String(motherFirst).toLowerCase())
   const fatherFirst = pickUnusedName(country.namePool.male, taken)
-  const altSurname = pickFrom(country.surnames)
+  // The father used to be given a DIFFERENT surname from his wife and children,
+  // deliberately, which in every society and era this game covers reads as a
+  // data bug: "Your father, Robert Carter, dies at 81" in an obituary for James
+  // Young. A household where the parents' names differ is a real thing and a
+  // minority one; it needs to be the exception, not the rule.
+  const altSurname = chance(0.08) ? pickFrom(country.surnames) : surname
   const baseQ = { secure: 82, stable: 68, struggling: 48, unstable: 28 }[familyStability] ?? 55
   const fatherPresent = familyStability !== 'unstable' || chance(0.55)
   const motherOccupation = assignParentOccupation(wealthTier, arch, birthYear, 'female', familyStability)

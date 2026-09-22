@@ -214,7 +214,7 @@ export function tryForChild(state) {
       ...state,
       flags: [...new Set([...state.flags, 'trying_for_child'])],
       mem: { ...(state.mem ?? {}), tryingSinceAge: tryingSince },
-      log: [...state.log, { age: state.age, isKey: false, text: preferUnsaid(state, pool) }],
+      log: [...state.log, { age: state.age, isKey: false, text: pickFrom(preferUnsaid(state, pool)) }],
     }
   }
   // Conception — store child details in mem; birth will be delivered by tick() ~2 years later

@@ -40,7 +40,7 @@ export const EVENTS_SONDER_4 = [
       !G.mem?.s4_walkman &&
       G.currentYear >= 1980 && G.currentYear <= 1992 &&
       G.age >= 12 && G.age <= 20,
-    text: 'The headphones go in and the world goes away. This is new — music as a private room you carry with you, as something that insulates the commute and the walk to school and the waiting. The tape is a specific object: you turn it over when one side ends. The act of turning it over is a small ceremony that you will not miss when it stops being necessary and that you will occasionally miss for years after.',
+    text: 'The headphones go in and the world goes away. This is new — music as a private room you carry with you, as something that insulates the bus ride and the walk to school and the waiting. The tape is a specific object: you turn it over when one side ends. The act of turning it over is a small ceremony that you will not miss when it stops being necessary and that you will occasionally miss for years after.',
     choices: null,
     effect: (p) => { p.m += 5; p.setMem('s4_walkman', true) },
   },
@@ -184,7 +184,9 @@ export const EVENTS_SONDER_4 = [
       !G.mem?.s4_meeting &&
       G.age >= 30 &&
       G.career &&
-      G.currentYear >= 1995,
+      // A year floor is not an arrival: this fired in North Korea in 1998, where
+      // the technology table says email never arrives at all.
+      hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear),
     text: 'You have been in a meeting that could have been an email and in an email that should have been a meeting. Today it is the first kind. You sit at a table for seventy minutes and produce three decisions, two of which were already made before anyone arrived. You know everyone who is there. There is nothing wrong. You leave and eat your lunch at your desk and feel obscurely grateful for the quiet.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s4_meeting', true) },

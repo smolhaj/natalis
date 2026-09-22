@@ -25,6 +25,7 @@ import { tickLifeCourse, secondaryChance, primaryChance } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
 import { suspendedInstitutions, proseFitsInstitutions, institutionExists } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
+import { hasTech } from '../data/technology.js'
 
 // What a listed salary is worth where it is paid. The companion question —
 // what it is worth WHEN it is paid — is `wageIndex` in economy.js, and the two
@@ -740,6 +741,23 @@ function eventWeight(e, G, desire, leaning) {
   // Inside the contemplative layer, prefer observations that are anchored to
   // this place and era — the "place and era texture" layer of the quiet year.
   if (e.contemplative && e.anchored) w *= 3
+  // An arc the character is already inside gets its next link.
+  //
+  // 194 events require a `mem` key another event sets, and 190 of them sat at
+  // weight 1-6, competing with the whole pool even three links in. The
+  // parent-care arc is eight links, two years apart, at weight 3, against a
+  // parent who will die within about fifteen years — so it essentially never
+  // reached its own ending. "Follow-through first" is the first design
+  // principle in CLAUDE.md and it was losing to the draw.
+  //
+  // Only a character who satisfies the prerequisite sees this, so it cannot
+  // crowd out anything for anybody else; it decides the order of what is
+  // already open, not whether new things can start.
+  if (e.continuesMem && e.continuesMem.every(k => G.mem?.[k])) w *= 8
+  // Same for a flag that exactly one event sets, which is an arc marker rather
+  // than a category. A smaller factor, because a long life holds many of these
+  // and they should order the follow-through, not drown out everything else.
+  else if (e.continuesFlag && e.continuesFlag.every(f => G.flags.includes(f))) w *= 5
   // Reaching a character who satisfies a four- or five-dimension guard is the
   // whole point of having written it. Without this, an event needing a Dalit
   // girl in rural India in a named decade competes on equal terms with every
@@ -1963,7 +1981,7 @@ function checkIllnessRisk(state) {
         'The drugs exist. They are not here. Everyone in the room knows both halves of that.',
       ],
     }
-    const illnessText = `${preferUnsaid(state, illnessContext[healthcare] ?? illnessContext.fair)} You are diagnosed with ${illness.name}.`
+    const illnessText = `${pickFrom(preferUnsaid(state, illnessContext[healthcare] ?? illnessContext.fair))} You are diagnosed with ${illness.name}.`
 
     const event = {
       id: `illness_${illness.id}_${state.age}`,
@@ -2570,8 +2588,14 @@ export function tick(state) {
     const smarts = s.stats.smarts
     const canAfford = (s.money ?? 0) >= 8000 || smarts >= 72
     const scholarship = smarts >= 75 || rawGpa >= 3.7
+    // The one screen in the game that still read like a menu in a different
+    // game: eleven emoji buttons and outcome copy in the register the design
+    // document rules out ("In-demand work. Good pay.", "Competitive and
+    // potentially lucrative."). It also framed every school system on earth as
+    // an American one, printing "You graduate from high school. GPA: 2.62" to a
+    // Russian in 1993, and offered IT as a trade in 1946.
     const uniChoices = (smarts >= 50 && canAfford) ? [{
-      text: '🎓 Go to University',
+      text: 'Go on to university',
       tag: null,
       outcome: scholarship ? 'You earn a partial scholarship and enroll in university.' : 'You enroll in university. The next four years will shape your career.',
       effect: (p) => {
@@ -2585,10 +2609,10 @@ export function tick(state) {
         phase: 'young_adult',
         text: 'What will you study at university?',
         choices: [
-          { text: '🏥 Medicine / Healthcare', tag: null, outcome: 'Demanding, long hours, significant reward.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'healthcare', year: 0 }); p.setMem('uniField', 'healthcare') }, inject: null },
-          { text: '⚖️ Law / Business', tag: null, outcome: 'Competitive and potentially lucrative.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'business', year: 0 }); p.setMem('uniField', 'business') }, inject: null },
-          { text: '🔬 Science / Engineering', tag: null, outcome: 'Rigorous with strong career prospects.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'science', year: 0 }); p.setMem('uniField', 'science') }, inject: null },
-          { text: '📚 Arts / Humanities', tag: null, outcome: 'You follow your passion. The path is less prescribed.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'arts', year: 0 }); p.setMem('uniField', 'arts') }, inject: null },
+          { text: 'Medicine', tag: null, outcome: 'Six years, and the first two are anatomy. You will be older than your friends when you start earning.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'healthcare', year: 0 }); p.setMem('uniField', 'healthcare') }, inject: null },
+          { text: 'Law or business', tag: null, outcome: 'The reading is enormous and most of it is other people\'s arguments. You are good at holding two of them at once.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'business', year: 0 }); p.setMem('uniField', 'business') }, inject: null },
+          { text: 'Science or engineering', tag: null, outcome: 'The mathematics is the filter and everybody knows it. You are on the right side of it, narrowly.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'science', year: 0 }); p.setMem('uniField', 'science') }, inject: null },
+          { text: 'Arts or humanities', tag: null, outcome: 'Somebody in the family asks what you will do with it. You do not have an answer and you go anyway.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'arts', year: 0 }); p.setMem('uniField', 'arts') }, inject: null },
         ],
         effect: null,
         when: () => true,
@@ -2597,32 +2621,44 @@ export function tick(state) {
     const graduationEvent = {
       id: 'hs_graduation',
       phase: 'young_adult',
-      text: `You graduate from high school. GPA: ${rawGpa.toFixed(2)}. The world is waiting — what comes next?`,
+      // "High school" and a four-point GPA are one country's school system.
+      // The USSR marked out of five and had no high school at all.
+      text: (() => {
+        const arch = liveCountry(s)?.archetype
+        const western = arch === 'wealthy_west' && (liveCountry(s)?.name === 'United States' || liveCountry(s)?.name === 'Canada')
+        return western
+          ? `You finish high school. Your average comes out at ${rawGpa.toFixed(2)}. Somebody asks what comes next and you realise they expect an answer today.`
+          : `School is finished. The results come out and they are what they are: about what you expected, and it turns out that is its own kind of disappointment. Somebody asks what comes next.`
+      })(),
       choices: [
         ...uniChoices,
         {
-          text: '🔧 Trade / Vocational School',
+          text: 'Train in a trade',
           tag: null,
-          outcome: 'A practical path. Two years to a certified trade.',
+          outcome: 'Two years, and at the end of them you have a thing you can do that somebody will always need doing.',
           effect: (p) => { p.m += 3; p.addFlag('vocational_enrolled'); p.setMem('educationPath', 'vocational') },
           inject: {
             id: 'vocational_field_choice',
             phase: 'young_adult',
             text: 'Which trade will you train in?',
             choices: [
-              { text: '🔌 Electrician', tag: null, outcome: 'In-demand work. Good pay.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'electrician', year: 0 }); p.setMem('vocField', 'electrician') }, inject: null },
-              { text: '🔧 Plumbing', tag: null, outcome: 'Essential trade. Steady income.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'plumber', year: 0 }); p.setMem('vocField', 'plumber') }, inject: null },
-              { text: '🏗️ Construction', tag: null, outcome: 'Physical work. You build real things.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'construction', year: 0 }); p.setMem('vocField', 'construction') }, inject: null },
-              { text: '💻 IT / Technical', tag: null, outcome: 'Fast-growing field, strong demand.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'IT', year: 0 }); p.setMem('vocField', 'IT') }, inject: null },
+              { text: 'Electrician', tag: null, outcome: 'You learn the colours, the loads, and the particular carefulness of people who work with something that does not forgive.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'electrician', year: 0 }); p.setMem('vocField', 'electrician') }, inject: null },
+              { text: 'Plumbing', tag: null, outcome: 'Everybody has a story about a plumber. You learn quickly that half the job is the conversation in the doorway.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'plumber', year: 0 }); p.setMem('vocField', 'plumber') }, inject: null },
+              { text: 'Building', tag: null, outcome: 'The first week your hands blister and the second week they stop. You can point at things now and say you did that.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'construction', year: 0 }); p.setMem('vocField', 'construction') }, inject: null },
+              // Offered with `when: () => true` to an American choosing a trade
+              // in 1946. A trade you can train in is a trade that exists.
+              ...(hasTech(liveCountry(s), 'personal_computer', s.currentYear)
+                ? [{ text: 'Computers', tag: null, outcome: 'Nobody in the family can explain what you do. The machines are in a room with its own air conditioning and you are allowed in it.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'IT', year: 0 }); p.setMem('vocField', 'IT') }, inject: null }]
+                : [{ text: 'Mechanic', tag: null, outcome: 'Engines are a finite number of things arranged in a finite number of ways, and after a year you can hear which one is wrong.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'mechanic', year: 0 }); p.setMem('vocField', 'mechanic') }, inject: null }]),
             ],
             effect: null,
             when: () => true,
           },
         },
         {
-          text: '💼 Enter the Workforce',
+          text: 'Start working',
           tag: 'workforce_direct',
-          outcome: 'No more school. You start earning right away.',
+          outcome: 'No more school. There is a wage at the end of the month and it is yours, which changes the shape of a week.',
           effect: (p) => { p.m += 2; p.addFlag('workforce_direct'); p.setMem('educationPath', 'workforce') },
           inject: null,
         },

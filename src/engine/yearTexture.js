@@ -1716,7 +1716,7 @@ function* textureCandidates(state, opts = {}) {
           : `${cn} is at school. That is a new country they go to every morning and come back from changed, incrementally.`,
         `The ${ya}-year-old logic of ${cn} is both wrong and completely coherent from the inside. You are learning to follow it.`,
         youngChildren.length > 1
-          ? `You are outnumbered by small people who trust you completely. This is among the most complicated feelings available.'`
+          ? `You are outnumbered by small people who trust you completely. This is among the most complicated feelings available.`
           : `The specific way ${cn} laughs at something they find funny — you would not trade that for anything available at your age.`,
       ])]
     }
@@ -2595,7 +2595,9 @@ function* textureCandidates(state, opts = {}) {
 
   if (F.has('stayed_when_others_left') && Math.random() < 0.22) yield [T.earned, pick([
     'Another one gone. You have counted so many. The country empties around you. You are still here. The decision was made at a particular moment and you are still living it.',
-    'The ones who left send money and WhatsApp messages and visit at Christmas. You are here in the in-between. The country has your year.',
+    hasTech(state.currentCountry ?? state.character?.country, 'smartphone', currentYear)
+      ? 'The ones who left send money and WhatsApp messages and visit at Christmas. You are here in the in-between. The country has your year.'
+      : 'The ones who left send money and letters and come at Christmas, when they come. You are here in the in-between. The country has your year.',
     phase === 'late_life'
       ? 'You are one of the ones who stayed. The decision accumulated over years into a fact. The people who shaped this place with you are mostly somewhere else now.'
       : 'The houses that have gone quiet on your street. The names at school your children don\'t know. You are still here.',
@@ -3012,7 +3014,7 @@ function* textureCandidates(state, opts = {}) {
     'Your name was changed in the official register. The name your parents gave you is the name used at home. You have been navigating two names for as long as you can remember.',
     phase === 'late_life'
       ? 'You have been Kurdish in a country that sometimes prosecuted that fact. The persistence of who you are against that pressure is the record.'
-      : 'To be Kurdish here is to carry the political fact of being Kurdish everywhere — at school, at the checkpoint, in the office where the form asks for national identity.',
+      : 'To be Kurdish here is to carry the political fact of being Kurdish everywhere — at school, at the checkpoint, at the registry desk where the form asks for national identity.',
     'The culture is maintained in specific ways: the language at home, the songs at weddings, the names chosen for children. Maintenance is resistance when maintenance is required.',
   ])]
 
@@ -9056,8 +9058,10 @@ function* textureCandidates(state, opts = {}) {
       : 'You remember where you were. You remember what the sky looked like. You remember the television running the footage on a loop. The specific details do not fade the way other memories fade.',
   ])]
   if (F.has('post_9_11_world') && Math.random() < 0.15) yield [T.anchored, pick([
-    'The security lines, the body scanners, the databases, the color-coded threat level system that no one could explain. The world after 2001 was a world organised around a specific event.',
-    'Something changed in 2001 and the change was sold as temporary emergency measures and the measures are still there twenty years later.',
+    (state.currentCountry ?? state.character?.country)?.name === 'United States'
+      ? 'The security lines, the body scanners, the databases, the colour-coded threat level that nobody could explain. The world after 2001 was a world organised around a specific event.'
+      : 'The security lines and the databases arrived here too, imported whole from somewhere else, for a thing that happened somewhere else. Nobody asked and the queues are longer.',
+    `Something changed in 2001 and the change was sold as temporary emergency measures and the measures are still there ${state.currentYear - 2001} years later.`,
   ])]
   if (F.has('katrina_generation') && Math.random() < 0.22) yield [T.anchored, pick([
     'The satellite image of the eye. The levees failing the morning of August 29. The Superdome. The people on the rooftops. "Brownie, you\'re doing a heck of a job." The helicopters flying over.',
@@ -13971,7 +13975,7 @@ function* textureCandidates(state, opts = {}) {
         1990: [
           'The internet is arriving, slowly. You know someone whose family has it.',
           'The decade feels like a transition between a world you were born into and one that is being built around you.',
-          'The video game or the CD player or the mobile phone — there is one thing that has arrived and changed everything.',
+          'The video game or the CD player or the first home computer — there is one thing that has arrived and changed everything.',
         ],
         2000: [
           'The phone is becoming a different kind of object. This is happening gradually and then very fast.',
@@ -14094,6 +14098,10 @@ function* textureCandidates(state, opts = {}) {
     const cn = state.character?.country?.name
     const country = state.currentCountry ?? state.character?.country ?? null
     const era = Math.floor(currentYear / 10) * 10
+    // These blocks fire at every age, so a line about the device in everyone's
+    // pocket reorganising the week was reaching four-year-olds. Noticing that
+    // something has been reorganised requires having been there before it.
+    const noticesDevices = age >= 12
 
     // ── wealthy_west era texture ──
     // The bucket is `Math.floor(year/10)*10`, so `era === 1940` meant 1940–1949
@@ -14162,12 +14170,12 @@ function* textureCandidates(state, opts = {}) {
       ])]
       if (era === 2000) yield [T.anchored, pick([
         'The security check at the airport takes longer than it used to. The whole architecture of public space has changed.',
-        'The mobile phone is in everyone\'s pocket now. The world is more reachable and less quiet.',
+        noticesDevices && 'The mobile phone is in everyone\'s pocket now. The world is more reachable and less quiet.',
         'The housing market is doing something that housing markets sometimes do, and no one yet knows which kind.',
       ])]
       if (era === 2010) yield [T.anchored, pick([
         'Austerity is the word now. The public sector is being reduced again, for different reasons than before, with similar consequences.',
-        'The smartphone has reorganized the day. You look at it more than you look at anything else.',
+        noticesDevices && 'The smartphone has reorganized the day. You look at it more than you look at anything else.',
         'The inequality numbers are back in the newspapers. They were always there. The newspapers are noticing them again.',
         'The political consensus that held for thirty years has developed serious cracks. People are choosing differently.',
       ])]
@@ -14216,7 +14224,7 @@ function* textureCandidates(state, opts = {}) {
           ? 'The West is further away than it seemed in the early nineties. Russia is doing something specific with that distance.'
           : 'The accession is close enough to plan around now. What it will actually mean is argued about in a way that assumes it is coming.',
         'The pension is not what it was supposed to be, and the generation that worked for it knows this.',
-        'The mobile phone arrived and the life reorganised itself around it. This happened everywhere and here it happened at a particular speed.',
+        noticesDevices && 'The mobile phone arrived and the life reorganised itself around it. This happened everywhere and here it happened at a particular speed.',
       ])]
       if (era >= 2010) yield [T.anchored, pick([
         'The nostalgia is for the certainty, not for the bread lines. Even the people who remember the bread lines sometimes feel it.',
@@ -14271,14 +14279,14 @@ function* textureCandidates(state, opts = {}) {
         !inTown && 'The sons go down for the season and come back with money and a way of talking that is new. The way of talking is what the mothers notice.',
       ])]
       if (era === 1990) yield [T.anchored, pick([
-        currentYear >= 1996 && 'The mobile phone is arriving before the landline arrived. This is either a paradox or a bypass. Either way, things work.',
+        noticesDevices && currentYear >= 1996 && 'The mobile phone is arriving before the landline arrived. This is either a paradox or a bypass. Either way, things work.',
         'Democracy is the official story now — elections, campaigns, the whole machinery. The substance of it is still being negotiated.',
         inTown && 'The middle class is emerging. It is visible in the cars, in the private schools, in the kind of shopping now available.',
         inTown && 'The family that buys a car this year is purchasing mobility and also membership in something — a tier of city life with its own traffic problems.',
         !inTown && 'The road was graded this year and the bus comes most days now. What it mostly carries out is people.',
       ])]
       if (era === 2000) yield [T.anchored, pick([
-        inTown && currentYear >= 2003 && 'The mobile phone is in everyone\'s pocket, and the pocket belongs to people who were never going to be given a telephone line.',
+        noticesDevices && inTown && currentYear >= 2003 && 'The mobile phone is in everyone\'s pocket, and the pocket belongs to people who were never going to be given a telephone line.',
         CALL_CENTRE.includes(cn) && inTown && currentYear >= 2000 && 'The call centre at two in the morning, full of young people speaking across time zones. A whole economy organised around the gap between clocks.',
         CHINA_BUILT.includes(cn) && currentYear >= 2005 && 'Chinese investment is visible in the roads, in the buildings, in the machinery on the site. The terms of the investment are less visible.',
         MEGACITY.includes(cn) && inTown && 'The city is the size of a small country. Its problems are the size of a small country\'s.',
@@ -14288,7 +14296,7 @@ function* textureCandidates(state, opts = {}) {
       ])]
       if (era >= 2010) yield [T.anchored, pick([
         'The young population bulge is visible everywhere — in the schools, in the unemployment statistics, in the food stalls that appear each year.',
-        'The smartphone has arrived. The politics are faster now and more visible and less controllable by the people who used to control them.',
+        noticesDevices && 'The smartphone has arrived. The politics are faster now and more visible and less controllable by the people who used to control them.',
         'The diaspora money is a significant part of the economy. The people who send it do not always get credit for what they are sustaining.',
         inTown && currentYear >= 2013 && 'The ride-share platform arrived and the informal drivers are on apps now. The platform takes its share. This is visible to no one in the car.',
         !inTown && 'The young people are on the phone to a city they have not been to. They know what the rent is there before they know the way.',
@@ -14326,11 +14334,11 @@ function* textureCandidates(state, opts = {}) {
         'Power cuts so regular they have been accommodated. The candle in the sideboard. The neighbour with the generator who has become a kind of utility.',
       ])]
       if (era >= 2010) yield [T.anchored, pick([
-        'The smartphone has arrived before the electricity is reliable. Solar charging is a business now.',
+        noticesDevices && 'The smartphone has arrived before the electricity is reliable. Solar charging is a business now.',
         'The middle class is real. It is also precarious in a way the word middle doesn\'t quite capture.',
-        'The diaspora is everywhere — in the remittances, in the WhatsApp groups, in the children who have two accents.',
+        noticesDevices && 'The diaspora is everywhere — in the remittances, in the WhatsApp groups, in the children who have two accents.',
         'The young people are in two places at once — here and on the phone, here and in their plans, which include a version of elsewhere.',
-        'The church has a Facebook page and a WhatsApp group and a pastor who sends voice notes. The congregation has distributed itself across the digital infrastructure without leaving the building.',
+        noticesDevices && 'The church has a Facebook page and a WhatsApp group and a pastor who sends voice notes. The congregation has distributed itself across the digital infrastructure without leaving the building.',
       ])]
     }
 
@@ -14461,7 +14469,7 @@ function* textureCandidates(state, opts = {}) {
       if (era >= 2000) yield [T.anchored, pick([
         'The aging population is the demographic challenge that the economists keep discussing. The people getting older are less interested in being discussed.',
         'The birth rate is the number that appears in the policy documents. The young people have reasons for it that the policy documents do not fully capture.',
-        currentYear >= 2010 && 'The smartphone is the device through which most things happen now. Including things that used to happen differently.',
+        noticesDevices && currentYear >= 2010 && 'The smartphone is the device through which most things happen now. Including things that used to happen differently.',
       ])]
     }
 

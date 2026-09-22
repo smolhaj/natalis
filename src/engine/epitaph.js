@@ -8,7 +8,14 @@ import { WORLD_EVENTS } from '../data/worldEvents'
 // Displayed in the Stats tab, regenerated each year.
 export function generateIdentityCard(state) {
   const F = new FlagSet(state.flags ?? [])
-  const { age, partner, children, career, education, desire } = state
+  // The partner object is kept on state after they die, because the grief and
+  // memory layers need the name. Every branch below asks "do they have a
+  // partner" and means a living one, so a widow was told "You are married to
+  // Vikram Joshi" on the card that renders every year for the rest of her life,
+  // four years after his death line printed. 9 of 13 widowed lives got this.
+  const { age, children, career, education, desire } = state
+  const partner = state.partner?.alive === false ? null : state.partner
+  const lostPartner = state.partner?.alive === false ? state.partner : null
   const G = buildG(state)
   const country = G.currentCountry ?? state.character?.country
   const birthCountry = state.character?.country
@@ -54,11 +61,21 @@ export function generateIdentityCard(state) {
     exterior.push(c > 0
       ? `You are with ${partner.name} and have ${c === 1 ? 'a child' : `${c} children`}.`
       : `You are with ${partner.name}.`)
-  } else if (F.has('widowed') || F.has('partner_died')) {
-    const c = (children ?? []).length
-    exterior.push(c > 0
-      ? `You are widowed, raising ${c === 1 ? 'a child' : `${c} children`}.`
-      : 'You are widowed.')
+  } else if (lostPartner || F.has('widowed') || F.has('partner_died')) {
+    const kids = children ?? []
+    const c = kids.length
+    // "Raising five children" was printed to an eighty-one-year-old whose
+    // youngest was fifty.
+    const stillRaising = kids.some(k => (k.age ?? 99) < 18)
+    const name = lostPartner?.name
+    exterior.push(
+      c > 0 && stillRaising
+        ? `You are widowed, raising ${c === 1 ? 'a child' : `${c} children`}.`
+        : c > 0
+          ? (name
+              ? `You are widowed. ${name} is who you had the ${c === 1 ? 'child' : c + ' children'} with.`
+              : `You are widowed, with ${c === 1 ? 'a grown child' : c + ' grown children'}.`)
+          : (name ? `You are widowed. ${name} was who you had.` : 'You are widowed.'))
   } else if (F.has('divorced')) {
     exterior.push('You are divorced.')
   } else if ((children ?? []).length > 0) {
@@ -668,12 +685,20 @@ export function generateEpitaph(state) {
     para2.push(`${He} lived in a divided Germany — the Wirtschaftswunder on one side, the Trabant queue on the other — and lived to see it reunified. Both Germanys were built from the same rubble by the same generation asking different questions about what came before.`)
   }
 
-  // Displacement / migration
+  // Displacement / migration.
+  //
+  // `displaced` does not mean a border was crossed — it is also the flag for
+  // being moved inside your own country, which is most displacement — and the
+  // state already knows the difference. A woman who lived her whole life in one
+  // Siberian district was being told she had been carried across borders.
+  const leftTheCountry = (state.currentCountry?.name ?? state.character?.country?.name) !== state.character?.country?.name
   if (any('refugee', 'displaced') && !any('genocide_survivor', 'tutsi_hidden')) {
     if (any('sought_asylum', 'refugee_status')) {
       para2.push(`${He} fled and was eventually granted refuge. The years of waiting between were their own kind of sentence.`)
-    } else {
+    } else if (leftTheCountry || any('refugee')) {
       para2.push(`${He} was carried across borders by forces larger than any single life.`)
+    } else {
+      para2.push(`${He} was moved by forces larger than any single life, though never out of the country ${he} was born in. Most displacement looks like that.`)
     }
   } else if (any('emigrated', 'diaspora') && para2.length === 0) {
     // Only add emigration if no heavy history already took up this paragraph
@@ -1200,7 +1225,11 @@ export function generateLifeNotes(state) {
   if (f('first_gen_graduate')) add(70, 'First in the family to graduate university.')
   if (any('lgbtq_persecuted', 'arrested_for_orientation')) add(70, 'Persecuted for who they were.')
   if (any('served_prison_time', 'incarcerated', 'served_time')) add(70, 'Served time in prison.')
-  if (any('refugee', 'displaced') && !any('genocide_survivor', 'tutsi_hidden')) add(70, 'A refugee.')
+  // Same distinction as the epitaph: "A refugee" for a life that never left the
+  // country is simply wrong, and it was printing on 13 of 48 lives.
+  const crossed = (state.currentCountry?.name ?? state.character?.country?.name) !== state.character?.country?.name
+  if (any('refugee') && !any('genocide_survivor', 'tutsi_hidden')) add(70, 'A refugee.')
+  else if (f('displaced') && !any('genocide_survivor', 'tutsi_hidden')) add(70, crossed ? 'A refugee.' : 'Displaced, inside their own country.')
   if (f('famine_memory') || f('famine_survivor')) add(70, 'Survived famine.')
 
   // Notable choices (priority 60)

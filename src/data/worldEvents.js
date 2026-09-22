@@ -231,8 +231,20 @@ export const WORLD_EVENTS = [
     countries: ['Ukraine', 'Russia', 'Poland', 'Romania', 'Georgia'],
     narrative: 'Russian tanks cross into Ukraine in the early morning. The capital is shelled. Refugees — millions of them — move westward. The war that everyone said wouldn\'t happen is happening. Food prices, fuel prices, the order of Europe: all of it shifts. You watch this on a phone, in a world that is no longer arranged the way it was yesterday.',
     context: 'Russia launched a full-scale invasion of Ukraine on February 24, 2022, following its 2014 annexation of Crimea and intervention in the Donbas. By 2025, over 10 million Ukrainians had been internally displaced and 6 million had fled abroad — the largest European refugee crisis since 1945. Ukrainian civilian infrastructure was systematically targeted. Western nations imposed unprecedented economic sanctions on Russia. Both sides sustained casualties estimated at over half a million by 2024, making this the deadliest war in Europe since World War II. No peace settlement was in sight.',
-    effect: (p) => { p.h -= 10; p.m -= 15; p.w -= 8; p.addFlag('war_generation'); },
-    addFlags: ['war_generation', 'displaced'],
+    // `displaced` is read by the epitaph as "A refugee" and "carried across
+    // borders by forces larger than any single life". It used to be in
+    // `addFlags`, which hands it to everyone alive in all five countries — so a
+    // Siberian villager who never left her district was a refugee on her own
+    // death screen, measured in 13 of 48 lives. The war generation is everyone
+    // in those countries. Displacement is not.
+    addFlags: ['war_generation'],
+    effect: (p) => {
+      p.h -= 10; p.m -= 15; p.w -= 8
+      // Ukraine is where the displacement happened. Elsewhere in the region the
+      // war is news, conscription, sanctions and someone else's relatives.
+      const here = p._state?.currentCountry?.name ?? p._state?.character?.country?.name
+      if (here === 'Ukraine' && Math.random() < 0.35) p.addFlag('displaced')
+    },
     minAge: 0,
   },
   {
