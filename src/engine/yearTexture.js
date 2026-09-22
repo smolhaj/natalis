@@ -14779,6 +14779,353 @@ function* textureCandidates(state, opts = {}) {
     'The work was precise. The risk attached to the precision was not abstract.',
   ])]
 
+  // ─── NEW ROSTER TEXTURE: AUSTRIA, ADRIATIC, ICELAND, MOLDOVA, OMAN, VANUATU, BHUTAN ───
+  // The follow-through layer for the eight countries added when the
+  // roster-reference audit found content that already assumed them. Under the
+  // old first-match-wins ordering a block added here — 13,000 lines down — was
+  // unreachable for anyone who also had a dead partner, a chronic condition or
+  // an age. It is in the anchored tier now and competes on equal terms.
+
+  if (F.has('aut_heldenplatz_witness') && Math.random() < 0.24) yield [T.anchored, pick([
+    'You were in the square. You have never once described it to anyone who was not, and the description you would give is about a hand on a shoulder rather than about a balcony.',
+    phase === 'late_life'
+      ? 'Everyone who was old enough to be in that square is dead or nearly. The event has become a documentary. You are one of about four people left who knows what the sound of it was like from underneath.'
+      : 'The photographs of it are in the schoolbooks now. You look for yourself in them, in the part of the crowd where you were standing, and cannot find anyone.',
+  ])]
+  if (F.has('aut_family_uneasy') && Math.random() < 0.2) yield [T.anchored, pick([
+    'Your family was not enthusiastic and did not say so, which in 1938 was the available position and is not one anyone hands out medals for.',
+    'There is a difference between not cheering and objecting, and your household lived in the gap, and you have never decided what the gap was worth.',
+  ])]
+  if (F.has('aut_bombing_survivor') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You are in a cellar somewhere in the country whenever the ceiling makes a particular sound. It takes a second to come back and the second is always there.',
+    'The Opera was rebuilt to look exactly as it had. You have been inside it since and it is very fine and it is not the building you remember burning.',
+    phase === 'late_life'
+      ? 'The buildings that came back came back perfect, which is its own kind of lie — nothing in the street records that the street had a gap in it.'
+      : 'Somebody was sweeping within the hour. Of everything about that morning it is the sweeping you have kept.',
+  ])]
+  if (F.has('aut_occupation_childhood') && Math.random() < 0.2) yield [T.anchored, pick([
+    'You can still tell the four uniforms apart. It is a useless skill and it is filed where the useful ones are.',
+    'Temporary lasted ten years, which was a childhood, and you have been suspicious of the word since.',
+  ])]
+  if (F.has('aut_neutrality_defended') && Math.random() < 0.18) yield [T.anchored,
+    'Neutrality is a principle in the speeches and it was a price at the time, and you are among the few who remember it being a price.']
+  if (F.has('aut_courtyard_elder') && Math.random() < 0.24) yield [T.anchored, pick([
+    'The tree is what people mean when they say the tree. You were here before it.',
+    'Two generations of families have turned over in this building and the laundry room has been renovated twice and the rent is still a number that embarrasses your cousin in Munich.',
+  ])]
+  if (F.has('aut_waldheim_abstained') && Math.random() < 0.2) yield [T.anchored,
+    'You got through 1986 without a position. Whenever the year comes up you are aware of exactly what you did not say and to whom.']
+  if (F.has('aut_immigration_open') && Math.random() < 0.18) yield [T.anchored,
+    'You used their names. Forty years on, one of their grandchildren is a doctor at the clinic on the corner and greets you by yours.']
+  if (F.has('aut_immigration_distant') && Math.random() < 0.18) yield [T.anchored,
+    'You were never unkind to the family on the floor below and never learned which town they were from, and both of those are things you did.']
+  if (F.has('aut_protest_exhausted') && Math.random() < 0.2) yield [T.anchored,
+    'You were right about it. Being right turned out not to be the variable that mattered, and knowing that is worse than not knowing it.']
+  if (F.has('aut_sovereignty_defensive') && Math.random() < 0.18) yield [T.anchored,
+    'The criticism came from outside and that is the part you objected to, and you have noticed, since, what the objection was standing in front of.']
+  if (F.has('aut_silence_broken') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You said it badly, in the wrong order, with far too much detail. The rule is broken. That was the whole objective.',
+    'Your child knows what the family did. You cannot tell whether the knowing has helped them and you would do it again.',
+  ])]
+  if (F.has('aut_silence_transmitted') && Math.random() < 0.22) yield [T.anchored,
+    'You changed the subject the way it was changed for you, and you watched the rule install itself in a seven-year-old in about four seconds.']
+  if (F.has('aut_transmitted_memory') && Math.random() < 0.2) yield [T.anchored,
+    'They wrote none of it down. They have not forgotten a word of it. You can tell from how carefully they ask the follow-up.']
+  if (F.has('aut_withheld_memory') && Math.random() < 0.2) yield [T.anchored,
+    'You gave them the dates. The dates were accurate and safe and they were not what you had.']
+
+  // ── Adriatic ──
+  if (F.has('adr_gastarbeiter_family') && Math.random() < 0.22) yield [T.anchored, pick([
+    'Your father came back twice a year in a better car than the street had. You have never been able to decide whether you were provided for or absent a parent, and the answer is both.',
+    phase === 'late_life'
+      ? 'You did the arithmetic once, properly: he was in the house for about four of your eighteen years. The house was paid for.'
+      : 'The coffee smelled different for two weeks and then it did not. You learned the calendar of a family run by transfer.',
+  ])]
+  if (F.has('adr_tito_generation') && Math.random() < 0.2) yield [T.anchored, pick([
+    'You can still hear the stadium singing. They play it on the anniversary and it is the same recording and it still does the thing to the back of your neck.',
+    'You have lived in more countries than you have moved house in, and none of the moving was yours.',
+  ])]
+  if (F.has('adr_si_independence') && Math.random() < 0.2) yield [T.anchored, pick([
+    'Ten days. You watched what came next happen in the same language, on the television, to people with names like yours.',
+    'The currency changed and then changed again and the second time it was the euro, and the whole distance was thirteen years.',
+  ])]
+  if (F.has('adr_si_luck_acknowledged') && Math.random() < 0.18) yield [T.anchored,
+    'You say it was demography and not virtue. It is not a popular sentence at a certain kind of table and it has not stopped being true.']
+  if (F.has('adr_si_national_pride') && Math.random() < 0.16) yield [T.anchored,
+    'The story is that Slovenia was organised and sensible and got out clean. It is a good story. You are aware it is partly a story.']
+  if (F.has('adr_si_erased_unaware') && Math.random() < 0.16) yield [T.anchored,
+    'Twenty-five thousand people were removed from a register in the year you were busy with something else. You know the number now.']
+  if (F.has('adr_si_crisis_generation') && Math.random() < 0.16) yield [T.anchored,
+    'Bad bank. It was the phrase of those two years, and it meant loans to people who knew people, and it was a fifth of everything the country makes.']
+  if (F.has('adr_si_weekend_cottage') && Math.random() < 0.24) yield [T.anchored, pick([
+    'The vines need doing and you will do them on Saturday, and the work is real and is the opposite of the week.',
+    'On a Friday afternoon the whole country goes uphill. There is nowhere here that is somewhere else.',
+  ])]
+  if (F.has('adr_hr_war_generation') && Math.random() < 0.2) yield [T.anchored, pick([
+    'The word neighbour has a second meaning for everyone your age here, and it did not have one in 1989, and it has not gone back.',
+    phase === 'late_life'
+      ? 'You have had thirty years of peace, which is longer than the war by a factor of seven, and the four years are still the ones with the detail in them.'
+      : 'There are people you do not speak to and people your parents do not speak to, and the reasons are specific and are from one particular autumn.',
+  ])]
+  if (F.has('adr_hr_oluja_complicated') && Math.random() < 0.2) yield [T.anchored,
+    'You can still describe the tractors. It was the end of the war and it was thirty kilometres of people leaving, and nobody has ever wanted both halves of that sentence at once.']
+  if (F.has('adr_hr_oluja_celebrated') && Math.random() < 0.16) yield [T.anchored,
+    'It was the largest relief of your life and it was not complicated at the time, and you have noticed that it has got more complicated since without anything new happening.']
+  if (F.has('adr_hr_kept_open') && Math.random() < 0.18) yield [T.anchored,
+    'You kept it open for four years. No medal exists for that and people in the town still mention it to you in shops.']
+  if (F.has('adr_hr_serb_stayed') && Math.random() < 0.24) yield [T.anchored, pick([
+    'Nothing ever happened to you, which is a different thing from having been safe, and you knew the difference every single day.',
+    'The surname is the first fact about you and has been since 1991, and there is nothing to be done about a surname.',
+  ])]
+  if (F.has('adr_hr_emigrated') && Math.random() < 0.2) yield [T.anchored, pick([
+    'You send money and visit at Christmas and the visits have got harder rather than easier, which nobody warned you about.',
+    'Half your school year is in Ireland or Germany. The group chat is in Croatian and nobody in it is in Croatia.',
+  ])]
+  if (F.has('adr_hr_season_economy') && Math.random() < 0.22) yield [T.anchored, pick([
+    'From June the town is four times itself and from mid-September there is one bakery and a great deal of light.',
+    'The year has two halves and the money is made in one of them, and the other half is for repairs and arguments.',
+  ])]
+  if (F.has('adr_veteran_pension') && Math.random() < 0.18) yield [T.anchored,
+    'In the queue you can tell roughly who was actually there. Nobody says anything. The category has become a thing people are.']
+  if (F.has('adr_veteran_refused_pension') && Math.random() < 0.18) yield [T.anchored,
+    'You stopped claiming it. It cost real money and bought something you have never found the word for and would not trade.']
+  if (F.has('adr_return_knocked') && Math.random() < 0.2) yield [T.anchored,
+    'You talked to her for twenty minutes about the roof. Neither of you mentioned the war. It was the most successful conversation of that decade.']
+  if (F.has('adr_return_withheld') && Math.random() < 0.2) yield [T.anchored,
+    'You were back on the main road inside ten minutes and you have not gone again, and the lane is still available, and you are aware of that every year.']
+  if (F.has('adr_village_emptied') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You could name every house on this road and who is in it and how many are over seventy, and the answer to the last is most of them.',
+    'The bakery holds on because of the school bus. If the bus goes, the bakery goes, and then the road is just houses.',
+  ])]
+  if (F.has('adr_passport_nostalgia') && Math.random() < 0.16) yield [T.anchored,
+    'What you actually miss is a document. You are embarrassed by how small that is and it is still what you miss.']
+
+  // ── Iceland ──
+  if (F.has('isl_occupation_wages') && Math.random() < 0.2) yield [T.anchored, pick([
+    'You were paid weekly, in cash, for the first time in your life, and no policy in forty years had managed what that did to the turf houses.',
+    'People called it the blessed war quietly and were entirely aware of what it meant that they did.',
+  ])]
+  if (F.has('isl_left_the_farm') && Math.random() < 0.18) yield [T.anchored,
+    'You left the land at nineteen and have been in a town since, and you still know what weather is coming by the look of the light on a hill.']
+  if (F.has('isl_stayed_farming') && Math.random() < 0.18) yield [T.anchored,
+    'The valley thinned around you for thirty years. You are still here and the sheep still need doing and the road is better than it was.']
+  if (F.has('isl_cod_war_generation') && Math.random() < 0.2) yield [T.anchored, pick([
+    'A country with no army won an argument with the Royal Navy four times, and the entire arsenal was a threat to close one airbase.',
+    'The net-cutter on a cable. That was the weapon. You have never found the story less funny or less serious.',
+  ])]
+  if (F.has('isl_herring_collapse') && Math.random() < 0.2) yield [T.anchored, pick([
+    'The racks at Siglufjörður stood for years with nothing on them. An industry did not close; it was simply not arrived at.',
+    'Half the town went inside a decade and all of the buildings stayed, which is a particular way to be shown what happened.',
+  ])]
+  if (F.has('isl_kept_quota') && Math.random() < 0.2) yield [T.anchored,
+    'Every year the arithmetic of not having sold is harder to defend at your own kitchen table, and every year you fish your share.']
+  if (F.has('isl_quota_regret') && Math.random() < 0.22) yield [T.anchored,
+    'You are the richest person at the wake and you sit near the door. Nobody has said anything about it for twenty-five years.']
+  if (F.has('isl_accountability_seen') && Math.random() < 0.18) yield [T.anchored,
+    'They actually went to prison. Names everybody knew, a courtroom in Reykjavík, and no other country managed it, and you notice that every time you read about somewhere else.']
+  if (F.has('isl_everyone_related') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You establish within four minutes which farm their grandmother was from and therefore how you are related, and neither of you finds this strange.',
+    'Anonymity is not on offer here. Neither is being unaccounted for, and on the whole you would keep the trade.',
+  ])]
+
+  // ── Moldova ──
+  if (F.has('mda_transnistria_war') && Math.random() < 0.2) yield [T.anchored, pick([
+    'The strip on the far bank has a flag and a currency and a garrison and no recognition, and it has had all four for thirty years. The word is frozen. The people in it are not.',
+    'The steel mill and the power station are on the other side of a river you can see from the road, and crossing takes the right papers and a wait.',
+  ])]
+  if (F.has('mda_russian_schooled') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You are fluent and placeable and slightly foreign in your grandmother\'s kitchen, and the decision that did that was made when you were seven.',
+    'Two languages, and the one that got you the job is not the one the songs are in.',
+  ])]
+  if (F.has('mda_kept_language') && Math.random() < 0.2) yield [T.anchored,
+    'You kept the language and lost two rungs for it, and in 1989 you were suddenly the person who had been right all along, which arrived thirty years late.']
+  if (F.has('mda_language_restored') && Math.random() < 0.18) yield [T.anchored,
+    'For about a year the signs in Chișinău were in both alphabets. You remember the year the letters changed back better than several actual events.']
+  if (F.has('mda_raising_the_left_behind') && Math.random() < 0.24) yield [T.anchored, pick([
+    'Four children in the house and none of them yours. The money comes on time. At the school gate everyone waiting is your age.',
+    'You do the fevers and the parent evenings and the shoes. There is no word in any official form for what you are.',
+  ])]
+  if (F.has('mda_stayed_abroad_too_long') && Math.random() < 0.24) yield [T.anchored, pick([
+    'Two years became six. The politeness on the Sunday call never changed, and that is how you knew, and you stayed anyway.',
+    'You have paid for a house you have not stood in for three years and a childhood you watched at twelve minutes a week.',
+  ])]
+  if (F.has('mda_returned_home') && Math.random() < 0.18) yield [T.anchored,
+    'You came back with less than you went for and you were there for the rest of it, and on the arithmetic you lost and you are not confused about which was worth more.']
+  if (F.has('mda_romanian_passport') && Math.random() < 0.18) yield [T.anchored,
+    'The passport is Romanian and the grandparent it came from died before you were born. You used it within a month of getting it.']
+  if (F.has('mda_declined_passport') && Math.random() < 0.18) yield [T.anchored,
+    'Your sister is in Bologna on the passport you declined. The argument is ongoing and neither of you has moved.']
+  if (F.has('mda_embargo_hit') && Math.random() < 0.16) yield [T.anchored,
+    'Ninety per cent of the wine went east until one morning a sanitary objection arrived with a political timetable attached. The cellars at Cricova run for kilometres and were full.']
+  if (F.has('mda_moldovan_identity') && Math.random() < 0.16) yield [T.anchored,
+    'Whether this is Romania with a different history or a country of its own is a question you answer the same way every time and half your family answers differently.']
+  if (F.has('mda_read_the_list') && Math.random() < 0.2) yield [T.anchored,
+    'You found the name at the bottom of the 1949 list. It was the name you expected. Knowing is not better and you would read it again.']
+  if (F.has('mda_left_it_closed') && Math.random() < 0.2) yield [T.anchored,
+    'The archive is open and you have not gone. The village functions. That is what the silence was for and you are part of the arrangement now.']
+
+  // ── Oman ──
+  if (F.has('omn_old_sultanate') && Math.random() < 0.24) yield [T.anchored, pick([
+    'There was a permit required to fit a door with a lock. You have tried to explain this and it does not land, because it is not credible.',
+    'Three schools in the country and none of them near you, and when someone was properly ill they went by boat.',
+    phase === 'late_life'
+      ? 'The gates of Muscat were shut at dusk and after that you needed a lantern to be out at all. It was a rule about lanterns. It was 1968.'
+      : 'Your uncles went to Zanzibar and Bombay because there was nothing here to stay for, and that was simply the shape of a family.',
+  ])]
+  if (F.has('omn_two_countries_carried') && Math.random() < 0.22) yield [T.anchored,
+    'You are the only person in the room who feels it as distance rather than as history, and there is no way to hand that over.']
+  if (F.has('omn_dhofar_war') && Math.random() < 0.2) yield [T.anchored, pick([
+    'There was a war in the south for ten years and the north was not told very much about it, and the thing that ended it was a road and a school in every wadi.',
+    'If you are from those mountains it is the central fact of your family. If you are from the north it was a thing happening somewhere hot.',
+  ])]
+  if (F.has('omn_zanzibari_identity') && Math.random() < 0.24) yield [T.anchored, pick([
+    'The house speaks Swahili and the street speaks Arabic and your Arabic was corrected at school, and you are Omani by passport and by descent and by nothing else.',
+    phase === 'late_life'
+      ? 'Your children speak it badly and your grandchildren not at all. You have watched a language leave a family at the rate of one generation each.'
+      : 'The food is Zanzibari and so is the grammar of an argument in the kitchen, and neither is from here.',
+  ])]
+  if (F.has('omn_zanzibari_assimilated') && Math.random() < 0.2) yield [T.anchored,
+    'The accent went inside two years. Something else went with it that took considerably longer to notice was gone.']
+  if (F.has('omn_kafala_critical') && Math.random() < 0.18) yield [T.anchored,
+    'You make the observation occasionally and are thought of as difficult, and half the people working in this country cannot ever be from it.']
+  if (F.has('omn_kafala_accepted') && Math.random() < 0.18) yield [T.anchored,
+    'You are decent to the people in your own house. You have never once asked what their contract says.']
+  if (F.has('omn_ibadi_formation') && Math.random() < 0.18) yield [T.anchored,
+    'The tradition predates the split everyone else is arranging themselves around and is notably uninterested in it, and that has hardened into a foreign policy.']
+  if (F.has('omn_diversification_doubt') && Math.random() < 0.16) yield [T.anchored,
+    'Diversification has been in every speech since you were thirty. Your children are applying to a private sector that is still mostly other people.']
+
+  // ── Vanuatu ──
+  if (F.has('vut_condominium_childhood') && Math.random() < 0.24) yield [T.anchored, pick([
+    'Two police forces, two school systems, two currencies, two courts, and if one charged you, you could elect the other. They called it the Pandemonium.',
+    'Which school you were put in decided which European language you would spend your life in and therefore which half of the country you could talk to.',
+  ])]
+  if (F.has('vut_american_years') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You can wade out at low tide at Million Dollar Point and stand on a jeep. They bulldozed the surplus into the sea rather than ship it home.',
+    'Half a million servicemen through an archipelago of fifty thousand people, and the observation that goods can simply arrive has outlasted all of them.',
+  ])]
+  if (F.has('vut_independence_generation') && Math.random() < 0.2) yield [T.anchored, pick([
+    'The two flags came down on the same afternoon. Within a week there were Papua New Guinean troops on Espiritu Santo, which is not in the anniversary speeches.',
+    'The constitution put the land back under custom ownership, and that one sentence has decided more arguments in this country than everything else in it.',
+  ])]
+  if (F.has('vut_bislama_working_language') && Math.random() < 0.2) yield [T.anchored,
+    'The paperwork is in English and the meeting is in Bislama, and the parts of the meeting that matter are in Bislama, and this is never written down anywhere.']
+  if (F.has('vut_land_claim_won') && Math.random() < 0.2) yield [T.anchored,
+    'You have the signature and the lease money and a cousin who has not spoken to you in eleven years, and the pigs and mats that settled it were a legal instrument.']
+  if (F.has('vut_land_deferred') && Math.random() < 0.18) yield [T.anchored,
+    'You got nothing and you are the person everyone comes to next time, which is a currency the lease money cannot buy.']
+  if (F.has('vut_climate_reckoning') && Math.random() < 0.24) yield [T.anchored, pick([
+    'The roof has been replaced twice and the garden replanted four times, and the interval between is shortening, and you are not guessing about that.',
+    'The season starts earlier than it did when you were young. Two category fours inside three days was not previously on the list of things that happen.',
+    'The court case in The Hague is still running. The rain is not waiting for it.',
+  ])]
+
+  // ── Bhutan ──
+  if (F.has('btn_serfdom_freed') && Math.random() < 0.22) yield [T.anchored, pick([
+    'There is land in your name in a country that had no paved road and no currency in general circulation, and your father worked it as though the arrangement would not hold.',
+    'The first school was a day\'s walk. That was an improvement on no school, by exactly one day\'s walk.',
+  ])]
+  if (F.has('btn_lhotshampa_stayed') && Math.random() < 0.24) yield [T.anchored, pick([
+    'You stayed, and the citizenship category is checked every time you need anything, and it has been checked for thirty years.',
+    'The dress code is law and you wear it correctly and it is not yours, and everybody in the office knows both of those things.',
+  ])]
+  if (F.has('btn_television_generation') && Math.random() < 0.2) yield [T.anchored, pick([
+    'Television and the internet arrived in the same year, the last country on earth, and within eighteen months there were forty-six channels and an argument about wrestling.',
+    'What actually changed was not the content. It was the arrival of a permanent comparison — this place could be measured against somewhere else, hourly.',
+  ])]
+  if (F.has('btn_first_election') && Math.random() < 0.18) yield [T.anchored,
+    'The king instructed the country to become a democracy and the country was not enthusiastic, and you voted with a feeling closer to obedience than to enfranchisement.']
+  if (F.has('btn_gnh_examined') && Math.random() < 0.18) yield [T.anchored,
+    'There is a survey with domains and indicators and you have filled it in, and the young are leaving for Perth in numbers it has no domain for.']
+  if (F.has('btn_told_the_story') && Math.random() < 0.2) yield [T.anchored,
+    'You explained the census and the dress code and watched it fail to fit into what they already knew about the place with the happiness in it.']
+  if (F.has('btn_kept_it_in') && Math.random() < 0.2) yield [T.anchored,
+    'You said it was beautiful, which is true. It is the sentence you have available when you are tired, and you are tired most of the time it comes up.']
+
+  // The 'both' flags: these carry an event follow-through AND a quiet-year
+  // presence, because the thing they name does not only happen once.
+
+  if (F.has('aut_taught_silence') && Math.random() < 0.2) yield [T.anchored, pick([
+    'Nobody wrote the rule down. You were fluent in it by twelve and you have never entirely stopped being fluent in it.',
+    'There are two or three subjects that do not come up in your family, and the not-coming-up is smooth and practised and is the family\'s largest achievement.',
+  ])]
+  if (F.has('aut_treaty_generation') && Math.random() < 0.18) yield [T.anchored,
+    'Österreich ist frei. You know the exact tone he said it in because it was on the radio in your kitchen, and the sentence cost a clause in the constitution.']
+  if (F.has('aut_gemeindebau_life') && Math.random() < 0.2) yield [T.anchored, pick([
+    'The courtyard was built by a city government that thought a worker should have a laundry and a window onto something, and it still has both.',
+    'You will not own this flat and your children can inherit the tenancy, and those two facts together make a particular kind of neighbour.',
+  ])]
+  if (F.has('aut_waldheim_reckoning') && Math.random() < 0.2) yield [T.anchored,
+    'You said it out loud in 1986 and lost an uncle over it, and you have been having the same argument at intervals ever since.']
+  if (F.has('aut_waldheim_defended') && Math.random() < 0.2) yield [T.anchored,
+    'He only did his duty, like hundreds of thousands of other Austrians. You said that, and you heard it land, and you have not managed to put it down since.']
+  if (F.has('aut_thursday_demos') && Math.random() < 0.18) yield [T.anchored,
+    'You walked the Ring through a winter of Thursdays. Attendance fell off in February. You know which February.']
+
+  if (F.has('adr_red_passport') && Math.random() < 0.18) yield [T.anchored,
+    'Trieste for the afternoon, and Munich for the work, and cousins in Prague who could do neither. Everybody here knew exactly how good they had it.']
+  if (F.has('adr_hr_veteran') && Math.random() < 0.22) yield [T.anchored, pick([
+    'The knee tells you the weather. It has been telling you the weather since you were twenty-four.',
+    phase === 'late_life'
+      ? 'Two years on a line, thirty years of peace, and the two years are the ones with all the detail in them.'
+      : 'The rifle they gave you was older than you were. You have never been able to make that funny when you tell it.',
+  ])]
+  if (F.has('adr_hr_displaced') && Math.random() < 0.2) yield [T.anchored,
+    'You spent the war safe and hearing about it, which has a weight of its own that nobody has ever offered to help you carry.']
+  if (F.has('adr_hr_serb_departed') && Math.random() < 0.22) yield [T.anchored, pick([
+    'Your family was on the military frontier since the Habsburgs put them there. In 1991 that history stopped being a defence.',
+    'Somebody else has lived in the house for longer now than you did. The arithmetic crossed over and you noticed the year it did.',
+  ])]
+  if (F.has('adr_hr_stayed_behind') && Math.random() < 0.2) yield [T.anchored,
+    'Half your school year is abroad. The street is quieter every September and nobody has proposed a solution that is not "leave".']
+
+  if (F.has('adr_si_erased_aware') && Math.random() < 0.18) yield [T.anchored,
+    'A form, a six-month window, twenty-five thousand people off a register. No violence at all — which is why almost nobody here has heard of it.']
+
+  if (F.has('isl_sold_quota') && Math.random() < 0.2) yield [T.anchored,
+    'The quota was worth more than the boat within a decade of being handed out for free. You sold. The village knew the day the boat left.']
+  if (F.has('isl_kreppan_protester') && Math.random() < 0.18) yield [T.anchored,
+    'Kitchen pots, outside the parliament, in January, until the government fell. It is not a metaphor and they were actual pots.']
+  if (F.has('isl_kreppan_debt') && Math.random() < 0.2) yield [T.anchored, pick([
+    'You took the mortgage in a foreign currency because everyone did, and the króna halved, and the arithmetic took six years to come back.',
+    'Three banks holding ten times what the country makes in a year, gone inside a week. You still have the paperwork somewhere.',
+  ])]
+
+  if (F.has('mda_deported_family') && Math.random() < 0.22) yield [T.anchored, pick([
+    'Four days in a cattle car when you were small, eight years in Kurgan, and a house with someone else in it at the end of it.',
+    'July 1949. The lists were made locally, which is the part of it nobody in the village will discuss.',
+  ])]
+  if (F.has('mda_deportation_witness') && Math.random() < 0.2) yield [T.anchored,
+    'Carts past the end of the lane at four in the morning, and nobody in your house went to the window, and everybody in your house was awake.']
+  if (F.has('mda_labour_migrant') && Math.random() < 0.22) yield [T.anchored, pick([
+    'You raise somebody else\'s parent in Padua and your own children are raised on a Sunday call, and a third of this country runs on the same arrangement.',
+    'The transfer goes on the same day every month. It is the most reliable thing about you and it is not the thing you wanted to be reliable about.',
+  ])]
+  if (F.has('mda_stayed_behind') && Math.random() < 0.2) yield [T.anchored,
+    'Somebody had to be here. It turned out to be you, and it turned out to mean four sets of grandparents and other people\'s children.']
+
+  if (F.has('omn_renaissance_generation') && Math.random() < 0.22) yield [T.anchored, pick([
+    'Two Omans, about four years apart, and you have both of them in your head at once whenever anyone says the word development.',
+    'A man came to the village to say the girls were to be enrolled too. The argument lasted a week. The girls were enrolled.',
+  ])]
+
+  if (F.has('vut_anglophone') && Math.random() < 0.18) yield [T.anchored,
+    'You came out of the English school and there is a part of Port Vila where you cannot follow the conversation, and a school choice made in 1962 did that.']
+  if (F.has('vut_francophone') && Math.random() < 0.18) yield [T.anchored,
+    'The French school put you on the losing side of independence, which nobody mentioned at the time and everybody understood by 1981.']
+  if (F.has('vut_rebuilt_kastom') && Math.random() < 0.18) yield [T.anchored,
+    'Low, tied down, thatch that gives instead of tearing. It was the old way and it is the one still standing after the next one.']
+  if (F.has('vut_rebuilt_modern') && Math.random() < 0.18) yield [T.anchored,
+    'The iron and the concrete went up fast and were dry, and they are what peeled off the second time.']
+
+  if (F.has('btn_lhotshampa_expelled') && Math.random() < 0.22) yield [T.anchored, pick([
+    'A tax receipt from 1958 decided whether your family had ever been there. Your father could not produce it.',
+    'Twenty years at Damak and then a resettlement flight to a city you had never heard of, and the camp is grassed over now.',
+  ])]
+
+  if (F.has('adr_si_erased_resolved') && Math.random() < 0.18) yield [T.anchored,
+    'Strasbourg ruled, twenty years late, for people some of whom had died waiting. The amounts were small. The finding was not.']
+
   // ─── SEASONAL / WEATHER TEXTURE ──────────────────────────────────────────────
   // Atmospheric only — no stat effects, no flags. Gate on country + season.
 

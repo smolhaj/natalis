@@ -25,6 +25,7 @@ import { POLITICAL_FLAGS } from './political.js'
 import { PRISON_FLAGS } from './prison.js'
 import { WORLD_EVENT_FLAGS } from './world_events.js'
 import { LIFECYCLE_FLAGS } from './lifecycle.js'
+import { NEW_ROSTER_FLAGS } from './new_roster.js'
 
 export const FLAG_REGISTRY = {
   ...IDENTITY_FLAGS,
@@ -36,6 +37,7 @@ export const FLAG_REGISTRY = {
   ...PRISON_FLAGS,
   ...WORLD_EVENT_FLAGS,
   ...LIFECYCLE_FLAGS,
+  ...NEW_ROSTER_FLAGS,
 }
 
 export {
