@@ -540,7 +540,7 @@ export const LATIN_AMERICA_EVENTS = [
       !G.mem?.col_displacement,
     text: 'They arrive one evening — men who are not soldiers or call themselves something else. They say the village will be safer elsewhere. Your family leaves before morning with what can be carried. You arrive in Bogotá or Medellín or Barranquilla in a neighborhood you did not know existed, where the streets are unpaved and the houses were built last year from materials that were not meant to be permanent.',
     choices: null,
-    effect: (p) => { p.m -= 10; p.h -= 5; p.addFlag('colombia_displaced'); p.addFlag('rural_to_urban'); p.setMem('col_displacement', true); },
+    effect: (p) => { p.m -= 10; p.h -= 5; p.addFlag('colombia_displaced'); p.addFlag('rural_to_urban'); p.relocate('co_bogota', 'informal'); p.setMem('col_displacement', true); },
   },
 
   {

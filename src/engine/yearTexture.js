@@ -82,15 +82,37 @@ const resolve = (candidate) => {
  */
 function buildYearTexture(state, opts = {}) {
   const buckets = { urgent: [], glimpse: [], anchored: [], earned: [], universal: [] }
+  // A guard may offer a third element: what to spend when this line PRINTS.
+  // Two blocks used to spend theirs inside the generator, at the moment the
+  // candidate was merely offered — the glimpse cadence and the desire-texture
+  // fire count — so a line that lost the tier draw still burned its budget. The
+  // glimpse went quiet for eight years without a word printing, and the desire
+  // layer advanced from full to brief to oblique while the player read none of
+  // them. Keyed by the line rather than the candidate because `preferUnsaid`
+  // rebuilds a variant pool and the array identity does not survive it.
+  const commits = new Map()
+  const note = (value, onPrint) => {
+    if (typeof onPrint !== 'function') return
+    for (const line of (Array.isArray(value) ? value : [value])) {
+      if (typeof line === 'string' && line.length > 0) commits.set(line, onPrint)
+    }
+  }
   for (const offer of textureCandidates(state, opts)) {
     if (!Array.isArray(offer)) continue
-    const [tier, value] = offer
+    const [tier, value, onPrint] = offer
     if (!buckets[tier]) continue
     // A guard offers either one line or a pool of interchangeable variants. The
     // pool counts as ONE candidate, so a block with thirty alternatives does not
     // outvote a country block with one — it just has thirty ways to say its turn.
     if (typeof value === 'string' && value.length > 0) buckets[tier].push(value)
     else if (Array.isArray(value) && value.length > 0) buckets[tier].push(value)
+    else continue
+    note(value, onPrint)
+  }
+
+  const print = (line) => {
+    if (line) commits.get(line)?.(state)
+    return line
   }
 
   if (buckets.urgent.length && Math.random() < 0.72) {
@@ -100,12 +122,12 @@ function buildYearTexture(state, opts = {}) {
     // every year it reads as a broken loop, not a motif, and a latched
     // single-line block has no other brake on it.
     if (allSaid(state, fresh)) {
-      if (Math.random() < 0.25) return resolve(pickOne(fresh))
+      if (Math.random() < 0.25) return print(resolve(pickOne(fresh)))
     } else {
-      return resolve(pickOne(fresh))
+      return print(resolve(pickOne(fresh)))
     }
   }
-  if (buckets.glimpse.length) return resolve(pickOne(preferUnsaid(state, buckets.glimpse)))
+  if (buckets.glimpse.length) return print(resolve(pickOne(preferUnsaid(state, buckets.glimpse))))
 
   const tiers = opts.specificOnly
     ? ['anchored', 'earned']
@@ -114,7 +136,7 @@ function buildYearTexture(state, opts = {}) {
   if (live.length === 0) {
     // Nothing specific, and the caller asked for specific only. If the caller
     // will take anything, an urgent line beats silence.
-    return buckets.urgent.length ? resolve(pickOne(preferUnsaid(state, buckets.urgent))) : null
+    return buckets.urgent.length ? print(resolve(pickOne(preferUnsaid(state, buckets.urgent)))) : null
   }
   const total = live.reduce((s, t) => s + TEXTURE_SHARES[t], 0)
   let r = Math.random() * total
@@ -130,7 +152,7 @@ function buildYearTexture(state, opts = {}) {
   // a better sentence than one the player read nine years ago. Grief is exempt
   // above — a feeling that recurs is supposed to recur.
   if (opts.specificOnly && allSaid(state, fresh)) return null
-  return resolve(pickOne(fresh))
+  return print(resolve(pickOne(fresh)))
 }
 
 /**
@@ -745,8 +767,13 @@ function* textureCandidates(state, opts = {}) {
 
   const lastSonderAge = mem?.sonderGlimpseAge ?? -99
   if (age >= 12 && (age - lastSonderAge) >= 8 && Math.random() < 0.18) {
-    if (!state.mem) state.mem = {}
-    state.mem.sonderGlimpseAge = age
+    // The cadence used to be spent HERE, inside the generator, before the
+    // driver knew which tier would win — so an urgent line (which beats a
+    // glimpse 72% of the time) silently swallowed the glimpse and the next one
+    // could not come for eight more years. `buildYearTexture` stamps it now,
+    // when a glimpse actually prints. It also matters that this generator is
+    // what the coverage census calls to ask what the layer WOULD say: a
+    // candidate generator that mutates state corrupts the life it is reading.
     const sonderPool = (phase === 'late_life') ? [
       'The young man on the bus has the posture of someone at the start of something large. You can see approximately where it goes from here. You do not tell him.',
       'You pass a lit window at eleven at night — someone reading in a chair, a lamp beside them, an entire life inside that apartment that has its own complete history.',
@@ -759,14 +786,18 @@ function* textureCandidates(state, opts = {}) {
       'The woman at the coffee counter has been smiling at customers for four hours. Something that is not the smile is happening behind it. You tip and leave.',
       'Your neighbor\'s door opens and closes at two in the morning. You don\'t know what schedule that belongs to. You have been curious about it for months and will never ask.',
       'A couple at the restaurant is not speaking — not in the bad way, in the other way. The specific silence of people who don\'t need to. You watch them for a moment without meaning to.',
-      'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.',
+      currentYear >= 2005
+        ? 'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.'
+        : 'The man across the carriage has taken the same photograph out of his wallet three times in four stops. He does not look at anything else in there.',
       _isNonWest ? 'The woman at the standpipe is organising who goes first. There is no official system. There is her, and the system she makes.' : 'The man in the café has been writing in the same notebook for an hour. The pages are covered. Something is being worked out in there that is not available to you.',
       _isNonWest ? 'A man on a motorbike is carrying something too large for a motorbike, slowly, with complete certainty about how to do it.' : 'The couple at the next table is having the specific argument that is about everything except what they are arguing about.',
     ] : (phase === 'young_adult') ? [
       'The person who has the desk across from yours: you know what they eat for lunch and nothing else about them. An entire life is visible from there and inaccessible.',
       'Your neighbor comes home at the same time every night. You know this the way you know everything about people you have never spoken to — by the sound of it through the wall.',
       'A woman on the platform is crying without covering her face. No one speaks to her. The train comes and she gets on. You will never know what that was.',
-      'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
+      currentYear >= 2005
+        ? 'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.'
+        : 'The man at the next table has been looking at an unopened letter for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
       _isNonWest ? 'A young woman at the bus stop has a single bag and the posture of someone who has just made a decision. You don\'t know what the decision was.' : 'The woman at the desk next to yours leaves at exactly five every day. You have been curious about what that is about for months and have not asked.',
       _isNonWest ? 'Someone sleeping on the pavement outside the bus station. Their things are arranged around them with a precision that makes it clear this is not the first time.' : 'The two people at the corner table have been speaking quietly for two hours. You can\'t tell if this is love or negotiation or both.',
     ] : [
@@ -777,7 +808,10 @@ function* textureCandidates(state, opts = {}) {
       _isNonWest ? 'A woman is carrying water on her head and also talking to someone and also watching a child ahead of her. Three things at once, flawlessly.' : 'The child on the other side of the fence is conducting a long and serious negotiation with a dog. The dog is attentive.',
       _isNonWest ? 'The old man in the chair outside his door is watching the street the way a person watches something they have watched for forty years.' : 'Someone is sitting in a parked car, engine off, not getting out. You walk past. You don\'t know what the inside of that moment is.',
     ]
-    yield [T.glimpse, pick(sonderPool)]
+    yield [T.glimpse, sonderPool, (st) => {
+      if (!st.mem) st.mem = {}
+      st.mem.sonderGlimpseAge = st.age
+    }]
   }
 
   // ─── GIFTED ARC TEXTURE ──────────────────────────────────────────────────────
@@ -2301,7 +2335,7 @@ function* textureCandidates(state, opts = {}) {
     ])]
   }
 
-  if (F.has('hajj_complete') && Math.random() < 0.3) yield [T.earned, pick([
+  if ((F.has('completed_hajj') || F.has('hajj_complete')) && Math.random() < 0.3) yield [T.earned, pick([
     'The tawaf at the Ka\'aba before dawn — seven circuits, the Black Stone at the corner, millions of shoulders moving in the same direction. You were in that. The word you keep reaching for is not religious. It is something older.',
     'You made the Hajj. The fifth pillar — you completed it. What the pilgrimage did to you is still working itself out, years later. Something changed in the ordering of things.',
     phase === 'late_life'
@@ -5503,8 +5537,7 @@ function* textureCandidates(state, opts = {}) {
   // ─── DESIRE-AWARE TEXTURE (fires ~40% of remaining quiet years) ───────────────
   // Tiered: first fire = full, second = brief, third+ = oblique (transformed in late life)
   if (desire && Math.random() < 0.4) {
-    if (!state.mem) state.mem = {}
-    const fireCount = state.mem.desireTextureFires ?? 0
+    const fireCount = state.mem?.desireTextureFires ?? 0
     const phaseKey = (phase === 'early_childhood') ? 'early_childhood'
       : (phase === 'childhood') ? 'childhood'
       : (phase === 'adolescence') ? 'adolescence'
@@ -5675,8 +5708,10 @@ function* textureCandidates(state, opts = {}) {
     }
 
     if (desireLine) {
-      state.mem.desireTextureFires = fireCount + 1
-      yield [T.earned, desireLine]
+      yield [T.earned, desireLine, (st) => {
+        if (!st.mem) st.mem = {}
+        st.mem.desireTextureFires = (st.mem.desireTextureFires ?? 0) + 1
+      }]
     }
   }
 
@@ -7219,6 +7254,17 @@ function* textureCandidates(state, opts = {}) {
       ? 'The Aum trial lasted until 2018. Twenty-three years of legal proceedings after eleven dead and six thousand injured on a Tuesday morning. The proceedings lasted longer than some careers.'
       : 'Before March 20, 1995, the language of religious violence in Japan referred to the nineteenth century. The frame changed in a Tuesday morning.',
   ])]
+  if (F.has('war_zone_civilian') && Math.random() < 0.22) yield [T.earned, pick([
+    'A door goes somewhere in the building and you are up and across the room before you have decided anything. You were an adult when it happened, which people assume means you were equipped for it.',
+    'The sound is a lorry on the bridge. It is always a lorry on the bridge. You still count the two seconds.',
+    'You were grown when it started, so nobody has ever asked you about it the way they ask the ones who were children. You have wondered occasionally whether that is a kindness.',
+  ])]
+
+  if (F.has('aum_knew_someone') && Math.random() < 0.2) yield [T.earned, pick([
+    'He went back to the same commute within the week, because the alternative was to move house and change jobs over something that took eight minutes. He told you that once and not again.',
+    'The thing you remember is not the news, which you watched like everybody. It is the sound of his voice on the telephone that evening, saying he was fine, three times, in a row.',
+  ])]
+
   if (F.has('aum_proximate') && Math.random() < 0.3) yield [T.anchored, pick([
     'The delayed medical care, the uncertain diagnosis, the specific chemical and what it does to the eye\'s ability to focus. The nerve agent has a pharmacology and you learned it from the inside.',
     'You were close enough to see what it did to the person beside you. The image is available to recall without your choosing to recall it.',
@@ -15192,6 +15238,77 @@ function* textureCandidates(state, opts = {}) {
 
 
 
+
+  // ── Nigeria 1967-1999: the decades the touchstone life actually lives ─────
+  // check-reach put a 1962 Nigerian at 20% of their own depth module, against
+  // 70% for one born in 1995. Five of its thirteen events need year >= 2030.
+
+  if (F.has('biafra_child') && Math.random() < 0.13) yield [T.anchored, pick([
+    'The word was kwashiorkor and you learned it the way you learn any word, by hearing it about somebody you knew.',
+    phase === 'late_life'
+      ? 'You were five when it started and eight when it stopped, and the whole of it is four or five images and a song about the night planes. That is what three years does to a child: it does not become a memory, it becomes a shape.'
+      : 'They gave the children the food first. Every time, as a rule. You were old enough to notice it was a rule and not old enough to ask what the rule was for.',
+  ])]
+
+  if (F.has('biafra_carried') && Math.random() < 0.12) yield [T.earned, pick([
+    'You do not leave food. Not as a principle. You have never once decided it.',
+    'Your children leave food on the plate and you have never said a word about it in twenty years, because the word would have to start somewhere.',
+  ])]
+
+  if (F.has('no_victor_no_vanquished') && !F.has('the_subtraction') && Math.random() < 0.11) yield [T.anchored,
+    'No victor, no vanquished. People say it generously and mean it generously, and it is not a sentence you can be against, and you have never once found it to be a description of anything.']
+
+  if (F.has('the_subtraction') && Math.random() < 0.11) yield [T.earned,
+    'Twenty pounds. A man with four lorries and a man with nothing, the same twenty pounds, and the government called it a fresh start.']
+
+  if (F.has('nigeria_1966') && Math.random() < 0.10) yield [T.anchored,
+    'September 1966, and the trains coming in with people on them who had left everything, and the adults stopping mid-sentence when a child came into the room.']
+
+  if (F.has('oil_boom_windfall') && Math.random() < 0.11) yield [T.anchored, pick([
+    'For about a year you were a family with a car. Everybody on that street was a family with something. By 1977 the prices had met the money halfway and settled above it.',
+    'There was so much money that a four-hundred-ship mistake was a story rather than a scandal.',
+  ])]
+
+  if (F.has('festac_77') && Math.random() < 0.09) yield [T.anchored,
+    'For four weeks in 1977 this was the capital of something, and the commemorative cloth is still in the house.']
+
+  if (F.has('ghana_must_go') && Math.random() < 0.10) yield [T.anchored,
+    'The bag is still called a Ghana-Must-Go. Children are packed off to boarding school in one by people who have no idea why it is called that.']
+
+  if (F.has('war_against_indiscipline') && !F.has('wai_reckoning') && Math.random() < 0.11) yield [T.earned,
+    'Soldiers at the bus stop with whips, and the queues worked, and a great many people were in favour. That sentence is hard to say now and it was true then.']
+
+  if (F.has('sap_generation') && Math.random() < 0.13) yield [T.earned, pick([
+    'The naira was one to the dollar in 1985. That is not nostalgia, it is a fact, and saying it out loud in 1993 sounded like a lie.',
+    'The arithmetic at the end of the month stopped being arithmetic and became a decision about which of two things the house did without.',
+  ])]
+
+  if (F.has('naira_distrust') && Math.random() < 0.11) yield [T.earned,
+    'Whatever there is sits in something — a plot, a container, dollars in the house. Your son calls it superstition. Your son was four in 1986.']
+
+  if (F.has('fuel_queue_years') && Math.random() < 0.11) yield [T.anchored,
+    'Sleeping in the car in the queue, in the sixth largest oil producer on earth, twenty yards from a man selling it out of a jerry can at four times the pump price.']
+
+  if (F.has('asuu_strike_generation') && Math.random() < 0.10) yield [T.anchored,
+    'Four years of degree taking seven, and everybody in that year ageing out of something while they waited — a scholarship, a job advert, somebody.']
+
+  if (F.has('saro_wiwa_1995') && Math.random() < 0.09) yield [T.anchored,
+    'He wrote the comedy everybody watched, and then he wrote about the creeks, and it was the second one that killed him.']
+
+  if (F.has('andrew_checking_out') && Math.random() < 0.10) yield [T.earned,
+    'Andrew is checking out. A government advert meant to shame people into staying, and the country took the phrase and used it, cheerfully, for forty years.']
+
+  if (F.has('the_ones_who_stayed') && Math.random() < 0.11) yield [T.earned,
+    'Four of the six went. One came back at sixty. You are the one who never tried, and there are two honest accounts of why, and you give the good one.']
+
+  if (F.has('democracy_1999_lived') && Math.random() < 0.10) yield [T.earned, pick([
+    'Thirty-seven years in this country and about nine of them under anybody elected.',
+    'What actually marked it was that the nine o\'clock news stopped being frightening to have on while somebody was visiting.',
+  ])]
+
+  if (F.has('ordinary_is_the_achievement') && Math.random() < 0.10) yield [T.earned,
+    'The complaints are ordinary complaints now — the roads, the power, the thieving. Ordinary is the achievement, and nobody under thirty can hear it that way.']
+
   // ── Bosnia: three peoples, one country ────────────────────────────────────
   // Six mentions in the whole corpus before this, and no module.
 
@@ -15231,7 +15348,7 @@ function* textureCandidates(state, opts = {}) {
     'There is still a Vučko somewhere in the flat. A keyring, or the sticker on the inside of a cupboard door that nobody has scraped off.',
     phase === 'late_life'
       ? 'Two weeks in February 1984 when the world came and liked it here. It is one of the two things anybody abroad knows about this city and it is not the one they mention.'
-      : 'Torvill and Dean got nines across the board at Zetra and the whole country behaved as though it had personally arranged it.',
+      : 'Every one of the nine judges gave Torvill and Dean a six at Zetra, and the whole country behaved as though it had personally arranged it.',
   ])]
 
   if (F.has('sarajevo_siege') && !F.has('siege_habits') && Math.random() < 0.14) yield [T.anchored, pick([
@@ -16333,13 +16450,30 @@ function* textureCandidates(state, opts = {}) {
     ])]
   }
 
-  if ((countryName === 'Norway' || countryName === 'Sweden' || countryName === 'Finland') && Math.random() < 0.25) {
-    if (season === 'winter') yield [T.anchored, pick([
+  // Polar night and midnight sun need the Arctic Circle, not the country. This
+  // was gated on Norway/Sweden/Finland and the season, so a man who lived his
+  // whole life in Stockholm — 59.3°N, about 800 km south of the circle, where
+  // the sun rises every day of the year — was told in 1999 that it did not get
+  // dark tonight and in 2001 that the sun did not rise today. What Stockholm
+  // and Oslo and Helsinki actually have is a December day of about six hours,
+  // which is its own thing and worth its own sentences.
+  const ABOVE_THE_CIRCLE = new Set(['no_tromso', 'no_north', 'se_north', 'se_kiruna', 'fi_lapland', 'fi_rovaniemi', 'no_finnmark'])
+  if ((countryName === 'Norway' || countryName === 'Sweden' || countryName === 'Finland' || countryName === 'Iceland') && Math.random() < 0.25) {
+    const farNorth = ABOVE_THE_CIRCLE.has(state.currentPlace?.id) ||
+      /Lapland|Finnmark|Troms|Norrbotten|Nordland/i.test(state.currentPlace?.region ?? '')
+    if (season === 'winter') yield [T.anchored, farNorth ? pick([
       'The polar night: the sun does not rise today. People have adapted — lamps with specific wavelengths, walks at noon in the thin blue light, the indoor life that is a second culture.',
+      'Nobody here says it is dark, because dark is not a description of anything at this latitude in January. What people say is how many weeks are left.',
+    ]) : pick([
+      'The light comes up around nine and is going again by three, and the part of the day that is yours happens at both ends of an office window.',
       'February: the long tunnel of the Nordic winter. The candles are lit. The coffee is hot. People have been perfecting indoor comfort out of necessity for generations.',
+      'You leave in the dark and come back in the dark and the day is a rumour somebody else had.',
     ])]
-    if (season === 'summer') yield [T.anchored, pick([
+    if (season === 'summer') yield [T.anchored, farNorth ? pick([
       'The midnight sun: it does not get dark tonight. The light stays, pale and horizontal, well past midnight. Sleep is an exercise in curtains and the agreement to rest even without dark.',
+    ]) : pick([
+      'It is light at half past three in the morning and light again at eleven at night, and for about six weeks the whole country behaves as though sleep is optional.',
+      'The summer is short and everybody knows the number of weeks, and the response to that is not resignation, it is a kind of organised urgency about being outdoors.',
     ])]
   }
 

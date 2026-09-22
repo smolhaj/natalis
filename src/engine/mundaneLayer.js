@@ -77,6 +77,11 @@ export function buildMundaneLayer(state) {
   const pool = []
   const add = (...items) => pool.push(...items)
   const addIf = (cond, ...items) => { if (cond) pool.push(...items) }
+  // The event classifier drops school prose for a character who never went
+  // (`assumesSchool` in events.js, `schoolProseFits` in tick.js). The prose
+  // layers had no such filter, so a never-schooled Ethiopian adolescent was
+  // told where he stood in the hierarchy at school.
+  const schooled = state.mem?.attendedSchool !== false && !flags.has('never_schooled')
 
   // ── UNIVERSAL HUMAN TEXTURE — PHASE BASED ──────────────────────────────────
   // Items true of any person alive in any era. The common thread of existence.
@@ -297,7 +302,12 @@ export function buildMundaneLayer(state) {
 
   // ── GENDER-SPECIFIC DAILY LIFE ─────────────────────────────────────────────
 
-  addIf(gender === 'female' && era <= 1959 && isWealthyArch,
+  // The comment eleven lines below documents this exact defect and the fix was
+  // applied to the block underneath while this one was left: a Japanese girl of
+  // three did the laundry, the shopping and the correspondence, and a
+  // one-year-old Swede managed around the club and the conversation about
+  // money. Grep for every reader of a rule you fix.
+  addIf(gender === 'female' && era <= 1959 && isWealthyArch && adult,
     'The meal is expected at a certain time. The expectation has not been stated. It is understood.',
     'You do the laundry, the shopping, the correspondence. This is called being at home.',
     'There are rooms not intended for you — the meeting, the club, the conversation about money. You manage around them.',
@@ -306,12 +316,22 @@ export function buildMundaneLayer(state) {
     'The job you have was not available to women at this level ten years ago. You are the first, or among the first.',
     'The equal pay conversation is happening in the office. The happening is not the same as the resolution.',
   )
-  addIf(gender === 'female' && isDeveloping,
+  // Running a household is not something a three-year-old does. This block had
+  // no age or phase term at all, unlike the one directly below it, so it told a
+  // Nigerian of three that the in-law visit fell to her and a five-year-old in
+  // Cairo that the market was her domain. And the water line has no wealth or
+  // urban term either: it printed into a Cairo middle_class household and to a
+  // Senior Property Agent in Fortaleza.
+  const runsAHousehold = gender === 'female' && isDeveloping &&
+    phase !== 'early_childhood' && phase !== 'childhood'
+  addIf(runsAHousehold,
     'The day begins before sunrise. By the time the rest of the household wakes, several things are already done.',
     'The market is your domain — the price-checking, the weight, the recognition of freshness. The vendor knows you.',
-    'The water is fetched. The fetching is not counted as work because it happens before work begins.',
     'The children\'s illness falls to you. The school appointment falls to you. The in-law visit falls to you.',
     'You are responsible for more of the visible daily life than the accounting would suggest.',
+  )
+  addIf(runsAHousehold && !tech('piped_water'),
+    'The water is fetched. The fetching is not counted as work because it happens before work begins.',
   )
   addIf(gender === 'female' && phase !== 'early_childhood' && phase !== 'childhood',
     'The list in your head does not empty. It reconfigures. By the time one thing is done, three others have moved up.',
@@ -1507,26 +1527,26 @@ export function buildMundaneLayer(state) {
 
   // ── SCHOOLS AND EDUCATION (STUDENT PERSPECTIVE) ───────────────────────────
 
-  addIf(phase === 'childhood' && age >= 6 && age <= 8,
+  addIf(schooled && phase === 'childhood' && age >= 6 && age <= 8,
     'The first day of school: the classroom smells new and so do the shoes.',
     'The teacher\'s name: learned fast and stored permanently.',
     'The desk is yours for the year. The sense of this being yours is out of proportion to the object.',
     'Learning to read: the moment the marks become words is something you do not remember happening. And then they did.',
   )
-  addIf(phase === 'childhood' && age >= 9 && age <= 11,
+  addIf(schooled && phase === 'childhood' && age >= 9 && age <= 11,
     'The friend you sit next to every day for two years. The sitting next to them is the friendship.',
     'The teacher who scared you, and the teacher who did not, and the difference between those two classrooms.',
     'The subject that came easily and the subject that did not. You know already which is which.',
     'Exam season: the revision, the specific dread, the aftermath regardless of the score.',
   )
-  addIf(phase === 'adolescence',
+  addIf(schooled && phase === 'adolescence',
     'The exam: the question you prepared for and the question you did not. The ratio was what the ratio was.',
     'The teacher who said something you have not forgotten. Not always the thing they intended to be remembered for.',
     'The school corridor between lessons: the economy of the seven minutes — who is speaking to whom, who is not.',
     'The library after school: no adults who know where you are. The books are not the point, or not entirely.',
     'The school uniform, if there is one, has an unofficial version — the collar, the shoes, the length — that communicates without saying.',
   )
-  addIf(phase === 'adolescence' && isDeveloping,
+  addIf(schooled && phase === 'adolescence' && isDeveloping,
     'The long walk to school: in the dark when it is a long walk, in the heat when it is the afternoon.',
     'The shared textbook: the page you need is the page that is torn.',
     'The school fee that arrived at term start. How it was found. That it was found.',
@@ -1974,12 +1994,12 @@ export function buildMundaneLayer(state) {
   )
 
   // ── ADOLESCENCE DEPTH ──────────────────────────────────────────────────────
-  addIf(phase === 'adolescence' && age >= 13 && age <= 15,
+  addIf(schooled && phase === 'adolescence' && age >= 13 && age <= 15,
     'The hierarchy at school is not written down but is understood by everyone. You know exactly where you stand in it.',
     'There is a piece of music this year that means something specific to this year, and will mean only it.',
     'The person who sits next to you in class is neither friend nor stranger. This category is very crowded at this age.',
   )
-  addIf(phase === 'adolescence' && age >= 15 && age <= 17,
+  addIf(schooled && phase === 'adolescence' && age >= 15 && age <= 17,
     'The end of school is close enough to think about and far enough to keep avoiding.',
     'You have started to see your teachers as people with lives outside this building. This is not entirely comfortable.',
     'The version of yourself that existed two years ago is already embarrassing to remember.',

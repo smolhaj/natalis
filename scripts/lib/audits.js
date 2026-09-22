@@ -753,7 +753,13 @@ export async function auditNarratedMoves() {
     String.raw`\b[Yy]ou\s+(?:move|relocate)\s+to\s+(?:[A-Z]|the (?:city|capital|coast|mainland|north|south|interior)\b)`
     + String.raw`|\b[Tt]he family\s+(?:moves|relocates|leaves for|emigrates)\s*(?:to\s+)?(?:[A-Z]|the (?:city|capital|coast)\b)`
     + String.raw`|\b[Yy]ou emigrate\b|\b[Yy]ou leave the country\b|[Aa]rrange the exit`
-    + String.raw`|\b[Yy]ou board the (?:boat|ship|plane) for\b`,
+    + String.raw`|\b[Yy]ou board the (?:boat|ship|plane) for\b`
+    // The shape that hid: prose that says a family emigrated without using
+    // the word 'move'. `adol_family_migration`'s outcome is "The family takes
+    // the step. A new world, cold and unfamiliar" — unmistakable to a reader
+    // and invisible to a pattern built around move/relocate/emigrate.
+    + String.raw`|\b[Tt]he family takes the step\b|\bA new world\b`
+    + String.raw`|\b[Yy]ou (?:land|arrive) in [A-Z]`,
   )
   const bodies = (e) => {
     const out = []
@@ -770,7 +776,14 @@ export async function auditNarratedMoves() {
     const prose = bodies(e)
     if (!MOVES.test(prose)) continue
     const src = effectSrc(e)
-    if (/relocate\s*\(|emigrateTo\s*\(|setResidency\s*\(/.test(src)) continue
+    // `setResidency` is not a move. It changes what papers the character holds
+    // and leaves them exactly where they were, so accepting it here made the
+    // audit blind to the commonest shape of this defect: a choice whose outcome
+    // reads "The family takes the step. A new world, cold and unfamiliar", whose
+    // effect is `addFlag('emigrated')` plus `setResidency('work_visa')`, and
+    // whose character then holds a work visa in their country of birth for
+    // forty-two years while the death screen says they left it.
+    if (/relocate\s*\(|emigrateTo\s*\(/.test(src)) continue
     findings.push(finding(WARN, 'narrated-move', e.id, locate(e.id),
       'prose narrates leaving and no effect calls relocate() or emigrateTo()'))
   }
@@ -863,7 +876,16 @@ export async function auditUnwrittenGroups() {
       // of the first twenty-eight findings were a country's own largest group,
       // which buries the two that are not. The plurality is the country-generic
       // population whether or not it clears fifty per cent.
-      const largest = (c.ethnicGroups ?? []).reduce((a, b) => ((b.share ?? 0) > (a.share ?? 0) ? b : a), { share: -1 })
+      // ...and `largest` was computed over ALL groups including the catch-all
+      // bucket, so where `other_zambian` (40%) or `other_philippine` (30%) is
+      // the biggest entry, the REAL plurality is not excluded and gets reported
+      // as unwritten — Tagalog at 28% of the Philippines, Bemba at 21% of
+      // Zambia, Kpelle at 20% of Liberia. An audit that reports a false
+      // positive has failed the same way as one that reports none, for the
+      // third time in this function.
+      const named = (c.ethnicGroups ?? []).filter(g2 =>
+        !(/^(other|mixed)(_|$)/.test(g2.id) || /^(other|mixed)\b/i.test(g2.name ?? '')))
+      const largest = named.reduce((a, b) => ((b.share ?? 0) > (a.share ?? 0) ? b : a), { share: -1 })
       const isPlurality = g.id === largest.id
       // A catch-all bucket is not a population anybody can write for. `other`,
       // `other_kenyan`, `mixed_guyanese` — nothing about being 'Other' in

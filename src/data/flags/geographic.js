@@ -3213,4 +3213,192 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ba_village_empty.',
   },
 
+
+  // ── NIGERIA 1967-1999 ──────────────────────────────────────────────────────
+  // Set by events_nigeria_midcentury.js — the decades the touchstone life lives.
+
+  nigeria_1966: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Nigeria in September 1966, on one side or the other of the trains coming east.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_1966_north.',
+  },
+
+  biafra_child: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'A child in Biafra under the blockade, where the word at the clinic was kwashiorkor and the children were given the food first.',
+    intent: 'both',
+    notes: 'Set by ngm_biafra_child. Consumed by ngm_ft_biafra_food and the year-texture layer.',
+  },
+
+  biafra_distant: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the war four hundred miles from it, as a thing on the radio and a photograph on a foreign magazine.',
+    intent: 'none',
+    notes: 'Set by ngm_biafra_lagos. No downstream event needed.',
+  },
+
+  no_victor_no_vanquished: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Alive for January 1970 and the three words the country settled on, and for the twenty pounds that followed them.',
+    intent: 'both',
+    notes: 'Set by ngm_no_victor. Consumed by ngm_ft_twenty_pounds and the year-texture layer.',
+  },
+
+  oil_boom_windfall: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Got the Udoji arrears in one piece, spent them, and watched the prices meet the money halfway and settle above it.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_udoji.',
+  },
+
+  cement_armada: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Watched four hundred ships sit off Lagos for a year with cement setting solid in the holds.',
+    intent: 'none',
+    notes: 'Set by ngm_cement_armada. No downstream event needed.',
+  },
+
+  festac_77: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'In Lagos for FESTAC in 1977, when the whole Black world came for a month and this was the capital of something.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_festac.',
+  },
+
+  ghana_must_go: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'In Nigeria in January 1983 when two million people were given two weeks, and the bag got its name.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ghana_must_go.',
+  },
+
+  war_against_indiscipline: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the whips at the bus stop, the frog-jumping in the car park, and how many people were in favour.',
+    intent: 'both',
+    notes: 'Set by ngm_war_against_indiscipline. Consumed by ngm_ft_wai_argument and the year-texture layer.',
+  },
+
+  order_over_freedom: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Queued, and has never been able to explain to their children why they did not mind the whip.',
+    intent: 'none',
+    notes: 'Set by ngm_war_against_indiscipline (yielding choice). No downstream event needed.',
+  },
+
+  andrew_checking_out: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Watched the advert meant to shame people into staying give the country its verb for leaving.',
+    intent: 'both',
+    notes: 'Set by ngm_andrew_checking_out. Consumed by ngm_ft_andrew_late and the year-texture layer.',
+  },
+
+  second_income: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Took a second thing during adjustment, because the household ate, and did not have an evening again for eleven years.',
+    intent: 'none',
+    notes: 'Set by ngm_sap (defiant choice). No downstream event needed.',
+  },
+
+  wages_evaporated: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Held the job through adjustment and did the same work in 1993 for a fifth of what it bought in 1985.',
+    intent: 'none',
+    notes: 'Set by ngm_sap (yielding choice). No downstream event needed.',
+  },
+
+  asuu_strike_generation: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'A four-year degree that took seven, on either side of it — the student or the parent paying the fees again.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_asuu.',
+  },
+
+  fuel_queue_years: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Slept in the car in the queue, in the sixth largest oil producer on earth.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_fuel_queue.',
+  },
+
+  saro_wiwa_1995: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In Nigeria on 10 November 1995, and knew which of the two things he wrote was the one that killed him.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_saro_wiwa.',
+  },
+
+  democracy_1999_lived: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was there on 29 May 1999, after sixteen unbroken years of soldiers.',
+    intent: 'both',
+    notes: 'Set by ngm_1999. Consumed by ngm_ft_1999_after and the year-texture layer.',
+  },
+
+  biafra_carried: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Does not leave food, has never decided not to, and has never said a word to their children about it.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_biafra_food.',
+  },
+
+  the_subtraction: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Permanently aware of a subtraction performed once, in 1970, and entered nowhere.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_twenty_pounds. Suppresses the generous reading of \'no victor, no vanquished\'.',
+  },
+
+  naira_distrust: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Keeps what there is in a plot, a container, or dollars in the house, having watched a currency go from one to twenty.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_sap_money.',
+  },
+
+  wai_reckoning: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Has been on both sides of the argument about whether the whip was worth the queue, and gives the true answer, which persuades nobody.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_wai_argument.',
+  },
+
+  the_ones_who_stayed: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Never tried to leave, has two honest accounts of why, and gives the good one.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_andrew_late.',
+  },
+
+  ordinary_is_the_achievement: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Knows that ordinary complaints are the achievement, and has stopped trying to make anyone under thirty hear it that way.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_1999_after.',
+  },
+
 }

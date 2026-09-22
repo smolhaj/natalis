@@ -215,11 +215,17 @@ export const RELIGION_EVENTS = [
     id: 'rel_muslim_hajj',
     phase: null,
     weight: 5,
-    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 30 && G.age <= 60 && !G.mem?.hajj && G.money > 5000,
+    // Three events narrate a first hajj and each tracked it under its own mem
+    // key, so a character made their first pilgrimage twice, 28 years apart.
+    // They all test the flag now, and the deferral has a cooldown so "you have
+    // saved for years" is not offered again the following spring.
+    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 30 && G.age <= 60 &&
+      !G.flags.includes('completed_hajj') && !G.flags.includes('hajj_complete') &&
+      G.currentYear - (G.mem?.hajjDeferredYear ?? -99) >= 5 && G.money > 5000,
     text: 'You have saved for years. The fifth pillar. Your name goes on the list, and when the confirmation comes, your hands are not steady. Two million Muslims converging from every country on earth — the same five days, the same sequence: Mecca, then Mina on the 8th of Dhul Hijjah, then the plain of Arafat where you stand from noon until sunset and ask for what you cannot ask anywhere else. Then Muzdalifah under an open sky, sleeping on stones, collecting pebbles for the stoning at Jamarat. The body does not forgive this easily. The soul is another matter.',
     choices: [
-      { text: 'Go — this year', tag: 'devout', outcome: 'On the second night in Mina your shoes blister through. The tawaf at the Ka\'aba before dawn — seven circuits, millions of shoulders, the black stone at the corner — you weep without embarrassment. The man next to you is from Indonesia and speaks no Arabic and no language you share, and you understand each other completely. You come home changed in ways you cannot yet describe and may never fully articulate.', effect: (p) => { p.mo -= 6000; p.m += 20; p.karma += 10; p.h -= 5; p.addFlag('hajj_complete'); p.setMem('hajj', true) } },
-      { text: 'Save more first — it should be done properly', tag: null, outcome: 'You wait. The pillar does not go anywhere. You return to the saving.', effect: (p) => { p.setMem('hajj', false) } },
+      { text: 'Go — this year', tag: 'devout', outcome: 'On the second night in Mina your shoes blister through. The tawaf at the Ka\'aba before dawn — seven circuits, millions of shoulders, the black stone at the corner — you weep without embarrassment. The man next to you is from Indonesia and speaks no Arabic and no language you share, and you understand each other completely. You come home changed in ways you cannot yet describe and may never fully articulate.', effect: (p) => { p.mo -= 6000; p.m += 20; p.karma += 10; p.h -= 5; p.addFlag('completed_hajj'); p.setMem('hajj', true) } },
+      { text: 'Save more first — it should be done properly', tag: null, outcome: 'You wait. The pillar does not go anywhere. You return to the saving.', effect: (p) => { p.setMem('hajjDeferredYear', p._state.currentYear) } },
     ],
   },
 

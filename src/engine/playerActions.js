@@ -748,6 +748,9 @@ export function retire(state) {
   return {
     ...state,
     career: null,
+    // What they retired FROM. Both epitaph readers take `state.career`, and
+    // nulling it here erased the working life from the death screen.
+    mem: { ...(state.mem ?? {}), retiredFrom: { title: state.career.title, field: state.career.field, id: state.career.id } },
     retired: true,
     // Recorded so tick() can actually pay it — the promise used to be prose only.
     pensionAnnual: pension,

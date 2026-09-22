@@ -93,8 +93,12 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_food_market_negotiation',
     phase: 'midlife',
     weight: 2,
+    // Same precedence bug: the left branch stood alone, so any rural character
+    // anywhere — rural Norway, rural Japan — was told they had been haggling in
+    // the market since they were old enough to be sent alone.
     when: (G) =>
-      G.ruralUrban !== 'urban' || ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.archetype) &&
+      (G.ruralUrban !== 'urban' || ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.archetype)) &&
+      ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.archetype) &&
       G.age >= 25 &&
       !G.mem?.s7FoodMarket,
     text: 'The price is not the price. This is understood by both parties. You name what you will pay; she names what she will accept; the final number is somewhere between them and was always going to be somewhere between them. The negotiation is social as much as economic — to not negotiate would be an insult to the process, a refusal of the form. You have been doing this since you were old enough to be sent to the market alone.',

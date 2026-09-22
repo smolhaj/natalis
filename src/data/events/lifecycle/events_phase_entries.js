@@ -3,14 +3,27 @@
 // They give the player a moment of conscious orientation — what matters most entering this phase.
 // Choices set flags that weight subsequent event selection and gate follow-through events.
 
+// These are injected at the front of the queue on the transition year, but a
+// queue is not a guarantee of the same year, and the opener asserted an exact
+// age — so a player who met the young-adult beat at twenty-one was told "You
+// are eighteen." The opener is now derived from the age the character actually
+// is, and each event carries a band beyond which the beat has stopped being
+// about entering the phase.
+const AGE_WORD = {
+  18: 'eighteen', 19: 'nineteen', 20: 'twenty', 21: 'twenty-one', 22: 'twenty-two',
+  30: 'thirty', 31: 'thirty-one', 32: 'thirty-two', 33: 'thirty-three', 34: 'thirty-four',
+  50: 'fifty', 51: 'fifty-one', 52: 'fifty-two', 53: 'fifty-three', 54: 'fifty-four',
+}
+const areNow = (G) => AGE_WORD[G.age] ? `You are ${AGE_WORD[G.age]}.` : 'You are here.'
+
 export const PHASE_ENTRY_EVENTS = [
 
   {
     id: 'phase_entry_young_adult',
     phase: 'young_adult',
     weight: 5,
-    when: (G) => !G.mem?.phaseEntryYoungAdultDone,
-    text: `You are eighteen. The scaffolding of childhood has been removed. The life ahead is unwritten. What matters most, entering this?`,
+    when: (G) => !G.mem?.phaseEntryYoungAdultDone && G.age <= 22,
+    text: (G) => `${areNow(G)} The scaffolding of childhood has been removed. The life ahead is unwritten. What matters most, entering this?`,
     choices: [
       {
         text: 'Making something of yourself. Career, achievement, recognition.',
@@ -38,7 +51,7 @@ export const PHASE_ENTRY_EVENTS = [
     id: 'phase_entry_midlife',
     phase: 'midlife',
     weight: 5,
-    when: (G) => !G.mem?.phaseEntryMidlifeDone,
+    when: (G) => !G.mem?.phaseEntryMidlifeDone && G.age <= 34,
     text: (G) => {
       const d = G.desire
       const desireCtx = {
@@ -52,7 +65,7 @@ export const PHASE_ENTRY_EVENTS = [
         redemption: `The debt you have been repaying, the wrong you have been righting — where does it stand?`,
       }
       const ctx = desireCtx[d] ?? 'The life you have been building has become recognizable as a life.'
-      return `You are thirty. ${ctx} What matters most in this half?`
+      return `${areNow(G)} ${ctx} What matters most in this half?`
     },
     choices: [
       {
@@ -81,7 +94,7 @@ export const PHASE_ENTRY_EVENTS = [
     id: 'phase_entry_late_life',
     phase: 'late_life',
     weight: 5,
-    when: (G) => !G.mem?.phaseEntryLateLifeDone,
+    when: (G) => !G.mem?.phaseEntryLateLifeDone && G.age <= 54,
     text: (G) => {
       const d = G.desire
       const desireCtx = {
@@ -95,7 +108,7 @@ export const PHASE_ENTRY_EVENTS = [
         redemption: `The reckoning you have been postponing, or conducting, or both — it arrives at fifty with some insistence.`,
       }
       const ctx = desireCtx[d] ?? 'The life you have lived has become visible, like a landscape from a height.'
-      return `You are fifty. ${ctx} What do you carry into this last stretch?`
+      return `${areNow(G)} ${ctx} What do you carry into this last stretch?`
     },
     choices: [
       {

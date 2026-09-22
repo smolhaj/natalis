@@ -242,6 +242,15 @@ function applyNaturalAging(state) {
   }
 }
 
+const EDUCATION_RANK = { none: 0, primary: 1, secondary: 2, university: 3, graduate: 4 }
+
+// Flags whose prose asserts a degree. See addFlag.
+const EDUCATION_FLAGS = {
+  university_graduate: 'university',
+  first_gen_university: 'university',
+  hbcu_graduate: 'university',
+}
+
 function buildEffectProxy(state) {
   const proxy = createProxy(state)
   // Read-only state accessors for effects that need to branch on character context
@@ -267,11 +276,36 @@ function buildEffectProxy(state) {
       if (TIMESTAMPED_FLAGS.has(flag)) {
         proxy.mem[`${flag}Year`] = state.currentYear
       }
+      // A flag is not a fact about the state. Six events set a flag that SAYS
+      // the character went to university -- `university_graduate`,
+      // `first_gen_university`, `hbcu_graduate` -- and not one of them touched
+      // `state.education`, so a graduate's identity card read "Education: none"
+      // while the corpus's 8 `education.level === 'university'` guards and
+      // every degree-requiring career were closed to them. Promoted here, at
+      // the one site every event goes through, rather than in six callers.
+      const implied = EDUCATION_FLAGS[flag]
+      if (implied) proxy.setEducation(implied)
+      // A flag whose name is a claim about WHEN. `war_childhood` is set by two
+      // world events with `minAge: 0` and no upper bound, so a Bosnian who was
+      // 29 in 1991 carried it and the obituary opened "There was a war on for
+      // the whole of her childhood" — on the 1962 cohort, whose childhood was
+      // the most peaceful in that country's century. Nineteen of nineteen
+      // holders in a targeted run had a peaceful childhood. The adult version
+      // of the same fact is a different flag and a different sentence.
+      if (flag === 'war_childhood' && (state.age ?? 0) > 17) {
+        proxy.flags = proxy.flags.filter(f => f !== 'war_childhood')
+        if (!proxy.flags.includes('war_zone_civilian')) proxy.flags.push('war_zone_civilian')
+      }
     }
   }
   proxy.clearFlag = (flag) => { proxy.flags = proxy.flags.filter(f => f !== flag) }
   proxy.setEducation = (level, field = null) => {
-    proxy._newEducation = { level, field: field ?? state.education.field }
+    // Monotonic: an event that hands out a degree must not take one away. The
+    // gifted arc sets `hbcu_graduate` on a character who may already hold a
+    // postgraduate degree, and 'university' ranks below 'graduate'.
+    const held = proxy._newEducation?.level ?? state.education?.level ?? 'none'
+    if ((EDUCATION_RANK[level] ?? 0) < (EDUCATION_RANK[held] ?? 0)) return
+    proxy._newEducation = { level, field: field ?? proxy._newEducation?.field ?? state.education.field }
   }
   proxy.setCareer = (careerId) => { proxy._newCareerId = careerId }
   proxy.clearCareer = () => { proxy._clearCareer = true }
@@ -287,7 +321,7 @@ function buildEffectProxy(state) {
       const country = state.currentCountry ?? state.character?.country
       const pool = c.gender === 'male' ? country?.namePool?.male : country?.namePool?.female
       const first = pool?.length ? pickFrom(pool) : null
-      c.name = first ? `${first} ${state.character?.surname ?? ''}`.trim() : 'Your child'
+      c.name = first ? `${first} ${surnameFor(state.character?.country, state.character?.surnameBase ?? state.character?.surname, c.gender)}`.trim() : 'Your child'
     }
     // ageAtBirth is the PARENT's age when the child arrived, so 0 is never a
     // real value — treat it as "not supplied" and default to a newborn.
@@ -471,7 +505,8 @@ function resolveProxyExtras(state, proxy) {
   // retirement because the pension was never recorded either.
   if (!next.retired && proxy.flags.includes('retired')) {
     const pension = state.career ? Math.round(state.career.salary * 0.35) : (next.pensionAnnual ?? 0)
-    next = { ...next, retired: true, career: null, pensionAnnual: pension }
+    next = { ...next, retired: true, career: null, pensionAnnual: pension,
+      mem: { ...(next.mem ?? {}), retiredFrom: { title: next.career?.title, field: next.career?.field, id: next.career?.id } } }
   }
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
@@ -668,7 +703,14 @@ function resolveProxyExtras(state, proxy) {
  * announcing at sixteen that there was never a school to leave.
  */
 function schoolProseFits(e, G) {
-  return !e.assumesSchool || G.literate || G.education?.level === 'secondary' || G.education?.enrolled
+  if (!e.assumesSchool) return true
+  // `mem.attendedSchool` is the engine's own answer, settled at 7 against the
+  // country's literacy read for this character's gender. It is definitive in
+  // both directions: `G.literate` is only the birth roll, and a character can
+  // be schooled without it.
+  if (G.mem?.attendedSchool === false || G.flags?.includes?.('never_schooled')) return false
+  if (G.mem?.attendedSchool === true) return true
+  return G.literate || G.education?.level === 'secondary' || G.education?.enrolled
 }
 
 // Does this event's prose assume something that did not exist here this year?
@@ -1481,7 +1523,7 @@ export function enterCareer(state, careerId) {
     promotionChance: career.promotionChance ?? 0.10,
     maxLevel: career.levels.length - 1,
   }
-  const log = [...state.log, { age: state.age, text: `You begin working as ${withArticle(level.title)}. Starting salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
+  const log = [...state.log, { age: state.age, text: `You begin working as ${withArticle(newCareer.title)}. Starting salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career: newCareer, log }
 }
 
@@ -1522,7 +1564,7 @@ export function checkPromotion(state) {
   const baseSalary = Math.max(drawn, Math.round((state.career.baseSalary ?? drawn) * 1.04))
   const salary = inEraMoney(baseSalary, liveCountry(state), state.currentYear)
   const career = { ...state.career, level: nextIdx, title: careerTitle(newLevel, state), salary, baseSalary, yearsInRole: 0, startedAge: state.age }
-  const log = [...state.log, { age: state.age, text: `You are promoted to ${newLevel.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
+  const log = [...state.log, { age: state.age, text: `You are promoted to ${career.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career, log }
 }
 
@@ -2001,9 +2043,18 @@ function tickAssets(state) {
   // principal does not fall, the unpaid interest is added to it, and the
   // shortfall is carried on `debt` where the poverty corpus can see it.
   let arrears = false
-  const updatedProperties = properties.map(p => {
+  // Arrears could run for the rest of a life, because nothing in the game ever
+  // took the house. A penniless owner was debited the payment they had NOT
+  // made — so the shortfall became debt AND the unpaid interest was added to
+  // the principal, the same bill counted twice — and then charged again the
+  // next year, forever: a $500 balance at 39 reached $257,327 by 60 with the
+  // interest rate nowhere near able to explain it. A lender who is not being
+  // paid does not extend credit indefinitely. They take the house.
+  const repossessed = []
+  const updatedProperties = []
+  for (const p of properties) {
     const type = PROPERTY_TYPES.find(t => t.id === p.typeId)
-    if (!type) return p
+    if (!type) { updatedProperties.push(p); continue }
     const newValue = Math.round(p.currentValue * drift * (1 + type.appreciationRate + randomBetween(-2, 2) / 100))
     money -= inEraMoney(type.annualMaintenance, liveCountry(state), state.currentYear)
     if (p.mortgage > 0) {
@@ -2011,14 +2062,24 @@ function tickAssets(state) {
       const payment = Math.min(Math.round(p.mortgage / 25) + interest, p.mortgage + interest)
       if (money >= payment) {
         money -= payment
-        return { ...p, currentValue: newValue, mortgage: Math.max(0, p.mortgage - (payment - interest)) }
+        updatedProperties.push({ ...p, currentValue: newValue, mortgage: Math.max(0, p.mortgage - (payment - interest)), arrearsYears: 0 })
+        continue
       }
       arrears = true
-      money -= payment
-      return { ...p, currentValue: newValue, mortgage: p.mortgage + interest }
+      const missed = (p.arrearsYears ?? 0) + 1
+      if (missed >= 3) {
+        // The sale clears the mortgage. Equity comes back, minus what a forced
+        // sale costs; negative equity stays as debt, which is the whole of what
+        // 2008 was for the people it happened to.
+        repossessed.push({ ...p, currentValue: newValue, mortgage: p.mortgage + interest })
+        continue
+      }
+      // The payment is not made, so it does not leave the account either.
+      updatedProperties.push({ ...p, currentValue: newValue, mortgage: p.mortgage + interest, arrearsYears: missed })
+      continue
     }
-    return { ...p, currentValue: newValue }
-  })
+    updatedProperties.push({ ...p, currentValue: newValue, arrearsYears: 0 })
+  }
 
   const updatedVehicles = vehicles.map(v => {
     const type = VEHICLE_TYPES.find(t => t.id === v.typeId)
@@ -2029,16 +2090,33 @@ function tickAssets(state) {
     return { ...v, currentValue: Math.max(100, Math.round(v.currentValue * drift * (1 - type.depreciationRate))) }
   })
 
-  const owed = money < 0 ? -money : 0
-  const log = arrears && !state.mem?.arrearsToldYear
-    ? [...state.log, { age: state.age, text: 'The payment does not go out this month, and then it does not go out the month after. The letter that follows is polite and the second one is not.', isKey: true }]
-    : state.log
+  let log = [...state.log]
+  let mem = state.mem ?? {}
+  let flags = state.flags
+  let shortfall = 0
+  for (const p of repossessed) {
+    const equity = p.currentValue - p.mortgage
+    if (equity > 0) money += Math.round(equity * 0.85)
+    else shortfall += -equity
+    log = [...log, { age: state.age, year: state.currentYear, isKey: true, text: equity > 0
+      ? 'It is sold from under you, and what is left after the lender takes theirs is less than you put in. You are given a date. You are out before it, because the alternative is being carried out on the day.'
+      : 'The house goes and the debt does not go with it. You owed more than it was worth, which is a sentence that took you a long time to be able to say out loud.' }]
+    flags = [...new Set([...flags, 'lost_home', 'housing_lost'])]
+    mem = { ...mem, homeRepossessedYear: state.currentYear }
+  }
+
+  const owed = (money < 0 ? -money : 0) + shortfall
+  if (arrears && !mem.arrearsToldYear) {
+    log = [...log, { age: state.age, text: 'The payment does not go out this month, and then it does not go out the month after. The letter that follows is polite and the second one is not.', isKey: true }]
+    mem = { ...mem, arrearsToldYear: state.currentYear }
+  }
   return {
     ...state,
     assets: { properties: updatedProperties, vehicles: updatedVehicles },
     money: Math.max(0, money),
     debt: Math.round((state.debt ?? 0) + owed),
-    mem: arrears && !state.mem?.arrearsToldYear ? { ...(state.mem ?? {}), arrearsToldYear: state.currentYear } : state.mem,
+    flags,
+    mem,
     log,
   }
 }
@@ -2368,7 +2446,19 @@ function checkIllnessRisk(state) {
     const pool = MIND.has(illness.id)
       ? (mindContext[healthcare] ?? mindContext.fair)
       : (illnessContext[healthcare] ?? illnessContext.fair)
-    const illnessText = `${pickFrom(preferUnsaid(state, pool))} You are diagnosed with ${illness.name}.`
+    // "There is no name for it available to you. There is only the fact of it,
+    // and the way people have started to talk around you rather than to you.
+    // You are diagnosed with Anxiety Disorder." The clinical label was appended
+    // unconditionally to a pool whose poor and very_poor tiers exist precisely
+    // to say that no diagnosis was available — 32 of 175 diagnoses in a
+    // 140-life run contradicted themselves in the same breath, in the
+    // "+5 Happiness" register the design document forbids. Where there is no
+    // one to name it, the game does not name it either: the condition is
+    // recorded, and the character has what they have.
+    const named = !(MIND.has(illness.id) && (healthcare === 'poor' || healthcare === 'very_poor'))
+    const illnessText = named
+      ? `${pickFrom(preferUnsaid(state, pool))} You are diagnosed with ${illness.name}.`
+      : pickFrom(preferUnsaid(state, pool))
 
     const event = {
       id: `illness_${illness.id}_${state.age}`,
@@ -2576,23 +2666,28 @@ export function tick(state) {
       midlife:     (desire && _desireMidlife[desire]) ?? 'You are thirty. The life you have been building has become recognizable as a life.',
       late_life:   (desire && _desireLateLife[desire]) ?? 'You are fifty. What you carry into this half is mostly set.',
     }[newPhase]
-    if (phaseLine) s.log = [...s.log, { age: s.age, year: s.currentYear, text: phaseLine, isKey: true, isPhaseTransition: true, toPhase: newPhase }]
-
-    // Inject guaranteed phase entry decision events at key phase boundaries
+    // Inject guaranteed phase entry decision events at key phase boundaries.
+    // This runs BEFORE the transition line is logged, because the entry event
+    // opens with the same sentence the line does — "You are thirty. The life
+    // you have been building has become recognizable as a life." is the default
+    // desire context of phase_entry_midlife AND the midlife phaseLine — so
+    // printing both put the identical sentence into one year, twice, on the
+    // screen at once. Where the event will carry the beat, the line stands down.
     const phaseEntryMap = getPhaseEntryMap()
     const usedMap = s.usedEventMap ?? new Map()
-    if (newPhase === 'young_adult' && !usedMap.has('phase_entry_young_adult') && !s.queue.some(e => e.id === 'phase_entry_young_adult')) {
-      const evt = phaseEntryMap.get('phase_entry_young_adult')
-      if (evt) s.queue = [evt, ...s.queue]
+    let entryInjected = false
+    const injectEntry = (id) => {
+      if (usedMap.has(id) || s.queue.some(e => e.id === id)) return
+      const evt = phaseEntryMap.get(id)
+      if (!evt) return
+      s.queue = [evt, ...s.queue]
+      entryInjected = true
     }
-    if (newPhase === 'midlife' && !usedMap.has('phase_entry_midlife') && !s.queue.some(e => e.id === 'phase_entry_midlife')) {
-      const evt = phaseEntryMap.get('phase_entry_midlife')
-      if (evt) s.queue = [evt, ...s.queue]
-    }
-    if (newPhase === 'late_life' && !usedMap.has('phase_entry_late_life') && !s.queue.some(e => e.id === 'phase_entry_late_life')) {
-      const evt = phaseEntryMap.get('phase_entry_late_life')
-      if (evt) s.queue = [evt, ...s.queue]
-    }
+    if (newPhase === 'young_adult') injectEntry('phase_entry_young_adult')
+    if (newPhase === 'midlife') injectEntry('phase_entry_midlife')
+    if (newPhase === 'late_life') injectEntry('phase_entry_late_life')
+
+    if (phaseLine && !entryInjected) s.log = [...s.log, { age: s.age, year: s.currentYear, text: phaseLine, isKey: true, isPhaseTransition: true, toPhase: newPhase }]
   }
 
   // Life skeleton beat scheduling — guaranteed narrative beats at key ages
@@ -2755,7 +2850,7 @@ export function tick(state) {
     if (s.mem?.pregnancyYear === undefined) {
       const cGender = chance(0.5) ? 'male' : 'female'
       const c = s.character?.country
-      const childName = c ? personName(c, cGender, s, { surname: s.character.surname }) : 'Baby'
+      const childName = c ? personName(c, cGender, s, { surname: s.character.surnameBase ?? s.character.surname }) : 'Baby'
       s.mem = { ...(s.mem ?? {}), pregnancyYear: s.age - 1, pendingChild: { name: childName, gender: cGender, traits: pickTraits(CHILD_TRAITS) } }
     }
     if (s.age >= (s.mem.pregnancyYear ?? 0) + 1) {
@@ -2776,7 +2871,7 @@ export function tick(state) {
       const childData = pc ?? (() => {
         const cg = chance(0.5) ? 'male' : 'female'
         const cc = s.character?.country
-        const cn = cc ? personName(cc, cg, s, { surname: s.character.surname }) : 'Baby'
+        const cn = cc ? personName(cc, cg, s, { surname: s.character.surnameBase ?? s.character.surname }) : 'Baby'
         return { name: cn, gender: cg, traits: pickTraits(CHILD_TRAITS) }
       })()
 
@@ -2805,25 +2900,123 @@ export function tick(state) {
   // Family income during childhood (before career income, no career yet)
   if (s.age < 18 && !s.career) s = tickFamilyIncome(s)
 
-  // Debt interest accrual
+  // Debt: interest, and a payment that actually reaches the principal.
+  //
+  // It did not. `s.debt = s.debt + interest` and then the minimum payment came
+  // off `money` and was never subtracted from `debt`, so a balance grew by 18%
+  // every year forever while the character paid 5% of it annually into nothing.
+  // The comment that stood here reasoned about "a spiral with no bottom", which
+  // is the right thing to model and was not what the code did: it is only a
+  // spiral if the payment is too small to keep up, and this payment was not
+  // small, it was absent. A life-log read found a novelist on $223,895/yr
+  // carrying $7.1m of debt from a $2,400 medical bill at 28, and three of the
+  // other seven lives read the same way — $202,732 on a $6,603 pension,
+  // $288,016 next to $471,768 in the bank.
+  //
+  // The player was never told either way. Debt appears in no prose, so the only
+  // line any of those lives ever saw was the bankruptcy notice, forty-eight
+  // years after the bill.
   if (s.debt > 0) {
     const interestRate = (s.mem?.debtType === 'mortgage') ? 0.06 : 0.18
     const preInterestDebt = s.debt
-    const interest = Math.round(s.debt * interestRate)
-    s.debt = s.debt + interest
-    s.money = (s.money ?? 0) - Math.round(preInterestDebt * 0.05) // minimum payment (5% of pre-interest balance)
-    // The insolvency line was a flat -8,000 in nominal money, so it was a
-    // fortune in 1950 and in Lagos and a bad month in 2020 Stockholm. At 18%
-    // compounding with a 5% minimum payment, a debt that can never reach the
-    // threshold is a spiral with no bottom — which is a real thing, but it
-    // should be a real thing everywhere rather than a rich-world one.
+    // A debt nobody has serviced for five years has been charged off. Real
+    // creditors stop compounding and start writing down, and informal lenders
+    // stop lending and start remembering — what continues is the relationship
+    // damage, not an exponential. Left compounding, a $500 balance in a country
+    // with no insolvency procedure reached $61m over a life, which is the same
+    // runaway one layer along from the one this block was fixed for.
+    const chargedOff = (s.mem?.debtMissedYears ?? 0) >= 5
+    const interest = chargedOff ? 0 : Math.round(s.debt * interestRate)
+    // Service the interest and 5% of the principal, which clears an ordinary
+    // debt in about twenty years — and pay what there is, because a payment you
+    // cannot make is where the spiral genuinely starts.
+    const due = interest + Math.round(preInterestDebt * 0.05)
+    const paid = Math.min(due, Math.max(0, s.money ?? 0))
+    s.debt = Math.max(0, preInterestDebt + interest - paid)
+    s.money = (s.money ?? 0) - paid
+
+    const serviced = paid >= due
+    // Decay, not reset. Requiring five CONSECUTIVE missed years meant a
+    // character who managed one payment in five never charged off and
+    // compounded for the rest of their life: tests/debt.test.js took a $500
+    // balance to $210,696 over fifty years on exactly that sawtooth. A
+    // creditor's patience is not restored by one payment either.
+    const missed = serviced
+      ? Math.max(0, (s.mem?.debtMissedYears ?? 0) - 1)
+      : (s.mem?.debtMissedYears ?? 0) + 1
+    s.mem = { ...s.mem, debtMissedYears: missed }
+
+    // Say it. Once when the debt becomes a fact of the household, once when it
+    // is gone — the two moments a person would actually notice.
+    if (!s.mem?.debtToldYear && s.debt > 0 && !serviced && missed >= 2) {
+      s.mem = { ...s.mem, debtToldYear: s.currentYear }
+      s.log = [...s.log, { age: s.age, year: s.currentYear, isKey: true, text: pickFrom([
+        'The balance has stopped being a number you are paying down and started being a number that is there. You know it to the nearest hundred without looking.',
+        'You make the payment you can make, which is not the payment that was due, and the difference goes on the end of it. This has been true for two years now.',
+        'The arithmetic has turned around: the interest is more than you are putting against it, and you understood that the first time you saw it written down.',
+      ]) }]
+    }
+    if (chargedOff && !s.mem?.debtChargedOffTold && s.debt > 0) {
+      s.mem = { ...s.mem, debtChargedOffTold: true }
+      s.flags = [...new Set([...s.flags, 'debt_defaulted'])]
+      s.log = [...s.log, { age: s.age, year: s.currentYear, isKey: true, text: pickFrom([
+        'The letters stop. That is not the same as the debt stopping, and you know the difference, and for about a month you keep expecting the next one.',
+        'Nobody has asked you for it in over a year. It has not been forgiven. It has been given up on, which is a different thing and leaves a different mark.',
+        'The man does not come any more. You still cross the road at his shop, out of a habit you formed in a year you would rather not itemise.',
+      ]) }]
+    }
+    if (s.debt === 0 && s.mem?.debtToldYear) {
+      s.mem = { ...s.mem, debtToldYear: null, debtMissedYears: 0 }
+      s.log = [...s.log, { age: s.age, year: s.currentYear, isKey: true, text: pickFrom([
+        'The last of it goes. You had expected to feel something larger than you do, and what you actually feel is the absence of a background noise.',
+        'It is paid. Nobody writes to tell you; you simply do the sum one month and there is nothing on the other side of it.',
+      ]) }]
+    }
+
+    // Bankruptcy is about the debt, not the cash balance. The old test read
+    // `money < -insolvency`, and once the payment stops draining money below
+    // zero the cash balance is the wrong instrument: what bankrupts a person is
+    // a debt they have not been able to service, for years, that is larger than
+    // they can earn their way out of.
+    // Against an absolute era floor alone this fired for two thirds of everyone
+    // who ever carried a debt, because in a poor country almost any balance
+    // clears $8,000-equivalent and a character with no cash misses the payment
+    // every year by construction. What bankrupts a person is a debt large
+    // against their own means, unserviced for years — so take the floor or a
+    // year and a half of income, whichever is larger.
     const insolvency = inEraMoney(localCost(8000, liveCountry(s)?.gdp), liveCountry(s), s.currentYear)
-    if (s.money < -insolvency) {
+    const income = (s.career?.salary ?? 0) + (s.pensionAnnual ?? 0)
+    const unpayable = Math.max(insolvency, Math.round(income * 1.5))
+    // Being declared bankrupt requires somewhere to be declared it. A personal
+    // insolvency procedure an ordinary person can actually reach is a rich-world
+    // institution of the second half of this period; everywhere else an
+    // unpayable debt is not discharged by a court, it is carried, or absorbed by
+    // the family, or defaulted on privately and remembered. Without this the
+    // engine bankrupted two thirds of everyone who ever owed anything, most of
+    // them in countries with no such procedure.
+    const dischargeable = ['very_high', 'high'].includes(liveCountry(s)?.gdp) && s.currentYear >= 1970
+    // A second insolvency needs a cooling-off period and its own sentence. This
+    // had no `bankrupt` term and one fixed string, so four of ten bankrupt
+    // lives were bankrupted more than once — a Japanese salaryman twice in five
+    // years with three promotions in between, both times in the same words.
+    // Real discharge periods bar a repeat for years (six in England and Wales,
+    // eight in the United States), which is also roughly how long it takes for
+    // it to be a different story rather than the same one.
+    const sinceLast = s.currentYear - (s.mem?.bankruptcyYear ?? -99)
+    if (dischargeable && s.debt > unpayable && missed >= 4 && sinceLast >= 8) {
+      const again = s.flags.includes('bankrupt')
       s.flags = [...new Set([...s.flags, 'bankrupt', 'declared_bankrupt', 'debt_spiral_survived'])]
       s.debt = 0
-      s.money = -Math.round(insolvency * 0.25)
+      s.money = Math.max(0, s.money ?? 0)
       s.creditScore = 320
-      s.log = [...s.log, { age: s.age, text: 'You are declared bankrupt. A relief and a shame at once.', isKey: true }]
+      s.mem = { ...s.mem, debtMissedYears: 0, debtToldYear: null, debtChargedOffTold: false, bankruptcyYear: s.currentYear }
+      s.log = [...s.log, { age: s.age, year: s.currentYear, isKey: true, text: again
+        ? 'The second time there is no shame in it, which surprises you. You know the forms. You know which questions they ask and in what order, and you answer them the way a person answers a form.'
+        : pickFrom([
+            'You are declared bankrupt. A relief and a shame at once.',
+            'It is done in a room with a strip light and takes eleven minutes, and the eleven minutes are the end of about four years.',
+            'You are declared bankrupt. What you had expected to feel was humiliation. What you feel, walking out, is that you can hear again.',
+          ]) }]
     }
   }
   // Auto-flag debt spiral when in trouble
@@ -2986,6 +3179,37 @@ export function tick(state) {
   // Education progression
   s = tickEnrollment(s)
 
+  // Whether there was a school at all is decided when a child would start one,
+  // not at sixteen. It used to be decided at sixteen, by the same roll that
+  // decides whether secondary is completed — so a character who failed the
+  // secondary roll and happened to be illiterate was stamped `never_schooled`,
+  // and `epitaph.js` turned that into "Never went to school." on the death
+  // screen. `everAttended` tested `mem.attendedSchool`, which nothing in the
+  // engine or the corpus has ever set.
+  //
+  // A life-log read found it printing to a Cairo middle_class character at
+  // wealthTier 3 who had had school events firing for a decade — the teacher
+  // using her name as the unit of measurement at 10, the birth certificate
+  // asked for at enrolment at 11, community service "through school" at 14 —
+  // and then, in the same year as "You do not learn to read", a library
+  // computer she learned to type on. Not completing secondary and never
+  // attending anything are different facts about a life.
+  if (s.age === 7 && s.mem?.attendedSchool === undefined) {
+    const attended = (s.character?.literate ?? false) || chance(primaryChance(s))
+    s.mem = { ...(s.mem ?? {}), attendedSchool: attended }
+    if (!attended) {
+      s.flags = [...new Set([...s.flags, 'never_schooled'])]
+      s.education = { ...s.education, level: 'none', enrolled: null }
+      s.log = [...s.log, {
+        age: s.age, year: s.currentYear, isKey: true,
+        text: pickFrom([
+          'There is no school to start. The nearest one is a long way off and the family needs what you can do here, and the question does not come up again in any year you can remember.',
+          'The other children go and you do not. Nobody sits you down about it. There is work, and you are old enough for some of it now, and that is the whole of the explanation anybody offers.',
+        ]),
+      }]
+    }
+  }
+
   // Leaving school, at the age and the rate this place and decade actually did.
   // Without this, every character who had not explicitly dropped out graduated
   // secondary school, including in countries where one child in ten did.
@@ -3008,11 +3232,12 @@ export function tick(state) {
       // and the whole illiteracy arc guards on G.literate.
       const literate = s.character?.literate ?? chance(primaryChance(s))
       s.education = { ...s.education, level: literate ? 'primary' : 'none', enrolled: null }
-      // A character who attended is one who left early; one who never attended
-      // is `never_schooled`. Setting both made every guard reading either one
-      // true for the same life.
-      const everAttended = literate || s.flags.includes('dropped_out') ||
-        s.flags.includes('left_school_early') || s.mem?.attendedSchool === true
+      // Attendance was settled at seven. What is settled here is only whether
+      // they finished, so this can set `left_school_early` and never
+      // `never_schooled` — a character who was never at a school is already
+      // carrying that flag and does not reach this branch as a surprise.
+      const everAttended = s.mem?.attendedSchool !== false || literate ||
+        s.flags.includes('dropped_out') || s.flags.includes('left_school_early')
       s.flags = [...new Set([...s.flags, ...(everAttended ? ['left_school_early'] : ['never_schooled'])])]
       s.log = [...s.log, {
         age: s.age, year: s.currentYear, isKey: true,
@@ -3703,4 +3928,4 @@ export function pickChoiceAutomatically(event, G) {
 
 // Internal functions needed by playerActions.js
 export { buildEffectProxy, applyProxy, resolveProxyExtras }
-import { personName } from './names'
+import { personName, surnameFor } from './names'

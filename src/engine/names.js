@@ -106,6 +106,16 @@ export function personName(country, gender, state, opts = {}) {
   const pool = gender === 'male' ? country?.namePool?.male : country?.namePool?.female
   const used = opts.used ?? namesInUse(state)
   const first = pickUnusedName(pool, used)
-  const base = opts.surname !== undefined ? opts.surname : pickFrom(country?.surnames ?? [])
+  let base
+  if (opts.surname !== undefined) {
+    base = opts.surname
+  } else {
+    // Not the household's. A partner met as an adult has their own family
+    // behind them, and drawing blind from a thirty-name pool married a
+    // Stefanie Zimmermann to a Simon Zimmermann.
+    const own = state?.character?.surnameBase ?? state?.character?.surname
+    const pool = (country?.surnames ?? []).filter(n => n !== own)
+    base = pickFrom(pool.length ? pool : (country?.surnames ?? []))
+  }
   return `${first} ${surnameFor(country, base, gender)}`.trim()
 }

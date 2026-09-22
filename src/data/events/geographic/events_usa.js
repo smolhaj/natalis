@@ -286,6 +286,9 @@ export const USA_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1995 &&
       G.age >= 25 && G.age <= 55 &&
       (G.stats?.wealth ?? 50) < 55 &&
+      // "Thirty years of the same shift, the same parking lot" fired for a
+      // novelist with `career: null`. The plant has to be somewhere you work.
+      ['manufacturing', 'construction', 'trade', 'transport'].includes(G.career?.field) &&
       !G.mem?.usaRustbelt,
     text: 'The notice goes up on Friday. The plant is closing. Thirty years of the same shift, the same parking lot, the same men in the same places in the locker room — and now there is a date six months out. NAFTA. Automation. Cheaper production somewhere the company is not obligated to. The union fights and loses or the union is already gone. The severance package is described in a document that takes a lawyer to read. You do not have a lawyer.',
     choices: [

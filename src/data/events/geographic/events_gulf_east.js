@@ -88,7 +88,7 @@ export const GULF_EAST_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      !G.mem.gulfHajjFamily &&
+      !G.mem.gulfHajjFamily && !G.flags.includes('completed_hajj') && !G.flags.includes('hajj_complete') &&
       G.character.country.archetype === 'wealthy_gulf' &&
       (G.religion === 'muslim_sunni' || G.religion === 'muslim_shia' || G.religion?.includes('muslim')) &&
       G.age >= 18 && G.age <= 35,
@@ -279,24 +279,46 @@ export const GULF_EAST_EVENTS = [
     id: 'korea_gwangju_1980',
     phase: null,
     weight: 3,
+    // It ASKED THE PLAYER to assert presence at the massacre — "You are in
+    // Gwangju." — with no place term in the guard, and Korea's roster had no
+    // Gwangju to be in. `jpn_hibakusha` one module over, except here the game
+    // invites the claim. `kr_gwangju` is now a place; being there decides it.
     when: (G) =>
-      G.character.country.name === 'South Korea' &&
+      (G.currentCountry?.name ?? G.character.country.name) === 'South Korea' &&
       G.currentYear === 1980 &&
       G.age >= 15 &&
       !G.mem.koreaGwangju,
     text: 'May 18, 1980. Gwangju. After Park Chung-hee\'s assassination, Chun Doo-hwan seizes power by military coup. When students and citizens protest in Gwangju, the paratroopers are sent in. What happens in the following nine days will be suppressed from national discourse for almost a decade. The number of dead is disputed. The military\'s tally is 144. Civil society\'s is higher. For those who are not in Gwangju, the news arrives in fragments and then does not arrive at all.',
     choices: [
       {
-        text: 'You are in Gwangju.',
-        tag: null,
-        outcome: 'You will not talk about it for years because there is no safe context in which to talk about it. The memory acquires the specific quality of things that cannot yet be named.',
-        effect: (p) => { p.m -= 18; p.h -= 8; p.r += 10; p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true) },
+        text: (G) => G.place?.id === 'kr_gwangju'
+          ? 'Go out. The street is where everyone is.'
+          : 'Believe the people you trust over the broadcast.',
+        tag: 'defiant',
+        outcome: (G) => G.place?.id === 'kr_gwangju'
+          ? 'You will not talk about it for years because there is no safe context in which to talk about it. The memory acquires the specific quality of things that cannot yet be named.'
+          : 'The official account and the accounts of people you trust do not agree. You file this. You continue to file this for the next decade, until the country is ready to look at it.',
+        effect: (p) => {
+          const there = p._state?.currentPlace?.id === 'kr_gwangju'
+          p.m -= there ? 18 : 10; p.r += there ? 10 : 7
+          if (there) { p.h -= 8; p.addFlag('gwangju_survivor') }
+          p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true)
+        },
       },
       {
-        text: 'You are not in Gwangju, but you know people who were.',
-        tag: null,
-        outcome: 'The official account and the accounts of people you trust do not agree. You file this. You continue to file this for the next decade, until the country is ready to look at it.',
-        effect: (p) => { p.m -= 10; p.r += 7; p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true) },
+        text: (G) => G.place?.id === 'kr_gwangju'
+          ? 'Stay inside. There are children in the house.'
+          : 'Accept the broadcast. It is easier and you are not sure.',
+        tag: 'yielding',
+        outcome: (G) => G.place?.id === 'kr_gwangju'
+          ? 'You listen to it through a wall for nine days. Afterwards nobody asks you what you did and you answer the question anyway, silently, for about thirty years.'
+          : 'It is 1988 before you understand what you were told in 1980, and by then you have had eight years of an opinion you would rather not have had.',
+        effect: (p) => {
+          const there = p._state?.currentPlace?.id === 'kr_gwangju'
+          p.m -= there ? 12 : 4; p.r += there ? 12 : 5
+          if (there) p.addFlag('gwangju_survivor')
+          p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true)
+        },
       },
     ],
     effect: null,

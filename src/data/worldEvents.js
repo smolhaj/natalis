@@ -1138,7 +1138,11 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m -= 12; p.s -= 5; p.addFlag('stasi_generation'); },
     addFlags: ['stasi_generation'],
     minAge: 10,
-    when: (G) => G.currentYear < 1990 && !G.flags.includes('wall_generation'),
+    when: (G) =>
+      // The roster has one Germany, correctly. These two are about the DDR,
+      // and fired for a woman in rural Bavaria without this.
+      ['de_leipzig', 'de_rural_east', 'de_berlin'].includes(G.place?.id) &&
+      G.currentYear < 1990 && !G.flags.includes('wall_generation'),
   },
   {
     id: 'east_germany_trabant',
@@ -1152,7 +1156,11 @@ export const WORLD_EVENTS = [
     addFlags: ['trabant_owner'],
     minAge: 25,
     maxAge: 65,
-    when: (G) => G.stats.wealth < 65 && G.currentYear < 1990,
+    when: (G) =>
+      // The roster has one Germany, correctly. These two are about the DDR,
+      // and fired for a woman in rural Bavaria without this.
+      ['de_leipzig', 'de_rural_east', 'de_berlin'].includes(G.place?.id) &&
+      G.stats.wealth < 65 && G.currentYear < 1990,
   },
   {
     id: 'cuba_ration_book',
@@ -1597,7 +1605,9 @@ export const WORLD_EVENTS = [
   {
     id: 'yugoslav_wars_impact',
     name: 'Yugoslav Wars: Civilian Experience',
-    years: [1991, 1999],
+    // The war in Bosnia began on 6 April 1992. This fired in 1991 and narrated
+    // the Dayton Agreement — November 1995 — as already past.
+    years: [1992, 1995],
     archetypes: 'all',
     // Serbia's telling is balkan_wars; Croatia, Slovenia, Kosovo and North
     // Macedonia are not yet playable countries, so listing them here is inert.

@@ -919,9 +919,17 @@ export const IDENTITY_FLAGS = {
   aum_proximate: {
     weight: 'moderate',
     category: 'trauma',
-    description: 'Was on or near an affected subway line on March 20, 1995 — or knew someone who was.',
+    description: 'Was on an affected Tokyo subway line on the morning of March 20, 1995.',
     intent: 'year_texture',
-    notes: 'Set by jpn_aum_sarin_1995 (proximate choice).',
+    notes: 'Set by jpn_aum_sarin_1995, and only for a character living in Tokyo. The "or knew someone who was" that used to share this flag is aum_knew_someone: the obituary and the texture layer both read this one as literal presence, and it was reaching Hiroshima.',
+  },
+
+  aum_knew_someone: {
+    weight: 'minor',
+    category: 'trauma',
+    description: 'Knew somebody who was on a line that morning. Not the same fact, and not the same sentence.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_aum_sarin_1995 outside Tokyo.',
   },
 
   ainu_identity: {

@@ -452,6 +452,20 @@ export const PLACES = [
   // ── SOUTH KOREA ────────────────────────────────────────────────────────────
 
   {
+    id: 'kr_gwangju',
+    name: 'Gwangju',
+    country: 'South Korea',
+    type: 'urban',
+    scale: 'city',
+    region: 'South Jeolla',
+    neighborhoods: {
+      informal: ['Yangdong', 'Daein'],
+      working_class: ['Songjeong', 'Hanam', 'Duam'],
+      middle_class: ['Sangmu', 'Chipyeong', 'Punggam'],
+      elite: ['Suwan', 'Bongseon'],
+    },
+  },
+  {
     id: 'kr_seoul', name: 'Seoul', country: 'South Korea',
     type: 'urban', scale: 'megacity', region: 'Capital Region',
     neighborhoods: {
@@ -2318,7 +2332,7 @@ export const PLACES = [
       informal:      ['Hervanta (the high blocks)', 'Tesoma'],
       working_class: ['Pispala', 'Nekala', 'Kaukajärvi'],
       middle_class:  ['Kaleva', 'Läntinen', 'Hatanpää'],
-      elite:         ['Pyynikki', 'Näsijärvi shore', 'Ruotula'],
+      elite:         ['Pyynikki', 'Petsamo', 'Niemenranta'],
     },
   },
   {
@@ -2536,10 +2550,10 @@ export const PLACES = [
     id: 'hr_split', name: 'Split', country: 'Croatia',
     type: 'urban', scale: 'mid_city', region: 'Dalmatia',
     neighborhoods: {
-      informal:      ['Kman', 'Splitska 3 blocks'],
+      informal:      ['Kman', 'Split 3'],
       working_class: ['Brda', 'Sućidar', 'Škalice'],
       middle_class:  ['Bačvice', 'Lovret'],
-      elite:         ['Dioklecijanova palača', 'Meje', 'Marjan'],
+      elite:         ['Meje', 'Firule', 'Marjan'],
     },
   },
   {
@@ -2628,7 +2642,7 @@ export const PLACES = [
       informal:      ['Gorica', 'Vratnik', 'Bjelave upper slopes'],
       working_class: ['Alipašino Polje', 'Dobrinja', 'Hrasno', 'Otoka'],
       middle_class:  ['Novo Sarajevo', 'Grbavica', 'Čengić Vila'],
-      elite:         ['Marijin Dvor', 'Breka', 'Koševo', 'Baščaršija'],
+      elite:         ['Marijin Dvor', 'Breka', 'Koševo', 'Ciglane'],
     },
   },
   {
@@ -2903,7 +2917,7 @@ export const PLACES = [
       informal:      ['Nubarashen', 'Bangladesh', 'The domiks at Shengavit'],
       working_class: ['Malatia-Sebastia', 'Shengavit', 'Ajapnyak', 'Nork'],
       middle_class:  ['Arabkir', 'Avan', 'Nor Nork', 'Davtashen'],
-      elite:         ['Kentron', 'Northern Avenue', 'Kond restored', 'Nork-Marash'],
+      elite:         ['Kentron', 'Northern Avenue', 'Arabkir upper', 'Nork-Marash'],
     },
   },
   {
@@ -2936,7 +2950,7 @@ export const PLACES = [
       informal:      ['Sovetski', 'The IDP settlements at Bina', 'Balakhani'],
       working_class: ['Ahmadli', 'Nizami', 'Sabunchu', 'Binagadi'],
       middle_class:  ['Yasamal', 'Narimanov', 'Khatai'],
-      elite:['Icherisheher', 'The Boulevard', 'Badamdar', 'White City'],
+      elite:['Fountains Square', 'The Boulevard', 'Badamdar', 'White City'],
     },
   },
   {
@@ -3266,7 +3280,7 @@ export const PLACES = [
       informal:      ['The partitioned rooms in Maafannu', 'The migrant quarters'],
       working_class: ['Maafannu', 'Galolhu', 'Machchangolhi'],
       middle_class:  ['Henveiru', 'Hulhumale phase one'],
-      elite:         ['The Henveiru waterfront', 'Villingili'],
+      elite:         ['The Henveiru waterfront', 'Ameer Ahmed Magu'],
     },
   },
   {
@@ -3509,7 +3523,7 @@ export const PLACES = [
     type: 'urban', scale: 'city', region: 'Bamako District',
     neighborhoods: {
       informal:      ['Bankoni', 'Sabalibougou', 'Djikoroni Para', 'Doumanzana'],
-      working_class: ['Niaréla', 'Bagadadji', 'Lafiabougou', 'Banconi'],
+      working_class: ['Niaréla', 'Bagadadji', 'Lafiabougou', 'Missira'],
       middle_class:  ['Badalabougou', 'Hamdallaye', 'Magnambougou'],
       elite:         ['ACI 2000', 'Hippodrome', 'Korofina Nord', 'Badalabougou Est'],
     },
@@ -3764,7 +3778,7 @@ export const PLACES = [
     neighborhoods: {
       informal:      ['Talladjé', 'Lazaret', 'Banizoumbou edges'],
       working_class: ['Yantala', 'Gamkallé', 'Zongo', 'Boukoki'],
-      middle_class:  ['Plateau lower', 'Terminus', 'Koira Kano'],
+      middle_class:  ['Plateau lower', 'Terminus', 'Yantala Haut'],
       elite:         ['Plateau', 'Kouara Kano villas', 'Near the presidency'],
     },
   },
@@ -3854,7 +3868,7 @@ export const PLACES = [
     id: 'bj_cotonou', name: 'Cotonou', country: 'Benin',
     type: 'urban', scale: 'town', region: 'Littoral',
     neighborhoods: {
-      informal:      ['Ganvié stilt village', 'Vossa', 'Sènadé'],
+      informal:      ['Ladji', 'Vossa', 'Sènadé', 'Agla'],
       working_class: ['Dantokpa', 'Akpakpa', 'Zogbo', 'Gbégamey'],
       middle_class:  ['Cadjèhoun', 'Sainte-Rita', 'Fidjrossè'],
       elite:         ['Haie Vive', 'Les Cocotiers', 'Patte d\'Oie'],
@@ -3934,7 +3948,7 @@ export const PLACES = [
     id: 'py_asuncion', name: 'Asunción', country: 'Paraguay',
     type: 'urban', scale: 'town', region: 'Asunción',
     neighborhoods: {
-      informal:      ['Chacarita', 'Bañado Sur', 'Bañado Norte', 'Ricardo Brugada'],
+      informal:      ['Chacarita', 'Bañado Sur', 'Bañado Norte', 'Tacumbú'],
       working_class: ['San Pablo', 'Tembetary', 'Obrero', 'Mariano Roque Alonso'],
       middle_class:  ['Villa Morra lower', 'Las Mercedes', 'Sajonia'],
       elite:         ['Villa Morra', 'Carmelitas', 'Mburucuyá', 'Recoleta'],
@@ -4026,7 +4040,7 @@ export const PLACES = [
       informal:      ['Chamelecón', 'Rivera Hernández', 'López Arellano'],
       working_class: ['Cofradía', 'El Carmen', 'Satélite'],
       middle_class:  ['Jardines del Valle', 'Trejo'],
-      elite:         ['Bella Vista', 'Lomas del Guijarro Sur'],
+      elite:         ['Bella Vista', 'Jardines del Valle', 'Los Andes'],
     },
   },
   {
@@ -4082,7 +4096,7 @@ export const PLACES = [
       informal:      ['Canterbury', 'Flankers', 'Norwood'],
       working_class: ['Granville', 'Salt Spring', 'Glendevon'],
       middle_class:  ['Bogue Heights', 'Coral Gardens'],
-      elite:         ['Ironshore', 'Rose Hall', 'The Hip Strip'],
+      elite:         ['Ironshore', 'Rose Hall', 'Reading'],
     },
   },
   {
@@ -4230,7 +4244,7 @@ export const PLACES = [
       informal:      ['Blacksands', 'Ohlen Freswota edges', 'Seaside Tongoa'],
       working_class: ['Anabrou', 'Tagabe', 'Ohlen'],
       middle_class:  ['Nambatu', 'Nambatri'],
-      elite:         ['Iririki', 'The Kumul Highway waterfront', 'Bellevue'],
+      elite:         ['Bellevue', 'The Kumul Highway waterfront', 'Nambatu Heights'],
     },
   },
   {
@@ -4333,6 +4347,61 @@ export const PLACES = [
       working_class: ['The village path', 'Near the copra shed'],
       middle_class:  ['By the church', 'Near the school'],
       elite:         ['The iroij\'s house', 'The house with the generator'],
+    },
+  },
+
+  // ── JAPAN: the two cities ──────────────────────────────────────────────────
+  // `jpn_hibakusha` had no place guard and the roster had nowhere to put one:
+  // Japan carried Tokyo, Osaka and Rural Tohoku, so a farmer eight hundred
+  // kilometres from Hiroshima became an atomic-bomb survivor and it was the
+  // first line of his epitaph — "the city unnamed", because there wasn't one.
+
+  {
+    id: 'jp_hiroshima', name: 'Hiroshima', country: 'Japan',
+    type: 'urban', scale: 'city', region: 'Chugoku',
+    neighborhoods: {
+      informal:      ['The barracks by the river', 'Aioi riverbank', 'Motomachi'],
+      working_class: ['Danbara', 'Eba', 'Ujina', 'Koi'],
+      middle_class:  ['Hatchobori', 'Nobori-cho', 'Ushita'],
+      elite:         ['Near the castle', 'Nakajima', 'Hijiyama'],
+    },
+  },
+  {
+    id: 'jp_nagasaki', name: 'Nagasaki', country: 'Japan',
+    type: 'urban', scale: 'city', region: 'Kyushu',
+    neighborhoods: {
+      informal:      ['The Urakami slopes', 'Near the shipyard gate'],
+      working_class: ['Urakami', 'Inasa', 'Tateyama'],
+      middle_class:  ['Dejima side', 'Nakamachi'],
+      elite:         ['Minamiyamate', 'Higashiyamate'],
+    },
+  },
+
+  // ── GERMANY: the other half ────────────────────────────────────────────────
+  // The roster has one Germany, correctly — it was one country either side of
+  // the forty years — but it carried only Berlin and rural Bavaria, so the
+  // Stasi and Trabant world events, guarded on `countries: ['Germany']`, told a
+  // Bavarian woman about her own informant file and the death screen recorded
+  // "Lived through East Germany".
+
+  {
+    id: 'de_leipzig', name: 'Leipzig', country: 'Germany',
+    type: 'urban', scale: 'city', region: 'Saxony',
+    neighborhoods: {
+      informal:      ['Eisenbahnstrasse', 'Volkmarsdorf', 'The Plattenbau at Grunau edge'],
+      working_class: ['Grunau', 'Paunsdorf', 'Connewitz', 'Lindenau'],
+      middle_class:  ['Sudvorstadt', 'Schleussig', 'Gohlis'],
+      elite:         ['Waldstrassenviertel', 'Musikviertel'],
+    },
+  },
+  {
+    id: 'de_rural_east', name: 'Rural Thuringia', country: 'Germany',
+    type: 'rural', scale: 'village', region: 'Thuringia',
+    neighborhoods: {
+      informal:      ['Die Kate am Waldrand', 'Hinter der LPG'],
+      working_class: ['Dorfstrasse', 'Bei der LPG'],
+      middle_class:  ['Um die Kirche', 'Am Anger'],
+      elite:         ['Das Gutshaus', 'Der grosse Hof'],
     },
   },
 

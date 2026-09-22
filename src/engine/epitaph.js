@@ -13,7 +13,11 @@ export function generateIdentityCard(state) {
   // partner" and means a living one, so a widow was told "You are married to
   // Vikram Joshi" on the card that renders every year for the rest of her life,
   // four years after his death line printed. 9 of 13 widowed lives got this.
-  const { age, children, career, education, desire } = state
+  const { age, children, education, desire } = state
+  // `retire()` nulls the career, so a retiree's whole working life was absent
+  // from the death screen: a Detective Chief Inspector with thirty-one years and
+  // a Celebrated Author with thirty-seven both read as having never worked.
+  const career = state.career ?? state.mem?.retiredFrom ?? null
   const partner = state.partner?.alive === false ? null : state.partner
   const lostPartner = state.partner?.alive === false ? state.partner : null
   const G = buildG(state)
@@ -240,7 +244,11 @@ export function generateIdentityCard(state) {
 const oneOf = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export function generateEpitaph(state) {
-  const { character, flags, stats, regret, age, children, partner, career, money } = state
+  const { character, flags, stats, regret, age, children, partner, money } = state
+  // `retire()` nulls the career, so a retiree's whole working life was absent
+  // from the death screen: a Detective Chief Inspector with thirty-one years and
+  // a Celebrated Author with thirty-seven both read as having never worked.
+  const career = state.career ?? state.mem?.retiredFrom ?? null
   const name = character.firstName
   const He = character.gender === 'male' ? 'He' : 'She'
   const he = He.toLowerCase()
@@ -1180,6 +1188,16 @@ const AMBIENT_WORLD_EVENTS = new Set([
 
 /** The clause an obituary would use for a world event, in priority order. */
 const WORLD_EVENT_NOTES = {
+  // Four of the 248 world-event names are headlines rather than noun phrases --
+  // a proper noun followed by a present-tense verb -- and "Lived through the
+  // West Indies Win the Cricket World Cup" is broken in a way no article rule
+  // repairs. `withDefiniteArticle` already declines to prefix them; the frame
+  // around them is the part that was wrong.
+  lee_kuan_yew_death_2015: 'Was in Singapore the week Lee Kuan Yew died.',
+  jesse_owens_berlin_1936: 'Remembered Jesse Owens in Berlin, 1936.',
+  west_indies_cricket_1975: 'Watched the West Indies win the World Cup.',
+  we_ci_houphouet_death_1993: 'Was alive when Houphouët-Boigny died and the certainty went with him.',
+
   // The ones whose own name is not a sentence a person would write.
   conscription_south_korea: 'Did his military service.',
   internet_revolution: null,             // too ambient to be an obituary line
@@ -1197,7 +1215,11 @@ const WORLD_EVENT_NOTES = {
 }
 
 export function generateLifeNotes(state) {
-  const { character, flags, age, children, partner, career, money, siblings, fame } = state
+  const { character, flags, age, children, partner, money, siblings, fame } = state
+  // `retire()` nulls the career, so a retiree's whole working life was absent
+  // from the death screen: a Detective Chief Inspector with thirty-one years and
+  // a Celebrated Author with thirty-seven both read as having never worked.
+  const career = state.career ?? state.mem?.retiredFrom ?? null
   const f = (flag) => flags.includes(flag)
   const any = (...fs) => fs.some(g => flags.includes(g))
   const notes = [] // [{ priority, text }]
@@ -1343,7 +1365,7 @@ function withDefiniteArticle(name) {
   // Depression, and then for the Jesse Owens Wins Four Gold Medals in Berlin".
   // A name with a verb in it is already a sentence; a possessive already has
   // its determiner; a colon means the name is a title, not a noun phrase.
-  if (/'s\s|\b(wins|dies|falls|opens|ends|begins|returns|arrives|comes|goes|takes|breaks|rises|collapses)\b/i.test(name)) return name
+  if (/'s\s|\b(wins?|dies|falls|opens|ends|begins|returns|arrives|comes|goes|takes|breaks|rises|collapses)\b/i.test(name)) return name
   if (name.includes(':')) return name
   return `the ${name}`
 }

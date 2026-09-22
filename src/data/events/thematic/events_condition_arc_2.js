@@ -204,13 +204,17 @@ export const CONDITION_ARC_2_EVENTS = [
     id: 'cond_children_ask',
     phase: null,
     weight: 3,
+    // No term on the CHILD's age, so "the question is direct the way children's
+    // questions are direct" and "you give the age-appropriate answer" were
+    // addressed to a 41-year-old who had been a parent himself for seven years.
     when: (G) => {
       const c = G.conditions.find(c => CHRONIC_IDS.includes(c.id))
-      return !!c && G.children && G.children.length > 0 && G.age >= 28 && !G.mem?.condChildrenAsk
+      const young = G.children?.some(k => (G.age - (k.ageAtBirth ?? 99)) <= 12)
+      return !!c && young && G.age >= 28 && !G.mem?.condChildrenAsk
     },
     text: (G) => {
       const c = G.conditions.find(c => CHRONIC_IDS.includes(c.id))
-      const child = G.children[0]
+      const child = G.children.find(k => (G.age - (k.ageAtBirth ?? 99)) <= 12) ?? G.children[0]
       const cname = {
         diabetes: 'the monitor and the insulin kit', heart_disease: 'the pills and the things you don\'t do',
         copd: 'why you breathe like that sometimes', back_pain: 'why you can\'t lift things',
