@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { COUNTRIES } from '../src/data/countries.js'
-import { getCountryFlag, FLAGGED_COUNTRIES } from '../src/utils/countryUtils.js'
+import { getCountryFlag, FLAGGED_COUNTRIES, RELIGION_LABELS } from '../src/utils/countryUtils.js'
 
 const VALID_ARCHETYPES = new Set([
   'wealthy_west', 'wealthy_east', 'wealthy_gulf', 'post_soviet',
@@ -203,5 +203,20 @@ describe('COUNTRIES array', () => {
     const stale = FLAGGED_COUNTRIES.filter(n => !roster.has(n))
     if (stale.length) console.error('ISO entries with no matching country:', stale)
     expect(stale).toEqual([])
+  })
+
+  // The wizard's religion picker read "Sunni Muslim / Protestant /
+  // christian_pentecostal / Animist / Catholic" in Nigeria — 18 of 31 ids had
+  // no label and were shown to the player as raw enum values.
+  it('has a display label for every religion in the data', () => {
+    const used = new Set(COUNTRIES.flatMap(c => Object.keys(c.religionWeights ?? {})))
+    const missing = [...used].filter(k => !RELIGION_LABELS[k])
+    if (missing.length) console.error('Religions shown to the player as raw ids:', missing)
+    expect(missing).toEqual([])
+  })
+
+  it('has no religion label the data never uses', () => {
+    const used = new Set(COUNTRIES.flatMap(c => Object.keys(c.religionWeights ?? {})))
+    expect(Object.keys(RELIGION_LABELS).filter(k => !used.has(k))).toEqual([])
   })
 })

@@ -2,13 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* The base layer the redesign missed. Every value here was still the iOS theme
+   the rest of the app moved away from: the page background was #f2f2f7 against
+   a #f4f2ed paper and a #f4f2ed theme-color, so the browser chrome and the page
+   disagreed and rubber-band overscroll showed iOS grey; the range input's
+   accent was #007aff, which made the curated wizard's birth-year slider the
+   most saturated thing in the entire application; and the font stack pinned
+   -apple-system over Tailwind's preflight, so the Inter webfont that index.html
+   preconnects and render-blocks on was never applied to anything. */
+
 @layer base {
   html, body, #root {
     height: 100%;
-    background-color: #f2f2f7;
-    color: #1c1c1e;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f4f2ed;   /* natalis-bg */
+    color: #1c1a16;              /* natalis-text */
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   * {
@@ -20,29 +30,47 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #f2f2f7;
+    background: #f4f2ed;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #c7c7cc;
+    background: #d0c9b9;         /* natalis-border, one step darker */
     border-radius: 4px;
   }
 
   input[type="range"] {
-    accent-color: #007aff;
+    accent-color: #3f5670;       /* natalis-accent */
   }
 
-  input[type="number"] {
-    background: white;
-    border: 1.5px solid #e5e5ea;
-    border-radius: 8px;
+  input[type="number"],
+  input[type="text"],
+  input[type="search"] {
+    background: #fdfcf9;         /* natalis-surface */
+    border: 1px solid #e2ddd2;   /* natalis-border */
+    border-radius: 10px;
     padding: 8px 12px;
-    color: #1c1c1e;
+    color: #1c1a16;
     font-size: 14px;
     outline: none;
   }
 
-  input[type="number"]:focus {
-    border-color: #007aff;
+  input[type="number"]:focus,
+  input[type="text"]:focus,
+  input[type="search"]:focus {
+    border-color: #3f5670;
+  }
+
+  /* No focus style was defined anywhere, so focus was whatever the UA drew —
+     in this build a saturated gold ring that reads as an error state. A
+     keyboard player needs to be able to see where they are. */
+  :focus-visible {
+    outline: 2px solid #3f5670;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* The prose face, applied to the one thing it is for. */
+  .font-prose {
+    font-feature-settings: 'kern' 1, 'liga' 1, 'onum' 1;
   }
 }

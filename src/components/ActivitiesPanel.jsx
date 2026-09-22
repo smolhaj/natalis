@@ -1036,7 +1036,7 @@ export default function ActivitiesPanel({ onClose }) {
                         // the regime's legal quality never applied to minigame crimes.
                         const sent = calcSentence(assaultCrime)
                         return { ...s, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                          pendingTrial: sent > 0 ? buildPendingTrial(s, assaultCrime, sent) : null,
+                          pendingTrial: sent > 0 ? buildPendingTrial(s, assaultCrime, sent) : s.pendingTrial,   // never discard a charge that has not been tried
                           criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime.criminalRecordEntry, age: s.age, category: 'violent' }],
                           log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${assaultCrime.name.toLowerCase()}.`, isKey: true }] }
                       },
@@ -1071,7 +1071,7 @@ export default function ActivitiesPanel({ onClose }) {
                         if (Math.random() < adjustedRisk) {
                           const sent = calcSentence(assaultCrime)
                           return { ...s, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                            pendingTrial: sent > 0 && assaultCrime ? buildPendingTrial(s, assaultCrime, sent) : null,
+                            pendingTrial: sent > 0 && assaultCrime ? buildPendingTrial(s, assaultCrime, sent) : s.pendingTrial,   // never discard a charge that has not been tried
                             criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime?.criminalRecordEntry ?? 'Assault', age: s.age, category: 'violent' }],
                             log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${(assaultCrime?.name ?? 'assault').toLowerCase()}.`, isKey: true }] }
                         }
@@ -1176,7 +1176,7 @@ export default function ActivitiesPanel({ onClose }) {
                           karma: Math.max(0, (s.karma ?? 50) - 20),
                           pendingTrial: failSentence > 0
                             ? buildPendingTrial(s, { name: 'Attempted murder', category: 'violent' }, failSentence)
-                            : null,
+                            : s.pendingTrial,
                           criminalRecord: [...(s.criminalRecord ?? []), { crime: 'Attempted murder', age: s.age, category: 'violent' }],
                           log: [...(s.log ?? []), { age: s.age, text: 'You are arrested for attempted murder.', isKey: true }],
                         }),
@@ -1244,7 +1244,7 @@ export default function ActivitiesPanel({ onClose }) {
                       return {
                         ...s,
                         actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                        pendingTrial: sentence > 0 ? buildPendingTrial(s, crime, sentence) : null,
+                        pendingTrial: sentence > 0 ? buildPendingTrial(s, crime, sentence) : s.pendingTrial,   // never discard a charge that has not been tried
                         criminalRecord: [...(s.criminalRecord ?? []), { crime: crime.criminalRecordEntry ?? crime.name, age: s.age, category: crime.category ?? 'other' }],
                         log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }],
                       }
@@ -1942,6 +1942,10 @@ export default function ActivitiesPanel({ onClose }) {
                 if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return false
                 if (cat.key === 'substances' && state.age < 14) return false
                 if (cat.key === 'crime' && state.age < 12) return false
+                // A charge is outstanding: the trial blocks Age Up and blocked
+                // nothing else, so the crime surface stayed open and a second
+                // arrest could overwrite the first charge.
+                if (cat.key === 'crime' && state.pendingTrial) return false
                 if (cat.key === 'travel' && state.age < 16) return false
                 if (cat.key === 'business' && state.age < 18) return false
                 if (cat.key === 'immigration' && state.residencyStatus === 'citizen' && !state.flags.includes('emigrated')) return false

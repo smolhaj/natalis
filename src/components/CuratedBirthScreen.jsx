@@ -319,12 +319,9 @@ export default function CuratedBirthScreen() {
         {step === 4 && selectedCountry && (
           <div className="space-y-3">
             <div className="bg-white rounded-2xl shadow-card overflow-hidden border border-natalis-border">
-              <div className="px-5 py-4 flex items-center gap-4" style={{ background: '#3f5670' }}>
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl bg-white shadow-sm">
-                  {gender === 'male' ? '👦' : '👧'}
-                </div>
+              <div className="px-5 py-4 border-b border-natalis-border">
                 <div>
-                  <p className="text-xl font-bold text-natalis-text">{selectedCountry.name}</p>
+                  <p className="font-prose text-xl text-natalis-text">{selectedCountry.name}</p>
                   <p className="text-natalis-muted text-sm">
                     {gender === 'male' ? 'Male' : 'Female'} · Born {effectiveYear}
                     {(() => {

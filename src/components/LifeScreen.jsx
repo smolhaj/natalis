@@ -36,6 +36,17 @@ function RelBar({ value, color }) {
   )
 }
 
+/** Escape dismisses the open sheet. Both sheets render a full-screen scrim. */
+function EscapeCloses({ active, onClose }) {
+  useEffect(() => {
+    if (!active) return
+    const onKey = (e) => { if (e.key === 'Escape') { e.stopPropagation(); onClose() } }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [active, onClose])
+  return null
+}
+
 function relColor(q) {
   return q > 65 ? '#3f6146' : q > 35 ? '#8a6635' : '#8c3a2e'
 }
@@ -150,10 +161,25 @@ export default function LifeScreen() {
     }
   }, [stats.happiness, stats.health, stats.smarts, stats.looks])
 
-  // Keyboard shortcuts: Space/Enter → age up or continue; 1/2/3 → choices
+  // Keyboard shortcuts: Space/Enter → age up or continue; 1/2/3 → choices.
+  //
+  // The handler used to exempt only INPUT/TEXTAREA/SELECT and then call
+  // preventDefault, which made the game unusable by keyboard: with a button
+  // focused, Space both activated the button AND aged the character (focus
+  // "Timeline", press Space, the view changes and a year passes), while Enter
+  // was swallowed entirely so no button in the game could ever be activated
+  // with it. A keyboard-only player could not reach Menu, the tabs, Move or
+  // Activities without burning a year each time.
+  //
+  // So: anything focusable handles its own keys, and these shortcuts apply only
+  // when the focus is on the page rather than on a control.
   useEffect(() => {
     const handleKey = (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return
+      const t = e.target
+      if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT') return
+      // A focused button, link, or anything with a tabindex owns Space and Enter.
+      if (typeof t.closest === 'function' &&
+          t.closest('button, a, [role="button"], [role="tab"], [tabindex]:not([tabindex="-1"])')) return
       if (e.metaKey || e.ctrlKey || e.altKey) return
       if (pendingEvent?.isAutomatic) {
         if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); resolveAutoEvent() }
@@ -385,17 +411,16 @@ export default function LifeScreen() {
 
           {/* Trial modal — blocks Age Up until resolved */}
           {pendingTrial && (
-            <div className="bg-white rounded-2xl shadow-card-lg overflow-hidden border border-red-200">
-              <div className="bg-red-600 px-5 py-3 flex items-center gap-2">
-                <span className="text-xl">⚖️</span>
-                <p className="text-white text-xs font-semibold uppercase tracking-widest">On Trial</p>
+            <div className="bg-natalis-surface rounded-2xl shadow-card overflow-hidden border border-natalis-border border-l-2 border-l-natalis-alarm">
+              <div className="px-5 pt-5 pb-1">
+                <p className="text-natalis-muted text-[11px] font-medium uppercase tracking-[0.14em]">On trial</p>
               </div>
-              <div className="p-5 space-y-4">
-                <p className="text-natalis-text text-base font-medium leading-relaxed">
-                  You are charged with <strong>{pendingTrial.crimeName.toLowerCase()}</strong> and facing up to {pendingTrial.sentence} year{pendingTrial.sentence !== 1 ? 's' : ''} in prison. Choose your defense.
+              <div className="px-5 pt-3 pb-5 space-y-4">
+                <p className="font-prose text-natalis-text text-prose-lg">
+                  You are charged with <strong>{pendingTrial.crimeName.toLowerCase()}</strong> and facing up to {pendingTrial.sentence} year{pendingTrial.sentence !== 1 ? 's' : ''} in prison.
                 </p>
                 <div className="space-y-2 pt-1">
-                  <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">Choose your defense</p>
+                  <p className="text-natalis-muted text-[11px] font-medium uppercase tracking-[0.14em]">How you answer it</p>
                   {[
                     { tier: 'none', label: 'Represent yourself', sub: 'Free · Low chance of leniency', cost: 0 },
                     { tier: 'mid',  label: 'Hire a local lawyer', sub: `$${(pendingTrial.lawyerCosts?.mid ?? 0).toLocaleString()} · Moderate chance of reduction`, cost: pendingTrial.lawyerCosts?.mid ?? 0 },
@@ -407,11 +432,14 @@ export default function LifeScreen() {
                         key={opt.tier}
                         disabled={!canAfford}
                         onClick={() => resolveTrial(opt.tier)}
-                        className="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-150 active:scale-95 disabled:opacity-40"
-                        style={{ background: !canAfford ? '#e2ddd2' : i === 0 ? '#4a453e' : i === 1 ? '#3f5670' : '#8a6635', color: !canAfford ? '#7d766a' : 'white' }}
+                        className="w-full text-left px-4 py-3 rounded-xl border border-natalis-rule
+                                   bg-natalis-raised text-natalis-text font-prose text-[0.9375rem]
+                                   hover:border-natalis-accent hover:bg-natalis-accent-soft
+                                   transition-colors duration-150 active:scale-[0.99]
+                                   disabled:opacity-40 disabled:hover:border-natalis-rule"
                       >
                         <div>{opt.label}</div>
-                        <div className="text-xs font-normal opacity-80 mt-0.5">{opt.sub}</div>
+                        <div className="text-xs text-natalis-muted mt-0.5">{opt.sub}</div>
                       </button>
                     )
                   })}
@@ -1292,7 +1320,7 @@ export default function LifeScreen() {
               {!partner && children.length === 0 && (!friends || friends.filter(f=>f.alive).length === 0) && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
                   <p className="text-4xl mb-2">🤝</p>
-                  <p className="text-natalis-muted text-sm">No relationships yet. Get out there!</p>
+                  <p className="text-natalis-muted text-sm">Nobody yet. That changes, or it does not.</p>
                 </div>
               )}
             </div>
@@ -1550,7 +1578,7 @@ export default function LifeScreen() {
               {assets?.properties?.length === 0 && assets?.vehicles?.length === 0 && (debt ?? 0) === 0 && !business?.active && travels?.length === 0 && !rosca && !jointFamily && gold === 0 && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
                   <p className="text-4xl mb-2">🏦</p>
-                  <p className="text-natalis-muted text-sm">No assets yet. Start saving!</p>
+                  <p className="text-natalis-muted text-sm">Nothing here yet. Most lives take a while to accumulate anything a list can hold.</p>
                 </div>
               )}
             </div>
@@ -1561,6 +1589,14 @@ export default function LifeScreen() {
       </div>
 
       {/* ── Activities Panel (slides up) ─────────────────────────────── */}
+      {/* Escape closes whichever sheet is open. The Move sheet's confirm step
+          had no close control at all, so Escape left a full-screen scrim over
+          the app with no way out but reloading. */}
+      <EscapeCloses
+        active={showActivities || showMoveModal}
+        onClose={() => { setShowActivities(false); setShowMoveModal(false) }}
+      />
+
       {showActivities && !pendingEvent && !isPassive && (
         <div className="fixed inset-0 z-40 flex flex-col justify-end" onClick={() => setShowActivities(false)}>
           <div className="absolute inset-0 bg-black/20" />
@@ -1733,21 +1769,19 @@ export default function LifeScreen() {
               <button
                 onClick={() => setShowActivities(v => !v)}
                 className="flex-1 py-3 rounded-xl font-bold text-sm transition-all active:scale-95"
-                style={{ background: showActivities ? '#4a453e' : '#8c3a2e', color: 'white' }}
+                style={{ background: showActivities ? '#4a453e' : '#8c3a2e', color: '#fdfcf9' }}
               >
-                {showActivities ? '✕ Close' : '🔒 Prison Life'}
+                Prison life
               </button>
             ) : (
               <button
                 onClick={() => setShowActivities(v => !v)}
                 disabled={actionsLeft <= 0}
-                className="flex-1 py-3 rounded-xl font-bold text-sm transition-all active:scale-95 disabled:opacity-40"
-                style={{
-                  background: actionsLeft > 0 ? '#5b4a6b' : '#e2ddd2',
-                  color: actionsLeft > 0 ? 'white' : '#7d766a',
-                }}
+                className="flex-1 py-3 rounded-xl text-sm font-prose border transition-colors active:scale-[0.99]
+                           disabled:opacity-40 border-natalis-rule bg-natalis-surface text-natalis-dim
+                           hover:border-natalis-text hover:text-natalis-text"
               >
-                {showActivities ? '✕ Close' : '⚡ Activities'}
+                Activities
               </button>
             )}
 

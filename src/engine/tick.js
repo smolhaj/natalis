@@ -22,6 +22,7 @@ import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
 import { rememberSaid } from './prose'
 import { tickLifeCourse, secondaryChance, primaryChance } from './lifeCourse'
+import { withArticle } from '../utils/countryUtils'
 
 function createProxy(state) {
   return {
@@ -1245,7 +1246,7 @@ export function enterCareer(state, careerId) {
     promotionChance: career.promotionChance ?? 0.10,
     maxLevel: career.levels.length - 1,
   }
-  const log = [...state.log, { age: state.age, text: `You begin working as a ${level.title}. Starting salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
+  const log = [...state.log, { age: state.age, text: `You begin working as ${withArticle(level.title)}. Starting salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career: newCareer, log }
 }
 
@@ -2665,8 +2666,22 @@ export function tick(state) {
   // like the graduation chain and illness diagnoses.
 
   // Resolve function text so EventBox and logs always receive strings
-  const resolvedText = typeof event.text === 'function' ? event.text(buildG(s)) : (event.text ?? '')
-  const resolvedEvent = resolvedText !== event.text ? { ...event, text: resolvedText } : event
+  // `event.text` and `choice.outcome` were both resolved when they were
+  // functions; `choice.text` never was, so EventBox rendered `{choice.text}`
+  // with a function in it — React warns "Functions are not valid as a React
+  // child" and draws an empty button. Five choices in the corpus are written
+  // this way, and all three of `inf_enter_informal`'s are, so entering the
+  // informal economy — a core path for the archetypes the game is proudest of
+  // — presented a paragraph above three completely blank buttons.
+  const G = buildG(s)
+  const resolvedText = typeof event.text === 'function' ? event.text(G) : (event.text ?? '')
+  const needsChoiceText = (event.choices ?? []).some(c => typeof c.text === 'function')
+  const resolvedChoices = needsChoiceText
+    ? event.choices.map(c => (typeof c.text === 'function' ? { ...c, text: c.text(G) } : c))
+    : event.choices
+  const resolvedEvent = (resolvedText !== event.text || needsChoiceText)
+    ? { ...event, text: resolvedText, choices: resolvedChoices }
+    : event
 
   if (!resolvedEvent.choices || resolvedEvent.choices.length === 0) {
     s.pendingEvent = { ...resolvedEvent, isAutomatic: true }

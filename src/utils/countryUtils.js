@@ -116,20 +116,48 @@ export const REGIME_COLORS = {
   democracy:                  '#3f6146',
 }
 
+// Thirteen labels against 31 religion ids in the country data, so the curated
+// birth wizard's religion list read "Sunni Muslim / Protestant /
+// christian_pentecostal / Animist / Catholic" — raw enum ids shown to the
+// player in Nigeria, Brazil, Kenya, DR Congo, Ghana, Jamaica, Chile, Guatemala
+// and 10 others. `christian_pentecostal` in particular was added to Brazil and
+// Nigeria by the identity-in-country audit precisely because that church is
+// largest there, and it has been rendering as a snake_case id ever since.
+// `tests/countries.test.js` now asserts the table covers the data.
 export const RELIGION_LABELS = {
-  christian_catholic:   'Catholic',
-  christian_protestant: 'Protestant',
-  christian_orthodox:   'Orthodox Christian',
-  muslim_sunni:         'Sunni Muslim',
-  muslim_shia:          'Shia Muslim',
-  hindu:                'Hindu',
-  buddhist:             'Buddhist',
-  secular:              'Secular',
-  atheist:              'Atheist',
-  jewish:               'Jewish',
-  sikh:                 'Sikh',
-  animist:              'Animist',
-  folk_religion:        'Folk Religion',
+  christian_catholic:    'Catholic',
+  christian_protestant:  'Protestant',
+  christian_orthodox:    'Orthodox Christian',
+  christian_pentecostal: 'Pentecostal',
+  christian_evangelical: 'Evangelical',
+  christian_lutheran:    'Lutheran',
+  christian_methodist:   'Methodist',
+  christian_maronite:    'Maronite Christian',
+  christian_armenian:    'Armenian Apostolic',
+  christian_kimbanguist: 'Kimbanguist',
+  christian_zionist:     'Zionist Christian',
+  christian_arab:        'Arab Christian',
+  christian_underground: 'Underground Christian',
+  christian_other:       'Christian',
+  muslim_sunni:          'Sunni Muslim',
+  muslim_shia:           'Shia Muslim',
+  muslim_sufi:           'Sufi Muslim',
+  muslim_alawi:          'Alawite',
+  muslim_druze:          'Druze',
+  muslim_ahmadiyya:      'Ahmadi Muslim',
+  muslim_other:          'Muslim',
+  hindu:                 'Hindu',
+  buddhist:              'Buddhist',
+  sikh:                  'Sikh',
+  jain:                  'Jain',
+  jewish:                'Jewish',
+  zoroastrian:           'Zoroastrian',
+  yezidi:                'Yazidi',
+  rastafari:             'Rastafari',
+  secular:               'Secular',
+  atheist:               'Atheist',
+  animist:               'Animist',
+  folk_religion:         'Folk Religion',
 }
 
 export const RESIDENCY_LABELS = {
@@ -142,4 +170,31 @@ export const RESIDENCY_LABELS = {
   asylum_seeker:       'Asylum Seeker',
   tourist_overstay:    'Overstayed Visa',
   climate_displaced:   'Climate Displaced',
+}
+
+/**
+ * "a" or "an", for a title the player reads. 34 career titles begin with a
+ * vowel — Engineer, Architect, Accountant, Editor, Officer, Elite Athlete, IT
+ * Director, Assembly Worker — and both the "Who you are" card (shown on the
+ * Life tab every year) and the job-start line hardcoded "a", so a player saw
+ * "working as a Inspector" for a whole career.
+ *
+ * The exceptions are the ones that matter in a career list: a *U*niversity
+ * lecturer and a *E*uropean anything take "a"; an *H*onorary or *M*P-style
+ * initialism takes "an".
+ */
+export function indefiniteArticle(word = '') {
+  const w = String(word).trim()
+  if (!w) return 'a'
+  const first = w[0]
+  // An initialism read letter by letter: IT Director, NGO Worker, MP.
+  if (/^[A-Z]{2,}\b/.test(w)) return /^[AEFHILMNORSX]/.test(first) ? 'an' : 'a'
+  if (/^(uni|use|user|usual|eu|one|once)/i.test(w)) return 'a'
+  if (/^(hon|hour|heir)/i.test(w)) return 'an'
+  return /^[aeiou]/i.test(first) ? 'an' : 'a'
+}
+
+/** `a Inspector` → `an Inspector`. */
+export function withArticle(word = '') {
+  return `${indefiniteArticle(word)} ${word}`
 }

@@ -1,6 +1,6 @@
 import { FlagSet, getPhase } from './character'
 import { buildG } from './tick'
-import { getCountryDisplayName } from '../utils/countryUtils'
+import { getCountryDisplayName, withArticle } from '../utils/countryUtils'
 
 // ─── Living identity card ─────────────────────────────────────────────────────
 // 4 sentences in two pairs: exterior (place/era/situation) + interior (wound/desire).
@@ -20,7 +20,7 @@ export function generateIdentityCard(state) {
   const place = country?.name ?? 'somewhere'
   const occupationPhrase = (() => {
     if (state.inPrison) return null // handled in exterior 2
-    if (career) return `working as a ${career.title}`
+    if (career) return `working as ${withArticle(career.title)}`
     if (state.retired) return 'retired'
     if (education?.enrolled) return 'studying'
     if (phase === 'early_childhood' || phase === 'childhood') return 'still a child'

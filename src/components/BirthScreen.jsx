@@ -52,7 +52,6 @@ export default function BirthScreen() {
     startGame()
   }
 
-  const genderEmoji = gender === 'male' ? '👦' : '👧'
 
   return (
     <div className="min-h-screen bg-natalis-bg flex items-center justify-center px-4 py-10">
@@ -67,7 +66,7 @@ export default function BirthScreen() {
         <div className="bg-white rounded-2xl shadow-card overflow-hidden border border-natalis-border">
           <div className="px-5 py-4 flex items-center gap-4" style={{ background: '#3f5670' }}>
             <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl bg-white shadow-sm">
-              {genderEmoji}
+              
             </div>
             <div>
               <p className="text-xl font-bold text-natalis-text">{firstName} {surname}</p>
@@ -158,12 +157,12 @@ export default function BirthScreen() {
             onClick={rerollCharacter}
             className="flex-1 py-4 rounded-2xl font-bold text-natalis-dim border-2 border-natalis-border bg-white text-sm transition-all active:scale-95"
           >
-            🎲 Reroll
+            Someone else
           </button>
           <button
             onClick={handleBegin}
             className="flex-[2] py-4 rounded-2xl font-bold text-white text-sm shadow-card-lg transition-all active:scale-95"
-            style={{ background: '#3f6146' }}
+            style={{ background: '#1c1a16' }}
           >
             Begin This Life →
           </button>
