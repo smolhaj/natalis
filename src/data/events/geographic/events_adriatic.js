@@ -1,10 +1,10 @@
 // Croatia and Slovenia arc events
 //
-// Two countries that left the same federation eighteen months apart and had
-// completely different 1990s, which is the whole point of writing them
-// together. Slovenia's war was ten days. Croatia's was four years and included
-// the shelling of a world heritage site and the departure of most of its Serb
-// population.
+// Two countries that declared independence on the same day — 25 June 1991,
+// within hours of each other — and had completely different 1990s, which is the
+// whole point of writing them together. Slovenia's war was ten days. Croatia's
+// was four years and included the shelling of a world heritage site and the
+// departure of most of its Serb population.
 //
 // 15 events. Follow-throughs at the bottom; every flag set here lands there or
 // in a buildYearTexture path.
@@ -63,7 +63,7 @@ export const ADRIATIC_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 1981 &&
       G.age >= 8 &&
       !G.mem?.adrTito,
-    text: 'May. The announcement comes and the football match stops and the crowd in the stadium sings, thirty thousand people, and the recording of it will be played for the rest of your life. The relay of youth is retired. Your school has a moment of silence that goes on much longer than a moment. What nobody says, because nobody yet has the sentence for it, is that the federation was held together by a person and the person is in a coffin in Ljubljana. You are eight or you are forty and either way you have never lived in a country without him.',
+    text: 'May. The announcement comes and the football match stops and the crowd in the stadium sings, thirty thousand people, and the recording of it will be played for the rest of your life. The relay of youth will go on without him for another seven years, which nobody in this room would predict. Your school has a moment of silence that goes on much longer than a moment. What nobody says, because nobody yet has the sentence for it, is that the federation was held together by a person and the person is in a coffin in Ljubljana. You are eight or you are forty and either way you have never lived in a country without him.',
     choices: null,
     effect: (p) => {
       p.m -= 8; p.e += 5
@@ -100,7 +100,13 @@ export const ADRIATIC_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 2012 &&
       G.age >= 18 &&
       !G.mem?.adrSiErased,
-    text: 'There is an administrative category that appears after independence: people who were citizens of Yugoslavia and residents of Slovenia and who did not complete a form inside a six-month window. Twenty-five thousand of them are removed from the register. They lose work, pensions, the right to be here, in some cases their documents on the spot. They are called the erased, and the word is accurate — a bureaucratic deletion, no violence at all. It takes twenty years and the European Court of Human Rights to begin fixing it. Most Slovenes you know have not heard of it.',
+    // The referendum is 4 April 2004, so the text branches on whether the
+    // character is living before the country was asked or after it answered.
+    // A flat retelling made it sound like an obscurity nobody had heard of;
+    // it was put to a national vote and lost by ninety-six per cent.
+    text: (G) => G.currentYear < 2004
+      ? 'There is an administrative category that appears after independence: people who were citizens of Yugoslavia and residents of Slovenia and who did not complete a form inside a six-month window. Twenty-five thousand of them are removed from the register. They lose work, pensions, the right to be here, in some cases their documents on the spot. They are called the erased, and the word is accurate — a bureaucratic deletion, no violence at all. Nobody you know can tell you how a person is supposed to appeal a clerical fact.'
+      : 'Twenty-five thousand people were taken off the register after independence — citizens of Yugoslavia, residents of Slovenia, who did not complete a form inside a six-month window. They lost work, pensions, the right to be here, in some cases their documents on the spot. They are called the erased. The Constitutional Court has now said twice that this was unlawful, and in April the question of putting them back goes to a referendum and loses: ninety-six per cent against, on a turnout of a third. It takes the European Court of Human Rights to move it after that.',
     choices: [
       { text: 'Find out about it properly', tag: 'defiant', outcome: 'You read the judgment. It is the least dramatic injustice you have ever been furious about.', effect: (p) => { p.e += 7; p.karma += 7; p.addFlag('adr_si_erased_aware') } },
       { text: 'It is a paperwork problem. There are bigger things.', tag: 'yielding', outcome: 'You are right about the paperwork and wrong about the size.', effect: (p) => { p.karma -= 4; p.addFlag('adr_si_erased_unaware') } },
@@ -135,7 +141,7 @@ export const ADRIATIC_EVENTS = [
       G.age >= 28 && G.age <= 70 &&
       G.currentYear >= 1970 &&
       !G.mem?.adrSiCottage,
-    text: 'There is a place in the family — a hayrack, a vineyard cottage, a house in a valley somebody\'s grandmother came from — and you go there most weekends of your adult life. The work there is real work: the wood, the vines, the roof. It is also the opposite of the job. Two million people and most of them have one of these, which is why the country empties toward the hills on a Friday afternoon and why nobody here thinks of the countryside as somewhere else.',
+    text: 'There is a place in the family — a hayrack, a vineyard cottage, a house in a valley somebody\'s grandmother came from — and you go there most weekends of your adult life. The work there is real work: the wood, the vines, the roof. It is also the opposite of the job. Not many families own one outright — fewer here than almost anywhere in the region — but everybody has access to somebody\'s, which is why the country empties toward the hills on a Friday afternoon and why nobody here thinks of the countryside as somewhere else.',
     choices: null,
     effect: (p) => {
       p.m += 9; p.h += 4

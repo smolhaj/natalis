@@ -42,7 +42,7 @@ export const ICELAND_MOLDOVA_EVENTS = [
       ((G.currentYear >= 1958 && G.currentYear <= 1961) || (G.currentYear >= 1972 && G.currentYear <= 1976)) &&
       G.age >= 14 &&
       !G.mem?.islCodWar,
-    text: 'The limit goes out — four miles, then twelve, then fifty, then two hundred — and each time the Royal Navy sends frigates and each time Iceland sends coastguard vessels with a net-cutter on a cable. There is no army. There is a threat to leave NATO and close the base, which is the entire arsenal and turns out to be enough. The frigates go home. A country of two hundred thousand people has won a dispute with Britain four times by having something Britain wanted more than it wanted the fish.',
+    text: 'The limit goes out — four miles, then twelve, then fifty, then two hundred — and each time the Royal Navy sends frigates and each time Iceland sends coastguard vessels with a net-cutter on a cable. There is no army. There is a threat to leave NATO and close the base, which is the entire arsenal and turns out to be enough. The frigates go home. A country of two hundred thousand people has won a dispute with Britain three times by having something Britain wanted more than it wanted the fish.',
     choices: null,
     effect: (p) => {
       p.m += 10; p.karma += 4; p.e += 4
@@ -60,7 +60,7 @@ export const ICELAND_MOLDOVA_EVENTS = [
       G.currentYear >= 1967 && G.currentYear <= 1972 &&
       G.age >= 16 &&
       !G.mem?.islHerring,
-    text: 'The herring does not come. Siglufjörður had thirty salting stations and a population that tripled every summer and a brass band, and the fish simply stops arriving — fished out, or moved, and the argument about which will go on for fifty years. The town loses half its people inside a decade. The buildings stay. You can walk down to the quay in 1975 and see the racks still standing with nothing on them, which is a specific way for an industry to end: not a closure, an absence.',
+    text: 'The herring does not come. Siglufjörður had twenty-three salting stations and a population that tripled every summer and a brass band, and the fish simply stops arriving — fished out, or moved, and the argument about which will go on for fifty years. The town loses a quarter of its people inside a decade, and keeps losing them after that. The buildings stay. You can walk down to the quay in 1975 and see the racks still standing with nothing on them, which is a specific way for an industry to end: not a closure, an absence.',
     choices: null,
     effect: (p) => {
       p.mo -= 800; p.m -= 8; p.e += 3
@@ -131,7 +131,7 @@ export const ICELAND_MOLDOVA_EVENTS = [
       G.currentYear >= 1946 && G.currentYear <= 1951 &&
       G.age >= 6 &&
       !G.mem?.mdaDeport,
-    text: 'Operation Iasul takes them in one night in July — thirty-five thousand people, the families of anyone with too much land or the wrong relative, to Kurgan and Tyumen. The lists were made locally, which is the part nobody in the village will discuss for the next sixty years, because the person who made the list also stayed. Before that came the famine of 1946 and 1947, and the requisition quotas that caused it, and the words people use for that year are not the words in the textbook.',
+    text: 'Operation Iug takes them in one night in July — thirty-five thousand people, the families of anyone with too much land or the wrong relative, to Kurgan and Tyumen. The lists were made locally, which is the part nobody in the village will discuss for the next sixty years, because the person who made the list also stayed. Before that came the famine of 1946 and 1947, and the requisition quotas that caused it, and the words people use for that year are not the words in the textbook.',
     choices: [
       { text: 'Your family is on the list', tag: null, outcome: 'Four days in a cattle car. You are in Siberia for eight years and you come back to a house with someone else in it.', effect: (p) => { p.m -= 20; p.h -= 12; p.mo -= 1500; p.addFlag('mda_deported_family'); p.addFlag('displaced'); p.addFlag('lost_home') } },
       { text: 'Your family is not', tag: null, outcome: 'You watch the carts go past the end of the lane at four in the morning. Nobody in your house goes to the window.', effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('mda_deportation_witness'); p.addFlag('aut_taught_silence') } },
@@ -165,7 +165,7 @@ export const ICELAND_MOLDOVA_EVENTS = [
       G.currentYear >= 1989 && G.currentYear <= 1992 &&
       G.age >= 14 &&
       !G.mem?.mdaLatin,
-    text: 'The language law passes and the alphabet changes back, and for a year the signs in Chișinău are in both, and then in one. There are half a million people in this republic who do not speak Romanian and have never needed to, and for them the same law reads as a door closing. On the left bank of the Dniester they refuse it outright. Within three years that refusal has a flag, a currency, a Russian garrison, and a war that kills a thousand people and then stops without ending.',
+    text: 'The language law passes and the alphabet changes back, and for a year the signs in Chișinău are in both, and then in one. There are a million and a half people in this republic who do not speak Romanian and have never needed to — a third of everyone — and for them the same law reads as a door closing. On the left bank of the Dniester they refuse it outright. Within three years that refusal has a flag, a currency, a Russian garrison, and a war that kills a thousand people and then stops without ending.',
     choices: null,
     effect: (p) => {
       p.e += 6; p.m += 4

@@ -359,6 +359,28 @@ export const NEW_ROSTER_FLAGS = {
     weight: 'moderate', category: 'legacy', intent: 'year_texture',
     description: 'The only person in the room who feels the renaissance as distance rather than history.',
   },
+  // ── Oman: the imamate war, 1954-59
+  omn_imamate_family: {
+    weight: 'major', category: 'political', intent: 'both',
+    description: 'Family was on the imam\'s side when the interior lost its autonomy.',
+    notes: 'Follow-through: omn_ft_imamate_after.',
+  },
+  omn_jebel_akhdar_survivor: {
+    weight: 'major', category: 'historical', intent: 'year_texture',
+    description: 'Was in the interior for the bombing and the SAS assault on the plateau.',
+  },
+  omn_falaj_destroyed: {
+    weight: 'moderate', category: 'historical', intent: 'year_texture',
+    description: 'The falaj above the village was bombed; the date palms died in order of distance from it.',
+  },
+  omn_imamate_buried: {
+    weight: 'moderate', category: 'political', intent: 'year_texture',
+    description: 'Took the government job and never raised the fifties again.',
+  },
+  omn_imamate_transmitted: {
+    weight: 'moderate', category: 'legacy', intent: 'year_texture',
+    description: 'Told the children the other version of 1959, once, in the kitchen.',
+  },
   omn_dhofar_war: {
     weight: 'major', category: 'conflict', intent: 'year_texture',
     description: 'Lived through the Dhofar war, which the north was not told much about.',

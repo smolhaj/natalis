@@ -14838,7 +14838,7 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('aut_bombing_survivor') && Math.random() < 0.22) yield [T.anchored, pick([
     'You are in a cellar somewhere in the country whenever the ceiling makes a particular sound. It takes a second to come back and the second is always there.',
-    'The Opera was rebuilt to look exactly as it had. You have been inside it since and it is very fine and it is not the building you remember burning.',
+    'They kept the front rooms and built the hall new, and argued about that for ten years first. You have been inside it since and it is very fine and it is not the building you remember burning.',
     phase === 'late_life'
       ? 'The buildings that came back came back perfect, which is its own kind of lie — nothing in the street records that the street had a gap in it.'
       : 'Somebody was sweeping within the hour. Of everything about that morning it is the sweeping you have kept.',
@@ -14950,12 +14950,12 @@ function* textureCandidates(state, opts = {}) {
   if (F.has('isl_stayed_farming') && Math.random() < 0.18) yield [T.anchored,
     'The valley thinned around you for thirty years. You are still here and the sheep still need doing and the road is better than it was.']
   if (F.has('isl_cod_war_generation') && Math.random() < 0.2) yield [T.anchored, pick([
-    'A country with no army won an argument with the Royal Navy four times, and the entire arsenal was a threat to close one airbase.',
+    'A country with no army won an argument with the Royal Navy three times, and the entire arsenal was a threat to close one airbase.',
     'The net-cutter on a cable. That was the weapon. You have never found the story less funny or less serious.',
   ])]
   if (F.has('isl_herring_collapse') && Math.random() < 0.2) yield [T.anchored, pick([
     'The racks at Siglufjörður stood for years with nothing on them. An industry did not close; it was simply not arrived at.',
-    'Half the town went inside a decade and all of the buildings stayed, which is a particular way to be shown what happened.',
+    'A quarter of the town went inside a decade and all of the buildings stayed, which is a particular way to be shown what happened.',
   ])]
   if (F.has('isl_kept_quota') && Math.random() < 0.2) yield [T.anchored,
     'Every year the arithmetic of not having sold is harder to defend at your own kitchen table, and every year you fish your share.']
@@ -15014,6 +15014,22 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('omn_two_countries_carried') && Math.random() < 0.22) yield [T.anchored,
     'You are the only person in the room who feels it as distance rather than as history, and there is no way to hand that over.']
+  if (F.has('omn_imamate_family') && Math.random() < 0.22) yield [T.anchored, pick([
+    'There is a word for what the interior had before 1959 and it is not printed anywhere in this country, and your family knows it and does not use it.',
+    phase === 'late_life'
+      ? 'The uncle in Dammam died there. Sixty years and he never came back and it was never once discussed as a decision he had made.'
+      : 'Two branches of the family, one here and one in the Gulf, and the reason is a year nobody in the room will say out loud.',
+  ])]
+  if (F.has('omn_jebel_akhdar_survivor') && Math.random() < 0.2) yield [T.anchored, pick([
+    'You can still hear the difference between an aircraft going somewhere and an aircraft arriving. It is not a useful skill and it has never left.',
+    'The soldiers who took the plateau were British and the Sultan they took it for was not on it, and you have never heard this taught in a classroom.',
+  ])]
+  if (F.has('omn_falaj_destroyed') && Math.random() < 0.2) yield [T.anchored,
+    'A falaj takes a century to cut and a season to lose. That is the whole of what you understood about the war, at the time, and you have not improved on it since.']
+  if (F.has('omn_imamate_buried') && Math.random() < 0.18) yield [T.anchored,
+    'Thirty years in that office and the subject never came up once, which took work, and the work is invisible and was the work.']
+  if (F.has('omn_imamate_transmitted') && Math.random() < 0.18) yield [T.anchored,
+    'You told them once and asked them not to repeat it, which is exactly how it was told to you, and you have wondered since whether that is transmission or only postponement.']
   if (F.has('omn_dhofar_war') && Math.random() < 0.2) yield [T.anchored, pick([
     'There was a war in the south for ten years and the north was not told very much about it, and the thing that ended it was a road and a school in every wadi.',
     'If you are from those mountains it is the central fact of your family. If you are from the north it was a thing happening somewhere hot.',
@@ -15031,7 +15047,7 @@ function* textureCandidates(state, opts = {}) {
   if (F.has('omn_kafala_accepted') && Math.random() < 0.18) yield [T.anchored,
     'You are decent to the people in your own house. You have never once asked what their contract says.']
   if (F.has('omn_ibadi_formation') && Math.random() < 0.18) yield [T.anchored,
-    'The tradition predates the split everyone else is arranging themselves around and is notably uninterested in it, and that has hardened into a foreign policy.']
+    'The tradition answered the seventh-century question a third way and has been quietly uninterested in the other two answers ever since, and that has hardened into a foreign policy.']
   if (F.has('omn_diversification_doubt') && Math.random() < 0.16) yield [T.anchored,
     'Diversification has been in every speech since you were thirty. Your children are applying to a private sector that is still mostly other people.']
 

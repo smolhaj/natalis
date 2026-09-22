@@ -7,7 +7,7 @@
 // the 1960s on. In all three the opening is narrated by the state as a gift,
 // and in all three there is a population it was not extended to.
 //
-// 16 events. Follow-throughs at the bottom.
+// 18 events. Follow-throughs at the bottom.
 
 const IS_OM = (G) => G.currentCountry?.name === 'Oman' || G.character.country?.name === 'Oman'
 const IS_VU = (G) => G.currentCountry?.name === 'Vanuatu' || G.character.country?.name === 'Vanuatu'
@@ -19,7 +19,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
 
   {
     id: 'omn_before_1970',
-    phase: 'childhood',
+    phase: null,   // guard carries its own 6-16 band; 'childhood' was cutting five years off it
     weight: 9,
     when: (G) =>
       IS_OM(G) &&
@@ -72,6 +72,32 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
   },
 
   {
+    // The gap the Oman content had: the Dhofar war was here and the 1970 coup
+    // was here, but the five years that made both of them possible were not.
+    // The Treaty of Seeb gave the interior its own Ibadi imam in 1920; oil was
+    // found under the interior in the 1950s; the Sultan wanted the concession
+    // and the RAF bombed the falaj channels and the villages until the SAS
+    // took the plateau in January 1959. It is also the only place in the
+    // corpus where the Ibadi imamate appears as a political institution
+    // rather than a theological footnote.
+    id: 'omn_jebel_akhdar',
+    phase: null,
+    weight: 8,
+    when: (G) =>
+      IS_OM(G) &&
+      G.currentYear >= 1954 && G.currentYear <= 1960 &&
+      G.age >= 8 &&
+      !G.mem?.omnJebel,
+    text: 'The interior has had its own imam since your grandfather\'s time \u2014 elected, in the Ibadi way, and the Sultan on the coast agreed to leave him alone. Then the surveyors come inland looking for oil and the agreement stops being convenient. The aircraft come after that. They bomb the villages on the plateau and they bomb the falaj channels, which is the more serious act, because a falaj takes a century to cut and a season to lose. In January the British soldiers climb the jebel at night and it is finished. Nobody will print the word imamate in this country again.',
+    choices: [
+      { text: 'Your family was for the imam', tag: 'defiant', outcome: 'Some of them go to Cairo and some go to Dammam and the ones who stay learn a very particular quietness.', effect: (p) => { p.m -= 14; p.mo -= 400; p.karma += 4; p.addFlag('omn_imamate_family'); p.addFlag('aut_taught_silence') } },
+      { text: 'Your family was for the Sultan, or said so', tag: 'yielding', outcome: 'It was the safe answer and it was also, in your father\'s case, sincere, and you have never been able to separate the two.', effect: (p) => { p.m -= 5; p.mo += 150; p.addFlag('omn_jebel_akhdar_survivor') } },
+      { text: 'You are eight and what you remember is the water', tag: null, outcome: 'The channel above the village ran for eight hundred years and then it did not, and the date palms went brown in the order of their distance from it.', effect: (p) => { p.m -= 10; p.h -= 4; p.addFlag('omn_jebel_akhdar_survivor'); p.addFlag('omn_falaj_destroyed') } },
+    ],
+    effect: null,
+  },
+
+  {
     id: 'omn_zanzibar_return',
     phase: null,
     weight: 8,
@@ -116,7 +142,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.currentYear >= 1980 &&
       G.age >= 25 &&
       !G.mem?.omnIbadi,
-    text: 'Your neighbours across the Gulf are in a quarrel and Oman is talking to both of them, which is what Oman does. The Ibadi tradition predates the split everyone else is arranging themselves around and is notably uninterested in it, and that has hardened over three centuries into a foreign policy: the Iran channel, the Yemen back-door, the embassy that stays open. It is a small country being useful on purpose. When you travel you find that this is the thing people know about the place, if they know anything.',
+    text: 'Your neighbours across the Gulf are in a quarrel and Oman is talking to both of them, which is what Oman does. The Ibadi tradition came out of the same seventh-century quarrel as the other two and answered it a third way — the imam is elected and can be deposed, and neither of the big answers is the one you were raised inside. That third position has hardened over three centuries into a foreign policy: the Iran channel, the Yemen back-door, the embassy that stays open. It is a small country being useful on purpose. When you travel you find that this is the thing people know about the place, if they know anything.',
     choices: null,
     effect: (p) => {
       p.e += 5; p.karma += 4; p.m += 3
@@ -129,7 +155,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
 
   {
     id: 'vut_condominium',
-    phase: 'childhood',
+    phase: null,   // guard carries its own 6-16 band; 'childhood' was cutting five years off it
     weight: 9,
     when: (G) =>
       IS_VU(G) &&
@@ -153,7 +179,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.currentYear >= 1942 && G.currentYear <= 1947 &&
       G.age >= 6 &&
       !G.mem?.vutBase,
-    text: 'Half a million American servicemen pass through Espiritu Santo, on an archipelago of perhaps fifty thousand people. There are roads and airstrips and Coca-Cola and Black soldiers being paid the same as white ones, which is noticed. When it ends they bulldoze the surplus into the sea at a place that is still called Million Dollar Point, and you can wade out at low tide and stand on a jeep. On Tanna the movement that has been waiting for John Frum ever since begins from exactly this — the observation that goods can simply arrive.',
+    text: 'Half a million American servicemen pass through Espiritu Santo, on an archipelago of perhaps fifty thousand people. There are roads and airstrips and Coca-Cola and Black soldiers being paid the same as white ones, which is noticed. When it ends they bulldoze the surplus into the sea at a place that is still called Million Dollar Point, and you can wade out at low tide and stand on a jeep. On Tanna the John Frum movement is already several years old by the time the first American lands — it started as a refusal of the mission and the head tax — and what the base gives it is a uniform, a flag and a date to keep waiting for.',
     choices: null,
     effect: (p) => {
       p.mo += 200; p.e += 6; p.m += 4
@@ -309,6 +335,28 @@ export const OMAN_PACIFIC_BHUTAN_FOLLOWTHROUGH = [
       p.addFlag('memory_keeper')
       p.setMem('omnFtTwo', true)
     },
+  },
+
+  {
+    // The follow-through the design principle requires: the flag has to become
+    // something twenty years later. The imamate lost, and what losing produced
+    // was a generation of interior families with an exile branch and a subject
+    // that does not come up.
+    id: 'omn_ft_imamate_after',
+    phase: 'midlife',
+    weight: 7,
+    when: (G) =>
+      IS_OM(G) &&
+      G.flags.has('omn_imamate_family') &&
+      G.currentYear >= 1975 &&
+      G.age >= 32 &&
+      !G.mem?.omnImamateAfter,
+    text: 'The new Sultan is building schools in the interior faster than anyone can staff them and the roads go where the tracks were, and it is all genuinely good, and your family does not discuss the fifties. An uncle in Dammam sends money at Eid and has never come back and will not be buried here. You are in a government office in Nizwa filling in a form under a portrait, and the office is the best thing that has happened to this town in your lifetime, and both of these facts are true at once.',
+    choices: [
+      { text: 'Take the job and say nothing', tag: 'yielding', outcome: 'You are good at it for thirty years. The subject never comes up and the not-coming-up is a skill.', effect: (p) => { p.mo += 3000; p.w += 6; p.m += 4; p.addFlag('omn_imamate_buried') } },
+      { text: 'Tell your children the other version', tag: 'defiant', outcome: 'You tell it once, properly, in the kitchen, and ask them not to repeat it, which is how it was told to you.', effect: (p) => { p.m += 6; p.karma += 6; p.addFlag('omn_imamate_transmitted'); p.addFlag('family_secret_kept') } },
+    ],
+    effect: null,
   },
 
   {

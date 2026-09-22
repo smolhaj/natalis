@@ -151,7 +151,7 @@ export const WORLD_EVENTS = [
     name: 'Arab Spring',
     years: [2010, 2013],
     archetypes: 'all',
-    countries: ['Egypt', 'Syria', 'Yemen', 'Jordan', 'Morocco'],
+    countries: ['Tunisia', 'Egypt', 'Libya', 'Syria', 'Yemen', 'Bahrain', 'Jordan', 'Morocco'],
     narrative: 'The protests start in Tunisia — a young man sets himself on fire over a confiscated fruit cart — and they don\'t stop. Egypt. Libya. Syria. Yemen. Bahrain. For a moment it looks like the region is changing. Some governments fall. Others crack down and hold. What comes after the falling is, in most places, worse or simply different.',
     context: 'The Arab Spring began December 17, 2010 when Mohamed Bouazizi, a Tunisian street vendor, set himself on fire after police confiscated his cart. Ben Ali fled Tunisia (January 2011); Mubarak resigned in Egypt (February 2011); Gaddafi was killed in Libya (October 2011). In Syria, peaceful protests became a civil war that killed 500,000+ and displaced half the population. In Bahrain, Saudi troops helped suppress the uprising. Of the major Arab Spring countries, only Tunisia initially achieved a democratic transition — and that reversed in 2021 under President Saïed. The broader regional upheaval ended without producing the democratic opening that the first weeks suggested.',
     effect: (p) => { p.m -= 6; p.addFlag('lived_through_revolution'); },
