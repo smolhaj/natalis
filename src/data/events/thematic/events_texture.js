@@ -1,3 +1,5 @@
+import { hasTech } from '../../technology.js'
+
 // events_texture.js
 // Lived-texture events: the grain of ordinary life in specific times and places.
 // Rural developing world, pre-1960 era, and career arc events.
@@ -707,7 +709,7 @@ export const TEXTURE_EVENTS = [
       G.career &&
       G.age >= 38 && G.age <= 55 &&
       !G.flags.includes('career_passed_over_done'),
-    text: 'The promotion you expected goes to someone else. The announcement is made by email on a Friday afternoon. The person who gets it is less experienced than you and, depending on how honest you are with yourself, possibly less qualified. Your manager calls to say that your contribution is valued. You say the right things. On the train home you think about what "valued" actually means in practice.',
+    text: (G) => 'The promotion you expected goes to someone else. ' + (hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear) ? 'The announcement is made by email on a Friday afternoon.' : 'You hear it in the corridor on a Friday afternoon, from someone who assumed you already knew.') + '  The person who gets it is less experienced than you and, depending on how honest you are with yourself, possibly less qualified. Your manager calls to say that your contribution is valued. You say the right things. On the train home you think about what "valued" actually means in practice.',
     choices: [
       {
         text: 'Accept it and recommit — you can still move up from here',

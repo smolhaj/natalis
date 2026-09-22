@@ -1,4 +1,5 @@
 import { randomBetween } from '../utils/random.js'
+import { hasTech } from './technology.js'
 import { FOLLOWTHROUGH_ALL_EVENTS } from './events/followthrough/events_followthrough_all.js'
 import { GENDER_EVENTS } from './events/thematic/events_gender.js'
 import { RELIGION_EVENTS } from './events/thematic/events_religion.js'
@@ -1317,7 +1318,9 @@ const BASE_EVENTS = [
     phase: 'adolescence',
     weight: 2,
     when: (G) => G.age >= 13,
-    text: 'Someone posts something unflattering about you online. It\'s spreading fast.',
+    text: (G) => hasTech(G.currentCountry, 'home_internet', G.currentYear)
+      ? 'Someone posts something unflattering about you online. It\'s spreading fast.'
+      : 'Someone has said something about you and by lunchtime it has been to every corner of the school and come back altered. You can tell who has heard it by how they look at the floor.',
     context: null,
     choices: [
       {
@@ -4898,7 +4901,9 @@ const BASE_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => !G.mem.friendReconnect && G.age >= 35,
-    text: 'A message arrives from someone you knew decades ago — a childhood friend, a college roommate, someone who disappeared from your life. They found you online.',
+    text: (G) => hasTech(G.currentCountry, 'home_internet', G.currentYear)
+      ? 'A message arrives from someone you knew decades ago — a childhood friend, a college roommate, someone who disappeared from your life. They found you online.'
+      : 'A letter arrives from someone you knew decades ago — a childhood friend, someone who disappeared from your life. They got the address from a cousin of a cousin. It took four months and two wrong houses to reach you.',
     choices: [
       { text: 'Respond and meet up', tag: null, outcome: 'The catch-up is strange and warm. You remember a version of yourself through them.', effect: (p) => { p.m += 8; p.makeFriend(60); p.setMem('friendReconnect', true); }, inject: null },
       { text: 'Reply warmly but keep it to messages', tag: null, outcome: 'The connection is real, if contained.', effect: (p) => { p.m += 4; p.setMem('friendReconnect', true); }, inject: null },
@@ -5788,7 +5793,9 @@ const BASE_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.career !== null && !G.mem.company_bankrupt && G.age >= 22,
-    text: 'The email arrives at 7am on a Monday. The company is entering administration. HR will be in touch. The office plants are still alive. The coffee machine is still on. Everything else is over.',
+    text: (G) => hasTech(G.currentCountry, 'email', G.currentYear)
+      ? 'The email arrives at 7am on a Monday. The company is entering administration. HR will be in touch. The office plants are still alive. The coffee machine is still on. Everything else is over.'
+      : 'The notice is on the door on Monday morning and there are eleven of you reading it at once. The company is finished. Somebody has already gone in for their tools. The kettle is still warm from Friday.',
     choices: [
       { text: 'Start job searching immediately', tag: null, outcome: 'You update the CV that night. The search is brutal but you stay ahead of the market. Something comes through eventually.', effect: (p) => { p.m -= 15; p.setMem('company_bankrupt', true); }, inject: null },
       { text: 'File for unemployment benefits', tag: null, outcome: 'The paperwork takes three weeks. The payments arrive. They are not enough but they are something.', effect: (p) => { p.mo += 500; p.m -= 20; p.setMem('company_bankrupt', true); }, inject: null },

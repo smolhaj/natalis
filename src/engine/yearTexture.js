@@ -2,6 +2,7 @@ import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime } from '
 import { pickFrom } from '../utils/random'
 import { wasSovietRepublic, INDEPENDENCE_YEAR } from '../data/history.js'
 import { preferUnsaid, hasSaid } from './prose'
+import { hasTech, wasWealthy } from '../data/technology.js'
 
 // yearTexture — the quiet-year prose layer.
 //
@@ -14015,6 +14016,7 @@ function* textureCandidates(state, opts = {}) {
   if (Math.random() < 0.50) {
     const arch = state.character?.country?.archetype
     const cn = state.character?.country?.name
+    const country = state.currentCountry ?? state.character?.country ?? null
     const era = Math.floor(currentYear / 10) * 10
 
     // ── wealthy_west era texture ──
@@ -14041,11 +14043,24 @@ function* textureCandidates(state, opts = {}) {
         'Reconstruction is visible everywhere. The rubble of last decade is becoming the concrete of this one.',
         'The welfare state is being assembled out of compromise and exhaustion. People are not sure yet what it will be.',
       ])]
-      if (era === 1950) yield [T.anchored, pick([
+      // The post-war boom did not reach every wealthy_west country in the
+      // fifties. Portugal was the poorest state in Western Europe until the
+      // nineties, Ireland until the mid-nineties, Greece and Spain until the
+      // eighties; the suburb-and-refrigerator register is only true where and
+      // when it was true. See src/data/technology.js.
+      if (era === 1950 && wasWealthy(country, currentYear)) yield [T.anchored, pick([
         'The suburb is new and everything in it is being assembled for the first time.',
-        'The television has arrived in the living room. The world is entering on its own terms.',
-        'The refrigerator. The car. The school with the new gymnasium. A different kind of life is becoming possible.',
+        hasTech(country, 'television', currentYear)
+          ? 'The television has arrived in the living room. The world is entering on its own terms.'
+          : 'The radio is the only thing in the room with an opinion about elsewhere, and the evening is arranged around it.',
+        hasTech(country, 'refrigerator', currentYear)
+          ? 'The refrigerator. The car. The school with the new gymnasium. A different kind of life is becoming possible.'
+          : 'The new school, the new clinic, the road being surfaced. A different kind of life is being described to you as imminent.',
         'Prosperity is the official story. The official story is partly true.',
+      ])]
+      else if (era === 1950) yield [T.anchored, pick([
+        'The countries to the north are being rebuilt with someone else\'s money and this one is not, and everybody here knows the name of the plan.',
+        'The emigration is the economy. The remittance arrives on the same week each month and the household is organised around the date.',
       ])]
       if (era === 1960) yield [T.anchored, pick([
         'The certainties of the last decade are being questioned with a particular ferocity. Some of what is being questioned deserves it.',

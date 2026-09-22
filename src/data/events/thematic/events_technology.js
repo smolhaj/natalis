@@ -1,9 +1,16 @@
+import { hasTech } from '../../technology.js'
+
 // events_technology.js
 // Era-defining technology moments that mark when you lived.
 // A character born in 1955 experiences these differently than one born in 1985.
 // All gate on G.currentYear and G.character.country.gdp / archetype.
 
 const wealthy = (G) => ['very_high','high','medium_high'].includes(G.character.country.gdp)
+// `wealthy` above reads present-day GDP, which is not a statement about the
+// year the character is living in: it put the first television into a Korean
+// living room in 1951 and a Portuguese one in 1953. `arrived` asks when the
+// thing actually reached this country. See src/data/technology.js.
+const arrived = (G, t) => hasTech(G.currentCountry ?? G.character.country, t, G.currentYear)
 const developing = (G) => ['low_medium','medium'].includes(G.character.country.gdp)
 const poor = (G) => ['very_low','low'].includes(G.character.country.gdp)
 
@@ -34,7 +41,7 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_first_tv_wealthy',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.currentYear >= 1951 && G.currentYear <= 1968 && wealthy(G) && G.age >= 5 && G.age <= 13,
+    when: (G) => arrived(G, 'television') && G.currentYear <= 1972 && wealthy(G) && G.age >= 5 && G.age <= 13,
     text: 'The television arrives. It takes two men to carry it in. Your father positions it like a piece of furniture and your mother puts a doily on top. The screen is small. The picture is black and white. The whole family sits in front of it in the evenings and watches the test pattern come on at 11 PM.',
     choices: null,
     effect: (p) => { p.m += 10; p.e += 4; p.addFlag('tv_generation') },

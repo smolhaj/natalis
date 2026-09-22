@@ -113,6 +113,11 @@ export async function runSimulation({
   mode = 'active',
   maxYears = 110,
   seedLabel = '',
+  // Opt-in: record every distinct prose line with the year and the country the
+  // character was living in when it printed, so a caller can check the line
+  // against the world it claimed. Off by default because it holds every
+  // sentence of the run in memory.
+  collectLines = false,
 } = {}) {
   stubStorage()
   // The engine is under active change; a module that will not even load should
@@ -148,6 +153,9 @@ export async function runSimulation({
   // with one life hearing the same sentence fourteen times.
   const repeat = { printed: 0, repeated: 0, worst: 0, worstLine: '' }
   const unlocated = new Map()   // event id → times fired, for ids the index cannot place
+  // text → { year, country } for the EARLIEST year the line printed, which is
+  // the firing most likely to be the anachronism.
+  const linesWithContext = collectLines ? new Map() : null
   const otherFiles = new Map()
   const perConfig = []
 
@@ -247,6 +255,13 @@ export async function runSimulation({
           }
           if (entry.isWorld) totals.world++
           if (entry.isHeadline) totals.headline++
+          if (linesWithContext && entry.text && !entry.isHeadline && !entry.isSoundtrack) {
+            const year = entry.year ?? s.currentYear
+            const prev = linesWithContext.get(entry.text)
+            if (!prev || year < prev.year) {
+              linesWithContext.set(entry.text, { year, country: s.currentCountry ?? s.character?.country ?? null })
+            }
+          }
         }
       }
       rec.deaths.push(s.age)
@@ -270,6 +285,7 @@ export async function runSimulation({
   return {
     fatal: null,
     mode, seedLabel, configs: perConfig, totals, byBucket, countriesSeen, unlocated, otherFiles,
+    linesWithContext,
     share: {
       contemplative: pct('contemplative'),
       anchored: pct('anchored'),

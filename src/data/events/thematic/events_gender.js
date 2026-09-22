@@ -1145,7 +1145,7 @@ export const GENDER_EVENTS = [
       G.character.gender === 'female' &&
       G.career &&
       G.stats.smarts >= 55,
-    text: 'You were the top performer in your department this year. Everyone knew the promotion was between you and a male colleague who joined two years after you. They gave it to him. In the announcement email, his "leadership potential" is mentioned.',
+    text: 'You were the top performer in your department this year. Everyone knew the promotion was between you and a male colleague who joined two years after you. They gave it to him. His "leadership potential" is mentioned when it is announced, and nothing of yours is raised at any point.',
     context: null,
     choices: [
       {

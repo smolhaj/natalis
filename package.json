@@ -16,7 +16,8 @@
     "lint:fix": "eslint . --fix",
     "check-flags": "node scripts/check-flags.js",
     "check-events": "node scripts/check-events.js",
-    "sim": "node scripts/sim.js"
+    "sim": "node scripts/sim.js",
+    "check-anachronisms": "node scripts/check-anachronisms.js"
   },
   "dependencies": {
     "react": "^18.3.1",

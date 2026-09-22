@@ -127,7 +127,9 @@ export const CULTURE_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => G.regime === 'single_party_communist' && G.age >= 14,
-    text: 'Someone at school has a cassette tape. Western music — American rock, British pop. It is technically contraband. You listen to it in someone\'s bedroom with the volume down, and for 45 minutes the world seems larger than it is.',
+    text: (G) => G.currentYear >= 1972
+      ? 'Someone at school has a cassette tape. Western music — American rock, British pop. It is technically contraband. You listen to it in someone\'s bedroom with the volume down, and for 45 minutes the world seems larger than it is.'
+      : 'Someone at school has a record cut into a used X-ray plate — you can see the ribs through it. Western music, one side, four or five plays before it wears out. It is technically contraband. You listen with the volume down and for a few minutes the world is larger than it is.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 5; p.addFlag('counter_culture') },
   },

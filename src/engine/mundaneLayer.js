@@ -1,4 +1,5 @@
 import { preferUnsaid } from './prose'
+import { hasTech, wasWealthy, techYear } from '../data/technology'
 // mundaneLayer.js — Daily-life texture that fires alongside main events every year.
 //
 // buildMundaneLayer(state) is called from advanceYear() regardless of whether
@@ -46,6 +47,24 @@ export function buildMundaneLayer(state) {
   const isRural = ruralUrban === 'rural'
   const isUrban = ruralUrban === 'urban'
   const isWealthyArch = ['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(arch)
+  // `isWealthyArch` says where a country sits now. The domestic-interior and
+  // technology lines below need to know where it sat THEN, which is a different
+  // question and is why a 1931 Omani childhood was getting a telephone in the
+  // hallway and a weekly trip to the cinema. `wealthyNow` and `tech` answer the
+  // year's version of it; see src/data/technology.js.
+  const homeCountry = state.currentCountry ?? state.character?.country ?? null
+  const wealthyNow = wasWealthy(homeCountry, currentYear)
+  const richHousehold = (state.character?.wealthTier ?? 2) >= 4   // 0-4 index into wealthTierWeights
+  const tech = (t) => hasTech(homeCountry, t, currentYear, { rural: isRural, rich: richHousehold })
+  // The bare arrival year, for lines that are only true while a thing is new.
+  const techArrival = (t) => {
+    let y = techYear(homeCountry, t)
+    if (y >= 9000) return y
+    const poor = !isWealthyArch
+    if (isRural) y += poor ? 12 : 5
+    if (richHousehold) y -= poor ? 12 : 5
+    return y
+  }
   const isSubsaharan = arch === 'subsaharan'
   const isDeveloping = ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(arch)
   const isPostSoviet = arch === 'post_soviet'
@@ -132,87 +151,127 @@ export function buildMundaneLayer(state) {
   )
 
   // ── ERA TECHNOLOGY ─────────────────────────────────────────────────────────
-  // Gated by decade + archetype. The texture of which tools the world provides.
+  //
+  // Was: decade + archetype. Archetype is a statement about now, so `era ===
+  // 1950 && isWealthyArch` put a television in an Icelandic living room sixteen
+  // years before Iceland had broadcasting, and `era === 1930 && isWealthyArch`
+  // gave a 1931 Omani household a hallway telephone, a folded newspaper and a
+  // weekly trip to the cinema, in a country that had none of those things and
+  // would not for forty years.
+  //
+  // Now: `tech(x)` asks when x actually arrived where this character lives,
+  // adjusted for rural and for a wealthy household, and `wealthyNow` asks
+  // whether the domestic-comfort register was true of the country that year.
+  // See src/data/technology.js. The `notYoung` gate exists because several of
+  // these are lines about somebody's working life or their commute and were
+  // firing for three-year-olds.
 
-  addIf(era <= 1919 && !isWealthyArch && phase !== 'early_childhood',
+  const notYoung = phase !== 'early_childhood'
+  const working = age >= 16
+  const adult = age >= 18
+
+  addIf(!wealthyNow && notYoung && currentYear <= 1950,
     'The lamp needs trimming. This is the work of the evening.',
     'News of what has happened elsewhere takes days to arrive.',
     'Water is fetched, not delivered. The fetching organises the morning.',
   )
-  addIf(era <= 1919 && isWealthyArch,
+  addIf(wealthyNow && notYoung && currentYear <= 1925,
     'The telegram arrived. Its brevity is the result of the cost, not the emotion.',
     'The horse-drawn cart is still the dominant technology of the street. The automobile is a novelty for the wealthy.',
   )
-  addIf(era === 1920 || era === 1930,
+  addIf(tech('radio') && !tech('television') && notYoung,
     'The radio in the front room gathers the family in the evenings as though it were a fire.',
     'The gramophone plays the same records again. You know them by heart now.',
   )
-  addIf((era === 1920 || era === 1930) && isWealthyArch,
+  addIf(tech('cinema') && notYoung && currentYear <= 1965,
     'The cinema is a weekly ritual. The darkness and the screen.',
+  )
+  addIf(tech('landline') && !tech('mobile_phone') && notYoung,
     'The telephone is in the hallway. Calls are brief and considered before making them.',
+    'The telephone rings. It is for one specific person. Everyone else finds out later.',
+  )
+  addIf(tech('newspaper') && adult && currentYear <= 1995,
     'The newspaper is folded and read in a specific order. The order has not changed.',
   )
-  addIf(era === 1940 && isWealthyArch,
+  addIf(currentYear >= 1939 && currentYear <= 1946 && wealthyNow && notYoung,
     'Rationing means the meal is considered before it is prepared.',
     'The letter from abroad is opened carefully. The news could be anything.',
     'The radio announces things that were not announced yesterday. You listen with particular attention.',
   )
-  addIf(era === 1950 && isWealthyArch,
+  // The television within about six years of arriving is still an event; after
+  // that it is furniture, and the line stops being true.
+  addIf(tech('television') && currentYear <= techArrival('television') + 6 && notYoung,
     'The television has arrived in the living room. The evenings have reorganised themselves around it.',
+    'The television is new in the house or almost in the house. Everything it changes will take a generation to see.',
+  )
+  addIf(tech('washing_machine') && currentYear <= techArrival('washing_machine') + 8 && notYoung,
     'The washing machine is still the subject of comment — at how much easier it has made the day.',
+  )
+  addIf(tech('automobile') && currentYear <= techArrival('automobile') + 10 && notYoung,
     'The car is the new fact of the neighbourhood. The street sounds different on weekend mornings.',
   )
-  addIf(era === 1960,
-    'The record player is the household\'s second intelligence. It knows what the afternoon needs.',
-    'The telephone rings. It is for one specific person. Everyone else finds out later.',
-  )
-  addIf(era === 1960 && isWealthyArch,
+  addIf(tech('colour_television') && currentYear <= techArrival('colour_television') + 8 && notYoung,
     'The colour television is in some houses, not yet all. The question of whether to get one is a category of conversation.',
   )
-  addIf(era === 1970,
+  addIf(tech('radio') && notYoung && currentYear >= 1955 && currentYear <= 1985,
+    'The record player is the household\'s second intelligence. It knows what the afternoon needs.',
+  )
+  addIf(tech('cassette') && notYoung && currentYear <= 1995,
     'The cassette tape has the advantage of being skippable. You have recorded a side that is entirely what you want.',
   )
-  addIf(era === 1970 && isWealthyArch,
+  addIf(tech('microwave') && currentYear <= techArrival('microwave') + 8 && notYoung,
     'The microwave is in some kitchens — a machine that does what a pot does, faster, and no one is entirely sure what this means for cooking.',
   )
-  addIf(era === 1980,
+  addIf(tech('vcr') && notYoung,
     'The VCR means the film can be watched again, which changes what watching a film means.',
+  )
+  addIf(tech('personal_computer') && age >= 10,
     'The personal computer is at the desk. Most of what it does is still being discovered.',
   )
-  addIf(era === 1980 && isWealthyArch,
+  addIf(tech('cassette') && working && wealthyNow && currentYear >= 1980 && currentYear <= 1998,
     'The Walkman has made the commute private. The city continues outside the headphones.',
+  )
+  addIf(working && wealthyNow && currentYear >= 1985 && currentYear <= 2002,
     'The fax machine has arrived at the office. A document that took days now arrives instantly.',
   )
-  addIf(era === 1990,
+  addIf(tech('personal_computer') && notYoung && currentYear >= 1992 && currentYear <= 2006,
     'The CD player has replaced the cassette. The skip protection is still imperfect.',
   )
-  addIf(era === 1990 && isWealthyArch,
+  addIf(tech('mobile_phone') && currentYear <= techArrival('mobile_phone') + 4 && age >= 14,
     'The mobile phone is the size of a small brick and calls cost significantly. You use it for genuine emergencies.',
+  )
+  addIf(tech('email') && working,
     'Email has arrived at the office. The volume of communication has increased without prior consultation.',
   )
-  addIf(era === 1990 && isDeveloping,
+  addIf(isDeveloping && !tech('home_internet') && tech('personal_computer') && age >= 12,
     'The internet café has opened. The internet is accessed as a destination, not a permanent condition.',
   )
-  addIf(era === 2000,
+  addIf(tech('mobile_phone') && !tech('smartphone') && age >= 12,
     'The phone in your pocket sends a text in the time it once took to compose a letter.',
+  )
+  addIf(tech('home_internet') && notYoung,
     'Broadband has made the internet a permanent fact of the home. It is not turned on and off. It is simply there.',
   )
-  addIf(era === 2000 && isWealthyArch,
+  addIf(tech('home_internet') && adult && currentYear <= 2012,
     'The DVD means you own the film, not just the memory of having watched it.',
     'The search engine means most questions have answers available in seconds. The questions have not changed. The seconds have.',
   )
-  addIf(era === 2010,
+  addIf(tech('smartphone') && age >= 12,
     'The smartphone is the last thing checked at night and the first thing checked in the morning. You have noticed this.',
     'WhatsApp has replaced the phone call as default communication. The voice note is somewhere between a call and a text.',
-    'Streaming means there is no schedule for the film or the series. You watch when you want. You watch more.',
     'The photograph is no longer a significant commitment. You take dozens. The dozens accumulate.',
   )
-  addIf(era === 2010 && isDeveloping,
+  addIf(tech('streaming') && age >= 10,
+    'Streaming means there is no schedule for the film or the series. You watch when you want. You watch more.',
+  )
+  addIf(tech('smartphone') && isDeveloping && age >= 12,
     'The smartphone arrived before the electricity is reliable. Solar charging is a business now.',
     'Mobile money means the transaction happens on the phone. No bank required.',
   )
-  addIf(era >= 2020,
+  addIf(tech('video_call') && age >= 10,
     'The video call is now indistinguishable from ordinary communication. The face on the screen is as real as the face in the room.',
+  )
+  addIf(tech('smartphone') && wealthyNow && adult,
     'Most things can be delivered. The option is taken more often than expected.',
     'The algorithm knows what you will want to read before you know you want to read it. You are still deciding how to feel about this.',
   )
@@ -224,7 +283,7 @@ export function buildMundaneLayer(state) {
     'You do the laundry, the shopping, the correspondence. This is called being at home.',
     'There are rooms not intended for you — the meeting, the club, the conversation about money. You manage around them.',
   )
-  addIf(gender === 'female' && era >= 1960 && era <= 1979 && isWealthyArch,
+  addIf(gender === 'female' && era >= 1960 && era <= 1979 && isWealthyArch && working,
     'The job you have was not available to women at this level ten years ago. You are the first, or among the first.',
     'The equal pay conversation is happening in the office. The happening is not the same as the resolution.',
   )
@@ -260,7 +319,11 @@ export function buildMundaneLayer(state) {
   // ── RELIGION-SPECIFIC DAILY RHYTHMS ────────────────────────────────────────
 
   addIf(isMuslim && phase !== 'early_childhood',
-    'The adhan sounds from the minaret or the phone or the radio, and the day organises itself around it.',
+    tech('mobile_phone')
+      ? 'The adhan sounds from the minaret or the phone or the radio, and the day organises itself around it.'
+      : tech('radio')
+        ? 'The adhan sounds from the minaret and from a radio in somebody\'s window, and the day organises itself around it.'
+        : 'The adhan comes from the minaret and from further off, a second one a beat behind the first, and the day organises itself around it.',
     'The five prayers are the architecture of the day. The architecture is invisible to people who do not share it.',
     'The wudu before prayer — the washing — is a ritual boundary between the world and the prayer.',
   )
@@ -359,7 +422,7 @@ export function buildMundaneLayer(state) {
     'The cleaner comes on a scheduled day. Their name is known. The arrangement is professional and also human.',
     'The annual leave is taken. The destination was agreed months ago. The planning was part of the pleasure.',
   )
-  addIf(arch === 'wealthy_west' && (gdp === 'medium' || gdp === 'medium_high'),
+  addIf(arch === 'wealthy_west' && (gdp === 'medium' || gdp === 'medium_high') && age >= 25,
     'The mortgage is the number that lives in the back of the mind. Not urgently. Persistently.',
     'There are two options and both are reasonable. This is a new situation relative to earlier decades.',
     'The car needs a service. This is handled.',
@@ -379,13 +442,15 @@ export function buildMundaneLayer(state) {
     'The conductor is calling the route from the window. The route is the route you take.',
     'Standing on a bus for an hour is its own form of being in the city.',
   )
-  addIf(isWealthyArch && era >= 1950 && career,
+  addIf(tech('automobile') && career,
     'The commute is the only part of the day that belongs entirely to you.',
-    'The radio in the car is the hour between the job and the home.',
     'The traffic is the constant. Your relationship with it has evolved from irritation to acceptance.',
     'The parking is found. This registers as a small win reported to no one.',
   )
-  addIf(isWealthyArch && era >= 1950 && isUrban,
+  addIf(tech('automobile') && tech('radio') && career,
+    'The radio in the car is the hour between the job and the home.',
+  )
+  addIf(wealthyNow && era >= 1950 && isUrban && working,
     'The specific rush of hot air before the underground train arrives. You know the timing of this now.',
     'The platform at rush hour is a managed compression of people. The management is mostly polite.',
     'The seat you prefer is at the end of the car. When it is available, the day begins differently.',
@@ -556,23 +621,31 @@ export function buildMundaneLayer(state) {
 
   // ── COMMUNICATION AND MEDIA ────────────────────────────────────────────────
 
-  addIf(era <= 1939,
+  addIf(currentYear <= 1950 && adult,
     'The letter took two weeks to arrive and another two weeks to receive a response. The slow conversation has its own rhythm.',
+  )
+  addIf(tech('newspaper') && adult && currentYear <= 1990,
     'The newspaper is read in a specific order. The order has not changed.',
   )
-  addIf(era >= 1930 && era <= 1959,
+  addIf(tech('radio') && !tech('television') && notYoung,
     'The radio in the evening is not just information. It is company.',
+  )
+  addIf(tech('landline') && !tech('mobile_phone') && adult,
     'The telephone call is short because it costs money. The shortness is efficient and slightly brutal.',
   )
-  addIf(era >= 1940 && era <= 1979 && isWealthyArch,
+  addIf(adult && currentYear <= 1995,
     'The letter is written by hand. The handwriting reveals the mood of the writing.',
+  )
+  addIf(tech('television') && !tech('streaming') && notYoung,
     'The television schedule is fixed. You are there for the programme or you miss it.',
   )
-  addIf(era >= 1970 && era <= 1989 && isWealthyArch,
+  addIf(tech('landline') && !tech('mobile_phone') && adult && currentYear >= 1975,
     'The answering machine message was left. You have been playing it back to check the tone.',
   )
-  addIf(era >= 1990 && era <= 2009,
+  addIf(tech('mobile_phone') && !tech('smartphone') && age >= 12,
     'The text message arrives. Its abbreviations are now fluent to you.',
+  )
+  addIf(tech('email') && working,
     'The email inbox has tripled in a year. The management of it is its own task.',
   )
   addIf(era >= 2010,
@@ -2201,9 +2274,8 @@ export function buildMundaneLayer(state) {
   )
 
   // ── 1950S COLD WAR TEXTURE ────────────────────────────────────────────────
-  addIf(era === 1950 && phase !== 'early_childhood',
+  addIf(era === 1950 && notYoung,
     'The bomb is the thing no one discusses directly. It is in the architecture of every conversation about the future.',
-    'The television is new in the house or almost in the house. Everything it changes will take a generation to see.',
   )
   addIf(era === 1950 && isPostSoviet && phase !== 'early_childhood',
     'The official optimism and the private accounting are not the same document.',
@@ -2916,7 +2988,7 @@ export function buildMundaneLayer(state) {
   )
 
   // ── FIRST GENERATION PROFESSIONAL ─────────────────────────────────────────
-  addIf((F('first_gen_educated') || F('poverty_childhood')) && phase !== 'early_childhood',
+  addIf((F('first_gen_educated') || F('poverty_childhood')) && working,
     'The office and the accent and the clothes and the calibration of how much to explain about where you started.',
     'The things that your colleagues assume as given that you did not come with. You learned them. The learning is invisible now.',
   )

@@ -295,7 +295,7 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr23ChildhoodFriend,
     text: () => pick([
-      `You run into a childhood friend — or more likely you see them on the internet, a photograph — and there is the shock of the face: the same face, aged, with the same underlying structure you knew at ten. You do the arithmetic. They are the same age as you. Of course they are. You are surprised anyway.`,
+      `You run into a childhood friend, or a photograph of one — and there is the shock of the face: the same face, aged, with the same underlying structure you knew at ten. You do the arithmetic. They are the same age as you. Of course they are. You are surprised anyway.`,
       `The childhood friend you lost contact with: you have occasionally thought about finding them and have not. The finding would require explaining the gap, and the gap has its own history, and the history might not survive the finding. The not-finding preserves a version of the friendship that the finding might not.`,
       `You meet the childhood friend as adults and discover you don't have much to talk about beyond the childhood. The shared past is real and the present selves are strangers. You spend an hour talking about people from then and part without making plans for another meeting, both of you understanding that this was the meeting.`,
     ]),
