@@ -696,6 +696,34 @@ character with a `retired` FLAG while every hook that hands out a job reads the
 invisible to a guard audit, invisible to `npm run sim`, and obvious within
 thirty seconds of reading a life as a player reads it.
 
+### `isRich` is a statement about now, for the third time
+
+CLAUDE.md has recorded this defect twice — `isWealthyArch` giving 1931 Oman a
+hallway telephone, then `place.hasRadio`/`hasTV`/`hasCinema` giving it a radio
+in 1930 — and both times the fix was applied to the predicates in front of it
+rather than to the predicate itself. CI then found a daily bus route with stops
+in a fixed order in **1951 Oman**, a country with ten kilometres of paved road
+and three schools, sixteen years before it exported oil. `isRich` was still
+`RICH_ARCHETYPES.includes(G.archetype)`, and eighteen predicates read it as
+"did this place have the thing early".
+
+The repair is three tests, not one, because they are three different questions:
+
+- **a table where there is one.** Electricity, piped water, a refrigerator, a
+  landline, a car all have arrival years per country. `wasWealthy` is the wrong
+  proxy for them: 1951 Germany was not materially rich — it was in ruins — and
+  had been electrified since the 1920s.
+- **`wasWealthy(country, year)`** for what genuinely tracks money and has no
+  table: a bank account, a clock in the house, a weekend, photographs.
+- **`cityEnough(G, share)`** for municipal infrastructure — a bus, a lift, an
+  underground, a supermarket — which follows urbanisation and not wealth.
+  Germany was 58% urban in 1935 and had municipal buses from 1905; Oman was
+  13% urban in 1951. Every country carries its own `urbanHistory`.
+
+**The lesson worth keeping: fix the predicate, not its callers.** Both earlier
+passes patched the symptom one guard at a time, and the wrong answer stayed in
+the definition waiting for the next sentence that asked it.
+
 ### Thresholds are instruments, and a noisy one fails on nothing
 
 Three assertions failed during this pass and none of them had found a defect.

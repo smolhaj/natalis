@@ -262,7 +262,15 @@ describe('persona coverage', () => {
       const anchoredIds = new Set()
       const ages = []
       let anchored = 0, world = 0, lives = 0, reachedLateLife = 0
-      for (let i = 0; i < 20; i++) {
+      // Sixty rather than twenty. Four assertions in this one test failed on a
+      // boundary in a single afternoon — `oldest 63 > 64`, `oldest 64 > 64`,
+      // `median 30 > 32`, `2 of 20 reaching 60 > 2` — and not one had found a
+      // defect. The repeated fix was to loosen the bound, which is the wrong
+      // lever: a bound loose enough to survive a twenty-life sample of a
+      // distribution this heavy-tailed is loose enough to miss a real
+      // regression. Give the assertions an instrument instead. At ~920ms per
+      // persona this costs about ten seconds of a 125-second job.
+      for (let i = 0; i < 60; i++) {
         // A persona that cannot be created at all is a failure: Ireland 1940 was
         // impossible before, because the country's birth floor started at 1950.
         useGameStore.getState().startCuratedGame({ country, birthYear, gender })
