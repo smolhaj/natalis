@@ -858,8 +858,28 @@ export function tickFamilyIncome(state) {
     totalParentalIncome = Math.round(totalParentalIncome * 0.35)
   }
 
+  // The wealth stat is a reading of how much money is AROUND this person, and
+  // for a child that is the household's, not their own. It was derived from the
+  // child's cash — which, once a child stopped banking eighteen years of
+  // household surplus, is one year's pocket money. On a log scale that pinned
+  // it at the clamp floor of 5 for every non-rich-world child in the game:
+  // Indonesia, Mexico, Vietnam, India and Brazil all read 5 at age 5 and 5 at
+  // age 12, elite and landless alike, while 71 guards in the corpus read this
+  // number and `ec2_poverty_known` gated the whole poverty arc off it.
+  //
+  // Read the household's annual income instead, in present-day money so the
+  // scale means the same thing in 1936 as in 2020, with a floor from the
+  // family's own tier — because a subsistence household books no cash income at
+  // all and is not therefore of unknown wealth.
+  const incomeToday = totalParentalIncome / (wageIndex(state.character?.country, year) || 1)
+  const TIER_FLOOR = { 0: 5, 1: 14, 2: 28, 3: 45, 4: 62 }
+  const fromIncome = incomeToday >= 1 ? (Math.log10(incomeToday) - 2.3) * 27 : 0
+  const wealthLevel = clamp(Math.round(Math.max(fromIncome, TIER_FLOOR[tier] ?? 28)), 2, 98)
+
   const surplus = Math.round(totalParentalIncome * surplusRate)
-  if (surplus <= 0) return state
+  if (surplus <= 0) {
+    return { ...state, stats: { ...state.stats, wealth: wealthLevel } }
+  }
 
   // A child does not accumulate a bank balance out of the household's surplus.
   // This paid 5-28% of parental income into the CHILD's money every year and
@@ -874,10 +894,6 @@ export function tickFamilyIncome(state) {
   // counting it, in the most visible place there is.
   const carried = Math.round(Math.min(state.money ?? 0, surplus * 0.6))
   const newMoney = carried + surplus
-  // Same unit problem as the adult wealth stat in tick.js: read the balance in
-  // a currency that means the same thing in every decade.
-  const inToday = Math.round(newMoney / (wageIndex(state.character?.country, year) || 1))
-  const wealthLevel = clamp(Math.round((Math.log10(Math.max(1, inToday)) - 2.5) * 22), 5, 98)
   return {
     ...state,
     money: newMoney,
