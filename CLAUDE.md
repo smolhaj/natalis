@@ -589,7 +589,7 @@ of defect: content that fires correctly and is wrong about the world.
 | "Life in brief" on the death screen | empty in 67% of lives | 0%, median 8 notes |
 | families with two members sharing a first name | 13% | under 1% |
 | both parents holding the identical job and wage | ~50% at the top tier | 3% |
-| smarts median at death (share ending 90+) | 96 (58%) | 77 (23%) |
+| smarts median at death (share ending 90+) | 96 (58%) | 77 (11%) |
 | countries whose religion mix the identity table distorts >12pp | 26 | 0 |
 | passive mode, share of years containing an event | measured at 52% | 88.6% (the 52% was the instrument) |
 
@@ -692,6 +692,56 @@ else.**
 
 **The lesson: an audit that cannot fail is not an audit.** When one reports
 zero, check that it can still report one.
+
+### Nobody had played the mode with play in it
+
+Every pass before this one tested **passive** mode. Active mode — the choice
+surface, the yearly action budget, the activities panel, crime, the trial, the
+minigames — had never been driven. Pacing came out good: 45% of years contain a
+real decision, 0-2% contain nothing, and choices measurably change a life
+(always-first against always-last, 14 lives each: US median death 71 vs 82,
+Nigeria 52 vs 25). Three things made it unplayable anyway.
+
+| | before | after |
+|---|---|---|
+| a negative balance at the trial screen | permanent soft-lock | recoverable |
+| salary reachable from one unbudgeted button | $3,455,778,417/yr | the top of your grade |
+| panel price vs engine price, 1950 Germany | $90,000 vs $1,260 | equal |
+| adult smarts, rich-world (share at 90+) | 96.7 (63%) | 83 (18%) |
+| money a child holds at eighteen, having never worked | $51,084 | pocket money |
+| world events reaching a prisoner over a ten-year sentence | 0 | 14 |
+| Money-category activities that do anything | 0 of 7 | 7 |
+| crimes the panel can reach | 30 of 37 | 37 |
+
+Two of those are worth naming as rules.
+
+**A price shown must be the price charged.** `economy.js` went in at the four
+engine chokepoints and not into the interface, so the panels printed
+present-day catalogue numbers while the engine charged era-denominated ones —
+and the `disabled` gates compared a nominal balance to a present-day price,
+falsely locking property, vehicles, travel and business for every character
+before about 2000. In 2024 the two numbers finally agreed, which is the "the
+economy is a statement about NOW" failure surviving one layer above where it
+was fixed. `estimatePrice`/`estimateCost` in `playerActions.js` now serve the
+display, the affordability check and the charge.
+
+**A verb offered is a verb that works.** Seven Money activities moved the
+wealth STAT, which `tick()` recomputes from `money` every year, so none of them
+did anything and two were strictly harmful. The sterilisation button called an
+activity id no pool defined. Seven crimes were not listed in the panel at all.
+Losing a career to a conviction had no prose. An arrest with a zero-length
+sentence had no consequence whatsoever.
+
+And the interface was contradicting four of the rules its own section states
+most explicitly: a "+2 / −4" flash on the stat strip, a partner card with a
+CRAZINESS bar behind a hot-pink gradient, emoji in one of the two log views but
+not the other, and the outcome of a choice printed twice on one screen. The
+Tailwind remap that exists so a component cannot reach a candy colour was
+missing exactly two scales, `pink` and `purple`, which is why the gradient was
+the real #ec4899.
+
+**The lesson: play the mode the player plays.** A passive life exercises the
+simulation. It does not touch a single button.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
