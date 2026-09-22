@@ -2857,6 +2857,38 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ind_emergency_1975. Two branches: adapted, or knew someone detained.',
   },
 
+  quota_ceiling: {
+    weight: 'moderate',
+    category: 'discrimination',
+    description: 'Held below a level by an allocation rule rather than by a person — a domicile, a district, a box on a form that is written down and therefore unarguable.',
+    intent: 'year_texture',
+    notes: 'Set by sl_muhajir_quota_1973.',
+  },
+
+  ethnic_political_organiser: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was in the rooms where an ethnic grievance became a political organisation — early enough to remember when the people at the front were the ones who argued best.',
+    intent: 'year_texture',
+    notes: 'Set by sl_muhajir_quota_1973.',
+  },
+
+  citizenship_protest: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Sat in the road over a citizenship law — a hundred days, mostly women, a library built out of donated books, and no win at the end of it.',
+    intent: 'year_texture',
+    notes: 'Set by sl_muslim_india_citizenship_2019.',
+  },
+
+  documented_defensively: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Put the household on paper before being asked to — the grandmother whose name is spelled three ways, the tin box gone through twice, the copies kept somewhere else.',
+    intent: 'year_texture',
+    notes: 'Set by sl_muslim_india_citizenship_2019.',
+  },
+
   babri_generation: {
     weight: 'major',
     category: 'historical',

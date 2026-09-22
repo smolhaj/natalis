@@ -14891,6 +14891,76 @@ function* textureCandidates(state, opts = {}) {
       : 'The rice fields on the other side of the border are not different from the rice fields here. The line went through rice fields, and the rice fields do not know it is there, and this is both obvious and some days the most painful thing you know.',
   ])]
 
+  if (F.has('partition_stayed_behind') && Math.random() < 0.13) yield [T.anchored, pick([
+    'The house four doors down changed hands in 1947 and the village still calls it by the name of the family that left it. Nobody who uses the name has met them. The people living in it now have been there longer than the people who built it.',
+    phase === 'late_life'
+      ? 'Everyone who could describe the village before the line is dead or nearly. You are the one left who remembers which houses emptied and which filled, and in what order, and there is nobody to tell it to who would understand why the order matters.'
+      : 'The word for the families who came is the same word it was thirty years ago. Their children were born here. Their children\'s children were born here. The word has not moved.',
+  ])]
+
+  if (F.has('muslim_minority_india') && Math.random() < 0.14) yield [T.anchored, pick([
+    'The form asks for the name before it asks for anything else, and the name answers a question the form has not asked. You have watched the small recalculation cross a hundred faces at the moment they read it: nothing said, nothing refused, just a reordering of what happens next.',
+    currentYear >= 1992
+      ? 'There are neighbourhoods you would have rented in before and do not enquire about now. The change was not announced. Estate agents simply started suggesting other areas, and the areas they suggest are the ones where the others are.'
+      : 'Your father chose not to go, in a year when going was the thing people did, and the choice was never discussed again in the house. You have spent your life inside a decision nobody explained to you.',
+    phase === 'late_life' && currentYear >= 2002
+      ? 'You have outlived two rounds of it now. What you notice is not the violence, which is rare, but what the years between the rounds are like: the way the country is entirely ordinary and entirely conditional at the same time, and how tiring it is to hold both.'
+      : 'The country is yours. The constitution says so and you believe the constitution. The believing takes an effort that the people around you do not have to make, and you have never found a way to describe that effort to them that does not sound like a complaint.',
+  ])]
+
+  if (F.has('muhajir_generation') && Math.random() < 0.14) yield [T.anchored, pick([
+    'The Urdu in your house is the Urdu of a city nine hundred miles away that none of the children have seen. It is more correct than the Urdu outside and that correctness is a thing the family holds onto, which is its own kind of admission.',
+    currentYear >= 1972
+      ? 'The quota is for the province. The province is Sindh. Your family has been in Sindh for twenty-five years and the form still has a box that means you are not from here, and everyone knows which box it is, and it is not called that.'
+      : 'They came for a country that was made for them and arrived to discover that a country cannot be made for anyone in particular; it can only be made, and then lived in alongside whoever else is in it.',
+    phase === 'late_life'
+      ? 'The graves are in India. This is the specific thing your mother could not get past — not the house, not the shop, the graves. You understand it better now than you did when she said it, which is a thing that keeps happening as you get older and is no use to her at all.'
+      : 'Somebody at work says the word muhajir the way it was meant in 1947, as a description of an honourable journey. Somebody else says it the way it is meant now. The word did not change. The thirty years did.',
+  ])]
+
+  if (F.has('sindhi_hindu_refugee') && Math.random() < 0.13) yield [T.anchored, pick([
+    'Nobody in Bombay can place the language. It is not Gujarati, it is not Marathi, it is not Punjabi, and the explanation takes long enough that you have developed a short version that leaves out the province entirely.',
+    phase === 'late_life'
+      ? 'There is no going back to look, and not because of the border. The thing you would be going back to look at has no address — a community, not a place, and it is here now, in the wrong climate, doing well.'
+      : 'The business is doing well. The business was always going to do well; that was the family\'s whole self-understanding and the displacement did not touch it. What the displacement touched was smaller and nobody names it out loud.',
+  ])]
+
+  if (F.has('quota_ceiling') && Math.random() < 0.11) yield [T.earned, pick([
+    'The promotion goes to someone whose grandfather was born inside the right district line. Nobody is being unkind about it. It is a rule, and it is written down, and that is somehow worse than if it were not.',
+    phase === 'late_life'
+      ? 'You retired from the level you reached in your thirties. The work you did there was good work. The sentence you cannot stop composing, decades late and to nobody, begins: if the box had said something else.'
+      : 'You have stopped telling the young ones in the family to study harder. It was not untrue. It was just never the variable.',
+  ])]
+
+  if (F.has('ethnic_political_organiser') && Math.random() < 0.11) yield [T.earned, pick([
+    'The rooms got bigger and then they got harder to leave. Somewhere between the first of them and now, the people at the front stopped being the people who argued best.',
+    phase === 'late_life'
+      ? 'Some of the men from those meetings are dead and some are in government and some went in a direction you will not describe out loud. You were at the beginning of it, which is a fact that means something different depending on who is asking and in what year.'
+      : 'You still go. Attendance is a position, and not going would also be a position, and there is no longer a way to stand outside it.',
+  ])]
+
+  if (F.has('citizenship_protest') && Math.random() < 0.12) yield [T.earned, pick([
+    'It was mostly women, and it was mostly cold, and there was a library built out of donated books at the edge of the road. That is what you remember when the anniversary comes round: not the speeches, the library.',
+    'Nothing was won. Something was demonstrated, which is not the same thing and is not nothing, and you have had years to decide how much of a consolation that is.',
+  ])]
+
+  if (F.has('documented_defensively') && Math.random() < 0.12) yield [T.earned, pick([
+    'The tin box has a folder in it now, and the folder is complete, and you know without looking exactly which shelf it is on. You check anyway, about twice a year, for no reason you would defend.',
+    'You had everyone\'s papers photocopied and the copies kept somewhere else. It cost an afternoon. Explaining to your children why you did it costs more than that and you keep putting it off.',
+  ])]
+
+  if (F.has('split_family_correspondence') && Math.random() < 0.11) yield [T.earned, pick([
+    'A letter goes across the line about twice a year in each direction and has done for decades. Between them the letters contain almost no information and the fact of them is the whole of the point.',
+    phase === 'late_life'
+      ? 'The correspondence has passed to the children on both sides, who have never met, and who write to each other out of an obligation neither of them could explain if asked. You think this is probably the best available outcome.'
+      : 'You have never met any of them. You would recognise the handwriting anywhere.',
+  ])]
+
+  if (F.has('family_history_transmitted') && Math.random() < 0.10) yield [T.earned, pick([
+    'The school project came back with a mark on it. The version of the family in it is shorter and clearer than the one you carry, and it is now the one that will be repeated.',
+    'Somebody in the family finally wrote it down. What they wrote down is about seventy per cent right, and you have decided that seventy per cent surviving you is a better outcome than the whole of it not.',
+  ])]
+
   if (F.has('third_gender_traditional') && Math.random() < 0.15) yield [T.anchored, pick([
     'The role exists in the culture before the Western words for it, which means it came with obligations and social functions that the Western words don\'t carry. The obligations are specific. The functions are specific. The translation is incomplete.',
     phase === 'late_life'

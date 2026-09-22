@@ -1817,6 +1817,30 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by sl_tibetan_dharamsala_childhood.',
   },
 
+  partition_stayed_behind: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Was in a district the 1947 line went around — the neighbours who sold the buffalo and went, the family given the empty house, the word "refugee" that outlives the people it was first used about.',
+    intent: 'year_texture',
+    notes: 'Set by sl_up_partition_hindu and the stay branch of sl_up_partition_muslim.',
+  },
+
+  muhajir_generation: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Migrated from the United Provinces to Karachi in 1947-48 — went to the country that was made for them and found it already had people in it. Urdu-speaking, provincially homeless, and about to be on the wrong side of a quota.',
+    intent: 'both',
+    notes: 'Set by ca_pakistan_muhajir_arrival and the Karachi branch of sl_up_partition_muslim.',
+  },
+
+  sindhi_hindu_refugee: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Left Sindh for Bombay in 1947-48 — a province that emptied rather than burned, and a trading community that arrived intact and rebuilt itself out of a room.',
+    intent: 'both',
+    notes: 'Set by sl_sindh_hindu_departure; gates sl_sindhi_hindu_refugee.',
+  },
+
   bengal_partition_displaced: {
     weight: 'major',
     category: 'displacement',

@@ -6515,6 +6515,30 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by sl_gulag_camp_born.',
   },
 
+  muslim_minority_india: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Muslim in India after 1947 — inside a decision somebody else made about whether to go, and inside a constitution that has to be believed in a little harder than the people around you have to believe in it.',
+    intent: 'both',
+    notes: 'Set by the stay branch of sl_up_partition_muslim.',
+  },
+
+  split_family_correspondence: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Keeps up a correspondence with the branch of the family that went the other way in 1947 — forty years of harvests and weddings, and the subject raised once or not at all.',
+    intent: 'year_texture',
+    notes: 'Set by sl_partition_the_other_branch.',
+  },
+
+  family_history_transmitted: {
+    weight: 'moderate',
+    category: 'legacy',
+    description: 'Told the family story to someone young enough to keep it, and watched it come back shorter, tidier and now permanent.',
+    intent: 'year_texture',
+    notes: 'Set by sl_partition_late_reckoning.',
+  },
+
   refugee_rebuilt_network: {
     weight: 'moderate',
     category: 'resilience',

@@ -15,6 +15,7 @@
 // earlier event recorded the attraction, or if the recognition event in
 // events_adolescence.js fired. One predicate so the era events stay readable.
 import { hasTech } from '../../technology.js'
+import { pickFrom } from '../../../utils/random'
 
 const QUESTIONING = (G) =>
   G.flags.includes('questioning_sexuality') ||
@@ -814,7 +815,10 @@ export const SPECIFIC_LIFE_EVENTS = [
         text: 'Arrange the exit. The patients you cannot treat need you nowhere. The ones somewhere else need someone.',
         tag: 'emigrate',
         outcome: 'The process takes eight months. The country you arrive in is a different country. The salary is twenty times. You think about what the twenty times means every day for a year.',
-        effect: (p) => { p.addFlag('emigrated'); p.mo += 3000; p.m -= 4; p.setMem('sl_vzla_prof', true) },
+        effect: (p) => {
+          p.mo += 3000; p.m -= 4; p.setMem('sl_vzla_prof', true)
+          p.emigrateTo(pickFrom(['Colombia', 'Colombia', 'Spain', 'United States']), { tier: 'working_class' })
+        },
       },
       {
         text: 'Stay. Someone has to be here. The patients who cannot emigrate need a doctor who also cannot leave.',
@@ -2740,38 +2744,255 @@ export const SPECIFIC_LIFE_EVENTS = [
     effect: (p) => { p.setMem('sl_tib_immolation', true); p.m -= 8; p.r += 6; p.addFlag('witnessed_extreme_witness') },
   },
 
+  // A high `weight` on these is not a thumb on the scale. Each one is gated on a
+  // religion, a country, a four-year window and an age band, fires once per life
+  // and describes the single most consequential thing that happened to that
+  // population. At weight 3 they lost the draw to eight thousand other events and
+  // a 1938 Indian Muslim childhood reached 1947 without noticing it. The guard is
+  // what makes them rare; the weight is what makes them land when the guard opens.
+
   // ══════════════════════════════════════════════════════════════════════════
-  // EE. BENGAL PARTITION 1947 — the other partition nobody made films about
+  // EE. PARTITION 1947 — three lines, three populations, three directions
+  //
+  // The events here used to be one event that could not be true of anyone. It
+  // told every rural Indian child 'the village is in East Bengal' — and India's
+  // only rural place is Uttar Pradesh, nine hundred miles west of the Bengal
+  // line. The Sindhi arc downstream of it was gated on having been displaced
+  // from Bengal, which is a different province, a different language and a
+  // different migration.
+  //
+  // Partition moved about fifteen million people in three directions that had
+  // almost nothing to do with each other. Punjab went in weeks and in blood.
+  // Bengal went in waves over twenty-five years. Sindh went quietly and almost
+  // completely. And the United Provinces, where the demand for Pakistan was
+  // loudest, did not move at all, because it was never going to be in it.
   // ══════════════════════════════════════════════════════════════════════════
 
   {
-    id: 'sl_bengal_partition_hindu',
+    id: 'sl_up_partition_hindu',
     phase: 'childhood',
-    weight: 3,
+    weight: 30,
     when: (G) =>
-      G.character.country.name === 'India' &&
-      G.currentYear >= 1947 && G.currentYear <= 1955 &&
-      G.age >= 4 && G.age <= 12 &&
+      G.currentCountry?.name === 'India' &&
+      G.currentYear >= 1947 && G.currentYear <= 1951 &&
+      G.age >= 5 && G.age <= 12 &&
       G.ruralUrban === 'rural' &&
-      !G.mem?.sl_bengal_part_h,
-    text: 'The village is in East Bengal, which is now East Pakistan, which means it is no longer a place where your family can remain. The people who made the line through Bengal made it in London, on a map, in six weeks. The line went through rivers and rice fields and the middle of market towns and your village is now on the wrong side of it. The move to West Bengal takes three months and the house you move into is not your house and the district is not your district and the language is Bengali everywhere, which should help but does not, because what you miss is the specific geography of the place the line went through.',
+      G.religion !== 'muslim_sunni' && G.religion !== 'muslim_shia' &&
+      !G.mem?.sl_up_partition,
+    text: 'The line is drawn a thousand miles away, through Punjab and through Bengal, and it does not come near the village. What comes near the village is everything the line displaces. The family four houses down sells the buffalo, then the copper, then the door frames, and goes to Karachi — they had voted for it, argued for it at the tea shop, and now they are the ones who have to live in it. Two months later a family arrives from the other direction with a bundle each and no Hindi you can follow, and they are given the empty house, and the village calls them the refugees for the next thirty years even after their children are born here.',
     choices: null,
-    effect: (p) => { p.setMem('sl_bengal_part_h', true); p.m -= 8; p.r += 6; p.addFlag('bengal_partition_displaced') },
+    effect: (p) => {
+      p.setMem('sl_up_partition', true)
+      p.m -= 4; p.e += 3; p.r += 2
+      p.addFlag('partition_stayed_behind')
+    },
+  },
+
+  {
+    id: 'sl_up_partition_muslim',
+    phase: 'childhood',
+    weight: 60,
+    when: (G) =>
+      G.currentCountry?.name === 'India' &&
+      G.currentYear >= 1947 && G.currentYear <= 1950 &&
+      G.age >= 6 && G.age <= 12 &&
+      (G.religion === 'muslim_sunni' || G.religion === 'muslim_shia') &&
+      !G.mem?.sl_up_partition,
+    text: 'The argument in your house runs for a year and it is not about politics, it is about a house. The United Provinces is where the demand for Pakistan was loudest — the newspapers, the meetings, your uncle who has not stopped talking since 1940 — and the United Provinces is not in it. The line went round you. Your uncle goes in October with three trunks. He writes from Karachi that there is work, that there is room, that the word for people like him there is muhajir, which means the ones who made the migration, and which he writes as though it were a title. Your father reads the letter twice and puts it in the drawer with the land papers.',
+    choices: [
+      {
+        text: 'Your father takes the family to Karachi.',
+        tag: 'defiant',
+        outcome: 'The train from Lucknow is full of people doing the same arithmetic. What you own becomes what you can carry.',
+        effect: (p) => {
+          p.setMem('sl_up_partition', true)
+          p.m -= 6; p.e += 4; p.r += 3
+          p.wipeMoney(0.6)
+          p.addFlag('muhajir_generation')
+          p.relocate('pk_karachi', 'informal', { residency: 'citizen' })
+        },
+      },
+      {
+        text: 'Your father puts the land papers back and nothing is said again.',
+        tag: 'yielding',
+        outcome: 'The house stays yours. So does the question of what you are now, which the country will keep asking you in one form or another.',
+        effect: (p) => {
+          p.setMem('sl_up_partition', true)
+          p.m -= 5; p.r += 4
+          p.addFlag('partition_stayed_behind')
+          p.addFlag('muslim_minority_india')
+        },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_east_bengal_hindu_exodus',
+    phase: null,
+    weight: 40,
+    when: (G) =>
+      G.character.country.name === 'Bangladesh' &&
+      G.religion === 'hindu' &&
+      G.currentYear >= 1947 && G.currentYear <= 1965 &&
+      G.age >= 5 && G.age <= 17 &&
+      !G.flags.includes('bengal_partition_displaced') &&
+      !G.mem?.sl_bengal_part_h,
+    text: (G) => G.currentYear >= 1964
+      ? 'It does not happen the way Punjab happened. It happens the way water gets into a boat. A notice about property held by people who have left. A cousin who goes and then writes for his brother. The riots in the winter, and afterwards the arithmetic everyone does quietly about which side of the river the family should be on. Your father holds out longer than most of the street. When he goes to the land office to sell, the clerk offers him a third of what the field is worth, and both of them know exactly why, and neither says it.'
+      : 'The line through Bengal was drawn in London in six weeks by a man who had never been to India, and it went through rivers and rice fields and the middle of market towns, and it put your village on the side that is now East Pakistan. Nobody makes you leave. That is the part that is hard to explain later. What happens is that the school changes, then the land office changes, then the names of the people who decide things change, and one year your father counts the Hindu households on the road and there are four where there were nineteen, and he starts, without announcing it, to sell.',
+    choices: null,
+    effect: (p) => {
+      p.setMem('sl_bengal_part_h', true)
+      p.m -= 8; p.r += 6
+      p.wipeMoney(0.5)
+      p.addFlag('bengal_partition_displaced')
+      p.addFlag('refugee')
+      p.relocate('in_rural_up', 'informal', { residency: 'citizen' })
+    },
+  },
+
+  {
+    id: 'sl_sindh_hindu_departure',
+    phase: null,
+    weight: 60,
+    when: (G) =>
+      G.character.country.name === 'Pakistan' &&
+      G.religion === 'hindu' &&
+      G.currentYear >= 1947 && G.currentYear <= 1951 &&
+      G.age >= 3 && G.age <= 45 &&
+      !G.mem?.sl_sindh_leaving,
+    text: 'Sindh does not burn the way Punjab burns. It empties. A quarter of Karachi was Hindu and the shops had your family\'s name on them in two scripts, and by the end of 1948 there is almost nobody left to read the second one. The trigger, when it comes, is not a massacre: it is the refugees arriving from the east with nothing, and being housed in the temple, and then in the school, and then the question of where else there is room. Your father books passage to Bombay for what the shop is worth on a bad day. He takes the ledgers. He leaves the stock.',
+    choices: null,
+    effect: (p) => {
+      p.setMem('sl_sindh_leaving', true)
+      p.m -= 7; p.r += 5
+      p.wipeMoney(0.7)
+      p.addFlag('sindhi_hindu_refugee')
+      p.addFlag('refugee')
+      p.relocate('in_mumbai', 'informal', { residency: 'citizen' })
+    },
   },
 
   {
     id: 'sl_sindhi_hindu_refugee',
     phase: null,
+    weight: 30,
+    when: (G) =>
+      G.currentCountry?.name === 'India' &&
+      G.currentYear >= 1948 && G.currentYear <= 1965 &&
+      G.age >= 16 && G.age <= 55 &&
+      G.flags.includes('sindhi_hindu_refugee') &&
+      !G.mem?.sl_sindhi_bombay,
+    text: 'In Bombay the Sindhi Hindu refugees are called refugees even though Bombay is technically their country now. The camp at Ulhasnagar was a barracks for Italian prisoners of war and now it is a town with your language in it. Your family builds something there that is not quite a business and not quite a community organisation but is the thing that keeps the community from disintegrating, which is what displaced communities mostly need: someone willing to hold the structure before the structure becomes formal. The Sindhi trader network is older than Pakistan. There is no province to run it from any more, so it runs from a room.',
+    choices: null,
+    effect: (p) => {
+      p.setMem('sl_sindhi_bombay', true)
+      p.s += 4; p.m += 2; p.mo += 2000
+      p.addFlag('refugee_rebuilt_network')
+    },
+  },
+
+  // ── The echoes. Written before the triggers, per the follow-through rule. ──
+
+  {
+    id: 'sl_muhajir_quota_1973',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      G.currentCountry?.name === 'Pakistan' &&
+      G.currentYear >= 1973 && G.currentYear <= 1990 &&
+      G.age >= 18 && G.age <= 55 &&
+      (G.flags.includes('muhajir_generation') || G.character.ethnicity === 'muhajir') &&
+      !G.mem?.sl_muhajir_quota,
+    text: 'In 1972 the province makes Sindhi its official language and Karachi burns for a week over a question of what will be printed on a form. What follows in 1973 is quieter and lasts longer: places at the university and posts in the provincial service are apportioned by domicile, urban and rural, and the arithmetic of that split puts your community on the wrong side of a door their entire migration was supposed to have opened. Your father gave up a house in the United Provinces for this country. You are twenty-six and being told, on paper, in the correct official language, that you are from somewhere else.',
+    choices: [
+      {
+        text: 'Take the post that is open to you and say nothing.',
+        tag: 'yielding',
+        outcome: 'The work is fine. The ceiling is in a place you can feel with your hand, and you spend thirty years not touching it.',
+        effect: (p) => { p.setMem('sl_muhajir_quota', true); p.m -= 5; p.r += 5; p.addFlag('quota_ceiling') },
+      },
+      {
+        text: 'Go to the meetings the young men are holding at the university.',
+        tag: 'defiant',
+        outcome: 'What is being organised in those rooms will be a political party inside ten years, and an armed one inside fifteen, and you will not be able to say afterwards at exactly which meeting that stopped being a surprise.',
+        effect: (p) => { p.setMem('sl_muhajir_quota', true); p.m -= 3; p.s += 4; p.r += 3; p.addFlag('ethnic_political_organiser'); p.addFlag('quota_ceiling') },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_muslim_india_citizenship_2019',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      G.currentCountry?.name === 'India' &&
+      (G.religion === 'muslim_sunni' || G.religion === 'muslim_shia') &&
+      G.currentYear >= 2019 && G.currentYear <= 2022 &&
+      G.age >= 18 &&
+      !G.mem?.sl_caa_nrc,
+    text: 'The law passed in December offers a path to citizenship for refugees from three neighbouring countries, from six religions, and the six do not include yours. On its own it changes nothing for you; you were born here. Paired with the register of citizens, which asks every household to document itself back two generations, it changes the question. Your grandmother\'s name is spelled three ways across four documents because she could not write and the clerks each did their best. Your father starts going through the tin box on the shelf, and keeps going through it, and you come in one evening and he is doing it again.',
+    choices: [
+      {
+        text: 'Go to the sit-in at Shaheen Bagh, or the one in your own city.',
+        tag: 'defiant',
+        outcome: 'It is mostly women, and it runs for a hundred days, and it ends when the virus arrives rather than when anybody wins.',
+        effect: (p) => { p.setMem('sl_caa_nrc', true); p.m -= 4; p.s += 5; p.r += 3; p.addFlag('citizenship_protest') },
+      },
+      {
+        text: 'Spend the winter getting the documents in order.',
+        tag: 'yielding',
+        outcome: 'Four hundred rupees and eleven weeks, and at the end of it the family exists on paper in a way it did not before, which is either prudence or the first concession, and you go back and forth on which.',
+        effect: (p) => { p.setMem('sl_caa_nrc', true); p.m -= 6; p.r += 5; p.mo -= 180; p.addFlag('documented_defensively') },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_partition_the_other_branch',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      (G.flags.includes('muslim_minority_india') || G.flags.includes('muhajir_generation')) &&
+      G.currentYear >= 1965 && G.currentYear <= 2005 &&
+      G.age >= 28 && G.age <= 65 &&
+      !G.mem?.sl_other_branch,
+    text: (G) => G.flags.includes('muhajir_generation')
+      ? 'The letter from the cousins takes eleven days and goes through a post office that reads it. They are still in the district. They have the land, which is worth something now, and a son at a university you have heard of, and a paragraph near the end about a riot two towns over that they mention the way you would mention weather. You read it twice. Your father made his decision in a fortnight in 1947 on the basis of a speech and a rumour, and the other version of your life is in this envelope, and it is not obviously worse.'
+      : 'The letter from Karachi takes eleven days and goes through a post office that reads it. They did well — a business, a house in a part of the city you would have to be told about. There is a paragraph near the end about the quota, about a nephew who did not get the place he should have got, and they mention it the way you would mention weather. You read it twice. Your father made his decision in a fortnight in 1947 by putting a letter in a drawer, and the other version of your life is in this envelope, and it is not obviously better.',
+    choices: [
+      {
+        text: 'Write back with the ordinary news and nothing else.',
+        tag: 'yielding',
+        outcome: 'It becomes a correspondence of harvests and weddings and nobody\'s children, held up for forty years by two people who never raise the subject once.',
+        effect: (p) => { p.setMem('sl_other_branch', true); p.m += 2; p.r += 3; p.addFlag('split_family_correspondence') },
+      },
+      {
+        text: 'Ask, in writing, whether they think it was the right thing.',
+        tag: 'defiant',
+        outcome: 'The reply, when it comes, answers a different question at some length, and you understand that this is the answer.',
+        effect: (p) => { p.setMem('sl_other_branch', true); p.m -= 3; p.r += 6; p.addFlag('split_family_correspondence') },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_partition_late_reckoning',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'India' &&
-      G.currentYear >= 1947 && G.currentYear <= 1960 &&
-      G.age >= 18 && G.age <= 35 &&
-      G.flags.includes('bengal_partition_displaced') &&
-      !G.mem?.sl_sindhi_bombay,
-    text: 'In Bombay the Sindhi Hindu refugees are called refugees even though Bombay is technically their country now. The camp in Ulhasnagar was built for them. Your family builds something there that is not quite a business and not quite a community organisation but is the thing that keeps the community from disintegrating, which is what displaced communities mostly need: someone willing to hold the structure before the structure becomes formal. The Sindhi trader network is older than Pakistan. You are rebuilding it here.',
+      (G.flags.includes('partition_stayed_behind') || G.flags.includes('muhajir_generation') ||
+       G.flags.includes('bengal_partition_displaced') || G.flags.includes('sindhi_hindu_refugee')) &&
+      G.age >= 60 &&
+      (G.children?.length ?? 0) > 0 &&
+      !G.mem?.sl_partition_reckoning,
+    text: 'A grandchild is given the thing to do for school — interview the oldest person in the family — and arrives with a notebook and a phone recording and asks the question straight out: why did they stay, or why did they go. You find that you do not know. You were seven. The decision was made in a room you were not in by people who are dead, and what you have instead of a reason is a set of images: a buffalo being sold, a door frame, the particular quiet of a road with too few people on it. You say some of that. The child writes down a sentence that is much tidier than anything you said.',
     choices: null,
-    effect: (p) => { p.setMem('sl_sindhi_bombay', true); p.s += 4; p.m += 2; p.mo += 2000; p.addFlag('refugee_rebuilt_network') },
+    effect: (p) => { p.setMem('sl_partition_reckoning', true); p.m += 3; p.r += 4; p.addFlag('family_history_transmitted') },
   },
 
   // ══════════════════════════════════════════════════════════════════════════
