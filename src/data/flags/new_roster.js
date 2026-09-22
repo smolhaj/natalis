@@ -470,4 +470,13 @@ export const NEW_ROSTER_FLAGS = {
     weight: 'moderate', category: 'displacement', intent: 'year_texture',
     description: 'Said the country was beautiful, which is true, because they were tired.',
   },
+  // ── The dzud follow-through, whose absence the registry corruption hid
+  nomadic_rebuilt: {
+    weight: 'moderate', category: 'economics', intent: 'year_texture',
+    description: 'Bought back into the herd after a dzud, and now counts in bad winters survivable rather than in animals.',
+  },
+  nomadic_left_the_steppe: {
+    weight: 'major', category: 'migration', intent: 'year_texture',
+    description: 'Sold what the dzud left and took a fenced plot on the edge of Ulaanbaatar.',
+  },
 }

@@ -612,38 +612,6 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by hai_earthquake_camp.',
   },
 
-  earthquake_survivor: {
-    weight: 'moderate',
-    category: 'trauma',
-    description: 'Survived a major earthquake — the thirty-five seconds that reorganised the city and the memory.',
-    intent: 'year_texture',
-    notes: 'Set by Haiti earthquake events and worldEvents Tangshan/Nepal/Mexico/Japan earthquake world events.',
-  },
-
-  dual_identity: {
-    weight: 'moderate',
-    category: 'identity',
-    description: 'Carries two cultural identities simultaneously — the community inside the community, the code-switching that is not a choice but a lived competence.',
-    intent: 'year_texture',
-    notes: 'Set by events_culture.js (minority community finding) and events_society.js (dual name/identity). Rich year texture potential.',
-  },
-
-  class_awareness: {
-    weight: 'minor',
-    category: 'identity',
-    description: 'Developed early class consciousness — noticing the domestic workers\' names, the arrangement others find unusual, the thing that was taken for granted.',
-    intent: 'year_texture',
-    notes: 'Set by events_culture.js (wealthy Gulf/developing) and events_texture.js (domestic service observation).',
-  },
-
-  failure_integrated: {
-    weight: 'minor',
-    category: 'identity',
-    description: 'Metabolised a major failure and carried it forward as information rather than shame — the specific work of making a failure useful.',
-    intent: 'year_texture',
-    notes: 'Set by events_coherence.js and events_early_life.js (first real failure choice).',
-  },
-
   bolivarian_collapse_lived: {
     weight: 'major',
     category: 'trauma',
@@ -5333,14 +5301,6 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by mn_stalinist_purge_family. Hidden thangkas, official story of "illness."',
   },
 
-  dzud_survivor: {
-    weight: 'major',
-    category: 'survival',
-    description: 'Survived a dzud — catastrophic winter when snow seals the grass and livestock die by thousands; the 2000 dzud killed a third of Mongolia\'s national herd.',
-    intent: 'year_texture',
-    notes: 'Set by mn_dzud_winter. Permanent relationship to winter weather; climate arc texture.',
-  },
-
   sankara_mourner: {
     weight: 'major',
     category: 'trauma',
@@ -5419,30 +5379,6 @@ export const IDENTITY_FLAGS = {
     description: 'Adherent faith practice — prayer, observance, community — that guides daily decisions rather than being nominal.',
     intent: 'none',
     notes: 'Cross-cutting. Set by various religion and cultural events. Checked 6x across event guards.',
-  },
-
-  acceptance: {
-    weight: 'minor',
-    category: 'identity',
-    description: 'Reached a state of genuine acceptance after hardship — not forgetting, but no longer fighting what cannot be changed.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by late-life reflection and grief events.',
-  },
-
-  found_meaning: {
-    weight: 'moderate',
-    category: 'identity',
-    description: 'Located meaning or purpose — in work, faith, family, or community — that makes the difficult years coherent in retrospect.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by desire-resolution, religion-arc, and community events.',
-  },
-
-  integrity: {
-    weight: 'moderate',
-    category: 'moral',
-    description: 'Maintained moral integrity under conditions designed to compromise it — the refusal that cost something real.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by corruption, authoritarian, and career events.',
   },
 
   principled: {
@@ -5579,10 +5515,6 @@ export const IDENTITY_FLAGS = {
     description: 'A Mongolian herder who survived a dzud winter catastrophe — the combined drought and freeze that kills livestock en masse and can wipe out a family\'s entire herd.',
     intent: 'both',
     notes: 'Set by nom_mongol_dzud event. Has year texture in nomadic section of buildYearTexture.',
-   category: 'economics',
-    description: 'Family income includes remittances from a member working abroad — the arithmetic of absence built into the household budget.',
-    intent: 'year_texture',
-    notes: 'Cross-cutting. Set by OFW, Tajik remittance, migration, and emigrant events. Already in buildYearTexture.',
   },
 
   moral_injury: {

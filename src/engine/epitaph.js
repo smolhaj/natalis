@@ -393,6 +393,8 @@ export function generateEpitaph(state) {
     para2.push(`${He} was in Hungary for the 1956 uprising — the twelve days, then November 4th and the Soviet tanks. ${He} carried the twelve days as a measurement for the rest of ${his} life.`)
   } else if (f('taiwan_228_generation')) {
     para2.push(`${He} was in Taiwan for the February 28 Massacre of 1947. The event was forbidden in public memory for forty years. ${He} carried it privately in the years when no other carrying was possible.`)
+  } else if (f('geo_testigo_generation') && f('april_9_generation')) {
+    para2.push(`${He} was on Rustaveli Avenue on April 9, 1989 and on Rustaveli Avenue again in 2024 with a different kind of crowd carrying the EU flag. The avenue had seen everything in between. So had ${he}.`)
   } else if (f('april_9_generation')) {
     para2.push(`${He} was on Rustaveli Avenue on April 9, 1989, when Soviet troops turned on the crowd. The event became the founding memory of Georgian independence.`)
   } else if (f('normalization_generation') && f('charter_77_generation') && f('political_dissident')) {
@@ -583,8 +585,6 @@ export function generateEpitaph(state) {
     para2.push(`${He} lived both the JCPOA and its collapse — the delegations, the Boeing deal, the rial improving, and then May 2018, and the rial falling sixty percent in three months. The hope and the answer to the hope are the same story.`)
   } else if (f('irn_sanctions_generation') && f('irn_double_life')) {
     para2.push(`${He} navigated the sanctions economy and the Republic's private geography simultaneously — dollar prices and official rates, rooftop parties and street-facing silences. The arithmetic of both became second nature.`)
-  } else if (f('geo_testigo_generation') && f('april_9_generation')) {
-    para2.push(`${He} was on Rustaveli Avenue on April 9, 1989 and on Rustaveli Avenue again in 2024 with a different kind of crowd carrying the EU flag. The avenue had seen everything in between. So had ${he}.`)
   } else if (f('geo_1990s_generation') && f('georgian_war_2008')) {
     para2.push(`${He} survived the Georgian 1990s — the seventy-percent collapse, the four-hour power, the warlords — and then August 2008, five days, Russian tanks forty kilometres out. What survived the decade and survived the week is the country ${he} still lives in.`)
   } else if (f('geo_1990s_generation')) {

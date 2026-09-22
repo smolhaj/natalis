@@ -696,14 +696,6 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ft10_intellectual_target_midlife. Gates ft10_intellectual_target_late.',
   },
 
-  reformasi_generation: {
-    weight: 'moderate',
-    category: 'political',
-    description: 'Character witnessed or participated in Indonesia\'s democratic transition after Suharto\'s resignation (May 1998).',
-    intent: 'event',
-    notes: 'Set by id98_suharto_falls. Ribbon: the_reformasi_generation.',
-  },
-
   id98_reckoned: {
     weight: 'moderate',
     category: 'historical',
@@ -1094,14 +1086,6 @@ export const POLITICAL_FLAGS = {
     description: 'Grew up in occupied Japan (1946–52) or the immediate postwar years — chocolate from American soldiers, rubble becoming concrete, trains running through the ruins, the emperor\'s voice on the radio.',
     intent: 'year_texture',
     notes: 'Set by jpn_postwar_childhood.',
-  },
-
-  anpo_generation: {
-    weight: 'moderate',
-    category: 'political',
-    description: 'Was in Japan during the 1960 Anpo protests — hundreds of thousands around the Diet building opposing the US security treaty, the Zengakuren students, the democracy testing its limits.',
-    intent: 'year_texture',
-    notes: 'Set by jpn_anpo_protests (both choices).',
   },
 
   showa_generation: {
@@ -6872,22 +6856,6 @@ export const POLITICAL_FLAGS = {
     description: 'Refused to pay the PFDJ diaspora tax — refusal noted, family in Eritrea potentially facing consequences, the collector moving on to the next family.',
     intent: 'none',
     notes: 'Set by eri_diaspora_tax (refused choice).',
-  },
-
-  activist: {
-    weight: 'moderate',
-    category: 'political',
-    description: 'Engaged in organised civic or political activism — protests, campaigns, labour organising — beyond passive awareness.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by political awakening events across multiple regions.',
-  },
-
-  regime_self_censorship: {
-    weight: 'moderate',
-    category: 'political',
-    description: 'Learned to self-censor under authoritarian pressure — the habitual pause before speaking that becomes second nature.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set in authoritarian-context events. The learned silence that outlasts the regime.',
   },
 
   scholarship_recipient: {

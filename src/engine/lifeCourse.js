@@ -29,7 +29,6 @@
  * between anchor years, then modulated by the character's own circumstances.
  */
 
-import { CAREERS } from '../data/careers'
 import { PROPERTY_TYPES, localisePrice } from '../data/assets'
 import { generatePartnerProfile, getMarried, proposeMarriage, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'

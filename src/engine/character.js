@@ -1,6 +1,6 @@
 import { COUNTRIES } from '../data/countries'
 import { getCountryDisplayName } from '../utils/countryUtils'
-import { PLACES, pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
+import { pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PHASE_ENTRY_EVENTS } from '../data/events/lifecycle/events_phase_entries'

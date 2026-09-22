@@ -582,14 +582,6 @@ export const RELATIONSHIP_FLAGS = {
     notes: 'Cross-cutting. Set by friendship arc and small life events.',
   },
 
-  strong_marriage: {
-    weight: 'moderate',
-    category: 'relationship',
-    description: 'Enduring partnership that has weathered years and remains genuinely close — the marriage that worked.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by romance arc and long-marriage events.',
-  },
-
   estranged_family: {
     weight: 'moderate',
     category: 'relationship',

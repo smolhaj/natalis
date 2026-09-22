@@ -5,7 +5,7 @@ import { DESTINATIONS } from '../data/destinations'
 import { CRIMES, VIOLENT_TARGETS, HOMICIDE_METHODS, crimePayout } from '../data/crimes'
 import { COUNTRIES } from '../data/countries'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
-import { getAvailableCareers, dropOutOfSchool, BUSINESS_TYPES, getAvailableBusinessTypes, getPhase, buildPendingTrial } from '../engine/gameEngine'
+import { getAvailableCareers, getAvailableBusinessTypes, getPhase, buildPendingTrial } from '../engine/gameEngine'
 import { CAREERS } from '../data/careers'
 
 const TOP_CATEGORIES = [
@@ -1636,7 +1636,7 @@ export default function ActivitiesPanel({ onClose }) {
             <div className="bg-white rounded-xl border border-natalis-border p-4 mb-2 space-y-1">
               <div className="flex justify-between items-center">
                 <span className="text-xs text-natalis-muted font-semibold uppercase tracking-wider">Current Status</span>
-                <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ color: RS_COLORS[rs] ?? '#7d766a', backgroundColor: `${RS_COLORS[rs]}18` ?? '#7d766a18' }}>
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ color: RS_COLORS[rs] ?? '#7d766a', backgroundColor: `${RS_COLORS[rs] ?? '#7d766a'}18` }}>
                   {RS_LABELS[rs] ?? rs}
                 </span>
               </div>

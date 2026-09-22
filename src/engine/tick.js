@@ -1,4 +1,3 @@
-import { COUNTRIES } from '../data/countries'
 import { EVENTS, EVENTS_BY_PHASE, classifyEvent } from '../data/events'
 import { WORLD_EVENTS } from '../data/worldEvents'
 import { RIBBONS } from '../data/ribbons'

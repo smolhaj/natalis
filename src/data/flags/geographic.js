@@ -13,22 +13,6 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Has extensive year texture (yearsAbroad gates), integration arc, memory layer. Well covered.',
   },
 
-  refugee: {
-    weight: 'major',
-    category: 'displacement',
-    description: 'Character fled their country as a refugee, with that legal/identity status.',
-    intent: 'both',
-    notes: 'Has resettlement events and ribbon. No year texture for the decade after resettlement.',
-  },
-
-  displaced: {
-    weight: 'major',
-    category: 'displacement',
-    description: 'Character was internally displaced — moved within their country by conflict or disaster.',
-    intent: 'year_texture',
-    notes: 'Clear orphan. Set in conflict/disaster events, never specifically followed up.',
-  },
-
   climate_displaced: {
     weight: 'major',
     category: 'displacement',
@@ -67,14 +51,6 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Character lived through a mass departure from their community or country.',
     intent: 'event',
     notes: 'events_stayed.js and followthrough_6 cover this.',
-  },
-
-  internally_displaced: {
-    weight: 'moderate',
-    category: 'displacement',
-    description: 'Character was forced to move within their country\'s borders.',
-    intent: 'year_texture',
-    notes: 'Variant of displaced; both need year texture.',
   },
 
   white_emigrant_sa: {
@@ -1563,8 +1539,8 @@ export const GEOGRAPHIC_FLAGS = {
     weight: 'moderate',
     category: 'conflict',
     description: 'Witnessed the Rainbow Warrior bombing in Auckland harbour — the specific education of state terrorism conducted by a nominal ally, and the world shrugging.',
-    intent: 'event', notes: 'Follow-through: ft46_nz_rainbow_warrior_late.',
-    notes: 'Set by nz_rainbow_warrior_1985. New Zealand only.',
+    intent: 'event',
+    notes: 'Set by nz_rainbow_warrior_1985. New Zealand only. Follow-through: ft46_nz_rainbow_warrior_late.',
   },
 
   nz_left_for_australia: {

@@ -30,6 +30,16 @@ jobs:
       - name: Build
         run: npm run build
 
+      # There was no linter until September 2026, and two of that pass's defects
+      # were exactly what one reports for free: a variable computed from an OR
+      # and never used, and a re-export that left a name unbound and killed 180
+      # of 200 simulated lives while all 224 unit tests passed. The config is
+      # narrow on purpose — the rules that catch a real bug at error level and
+      # nothing stylistic — so this step failing means something is actually
+      # wrong. Inherited dead code reports as a warning and does not gate.
+      - name: Lint
+        run: npm run lint
+
       # Content integrity: every registered flag must be set somewhere and
       # consumed in the way its declared intent promises.
       #

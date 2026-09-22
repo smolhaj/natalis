@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useGameStore } from '../store/gameStore'
-import { COUNTRIES } from '../data/countries'
 import StatBar from './StatBar'
 
 const WEALTH_LABELS = ['Destitute', 'Poor', 'Working Class', 'Middle Class', 'Wealthy']

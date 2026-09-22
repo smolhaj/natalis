@@ -5,7 +5,7 @@ import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
 import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, formatParentIncome, getPhase } from '../engine/gameEngine'
-import { PLACES, getPlacesForCountry, getRelocationCost } from '../data/places'
+import { getPlacesForCountry, getRelocationCost } from '../data/places'
 import ActivitiesPanel from './ActivitiesPanel'
 
 const PHASE_CHAPTER_LABELS = {

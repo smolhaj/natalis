@@ -165,9 +165,9 @@ function* textureCandidates(state, opts = {}) {
   }
   if (F.has('partner_died') && !partner) {
     const name = state.exPartners?.slice(-1)[0]?.name
-    yield [T.urgent, name]
+    yield [T.urgent, name
       ? pick([`You still reach for ${name} sometimes. The habit hasn't broken yet.`, `${name} is still everywhere in the house.`])
-      : pick(['Some mornings the quiet is a different kind of quiet.', 'The bed is the same size. You are still adjusting to that.'])
+      : pick(['Some mornings the quiet is a different kind of quiet.', 'The bed is the same size. You are still adjusting to that.'])]
   }
   if (yearsSincePartnerDeath !== null && yearsSincePartnerDeath >= 1 && yearsSincePartnerDeath <= 3) {
     if (yearsSincePartnerDeath === 1) yield [T.urgent, 'There are still whole days that belong to the grief. Fewer than before.']
@@ -8978,9 +8978,9 @@ function* textureCandidates(state, opts = {}) {
       : 'The Warren Commission closed the official case. The House Select Committee on Assassinations in 1979 found "probable conspiracy." The files remain partially classified. The official account and the classified files are in the same government.',
   ])]
   if (F.has('jfk_assassination_generation') && F.has('king_assassination_generation') && Math.random() < 0.2) {
-    yield [T.anchored, phase === 'late_life']
+    yield [T.anchored, phase === 'late_life'
       ? 'You have carried 1963 and 1968 for sixty years — both men shot, both forty-something, both the specific version of something that was not yet finished. The unfinishedness is what stays. What they were each about to become is not knowable, which is different from not mattering.'
-      : 'November 22, 1963 and April 4, 1968: the same decade, the same kind of shooting, the same structure of a promise interrupted. You were alive for both. The accumulation is its own political education.'
+      : 'November 22, 1963 and April 4, 1968: the same decade, the same kind of shooting, the same structure of a promise interrupted. You were alive for both. The accumulation is its own political education.']
   }
   if (F.has('vietnam_went') && F.has('civil_rights_generation') && Math.random() < 0.18) yield [T.anchored, pick([
     'You went to Vietnam — called when called — and came back to a country that was arguing about whether the men who looked like you should have full rights in it. The draft and the movement were happening simultaneously. You were in both.',
@@ -15125,6 +15125,15 @@ function* textureCandidates(state, opts = {}) {
 
   if (F.has('adr_si_erased_resolved') && Math.random() < 0.18) yield [T.anchored,
     'Strasbourg ruled, twenty years late, for people some of whom had died waiting. The amounts were small. The finding was not.']
+
+  if (F.has('nomadic_rebuilt') && Math.random() < 0.2) yield [T.anchored, pick([
+    'A third of what it was, and four years to get there. You count in bad winters survivable now, and the number is one.',
+    'Everyone in the valley is doing the same sum and nobody says the answer out loud.',
+  ])]
+  if (F.has('nomadic_left_the_steppe') && Math.random() < 0.22) yield [T.anchored, pick([
+    'A fence, a stove, and a water kiosk four hundred metres away. The plot is yours, which the steppe never was and never needed to be.',
+    'Your children cannot read a sky. It is not a thing you can teach in a ger district and it is the thing you knew best.',
+  ])]
 
   // ─── SEASONAL / WEATHER TEXTURE ──────────────────────────────────────────────
   // Atmospheric only — no stat effects, no flags. Gate on country + season.

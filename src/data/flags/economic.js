@@ -814,22 +814,6 @@ export const ECONOMIC_FLAGS = {
     notes: 'Cross-cutting. Set by automation, Rust Belt, career, and poverty events.',
   },
 
-  mobile_money_user: {
-    weight: 'minor',
-    category: 'economics',
-    description: 'Accesses financial services through mobile money — the bank in a pocket that skipped the branch-era entirely.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by Kenya M-Pesa, Tajik remittance, and informal economy events.',
-  },
-
-  food_insecurity: {
-    weight: 'major',
-    category: 'economics',
-    description: 'Lived with genuine food insecurity — where the question of whether there will be enough to eat was not rhetorical.',
-    intent: 'year_texture',
-    notes: 'Cross-cutting. Set by famine, poverty, and subsistence events. Already in buildYearTexture.',
-  },
-
   poverty_childhood: {
     weight: 'major',
     category: 'economic',

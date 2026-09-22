@@ -1,10 +1,7 @@
 import { COUNTRIES } from '../data/countries'
 import { DESTINATIONS } from '../data/destinations'
-import { CAREERS } from '../data/careers'
 import { ACTIVITIES, localCost } from '../data/activities'
-import { CRIMES } from '../data/crimes'
 import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
-import { ILLNESSES } from '../data/illnesses'
 import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 import {
