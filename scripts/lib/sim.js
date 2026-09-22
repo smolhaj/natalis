@@ -118,6 +118,9 @@ export async function runSimulation({
   // against the world it claimed. Off by default because it holds every
   // sentence of the run in memory.
   collectLines = false,
+  // Opt-in: keep each life's final state, for the death-screen checks. Same
+  // reason it is off by default.
+  keepFinalStates = false,
 } = {}) {
   stubStorage()
   // The engine is under active change; a module that will not even load should
@@ -156,6 +159,7 @@ export async function runSimulation({
   // text → { year, country } for the EARLIEST year the line printed, which is
   // the firing most likely to be the anachronism.
   const linesWithContext = collectLines ? new Map() : null
+  const finalStates = keepFinalStates ? [] : null
   const otherFiles = new Map()
   const perConfig = []
 
@@ -264,6 +268,7 @@ export async function runSimulation({
           }
         }
       }
+      if (finalStates) finalStates.push(s)
       rec.deaths.push(s.age)
       if (s.age < 5) rec.under5++
       else rec.survivedChildhood.push(s.age)
@@ -285,7 +290,7 @@ export async function runSimulation({
   return {
     fatal: null,
     mode, seedLabel, configs: perConfig, totals, byBucket, countriesSeen, unlocated, otherFiles,
-    linesWithContext,
+    linesWithContext, finalStates,
     share: {
       contemplative: pct('contemplative'),
       anchored: pct('anchored'),
