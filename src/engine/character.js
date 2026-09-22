@@ -4,6 +4,7 @@ import { pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood } from '../
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PHASE_ENTRY_EVENTS } from '../data/events/lifecycle/events_phase_entries'
+import { religionFor } from '../data/identity.js'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
 // Extends Set with Array.prototype.includes as an alias for has(), so existing
@@ -182,20 +183,23 @@ export function createCharacter(overrides = {}) {
   const wealth = clamp(wealthTier * 18 + randomBetween(-4, 4), 0, 100)
   const initialStats = { happiness, health, smarts, looks, charisma, wealth }
 
-  // Assign religion
-  const religion = overrides.religion ?? (() => {
-    const weights = country.religionWeights
-    if (!weights) return 'secular'
-    return weightedRandom(weights)
-  })()
-
-  // Assign ethnicity
+  // Ethnicity first, then religion CONDITIONED on it. These were two
+  // independent draws, which produced people who cannot exist: Lhotshampa who
+  // are Buddhist (they are Bhutan's Hindu population, which is the whole reason
+  // for the 1990 expulsions), Bosniaks who are Catholic, Dalits who are Muslim,
+  // Copts who are Sunni. Identity-gated content is a large share of the corpus
+  // and every one of those guards was silently failing for part of its own
+  // population. See src/data/identity.js — it speaks only for the groups where
+  // the two facts are genuinely entangled and defers to the country marginal
+  // for everyone else.
   const ethnicity = (() => {
     const groups = country.ethnicGroups
     if (!groups || groups.length === 0) return 'local'
     const group = weightedRandomFromArray(groups, 'share')
     return group.id
   })()
+
+  const religion = overrides.religion ?? religionFor(ethnicity, country, weightedRandom)
 
   // Rural/urban from the country's historical urbanisation series
   const adjustedUrbanRate = urbanChanceFor(country, birthYear)
