@@ -2936,7 +2936,9 @@ export function tick(state) {
       // `npm run sim` could not see a single one of them. It reported 0.63% for
       // that run. `isTexture` both makes them visible to the instrument and
       // routes them through the same exhaustion rule as every other prose layer.
-      if (harvestFactor < 0.7) s.log = [...s.log, { age: s.age, isKey: false, isTexture: true, text: harvestLine(s, [
+      // Not every year needs a note about it. Firing on all of them was both
+      // repetitive and mechanical: forty years of commentary on the weather.
+      if (harvestFactor < 0.7 && chance(0.55)) s.log = [...s.log, { age: s.age, isKey: false, isTexture: true, text: harvestLine(s, [
         'A bad year for the harvest. You earn significantly less than expected.',
         'The rains were wrong — too late, or too much at once — and the yield shows it.',
         'A poor year. You will be eating into what was put by, and you know exactly how far it goes.',
@@ -2946,7 +2948,7 @@ export function tick(state) {
         'What comes in fills less than half the store. You stand in the doorway doing the division.',
         'The price is good this year, which is no use to anybody who has nothing to sell.',
       ]) }]
-      else if (harvestFactor > 1.4) s.log = [...s.log, { age: s.age, isKey: false, isTexture: true, text: harvestLine(s, [
+      else if (harvestFactor > 1.4 && chance(0.45)) s.log = [...s.log, { age: s.age, isKey: false, isTexture: true, text: harvestLine(s, [
         'A good harvest. The yield is better than most years.',
         'The rains came when they were supposed to and stopped when they were supposed to. It is not always like this.',
         'More than the store will hold. There is a decision to make about the surplus and it is a good decision to have.',

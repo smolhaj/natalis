@@ -31,6 +31,7 @@
 
 import { PROPERTY_TYPES, localisePrice } from '../data/assets'
 import { inEraMoney } from '../data/economy.js'
+import { institutionExists } from '../data/history.js'
 import { generatePartnerProfile, getMarried, proposeMarriage, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'
 
@@ -646,11 +647,21 @@ function courseHousing(s) {
     flags: [...new Set([...s.flags, 'homeowner', 'home_without_a_deed'])],
     mem: { ...s.mem, lcHousingSettled: true, lcHomeYear: s.currentYear },
   }
+  // Two of these assume an institution that a handful of country-years did not
+  // have: money, and a letter from a functioning post and land registry.
+  // Democratic Kampuchea abolished both, and printed "The roof goes on in
+  // stages, as the money arrives" into 1977.
+  const hasMoney = institutionExists(c?.name, s.currentYear, 'money')
+  const hasPost = institutionExists(c?.name, s.currentYear, 'post')
   return log(s, pick([
     'The house is finished in the sense that you live in it. The upper floor has been waiting for its windows for two years and will wait longer, and everyone builds this way, so nobody remarks on it.',
     'Nobody signs anything. The land is where the family has been, and the arrangement is understood by everyone who needs to understand it, which works perfectly until the day it does not.',
-    'The roof goes on in stages, as the money arrives. You can date the last four years by looking up at it.',
-    'The flat was allocated, and then years later a letter arrived saying it was simply yours now. You read it twice. Nobody had asked you whether you wanted to own anything.',
+    hasMoney
+      ? 'The roof goes on in stages, as the money arrives. You can date the last four years by looking up at it.'
+      : 'The roof goes on in stages, as the materials turn up. You can date the last four years by looking up at it.',
+    hasPost
+      ? 'The flat was allocated, and then years later a letter arrived saying it was simply yours now. You read it twice. Nobody had asked you whether you wanted to own anything.'
+      : 'You were put in it. Whether it is yours is not a question anybody is currently answering, and asking would be the wrong thing to do.',
   ]), true)
 }
 

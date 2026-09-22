@@ -7,6 +7,8 @@
 // "Rural Java (village)". Printed straight into a sentence it reads as a data
 // row rather than as somewhere a person lives. Strip the parenthetical, and
 // strip the "Rural " prefix, which is a classification and not a name either.
+import { pickFrom } from '../../../utils/random'
+
 const placeName = (G, fallback = 'here') => {
   const raw = G.place?.name
   if (!raw) return fallback
@@ -146,7 +148,14 @@ export const PLACES_EVENTS = [
     text: (G) => {
       const nbr = neighbourhoodName(G)
       const subject = nbr ? `${nbr} has` : 'Where you live has'
-      return `${subject} a logic that outsiders miss. Who owns which block of pavement. Where the water pressure is best in the morning. Which family has the generator when the power cuts. You know these things the way you know your own face. This knowledge is not nothing.`
+      // `cooldown: 12` means this is meant to recur across a life, and with one
+      // sentence it recurred as the same sentence — four times, verbatim.
+      return pickFrom([
+        `${subject} a logic that outsiders miss. Who owns which block of pavement. Where the water pressure is best in the morning. Which family has the generator when the power cuts. You know these things the way you know your own face. This knowledge is not nothing.`,
+        `${subject} rules nobody wrote down. Which lane floods first. Whose roof you may cross and whose you may not. What you say to the man who collects and what you do not. You learned all of it without anyone teaching you and you could not teach it either.`,
+        `${subject} an order to it that looks like no order at all from the road. Everybody knows whose is whose. The one time somebody built over the line it was resolved in an afternoon, by people, without anybody going anywhere near an office.`,
+        `${subject} changed again this year — a wall where there was a path, a shop where there was a wall — and you absorbed it without noticing, the way you absorb a face getting older.`,
+      ])
     },
     choices: null,
     effect: (p) => { p.e += 2; p.s += 2 },

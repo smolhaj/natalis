@@ -163,7 +163,21 @@ function* textureCandidates(state, opts = {}) {
 
   if (F.has('partner_died') && mem?.griefPartnerFirst && !mem?.griefPartnerDating) {
     const name = state.exPartners?.slice(-1)[0]?.name
-    yield [T.urgent, name ? `${name}'s absence is still present in everything.` : 'The house is still the wrong size.']
+    // One sentence for a grief that runs for years, so a life read "The house is
+    // still the wrong size" four times. Grief is exempt from the exhaustion
+    // rule because a feeling that recurs is supposed to recur — which is the
+    // argument for MORE ways to say it, not for one.
+    yield [T.urgent, name ? [
+      `${name}'s absence is still present in everything.`,
+      `You have started talking to ${name} in the car, which you are aware of and are not going to stop doing.`,
+      `The house is still the wrong size. You have moved nothing of ${name}'s and you are not ready to be asked about it.`,
+      `Somebody says ${name}'s name without thinking and the whole room checks your face. You wish they would not.`,
+      `You reach the end of a day and realise you did not think about ${name} once, and the relief and the guilt arrive together and in that order.`,
+    ] : [
+      'The house is still the wrong size.',
+      'You keep setting out two of things. It is three months before you stop and a year before you stop noticing that you have stopped.',
+      'There is a particular hour of the evening that is worse than the rest of it, and it is always the same hour.',
+    ]]
   }
   if (F.has('partner_died') && !partner) {
     const name = state.exPartners?.slice(-1)[0]?.name
@@ -401,8 +415,25 @@ function* textureCandidates(state, opts = {}) {
       'The clarity that the medication produces is a reminder of how much the fog costs. Both are data.',
     ])]
   }
-  if (mh.condition && !mh.therapy && !mh.medicating) {
-    yield [T.urgent, 'Something is off. You are managing, which is not the same as being fine.']
+  if (mh.condition && !mh.therapy && !mh.medicating && Math.random() < 0.6) {
+    // The line prose.js was written about: it printed fourteen times to one
+    // character, and after the exhaustion rule it still printed seven, because
+    // it is a single sentence in the `urgent` tier, which wins most years, and
+    // grief-register lines are deliberately exempt from exhaustion. An
+    // untreated condition running for a decade IS supposed to recur. The
+    // argument for that is more ways to say it, not one.
+    yield [T.urgent, [
+      'Something is off. You are managing, which is not the same as being fine.',
+      'You have got good at the front end of a conversation and you run out somewhere around the fourth minute.',
+      'The mornings are the tax. By about eleven you are a person again, and by then a third of the day has gone.',
+      'Nobody has asked, which is either tact or the thing working, and you cannot tell which and have stopped trying to.',
+      'You are aware that there is a version of this that people get help for. You are also aware that you are not going to, this year.',
+      'It is not every day. It is enough days that you have started planning around which ones they might be.',
+      'You do the things. The doing is correct and the something underneath the doing is not, and only one of those is visible.',
+      'A small thing goes wrong and the size of your reaction to it tells you something you already knew.',
+      'You are tired in a way that sleep does not touch, and you have had this conversation with yourself before, and it ended here.',
+      'Somebody says you seem well. You say thank you. Both of you are telling the truth about different things.',
+    ]]
   }
   // Managed mental health — the texture of living with it, not through it
   if (mh.condition && mh.therapy && !mh.medicating && career && Math.random() < 0.35) {
@@ -10307,12 +10338,23 @@ function* textureCandidates(state, opts = {}) {
       : 'You watched the institutions be occupied and damaged and then you watched the police arrive. The democracy survived January 8. The question of what the people who entered those buildings believe, and what they will try next, is the question the survival leaves open.',
   ])]
 
-  if (F.has('bra_carnaval_generation') && Math.random() < 0.2) yield [T.anchored, pick([
-    'The escola de samba starts rehearsals in October. By February you know the samba-enredo by heart — the story of the quilombo or the orixá or the Amazon that the escola chose this year. When the escola enters the Sambódromo the people who made it are not in the television coverage of the people who made it.',
-    phase === 'late_life'
-      ? 'The bloco de rua, the truck of instruments, the crowd that fills whatever street it finds. The Sambódromo is the television version. The morro version is still there behind it, older and larger and not for export.'
-      : 'The escolas do not emerge fully formed in February. They are made across months in the quadra, in November fittings, in December drumming sessions. What appears in the Sambódromo is the end of something the television cameras only catch the last part of.',
-  ])]
+  if (F.has('bra_carnaval_generation') && Math.random() < 0.2) {
+    // The Sambódromo opened in March 1984. Before it the parade came down an
+    // avenue, and the same sentence about who does not get named still holds.
+    const sambodromo = currentYear >= 1984
+    yield [T.anchored, pick([
+      sambodromo
+        ? 'The escola de samba starts rehearsals in October. By February you know the samba-enredo by heart — the story of the quilombo or the orixá or the Amazon that the escola chose this year. When the escola enters the Sambódromo the people who made it are not in the television coverage of the people who made it.'
+        : 'The escola de samba starts rehearsals in October. By February you know the samba-enredo by heart — the story of the quilombo or the orixá or the Amazon that the escola chose this year. When the escola comes down the avenue the people who made it are not in anybody\'s account of who made it.',
+      phase === 'late_life'
+        ? (sambodromo
+          ? 'The bloco de rua, the truck of instruments, the crowd that fills whatever street it finds. The Sambódromo is the television version. The morro version is still there behind it, older and larger and not for export.'
+          : 'The bloco de rua, the truck of instruments, the crowd that fills whatever street it finds. The avenue is the version that gets photographed. The morro version is still there behind it, older and larger and not for export.')
+        : (sambodromo
+          ? 'The escolas do not emerge fully formed in February. They are made across months in the quadra, in November fittings, in December drumming sessions. What appears in the Sambódromo is the end of something the television cameras only catch the last part of.'
+          : 'The escolas do not emerge fully formed in February. They are made across months in the quadra, in November fittings, in December drumming sessions. What comes down the avenue is the end of something almost nobody outside the hill watched being made.'),
+    ])]
+  }
 
   // ─── ARGENTINA DEPTH TEXTURE ─────────────────────────────────────────────────
   if (F.has('arg_peronist_generation') && Math.random() < 0.25) yield [T.anchored, pick([

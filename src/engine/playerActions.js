@@ -2,7 +2,7 @@ import { COUNTRIES } from '../data/countries'
 import { DESTINATIONS } from '../data/destinations'
 import { ACTIVITIES, localCost } from '../data/activities'
 import { inEraMoney } from '../data/economy.js'
-import { preferUnsaid } from './prose.js'
+import { preferUnsaid, rememberSaid } from './prose.js'
 import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
 import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
@@ -198,9 +198,12 @@ export function tryForChild(state) {
       // A couple who already have a child are not inside the same silence.
       ? years <= 2
         ? ["You try for another. It doesn't happen this year.",
-           'Nothing this year. There is already a child asleep down the hall, which changes the shape of it without changing it.']
+           'Nothing this year. There is already a child asleep down the hall, which changes the shape of it without changing it.',
+           'Not this year. You are not worried, and you notice that you have had to decide not to be.']
         : ['You had assumed it would work the way it worked before. It has not.',
-           'The second one is not arriving. Nobody offers you the sympathy they offered the people who had none, and you do not ask for it.']
+           'The second one is not arriving. Nobody offers you the sympathy they offered the people who had none, and you do not ask for it.',
+           'You have started to think of the one you have as the only one, and then to take the thought back, and then to have it again.',
+           'Somebody asks when the next one is coming and you give the light answer, and you are getting better at the light answer.']
       : years === 1
         ? ["You try for a child — it doesn't happen this year.",
            'Nothing yet. Neither of you thinks anything of it.']
@@ -248,21 +251,35 @@ export function tryForChild(state) {
           'Another one. Your mother had more than this and said less about it, and you are aware of both facts at once.',
           'You are pregnant. Nobody in the household is surprised, including you.',
         ]
+  // A life can hold six of these and there were three sentences for it, so one
+  // family heard "You find yourself counting rooms" four times. "You are told
+  // in a kitchen, or a corridor" is also the game declining to say which.
   const theirs = parity === 0
     ? [
-        `${state.partner.name} is pregnant. You are told in a kitchen, or a corridor, and you do not know what to do with your hands.`,
+        `${state.partner.name} is pregnant. You are told in the kitchen, standing up, and you do not know what to do with your hands.`,
         `${state.partner.name} is pregnant. Something in the room reorganises itself and you are standing in the middle of it.`,
+        `${state.partner.name} tells you and then watches your face, which you understand afterwards was the whole of the test.`,
+        `${state.partner.name} is pregnant. You say the wrong thing first and the right thing about four seconds later, and both of them get remembered.`,
       ]
     : [
         `${state.partner.name} is pregnant again. You are better at the news this time and slightly worse at the arithmetic.`,
         `${state.partner.name} tells you. You have been here before, which does not make it ordinary, only familiar.`,
         `${state.partner.name} is expecting. You find yourself counting rooms.`,
+        `${state.partner.name} is pregnant again and tells you in the middle of something else, which is how the second and third ones arrive.`,
+        `${state.partner.name} is expecting. Neither of you says anything for a moment and then one of you laughs, and it is not entirely a happy laugh, and that is fine.`,
+        `${state.partner.name} is pregnant again. The older one is in the next room and does not know yet, and for one day you are the only two people who do.`,
       ]
+  // A life can hold six pregnancies against six sentences, so drawing blind gave
+  // one family the same announcement four times.
+  const announcement = pickFrom(preferUnsaid(state, bearerIsPlayer ? own : theirs))
   return {
     ...state,
     flags: [...new Set(flags)],
-    mem: { ...(state.mem ?? {}), pregnancyYear: state.age, pendingChild: { name: childName, gender: cGender, traits } },
-    log: [...state.log, { age: state.age, text: pickFrom(bearerIsPlayer ? own : theirs), isKey: true }],
+    mem: rememberSaid(
+      { ...(state.mem ?? {}), pregnancyYear: state.age, pendingChild: { name: childName, gender: cGender, traits } },
+      announcement,
+    ),
+    log: [...state.log, { age: state.age, text: announcement, isKey: true }],
   }
 }
 
