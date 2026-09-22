@@ -1,4 +1,4 @@
-import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime } from './character'
+import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime, livingRuralUrban } from './character'
 import { pickFrom } from '../utils/random'
 import { wasSovietRepublic, INDEPENDENCE_YEAR } from '../data/history.js'
 import { preferUnsaid, hasSaid } from './prose'
@@ -14076,7 +14076,7 @@ function* textureCandidates(state, opts = {}) {
   if (phase === 'early_childhood') {
     const character = state.character
     const arch = character?.country?.archetype ?? 'developing_urban'
-    const ruralUrban = character?.ruralUrban ?? 'urban'
+    const ruralUrban = livingRuralUrban(state)
     const wealth = state.stats?.wealth ?? 50
     const cr = character?.country?.conflictRisk ?? 0
 
@@ -14330,7 +14330,7 @@ function* textureCandidates(state, opts = {}) {
       // are true of one part of this 38-country archetype and not the rest now
       // name the countries they are true of, and the countryside gets its own
       // decades rather than the city's.
-      const inTown = (state.character?.ruralUrban ?? 'urban') !== 'rural'
+      const inTown = livingRuralUrban(state) !== 'rural'
       // Cities that really are the size of a small country, and the two places
       // whose night shift is answering another continent's telephones.
       const MEGACITY = ['India', 'China', 'Brazil', 'Mexico', 'Indonesia', 'Philippines', 'Egypt', 'Turkey', 'Argentina', 'Colombia', 'Thailand', 'Peru', 'Vietnam']
@@ -14917,6 +14917,35 @@ function* textureCandidates(state, opts = {}) {
     phase === 'late_life'
       ? 'It was paid off eventually. You could say which year. You could also say what it cost in the years before that, and the two are not the same accounting.'
       : 'You do the arithmetic about once a month, at night, and it comes out the same every time, and you do it again the following month.',
+  ])]
+
+  if (F.has('lgbtq_life_not_lived') && Math.random() < 0.12) yield [T.earned, pick([
+    'Somebody at a table is describing a marriage in terms you recognise and do not have. You are entirely pleasant about it. You are also aware of exactly which sentence you did not say.',
+    phase === 'late_life'
+      ? 'The forty years happened. They were not a waiting room and they were not a lie, and you have had to build the third description yourself because nobody else was going to write one for a life like this.'
+      : 'It is not an ache. It is closer to a room you walk past in your own house, and some weeks you do not notice it and some weeks you stop outside the door.',
+  ])]
+
+  if (F.has('lgbtq_one_person_knows') && Math.random() < 0.10) yield [T.earned, pick([
+    'She never brings it up and she has never once forgotten it either, and the two of you have a way of looking at each other across a room that nobody else in the room can read.',
+    phase === 'late_life'
+      ? 'She died first. The fact went with her, back into the one head it started in, and you find that you mind that more than you expected to.'
+      : 'One person knowing turns out to be the whole difference between a secret and a fact.',
+  ])]
+
+  if (F.has('lgbtq_outlived_the_law') && Math.random() < 0.11) yield [T.earned, pick([
+    'The young ones say it the way you would say what you had for lunch. You are not envious of them, which surprises you. What you feel is closer to vertigo.',
+    'You do the arithmetic sometimes about which decade you were born in, and then you stop doing it, because it does not resolve and never will.',
+  ])]
+
+  if (F.has('lgbtq_said_it_late') && Math.random() < 0.11) yield [T.earned, pick([
+    'They treat you exactly the same and they are slightly more careful with you, and both of those are what you asked for without knowing you were asking.',
+    'One of them mentions it in passing, a year later, as an ordinary fact about you. You think about that sentence for the rest of the day.',
+  ])]
+
+  if (F.has('lgbtq_kept_it') && Math.random() < 0.11) yield [T.earned, pick([
+    'There is nobody left to tell. That is not tragic; it is just the arithmetic of having waited, and you made the arithmetic yourself.',
+    'You go into the room sometimes. It is quiet in there and it is entirely yours, and by now that is most of what it is for.',
   ])]
 
   if (F.has('partition_stayed_behind') && Math.random() < 0.13) yield [T.anchored, pick([

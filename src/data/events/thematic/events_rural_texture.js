@@ -233,6 +233,15 @@ export const RURAL_TEXTURE_EVENTS = [
     cooldown: 6,
     when: (G) =>
       G.place?.type === 'rural' &&
+      // Being in a rural place is not the same as farming it. "The sorghum is
+      // half-height. The family calculates which child will eat less" fired
+      // for a Superstar recording artist, an Agency Director and a day
+      // labourer, none of whom own a field.
+      (['agriculture', 'farmer'].includes(G.career?.field) ||
+        !G.career ||
+        G.flags.includes('subsistence_farming') ||
+        G.flags.includes('family_farm') ||
+        G.flags.includes('smallholder')) &&
       HARVEST_COUNTRIES.has(G.currentCountry?.name) &&
       !G.mem?.droughtSurvived,
     text: (G) => {

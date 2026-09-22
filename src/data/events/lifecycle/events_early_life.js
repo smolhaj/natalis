@@ -35,6 +35,7 @@ function _goToTheCity(p) {
 
 
 import { hasTech } from '../../technology.js'
+import { pickFrom } from '../../../utils/random'
 
 export const EARLY_LIFE_EVENTS = [
 
@@ -674,7 +675,13 @@ export const EARLY_LIFE_EVENTS = [
       const regime = G.regime
       const arch = G.character.country.archetype
       if (['military_dictatorship', 'single_party_authoritarian', 'single_party_communist'].includes(regime)) {
-        return 'Something happens — a neighbour is taken, or a professor disappears from the schedule, or a book is removed from the library without explanation — and for the first time the system you were born into is visible to you as a system. Not a backdrop. An arrangement that someone made and that benefits someone. You cannot go back to not seeing it.'
+        // One thing that happened, not a menu of three things that might have.
+        return `${pickFrom([
+          'A neighbour is taken, at an hour chosen so that the street would see it and not be able to say it saw it',
+          'A name comes off the schedule between one term and the next and nobody in the department mentions the gap where the lecture was',
+          'A book you had out last year is not in the catalogue, and the librarian looks at the screen slightly too long before saying so',
+          'A programme is interrupted and replaced by music, and everyone in the room carries on exactly as they were, which tells you more than the interruption did',
+        ])} — and for the first time the system you were born into is visible to you as a system. Not a backdrop. An arrangement that someone made and that benefits someone. You cannot go back to not seeing it.`
       }
       if (['developing_unstable', 'conflict_zone'].includes(arch)) {
         return 'A news story, or a conversation, or the specific way an election result is announced, makes something clear that you had been circling for years. The world has an arrangement. The arrangement is not accidental. People have interests. Some interests are yours and some are not. You are twenty-one or twenty-two and this is the year the politics becomes personal.'

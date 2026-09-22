@@ -132,8 +132,17 @@ describe('engine balance', () => {
         // passed 33.
         expect(m, `${c} median death age (survived childhood)`).toBeGreaterThan(24)
         expect(m, `${c} median death age (survived childhood)`).toBeLessThan(97)
-        expect(Math.max(...r.deaths), `${c} oldest life`).toBeGreaterThan(64)
+        // The MAX of ~32 survivors is the least stable statistic available, and
+        // a floor of 64 on it flaked: one run gave a Nigerian oldest of 63 and
+        // failed, and a direct measurement of the same code at n=150 gave 82.
+        // The bound exists to catch the original defect — median 8, nobody past
+        // 33 — so it keeps that job with room for the noise it is taken from.
+        expect(Math.max(...r.deaths), `${c} oldest life`).toBeGreaterThan(50)
       }
+      // The stable version of the same claim, pooled over every country and
+      // every life in the run: the upper tail has to exist somewhere.
+      const sorted = [...pooled].sort((a, b) => a - b)
+      expect(sorted[Math.floor(sorted.length * 0.9)], 'pooled p90 death age').toBeGreaterThan(70)
     }, 300000)
   }
 

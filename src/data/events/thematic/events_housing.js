@@ -174,6 +174,12 @@ export const HOUSING_EVENTS = [
       ['wealthy_west', 'wealthy_east'].includes(G.archetype) &&
       G.age >= 52 &&
       !G.flags.has('homeowner') &&
+      // "The question of buying stopped being a plan being deferred and became
+      // a thing that was not going to happen" fired for a character holding
+      // 424,860 who had been told at 40 "You have more than you will spend" —
+      // and who bought a house nine years later. It is an event about not
+      // having the deposit.
+      G.money < 60000 &&
       !G.mem?.housingNeverOwned,
     text: 'The rent goes up again by a number that is described in the letter as modest. You have lived here eleven years. Somewhere in your forties the question of buying stopped being a plan being deferred and became a thing that was not going to happen, and there was no particular day on which that changed, which is why you cannot point to the mistake.',
     choices: [

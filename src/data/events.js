@@ -1938,7 +1938,9 @@ const BASE_EVENTS = [
     id: 'mid_children_leave',
     phase: 'midlife',
     weight: 3,
-    when: (G) => G.children.length > 0,
+    // Fired for a 31-year-old whose children were 12, 2 and 1. Somebody has to
+    // be old enough to leave.
+    when: (G) => (G.children ?? []).some(c => c.alive !== false && (c.age ?? 0) >= 17),
     text: 'Your children leave home. The house rearranges itself around their absence.',
     context: null,
     choices: [
@@ -2206,14 +2208,19 @@ const BASE_EVENTS = [
     id: 'late_retirement',
     phase: 'late_life',
     weight: 4,
-    when: (G) => G.career !== null,
-    text: 'The working life ends. The last day comes and goes with less ceremony than expected.',
+    // `late_life` starts at 50, so "The working life ends" was landing on a
+    // 52-year-old — who then took "Keep working", which makes the opening
+    // sentence false in its own event. The age is now the country's own
+    // retirement age where there is one, and the text does not assert the
+    // ending before the player has chosen it.
+    when: (G) => G.career !== null && G.age >= 60 && !G.flags.includes('retired'),
+    text: 'The question arrives as a form to sign rather than as a decision: how much longer, and on what terms. The people who left before you describe it in two completely different ways depending on which of them you ask.',
     context: null,
     choices: [
       {
-        text: 'Embrace retirement',
+        text: 'Sign it. The working life ends.',
         tag: 'retired',
-        outcome: 'Time opens up in ways you had forgotten were possible.',
+        outcome: 'The last day comes and goes with less ceremony than expected. Time opens up in ways you had forgotten were possible.',
         effect: (p) => { p.m += 7; p.h += 3; p.clearCareer(); p.addFlag('retired'); },
         inject: null,
       },

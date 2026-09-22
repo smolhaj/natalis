@@ -34,6 +34,7 @@ import { inEraMoney } from '../data/economy.js'
 import { institutionExists } from '../data/history.js'
 import { generatePartnerProfile, getMarried, proposeMarriage, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'
+import { livingRuralUrban } from './character'
 
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v))
 const chance = p => Math.random() < p
@@ -277,6 +278,12 @@ const FIELD_FIT = {
   finance:           [0.1, 0.8, 2.5],
   law:               [0.1, 0.8, 2],
   media:             [0.1, 1, 2],
+  // Split out of `media` because every `field === 'media'` guard in the
+  // corpus is about a journalist under a regime — the editor's office, the
+  // protected source, the story that cannot run — and they were all firing
+  // for a TikTok influencer, whose epitaph then read "She worked in
+  // journalism and learned what it costs to tell the truth."
+  digital_media:     [0.2, 1.2, 1.8],
   academia:          [0.1, 0.6, 1.8],
   science:           [0.05, 0.5, 1.5],
   arts:              [0.6, 1, 1.2],
@@ -298,20 +305,32 @@ const FIELD_FIT = {
   politics:          [0.2, 0.5, 0.8],
 }
 
-function fitColumn(country) {
-  const rich = ['high', 'very_high', 'medium_high'].includes(country?.gdp)
-  const urban = (country?.urbanRate ?? 0.5) >= 0.45
-  if (rich) return 2
-  return urban ? 1 : 0
+// The columns are rural-poor / urban-poor / urban-rich, and the column was
+// picked from the COUNTRY's urban rate rather than from where this character
+// actually is — so every Indonesian in 1977 read as rural-poor including the
+// ones in Jakarta, and every Brazilian in 1995 as urban-poor including the ones
+// on a farm. The character's own position is what the table is about.
+function fitColumn(state) {
+  const country = liveCountry(state)
+  const rural = livingRuralUrban(state) === 'rural'
+  const tier = state?.character?.wealthTier ?? 2
+  const richCountry = ['high', 'very_high', 'medium_high'].includes(country?.gdp)
+  if (rural) return richCountry && tier >= 3 ? 1 : 0
+  if (richCountry || tier >= 4) return 2
+  return 1
 }
 
 /** Pick a job the way a life picks one: from what is actually around. */
 export function chooseCareer(state) {
   const available = getAvailableCareers(state).filter(c => !c.partTime || state.age < 20)
   if (!available.length) return null
-  const col = fitColumn(liveCountry(state))
+  const col = fitColumn(state)
   const weighted = available.map(c => {
-    const fit = FIELD_FIT[c.field]?.[col] ?? 1
+    let fit = FIELD_FIT[c.field]?.[col] ?? 1
+    // A ladder whose top rung is "Superstar" is not entered the way a trade is.
+    // A rural Sundanese seventeen-year-old in 1977 was picked for Busker and
+    // promoted to Superstar by twenty-two, with a twenty-six-year tenure.
+    if ((c.fameCareer || ['entertainment', 'sports'].includes(c.field)) && col === 0) fit *= 0.25
     // Smarts open the doors that require them; they do not open the doors that
     // require capital or a name, which the requirements already model.
     const req = c.requirements?.minSmarts ?? 0
@@ -360,11 +379,34 @@ function courseWork(s) {
 
   // Most people are not looking every year; they take what comes when it comes.
   if (!chance(0.42)) return s
-  const career = chooseCareer(s)
+  // Somebody who has worked before is not starting a first job. Prefer the
+  // trade they know — a laid-off Agency Director looks for agency work — and
+  // where they cannot get back in, say so, because the log otherwise reads
+  // "You begin working as an Assembly Worker. Starting salary: $6,415/yr"
+  // after twenty years on six figures, as though nothing had happened.
+  const last = s.mem?.lcLastCareer
+  const reentry = last && chance(0.65)
+    ? (getAvailableCareers(s).find(c => c.id === last.id)
+      ?? getAvailableCareers(s).find(c => c.field === last.field))
+    : null
+  const career = reentry ?? chooseCareer(s)
   if (!career) return s
   const before = s.career
   s = enterCareer(s, career.id)
   if (!s.career || s.career === before) return s
+  if (last) {
+    const fell = (last.baseSalary ?? 0) > 0 && (s.career.baseSalary ?? 0) < last.baseSalary * 0.55
+    s = log(s, fell
+      ? pick([
+        `The job is a job. It is not the job, and the difference is a number you have stopped saying out loud.`,
+        `You start again at the bottom of something, at an age when the people around you at this level are half yours. Nobody is unkind about it. That is its own thing to absorb.`,
+        `What you were is not on the form. What you are is, and the two do not have to be reconciled by anybody except you.`,
+      ])
+      : pick([
+        `You are back in it. The first week is spent finding out how much of what you knew still applies.`,
+        `The work resumes. Some of it has moved on without you and some of it has not moved at all.`,
+      ]), true)
+  }
   return { ...s, mem: { ...s.mem, lcFirstJobAge: s.mem?.lcFirstJobAge ?? s.age } }
 }
 
@@ -581,6 +623,20 @@ export function ownershipChance(state) {
   return base
 }
 
+// A flat allocated by a housing office and later privatised by decree is a
+// socialist state's story; a self-build on family land is everywhere else's.
+// Drawn from one pool, the allocation line reached an Indonesian police
+// sergeant in 2020 — and CLAUDE.md's own note says post-Soviet privatisation
+// is an event, not a hazard.
+const ALLOCATING = new Set([
+  'Russia', 'Ukraine', 'Belarus', 'Poland', 'Romania', 'Bulgaria', 'Hungary',
+  'Czech Republic', 'Slovakia', 'Estonia', 'Latvia', 'Lithuania', 'Moldova',
+  'Georgia', 'Armenia', 'Azerbaijan', 'Kazakhstan', 'Uzbekistan', 'Kyrgyzstan',
+  'Tajikistan', 'Turkmenistan', 'China', 'Cuba', 'North Korea', 'Vietnam',
+  'Mongolia', 'Albania', 'Serbia', 'Croatia', 'Slovenia', 'Bosnia and Herzegovina',
+  'East Germany', 'Singapore',
+])
+
 /**
  * A home, by whichever route this place and decade actually provides one.
  *
@@ -591,10 +647,16 @@ export function ownershipChance(state) {
  * for most of this period, and pricing it as a purchase would have quietly
  * excluded it.
  */
+
 function courseHousing(s) {
   if (s.inPrison || s.age < 20 || s.age > 72) return s
   if ((s.assets?.properties?.length ?? 0) > 0) return s
   if (s.mem?.lcHousingSettled) return s
+  // A character who has already had the "it was not going to happen" event and
+  // made their peace with renting should not then be handed a mortgage by the
+  // default layer. One life got `housing_never_owned_west` at 54 and a
+  // terraced house at 63.
+  if (s.mem?.housingNeverOwned || (s.flags ?? []).includes('made_peace_with_renting')) return s
 
   const c = liveCountry(s)
   // Acquisition peaks in the thirties and tails off; the lifetime total is what
@@ -639,10 +701,11 @@ function courseHousing(s) {
   // The unfinanced route: family land, a self-build, an allocated flat that
   // became yours. No mortgage, because there was never a bank in it.
   const value = Math.max(400, inEraMoney(Math.round(localisePrice(type.basePrice, c?.gdp, 'local') * 0.45), c, s.currentYear))
+  const allocated = ALLOCATING.has(c?.name) && s.currentYear >= 1950
   s = {
     ...s,
     assets: { ...s.assets, properties: [...(s.assets?.properties ?? []), {
-      typeId: type.id, name: unpurchasedHomeName(c, s.flags), purchasePrice: 0, currentValue: value, mortgage: 0,
+      typeId: type.id, name: unpurchasedHomeName(c, s.flags, allocated), purchasePrice: 0, currentValue: value, mortgage: 0,
     }] },
     flags: [...new Set([...s.flags, 'homeowner', 'home_without_a_deed'])],
     mem: { ...s.mem, lcHousingSettled: true, lcHomeYear: s.currentYear },
@@ -653,15 +716,29 @@ function courseHousing(s) {
   // stages, as the money arrives" into 1977.
   const hasMoney = institutionExists(c?.name, s.currentYear, 'money')
   const hasPost = institutionExists(c?.name, s.currentYear, 'post')
+  // There are two unfinanced routes and they are not the same route. A flat
+  // allocated by a housing office and then privatised by decree is a socialist
+  // state's story; a self-build on family land is everywhere else's. Drawn
+  // from one pool, the allocation line reached an Indonesian police sergeant
+  // in 2020 — and CLAUDE.md's own note says post-Soviet privatisation is an
+  // event, not a hazard. The property's name comes from `unpurchasedHomeName`
+  // either way, so a flat that was allocated to you was also being called "the
+  // house you built".
+  if (allocated) {
+    return log(s, pick([
+      hasPost
+        ? 'The flat was allocated, and then years later a letter arrived saying it was simply yours now. You read it twice. Nobody had asked you whether you wanted to own anything.'
+        : 'You were put in it. Whether it is yours is not a question anybody is currently answering, and asking would be the wrong thing to do.',
+      'The list moved and your name was on it, after a number of years you could state exactly. The flat is the same as the flats either side of it, which is the point of it.',
+      'Somebody at the works had a word, and then there was a key. You have never been entirely sure which part of that was the system working and which part was the word.',
+    ]), true)
+  }
   return log(s, pick([
     'The house is finished in the sense that you live in it. The upper floor has been waiting for its windows for two years and will wait longer, and everyone builds this way, so nobody remarks on it.',
     'Nobody signs anything. The land is where the family has been, and the arrangement is understood by everyone who needs to understand it, which works perfectly until the day it does not.',
     hasMoney
       ? 'The roof goes on in stages, as the money arrives. You can date the last four years by looking up at it.'
       : 'The roof goes on in stages, as the materials turn up. You can date the last four years by looking up at it.',
-    hasPost
-      ? 'The flat was allocated, and then years later a letter arrived saying it was simply yours now. You read it twice. Nobody had asked you whether you wanted to own anything.'
-      : 'You were put in it. Whether it is yours is not a question anybody is currently answering, and asking would be the wrong thing to do.',
   ]), true)
 }
 
@@ -686,10 +763,14 @@ export function tickLifeCourse(state) {
 // entry is a financed transaction's name, and the prose beside it describes
 // rebar and an unfinished upper floor, so a life ended holding an asset called
 // "Studio Flat" while the epitaph described the house they built.
-export function unpurchasedHomeName(country, flags = []) {
+export function unpurchasedHomeName(country, flags = [], allocated = false) {
   if (flags.includes?.('privatised_flat') || flags.includes?.('soviet_flat')) return 'The flat, privatised'
   const arch = country?.archetype
   if (arch === 'post_soviet') return 'The flat you were given the deed to'
+  // The name has to match the story the prose told. A flat that was allocated
+  // to an Indonesian police sergeant was also being called "The house you
+  // built", and the epitaph then said it was built in stages as money allowed.
+  if (allocated) return 'The flat you were allocated'
   if (['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(arch)) return 'The house that came to you'
   return 'The house you built'
 }

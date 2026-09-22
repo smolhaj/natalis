@@ -1,3 +1,24 @@
+// A shop floor, a break and a bargaining unit exist in some kinds of work and
+// not in others. These are the fields that actually had a union culture in the
+// twentieth century, in the countries and years this module covers.
+const UNIONISED_FIELDS = new Set([
+  'manufacturing', 'construction', 'transport', 'trade', 'electrician', 'plumber',
+  'healthcare', 'education', 'government', 'law_enforcement', 'casual', 'aviation',
+  'hospitality', 'media', 'social_services',
+])
+
+// Work a machine could take over one-for-one, and — from 1995 — the desk jobs
+// software arrived for.
+const MECHANISABLE_FIELDS = new Set([
+  'manufacturing', 'construction', 'transport', 'trade', 'agriculture', 'casual',
+  'electrician', 'plumber',
+])
+const DESK_FIELDS = new Set([
+  'finance', 'media', 'government', 'writing', 'real_estate', 'IT', 'technology',
+  'architecture', 'science',
+])
+
+
 // events_labor.js — BUILD 20
 // Labor and strikes: the union card, the picket line, collective action,
 // the machine that does your job, solidarity. Fires across archetypes,
@@ -21,7 +42,14 @@ export const LABOR_EVENTS = [
       // smallholding, and the informal sector has no representative to send.
       // This was reaching Rwandan subsistence farmers.
       G.ruralUrban !== 'rural' &&
-      !['farmer', 'informal', 'agriculture'].includes(G.career?.field) &&
+      // A negative list let everything it had not thought of through, and "a
+      // union representative finds you during the break — someone you
+      // recognise from the floor" reached an Agency Director at a property
+      // agency. There is a floor, a break and a bargaining unit in some kinds
+      // of work and not in others, so name the ones there are.
+      UNIONISED_FIELDS.has(G.career?.field) &&
+      // And not from above it: a director is who the union negotiates with.
+      (G.career?.level ?? 0) <= 3 &&
       !G.flags.has('informal_economy') && !G.flags.has('subsistence_farming') &&
       ['wealthy_west', 'post_soviet', 'developing_urban', 'subsaharan'].includes(G.character.country.archetype),
     text: 'A union representative finds you during the break — someone you recognise from the floor, not a stranger. He doesn\'t make a speech. He tells you what the monthly fee is. He tells you what the union got in the last negotiation: two extra days of leave, a grievance process that didn\'t exist before. He slides a card across the table. You have until Friday.',
@@ -186,6 +214,12 @@ export const LABOR_EVENTS = [
     when: (G) =>
       !G.mem?.labLuddite &&
       G.career &&
+      // "The machine arrives in a crate and takes three men to uninstall it...
+      // It does what six workers did before it" requires a job a machine can
+      // replace one-for-one. The 1995+ branch generalises to office work; the
+      // earlier branches do not generalise at all.
+      (MECHANISABLE_FIELDS.has(G.career?.field) ||
+        (G.currentYear >= 1995 && DESK_FIELDS.has(G.career?.field))) &&
       G.currentYear >= 1880 &&
       G.age >= 22,
     text: (G) => {

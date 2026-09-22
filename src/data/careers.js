@@ -1776,7 +1776,7 @@ export const CAREERS = [
   {
     id: 'content_creator',
     title: 'Content Creator',
-    field: 'media',
+    field: 'digital_media',
     minYear: 2012,
     levels: [
       { title: 'Micro Creator', salaryRange: [5000, 20000] },

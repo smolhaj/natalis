@@ -1229,6 +1229,12 @@ export const POVERTY_EVENTS = [
     when: (G) =>
       !G.mem?.povChildSchoolParent &&
       G.flags.has('poverty_childhood') &&
+      // A childhood flag is not a statement about now. "You did not eat lunch
+      // for three days and you do not mention it" fired for a character
+      // earning 71,991 with 25,161 in the bank, which is not the calculation
+      // the event is about. `G.money` is present-day dollars, so the test
+      // means the same thing in 1955 as in 2015.
+      G.money < 4000 && (G.stats?.wealth ?? 50) < 45 &&
       G.children?.length > 0 &&
       G.age >= 30 && G.age <= 50,
     text: 'Your child comes home with a form about the school trip. The cost is not large. It is large enough. You recognise the calculation your parent ran when you were this age, running it now for your own child — whether to say it cannot be done and explain, or to find the money and not explain. You had promised yourself this moment would not arrive.',

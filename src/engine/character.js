@@ -901,6 +901,25 @@ export function tickFamilyIncome(state) {
   }
 }
 
+/**
+ * Rural or urban NOW, not at birth.
+ *
+ * `character.ruralUrban` is frozen at birth, and every prose layer and every
+ * guard read it directly — so a character who moved to Jakarta at 26 was still
+ * being told, at 53, that the firewood needed collecting, and a 68-year-old
+ * forty years into city life still had a hallway telephone. `homeCountry` on
+ * the very next line of those files already followed the character; the rural
+ * dimension did not.
+ *
+ * `currentPlace.type` is the answer whenever there is a place, and the birth
+ * value is the fallback, which is what it was always meant to be.
+ */
+export function livingRuralUrban(state) {
+  const t = state?.currentPlace?.type
+  if (t === 'rural' || t === 'urban') return t
+  return state?.character?.ruralUrban ?? 'urban'
+}
+
 // ─── Formatted parent income display ─────────────────────────────────────────
 // Returns a human-readable income string for the UI.
 export function formatParentIncome(occupation, gdp, country = null, year = null) {

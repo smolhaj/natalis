@@ -286,12 +286,26 @@ export function techYear(country, tech) {
  * household is always first, everywhere, and the size of that head start is
  * larger in a poor country than a rich one.
  */
+// The flat rural penalty is right for anything that arrives on a wire or a
+// pipe — the grid, the landline, mains water, the sewer — because the cost of
+// reaching a village is the length of the wire. It is wrong for the
+// technologies that leapfrogged precisely because they needed no wire, which
+// is the whole story of the mobile phone and mobile money in the countries the
+// landline never reached. Applied flat, it kept the hallway telephone legal in
+// rural Indonesia until 2015 in a country that largely skipped the landline,
+// which the game's own leapfrog content says elsewhere.
+const NO_RURAL_LAG = new Set(['mobile_phone', 'mobile_money', 'radio', 'satellite_tv'])
+const HALF_RURAL_LAG = new Set(['television', 'internet', 'smartphone'])
+
 export function hasTech(country, tech, year, opts = {}) {
   let y = techYear(country, tech)
   if (y >= 9000) return false
   const arch = typeof country === 'string' ? null : country?.archetype
   const poor = !['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(arch)
-  if (opts.rural) y += poor ? 12 : 5
+  if (opts.rural && !NO_RURAL_LAG.has(tech)) {
+    const lag = poor ? 12 : 5
+    y += HALF_RURAL_LAG.has(tech) ? Math.round(lag / 2) : lag
+  }
   if (opts.rich) y -= poor ? 12 : 5
   return year >= y
 }

@@ -1,3 +1,4 @@
+import { livingRuralUrban } from './character'
 import { preferUnsaid } from './prose'
 import { hasTech, wasWealthy, techYear } from '../data/technology'
 // mundaneLayer.js — Daily-life texture that fires alongside main events every year.
@@ -31,7 +32,7 @@ export function buildMundaneLayer(state) {
   const gender = state.character?.gender ?? 'male'
   const religion = state.character?.religion ?? ''
   const gdp = state.character?.country?.gdp ?? 'medium'
-  const ruralUrban = state.character?.ruralUrban ?? 'urban'
+  const ruralUrban = livingRuralUrban(state)
   const careerField = career?.field ?? null
   const isMuslim = religion?.startsWith('muslim')
   const isChristian = religion?.startsWith('christian')
@@ -644,7 +645,7 @@ export function buildMundaneLayer(state) {
     'The knee that was fine last year now has opinions about stairs.',
     'You are sleeping less deeply than you once did. The depth has been changing slowly for years.',
     'Something that took two days to recover from now takes four. The body is recalibrating.',
-    'The reading glasses appeared this year, or last year, or are imminent. The print that was fine is now borderline.',
+    'The reading glasses appeared this year. The print that was fine is now borderline and you hold the page at a distance you have started to notice yourself holding it at.',
     'The grey in the hair has reached a percentage people comment on. You have decided how to respond.',
     'The blood pressure was checked. The number is what it is. You are doing what the number requires.',
   )
@@ -1791,7 +1792,7 @@ export function buildMundaneLayer(state) {
   addIf(F('emigrated') || F('first_generation_immigrant'),
     'The form: the small box for the country of origin, the question of which address is permanent.',
     'The friend who is also from there: the relief of speaking without choosing words carefully.',
-    'The first winter here, or the first summer, or the first season that is not a season from before.',
+    'The first winter here. It is not the winter you have a word for, and you find yourself dressing for the one you remember.',
     'You are learning the bureaucracy. The bureaucracy is specific to this country and has its own logic.',
     'The job you have here is not the job you had there. The here job is the available job.',
     'Sunday is different here. The day has a different shape. The shape requires adjustment.',

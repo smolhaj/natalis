@@ -124,6 +124,46 @@ export const IDENTITY_FLAGS = {
     timestamped: true,
   },
 
+  lgbtq_life_not_lived: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Same-sex attracted and married the other way, in a place and decade where that was the available life — carried quietly inside an ordinary one, for forty years.',
+    intent: 'both',
+    notes: 'Set by lgbtq_the_marriage_that_happened. The commonest version of the arc and the one nobody had written: every other follow-through was country-specific or capped at 30.',
+  },
+
+  lgbtq_one_person_knows: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Told exactly one person, once, and never again — so the fact exists somewhere outside their own head.',
+    intent: 'year_texture',
+    notes: 'Set by lgbtq_the_marriage_that_happened.',
+  },
+
+  lgbtq_outlived_the_law: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Watched the thing become ordinary, on a television, in a room where nobody reacted — decades after the architecture built around its impossibility stopped holding anything up.',
+    intent: 'year_texture',
+    notes: 'Set by lgbtq_the_world_changes_too_late.',
+  },
+
+  lgbtq_said_it_late: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Said it out loud at sixty-eight, once, plainly — and it was smaller and stranger than anything rehearsed.',
+    intent: 'year_texture',
+    notes: 'Set by lgbtq_the_late_admission.',
+  },
+
+  lgbtq_kept_it: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Never said it. Not a burden by the end; more like a room in the house nobody else has been into.',
+    intent: 'year_texture',
+    notes: 'Set by lgbtq_the_late_admission.',
+  },
+
   lgbtq_had_relationship: {
     weight: 'moderate',
     category: 'relationships',

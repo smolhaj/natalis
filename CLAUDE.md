@@ -422,6 +422,43 @@ nearly everyone and opens every `stats.smarts >= 70` guard to the whole
 population. `earnedGain` scales a gain by the headroom above it and never scales
 a loss.
 
+**A bill you cannot pay does not stop existing.** `Math.max(0, ...)` on the
+balance meant no purchase in the game could fail for lack of funds — a Swedish
+pensioner holding $42,571 was offered a $63,859 bypass, took it, and the
+shortfall evaporated — and `tickAssets` clamped it a second time while still
+amortising the mortgage, so a character on nothing watched the principal fall
+from 73,466 to 55,206 over six years. A shortfall large enough to matter now
+becomes `debt`, and an unpaid mortgage goes into arrears rather than paying
+itself off. Related: consumption was a share of the SALARY, so being alive cost
+a retiree nothing; the poverty premium read the cash balance, so a retiree in a
+house worth 934,534 was charged for poverty; and the insolvency line was a flat
+-8,000 nominal, a fortune in 1950 Lagos and a bad month in 2020 Stockholm.
+
+**A guard answers "may this fire", not "is this true afterwards".**
+`ya_city_arrival` narrated a young adult leaving the village and left them in
+it; eighty-three events set `emigrated` and not one could change a country,
+because `relocate` did not carry the destination's own country and there was no
+verb for "they went to Spain". `p.emigrateTo(country, opts)` is that verb, and
+`relocate` now carries the country, so the Venezuelan physician who arranges the
+exit stops drawing a Venezuelan salary. `npm run check-events` carries
+`narrated-move` and `silent-choice` for both halves of this: prose that
+describes a move no effect makes, and a choice that applies an effect and
+prints nothing back — fifty-one of those existed, so the player pressed
+"Navigate carefully — know the rules and survive" and the game said nothing.
+
+**A flag about the past is not a statement about now.** `poverty_childhood`
+gated "You did not eat lunch for three days" onto a character earning 71,991
+with 25,161 in the bank; `character.ruralUrban` is frozen at birth and every
+prose layer read it directly, so a character who moved to Jakarta at 26 was
+still collecting firewood at 53. `livingRuralUrban(state)` reads
+`currentPlace.type` and falls back to birth, and the events that describe a
+present condition test the present one. Same class: a negative field list let
+"a union representative finds you during the break — someone you recognise from
+the floor" reach an Agency Director at a property agency, and `content_creator`
+shared the `media` field with `journalist`, so a TikTok influencer got the
+editor's office, the ministry call, and an epitaph reading "She worked in
+journalism and learned what it costs to tell the truth."
+
 **The instrument must be able to see the thing it measures.** Passive mode
 resolves choice events inside `tick()`, so `pendingEvent` is never set for them,
 and the firing-rate harness — which counted events by reading it — reported
@@ -521,9 +558,10 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 252 world events, 8,082 character events (2,129 of them the
-contemplative sonder layer, 157 stranger glimpses, 42 prison and political-arrest),
-2,964 registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
+154 countries, 183 named places, 252 world events, 8,089 character events
+(2,129 of them the contemplative sonder layer, 157 stranger glimpses, 42 prison
+and political-arrest), 2,975 registered flags, 377 ribbons.
+**0 orphaned, 0 partial flags.**
 
 Verify with:
 
@@ -533,7 +571,8 @@ npm test                 # 346 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
 npm run check-flags      # 2964 covered / 0 partial / 0 orphaned
-npm run check-events     # reachability: dead guards, enum domains, phase/year windows, season/country
+npm run check-events     # reachability: dead guards, enum domains, phase/year windows,
+                         # season/country, silent choices, narrated moves that move nobody
 npm run check-anachronisms  # plays lives and reads every line against when the world held it
 npm run sim              # firing-rate report — what ACTUALLY fires, per 100 lives
 npm run sim -- --broad   # the same over the whole roster, not the ten default configurations
@@ -637,6 +676,35 @@ character with a `retired` FLAG while every hook that hands out a job reads the
 **The lesson worth keeping: read the log in order.** Every one of these is
 invisible to a guard audit, invisible to `npm run sim`, and obvious within
 thirty seconds of reading a life as a player reads it.
+
+### The third beta pass
+
+The second pass read four lives. The third read four more, after the money
+layer went in, and found a fourth class: **a rule that is correct in one place
+and silently wrong in every other place it is read from.**
+
+| | before | after |
+|---|---|---|
+| diagnosed lives ending with `conditions: []` | 89% | 0.7% |
+| a child's wealth stat, outside the rich world | 5 (the clamp floor) for every tier | 5 / 14 / 28 / 45 / 62 by tier |
+| adult-years resting on the money clamp | 5.8%, with bills forgiven | 8.4%, carrying debt |
+| choices that print nothing back | 51 | 0, audited |
+| emigration events that move anybody | 0 of 83 flag-setters | `p.emigrateTo`, audited |
+| "Never married." on a widower's death screen | 6 of 200 married lives | 0 |
+| the empty-nest event's youngest trigger | children aged 12, 2 and 1 | somebody 17 or over |
+| retirement narrated as over, then declined | fired at 50 | 60, and the text does not assert it |
+
+The pattern is one rule read from several places, fixed in one of them. A
+promotion that pays less was fixed in the re-denomination path and in
+`askForRaise` and left in `checkPromotion`. `occupation.annualIncome` is scaled
+by `GDP_MULT` in `tickFamilyIncome` and in `formatParentIncome` and not in the
+estate band, so an inheritance was wrong by exactly `1 / GDP_MULT` — forty times
+in a `very_low` country. `character.ruralUrban` is frozen at birth and four
+separate prose sites read it directly while `homeCountry`, on the next line of
+the same files, correctly followed the character.
+
+**The lesson worth keeping: when you fix a rule, grep for every reader of it.**
+The one you do not fix is the one that will print into a life.
 
 ### Money is a statement about when
 

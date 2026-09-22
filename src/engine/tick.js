@@ -17,7 +17,7 @@ import {
   GDP_MULT, HYPERINFLATION_DRAIN, getHyperinflation,
   calculateHouseholdContribution, tickFamilyIncome,
   ADULT_TRAITS, CHILD_TRAITS, pickTraits, TRAIT_PROSE, BUSINESS_TYPES, partnerOccupation,
-  getLifeSkeletonMap, getPhaseEntryMap, deriveSeason,
+  getLifeSkeletonMap, getPhaseEntryMap, deriveSeason, livingRuralUrban,
 } from './character'
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
@@ -77,11 +77,21 @@ export function earnedGain(current, delta) {
   return delta * (0.06 + 0.94 * headroom)
 }
 
+// A fractional store is deliberate (see below) and floating-point residue is
+// not: a life ended with `looks = 2.1316282072803006e-14`, which is zero with
+// a tail on it. StatBar rounds at display, but any surface that formats a stat
+// without rounding shows the tail, so snap what is within a rounding error of
+// a whole number and leave the genuinely fractional values alone.
+const snap = (v) => {
+  const r = Math.round(v)
+  return Math.abs(v - r) < 1e-6 ? r : v
+}
+
 function applyProxy(state, proxy) {
   const stats = {
-    health:    clamp(state.stats.health    + proxy.h,  0, 100),
-    happiness: clamp(state.stats.happiness + proxy.m,  0, 100),
-    wealth:    clamp(state.stats.wealth    + proxy.w,  0, 100),
+    health:    snap(clamp(state.stats.health    + proxy.h,  0, 100)),
+    happiness: snap(clamp(state.stats.happiness + proxy.m,  0, 100)),
+    wealth:    snap(clamp(state.stats.wealth    + proxy.w,  0, 100)),
     // NOT rounded per application, which is what defeated `earnedGain`. A +3 at
     // 99 scales to 0.77 and then rounds to 1, so the last point cost the same
     // as the first and the ratchet survived the fix meant to remove it:
@@ -92,9 +102,9 @@ function applyProxy(state, proxy) {
     // with >= or <=, so a fractional store is invisible everywhere except in
     // the one place it matters: a gain worth less than half a point now buys
     // less than half a point.
-    smarts:    clamp(state.stats.smarts   + earnedGain(state.stats.smarts, proxy.e),  0, 100),
-    charisma:  clamp(state.stats.charisma + earnedGain(state.stats.charisma, proxy.s), 0, 100),
-    looks:     clamp(state.stats.looks     + proxy.lo, 0, 100),
+    smarts:    snap(clamp(state.stats.smarts   + earnedGain(state.stats.smarts, proxy.e),  0, 100)),
+    charisma:  snap(clamp(state.stats.charisma + earnedGain(state.stats.charisma, proxy.s), 0, 100)),
+    looks:     snap(clamp(state.stats.looks     + proxy.lo, 0, 100)),
   }
   const regret  = clamp(state.regret + proxy.r, 0, 100)
   // Every `p.mo` in the corpus is written in present-day dollars — 629 of them,
@@ -1013,7 +1023,7 @@ export function buildG(state) {
       return 0 // negative net worth
     })(),
     ethnicity: state.character?.ethnicity ?? 'local',
-    ruralUrban: state.character?.ruralUrban ?? 'urban',
+    ruralUrban: livingRuralUrban(state),
     literate: flagSet.has('became_literate') ? true
       : flagSet.has('never_schooled') ? false
       : (state.character?.literate ?? true),
@@ -1563,10 +1573,21 @@ export function askForRaise(state) {
   }
 }
 
+// What the character was doing before. A career that ends leaves an experienced
+// person behind, and `courseWork` treated every jobless year as a first job:
+// an Agency Director on 107,312 was laid off at 53 and began again at 55 as an
+// Assembly Worker on 6,415, narrated as a fresh start.
+function rememberCareer(state) {
+  const c = state.career
+  if (!c) return state.mem
+  return { ...(state.mem ?? {}), lcLastCareer: { id: c.id, field: c.field, level: c.level, baseSalary: c.baseSalary ?? null, title: c.title } }
+}
+
 export function quitJob(state) {
   if (!state.career) return state
   return {
     ...state,
+    mem: rememberCareer(state),
     career: null,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 8, 0, 100) },
     log: [...state.log, { age: state.age, text: `You resign from your position as ${state.career.title}.`, isKey: true }],
@@ -1576,6 +1597,7 @@ export function quitJob(state) {
 function fireFromJob(state) {
   return {
     ...state,
+    mem: rememberCareer(state),
     career: null,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness - 15, 0, 100) },
     log: [...state.log, { age: state.age, text: `You are fired from your job as ${state.career.title} due to poor performance.`, isKey: true }],
@@ -2157,14 +2179,25 @@ function tickPartner(state) {
   return { ...state, partner }
 }
 
+// Fame decayed at 7% of itself every year the character was not currently
+// holding an entertainment or sports job — so someone who spent twenty-six
+// years as a Superstar and then lost the job at 48 died with a fame of 7.9, and
+// the celebrity arc never fired for the people who actually earned it. A career
+// that ended is not a reputation that ended: what you were known for stays
+// known, and the decay is the slow one of being of an earlier decade.
+const FAME_CAREER_FIELDS = new Set(['entertainment', 'sports'])
 function tickFame(state) {
   const fame = state.fame ?? 0
   if (fame <= 0) return state
-  const isEntCareeer = state.career?.field === 'entertainment' || state.career?.field === 'sports'
-  if (!isEntCareeer) {
-    return { ...state, fame: clamp(fame - fame * 0.07, 0, 100) }
-  }
-  return state
+  if (FAME_CAREER_FIELDS.has(state.career?.field)) return state
+  // Having BEEN famous is a fact about a life. It fades, but towards a floor
+  // set by how far it went and how long it lasted, not towards nothing.
+  const wasFamous = (state.flags ?? []).includes('famous') || (state.mem?.peakFame ?? 0) >= 45
+  const peak = Math.max(state.mem?.peakFame ?? 0, fame)
+  const floor = wasFamous ? Math.min(40, peak * 0.45) : 0
+  const rate = wasFamous ? 0.025 : 0.07
+  const next = Math.max(floor, fame - fame * rate)
+  return { ...state, fame: clamp(next, 0, 100), mem: { ...(state.mem ?? {}), peakFame: peak } }
 }
 
 // ─── Illness risk ─────────────────────────────────────────────────────────────
@@ -3254,6 +3287,9 @@ export function tick(state) {
     if (s.career.field === 'entertainment' || s.career.field === 'sports') {
       const fameGain = clamp((s.career.level + 1) * 5 + randomBetween(-3, 6), 1, 25)
       s.fame = clamp((s.fame ?? 0) + fameGain, 0, 100)
+      // `tickFame` reads this to know how far it went, so it has to be written
+      // wherever fame is earned, not only where it is spent.
+      s.mem = { ...(s.mem ?? {}), peakFame: Math.max(s.mem?.peakFame ?? 0, s.fame) }
     }
   }
 

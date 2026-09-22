@@ -48,7 +48,9 @@ export const CLIMATE_EVENTS = [
         return 'Forty-nine degrees for two weeks. The old men say they have never felt anything like it. The outdoor workers are on mandatory rest from ten in the morning until four. Three die anyway — unofficial, unreported. The air conditioning runs continuously through the night and the city hums.'
       } else if (isDev) {
         const staple = STAPLE[country] ?? 'grain'
-        if (G.wealthTier >= 4) {
+        // Birth tier OR where they have got to since: a first-generation
+        // professional is on the ledger side of this too.
+        if (G.wealthTier >= 4 || (G.stats?.wealth ?? 50) >= 62 || G.money > 60000) {
           return `The harvest comes in thin. The rains were a month late and two weeks short. The price of ${staple} has doubled since January, which for you is a line in a ledger and for the people who work for you is the arithmetic they do standing at the counter. You watch them do it. You notice that you have stopped noticing the price yourself, and that this is recent.`
         }
         return `The harvest comes in thin. The rains were a month late and two weeks short. The price of ${staple} in the market has doubled since January and the gap between the portion that was normal and the portion that is possible is widening. Children eat last in every house you know.`
@@ -115,6 +117,12 @@ export const CLIMATE_EVENTS = [
     when: (G) =>
       G.currentYear >= 2028 && G.currentYear <= 2050 &&
       G.age >= 18 &&
+      // A food price rise is not the same experience at every income. "The
+      // portion that was normal a year ago is becoming smaller each year"
+      // reached an Agency Director on $108,679, for whom doubling maize is a
+      // line in a budget rather than a portion. Read the position the
+      // character is in NOW — `wealthTier` is where they were born.
+      (G.stats?.wealth ?? 50) < 55 && G.money < 30000 &&
       ['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.character.country.archetype) &&
       !G.mem?.climFoodPrices,
     text: 'Three bad harvests, two of them in a row. Maize has doubled in the market. The portion that was normal a year ago is becoming smaller each year — not dramatically, not quickly enough to name as crisis, just incrementally smaller, like a tide going out. Your grandmother says the rains used to come differently.',

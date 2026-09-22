@@ -1,3 +1,16 @@
+
+// The prose says a parent has died. Effects only receive `p`, so read the
+// living parents off `p._state` — the established escape hatch — and kill one.
+// `p.killParent` sets the canonical flags and the memory timestamp that the
+// grief layer keys off; `addFlag('lost_parent')` alone did neither, and left
+// `tickParents` free to kill the same parent again two years later.
+function killTheNamedParent(p) {
+  const parents = p._state?.parents ?? {}
+  const living = ['father', 'mother'].filter(k => parents[k]?.alive)
+  if (living.length === 0) return
+  p.killParent(living[Math.floor(Math.random() * living.length)])
+}
+
 // events_grief.js
 // The full arc of grief — parents, partner, children, siblings, friends, prolonged.
 // These are the highest-emotional-weight events in the game.
@@ -19,26 +32,44 @@ export const GRIEF_EVENTS = [
       G.parents &&
       (G.parents.father?.alive || G.parents.mother?.alive) &&
       Math.random() < 0.08,
+    // The parent died in the prose and stayed alive in the state, so
+    // `tickParents` killed them again later: one life was told at 55 "Your
+    // mother is gone" and at 57 "Your mother, Hesti Andriansyah, dies at 84."
+    // And the caller was hardcoded to a brother, in a life with no siblings.
     text: (G) => {
       const which = G.parents.father?.alive && G.parents.mother?.alive
         ? (Math.random() < 0.5 ? 'father' : 'mother')
         : (G.parents.father?.alive ? 'father' : 'mother')
+      const sib = (G.siblings ?? []).find(s => s.alive !== false)
+      const caller = which === 'father'
+        ? 'your mother'
+        : G.parents.father?.alive ? 'your father'
+          : sib ? (sib.name?.split(' ')[0] ?? 'your brother')
+            : 'a cousin you have not spoken to in years'
       return which === 'father'
-        ? 'The call comes from your mother. She says your father collapsed this morning. He is gone before you can get there. You are driving when you hear and you pull over onto the shoulder and sit there for a long time.'
-        : 'Your brother calls. Your mother is gone. She was fine two weeks ago. He does not have many details yet. You find yourself standing in your kitchen not understanding what you are supposed to do with your hands.'
+        ? `The call comes from ${caller}. ${caller === 'your mother' ? 'She says' : 'They say'} your father collapsed this morning. He is gone before you can get there. You pull over onto the shoulder and sit there for a long time.`
+        : `${caller.charAt(0).toUpperCase() + caller.slice(1)} calls. Your mother is gone. She was fine two weeks ago. There are not many details yet. You find yourself standing in the middle of a room with the phone still in your hand.`
     },
     choices: [
       {
-        text: 'Get in the car and go',
+        text: 'Go now. Drive through the night if you have to.',
         tag: null,
         outcome: 'The drive is long. You arrive to a house that already feels different — the same objects, the wrong order.',
-        effect: (p) => { p.m -= 20; p.r += 8; p.addFlag('lost_parent'); p.setMem('griefParentCall', true) },
+        effect: (p) => {
+          p.m -= 20; p.r += 8
+          p.setMem('griefParentCall', true)
+          killTheNamedParent(p)
+        },
       },
       {
         text: 'Sit with it first. You will be no use to anyone like this.',
         tag: null,
         outcome: 'You give yourself an hour. Then you pack a bag and go.',
-        effect: (p) => { p.m -= 18; p.r += 6; p.addFlag('lost_parent'); p.setMem('griefParentCall', true) },
+        effect: (p) => {
+          p.m -= 18; p.r += 6
+          p.setMem('griefParentCall', true)
+          killTheNamedParent(p)
+        },
       },
     ],
     effect: null,
