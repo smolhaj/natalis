@@ -951,7 +951,9 @@ export const GENDER_EVENTS = [
         (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 1950 && G.currentYear <= 1975) ||
         G.character.country.genderGap > 0.30
       ),
-    text: 'The doctor sets down his pen. "I\'ll need your husband\'s written consent before I can proceed." You are thirty-four years old. You are the one sitting in the chair. He is not here.',
+    // The age was written into the sentence, and the event fires from the
+    // twenties to the fifties: a 23-year-old was told she was thirty-four.
+    text: (G) => `The doctor sets down his pen. "I'll need your husband's written consent before I can proceed." You are ${G.age} years old. You are the one sitting in the chair. He is not here.`,
     context: null,
     choices: [
       {
@@ -1177,9 +1179,16 @@ export const GENDER_EVENTS = [
     id: 'wd_sexual_harassment',
     phase: 'young_adult',
     weight: 4,
+    // A manager, an office door, a notebook and — in the outcomes — an HR
+    // panel. All four require a formal employer and a grievance procedure to
+    // take it to. This was reaching a self-employed market trader in rural
+    // Nigeria in 1981, who has no manager and no HR.
     when: (G) =>
       G.character.gender === 'female' &&
-      G.career,
+      G.career && !['agriculture', 'informal', 'trade'].includes(G.career.field) &&
+      !G.flags.has('informal_economy') && !G.flags.has('self_employed') &&
+      G.ruralUrban !== 'rural' &&
+      G.currentYear >= 1975,
     text: 'Your manager has been making comments for six months. Last week he closed the office door. You have been documenting the dates and times in a notebook you keep at home. You know what this is. You are deciding what to do about it.',
     context: null,
     choices: [

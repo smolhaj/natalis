@@ -1204,17 +1204,30 @@ export function generateLifeNotes(state) {
   if (f('village_electrified')) add(50, 'Present when the first light came on in the village.')
 
   // ── The historical spine (priority 45) ──────────────────────────────────
+  //
   // What actually reached this character, recorded year by year by the engine.
+  // Capped, and deliberately BELOW the life-shape notes below, because a life
+  // in a busy century collects eight or ten of these and they crowded out
+  // everything else: a Nigerian woman who had four children, built a business
+  // and died in childbirth at 25 got eight lines, all of them "Lived through
+  // the Sahel Drought". A history reel is not an obituary.
+  const history = []
   for (const id of state.worldEventsFired ?? []) {
     if (Object.prototype.hasOwnProperty.call(WORLD_EVENT_NOTES, id)) {
       const line = WORLD_EVENT_NOTES[id]
-      if (line) add(46, line)
+      if (line) history.push([46, line])
       continue
     }
     if (AMBIENT_WORLD_EVENTS.has(id)) continue
     const we = WORLD_EVENTS.find(w => w.id === id)
-    if (we?.name) add(45, `Lived through ${withDefiniteArticle(we.name)}.`)
+    if (we?.name) history.push([45, `Lived through ${withDefiniteArticle(we.name)}.`])
   }
+  // The ones written for this character's own country first: an event that
+  // names where they lived is a fact about them, not about the decade.
+  const here = state.character?.country?.name
+  history.sort((a, b) => b[0] - a[0])
+  const own = history.filter(h => WORLD_EVENTS.find(w => w.name && h[1].includes(w.name))?.countries?.includes(here))
+  for (const [, line] of [...own, ...history.filter(h => !own.includes(h))].slice(0, 3)) add(21, line)
 
   // ── The ordinary shape of the life (priority 10-30) ─────────────────────
   // So the panel is never blank. An obituary opens with these.

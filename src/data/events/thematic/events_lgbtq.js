@@ -12,7 +12,9 @@ export const LGBTQ_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => !G.flags.includes('lgbtq_identity') && G.age >= 11 && G.age <= 14 && !G.mem?.lgbtq_unnamed,
-    text: 'There is something you notice about yourself that you do not have a word for yet. It is not like what the boys talk about in the locker room or what the girls whisper about during lunch. You do not know if it is wrong or simply different. You file it somewhere deep and return to it at night.',
+    // The locker room and the lunch hall are an American high school, and this
+    // fires for every twelve-year-old on earth from 1920 on.
+    text: 'There is something you notice about yourself that you do not have a word for yet. It is not what the other boys talk about, or what the girls say to each other when they think nobody is listening. You do not know if it is wrong or simply different. You file it somewhere deep and return to it at night.',
     choices: null,
     effect: (p) => { p.e += 3; p.m -= 4; p.setMem('lgbtq_unnamed', true) },
   },

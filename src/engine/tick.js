@@ -1301,7 +1301,7 @@ export function enterCareer(state, careerId) {
   const salary = Math.round(baseSalary * salaryMult)
   const newCareer = {
     id: career.id, title: careerTitle(level, state), level: 0, salary,
-    field: career.field, yearsInRole: 0, performance: 70,
+    field: career.field, yearsInRole: 0, startedAge: state.age, performance: 70,
     partTime: career.partTime ?? false,
     promotionChance: career.promotionChance ?? 0.10,
     maxLevel: career.levels.length - 1,
@@ -1313,6 +1313,16 @@ export function enterCareer(state, careerId) {
 export function checkPromotion(state) {
   if (!state.career) return state
   if (!institutionExists(liveCountry(state)?.name, state.currentYear, 'wages')) return state
+  // Nobody is promoted in the year they were hired. `yearsBonus` made it less
+  // likely, not impossible, and the life log read "You begin working as a
+  // Market Trader. Starting salary: $722/yr." immediately followed by "You are
+  // promoted to Small Business Owner. New salary: $2,103/yr." in the same year.
+  //
+  // `yearsInRole` alone is not enough to say this: the career block increments
+  // it and then calls this function in the same tick, so it already reads 1 on
+  // the starting year. The age the job began is unambiguous.
+  if (state.age <= (state.career.startedAge ?? -Infinity)) return state
+  if ((state.career.yearsInRole ?? 0) < 1) return state
   const careerDef = CAREERS.find(c => c.id === state.career.id)
   if (!careerDef) return state
   const nextIdx = state.career.level + 1
@@ -1330,7 +1340,7 @@ export function checkPromotion(state) {
   const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
   const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0
   const salary = Math.round(randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1]) * salaryMult)
-  const career = { ...state.career, level: nextIdx, title: careerTitle(newLevel, state), salary, yearsInRole: 0 }
+  const career = { ...state.career, level: nextIdx, title: careerTitle(newLevel, state), salary, yearsInRole: 0, startedAge: state.age }
   const log = [...state.log, { age: state.age, text: `You are promoted to ${newLevel.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career, log }
 }
@@ -2082,8 +2092,14 @@ export function tick(state) {
   // Natural aging
   s = applyNaturalAging(s)
 
-  // Pending birth — deliver child after ~2 age-up cycles from conception
-  // This allows pregnancy texture events to fire before the birth year
+  // Pending birth — delivered the year after conception.
+  //
+  // It used to be two age-up cycles, to make room for the pregnancy-texture
+  // events to fire in between. The cost was visible in every life log that
+  // contained a birth: "You are pregnant" at 15 and "Adesuwa Amao is born" at
+  // 17, four times over in one Nigerian life. A year is already generous for a
+  // nine-month pregnancy; two is a different species. The texture now fires in
+  // the conception year, which is where learning you are pregnant belongs.
   if (s.flags.includes('pregnant') || s.flags.includes('expecting')) {
     // Normalise: if pregnancyYear not in mem (e.g. set by IVF event), initialise it
     if (s.mem?.pregnancyYear === undefined) {
@@ -2092,8 +2108,7 @@ export function tick(state) {
       const childName = c ? personName(c, cGender, s, { surname: s.character.surname }) : 'Baby'
       s.mem = { ...(s.mem ?? {}), pregnancyYear: s.age - 1, pendingChild: { name: childName, gender: cGender, traits: pickTraits(CHILD_TRAITS) } }
     }
-    // Birth fires when age >= pregnancyYear + 2 (one year of pregnancy events, then birth)
-    if (s.age >= (s.mem.pregnancyYear ?? 0) + 2) {
+    if (s.age >= (s.mem.pregnancyYear ?? 0) + 1) {
       const pc = s.mem.pendingChild
       const archetype = s.character?.country?.archetype
       const healthcare = s.character?.country?.healthcare
