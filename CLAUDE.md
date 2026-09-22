@@ -575,9 +575,9 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 192 named places, 252 world events, 8,124 character events
+154 countries, 197 named places, 252 world events, 8,166 character events
 (2,129 of them the contemplative sonder layer, 158 stranger glimpses, 42 prison
-and political-arrest, 30 Gulf), 3,025 registered flags, 377 ribbons.
+and political-arrest, 30 Gulf, 42 Guyana), 3,075 registered flags, 377 ribbons.
 **0 orphaned, 0 partial flags.**
 
 Verify with:
@@ -737,6 +737,41 @@ addresses is invisible to every audit here.** `check-flags` is about flags,
 nothing was ever written for fires nothing, which looks exactly like a
 population that is simply rare. The counter-check is to walk the roster's own
 `ethnicGroups` and ask which ids the corpus has never once named.
+
+### And the same hole, one scale up: a country
+
+The audit's next report was not a group inside a country. It was Guyana, whose
+four main populations were all on the list at once, because the corpus contained
+**one guard naming the country**, in a list of five Caribbean states. Nobody
+born there had a place either — `places.js` had no Guyanese entry, so a Guyanese
+character was born nowhere and the neighbourhood tiers had nothing to draw from.
+
+It is a small country to have missed and a strange one to miss, because its
+twentieth century holds, in one place, almost every force this project is
+otherwise writing about one at a time: indenture, a single company owning the
+wage and the shop and the ship, a constitution suspended by warship 133 days
+after the first universal-suffrage election, a party split in 1955 that made a
+surname answer the ballot for sixty years, a voting system changed from outside
+specifically to remove the man who would have won, two decades of rigged boxes
+and a ban on wheat flour, a historian killed by a bomb in a walkie-talkie, and
+an emigration so complete that there are more Guyanese outside the country than
+in it. Plus the thing the world does know, which is a compound in the North West
+District where 918 people died and almost none of them were Guyanese.
+
+`events_guyana.js` is 42 events, 10 of them follow-through, plus 5 places and
+~27 year-texture blocks. Measured over 520 lives across ten birth cohorts: all
+42 fire, 0 errors, and `p.emigrateTo` puts the 59 diaspora characters in the
+United States and Canada rather than only flagging them.
+
+Two calibration notes worth keeping. The weight a narrow guard needs is not the
+weight a broad one needs: `gy_logie_room` (Indo-Guyanese, childhood, before
+1965) reached 5 of 520 lives at weight 8 and 26 at weight 30, and the
+follow-throughs gate on flags only 16-76 characters ever hold, so at the
+module-typical weight of 8 they lost to the general pool and the echo never
+landed for the life it was written for. And `check-anachronisms` now runs two
+Guyanese cohorts (1932 and 1955), because an estate colony on the sugar coast
+is exactly the case that audit exists for — a country whose present-day
+category says nothing about what was in the house.
 
 ### `isRich` is a statement about now, for the third time
 
@@ -1250,6 +1285,24 @@ src/
                                     being eleven per cent of your own country, Kuwait 1990 and the
                                     expulsion that followed it, and the Pearl Roundabout demolished
                                     so that nothing was left for anyone to mean by it
+        events_guyana.js          — 42 events: the country with one mention. Guyana had a single
+                                    guard anywhere in 8,124 events, and that guard named it in a
+                                    list of five Caribbean states — for a country whose twentieth
+                                    century contains, in one place, most of the forces this game is
+                                    about. Indenture from 1838 and the logie with the wall that
+                                    stops short of the roof; a single company owning the wage, the
+                                    shop, the ship and the estate hospital; the five shot at Enmore
+                                    in 1948 and the funeral walk that made Jagan; a constitution
+                                    suspended by warship 133 days after the first free vote; a
+                                    party split in 1955 that made the surname answer the ballot; the
+                                    2,600 families who moved in 1964; a voting system changed from
+                                    outside to remove one man; twenty years of rigged boxes and a
+                                    ban on wheat flour; Rodney and the bomb in the walkie-talkie;
+                                    Jonestown, which is the one word the world knows; the departure
+                                    that emptied the villages; and oil in 2015, which so far is a
+                                    number on the news. Plus the parts that are not politics: the
+                                    seawall with the Atlantic above the road, the bottom house, the
+                                    abeer in the street, Bourda. 10 of the 42 are follow-through.
         events_korea.js           — 14 events: hagwon, suneung, military service, Gwangju 1980, chaebol, Hallyu, DMZ families
         events_india.js           — 7 events: Emergency 1975–77, Sikh massacre 1984, liberalisation 1991, demonetisation
         events_india_depth.js     — 12 events: arranged marriage, joint family economy, dowry pressure, NRI question

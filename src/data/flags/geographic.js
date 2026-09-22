@@ -2365,4 +2365,408 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by per_dep_castillo_2021.',
   },
 
+
+  // ── GUYANA ─────────────────────────────────────────────────────────────────
+  // Set by events_guyana.js — the country with one mention.
+
+  logie_childhood: {
+    weight: 'moderate',
+    category: 'housing',
+    description: 'Grew up in estate barrack housing — one room, a wall that stops short of the roof, and a landlord who is also the employer.',
+    intent: 'year_texture',
+    notes: 'Set by gy_logie_room.',
+  },
+
+  booker_colony: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived inside a single-company economy: the wage, the shop, the drugstore, the ship out, all one name.',
+    intent: 'year_texture',
+    notes: 'Set by gy_bookers_everything.',
+  },
+
+  backdam_cane: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Cut cane in the backdam — the four o\'clock start, the cutlass sharpened daily, the trench water warm as blood.',
+    intent: 'year_texture',
+    notes: 'Set by gy_backdam_cutlass.',
+  },
+
+  enmore_martyrs: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was in the road behind the coffins after Enmore, 16 June 1948 — the founding act of Guyanese labour politics.',
+    intent: 'event',
+    notes: 'Set by gy_enmore_1948. Consumed by gy_ft_enmore_name.',
+  },
+
+  ethnic_vote: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Votes the way their street votes, in a country where the surname answers the question before it is asked.',
+    intent: 'year_texture',
+    notes: 'Set by gy_vote_known_before_spoken.',
+  },
+
+  refused_ethnic_vote: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Said out loud that both parties were using the split, and was not thanked for it.',
+    intent: 'none',
+    notes: 'Set by gy_vote_known_before_spoken (defiant choice). No downstream event needed.',
+  },
+
+  constitution_suspended_1953: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Was there when Britain suspended British Guiana\'s constitution 133 days after the first universal-suffrage election, troops off HMS Superb.',
+    intent: 'none',
+    notes: 'Set by gy_1953_suspension. No downstream event needed.',
+  },
+
+  black_friday_1962: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Georgetown\'s commercial district burned on 16 February 1962, and afterwards the two halves of the country looked at each other differently.',
+    intent: 'none',
+    notes: 'Set by gy_black_friday_1962. No downstream event needed.',
+  },
+
+  displaced_1964: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Moved, or took in the people who were moved, in the 1962-64 disturbances — about 2,600 families relocating into villages whose surnames matched theirs.',
+    intent: 'both',
+    notes: 'Set by gy_1964_displacement. Consumed by gy_ft_displaced_house and the year-texture layer.',
+  },
+
+  sheltered_the_displaced: {
+    weight: 'minor',
+    category: 'moral',
+    description: 'Eleven people in a house built for five, for most of a year, and would agree to it again.',
+    intent: 'none',
+    notes: 'Set by gy_1964_displacement (defiant choice). No downstream event needed.',
+  },
+
+  moved_for_safety: {
+    weight: 'minor',
+    category: 'displacement',
+    description: 'Went where the surnames matched, and never quite stopped calling the old place home.',
+    intent: 'none',
+    notes: 'Set by gy_1964_displacement (yielding choice). No downstream event needed.',
+  },
+
+  election_engineered: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Watched an electoral system changed from outside specifically to remove the man who would otherwise have won.',
+    intent: 'none',
+    notes: 'Set by gy_1964_pr_election. No downstream event needed.',
+  },
+
+  dougla_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Mixed Indo- and Afro-Guyanese in a country whose two parties are each one of those halves, and which has no party for both.',
+    intent: 'year_texture',
+    notes: 'Set by gy_dougla_household.',
+  },
+
+  golden_arrowhead: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched the flag go up in May 1966 and can still recite what all five colours stand for.',
+    intent: 'year_texture',
+    notes: 'Set by gy_independence_1966.',
+  },
+
+  co_operative_republic: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived in the only co-operative republic in the world, which sounded like a distinction and turned out to describe who owned the shops.',
+    intent: 'year_texture',
+    notes: 'Set by gy_republic_1970.',
+  },
+
+  nationalised_industry: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Present when the company that ran the town became the government that ran the town, and the machines and the houses stayed exactly as they were.',
+    intent: 'none',
+    notes: 'Set by gy_nationalisation. No downstream event needed.',
+  },
+
+  rigged_ballot: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Voted, or stopped voting, in elections where the boxes went to the army to be counted.',
+    intent: 'year_texture',
+    notes: 'Set by gy_rigged_ballot.',
+  },
+
+  political_disillusioned: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Stopped taking part, having established that taking part changed nothing, and found that not taking part changed nothing either.',
+    intent: 'year_texture',
+    notes: 'Set by gy_rigged_ballot (withdrawal choice) and available to any arc that needs the withdrawal rather than the anger.',
+  },
+
+  bread_ban_years: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Lived through the Guyanese import bans of the 1980s — no wheat flour, no split peas, no onions — and learned to bake with cassava.',
+    intent: 'event',
+    notes: 'Set by gy_flour_ban. Consumed by gy_ft_bread.',
+  },
+
+  backtrack_trade: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Crossed the Corentyne at night for flour and sold it on; a smuggler in the legal sense and a shopkeeper in every other.',
+    intent: 'year_texture',
+    notes: 'Set by gy_flour_ban (defiant choice).',
+  },
+
+  rodney_killed: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was in Guyana when Walter Rodney was killed by a bomb on 13 June 1980, in a country where everybody had the information the government said it lacked.',
+    intent: 'both',
+    notes: 'Set by gy_rodney_1980. Consumed by gy_ft_rodney_inquiry and the year-texture layer.',
+  },
+
+  jonestown_year: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'In Guyana in November 1978, and spent the rest of their life hearing one word said back whenever they named their country abroad.',
+    intent: 'none',
+    notes: 'Set by gy_jonestown_1978. No downstream event needed.',
+  },
+
+  mission_school: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Taken at six to an interior mission school four river-days from the village, taught well, and taught in one language only.',
+    intent: 'year_texture',
+    notes: 'Set by gy_mission_school.',
+  },
+
+  kept_language: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Held onto the first language deliberately through a schooling designed to remove it, and can still talk to the old people.',
+    intent: 'year_texture',
+    notes: 'Set by gy_mission_school (defiant choice).',
+  },
+
+  language_lost: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Can hear every word of the first language and cannot make the mouth produce it.',
+    intent: 'event',
+    notes: 'Set by gy_mission_school (yielding choice). Consumed by gy_ft_mission_language.',
+  },
+
+  rupununi_uprising: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'In the savannah in January 1969, when the rising ended in days and the soldiers stayed.',
+    intent: 'none',
+    notes: 'Set by gy_rupununi_1969. No downstream event needed.',
+  },
+
+  porkknocker: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Went into the Guyanese interior after gold with a dredge, a shotgun and a barrel of salt pork. One trip in four pays.',
+    intent: 'event',
+    notes: 'Set by gy_porkknocker. Consumed by gy_ft_porkknocker_body.',
+  },
+
+  mercury_river: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'The river came down brown and stayed brown, and the fish is what the village eats and has always eaten.',
+    intent: 'year_texture',
+    notes: 'Set by gy_mercury_river.',
+  },
+
+  seawall_coast: {
+    weight: 'moderate',
+    category: 'place',
+    description: 'Lives below the Atlantic behind a Dutch seawall, on a coast that drains through kokers at low tide.',
+    intent: 'year_texture',
+    notes: 'Set by gy_seawall_koker.',
+  },
+
+  great_flood_2005: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Was on the Guyanese coast in January 2005 when the conservancy went over and a third of the country stood in the water for weeks.',
+    intent: 'event',
+    notes: 'Set by gy_flood_2005. Consumed by gy_ft_flood_ground_floor.',
+  },
+
+  bourda_cricket: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Test cricket at Bourda: five days a year in which nobody asked whose grandparents came on which ship.',
+    intent: 'year_texture',
+    notes: 'Set by gy_bourda_test.',
+  },
+
+  phagwah_street: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Phagwah in the road rather than the yard, in a country with public holidays for three faiths and no expectation that you hold any of them.',
+    intent: 'year_texture',
+    notes: 'Set by gy_phagwah_street.',
+  },
+
+  bottom_house: {
+    weight: 'moderate',
+    category: 'place',
+    description: 'The life of the house happens underneath it: the table, the washing line, the domino game that runs until the mosquitoes.',
+    intent: 'year_texture',
+    notes: 'Set by gy_bottom_house.',
+  },
+
+  barrel_from_abroad: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'The barrel from Brooklyn, opened with everybody present, which is the most reliable income this house has.',
+    intent: 'year_texture',
+    notes: 'Set by gy_the_barrel.',
+  },
+
+  guyanese_diaspora: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left Guyana for New York or Toronto, in a departure so general that the street measured itself by who was still on it.',
+    intent: 'event',
+    notes: 'Set by gy_leaving. Consumed by gy_ft_diaspora_return.',
+  },
+
+  guyana_stayer: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Stayed, and was right to, and by the time it turned the people who would have celebrated it were in three other countries.',
+    intent: 'event',
+    notes: 'Set by gy_leaving (defiant choice). Consumed by gy_ft_stayer_vindicated.',
+  },
+
+  emptied_village: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Lives on a street where four houses hold one person each, all of them over seventy, with a man who comes to cut the yards.',
+    intent: 'year_texture',
+    notes: 'Set by gy_house_with_one_person.',
+  },
+
+  free_election_1992: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Stood in the queue on 5 October 1992, the first certified free vote in twenty-eight years.',
+    intent: 'year_texture',
+    notes: 'Set by gy_1992_election.',
+  },
+
+  oil_found_2015: {
+    weight: 'major',
+    category: 'economic',
+    description: 'In Guyana when the offshore oil was confirmed and the country became the fastest-growing economy on earth on the radio.',
+    intent: 'event',
+    notes: 'Set by gy_oil_2015. Consumed by gy_ft_oil_arrives_or_not.',
+  },
+
+  essequibo_claim: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Learned the map with the line down it before learning most things, as every Guyanese child does.',
+    intent: 'year_texture',
+    notes: 'Set by gy_essequibo_map.',
+  },
+
+  carries_enmore: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Can still say the five names in order and has never once had to practise them.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_enmore_name.',
+  },
+
+  returned_to_the_village: {
+    weight: 'minor',
+    category: 'displacement',
+    description: 'Drove past the house they were put out of in 1964 and did not stop the car.',
+    intent: 'none',
+    notes: 'Set by gy_ft_displaced_house. Terminal; suppresses the displacement texture.',
+  },
+
+  rodney_inquiry_lived_to_see: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Alive in 2016 when the commission said what everybody had said since the week it happened.',
+    intent: 'none',
+    notes: 'Set by gy_ft_rodney_inquiry. No downstream event needed.',
+  },
+
+  shortage_habits: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Buys two. There has been bread in the shop for thirty years and they buy two.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_bread.',
+  },
+
+  returned_as_visitor: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Went home for three weeks and was called, without malice, a foreigner.',
+    intent: 'none',
+    notes: 'Set by gy_ft_diaspora_return. No downstream event needed.',
+  },
+
+  stayer_vindicated: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'The ones who left are back for two weeks at a time to look at land, and are asking them the questions.',
+    intent: 'none',
+    notes: 'Set by gy_ft_stayer_vindicated. No downstream event needed.',
+  },
+
+  flood_wary: {
+    weight: 'moderate',
+    category: 'disaster',
+    description: 'Nothing of value lives below waist height in this house and nothing ever will again.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_flood_ground_floor.',
+  },
+
+  language_loss_reckoning: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Sat in the recording as the person who understands the language and cannot answer in it.',
+    intent: 'none',
+    notes: 'Set by gy_ft_mission_language. No downstream event needed.',
+  },
+
+  oil_boom_lived_through: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Present for the boom, on one side or the other of whether it reached the house.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_oil_arrives_or_not.',
+  },
+
+  bush_body: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'The malaria comes back when they get run down, and they can spot a man who has been in the bush from across a room.',
+    intent: 'year_texture',
+    notes: 'Set by gy_ft_porkknocker_body.',
+  },
+
 }

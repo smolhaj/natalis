@@ -15184,6 +15184,158 @@ function* textureCandidates(state, opts = {}) {
   if (F.has('gulf_minority_reflection') && Math.random() < 0.09) yield [T.earned,
     'A cousin visits from abroad and says something about it, and you hear your own street freshly for an afternoon and then stop.']
 
+
+  // Withdrawal rather than anger — the shape political feeling takes when a
+  // person has established, by experiment, that taking part changes nothing.
+  // Not Guyana-specific: any arc that needs the quiet version can set it.
+
+  if (F.has('political_disillusioned') && Math.random() < 0.10) yield [T.earned, pick([
+    'You do not follow it any more. Not as a position — you simply stopped, at some point, and the stopping did not require a decision.',
+    'Somebody at the table is angry about the government and you find you have nothing to add, and the nothing is not agreement.',
+    phase === 'late_life'
+      ? 'You were interested once, seriously, for about fifteen years. You can remember being that person and you cannot reconstruct how it felt.'
+      : 'The names change on the posters and the arrangement does not, and you have watched that happen enough times to have stopped reading the posters.',
+  ])]
+
+  // ── Guyana: the coast below the sea ───────────────────────────────────────
+  // One guard in the whole corpus before this, in a list of five countries.
+
+  if (F.has('logie_childhood') && Math.random() < 0.13) yield [T.anchored, pick([
+    'The wall did not go all the way up to the roof. You could hear the Persauds decide things. They could hear you be told things. Nobody ever mentioned it in forty years of living six feet apart.',
+    phase === 'late_life'
+      ? 'You have had a room with a door and a ceiling for most of your life now and you still, entering a room, look up at the corner where the wall meets the roof to check.'
+      : 'One room for the family and the estate owned the room. That is the whole arrangement and everything else followed from it.',
+  ])]
+
+  if (F.has('booker_colony') && Math.random() < 0.12) yield [T.anchored, pick([
+    'The wage, the shop, the drugstore, the rum, the ship. One name on all of it, and the joke about the initials that everyone made and nobody thought was funny.',
+    'You learned the word "monopoly" much later, in a classroom, and recognised it immediately as the description of a place you had already lived in.',
+  ])]
+
+  if (F.has('backdam_cane') && Math.random() < 0.12) yield [T.earned, pick([
+    'Your hands have a particular thickness across the base of the fingers. You notice it when you shake hands with someone who has never done the work.',
+    'You still wake before the sun without an alarm and there has been no reason to for eighteen years.',
+    phase === 'late_life'
+      ? 'The shoulder is the cane. The knees are the trench. Nobody in the clinic writes down what actually did it and it would not change the treatment.'
+      : 'The cutlass had a curve to it and a weight you stopped noticing in the second month. You could still sharpen one properly.',
+  ])]
+
+  if (F.has('bottom_house') && Math.random() < 0.12) yield [T.anchored, pick([
+    'The house is on stilts and the life of it is underneath: the table, the washing line, the domino game that runs until the mosquitoes end it. The good chairs are upstairs and nobody has ever sat in them.',
+    'Rain on a zinc roof from underneath a house, which is the loudest and most reassuring sound there is.',
+  ])]
+
+  if (F.has('seawall_coast') && Math.random() < 0.12) yield [T.anchored, pick([
+    'The Atlantic is above the road. You have known this since you were seven and it has never once been a thought you had during the day.',
+    'The kokers shut at high tide and open at low and the whole coast drains out through them, and this has been the arrangement since the Dutch, and everybody simply knows the times.',
+    'Sunday on the seawall: the whole city up there walking in one direction and then the other, with the sea on one side, higher than the houses on the other.',
+  ])]
+
+  if (F.has('phagwah_street') && Math.random() < 0.10) yield [T.anchored, pick([
+    'The abeer does not come out of a white shirt and everyone knows it and everyone wears one anyway.',
+    'Three sets of public holidays in one small country and every one of them treated as an invitation to people who do not hold the belief in question.',
+  ])]
+
+  if (F.has('bourda_cricket') && Math.random() < 0.11) yield [T.anchored, pick([
+    'The commentary on the radio in a house where nobody is watching the radio, and a shout from three yards away that tells you what happened before the commentator does.',
+    'Five days a year in which the question of whose grandparents came on which ship did not arise even once.',
+  ])]
+
+  if (F.has('barrel_from_abroad') && Math.random() < 0.12) yield [T.earned, pick([
+    'The barrel has a smell — cardboard and detergent and something American — and opening it is done with everybody present because opening it is the event.',
+    'The clothes came in sizes somebody guessed at from four thousand miles away, and you wore all of them, including the ones that did not fit.',
+  ])]
+
+  if (F.has('emptied_village') && Math.random() < 0.13) yield [T.earned, pick([
+    'Four houses on this street with one person in them, and that person over seventy, and a man who comes to cut the yards so they do not look abandoned.',
+    'The telephone rings at a time agreed years ago, on a Sunday, and it is the same fifteen minutes every week, and it is the week.',
+    phase === 'late_life'
+      ? 'Your class was thirty-one. You could name where every one of them is and it would take four countries to do it.'
+      : 'You do the arithmetic sometimes on who is left, and you stop doing it, because the number only goes one way.',
+  ])]
+
+  if (F.has('essequibo_claim') && Math.random() < 0.09) yield [T.anchored,
+    'The map with the line down it, which every child here can draw from memory, and which gets loud again about every twenty years.']
+
+  if (F.has('golden_arrowhead') && Math.random() < 0.10) yield [T.anchored, pick([
+    'Green for the forest, gold for what is in the ground, white for the rivers, black for endurance, red for the work ahead. You had it off by heart at nine and you have never needed to relearn it.',
+    'A great deal of gold in the ground and very little in the houses. The flag was accurate and it was also pointing at somewhere nobody had got to.',
+  ])]
+
+  if (F.has('co_operative_republic') && Math.random() < 0.09) yield [T.anchored, pick([
+    'Mashramani in February: the bands down Church Street, the costume competition, the word that is said to be Amerindian for the celebration after co-operative work.',
+    'The only co-operative republic in the world, which sounded like a distinction and turned out to be a description of who owned the shops.',
+  ])]
+
+  if (F.has('rigged_ballot') && Math.random() < 0.11) yield [T.earned, pick([
+    'The boxes went to the army to be counted. That is not an allegation, that is the procedure, and it was printed.',
+    'The queue outside the school was long and quiet, and the quietness was everybody declining to say out loud what they knew.',
+  ])]
+
+  if (F.has('backtrack_trade') && Math.random() < 0.11) yield [T.earned, pick([
+    'The river at night with no light on the boat, and a word for it that was used in front of children without lowering anyone\'s voice.',
+    'You can still judge, by eye, the weight a small boat will take before it stops being sensible.',
+  ])]
+
+  if (F.has('shortage_habits') && Math.random() < 0.13) yield [T.earned, pick([
+    'You buy two. There has been bread in the shop for thirty years and you buy two, and your daughter laughs at you, and you buy two.',
+    'The cupboard has more in it than the cupboard needs. You are aware of this. It is not going to change.',
+  ])]
+
+  if (F.has('flood_wary') && Math.random() < 0.12) yield [T.earned, pick([
+    'Nothing of value lives below waist height in this house and nothing ever will again. The documents are upstairs in a box with a lid that clips.',
+    'Hard rain at night and you are awake, listening to the gutter, and so is everyone else on this coast, and none of you say so.',
+  ])]
+
+  if (F.has('bush_body') && Math.random() < 0.11) yield [T.earned, pick([
+    'The malaria comes back when you get run down. Your wife says the sentence for you now, in your voice, before you can.',
+    'You can tell a man who has been in the bush from across a room — something in the forearms, something in how he sits — and you have not been wrong yet.',
+  ])]
+
+  if (F.has('kept_language') && Math.random() < 0.12) yield [T.anchored, pick([
+    'You are one of the ones who can still talk properly to the old people. There are four of them. You visit more than you strictly have reason to.',
+    'The English is the one you work in and the other one is the one your grandmother\'s face changed for. You have kept both and it took deliberate effort to keep the second.',
+  ])]
+
+  if (F.has('mission_school') && Math.random() < 0.11) yield [T.anchored, pick([
+    'A dormitory of children from three nations and a rule that only one language was spoken in the compound, and the teaching in it was good, and both of those are true.',
+    'Four days from the village if the river was right. You measured home in river days for the whole of your childhood.',
+  ])]
+
+  if (F.has('mercury_river') && Math.random() < 0.11) yield [T.anchored, pick([
+    'The river came down brown that year and stayed brown. Upstream there are dredges and nobody at the meeting had another river.',
+    'The fish is what the village eats and has always eaten. That sentence used to be a good one.',
+  ])]
+
+  if (F.has('carries_enmore') && Math.random() < 0.12) yield [T.earned, pick([
+    'Lallabagee, Pooran, Rambarran, Dukhi, Harry. You have never once had to practise them.',
+    'There is a monument now and school parties are taken to it, and a child asked you if you knew them, and the honest answer was that you were in the road behind them.',
+  ])]
+
+  if (F.has('ethnic_vote') && Math.random() < 0.10) yield [T.anchored,
+    'Nobody has to ask how you vote. The surname does the whole job, and it does it at the ministry counter as well as at the shop.']
+
+  if (F.has('dougla_identity') && Math.random() < 0.12) yield [T.anchored, pick([
+    'Both grandmothers have a word for the other side of you and neither is going to stop feeding you enormously.',
+    'There are a great many of you in this country and there is no party for you, and nobody has ever put that in a manifesto.',
+  ])]
+
+  if (F.has('oil_boom_lived_through') && Math.random() < 0.12) yield [T.earned, pick([
+    'The fastest-growing economy on earth, read out on the radio in a house where the current still goes at seven.',
+    'The price of a house lot in Georgetown has done something violent and nobody in this street is selling, because where would they go.',
+  ])]
+
+  if (F.has('free_election_1992') && Math.random() < 0.10) yield [T.earned,
+    'The queue in October that started before it was light, and the quietness in it that was a different quietness — not people refusing to say what they knew, but people not wanting to jinx it.']
+
+  if (F.has('displaced_1964') && !F.has('returned_to_the_village') && Math.random() < 0.12) yield [T.anchored, pick([
+    'You live among surnames that match yours. It is safer. That is the entire reason and it has been the entire reason since 1964.',
+    'The word people use for it is "the disturbances," which was chosen by somebody who was not moved.',
+  ])]
+
+  if (F.has('rodney_killed') && Math.random() < 0.10) yield [T.anchored,
+    'A bomb in a walkie-talkie, and a sergeant who left the country that week, and a government with no information in a country where everybody had the information.']
+
   if (F.has('partition_stayed_behind') && Math.random() < 0.13) yield [T.anchored, pick([
     'The house four doors down changed hands in 1947 and the village still calls it by the name of the family that left it. Nobody who uses the name has met them. The people living in it now have been there longer than the people who built it.',
     phase === 'late_life'

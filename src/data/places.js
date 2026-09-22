@@ -1,4 +1,7 @@
-// Geographic place data for all 77 countries.
+// Geographic place data. 197 places across 83 of the roster's 154 countries —
+// `pickBirthPlace` returns null for the other 71, which leaves `G.place`,
+// `currentNeighborhoodTier` and `currentNeighborhoodName` all null for anyone born
+// there, so every place-guarded event and texture block is silently unreachable.
 // Each country has at minimum: 1 rural, 1 town/suburban, 1 urban entry.
 // Large countries (US, India, China, Brazil, Russia, Nigeria) get 4–8 entries.
 // Neighborhoods are real named districts, accurate to wealth tier and era.
@@ -2183,6 +2186,60 @@ export const PLACES = [
       working_class: ['Calle principal', 'Parque central'],
       middle_class:  ['Municipalidad', 'La iglesia'],
       elite:         ['Finca cafetalera', 'Ranchería del patrón'],
+    },
+  },
+
+
+  // ── GUYANA ─────────────────────────────────────────────────────────────────
+
+  {
+    id: 'gy_georgetown', name: 'Georgetown', country: 'Guyana',
+    type: 'urban', scale: 'city', region: 'Demerara-Mahaica',
+    neighborhoods: {
+      informal:      ['Albouystown', 'Tiger Bay', 'Sophia', 'Plastic City'],
+      working_class: ['Werk-en-Rust', 'Charlestown', 'Agricola', 'East La Penitence'],
+      middle_class:  ['Kitty', 'Campbellville', 'Prashad Nagar', 'Alberttown'],
+      elite:         ['Queenstown', 'Bel Air Park', 'Subryanville', 'Lamaha Gardens'],
+    },
+  },
+  {
+    id: 'gy_berbice', name: 'New Amsterdam and the Berbice Coast', country: 'Guyana',
+    type: 'urban', scale: 'town', region: 'East Berbice-Corentyne',
+    neighborhoods: {
+      informal:      ['The logies at Port Mourant', 'Angoy\'s Avenue', 'Canje backdam'],
+      working_class: ['Rose Hall Estate ranges', 'Albion housing scheme', 'Skeldon line'],
+      middle_class:  ['Main Street', 'Stanleytown', 'Corriverton'],
+      elite:         ['The estate manager\'s compound', 'Fort Ordnance'],
+    },
+  },
+  {
+    id: 'gy_linden', name: 'Linden', country: 'Guyana',
+    type: 'urban', scale: 'town', region: 'Upper Demerara-Berbice',
+    neighborhoods: {
+      informal:      ['Block 22', 'Amelia\'s Ward squatting area', 'Silvertown'],
+      working_class: ['Wismar', 'Christianburg', 'One Mile'],
+      middle_class:  ['Mackenzie', 'Richmond Hill'],
+      elite:         ['The Demba senior staff compound', 'Watooka'],
+    },
+  },
+  {
+    id: 'gy_essequibo', name: 'The Essequibo Coast', country: 'Guyana',
+    type: 'rural', scale: 'village', region: 'Pomeroon-Supenaam',
+    neighborhoods: {
+      informal:      ['The backdam shacks', 'Squatting area behind the dam'],
+      working_class: ['Anna Regina', 'Charity', 'Suddie'],
+      middle_class:  ['The rice-mill house', 'Near the market'],
+      elite:         ['The miller\'s house on the public road'],
+    },
+  },
+  {
+    id: 'gy_rupununi', name: 'The Rupununi', country: 'Guyana',
+    type: 'rural', scale: 'village', region: 'Upper Takutu-Upper Essequibo',
+    neighborhoods: {
+      informal:      ['The benab at the edge of the village', 'The mining camp'],
+      working_class: ['Village centre', 'Near the airstrip'],
+      middle_class:  ['The mission', 'The schoolteacher\'s house'],
+      elite:         ['The ranch house', 'Lethem'],
     },
   },
 
