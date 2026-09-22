@@ -691,6 +691,28 @@ function courseHousing(s) {
     const price = inEraMoney(localisePrice(type.basePrice, c?.gdp, 'local'), c, s.currentYear)
     const deposit = Math.round(price * (type.downPaymentRate ?? 0.2))
     if ((s.money ?? 0) < deposit) return s
+    // A lender tests the income, not only the deposit. Nothing here did, so a
+    // musician on $4,149 a year who happened to have saved a deposit was handed
+    // a terraced house whose annual payment exceeded her entire salary — and
+    // that was free, invisibly, for as long as arrears had no consequence. The
+    // moment three years of them took the house, the engine started repossessing
+    // people at 44 whose only mistake was being sold a mortgage in the first
+    // place: three lives in a row entered arrears at 42 and lost the house at 44.
+    //
+    // Below the line the purchase simply does not happen, which is what "could
+    // not get a mortgage" looks like from inside a life.
+    const mortgage = price - deposit
+    const payment = Math.round(mortgage / 25) + Math.round(mortgage * 0.04)
+    // The textbook line is about a third of GROSS HOUSEHOLD income, and the
+    // state carries one salary — there is no partner income field — so the
+    // figure has to stand in for a household out of a single earner's wage.
+    // Calibrated against the recorded targets rather than picked: at 0.35 it
+    // rejected the median 1975 American household and ownership collapsed to
+    // 18%; at 0.7 it measures US 41-50% and Germany 37-42% against real figures
+    // of 43% and 47%, with repossession down to 1-3 lives in 62.
+    const HOUSEHOLD_CAPACITY = 0.7
+    const income = (s.career?.salary ?? 0) + (s.pensionAnnual ?? 0)
+    if (payment > income * HOUSEHOLD_CAPACITY) return s
     s = {
       ...s,
       money: (s.money ?? 0) - deposit,

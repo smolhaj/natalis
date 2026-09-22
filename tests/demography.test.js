@@ -137,12 +137,18 @@ describe('demography matches the historical record', () => {
 
   it('gives people homes at roughly the rate their country and decade did', () => {
     // Ownership was 0% across every simulated life before the housing hook:
-    // buyProperty existed and nothing called it. Tolerances are wide because
-    // run-to-run variance at this sample size is around ten points — Germany
-    // measured 49, 75, 55, 45 and 56 across five runs of the same code.
+    // buyProperty existed and nothing called it.
+    //
+    // Twenty lives is not enough to carry this claim. About seventeen of them
+    // reach 55, so the measured rate moves in steps of six points and lands ON
+    // the 0.25 floor at 4/16 and 5/20 — it failed two runs in five against an
+    // engine measuring 41-50% at n=62. That is the trap CLAUDE.md records
+    // twice: assert the contract at the sample size you are actually taking.
+    // Forty-five lives puts roughly thirty-eight adults in the sample and moves
+    // the floor several standard errors away from the truth.
     const measure = (country, birthYear) => {
       let adults = 0, owned = 0
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 45; i++) {
         const { s } = runLife(country, birthYear)
         if (s.age < 55) continue
         adults++
