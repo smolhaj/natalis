@@ -1144,6 +1144,14 @@ export const useGameStore = create((set, get) => ({
       next.prisonSentence = finalSentence
       next.mem = { ...next.mem, originalSentence: finalSentence, prisonYearStart: state.age }
       if (state.career && ['petty','property','violent','drug','organized','financial','organised'].includes(crimeCategory)) {
+        // This happened silently. A criminal life read "You are promoted to
+        // Teacher. New salary: $21,600" → "You are arrested for burglary" →
+        // next year "You begin working as a Teaching Assistant", five times
+        // over, with nothing in between. It is the most consequential
+        // downstream effect in the crime system and it had no prose.
+        const lost = state.career.title
+        next.log = [...next.log, { age: state.age, isKey: true, text:
+          `The letter about your position as ${lost} arrives before the sentence does. They are careful with the wording and it does not take long to read.` }]
         next.career = null
       }
     }

@@ -231,6 +231,29 @@ export const ACTIVITIES = {
   ],
 
   body: [
+    // The panel has had a Vasectomy / Tubal Ligation button for some time,
+    // calling `takeActivity('sterilization')` — an id no pool defined, so
+    // `applyActivity` returned the state unchanged: no flag, no cost, no action
+    // spent, no line in the log. The button's own guard reads the flag it was
+    // supposed to set, so it never went away and could be pressed forever.
+    {
+      id: 'sterilization',
+      name: 'Permanent sterilisation',
+      description: 'A decision that is not designed to be reversed.',
+      minAge: 18,
+      maxAge: null,
+      cost: 1500,
+      effect: (p) => {
+        p.addFlag(p._state?.character?.gender === 'male' ? 'vasectomy' : 'tubal_ligation')
+        p.addFlag('sterilised')
+        p.m += 2
+      },
+      condition: (G) => G.age >= 18 && !G.flags.includes('vasectomy') && !G.flags.includes('tubal_ligation'),
+      outcome: 'It takes an afternoon. The recovery is a week of walking carefully. The decision was made long before the appointment.',
+      prose: (G) => G.children?.length > 0
+        ? 'You have the number of children you are going to have. Saying so out loud to a doctor is stranger than deciding it was.'
+        : 'Somebody asks whether you are sure, which is their job, and you are, and you say so in a voice that surprises you slightly.',
+    },
     {
       id: 'gym',
       name: 'Go to the gym',
@@ -660,6 +683,17 @@ export const ACTIVITIES = {
   ],
 
   money: [
+    // Every activity in this category used to move `p.w` — the wealth STAT —
+    // which tick() recomputes from `money` every year for anyone with a career.
+    // So none of them did anything, and two were strictly harmful: "Work
+    // overtime" cost 3 health and 3 happiness permanently and "Save
+    // aggressively" cost 2 charisma, for a gain that was erased on the next Age
+    // Up. Measured: wealth 67 → 78 → back to 67.
+    //
+    // They move `p.mo` now, which is real money. The figures are written in
+    // present-day dollars and denominated by applyProxy like every other
+    // `p.mo` in the corpus, and where there is a wage they are a share of it,
+    // because an hour of overtime is worth what your hour is worth.
     {
       id: 'overtime',
       name: 'Work overtime',
@@ -667,7 +701,11 @@ export const ACTIVITIES = {
       minAge: 18,
       maxAge: null,
       cost: 0,
-      effect: (p) => { p.w += 6; p.h -= 3; p.m -= 3; },
+      effect: (p) => {
+        const wage = p._state?.career?.salary ?? 0
+        p.moNominal += Math.round(wage * 0.09)
+        p.h -= 3; p.m -= 3
+      },
       condition: (G) => G.career !== null,
       outcome: 'The extra money is real. So is the cost.',
       prose: (G) => {
@@ -683,7 +721,13 @@ export const ACTIVITIES = {
       minAge: 18,
       maxAge: null,
       cost: 0,
-      effect: (p) => { p.w += 5; p.s -= 2; },
+      effect: (p) => {
+        // Saving is not earning. This is the money you did not spend, and the
+        // charisma is what saying no to things costs.
+        const wage = p._state?.career?.salary ?? 0
+        p.moNominal += Math.round(wage * 0.07)
+        p.s -= 2
+      },
       condition: null,
       outcome: 'Security accumulates.',
       prose: (G) => {
@@ -700,10 +744,14 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 20,
       effect: (p) => {
+        // A share of what is actually in the account, which is what a market
+        // does to savings.
+        const held = p._state?.money ?? 0
+        const stake = Math.round(held * 0.25)
         const roll = Math.random()
-        if (roll < 0.45) { p.w += 10; }
-        else if (roll < 0.75) { p.w -= 5; }
-        else { p.w -= 15; }
+        if (roll < 0.45) p.moNominal += Math.round(stake * 0.35)
+        else if (roll < 0.75) p.moNominal -= Math.round(stake * 0.15)
+        else p.moNominal -= Math.round(stake * 0.5)
       },
       condition: (G) => G.stats.wealth > 30,
       outcome: 'Markets are indifferent to your needs.',
@@ -717,9 +765,11 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 10,
       effect: (p) => {
+        const wage = p._state?.career?.salary ?? 0
+        const scale = wage > 0 ? wage : 4000
         const roll = Math.random()
-        if (roll < 0.6) { p.w += 7; p.m += 2; }
-        else { p.w -= 3; p.m -= 3; }
+        if (roll < 0.6) { p.moNominal += Math.round(scale * 0.2); p.m += 2 }
+        else { p.mo -= 200; p.m -= 3 }
       },
       condition: null,
       outcome: 'It either finds its feet or it doesn\'t.',
@@ -754,7 +804,11 @@ export const ACTIVITIES = {
       minAge: 18,
       maxAge: null,
       cost: 0,
-      effect: (p) => { p.w += 4; p.m -= 1; },
+      effect: (p) => {
+        const wage = p._state?.career?.salary ?? 0
+        p.moNominal += Math.round(wage * 0.04)
+        p.m -= 1
+      },
       condition: null,
       outcome: 'Financial discipline is unglamorous and works.',
       prose: (G) => {
@@ -770,10 +824,12 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 20,
       effect: (p) => {
+        const held = p._state?.money ?? 0
+        const stake = Math.max(1, Math.round(held * 0.1))
         const roll = Math.random()
-        if (roll < 0.30) { p.w += 12; p.m += 3; }
-        else if (roll < 0.55) { p.w -= 5; }
-        else { p.w -= 14; p.m -= 5; p.addFlag('gambler'); }
+        if (roll < 0.30) { p.moNominal += stake * 2; p.m += 3 }
+        else if (roll < 0.55) { p.moNominal -= stake }
+        else { p.moNominal -= stake * 3; p.m -= 5; p.addFlag('gambler') }
       },
       condition: null,
       outcome: 'The odds are known and ignored.',
@@ -951,6 +1007,18 @@ export const ACTIVITIES = {
     { crimeId: 'drug_lab', label: 'Run a drug lab', minAge: 22 },
     { crimeId: 'bribery', label: 'Pay a bribe', minAge: 18 },
     { crimeId: 'fraud', label: 'Commit fraud', minAge: 20 },
+    // Seven of the thirty-seven crimes in crimes.js were not listed here at
+    // all, so nothing could reach them — and they are every modern and cyber
+    // crime in the file, which is to say all of the era-gated crime content
+    // (`requiresYear` 1995-2015), plus `hacking`, which carries one of only
+    // nine minigames in the build.
+    { crimeId: 'drug_possession', label: 'Carry something on you', minAge: 14 },
+    { crimeId: 'dui', label: 'Drive after drinking', minAge: 17 },
+    { crimeId: 'phishing', label: 'Send the emails', minAge: 16 },
+    { crimeId: 'identity_theft', label: 'Use somebody else\'s name', minAge: 18 },
+    { crimeId: 'hacking', label: 'Get into a system you should not be in', minAge: 15 },
+    { crimeId: 'ransomware', label: 'Lock up somebody\'s files', minAge: 18 },
+    { crimeId: 'crypto_fraud', label: 'Run the coin', minAge: 18 },
     { crimeId: 'tax_evasion', label: 'Evade taxes', minAge: 25 },
     { crimeId: 'embezzlement', label: 'Embezzle funds', minAge: 25 },
     { crimeId: 'money_laundering', label: 'Launder money', minAge: 25 },

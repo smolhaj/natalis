@@ -1552,6 +1552,21 @@ export function attemptCrime(state, crimeId) {
     if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
     updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }]
     if (sentence > 0) updated.pendingTrial = buildPendingTrial(updated, crime, sentence)
+    else {
+      // A crime whose sentence band is 0-0 — shoplifting, and two others — went
+      // no further than the arrest line: no trial, no fine, no prison, nothing.
+      // One life was arrested four times before anything happened at all. A
+      // non-custodial offence still has a consequence; it is a fine, a caution
+      // and an afternoon.
+      const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
+      const fine = inEraMoney(Math.round(400 * (gdpMult[liveCountry(updated)?.gdp] ?? 1)), liveCountry(updated), updated.currentYear)
+      const repeat = (updated.criminalRecord ?? []).filter(r => (r.crime ?? '') === (crime.criminalRecordEntry ?? '')).length
+      updated.money = Math.max(0, (updated.money ?? 0) - fine)
+      updated.stats = { ...updated.stats, happiness: clamp((updated.stats.happiness ?? 50) - (repeat > 1 ? 8 : 4), 0, 100) }
+      updated.log = [...updated.log, { age: state.age, isKey: false, text: repeat > 1
+        ? `The fine is $${fine.toLocaleString()} and the officer recognises you, which costs more than the fine does. You are told, without heat, what happens the next time.`
+        : `A caution, a fine of $${fine.toLocaleString()}, and most of a day. You sign three things. Nobody is unkind about it and that is somehow not a relief.` }]
+    }
   } else {
     const proxy = buildEffectProxy(updated)
     if (useNewFormat) crime.effect(proxy)
@@ -2287,8 +2302,29 @@ export function tick(state) {
     scheduleLifeBeat('ls_the_reckoning', 55)
   }
 
-  // Prison year
+  // Prison year.
+  //
+  // This branch used to `return s` above applyNaturalAging, tickParents,
+  // tickSiblings, tickPartner, applyWorldEvents, applyHeadlines, applySoundtrack
+  // and checkIllnessRisk — so time stopped for everyone else while the
+  // character was inside. A Russian imprisoned 1988 to 1998 got zero world
+  // events and zero headlines: the USSR dissolved and the game never mentioned
+  // it, in the one situation where a character would most plausibly come out to
+  // a changed country. Their mother aged nought years in ten, which made a long
+  // sentence a life-extension cheat for the whole family.
+  //
+  // The character's OWN course does not advance — no job, no marriage, no
+  // house, which is what prison is — but the world does.
   if (s.inPrison) {
+    s = applyNaturalAging(s)
+    s = tickParents(s)
+    s = tickSiblings(s)
+    s = tickPartner(s)
+    s = applyWorldEvents(s)
+    s = applyHeadlines(s)
+    s = applySoundtrack(s)
+    s = checkIllnessRisk(s)
+    if (s.dead) return s
     s.stats = { ...s.stats, health: clamp(s.stats.health - 1, 0, 100), happiness: clamp(s.stats.happiness - 2, 0, 100) }
     const d = checkDeath(s)
     if (d.dead) {

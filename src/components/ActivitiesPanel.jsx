@@ -582,10 +582,7 @@ export default function ActivitiesPanel({ onClose }) {
             {state.age >= 18 && !state.flags.includes('vasectomy') && !state.flags.includes('tubal_ligation') && (
               <Btn
                 disabled={noActions}
-                onClick={() => go(() => {
-                  const flag = state.character?.gender === 'male' ? 'vasectomy' : 'tubal_ligation'
-                  useGameStore.getState().takeActivity('sterilization')
-                })}
+                onClick={() => go(() => takeActivity('sterilization'))}
                 title={state.character?.gender === 'male' ? 'Vasectomy' : 'Tubal Ligation'}
                 subtitle="Permanent sterilisation."
                 cost="Cost: $1,500"
