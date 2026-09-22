@@ -55,7 +55,7 @@ function Btn({ onClick, disabled, title, subtitle, cost, danger }) {
     >
       <p className={`text-sm font-semibold ${danger ? 'text-bit-red' : 'text-natalis-text'}`}>{title}</p>
       {subtitle && <p className="text-natalis-muted text-xs">{subtitle}</p>}
-      {cost && <p className="text-xs font-medium" style={{ color: '#007aff' }}>{cost}</p>}
+      {cost && <p className="text-xs font-medium" style={{ color: '#3f5670' }}>{cost}</p>}
     </button>
   )
 }
@@ -264,14 +264,14 @@ export default function ActivitiesPanel({ onClose }) {
                   {enrolled.type === 'university' ? '🎓' : '🔧'} {enrolled.field} — Year {(enrolled.year ?? 0) + 1} of {enrolled.type === 'university' ? 4 : 2}
                 </p>
                 <div className="w-full h-2 bg-natalis-bg rounded-full overflow-hidden mt-1">
-                  <div className="h-full rounded-full" style={{ width: `${((enrolled.year ?? 0) / (enrolled.type === 'university' ? 4 : 2)) * 100}%`, background: 'linear-gradient(90deg, #007aff, #5ac8fa)' }} />
+                  <div className="h-full rounded-full" style={{ width: `${((enrolled.year ?? 0) / (enrolled.type === 'university' ? 4 : 2)) * 100}%`, background: '#3f5670' }} />
                 </div>
               </div>
             )}
             {gpa !== null && (
               <div className="flex items-center justify-between bg-white rounded-xl border border-natalis-border px-4 py-3">
                 <span className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">🎓 GPA</span>
-                <span className="font-bold text-sm" style={{ color: gpa >= 3.5 ? '#34c759' : gpa >= 2.5 ? '#ff9500' : '#ff3b30' }}>{gpa.toFixed(2)}</span>
+                <span className="font-bold text-sm" style={{ color: gpa >= 3.5 ? '#3f6146' : gpa >= 2.5 ? '#8a6635' : '#8c3a2e' }}>{gpa.toFixed(2)}</span>
               </div>
             )}
             {state.age >= 10 && state.age <= 25 && (
@@ -358,17 +358,17 @@ export default function ActivitiesPanel({ onClose }) {
               </div>
               {/* Stat bars */}
               <div className="px-4 pt-2 pb-3 space-y-2">
-                <StatBarRow label="Looks" value={profile.looks} color="#ff6b81" />
-                <StatBarRow label="Smarts" value={profile.smarts} color="#007aff" />
-                <StatBarRow label="Money" value={profile.wealthStat} color="#34c759" />
-                <StatBarRow label="Craziness" value={profile.craziness} color="#ff9500" />
+                <StatBarRow label="Looks" value={profile.looks} color="#7b4356" />
+                <StatBarRow label="Smarts" value={profile.smarts} color="#3f5670" />
+                <StatBarRow label="Money" value={profile.wealthStat} color="#3f6146" />
+                <StatBarRow label="Craziness" value={profile.craziness} color="#8a6635" />
               </div>
               {/* Action buttons */}
               <div className="px-4 pb-4 grid grid-cols-2 gap-2">
                 <button
                   onClick={onAccept}
                   className="py-3 rounded-xl font-bold text-white text-sm active:scale-95 transition-all"
-                  style={{ background: 'linear-gradient(135deg,#ff6b81,#c44569)' }}
+                  style={{ background: '#7b4356' }}
                 >
                   {acceptLabel}
                 </button>
@@ -433,9 +433,9 @@ export default function ActivitiesPanel({ onClose }) {
                   <button key={r.value} onClick={() => setDatingFilters(f => ({ ...f, ageRange: r.value }))}
                     className="py-2 px-2 rounded-xl border text-xs font-semibold transition-all active:scale-95"
                     style={{
-                      background: datingFilters.ageRange === r.value ? '#ff6b81' : 'white',
-                      color: datingFilters.ageRange === r.value ? 'white' : '#8e8e93',
-                      borderColor: datingFilters.ageRange === r.value ? '#ff6b81' : '#e5e5ea',
+                      background: datingFilters.ageRange === r.value ? '#7b4356' : 'white',
+                      color: datingFilters.ageRange === r.value ? 'white' : '#7d766a',
+                      borderColor: datingFilters.ageRange === r.value ? '#7b4356' : '#e2ddd2',
                     }}>
                     {r.label}
                   </button>
@@ -448,9 +448,9 @@ export default function ActivitiesPanel({ onClose }) {
                   <button key={r.value} onClick={() => setDatingFilters(f => ({ ...f, netWorth: r.value }))}
                     className="w-full text-left px-4 py-2.5 rounded-xl border text-sm font-semibold transition-all active:scale-95"
                     style={{
-                      background: datingFilters.netWorth === r.value ? '#fff0f3' : 'white',
-                      color: datingFilters.netWorth === r.value ? '#c44569' : '#3a3a3c',
-                      borderColor: datingFilters.netWorth === r.value ? '#ff6b81' : '#e5e5ea',
+                      background: datingFilters.netWorth === r.value ? '#f8eef0' : 'white',
+                      color: datingFilters.netWorth === r.value ? '#663747' : '#403b33',
+                      borderColor: datingFilters.netWorth === r.value ? '#7b4356' : '#e2ddd2',
                     }}>
                     {r.label}
                     {datingFilters.netWorth === r.value && <span className="float-right text-pink-400">✓</span>}
@@ -467,7 +467,7 @@ export default function ActivitiesPanel({ onClose }) {
                   setDatingAppStep('match')
                 }}
                 className="w-full py-3 rounded-xl font-bold text-white text-sm active:scale-95 disabled:opacity-40 transition-all"
-                style={{ background: 'linear-gradient(135deg,#ff6b81,#c44569)' }}
+                style={{ background: '#7b4356' }}
               >
                 💘 Let's try it · ${(state.money ?? 0) >= 100 ? '100' : 'Need $100'}
               </button>
@@ -579,7 +579,7 @@ export default function ActivitiesPanel({ onClose }) {
           <>
             <div className="flex items-center justify-between bg-white rounded-xl border border-natalis-border px-4 py-3 mb-1">
               <span className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">Birth Control</span>
-              <span className="text-xs font-bold px-2.5 py-1 rounded-full text-white" style={{ backgroundColor: state.birthControl ? '#34c759' : '#ff3b30' }}>
+              <span className="text-xs font-bold px-2.5 py-1 rounded-full text-white" style={{ backgroundColor: state.birthControl ? '#3f6146' : '#8c3a2e' }}>
                 {state.birthControl ? 'ON' : 'OFF'}
               </span>
             </div>
@@ -739,9 +739,9 @@ export default function ActivitiesPanel({ onClose }) {
                 onClick={() => setHorseIdx(i)}
                 className="w-full text-left px-4 py-3 rounded-xl border transition-all text-sm font-semibold active:scale-95"
                 style={{
-                  background: horseIdx === i ? 'linear-gradient(135deg,#ff9500,#ff6b00)' : 'white',
-                  color: horseIdx === i ? 'white' : '#3a3a3c',
-                  borderColor: horseIdx === i ? '#ff9500' : '#e5e5ea',
+                  background: horseIdx === i ? '#8a6635' : 'white',
+                  color: horseIdx === i ? 'white' : '#403b33',
+                  borderColor: horseIdx === i ? '#8a6635' : '#e2ddd2',
                 }}
               >
                 #{i + 1} — {horse} {horseIdx === i ? '✓' : ''}
@@ -754,9 +754,9 @@ export default function ActivitiesPanel({ onClose }) {
                   <button key={amt} onClick={() => setBetAmount(amt)}
                     className="flex-1 py-2 text-xs font-bold rounded-xl border transition-all active:scale-95"
                     style={{
-                      background: betAmount === amt ? '#007aff' : 'white',
-                      color: betAmount === amt ? 'white' : '#8e8e93',
-                      borderColor: betAmount === amt ? '#007aff' : '#e5e5ea',
+                      background: betAmount === amt ? '#3f5670' : 'white',
+                      color: betAmount === amt ? 'white' : '#7d766a',
+                      borderColor: betAmount === amt ? '#3f5670' : '#e2ddd2',
                     }}>
                     ${amt}
                   </button>
@@ -775,7 +775,7 @@ export default function ActivitiesPanel({ onClose }) {
                 disabled={noActions || (state.money ?? 0) < betAmount}
                 onClick={() => go(() => betOnHorses(horseIdx, betAmount))}
                 className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all active:scale-95 disabled:opacity-40"
-                style={{ background: 'linear-gradient(135deg,#34c759,#28a046)' }}
+                style={{ background: '#3f6146' }}
               >
                 🎰 Bet ${betAmount.toLocaleString()} on {raceHorses[horseIdx]}
               </button>
@@ -1393,7 +1393,7 @@ export default function ActivitiesPanel({ onClose }) {
         return aliveFriends.map((friend, i) => {
           const realIdx = friends.indexOf(friend)
           const q = friend.relationshipQuality
-          const qColor = q > 65 ? '#34c759' : q > 35 ? '#ff9500' : '#ff3b30'
+          const qColor = q > 65 ? '#3f6146' : q > 35 ? '#8a6635' : '#8c3a2e'
           return (
             <div key={i} className="bg-white rounded-xl border border-natalis-border p-4 space-y-3 shadow-sm">
               <div className="flex justify-between items-center">
@@ -1559,7 +1559,7 @@ export default function ActivitiesPanel({ onClose }) {
         const biz = state.business
         if (biz?.active) {
           const perf = biz.performance ?? 50
-          const perfColor = perf > 65 ? '#34c759' : perf > 35 ? '#ff9500' : '#ff3b30'
+          const perfColor = perf > 65 ? '#3f6146' : perf > 35 ? '#8a6635' : '#8c3a2e'
           return (
             <>
               <div className="bg-white rounded-xl border border-natalis-border p-4 space-y-2 mb-2">
@@ -1626,9 +1626,9 @@ export default function ActivitiesPanel({ onClose }) {
           tourist_overstay: 'Overstayed Visa',
         }
         const RS_COLORS = {
-          citizen: '#34c759', permanent_resident: '#34c759', work_visa: '#ff9500',
-          undocumented: '#ff3b30', refugee_status: '#ff9500', asylum_seeker: '#ff9500',
-          tourist_overstay: '#ff3b30',
+          citizen: '#3f6146', permanent_resident: '#3f6146', work_visa: '#8a6635',
+          undocumented: '#8c3a2e', refugee_status: '#8a6635', asylum_seeker: '#8a6635',
+          tourist_overstay: '#8c3a2e',
         }
 
         return (
@@ -1636,7 +1636,7 @@ export default function ActivitiesPanel({ onClose }) {
             <div className="bg-white rounded-xl border border-natalis-border p-4 mb-2 space-y-1">
               <div className="flex justify-between items-center">
                 <span className="text-xs text-natalis-muted font-semibold uppercase tracking-wider">Current Status</span>
-                <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ color: RS_COLORS[rs] ?? '#8e8e93', backgroundColor: `${RS_COLORS[rs]}18` ?? '#8e8e9318' }}>
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ color: RS_COLORS[rs] ?? '#7d766a', backgroundColor: `${RS_COLORS[rs]}18` ?? '#7d766a18' }}>
                   {RS_LABELS[rs] ?? rs}
                 </span>
               </div>
@@ -1903,7 +1903,7 @@ export default function ActivitiesPanel({ onClose }) {
         <div className="flex items-center gap-3">
           <div className="flex gap-1">
             {Array.from({ length: state.maxActionsPerYear }).map((_, i) => (
-              <div key={i} className="w-2 h-2 rounded-full" style={{ backgroundColor: i < state.actionsThisYear ? '#e5e5ea' : '#007aff' }} />
+              <div key={i} className="w-2 h-2 rounded-full" style={{ backgroundColor: i < state.actionsThisYear ? '#e2ddd2' : '#3f5670' }} />
             ))}
           </div>
           <button onClick={onClose} className="text-natalis-muted text-lg leading-none">✕</button>
@@ -1958,13 +1958,13 @@ export default function ActivitiesPanel({ onClose }) {
                   <p className="text-[10px] font-bold uppercase tracking-widest text-natalis-muted px-1 pb-1">{groupLabel}</p>
                   <div className="space-y-1.5">
                     {visibleCats.map(cat => {
-                      const badge = cat.key === 'prison' && state.inPrison ? { text: `${state.prisonSentence}yr`, color: '#ff3b30' } :
-                                    cat.key === 'underground' && isUnderground ? { text: '!', color: '#ff3b30' } :
-                                    cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
-                                    cat.key === 'mind_body' && anySevereUnmanaged ? { text: '⚕', color: '#ff9500' } :
-                                    cat.key === 'love' && pendingPartner && !state.partner ? { text: '💘', color: '#ff6b81' } :
-                                    cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#007aff' } :
-                                    cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#34c759' } :
+                      const badge = cat.key === 'prison' && state.inPrison ? { text: `${state.prisonSentence}yr`, color: '#8c3a2e' } :
+                                    cat.key === 'underground' && isUnderground ? { text: '!', color: '#8c3a2e' } :
+                                    cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#8c3a2e' } :
+                                    cat.key === 'mind_body' && anySevereUnmanaged ? { text: '⚕', color: '#8a6635' } :
+                                    cat.key === 'love' && pendingPartner && !state.partner ? { text: '💘', color: '#7b4356' } :
+                                    cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#3f5670' } :
+                                    cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#3f6146' } :
                                     null
                       return (
                         <button

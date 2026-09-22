@@ -95,7 +95,7 @@ export default function FightGame({ onComplete, difficulty = 'normal', enemyLabe
   const HP = ({ n, max = 3, color }) => (
     <div className="flex gap-1">
       {Array.from({ length: max }, (_, i) => (
-        <div key={i} className="w-5 h-5 rounded-full" style={{ background: i < n ? color : '#e5e7eb' }} />
+        <div key={i} className="w-5 h-5 rounded-full" style={{ background: i < n ? color : '#e2ddd2' }} />
       ))}
     </div>
   )
@@ -106,12 +106,12 @@ export default function FightGame({ onComplete, difficulty = 'normal', enemyLabe
       <div className="w-full max-w-xs flex justify-between items-center">
         <div className="flex flex-col items-start gap-1">
           <span className="text-xs text-gray-500 font-semibold">You</span>
-          <HP n={playerHP} color="#34d399" />
+          <HP n={playerHP} color="#4e7159" />
         </div>
         <span className="text-lg font-bold text-gray-400">VS</span>
         <div className="flex flex-col items-end gap-1">
           <span className="text-xs text-gray-500 font-semibold capitalize">{enemy}</span>
-          <HP n={enemyHP} color="#f87171" />
+          <HP n={enemyHP} color="#9b5445" />
         </div>
       </div>
 
@@ -143,7 +143,7 @@ export default function FightGame({ onComplete, difficulty = 'normal', enemyLabe
             disabled={phase !== 'telegraph' || done}
             className="flex flex-col items-center gap-1 px-5 py-4 rounded-2xl text-white font-semibold transition-all active:scale-90"
             style={{
-              background: phase === 'telegraph' ? '#6366f1' : '#9ca3af',
+              background: phase === 'telegraph' ? '#635880' : '#9ca3af',
               cursor: phase === 'telegraph' ? 'pointer' : 'default',
             }}
           >

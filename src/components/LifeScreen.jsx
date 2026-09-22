@@ -37,15 +37,18 @@ function RelBar({ value, color }) {
 }
 
 function relColor(q) {
-  return q > 65 ? '#34c759' : q > 35 ? '#ff9500' : '#ff3b30'
+  return q > 65 ? '#3f6146' : q > 35 ? '#8a6635' : '#8c3a2e'
 }
 
 // Tab panels
+// Emoji removed. An emoji tab bar is the single loudest "this is a mobile game"
+// signal available, and the design document asks for the opposite four times
+// over. The words were always doing the work.
 const TABS = [
-  { key: 'life',   label: 'Life',   emoji: '📖' },
-  { key: 'stats',  label: 'Stats',  emoji: '📊' },
-  { key: 'people', label: 'People', emoji: '👥' },
-  { key: 'assets', label: 'Assets', emoji: '🏠' },
+  { key: 'life',   label: 'Life' },
+  { key: 'stats',  label: 'Stats' },
+  { key: 'people', label: 'People' },
+  { key: 'assets', label: 'Assets' },
 ]
 
 export default function LifeScreen() {
@@ -176,7 +179,7 @@ export default function LifeScreen() {
   const isAbroad = liveCountry?.name !== birthCountry?.name
   const regime = getCountryRegime(liveCountry, currentYear)
   const regimeLabel = REGIME_LABELS[regime] ?? regime
-  const regimeColor = REGIME_COLORS[regime] ?? '#8e8e93'
+  const regimeColor = REGIME_COLORS[regime] ?? '#7d766a'
   const religionLabel = RELIGION_LABELS[character.religion] ?? character.religion ?? 'Unknown'
   const ethnicName = character.country.ethnicGroups?.find(eg => eg.id === character.ethnicity)?.name ?? character.ethnicity ?? 'Unknown'
   const residencyLabel = RESIDENCY_LABELS[residencyStatus] ?? residencyStatus
@@ -212,10 +215,10 @@ export default function LifeScreen() {
     const uses = (mem?.alcoholUses ?? 0) + (mem?.drugUses ?? 0)
     const isAddicted = flags.includes('alcohol_addiction') || flags.includes('drug_addiction') || flags.includes('gambling_addiction')
     const isOverdosed = flags.includes('overdosed')
-    if (isOverdosed || (isAddicted && uses > 20)) return { label: 'Stage 4 — Crisis', color: '#ff3b30' }
-    if (isAddicted) return { label: 'Stage 3 — Dependent', color: '#ff3b30' }
-    if (uses >= 5) return { label: 'Stage 2 — Heavy Use', color: '#ff9500' }
-    return { label: 'Stage 1 — Casual Use', color: '#ff9500' }
+    if (isOverdosed || (isAddicted && uses > 20)) return { label: 'Stage 4 — Crisis', color: '#8c3a2e' }
+    if (isAddicted) return { label: 'Stage 3 — Dependent', color: '#8c3a2e' }
+    if (uses >= 5) return { label: 'Stage 2 — Heavy Use', color: '#8a6635' }
+    return { label: 'Stage 1 — Casual Use', color: '#8a6635' }
   }
   const addictionStage = getAddictionStage()
 
@@ -229,23 +232,23 @@ export default function LifeScreen() {
   }
 
   const karmaLabel = karma >= 85 ? 'Lives with deep purpose' : karma >= 70 ? 'More good than not' : karma >= 50 ? 'Navigating, as most do' : karma >= 30 ? 'Compromised by choices' : 'Haunted by what you\'ve done'
-  const karmaColor = karma >= 70 ? '#34c759' : karma >= 50 ? '#ff9500' : '#ff3b30'
+  const karmaColor = karma >= 70 ? '#3f6146' : karma >= 50 ? '#8a6635' : '#8c3a2e'
   const genderMark = (g) => g === 'male' ? <span className="text-blue-400 text-xs ml-1">♂</span> : g === 'female' ? <span className="text-pink-400 text-xs ml-1">♀</span> : null
 
   // Derives a readable status label from relationship quality
   const relStatusLabel = (quality, extraFlags = []) => {
     const labels = []
-    if (extraFlags.includes('estranged')) labels.push({ text: 'Estranged', color: '#ff3b30' })
-    else if (extraFlags.includes('reconciled')) labels.push({ text: 'Reconciled', color: '#34c759' })
-    else if (extraFlags.includes('abroad')) labels.push({ text: 'Lives abroad', color: '#8e8e93' })
-    else if (quality <= 24) labels.push({ text: 'Estranged', color: '#ff3b30' })
-    else if (quality <= 39) labels.push({ text: 'Strained', color: '#ff9500' })
-    else if (quality <= 55) labels.push({ text: 'Steady', color: '#8e8e93' })
-    else if (quality <= 75) labels.push({ text: 'Good', color: '#5ac8fa' })
-    else if (quality >= 90) labels.push({ text: 'Very close', color: '#34c759' })
-    else if (quality >= 76) labels.push({ text: 'Close', color: '#34c759' })
-    if (extraFlags.includes('caretaker')) labels.push({ text: 'You\'re their carer', color: '#007aff' })
-    if (extraFlags.includes('therapy')) labels.push({ text: 'In couples therapy', color: '#007aff' })
+    if (extraFlags.includes('estranged')) labels.push({ text: 'Estranged', color: '#8c3a2e' })
+    else if (extraFlags.includes('reconciled')) labels.push({ text: 'Reconciled', color: '#3f6146' })
+    else if (extraFlags.includes('abroad')) labels.push({ text: 'Lives abroad', color: '#7d766a' })
+    else if (quality <= 24) labels.push({ text: 'Estranged', color: '#8c3a2e' })
+    else if (quality <= 39) labels.push({ text: 'Strained', color: '#8a6635' })
+    else if (quality <= 55) labels.push({ text: 'Steady', color: '#7d766a' })
+    else if (quality <= 75) labels.push({ text: 'Good', color: '#3f6470' })
+    else if (quality >= 90) labels.push({ text: 'Very close', color: '#3f6146' })
+    else if (quality >= 76) labels.push({ text: 'Close', color: '#3f6146' })
+    if (extraFlags.includes('caretaker')) labels.push({ text: 'You\'re their carer', color: '#3f5670' })
+    if (extraFlags.includes('therapy')) labels.push({ text: 'In couples therapy', color: '#3f5670' })
     return labels
   }
 
@@ -266,29 +269,30 @@ export default function LifeScreen() {
     <div className="h-screen bg-natalis-bg flex flex-col overflow-hidden">
 
       {/* ── Top Header ─────────────────────────────────────────────────── */}
-      <header className="bg-white border-b border-natalis-border flex-shrink-0 shadow-sm">
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-xl"
-              style={{ background: character.gender === 'male' ? 'linear-gradient(135deg,#5ac8fa,#007aff)' : 'linear-gradient(135deg,#ff2d55,#af52de)' }}>
-              {character.gender === 'male' ? '👦' : '👧'}
-            </div>
-            <div>
-              <p className="font-bold text-natalis-text text-sm leading-tight">{character.firstName} {character.surname}</p>
-              <p className="text-natalis-muted text-xs">{career ? career.title : (retired ? 'Retired' : PHASE_LABELS[phase])}</p>
-            </div>
+      {/* The gendered gradient emoji avatar is gone. A game that models what it
+          was to be a woman in a particular place and decade should not open by
+          reducing her to a pink bubble. The name and the year do the work. */}
+      <header className="bg-natalis-surface border-b border-natalis-border flex-shrink-0">
+        <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-baseline justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="font-prose text-natalis-text text-base leading-tight truncate">
+              {character.firstName} {character.surname}
+            </h1>
+            <p className="text-natalis-muted text-xs truncate">
+              {career ? career.title : (retired ? 'Retired' : PHASE_LABELS[phase])}
+            </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-baseline gap-3 flex-shrink-0">
             <div className="text-right">
-              <p className="font-bold text-bit-green text-base leading-tight">{formatMoney(money)}</p>
-              <p className="text-natalis-muted text-xs">
-                <span className="mr-1">{getCountryFlag(currentCountry ?? character.country)}</span>
-                Age {age} · {currentYear}
+              <p className="text-natalis-dim text-sm leading-tight tabular-nums">
+                <span className="mr-1.5" aria-hidden="true">{getCountryFlag(currentCountry ?? character.country)}</span>
+                {currentYear} · age {age}
               </p>
+              <p className="text-natalis-muted text-xs tabular-nums">{formatMoney(money)}</p>
             </div>
             <button
               onClick={goToTitle}
-              className="text-natalis-muted text-xs font-semibold border border-natalis-border rounded-lg px-2 py-1.5 hover:bg-natalis-bg transition-colors"
+              className="text-natalis-muted text-xs border border-natalis-border rounded-lg px-2 py-1 hover:bg-natalis-bg transition-colors"
               title="Save and return to title"
             >
               Menu
@@ -298,29 +302,35 @@ export default function LifeScreen() {
       </header>
 
       {/* ── Stats strip ────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-natalis-border flex-shrink-0">
-        <div className="max-w-2xl mx-auto px-4 py-3 grid grid-cols-2 gap-x-6 gap-y-2">
-          <StatBar stat="happiness" label="Happiness" value={stats.happiness} delta={flashDeltas.happiness} />
-          <StatBar stat="health"    label="Health"    value={stats.health}    delta={flashDeltas.health} />
-          <StatBar stat="smarts"    label="Smarts"    value={stats.smarts}    delta={flashDeltas.smarts} />
-          <StatBar stat="looks"     label="Looks"     value={stats.looks}     delta={flashDeltas.looks} />
+      {/* Was a 2×2 grid of large saturated bars taking roughly a third of the
+          screen, above the prose. Now one quiet row: four columns of hairline
+          bars, so the writing starts near the top of the page where it belongs.
+          The full six live in the Stats tab for anyone who wants them. */}
+      <div className="bg-natalis-surface border-b border-natalis-border flex-shrink-0">
+        <div className="max-w-2xl mx-auto px-4 py-2 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-1.5">
+          <StatBar stat="happiness" value={stats.happiness} delta={flashDeltas.happiness} />
+          <StatBar stat="health"    value={stats.health}    delta={flashDeltas.health} />
+          <StatBar stat="smarts"    value={stats.smarts}    delta={flashDeltas.smarts} />
+          <StatBar stat="looks"     value={stats.looks}     delta={flashDeltas.looks} />
         </div>
       </div>
 
       {/* ── Tab bar ────────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-natalis-border flex-shrink-0">
-        <div className="max-w-2xl mx-auto flex">
+      <div className="bg-natalis-surface border-b border-natalis-border flex-shrink-0">
+        <div className="max-w-2xl mx-auto flex" role="tablist">
           {TABS.map(tab => (
             <button
               key={tab.key}
+              role="tab"
+              aria-selected={activeTab === tab.key}
               onClick={() => { setActiveTab(tab.key); setShowActivities(false) }}
-              className="flex-1 py-2.5 flex flex-col items-center gap-0.5 transition-all"
-              style={{ borderBottom: activeTab === tab.key ? '2.5px solid #007aff' : '2.5px solid transparent' }}
+              className={`flex-1 py-2 text-xs tracking-[0.06em] transition-colors border-b-2 ${
+                activeTab === tab.key
+                  ? 'border-natalis-text text-natalis-text font-medium'
+                  : 'border-transparent text-natalis-muted hover:text-natalis-dim'
+              }`}
             >
-              <span className="text-base">{tab.emoji}</span>
-              <span className="text-xs font-semibold" style={{ color: activeTab === tab.key ? '#007aff' : '#8e8e93' }}>
-                {tab.label}
-              </span>
+              {tab.label}
             </button>
           ))}
         </div>
@@ -398,7 +408,7 @@ export default function LifeScreen() {
                         disabled={!canAfford}
                         onClick={() => resolveTrial(opt.tier)}
                         className="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-150 active:scale-95 disabled:opacity-40"
-                        style={{ background: !canAfford ? '#e5e5ea' : i === 0 ? 'linear-gradient(135deg,#636366,#48484a)' : i === 1 ? 'linear-gradient(135deg,#007aff,#0055cc)' : 'linear-gradient(135deg,#ff9500,#e07800)', color: !canAfford ? '#8e8e93' : 'white' }}
+                        style={{ background: !canAfford ? '#e2ddd2' : i === 0 ? '#4a453e' : i === 1 ? '#3f5670' : '#8a6635', color: !canAfford ? '#7d766a' : 'white' }}
                       >
                         <div>{opt.label}</div>
                         <div className="text-xs font-normal opacity-80 mt-0.5">{opt.sub}</div>
@@ -430,7 +440,7 @@ export default function LifeScreen() {
             const phaseLabel = { early_childhood: 'Early Childhood (0–5)', childhood: 'Childhood (6–11)', adolescence: 'Adolescence (12–17)', young_adult: 'Young Adult (18–29)', midlife: 'Midlife (30–49)', late_life: 'Late Life (50+)' }
             const livePlace = currentPlace ?? character.birthPlace
             const liveNbr = currentNeighborhoodName ?? character.birthNeighborhoodName
-            const tierColors = { informal: '#ff3b30', working_class: '#ff9500', middle_class: '#34c759', elite: '#007aff' }
+            const tierColors = { informal: '#8c3a2e', working_class: '#8a6635', middle_class: '#3f6146', elite: '#3f5670' }
             const tierLabel = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }
             const nbTier = currentNeighborhoodTier ?? character.birthNeighborhoodTier
             return (
@@ -473,16 +483,16 @@ export default function LifeScreen() {
                   const card = generateIdentityCard(fullState)
                   if (!card) return null
                   return (
-                    <div className="bg-blue-50 rounded-2xl px-4 py-3 border border-blue-100">
-                      <p className="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-1">Who you are</p>
-                      <p className="text-sm text-blue-900 leading-relaxed italic">{card}</p>
+                    <div className="px-4 py-3 border-l-2 border-natalis-rule">
+                      <p className="text-[11px] font-medium text-natalis-muted uppercase tracking-[0.14em] mb-1.5">Who you are</p>
+                      <p className="font-prose text-natalis-dim text-[0.9375rem] leading-relaxed">{card}</p>
                     </div>
                   )
                 })()}
 
                 {/* Toggle */}
                 <div className="flex gap-1.5 bg-white rounded-2xl p-1.5 border border-natalis-border">
-                  {[['recent','Recent'],['decades','Timeline'],['search','🔍 Search']].map(([mode, label]) => (
+                  {[['recent','Recent'],['decades','Timeline'],['search','Search']].map(([mode, label]) => (
                     <button key={mode}
                       onClick={() => {
                         setLogMode(mode)
@@ -491,8 +501,11 @@ export default function LifeScreen() {
                           setOpenDecades(prev => prev.has(d) ? prev : new Set([...prev, d]))
                         }
                       }}
-                      className="flex-1 py-1.5 rounded-xl text-xs font-semibold transition-all"
-                      style={{ background: logMode === mode ? '#007aff' : 'transparent', color: logMode === mode ? 'white' : '#8e8e93' }}>
+                      className={`flex-1 py-1.5 rounded-lg text-xs transition-colors ${
+                        logMode === mode
+                          ? 'bg-natalis-accent-soft text-natalis-text font-medium'
+                          : 'text-natalis-muted hover:text-natalis-dim'
+                      }`}>
                       {label}
                     </button>
                   ))}
@@ -533,23 +546,23 @@ export default function LifeScreen() {
                         <div className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">{ageLabel}</div>
                       )}
                       {entry.isHeadline && (
-                        <div className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">📰 {ageLabel}</div>
+                        <div className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">{ageLabel} · in the news</div>
                       )}
                       {entry.isSoundtrack && (
-                        <div className="text-xs font-semibold uppercase tracking-wider text-violet-500 mb-1">🎵 {ageLabel}</div>
+                        <div className="text-xs font-semibold uppercase tracking-wider text-violet-500 mb-1">{ageLabel} · what was playing</div>
                       )}
                       {entry.isWorld && entry.worldEventName && (
-                        <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">🌐 {entry.worldEventName}</div>
+                        <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">{entry.worldEventName}</div>
                       )}
                       {entry.isLetter && (
-                        <div className="text-xs font-semibold uppercase tracking-wider text-amber-700 mb-2">✉ {ageLabel}</div>
+                        <div className="text-xs font-semibold uppercase tracking-wider text-amber-700 mb-2">{ageLabel} · a letter</div>
                       )}
                       {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && (
                         <span className={`font-bold mr-2 text-xs uppercase tracking-wider ${entry.isKey ? 'text-blue-500 opacity-100' : 'opacity-60'}`}>{ageLabel}</span>
                       )}
-                      <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''} ${entry.isLetter ? 'italic block ml-2 border-l-2 border-amber-400 pl-3' : ''} ${entry.isKey && !entry.isWorld ? 'font-medium' : ''}`}>{entry.text}</span>
+                      <span className={`font-prose ${entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''} ${entry.isLetter ? 'italic block ml-2 border-l-2 border-amber-300 pl-3' : ''} ${entry.isKey && !entry.isWorld ? 'text-natalis-text' : ''}`}>{entry.text}</span>
                       {entry.outcome && (
-                        <span className="block mt-1.5 pl-3 border-l-2 border-natalis-border text-natalis-dim">{entry.outcome}</span>
+                        <span className="block mt-1.5 pl-3 border-l border-natalis-rule text-natalis-muted font-prose">{entry.outcome}</span>
                       )}
                     </div>
                   )
@@ -775,7 +788,7 @@ export default function LifeScreen() {
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: `${fame}%`, backgroundColor: '#ffcc00' }} />
+                        <div className="h-full rounded-full" style={{ width: `${fame}%`, backgroundColor: '#8a7435' }} />
                       </div>
                       <span className="text-xs font-bold text-natalis-muted w-8 text-right">{Math.round(fame)}</span>
                     </div>
@@ -837,7 +850,7 @@ export default function LifeScreen() {
                   {isAbroad && residencyStatus !== 'citizen' && (
                     <div className="flex justify-between items-center py-1 border-b border-natalis-border">
                       <span className="text-natalis-muted text-xs">📋 Status</span>
-                      <span className="font-semibold text-xs" style={{ color: residencyStatus === 'undocumented' || residencyStatus === 'tourist_overstay' ? '#ff3b30' : residencyStatus === 'refugee_status' || residencyStatus === 'asylum_seeker' ? '#ff9500' : '#007aff' }}>
+                      <span className="font-semibold text-xs" style={{ color: residencyStatus === 'undocumented' || residencyStatus === 'tourist_overstay' ? '#8c3a2e' : residencyStatus === 'refugee_status' || residencyStatus === 'asylum_seeker' ? '#8a6635' : '#3f5670' }}>
                         {residencyLabel}
                       </span>
                     </div>
@@ -873,11 +886,11 @@ export default function LifeScreen() {
                     <div className="flex justify-between items-center py-1">
                       <span className="text-natalis-muted text-xs">🗳️ Politics</span>
                       <span className="font-semibold text-xs capitalize" style={{
-                        color: political_leaning === 'left' ? '#34c759' :
-                               political_leaning === 'right' ? '#ff3b30' :
-                               political_leaning === 'nationalist' ? '#ff3b30' :
-                               political_leaning === 'dissident' ? '#ff9500' :
-                               '#007aff'
+                        color: political_leaning === 'left' ? '#3f6146' :
+                               political_leaning === 'right' ? '#8c3a2e' :
+                               political_leaning === 'nationalist' ? '#8c3a2e' :
+                               political_leaning === 'dissident' ? '#8a6635' :
+                               '#3f5670'
                       }}>{political_leaning.replace('_', ' ')}</span>
                     </div>
                   )}
@@ -1049,7 +1062,7 @@ export default function LifeScreen() {
                     </div>
                     <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                       <div className="h-full rounded-full transition-all"
-                        style={{ width: `${career.performance ?? 70}%`, backgroundColor: (career.performance ?? 70) > 60 ? '#34c759' : (career.performance ?? 70) > 30 ? '#ff9500' : '#ff3b30' }} />
+                        style={{ width: `${career.performance ?? 70}%`, backgroundColor: (career.performance ?? 70) > 60 ? '#3f6146' : (career.performance ?? 70) > 30 ? '#8a6635' : '#8c3a2e' }} />
                     </div>
                   </div>
                   {career.level < (career.maxLevel ?? 99) && (() => {
@@ -1064,7 +1077,7 @@ export default function LifeScreen() {
                     return (
                       <div className="mt-2 pt-2 border-t border-natalis-border flex justify-between items-center">
                         <span className="text-xs text-natalis-muted">Promotion chance</span>
-                        <span className="text-xs font-semibold" style={{ color: effectivePct > 0.2 ? '#34c759' : effectivePct > 0.1 ? '#ff9500' : '#8e8e93' }}>
+                        <span className="text-xs font-semibold" style={{ color: effectivePct > 0.2 ? '#3f6146' : effectivePct > 0.1 ? '#8a6635' : '#7d766a' }}>
                           ~{Math.round(effectivePct * 100)}%/yr{estYears ? ` · ~${estYears}yr avg` : ''}
                         </span>
                       </div>
@@ -1078,8 +1091,8 @@ export default function LifeScreen() {
                 <div className="bg-white rounded-2xl overflow-hidden border border-natalis-border shadow-card">
                   {/* Partner moment — shown prominently at top when available */}
                   {mem?.partnerMoments?.length > 0 && (
-                    <div className="px-4 pt-4 pb-3" style={{ background: 'linear-gradient(135deg, #fff0f3, #fff5f7)' }}>
-                      <p className="text-[13px] italic leading-relaxed" style={{ color: '#9d174d' }}>
+                    <div className="px-4 pt-4 pb-3" style={{ background: '#f8eef0' }}>
+                      <p className="text-[13px] italic leading-relaxed" style={{ color: '#7b4356' }}>
                         &ldquo;{mem.partnerMoments.at(-1)}&rdquo;
                       </p>
                     </div>
@@ -1496,14 +1509,14 @@ export default function LifeScreen() {
                     </div>
                     <div className="text-center">
                       <p className="text-xs text-natalis-muted">Performance</p>
-                      <p className="font-bold text-sm" style={{ color: (business.performance ?? 50) > 60 ? '#34c759' : (business.performance ?? 50) > 35 ? '#ff9500' : '#ff3b30' }}>
+                      <p className="font-bold text-sm" style={{ color: (business.performance ?? 50) > 60 ? '#3f6146' : (business.performance ?? 50) > 35 ? '#8a6635' : '#8c3a2e' }}>
                         {Math.round(business.performance ?? 50)}%
                       </p>
                     </div>
                   </div>
                   <div className="mt-2">
                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full transition-all" style={{ width: `${business.performance ?? 50}%`, backgroundColor: (business.performance ?? 50) > 60 ? '#34c759' : (business.performance ?? 50) > 35 ? '#ff9500' : '#ff3b30' }} />
+                      <div className="h-full rounded-full transition-all" style={{ width: `${business.performance ?? 50}%`, backgroundColor: (business.performance ?? 50) > 60 ? '#3f6146' : (business.performance ?? 50) > 35 ? '#8a6635' : '#8c3a2e' }} />
                     </div>
                   </div>
                 </div>
@@ -1575,7 +1588,7 @@ export default function LifeScreen() {
                 const liveCountry = currentCountry ?? character.country
                 const samePlaces = getPlacesForCountry(liveCountry.name).filter(p => p.id !== (currentPlace ?? character.birthPlace)?.id)
                 const fromPlace = currentPlace ?? character.birthPlace
-                const tierColors = { informal: '#ff3b30', working_class: '#ff9500', middle_class: '#34c759', elite: '#007aff' }
+                const tierColors = { informal: '#8c3a2e', working_class: '#8a6635', middle_class: '#3f6146', elite: '#3f5670' }
                 const tierLabel = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }
                 const scaleLabel = { village: 'Village', town: 'Town', mid_city: 'City', major_city: 'Major City', megacity: 'Megacity' }
                 return (
@@ -1605,7 +1618,7 @@ export default function LifeScreen() {
                                 <p className="text-natalis-muted text-xs">{place.region} · {scaleLabel[place.scale] ?? place.scale}</p>
                               </div>
                               <div className="text-right ml-3 flex-shrink-0">
-                                <p className="font-bold text-sm" style={{ color: canAfford ? '#34c759' : '#ff3b30' }}>
+                                <p className="font-bold text-sm" style={{ color: canAfford ? '#3f6146' : '#8c3a2e' }}>
                                   {cost === 0 ? 'Free' : `$${cost.toLocaleString()}`}
                                 </p>
                                 <p className="text-xs text-natalis-muted">{canAfford ? 'Can afford' : 'Too expensive'}</p>
@@ -1622,7 +1635,7 @@ export default function LifeScreen() {
                 const fromPlace = currentPlace ?? character.birthPlace
                 const cost = getRelocationCost(fromPlace, selectedPlace)
                 const canAfford = (money ?? 0) >= cost
-                const nbTierColors = { informal: '#ff3b30', working_class: '#ff9500', middle_class: '#34c759', elite: '#007aff' }
+                const nbTierColors = { informal: '#8c3a2e', working_class: '#8a6635', middle_class: '#3f6146', elite: '#3f5670' }
                 const nbTierLabels = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }
                 const affordableNbrs = Object.entries(selectedPlace.neighborhoods ?? {}).map(([tier, names]) => ({
                   tier, names, label: nbTierLabels[tier], color: nbTierColors[tier],
@@ -1687,10 +1700,12 @@ export default function LifeScreen() {
           <div className="max-w-2xl mx-auto px-4 py-3">
             <button
               onClick={() => eventRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })}
-              className="w-full py-3 rounded-xl font-bold text-sm text-white transition-all active:scale-95"
-              style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
+              className="w-full py-2.5 rounded-xl text-sm font-prose text-natalis-dim
+                         border border-natalis-rule bg-natalis-surface
+                         hover:border-natalis-text hover:text-natalis-text
+                         transition-colors active:scale-[0.99]"
             >
-              ↑ A life event needs your decision
+              Something is waiting for you &uarr;
             </button>
           </div>
         </div>
@@ -1705,10 +1720,10 @@ export default function LifeScreen() {
             <div className={`flex-col items-center gap-1 min-w-[36px] ${isPassive ? 'hidden' : 'flex'}`}>
               <div className="flex gap-1">
                 {Array.from({ length: maxActionsPerYear }).map((_, i) => (
-                  <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: i < actionsThisYear ? '#e5e5ea' : '#007aff' }} />
+                  <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: i < actionsThisYear ? '#e2ddd2' : '#3f5670' }} />
                 ))}
               </div>
-              <span className="text-[9px] font-medium leading-none" style={{ color: actionsLeft > 0 ? '#007aff' : '#8e8e93' }}>
+              <span className="text-[9px] font-medium leading-none" style={{ color: actionsLeft > 0 ? '#3f5670' : '#7d766a' }}>
                 {actionsLeft > 0 ? `${actionsLeft} left` : 'none left'}
               </span>
             </div>
@@ -1718,7 +1733,7 @@ export default function LifeScreen() {
               <button
                 onClick={() => setShowActivities(v => !v)}
                 className="flex-1 py-3 rounded-xl font-bold text-sm transition-all active:scale-95"
-                style={{ background: showActivities ? '#636366' : 'linear-gradient(135deg,#ff3b30,#c0392b)', color: 'white' }}
+                style={{ background: showActivities ? '#4a453e' : '#8c3a2e', color: 'white' }}
               >
                 {showActivities ? '✕ Close' : '🔒 Prison Life'}
               </button>
@@ -1728,8 +1743,8 @@ export default function LifeScreen() {
                 disabled={actionsLeft <= 0}
                 className="flex-1 py-3 rounded-xl font-bold text-sm transition-all active:scale-95 disabled:opacity-40"
                 style={{
-                  background: actionsLeft > 0 ? 'linear-gradient(135deg,#af52de,#007aff)' : '#e5e5ea',
-                  color: actionsLeft > 0 ? 'white' : '#8e8e93',
+                  background: actionsLeft > 0 ? '#5b4a6b' : '#e2ddd2',
+                  color: actionsLeft > 0 ? 'white' : '#7d766a',
                 }}
               >
                 {showActivities ? '✕ Close' : '⚡ Activities'}
@@ -1747,9 +1762,9 @@ export default function LifeScreen() {
                 onClick={ageUp}
                 disabled={!!pendingTrial}
                 className="w-full py-3 rounded-xl font-black text-lg text-white transition-all active:scale-95 shadow-card disabled:opacity-50"
-                style={{ background: pendingTrial ? '#e5e5ea' : 'linear-gradient(135deg, #34c759, #28a046)', color: pendingTrial ? '#8e8e93' : 'white' }}
+                style={{ background: pendingTrial ? '#e2ddd2' : '#1c1a16', color: pendingTrial ? '#7d766a' : '#fdfcf9' }}
               >
-                {pendingTrial ? 'On Trial...' : 'Age Up +'}
+                {pendingTrial ? 'On trial' : 'Another year'}
               </button>
             </div>
           </div>

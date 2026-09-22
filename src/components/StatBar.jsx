@@ -1,10 +1,20 @@
-const STAT_CONFIG = {
-  happiness: { emoji: '😊', color: '#ffcc00', bg: '#fff9e6', label: 'Happiness' },
-  health:    { emoji: '❤️',  color: '#ff3b30', bg: '#fff0ef', label: 'Health' },
-  smarts:    { emoji: '🧠', color: '#007aff', bg: '#e8f2ff', label: 'Smarts' },
-  looks:     { emoji: '✨', color: '#af52de', bg: '#f5eeff', label: 'Looks' },
-  charisma:  { emoji: '💬', color: '#34c759', bg: '#e9faf0', label: 'Charisma' },
-  wealth:    { emoji: '💰', color: '#ff9500', bg: '#fff4e6', label: 'Wealth' },
+// Six stats, six emoji, six candy colours, and a 2×2 grid of them occupying the
+// top third of every screen above the prose. CLAUDE.md: "Stats are numbers. The
+// game's primary mechanic is the sentence that lands."
+//
+// So the word leads and the number follows it, quietly. The bar is one ink at
+// varying weight rather than six hues, because the hue was carrying no
+// information — health being red told you nothing that the word "Critical" did
+// not. Only a genuinely failing body gets colour, because that is the one case
+// where the player needs to look now.
+
+const STAT_LABELS = {
+  happiness: 'Happiness',
+  health:    'Health',
+  smarts:    'Smarts',
+  looks:     'Looks',
+  charisma:  'Charisma',
+  wealth:    'Wealth',
 }
 
 const STAT_TIERS = {
@@ -23,32 +33,49 @@ function getTierLabel(stat, value) {
 }
 
 export default function StatBar({ stat, label, value, delta }) {
-  const cfg = STAT_CONFIG[stat] ?? STAT_CONFIG.health
   const pct = Math.round(Math.max(0, Math.min(100, value)))
   const tier = getTierLabel(stat, pct)
+  const name = label ?? STAT_LABELS[stat] ?? stat
+  // A body below 25 is the one stat state that warrants being looked at now.
+  const critical = stat === 'health' && pct < 25
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-base w-6 text-center flex-shrink-0">{cfg.emoji}</span>
-      <div className="flex-1 min-w-0">
-        <div className="flex justify-between items-center mb-1">
-          <span className="text-xs font-semibold text-natalis-dim">{label ?? cfg.label}</span>
-          <div className="flex items-center gap-1.5">
-            {tier && <span className="text-[10px] italic text-natalis-muted">{tier}</span>}
-            {delta != null && delta !== 0 && (
-              <span className="text-[10px] font-bold animate-pulse" style={{ color: delta > 0 ? '#34c759' : '#ff3b30' }}>
-                {delta > 0 ? `+${delta}` : delta}
-              </span>
-            )}
-            <span className="text-xs font-bold" style={{ color: cfg.color }}>{pct}</span>
-          </div>
-        </div>
-        <div className="h-2.5 rounded-full overflow-hidden" style={{ backgroundColor: cfg.bg }}>
-          <div
-            className="h-full rounded-full transition-all duration-500"
-            style={{ width: `${pct}%`, backgroundColor: cfg.color }}
-          />
-        </div>
+    <div>
+      <div className="flex items-baseline justify-between gap-2 mb-1">
+        <span className="text-[11px] font-medium text-natalis-muted uppercase tracking-[0.1em] truncate">
+          {name}
+        </span>
+        <span className="flex items-baseline gap-1.5 flex-shrink-0">
+          {tier && (
+            <span className={`text-xs ${critical ? 'text-natalis-alarm font-medium' : 'text-natalis-dim'}`}>
+              {tier}
+            </span>
+          )}
+          {delta != null && delta !== 0 && (
+            <span className={`text-[10px] tabular-nums ${delta > 0 ? 'text-natalis-gain' : 'text-natalis-loss'}`}>
+              {delta > 0 ? `+${delta}` : delta}
+            </span>
+          )}
+          <span className="text-[10px] tabular-nums text-natalis-faint w-5 text-right">{pct}</span>
+        </span>
+      </div>
+      <div
+        className="h-[3px] rounded-full bg-natalis-border overflow-hidden"
+        role="meter"
+        aria-label={name}
+        aria-valuenow={pct}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuetext={tier ? `${tier}, ${pct} of 100` : `${pct} of 100`}
+      >
+        <div
+          className="h-full rounded-full transition-[width] duration-500"
+          style={{
+            width: `${pct}%`,
+            backgroundColor: critical ? '#8c3a2e' : '#403b33',
+            opacity: critical ? 1 : 0.32 + (pct / 100) * 0.38,
+          }}
+        />
       </div>
     </div>
   )

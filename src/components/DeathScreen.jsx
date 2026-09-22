@@ -2,14 +2,14 @@ import { useGameStore } from '../store/gameStore'
 import { generateLifeNotes } from '../engine/gameEngine'
 
 const RIBBON_STYLES = {
-  gold:   { border: '#d97706', text: '#92400e', accent: '#fbbf24' },
-  green:  { border: '#16a34a', text: '#14532d', accent: '#4ade80' },
-  red:    { border: '#dc2626', text: '#7f1d1d', accent: '#f87171' },
-  blue:   { border: '#2563eb', text: '#1e3a8a', accent: '#60a5fa' },
+  gold:   { border: '#d97706', text: '#92400e', accent: '#b6a256' },
+  green:  { border: '#16a34a', text: '#14532d', accent: '#6b8f79' },
+  red:    { border: '#dc2626', text: '#7f1d1d', accent: '#9b5445' },
+  blue:   { border: '#3f5670', text: '#1e3a8a', accent: '#6e7e96' },
   purple: { border: '#9333ea', text: '#581c87', accent: '#c084fc' },
-  gray:   { border: '#6b7280', text: '#374151', accent: '#9ca3af' },
-  orange: { border: '#ea580c', text: '#7c2d12', accent: '#fb923c' },
-  pink:   { border: '#db2777', text: '#831843', accent: '#f472b6' },
+  gray:   { border: '#615b52', text: '#374151', accent: '#9ca3af' },
+  orange: { border: '#ea580c', text: '#7c2d12', accent: '#b18660' },
+  pink:   { border: '#db2777', text: '#831843', accent: '#ae7182' },
 }
 
 export default function DeathScreen() {
@@ -57,7 +57,7 @@ export default function DeathScreen() {
         {/* ── Masthead ── */}
         <div className="rounded-2xl overflow-hidden border border-stone-300" style={{ background: '#faf7f2' }}>
           {/* Thin decorative top rule */}
-          <div className="h-1" style={{ background: '#1c1c1e' }} />
+          <div className="h-1" style={{ background: '#1c1a16' }} />
 
           {/* Publication line */}
           <div className="flex items-center justify-between px-5 pt-3 pb-2 border-b border-stone-200">
@@ -159,7 +159,7 @@ export default function DeathScreen() {
         <button
           onClick={startNewLife}
           className="w-full py-4 rounded-2xl font-bold text-white text-base shadow-card-lg transition-all active:scale-95"
-          style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
+          style={{ background: '#3f5670' }}
         >
           🌱 Start Another Life
         </button>

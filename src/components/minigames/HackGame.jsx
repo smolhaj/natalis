@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 // Shows the sequence briefly, then player recreates it
 
 const SYMBOLS = ['A1', 'B2', 'C3', 'D4', 'E5', 'F6', '7G', '8H', '9I', '0J']
-const COLORS = ['#6366f1', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#ef4444', '#8b5cf6', '#06b6d4', '#84cc16', '#f97316']
+const COLORS = ['#635880', '#935264', '#967a3f', '#4e715d', '#4e6180', '#9b5445', '#745880', '#06b6d4', '#84cc16', '#f97316']
 
 function genSequence(length) {
   return Array.from({ length }, () => Math.floor(Math.random() * SYMBOLS.length))

@@ -36,7 +36,7 @@ function Pin({ index, onSet, isSet, speed }) {
     <div className="flex flex-col items-center gap-1">
       <div
         className="relative w-10 rounded-lg overflow-hidden cursor-pointer select-none"
-        style={{ height: 120, background: isSet ? '#d1fae5' : '#f3f4f6', border: `2px solid ${isSet ? '#34d399' : tension ? '#f87171' : '#d1d5db'}`, transition: 'border-color 0.1s' }}
+        style={{ height: 120, background: isSet ? '#d1fae5' : '#f3f4f6', border: `2px solid ${isSet ? '#4e7159' : tension ? '#9b5445' : '#d1d5db'}`, transition: 'border-color 0.1s' }}
         onClick={handleClick}
       >
         {/* Sweet spot indicator */}
@@ -50,9 +50,9 @@ function Pin({ index, onSet, isSet, speed }) {
           style={{
             bottom: `${pos}%`,
             transform: 'translateX(-50%)',
-            background: isSet ? '#34d399' : '#6366f1',
+            background: isSet ? '#4e7159' : '#635880',
             transition: 'background 0.1s',
-            boxShadow: inZone ? '0 0 8px #34d399' : 'none',
+            boxShadow: inZone ? '0 0 8px #4e7159' : 'none',
           }}
         />
       </div>

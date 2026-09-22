@@ -83,9 +83,9 @@ export default function QuickTime({ onComplete, difficulty = 'normal', label = '
           style={{
             left: `${pos}%`,
             transform: `translateX(-50%) translateY(-50%)`,
-            background: flash === 'hit' ? '#34d399' : flash === 'miss' ? '#f87171' : '#6366f1',
+            background: flash === 'hit' ? '#4e7159' : flash === 'miss' ? '#9b5445' : '#635880',
             transition: 'background 0.15s',
-            boxShadow: flash === 'hit' ? '0 0 12px #34d399' : 'none',
+            boxShadow: flash === 'hit' ? '0 0 12px #4e7159' : 'none',
           }}
         >
           {flash === 'hit' ? '✓' : flash === 'miss' ? '✗' : '👋'}
@@ -96,7 +96,7 @@ export default function QuickTime({ onComplete, difficulty = 'normal', label = '
         onClick={handleTap}
         disabled={done || !!flash}
         className="w-40 py-4 rounded-2xl text-white font-bold text-lg active:scale-95 transition-transform"
-        style={{ background: done ? '#9ca3af' : '#6366f1', cursor: done ? 'default' : 'pointer' }}
+        style={{ background: done ? '#9ca3af' : '#635880', cursor: done ? 'default' : 'pointer' }}
       >
         {label}
       </button>

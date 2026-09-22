@@ -105,15 +105,15 @@ export const REGIME_LABELS = {
 }
 
 export const REGIME_COLORS = {
-  federal_republic:           '#34c759',
-  parliamentary_republic:     '#34c759',
-  constitutional_monarchy:    '#34c759',
-  absolute_monarchy:          '#ff9500',
-  military_dictatorship:      '#ff3b30',
-  single_party_communist:     '#ff3b30',
-  single_party_authoritarian: '#ff3b30',
-  theocracy:                  '#ff9500',
-  democracy:                  '#34c759',
+  federal_republic:           '#3f6146',
+  parliamentary_republic:     '#3f6146',
+  constitutional_monarchy:    '#3f6146',
+  absolute_monarchy:          '#8a6635',
+  military_dictatorship:      '#8c3a2e',
+  single_party_communist:     '#8c3a2e',
+  single_party_authoritarian: '#8c3a2e',
+  theocracy:                  '#8a6635',
+  democracy:                  '#3f6146',
 }
 
 export const RELIGION_LABELS = {
