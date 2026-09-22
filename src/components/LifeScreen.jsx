@@ -95,9 +95,7 @@ export default function LifeScreen() {
   const [showMoveModal, setShowMoveModal] = useState(false)
   const [moveStep, setMoveStep] = useState('pick') // 'pick' | 'confirm'
   const [selectedPlace, setSelectedPlace] = useState(null)
-  const [flashDeltas, setFlashDeltas] = useState({})
   const prevStatsRef = useRef(null)
-  const flashTimerRef = useRef(null)
 
   const resolveAutoEvent = useGameStore(s => s.resolveAutoEvent)
   const resolveChoice = useGameStore(s => s.resolveChoice)
@@ -147,22 +145,17 @@ export default function LifeScreen() {
   const ageUp        = useGameStore(s => s.ageUp)
   const goToTitle    = useGameStore(s => s.goToTitle)
 
-  // Stat delta flash — shows +/- on stat bars when values change
+  // The stat strip used to flash a coloured "+2" / "−4" beside each stat for
+  // two seconds after any change, which is the one thing CLAUDE.md rules out by
+  // name: "No 'You gain +5 Happiness!' framing." The prose is the mechanic.
+  //
+  // The movement is still worth showing — a stat that changed is information —
+  // so the WORD changes and the number underneath it changes, which is what the
+  // design document already asks the strip to do. The arithmetic does not
+  // appear. The ref is kept because the change detection is still wanted if a
+  // future surface wants to animate the word.
   useEffect(() => {
-    if (!prevStatsRef.current) { prevStatsRef.current = stats; return }
-    const prev = prevStatsRef.current
-    const deltas = {}
-    let changed = false
-    for (const key of ['happiness', 'health', 'smarts', 'looks']) {
-      const d = Math.round((stats[key] ?? 0) - (prev[key] ?? 0))
-      if (d !== 0) { deltas[key] = d; changed = true }
-    }
     prevStatsRef.current = { ...stats }
-    if (changed) {
-      setFlashDeltas(deltas)
-      if (flashTimerRef.current) clearTimeout(flashTimerRef.current)
-      flashTimerRef.current = setTimeout(() => setFlashDeltas({}), 2000)
-    }
   }, [stats.happiness, stats.health, stats.smarts, stats.looks])
 
   // Keyboard shortcuts: Space/Enter → age up or continue; 1/2/3 → choices.
@@ -341,10 +334,10 @@ export default function LifeScreen() {
           The full six live in the Stats tab for anyone who wants them. */}
       <div className="bg-natalis-surface border-b border-natalis-border flex-shrink-0">
         <div className="max-w-2xl mx-auto px-4 py-2 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-1.5">
-          <StatBar stat="happiness" value={stats.happiness} delta={flashDeltas.happiness} />
-          <StatBar stat="health"    value={stats.health}    delta={flashDeltas.health} />
-          <StatBar stat="smarts"    value={stats.smarts}    delta={flashDeltas.smarts} />
-          <StatBar stat="looks"     value={stats.looks}     delta={flashDeltas.looks} />
+          <StatBar stat="happiness" value={stats.happiness} />
+          <StatBar stat="health"    value={stats.health}    />
+          <StatBar stat="smarts"    value={stats.smarts}    />
+          <StatBar stat="looks"     value={stats.looks}     />
         </div>
       </div>
 
@@ -403,33 +396,30 @@ export default function LifeScreen() {
 
           {/* Prison banner */}
           {inPrison && (
-            <div className="bg-red-50 border border-red-200 rounded-2xl px-4 py-3 flex items-center gap-3">
-              <span className="text-2xl">🔒</span>
+            <div className="bg-natalis-bg border border-natalis-rule rounded-2xl px-4 py-3">
               <div>
-                <p className="font-bold text-red-600 text-sm">In Prison</p>
-                <p className="text-red-500 text-xs">{prisonSentence} year{prisonSentence !== 1 ? 's' : ''} remaining</p>
+                <p className="text-[11px] font-medium text-natalis-muted uppercase tracking-[0.14em]">Inside</p>
+                <p className="text-natalis-dim text-sm mt-0.5 font-prose">{prisonSentence} year{prisonSentence !== 1 ? 's' : ''} left of the sentence.</p>
               </div>
             </div>
           )}
 
           {/* Wanted / fugitive banner */}
           {wanted && !inPrison && (
-            <div className="bg-red-600 rounded-2xl px-4 py-3 flex items-center gap-3">
-              <span className="text-2xl">🚨</span>
+            <div className="bg-natalis-bg border border-natalis-alarm rounded-2xl px-4 py-3">
               <div>
-                <p className="font-bold text-white text-sm">WANTED FUGITIVE</p>
-                <p className="text-red-200 text-xs">{assumedIdentity ? `Living as ${assumedIdentity.name}` : 'Police are actively searching for you'}</p>
+                <p className="text-[11px] font-medium text-natalis-alarm uppercase tracking-[0.14em]">Wanted</p>
+                <p className="text-natalis-dim text-sm mt-0.5 font-prose">{assumedIdentity ? `Living as ${assumedIdentity.name}` : 'Police are actively searching for you'}</p>
               </div>
             </div>
           )}
 
           {/* Addiction warning */}
           {hasAddiction && addictionStage && (
-            <div className="bg-orange-50 border border-orange-200 rounded-2xl px-4 py-3 flex items-center gap-3">
-              <span className="text-2xl">⚠️</span>
+            <div className="bg-natalis-bg border border-natalis-rule rounded-2xl px-4 py-3">
               <div className="flex-1">
                 <div className="flex items-center justify-between">
-                  <p className="font-bold text-orange-600 text-sm">Active Addiction</p>
+                  <p className="text-[11px] font-medium text-natalis-muted uppercase tracking-[0.14em]">Using</p>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: addictionStage.color + '22', color: addictionStage.color }}>
                     {addictionStage.label}
                   </span>
@@ -491,13 +481,13 @@ export default function LifeScreen() {
             {pendingEvent && <EventBox event={pendingEvent} />}
           </div>
 
-          {/* Last outcome flash */}
-          {lastOutcome && !pendingEvent && (
-            <div className="bg-white rounded-xl px-4 py-3 border border-natalis-border shadow-sm flex items-start gap-2">
-              <span className="text-base">💬</span>
-              <p className="text-natalis-dim text-sm italic leading-relaxed">{lastOutcome}</p>
-            </div>
-          )}
+          {/* The outcome of the last choice used to be printed HERE and again in
+              the log entry a few hundred pixels below, so the same sentence
+              appeared twice on one screen — in a game that has just spent an
+              engineering pass driving within-life repetition from 15.6% to
+              0.3%. The log is the record and it already carries it. The emoji
+              went with it: the reading surface is prose.
+              (The removed block is the only thing `lastOutcome` fed.) */}
 
           {/* ── LIFE TAB ── */}
           {activeTab === 'life' && (() => {
@@ -516,7 +506,7 @@ export default function LifeScreen() {
                 {livePlace && (
                   <div className="bg-white rounded-2xl border border-natalis-border px-4 py-3 flex items-center justify-between">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-lg flex-shrink-0">📍</span>
+                      
                       <div className="min-w-0">
                         <p className="font-semibold text-natalis-text text-sm truncate">
                           {/* 52 places carry a region their own name already
@@ -726,10 +716,10 @@ export default function LifeScreen() {
                                 }`}>
                                   {entry.isDeath && <span className="font-semibold mr-1.5 text-xs text-zinc-400 uppercase">{al} — </span>}
                                   {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && <span className={`font-bold mr-2 text-xs ${entry.isKey ? 'text-blue-500' : 'opacity-50'}`}>{al}</span>}
-                                  {entry.isHeadline && <span className="text-xs font-semibold mr-1 text-stone-500">📰 {al} — </span>}
-                                  {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 {al} — </span>}
-                                  {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
-                                  {entry.isLetter && <span className="text-xs font-semibold mr-1 text-amber-700">✉ {al} — </span>}
+                                  {entry.isHeadline && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{al} · In the news — </span>}
+                                  {entry.isSoundtrack && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{al} · Heard that year — </span>}
+                                  {entry.isWorld && entry.worldEventName && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{entry.worldEventName} — </span>}
+                                  {entry.isLetter && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{al} · A letter — </span>}
                                   <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic' : ''} ${entry.isLetter ? 'italic' : ''} ${entry.isKey && !entry.isWorld ? 'font-medium' : ''}`}>{entry.text}</span>
                                   {entry.outcome && (
                                     <span className="block mt-1 pl-2 border-l-2 border-natalis-border text-natalis-dim">{entry.outcome}</span>
@@ -780,8 +770,8 @@ export default function LifeScreen() {
                               'bg-white border-natalis-border text-natalis-dim'
                             }`}>
                               <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>
-                              {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 </span>}
-                              {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
+                              {entry.isSoundtrack && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">Heard that year — </span>}
+                              {entry.isWorld && entry.worldEventName && <span className="text-[10px] font-medium mr-1.5 uppercase tracking-[0.14em] text-natalis-muted">{entry.worldEventName} — </span>}
                               <span className={entry.isHeadline || entry.isSoundtrack ? 'italic' : ''}>{entry.text}</span>
                               {entry.outcome && <span className="block mt-1 text-natalis-dim">{entry.outcome}</span>}
                             </div>

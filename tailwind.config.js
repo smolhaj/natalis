@@ -107,6 +107,21 @@ export default {
           400: '#ae7182', 500: '#935264', 600: '#7b4356', 700: '#663747',
           800: '#522d3a', 900: '#432630', 950: '#29171d',
         },
+        // `pink` and `purple` were the two scales this remap missed, which is
+        // why `bg-gradient-to-br from-pink-500 to-rose-400` on the partner card
+        // and the dating-app header was Tailwind's real #ec4899 bleeding into a
+        // muted mauve. The whole point of remapping is that a component
+        // reaching for a candy colour cannot get one.
+        pink: {
+          50: '#f8eef1', 100: '#f0dee3', 200: '#e0bfc9', 300: '#c998a8',
+          400: '#ae7186', 500: '#935268', 600: '#7b4359', 700: '#66374a',
+          800: '#522d3c', 900: '#432632', 950: '#29171e',
+        },
+        purple: {
+          50: '#f1eff4', 100: '#e4e0e9', 200: '#cac2d4', 300: '#aa9dba',
+          400: '#8b7a9e', 500: '#715f85', 600: '#5b4a6b', 700: '#4b3d58',
+          800: '#3d3247', 900: '#322a3a', 950: '#1e1923',
+        },
         green: {
           50: '#edf2ee', 100: '#dde7e0', 200: '#bdcfc3', 300: '#95b09f',
           400: '#6b8f79', 500: '#4e7159', 600: '#3f6146', 700: '#34503a',

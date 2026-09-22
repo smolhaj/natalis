@@ -316,73 +316,59 @@ export default function ActivitiesPanel({ onClose }) {
 
       case 'love': {
         // ── Partner profile card (organic meet or dating app match) ──────────
-        const PartnerProfileCard = ({ profile, onAccept, onDecline, acceptLabel = 'Go on a Date', declineLabel = 'Not Interested' }) => {
-          const genderEmojis = { male: '👨', female: '👩', 'non-binary': '🧑' }
-          const faceEmoji = genderEmojis[profile.gender] ?? '🧑'
-          const StatBarRow = ({ label, value, color }) => (
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-natalis-muted w-16 shrink-0">{label}</span>
-              <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full rounded-full transition-all" style={{ width: `${value}%`, backgroundColor: color }} />
-              </div>
-              <span className="text-xs font-bold w-8 text-right" style={{ color }}>{value}</span>
-            </div>
-          )
-          return (
-            <div className="bg-white rounded-2xl border border-natalis-border shadow-sm overflow-hidden mb-2">
-              {/* Header */}
-              <div className="bg-gradient-to-br from-pink-500 to-rose-400 px-5 py-4 flex items-center gap-4">
-                <span className="text-5xl">{faceEmoji}</span>
-                <div>
-                  <p className="text-white font-bold text-lg leading-tight">{profile.name}</p>
-                  <p className="text-pink-100 text-xs mt-0.5">{profile.occupation}</p>
-                </div>
-              </div>
-              {/* Info fields */}
-              <div className="px-4 pt-3 pb-1 grid grid-cols-2 gap-x-4 gap-y-1.5">
-                <div>
-                  <p className="text-natalis-muted text-xs">Gender</p>
-                  <p className="text-natalis-text text-sm font-semibold capitalize">{profile.gender}</p>
-                </div>
-                <div>
-                  <p className="text-natalis-muted text-xs">Birth Gender</p>
-                  <p className="text-natalis-text text-sm font-semibold capitalize">{profile.birthGender}</p>
-                </div>
-                <div>
-                  <p className="text-natalis-muted text-xs">Age</p>
-                  <p className="text-natalis-text text-sm font-semibold">{profile.age}</p>
-                </div>
-                <div>
-                  <p className="text-natalis-muted text-xs">Occupation</p>
-                  <p className="text-natalis-text text-sm font-semibold truncate">{profile.occupation}</p>
-                </div>
-              </div>
-              {/* Stat bars */}
-              <div className="px-4 pt-2 pb-3 space-y-2">
-                <StatBarRow label="Looks" value={profile.looks} color="#7b4356" />
-                <StatBarRow label="Smarts" value={profile.smarts} color="#3f5670" />
-                <StatBarRow label="Money" value={profile.wealthStat} color="#3f6146" />
-                <StatBarRow label="Craziness" value={profile.craziness} color="#8a6635" />
-              </div>
-              {/* Action buttons */}
-              <div className="px-4 pb-4 grid grid-cols-2 gap-2">
-                <button
-                  onClick={onAccept}
-                  className="py-3 rounded-xl font-bold text-white text-sm active:scale-95 transition-all"
-                  style={{ background: '#7b4356' }}
-                >
-                  {acceptLabel}
-                </button>
-                <button
-                  onClick={onDecline}
-                  className="py-3 rounded-xl font-bold text-sm border border-natalis-border bg-natalis-bg text-natalis-muted active:scale-95 transition-all"
-                >
-                  {declineLabel}
-                </button>
-              </div>
-            </div>
-          )
+        // The partner card was a BitLife stat sheet: four coloured bars —
+        // Looks, Smarts, Money and CRAZINESS — a "Birth Gender" field, a
+        // five-times-size emoji face and a hot-pink gradient header, in a
+        // paper-and-ink game whose design document says "Invisible systems.
+        // Partner traits... none of these appear in the UI" and rules out
+        // gradients on controls. (`pink` is also one of two Tailwind scales the
+        // remap misses, so it was the real #ec4899.)
+        //
+        // The numbers still decide everything they decided. They are now a
+        // sentence, which is the whole principle: a system that makes a
+        // sentence land differently has succeeded.
+        const impressionOf = (pr) => {
+          const bits = []
+          if (pr.looks >= 78) bits.push('People look at them twice and they have clearly known that for years')
+          else if (pr.looks >= 55) bits.push('Good-looking in a way you would not have been able to describe afterwards')
+          else if (pr.looks <= 30) bits.push('Not the first person you would have noticed in the room')
+          if (pr.smarts >= 78) bits.push('quick, and slightly impatient with people who are not')
+          else if (pr.smarts <= 32) bits.push('not interested in being clever about anything, which is restful')
+          if (pr.wealthStat >= 75) bits.push('comfortable in a way that has never had to be thought about')
+          else if (pr.wealthStat <= 25) bits.push('counting, and not hiding it')
+          if (pr.craziness >= 75) bits.push('and there is something going on there that you cannot place yet')
+          else if (pr.craziness <= 20) bits.push('and entirely steady, which you will either love or find dull')
+          if (!bits.length) bits.push('Perfectly ordinary, which is most people, which is the point')
+          return bits.join(', ') + '.'
         }
+
+        const PartnerProfileCard = ({ profile, onAccept, onDecline, acceptLabel = 'Go on a Date', declineLabel = 'Not Interested' }) => (
+          <div className="bg-natalis-surface rounded-2xl border border-natalis-border overflow-hidden mb-2">
+            <div className="px-5 pt-4 pb-3 border-b border-natalis-rule">
+              <p className="text-natalis-text font-prose text-prose-lg leading-tight">{profile.name}</p>
+              <p className="text-natalis-muted text-xs mt-1">
+                {profile.occupation}{profile.age ? ` · ${profile.age}` : ''}
+              </p>
+            </div>
+            <p className="px-5 py-4 text-natalis-dim font-prose text-sm leading-relaxed">
+              {impressionOf(profile)}
+            </p>
+            <div className="px-4 pb-4 grid grid-cols-2 gap-2">
+              <button
+                onClick={onAccept}
+                className="py-3 rounded-xl text-sm border border-natalis-accent text-natalis-accent active:scale-95 transition-all"
+              >
+                {acceptLabel}
+              </button>
+              <button
+                onClick={onDecline}
+                className="py-3 rounded-xl text-sm border border-natalis-border bg-natalis-bg text-natalis-muted active:scale-95 transition-all"
+              >
+                {declineLabel}
+              </button>
+            </div>
+          </div>
+        )
 
         // ── Pending partner (organic meet) ───────────────────────────────────
         if (pendingPartner && !state.partner) {
@@ -423,9 +409,9 @@ export default function ActivitiesPanel({ onClose }) {
             <>
               <button onClick={() => setDatingAppStep(null)} className="text-bit-blue text-sm font-semibold mb-3">← Back</button>
               {/* Dating app header card */}
-              <div className="bg-gradient-to-br from-pink-500 to-rose-400 rounded-2xl px-5 py-4 mb-4 text-white">
+              <div className="bg-natalis-bg border border-natalis-rule rounded-2xl px-5 py-4 mb-4">
                 <p className="font-bold text-lg">💘 Dating App</p>
-                <p className="text-pink-100 text-xs mt-0.5">$100 per search · Find your match</p>
+                <p className="text-natalis-muted text-xs mt-0.5">A fee per search. Whether that is a good way to meet somebody is a separate question.</p>
               </div>
 
               <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Pick your desired age</p>

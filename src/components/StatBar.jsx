@@ -41,7 +41,7 @@ function getTierLabel(stat, value) {
   return tiers[statTier(value)]
 }
 
-export default function StatBar({ stat, label, value, delta }) {
+export default function StatBar({ stat, label, value }) {
   const pct = Math.round(Math.max(0, Math.min(100, value)))
   const tier = getTierLabel(stat, pct)
   const name = label ?? STAT_LABELS[stat] ?? stat
@@ -62,11 +62,6 @@ export default function StatBar({ stat, label, value, delta }) {
           {tier && (
             <span className={`text-xs ${critical ? 'text-natalis-alarm font-medium' : 'text-natalis-dim'}`}>
               {tier}
-            </span>
-          )}
-          {delta != null && delta !== 0 && (
-            <span className={`text-[10px] tabular-nums ${delta > 0 ? 'text-natalis-gain' : 'text-natalis-loss'}`}>
-              {delta > 0 ? `+${delta}` : delta}
             </span>
           )}
           <span className="text-[10px] tabular-nums text-natalis-faint w-5 text-right">{pct}</span>
