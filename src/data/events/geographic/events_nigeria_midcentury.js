@@ -315,7 +315,9 @@ export const NIGERIA_MIDCENTURY_FOLLOWTHROUGH = [
     phase: null,
     weight: 40,
     when: (G) => G.flags.includes('andrew_checking_out') && G.age >= 55 && once(G, 'ngm_ft_andrew'),
-    text: 'Somebody has put the old advert on the internet and it goes round the family group, and everybody makes the joke, and everybody has the same second thought about four seconds later and nobody types it. Of the six of you in that classroom, four went. One came back at sixty. You are the one who never tried, and there are two entirely honest accounts of why, and you give the good one.',
+    text: (G) => G.currentYear >= 2012
+      ? 'Somebody has put the old advert on the internet and it goes round the family group, and everybody makes the joke, and everybody has the same second thought about four seconds later and nobody types it. Of the six of you in that classroom, four went. One came back at sixty. You are the one who never tried, and there are two entirely honest accounts of why, and you give the good one.'
+      : 'Somebody does the advert at the wedding, the whole line of it, and the table goes. Everybody makes the joke and everybody has the same second thought about four seconds later and nobody says it. Of the six of you in that classroom, four went. One came back at sixty. You are the one who never tried, and there are two entirely honest accounts of why, and you give the good one.',
     choices: null,
     effect: (p) => { p.setMem('ngm_ft_andrew', true); p.m += 2; p.r += 3; p.addFlag('the_ones_who_stayed') },
   },

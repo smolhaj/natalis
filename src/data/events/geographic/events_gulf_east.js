@@ -88,7 +88,7 @@ export const GULF_EAST_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      !G.mem.gulfHajjFamily &&
+      !G.mem.gulfHajjFamily && !G.flags.includes('completed_hajj') && !G.flags.includes('hajj_complete') &&
       G.character.country.archetype === 'wealthy_gulf' &&
       (G.religion === 'muslim_sunni' || G.religion === 'muslim_shia' || G.religion?.includes('muslim')) &&
       G.age >= 18 && G.age <= 35,

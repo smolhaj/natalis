@@ -117,11 +117,13 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_hajj_lifetime',
     phase: null,
     weight: 3,
-    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 35 && G.age <= 65 && !G.mem?.hajj_arc && G.money > 4000,
+    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 35 && G.age <= 65 &&
+      !G.flags.includes('completed_hajj') && !G.flags.includes('hajj_complete') &&
+      G.currentYear - (G.mem?.hajjDeferredYear ?? -99) >= 5 && G.money > 4000,
     text: 'You have been saving for years. The fifth pillar. You arrange everything — the visa, the accommodation, the time off work, someone to care for your family. When you finally arrive in Mecca and join the river of people circling the Ka\'aba, you feel a scale that personal faith rarely reaches.',
     choices: [
-      { text: 'Make the Hajj', tag: 'devout', outcome: 'The tawaf before dawn. Millions of people saying the same words in the same direction. You understand in your body what the mind has held as abstraction. You return different.', effect: (p) => { p.mo -= 5000; p.m += 22; p.karma += 12; p.h -= 5; p.addFlag('devout'); p.addFlag('hajj_complete'); p.setMem('hajj_arc', true) } },
-      { text: 'Wait until the time is more right', tag: null, outcome: 'The pillar does not expire. You continue saving.', effect: (p) => { p.setMem('hajj_arc', false) } },
+      { text: 'Make the Hajj', tag: 'devout', outcome: 'The tawaf before dawn. Millions of people saying the same words in the same direction. You understand in your body what the mind has held as abstraction. You return different.', effect: (p) => { p.mo -= 5000; p.m += 22; p.karma += 12; p.h -= 5; p.addFlag('devout'); p.addFlag('completed_hajj'); p.setMem('hajj_arc', true) } },
+      { text: 'Wait until the time is more right', tag: null, outcome: 'The pillar does not expire. You continue saving.', effect: (p) => { p.setMem('hajjDeferredYear', p._state.currentYear) } },
     ],
     effect: null,
   },

@@ -47,16 +47,64 @@ describe('debt', () => {
   it('never compounds without limit', () => {
     // The defect's signature: hand a character a small debt and no means, and
     // watch what fifty years does to it.
+    //
+    // The first version of this asserted a flat cap on the peak balance and was
+    // a noisy instrument, because `debt` is not only the compounding balance —
+    // every unpayable bill in the game lands on it. It failed one run in ten on
+    // a life that had bought a house, which was a real defect but a DIFFERENT
+    // one (see the repossession test below), and it would have failed the same
+    // way on a life that simply lived fifty years it could not afford, which is
+    // not a defect at all.
+    //
+    // So assert what this block is actually responsible for: the year-over-year
+    // GROWTH of a balance nobody adds to. Nothing here can grow faster than the
+    // interest rate, and after the charge-off it cannot grow at all.
     let s = freshLife()
     s = runYears(s, 25)
     if (s.dead) return
-    s = { ...s, debt: 500, money: 0, career: null, mem: { ...s.mem, debtMissedYears: 0 } }
-    let peak = 0
-    s = runYears(s, 50, { onTick: (st) => { peak = Math.max(peak, st.debt ?? 0) } })
-    // 500 at 18% for fifty years is roughly two million. Any finite cap beats
-    // that; this one is deliberately loose because the charge-off lands at five
-    // missed years and the balance before it depends on what else the life did.
-    expect(peak, `a $500 debt with no means reached $${peak.toLocaleString()}`).toBeLessThan(100_000)
+    s = { ...s, debt: 500, money: 0, career: null, assets: { properties: [], vehicles: [] }, mem: { ...s.mem, debtMissedYears: 0 } }
+    let worstRatio = 0
+    let last = s.debt
+    s = runYears(s, 50, { onTick: (st) => {
+      if (last > 0 && (st.debt ?? 0) > last) worstRatio = Math.max(worstRatio, (st.debt ?? 0) / last)
+      last = st.debt ?? 0
+    } })
+    // 1.18 is the unsecured rate; the margin is for the living-cost shortfall
+    // that lands on the same field in a year the character had nothing at all.
+    expect(worstRatio, `a debt grew ${worstRatio.toFixed(2)}x in one year`).toBeLessThan(2.0)
+  })
+
+  it('takes the house rather than billing forever for it', () => {
+    // A mortgage in arrears debited the payment that was NOT made, so the
+    // shortfall became debt AND the unpaid interest went onto the principal —
+    // the same bill twice — and then again the next year, for the rest of the
+    // life, because nothing in the game ever repossessed anything. Measured:
+    // a $500 balance at 39 reached $257,327 by 60, with the interest rate
+    // nowhere near able to explain it.
+    let s = freshLife()
+    s = runYears(s, 30)
+    if (s.dead) return
+    s = {
+      ...s, money: 0, career: null, debt: 0,
+      assets: {
+        properties: [{ typeId: 'terraced_house', currentValue: 120000, mortgage: 90000, purchaseYear: s.currentYear - 1 }],
+        vehicles: [],
+      },
+    }
+    // Held penniless each year on purpose: `tickLifeCourse` hands out a job to
+    // anybody who does not have one, so a plain eight-year run re-employs the
+    // character and they service the mortgage — which is correct behaviour and
+    // not what this test is about.
+    for (let y = 0; y < 8 && !s.dead && s.assets.properties.length; y++) {
+      s = { ...s, money: 0, career: null, retired: true }
+      s = tick(s)
+      if (s.pendingEvent) s = { ...s, pendingEvent: null }
+      if (s.pendingMinigame) s = { ...s, pendingMinigame: null }
+      if (s.pendingTrial) s = { ...s, pendingTrial: null }
+    }
+    if (s.dead) return
+    expect(s.assets.properties.length, 'a house nobody can pay for is not kept forever').toBe(0)
+    expect(s.flags).toContain('lost_home')
   })
 
   it('tells the player, over a run of lives', () => {

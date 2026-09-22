@@ -82,15 +82,37 @@ const resolve = (candidate) => {
  */
 function buildYearTexture(state, opts = {}) {
   const buckets = { urgent: [], glimpse: [], anchored: [], earned: [], universal: [] }
+  // A guard may offer a third element: what to spend when this line PRINTS.
+  // Two blocks used to spend theirs inside the generator, at the moment the
+  // candidate was merely offered — the glimpse cadence and the desire-texture
+  // fire count — so a line that lost the tier draw still burned its budget. The
+  // glimpse went quiet for eight years without a word printing, and the desire
+  // layer advanced from full to brief to oblique while the player read none of
+  // them. Keyed by the line rather than the candidate because `preferUnsaid`
+  // rebuilds a variant pool and the array identity does not survive it.
+  const commits = new Map()
+  const note = (value, onPrint) => {
+    if (typeof onPrint !== 'function') return
+    for (const line of (Array.isArray(value) ? value : [value])) {
+      if (typeof line === 'string' && line.length > 0) commits.set(line, onPrint)
+    }
+  }
   for (const offer of textureCandidates(state, opts)) {
     if (!Array.isArray(offer)) continue
-    const [tier, value] = offer
+    const [tier, value, onPrint] = offer
     if (!buckets[tier]) continue
     // A guard offers either one line or a pool of interchangeable variants. The
     // pool counts as ONE candidate, so a block with thirty alternatives does not
     // outvote a country block with one — it just has thirty ways to say its turn.
     if (typeof value === 'string' && value.length > 0) buckets[tier].push(value)
     else if (Array.isArray(value) && value.length > 0) buckets[tier].push(value)
+    else continue
+    note(value, onPrint)
+  }
+
+  const print = (line) => {
+    if (line) commits.get(line)?.(state)
+    return line
   }
 
   if (buckets.urgent.length && Math.random() < 0.72) {
@@ -100,12 +122,12 @@ function buildYearTexture(state, opts = {}) {
     // every year it reads as a broken loop, not a motif, and a latched
     // single-line block has no other brake on it.
     if (allSaid(state, fresh)) {
-      if (Math.random() < 0.25) return resolve(pickOne(fresh))
+      if (Math.random() < 0.25) return print(resolve(pickOne(fresh)))
     } else {
-      return resolve(pickOne(fresh))
+      return print(resolve(pickOne(fresh)))
     }
   }
-  if (buckets.glimpse.length) return resolve(pickOne(preferUnsaid(state, buckets.glimpse)))
+  if (buckets.glimpse.length) return print(resolve(pickOne(preferUnsaid(state, buckets.glimpse))))
 
   const tiers = opts.specificOnly
     ? ['anchored', 'earned']
@@ -114,7 +136,7 @@ function buildYearTexture(state, opts = {}) {
   if (live.length === 0) {
     // Nothing specific, and the caller asked for specific only. If the caller
     // will take anything, an urgent line beats silence.
-    return buckets.urgent.length ? resolve(pickOne(preferUnsaid(state, buckets.urgent))) : null
+    return buckets.urgent.length ? print(resolve(pickOne(preferUnsaid(state, buckets.urgent)))) : null
   }
   const total = live.reduce((s, t) => s + TEXTURE_SHARES[t], 0)
   let r = Math.random() * total
@@ -130,7 +152,7 @@ function buildYearTexture(state, opts = {}) {
   // a better sentence than one the player read nine years ago. Grief is exempt
   // above — a feeling that recurs is supposed to recur.
   if (opts.specificOnly && allSaid(state, fresh)) return null
-  return resolve(pickOne(fresh))
+  return print(resolve(pickOne(fresh)))
 }
 
 /**
@@ -745,8 +767,13 @@ function* textureCandidates(state, opts = {}) {
 
   const lastSonderAge = mem?.sonderGlimpseAge ?? -99
   if (age >= 12 && (age - lastSonderAge) >= 8 && Math.random() < 0.18) {
-    if (!state.mem) state.mem = {}
-    state.mem.sonderGlimpseAge = age
+    // The cadence used to be spent HERE, inside the generator, before the
+    // driver knew which tier would win — so an urgent line (which beats a
+    // glimpse 72% of the time) silently swallowed the glimpse and the next one
+    // could not come for eight more years. `buildYearTexture` stamps it now,
+    // when a glimpse actually prints. It also matters that this generator is
+    // what the coverage census calls to ask what the layer WOULD say: a
+    // candidate generator that mutates state corrupts the life it is reading.
     const sonderPool = (phase === 'late_life') ? [
       'The young man on the bus has the posture of someone at the start of something large. You can see approximately where it goes from here. You do not tell him.',
       'You pass a lit window at eleven at night — someone reading in a chair, a lamp beside them, an entire life inside that apartment that has its own complete history.',
@@ -781,7 +808,10 @@ function* textureCandidates(state, opts = {}) {
       _isNonWest ? 'A woman is carrying water on her head and also talking to someone and also watching a child ahead of her. Three things at once, flawlessly.' : 'The child on the other side of the fence is conducting a long and serious negotiation with a dog. The dog is attentive.',
       _isNonWest ? 'The old man in the chair outside his door is watching the street the way a person watches something they have watched for forty years.' : 'Someone is sitting in a parked car, engine off, not getting out. You walk past. You don\'t know what the inside of that moment is.',
     ]
-    yield [T.glimpse, pick(sonderPool)]
+    yield [T.glimpse, sonderPool, (st) => {
+      if (!st.mem) st.mem = {}
+      st.mem.sonderGlimpseAge = st.age
+    }]
   }
 
   // ─── GIFTED ARC TEXTURE ──────────────────────────────────────────────────────
@@ -2305,7 +2335,7 @@ function* textureCandidates(state, opts = {}) {
     ])]
   }
 
-  if (F.has('hajj_complete') && Math.random() < 0.3) yield [T.earned, pick([
+  if ((F.has('completed_hajj') || F.has('hajj_complete')) && Math.random() < 0.3) yield [T.earned, pick([
     'The tawaf at the Ka\'aba before dawn — seven circuits, the Black Stone at the corner, millions of shoulders moving in the same direction. You were in that. The word you keep reaching for is not religious. It is something older.',
     'You made the Hajj. The fifth pillar — you completed it. What the pilgrimage did to you is still working itself out, years later. Something changed in the ordering of things.',
     phase === 'late_life'
@@ -5507,8 +5537,7 @@ function* textureCandidates(state, opts = {}) {
   // ─── DESIRE-AWARE TEXTURE (fires ~40% of remaining quiet years) ───────────────
   // Tiered: first fire = full, second = brief, third+ = oblique (transformed in late life)
   if (desire && Math.random() < 0.4) {
-    if (!state.mem) state.mem = {}
-    const fireCount = state.mem.desireTextureFires ?? 0
+    const fireCount = state.mem?.desireTextureFires ?? 0
     const phaseKey = (phase === 'early_childhood') ? 'early_childhood'
       : (phase === 'childhood') ? 'childhood'
       : (phase === 'adolescence') ? 'adolescence'
@@ -5679,8 +5708,10 @@ function* textureCandidates(state, opts = {}) {
     }
 
     if (desireLine) {
-      state.mem.desireTextureFires = fireCount + 1
-      yield [T.earned, desireLine]
+      yield [T.earned, desireLine, (st) => {
+        if (!st.mem) st.mem = {}
+        st.mem.desireTextureFires = (st.mem.desireTextureFires ?? 0) + 1
+      }]
     }
   }
 

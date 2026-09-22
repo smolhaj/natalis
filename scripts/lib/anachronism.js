@@ -42,7 +42,11 @@ export const TECH_PHRASES = [
   // office and "the phone" is the instrument in the hall; both are ordinary
   // in 1960 and neither is a pocket screen. Including them made this cry
   // wolf on an OFW ringing home from Mexico in 1984.
-  [/\b(?:on|at|to) (?:his|her|their|your) phone\b|\bchecking (?:his|her|their|your) phone\b|\bscroll(?:s|ing|ed)\b/, 'mobile_phone'],
+  // And the bare verb `scroll(s|ing|ed)` was too loose in the other direction:
+  // a Japanese household in 1947 trades the kimono, then the other kimono,
+  // then THE SCROLLS, which are kakemono. A scroll is a noun older than paper
+  // mills. The verb needs its particle.
+  [/\b(?:on|at|to) (?:his|her|their|your) phone\b|\bchecking (?:his|her|their|your) phone\b|\bscroll(?:s|ing|ed)?\s+(?:through|past|down|up|back)\b|\bscrolling\b/, 'mobile_phone'],
   [/\bvoice note\b|\bselfie\b/, 'smartphone'],
   [/\bstreaming\b|\bnetflix\b/, 'streaming'],
   [/\bvideo call\b|\bvideo-call\b|\bzoom call\b|\bskype\b/, 'video_call'],

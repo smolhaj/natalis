@@ -242,6 +242,15 @@ function applyNaturalAging(state) {
   }
 }
 
+const EDUCATION_RANK = { none: 0, primary: 1, secondary: 2, university: 3, graduate: 4 }
+
+// Flags whose prose asserts a degree. See addFlag.
+const EDUCATION_FLAGS = {
+  university_graduate: 'university',
+  first_gen_university: 'university',
+  hbcu_graduate: 'university',
+}
+
 function buildEffectProxy(state) {
   const proxy = createProxy(state)
   // Read-only state accessors for effects that need to branch on character context
@@ -267,11 +276,25 @@ function buildEffectProxy(state) {
       if (TIMESTAMPED_FLAGS.has(flag)) {
         proxy.mem[`${flag}Year`] = state.currentYear
       }
+      // A flag is not a fact about the state. Six events set a flag that SAYS
+      // the character went to university -- `university_graduate`,
+      // `first_gen_university`, `hbcu_graduate` -- and not one of them touched
+      // `state.education`, so a graduate's identity card read "Education: none"
+      // while the corpus's 8 `education.level === 'university'` guards and
+      // every degree-requiring career were closed to them. Promoted here, at
+      // the one site every event goes through, rather than in six callers.
+      const implied = EDUCATION_FLAGS[flag]
+      if (implied) proxy.setEducation(implied)
     }
   }
   proxy.clearFlag = (flag) => { proxy.flags = proxy.flags.filter(f => f !== flag) }
   proxy.setEducation = (level, field = null) => {
-    proxy._newEducation = { level, field: field ?? state.education.field }
+    // Monotonic: an event that hands out a degree must not take one away. The
+    // gifted arc sets `hbcu_graduate` on a character who may already hold a
+    // postgraduate degree, and 'university' ranks below 'graduate'.
+    const held = proxy._newEducation?.level ?? state.education?.level ?? 'none'
+    if ((EDUCATION_RANK[level] ?? 0) < (EDUCATION_RANK[held] ?? 0)) return
+    proxy._newEducation = { level, field: field ?? proxy._newEducation?.field ?? state.education.field }
   }
   proxy.setCareer = (careerId) => { proxy._newCareerId = careerId }
   proxy.clearCareer = () => { proxy._clearCareer = true }
@@ -1482,7 +1505,7 @@ export function enterCareer(state, careerId) {
     promotionChance: career.promotionChance ?? 0.10,
     maxLevel: career.levels.length - 1,
   }
-  const log = [...state.log, { age: state.age, text: `You begin working as ${withArticle(level.title)}. Starting salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
+  const log = [...state.log, { age: state.age, text: `You begin working as ${withArticle(newCareer.title)}. Starting salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career: newCareer, log }
 }
 
@@ -1523,7 +1546,7 @@ export function checkPromotion(state) {
   const baseSalary = Math.max(drawn, Math.round((state.career.baseSalary ?? drawn) * 1.04))
   const salary = inEraMoney(baseSalary, liveCountry(state), state.currentYear)
   const career = { ...state.career, level: nextIdx, title: careerTitle(newLevel, state), salary, baseSalary, yearsInRole: 0, startedAge: state.age }
-  const log = [...state.log, { age: state.age, text: `You are promoted to ${newLevel.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
+  const log = [...state.log, { age: state.age, text: `You are promoted to ${career.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career, log }
 }
 
@@ -2002,9 +2025,18 @@ function tickAssets(state) {
   // principal does not fall, the unpaid interest is added to it, and the
   // shortfall is carried on `debt` where the poverty corpus can see it.
   let arrears = false
-  const updatedProperties = properties.map(p => {
+  // Arrears could run for the rest of a life, because nothing in the game ever
+  // took the house. A penniless owner was debited the payment they had NOT
+  // made — so the shortfall became debt AND the unpaid interest was added to
+  // the principal, the same bill counted twice — and then charged again the
+  // next year, forever: a $500 balance at 39 reached $257,327 by 60 with the
+  // interest rate nowhere near able to explain it. A lender who is not being
+  // paid does not extend credit indefinitely. They take the house.
+  const repossessed = []
+  const updatedProperties = []
+  for (const p of properties) {
     const type = PROPERTY_TYPES.find(t => t.id === p.typeId)
-    if (!type) return p
+    if (!type) { updatedProperties.push(p); continue }
     const newValue = Math.round(p.currentValue * drift * (1 + type.appreciationRate + randomBetween(-2, 2) / 100))
     money -= inEraMoney(type.annualMaintenance, liveCountry(state), state.currentYear)
     if (p.mortgage > 0) {
@@ -2012,14 +2044,24 @@ function tickAssets(state) {
       const payment = Math.min(Math.round(p.mortgage / 25) + interest, p.mortgage + interest)
       if (money >= payment) {
         money -= payment
-        return { ...p, currentValue: newValue, mortgage: Math.max(0, p.mortgage - (payment - interest)) }
+        updatedProperties.push({ ...p, currentValue: newValue, mortgage: Math.max(0, p.mortgage - (payment - interest)), arrearsYears: 0 })
+        continue
       }
       arrears = true
-      money -= payment
-      return { ...p, currentValue: newValue, mortgage: p.mortgage + interest }
+      const missed = (p.arrearsYears ?? 0) + 1
+      if (missed >= 3) {
+        // The sale clears the mortgage. Equity comes back, minus what a forced
+        // sale costs; negative equity stays as debt, which is the whole of what
+        // 2008 was for the people it happened to.
+        repossessed.push({ ...p, currentValue: newValue, mortgage: p.mortgage + interest })
+        continue
+      }
+      // The payment is not made, so it does not leave the account either.
+      updatedProperties.push({ ...p, currentValue: newValue, mortgage: p.mortgage + interest, arrearsYears: missed })
+      continue
     }
-    return { ...p, currentValue: newValue }
-  })
+    updatedProperties.push({ ...p, currentValue: newValue, arrearsYears: 0 })
+  }
 
   const updatedVehicles = vehicles.map(v => {
     const type = VEHICLE_TYPES.find(t => t.id === v.typeId)
@@ -2030,16 +2072,33 @@ function tickAssets(state) {
     return { ...v, currentValue: Math.max(100, Math.round(v.currentValue * drift * (1 - type.depreciationRate))) }
   })
 
-  const owed = money < 0 ? -money : 0
-  const log = arrears && !state.mem?.arrearsToldYear
-    ? [...state.log, { age: state.age, text: 'The payment does not go out this month, and then it does not go out the month after. The letter that follows is polite and the second one is not.', isKey: true }]
-    : state.log
+  let log = [...state.log]
+  let mem = state.mem ?? {}
+  let flags = state.flags
+  let shortfall = 0
+  for (const p of repossessed) {
+    const equity = p.currentValue - p.mortgage
+    if (equity > 0) money += Math.round(equity * 0.85)
+    else shortfall += -equity
+    log = [...log, { age: state.age, year: state.currentYear, isKey: true, text: equity > 0
+      ? 'It is sold from under you, and what is left after the lender takes theirs is less than you put in. You are given a date. You are out before it, because the alternative is being carried out on the day.'
+      : 'The house goes and the debt does not go with it. You owed more than it was worth, which is a sentence that took you a long time to be able to say out loud.' }]
+    flags = [...new Set([...flags, 'lost_home', 'housing_lost'])]
+    mem = { ...mem, homeRepossessedYear: state.currentYear }
+  }
+
+  const owed = (money < 0 ? -money : 0) + shortfall
+  if (arrears && !mem.arrearsToldYear) {
+    log = [...log, { age: state.age, text: 'The payment does not go out this month, and then it does not go out the month after. The letter that follows is polite and the second one is not.', isKey: true }]
+    mem = { ...mem, arrearsToldYear: state.currentYear }
+  }
   return {
     ...state,
     assets: { properties: updatedProperties, vehicles: updatedVehicles },
     money: Math.max(0, money),
     debt: Math.round((state.debt ?? 0) + owed),
-    mem: arrears && !state.mem?.arrearsToldYear ? { ...(state.mem ?? {}), arrearsToldYear: state.currentYear } : state.mem,
+    flags,
+    mem,
     log,
   }
 }
@@ -2577,23 +2636,28 @@ export function tick(state) {
       midlife:     (desire && _desireMidlife[desire]) ?? 'You are thirty. The life you have been building has become recognizable as a life.',
       late_life:   (desire && _desireLateLife[desire]) ?? 'You are fifty. What you carry into this half is mostly set.',
     }[newPhase]
-    if (phaseLine) s.log = [...s.log, { age: s.age, year: s.currentYear, text: phaseLine, isKey: true, isPhaseTransition: true, toPhase: newPhase }]
-
-    // Inject guaranteed phase entry decision events at key phase boundaries
+    // Inject guaranteed phase entry decision events at key phase boundaries.
+    // This runs BEFORE the transition line is logged, because the entry event
+    // opens with the same sentence the line does — "You are thirty. The life
+    // you have been building has become recognizable as a life." is the default
+    // desire context of phase_entry_midlife AND the midlife phaseLine — so
+    // printing both put the identical sentence into one year, twice, on the
+    // screen at once. Where the event will carry the beat, the line stands down.
     const phaseEntryMap = getPhaseEntryMap()
     const usedMap = s.usedEventMap ?? new Map()
-    if (newPhase === 'young_adult' && !usedMap.has('phase_entry_young_adult') && !s.queue.some(e => e.id === 'phase_entry_young_adult')) {
-      const evt = phaseEntryMap.get('phase_entry_young_adult')
-      if (evt) s.queue = [evt, ...s.queue]
+    let entryInjected = false
+    const injectEntry = (id) => {
+      if (usedMap.has(id) || s.queue.some(e => e.id === id)) return
+      const evt = phaseEntryMap.get(id)
+      if (!evt) return
+      s.queue = [evt, ...s.queue]
+      entryInjected = true
     }
-    if (newPhase === 'midlife' && !usedMap.has('phase_entry_midlife') && !s.queue.some(e => e.id === 'phase_entry_midlife')) {
-      const evt = phaseEntryMap.get('phase_entry_midlife')
-      if (evt) s.queue = [evt, ...s.queue]
-    }
-    if (newPhase === 'late_life' && !usedMap.has('phase_entry_late_life') && !s.queue.some(e => e.id === 'phase_entry_late_life')) {
-      const evt = phaseEntryMap.get('phase_entry_late_life')
-      if (evt) s.queue = [evt, ...s.queue]
-    }
+    if (newPhase === 'young_adult') injectEntry('phase_entry_young_adult')
+    if (newPhase === 'midlife') injectEntry('phase_entry_midlife')
+    if (newPhase === 'late_life') injectEntry('phase_entry_late_life')
+
+    if (phaseLine && !entryInjected) s.log = [...s.log, { age: s.age, year: s.currentYear, text: phaseLine, isKey: true, isPhaseTransition: true, toPhase: newPhase }]
   }
 
   // Life skeleton beat scheduling — guaranteed narrative beats at key ages
