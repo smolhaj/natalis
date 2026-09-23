@@ -9320,6 +9320,45 @@ function flagPrerequisites(src) {
   return req.length ? req : null
 }
 
+// Events that narrate ONE historical year — the day of Peru's 1980 election, the
+// referendum in Sarajevo, the night the Wall opened. One event fires per year
+// and the anchored register holds ~38% of a year, so an event whose guard is
+// open for a single year was structurally capped at about that share of the
+// people it was written for even at weight 999, and at 4% at the corpus-typical
+// weight below 20 — measured over 394 such events, pooled reach for an eligible
+// character was 8.8%. A wide window can be fixed by hand, as Bosnia's were; a
+// sentence about the day itself cannot be widened.
+//
+// `dated` is the window, `{ from, to }`, when the guard confines the event to
+// at most DATED_MAX_SPAN calendar years, and null otherwise. Parsed from the
+// guard's own comparisons against its parameter's `currentYear`, read as a
+// conjunction. Anything the parse cannot be sure of — an `||`, an early
+// `return false`, a destructured parameter — is left undated, because a false
+// positive here would hand a slot to an event every year of a life.
+export const DATED_MAX_SPAN = 2
+const YEAR_OPS = '===|==|>=|<=|>|<'
+function datedWindow(src) {
+  if (!src || !/currentYear/.test(src)) return null
+  if (/\|\||return\s+false/.test(src)) return null
+  const param = src.match(/^\s*(?:function\s*\w*\s*)?\(?\s*([A-Za-z_$][\w$]*)\s*\)?\s*(?:=>|\{)/)?.[1]
+  if (!param) return null
+  const prop = `\\b${param}\\s*\\??\\.\\s*currentYear\\b`
+  let lo = -Infinity, hi = Infinity
+  const apply = (op, n) => {
+    if (op === '>=') lo = Math.max(lo, n)
+    else if (op === '>') lo = Math.max(lo, n + 1)
+    else if (op === '<=') hi = Math.min(hi, n)
+    else if (op === '<') hi = Math.min(hi, n - 1)
+    else { lo = Math.max(lo, n); hi = Math.min(hi, n) }
+  }
+  const flip = { '>=': '<=', '<=': '>=', '>': '<', '<': '>', '===': '===', '==': '==' }
+  for (const m of src.matchAll(new RegExp(`${prop}\\s*(${YEAR_OPS})\\s*(\\d{4})\\b`, 'g'))) apply(m[1], Number(m[2]))
+  for (const m of src.matchAll(new RegExp(`\\b(\\d{4})\\s*(${YEAR_OPS})\\s*${prop}`, 'g'))) apply(flip[m[2]], Number(m[1]))
+  if (!Number.isFinite(lo) || !Number.isFinite(hi) || hi < lo) return null
+  if (hi - lo + 1 > DATED_MAX_SPAN) return null
+  return { from: lo, to: hi }
+}
+
 export function classifyEvent(e) {
   if (e.register !== undefined) return e
   let src = ''
@@ -9364,6 +9403,7 @@ export function classifyEvent(e) {
   // for a character who is already inside the arc.
   e.continuesFlag = flagPrerequisites(src)
   guardSpecificity(e)
+  e.dated = e.contemplative ? null : datedWindow(src)
   if (e.contemplative) e.register = 'contemplative'
   else if (e.anchored) e.register = 'anchored'
   else if (EARNED_PROBE.test(src)) e.register = 'earned'

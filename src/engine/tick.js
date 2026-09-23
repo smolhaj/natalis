@@ -854,6 +854,33 @@ const CONTEMPLATIVE_COOLDOWN = 3
 // A stranger glimpse is due roughly once a decade, per the Sonder Principle.
 const GLIMPSE_INTERVAL = 9
 
+// Dated events — guards open for one or two calendar years (`event.dated`, see
+// classifyEvent). The register draw gives anchored events ~38% of a year, and
+// an event that can only ever fire in 1980 gets exactly one draw, so the day of
+// Peru's first universal-suffrage election reached 7-40% of the Peruvians it was
+// written for, and the 345 dated events at the corpus-typical weight under 20
+// reached 4%. Nothing about the event was wrong; the year simply had one slot
+// and the slot was a coin flip it could not retry.
+//
+// So a dated event that is eligible THIS year may claim the year before the
+// register draw. With high probability when this is the last year it can ever
+// fire, with even odds when its window still has a year to run (it gets a
+// second, stronger chance next year). The chance halves for each year of an
+// unbroken run of dated events ending last year, so a crowded stretch — Bosnia
+// 1990-95, Peru 1980-83, Central Europe 1989-91 — alternates history with the
+// rest of the life instead of becoming a run of nothing else. A gap resets it:
+// a dated event two years ago says nothing about whether this year is crowded.
+//
+// A dated year taken from another register is borrowed from anchored and paid
+// back at the next anchored draw (`mem.anchoredDebt`), so REGISTER_SHARES still
+// describes the life. Measured over 394 dated events and 4,770 lives forced into
+// their windows: pooled reach for an eligible character 8.8% -> 77%; the
+// weight-999 Peruvian election 32% -> 86%; the register mix within a point.
+const DATED_FINAL_CHANCE = 0.9
+const DATED_EARLY_CHANCE = 0.5
+const DATED_LOOKBACK = 3
+const DATED_DECAY = 0.5
+
 function eventWeight(e, G, desire, leaning) {
   let w = (e.weight ?? 1) * desireWeight(e.id, desire) * statWeight(e.id, G) * leaningWeight(e.id, leaning)
   // Inside the contemplative layer, prefer observations that are anchored to
@@ -937,17 +964,6 @@ export function getNextEvent(state) {
   const desire = G.desire
   const leaning = G.political_leaning
 
-  // A glimpse of a stranger's life, on its own cadence rather than competing
-  // for weight against 8,000 other events.
-  const lastGlimpse = state.mem?.lastGlimpseYear ?? (state.character?.birthYear ?? currentYear)
-  // Age floor at 3, not 8: the glimpse pool now carries early-childhood entries
-  // (a stranger noticed at 3-5, before you have the words for it), and an
-  // age-8 gate meant those could never be scheduled.
-  if (state.age >= 3 && currentYear - lastGlimpse >= GLIMPSE_INTERVAL) {
-    const glimpses = pool.filter(e => e.isGlimpse)
-    if (glimpses.length && chance(0.55)) return weightedPick(glimpses, G, desire, leaning)
-  }
-
   const lastContemplative = state.mem?.lastContemplativeYear ?? -999
   const contemplativeAllowed = currentYear - lastContemplative >= CONTEMPLATIVE_COOLDOWN
 
@@ -959,7 +975,6 @@ export function getNextEvent(state) {
   // something eligible this year.
   const shares = REGISTER_SHARES[state.mode === 'passive' ? 'passive' : 'active']
   const live = Object.keys(buckets).filter(k => buckets[k].length > 0)
-  if (live.length === 0) return null
 
   // Renormalise over the registers that actually have something eligible — but
   // never into `universal`. Contemplative is on a three-year cooldown and the
@@ -980,12 +995,65 @@ export function getNextEvent(state) {
     for (const k of others) weights[k] = shares[k] * scale
     if (uni > 0) weights.universal = uni
   }
+  // Drawn before the dated slot, which needs to know whose year it would be
+  // taking. Null when nothing is eligible in any register, which still leaves
+  // a glimpse able to speak.
   const totalShare = Object.values(weights).reduce((a, b) => a + b, 0)
   let r = Math.random() * totalShare
-  let chosen = live[live.length - 1]
-  for (const k of Object.keys(weights)) {
-    r -= weights[k]
-    if (r <= 0) { chosen = k; break }
+  let chosen = live.length ? live[live.length - 1] : null
+  if (chosen) {
+    for (const k of Object.keys(weights)) {
+      r -= weights[k]
+      if (r <= 0) { chosen = k; break }
+    }
+  }
+
+  // A dated event may claim a year that is its only year, ahead of the glimpse
+  // and of whatever register was drawn. A glimpse that yields waits a year;
+  // 1980 does not come again.
+  const dated = pool.filter(e => e.dated && currentYear >= e.dated.from && currentYear <= e.dated.to)
+  if (dated.length) {
+    const final = dated.filter(e => e.dated.to <= currentYear)
+    // The unbroken run of dated years ending last year: a gap resets it.
+    const firedYears = new Set(state.mem?.datedYears ?? [])
+    let run = 0
+    while (run < DATED_LOOKBACK && firedYears.has(currentYear - 1 - run)) run++
+    const p = (final.length ? DATED_FINAL_CHANCE : DATED_EARLY_CHANCE) * DATED_DECAY ** run
+    if (chance(p)) {
+      const pick = weightedPick(final.length ? final : dated, G, desire, leaning)
+      // Dated events are anchored. Taking a year the draw gave to another
+      // register borrows an anchored year, repaid below, so the register mix
+      // over a life is what REGISTER_SHARES says it is.
+      return chosen === 'anchored' ? pick : { ...pick, borrowsAnchored: true }
+    }
+  }
+
+  // A glimpse of a stranger's life, on its own cadence rather than competing
+  // for weight against 8,000 other events.
+  const lastGlimpse = state.mem?.lastGlimpseYear ?? (state.character?.birthYear ?? currentYear)
+  // Age floor at 3, not 8: the glimpse pool now carries early-childhood entries
+  // (a stranger noticed at 3-5, before you have the words for it), and an
+  // age-8 gate meant those could never be scheduled.
+  if (state.age >= 3 && currentYear - lastGlimpse >= GLIMPSE_INTERVAL) {
+    const glimpses = pool.filter(e => e.isGlimpse)
+    if (glimpses.length && chance(0.55)) return weightedPick(glimpses, G, desire, leaning)
+  }
+  if (!chosen) return null
+
+  // Repay a borrowed year: the draw landed on anchored, and an earlier dated
+  // event already took an anchored year out of turn, so this year goes to the
+  // register it displaced instead. Without it, the dated slot moved ~3 points of
+  // every life from earned to anchored.
+  if (chosen === 'anchored' && (state.mem?.anchoredDebt ?? 0) > 0) {
+    const repay = Object.keys(weights).filter(k => k !== 'anchored')
+    if (repay.length) {
+      const tot = repay.reduce((a, k) => a + weights[k], 0)
+      let rr = Math.random() * tot
+      let k2 = repay[repay.length - 1]
+      for (const k of repay) { rr -= weights[k]; if (rr <= 0) { k2 = k; break } }
+      const pick = weightedPick(buckets[k2], G, desire, leaning)
+      if (pick) return { ...pick, repaysAnchored: true }
+    }
   }
 
   return weightedPick(buckets[chosen], G, desire, leaning)
@@ -3778,6 +3846,11 @@ function trackCadence(s, event, year) {
   let touched = false
   if (event.contemplative) { mem.lastContemplativeYear = year; touched = true }
   if (event.isGlimpse) { mem.lastGlimpseYear = year; touched = true }
+  // Every dated event counts toward the density cap, whichever path chose it:
+  // the cap is about how much of a stretch of life is history, not about the slot.
+  if (event.dated) { mem.datedYears = [...(mem.datedYears ?? []).filter(y => year - y <= DATED_LOOKBACK), year]; touched = true }
+  if (event.borrowsAnchored) { mem.anchoredDebt = (mem.anchoredDebt ?? 0) + 1; touched = true }
+  if (event.repaysAnchored) { mem.anchoredDebt = Math.max(0, (mem.anchoredDebt ?? 0) - 1); touched = true }
   return touched ? { ...s, mem } : s
 }
 
