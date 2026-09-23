@@ -123,6 +123,9 @@ export const VIETNAM_EVENTS = [
     when: (G) =>
       !G.mem.vnCampWait &&
       G.flags.includes('boat_person') &&
+      // The camp is the year or two after the boat, not a decade into the new
+      // country: it fired in New York six years after the crossing.
+      (G.mem.boat_personYear == null || G.currentYear - G.mem.boat_personYear <= 2) &&
       G.currentYear >= 1977 && G.currentYear <= 1993 &&
       G.age >= 16,
     text: 'The camp is on a small island. There are more people than the camp was built for. The food allocation is calculated by UNHCR formula. You are a number on a form. The interview will determine which country, if any, will accept you. First interview, then screening, then waiting for the result, then appeal. Some people have been here two years. You have a neighbour who has been here four. He is teaching children in a makeshift classroom because there is nothing else to do with the time.',

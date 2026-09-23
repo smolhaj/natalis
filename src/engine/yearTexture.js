@@ -1741,7 +1741,10 @@ function* textureCandidates(state, opts = {}) {
 
   // Young children texture — present-tense parenting in young_adult/midlife
   {
-    const youngChildren = (children ?? []).filter(c => c.age <= 12 && (c.relationshipQuality ?? 50) >= 55)
+    // From three. "Christos is 0. The world is still explicable to them" and
+    // "the 0-year-old logic of Christos" were printed about a newborn, and a
+    // baby does not have a question every morning before breakfast.
+    const youngChildren = (children ?? []).filter(c => c.alive !== false && c.age >= 3 && c.age <= 12 && (c.relationshipQuality ?? 50) >= 55)
     if (youngChildren.length > 0 && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.25) {
       const yc = youngChildren[Math.floor(Math.random() * youngChildren.length)]
       const cn = yc.name?.split(' ')[0] ?? 'your child'
@@ -14166,9 +14169,13 @@ function* textureCandidates(state, opts = {}) {
   // Country + archetype + era prose for when no specific flags fire.
   // Ensures quiet years still feel grounded in historical moment and place.
   if (Math.random() < 0.50) {
-    const arch = state.character?.country?.archetype
-    const cn = state.character?.country?.name
+    // The place a quiet year is grounded in is the one the character is in.
+    // This read the birth country, so a Filipina fifteen years into a Riyadh
+    // contract was told about the ride-share drivers and the youth bulge in
+    // the schools at home.
     const country = state.currentCountry ?? state.character?.country ?? null
+    const arch = country?.archetype
+    const cn = country?.name
     const era = Math.floor(currentYear / 10) * 10
     // These blocks fire at every age, so a line about the device in everyone's
     // pocket reorganising the week was reaching four-year-olds. Noticing that

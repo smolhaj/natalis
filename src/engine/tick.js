@@ -264,6 +264,8 @@ function buildEffectProxy(state) {
     'uyghur_suppressed', 'kafala_documented', 'forced_harvest', 'ebola_survivor',
     'experienced_miscarriage', 'multiple_miscarriage', 'sibling_estranged', 'grief_drinking',
     'child_seriously_ill', 'sick_child_diagnosed',
+    // the crossing, so the camp that follows it can be dated from it
+    'boat_person',
   ])
   proxy.addFlag = (flag) => {
     if (!proxy.flags.includes(flag)) {
@@ -1566,6 +1568,7 @@ export function enterCareer(state, careerId) {
     // Which country's wage level `baseSalary` was drawn at, so a move can
     // re-base it. See the re-denomination in tick().
     wageGdp: liveCountry(state).gdp,
+    wageCountry: liveCountry(state).name,
     field: career.field, yearsInRole: 0, startedAge: state.age, performance: 70,
     partTime: career.partTime ?? false,
     promotionChance: career.promotionChance ?? 0.10,
@@ -3372,6 +3375,14 @@ export function tick(state) {
     } else {
       s = checkPromotion(s)
     }
+  }
+
+  // A farm does not cross a border. A Vietnamese smallholder who left on a
+  // boat in 1978 was promoted to Farmer in New York three years later and lost
+  // a harvest in East New York in 1999; a wage can be re-based, land cannot.
+  if (s.career?.field === 'agriculture' && (s.career.wageCountry ?? s.character?.country?.name) !== liveCountry(s)?.name) {
+    s = { ...s, career: null, log: [...s.log, { age: s.age, isKey: true,
+      text: 'The land stayed where it was. Whatever the work is here, it is not that.' }] }
   }
 
   // Career income (actual salary → money)

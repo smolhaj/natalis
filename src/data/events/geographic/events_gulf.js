@@ -50,7 +50,21 @@ const MIGRANT_IDS = new Set([
   'south_asian_uae', 'south_asian_qatar', 'south_asian_kuwait', 'south_asian_bahrain',
   'south_asian_omani', 'south_asian_worker', 'filipino_qatar', 'east_asian_uae',
 ])
-const IS_MIGRANT = (G) => MIGRANT_IDS.has(G.character?.ethnicity)
+// And the migrants who actually arrived. Written when nobody could emigrate,
+// this read only the ethnicity the roster draws in the Gulf itself; once the
+// OFW contract and the Kerala and Nepal departures moved people here, a
+// Filipina domestic worker in Riyadh was reading the citizen's side of the
+// labour bus. Western expatriates stay the third thing the header describes.
+const ARRIVED = (G) => {
+  const born = G.character?.country
+  return GULF.includes(here(G)) && !GULF.includes(born?.name) &&
+    !['wealthy_west', 'wealthy_east'].includes(born?.archetype)
+}
+const IS_MIGRANT = (G) => MIGRANT_IDS.has(G.character?.ethnicity) || ARRIVED(G)
+// The labour arc is about the labour camp. An engine that lets a South Asian
+// Abu Dhabi-born athlete earn $3m a year was also sending him to the labour
+// office with the others when the wages were three months late.
+const STILL_LABOUR = (G) => (G.wealthTier ?? 2) <= 3
 
 // The citizen populations. `other_arab_*` and `western_*` are a third thing —
 // resident, not migrant labour, not national — and this module leaves them out
@@ -124,7 +138,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 30,
     when: (G) =>
-      G.flags.includes('gulf_migrant_worker') &&
+      G.flags.includes('gulf_migrant_worker') && STILL_LABOUR(G) &&
       G.mem?.gulfArrivedYear != null &&
       G.currentYear - G.mem.gulfArrivedYear >= 9 &&
       !G.mem?.gulfTwoMoreYears,
@@ -141,7 +155,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 26,
     when: (G) =>
-      G.flags.includes('gulf_migrant_worker') &&
+      G.flags.includes('gulf_migrant_worker') && STILL_LABOUR(G) &&
       G.flags.includes('gulf_sends_remittance') &&
       G.mem?.gulfArrivedYear != null &&
       G.currentYear - G.mem.gulfArrivedYear >= 6 &&
@@ -156,7 +170,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 26,
     when: (G) =>
-      G.flags.includes('gulf_migrant_worker') &&
+      G.flags.includes('gulf_migrant_worker') && STILL_LABOUR(G) &&
       (G.children ?? []).some(c => c.alive !== false) &&
       G.currentYear >= 2008 &&
       G.mem?.gulfArrivedYear != null &&
@@ -176,7 +190,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 34,
     when: (G) =>
-      G.flags.includes('gulf_migrant_worker') &&
+      G.flags.includes('gulf_migrant_worker') && STILL_LABOUR(G) &&
       IS_GULF(G) &&
       // Qatar 2018-2021 is the real reform; the others move partially and later.
       G.currentYear >= (here(G) === 'Qatar' ? 2020 : 2022) &&
@@ -262,7 +276,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 90,
     when: (G) =>
-      IS_GULF(G) && IS_MIGRANT(G) &&
+      IS_GULF(G) && IS_MIGRANT(G) && STILL_LABOUR(G) &&
       G.age >= 19 && G.age <= 34 &&
       G.currentYear >= 1975 &&
       !G.mem?.gulfArrived,
@@ -304,7 +318,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 50,
     when: (G) =>
-      G.flags.includes('gulf_migrant_worker') &&
+      G.flags.includes('gulf_migrant_worker') && STILL_LABOUR(G) &&
       G.mem?.gulfArrivedYear != null &&
       G.currentYear - G.mem.gulfArrivedYear <= 3 &&
       !G.mem?.gulfRoom,
@@ -318,7 +332,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 44,
     when: (G) =>
-      G.flags.includes('gulf_migrant_worker') &&
+      G.flags.includes('gulf_migrant_worker') && STILL_LABOUR(G) &&
       !G.mem?.gulfHeat,
     text: (G) => G.currentYear >= (here(G) === 'UAE' ? 2005 : here(G) === 'Qatar' ? 2007 : 2010)
       ? 'From June there is a rule: no outdoor work between noon and three. It is a real rule and it is mostly kept, and it means the day starts before light and finishes after dark with a hole in the middle that you spend lying on a bunk in a room that is thirty-eight degrees, waiting. Somebody times it. The men who were here before the rule describe the years before the rule in a flat voice and do not dwell on it.'
@@ -348,7 +362,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 40,
     when: (G) =>
-      G.flags.includes('gulf_migrant_worker') &&
+      G.flags.includes('gulf_migrant_worker') && STILL_LABOUR(G) &&
       G.mem?.gulfArrivedYear != null &&
       G.currentYear - G.mem.gulfArrivedYear >= 2 &&
       !G.mem?.gulfWagesLate,
@@ -376,7 +390,7 @@ export const GULF_EVENTS = [
     weight: 55,
     when: (G) =>
       here(G) === 'Qatar' &&
-      G.flags.includes('gulf_migrant_worker') &&
+      G.flags.includes('gulf_migrant_worker') && STILL_LABOUR(G) &&
       G.currentYear >= 2012 && G.currentYear <= 2022 &&
       !G.mem?.gulfWorldCup,
     text: 'The country is building eight stadiums and a metro and a city that was not there, and you are in the middle of it with a hard hat and a number. The work is enormous and it is genuinely impressive and you are genuinely a part of it. Journalists come, occasionally, escorted; there is a debate somewhere far away about a figure for how many men have died and the figure has a wide range because nobody is obliged to count in a way that would settle it. In 2022 the tournament happens and it is on the television in the room and the room watches it, and the feeling in the room is complicated and mostly not bitter.',
@@ -389,7 +403,7 @@ export const GULF_EVENTS = [
     phase: null,
     weight: 55,
     when: (G) =>
-      IS_GULF(G) && IS_MIGRANT(G) &&
+      IS_GULF(G) && IS_MIGRANT(G) && STILL_LABOUR(G) &&
       G.character?.gender === 'female' &&
       G.age >= 20 && G.age <= 45 &&
       G.currentYear >= 1985 &&

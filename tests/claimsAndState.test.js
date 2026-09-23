@@ -130,6 +130,17 @@ describe('a wage is paid where the work is done', () => {
   })
 })
 
+describe('a farm does not cross a border', () => {
+  it('a smallholder who emigrates is no longer a smallholder', () => {
+    let s = born('Vietnam', 1958)
+    s = { ...s, age: 23, currentYear: 1981,
+      career: { id: 'farmer', title: 'Smallholder', level: 1, salary: 300, baseSalary: 2000, wageGdp: 'low_medium', wageCountry: 'Vietnam', field: 'agriculture', yearsInRole: 2, performance: 90 },
+      currentCountry: COUNTRIES.find(c => c.name === 'United States') }
+    const next = tick(s)
+    expect(next.career?.field === 'agriculture' && next.career?.id === 'farmer' && next.career?.wageCountry === 'Vietnam').toBe(false)
+  })
+})
+
 describe('the regime and the archetype are where you live', () => {
   it('an Iranian living in Germany is not under the Islamic Republic', () => {
     let s = born('Iran', 1958)
