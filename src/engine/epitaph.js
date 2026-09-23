@@ -1031,6 +1031,13 @@ export function generateEpitaph(state) {
   }
 
   // ── The years taken ──────────────────────────────────────────────────────────
+  // The generic prison line above fires on the same flags, so an obituary read
+  // "She served time. Prison changes people. ... She served a sentence. It
+  // closed doors that stayed closed." The specific account replaces it.
+  if (f('political_prisoner') || f('served_prison_time') || f('imprisoned')) {
+    const generic = para3.indexOf(`${He} served time. Prison changes people.`)
+    if (generic >= 0) para3.splice(generic, 1)
+  }
   if (f('political_prisoner')) {
     const yrs = state.mem?.originalSentence
     para3.push(oneOf([
@@ -1146,7 +1153,9 @@ export function generateEpitaph(state) {
   }
 
   // Fallback — only if overall content is sparse AND para5 not already filled
-  if (para1.length + para2.length + para3.length + para4.length + para5.length < 3) {
+  // Not for a child: "decisions he made from within them" closed the obituary
+  // of a three-year-old who died of pneumonia.
+  if (age >= 12 && para1.length + para2.length + para3.length + para4.length + para5.length < 3) {
     para5.push(`${name}'s life was shaped by circumstances ${he} did not choose, and decisions ${he} made from within them.`)
   }
 

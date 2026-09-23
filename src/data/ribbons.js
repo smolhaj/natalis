@@ -745,8 +745,17 @@ export const RIBBONS = [
     // flag was set. The belt-and-braces birth-year floor is here as well as on
     // the world event because a ribbon is the last thing a player reads and
     // there is no recovering from it being wrong.
-    condition: (G) => (G.flags.includes('aids_crisis_generation') || G.flags.includes('aids_generation')) &&
-      G.character.birthYear <= 1980,
+    // `aids_crisis_generation` is set on everyone in the rich world who was
+    // fifteen at some point in 1981-96, which is almost everyone born before
+    // 1980 — so "you watched your friends die one by one" headed the obituary
+    // of three of the four long Western lives in one play session, none of
+    // whose logs had AIDS in them. In the rich world it was a catastrophe
+    // concentrated in particular communities; the ribbon now needs the life to
+    // have been inside one. Across sub-Saharan Africa it was not concentrated.
+    condition: (G) => G.character.birthYear <= 1980 && (
+      G.flags.includes('aids_generation') ||
+      (G.flags.includes('aids_crisis_generation') &&
+        G.flags.some(f => f.startsWith('lgbtq_') || f === 'drug_addiction' || f === 'substance_abuser' || f === 'hiv_positive' || f === 'has_hiv'))),
     priority: 85,
     color: 'purple',
   },
@@ -833,7 +842,9 @@ export const RIBBONS = [
   },
   {
     id: 'the_asian_crisis',
-    name: 'The Baht Collapsed',
+    // The flag is set across Thailand, Indonesia, Korea, Malaysia and the
+    // Philippines; a Filipina's obituary was headed with the Thai currency.
+    name: 'The Currency Fell',
     description: 'What your family had saved in years was halved in a week. You learned that the currency in your pocket was a political decision, not a fact of nature.',
     condition: (G) => G.flags.includes('asian_crisis_generation'),
     priority: 68,

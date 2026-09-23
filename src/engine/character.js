@@ -255,7 +255,10 @@ export function createCharacter(overrides = {}) {
   const nameCountry = nameCountryFor(ethnicity, religion)
   const namesFrom = (nameCountry && COUNTRIES.find(c => c.name === nameCountry)) || country
   const firstName = pickFrom(gender === 'male' ? namesFrom.namePool.male : namesFrom.namePool.female)
-  const surname = pickFrom(namesFrom.surnames)
+  // Several pools carry a name as both a given name and a family name
+  // (Afolabi, Adewale, Ikenna), so a life began as "Afolabi Afolabi".
+  const surname = pickFrom(namesFrom.surnames.filter(n => n !== firstName).length
+    ? namesFrom.surnames.filter(n => n !== firstName) : namesFrom.surnames)
 
   // Rural/urban from the country's historical urbanisation series
   const adjustedUrbanRate = urbanChanceFor(country, birthYear)

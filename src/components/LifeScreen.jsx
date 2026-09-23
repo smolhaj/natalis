@@ -6,6 +6,7 @@ import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
 import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, localCreditScore, formatParentIncome, getPhase } from '../engine/gameEngine'
 import { getPlacesForCountry, getRelocationCost } from '../data/places'
+import { eraMoney } from '../engine/playerActions'
 import ActivitiesPanel from './ActivitiesPanel'
 
 const PHASE_CHAPTER_LABELS = {
@@ -331,9 +332,12 @@ export default function LifeScreen() {
       {/* Was a 2×2 grid of large saturated bars taking roughly a third of the
           screen, above the prose. Now one quiet row: four columns of hairline
           bars, so the writing starts near the top of the page where it belongs.
-          The full six live in the Stats tab for anyone who wants them. */}
+          The full six live in the Stats tab for anyone who wants them.
+          Four columns from md, with a narrower gap: at sm with gap-x-5 the
+          row was 2-8px short and "HAPPINESS" read "HAPPINE…" at every desktop
+          width. */}
       <div className="bg-natalis-surface border-b border-natalis-border flex-shrink-0">
-        <div className="max-w-2xl mx-auto px-4 py-2 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-1.5">
+        <div className="max-w-2xl mx-auto px-4 py-2 grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-1.5">
           <StatBar stat="happiness" value={stats.happiness} />
           <StatBar stat="health"    value={stats.health}    />
           <StatBar stat="smarts"    value={stats.smarts}    />
@@ -514,7 +518,9 @@ export default function LifeScreen() {
                               Eastern Cape" and "Rural Yorkshire, Yorkshire". */}
                           {livePlace.name}{placeRegionSuffix(livePlace)}
                         </p>
-                        <p className="text-natalis-muted text-xs truncate">
+                        {/* Wraps rather than truncates: at phone width the tier —
+                            the one word here that says anything — was cut to "Wo…". */}
+                        <p className="text-natalis-muted text-xs">
                           {liveNbr && <span>{liveNbr} <span className="opacity-60">· neighborhood</span></span>}
                           {nbTier && (
                             <span className={liveNbr ? 'ml-2' : ''}>
@@ -1147,8 +1153,25 @@ export default function LifeScreen() {
                 </div>
               )}
 
+              {/* Late partner. tickPartner keeps a partner who has died on state
+                  as { alive: false } so the grief layer can name them, and this
+                  card read that as a living spouse: "Married · Age 77", a
+                  relationship bar, ageing no further, for the rest of the life. */}
+              {partner && partner.alive === false && (
+                <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+                  <p className="font-bold text-natalis-text text-sm mb-3">Partner</p>
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-natalis-dim text-sm">{partner.name}{genderMark(partner.gender)}</p>
+                      <p className="text-natalis-muted text-xs">{partner.age ? `Deceased · Age ${partner.age}` : 'Deceased'}</p>
+                    </div>
+                    <span className="text-xs text-natalis-muted">✞</span>
+                  </div>
+                </div>
+              )}
+
               {/* Partner */}
-              {partner && (
+              {partner && partner.alive !== false && (
                 <div className="bg-white rounded-2xl overflow-hidden border border-natalis-border shadow-card">
                   {/* Partner moment — shown prominently at top when available */}
                   {mem?.partnerMoments?.length > 0 && (
@@ -1234,7 +1257,9 @@ export default function LifeScreen() {
                             {!p.currentAge && !p.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
                             {p.occupation?.title && p.occupation.title !== 'Homemaker' && (
                               <p className="text-natalis-muted text-xs italic">
-                                {p.occupation.title}{parentIncome ? ` · ${parentIncome}` : ''}
+                                {/* A parent's wage is re-denominated every year, so a father
+                                    dead since 1987 went on earning a rising salary here. */}
+                                {p.occupation.title}{parentIncome && p.alive ? ` · ${parentIncome}` : ''}
                               </p>
                             )}
                             {p.occupation?.title === 'Homemaker' && (
@@ -1263,8 +1288,9 @@ export default function LifeScreen() {
                         <div key={i} className="flex justify-between items-center">
                           <div>
                             <p className="text-natalis-dim text-sm">{sib.name.split(' ')[0]}{genderMark(sib.gender)}</p>
-                            {sibAge !== null && <p className="text-natalis-muted text-xs">{sib.alive ? `Age ${Math.max(0, sibAge)}` : `Deceased · Age ${Math.max(0, sibAge)}`}</p>}
-                            {sibAge === null && !sib.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
+                            {/* A dead sibling's age is derived from yours, so it kept rising. */}
+                            {sibAge !== null && sib.alive && <p className="text-natalis-muted text-xs">Age {Math.max(0, sibAge)}</p>}
+                            {!sib.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
                             {sib.alive && (() => {
                               const sf = []
                               if (flags.includes('sibling_estranged') && (sib.relationshipQuality ?? 50) < 40) sf.push('estranged')
@@ -1680,7 +1706,7 @@ export default function LifeScreen() {
                     )}
                     <div className="space-y-2">
                       {samePlaces.map(place => {
-                        const cost = getRelocationCost(fromPlace, place)
+                        const cost = eraMoney(getRelocationCost(fromPlace, place), fullState)
                         const canAfford = (money ?? 0) >= cost
                         return (
                           <button
@@ -1710,7 +1736,7 @@ export default function LifeScreen() {
               })()}
               {moveStep === 'confirm' && selectedPlace && (() => {
                 const fromPlace = currentPlace ?? character.birthPlace
-                const cost = getRelocationCost(fromPlace, selectedPlace)
+                const cost = eraMoney(getRelocationCost(fromPlace, selectedPlace), fullState)
                 const canAfford = (money ?? 0) >= cost
                 const nbTierColors = { informal: '#8c3a2e', working_class: '#8a6635', middle_class: '#3f6146', elite: '#3f5670' }
                 const nbTierLabels = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }

@@ -114,7 +114,7 @@ export function personName(country, gender, state, opts = {}) {
     // behind them, and drawing blind from a thirty-name pool married a
     // Stefanie Zimmermann to a Simon Zimmermann.
     const own = state?.character?.surnameBase ?? state?.character?.surname
-    const pool = (country?.surnames ?? []).filter(n => n !== own)
+    const pool = (country?.surnames ?? []).filter(n => n !== own && n !== first)
     base = pickFrom(pool.length ? pool : (country?.surnames ?? []))
   }
   return `${first} ${surnameFor(country, base, gender)}`.trim()

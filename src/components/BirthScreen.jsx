@@ -64,12 +64,13 @@ export default function BirthScreen() {
 
         {/* Identity card */}
         <div className="bg-white rounded-2xl shadow-card overflow-hidden border border-natalis-border">
-          <div className="px-5 py-4 flex items-center gap-4" style={{ background: '#3f5670' }}>
-            <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl bg-white shadow-sm">
-              
-            </div>
+          {/* The avatar emoji went in the no-emoji pass and left its white
+              tile behind, an empty square beside the name; and the name was
+              set in the ink colour on the slate header, which it all but
+              disappeared into. */}
+          <div className="px-5 py-4 border-b border-natalis-border">
             <div>
-              <p className="text-xl font-bold text-natalis-text">{firstName} {surname}</p>
+              <p className="font-prose text-xl text-natalis-text">{firstName} {surname}</p>
               <p className="text-natalis-muted text-sm">
                 {gender === 'male' ? 'Male' : 'Female'} · {country.name}
               </p>
