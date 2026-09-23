@@ -99,6 +99,10 @@ async function main() {
   // Starting a life pulls in the engine and every content chunk, which is
   // where the remaining (harmless, so far) cycles are. A blank title screen is
   // a different failure from a title screen that cannot start a game.
+  // Inhabit, not Witness: the activities panel only exists in active mode, and
+  // nothing else here would ever render it.
+  const inhabit = page.getByRole('button', { name: /Inhabit/i }).first()
+  if (await inhabit.count() > 0) await inhabit.click({ timeout: 5000 }).catch(() => {})
   await page.getByRole('button', { name: /Begin a(nother)? life/i }).first()
     .click({ timeout: 10000 }).catch(() => fail('no "Begin a life" button on the title screen'))
   await sleep(1000)
@@ -129,6 +133,38 @@ async function main() {
   const body = await page.evaluate(() => document.body.innerText ?? '')
   if (!/AGE \d+/.test(body)) await fail('the life log printed nothing')
   console.log(GRN('✓') + ' the life log prints')
+
+  // Open every activities category once. The panel builds its guards from the
+  // engine's G, and no other check here renders it: a panel that throws would
+  // pass every test in the repo.
+  const activities = page.getByRole('button', { name: /^Activities$/ }).first()
+  // An event may be waiting; answer it, the way the ageing loop above does.
+  for (let i = 0; i < 10 && await activities.count() === 0; i++) {
+    const opts = page.locator('[data-choice], button').filter({
+      hasNotText: /Another year|Menu|Life|Stats|People|Assets|Recent|Timeline|Search|Back|waiting for you/,
+    })
+    if (await opts.count() === 0) break
+    await opts.first().click({ timeout: 4000 }).catch(() => {})
+    await sleep(400)
+  }
+  if (await activities.count() === 0) await fail('no Activities button in an Inhabit life')
+  let opened = 0
+  for (let i = 0; i < 40; i++) {
+    if (await page.getByRole('button', { name: /← Back/ }).count() === 0) {
+      await activities.click({ timeout: 5000 }).catch(() => {})
+      await sleep(300)
+    }
+    const tiles = page.locator('div.fixed button').filter({ hasNotText: /Back|Activities|Another year/ })
+    const n = await tiles.count()
+    if (i >= n) break
+    await tiles.nth(i).click({ timeout: 3000 }).catch(() => {})
+    await sleep(250)
+    opened++
+    const back = page.getByRole('button', { name: /← Back/ }).first()
+    if (await back.count() > 0) await back.click({ timeout: 3000 }).catch(() => {})
+    await sleep(150)
+  }
+  console.log(GRN('✓') + ` the activities panel opens ${DIM(`(${opened} categories)`)}`)
 
   if (errors.length) await fail(`${errors.length} error(s) in the console`)
 

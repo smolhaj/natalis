@@ -46,6 +46,14 @@ export const TECH_PHRASES = [
   [/\bbroadband\b|\bwi-?fi\b|\bthe internet\b|\bonline\b|\bwebsite\b|\bsearch engine\b/, 'home_internet'],
   [/\bemail\b|\be-mail\b|\binbox\b/, 'email'],
   [/\bmobile phone\b|\bmobile money\b|\bm-pesa\b|\btext message\b|\bsends a text\b|\bsim card\b/, 'mobile_phone'],
+  // The phone you carry. The table only knew "mobile phone" by name, and the
+  // prose almost never says it: "goes through your phone" printed into 1976
+  // Seoul, "somebody's phone is at forty percent" into a 1983 power cut in
+  // Benue, and "the phone screen is lit" into 1989 São Paulo. A possessive
+  // phone is a handset; "the phone" and "on the phone" are left alone,
+  // because the hallway telephone is the right sentence for most of the century.
+  [/\bwechat\b|\bgroup chat\b|\bphone screen\b|\bphone is at \w+ percent\b|\bphone to pay\b/, 'smartphone'],
+  [/\b(?:your|my|his|her|their|someone's|somebody's|everyone's) phone\b(?! (?:number|call|line|book|bill|rings|box))/, 'mobile_phone'],
   [/\bpersonal computer\b|\blaptop\b|\bthe computer\b/, 'personal_computer'],
   [/\bmicrowave\b/, 'microwave'],
   [/\bthe vcr\b|\bvideotape\b|\bthe dvd\b/, 'vcr'],
@@ -74,6 +82,8 @@ export const TECH_PHRASES = [
 // 1990 Nigeria, seventeen years before M-Pesa. Any sentence that mentions what
 // something replaced was invisible to this audit, which is most of the
 // sentences worth auditing.
+const HANDHELD = new Set(['mobile_phone', 'smartphone'])
+
 const NEGATED = /\b(no|not|never|without|before|until|had not|hasn't|doesn't|there is no|nobody has|none of|lacks|absence of|would not|didn't|did not)\b/
 
 // A line may also name a thing that has not arrived YET, which is not an
@@ -125,7 +135,11 @@ export function checkLine(text, year, country, opts = {}) {
     // early and the arrival table is a median, not a floor. Anything inside the
     // margin is not worth a reviewer's time; anything outside it is a mistake
     // about the century.
-    const margin = 15
+    // Not for the handheld. The table's mobile-phone year is already the
+    // year the richest households had one, and fifteen years before it there
+    // was no handset to be early with — "goes through your phone" in 1976
+    // Seoul sat inside the margin and was never reported.
+    const margin = HANDHELD.has(tech) ? 8 : 15
     if (year < arrived - margin) {
       return { phrase: re.source, tech, arrived, year, text }
     }
