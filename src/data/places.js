@@ -30,6 +30,20 @@ export const PLACES = [
     },
   },
   {
+    id: 'us_minneapolis', name: 'Minneapolis', country: 'United States',
+    type: 'urban', scale: 'city', region: 'Minnesota',
+    // A place people arrive in, not one the birth draw uses: weight 0 keeps
+    // the American birth distribution as it was. It exists so a Somali
+    // resettled in 1990s America can land where most of them did.
+    weight: 0,
+    neighborhoods: {
+      informal:      ['Cedar-Riverside towers', 'Phillips'],
+      working_class: ['Cedar-Riverside', 'Seward', 'Near North'],
+      middle_class:  ['Longfellow', 'Northeast'],
+      elite:         ['Kenwood', 'Linden Hills'],
+    },
+  },
+  {
     id: 'us_los_angeles', name: 'Los Angeles', country: 'United States',
     type: 'urban', scale: 'megacity', region: 'West Coast',
     neighborhoods: {
@@ -1408,11 +1422,52 @@ export const PLACES = [
   {
     id: 'sn_rural', name: 'Rural Casamance', country: 'Senegal',
     type: 'rural', scale: 'village', region: 'Casamance',
+    homeOf: ['diola', 'mandinka'],
     neighborhoods: {
       informal:      ['Quartier périphérique', 'Campements'],
       working_class: ['Marché', 'Route principale'],
       middle_class:  ['Centre du village', 'Mosquée area'],
       elite:         ['Maison du chef', 'Dispensaire road'],
+    },
+  },
+  // Senegal had one rural place and it was Casamance, so every rural
+  // Halpulaar the engine drew — four in five of them — was born in the
+  // Diola south, eight hundred kilometres from the river, and every rural
+  // Wolof with them. The Fouta Toro is the middle valley of the Senegal
+  // river, the walo and the jeeri; the Ferlo is the dry country south of it
+  // where the herding Fulɓe water their cattle at the boreholes. The
+  // groundnut basin is where the Wolof and Serer countryside actually is.
+  {
+    id: 'sn_fouta', name: 'A Village in the Fouta Toro', country: 'Senegal',
+    type: 'rural', scale: 'village', region: 'Fouta Toro',
+    homeOf: ['fula_senegal'],
+    neighborhoods: {
+      informal:      ['The subalbe quarter by the landing', 'The huts on the jeeri side'],
+      working_class: ['Along the path to the walo', 'Near the Friday mosque'],
+      middle_class:  ['The cement houses the France money built', 'By the dispensary'],
+      elite:         ['The Thierno\'s compound', 'The chef de village\'s house'],
+    },
+  },
+  {
+    id: 'sn_ferlo', name: 'A Camp in the Ferlo', country: 'Senegal',
+    type: 'rural', scale: 'village', region: 'Ferlo',
+    homeOf: ['fula_senegal'],
+    neighborhoods: {
+      informal:      ['The dry-season camp', 'The grass huts past the thorn fence'],
+      working_class: ['Near the borehole troughs', 'The weekly market ground'],
+      middle_class:  ['The houses by the borehole', 'Near the veterinary post'],
+      elite:         ['The ardo\'s compound', 'The house of the man with three hundred head'],
+    },
+  },
+  {
+    id: 'sn_groundnut', name: 'A Village in the Groundnut Basin', country: 'Senegal',
+    type: 'rural', scale: 'village', region: 'Sine-Saloum',
+    homeOf: ['wolof', 'serer'],
+    neighborhoods: {
+      informal:      ['The navétanes\' huts at the edge', 'Past the last well'],
+      working_class: ['Along the road to Kaolack', 'Near the seccos'],
+      middle_class:  ['By the mosque', 'The cooperative\'s side'],
+      elite:         ['The serigne\'s compound', 'The chef de village\'s house'],
     },
   },
 
@@ -1567,11 +1622,97 @@ export const PLACES = [
   {
     id: 'so_mogadishu', name: 'Mogadishu', country: 'Somalia',
     type: 'urban', scale: 'major_city', region: 'Benadir',
+    homeOf: ['somali_hawiye', 'somali_darod', 'somali_dir', 'somali_other'],
     neighborhoods: {
       informal:      ['Badbaado IDP camp', 'Kaxda', 'Huriwaa'],
       working_class: ['Hodan', 'Wadajir', 'Waberi', 'Heliwa'],
       middle_class:  ['Hamar-Weyne', 'Dharkenley', 'Yaaqshiid', 'Bondhere'],
       elite:         ['Boondheere elite', 'Maka Al-Mukarama road', 'Ex-Villa Somalia zone'],
+    },
+  },
+  // Somalia had one place, so every Somali the engine drew — eight in ten of
+  // them rural, most of them pastoralists — was born in Mogadishu, and the
+  // Isaaq with them, in a city most of them would never see. The clan
+  // families live in different parts of the country and the war was fought
+  // over exactly that, so the places are keyed to who lives in them: the
+  // Hawiye on the Shabelle and in the grazing country of Galgaduud, the Isaaq
+  // in Hargeisa and the Haud, the Darod in the Nugaal, the Rahanweyn (most of
+  // the roster's `somali_other`) in Bay, the Dir in the Awdal hills.
+  {
+    id: 'so_shabelle', name: 'A Village on the Shabelle', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Middle Shabelle',
+    homeOf: ['somali_hawiye'],
+    neighborhoods: {
+      informal:      ['The huts past the canal', 'The camp by the Jowhar road'],
+      working_class: ['Along the river path', 'Near the pump house'],
+      middle_class:  ['By the mosque', 'The houses with tin roofs'],
+      elite:         ['The duq\'s compound', 'The house the Italians left'],
+    },
+  },
+  {
+    id: 'so_galgaduud', name: 'The Grazing Country of Galgaduud', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Galgaduud',
+    homeOf: ['somali_hawiye'],
+    neighborhoods: {
+      informal:      ['The aqal at the edge of the camp', 'The camp by the dry well'],
+      working_class: ['The camp by the berkad', 'Near the water trough'],
+      middle_class:  ['The settlement by the borehole', 'The shop by the Dhusamareb road'],
+      elite:         ['The camp of the man with two hundred camels', 'The nabadoon\'s house'],
+    },
+  },
+  {
+    id: 'so_hargeisa', name: 'Hargeisa', country: 'Somalia',
+    type: 'urban', scale: 'city', region: 'Woqooyi Galbeed',
+    homeOf: ['somali_isaaq'],
+    neighborhoods: {
+      informal:      ['The returnee camps', 'State House camp'],
+      working_class: ['Jigjiga Yar', 'Daami', 'Ga\'an Libah'],
+      middle_class:  ['Shacab', 'Koodbuur', 'Masalaha'],
+      elite:         ['Jigjiga Yar villas', 'New Hargeisa'],
+    },
+  },
+  {
+    id: 'so_haud', name: 'The Haud', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Togdheer',
+    homeOf: ['somali_isaaq'],
+    neighborhoods: {
+      informal:      ['The camp by the dry well', 'The aqal past the thorn fence'],
+      working_class: ['The camp by the berkad', 'Near the water point'],
+      middle_class:  ['The settlement by the road', 'The shop by the well'],
+      elite:         ['The camp of the man with the big herd', 'The elder\'s house'],
+    },
+  },
+  {
+    id: 'so_nugaal', name: 'The Nugaal Valley', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Nugaal',
+    homeOf: ['somali_darod'],
+    neighborhoods: {
+      informal:      ['The camp past the wadi', 'The aqal by the dry well'],
+      working_class: ['The camp by the berkad', 'Near the water point'],
+      middle_class:  ['The settlement by the Garowe road', 'The shop by the well'],
+      elite:         ['The camp of the man with the big herd', 'The elder\'s house'],
+    },
+  },
+  {
+    id: 'so_bay', name: 'A Village in Bay', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Bay',
+    homeOf: ['somali_other'],
+    neighborhoods: {
+      informal:      ['The huts past the sorghum pits', 'The edge of the fields'],
+      working_class: ['Along the Baidoa road', 'Near the well'],
+      middle_class:  ['By the mosque', 'The houses near the market'],
+      elite:         ['The malaaq\'s compound', 'The grain trader\'s house'],
+    },
+  },
+  {
+    id: 'so_awdal', name: 'The Awdal Hills', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Awdal',
+    homeOf: ['somali_dir'],
+    neighborhoods: {
+      informal:      ['The camp below the hill', 'The aqal by the wadi'],
+      working_class: ['Along the Borama road', 'Near the well'],
+      middle_class:  ['The settlement by the road', 'By the mosque'],
+      elite:         ['The ugaas\'s house', 'The elder\'s house'],
     },
   },
 
@@ -3780,6 +3921,7 @@ export const PLACES = [
   {
     id: 'gn_conakry', name: 'Conakry', country: 'Guinea',
     type: 'urban', scale: 'city', region: 'Conakry',
+    homeOf: ['susu_guinean', 'fula_guinean', 'mandinka_guinean', 'kissi_guinean', 'other_guinean'],
     neighborhoods: {
       informal:      ['Kaporo Rails', 'Dimesse', 'Sonfonia squats'],
       working_class: ['Matoto', 'Ratoma', 'Hamdallaye', 'Bonfi'],
@@ -3790,6 +3932,7 @@ export const PLACES = [
   {
     id: 'gn_kankan', name: 'Kankan', country: 'Guinea',
     type: 'urban', scale: 'town', region: 'Haute-Guinée',
+    homeOf: ['mandinka_guinean'],
     neighborhoods: {
       informal:      ['Past the Milo bank', 'Timbo edges'],
       working_class: ['Kabada', 'Salamani', 'Banankoro'],
@@ -3800,11 +3943,50 @@ export const PLACES = [
   {
     id: 'gn_fouta', name: 'The Fouta Djallon', country: 'Guinea',
     type: 'rural', scale: 'village', region: 'Moyenne-Guinée',
+    homeOf: ['fula_guinean'],
     neighborhoods: {
       informal:      ['The tapade past the last one', 'By the stream'],
       working_class: ['The path through the village', 'Near the mosque wall'],
       middle_class:  ['By the mosque', 'The village centre'],
       elite:         ['The almamy\'s compound', 'The house the Dakar money built'],
+    },
+  },
+  // Guinea's only rural place was the Fouta Djallon, so every rural Malinké
+  // the engine drew — more than four in five of them — was born among the
+  // Peul, in the one region of the country whose history with theirs is the
+  // country's sharpest political line. The same was true of every rural Susu
+  // and every Kissi. Four natural regions, four places.
+  {
+    id: 'gn_upper', name: 'A Village in Upper Guinea', country: 'Guinea',
+    type: 'rural', scale: 'village', region: 'Haute-Guinée',
+    homeOf: ['mandinka_guinean'],
+    neighborhoods: {
+      informal:      ['The huts by the rice flats', 'The gold camp past the village'],
+      working_class: ['Along the Siguiri road', 'Near the well'],
+      middle_class:  ['By the mosque', 'The houses near the market'],
+      elite:         ['The dugutigi\'s compound', 'The house the gold built'],
+    },
+  },
+  {
+    id: 'gn_lower', name: 'A Village in Lower Guinea', country: 'Guinea',
+    type: 'rural', scale: 'village', region: 'Basse-Guinée',
+    homeOf: ['susu_guinean'],
+    neighborhoods: {
+      informal:      ['The huts by the mangrove', 'Past the salt pans'],
+      working_class: ['Along the Coyah road', 'Near the rice fields'],
+      middle_class:  ['By the mosque', 'The houses near the market'],
+      elite:         ['The chief\'s compound', 'The house with the generator'],
+    },
+  },
+  {
+    id: 'gn_forest', name: 'A Village in the Forest Region', country: 'Guinea',
+    type: 'rural', scale: 'village', region: 'Guinée Forestière',
+    homeOf: ['kissi_guinean', 'other_guinean'],
+    neighborhoods: {
+      informal:      ['The huts past the coffee', 'The refugee quarter'],
+      working_class: ['Along the Guéckédou road', 'Near the sacred forest'],
+      middle_class:  ['By the church and the mosque', 'The houses near the market'],
+      elite:         ['The chief\'s compound', 'The coffee buyer\'s house'],
     },
   },
 
@@ -4044,6 +4226,7 @@ export const PLACES = [
   {
     id: 'sl_freetown', name: 'Freetown', country: 'Sierra Leone',
     type: 'urban', scale: 'town', region: 'Western Area',
+    homeOf: ['krio', 'temne', 'mende', 'limba', 'susu_sl', 'loko', 'other_sl'],
     neighborhoods: {
       informal:      ['Kroo Bay', 'Susan\'s Bay', 'Moa Wharf', 'Culvert'],
       working_class: ['Kissy', 'Wellington', 'Calaba Town', 'Waterloo'],
@@ -4054,11 +4237,72 @@ export const PLACES = [
   {
     id: 'sl_kono', name: 'Kono District', country: 'Sierra Leone',
     type: 'rural', scale: 'village', region: 'Eastern Province',
+    homeOf: ['kono_sl'],
     neighborhoods: {
       informal:      ['The mining camp by the tailings', 'Past the pits'],
       working_class: ['The village road', 'Near the wash plant'],
       middle_class:  ['By the mosque', 'Near the school'],
       elite:         ['The paramount chief\'s compound', 'The dealer\'s house'],
+    },
+  },
+  // Sierra Leone's only rural place was Kono, so every rural Mende the
+  // engine drew — three in four of them — was born in the diamond district,
+  // and every rural Temne with them. The Mende south and east is rice, swamp
+  // and bush, Bo and Kenema are its towns, and Kailahun is where the war
+  // began in March 1991. The north is the Temne and Limba country.
+  {
+    id: 'sl_kailahun', name: 'A Village in Kailahun', country: 'Sierra Leone',
+    type: 'rural', scale: 'village', region: 'Eastern Province',
+    homeOf: ['mende'],
+    neighborhoods: {
+      informal:      ['The huts by the swamp', 'The farm hut on the upland'],
+      working_class: ['Along the Pendembu road', 'Near the court barri'],
+      middle_class:  ['By the mosque', 'The houses near the school'],
+      elite:         ['The paramount chief\'s compound', 'The coffee buyer\'s house'],
+    },
+  },
+  {
+    id: 'sl_pujehun', name: 'A Village in Pujehun', country: 'Sierra Leone',
+    type: 'rural', scale: 'village', region: 'Southern Province',
+    homeOf: ['mende'],
+    neighborhoods: {
+      informal:      ['The huts by the swamp', 'The fishing camp on the river'],
+      working_class: ['Along the path to the farm', 'Near the court barri'],
+      middle_class:  ['By the mosque', 'The houses near the school'],
+      elite:         ['The paramount chief\'s compound', 'The trader\'s house'],
+    },
+  },
+  {
+    id: 'sl_bo', name: 'Bo', country: 'Sierra Leone',
+    type: 'urban', scale: 'town', region: 'Southern Province',
+    homeOf: ['mende'],
+    neighborhoods: {
+      informal:      ['Gondama camp', 'The huts by the Kpetema road'],
+      working_class: ['Nikibu', 'Salina', 'Lewabu'],
+      middle_class:  ['Bo Old Town', 'Kindia Town'],
+      elite:         ['Reservation', 'Near Bo School'],
+    },
+  },
+  {
+    id: 'sl_kenema', name: 'Kenema', country: 'Sierra Leone',
+    type: 'urban', scale: 'town', region: 'Eastern Province',
+    homeOf: ['mende'],
+    neighborhoods: {
+      informal:      ['The huts past the lorry park', 'The diamond dealers\' back lanes'],
+      working_class: ['Hangha Road', 'Nyandeyama', 'Burma'],
+      middle_class:  ['Kpayama', 'Near the government hospital'],
+      elite:         ['Reservation', 'The Lebanese dealers\' street'],
+    },
+  },
+  {
+    id: 'sl_north', name: 'A Village in Bombali', country: 'Sierra Leone',
+    type: 'rural', scale: 'village', region: 'Northern Province',
+    homeOf: ['temne', 'limba', 'loko', 'susu_sl', 'kuranko', 'yalunka'],
+    neighborhoods: {
+      informal:      ['The huts by the boliland', 'The farm hut on the upland'],
+      working_class: ['Along the Makeni road', 'Near the court barri'],
+      middle_class:  ['By the mosque', 'The houses near the school'],
+      elite:         ['The paramount chief\'s compound', 'The trader\'s house'],
     },
   },
 
