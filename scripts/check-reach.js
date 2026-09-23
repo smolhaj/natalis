@@ -193,6 +193,9 @@ async function main() {
       ['Nigeria', 1962, 'geographic/events_nigeria_midcentury.js'],
       ['India', 1955, 'geographic/events_india_depth.js'],
       ['Peru', 1960, 'geographic/events_peru_depth.js'],
+      ['Peru', 1975, 'geographic/events_peru_depth.js'],
+      ['Peru', 1960, 'geographic/events_peru_midcentury.js'],
+      ['Peru', 1948, 'geographic/events_peru_midcentury.js'],
     ]
     console.log(`\n${B('country modules')}  ${DIM(`for a character born there, what share of the module ever fires · ${LIVES} lives each`)}\n`)
     for (const [country, birthYear, rel] of MODULES) {

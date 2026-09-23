@@ -8,6 +8,8 @@
 // Companion to events_peru.js (Sendero childhood, Fujimori autogolpe,
 // forced sterilizations, Lima racism, vladivideos, CVR, Keiko generation).
 
+import { inSenderoZone, PE_PLACE } from './events_peru_midcentury.js'
+
 const IS_PERU = (G) => G.character.country?.name === 'Peru'
 const IS_SIERRA = (G) =>
   G.character.country?.name === 'Peru' && G.ruralUrban === 'rural'
@@ -24,13 +26,14 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_serrano_lima',
-    phase: 'young_adult',
-    weight: 4,
+    phase: null,
+    weight: 60,
     when: (G) =>
       IS_PERU(G) &&
-      G.ruralUrban === 'urban' &&
+      G.place?.id === 'pe_lima' &&
+      (G.character.ruralUrban === 'rural' || G.flags.has('pe_bajo_a_lima') || G.flags.has('pe_desplazado')) &&
       G.currentYear >= 1960 && G.currentYear <= 2000 &&
-      G.age >= 16 && G.age <= 30 &&
+      G.age >= 16 && G.age <= 34 &&
       !G.mem?.perDepSerranoLima,
     text: `Lima is a city that knows you came from the sierra as soon as you open your mouth. The accent, the specific words, the way you say certain vowels. The term for someone from the highlands, *cholo*, can be an insult or a greeting depending on who says it and how. The barriada you arrive in — the invasion settlement on the desert land to the north or south of the city — is full of people who arrived the same way, speaking Quechua to each other at home and Spanish in the street. The city does not welcome you. The city absorbs you according to the rules the city has, which are not the rules of the highlands.`,
     choices: [
@@ -67,11 +70,11 @@ export const PERU_DEPTH_EVENTS = [
   {
     id: 'per_dep_ayacucho_sendero',
     phase: null,
-    weight: 4,
+    weight: 200,
     when: (G) =>
       IS_PERU(G) &&
       G.currentYear >= 1980 && G.currentYear <= 1995 &&
-      G.ruralUrban === 'rural' &&
+      G.place?.id === 'pe_rural' && inSenderoZone(G) &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.perDepAyacucho,
     text: `Ayacucho in the 1980s: two forces occupy the same roads, the same villages. The Shining Path arrives and holds a community meeting that is not optional. The army arrives and holds a community meeting that is also not optional. To be seen as Sendero by the army is to disappear. To be seen as a collaborator of the army by the Sendero is to be executed at the next village assembly. The people in the middle — the Quechua communities who formed neither the ideology nor the strategy — were killed by both sides in numbers the CVR would spend years counting. You grew up learning to read which presence was which at the distance of a road.`,
@@ -90,10 +93,10 @@ export const PERU_DEPTH_EVENTS = [
   {
     id: 'per_dep_la_oroya',
     phase: null,
-    weight: 3,
+    weight: 150,
     when: (G) =>
       IS_PERU(G) &&
-      G.ruralUrban === 'rural' &&
+      PE_PLACE(G, 'pe_mantaro_rural', 'pe_huancayo') &&
       G.currentYear >= 1970 && G.currentYear <= 2010 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.perDepLaOroya,
@@ -130,7 +133,7 @@ export const PERU_DEPTH_EVENTS = [
   {
     id: 'per_dep_nikkei',
     phase: null,
-    weight: 4,
+    weight: 200,
     when: (G) =>
       IS_NIKKEI(G) &&
       G.currentYear >= 1960 && G.currentYear <= 2000 &&
@@ -168,7 +171,7 @@ export const PERU_DEPTH_EVENTS = [
   {
     id: 'per_dep_afro_peruvian',
     phase: null,
-    weight: 4,
+    weight: 150,
     when: (G) =>
       IS_AFRO_PERUVIAN(G) &&
       G.currentYear >= 1960 &&
@@ -189,10 +192,10 @@ export const PERU_DEPTH_EVENTS = [
   {
     id: 'per_dep_vraem_coca',
     phase: null,
-    weight: 3,
+    weight: 80,
     when: (G) =>
       IS_PERU(G) &&
-      G.ruralUrban === 'rural' &&
+      PE_PLACE(G, 'pe_rural', 'pe_cusco_rural', 'pe_mantaro_rural') &&
       G.currentYear >= 1990 && G.currentYear <= 2015 &&
       G.age >= 16 && G.age <= 35 &&
       !G.mem?.perDepVraem,
@@ -230,19 +233,19 @@ export const PERU_DEPTH_EVENTS = [
   {
     id: 'per_dep_castillo_2021',
     phase: null,
-    weight: 3,
+    weight: 200,
     when: (G) =>
       IS_PERU(G) &&
       G.currentYear >= 2021 && G.currentYear <= 2024 &&
       G.age >= 25 &&
       !G.mem?.perDepCastillo,
-    text: 'He wins by forty-four thousand votes out of eighteen million, and he is a schoolteacher from Cajamarca who campaigned in the hat. In Lima the word people use is catastrophe. In your mother\'s town they put a photograph of him in the window of the pharmacy. Eighteen months later he is in a cell and the woman who replaced him has sent the police south, and there are sixty dead in Ayacucho and Juliaca. The question of who this country is for was not opened by him and it does not close with him.',
-    context: 'Pedro Castillo, a rural schoolteacher and union leader, won Peru\'s 2021 election by about 44,000 votes, the first president from the sierra campesino class in the country\'s history. He attempted to dissolve Congress in December 2022, was impeached and arrested. His vice-president Dina Boluarte succeeded him; security forces killed some sixty protesters in the southern regions during the weeks that followed.',
+    text: 'He wins by forty-four thousand votes out of eighteen million, and he is a schoolteacher from Cajamarca who campaigned in the hat. In Lima the word people use is catastrophe. In your mother\'s town they put a photograph of him in the window of the pharmacy. Eighteen months later he is in a cell and the woman who replaced him has sent the police south, and there are nearly fifty dead, most of them in Ayacucho and Juliaca. The question of who this country is for was not opened by him and it does not close with him.',
+    context: 'Pedro Castillo, a rural schoolteacher and union leader, won Peru\'s 2021 election by about 44,000 votes, the first president from the sierra campesino class in the country\'s history. He attempted to dissolve Congress in December 2022, was impeached and arrested. His vice-president Dina Boluarte succeeded him; security forces killed around fifty protesters and bystanders, most of them in the southern regions, in the weeks that followed.',
     choices: [
       {
         text: 'His election was real. That the establishment destroyed it does not make it not real.',
         tag: null,
-        outcome: 'The sixty dead in the south are from the departments that voted for him by the highest margins. The relationship between this fact and the official response is not subtle.',
+        outcome: 'The dead in the south are from the departments that voted for him by the highest margins. The relationship between this fact and the official response is not subtle.',
         effect: (p) => {
           p.m -= 8
           p.r += 6
@@ -270,7 +273,7 @@ export const PERU_DEPTH_EVENTS = [
   {
     id: 'per_dep_sierra_late_reckoning',
     phase: 'late_life',
-    weight: 2,
+    weight: 60,
     when: (G) =>
       IS_PERU(G) &&
       G.flags.has('per_dep_lima_migrant') &&
@@ -290,7 +293,7 @@ export const PERU_DEPTH_EVENTS = [
   {
     id: 'per_dep_smelter_health_echo',
     phase: 'late_life',
-    weight: 2,
+    weight: 60,
     when: (G) =>
       IS_PERU(G) &&
       G.flags.has('per_dep_smelter_generation') &&

@@ -1842,6 +1842,7 @@ export const PLACES = [
   {
     id: 'pe_lima', name: 'Lima', country: 'Peru',
     type: 'urban', scale: 'megacity', region: 'Lima Region',
+    weight: 4,
     neighborhoods: {
       informal:      ['Villa El Salvador (early)', 'San Juan de Lurigancho asentamiento', 'Callao chalet'],
       working_class: ['El Agustino', 'San Juan de Miraflores', 'Villa María del Triunfo', 'Comas'],
@@ -1852,11 +1853,177 @@ export const PLACES = [
   {
     id: 'pe_rural', name: 'Rural Ayacucho', country: 'Peru',
     type: 'rural', scale: 'village', region: 'Ayacucho Highlands',
+    homeOf: ['quechua_peruvian'],
     neighborhoods: {
       informal:      ['Asentamiento campesino', 'Rancho bajo'],
       working_class: ['Calle real', 'Mercado'],
       middle_class:  ['Plaza de armas', 'Municipio road'],
       elite:         ['Casa de los hacendados', 'Gamonales'],
+    },
+  },
+  // Peru had two places, Lima and rural Ayacucho, so every rural Peruvian the
+  // engine drew — more than half of the 1960 cohort — was born in the province
+  // where the Shining Path began, and every place guard written for the sierra
+  // could only ever answer "Ayacucho". The rest of the country is not Ayacucho:
+  // the altiplano is Aymara and was hit by drought, not by the war; Cajamarca
+  // invented the rondas against cattle thieves a decade before anyone armed
+  // them against Sendero; the north coast was sugar, and after 1969 the sugar
+  // was cooperatives. `homeOf` keeps the Aymara on the lake and the Achuar on
+  // their river instead of drawing them uniformly across the map.
+  {
+    id: 'pe_arequipa', name: 'Arequipa', country: 'Peru',
+    type: 'urban', scale: 'major_city', region: 'Arequipa',
+    weight: 1.2,
+    neighborhoods: {
+      informal:      ['Cerro Colorado ladera', 'Alto Selva Alegre, the upper slope'],
+      working_class: ['Mariano Melgar', 'Paucarpata', 'Miraflores (Arequipa)'],
+      middle_class:  ['Cayma', 'Umacollo', 'Vallecito'],
+      elite:         ['Yanahuara', 'Selva Alegre', 'A sillar house near the Plaza de Armas'],
+    },
+  },
+  {
+    id: 'pe_trujillo', name: 'Trujillo', country: 'Peru',
+    type: 'urban', scale: 'city', region: 'La Libertad',
+    neighborhoods: {
+      informal:      ['Alto Trujillo', 'El Porvenir, the upper streets'],
+      working_class: ['La Esperanza', 'Florencia de Mora', 'El Porvenir'],
+      middle_class:  ['Urbanización La Noria', 'Centro histórico'],
+      elite:         ['Urbanización El Golf', 'San Andrés', 'Víctor Larco'],
+    },
+  },
+  {
+    id: 'pe_huancayo', name: 'Huancayo', country: 'Peru',
+    type: 'urban', scale: 'city', region: 'Junín',
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['Chilca, the hillside', 'Justicia Paz y Vida'],
+      working_class: ['El Tambo', 'Chilca', 'Pio Pata'],
+      middle_class:  ['San Carlos', 'The streets off Calle Real'],
+      elite:         ['San Carlos, the big houses', 'A house on the Constitución'],
+    },
+  },
+  {
+    id: 'pe_cusco', name: 'Cusco', country: 'Peru',
+    type: 'urban', scale: 'city', region: 'Cusco',
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['The ladera above Santiago', 'Huancaro'],
+      working_class: ['Santiago', 'San Sebastián', 'Belén'],
+      middle_class:  ['Wanchaq', 'Magisterio'],
+      elite:         ['San Blas', 'A colonial house off the Plaza de Armas'],
+    },
+  },
+  {
+    id: 'pe_iquitos', name: 'Iquitos', country: 'Peru',
+    type: 'urban', scale: 'city', region: 'Loreto',
+    weight: 0.6,
+    homeOf: ['amazonian_indigenous_pe'],
+    neighborhoods: {
+      informal:      ['Belén, the houses that float', 'The ribera in Punchana'],
+      working_class: ['Punchana', 'San Juan Bautista', 'Belén, the high part'],
+      middle_class:  ['Near the Plaza de Armas', 'Calle Próspero'],
+      elite:         ['A rubber-era house on the Malecón Tarapacá', 'Santa Rosa'],
+    },
+  },
+  {
+    id: 'pe_chimbote', name: 'Chimbote', country: 'Peru',
+    type: 'urban', scale: 'mid_city', region: 'Áncash',
+    weight: 0.6,
+    neighborhoods: {
+      informal:      ['La Florida', 'The invasion on the dunes', 'San Pedro'],
+      working_class: ['El Progreso', 'Miramar Bajo', 'Buenos Aires'],
+      middle_class:  ['Casco urbano', 'Urbanización Los Pinos'],
+      elite:         ['The managers\' houses by the steelworks', 'Casa Huerta'],
+    },
+  },
+  {
+    id: 'pe_cusco_rural', name: 'Rural Cusco', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Cusco',
+    homeOf: ['quechua_peruvian'],
+    neighborhoods: {
+      informal:      ['A choza on the puna', 'The colonos\' houses'],
+      working_class: ['The comunidad', 'The road to the Sunday feria'],
+      middle_class:  ['The plaza of the district capital', 'The schoolteacher\'s house'],
+      elite:         ['The casa hacienda', 'The gamonal\'s house on the plaza'],
+    },
+  },
+  {
+    id: 'pe_puno_rural', name: 'The Altiplano, Puno', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Puno',
+    homeOf: ['aymara_peruvian', 'quechua_peruvian'],
+    neighborhoods: {
+      informal:      ['An estancia on the pampa', 'A choza near the lake'],
+      working_class: ['The comunidad', 'The Ilave feria'],
+      middle_class:  ['The plaza at Juli', 'The district capital'],
+      elite:         ['The casa hacienda', 'The ganadero\'s house'],
+    },
+  },
+  {
+    id: 'pe_cajamarca_rural', name: 'Rural Cajamarca', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Cajamarca',
+    weight: 1.5,
+    neighborhoods: {
+      informal:      ['A caserío above the valley', 'The peones\' houses'],
+      working_class: ['The comunidad', 'The Chota road'],
+      middle_class:  ['The plaza at Bambamarca', 'The district capital'],
+      elite:         ['The casa hacienda', 'The dairy fundo'],
+    },
+  },
+  {
+    id: 'pe_mantaro_rural', name: 'The Mantaro Valley', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Junín',
+    homeOf: ['quechua_peruvian'],
+    neighborhoods: {
+      informal:      ['A choza in the hills', 'The mine camp barracks'],
+      working_class: ['A comunidad on the valley floor', 'The La Oroya camp'],
+      middle_class:  ['The plaza at Concepción', 'Jauja'],
+      elite:         ['The casa hacienda', 'The engineers\' houses at the mine'],
+    },
+  },
+  {
+    id: 'pe_ancash_rural', name: 'The Callejón de Huaylas', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Áncash',
+    homeOf: ['quechua_peruvian'],
+    neighborhoods: {
+      informal:      ['An estancia under the Cordillera Blanca', 'A choza above the river'],
+      working_class: ['The comunidad', 'The Carhuaz market'],
+      middle_class:  ['The plaza of the district capital', 'The road to Caraz'],
+      elite:         ['The casa hacienda', 'The big house on the plaza'],
+    },
+  },
+  {
+    id: 'pe_chicama', name: 'The Chicama Valley', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'La Libertad',
+    weight: 0.7,
+    neighborhoods: {
+      informal:      ['The cane cutters\' rancherías', 'The barracks at the edge of the cane'],
+      working_class: ['The workers\' rows at Casa Grande', 'Chiclín'],
+      middle_class:  ['The empleados\' houses', 'Chocope'],
+      elite:         ['The hacienda house at Casa Grande'],
+    },
+  },
+  {
+    id: 'pe_chincha', name: 'Chincha', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Ica',
+    weight: 0.6,
+    homeOf: ['afro_peruvian'],
+    neighborhoods: {
+      informal:      ['A callejón in El Carmen', 'A rancho by the cotton'],
+      working_class: ['El Carmen', 'San José', 'Sunampe'],
+      middle_class:  ['Chincha Alta, the centre', 'Pueblo Nuevo'],
+      elite:         ['The casa hacienda at San José'],
+    },
+  },
+  {
+    id: 'pe_amazon_rural', name: 'The Río Corrientes', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Loreto',
+    weight: 0.5,
+    homeOf: ['amazonian_indigenous_pe'],
+    neighborhoods: {
+      informal:      ['A comunidad on the river', 'A clearing upriver'],
+      working_class: ['A riverside village', 'The road to the oil camp'],
+      middle_class:  ['The mission', 'Trompeteros'],
+      elite:         ['The patrón\'s house', 'The oil company camp'],
     },
   },
 
@@ -4466,7 +4633,30 @@ export function getPlacesForCountry(countryName) {
   return PLACES.filter(p => p.country === countryName)
 }
 
-export function pickBirthPlace(country, ruralUrban, wealthTier) {
+// A draw among places, honouring two optional fields. `weight` (default 1) is
+// for a country whose capital holds a large share of its towns-people: with
+// seven Peruvian cities drawn uniformly, Lima would get a seventh of urban
+// births against a real share near two fifths. `homeOf` names the groups
+// for whom that place is home: an Aymara is on the altiplano, not in the
+// Chicama cane, and without it the draw is blind to who is being born.
+function drawPlace(places, identity) {
+  let pool = places
+  const eth = identity?.ethnicity
+  if (eth) {
+    const home = places.filter(p => p.homeOf?.includes(eth))
+    if (home.length && Math.random() < 0.85) pool = home
+  }
+  const total = pool.reduce((s, p) => s + (p.weight ?? 1), 0)
+  let r = Math.random() * total
+  for (const p of pool) {
+    r -= p.weight ?? 1
+    if (r <= 0) return p
+  }
+  return pool[pool.length - 1]
+}
+
+/** `identity` is optional — `{ ethnicity }` — and only read by places with `homeOf`. */
+export function pickBirthPlace(country, ruralUrban, wealthTier, identity = null) {
   const countryPlaces = getPlacesForCountry(country.name)
   if (!countryPlaces.length) return null
 
@@ -4478,9 +4668,9 @@ export function pickBirthPlace(country, ruralUrban, wealthTier) {
 
   for (const preferred of typePreference) {
     const matches = countryPlaces.filter(p => p.type === preferred || p.scale === preferred)
-    if (matches.length) return matches[Math.floor(Math.random() * matches.length)]
+    if (matches.length) return drawPlace(matches, identity)
   }
-  return countryPlaces[Math.floor(Math.random() * countryPlaces.length)]
+  return drawPlace(countryPlaces, identity)
 }
 
 export function pickNeighborhoodTier(wealthTier) {

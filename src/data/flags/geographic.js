@@ -3401,4 +3401,160 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ngm_ft_1999_after.',
   },
 
+  // ── PERU 1965-2006 ─────────────────────────────────────────────────────────
+  // Set by events_peru_midcentury.js — the decades a Peruvian born about 1960
+  // actually lives. Every one is read by a follow-through in the same module.
+
+  pe_velasco_1968: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive in Peru for October 1968, when the general took the palace and then the Americans\' oil, and "dignity" was the word on the radio.',
+    intent: 'event',
+    notes: 'Set by pem_velasco_coup. Consumed by pem_ft_velasco_table (the argument at the family table, 1995+).',
+  },
+
+  pe_reforma_comunero: {
+    weight: 'major',
+    category: 'economic',
+    description: 'On the receiving end of the 1969 agrarian reform: the hacienda became a cooperative with initials, and the patrón stopped being owed four days a week.',
+    intent: 'event',
+    notes: 'Set by pem_reforma_agraria. Consumed by pem_ft_cooperativa (parcelled in the sierra, indebted on the sugar coast, burned by Sendero in the Mantaro valley).',
+  },
+
+  pe_reforma_hacienda_lost: {
+    weight: 'major',
+    category: 'economic',
+    description: 'A hacendado family expropriated by the 1969 reform, paid in bonds the inflation ate, and moved to a Lima flat with a dining table too big for the room.',
+    intent: 'event',
+    notes: 'Set by pem_reforma_hacendado. Consumed by pem_ft_hacienda_portrait; also varies pem_ft_velasco_table.',
+  },
+
+  pe_terremoto_1970: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In the Callejón de Huaylas or Chimbote on 31 May 1970, when the ground moved for most of a minute and Huascarán came down on Yungay.',
+    intent: 'event',
+    notes: 'Set by pem_terremoto_1970. Consumed by pem_terremoto_after (1971-72) and pem_ft_yungay (the anniversary at 15:23).',
+  },
+
+  pe_castellano_school: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Taught in Castilian at a sierra school where a first language in Quechua was answered with a ruler.',
+    intent: 'event',
+    notes: 'Set by pem_castellano_school. Consumed by pem_ft_children_spanish; widens pem_quechua_oficial.',
+  },
+
+  pe_quechua_official: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Heard the radio say in 1975 that Quechua was an official language of the Republic, while the district forms stayed in Castilian.',
+    intent: 'event',
+    notes: 'Set by pem_quechua_oficial. Consumed by pem_ft_quechua_congress (the 2006 oath in Quechua).',
+  },
+
+  pe_voted_1980: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive for May 1980, the first election in which Peruvians who could not read could vote, and the night the boxes were burned at Chuschi.',
+    intent: 'event',
+    notes: 'Set by pem_first_vote_1980. Consumed by pem_ft_chuschi (1983-90, remembering the paragraph nobody read).',
+  },
+
+  pe_sendero_assembly: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Stood in the plaza for a Shining Path juicio popular and saw what the list was for.',
+    intent: 'event',
+    notes: 'Set by pem_asamblea_popular. Consumed by pem_ft_assembly_silence; gates per_cvr.',
+  },
+
+  pe_desaparecido_family: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'A relative taken before dawn by soldiers in the emergency zone, never charged, never found; the photograph carried to the barracks gate at Los Cabitos.',
+    intent: 'event',
+    notes: 'Set by pem_desaparecido. Consumed by pem_ft_anfasep; varies per_cvr text.',
+  },
+
+  pe_desplazado: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Fled the war in Ayacucho by night, down the ravines to the road and on to a settlement on a Lima hill full of people from the same province.',
+    intent: 'event',
+    notes: 'Set by pem_desplazado. Consumed by pem_ft_retorno (the repopulation lorry, 1994-2006); pem_invasion, pem_chicha, per_dep_serrano_lima, pem_guzman_capturado read it.',
+  },
+
+  pe_rondero: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Walked the ronda: against cattle thieves in Cajamarca, or with an army shotgun in the self-defence committees of the war.',
+    intent: 'event',
+    notes: 'Set by pem_ronda_cajamarca, pem_ronda_autodefensa. Consumed by pem_ft_ronda; gates per_cvr.',
+  },
+
+  pe_leva: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Taken off a bus by the leva at eighteen and put into two years of obligatory service, which ended for everyone else in 1999.',
+    intent: 'event',
+    notes: 'Set by pem_leva. Consumed by pem_ft_leva.',
+  },
+
+  pe_bajo_a_lima: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Came down from the sierra to Lima over the pass at Ticlio, to an uncle\'s room and the word serrano.',
+    intent: 'event',
+    notes: 'Set by pem_bajada_a_lima, pem_empleada. Consumed by pem_invasion, pem_chicha, pem_ft_club_provincial, pem_ft_fiesta_return, per_dep_serrano_lima.',
+  },
+
+  pe_invasion: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Walked onto the sand at night with a straw mat and a flag and founded a pueblo joven.',
+    intent: 'event',
+    notes: 'Set by pem_invasion. Consumed by pem_ft_titulo (the COFOPRI title, 1996-2010).',
+  },
+
+  pe_empleada: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Sent down to Lima as a girl to live in as a domestic worker: the uniform, the separate plate, the room with no window, Sunday afternoons.',
+    intent: 'event',
+    notes: 'Set by pem_empleada. Consumed by pem_ft_empleada (refusing the same offer for a daughter).',
+  },
+
+  pe_comedor: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Part of the comedores populares and the glass of milk in the Lima settlements of the 1980s.',
+    intent: 'event',
+    notes: 'Set by pem_vaso_de_leche. Consumed by pem_moyano (February 1992).',
+  },
+
+  pe_hiperinflacion: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the inti: prices changing between morning and afternoon, the cambista on the corner, the queue for no milk.',
+    intent: 'event',
+    notes: 'Set by pem_hiperinflacion. Consumed by pem_ft_dollars.',
+  },
+
+  pe_fujishock: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Heard the minister read the new prices on 8 August 1990 and end with "may God help us".',
+    intent: 'event',
+    notes: 'Set by pem_fujishock. Consumed by pem_ft_dollars.',
+  },
+
+  pe_corrientes_oil: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'Grew up on the Río Corrientes after the oil came, with the produced water in the streams and lead in the children\'s blood.',
+    intent: 'event',
+    notes: 'Set by pem_corrientes. Consumed by pem_ft_dorissa (the October 2006 occupation and the Acta de Dorissa).',
+  },
+
 }

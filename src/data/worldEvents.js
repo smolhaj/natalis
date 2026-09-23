@@ -1,3 +1,5 @@
+import { INDEPENDENCE_YEAR } from './history.js'
+
 // Large disasters kill or displace a small fraction of a national population.
 // Firing the full "you were in it" narration and its stat penalty at every
 // citizen of the country is wrong; so is dropping the event. This returns a
@@ -3169,7 +3171,15 @@ export const WORLD_EVENTS = [
     context: 'Much of the developing world gained independence from European powers in the 1950s-60s. By the 1970s, many newly independent nations faced coups, single-party states, IMF structural adjustment conditions, and continued economic dependency on former colonial powers. The gap between independence-era promise and lived reality shaped a generation\'s political consciousness.',
     effect: (p) => { p.m -= 6; p.r += 6 },
     addFlags: ['independence_disillusionment'],
-    when: (G) => !G.flags.includes('independence_disillusionment'),
+    // "Independence was ten, fifteen years ago" was reaching every
+    // developing_urban country, which is most of Latin America — Peru has been
+    // independent since 1821 — and Turkey and Thailand, which were never
+    // colonised. It is true only where the flag actually changed recently.
+    when: (G) => {
+      const indep = INDEPENDENCE_YEAR[(G.currentCountry ?? G.character?.country)?.name]
+      return indep != null && G.currentYear - indep >= 5 && G.currentYear - indep <= 25 &&
+        !G.flags.includes('independence_disillusionment')
+    },
   },
 
   // ── Central American arc ──────────────────────────────────────────────────

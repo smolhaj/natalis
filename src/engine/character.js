@@ -214,7 +214,7 @@ export function createCharacter(overrides = {}) {
   const literate = Math.random() < literacyChanceFor(country, gender, birthYear)
 
   // Assign birth place
-  const birthPlace = pickBirthPlace(country, ruralUrban, wealthTier)
+  const birthPlace = pickBirthPlace(country, ruralUrban, wealthTier, { ethnicity })
   const birthNeighborhoodTier = pickNeighborhoodTier(wealthTier)
   const birthNeighborhoodName = pickNamedNeighborhood(birthPlace, birthNeighborhoodTier, { ethnicity, religion })
 
