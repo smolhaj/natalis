@@ -261,7 +261,7 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     text: 'On the twenty-ninth of May a civilian is sworn in, and he is the general who handed over to civilians in 1979, which tells you something about the size of the pool. If you were born in 1962 you have now lived thirty-seven years in this country and about nine of them under anybody elected. People are careful about how pleased they let themselves be. The thing that actually marks it, in your house, is that the news at nine stops being frightening to have on while somebody visits.',
     context: 'Olusegun Obasanjo, military head of state 1976–79, was sworn in as civilian president on 29 May 1999, ending sixteen consecutive years of military rule. Nigeria has held civilian elections since.',
     choices: null,
-    effect: (p) => { p.setMem('ngm_1999', true); p.m += 9; p.addFlag('democracy_1999_lived') },
+    effect: (p) => { p.setMem('ngm_1999', true); p.m += 9; p.addFlag('democracy_1999_lived'); p.addFlag('nga_democracy_generation') },
   },
 
 ]

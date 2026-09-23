@@ -124,7 +124,7 @@ const VENEZUELA_EVENTS = [
       G.character.country.name === 'Venezuela' &&
       G.currentYear >= 2013 && G.currentYear <= 2013 &&
       G.age >= 15 &&
-      !G.mem?.ven_chavez_death,
+      !G.mem?.ven_chavez_death && !G.mem?.venChavezDeath,
     text: (G) => {
       const isChavista = G.flags.has('chavista_generation') || G.flags.has('bolivarian_generation')
       return isChavista
@@ -132,7 +132,7 @@ const VENEZUELA_EVENTS = [
         : 'March 5, 2013. The announcement comes from Maduro on the state channel. Chávez is dead. Whatever you thought of him, the country is going to change. The oil is still at a hundred dollars a barrel. The successor is the man Chávez chose. The experiment continues without the person who began it, which is a different experiment.'
     },
     choices: null,
-    effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('ven_chavez_death_generation'); p.setMem('ven_chavez_death', true); },
+    effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('ven_chavez_death_generation'); p.setMem('ven_chavez_death', true); p.setMem('venChavezDeath', true); },
   },
 
   // ── THE COLLAPSE BEGINS ───────────────────────────────────────────────────────

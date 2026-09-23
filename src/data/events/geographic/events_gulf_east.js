@@ -287,7 +287,7 @@ export const GULF_EAST_EVENTS = [
       (G.currentCountry?.name ?? G.character.country.name) === 'South Korea' &&
       G.currentYear === 1980 &&
       G.age >= 15 &&
-      !G.mem.koreaGwangju,
+      !G.mem.koreaGwangju && !G.mem?.krGwangjuFired,
     text: 'May 18, 1980. Gwangju. After Park Chung-hee\'s assassination, Chun Doo-hwan seizes power by military coup. When students and citizens protest in Gwangju, the paratroopers are sent in. What happens in the following nine days will be suppressed from national discourse for almost a decade. The number of dead is disputed. The military\'s tally is 144. Civil society\'s is higher. For those who are not in Gwangju, the news arrives in fragments and then does not arrive at all.',
     choices: [
       {
@@ -302,7 +302,7 @@ export const GULF_EAST_EVENTS = [
           const there = p._state?.currentPlace?.id === 'kr_gwangju'
           p.m -= there ? 18 : 10; p.r += there ? 10 : 7
           if (there) { p.h -= 8; p.addFlag('gwangju_survivor') }
-          p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true)
+          p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true); p.setMem('krGwangjuFired', true)
         },
       },
       {
@@ -317,7 +317,7 @@ export const GULF_EAST_EVENTS = [
           const there = p._state?.currentPlace?.id === 'kr_gwangju'
           p.m -= there ? 12 : 4; p.r += there ? 12 : 5
           if (there) p.addFlag('gwangju_survivor')
-          p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true)
+          p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true); p.setMem('krGwangjuFired', true)
         },
       },
     ],

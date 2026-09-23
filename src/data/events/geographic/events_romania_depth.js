@@ -65,7 +65,7 @@ export const ROMANIA_DEPTH_EVENTS = [
       G.character.country.name === 'Romania' &&
       G.currentYear >= 1989 && G.currentYear <= 1990 &&
       G.age >= 16 &&
-      !G.mem?.romDepTimisoara,
+      !G.mem?.romDepTimisoara && !G.mem?.romaniaCeausescuFall && !G.mem?.romRevolution,
     text: 'The congregation stands around the parsonage in Timisoara so that the Securitate cannot get the pastor out, and by dark there are thousands in the street who have never met the man. On the seventeenth they fire into the crowd. Four days later the party assembles a rally in Bucharest and the crowd begins to boo, live, and the old man on the balcony stops speaking and does not know what to do with his hands. Everyone in the country sees the face he makes.',
     context: 'Securitate officers moved to remove Laszlo Tokes, a Hungarian Reformed pastor, from his Timisoara parsonage on 16 December 1989. His congregation formed a human chain, the protest spread, and security forces opened fire, killing about sixty people on 17 December. Ceausescu returned from a state visit to Iran and called a rally in Bucharest on 21 December that turned against him on live television. He and Elena Ceausescu were executed on 25 December.',
     choices: [
@@ -78,7 +78,7 @@ export const ROMANIA_DEPTH_EVENTS = [
           p.karma += 8
           p.r += 6
           p.addFlag('rom_timisoara_generation')
-          p.setMem('romDepTimisoara', true)
+          p.setMem('romDepTimisoara', true); p.setMem('romaniaCeausescuFall', true); p.setMem('romRevolution', true)
         },
       },
       {
@@ -90,7 +90,7 @@ export const ROMANIA_DEPTH_EVENTS = [
           p.karma += 5
           p.r += 5
           p.addFlag('rom_timisoara_generation')
-          p.setMem('romDepTimisoara', true)
+          p.setMem('romDepTimisoara', true); p.setMem('romaniaCeausescuFall', true); p.setMem('romRevolution', true)
         },
       },
     ],

@@ -91,7 +91,7 @@ export const KOREA_EVENTS = [
       isSouthKorea(G) &&
       G.currentYear === 1980 &&
       G.age >= 15 && G.age <= 40 &&
-      !G.mem?.krGwangjuFired,
+      !G.mem?.krGwangjuFired && !G.mem?.koreaGwangju,
     text: 'In Gwangju the paratroopers have been deployed against civilians. The news coming out is confused and then consistent. Citizens have taken up arms to defend the city hall. This lasts ten days. The military crushes it. The death toll is contested for decades and will not be officially acknowledged for years. In Seoul and the rest of the country you are watching this happen and understanding, with absolute clarity, what kind of government you live under. Chun Doo-hwan has been in power for seven months.',
     choices: [
       {

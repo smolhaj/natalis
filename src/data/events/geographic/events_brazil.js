@@ -363,6 +363,9 @@ const BRAZIL_EVENTS = [
       G.character.country.name === 'Brazil' &&
       G.currentYear >= 1950 && G.currentYear <= 1995 &&
       G.ruralUrban === 'rural' &&
+      // Still in the interior: somebody who has already gone to a city is not
+      // standing at the side of the road south.
+      G.place?.type !== 'urban' &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.bra_nordestino,
     text: (G) => {
@@ -370,14 +373,16 @@ const BRAZIL_EVENTS = [
       if (yr <= 1970) {
         return 'The pau-de-arara: the wooden truck bed with the pole across the top for people to grip on the road south. Weeks from Ceará or Piauí or Bahia to São Paulo. The sertão is dry again this year — the drought polygon, the caatinga, the reservoir that is a mudflat by August. São Paulo needs workers. The construction sites need workers. The domestic employers need workers. You leave with an address written on a piece of paper and the name of someone from your town who made it.'
       }
-      return 'The sertão is dry and São Paulo has work. Millions before you have taken this road — by truck in earlier decades, by bus now. In São Paulo they will call you nordestino and the word is not always neutral. You will live in a room with four other people from your state. You will send money home. The forró is still playing, in the bar in Brás where everyone from your city goes on Saturdays. You are in São Paulo. The sertão is in São Paulo with you.'
+      return 'The sertão is dry and São Paulo has work. Millions before you have taken this road — by truck in earlier decades, by bus now. In São Paulo they call you nordestino and the word is not always neutral. The ones who went live five to a room with people from their own state and send money home, and on Saturdays there is forró in a bar in Brás where everyone from your town goes.'
     },
     choices: [
       {
         text: 'You go. The sertão has nothing left to give this year.',
         tag: null,
         outcome: 'São Paulo receives you and processes you into its economy. The city needs your labor more than it admits to needing it. The distance between the city you arrived in and the city you built is a political fact no one officially records.',
-        effect: (p) => { p.w += 5; p.m -= 5; p.r += 4; p.addFlag('bra_nordestino_migrant'); p.setMem('bra_nordestino', true); },
+        // The narration puts you in São Paulo, so the effect has to as well:
+        // this set a flag and left the character in the sertão for life.
+        effect: (p) => { p.w += 5; p.m -= 5; p.r += 4; p.addFlag('bra_nordestino_migrant'); p.addFlag('rural_to_urban'); p.setMem('bra_nordestino', true); p.relocate('br_sao_paulo', 'informal'); },
       },
       {
         text: 'You stay. The sertão is yours and the stories of São Paulo are not all good.',

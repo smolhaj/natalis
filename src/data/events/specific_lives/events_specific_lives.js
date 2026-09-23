@@ -2607,6 +2607,10 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.stats.wealth <= 30 &&
       G.age >= 16 && G.age <= 30 &&
       !G.career?.id &&
+      // Already somebody's live-in maid: the Brazil pardo module, Peru's
+      // empleada and the Gulf arc each tell this room in their own country's
+      // words, and this generic one was telling it a second time.
+      !G.flags.has('domestic_worker') &&
       !G.mem?.sl_la_maid,
     text: 'The employer is a family in the nice part of the city. You live in the house, in the maid\'s room off the kitchen. The maid\'s room is small and has a different bathroom from the rest of the house and your day off is Sunday from noon, which is the arrangement and you understood the arrangement when you took the position. The children of the family know your name. The adults of the family sometimes do not use it. The legal protections for domestic workers in this country are on paper in ways that do not yet reliably reach the kitchen.',
     choices: null,

@@ -71,20 +71,20 @@ export const KYRGYZSTAN_EVENTS = [
       IS_KYRGYZ(G) &&
       G.currentYear >= 2005 && G.currentYear <= 2006 &&
       G.age >= 16 &&
-      !G.mem?.kyrTulip,
+      !G.mem?.kyrTulip && !G.mem?.casTulip,
     text: 'On March 24, 2005 protesters storm government buildings in Bishkek. President Askar Akayev flees to Russia. The Tulip Revolution — named after the flower, though the protesters did not choose the name — ends fifteen years of Akayev\'s rule. The optimism is real. What follows is also real: the next president, Bakiyev, proves to be worse. The lesson that the region is taking from these events is still being debated. You watched this happen in the capital of your country and you are still deciding what you watched.',
     choices: [
       {
         text: 'You were in the streets or among those who believed something had changed.',
         tag: 'kyr_tulip_participant',
         outcome: 'The feeling on that day was specific. The days after were also specific. You keep both.',
-        effect: (p) => { p.addFlag('kyr_tulip_participant'); p.m += 4; p.r += 5; p.setMem('kyrTulip', true) },
+        effect: (p) => { p.addFlag('kyr_tulip_participant'); p.m += 4; p.r += 5; p.setMem('kyrTulip', true); p.setMem('casTulip', true) },
       },
       {
         text: 'You watched it happen and felt uncertain about what it meant.',
         tag: 'kyr_tulip_skeptic',
         outcome: 'The optimism did not fully reach you. The next years confirmed some of your uncertainty.',
-        effect: (p) => { p.addFlag('kyr_tulip_skeptic'); p.r += 6; p.e += 3; p.setMem('kyrTulip', true) },
+        effect: (p) => { p.addFlag('kyr_tulip_skeptic'); p.r += 6; p.e += 3; p.setMem('kyrTulip', true); p.setMem('casTulip', true) },
       },
     ],
   },

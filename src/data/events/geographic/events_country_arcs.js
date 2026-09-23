@@ -136,11 +136,11 @@ export const COUNTRY_ARC_EVENTS = [
     id: 'ca_romania_ceausescu_fall',
     phase: 'midlife',
     weight: 3,
-    when: (G) => G.character.country.name === 'Romania' && G.currentYear === 1989 && !G.mem?.romaniaCeausescuFall,
+    when: (G) => G.character.country.name === 'Romania' && G.currentYear === 1989 && !G.mem?.romaniaCeausescuFall && !G.mem?.romRevolution && !G.mem?.romDepTimisoara,
     text: 'December 21st. The broadcast from the Central Committee balcony begins normally. Then someone boos. In twenty-four years of this, nobody has ever booed. The camera pulls back. Ceaușescu looks confused — he does not know what to do with a crowd that has stopped performing. Neither does anyone else. Everything that follows follows from that boo.',
     choices: [
-      { text: 'Go into the streets — this is it', tag: null, outcome: 'You are in the crowd when the army sides with the protesters. On Christmas Day you watch the execution on television. You feel things you do not have names for.', effect: (p) => { p.m += 8; p.karma += 6; p.setMem('romaniaCeausescuFall', true); p.addFlag('revolution_generation'); } },
-      { text: 'Stay inside — you have seen how these things can turn', tag: null, outcome: 'You watch from the window. The army defects anyway. You come out three days later into a different country.', effect: (p) => { p.m += 4; p.setMem('romaniaCeausescuFall', true); p.addFlag('revolution_generation'); } },
+      { text: 'Go into the streets — this is it', tag: null, outcome: 'You are in the crowd when the army sides with the protesters. On Christmas Day you watch the execution on television. You feel things you do not have names for.', effect: (p) => { p.m += 8; p.karma += 6; p.setMem('romaniaCeausescuFall', true); p.setMem('romRevolution', true); p.setMem('romDepTimisoara', true); p.addFlag('revolution_generation'); } },
+      { text: 'Stay inside — you have seen how these things can turn', tag: null, outcome: 'You watch from the window. The army defects anyway. You come out three days later into a different country.', effect: (p) => { p.m += 4; p.setMem('romaniaCeausescuFall', true); p.setMem('romRevolution', true); p.setMem('romDepTimisoara', true); p.addFlag('revolution_generation'); } },
     ],
   },
 

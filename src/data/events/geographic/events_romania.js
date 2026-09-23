@@ -68,7 +68,7 @@ export const ROMANIA_EVENTS = [
       G.character.country.name === 'Romania' &&
       G.currentYear >= 1989 && G.currentYear <= 1990 &&
       G.age >= 10 &&
-      !G.mem?.romRevolution,
+      !G.mem?.romRevolution && !G.mem?.romaniaCeausescuFall && !G.mem?.romDepTimisoara,
     text: (G) => {
       const age = G.age
       if (age <= 20) {
@@ -81,13 +81,13 @@ export const ROMANIA_EVENTS = [
         text: 'You are in the street, in the crowd, in the history.',
         tag: null,
         outcome: 'You are in it. Afterwards, when people ask, you were there. The being there is the thing you have.',
-        effect: (p) => { p.m += 10; p.m -= 6; p.karma += 8; p.r += 5; p.addFlag('romania_1989_generation'); p.addFlag('political_active'); p.setMem('romRevolution', true); },
+        effect: (p) => { p.m += 10; p.m -= 6; p.karma += 8; p.r += 5; p.addFlag('romania_1989_generation'); p.addFlag('political_active'); p.setMem('romRevolution', true); p.setMem('romaniaCeausescuFall', true); p.setMem('romDepTimisoara', true); },
       },
       {
         text: 'You watch from the window or from the television in another city.',
         tag: null,
         outcome: 'You watch. The watching is also a way of being present for a historical event. What happens does not require your presence to happen.',
-        effect: (p) => { p.m += 6; p.r += 4; p.addFlag('romania_1989_generation'); p.setMem('romRevolution', true); },
+        effect: (p) => { p.m += 6; p.r += 4; p.addFlag('romania_1989_generation'); p.setMem('romRevolution', true); p.setMem('romaniaCeausescuFall', true); p.setMem('romDepTimisoara', true); },
       },
     ],
     effect: null,
