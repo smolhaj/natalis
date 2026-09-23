@@ -748,6 +748,21 @@ export const PLACES = [
       elite:         ['Meireles', 'Varjota', 'Cocó', 'Guararapes'],
     },
   },
+  // Salvador, because the colour line in Brazil is not one line. Four fifths of
+  // the city declares itself preto or pardo; it is where Ilê Aiyê came down
+  // from Curuzu in 1975 and a newspaper called it a racist bloco. Without it the
+  // only urban Northeast the engine could draw was Fortaleza.
+  {
+    id: 'br_salvador', name: 'Salvador', country: 'Brazil',
+    type: 'urban', scale: 'major_city', region: 'Northeast Brazil',
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['Alagados', 'Nordeste de Amaralina', 'Calabetão'],
+      working_class: ['Liberdade', 'Curuzu', 'São Caetano', 'Periperi'],
+      middle_class:  ['Brotas', 'Nazaré', 'Rio Vermelho'],
+      elite:         ['Graça', 'Barra', 'Corredor da Vitória'],
+    },
+  },
   {
     id: 'br_rural', name: 'Rural Bahia (sertão)', country: 'Brazil',
     type: 'rural', scale: 'village', region: 'Northeast Brazil',
@@ -1908,6 +1923,21 @@ export const PLACES = [
       working_class: ['Pogolotti', 'Cerro', 'Regla', 'Guanabacoa'],
       middle_class:  ['El Vedado lower', 'Centro Habana', 'Miramar (lower)', 'Playa'],
       elite:         ['Miramar (5th Avenue)', 'Siboney', 'Kohly', 'Nuevo Vedado top'],
+    },
+  },
+  // Santiago, because Havana is not Cuba's colour line either. Oriente is the
+  // blackest end of the island, the province of 1912, and after 1997 the place
+  // Havana sent people back to under Decree 217. Weighted to its size against
+  // Havana's.
+  {
+    id: 'cu_santiago', name: 'Santiago de Cuba', country: 'Cuba',
+    type: 'urban', scale: 'major_city', region: 'Eastern Cuba',
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['Los Olmos', 'Chicharrones (edge)', 'San Pedrito'],
+      working_class: ['Los Hoyos', 'Chicharrones', 'Mariana de la Torre', 'Altamira'],
+      middle_class:  ['Sueño', 'Reparto Terrazas', 'Distrito José Martí'],
+      elite:         ['Vista Alegre', 'Terrazas de Vista Alegre'],
     },
   },
   {
