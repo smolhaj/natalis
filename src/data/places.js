@@ -1286,11 +1286,41 @@ export const PLACES = [
   {
     id: 'et_rural', name: 'Rural Oromia', country: 'Ethiopia',
     type: 'rural', scale: 'village', region: 'Oromia',
+    homeOf: ['oromo'],
     neighborhoods: {
       informal:      ['Bonde (temporary structures)', 'Geshey kebele'],
       working_class: ['Fere-gna', 'Merkato'],
       middle_class:  ['Kebele tsehafit bet', 'Genet'],
       elite:         ['Balabat ketema', 'New tin roof area'],
+    },
+  },
+  // Ethiopia had one rural place and it was Oromia, so every rural Amhara the
+  // engine drew — nine in ten of them, in a country that was 90% rural for most
+  // of the period — was born in somebody else's region, and every guard written
+  // for the northern highlands could only ever answer "Oromia". Two, because
+  // the Amhara north is not one place: Gojjam is the rist country and the Fano
+  // heartland; Wollo is the famine province, a third Muslim, and the place the
+  // 1985 resettlement trucks left from.
+  {
+    id: 'et_gojjam', name: 'A Village in Gojjam', country: 'Ethiopia',
+    type: 'rural', scale: 'village', region: 'Gojjam',
+    homeOf: ['amhara'],
+    neighborhoods: {
+      informal:      ['Below the threshing floors', 'The tenant houses by the gully'],
+      working_class: ['Along the market path', 'Near the spring'],
+      middle_class:  ['The houses around the church compound', 'The priest\'s side of the village'],
+      elite:         ['The balabat\'s compound', 'The house with the tin roof'],
+    },
+  },
+  {
+    id: 'et_wollo', name: 'A Village in Wollo', country: 'Ethiopia',
+    type: 'rural', scale: 'village', region: 'Wollo',
+    homeOf: ['amhara'],
+    neighborhoods: {
+      informal:      ['The terraces above the road', 'The houses by the dry riverbed'],
+      working_class: ['The market side', 'Near the mosque and the church'],
+      middle_class:  ['Along the Dessie road', 'The grain trader\'s row'],
+      elite:         ['The old landlord\'s compound', 'The house the Arab money built'],
     },
   },
 
@@ -1437,6 +1467,8 @@ export const PLACES = [
   {
     id: 'af_kabul', name: 'Kabul', country: 'Afghanistan',
     type: 'urban', scale: 'major_city', region: 'Eastern Afghanistan',
+    weight: 3,
+    homeOf: ['tajik_afghan', 'pashtun', 'hazara', 'uzbek_afghan'],
     neighborhoods: {
       informal:      ['Chaman-e-Babrak IDP camp', 'Qala-e-Musa', 'Khair Khana informal'],
       working_class: ['Khair Khana', 'Deh Afghanan', 'Baraki Barak area', 'Qalai Zaman Khan'],
@@ -1447,11 +1479,63 @@ export const PLACES = [
   {
     id: 'af_rural', name: 'Rural Helmand', country: 'Afghanistan',
     type: 'rural', scale: 'village', region: 'Southern Afghanistan',
+    homeOf: ['pashtun'],
     neighborhoods: {
       informal:      ['Kochi camp', 'Kalay khodai'],
       working_class: ['Bazar', 'Afshar road'],
       middle_class:  ['Markaz', 'Haji\'s road'],
       elite:         ['Malik\'s compound', 'Commander\'s qala'],
+    },
+  },
+  // Afghanistan had Kabul and rural Helmand, so a rural Tajik — most of them —
+  // was born in the Pashtun south, and the Panjshir, the Shomali vineyards and
+  // Herat, which are where that population's twentieth century happened, did
+  // not exist.
+  {
+    id: 'af_panjshir', name: 'A Village in the Panjshir', country: 'Afghanistan',
+    type: 'rural', scale: 'village', region: 'Panjshir',
+    homeOf: ['tajik_afghan'],
+    neighborhoods: {
+      informal:      ['The houses on the scree', 'Below the mill'],
+      working_class: ['Along the river road', 'By the mosque'],
+      middle_class:  ['The mulberry terraces', 'The malik\'s lane'],
+      elite:         ['The khan\'s qala', 'The stone house above the orchards'],
+    },
+  },
+  {
+    id: 'af_shomali', name: 'A Village on the Shomali Plain', country: 'Afghanistan',
+    type: 'rural', scale: 'village', region: 'Parwan',
+    weight: 2,
+    homeOf: ['tajik_afghan'],
+    neighborhoods: {
+      informal:      ['The mud houses at the end of the karez', 'Behind the drying houses'],
+      working_class: ['The vineyard lanes', 'Along the canal'],
+      middle_class:  ['Inside the orchard walls', 'Near the bazaar on the Charikar road'],
+      elite:         ['The arbab\'s qala', 'The house with three raisin rooms'],
+    },
+  },
+  // Added with the Tajik places, because homeOf on Helmand and the two Tajik
+  // villages left rural Hazaras nowhere to be but the Shomali and the Panjshir.
+  {
+    id: 'af_hazarajat', name: 'A Village in the Hazarajat', country: 'Afghanistan',
+    type: 'rural', scale: 'village', region: 'Bamiyan',
+    homeOf: ['hazara'],
+    neighborhoods: {
+      informal:      ['The caves in the cliff', 'The houses below the snowline'],
+      working_class: ['Along the irrigation channel', 'By the potato fields'],
+      middle_class:  ['Near the imambargah', 'The school road'],
+      elite:         ['The mir\'s fort', 'The house with the glass windows'],
+    },
+  },
+  {
+    id: 'af_herat', name: 'Herat', country: 'Afghanistan',
+    type: 'urban', scale: 'city', region: 'Western Afghanistan',
+    homeOf: ['tajik_afghan'],
+    neighborhoods: {
+      informal:      ['The camp on the Maslakh road', 'Mud houses past the Iraq gate'],
+      working_class: ['The old city by the Friday Mosque', 'Darb-e Qandahar quarter'],
+      middle_class:  ['Shahr-e Naw', 'Along the Walayat road'],
+      elite:         ['The gardens near the Musalla', 'The villas on the Takht-e Safar road'],
     },
   },
 
@@ -3467,6 +3551,8 @@ export const PLACES = [
   {
     id: 'dz_algiers', name: 'Algiers', country: 'Algeria',
     type: 'urban', scale: 'major_city', region: 'Alger',
+    weight: 2,
+    homeOf: ['arab_algerian', 'berber_kabyle'],
     neighborhoods: {
       informal:      ['The bidonvilles at Oued Ouchayah', 'Diar Echems', 'Climat de France'],
       working_class: ['Bab El Oued', 'Belouizdad', 'Kouba', 'Bachdjarah'],
@@ -3477,6 +3563,7 @@ export const PLACES = [
   {
     id: 'dz_oran', name: 'Oran', country: 'Algeria',
     type: 'urban', scale: 'city', region: 'Oran',
+    homeOf: ['arab_algerian'],
     neighborhoods: {
       informal:      ['Planteurs', 'Ras El Aïn shacks'],
       working_class: ['Médina Jdida', 'Sidi El Houari', 'El Hamri'],
@@ -3487,11 +3574,49 @@ export const PLACES = [
   {
     id: 'dz_kabylie', name: 'A Village in Kabylie', country: 'Algeria',
     type: 'rural', scale: 'village', region: 'Kabylie',
+    homeOf: ['berber_kabyle'],
     neighborhoods: {
       informal:      ['Below the last houses', 'By the spring'],
       working_class: ['The road through the village', 'Near the olive press'],
       middle_class:  ['Around the djemaa', 'The village centre'],
       elite:         ['The house the emigrant built', 'Above the terraces'],
+    },
+  },
+  // The Kabylie village was Algeria's only rural place, so every rural Arab
+  // Algerian was born in it and every rural Kabyle had a one-in-five chance of
+  // being born in Oran. Tizi Ouzou is the city the 1980 spring happened in; the
+  // plateau and the Aurès give the rest of the countryside somewhere to be.
+  {
+    id: 'dz_tizi_ouzou', name: 'Tizi Ouzou', country: 'Algeria',
+    type: 'urban', scale: 'mid_city', region: 'Kabylie',
+    homeOf: ['berber_kabyle'],
+    neighborhoods: {
+      informal:      ['The chalets at Oued Aïssi', 'Below the Haute-Ville'],
+      working_class: ['The Haute-Ville', 'Les Genêts', 'The 2000-Logements'],
+      middle_class:  ['Nouvelle-Ville', 'Off the Grande Rue'],
+      elite:         ['The villas above Hasnaoua', 'The Redjaouna road'],
+    },
+  },
+  {
+    id: 'dz_plateaux', name: 'A Village on the High Plateaux', country: 'Algeria',
+    type: 'rural', scale: 'village', region: 'Sétif',
+    homeOf: ['arab_algerian'],
+    neighborhoods: {
+      informal:      ['The gourbis past the silo', 'By the dry oued'],
+      working_class: ['Along the national road', 'Near the wheat cooperative'],
+      middle_class:  ['Around the mosque square', 'The teacher\'s street'],
+      elite:         ['The old colon farmhouse', 'The house with the tractor shed'],
+    },
+  },
+  {
+    id: 'dz_aures', name: 'A Village in the Aurès', country: 'Algeria',
+    type: 'rural', scale: 'village', region: 'Aurès',
+    homeOf: ['berber_other'],
+    neighborhoods: {
+      informal:      ['The old dechra on the cliff', 'Below the gorge road'],
+      working_class: ['The new houses by the road', 'Near the apricot orchards'],
+      middle_class:  ['Around the school', 'The mayor\'s street'],
+      elite:         ['The house the soldier\'s pension built', 'Above the palm gardens'],
     },
   },
 
