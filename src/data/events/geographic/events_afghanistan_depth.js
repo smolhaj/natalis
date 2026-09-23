@@ -197,7 +197,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
         text: 'You get to the airport. The crush, the panic, the question of whether you make the flight.',
         tag: 'afg_2021_escaped',
         outcome: 'You make it. Doha first, then a transit country, then a third country. You arrive somewhere with what you could carry. The visa problem will take another two years.',
-        effect: (p) => { p.m -= 20; p.r += 12; p.karma += 5; p.addFlag('afg_2021_escaped'); p.addFlag('emigrated'); p.setMem('afg2021', true); },
+        effect: (p) => { p.m -= 20; p.r += 12; p.karma += 5; p.addFlag('afg_2021_escaped'); p.addFlag('emigrated'); p.emigrateTo(['Germany', 'United States', 'United Kingdom'], { residency: 'refugee_status' }); p.setMem('afg2021', true); },
       },
       {
         text: 'You cannot reach the airport, or you will not leave your family.',
@@ -266,7 +266,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
         text: 'You make it to the airport. A Special Immigrant Visa processes eventually.',
         tag: 'afg_interpreter_evacuated',
         outcome: 'Fort Lee, Virginia. A processing center. Then a apartment somewhere in suburban America near a mosque. You have survived what the visa was for.',
-        effect: (p) => { p.m -= 5; p.h += 5; p.karma += 5; p.r += 8; p.addFlag('afg_interpreter_evacuated'); p.addFlag('emigrated'); p.setMem('afgInterpreterThreat', true); },
+        effect: (p) => { p.m -= 5; p.h += 5; p.karma += 5; p.r += 8; p.addFlag('afg_interpreter_evacuated'); p.addFlag('emigrated'); p.emigrateTo('United States', { residency: 'permanent_resident' }); p.setMem('afgInterpreterThreat', true); },
       },
       {
         text: 'You cannot get out. You hide. The visa process continues by email from inside.',

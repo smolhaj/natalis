@@ -126,7 +126,7 @@ export const DISASTER_EVENTS = [
     text: (G) => {
       const cn = G.character.country.name
       if (cn === 'Japan') {
-        return 'You are in the office when it starts. The building makes a sound before it moves — or the movement and the sound are simultaneous; you cannot reconstruct the sequence after. The drill runs automatically: you are under the desk before you have decided to be. The shaking lasts forty seconds. You count. When it stops you check the building, the people, your phone. The bag is still by the door at home. You check it that evening.'
+        return 'You are in the office when it starts. The building makes a sound before it moves — or the movement and the sound are simultaneous; you cannot reconstruct the sequence after. The drill runs automatically: you are under the desk before you have decided to be. The shaking lasts forty seconds. You count. When it stops you check the building, the people, the gas. The bag is still by the door at home. You check it that evening.'
       }
       return 'The floor moves. You have been prepared for this since childhood and the preparation works — you are in the correct position, calm, accounting for the people around you. When it is over, it worked. You notice this specifically. You had not been entirely certain, until now, that it would.'
     },

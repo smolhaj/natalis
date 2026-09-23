@@ -141,9 +141,9 @@ export const CONSEQUENCE_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.yearsAbroad >= 10 && G.flags.includes('emigrated') && G.age >= 38 && !G.mem?.abroad_roots_pull,
-    text: 'A parent is unwell. Or a sibling calls with news. Or you attend a funeral remotely, on a phone screen, in a different time zone, unable to touch anything. The distance that seemed manageable for twenty years reveals a cost that was always there. You think about going back and immediately think about everything you would be leaving.',
+    text: 'A parent is unwell. Or a sibling calls with news. Or you attend a funeral by telephone, in a different time zone, unable to touch anything. The distance that seemed manageable for twenty years reveals a cost that was always there. You think about going back and immediately think about everything you would be leaving.',
     choices: [
-      { text: 'Go back — permanently or for a long stay', tag: null, outcome: 'The reverse journey is its own kind of immigration. The place you left has changed. So have you.', effect: (p) => { p.m -= 5; p.r += 8; p.addFlag('returned_home'); p.setMem('abroad_roots_pull', true) } },
+      { text: 'Go back — permanently or for a long stay', tag: null, outcome: 'The reverse journey is its own kind of immigration. The place you left has changed. So have you.', effect: (p) => { p.returnHome(); p.m -= 5; p.r += 8; p.addFlag('returned_home'); p.setMem('abroad_roots_pull', true) } },
       { text: 'Stay — your life is here now', tag: null, outcome: 'You send money instead of presence. It is not enough and you know it and you do it anyway.', effect: (p) => { p.m -= 12; p.r += 12; p.mo -= 2000; p.setMem('abroad_roots_pull', true) } },
     ],
     effect: null,

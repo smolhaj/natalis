@@ -5,7 +5,7 @@ import { DESTINATIONS } from '../data/destinations'
 import { CRIMES, VIOLENT_TARGETS, HOMICIDE_METHODS, crimePayout } from '../data/crimes'
 import { COUNTRIES } from '../data/countries'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
-import { getAvailableCareers, getAvailableBusinessTypes, getPhase, buildPendingTrial } from '../engine/gameEngine'
+import { getAvailableCareers, getAvailableBusinessTypes, getPhase, buildPendingTrial, buildG } from '../engine/gameEngine'
 import { CAREERS } from '../data/careers'
 import { estimatePrice, estimateCost, eraMoney } from '../engine/playerActions'
 
@@ -150,7 +150,12 @@ export default function ActivitiesPanel({ onClose }) {
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
-  const G = { character: state.character, stats: state.stats, flags: state.flags, age: state.age, career: state.career, education: state.education, inPrison: state.inPrison, partner: state.partner, regret: state.regret ?? 50, siblings: state.siblings ?? [], children: state.children ?? [], money: state.money ?? 0, assets: state.assets ?? { properties: [], vehicles: [] }, currentYear: state.currentYear }
+  // The engine's own G, not a hand-built subset of it. The subset had no
+  // \`rosca\`, \`gold\` or \`literate\`, so "Leave the ROSCA" and "Sell gold" could
+  // never be shown and the reading activities were offered to a character the
+  // engine had just told could not read; and it passed a dead partner through
+  // as a living one, so a widow was offered a date night.
+  const G = buildG(state)
 
   const phase = getPhase(state.age)
   const conditions = state.conditions ?? []
@@ -287,6 +292,7 @@ export default function ActivitiesPanel({ onClose }) {
             {(ACTIVITIES.mind ?? [])
               .filter(a => ['study', 'online_course', 'learn_language', 'philosophy'].includes(a.id))
               .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
+              .filter(a => !a.condition || a.condition(G))
               .map(a => (
                 <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${estimateCost(state, a.cost).toLocaleString()}` : null} />
               ))
@@ -1454,6 +1460,7 @@ export default function ActivitiesPanel({ onClose }) {
           .filter(a => {
             if (a.minAge && state.age < a.minAge) return false
             if (a.minYear && (state.currentYear ?? 0) < a.minYear) return false
+            if (a.literate && G.literate === false) return false
             return true
           })
           .map(a => (

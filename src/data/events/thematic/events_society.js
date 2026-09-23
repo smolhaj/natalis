@@ -665,7 +665,7 @@ export const SOCIETY_EVENTS = [
       G.character.gender === 'female' &&
       G.character.country.archetype === 'wealthy_west' &&
       G.currentYear >= 1920 && G.currentYear <= 1960 &&
-      G.children && G.children.length >= 1 &&
+      G.youngestChildAge !== null && G.youngestChildAge <= 1 &&
       !G.mem?.birth_experience,
     text: 'The hospital does not allow your husband in the room. You are given ether. You remember little of it. The baby is brought to you afterward, clean and wrapped, by a nurse who does not ask how you are feeling.',
     choices: null,

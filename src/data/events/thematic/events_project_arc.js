@@ -53,7 +53,7 @@ export const PROJECT_ARC_EVENTS = [
       const desc = {
         writing: 'Someone at work finds out you write. They ask what you write. The question catches you.',
         music: 'A colleague asks about the calluses on your fingers. You tell them you play. They ask to hear something.',
-        art: 'Someone sees a piece of your work — by accident, in your home, or on your phone. They ask about it directly.',
+        art: 'Someone sees a piece of your work — by accident, in your home, or in a photograph. They ask about it directly.',
         running: 'A younger person at work asks how you stay consistent. They want to start. They\'ve noticed you\'ve been at it for years.',
       }
       return desc[type] ?? 'Someone notices something you have been doing for years. They ask about it.'

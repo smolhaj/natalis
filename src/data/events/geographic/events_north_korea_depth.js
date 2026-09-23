@@ -59,7 +59,7 @@ export const NORTH_KOREA_DEPTH_EVENTS = [
     weight: 4,
     when: (G) =>
       IS_DPRK(G) &&
-      G.currentYear >= 2000 &&
+      G.currentYear >= 2004 &&
       !G.flags.has('dprk_tumen_phone'),
     text: 'The Chinese SIM card comes through the market. The signal from the Chinese tower reaches the high ground near the river on clear days. You go before dawn, when the patrol pattern has a gap. The call connects after two tries. Your cousin, who has been on the other side for fourteen months, sounds like herself and also like someone who has been somewhere else for fourteen months — some words slightly different, some pauses in different places. The call lasts three minutes. You say: I am here. She says: I am here. You agree to try again in a month. You go back down before the light comes.',
     choices: null,

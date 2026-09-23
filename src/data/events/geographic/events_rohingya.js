@@ -146,7 +146,7 @@ export const ROHINGYA_EVENTS = [
         text: 'Go. Whatever country it is.',
         tag: 'went',
         outcome: 'The flight is the first plane you have been on. The arrival is overwhelming in the specific way of a place designed for people with luggage and plans.',
-        effect: (p) => { p.m += 10; p.addFlag('rohingya_resettled'); p.addFlag('emigrated'); p.setResidency('refugee_status'); p.setMem('rohResettled', true) },
+        effect: (p) => { p.m += 10; p.addFlag('rohingya_resettled'); p.addFlag('emigrated'); p.emigrateTo(['United States', 'Canada', 'Australia']); p.setResidency('refugee_status'); p.setMem('rohResettled', true) },
       },
       {
         text: 'Your family is still in the camp. You can\'t leave them.',

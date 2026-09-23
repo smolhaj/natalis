@@ -55,7 +55,7 @@ export const LATIN_AMERICA_EVENTS = [
         text: 'Leave — the risk is real',
         tag: null,
         outcome: 'Buenos Aires first, then perhaps Paris or Stockholm. You leave with a suitcase and the understanding that you do not know when you will return.',
-        effect: (p) => { p.m -= 8; p.addFlag('chile_exiled'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('chile_exile_decision', true); },
+        effect: (p) => { p.m -= 8; p.addFlag('chile_exiled'); p.addFlag('emigrated'); p.emigrateTo(['Argentina', 'France', 'Sweden']); p.setResidency('work_visa'); p.setMem('chile_exile_decision', true); },
         inject: null,
       },
       {
@@ -671,7 +671,7 @@ export const LATIN_AMERICA_EVENTS = [
         text: 'Go back — this is what you worked toward',
         tag: null,
         outcome: 'You return to a place that kept its name and changed its contents. The adjustment takes years. So does the relief.',
-        effect: (p) => { p.m += 6; p.r -= 4; p.addFlag('returned_exile'); p.setMem('condor_return', true); },
+        effect: (p) => { p.m += 6; p.r -= 4; p.addFlag('returned_exile'); p.returnHome(); p.setMem('condor_return', true); },
         inject: null,
       },
       {
@@ -1004,7 +1004,7 @@ export const LATIN_AMERICA_EVENTS = [
         text: 'Leave — there is nothing left to stay for',
         tag: null,
         outcome: 'You cross the border with what fits in a bag. The country you arrive in has a specific way of receiving you.',
-        effect: (p) => { p.m -= 8; p.addFlag('emigrated'); p.addFlag('venezuela_exodus'); p.setResidency('undocumented'); p.setMem('ven_exodus', true); },
+        effect: (p) => { p.m -= 8; p.addFlag('emigrated'); p.emigrateTo(['Colombia', 'Peru', 'Chile', 'Brazil']); p.addFlag('venezuela_exodus'); p.setResidency('undocumented'); p.setMem('ven_exodus', true); },
         inject: null,
       },
       {
@@ -1081,7 +1081,7 @@ export const LATIN_AMERICA_EVENTS = [
         text: 'Leave — anything across the water is better than this',
         tag: null,
         outcome: 'The crossing is 90 miles. The raft holds. You arrive. Miami is nothing like you imagined and exactly what you imagined simultaneously.',
-        effect: (p) => { p.m -= 10; p.h -= 8; p.addFlag('emigrated'); p.addFlag('cuba_balsero'); p.setResidency('refugee_status'); p.setMem('cub_leaving', true); },
+        effect: (p) => { p.m -= 10; p.h -= 8; p.addFlag('emigrated'); p.emigrateTo('United States', { placeId: 'us_miami' }); p.addFlag('cuba_balsero'); p.setResidency('refugee_status'); p.setMem('cub_leaving', true); },
         inject: null,
       },
       {

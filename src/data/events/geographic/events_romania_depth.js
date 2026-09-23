@@ -221,7 +221,7 @@ export const ROMANIA_DEPTH_EVENTS = [
       p.w += 3
       p.r += 5
       p.addFlag('rom_italian_emigrant')
-      p.addFlag('emigrated')
+      p.addFlag('emigrated'); p.emigrateTo('Italy')
       p.setMem('romDepItaly', true)
     },
   },

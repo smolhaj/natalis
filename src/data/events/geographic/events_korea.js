@@ -24,7 +24,7 @@ export const KOREA_EVENTS = [
       G.currentYear >= 1975 &&
       G.age >= 8 && G.age <= 13 &&
       !G.mem?.krHagwonFired,
-    text: 'School ends at three. Then the English hagwon. Then the math hagwon. Then the private tutor on Wednesday evenings. You are ten years old. This is normal — your entire class has the same schedule. The definition of a good parent in this country is a parent who is doing exactly this. Your mother packs the lunch boxes before you wake, tracks the schedule across her phone, drives you between sessions, and you eat in the car. The years of your childhood are years of preparation for something that is still ahead of you.',
+    text: 'School ends at three. Then the English hagwon. Then the math hagwon. Then the private tutor on Wednesday evenings. You are ten years old. This is normal — your entire class has the same schedule. The definition of a good parent in this country is a parent who is doing exactly this. Your mother packs the lunch boxes before you wake, tracks the schedule on a calendar by the door, drives you between sessions, and you eat in the car. The years of your childhood are years of preparation for something that is still ahead of you.',
     choices: null,
     effect: (p) => { p.e += 4; p.m -= 5; p.addFlag('hagwon_childhood'); p.setMem('krHagwonFired', true) },
   },

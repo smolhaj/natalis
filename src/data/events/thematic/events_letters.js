@@ -147,12 +147,12 @@ export const LETTER_EVENTS = [
     isLetter: true,
     when: (G) =>
       G.currentYear < 1995 &&
-      G.children?.length > 0 &&
+      G.youngestChildAge !== null && G.youngestChildAge <= 1 &&
       (G.parents?.father?.alive || G.parents?.mother?.alive) &&
       G.age >= 28 && G.age <= 42 &&
       !G.mem?.letterBirth,
     text: (G) => {
-      const child = G.children?.[0]
+      const child = [...(G.children ?? [])].sort((a, b) => (b.ageAtBirth ?? 0) - (a.ageAtBirth ?? 0))[0]
       const cname = child?.name ?? 'the baby'
       return `You write to tell them about ${cname}. The letter takes time to compose — more time than you expected. You want to convey something about what it feels like but the words available for this are inadequate, so you write the facts instead: the date, the weight, the name and its meaning. You close with something about everyone being well. Their reply, when it comes, will say the same things back in different words. Both letters will be kept.`
     },

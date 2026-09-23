@@ -411,7 +411,7 @@ export const LATE_LIFE_EVENTS = [
     when: (G) =>
       !G.mem.healthVisionLoss &&
       G.age >= 65 && G.age <= 85,
-    text: 'The glasses are not enough anymore. The ophthalmologist says it is macular degeneration, or glaucoma, or simply the accumulated arithmetic of the years. Reading now requires light and time and something that is close to effort. You notice which lights in the house are not enough and you move lamps. The text on your phone you make larger. You stop reading before bed because the bed is dark.',
+    text: 'The glasses are not enough anymore. The ophthalmologist says it is macular degeneration, or glaucoma, or simply the accumulated arithmetic of the years. Reading now requires light and time and something that is close to effort. You notice which lights in the house are not enough and you move lamps. The print on the labels you hold at arm\'s length, then closer. You stop reading before bed because the bed is dark.',
     choices: null,
     effect: (p) => { p.h -= 8; p.e -= 3; p.m -= 6; p.addFlag('vision_impaired'); p.setMem('healthVisionLoss', true) },
   },

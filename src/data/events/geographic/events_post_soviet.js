@@ -364,7 +364,7 @@ export const POST_SOVIET_EVENTS = [
         text: 'Leave — Israel, Germany, anywhere that will take you',
         tag: null,
         outcome: 'The departure is not heroic. It is practical and irreversible and the right decision, which you will spend years explaining to yourself.',
-        effect: (p) => { p.m -= 5; p.addFlag('emigrated'); p.addFlag('post_soviet_emigrant'); p.setResidency('permanent_resident'); p.setMem('psJewishEmigration', true) },
+        effect: (p) => { p.m -= 5; p.addFlag('emigrated'); p.emigrateTo(['Israel', 'Israel', 'Germany', 'United States']); p.addFlag('post_soviet_emigrant'); p.setResidency('permanent_resident'); p.setMem('psJewishEmigration', true) },
       },
       {
         text: 'Stay — this country is still yours',
@@ -392,7 +392,7 @@ export const POST_SOVIET_EVENTS = [
         text: 'Accept — go to Germany',
         tag: null,
         outcome: 'Germany is both what you expected and nothing like it. The Germans call you Russian. The Russians always called you German. You arrive somewhere that has a place for you on paper.',
-        effect: (p) => { p.m -= 6; p.addFlag('emigrated'); p.addFlag('post_soviet_emigrant'); p.setResidency('permanent_resident'); p.setMem('psGermanEmigration', true) },
+        effect: (p) => { p.m -= 6; p.addFlag('emigrated'); p.emigrateTo('Germany'); p.addFlag('post_soviet_emigrant'); p.setResidency('permanent_resident'); p.setMem('psGermanEmigration', true) },
       },
       {
         text: 'Stay — Germany is a name, not a place you know',
@@ -427,7 +427,7 @@ export const POST_SOVIET_EVENTS = [
         text: 'Go — take the offer',
         tag: null,
         outcome: 'The first years are disorienting in ways you did not prepare for. The credential is accepted but you are not, quite, a person yet in the new city. This changes, slowly.',
-        effect: (p) => { p.w += 8; p.m -= 4; p.addFlag('emigrated'); p.addFlag('post_soviet_emigrant'); p.addFlag('qualified_emigrant'); p.setResidency('work_visa'); p.setMem('psProfessionalEmigration', true) },
+        effect: (p) => { p.w += 8; p.m -= 4; p.addFlag('emigrated'); p.emigrateTo(['Germany', 'United States', 'United Kingdom']); p.addFlag('post_soviet_emigrant'); p.addFlag('qualified_emigrant'); p.setResidency('work_visa'); p.setMem('psProfessionalEmigration', true) },
       },
       {
         text: 'Stay — someone has to rebuild this country',

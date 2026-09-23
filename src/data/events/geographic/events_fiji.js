@@ -150,7 +150,7 @@ export const FIJI_EVENTS = [
         text: 'You leave. The future here is too uncertain.',
         tag: 'emigrate',
         outcome: 'Brisbane or Auckland or Toronto. You arrive with your qualifications and your accent and the specific knowledge that you are now a Fijian Indian in a country that does not have a category for that yet.',
-        effect: (p) => { p.m -= 5; p.e += 5; p.w += 3; p.addFlag('fiji_emigrated'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('fjEmigration', true) },
+        effect: (p) => { p.m -= 5; p.e += 5; p.w += 3; p.addFlag('fiji_emigrated'); p.addFlag('emigrated'); p.emigrateTo(['Australia', 'New Zealand', 'Canada']); p.setResidency('work_visa'); p.setMem('fjEmigration', true) },
       },
       {
         text: 'You stay. This is your country too.',

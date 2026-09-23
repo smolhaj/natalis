@@ -202,7 +202,7 @@ export const IRAN_DEPTH_EVENTS = [
           p.w -= 5
           p.e += 6
           p.addFlag('irn_cultural_revolution_student')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo(['United States', 'Germany', 'United Kingdom', 'France'])
           p.setMem('irnDepUniPurge', true)
         },
       },
@@ -272,7 +272,7 @@ export const IRAN_DEPTH_EVENTS = [
           p.r += 8
           p.e += 3
           p.addFlag('irn_post_2022_departure')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo(['Turkey', 'Georgia', 'Germany'])
           p.setMem('irnDepPost2022', true)
         },
       },

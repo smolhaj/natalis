@@ -209,6 +209,8 @@ export const GRIEF_EVENTS = [
     when: (G) =>
       G.deceasedPartner &&
       !G.mem.griefPartnerFirst &&
+      // Present tense about a death: it belongs to the year it happened.
+      (G.mem.partnerDeathYear == null || G.currentYear - G.mem.partnerDeathYear <= 1) &&
       G.age >= 35,
     // "You are in the hospital, or you are at home, or you are in the car in
     // the hospital car park" is the game declining to say which. It knows how
@@ -677,7 +679,7 @@ export const GRIEF_EVENTS = [
       G.flags.includes('friend_died') &&
       !G.mem.griefFriendFollowup &&
       G.age >= 35,
-    text: 'The group chat goes quiet for a week. Then someone posts an ordinary thing — something they would have laughed at — and the act of sending it is grief in a language you didn\'t know the group used. You screenshot it. You don\'t know why. The person who isn\'t in the chat anymore would have had the best reply.',
+    text: 'Nobody rings anybody for a week. Then someone posts an ordinary thing — something they would have laughed at — and the act of sending it is grief in a language you didn\'t know the group used. You screenshot it. You don\'t know why. The person who isn\'t in the chat anymore would have had the best reply.',
     choices: [
       {
         text: 'Keep the group alive — it\'s what they would have wanted',
@@ -751,7 +753,10 @@ export const GRIEF_EVENTS = [
       // Nigeria's median age at widowhood is 56 — which is the same mistake as
       // reading a rich-world table for the mortality that causes it.
       ((G.children ?? []).some(c => c.alive !== false && (c.age ?? 99) < 18) ||
-        G.age <= (G.retirementAge ?? 62) - 5) &&
+        // Without children at home the only prose left is "the widows in this
+        // place are thirty years older than you", which a 57-year-old widow in
+        // rural Uttar Pradesh was told. That sentence is for someone under 46.
+        G.age <= Math.min((G.retirementAge ?? 62) - 5, 45)) &&
       // The death year itself belongs to `grief_partner_death`, which fires at
       // weight 999 and takes it. Measured: 1 of 6 eligible widowings reached
       // this event with a one-year window, because its only chance was a year

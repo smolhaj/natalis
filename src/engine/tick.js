@@ -17,7 +17,7 @@ import {
   GDP_MULT, HYPERINFLATION_DRAIN, getHyperinflation,
   calculateHouseholdContribution, tickFamilyIncome,
   ADULT_TRAITS, CHILD_TRAITS, pickTraits, TRAIT_PROSE, BUSINESS_TYPES, partnerOccupation,
-  getLifeSkeletonMap, getPhaseEntryMap, deriveSeason, livingRuralUrban,
+  getLifeSkeletonMap, getPhaseEntryMap, deriveSeason, livingRuralUrban, childNameCountry,
 } from './character'
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
@@ -27,6 +27,7 @@ import { withArticle } from '../utils/countryUtils'
 import { suspendedInstitutions, proseFitsInstitutions, institutionExists } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
 import { hasTech } from '../data/technology.js'
+import { migrationDestinations } from '../data/migration.js'
 
 // What a listed salary is worth where it is paid. The companion question —
 // what it is worth WHEN it is paid — is `wageIndex` in economy.js, and the two
@@ -43,6 +44,9 @@ function createProxy(state) {
     // one on the button.
     moNominal: 0,
     flags: [...state.flags],
+    // What the character already carried before this effect ran, so the
+    // engine can tell a flag an effect has just ADDED from one it inherited.
+    _flagsAtStart: new Set(state.flags),
     mem: { ...(state.mem ?? {}) },
   }
 }
@@ -269,6 +273,8 @@ function buildEffectProxy(state) {
     'uyghur_suppressed', 'kafala_documented', 'forced_harvest', 'ebola_survivor',
     'experienced_miscarriage', 'multiple_miscarriage', 'sibling_estranged', 'grief_drinking',
     'child_seriously_ill', 'sick_child_diagnosed',
+    // the crossing, so the camp that follows it can be dated from it
+    'boat_person',
   ])
   proxy.addFlag = (flag) => {
     if (!proxy.flags.includes(flag)) {
@@ -318,10 +324,10 @@ function buildEffectProxy(state) {
   proxy.addChild = (child) => {
     const c = { ...(child ?? {}) }
     if (!c.name) {
-      const country = state.currentCountry ?? state.character?.country
+      const country = childNameCountry(state)
       const pool = c.gender === 'male' ? country?.namePool?.male : country?.namePool?.female
       const first = pool?.length ? pickFrom(pool) : null
-      c.name = first ? `${first} ${surnameFor(state.character?.country, state.character?.surnameBase ?? state.character?.surname, c.gender)}`.trim() : 'Your child'
+      c.name = first ? `${first} ${surnameFor(country, childSurname(state), c.gender) ?? ''}`.trim() : 'Your child'
     }
     // ageAtBirth is the PARENT's age when the child arrived, so 0 is never a
     // real value — treat it as "not supplied" and default to a newborn.
@@ -412,8 +418,13 @@ function buildEffectProxy(state) {
   // the prose had them in Madrid. `relocate` can cross a border now, but only if
   // the event knows a place id; this is the version for "they went to Spain",
   // which is how the prose actually says it.
+  //
+  // Takes a list as well as a name — `p.emigrateTo(['Germany', 'Sweden'])` —
+  // because most of the corpus's departures name a corridor rather than a
+  // city, and the effect functions do not import a random helper.
   proxy.emigrateTo = (countryName, opts = {}) => {
-    const dest = COUNTRIES.find(c => c.name === countryName)
+    const name = Array.isArray(countryName) ? pickFrom(countryName) : countryName
+    const dest = COUNTRIES.find(c => c.name === name)
     if (!dest) return
     const order = ['megacity', 'major_city', 'large_city', 'city', 'mid_city', 'town', 'village']
     const here = PLACES.filter(pl => pl.country === dest.name)
@@ -425,6 +436,11 @@ function buildEffectProxy(state) {
     if (opts.tier) proxy._relocateNeighborhoodTier = opts.tier
     proxy._relocateResidency = opts.residency ?? 'work_visa'
   }
+  // The counterpart. A return migration narrated with a flag — `ofw_returned`,
+  // `gulf_returned`, "Go home. Take the loss." — has to put the character back
+  // where they were born, or the emigration fix above leaves every returnee in
+  // Riyadh reading prose about the finished house in Batangas.
+  proxy.returnHome = () => { proxy._returnHome = true }
   proxy.practiceHobby = (hobbyId, delta = 1) => {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
     proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
@@ -622,6 +638,41 @@ function resolveProxyExtras(state, proxy) {
     )
     next = { ...next, conditions: updated }
   }
+  // `emigrated` is a statement about where the character lives, and eighty
+  // events set it without moving anybody — 41 of 44 flagged emigrants in a
+  // 160-life sample died in the country they were born in. An effect that adds
+  // the flag and names no destination is sent down the main corridor out of
+  // the country it was set in (src/data/migration.js), so the flag and the
+  // state cannot disagree whatever the next event forgets to say.
+  const justEmigrated = proxy.flags.includes('emigrated') && !(proxy._flagsAtStart?.has('emigrated'))
+  const livingAt = next.currentCountry ?? next.character?.country
+  if (justEmigrated && !proxy._relocateTo && livingAt?.name === next.character?.country?.name) {
+    const dest = pickFrom(migrationDestinations(livingAt))
+    const order = ['megacity', 'major_city', 'large_city', 'city', 'mid_city', 'town', 'village']
+    const here = PLACES.filter(pl => pl.country === dest)
+    const place = order.map(sc => here.find(pl => pl.scale === sc)).find(Boolean) ?? here[0]
+    if (place) {
+      proxy._relocateTo = place.id
+      if (!proxy._residencyStatus) {
+        proxy._relocateResidency = proxy.flags.includes('refugee') ? 'refugee_status' : 'work_visa'
+      }
+    }
+  }
+  if (proxy._returnHome) {
+    const birth = next.character?.country
+    const abroad = (next.currentCountry?.name ?? birth?.name) !== birth?.name
+    if (abroad) {
+      next = {
+        ...next,
+        currentCountry: birth,
+        currentPlace: next.character?.birthPlace ?? null,
+        currentNeighborhoodTier: next.character?.birthNeighborhoodTier ?? next.currentNeighborhoodTier,
+        currentNeighborhoodName: next.character?.birthNeighborhoodName ?? null,
+        residencyStatus: 'citizen',
+        flags: [...new Set([...next.flags, 'returned_home'])],
+      }
+    }
+  }
   if (proxy._relocateTo) {
     const destPlace = PLACES.find(p => p.id === proxy._relocateTo)
     if (destPlace) {
@@ -639,7 +690,10 @@ function resolveProxyExtras(state, proxy) {
         flags: [...new Set([...next.flags, 'relocated', ...(destCountry ? ['emigrated'] : [])])],
         ...(destCountry ? {
           currentCountry: destCountry,
-          residencyStatus: proxy._relocateResidency ?? next.residencyStatus ?? 'citizen',
+          // An explicit `p.setResidency` in the same effect is the author
+          // saying what papers this crossing carried — a boat to a refugee
+          // camp is not a work visa — and wins over the verb's default.
+          residencyStatus: proxy._residencyStatus ?? proxy._relocateResidency ?? next.residencyStatus ?? 'citizen',
         } : {}),
       }
     }
@@ -718,6 +772,12 @@ function schoolProseFits(e, G) {
 // abolished money, wages, schools, hospitals, religion, the post and the cities
 // in 1975, and until this existed a 1977 Cambodian was drawing a salary and
 // being referred to a psychiatrist.
+// A departure is written from home. See `departs` in classifyEvent.
+function departureFits(e, G) {
+  if (!e.departs) return true
+  return (G.currentCountry?.name ?? G.character?.country?.name) === G.character?.country?.name
+}
+
 function institutionsFit(e, G) {
   const needs = e.assumesInstitutions
   if (!needs) return true
@@ -926,6 +986,8 @@ function weightedPick(pool, G, desire, leaning) {
   return pool[pool.length - 1]
 }
 
+const GRIEF_FIRST = EVENTS.find(e => e.id === 'grief_partner_death') ?? null
+
 export function getNextEvent(state) {
   const phase = getPhase(state.age)
   const G = buildG(state)
@@ -943,7 +1005,7 @@ export function getNextEvent(state) {
   let pool = phaseEvents.filter(e =>
     isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
     (!state.inPrison || e.prisonOk === true) &&
-    schoolProseFits(classifyEvent(e), G) && institutionsFit(e, G)
+    schoolProseFits(classifyEvent(e), G) && institutionsFit(e, G) && departureFits(e, G)
   )
 
   if (state.career && !state.inPrison) {
@@ -1142,7 +1204,14 @@ export function buildG(state) {
     literate: flagSet.has('became_literate') ? true
       : flagSet.has('never_schooled') ? false
       : (state.character?.literate ?? true),
-    regime: getCountryRegime(state.character?.country, currentYear),
+    // The regime and the archetype are statements about the country the
+    // character is standing in. Both read the BIRTH country, so an Iranian who
+    // left in 1980 could be arrested by the morality court in Hamburg, and a
+    // Mexican in New York was offered two years' rent in advance, in cash, to a
+    // man in a room — while `G.money`, `G.lgbtqCriminalized` and every world
+    // event already followed them. Content about where a character is FROM
+    // reads `G.character.country`, which is what 584 guards already do.
+    regime: getCountryRegime(liveCountry(state), currentYear),
     lgbtqCriminalized: isLgbtqCriminalized(liveCountry(state), currentYear),
     casteSystem: state.character?.country?.casteSystem ?? false,
     childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
@@ -1167,7 +1236,7 @@ export function buildG(state) {
     workStatus: state.workStatus ?? null,
     currentProject: state.currentProject ?? null,
     legacy: state.legacy ?? 0,
-    archetype: state.character?.country?.archetype ?? null,
+    archetype: liveCountry(state)?.archetype ?? state.character?.country?.archetype ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
     capital: state.character?.country?.capital ?? '',
@@ -1179,6 +1248,18 @@ export function buildG(state) {
     // Season derived deterministically per character+year; shared with the
     // year-texture layer so seasonal prose and seasonal guards agree.
     season: deriveSeason(state),
+    // Whether a technology had reached where the character lives, that year.
+    // Forty-odd events put a handset into the 1970s because their guards could
+    // only reach for `place.hasPhone` (the hallway landline) or nothing at all.
+    tech: (key) => hasTech(liveCountry(state), key, currentYear),
+    // How old the youngest living child is, or null. "The baby is six weeks
+    // old" was guarded on `children.length > 0`, and told a Swedish mother
+    // whose youngest was ten that she had not slept since the birth.
+    youngestChildAge: (() => {
+      const kids = (state.children ?? []).filter(c => c.alive !== false)
+      if (!kids.length) return null
+      return Math.min(...kids.map(c => Math.max(0, (state.age ?? 0) - (c.ageAtBirth ?? state.age ?? 0))))
+    })(),
   }
 }
 
@@ -1213,7 +1294,15 @@ function applyWorldEvents(state) {
     if (!proseFitsInstitutions(wnText, lived?.name, state.currentYear)) continue
     const proxy = buildEffectProxy(updated)
     we.effect(proxy)
+    // `addFlags` goes through the proxy too, so a flag that is a claim about
+    // the state (`emigrated`) is seen by the same code that makes it true.
+    for (const f of we.addFlags ?? []) proxy.addFlag(f)
     updated = applyProxy(updated, proxy)
+    // The verbs that live in resolveProxyExtras — setResidency, setPolitical,
+    // and any move — were silently dropped for world events, so the boat
+    // people event set `refugee_status` and `emigrated` on a character it left
+    // in Saigon.
+    updated = resolveProxyExtras(updated, proxy)
     updated.worldEventsFired = new Set([...updated.worldEventsFired, we.id])
     const narrativeText = wnText
     updated.log = [...updated.log, { age: updated.age, year: updated.currentYear, text: narrativeText, worldEventName: we.name, isKey: true, isWorld: true }]
@@ -1586,6 +1675,10 @@ export function enterCareer(state, careerId) {
   const salary = inEraMoney(baseSalary, liveCountry(state), state.currentYear)
   const newCareer = {
     id: career.id, title: careerTitle(level, state), level: 0, salary, baseSalary,
+    // Which country's wage level `baseSalary` was drawn at, so a move can
+    // re-base it. See the re-denomination in tick().
+    wageGdp: liveCountry(state).gdp,
+    wageCountry: liveCountry(state).name,
     field: career.field, yearsInRole: 0, startedAge: state.age, performance: 70,
     partTime: career.partTime ?? false,
     promotionChance: career.promotionChance ?? 0.10,
@@ -2352,6 +2445,14 @@ function tickPartner(state) {
       flags: [...new Set([...state.flags.filter(f => f !== 'married' && f !== 'engaged'), 'widowed', 'lost_partner'])],
       mem: updatedMem,
       log: [...state.log, { age: state.age, text: line, isKey: true, isDeath: true }],
+      // The first-grief event carried `weight: 999`, which is a weight inside
+      // a register and not a guarantee: in a year the register draw went
+      // elsewhere it waited, and a widow in Uttar Pradesh read "The abstract is
+      // now the present tense" four years after the funeral. It is queued, the
+      // way the phase entries are, so it lands in the year it is about.
+      queue: GRIEF_FIRST && !(state.queue ?? []).some(e => e.id === GRIEF_FIRST.id)
+        ? [GRIEF_FIRST, ...(state.queue ?? [])]
+        : state.queue,
     }
   }
   // Relationship quality drifts slightly based on engagement
@@ -2932,8 +3033,8 @@ export function tick(state) {
     // Normalise: if pregnancyYear not in mem (e.g. set by IVF event), initialise it
     if (s.mem?.pregnancyYear === undefined) {
       const cGender = chance(0.5) ? 'male' : 'female'
-      const c = s.character?.country
-      const childName = c ? personName(c, cGender, s, { surname: s.character.surnameBase ?? s.character.surname }) : 'Baby'
+      const c = childNameCountry(s)
+      const childName = c ? personName(c, cGender, s, { surname: childSurname(s) }) : 'Baby'
       s.mem = { ...(s.mem ?? {}), pregnancyYear: s.age - 1, pendingChild: { name: childName, gender: cGender, traits: pickTraits(CHILD_TRAITS) } }
     }
     if (s.age >= (s.mem.pregnancyYear ?? 0) + 1) {
@@ -2953,8 +3054,8 @@ export function tick(state) {
       // Generate child if somehow still missing
       const childData = pc ?? (() => {
         const cg = chance(0.5) ? 'male' : 'female'
-        const cc = s.character?.country
-        const cn = cc ? personName(cc, cg, s, { surname: s.character.surnameBase ?? s.character.surname }) : 'Baby'
+        const cc = childNameCountry(s)
+        const cn = cc ? personName(cc, cg, s, { surname: childSurname(s) }) : 'Baby'
         return { name: cn, gender: cg, traits: pickTraits(CHILD_TRAITS) }
       })()
 
@@ -3584,6 +3685,14 @@ export function tick(state) {
     }
   }
 
+  // A farm does not cross a border. A Vietnamese smallholder who left on a
+  // boat in 1978 was promoted to Farmer in New York three years later and lost
+  // a harvest in East New York in 1999; a wage can be re-based, land cannot.
+  if (s.career?.field === 'agriculture' && (s.career.wageCountry ?? s.character?.country?.name) !== liveCountry(s)?.name) {
+    s = { ...s, career: null, log: [...s.log, { age: s.age, isKey: true,
+      text: 'The land stayed where it was. Whatever the work is here, it is not that.' }] }
+  }
+
   // Career income (actual salary → money)
   if (s.career && !s.inPrison) {
     // Cost-of-living re-denomination. The stored wage is nominal, so a wage set
@@ -3592,8 +3701,28 @@ export function tick(state) {
     if (!s.career.baseSalary) {
       s.career = { ...s.career, baseSalary: inTodayMoney(s.career.salary, liveCountry(s), s.currentYear) }
     }
+    // `baseSalary` carries the wage level of the country it was drawn in
+    // (gdpSalaryMult), and nothing re-based it when the character moved. A
+    // Mexican foreman who emigrated to New York in 1990 went on drawing $2,614
+    // a year there, raise after raise, for the rest of his working life — the
+    // "Nigerian wages at a German job" that `liveCountry` was introduced to end,
+    // surviving in every career that was held across the border.
+    const wageHere = liveCountry(s)?.gdp
+    const wageFrom = s.career.wageGdp ?? s.character?.country?.gdp
+    let moved = false
+    if (wageHere && wageFrom && wageHere !== wageFrom) {
+      const ratio = (gdpSalaryMult[wageHere] ?? 1) / (gdpSalaryMult[wageFrom] ?? 1)
+      s.career = { ...s.career, baseSalary: Math.round(s.career.baseSalary * ratio), wageGdp: wageHere }
+      moved = true
+    }
     const redenominated = inEraMoney(s.career.baseSalary, liveCountry(s), s.currentYear)
-    if (redenominated !== s.career.salary) {
+    if (moved && redenominated !== s.career.salary) {
+      const prev = s.career.salary
+      s.log = [...s.log, { age: s.age, isKey: false, text: redenominated > prev
+        ? 'The work is the same work. What it pays here is not what it paid there, and the first wage slip is a number you read twice.'
+        : 'The work is the same work. It pays less here than it did there, and the arithmetic of the move has to be done again.' }]
+      s.career = { ...s.career, salary: redenominated }
+    } else if (redenominated !== s.career.salary) {
       // A silent re-denomination reads as a bug when the money is moving fast.
       // A Russian kitchen hand went $821 in 1992, silently to $667 in 1993, and
       // then "You are promoted to Line Cook. New salary: $651/yr." A promotion
@@ -4016,4 +4145,4 @@ export function pickChoiceAutomatically(event, G) {
 
 // Internal functions needed by playerActions.js
 export { buildEffectProxy, applyProxy, resolveProxyExtras }
-import { personName, surnameFor } from './names'
+import { personName, childSurname, surnameFor } from './names'

@@ -31,7 +31,7 @@ export const UYGHUR_EVENTS = [
         text: 'Leave before the invitation becomes a summons.',
         tag: 'fled',
         outcome: 'Kazakhstan. Turkey. A third country if you can reach it. You leave with your phone number changed and tell no one who might be asked.',
-        effect: (p) => { p.m -= 18; p.addFlag('uyghur_diaspora'); p.addFlag('emigrated'); p.setResidency('refugee_status'); p.setMem('uygCamp', true) },
+        effect: (p) => { p.m -= 18; p.addFlag('uyghur_diaspora'); p.addFlag('emigrated'); p.emigrateTo(['Kazakhstan', 'Turkey']); p.setResidency('refugee_status'); p.setMem('uygCamp', true) },
       },
     ],
   },

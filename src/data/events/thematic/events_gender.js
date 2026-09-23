@@ -996,14 +996,14 @@ export const GENDER_EVENTS = [
         // been done: `tickLifeCourse` kept rolling conceptions, and six years
         // later the contraception event told her that whether she became a
         // mother was now, for the first time, mostly hers to answer.
-        effect: (p) => { p.m -= 10; p.mo += 3000; p.karma += 6; p.addFlag('medical_trauma'); p.addFlag('infertile'); p.addFlag('sterilised_without_consent'); },
+        effect: (p) => { p.m -= 10; p.mo += 3000; p.karma += 6; p.addFlag('medical_trauma'); p.addFlag('infertile'); p.addFlag('sterilised_without_consent'); p.addFlag('sterilised'); p.addFlag('tubal_ligation'); },
         inject: null,
       },
       {
         text: 'Carry it in silence — no one will believe you',
         tag: null,
         outcome: 'You tell no one for twenty years. Then you tell your daughter. She believes you immediately.',
-        effect: (p) => { p.m -= 15; p.r += 10; p.addFlag('medical_trauma'); p.addFlag('infertile'); p.addFlag('sterilised_without_consent'); },
+        effect: (p) => { p.m -= 15; p.r += 10; p.addFlag('medical_trauma'); p.addFlag('infertile'); p.addFlag('sterilised_without_consent'); p.addFlag('sterilised'); p.addFlag('tubal_ligation'); },
         inject: null,
       },
     ],
@@ -2190,7 +2190,7 @@ export const GENDER_EVENTS = [
         text: 'Move to a city where you are unknown — start again',
         tag: 'independent',
         outcome: 'In the city, no one knows your history. This is both loss and opening.',
-        effect: (p) => { p.m -= 3; p.s -= 2; p.e += 4; p.addFlag('emigrated'); },
+        effect: (p) => { p.m -= 3; p.s -= 2; p.e += 4; p.relocate('in_delhi'); },
         inject: null,
       },
     ],

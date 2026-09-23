@@ -175,7 +175,7 @@ export const BONDED_LABOR_EVENTS = [
         text: 'You leave. Take the money and go somewhere the owner does not have reach.',
         tag: 'leave',
         outcome: 'The town is larger and more anonymous. The money lasts six months. You find work. The first year is the hardest.',
-        effect: (p) => { p.m += 12; p.r += 8; p.mo += 800; p.addFlag('bonded_labor_freed'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('blLiberation', true) },
+        effect: (p) => { p.m += 12; p.r += 8; p.mo += 800; p.addFlag('bonded_labor_freed'); p.setMem('blLiberation', true) },
       },
       {
         text: 'You stay in the area. Your family is here. You will navigate the owner\'s presence.',
@@ -241,7 +241,7 @@ export const BONDED_LABOR_EVENTS = [
         text: 'You go. Leave at night. Send for your family once you are settled.',
         tag: 'go',
         outcome: 'Chicago in February is a different kind of cold than Mississippi in February. The plant is loud and the work is hard but the check is real.',
-        effect: (p) => { p.m += 8; p.e += 4; p.w += 3; p.addFlag('great_migration'); p.addFlag('emigrated'); p.setResidency('citizen'); p.setMem('blSharecropNorth', true) },
+        effect: (p) => { p.m += 8; p.e += 4; p.w += 3; p.addFlag('great_migration'); p.relocate('us_chicago'); p.setResidency('citizen'); p.setMem('blSharecropNorth', true) },
       },
       {
         text: 'You stay. You cannot leave your parents, your community, the land.',

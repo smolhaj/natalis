@@ -30,6 +30,11 @@ function liveGdp(p) {
   return p?._state?.currentCountry?.gdp ?? p?._state?.character?.country?.gdp ?? 'very_high'
 }
 
+// Reading, writing, the library, a course: offered to a Nigerian girl the
+// engine had just told "You do not learn to read", who then "read more than
+// anyone assigns you" and kept a journal for twenty years.
+const READS = (G) => G.literate !== false
+
 export const ACTIVITIES = {
   mind: [
     {
@@ -40,7 +45,7 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 0,
       effect: (p) => { p.e += 3; p.m += 2; },
-      condition: null,
+      condition: READS,
       outcome: 'Your understanding of the world deepens quietly.',
       prose: (G) => {
         if (G.age < 12) return 'You find a book and disappear into it.'
@@ -75,7 +80,7 @@ export const ACTIVITIES = {
       maxAge: 22,
       cost: 0,
       effect: (p) => { p.e += 5; p.m -= 2; },
-      condition: null,
+      condition: READS,
       outcome: 'The work pays off in marks, if not in rest.',
       prose: (G) => {
         if (G.age < 14) return 'The exam is next week. You work through the textbook again.'
@@ -91,7 +96,7 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 20,
       effect: (p) => { p.e += 4; p.m += 1; },
-      condition: null,
+      condition: READS,
       outcome: 'A new capability, quietly earned.',
       prose: (G) => {
         if (G.age < 25) return 'You do the modules over a series of evenings.'
@@ -123,7 +128,7 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 0,
       effect: (p) => { p.m += 4; p.r -= 3; },
-      condition: null,
+      condition: READS,
       outcome: 'Writing becomes a way of thinking.',
       prose: (G) => {
         if (G.age < 18) return 'You write down what happened. Then what you thought about it, which takes longer.'
@@ -140,7 +145,7 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 0,
       effect: (p) => { p.e += 3; p.m += 3; },
-      condition: null,
+      condition: READS,
       outcome: 'The questions become more interesting than the answers.',
       prose: (G) => {
         if (G.age < 20) return 'You read Camus at seventeen and it rearranges something. Then you read the critics of Camus.'
@@ -204,7 +209,7 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 0,
       effect: (p) => { p.e += 4; p.m += 2; },
-      condition: null,
+      condition: READS,
       outcome: 'Knowledge accumulates in ways you cannot always measure.',
       prose: (G) => {
         if (G.age < 12) return 'You find a book about something you have never thought about. You take it home.'
@@ -533,7 +538,7 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 120,
       effect: (p) => { p.m += 6; p.addFlag('therapy_veteran'); },
-      condition: null,
+      condition: READS,
       outcome: 'Progress is slow and meaningful.',
     },
     {
@@ -673,7 +678,7 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 0,
       effect: (p) => { p.e += 4; p.m += 5; p.r -= 6; p.addFlag('wrote_memoirs'); },
-      condition: null,
+      condition: READS,
       outcome: 'You find that writing it down changes what you remember. Some of it is better than you thought.',
       prose: (G) => {
         if (G.stats.happiness < 40) return 'You write around certain things. But writing around them is also writing them.'
@@ -1042,13 +1047,13 @@ export const ACTIVITIES = {
   hobbies: [
     { id: 'practice_music',   label: 'Practice Music',   emoji: '🎸', desc: 'Develop your musical skills.', minAge: 5,  cost: 0,    hobbyId: 'music',   delta: 8,  statBonus: { m: 4 } },
     { id: 'practice_art',     label: 'Draw / Paint',     emoji: '🎨', desc: 'Develop your artistic skills.', minAge: 5,  cost: 0,    hobbyId: 'art',     delta: 8,  statBonus: { m: 4, e: 2 } },
-    { id: 'practice_writing', label: 'Write',            emoji: '✍️', desc: 'Work on your writing.', minAge: 8,  cost: 0,    hobbyId: 'writing', delta: 8,  statBonus: { e: 4 } },
+    { id: 'practice_writing', label: 'Write',            emoji: '✍️', desc: 'Work on your writing.', minAge: 8,  cost: 0,    hobbyId: 'writing', delta: 8,  statBonus: { e: 4 }, literate: true },
     { id: 'practice_cooking', label: 'Cook Something',   emoji: '🍳', desc: 'Experiment in the kitchen.', minAge: 12, cost: 20,   hobbyId: 'cooking', delta: 8,  statBonus: { m: 5, h: 2 } },
     { id: 'practice_coding',  label: 'Code a Project',   emoji: '💻', desc: 'Build something with code.', minAge: 14, cost: 0,    hobbyId: 'coding',  delta: 10, statBonus: { e: 5 }, minYear: 1990 },
     { id: 'practice_sport',   label: 'Train Sport',      emoji: '⚽', desc: 'Physical training and practice.', minAge: 6,  cost: 0,    hobbyId: 'sport',   delta: 8,  statBonus: { h: 5, s: 2 } },
     { id: 'music_lesson',     label: 'Music Lesson',     emoji: '🎹', desc: 'Professional tuition — costs money but doubles progress.', minAge: 5,  cost: 80,   hobbyId: 'music',   delta: 18, statBonus: { m: 5, e: 3 } },
     { id: 'art_class',        label: 'Art Class',        emoji: '🖼️', desc: 'Structured tuition — faster skill growth.', minAge: 8,  cost: 60,   hobbyId: 'art',     delta: 16, statBonus: { m: 5 } },
-    { id: 'writing_workshop', label: 'Writing Workshop',  emoji: '📝', desc: 'Workshop with peer feedback.', minAge: 16, cost: 100,  hobbyId: 'writing', delta: 16, statBonus: { e: 6 } },
+    { id: 'writing_workshop', label: 'Writing Workshop',  emoji: '📝', desc: 'Workshop with peer feedback.', minAge: 16, cost: 100,  hobbyId: 'writing', delta: 16, statBonus: { e: 6 }, literate: true },
   ],
 
   extracurricular: [

@@ -26,12 +26,19 @@ export function buildMundaneLayer(state) {
     : age <= 29 ? 'young_adult'
     : age <= 49 ? 'midlife'
     : 'late_life'
-  const arch = state.character?.country?.archetype ?? 'developing_urban'
-  const cn = state.character?.country?.name ?? ''
+  // The daily texture is about the place the character is standing in, so it
+  // reads the country they LIVE in. It read the birth country, and a Mexican
+  // who had lived in New York for thirty years was still being told about the
+  // combi and the mercado, while `homeCountry` twenty lines down — which asks
+  // the same question for technology — already followed him.
+  const liveC = state.currentCountry ?? state.character?.country
+  const arch = liveC?.archetype ?? 'developing_urban'
+  const cn = liveC?.name ?? ''
+  const birthCn = state.character?.country?.name ?? ''
   const era = Math.floor(currentYear / 10) * 10
   const gender = state.character?.gender ?? 'male'
   const religion = state.character?.religion ?? ''
-  const gdp = state.character?.country?.gdp ?? 'medium'
+  const gdp = liveC?.gdp ?? 'medium'
   const ruralUrban = livingRuralUrban(state)
   const careerField = career?.field ?? null
   const isMuslim = religion?.startsWith('muslim')
@@ -264,7 +271,8 @@ export function buildMundaneLayer(state) {
   addIf(isDeveloping && !tech('home_internet') && tech('personal_computer') && age >= 12,
     'The internet café has opened. The internet is accessed as a destination, not a permanent condition.',
   )
-  addIf(tech('mobile_phone') && !tech('smartphone') && age >= 12,
+  // SMS is 1992 at the earliest, whatever a rich household's handset was.
+  addIf(tech('mobile_phone') && !tech('smartphone') && age >= 12 && currentYear >= 1996,
     'The phone in your pocket sends a text in the time it once took to compose a letter.',
   )
   addIf(tech('home_internet') && notYoung,
@@ -632,7 +640,9 @@ export function buildMundaneLayer(state) {
   addIf(isDeveloping && isUrban,
     'The landlord lives in the same compound. The landlord-tenant relationship requires management.',
     'The alley between houses is the social space. The social space is always occupied.',
-    'The power is out again. The candle or the lamp or the phone screen is lit.',
+    tech('mobile_phone')
+      ? 'The power is out again. The candle or the lamp or the phone screen is lit.'
+      : 'The power is out again. The candle or the lamp is lit, and the evening rearranges itself around the one light.',
   )
   addIf(isWealthyArch && era >= 1960,
     'The neighbour above walks with a specific weight at a specific hour. You know this without having met them.',
@@ -711,16 +721,18 @@ export function buildMundaneLayer(state) {
   addIf(tech('email') && working,
     'The email inbox has tripled in a year. The management of it is its own task.',
   )
-  addIf(era >= 2010 && age >= 12,
+  // Behind the handset, not the decade: `era >= 2010` put the group chat and
+  // the voice note into Pyongyang and rural Tigray the year the decade turned.
+  addIf(tech('smartphone') && age >= 12,
     'The WhatsApp message was sent at 11pm and read at 11pm. Both people know this.',
   )
-  addIf(era >= 2010,
+  addIf(tech('smartphone'),
     'The group chat has many unread messages. You scroll up to find the one relevant to you.',
     'The phone was on the table during the meal. This is noted. The meal continues.',
     'A conversation that once required a letter now takes four minutes. The efficiency is not only a gain.',
     'You posted something and the response came immediately from somewhere you did not expect.',
   )
-  addIf(era >= 2010 && isDeveloping,
+  addIf(tech('smartphone') && isDeveloping,
     'The voice note is sent. The voice note is the preferred form — faster than typing, more precise than text.',
     'The diaspora family is in the group chat. The group chat is the compound, extended.',
   )
@@ -811,9 +823,15 @@ export function buildMundaneLayer(state) {
     'The collective meal — the banchan, the shared hotpot — is also the collective meeting.',
     'The sauna or jjimjilbang: the communal space, the egg, the flat television on the wall.',
   )
+  // WeChat launched in 2011 and the first high-speed line opened in 2008; both
+  // were printing into Mao-era childhoods.
   addIf(cn === 'China',
-    'The WeChat group has instructions in it before the meeting happens. The meeting confirms the group.',
     'The red envelope at Lunar New Year. The amount inside is a calculation based on relationship and circumstance.',
+  )
+  addIf(cn === 'China' && currentYear >= 2013,
+    'The WeChat group has instructions in it before the meeting happens. The meeting confirms the group.',
+  )
+  addIf(cn === 'China' && currentYear >= 2009 && currentYear <= 2016,
     'The high-speed rail between cities: the speed of it is not yet normal. The normal is arriving.',
   )
   addIf(cn === 'Brazil',
@@ -2499,7 +2517,7 @@ export function buildMundaneLayer(state) {
   )
 
   // ── RETURNED FROM EMIGRATION ──────────────────────────────────────────────
-  addIf(F('ofw_returned') || (F('emigrated') && phase === 'late_life' && currentCn === cn),
+  addIf(F('ofw_returned') || (F('emigrated') && phase === 'late_life' && currentCn === birthCn),
     'Back in the country: the familiar things that are slightly different from the familiar things you remember.',
     'What you thought you would feel about coming back, and what you actually feel, which is not simpler.',
     'The people who never left and the person you are now: the gap has to be managed in both directions.',

@@ -2647,7 +2647,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
         text: 'Leave Turkey before they come to you directly.',
         tag: 'kurd_fled_state_pressure',
         outcome: 'You leave quickly, without a story prepared. The word asylum sits in the processing office like a stone. You have never used it about yourself before.',
-        effect: (p) => { p.addFlag('kurd_state_pressure'); p.addFlag('emigrated'); p.setResidency('asylum_seeker'); p.m -= 8 },
+        effect: (p) => { p.addFlag('kurd_state_pressure'); p.addFlag('emigrated'); p.emigrateTo(['Germany', 'Sweden']); p.setResidency('asylum_seeker'); p.m -= 8 },
       },
     ],
     effect: null,

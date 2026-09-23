@@ -544,7 +544,7 @@ export const SPECIFIC_LIFE_EVENTS = [
         text: 'Hold the application. Outlast the pressure.',
         tag: 'persist',
         outcome: 'The visa comes. The preparation for leaving takes four more months. The leaving is real and permanent.',
-        effect: (p) => { p.addFlag('refusenik_applied'); p.addFlag('emigrated'); p.m -= 2; p.setMem('sl_sov_jew', true); p.setResidency('work_visa') },
+        effect: (p) => { p.addFlag('refusenik_applied'); p.addFlag('emigrated'); p.emigrateTo(['Israel', 'United States']); p.m -= 2; p.setMem('sl_sov_jew', true); p.setResidency('work_visa') },
       },
       {
         text: 'Withdraw the application. Reconstruct what the process cost.',
@@ -1371,7 +1371,7 @@ export const SPECIFIC_LIFE_EVENTS = [
         text: 'Get out. The exit window is still open.',
         tag: 'leave',
         outcome: 'You leave through the mountains or the airport or both. The exit costs what it costs. The country you arrive in does not have a word for what you were.',
-        effect: (p) => { p.addFlag('emigrated'); p.m -= 5; p.setResidency('asylum_seeker'); p.karma += 3; p.setMem('sl_iran_79_ed', true) },
+        effect: (p) => { p.addFlag('emigrated'); p.emigrateTo(['United States', 'France', 'Germany', 'United Kingdom']); p.m -= 5; p.setResidency('asylum_seeker'); p.karma += 3; p.setMem('sl_iran_79_ed', true) },
       },
       {
         text: 'Go underground. The revolution can still be corrected from inside.',
@@ -3273,7 +3273,7 @@ export const SPECIFIC_LIFE_EVENTS = [
         text: 'Go to Germany. The practice will be better. The life will be elsewhere.',
         tag: 'leave',
         outcome: 'Munich is efficient and the hospital is well-supplied and the pay is four times what you were making in Athens. You send money home. You become the brain drain statistic that the commentators write about. You do good work.',
-        effect: (p) => { p.setMem('sl_gr_doctor', true); p.mo += 15000; p.m -= 4; p.addFlag('emigrated'); p.addFlag('brain_drain_participant') },
+        effect: (p) => { p.setMem('sl_gr_doctor', true); p.mo += 15000; p.m -= 4; p.addFlag('emigrated'); p.emigrateTo('Germany'); p.addFlag('brain_drain_participant') },
       },
       {
         text: 'Stay. The patients here need you.',
@@ -3606,7 +3606,7 @@ export const SPECIFIC_LIFE_EVENTS = [
         text: 'Go. The island cannot contain what you want to build.',
         tag: 'leave',
         outcome: 'The university is excellent. The winter is extraordinary. You send money home and go back for carnival every few years. The island is where you come from. The city is where you live.',
-        effect: (p) => { p.setMem('sl_carib_leave', true); p.e += 4; p.mo += 5000; p.addFlag('emigrated'); p.addFlag('caribbean_diaspora') },
+        effect: (p) => { p.setMem('sl_carib_leave', true); p.e += 4; p.mo += 5000; p.addFlag('emigrated'); p.emigrateTo(['United States', 'Canada', 'United Kingdom']); p.addFlag('caribbean_diaspora') },
       },
       {
         text: 'Stay. Someone has to build the place.',
@@ -3711,7 +3711,7 @@ export const SPECIFIC_LIFE_EVENTS = [
         text: 'Apply for the Pacific access migrant visa to New Zealand.',
         tag: 'leave',
         outcome: 'Auckland is green and large and cold in winter and you have family there from the first wave of migration in the 1990s. The island is still the island. You send money back. You cannot send the island back to where it was.',
-        effect: (p) => { p.setMem('sl_pac_climate', true); p.m -= 5; p.mo += 3000; p.addFlag('climate_refugee'); p.addFlag('emigrated') },
+        effect: (p) => { p.setMem('sl_pac_climate', true); p.m -= 5; p.mo += 3000; p.addFlag('climate_refugee'); p.addFlag('emigrated'); p.emigrateTo('New Zealand') },
       },
       {
         text: 'Stay. This is not abstract. This is home.',
@@ -4024,7 +4024,7 @@ export const SPECIFIC_LIFE_EVENTS = [
         text: 'Leave for Colombia. The patients you can save are there.',
         tag: 'leave',
         outcome: 'Bogotá has a hospital that functions. The salary is adequate. You are practising medicine instead of managing the absence of medicine. You send money to family. You do not know if this was the right decision. You know it was a decision.',
-        effect: (p) => { p.setMem('sl_ve_doc', true); p.mo += 12000; p.m -= 3; p.addFlag('emigrated'); p.addFlag('brain_drain_participant') },
+        effect: (p) => { p.setMem('sl_ve_doc', true); p.mo += 12000; p.m -= 3; p.addFlag('emigrated'); p.emigrateTo('Colombia'); p.addFlag('brain_drain_participant') },
       },
       {
         text: 'Stay. These patients have no one else.',

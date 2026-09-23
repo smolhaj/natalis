@@ -65,7 +65,7 @@ const CUBA_EVENTS = [
         text: 'You got on one of the boats.',
         tag: 'left',
         outcome: 'Three days in a crowded vessel. The Florida coastline. The tent city at Eglin Air Force Base. The Cuban Miami that was not fully prepared for you — you were "Marielito" before you had time to be anything else.',
-        effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('emigrated'); p.addFlag('cub_mariel_gone'); p.setResidency('refugee_status'); p.setMem('cub_mariel', true); },
+        effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('emigrated'); p.emigrateTo('United States', { placeId: 'us_miami' }); p.addFlag('cub_mariel_gone'); p.setResidency('refugee_status'); p.setMem('cub_mariel', true); },
       },
       {
         text: 'You stayed. The calculation came out that way.',

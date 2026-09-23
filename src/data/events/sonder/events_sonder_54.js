@@ -275,7 +275,7 @@ export const EVENTS_SONDER_54 = [
     id: 'sonder_54_ab',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s54ab,
+    when: (G) => G.tech('mobile_phone') && (!G.mem?.s54ab),
     text: 'The quality of waiting for someone who is late. Not long late — ten minutes, fifteen. You are in a café or on a corner. You have checked your phone. You have rechecked your phone. The time passes at a different rate than time normally passes. There is a version of you waiting who is calm and a version who is already composing the face you will make when they arrive. Both versions are present simultaneously in the body.',
     choices: null,
     effect: (p) => { p.setMem('s54ab', true) },

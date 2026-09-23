@@ -64,7 +64,7 @@ export const SOUTH_SOUTH_EVENTS = [
         effect: (p) => {
           p.m += 8;
           p.mo -= 2000;
-          p.addFlag('returned_migrant');
+          p.addFlag('returned_migrant'); p.returnHome();
           p.setMem('ssBDMYYears', true);
         },
       },
@@ -142,7 +142,7 @@ export const SOUTH_SOUTH_EVENTS = [
         effect: (p) => {
           p.m -= 15;
           p.addFlag('witnessed_xenophobia');
-          p.addFlag('returned_migrant');
+          p.addFlag('returned_migrant'); p.returnHome();
           p.setResidency('citizen');
           p.setMem('ssZimXenophobia', true);
         },

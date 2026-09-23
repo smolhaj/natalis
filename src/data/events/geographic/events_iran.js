@@ -172,7 +172,7 @@ const IRAN_EVENTS = [
         text: 'You go. Turkey first, then wherever the visa comes through.',
         tag: null,
         outcome: 'The leaving is also a grief that has no name in the destination country. You carry Iran in a way that people who were not born there do not understand.',
-        effect: (p) => { p.r += 8; p.m -= 5; p.e += 5; p.addFlag('irn_diaspora_generation'); p.addFlag('emigrated'); p.setMem('irn_brain_drain', true); },
+        effect: (p) => { p.r += 8; p.m -= 5; p.e += 5; p.addFlag('irn_diaspora_generation'); p.addFlag('emigrated'); p.emigrateTo(['Turkey', 'Germany', 'Canada', 'United States']); p.setMem('irn_brain_drain', true); },
       },
       {
         text: 'You stay. The country needs people who stay.',

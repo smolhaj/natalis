@@ -183,7 +183,7 @@ export const GEORGIA_EVENTS = [
         text: 'You or someone in your family left. Turkey, Russia, Greece — wherever the border was open.',
         tag: null,
         outcome: 'One million Georgians left in the 1990s. The ones who left carried Georgia with them in a way that required the distance to understand.',
-        effect: (p) => { p.w -= 5; p.m -= 8; p.r += 6; p.addFlag('geo_1990s_generation'); p.addFlag('emigrated'); p.setMem('geo1990s', true); },
+        effect: (p) => { p.w -= 5; p.m -= 8; p.r += 6; p.addFlag('geo_1990s_generation'); p.setMem('geo1990s', true); },
       },
     ],
     effect: null,

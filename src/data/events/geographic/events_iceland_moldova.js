@@ -205,8 +205,8 @@ export const ICELAND_MOLDOVA_EVENTS = [
       !G.mem?.mdaDeparture,
     text: 'The factory on the far bank, the vineyards under a Russian embargo, and a wage that will not cover the winter. Everybody\'s cousin is in Italy cleaning for a family in Padua, or in Moscow on a building site, or in Israel caring for someone\'s mother. A third of what this country runs on arrives by transfer. The village you grew up in is now grandparents and grandchildren with the middle generation missing, and the arithmetic has been obvious for years.',
     choices: [
-      { text: 'Italy. The care work.', tag: null, outcome: 'Padua. You raise someone else\'s parents and your own children raise themselves, on video calls, at a distance you can measure in years.', effect: (p) => { p.mo += 5200; p.m -= 12; p.setResidency('work_visa'); p.addFlag('mda_labour_migrant'); p.addFlag('emigrated'); p.addFlag('children_left_behind') } },
-      { text: 'Moscow. It is closer and the language is already yours.', tag: null, outcome: 'A site in the outer districts, six to a room, and a residency permit that is always nearly expired.', effect: (p) => { p.mo += 3400; p.m -= 10; p.h -= 6; p.setResidency('work_visa'); p.addFlag('mda_labour_migrant'); p.addFlag('emigrated') } },
+      { text: 'Italy. The care work.', tag: null, outcome: 'Padua. You raise someone else\'s parents and your own children raise themselves, on video calls, at a distance you can measure in years.', effect: (p) => { p.mo += 5200; p.m -= 12; p.setResidency('work_visa'); p.addFlag('mda_labour_migrant'); p.addFlag('emigrated'); p.emigrateTo('Italy'); p.addFlag('children_left_behind') } },
+      { text: 'Moscow. It is closer and the language is already yours.', tag: null, outcome: 'A site in the outer districts, six to a room, and a residency permit that is always nearly expired.', effect: (p) => { p.mo += 3400; p.m -= 10; p.h -= 6; p.setResidency('work_visa'); p.addFlag('mda_labour_migrant'); p.addFlag('emigrated'); p.emigrateTo('Russia') } },
       { text: 'Stay. Somebody has to be here.', tag: 'defiant', outcome: 'You stay. You are the one who looks after four sets of grandparents and three sets of other people\'s children.', effect: (p) => { p.m -= 4; p.karma += 9; p.mo -= 400; p.addFlag('mda_stayed_behind'); p.addFlag('stayed_behind') } },
     ],
     effect: null,
@@ -298,7 +298,7 @@ export const ICELAND_MOLDOVA_FOLLOWTHROUGH = [
       !G.mem?.mdaFtVideo,
     text: 'The call is on Sunday and it is twelve minutes long and your mother holds the phone at the wrong angle so you spend most of it looking at the ceiling of your own kitchen. Your child answers questions politely. There is a particular silence that happens about eight minutes in, every week, and you have both learned to fill it with a question about school. You have paid for the house they are standing in and you have not stood in it for three years.',
     choices: [
-      { text: 'Go home. Take the loss.', tag: 'defiant', outcome: 'You go back with less than you planned and you are there for the rest of their childhood.', effect: (p) => { p.mo -= 2200; p.m += 14; p.karma += 8; p.updateChildRel(0, 22); p.addFlag('mda_returned_home') } },
+      { text: 'Go home. Take the loss.', tag: 'defiant', outcome: 'You go back with less than you planned and you are there for the rest of their childhood.', effect: (p) => { p.mo -= 2200; p.m += 14; p.karma += 8; p.updateChildRel(0, 22); p.addFlag('mda_returned_home'); p.returnHome() } },
       { text: 'Another two years. Then.', tag: 'yielding', outcome: 'Two years becomes six. The politeness on the calls does not change and that is how you know.', effect: (p) => { p.mo += 4000; p.m -= 12; p.r += 10; p.updateChildRel(0, -14); p.addFlag('mda_stayed_abroad_too_long') } },
     ],
     effect: null,

@@ -103,7 +103,7 @@ export const EVENTS_SONDER_38 = [
     id: 'sonder_38_l',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => place.hasPhone(G) && (!G.mem?.s38l),
+    when: (G) => place.hasMobile(G) && (!G.mem?.s38l),
     text: 'The train is late and you are on the platform with an hour. You have your phone and you don\'t use it. You stand or sit and you watch the platform do what platforms do. This is the hour you did not plan for and did not spend on anything and remember with something like gratitude, which is strange because nothing happened in it.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s38l', true) },

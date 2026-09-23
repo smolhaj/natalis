@@ -234,7 +234,7 @@ const BANGLADESH_EVENTS = [
         text: 'You go. The three lakh is borrowed, the ticket is bought.',
         tag: null,
         outcome: 'Kuala Lumpur at two in the morning. The agent takes your passport at the airport. You will get it back when the employer says. The dormitory holds eighteen people.',
-        effect: (p) => { p.m -= 10; p.mo -= 3500; p.addFlag('bng_malaysia_worker'); p.addFlag('bng_broker_debt'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('bngMalaysia', true); },
+        effect: (p) => { p.m -= 10; p.mo -= 3500; p.addFlag('bng_malaysia_worker'); p.addFlag('bng_broker_debt'); p.addFlag('emigrated'); p.emigrateTo('Malaysia'); p.setResidency('work_visa'); p.setMem('bngMalaysia', true); },
       },
       {
         text: 'The risk is the debt, not the distance. You stay.',
