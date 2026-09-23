@@ -120,8 +120,6 @@ describe('dated events: selection', () => {
     // In debt, an ordinary year's anchored draws go elsewhere.
     // One character for both arms: two separate draws can differ in place and
     // identity, and with it how much anchored content exists at all.
-    const clear = stateIn('Peru', 1990, 40)
-    const later = { ...clear, mem: { ...clear.mem, anchoredDebt: 50 } }
     const anchoredShare = (st) => {
       let a = 0, n = 0
       for (let i = 0; i < 300; i++) {
@@ -133,6 +131,17 @@ describe('dated events: selection', () => {
       }
       return a / n
     }
-    expect(anchoredShare(later)).toBeLessThan(anchoredShare(clear))
+    // 1990 Peru is crowded with dated events, so only ~10% of draws are
+    // undated at all and a third of drawn Peruvians have no undated anchored
+    // content open that year (0 < 0 is not a finding). Take one who does;
+    // measured over 12 characters, debt took every one of them to 0.
+    let clear, base = 0
+    for (let t = 0; t < 20 && base === 0; t++) {
+      clear = stateIn('Peru', 1990, 40)
+      base = anchoredShare(clear)
+    }
+    expect(base, 'a character with anchored content open').toBeGreaterThan(0)
+    const later = { ...clear, mem: { ...clear.mem, anchoredDebt: 50 } }
+    expect(anchoredShare(later)).toBeLessThan(base)
   })
 })
