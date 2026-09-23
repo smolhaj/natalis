@@ -22,6 +22,7 @@
     "sim": "node scripts/sim.js",
     "check-anachronisms": "node scripts/check-anachronisms.js",
     "check-bundle": "node scripts/check-bundle.js",
+    "check-ui": "node scripts/check-ui.js",
     "check-reach": "node scripts/check-reach.js"
   },
   "dependencies": {

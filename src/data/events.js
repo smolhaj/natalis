@@ -1546,7 +1546,11 @@ const BASE_EVENTS = [
     id: 'ya_first_child',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.partner !== null,
+    // It narrated a birth and added no child, so a life read "A child arrives"
+    // at 25 and ended on "Had no children." It now answers the birth the engine
+    // actually made: a first child, born this year or last.
+    when: (G) => G.partner !== null && (G.children?.length ?? 0) === 1 &&
+      G.age - (G.children[0].ageAtBirth ?? -99) <= 1,
     text: 'A child arrives. Nothing about the world is the same after.',
     context: null,
     choices: [

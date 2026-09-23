@@ -462,7 +462,7 @@ function coursePartner(s) {
 
 /** Marriage, where and when marriage is what people do. */
 function courseMarriage(s) {
-  if (!s.partner || s.partner.married || s.inPrison) return s
+  if (!s.partner || s.partner.alive === false || s.partner.married || s.inPrison) return s
   const years = s.partner.years ?? 0
   if (years < 1) return s
   const target = marriageAge(s)
@@ -489,7 +489,9 @@ function courseMarriage(s) {
 
 /** Children, at the rate the place and the decade actually had them. */
 function courseChildren(s) {
-  if (!s.partner || s.inPrison) return s
+  // A partner who has died stays on state as { alive: false } so the grief
+  // layer can name them. Read as "has a partner", it went on conceiving.
+  if (!s.partner || s.partner.alive === false || s.inPrison) return s
   if (s.flags?.includes('pregnant') || s.flags?.includes('expecting') || s.birthControl) return s
   if (s.flags?.includes('infertile') || s.flags?.includes('childfree_by_choice')) return s
   if (s.flags?.includes('sterilised')) return s

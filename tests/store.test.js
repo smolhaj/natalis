@@ -149,6 +149,43 @@ describe('save / load round trip', () => {
     expect(Array.isArray(parsed.usedEventMap), 'Map is stored as entries').toBe(true)
     expect(Array.isArray(parsed.worldEventsFired), 'Set is stored as an array').toBe(true)
   }, 120000)
+
+  // Every Age Up is saved with the year's question waiting, and the save used
+  // to drop it: Menu → Continue, or a reload, let the year be aged past with
+  // the question unanswered, and emptied the queue of guaranteed beats.
+  it('carries the pending question and the queue across a save', async () => {
+    const { EVENTS } = await import('../src/data/events.js')
+    livedTo(20)
+    const q = EVENTS.find(e => typeof e.text === 'string' && (e.choices?.length ?? 0) > 1 && e.choices.every(c => typeof c.text === 'string'))
+    const queued = EVENTS.find(e => e.id !== q.id && typeof e.text === 'string')
+    useGameStore.setState({ pendingEvent: q, queue: [queued] })
+    const { slot } = persistAndReload()
+    S().continueSaveSlot(slot)
+    const loaded = S()
+    expect(loaded.pendingEvent?.id, 'the question survives').toBe(q.id)
+    expect(loaded.pendingEvent.text).toBe(q.text)
+    expect(loaded.pendingEvent.choices.map(c => c.text)).toEqual(q.choices.map(c => c.text))
+    expect(typeof loaded.pendingEvent.choices[0].effect === 'function' || loaded.pendingEvent.choices[0].effect == null).toBe(true)
+    expect(loaded.queue.map(e => e.id), 'the queue survives').toEqual([queued.id])
+    // And it can be answered.
+    S().resolveChoice(0)
+    expect(S().pendingEvent).toBe(null)
+  }, 120000)
+
+  // The graduation fork is built inside tick, not in EVENTS, and it is the
+  // question a reload used to eat most often, because it is queued at 18.
+  it('carries the graduation question, which tick builds in place', async () => {
+    const { rebuildTickEvent } = await import('../src/engine/tick.js')
+    livedTo(18, { country: 'United States', birthYear: 1950 })
+    useGameStore.setState({ mem: { ...S().mem, hsGpa: 3.1 } })
+    const grad = rebuildTickEvent('hs_graduation', S())
+    expect(grad?.choices?.length).toBeGreaterThan(1)
+    useGameStore.setState({ pendingEvent: grad })
+    const { slot } = persistAndReload()
+    S().continueSaveSlot(slot)
+    expect(S().pendingEvent?.id).toBe('hs_graduation')
+    expect(S().pendingEvent.choices.map(c => c.text)).toEqual(grad.choices.map(c => c.text))
+  }, 120000)
 })
 
 // ─── The trial system ─────────────────────────────────────────────────────────

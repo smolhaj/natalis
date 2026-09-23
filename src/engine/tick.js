@@ -34,6 +34,19 @@ import { migrationDestinations } from '../data/migration.js'
 // are always applied together.
 const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
 
+/**
+ * The starting wage band a career pays THIS character — where and when they
+ * are — which is what `enterCareer` draws from. The career panel printed the
+ * catalogue's present-day band instead: "Day Laborer $8,000–$15,000/yr" over
+ * a 1969 Ohio hire that paid $1,502.
+ */
+export function startingSalaryRange(state, career) {
+  const band = career?.levels?.[0]?.salaryRange
+  if (!band) return null
+  const mult = gdpSalaryMult[liveCountry(state)?.gdp] ?? 1.0
+  return band.map(v => inEraMoney(Math.round(v * mult), liveCountry(state), state.currentYear))
+}
+
 function createProxy(state) {
   return {
     h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 0, karma: 0, fame: 0, legacy: 0,
@@ -1812,6 +1825,112 @@ function fireFromJob(state) {
   }
 }
 
+// The graduation question is built inside tick, so its choices close over the
+// moment it was asked. That made it the one event a save could not carry: it
+// is queued at eighteen, shown after Age Up, and a reload before answering
+// used to lose the whole educational fork of the life. Built here so a save
+// can build it again from the state it was asked in (`mem.hsGpa`).
+function buildGraduationEvent(s, rawGpa) {
+  const smarts = s.stats.smarts
+  const canAfford = (s.money ?? 0) >= 8000 || smarts >= 72
+  const scholarship = smarts >= 75 || rawGpa >= 3.7
+  // The one screen in the game that still read like a menu in a different
+  // game: eleven emoji buttons and outcome copy in the register the design
+  // document rules out ("In-demand work. Good pay.", "Competitive and
+  // potentially lucrative."). It also framed every school system on earth as
+  // an American one, printing "You graduate from high school. GPA: 2.62" to a
+  // Russian in 1993, and offered IT as a trade in 1946.
+  const uniChoices = (smarts >= 50 && canAfford) ? [{
+    text: 'Go on to university',
+    tag: null,
+    outcome: scholarship ? 'You earn a partial scholarship and enroll in university.' : 'You enroll in university. The next four years will shape your career.',
+    effect: (p) => {
+      p.addFlag('university_enrolled')
+      p.m += 5
+      if (scholarship) p.addFlag('scholarship_won')
+      p.setMem('educationPath', 'university')
+    },
+    inject: {
+      id: 'uni_field_choice',
+      phase: 'young_adult',
+      text: 'What will you study at university?',
+      choices: [
+        { text: 'Medicine', tag: null, outcome: 'Six years, and the first two are anatomy. You will be older than your friends when you start earning.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'healthcare', year: 0 }); p.setMem('uniField', 'healthcare') }, inject: null },
+        { text: 'Law or business', tag: null, outcome: 'The reading is enormous and most of it is other people\'s arguments. You are good at holding two of them at once.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'business', year: 0 }); p.setMem('uniField', 'business') }, inject: null },
+        { text: 'Science or engineering', tag: null, outcome: 'The mathematics is the filter and everybody knows it. You are on the right side of it, narrowly.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'science', year: 0 }); p.setMem('uniField', 'science') }, inject: null },
+        { text: 'Arts or humanities', tag: null, outcome: 'Somebody in the family asks what you will do with it. You do not have an answer and you go anyway.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'arts', year: 0 }); p.setMem('uniField', 'arts') }, inject: null },
+      ],
+      effect: null,
+      when: () => true,
+    },
+  }] : []
+  const graduationEvent = {
+    id: 'hs_graduation',
+    phase: 'young_adult',
+    // "High school" and a four-point GPA are one country's school system.
+    // The USSR marked out of five and had no high school at all.
+    text: (() => {
+      const arch = liveCountry(s)?.archetype
+      const western = arch === 'wealthy_west' && (liveCountry(s)?.name === 'United States' || liveCountry(s)?.name === 'Canada')
+      return western
+        ? `You finish high school. Your average comes out at ${rawGpa.toFixed(2)}. Somebody asks what comes next and you realise they expect an answer today.`
+        : `School is finished. The results come out and they are what they are: about what you expected, and it turns out that is its own kind of disappointment. Somebody asks what comes next.`
+    })(),
+    choices: [
+      ...uniChoices,
+      {
+        text: 'Train in a trade',
+        tag: null,
+        outcome: 'Two years, and at the end of them you have a thing you can do that somebody will always need doing.',
+        effect: (p) => { p.m += 3; p.addFlag('vocational_enrolled'); p.setMem('educationPath', 'vocational') },
+        inject: {
+          id: 'vocational_field_choice',
+          phase: 'young_adult',
+          text: 'Which trade will you train in?',
+          choices: [
+            { text: 'Electrician', tag: null, outcome: 'You learn the colours, the loads, and the particular carefulness of people who work with something that does not forgive.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'electrician', year: 0 }); p.setMem('vocField', 'electrician') }, inject: null },
+            { text: 'Plumbing', tag: null, outcome: 'Everybody has a story about a plumber. You learn quickly that half the job is the conversation in the doorway.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'plumber', year: 0 }); p.setMem('vocField', 'plumber') }, inject: null },
+            { text: 'Building', tag: null, outcome: 'The first week your hands blister and the second week they stop. You can point at things now and say you did that.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'construction', year: 0 }); p.setMem('vocField', 'construction') }, inject: null },
+            // Offered with `when: () => true` to an American choosing a trade
+            // in 1946. A trade you can train in is a trade that exists.
+            ...(hasTech(liveCountry(s), 'personal_computer', s.currentYear)
+              ? [{ text: 'Computers', tag: null, outcome: 'Nobody in the family can explain what you do. The machines are in a room with its own air conditioning and you are allowed in it.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'IT', year: 0 }); p.setMem('vocField', 'IT') }, inject: null }]
+              : [{ text: 'Mechanic', tag: null, outcome: 'Engines are a finite number of things arranged in a finite number of ways, and after a year you can hear which one is wrong.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'mechanic', year: 0 }); p.setMem('vocField', 'mechanic') }, inject: null }]),
+          ],
+          effect: null,
+          when: () => true,
+        },
+      },
+      {
+        text: 'Start working',
+        tag: 'workforce_direct',
+        outcome: 'No more school. There is a wage at the end of the month and it is yours, which changes the shape of a week.',
+        effect: (p) => { p.m += 2; p.addFlag('workforce_direct'); p.setMem('educationPath', 'workforce') },
+        inject: null,
+      },
+    ],
+    effect: null,
+    when: () => true,
+  }
+  return graduationEvent
+}
+
+/**
+ * An event tick built in place — not one in EVENTS — rebuilt by id from the
+ * state a save restored, or null. Used by the store's loader.
+ */
+export function rebuildTickEvent(id, state) {
+  if (!id || !state?.mem) return null
+  const find = (e) => {
+    if (!e) return null
+    if (e.id === id) return e
+    for (const c of e.choices ?? []) { const hit = find(c.inject); if (hit) return hit }
+    return null
+  }
+  if (!['hs_graduation', 'uni_field_choice', 'vocational_field_choice'].includes(id)) return null
+  return find(buildGraduationEvent(state, state.mem.hsGpa ?? state.gpa ?? 2.0))
+}
+
 // ─── Relationship system ──────────────────────────────────────────────────────
 
 // ─── Crime system ─────────────────────────────────────────────────────────────
@@ -3458,87 +3577,7 @@ export function tick(state) {
     s.flags = [...new Set([...s.flags, 'graduated_hs'])]
     s.gpa = rawGpa
     s.mem = { ...s.mem, hsGpa: rawGpa }
-    const smarts = s.stats.smarts
-    const canAfford = (s.money ?? 0) >= 8000 || smarts >= 72
-    const scholarship = smarts >= 75 || rawGpa >= 3.7
-    // The one screen in the game that still read like a menu in a different
-    // game: eleven emoji buttons and outcome copy in the register the design
-    // document rules out ("In-demand work. Good pay.", "Competitive and
-    // potentially lucrative."). It also framed every school system on earth as
-    // an American one, printing "You graduate from high school. GPA: 2.62" to a
-    // Russian in 1993, and offered IT as a trade in 1946.
-    const uniChoices = (smarts >= 50 && canAfford) ? [{
-      text: 'Go on to university',
-      tag: null,
-      outcome: scholarship ? 'You earn a partial scholarship and enroll in university.' : 'You enroll in university. The next four years will shape your career.',
-      effect: (p) => {
-        p.addFlag('university_enrolled')
-        p.m += 5
-        if (scholarship) p.addFlag('scholarship_won')
-        p.setMem('educationPath', 'university')
-      },
-      inject: {
-        id: 'uni_field_choice',
-        phase: 'young_adult',
-        text: 'What will you study at university?',
-        choices: [
-          { text: 'Medicine', tag: null, outcome: 'Six years, and the first two are anatomy. You will be older than your friends when you start earning.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'healthcare', year: 0 }); p.setMem('uniField', 'healthcare') }, inject: null },
-          { text: 'Law or business', tag: null, outcome: 'The reading is enormous and most of it is other people\'s arguments. You are good at holding two of them at once.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'business', year: 0 }); p.setMem('uniField', 'business') }, inject: null },
-          { text: 'Science or engineering', tag: null, outcome: 'The mathematics is the filter and everybody knows it. You are on the right side of it, narrowly.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'science', year: 0 }); p.setMem('uniField', 'science') }, inject: null },
-          { text: 'Arts or humanities', tag: null, outcome: 'Somebody in the family asks what you will do with it. You do not have an answer and you go anyway.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'arts', year: 0 }); p.setMem('uniField', 'arts') }, inject: null },
-        ],
-        effect: null,
-        when: () => true,
-      },
-    }] : []
-    const graduationEvent = {
-      id: 'hs_graduation',
-      phase: 'young_adult',
-      // "High school" and a four-point GPA are one country's school system.
-      // The USSR marked out of five and had no high school at all.
-      text: (() => {
-        const arch = liveCountry(s)?.archetype
-        const western = arch === 'wealthy_west' && (liveCountry(s)?.name === 'United States' || liveCountry(s)?.name === 'Canada')
-        return western
-          ? `You finish high school. Your average comes out at ${rawGpa.toFixed(2)}. Somebody asks what comes next and you realise they expect an answer today.`
-          : `School is finished. The results come out and they are what they are: about what you expected, and it turns out that is its own kind of disappointment. Somebody asks what comes next.`
-      })(),
-      choices: [
-        ...uniChoices,
-        {
-          text: 'Train in a trade',
-          tag: null,
-          outcome: 'Two years, and at the end of them you have a thing you can do that somebody will always need doing.',
-          effect: (p) => { p.m += 3; p.addFlag('vocational_enrolled'); p.setMem('educationPath', 'vocational') },
-          inject: {
-            id: 'vocational_field_choice',
-            phase: 'young_adult',
-            text: 'Which trade will you train in?',
-            choices: [
-              { text: 'Electrician', tag: null, outcome: 'You learn the colours, the loads, and the particular carefulness of people who work with something that does not forgive.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'electrician', year: 0 }); p.setMem('vocField', 'electrician') }, inject: null },
-              { text: 'Plumbing', tag: null, outcome: 'Everybody has a story about a plumber. You learn quickly that half the job is the conversation in the doorway.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'plumber', year: 0 }); p.setMem('vocField', 'plumber') }, inject: null },
-              { text: 'Building', tag: null, outcome: 'The first week your hands blister and the second week they stop. You can point at things now and say you did that.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'construction', year: 0 }); p.setMem('vocField', 'construction') }, inject: null },
-              // Offered with `when: () => true` to an American choosing a trade
-              // in 1946. A trade you can train in is a trade that exists.
-              ...(hasTech(liveCountry(s), 'personal_computer', s.currentYear)
-                ? [{ text: 'Computers', tag: null, outcome: 'Nobody in the family can explain what you do. The machines are in a room with its own air conditioning and you are allowed in it.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'IT', year: 0 }); p.setMem('vocField', 'IT') }, inject: null }]
-                : [{ text: 'Mechanic', tag: null, outcome: 'Engines are a finite number of things arranged in a finite number of ways, and after a year you can hear which one is wrong.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'mechanic', year: 0 }); p.setMem('vocField', 'mechanic') }, inject: null }]),
-            ],
-            effect: null,
-            when: () => true,
-          },
-        },
-        {
-          text: 'Start working',
-          tag: 'workforce_direct',
-          outcome: 'No more school. There is a wage at the end of the month and it is yours, which changes the shape of a week.',
-          effect: (p) => { p.m += 2; p.addFlag('workforce_direct'); p.setMem('educationPath', 'workforce') },
-          inject: null,
-        },
-      ],
-      effect: null,
-      when: () => true,
-    }
+    const graduationEvent = buildGraduationEvent(s, rawGpa)
     s.queue = [graduationEvent, ...s.queue]
   }
 
