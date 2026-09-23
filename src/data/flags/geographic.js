@@ -60,6 +60,13 @@ export const GEOGRAPHIC_FLAGS = {
     timestamped: true,
     notes: 'Has extensive year texture (yearsAbroad gates), integration arc, memory layer. Well covered.',
   },
+  returned_home: {
+    weight: 'minor',
+    category: 'displacement',
+    description: 'Lived abroad and came back: set by the engine when p.returnHome() moves the character back to the country they were born in.',
+    intent: 'none',
+    notes: 'Engine-set. Read by the death screen so a refugee who returned is still one who crossed a border.',
+  },
 
   climate_displaced: {
     weight: 'major',

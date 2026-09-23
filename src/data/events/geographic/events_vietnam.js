@@ -104,7 +104,7 @@ export const VIETNAM_EVENTS = [
         text: 'Go — take the boat',
         tag: null,
         outcome: 'The crossing takes four days. What happens on the water is not something you will speak of in detail. You arrive.',
-        effect: (p) => { p.h -= 10; p.m -= 15; p.w -= 12; p.addFlag('boat_person'); p.addFlag('emigrated'); p.addFlag('south_vietnamese_diaspora'); p.setResidency('refugee_status'); p.setMem('vnBoatDecision', true) },
+        effect: (p) => { p.h -= 10; p.m -= 15; p.w -= 12; p.addFlag('boat_person'); p.addFlag('emigrated'); p.emigrateTo(['United States', 'Australia', 'Canada', 'France']); p.addFlag('south_vietnamese_diaspora'); p.setResidency('refugee_status'); p.setMem('vnBoatDecision', true) },
       },
       {
         text: 'Stay — build a life inside what exists',

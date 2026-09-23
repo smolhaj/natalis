@@ -63,6 +63,25 @@ const IS_CITIZEN = (G) => CITIZEN_IDS.has(G.character?.ethnicity)
 
 const here = (G) => G.currentCountry?.name ?? G.character?.country?.name
 
+// Where "home" is for a migrant the engine drew in the Gulf. The roster models
+// these groups as born in the country they work in, so the birth country is
+// the Gulf state itself and `p.returnHome()` would go nowhere. Going home for
+// good narrated a bag, a bank draft and a finished house, and then left the
+// man in Bur Dubai for the rest of his life, retiring on a Gulf pension from a
+// country whose own prose had just said there is no retirement here.
+const SENDING = {
+  filipino_qatar: ['Philippines'],
+  east_asian_uae: ['Philippines', 'Philippines', 'Indonesia'],
+}
+const goHome = (p) => {
+  // The family's names already say where it came from (character.js,
+  // NAME_SOURCE), so home is that country when there is one.
+  const eth = p._state?.character?.ethnicity
+  const origin = p._state?.character?.nameCountry
+  p.emigrateTo(origin ? [origin] : SENDING[eth] ?? ['India', 'India', 'Pakistan', 'Bangladesh', 'Nepal', 'Sri Lanka'], { residency: 'citizen' })
+  p.clearCareer()
+}
+
 export const GULF_EVENTS = [
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -189,7 +208,7 @@ export const GULF_EVENTS = [
         effect: (p) => {
           p.setMem('gulfWentHome', true)
           p.m += 8; p.r += 4
-          p.addFlag('gulf_returned'); p.addFlag('ofw_returned')
+          p.addFlag('gulf_returned'); p.addFlag('ofw_returned'); goHome(p)
         },
       },
       {
@@ -199,7 +218,7 @@ export const GULF_EVENTS = [
         effect: (p) => {
           p.setMem('gulfWentHome', true)
           p.m -= 6; p.r += 9
-          p.addFlag('gulf_returned'); p.addFlag('gulf_could_not_settle')
+          p.addFlag('gulf_returned'); p.addFlag('gulf_could_not_settle'); goHome(p)
         },
       },
     ],

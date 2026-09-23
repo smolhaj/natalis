@@ -153,7 +153,7 @@ export const INDONESIA_EVENTS = [
         text: 'Sell what remains and go.',
         tag: 'emigrated',
         outcome: 'Singapore, Australia, the United States — the community has spread across every city with a university and an airport. You join them.',
-        effect: (p) => { p.addFlag('id98_emigrated'); p.addFlag('emigrated'); p.setResidency('work_visa') },
+        effect: (p) => { p.addFlag('id98_emigrated'); p.addFlag('emigrated'); p.emigrateTo(['Singapore', 'Australia', 'United States']); p.setResidency('work_visa') },
       },
       {
         text: 'Stay but do not rebuild. Work for someone else.',

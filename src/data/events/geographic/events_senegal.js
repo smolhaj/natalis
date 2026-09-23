@@ -60,7 +60,7 @@ export const SENEGAL_EVENTS = [
         text: 'Attempt the crossing.',
         tag: 'crossed',
         outcome: 'Seven days. You arrive in Tenerife. The Spanish Red Cross gives you a foil blanket. You give them a false name because you heard it goes better that way.',
-        effect: (p) => { p.m -= 18; p.h -= 10; p.addFlag('emigrated'); p.setResidency('undocumented'); p.setMem('senBarca', true) },
+        effect: (p) => { p.m -= 18; p.h -= 10; p.addFlag('emigrated'); p.emigrateTo('Spain'); p.setResidency('undocumented'); p.setMem('senBarca', true) },
       },
       {
         text: 'Stay. Build something here.',
@@ -95,7 +95,7 @@ export const SENEGAL_EVENTS = [
         text: 'The Canary Islands route is faster. You know someone with a boat.',
         tag: null,
         outcome: 'You take the Atlantic instead. The boat is a pirogue, not built for nine hundred kilometres. Seven days on the water with thirty-eight people.',
-        effect: (p) => { p.m -= 20; p.h -= 12; p.addFlag('emigrated'); p.setResidency('undocumented'); p.setMem('senMoroccoRoute', true); p.setMem('senBarca', true); },
+        effect: (p) => { p.m -= 20; p.h -= 12; p.addFlag('emigrated'); p.emigrateTo('Spain'); p.setResidency('undocumented'); p.setMem('senMoroccoRoute', true); p.setMem('senBarca', true); },
       },
     ],
     effect: null,
@@ -140,7 +140,7 @@ export const SENEGAL_EVENTS = [
         text: 'Go over.',
         tag: null,
         outcome: 'You reach Spanish territory. You are bleeding from both hands and your left leg. Spain is legally required to process you. You know this because someone in the forest camp told you. You hold this information like a key.',
-        effect: (p) => { p.m -= 15; p.h -= 10; p.addFlag('emigrated'); p.addFlag('sen_made_europe'); p.setResidency('asylum_seeker'); p.setMem('senMelillaFence', true); },
+        effect: (p) => { p.m -= 15; p.h -= 10; p.addFlag('emigrated'); p.emigrateTo('Spain'); p.addFlag('sen_made_europe'); p.setResidency('asylum_seeker'); p.setMem('senMelillaFence', true); },
       },
       {
         text: 'You are knocked down before you reach the top.',

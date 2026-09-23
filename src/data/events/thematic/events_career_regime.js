@@ -20,7 +20,7 @@ export const CAREER_REGIME_EVENTS = [
     text: 'You have verified the story three times. The sources are real. The documents are real. You know it will not run. The editorial meeting lasts eight minutes and nobody raises their voice. You file the notes in a folder on a hard drive you keep at home.',
     choices: [
       { text: 'Keep the file. It will matter someday.', tag: null, outcome: 'The folder grows. You tell yourself this is the long game.', effect: (p) => { p.m -= 6; p.e += 5; p.addFlag('journalist_suppressed_story'); p.addFlag('double_consciousness') } },
-      { text: 'Leak it to a foreign outlet anonymously', tag: null, outcome: 'The story runs in a newspaper three countries away. Nobody here can say it. You read it on your phone with the curtains drawn.', effect: (p) => { p.m += 4; p.r += 8; p.addFlag('journalist_leaked_abroad'); p.addFlag('dissident_reader') } },
+      { text: 'Leak it to a foreign outlet anonymously', tag: null, outcome: 'The story runs in a newspaper three countries away. Nobody here can say it. You read it with the curtains drawn.', effect: (p) => { p.m += 4; p.r += 8; p.addFlag('journalist_leaked_abroad'); p.addFlag('dissident_reader') } },
     ],
     effect: null,
   },
@@ -167,7 +167,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.career?.field === 'military' && G.flags.includes('combat_veteran') && G.age >= 19,
-    text: 'You see a civilian casualty. The details do not need to be more specific than that. You cannot un-see it. You write nothing about it in letters home. You look at the photographs of your family on your phone and cannot connect the two worlds.',
+    text: 'You see a civilian casualty. The details do not need to be more specific than that. You cannot un-see it. You write nothing about it in letters home. You look at the photographs of your family that you carry and cannot connect the two worlds.',
     choices: null,
     effect: (p) => { p.m -= 18; p.r += 15; p.addFlag('witnessed_civilian_casualty'); p.addFlag('moral_injury') },
   },
@@ -426,7 +426,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => (G.career?.field === 'arts' || G.career?.field === 'entertainment' || G.career?.field === 'writing') && repressiveRegime(G) && G.age >= 28,
-    text: 'A prize, an exhibition, a review in a European publication. The government\'s response is measured and quick: this is foreign interference, cultural imperialism, an attempt to destabilize. The work, which was suppressed domestically, is now a diplomatic incident. You sit in your studio and look at your phone.',
+    text: 'A prize, an exhibition, a review in a European publication. The government\'s response is measured and quick: this is foreign interference, cultural imperialism, an attempt to destabilize. The work, which was suppressed domestically, is now a diplomatic incident. You sit in your studio and read the review again.',
     choices: [
       { text: 'Accept the recognition and speak to the foreign press', tag: null, outcome: 'The statement you give is calm and precise. At home, your telephone is very quiet for several weeks.', effect: (p) => { p.m += 8; p.r += 8; p.karma += 10; p.addFlag('internationally_recognised'); p.addFlag('dissident_reader') } },
       { text: 'Decline and say the work was misunderstood', tag: null, outcome: 'The regime is satisfied. The foreign press is confused. You have bought yourself some time.', effect: (p) => { p.m -= 12; p.r += 12; p.addFlag('denied_recognition'); p.addFlag('compromised') } },

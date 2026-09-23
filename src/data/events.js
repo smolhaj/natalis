@@ -2066,8 +2066,13 @@ const BASE_EVENTS = [
     id: 'mid_caring_for_parent',
     phase: 'midlife',
     weight: 3,
-    when: () => true,
-    text: 'Your surviving parent can no longer care for themselves. The responsibility falls on you.',
+    // Guarded on nothing, so it told a Moscow man of 33 that his "surviving
+    // parent" needed care, eleven years before the first of his two living
+    // parents died — and could fire for an orphan.
+    when: (G) => !!(G.parents?.mother?.alive || G.parents?.father?.alive),
+    text: (G) => (G.parents?.mother?.alive && G.parents?.father?.alive)
+      ? 'One of your parents can no longer care for themselves, and the other cannot do it alone. The responsibility falls on you.'
+      : 'Your surviving parent can no longer care for themselves. The responsibility falls on you.',
     context: null,
     choices: [
       {
@@ -4590,6 +4595,10 @@ const BASE_EVENTS = [
     weight: 3,
     when: (G) => G.age >= 15 && G.age <= 17 && !G.mem.firstJob,
     text: (G) => {
+      // "School ends at three" was printed a year after "There was never a
+      // school to leave."
+      if (G.flags.has('never_schooled') || G.flags.has('left_school_early'))
+        return 'The work is the whole day now — a market stall, carrying goods, domestic work. Nobody calls it a first job. The money goes to the household.'
       if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
         return 'School ends at three. The rest of the day you work — a market stall, carrying goods, domestic work. The money goes to the household.'
       return 'Your first part-time job. The pay is negligible. The independence is not.'
@@ -5260,8 +5269,10 @@ const BASE_EVENTS = [
     when: (G) => G.flags.includes('addiction') && !G.mem.rock_bottom_shown && G.age >= 21,
     text: G => {
       const arch = G.character.country.archetype;
-      if (['developing_urban', 'subsaharan', 'developing_unstable'].includes(arch)) return 'You spent your rent money on another binge. The landlord\'s notice is on the door. Your phone shows unanswered calls from family you\'ve been avoiding for months.';
-      return 'You wake up in a stranger\'s apartment having missed an important presentation. Your phone has seventeen missed calls. The ceiling is unfamiliar. You don\'t know what day it is.';
+      if (['developing_urban', 'subsaharan', 'developing_unstable'].includes(arch)) return 'You spent your rent money on another binge. The landlord\'s notice is on the door. There are messages from family you\'ve been avoiding for months.';
+      return G.tech('mobile_phone')
+        ? 'You wake up in a stranger\'s apartment having missed an important presentation. Your phone has seventeen missed calls. The ceiling is unfamiliar. You don\'t know what day it is.'
+        : 'You wake up in a stranger\'s apartment having missed an important presentation. Somewhere a telephone has been ringing on your desk all morning. The ceiling is unfamiliar. You don\'t know what day it is.';
     },
     isKey: true,
     choices: [
@@ -7879,7 +7890,7 @@ const BASE_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) => G.flags.includes('escaped_prisoner') && G.age > 18,
-    text: G => `An old acquaintance spots you at a market. They look surprised — your face was on the news. They haven't reached for their phone yet.`,
+    text: G => `An old acquaintance spots you at a market. They look surprised — your face was on the news. They haven't called out to anyone yet.`,
     choices: [
       { text: 'Beg them not to turn you in', tag: null, outcome: 'They hesitate, then nod. You owe them one — and they know it.', effect: (p) => { p.m -= 5; p.karma -= 3 } },
       { text: 'Threaten them into silence', tag: null, outcome: 'They back off, terrified. But now there\'s another person with a reason to hate you.', effect: (p) => { p.karma -= 15; p.m -= 8; p.addFlag('violent') } },
@@ -9285,7 +9296,19 @@ function flagPrerequisites(src) {
   return req.length ? req : null
 }
 
+function effectSource(e) {
+  const fns = [e.effect, ...(e.choices ?? []).map(c => c?.effect)].filter(f => typeof f === 'function')
+  try { return fns.map(f => Function.prototype.toString.call(f)).join(' ') } catch (_) { return '' }
+}
+
 export function classifyEvent(e) {
+  // Does resolving this event take the character out of the country? The
+  // eighty emigration events are written from home — "You leave. Germany, the
+  // Netherlands, the UK" — and once emigration actually moved people, a Greek
+  // already in Munich could be offered the 2010 departure again, and a
+  // Vietnamese refugee in California the boat. Computed ahead of the early
+  // return, because some events arrive with their register already set.
+  if (e.departs === undefined) e.departs = /addFlag\(['"]emigrated['"]\)|emigrateTo\(/.test(effectSource(e))
   if (e.register !== undefined) return e
   let src = ''
   try { if (typeof e.when === 'function') src = Function.prototype.toString.call(e.when) } catch (_) { src = '' }

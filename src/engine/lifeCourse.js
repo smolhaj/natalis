@@ -483,6 +483,7 @@ function courseChildren(s) {
   if (!s.partner || s.inPrison) return s
   if (s.flags?.includes('pregnant') || s.flags?.includes('expecting') || s.birthControl) return s
   if (s.flags?.includes('infertile') || s.flags?.includes('childfree_by_choice')) return s
+  if (s.flags?.includes('sterilised')) return s
   const female = s.character?.gender === 'female'
   const bearerAge = female ? s.age : (s.partner.age ?? s.age)
   if (bearerAge > 44 || bearerAge < 15) return s

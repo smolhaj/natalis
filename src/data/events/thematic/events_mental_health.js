@@ -383,7 +383,7 @@ export const MENTAL_HEALTH_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) =>
-      G.children && G.children.length > 0 &&
+      G.youngestChildAge !== null && G.youngestChildAge <= 1 &&
       G.age >= 22 && G.age <= 38 &&
       !G.mem.mhPostnatal &&
       G.stats.happiness < 50,

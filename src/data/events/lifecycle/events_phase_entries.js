@@ -1,5 +1,9 @@
 // Phase entry decision points — fire once at the start of young_adult, midlife, late_life.
 // These are guaranteed: injected into the queue by tick() at each phase transition.
+// They do not say the age. The transition line in the log already does ("You
+// are thirty. ..."), so the event said it a second time in the same year, and
+// when another queued event took the year it fired late and told a
+// twenty-one-year-old "You are eighteen."
 // They give the player a moment of conscious orientation — what matters most entering this phase.
 // Choices set flags that weight subsequent event selection and gate follow-through events.
 
@@ -10,7 +14,7 @@ export const PHASE_ENTRY_EVENTS = [
     phase: 'young_adult',
     weight: 5,
     when: (G) => !G.mem?.phaseEntryYoungAdultDone,
-    text: `You are eighteen. The scaffolding of childhood has been removed. The life ahead is unwritten. What matters most, entering this?`,
+    text: `The scaffolding of childhood has been removed. The life ahead is unwritten. What matters most, entering this?`,
     choices: [
       {
         text: 'Making something of yourself. Career, achievement, recognition.',
@@ -52,7 +56,7 @@ export const PHASE_ENTRY_EVENTS = [
         redemption: `The debt you have been repaying, the wrong you have been righting — where does it stand?`,
       }
       const ctx = desireCtx[d] ?? 'The life you have been building has become recognizable as a life.'
-      return `You are thirty. ${ctx} What matters most in this half?`
+      return `${ctx} What matters most in this half?`
     },
     choices: [
       {
@@ -95,7 +99,7 @@ export const PHASE_ENTRY_EVENTS = [
         redemption: `The reckoning you have been postponing, or conducting, or both — it arrives at fifty with some insistence.`,
       }
       const ctx = desireCtx[d] ?? 'The life you have lived has become visible, like a landscape from a height.'
-      return `You are fifty. ${ctx} What do you carry into this last stretch?`
+      return `${ctx} What do you carry into this last stretch?`
     },
     choices: [
       {

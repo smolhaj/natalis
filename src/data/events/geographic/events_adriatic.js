@@ -216,7 +216,7 @@ export const ADRIATIC_EVENTS = [
       !G.mem?.adrHrEu,
     text: 'July, and the accession takes effect, and the immediate consequence is not prosperity but departure: the labour market opens and the young go — Ireland, Germany, Sweden. Villages in Slavonia now have more houses than households. The remittances come back and the people do not. The country spent the 1990s fighting to exist and spent the 2010s discovering that existing and being lived in are different achievements.',
     choices: [
-      { text: 'Go', tag: 'defiant', outcome: 'Dublin, then Munich. You send money home and visit at Christmas and the visits get harder, not easier.', effect: (p) => { p.mo += 3000; p.m -= 5; p.addFlag('adr_hr_emigrated'); p.addFlag('emigrated') } },
+      { text: 'Go', tag: 'defiant', outcome: 'Dublin, then Munich. You send money home and visit at Christmas and the visits get harder, not easier.', effect: (p) => { p.mo += 3000; p.m -= 5; p.addFlag('adr_hr_emigrated'); p.addFlag('emigrated'); p.emigrateTo(['Ireland', 'Germany']) } },
       { text: 'Stay', tag: 'yielding', outcome: 'You stay. Half your school year does not. The street is quieter every September.', effect: (p) => { p.m -= 6; p.karma += 4; p.addFlag('adr_hr_stayed_behind'); p.addFlag('stayed_behind') } },
     ],
     effect: null,

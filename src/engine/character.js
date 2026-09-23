@@ -140,6 +140,56 @@ export function urbanChanceFor(country, birthYear) {
 
 // ─── Character creation ───────────────────────────────────────────────────────
 
+// Whose names a family carries. The roster draws the Gulf's migrant majority
+// correctly — the UAE is 59% South Asian, Qatar 60% — and then named every one
+// of them from the Emirati or Qatari pool: a Buddhist from a South Asian family
+// in Sharjah was Theyab Al Rashdi, a Kerala construction worker's father was
+// Tariq Al Ghurair, and nothing stopped a Bangladeshi labourer being born an
+// Al Maktoum. A group whose names come from somewhere else on the roster says
+// where, conditioned on religion where the sending countries divide that way.
+const SOUTH_ASIAN_GULF = new Set([
+  'south_asian_uae', 'south_asian_qatar', 'south_asian_kuwait', 'south_asian_bahrain',
+  'south_asian_omani', 'south_asian_worker',
+])
+const NAME_SOURCE = {
+  filipino_qatar: ['Philippines'],
+  east_asian_uae: ['Philippines', 'Philippines', 'Indonesia'],
+  western_expat_uae: ['United Kingdom'],
+  western_qatar: ['United Kingdom'],
+  arab_expat_uae: ['Egypt', 'Jordan', 'Lebanon', 'Syria'],
+  other_arab_qatar: ['Egypt', 'Jordan', 'Lebanon', 'Syria'],
+  other_arab_kuwait: ['Egypt', 'Jordan', 'Lebanon', 'Syria'],
+  other_arab_bahrain: ['Egypt', 'Jordan', 'Lebanon', 'Syria'],
+}
+function nameCountryFor(ethnicity, religion) {
+  if (SOUTH_ASIAN_GULF.has(ethnicity)) {
+    // India's pool is Hindu-coded, so a Muslim family draws from the two
+    // Muslim-majority sending countries rather than be named Jyoti Mishra.
+    if (religion?.startsWith('muslim')) return pickFrom(['Pakistan', 'Bangladesh'])
+    if (religion === 'buddhist') return pickFrom(['Sri Lanka', 'Nepal'])
+    return pickFrom(['India', 'India', 'Nepal'])
+  }
+  const src = NAME_SOURCE[ethnicity]
+  return src ? pickFrom(src) : null
+}
+
+/**
+ * Where a new child's first name comes from: the family's own tradition while
+ * they live where the character was born, the country they live in once they
+ * have left it.
+ */
+export function childNameCountry(state) {
+  const birth = state?.character?.country
+  const here = state?.currentCountry ?? birth
+  return here?.name === birth?.name ? nameSourceCountry(state?.character) : here
+}
+
+/** The country whose name pools this character's family draws from. */
+export function nameSourceCountry(character) {
+  const src = character?.nameCountry
+  return (src && COUNTRIES.find(c => c.name === src)) || character?.country
+}
+
 export function createCharacter(overrides = {}) {
   // Accept either a country name or a country object. Passing an object used to
   // fall through the name lookup and silently produce a RANDOM country, which is
@@ -155,9 +205,6 @@ export function createCharacter(overrides = {}) {
     ?? randomBetween(country.yearRange[0], country.yearRange[1])
 
   const gender = overrides.gender ?? (chance(0.5) ? 'male' : 'female')
-
-  const firstName = pickFrom(gender === 'male' ? country.namePool.male : country.namePool.female)
-  const surname = pickFrom(country.surnames)
 
   const wealthTier = overrides.wealthTier ?? rollWeighted(country.wealthTierWeights)
 
@@ -204,6 +251,12 @@ export function createCharacter(overrides = {}) {
 
   const religion = overrides.religion ?? religionFor(ethnicity, country, weightedRandom)
 
+  // Drawn after ethnicity and religion, because they decide whose names these are.
+  const nameCountry = nameCountryFor(ethnicity, religion)
+  const namesFrom = (nameCountry && COUNTRIES.find(c => c.name === nameCountry)) || country
+  const firstName = pickFrom(gender === 'male' ? namesFrom.namePool.male : namesFrom.namePool.female)
+  const surname = pickFrom(namesFrom.surnames)
+
   // Rural/urban from the country's historical urbanisation series
   const adjustedUrbanRate = urbanChanceFor(country, birthYear)
   const ruralUrban = overrides.ruralUrban ?? (Math.random() < adjustedUrbanRate
@@ -221,7 +274,8 @@ export function createCharacter(overrides = {}) {
   return {
     // Slavic family names take a feminine form: the game was producing Yulia
     // Orlov and her daughters Elena Orlov and Alina Orlov.
-    firstName, surname: surnameFor(country, surname, gender), name: `${firstName} ${surnameFor(country, surname, gender)}`,
+    firstName, surname: surnameFor(namesFrom, surname, gender), name: `${firstName} ${surnameFor(namesFrom, surname, gender)}`,
+    nameCountry: namesFrom === country ? null : namesFrom.name,
     country, gender, birthYear, wealthTier, familyStability, familySize,
     initialStats,
     religion, ethnicity, ruralUrban, literate,
@@ -241,7 +295,7 @@ export function deriveInitialStats(char) {
  */
 export function deriveInitialSiblings(char, parents) {
   const count = Math.min(Math.max(0, char.familySize - 1), 5)
-  const c = char.country
+  const c = nameSourceCountry(char)
   const baseQ = { secure: 78, stable: 65, struggling: 50, unstable: 32 }[char.familyStability] ?? 55
   // Keyed the same way pickUnusedName looks names up. While these were raw
   // lowercase and the lookup was phonetic, nothing ever matched and family
@@ -771,22 +825,23 @@ function assignParentOccupation(wealthTier, archetype, birthYear, gender, family
 export function deriveInitialParents(char) {
   const { country, familyStability, wealthTier, birthYear, surname } = char
   const arch = country.archetype
+  const names = nameSourceCountry(char)
   const taken = new Set([nameKey(char.firstName ?? '')])
-  const motherFirst = pickUnusedName(country.namePool.female, taken)
+  const motherFirst = pickUnusedName(names.namePool.female, taken)
   taken.add(nameKey(motherFirst))
-  const fatherFirst = pickUnusedName(country.namePool.male, taken)
+  const fatherFirst = pickUnusedName(names.namePool.male, taken)
   // The father used to be given a DIFFERENT surname from his wife and children,
   // deliberately, which in every society and era this game covers reads as a
   // data bug: "Your father, Robert Carter, dies at 81" in an obituary for James
   // Young. A household where the parents' names differ is a real thing and a
   // minority one; it needs to be the exception, not the rule.
-  const altSurname = chance(0.08) ? pickFrom(country.surnames) : surname
+  const altSurname = chance(0.08) ? pickFrom(names.surnames) : surname
   const baseQ = { secure: 82, stable: 68, struggling: 48, unstable: 28 }[familyStability] ?? 55
   const fatherPresent = familyStability !== 'unstable' || chance(0.55)
   const motherOccupation = assignParentOccupation(wealthTier, arch, birthYear, 'female', familyStability)
   return {
     mother: {
-      name: `${motherFirst} ${surnameFor(country, surname, 'female')}`,
+      name: `${motherFirst} ${surnameFor(names, surname, 'female')}`,
       currentAge: randomBetween(22, 34),
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-10, 10), 12, 100),

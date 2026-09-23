@@ -233,7 +233,7 @@ export const FOLLOWTHROUGH_79_EVENTS = [
         effect: (p) => {
           p.r += 4
           p.m += 3
-          p.addFlag('rom_returned_emigrant')
+          p.addFlag('rom_returned_emigrant'); p.returnHome()
           p.setMem('ft79ItalyReturn', true)
         },
       },

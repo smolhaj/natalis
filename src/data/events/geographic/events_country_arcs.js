@@ -267,7 +267,8 @@ export const COUNTRY_ARC_EVENTS = [
     phase: 'adolescence',
     weight: 4,
     when: (G) => G.character.country.name === 'South Korea' && G.currentYear >= 1960 && !G.mem?.skExamPressure,
-    text: 'The Suneung determines your university and your university determines your life. You have known this since you were old enough to know anything. The study hall is open until midnight. Your mother brings food at nine. The other students eat without looking up. In this room, the Korean miracle requires something from each of you.',
+    // The Suneung was first sat in 1993 (for 1994 entry); this fired from 1960.
+    text: (G) => `${G.currentYear >= 1994 ? 'The Suneung' : 'The entrance exam'} determines your university and your university determines your life. You have known this since you were old enough to know anything. The study hall is open until midnight. Your mother brings food at nine. The other students eat without looking up. In this room, the Korean miracle requires something from each of you.`,
     choices: [
       { text: 'Give everything — this is your chance', tag: null, outcome: 'You study until your vision blurs. Whether this is discipline or damage depends on what you get and what it costs you.', effect: (p) => { p.e += 10; p.m -= 8; p.h -= 4; p.setMem('skExamPressure', true); p.addFlag('academic_pressure'); p.addFlag('korean_miracle_generation'); } },
       { text: 'Find your own pace — burn out serves no one', tag: null, outcome: 'You sleep eight hours. Your classmates call this reckless. Your score is what it is.', effect: (p) => { p.e += 5; p.m -= 2; p.setMem('skExamPressure', true); p.addFlag('academic_pressure'); } },

@@ -266,7 +266,7 @@ export const EVENTS_SONDER_14 = [
     phase: 'midlife',
     weight: 2,
     isGlimpse: true,
-    when: (G) => place.hasPhone(G) && (G.age >= 35 && !G.mem?.s14StrangerTrain),
+    when: (G) => place.hasMobile(G) && (G.age >= 35 && !G.mem?.s14StrangerTrain),
     text: `The woman across from you on the train today. She is doing something ordinary — reading, looking at her phone, looking at nothing in particular — and you observe, without meaning to, that she is at a specific moment in her life. You do not know what the moment is. But you can read the particular quality of attention she is giving to the nothing she is looking at — slightly inward, slightly away — and infer that something has recently happened, or is about to happen, or is being processed. You arrive at your stop and she continues.`,
     choices: null,
     effect: (p) => { p.setMem('s14StrangerTrain', true) },

@@ -54,7 +54,7 @@ export const KURDISH_EVENTS = [
         text: 'Go back.',
         tag: 'returned',
         outcome: 'Germany made you German in ways you didn\'t expect. Turkey feels like the country of a relative, not your own.',
-        effect: (p) => { p.m -= 5; p.addFlag('kurd_returned_home'); p.setMem('kurdDiasporaQ', true) },
+        effect: (p) => { p.m -= 5; p.addFlag('kurd_returned_home'); p.returnHome(); p.setMem('kurdDiasporaQ', true) },
       },
     ],
   },

@@ -196,7 +196,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_overheard_joy',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 16 && !G.mem?.sdr26OverheardJoy,
+    when: (G) => G.tech('mobile_phone') && (G.age >= 16 && !G.mem?.sdr26OverheardJoy),
     text: () => pick([
       'From somewhere down the street: laughter, the kind that has lost control of itself, that is not performing anything. You cannot see who it is. It does not matter. The sound is enough. You walk past it and carry a small residue of it.',
       'The couple at the other end of the carriage. The way she leans her head briefly on his shoulder and he adjusts his position to make it easier for her without commenting on it. Thirty seconds, maybe less. You look at your phone. But you saw it.',

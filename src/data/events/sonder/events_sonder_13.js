@@ -262,7 +262,7 @@ export const EVENTS_SONDER_13 = [
     phase: 'midlife',
     weight: 2,
     isGlimpse: true,
-    when: (G) => place.hasPhone(G) && (!G.mem?.sonder13_stranger_2),
+    when: (G) => place.hasMobile(G) && (!G.mem?.sonder13_stranger_2),
     text: `The man on the platform is checking his phone. On his face for a moment is something — you catch it in the second before he rearranges his face into the neutral expression people wear in public. The something was grief. Or it was good news about someone he loves. You cannot tell and you are not supposed to know and then the train arrives.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_stranger_2', true) },

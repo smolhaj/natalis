@@ -543,7 +543,7 @@ export const RURAL_TEXTURE_EVENTS = [
         text: 'Go. Join the people who left before you.',
         tag: 'emigrated',
         outcome: 'The boat or the plane, and then the city that will not care that you are here. You build a life. You send money back. You come home at Christmas and leave again.',
-        effect: (p) => { p.mo += 1500; p.m -= 3; p.addFlag('emigrated'); p.addFlag('irish_emigrant'); p.setMem('irelandLeaving', true) },
+        effect: (p) => { p.mo += 1500; p.m -= 3; p.addFlag('emigrated'); p.emigrateTo(['United Kingdom', 'United States']); p.addFlag('irish_emigrant'); p.setMem('irelandLeaving', true) },
       },
       {
         text: 'Stay. Someone has to look after the farm.',

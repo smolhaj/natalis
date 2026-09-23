@@ -133,7 +133,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
           p.r += 8
           p.m -= 5
           p.addFlag('pak_hazara_generation')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo(['Australia', 'Germany', 'United Kingdom'])
           p.setResidency('asylum_seeker')
           p.setMem('pakDepHazara', true)
         },

@@ -15,7 +15,7 @@ export const FERTILITY_EVENTS = [
       G.character.gender === 'female' &&
       G.partner &&
       G.age >= 22 && G.age <= 38 &&
-      G.flags.includes('trying_for_child') &&
+      G.flags.includes('trying_for_child') && !G.flags.includes('sterilised') &&
       G.yearsSince('bereavement') >= 2,
     text: 'You are eight weeks in when it ends. The clinic is matter-of-fact and kind, which is the correct combination. Your partner drives home. You do not talk much in the car. At home you sit together on the sofa for a long time. Later — days later — you will learn that it is very common. The commonness is both real and irrelevant to the specific weight of it.',
     choices: [
@@ -44,7 +44,7 @@ export const FERTILITY_EVENTS = [
       G.character.gender === 'female' &&
       G.partner &&
       G.age >= 35 && G.age <= 42 &&
-      G.flags.includes('trying_for_child') &&
+      G.flags.includes('trying_for_child') && !G.flags.includes('sterilised') &&
       G.yearsSince('bereavement') >= 2,
     text: 'The second time, you know what the signs mean. You do not tell anyone you were pregnant again. That means you cannot tell anyone you have lost it again. The silence is its own kind of grief — private and unwitnessed and somehow worse for that.',
     choices: [
@@ -76,7 +76,7 @@ export const FERTILITY_EVENTS = [
       G.partner &&
       G.children.length === 0 &&
       G.age >= 32 && G.age <= 40 &&
-      G.flags.includes('trying_for_child') &&
+      G.flags.includes('trying_for_child') && !G.flags.includes('sterilised') &&
       (G.character.country.archetype === 'wealthy_west' || G.character.country.archetype === 'wealthy_east' || G.money > 20000),
     text: 'The fertility specialist lays out the options. IVF is the recommendation — the success rate at your age, per cycle, is approximately thirty percent. The cost is approximately fifteen thousand per cycle. Insurance covers none of it. He says most couples need two or three rounds. He says this in the same tone he uses for everything else.',
     choices: [
@@ -136,7 +136,7 @@ export const FERTILITY_EVENTS = [
       G.character.gender === 'female' &&
       G.children.length === 0 &&
       G.age >= 26 && G.age <= 38 &&
-      G.flags.includes('trying_for_child') &&
+      G.flags.includes('trying_for_child') && !G.flags.includes('sterilised') &&
       ['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.character.country.archetype),
     text: (G) => {
       return `An older woman in the family takes you aside. She knows someone — a healer, a specific prayer, a preparation that has worked for others. The clinic option exists in ${G.currentCountry?.name ?? G.character.country.name} but it is very far and very expensive. This option is available now and costs the price of belief.`
@@ -211,7 +211,7 @@ export const FERTILITY_EVENTS = [
       G.character.gender === 'female' &&
       G.partner &&
       G.age >= 36 && G.age <= 44 &&
-      G.flags.includes('trying_for_child'),
+      G.flags.includes('trying_for_child') && !G.flags.includes('sterilised'),
     text: 'The obstetrician flags it at the twelve-week scan — the pregnancy is higher risk at this age, with this particular finding. She says the word "monitoring" several times. The monitoring is thorough and the pregnancy proceeds. You carry a specific kind of anxiety for twenty-six weeks that has no name and no resolution until there is a resolution.',
     choices: [
       {

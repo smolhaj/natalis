@@ -116,7 +116,7 @@ export const CARIBBEAN_EVENTS = [
           p.m -= 3;
           p.e += 3;
           p.addFlag('jamaica_emigrated');
-          p.addFlag('emigrated');
+          p.addFlag('emigrated'); p.emigrateTo(['United Kingdom', 'United Kingdom', 'United States', 'Canada']);
           p.setResidency('work_visa');
           p.setMem('jam_emigration_decision', true);
         },

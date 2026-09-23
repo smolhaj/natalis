@@ -192,7 +192,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
     when: (G) => (G.children ?? []).some(c => c.age >= 22 && (c.relationshipQuality ?? 50) > 80),
     text: (G) => {
       const c = (G.children ?? []).find(c => c.age >= 22 && (c.relationshipQuality ?? 50) > 80)
-      return `${c?.name?.split(' ')[0] ?? 'Your child'} texts you about something small — a recipe, a film, a thing that happened at work. You text back. This is the relationship you have, and it took years to build.`
+      return `${c?.name?.split(' ')[0] ?? 'Your child'} calls you about something small — a recipe, a film, a thing that happened at work. You text back. This is the relationship you have, and it took years to build.`
     },
     choices: null,
     effect: (p) => { p.m += 4; p.karma += 2 },

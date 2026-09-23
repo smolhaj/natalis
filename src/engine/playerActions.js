@@ -8,7 +8,7 @@ import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhoo
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 import {
   getPhase, GDP_MULT,
-  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES,
+  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES, childNameCountry,
 } from './character'
 import {
   buildG, buildEffectProxy, applyProxy, resolveProxyExtras,
@@ -177,6 +177,13 @@ export function tryForChild(state) {
   if (state.birthControl) {
     return { ...state, log: [...state.log, { age: state.age, text: "You're currently using birth control.", isKey: false }] }
   }
+  // Sterilisation was a flag nothing read. A Moscow father who had "the number
+  // of children you are going to have" said out loud to a doctor at 33 went on
+  // to have two more, and a Swedish woman sterilised without her consent in
+  // 1958 — an event written about exactly that — gave birth in 1970.
+  if (state.flags.includes('sterilised')) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'That was settled at the clinic, and it stays settled.', isKey: false }] }
+  }
   if (state.age > 50 || (state.partner.age ?? 30) > 48) {
     return { ...state, log: [...state.log, { age: state.age, text: "Having a biological child is no longer possible.", isKey: false }] }
   }
@@ -222,8 +229,8 @@ export function tryForChild(state) {
   }
   // Conception — store child details in mem; birth will be delivered by tick() ~2 years later
   const cGender = chance(0.5) ? 'male' : 'female'
-  const c = state.currentCountry ?? state.character.country
-  const childName = personName(c, cGender, state, { surname: state.character.surname })
+  const c = childNameCountry(state)
+  const childName = personName(c, cGender, state, { surname: childSurname(state) })
   const traits = pickTraits(CHILD_TRAITS)
   // `expecting` is the couple's state and drives the birth in tick(); `pregnant`
   // is the player's own body and is what the maternal-mortality roll and the
@@ -344,6 +351,7 @@ export function applyActivity(state, activityId) {
   // ── Hobby practice activities ────────────────────────────────────────────────
   const hobbyActivity = (ACTIVITIES.hobbies ?? []).find(a => a.id === activityId)
   if (hobbyActivity) {
+    if (hobbyActivity.literate && buildG(state).literate === false) return state
     let updated = { ...state }
     const cost = $$(hobbyActivity.cost ?? 0, state)
     if (cost > 0 && (updated.money ?? 0) < cost) {
@@ -983,8 +991,8 @@ export function adoptChild(state) {
     return { ...state, log: [...state.log, { age: state.age, text: `The adoption process requires funds you don't currently have.`, isKey: false }] }
   }
   const cGender = chance(0.5) ? 'male' : 'female'
-  const c = state.currentCountry ?? state.character.country
-  const childName = personName(c, cGender, state, { surname: state.character.surname })
+  const c = childNameCountry(state)
+  const childName = personName(c, cGender, state, { surname: childSurname(state) })
   const childAge = randomBetween(0, 8)
   const child = { name: childName, gender: cGender, ageAtBirth: state.age - childAge, relationshipQuality: 75, adopted: true }
   return {
@@ -1433,7 +1441,7 @@ export function bookTrip(state, destinationId) {
 
 // BUSINESS_TYPES is imported from './character' and re-exported via gameEngine.js
 export { BUSINESS_TYPES } from './character'
-import { personName } from './names'
+import { personName, childSurname } from './names'
 
 // Every price in this file is written in present-day dollars, and until
 // economy.js existed that is what the player was charged and shown, in every

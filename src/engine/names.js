@@ -109,3 +109,21 @@ export function personName(country, gender, state, opts = {}) {
   const base = opts.surname !== undefined ? opts.surname : pickFrom(country?.surnames ?? [])
   return `${first} ${surnameFor(country, base, gender)}`.trim()
 }
+
+/**
+ * The surname a child of this character is given.
+ *
+ * Every child took the CHARACTER's surname, so when the character was a woman
+ * the children carried their mother's family name in countries where that was
+ * never the practice: a Dalit woman in Uttar Pradesh married Rajesh Singh and
+ * raised seven children called Das. Across nearly all of the roster, for
+ * nearly all of the period, a child born inside a marriage took the father's
+ * name. A woman without a partner still gives her own.
+ */
+export function childSurname(state) {
+  const own = state?.character?.surname ?? ''
+  if (state?.character?.gender !== 'female') return own
+  const full = state?.partner?.name
+  if (!full || !full.includes(' ')) return own
+  return full.slice(full.indexOf(' ') + 1)
+}

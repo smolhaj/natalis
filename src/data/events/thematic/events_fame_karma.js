@@ -19,9 +19,9 @@ export const FAME_KARMA_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      G.fame > 20 &&
+      G.tech('mobile_phone') && (G.fame > 20 &&
       !G.mem.fameRecognizedStreet &&
-      G.age >= 18 && G.age <= 49,
+      G.age >= 18 && G.age <= 49),
     text: 'You are at the market with a bag of onions in each hand when a stranger calls your name. They know who you are. They have their phone out before you understand what is happening. You smile. It is not a real smile but it is close enough.',
     choices: [
       {

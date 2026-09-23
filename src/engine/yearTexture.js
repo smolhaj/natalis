@@ -740,8 +740,11 @@ function* textureCandidates(state, opts = {}) {
   // Not a mechanic — just the accidental glimpse that sonder is made of.
   // Per the design: "the person at the next table, the light on in the apartment above."
 
-  const _arch = state.character?.country?.archetype
+  const _arch = (state.currentCountry ?? state.character?.country)?.archetype
   const _isNonWest = _arch && !['wealthy_west', 'wealthy_east'].includes(_arch)
+  // The stranger's handset is the most datable object in this pool. It was
+  // printing into 1970s London and 1976 Mexico City.
+  const _mobileHere = hasTech(state.currentCountry ?? state.character?.country, 'mobile_phone', currentYear)
 
   const lastSonderAge = mem?.sonderGlimpseAge ?? -99
   if (age >= 12 && (age - lastSonderAge) >= 8 && Math.random() < 0.18) {
@@ -759,14 +762,18 @@ function* textureCandidates(state, opts = {}) {
       'The woman at the coffee counter has been smiling at customers for four hours. Something that is not the smile is happening behind it. You tip and leave.',
       'Your neighbor\'s door opens and closes at two in the morning. You don\'t know what schedule that belongs to. You have been curious about it for months and will never ask.',
       'A couple at the restaurant is not speaking — not in the bad way, in the other way. The specific silence of people who don\'t need to. You watch them for a moment without meaning to.',
-      'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.',
+      _mobileHere
+        ? 'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.'
+        : 'The man on the train has been looking at a photograph from his wallet for the past four stops. He does not put it away. He has been looking at the same image since before you sat down.',
       _isNonWest ? 'The woman at the standpipe is organising who goes first. There is no official system. There is her, and the system she makes.' : 'The man in the café has been writing in the same notebook for an hour. The pages are covered. Something is being worked out in there that is not available to you.',
       _isNonWest ? 'A man on a motorbike is carrying something too large for a motorbike, slowly, with complete certainty about how to do it.' : 'The couple at the next table is having the specific argument that is about everything except what they are arguing about.',
     ] : (phase === 'young_adult') ? [
       'The person who has the desk across from yours: you know what they eat for lunch and nothing else about them. An entire life is visible from there and inaccessible.',
       'Your neighbor comes home at the same time every night. You know this the way you know everything about people you have never spoken to — by the sound of it through the wall.',
       'A woman on the platform is crying without covering her face. No one speaks to her. The train comes and she gets on. You will never know what that was.',
-      'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
+      _mobileHere
+        ? 'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.'
+        : 'The man at the next table has been holding the same folded letter without opening it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
       _isNonWest ? 'A young woman at the bus stop has a single bag and the posture of someone who has just made a decision. You don\'t know what the decision was.' : 'The woman at the desk next to yours leaves at exactly five every day. You have been curious about what that is about for months and have not asked.',
       _isNonWest ? 'Someone sleeping on the pavement outside the bus station. Their things are arranged around them with a precision that makes it clear this is not the first time.' : 'The two people at the corner table have been speaking quietly for two hours. You can\'t tell if this is love or negotiation or both.',
     ] : [
@@ -9108,7 +9115,8 @@ function* textureCandidates(state, opts = {}) {
     (state.currentCountry ?? state.character?.country)?.name === 'United States'
       ? 'The security lines, the body scanners, the databases, the colour-coded threat level that nobody could explain. The world after 2001 was a world organised around a specific event.'
       : 'The security lines and the databases arrived here too, imported whole from somewhere else, for a thing that happened somewhere else. Nobody asked and the queues are longer.',
-    `Something changed in 2001 and the change was sold as temporary emergency measures and the measures are still there ${state.currentYear - 2001} years later.`,
+    // Printed "still there 0 years later" into 2001 itself.
+    state.currentYear - 2001 >= 4 && `Something changed in 2001 and the change was sold as temporary emergency measures and the measures are still there ${state.currentYear - 2001} years later.`,
   ])]
   if (F.has('katrina_generation') && Math.random() < 0.22) yield [T.anchored, pick([
     'The satellite image of the eye. The levees failing the morning of August 29. The Superdome. The people on the rooftops. "Brownie, you\'re doing a heck of a job." The helicopters flying over.',
@@ -14380,7 +14388,7 @@ function* textureCandidates(state, opts = {}) {
       ])]
       if (era >= 2010) yield [T.anchored, pick([
         'The young population bulge is visible everywhere — in the schools, in the unemployment statistics, in the food stalls that appear each year.',
-        noticesDevices && 'The smartphone has arrived. The politics are faster now and more visible and less controllable by the people who used to control them.',
+        noticesDevices && currentYear >= 2013 && 'The smartphone has arrived. The politics are faster now and more visible and less controllable by the people who used to control them.',
         'The diaspora money is a significant part of the economy. The people who send it do not always get credit for what they are sustaining.',
         inTown && currentYear >= 2013 && 'The ride-share platform arrived and the informal drivers are on apps now. The platform takes its share. This is visible to no one in the car.',
         !inTown && 'The young people are on the phone to a city they have not been to. They know what the rent is there before they know the way.',
@@ -14418,11 +14426,11 @@ function* textureCandidates(state, opts = {}) {
         'Power cuts so regular they have been accommodated. The candle in the sideboard. The neighbour with the generator who has become a kind of utility.',
       ])]
       if (era >= 2010) yield [T.anchored, pick([
-        noticesDevices && 'The smartphone has arrived before the electricity is reliable. Solar charging is a business now.',
+        noticesDevices && currentYear >= 2013 && 'The smartphone has arrived before the electricity is reliable. Solar charging is a business now.',
         'The middle class is real. It is also precarious in a way the word middle doesn\'t quite capture.',
-        noticesDevices && 'The diaspora is everywhere — in the remittances, in the WhatsApp groups, in the children who have two accents.',
+        noticesDevices && currentYear >= 2013 && 'The diaspora is everywhere — in the remittances, in the WhatsApp groups, in the children who have two accents.',
         'The young people are in two places at once — here and on the phone, here and in their plans, which include a version of elsewhere.',
-        noticesDevices && 'The church has a Facebook page and a WhatsApp group and a pastor who sends voice notes. The congregation has distributed itself across the digital infrastructure without leaving the building.',
+        noticesDevices && currentYear >= 2013 && 'The church has a Facebook page and a WhatsApp group and a pastor who sends voice notes. The congregation has distributed itself across the digital infrastructure without leaving the building.',
       ])]
     }
 

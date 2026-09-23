@@ -75,7 +75,7 @@ export const BODY_ARC_EVENTS = [
     text: () => pick([
       `You wake at 3am and do not go back to sleep for two hours. This happens once and then again and then you realize it is a pattern now, a consistent feature of the night rather than an anomaly in it. The 3am hour has a particular quality — the thoughts that arrive in it are not necessarily worse than daytime thoughts, but they have no competition.`,
       `The problem is not falling asleep. The problem is the waking at a specific hour in the middle of the night with a clarity that feels wrong for the time, and the subsequent difficulty returning to the state you were just in. The body's sleep architecture has apparently revised itself without consulting you.`,
-      `You lie awake at 3am doing nothing in particular. The mind finds things to do in the absence of guidance. Most of them are not useful. You have learned not to check your phone because the light makes it worse. You lie there instead, in the dark, in the particular company of 3am, which is a company everyone will eventually know.`,
+      `You lie awake at 3am doing nothing in particular. The mind finds things to do in the absence of guidance. Most of them are not useful. You have learned not to turn on the lamp because the light makes it worse. You lie there instead, in the dark, in the particular company of 3am, which is a company everyone will eventually know.`,
     ]),
     choices: null,
     effect: (p) => { p.h -= 2; p.setMem('bodyArc3am', true) },

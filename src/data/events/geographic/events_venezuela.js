@@ -212,7 +212,7 @@ const VENEZUELA_EVENTS = [
         text: 'You go. There is nothing left here to stay for that you couldn\'t rebuild somewhere else.',
         tag: null,
         outcome: 'The crossing to Colombia by bus, or the flight, or whatever route you found. You arrive in someone else\'s country with Venezuelan on your tongue and in the way you navigate a street.',
-        effect: (p) => { p.m -= 10; p.addFlag('venezuela_exodus'); p.addFlag('emigrated'); p.addFlag('ven_stayer'); p.setResidency('undocumented'); p.setMem('ven_emigrar', true); },
+        effect: (p) => { p.m -= 10; p.addFlag('venezuela_exodus'); p.addFlag('emigrated'); p.emigrateTo(['Colombia', 'Peru', 'Chile', 'Spain', 'United States']); p.addFlag('ven_stayer'); p.setResidency('undocumented'); p.setMem('ven_emigrar', true); },
       },
       {
         text: 'You stay. This is your country and leaving would be the last surrender.',

@@ -28,7 +28,7 @@ export const IMMIGRATION_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => (G.residencyStatus === 'undocumented' || G.residencyStatus === 'tourist_overstay') && G.age >= 18,
-    text: 'Someone follows you from the bus stop and takes your phone and the week\'s cash you were carrying home. You know the number to call. You do not call it. You cannot afford the questions they would ask, the forms they might generate. You walk the rest of the way home in the dark and tell nobody.',
+    text: 'Someone follows you from the bus stop and takes the week\'s cash you were carrying home. You know the number to call. You do not call it. You cannot afford the questions they would ask, the forms they might generate. You walk the rest of the way home in the dark and tell nobody.',
     choices: null,
     effect: (p) => { p.mo -= 300; p.m -= 15; p.r += 10; p.addFlag('victimized_no_recourse') },
   },
@@ -60,7 +60,7 @@ export const IMMIGRATION_EVENTS = [
     id: 'imm_undoc_child_born',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => (G.residencyStatus === 'undocumented' || G.residencyStatus === 'tourist_overstay') && G.age >= 20 && G.children && G.children.length > 0,
+    when: (G) => (G.residencyStatus === 'undocumented' || G.residencyStatus === 'tourist_overstay') && G.age >= 20 && G.youngestChildAge !== null && G.youngestChildAge <= 1,
     text: 'The baby is born here. You are not sure, exactly, what that means — whether it means what it used to mean, whether the laws have changed, whether they changed again. You hold the child and think about paperwork and then stop thinking about paperwork and just hold the child.',
     choices: [
       { text: 'Register the birth immediately and navigate whatever comes', tag: null, outcome: 'The certificate exists. The child has a number. What that number means in ten years is a question you cannot yet answer.', effect: (p) => { p.m += 5; p.r += 8; p.karma += 5; p.addFlag('child_born_abroad') } },
@@ -557,7 +557,7 @@ export const IMMIGRATION_EVENTS = [
         text: 'Go. Send money back.',
         tag: null,
         outcome: 'The room in Cologne has one window and a shared kitchen. The first transfer home goes out in the fifth week. It is more than your father earned in a season.',
-        effect: (p) => { p.mo += 2500; p.m -= 6; p.r += 6; p.addFlag('kurd_europe_diaspora'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('immKurdEurope', true) },
+        effect: (p) => { p.mo += 2500; p.m -= 6; p.r += 6; p.addFlag('kurd_europe_diaspora'); p.addFlag('emigrated'); p.emigrateTo('Germany'); p.setResidency('work_visa'); p.setMem('immKurdEurope', true) },
       },
       {
         text: 'Stay. The house needs someone in it.',

@@ -315,7 +315,7 @@ export const WEST_AFRICA_EVENTS = [
         text: 'You leave, or you are already planning to.',
         tag: 'left',
         outcome: 'The logic is rational at the individual level. The effect at scale is the thing you carry.',
-        effect: (p) => { p.m -= 6; p.r += 6; p.addFlag('brain_drain_gone'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('ghaBrainDrain', true); },
+        effect: (p) => { p.m -= 6; p.r += 6; p.addFlag('brain_drain_gone'); p.addFlag('emigrated'); p.emigrateTo(['United Kingdom', 'United States']); p.setResidency('work_visa'); p.setMem('ghaBrainDrain', true); },
       },
     ],
     effect: null,

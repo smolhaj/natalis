@@ -88,7 +88,7 @@ export const ZIMBABWE_EVENTS = [
         text: 'Leave — join the Zimbabwean diaspora in South Africa',
         tag: null,
         outcome: 'Johannesburg has a Zimbabwean district, Zimbabwean churches, Zimbabwean food if you know where. You arrive into it. The xenophobic violence of 2008 has not yet happened. You find work below your qualification and send money home.',
-        effect: (p) => { p.m -= 10; p.addFlag('zim_diaspora'); p.addFlag('emigrated'); p.setResidency('undocumented'); p.setMem('zimExodus', true); },
+        effect: (p) => { p.m -= 10; p.addFlag('zim_diaspora'); p.addFlag('emigrated'); p.emigrateTo('South Africa'); p.setResidency('undocumented'); p.setMem('zimExodus', true); },
       },
       {
         text: 'Stay — this is your country',
@@ -244,7 +244,7 @@ export const ZIMBABWE_EVENTS = [
         text: 'Go back — the country needs people who left to come back',
         tag: null,
         outcome: 'You go. It is not the same. You knew it would not be the same. You build something anyway, which is what you always did.',
-        effect: (p) => { p.m += 8; p.r += 5; p.addFlag('zim_diaspora_return'); p.setMem('zimDiasporaLate', true); },
+        effect: (p) => { p.m += 8; p.r += 5; p.addFlag('zim_diaspora_return'); p.returnHome(); p.setMem('zimDiasporaLate', true); },
       },
       {
         text: 'Stay — what you built here is real, even without the name you thought it would have',

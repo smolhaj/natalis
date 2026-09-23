@@ -350,7 +350,7 @@ export const INFRASTRUCTURE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.age >= 8 && G.age <= 70 && ['developing_urban', 'developing_unstable', 'subsaharan', 'post_soviet'].includes(G.archetype) && !G.mem?.ordPowerCutGood && Math.random() < 0.16,
-    text: `The power goes at eight and for once nobody is annoyed. Candles come out of the drawer they live in. Somebody's phone is at forty percent and is declared communal property. In the dark the conversation goes somewhere it does not go under a bulb, and when the lights come back on at eleven there is a small collective groan.`,
+    text: (G) => `The power goes at eight and for once nobody is annoyed. Candles come out of the drawer they live in. ${G.tech('smartphone') ? "Somebody's phone is at forty percent and is declared communal property." : "Somebody's transistor radio is declared communal property."} In the dark the conversation goes somewhere it does not go under a bulb, and when the lights come back on at eleven there is a small collective groan.`,
     choices: null,
     effect: (p) => { p.m += 8; p.s += 2; p.setMem('ordPowerCutGood', true) },
   },
