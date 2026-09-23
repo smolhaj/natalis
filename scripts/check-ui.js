@@ -103,14 +103,18 @@ async function overflowAt(label) {
 }
 /** The interface rules that can be read off computed style: no gradient on any control, and no choice styled differently from its siblings. */
 async function interfaceRules(label) {
+  // The cursor is still over the button the last click pressed, and its hover
+  // colour is not a styling difference. Park it before reading computed style.
+  await page.mouse.move(0, 0)
+  await sleep(200)
   const r = await page.evaluate(() => {
     const grad = [...document.querySelectorAll('button')].filter(b => /gradient/.test(getComputedStyle(b).backgroundImage)).map(b => b.innerText.slice(0, 30))
     const choices = [...document.querySelectorAll('main article button')].filter(b => !/What was happening/.test(b.innerText))
     const styles = new Set(choices.map(b => b.className + '|' + getComputedStyle(b).backgroundColor + '|' + getComputedStyle(b).borderColor))
-    return { grad, uneven: choices.length > 1 && styles.size > 1 }
+    return { grad, uneven: choices.length > 1 && styles.size > 1, styles: [...styles].join(' || ') }
   })
   if (r.grad.length) fail(`gradient on a control (${label}): ${r.grad.join(', ')}`)
-  if (r.uneven) fail(`choices styled differently from one another (${label})`)
+  if (r.uneven) fail(`choices styled differently from one another (${label}): ${r.styles}`)
 }
 async function resolveBlocking() {
   const skip = page.getByRole('button', { name: /Skip \(counts as failure\)/ })
