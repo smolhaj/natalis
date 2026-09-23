@@ -104,7 +104,7 @@ export const GUINEA_EVENTS = [
         text: 'You leave. Dakar, Paris, Montreal — somewhere the work is possible.',
         tag: 'exiled',
         outcome: 'The taxi to the airport. You carry two bags and the particular sensation of not knowing whether you are going to return. The city out the window in the morning light looks exactly like itself.',
-        effect: (p) => { p.m -= 10; p.e += 8; p.w += 2; p.addFlag('guinea_exile'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('gnEducatedLeaves', true) },
+        effect: (p) => { p.m -= 10; p.e += 8; p.w += 2; p.addFlag('guinea_exile'); p.addFlag('emigrated'); p.emigrateTo(['Senegal', 'France', 'Canada']); p.setResidency('work_visa'); p.setMem('gnEducatedLeaves', true) },
       },
       {
         text: 'You stay. You make the accommodations staying requires.',

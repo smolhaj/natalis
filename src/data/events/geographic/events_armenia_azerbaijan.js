@@ -26,20 +26,24 @@ const ARMENIA_AZ_EVENTS = [
     id: 'arm_earthquake_1988',
     phase: 'young_adult',
     weight: 6,
-    when: (G) => G.character.country.name === 'Armenia' && G.currentYear === 1988 && !G.flags.has('arm_earthquake_survivor'),
-    text: 'December 7, 1988. At 11:41 in the morning, the north of Armenia disappears. Spitak: gone in forty-three seconds. Leninakan: half the city collapsed. The television shows things you cannot look at directly. You spend three days with a shovel in the rubble. There are sounds under the concrete — not many, and getting fewer.',
+    // Latched on its own marker, not on arm_earthquake_survivor: the Spitak
+    // world event sets that flag for everyone in Armenia before 1988's event is
+    // drawn, so the negation closed this to every Armenian it was written for.
+    // The world event also carries the date and the minute, so this does not.
+    when: (G) => G.character.country.name === 'Armenia' && G.currentYear === 1988 && !G.mem?.armEarthquake1988,
+    text: 'By the afternoon the size of it is known. Spitak: gone in forty-three seconds. Leninakan: half the city collapsed. The television shows things you cannot look at directly. You spend three days with a shovel in the rubble. There are sounds under the concrete — not many, and getting fewer.',
     choices: [
       {
         text: 'You were in the affected zone.',
         tag: 'survivor',
         outcome: 'You were in a building that held. The family of four in the building next to you was not.',
-        effect: (p) => { p.m -= 20; p.h -= 8; p.r += 8; p.addFlag('arm_earthquake_survivor'); p.addFlag('arm_earthquake_zone'); },
+        effect: (p) => { p.m -= 20; p.h -= 8; p.r += 8; p.addFlag('arm_earthquake_survivor'); p.setMem('armEarthquake1988', true); p.addFlag('arm_earthquake_zone'); },
       },
       {
         text: 'You were in Yerevan, and went north to help.',
         tag: 'volunteer',
         outcome: 'The buses north were full of people carrying shovels and blankets. You dug for three days. You found three people alive. You found more who were not.',
-        effect: (p) => { p.m -= 14; p.h -= 5; p.r += 6; p.addFlag('arm_earthquake_survivor'); },
+        effect: (p) => { p.m -= 14; p.h -= 5; p.r += 6; p.addFlag('arm_earthquake_survivor'); p.setMem('armEarthquake1988', true); },
       },
     ],
   },
@@ -155,20 +159,25 @@ const ARMENIA_AZ_EVENTS = [
     id: 'azr_black_january',
     phase: 'young_adult',
     weight: 6,
-    when: (G) => G.character.country.name === 'Azerbaijan' && G.currentYear === 1990 && !G.flags.has('azr_black_january_generation'),
-    text: 'January 19, 1990. Soviet troops enter Baku after midnight. You hear it before you understand what it is: armored vehicles on the Neftchilar Avenue. The government had already cut the television. By morning the count is 131 dead — shot in the streets, crushed by vehicles, found in doorways. The coffins laid out in Azadliq Square fill the square. At the funerals, people tear their Soviet passports in half. The communist party membership cards go into the coffins. You keep yours — not from belief, but because you do not know yet what comes next.',
+    // Latched on its own marker: baku_black_january_1990 sets
+    // azr_black_january_generation before 1990's event is drawn, so negating it
+    // closed this to every Azerbaijani, and azr_black_january_witness (texture,
+    // a ribbon) had no reachable setter. The world event carries the date and
+    // the count, so this does not repeat them.
+    when: (G) => G.character.country.name === 'Azerbaijan' && G.currentYear === 1990 && !G.mem?.azrBlackJanuary,
+    text: 'You hear it before you understand what it is: armored vehicles on Neftchilar Avenue, after midnight, and the television already dark. By morning there are people shot in the streets, crushed by vehicles, found in doorways. The coffins laid out in Azadliq Square fill the square. At the funerals, people tear their Soviet passports in half. The communist party membership cards go into the coffins. You keep yours — not from belief, but because you do not know yet what comes next.',
     choices: [
       {
         text: 'You were on the street that night.',
         tag: 'witness',
         outcome: 'You pressed yourself into a doorway when the armored column passed. The sound of it stayed in your body for months.',
-        effect: (p) => { p.m -= 16; p.r += 8; p.karma += 4; p.addFlag('azr_black_january_generation'); p.addFlag('azr_black_january_witness'); },
+        effect: (p) => { p.m -= 16; p.r += 8; p.karma += 4; p.addFlag('azr_black_january_generation'); p.setMem('azrBlackJanuary', true); p.addFlag('azr_black_january_witness'); },
       },
       {
         text: 'You heard it from your apartment window.',
         tag: 'heard',
         outcome: 'The next morning you walked to Azadliq Square. The flowers were already there. The coffins were already there.',
-        effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('azr_black_january_generation'); },
+        effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('azr_black_january_generation'); p.setMem('azrBlackJanuary', true); },
       },
     ],
   },

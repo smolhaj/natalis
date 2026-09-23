@@ -39,7 +39,7 @@ export const EMIGRANT_INTEGRATION_EVENTS = [
       !G.mem?.emigUnwrittenRules,
     text: (G) => {
       const newCountry = G.currentCountry?.name ?? 'this country'
-      return `You understand the rules now — the written ones, and the ones underneath the written ones. The precise distance to stand from a stranger. The tone used in an email to a superior. When it is acceptable to be direct and when that directness will be read as hostility. You learned these rules without a lesson, from mistake and correction and observation. They are not your native rules. You follow them, which is different from having them.`
+      return `You understand the rules now — the written ones, and the ones underneath the written ones. The precise distance to stand from a stranger. The tone used in ${G.tech('email') ? 'an email' : 'a letter'} to a superior. When it is acceptable to be direct and when that directness will be read as hostility. You learned these rules without a lesson, from mistake and correction and observation. They are not your native rules. You follow them, which is different from having them.`
     },
     choices: null,
     effect: (p) => {

@@ -116,7 +116,7 @@ export const MOROCCO_EVENTS = [
         text: 'Cross. You know someone who knows the captain.',
         tag: 'crossed',
         outcome: 'The crossing takes three hours and you spend them very still. You arrive. The first six months are the hardest six months of your life.',
-        effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('moroccan_diaspora'); p.addFlag('emigrated'); p.setResidency('undocumented'); p.setMem('morStraitDecision', true) },
+        effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('moroccan_diaspora'); p.addFlag('emigrated'); p.emigrateTo('Spain'); p.setResidency('undocumented'); p.setMem('morStraitDecision', true) },
       },
       {
         text: 'Stay. The other side is not what people say.',

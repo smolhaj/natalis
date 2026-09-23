@@ -314,7 +314,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_wait_news',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s6WaitNews,
+    when: (G) => G.tech('mobile_phone') && (G.age >= 30 && !G.mem?.s6WaitNews),
     text: 'Waiting for news about someone. You do not know yet whether it will be the good version or the bad version. Your phone is in your hand. The interval between not knowing and knowing has a particular texture: it is not quite fear but it is the awareness of fear\'s shape, its outline in the air before it lands.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s6WaitNews', true) },

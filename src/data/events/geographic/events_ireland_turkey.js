@@ -23,7 +23,7 @@ export const IRELAND_TURKEY_EVENTS = [
         text: 'You leave. London, Boston, somewhere.',
         tag: null,
         outcome: 'The boat-train from Dun Laoghaire, or the airport at Shannon. You join the generation that is Irish at one remove.',
-        effect: (p) => { p.m -= 5; p.addFlag('irish_emigrant_generation'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('ireEmigration', true) },
+        effect: (p) => { p.m -= 5; p.addFlag('irish_emigrant_generation'); p.addFlag('emigrated'); p.emigrateTo(['United Kingdom', 'United States']); p.setResidency('work_visa'); p.setMem('ireEmigration', true) },
       },
       {
         text: 'You stay. You are not sure why.',

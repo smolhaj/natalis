@@ -143,6 +143,7 @@ export const DISEASE_ARC_EVENTS = [
       ['Thailand', 'Indonesia', 'South Korea', 'Malaysia'].includes(G.character.country?.name) &&
       G.currentYear >= 1997 && G.currentYear <= 1999 &&
       G.age >= 20 && G.age <= 50 &&
+      !G.flags.has('asian_crisis_personal') && // id98_crisis_texture told this life already
       !G.mem?.asianCrisis97,
     text: `The baht falls forty percent in a week. Or the rupiah. Or the won. It falls and keeps falling because the logic that held it up is the same logic that everyone is now revising simultaneously. The money your family has saved over the past fifteen years is in the bank. The bank is still there. The currency is worth half what it was last month. The savings are still there; they are worth half.`,
     choices: [

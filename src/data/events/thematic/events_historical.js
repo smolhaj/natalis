@@ -241,11 +241,11 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_iran_revolution',
     phase: null,
     weight: 8,
-    when: (G) => G.character.country.name === 'Iran' && G.currentYear === 1979 && G.age >= 12 && !G.mem?.iran_revolution,
+    when: (G) => G.character.country.name === 'Iran' && G.currentYear === 1979 && G.age >= 12 && !G.mem?.iran_revolution && !G.mem?.iranRevolutionWeek,
     text: 'The Shah has fled. The Ayatollah has returned. The streets are full of people who seem to believe that what comes next will be better. You are not sure yet what you believe.',
     choices: [
-      { text: 'Join the revolutionary crowds', tag: null, outcome: 'The energy is like nothing you\'ve felt. The Republic that follows will be very different from what many who marched imagined they were marching toward.', effect: (p) => { p.m += 5; p.s += 3; p.addFlag('revolutionary'); p.setMem('iran_revolution', true) } },
-      { text: 'Watch carefully from home', tag: null, outcome: 'You see the direction early. You begin making contingency plans.', effect: (p) => { p.e += 5; p.setMem('iran_revolution', true) } },
+      { text: 'Join the revolutionary crowds', tag: null, outcome: 'The energy is like nothing you\'ve felt. The Republic that follows will be very different from what many who marched imagined they were marching toward.', effect: (p) => { p.m += 5; p.s += 3; p.addFlag('revolutionary'); p.setMem('iran_revolution', true); p.setMem('iranRevolutionWeek', true) } },
+      { text: 'Watch carefully from home', tag: null, outcome: 'You see the direction early. You begin making contingency plans.', effect: (p) => { p.e += 5; p.setMem('iran_revolution', true); p.setMem('iranRevolutionWeek', true) } },
     ],
   },
 
@@ -454,7 +454,10 @@ export const HISTORICAL_EVENTS = [
       G.currentYear >= 1971 && G.currentYear <= 1972 &&
       G.age >= 6 &&
       !G.flags.has('liberation_war_witnessed') &&
-      !G.mem?.histLiberationWar,
+      !G.mem?.histLiberationWar &&
+      // the same war as ca_bangladesh_liberation_war and its victory; one life
+      // is told it once
+      !G.mem?.bdLiberationWar,
     text: 'In March the army comes out of the cantonment at night and the university does not open again that term. For nine months the country is a set of things you learn not to say on the road: which bridge is held, whose brother has gone across to train, what the word razakar means when it is used about a neighbour. In December the Indian aircraft come over low and the surrender is signed in a racecourse in Dhaka. Your family counts who is still here. The count is not the same as it was in February.',
     context: 'Following the Pakistani army\'s Operation Searchlight in March 1971, an estimated 300,000 to 3 million people were killed and around 10 million fled to India. Bangladesh became independent on 16 December 1971.',
     choices: null,

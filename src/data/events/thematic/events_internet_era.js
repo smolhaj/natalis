@@ -235,6 +235,7 @@ export const INTERNET_ERA_EVENTS = [
       G.age >= 18 &&
       G.currentYear >= 1997 && G.currentYear <= 1999 &&
       ['Thailand', 'Indonesia', 'South Korea', 'Malaysia', 'Philippines'].includes(G.character.country.name) &&
+      !G.flags.has('asian_crisis_personal') && // id98_crisis_texture told this life already
       !G.mem?.asianCrisisPersonal,
     text: 'The baht collapsed in July and the currency your salary was paid in lost a third of its value in a month. The IMF has arrived with conditions that the government accepted in a room with no cameras. What the conditions mean, practically: the government job your father relied on has a hiring freeze. The bank your savings were in is being restructured. The word restructuring means the same thing as the word collapse, spoken more quietly.',
     choices: [

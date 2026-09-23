@@ -811,4 +811,348 @@ export const NEW_ROSTER_FLAGS = {
     weight: 'major', category: 'legacy', intent: 'event',
     description: 'Talked for an hour into a recorder, and said the bit about the sky twice.',
   },
+
+  // ── Kabyle Algeria (events_kabylie.js) ────────────────────────────────────
+  kab_regrouped: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Moved down the mountain into a French regroupement camp while the village above became a forbidden zone.',
+    notes: 'Set by kab_regroupement. Consumed by kab_ft_regroupement.',
+  },
+  kab_school_no_tamazight: {
+    weight: 'moderate', category: 'education', intent: 'event',
+    description: 'Schooled in an Arabic nobody at home spoke, with the language of the house punished in the yard.',
+    notes: 'Set by kab_school_arabic. Consumed by kab_ft_school_child and kab_official_2016.',
+  },
+  kab_tafsut_1980: {
+    weight: 'major', category: 'political', intent: 'event',
+    description: 'Was there for the Berber Spring of April 1980.',
+    notes: 'Set by kab_spring_campus and kab_spring_village. Consumed by kab_ft_tafsut and kab_official_2016.',
+  },
+  kab_boycott_year: {
+    weight: 'moderate', category: 'education', intent: 'event',
+    description: 'Lost the school year 1994-95 to the schoolbag strike.',
+    notes: 'Set by kab_boycott_pupil. Consumed by kab_ft_boycott.',
+  },
+  kab_matoub_1998: {
+    weight: 'moderate', category: 'cultural', intent: 'event',
+    description: 'Lived through the killing of Matoub Lounès and the week the mountains burned for him.',
+    notes: 'Set by kab_matoub_killed. Consumed by kab_ft_matoub.',
+  },
+  kab_black_spring: {
+    weight: 'major', category: 'political', intent: 'event',
+    description: 'Lived through the Black Spring of 2001 in Kabylie, 126 dead.',
+    notes: 'Set by kab_black_spring_young and kab_black_spring_witness. Consumed by kab_ft_black_spring, kab_aarch, kab_national_2002.',
+  },
+  kab_aarch_delegate: {
+    weight: 'moderate', category: 'community', intent: 'event',
+    description: 'Sat for the village in the aarch coordination of 2001.',
+    notes: 'Set by kab_aarch. Consumed by kab_ft_aarch.',
+  },
+  kab_emigrant_france: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Left the Kabyle village for France, and owes it a line in the notebook.',
+    notes: 'Set by kab_leave_old and kab_leave_new. Consumed by kab_ft_emigrant_money and kab_ft_emigrant_return.',
+  },
+  kab_flag_2019: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Held the Amazigh flag in 2019, the year it became an arrestable thing to carry.',
+    notes: 'Set by kab_flag_2019. Consumed by kab_ft_flag.',
+  },
+
+  // ── Amhara Ethiopia (events_amhara.js) ────────────────────────────────────
+  amh_church_school: {
+    weight: 'moderate', category: 'religion', intent: 'event',
+    description: 'Learned the fidel and the Psalms of David in Ge\'ez under the tree by the church.',
+    notes: 'Set by amh_church_school. Consumed by amh_ft_church_school.',
+  },
+  amh_zemecha_student: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Sent to a southern village in the 1975 Zemecha to teach in Amharic.',
+    notes: 'Set by amh_zemecha. Consumed by amh_ft_zemecha.',
+  },
+  amh_derg_soldier: {
+    weight: 'major', category: 'military', intent: 'event',
+    description: 'Conscripted into the Derg army and sent north.',
+    notes: 'Set by amh_derg_conscript. Consumed by amh_ft_walked_home (May 1991).',
+  },
+  amh_walked_home: {
+    weight: 'moderate', category: 'military', intent: 'event',
+    description: 'Walked home through Tigray when the Derg army dissolved in 1991.',
+    notes: 'Set by amh_ft_walked_home. Consumed by amh_ft_veteran.',
+  },
+  amh_resettled: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Put on a Derg resettlement truck from Wollo to Wollega in the 1984-86 famine.',
+    notes: 'Set by amh_resettlement. Consumed by amh_ft_mete and amh_ft_leave_wollega.',
+  },
+  amh_1991_reclassified: {
+    weight: 'moderate', category: 'identity', intent: 'event',
+    description: 'Became, after 1991, Amhara on a card before Ethiopian anywhere else.',
+    notes: 'Set by amh_1991. Consumed by amh_ft_reclassified.',
+  },
+  amh_2005_voter: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Voted in the 2005 election and saw what the count cost.',
+    notes: 'Set by amh_2005. Consumed by amh_ft_2015.',
+  },
+  amh_2016_protest: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Joined the stay-at-home strikes of the 2016 Amhara protests.',
+    notes: 'Set by amh_2016. Consumed by amh_ft_2018.',
+  },
+  amh_war_2021: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Lived the 2020-22 war from an Amhara village, as its front line or its recruiting ground.',
+    notes: 'Set by amh_war_wollo and amh_war_gojjam. Consumed by amh_ft_after_pretoria.',
+  },
+  amh_gulf_worker: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Went to Saudi Arabia as a domestic worker, by the agency or by the sea road.',
+    notes: 'Set by amh_gulf. Consumed by amh_ft_gulf_contract, amh_ft_gulf_deported, amh_ft_gulf_house.',
+  },
+
+  // ── Tajik Afghanistan (events_afghan_tajik.js) ────────────────────────────
+  taj_panjshir_1982: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Hid in the side valleys of the Panjshir while the Soviet columns burned the villages.',
+    notes: 'Set by taj_panjshir_offensive. Consumed by taj_ft_tanks.',
+  },
+  taj_jamiat_fighter: {
+    weight: 'major', category: 'military', intent: 'event',
+    description: 'Went up to the ridge with Massoud\'s men as a boy.',
+    notes: 'Set by taj_mujahid. Consumed by taj_ft_disarm.',
+  },
+  taj_herat_1979: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Lived through the Herat uprising of March 1979 and its reprisal.',
+    notes: 'Set by taj_herat_1979. Consumed by taj_ft_herat_grave.',
+  },
+  taj_kabul_1992: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Was in Kabul when the mujahideen factions fought over it, 1992-95.',
+    notes: 'Set by taj_kabul_1992. Consumed by taj_ft_amnesty.',
+  },
+  taj_shomali_burned: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Driven off the Shomali plain in 1999 when the Taliban cut the vines and burned the villages.',
+    notes: 'Set by taj_shomali_1999. Consumed by taj_ft_replant.',
+  },
+  taj_golden_needle: {
+    weight: 'major', category: 'education', intent: 'event',
+    description: 'Studied literature in Herat under the Taliban, disguised as a sewing class.',
+    notes: 'Set by taj_golden_needle. Consumed by taj_ft_needle.',
+  },
+  taj_massoud_2001: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Heard, two days before the towers, that Massoud was dead.',
+    notes: 'Set by taj_massoud. Consumed by taj_ft_massoud_week.',
+  },
+  taj_iran_worker: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Crossed into Iran without papers to carry cement on Tehran building sites.',
+    notes: 'Set by taj_iran_work. Consumed by taj_ft_deported.',
+  },
+  taj_panjshir_2021: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Was in the Panjshir when the Taliban flag went up over Bazarak, which in forty years had never happened.',
+    notes: 'Set by taj_panjshir_2021. Consumed by taj_ft_valley_after.',
+  },
+
+  // ── Mende Sierra Leone (events_mende.js) ────────────────────────────────────
+  mende_poro: {
+    weight: 'moderate', category: 'identity', intent: 'event',
+    description: 'Went into the Poro bush as a boy and came out with the marks on his back.',
+    notes: 'Set by mende_poro. Consumed by mende_ft_poro.',
+  },
+  mende_sande: {
+    weight: 'moderate', category: 'identity', intent: 'event',
+    description: 'Went into the Sande bush as a girl, with everything that meant.',
+    notes: 'Set by mende_sande. Consumed by mende_ft_sande_daughter.',
+  },
+  mende_digger: {
+    weight: 'moderate', category: 'economic', intent: 'event',
+    description: 'Dug for diamonds for three seasons at Tongo or in Kono, for a supporter.',
+    notes: 'Set by mende_diamonds. Consumed by mende_ft_digger.',
+  },
+  mende_1982: {
+    weight: 'major', category: 'political', intent: 'event',
+    description: 'Was in Pujehun when the villages burned after the 1982 election.',
+    notes: 'Set by mende_ndogboyosoi. Consumed by mende_ft_1982.',
+  },
+  mende_under_ruf: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Stayed in the village when the RUF came in 1991, and lived under them.',
+    notes: 'Set by mende_ruf_kailahun / mende_ruf_pujehun. Consumed by mende_ruf_farm and mende_ft_trc.',
+  },
+  mende_fled_kailahun: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Walked from Kailahun to Kenema when the RUF came in 1991.',
+    notes: 'Set by mende_ruf_kailahun. Consumed by mende_ft_return_kailahun.',
+  },
+  mende_refugee_guinea: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Fled over the border to the camps at Gueckedou in 1991.',
+    notes: 'Set by mende_ruf_kailahun. Consumed by mende_ft_return_kailahun.',
+  },
+  mende_fled_pujehun: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Walked from Pujehun to the camp at Gondama outside Bo in 1991.',
+    notes: 'Set by mende_ruf_pujehun. Consumed by mende_ft_return_pujehun.',
+  },
+  mende_displaced: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Village burned in the mid-nineties war; walked to Bo and never went back.',
+    notes: 'Set by mende_flight_south. Consumed by mende_ft_displaced.',
+  },
+  mende_kamajor: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Was initiated into the Kamajors and held a checkpoint on the Bo road.',
+    notes: 'Set by mende_kamajor. Consumed by mende_ft_kamajor, mende_norman, mende_ft_norman.',
+  },
+  mende_norman: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Watched Hinga Norman arrested by the Special Court in 2003.',
+    notes: 'Set by mende_norman. Consumed by mende_ft_norman.',
+  },
+  mende_ebola: {
+    weight: 'major', category: 'loss', intent: 'event',
+    description: 'Lost an aunt to Ebola in 2014 and faced the burial team.',
+    notes: 'Set by mende_ebola. Consumed by mende_ft_ebola.',
+  },
+  mende_dv: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Won the American diversity visa lottery and went.',
+    notes: 'Set by mende_dv_lottery. Consumed by mende_ft_america.',
+  },
+
+  // ── Hawiye Somalia (events_hawiye.js) ───────────────────────────────────────
+  haw_campaign_1974: {
+    weight: 'moderate', category: 'education', intent: 'event',
+    description: 'Learned, or taught, the new Somali script in the 1974 rural literacy campaign.',
+    notes: 'Set by haw_campaign_rural / haw_campaign_student. Consumed by haw_ft_campaign.',
+  },
+  haw_resettled: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Taken off the grazing land by truck in the 1974-75 drought and made a farmer on the river.',
+    notes: 'Set by haw_dabadheer. Consumed by haw_ft_resettled.',
+  },
+  haw_ogaden: {
+    weight: 'major', category: 'military', intent: 'event',
+    description: 'Went to the Ogaden war in 1977 and walked back in 1978.',
+    notes: 'Set by haw_ogaden_call. Consumed by haw_ft_ogaden.',
+  },
+  haw_sheltered: {
+    weight: 'major', category: 'moral', intent: 'event',
+    description: 'Hid a Darod family from the USC in January 1991.',
+    notes: 'Set by haw_usc_city. Consumed by haw_ft_neighbour.',
+  },
+  haw_door_shut: {
+    weight: 'major', category: 'moral', intent: 'event',
+    description: 'Kept the door shut when the Darod family across the lane came to it in January 1991.',
+    notes: 'Set by haw_usc_city. Consumed by haw_ft_door.',
+  },
+  haw_green_line: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Lived through the four months Mogadishu fired on itself across the Green Line.',
+    notes: 'Set by haw_green_line. Consumed by haw_ft_green_line.',
+  },
+  haw_1993: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Was in Mogadishu in 1993, the summer of the hunt for Aidid and the third of October.',
+    notes: 'Set by haw_1993. Consumed by haw_ft_film.',
+  },
+  haw_afgooye: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Fled Mogadishu for the Afgooye road in 2007.',
+    notes: 'Set by haw_ethiopians. Consumed by haw_ft_afgooye.',
+  },
+  haw_kenya: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Crossed into Kenya, to Dadaab and then Eastleigh.',
+    notes: 'Set by haw_flee_kenya. Consumed by haw_ft_eastleigh.',
+  },
+  haw_minneapolis: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Resettled from Eastleigh to Minneapolis.',
+    notes: 'Set by haw_ft_eastleigh. Consumed by haw_ft_minneapolis.',
+  },
+
+  // ── Halpulaar Senegal (events_fouta.js) ─────────────────────────────────────
+  fouta_emigrant: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Sold two cows for the ticket and went to the foyer in Montreuil.',
+    notes: 'Set by fouta_emigrate. Consumed by fouta_ft_emigrant_house and fouta_ft_emigrant_return.',
+  },
+  fouta_deportees: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Took in a family expelled across the river from Mauritania in 1989.',
+    notes: 'Set by fouta_deportees. Consumed by fouta_ft_deportees.',
+  },
+  fouta_1989: {
+    weight: 'moderate', category: 'moral', intent: 'event',
+    description: 'Was there when the Mauritanian shop was emptied in April 1989.',
+    notes: 'Set by fouta_1989. Consumed by fouta_ft_1989.',
+  },
+  fouta_herd_lost: {
+    weight: 'major', category: 'economic', intent: 'event',
+    description: 'Lost the family herd on the Mauritanian bank when the border closed in 1989.',
+    notes: 'Set by fouta_herd_seized. Consumed by fouta_ft_herd.',
+  },
+  fouta_pulaar_writer: {
+    weight: 'moderate', category: 'education', intent: 'event',
+    description: 'Learned to write Pulaar, with the hooked letters, at an evening class.',
+    notes: 'Set by fouta_pulaar_class. Consumed by fouta_ft_letter.',
+  },
+  fouta_went_dakar: {
+    weight: 'moderate', category: 'migration', intent: 'event',
+    description: 'Left the Fouta for an uncle\'s stall in Sandaga and a room in Pikine.',
+    notes: 'Set by fouta_to_dakar. Consumed by fouta_ft_dakar_children.',
+  },
+
+  // ── Malinke Guinea (events_upper_guinea.js) ─────────────────────────────────
+  mgn_gold: {
+    weight: 'moderate', category: 'economic', intent: 'event',
+    description: 'Worked the dry-season gold pits near Siguiri.',
+    notes: 'Set by mgn_gold. Consumed by mgn_ft_gold.',
+  },
+  mgn_normes_hid: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Hid sacks under a false floor rather than deliver the full norme.',
+    notes: 'Set by mgn_normes. Consumed by mgn_ft_normes.',
+  },
+  mgn_1976: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Lived next door to a Peul family through the 1976 speeches.',
+    notes: 'Set by mgn_1976. Consumed by mgn_ft_boiro_names.',
+  },
+  mgn_1985: {
+    weight: 'major', category: 'political', intent: 'event',
+    description: 'Saw the Malinke shops looted after Diarra Traore\'s coup failed in July 1985.',
+    notes: 'Set by mgn_1985. Consumed by mgn_ft_1985.',
+  },
+  mgn_2010_sheltered: {
+    weight: 'major', category: 'moral', intent: 'event',
+    description: 'Stood in front of a Peul trader\'s stall in Upper Guinea in October 2010.',
+    notes: 'Set by mgn_2010_violence. Consumed by mgn_ft_2010_sheltered.',
+  },
+  mgn_2010_stood: {
+    weight: 'major', category: 'moral', intent: 'event',
+    description: 'Walked the other way while a Peul trader\'s stall was pulled down in October 2010.',
+    notes: 'Set by mgn_2010_violence. Consumed by mgn_ft_2010_stood.',
+  },
+  mgn_2021: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Saw a colonel from Kankan take the palace in September 2021.',
+    notes: 'Set by mgn_2021. Consumed by mgn_ft_2021.',
+  },
+  mgn_abidjan: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Went down to Abidjan to a cousin\'s stall in Adjame.',
+    notes: 'Set by mgn_abidjan. Consumed by mgn_ft_abidjan.',
+  },
+  mgn_libya: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Paid the first stage of the road north and ended up in Libya.',
+    notes: 'Set by mgn_mediterranean. Consumed by mgn_ft_libya.',
+  },
 }

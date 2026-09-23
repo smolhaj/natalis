@@ -216,7 +216,7 @@ export const MYANMAR_DEPTH_EVENTS = [
           p.r += 6
           p.m -= 4
           p.addFlag('mya_dep_spring_revolution')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo(['Thailand', 'India'])
           p.setResidency('refugee_status')
           p.setMem('myaDepSpring', true)
         },

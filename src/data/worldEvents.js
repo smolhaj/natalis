@@ -1,3 +1,5 @@
+import { INDEPENDENCE_YEAR } from './history.js'
+
 // Large disasters kill or displace a small fraction of a national population.
 // Firing the full "you were in it" narration and its stat penalty at every
 // citizen of the country is wrong; so is dropping the event. This returns a
@@ -9,6 +11,28 @@ function inDisasterZone(character, salt, percent) {
   let h = 7
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 100003
   return h % 100 < percent
+}
+
+// Partition moved people across two provinces, Punjab and Bengal, and into
+// the cities that took them in. The refugee branch was a flat 22% of every
+// Indian and Pakistani character, so a Dalit girl in rural Uttar Pradesh — a
+// thousand kilometres from the line, in a village whose own module says "the
+// line does not come near the village" — was told she walked in the column at
+// night, and carried "You crossed the border during the Partition" to her
+// death screen. Muhajirs are the people who came; for everyone else the zone
+// is the Punjab and the cities that received them.
+function inPartitionBelt(G) {
+  const cn = G.character?.country?.name
+  const placeId = (G.birthPlace ?? G.place)?.id
+  if (cn === 'Pakistan') {
+    if (G.ethnicity === 'muhajir') return true
+    return ['pk_lahore', 'pk_rural', 'pk_karachi'].includes(placeId) && inDisasterZone(G.character, 'partition1947', 30)
+  }
+  if (cn === 'India') {
+    if (G.religion === 'sikh') return inDisasterZone(G.character, 'partition1947', 55)
+    return placeId === 'in_delhi' && inDisasterZone(G.character, 'partition1947', 30)
+  }
+  return false
 }
 
 // The 'post_soviet' archetype in countries.js covers the whole former Eastern
@@ -274,7 +298,7 @@ export const WORLD_EVENTS = [
     when: (G) => !['Central America', 'South America', 'Caribbean', 'North America'].includes(G.character.country.region),
     narrative: 'You are among hundreds of thousands crossing the Mediterranean in an inflatable boat. The crossing takes hours. Some boats sink. Whether you reach land, and which land, and what happens when you do — these are decided by wind and coast guards and the politics of countries that are not yours.',
     context: 'The 2015–16 European refugee crisis saw over 1.3 million people seek asylum in Europe — the largest influx since World War II. Most fled Syria, Afghanistan, and Eritrea. The Aegean and central Mediterranean were the main crossings; an estimated 3,771 people drowned in the Mediterranean in 2015 alone. The crisis divided the EU: Germany accepted over one million asylum seekers; Hungary, Poland, and other Eastern European states built fences and refused EU-mandated relocation quotas. The political backlash fuelled the rise of far-right parties across Europe and shaped elections for a decade.',
-    effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('refugee'); },
+    effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('refugee'); p.emigrateTo(['Germany', 'Germany', 'Sweden', 'Italy', 'Greece'], { residency: 'asylum_seeker' }) },
     addFlags: ['refugee', 'displaced', 'emigrated'],
     minAge: 0,
   },
@@ -1501,7 +1525,7 @@ export const WORLD_EVENTS = [
     addFlags: ['partition_survivor', 'war_childhood'],
     minAge: 0,
     // The families who actually crossed the line get partition_india_refugee instead.
-    when: (G) => G.age <= 40 && !inDisasterZone(G.character, 'partition1947', 22),
+    when: (G) => G.age <= 40 && !inPartitionBelt(G),
   },
 
   {
@@ -1515,7 +1539,7 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m -= 25; p.h -= 15; p.w -= 10; p.addFlag('partition_refugee'); p.addFlag('lost_home'); p.addFlag('displaced'); p.addFlag('refugee'); },
     addFlags: ['partition_refugee', 'lost_home', 'war_childhood'],
     minAge: 0,
-    when: (G) => G.age <= 40 && inDisasterZone(G.character, 'partition1947', 22),
+    when: (G) => G.age <= 40 && inPartitionBelt(G),
   },
 
   {
@@ -1698,7 +1722,7 @@ export const WORLD_EVENTS = [
     countries: ['Vietnam'],
     narrative: 'The boat is smaller than you imagined when you paid the broker. There are more people than the number you agreed to. The sea is not what you were told to expect. The destination — Malaysia, Hong Kong, the Philippines — is a rumour. What you are leaving is certain. What you are going to is not.',
     context: 'Between 1975 and 1995, an estimated 800,000–1 million Vietnamese fled by sea, primarily ethnic Chinese Vietnamese and former South Vietnamese. An estimated 200,000–400,000 died at sea from drowning, piracy, or dehydration. Those who reached land spent years in UNHCR camps in Southeast Asia and Hong Kong before being resettled or — from the late 1980s — repatriated. The crisis produced the largest refugee processing operation in UNHCR history.',
-    effect: (p) => { p.h -= 12; p.m -= 18; p.w -= 10; p.addFlag('boat_person'); p.addFlag('refugee'); p.addFlag('emigrated'); p.setResidency('refugee_status'); },
+    effect: (p) => { p.h -= 12; p.m -= 18; p.w -= 10; p.addFlag('boat_person'); p.addFlag('refugee'); p.addFlag('emigrated'); p.emigrateTo(['United States', 'Australia', 'Canada', 'France']); p.setResidency('refugee_status'); },
     addFlags: ['boat_person', 'refugee', 'emigrated', 'south_vietnamese'],
     minAge: 0,
     when: (G) => G.flags.includes('south_vietnamese') || G.flags.includes('saigon_fell'),
@@ -3169,7 +3193,15 @@ export const WORLD_EVENTS = [
     context: 'Much of the developing world gained independence from European powers in the 1950s-60s. By the 1970s, many newly independent nations faced coups, single-party states, IMF structural adjustment conditions, and continued economic dependency on former colonial powers. The gap between independence-era promise and lived reality shaped a generation\'s political consciousness.',
     effect: (p) => { p.m -= 6; p.r += 6 },
     addFlags: ['independence_disillusionment'],
-    when: (G) => !G.flags.includes('independence_disillusionment'),
+    // "Independence was ten, fifteen years ago" was reaching every
+    // developing_urban country, which is most of Latin America — Peru has been
+    // independent since 1821 — and Turkey and Thailand, which were never
+    // colonised. It is true only where the flag actually changed recently.
+    when: (G) => {
+      const indep = INDEPENDENCE_YEAR[(G.currentCountry ?? G.character?.country)?.name]
+      return indep != null && G.currentYear - indep >= 5 && G.currentYear - indep <= 25 &&
+        !G.flags.includes('independence_disillusionment')
+    },
   },
 
   // ── Central American arc ──────────────────────────────────────────────────

@@ -221,9 +221,9 @@ export const COHERENCE_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) =>
-      G.flags.has('friend_group_scattered') &&
+      G.tech('smartphone') && (G.flags.has('friend_group_scattered') &&
       !G.mem?.cohFriendScatterEcho &&
-      G.age >= 33 && G.age <= 44,
+      G.age >= 33 && G.age <= 44),
     text: 'You see them occasionally — a wedding, an anniversary, a visit that happens once every few years and then takes eighteen months to schedule again. The group that defined your early twenties exists now mainly as a group chat and a set of faces you can still read at a glance, even after the gap. The closeness is real. The proximity is not. You have both and you have learned they are different things.',
     choices: null,
     effect: (p) => {

@@ -705,7 +705,12 @@ export function generateEpitaph(state) {
   if (any('refugee', 'displaced') && !any('genocide_survivor', 'tutsi_hidden')) {
     if (any('sought_asylum', 'refugee_status')) {
       para2.push(`${He} fled and was eventually granted refuge. The years of waiting between were their own kind of sentence.`)
-    } else if (leftTheCountry || any('refugee')) {
+    // The `refugee` flag alone is not a border. Nineteen events set it for
+    // flight inside the country — "Find a way to flee", the road that is not
+    // safe — and an Iranian who spent his whole life in Tehran was told he had
+    // been carried across borders. Partition is the exception: the border
+    // moved across the character, and `currentCountry` cannot record that.
+    } else if (leftTheCountry || any('partition_refugee', 'partition_survivor', 'returned_home')) {
       para2.push(`${He} was carried across borders by forces larger than any single life.`)
     } else {
       para2.push(`${He} was moved by forces larger than any single life, though never out of the country ${he} was born in. Most displacement looks like that.`)
@@ -1026,6 +1031,13 @@ export function generateEpitaph(state) {
   }
 
   // ── The years taken ──────────────────────────────────────────────────────────
+  // The generic prison line above fires on the same flags, so an obituary read
+  // "She served time. Prison changes people. ... She served a sentence. It
+  // closed doors that stayed closed." The specific account replaces it.
+  if (f('political_prisoner') || f('served_prison_time') || f('imprisoned')) {
+    const generic = para3.indexOf(`${He} served time. Prison changes people.`)
+    if (generic >= 0) para3.splice(generic, 1)
+  }
   if (f('political_prisoner')) {
     const yrs = state.mem?.originalSentence
     para3.push(oneOf([
@@ -1141,7 +1153,9 @@ export function generateEpitaph(state) {
   }
 
   // Fallback — only if overall content is sparse AND para5 not already filled
-  if (para1.length + para2.length + para3.length + para4.length + para5.length < 3) {
+  // Not for a child: "decisions he made from within them" closed the obituary
+  // of a three-year-old who died of pneumonia.
+  if (age >= 12 && para1.length + para2.length + para3.length + para4.length + para5.length < 3) {
     para5.push(`${name}'s life was shaped by circumstances ${he} did not choose, and decisions ${he} made from within them.`)
   }
 
@@ -1252,8 +1266,10 @@ export function generateLifeNotes(state) {
   // Same distinction as the epitaph: "A refugee" for a life that never left the
   // country is simply wrong, and it was printing on 13 of 48 lives.
   const crossed = (state.currentCountry?.name ?? state.character?.country?.name) !== state.character?.country?.name
-  if (any('refugee') && !any('genocide_survivor', 'tutsi_hidden')) add(70, 'A refugee.')
-  else if (f('displaced') && !any('genocide_survivor', 'tutsi_hidden')) add(70, crossed ? 'A refugee.' : 'Displaced, inside their own country.')
+  const borderMoved = any('partition_refugee', 'partition_survivor', 'returned_home')
+  if (any('refugee', 'displaced') && !any('genocide_survivor', 'tutsi_hidden')) {
+    add(70, crossed || borderMoved ? 'A refugee.' : 'Displaced, inside their own country.')
+  }
   if (f('famine_memory') || f('famine_survivor')) add(70, 'Survived famine.')
 
   // Notable choices (priority 60)

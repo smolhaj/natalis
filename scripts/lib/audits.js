@@ -759,11 +759,21 @@ export async function auditNarratedMoves() {
     // the step. A new world, cold and unfamiliar" — unmistakable to a reader
     // and invisible to a pattern built around move/relocate/emigrate.
     + String.raw`|\b[Tt]he family takes the step\b|\bA new world\b`
-    + String.raw`|\b[Yy]ou (?:land|arrive) in [A-Z]`,
+    + String.raw`|\b[Yy]ou (?:land|arrive) in [A-Z]`
+    // `bra_nordestino_migration`: "São Paulo receives you and processes you
+    // into its economy" — a city taking somebody in, with no verb of leaving.
+    + String.raw`|\b[A-Z][\wà-ÿ]+(?: [A-Z][\wà-ÿ]+)? receives you\b`,
   )
+  // A function `text` is prose too. `bra_nordestino_migration` writes its body
+  // as `(G) => yr <= 1970 ? '...' : '...'`, and reading only string bodies made
+  // every era-branched event invisible here — the same shape as the negation
+  // exemption in check-anachronisms, an audit exempting what it exists to read.
   const bodies = (e) => {
     const out = []
-    const push = (v) => { if (typeof v === 'string') out.push(v) }
+    const push = (v) => {
+      if (typeof v === 'string') out.push(v)
+      else if (typeof v === 'function') out.push(fnSource(v))
+    }
     push(e.text)
     for (const c of e.choices ?? []) { push(c?.text); push(c?.outcome) }
     return out.join(' \n ')
@@ -822,12 +832,13 @@ export async function auditUnwrittenGroups() {
   // is still there after somebody has closed it.
   //
   // And exclude the files that merely DECLARE the ids. `countries.js` defines
-  // every one of them and `identity.js` gives their religion distribution, so
+  // every one of them, `identity.js` gives their religion distribution and
+  // `places.js` maps them to a birthplace via `homeOf`, so
   // scanning those makes every id trivially "named" and the audit reports zero
   // forever — the same shape as the negation exemption that made
   // check-anachronisms blind to the sentences worth auditing. Scan the files
   // that would USE an id.
-  const DECLARES = /src[/\\]data[/\\](countries|identity)\.js$/
+  const DECLARES = /src[/\\]data[/\\](countries|identity|places)\.js$/
   let corpus = ''
   for (const { rel, content } of sourceFiles()) {
     if (DECLARES.test(rel)) continue
@@ -911,6 +922,252 @@ export async function auditUnwrittenGroups() {
   return findings
 }
 
+/**
+ * A chain whose second link can never follow its first.
+ *
+ * One event resolves per year. `ba_camp` required a flag its own trigger set
+ * in 1992 and was itself confined to 1992, so a character could only hold the
+ * flag AFTER the one year the camp could fire, and it was dead for every
+ * Bosnian the engine ever drew. `ca_bangladesh_liberation_victory` was the
+ * same shape: 16 December 1971, behind a mem key only the March 1971 event
+ * sets. Every other audit here passes both — the flag IS set, the year IS
+ * inside the country's range, the phase does reach the age. The fault is the
+ * ORDER, and it is only visible with the two windows side by side.
+ *
+ * For every event B that hard-requires a flag or a mem key, collect every
+ * event A whose effect sets it. The earliest year A can resolve is A's lower
+ * year bound, and B needs a strictly later year. If every setter's earliest
+ * year is at or after the last year B can fire, B is unreachable:
+ *   same-year-chain     — the windows meet (both confined to 1971)
+ *   chain-setter-after  — every setter opens after B's window has closed
+ *
+ * It stays silent whenever anything else could be the setter: a world event's
+ * `addFlags`, an engine or store write, a choice `tag`, a template, a helper
+ * the effect calls, or any `addFlag`/`setMem` in source the event scan cannot
+ * attribute to an event. A setter whose window it cannot read counts as open.
+ * A false "this is dead" costs more than a missed one.
+ */
+export function chainWindowFindings(events, opts = {}) {
+  const files = opts.files ?? sourceFiles()
+  const findings = []
+  const byId = new Map()
+  for (const e of events) if (e?.id && !byId.has(e.id)) byId.set(e.id, e)
+  const uniq = [...byId.values()]
+
+  const effectText = (e) => [e.effect, ...(e.choices ?? []).map(c => c?.effect)]
+    .filter(f => typeof f === 'function').map(fnSource).join(' \n ')
+  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const count = (text, re) => (text.match(re) ?? []).length
+
+  // Setters attributed to events, and how many call sites each accounts for.
+  const flagSetters = new Map()
+  const memSettersOf = new Map()
+  const flagEvCount = new Map()
+  const memEvCount = new Map()
+  const note = (map, counts, key, id) => {
+    if (!map.has(key)) map.set(key, new Set())
+    map.get(key).add(id)
+    counts.set(key, (counts.get(key) ?? 0) + 1)
+  }
+  for (const e of uniq) {
+    const eff = effectText(e)
+    for (const m of eff.matchAll(/addFlag\(\s*['"]([A-Za-z_0-9]+)['"]\s*\)/g)) note(flagSetters, flagEvCount, m[1], e.id)
+    for (const m of eff.matchAll(/setMem\(\s*['"]([A-Za-z_0-9]+)['"]/g)) note(memSettersOf, memEvCount, m[1], e.id)
+  }
+
+  // Everything else that could set it, read from source text. Any hit — or
+  // more call sites in source than the events account for — makes it "open".
+  const allText = files.map(f => f.content).join('\n')
+  const engineText = files.filter(f => /src[/\\](engine|store)[/\\]/.test(f.rel)).map(f => f.content).join('\n')
+  const otherFlag = new Set()
+  const dynamicFlag = []
+  for (const { content } of files) {
+    for (const m of content.matchAll(/(?:flags|addFlags|flagsAdded)\s*(?::|=)\s*\[|flags\s*\.\s*push\s*\(/g)) {
+      const block = balancedRegion(content, m.index + m[0].length - 1)
+      for (const lit of block.matchAll(/'([A-Za-z_0-9]+)'|"([A-Za-z_0-9]+)"/g)) otherFlag.add(lit[1] ?? lit[2])
+    }
+    for (const m of content.matchAll(/\b(?:tag|addFlag|flag|survivorFlag|addictionFlag|setsFlag|grantsFlag)\s*:\s*['"]([A-Za-z_0-9]+)['"]/g)) otherFlag.add(m[1])
+    for (const m of content.matchAll(/addFlag\(\s*`([^`]*)`/g)) {
+      if (!m[1].includes('${')) { otherFlag.add(m[1]); continue }
+      dynamicFlag.push(new RegExp('^' + m[1].split(/\$\{[^}]*\}/).map(esc).join('[A-Za-z_0-9]+') + '$'))
+    }
+  }
+  const flagOpen = (f) => otherFlag.has(f) || dynamicFlag.some(re => re.test(f)) ||
+    count(allText, new RegExp(`addFlag\\(\\s*['"]${esc(f)}['"]`, 'g')) > (flagEvCount.get(f) ?? 0)
+  const memOpen = (k) => {
+    if (new RegExp(`\\b${esc(k)}\\b`).test(engineText)) return true
+    // mem.[flag]Year from TIMESTAMPED_FLAGS, and lastMajorEvent_*: composed
+    // at runtime by the engine, never spelled as a literal.
+    if (/Year$/.test(k) && new RegExp(`['"]${esc(k.slice(0, -4))}['"]`).test(engineText)) return true
+    if (/^lastMajorEvent_/.test(k)) return true
+    if (new RegExp(`mem\\s*(?:\\??\\.\\s*${esc(k)}\\s*=[^=]|\\[\\s*['"]${esc(k)}['"]\\s*\\]\\s*=[^=])`).test(allText)) return true
+    return count(allText, new RegExp(`setMem\\(\\s*['"]${esc(k)}['"]`, 'g')) > (memEvCount.get(k) ?? 0)
+  }
+
+  const yearLo = (e) => {
+    const src = fnSource(e?.when)
+    if (!src) return -Infinity
+    const b = numericBounds(src, 'currentYear')
+    return b.sawLo ? b.lo : -Infinity
+  }
+  const yearHi = (e) => {
+    const src = fnSource(e?.when)
+    if (!src) return Infinity
+    const b = numericBounds(src, 'currentYear')
+    return b.sawHi ? b.hi : Infinity
+  }
+
+  for (const b of uniq) {
+    const rawSrc = fnSource(b.when)
+    if (!rawSrc) continue
+    const bb = numericBounds(rawSrc, 'currentYear')
+    if (!bb.sawHi || bb.hi === Infinity) continue
+    const src = stripComments(rawSrc)
+    const reqs = new Map()
+    for (const { flag, required } of flagChecksWithContext(src)) if (required) reqs.set('flag:' + flag, ['flag', flag])
+    for (const { key, required } of memChecksWithContext(src)) if (required) reqs.set('mem:' + key, ['mem', key])
+    for (const [kind, key] of reqs.values()) {
+      const setters = kind === 'flag' ? flagSetters.get(key) : memSettersOf.get(key)
+      if (!setters) continue // nothing sets it at all: reverse-flags' job
+      if (kind === 'flag' ? flagOpen(key) : memOpen(key)) continue
+      const others = [...setters].filter(id => id !== b.id)
+      if (others.length === 0) continue
+      const los = others.map(id => [id, yearLo(byId.get(id))])
+      const earliest = Math.min(...los.map(([, lo]) => lo))
+      const what = kind === 'flag' ? `flag '${key}'` : `mem.${key}`
+      if (earliest < bb.hi) {
+        // Reachable, but only just: the setters have exactly one year in
+        // which firing them still leaves B a year to follow, and they stay
+        // open into B's own last year, where firing them is wasted — as
+        // `id98_suharto_falls` (1998) behind a 1997-98 crisis event is.
+        const his = others.map(id => yearHi(byId.get(id)))
+        const viable = new Set()
+        for (const [i, [, lo]] of los.entries()) {
+          const top = Math.min(his[i], bb.hi - 1)
+          if (lo === -Infinity || top - lo > 1) { viable.add('open'); viable.add('wide'); break }
+          for (let y = lo; y <= top; y++) viable.add(y)
+        }
+        if (viable.size === 1 && Math.max(...his) >= bb.hi) {
+          findings.push(finding(WARN, 'chain-squeezed', b.id, locate(b.id),
+            `requires ${what} by ${bb.hi}; its setters (${others.join(', ')}) have one useful year, ` +
+            `${[...viable][0]}, and stay open into ${bb.hi} where firing them is too late`))
+        }
+        continue
+      }
+      const code = earliest === bb.hi ? 'same-year-chain' : 'chain-setter-after'
+      findings.push(finding(ERR, code, b.id, locate(b.id),
+        `requires ${what} and can fire no later than ${bb.hi}, but only ` +
+        los.map(([id, lo]) => `${id} (from ${lo})`).join(', ') + ' sets it — ' +
+        (code === 'same-year-chain'
+          ? 'one event resolves per year, so it arrives after the last year this can fire'
+          : 'every setter opens after this window has closed')))
+    }
+  }
+  return findings
+}
+
+/**
+ * The mem keys a guard reads as a positive requirement: a bare truthy term,
+ * `=== <truthy literal>`, `> n` / `>= n>0`, or `year - G.mem.x >= n`.
+ * `(G.mem.x ?? 0) < 3` and `!G.mem.x` are not requirements, and anything
+ * under an `||` is demoted, exactly as for flags.
+ */
+export function memChecksWithContext(src) {
+  const out = []
+  const re = /(!?)\s*(?:[A-Za-z_$][\w$]*\s*\??\s*\.\s*)*\bmem\s*\??\s*\.\s*([A-Za-z_]\w*)/g
+  for (const m of src.matchAll(re)) {
+    if (m[1] === '!') continue
+    const before = src.slice(Math.max(0, m.index - 3), m.index)
+    const after = src.slice(m.index + m[0].length, m.index + m[0].length + 40)
+    const truthy = /^\s*(?:&&|\)|;|$)/.test(after) ||
+      /^\s*===?\s*(?:true\b|'[^']+'|"[^"]+"|[1-9])/.test(after) ||
+      /^\s*>\s*\d|^\s*>=\s*[1-9]/.test(after) ||
+      (/-\s*$/.test(before) && /^\s*(?:>=?|<=?)\s*\d/.test(after))
+    if (!truthy) continue
+    out.push({ key: m[2], required: !hasOrInScope(src, m.index) })
+  }
+  return out
+}
+
+/**
+ * The same order fault with a world event as the first link.
+ *
+ * World events resolve BEFORE the year's character event is drawn, in the
+ * first year of their range the character is eligible for. So a dated event
+ * that negates a flag a world event hands out — `!G.flags.has('x')` meaning
+ * "not already told" — is closed from that year on to everyone the world event
+ * reached. `id98_riot_night` negated `jakarta_98_survived`, which the May 1998
+ * world event sets for every Chinese Indonesian before 1998's draw, and
+ * `id98_crisis_texture` negated `asian_crisis_generation`, set by the 1997
+ * crisis world event: both were closed to the whole population they were
+ * written for, and every audit here passed them.
+ *
+ * A warning, because a world event's own `when` can narrow who it reaches and
+ * that cannot be read statically. The case it reports is the one to look at: a
+ * world event scoped to the event's own country, open in or before the
+ * event's first year, at an age the event's guard admits.
+ */
+export function worldFlagBlockFindings(events, worldEvents, opts = {}) {
+  const files = opts.files ?? sourceFiles()
+  const fileText = new Map(files.map(f => [f.rel, f.content]))
+  const findings = []
+  const byFlag = new Map()
+  for (const we of worldEvents) {
+    if (!Array.isArray(we.years) || !Array.isArray(we.countries) || !we.countries.length) continue
+    const flags = new Set(we.addFlags ?? [])
+    for (const m of fnSource(we.effect).matchAll(/addFlag\(\s*['"]([A-Za-z_0-9]+)['"]/g)) flags.add(m[1])
+    for (const f of flags) {
+      if (!byFlag.has(f)) byFlag.set(f, [])
+      byFlag.get(f).push(we)
+    }
+  }
+  // A guard that reads its country through a module helper — IS_NG(G),
+  // IS_INDONESIA(G) — names no country itself. Inline the helper's body from
+  // the event's own file so the country can be read.
+  const inlineHelpers = (src, id) => {
+    const rel = (locate(id).match(/^(.*):\d+$/) ?? [])[1]
+    const text = rel ? fileText.get(rel) : null
+    if (!text) return src
+    let out = src
+    for (const m of src.matchAll(/\b([A-Za-z_$][\w$]*)\(\s*G\s*\)/g)) {
+      const def = text.match(new RegExp(`const\\s+${m[1]}\\s*=\\s*\\(\\s*G\\s*\\)\\s*=>\\s*([^\\n]+)`))
+      if (def) out += ' && ' + def[1]
+    }
+    return out
+  }
+  const seen = new Set()
+  for (const e of events) {
+    if (!e?.id || seen.has(e.id)) continue
+    seen.add(e.id)
+    const raw = fnSource(e.when)
+    if (!raw) continue
+    const yb = numericBounds(raw, 'currentYear')
+    if (!yb.sawLo || !yb.sawHi || yb.hi - yb.lo > 3) continue
+    const src = stripComments(raw)
+    if (/\|\|/.test(src)) continue
+    const { required } = countriesInGuard(inlineHelpers(src, e.id))
+    if (required.size === 0) continue
+    const PHASE_LO = { childhood: 6, adolescence: 12, young_adult: 18, midlife: 30, late_life: 50 }
+    const minAge = Math.max(numericBounds(raw, 'age').lo, PHASE_LO[e.phase] ?? 0, 0)
+    for (const m of src.matchAll(/!\s*(?:[A-Za-z_$][\w$]*\s*\??\s*\.\s*)*flags\s*\??\s*\.\s*(?:has|includes)\(\s*['"]([A-Za-z_0-9]+)['"]\s*\)/g)) {
+      for (const we of byFlag.get(m[1]) ?? []) {
+        if (![...required].every(c => we.countries.includes(c))) continue
+        if (we.years[0] > yb.lo || we.years[1] < yb.lo) continue
+        if ((we.minAge ?? 0) > Math.max(minAge, 0) + 5) continue
+        findings.push(finding(WARN, 'world-flag-blocks', e.id, locate(e.id),
+          `negates flag '${m[1]}', which world event ${we.id} (${we.years.join('-')}, ${we.countries.join('/')}) ` +
+          `sets before ${yb.lo}'s event is drawn — closed from then on to everyone that world event reaches`))
+      }
+    }
+  }
+  return findings
+}
+
+export async function auditChainWindows() {
+  const { allCharacterEvents, WORLD_EVENTS } = await loadCorpus()
+  return [...chainWindowFindings(allCharacterEvents), ...worldFlagBlockFindings(allCharacterEvents, WORLD_EVENTS)]
+}
+
 export const AUDITS = [
   ['reverse-flags', 'flags a guard requires that nothing sets', auditReverseFlags],
   ['enum-domains', 'string literals compared against an enum they are not in', auditEnumDomains],
@@ -922,6 +1179,7 @@ export const AUDITS = [
   ['season-country', 'seasons a guard demands that its country cannot have', auditSeasonInCountry],
   ['silent-choice', 'choices that apply an effect and print no outcome', auditSilentChoices],
   ['narrated-move', 'prose that narrates leaving where no effect moves anyone', auditNarratedMoves],
+  ['chain-window', 'chains whose next link can only fire before its trigger sets it', auditChainWindows],
   ['unwritten-group', 'populations the roster models that no guard has ever named', auditUnwrittenGroups],
 ]
 

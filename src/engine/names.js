@@ -114,8 +114,27 @@ export function personName(country, gender, state, opts = {}) {
     // behind them, and drawing blind from a thirty-name pool married a
     // Stefanie Zimmermann to a Simon Zimmermann.
     const own = state?.character?.surnameBase ?? state?.character?.surname
-    const pool = (country?.surnames ?? []).filter(n => n !== own)
+    const pool = (country?.surnames ?? []).filter(n => n !== own && n !== first)
     base = pickFrom(pool.length ? pool : (country?.surnames ?? []))
   }
   return `${first} ${surnameFor(country, base, gender)}`.trim()
+}
+
+/**
+ * The surname a child of this character is given.
+ *
+ * Every child took the CHARACTER's surname, so when the character was a woman
+ * the children carried their mother's family name in countries where that was
+ * never the practice: a Dalit woman in Uttar Pradesh married Rajesh Singh and
+ * raised seven children called Das. Across nearly all of the roster, for
+ * nearly all of the period, a child born inside a marriage took the father's
+ * name. A woman without a partner still gives her own.
+ */
+export function childSurname(state) {
+  // The base form: `character.surname` is already feminised in Slavic naming.
+  const own = state?.character?.surnameBase ?? state?.character?.surname ?? ''
+  if (state?.character?.gender !== 'female') return own
+  const full = state?.partner?.name
+  if (!full || !full.includes(' ')) return own
+  return full.slice(full.indexOf(' ') + 1)
 }

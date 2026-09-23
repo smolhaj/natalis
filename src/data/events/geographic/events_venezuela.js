@@ -124,7 +124,7 @@ const VENEZUELA_EVENTS = [
       G.character.country.name === 'Venezuela' &&
       G.currentYear >= 2013 && G.currentYear <= 2013 &&
       G.age >= 15 &&
-      !G.mem?.ven_chavez_death,
+      !G.mem?.ven_chavez_death && !G.mem?.venChavezDeath,
     text: (G) => {
       const isChavista = G.flags.has('chavista_generation') || G.flags.has('bolivarian_generation')
       return isChavista
@@ -132,7 +132,7 @@ const VENEZUELA_EVENTS = [
         : 'March 5, 2013. The announcement comes from Maduro on the state channel. Chávez is dead. Whatever you thought of him, the country is going to change. The oil is still at a hundred dollars a barrel. The successor is the man Chávez chose. The experiment continues without the person who began it, which is a different experiment.'
     },
     choices: null,
-    effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('ven_chavez_death_generation'); p.setMem('ven_chavez_death', true); },
+    effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('ven_chavez_death_generation'); p.setMem('ven_chavez_death', true); p.setMem('venChavezDeath', true); },
   },
 
   // ── THE COLLAPSE BEGINS ───────────────────────────────────────────────────────
@@ -212,7 +212,7 @@ const VENEZUELA_EVENTS = [
         text: 'You go. There is nothing left here to stay for that you couldn\'t rebuild somewhere else.',
         tag: null,
         outcome: 'The crossing to Colombia by bus, or the flight, or whatever route you found. You arrive in someone else\'s country with Venezuelan on your tongue and in the way you navigate a street.',
-        effect: (p) => { p.m -= 10; p.addFlag('venezuela_exodus'); p.addFlag('emigrated'); p.addFlag('ven_stayer'); p.setResidency('undocumented'); p.setMem('ven_emigrar', true); },
+        effect: (p) => { p.m -= 10; p.addFlag('venezuela_exodus'); p.addFlag('emigrated'); p.emigrateTo(['Colombia', 'Peru', 'Chile', 'Spain', 'United States']); p.addFlag('ven_stayer'); p.setResidency('undocumented'); p.setMem('ven_emigrar', true); },
       },
       {
         text: 'You stay. This is your country and leaving would be the last surrender.',

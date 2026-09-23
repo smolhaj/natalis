@@ -226,7 +226,9 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_no_phone_era',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.currentYear >= 1960 && G.currentYear <= 1985 && G.age >= 18 && G.age <= 28,
+    // "You are in a new city" for someone who had never left the village.
+    when: (G) => G.currentYear >= 1960 && G.currentYear <= 1985 && G.age >= 18 && G.age <= 28 &&
+      !!G.place && G.place.id !== G.birthPlace?.id && G.place.type !== 'rural',
     text: 'You are in a new city for the first time. There is no way to reach your family except by letter, which takes a week, or a long-distance call from a phone box with coins. You write a letter. You are genuinely on your own in a way that people born later will find difficult to imagine.',
     choices: null,
     effect: (p) => { p.m -= 6; p.e += 5; p.addFlag('pre_mobile_independence') },
@@ -235,7 +237,8 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_pre_internet_research',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.currentYear >= 1970 && G.currentYear <= 1993 && G.age >= 12 && G.age <= 18,
+    when: (G) => G.currentYear >= 1970 && G.currentYear <= 1993 && G.age >= 12 && G.age <= 18 &&
+      G.literate !== false && !G.flags.has('never_schooled'),
     text: 'You need information for a school project. You go to the library. You look in the card catalogue. You find three books and read through all of them to find the two paragraphs you need. The information is imprecise and hard-won. You are more careful with it than you would be if it were easy to find.',
     choices: null,
     effect: (p) => { p.e += 6; p.m -= 2 },

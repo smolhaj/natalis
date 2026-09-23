@@ -101,7 +101,7 @@ const IRAQ_EVENTS = [
         text: 'You find a way out — to Jordan, to the Gulf states, to wherever a visa can be got',
         tag: null,
         outcome: 'The Iraqi diaspora of the 1990s is doctors and engineers who could not afford medicine or engineering in Iraq. You are in it now.',
-        effect: (p) => { p.w -= 6; p.addFlag('irq_sanctions_generation'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('irq_sanctions', true); },
+        effect: (p) => { p.w -= 6; p.addFlag('irq_sanctions_generation'); p.addFlag('emigrated'); p.emigrateTo(['Jordan', 'UAE']); p.setResidency('work_visa'); p.setMem('irq_sanctions', true); },
       },
     ],
     effect: null,

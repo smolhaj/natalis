@@ -81,8 +81,13 @@ export const INDONESIA_EVENTS = [
     id: 'id98_crisis_texture',
     phase: 'young_adult',
     weight: 4,
-    when: (G) => IS_INDONESIA(G) && G.currentYear >= 1997 && G.currentYear <= 1998 && !G.flags.has('jakarta_98_survived') && !G.flags.has('asian_crisis_generation'),
-    text: 'The *rupiah* was 2,400 to the dollar in July. It is 17,000 now. The shelves at the shop your uncle runs are thinning. He cannot price in *rupiah* anymore — his suppliers want dollars, and dollars cost seven times what they did eight months ago. On the radio, the government is still talking about fundamentals.',
+    // 1997 only, and latched on the two generic crisis events rather than on
+    // `asian_crisis_generation`: that flag is set by the 1997 world event,
+    // which runs before the year's event is drawn, so this was closed to every
+    // Indonesian old enough to read it — and id98_suharto_falls and
+    // id98_bystander, which need its flag by 1998, were closed with it.
+    when: (G) => IS_INDONESIA(G) && G.currentYear === 1997 && !G.flags.has('jakarta_98_survived') && !G.mem?.asianCrisisPersonal && !G.mem?.asianCrisis97,
+    text: 'The *rupiah* was 2,400 to the dollar in July. By December it is past 5,000. Sixteen banks were closed on the first of November, and the queues outside the ones still open go round the block. The shelves at the shop your uncle runs are thinning. His suppliers want dollars now, and dollars cost twice what they did in the summer. On the radio, the government is still talking about fundamentals.',
     effect: (p) => { p.m -= 8; p.w -= 5; p.addFlag('asian_crisis_personal') },
   },
 
@@ -90,7 +95,11 @@ export const INDONESIA_EVENTS = [
     id: 'id98_graffiti',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => IS_CHINESE_INDONESIAN(G) && IS_INDONESIA(G) && G.currentYear === 1998 && G.flags.has('asian_crisis_personal') && !G.flags.has('id98_targeted_by_name'),
+    // 1996-97, not 1998: the anti-Chinese riots of those two years (Situbondo,
+    // Tasikmalaya, Rengasdengklok, Makassar) came before the crash, and a wall
+    // does not wait for one. Confined to 1998 it could only ever take the riot's
+    // year, and the riot, which required its flag, could never follow it.
+    when: (G) => IS_CHINESE_INDONESIAN(G) && IS_INDONESIA(G) && G.currentYear >= 1996 && G.currentYear <= 1997 && !G.flags.has('id98_targeted_by_name') && !G.flags.has('jakarta_98_survived'),
     text: 'Someone has written on the wall outside the shop. *Cina pulang* — Chinese go home. Your family has been in this city for three generations. You were born in this neighbourhood. You paint over it the same evening, before your mother sees.',
     effect: (p) => { p.m -= 12; p.addFlag('id98_targeted_by_name') },
   },
@@ -101,26 +110,32 @@ export const INDONESIA_EVENTS = [
     id: 'id98_riot_night',
     phase: 'young_adult',
     weight: 5,
-    when: (G) => IS_CHINESE_INDONESIAN(G) && IS_INDONESIA(G) && G.currentYear === 1998 && G.flags.has('id98_targeted_by_name') && !G.flags.has('jakarta_98_survived'),
-    text: 'The smoke is visible from three streets away. You know which shops are burning — you can tell by the direction. The phone lines are jammed. You don\'t know where your cousin is. The street outside your building is quiet, then briefly not, then quiet again.',
+    // Dead twice over. It required id98_graffiti's flag, and both were confined
+    // to 1998 with one event per year; and it negated jakarta_98_survived,
+    // which the indonesia_may_1998_riots world event sets for every Chinese
+    // Indonesian before 1998's event is drawn. That world event narrates the
+    // afternoon (and opened with this event's first sentence); this is the
+    // night, and the choice, so it latches on its own marker instead.
+    when: (G) => IS_CHINESE_INDONESIAN(G) && IS_INDONESIA(G) && G.currentYear === 1998 && !G.mem?.id98RiotNight,
+    text: 'You know which shops are burning — you can tell by the direction. The phone lines are jammed. You don\'t know where your cousin is. The street outside your building is quiet, then briefly not, then quiet again.',
     choices: [
       {
         text: 'Lock the doors and wait.',
         tag: 'stayed',
         outcome: 'The building holds. By morning the street is ash and broken glass and then, strangely, ordinary again. You count people you can\'t reach.',
-        effect: (p) => { p.m -= 18; p.h -= 5; p.addFlag('jakarta_98_survived') },
+        effect: (p) => { p.m -= 18; p.h -= 5; p.addFlag('jakarta_98_survived'); p.setMem('id98RiotNight', true) },
       },
       {
         text: 'Go to a neighbour\'s — they offered.',
         tag: 'sheltered',
         outcome: 'A Javanese family three doors down takes you in. You sleep on their floor. You have known them for years and this is the first time you have eaten together.',
-        effect: (p) => { p.m -= 10; p.karma += 6; p.addFlag('jakarta_98_survived') },
+        effect: (p) => { p.m -= 10; p.karma += 6; p.addFlag('jakarta_98_survived'); p.setMem('id98RiotNight', true) },
       },
       {
         text: 'Try to reach family across the city.',
         tag: 'moved',
         outcome: 'You see things on the way that you do not describe afterward. You find your family. You all stay together for a week.',
-        effect: (p) => { p.m -= 20; p.h -= 8; p.addFlag('jakarta_98_survived') },
+        effect: (p) => { p.m -= 20; p.h -= 8; p.addFlag('jakarta_98_survived'); p.setMem('id98RiotNight', true) },
       },
     ],
   },
@@ -131,7 +146,10 @@ export const INDONESIA_EVENTS = [
     id: 'id98_suharto_falls',
     phase: 'young_adult',
     weight: 4,
-    when: (G) => IS_INDONESIA(G) && G.currentYear === 1998 && G.flags.has('asian_crisis_personal') && !G.flags.has('reformasi_generation'),
+    // Not for a Chinese Indonesian: May 1998 is the riot for them, a week
+    // earlier, and the resignation drawn against it (with the crisis
+    // follow-through boost) took the year 3 times in 4.
+    when: (G) => IS_INDONESIA(G) && !IS_CHINESE_INDONESIAN(G) && G.currentYear === 1998 && G.flags.has('asian_crisis_personal') && !G.flags.has('reformasi_generation'),
     text: 'May 21. Suharto reads a statement on television. After thirty-two years, he is resigning. Students are on the roof of parliament. The word that is already on everyone\'s lips is *reformasi* — reform. You don\'t know yet what it will mean.',
     effect: (p) => { p.m += 10; p.addFlag('reformasi_generation') },
   },
@@ -153,7 +171,7 @@ export const INDONESIA_EVENTS = [
         text: 'Sell what remains and go.',
         tag: 'emigrated',
         outcome: 'Singapore, Australia, the United States — the community has spread across every city with a university and an airport. You join them.',
-        effect: (p) => { p.addFlag('id98_emigrated'); p.addFlag('emigrated'); p.setResidency('work_visa') },
+        effect: (p) => { p.addFlag('id98_emigrated'); p.addFlag('emigrated'); p.emigrateTo(['Singapore', 'Australia', 'United States']); p.setResidency('work_visa') },
       },
       {
         text: 'Stay but do not rebuild. Work for someone else.',

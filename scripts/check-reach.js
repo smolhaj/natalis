@@ -30,6 +30,7 @@
  *   npm run check-reach                  careers and countries
  *   npm run check-reach -- --lives=40    more lives per condition
  *   npm run check-reach -- --only=career
+ *   npm run check-reach -- --only=group  a population inside a country
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -193,6 +194,9 @@ async function main() {
       ['Nigeria', 1962, 'geographic/events_nigeria_midcentury.js'],
       ['India', 1955, 'geographic/events_india_depth.js'],
       ['Peru', 1960, 'geographic/events_peru_depth.js'],
+      ['Peru', 1975, 'geographic/events_peru_depth.js'],
+      ['Peru', 1960, 'geographic/events_peru_midcentury.js'],
+      ['Peru', 1948, 'geographic/events_peru_midcentury.js'],
     ]
     console.log(`\n${B('country modules')}  ${DIM(`for a character born there, what share of the module ever fires · ${LIVES} lives each`)}\n`)
     for (const [country, birthYear, rel] of MODULES) {
@@ -211,6 +215,45 @@ async function main() {
       if (mark !== GRN('✓')) problems++
       console.log(`  ${mark} ${country.padEnd(26)} ${bar(share)} ${String(Math.round(share * 100)).padStart(3)}%  ` +
         DIM(`${distinct.size}/${watch.size} events · born ${birthYear}`) + (note ? `  ${YEL(note)}` : ''))
+    }
+  }
+
+  // ── Groups ─────────────────────────────────────────────────────────────────
+  // The same question for a population inside a country, which is what
+  // `unwritten-group` reports. The engine cannot be asked for an ethnicity, so
+  // the character is drawn normally — birth year anywhere in the country's
+  // range, place and wealth as the engine chooses — and handed the identity at
+  // birth. Nothing else about the draw is forced: the point is to measure the
+  // module against the lives the engine actually produces for this group.
+  if (!ONLY || ONLY === 'group') {
+    const GROUPS = [
+      ['Brazil', 'pardo_brazilian', 'geographic/events_brazil_pardo.js'],
+      ['Cuba', 'mulatto_cuban', 'geographic/events_cuba_mulatto.js'],
+    ]
+    const { COUNTRIES } = await import('../src/data/countries.js')
+    console.log(`\n${B('groups')}  ${DIM(`for a character of this group, what share of its module ever fires · ${LIVES} lives each, any birth year`)}\n`)
+    for (const [country, ethnicity, rel] of GROUPS) {
+      const watch = idsIn(`src/data/events/${rel}`)
+      if (!watch || !watch.size) { console.log(`  ${RED('?')} ${country.padEnd(26)} no ids in ${rel}`); problems++; continue }
+      const [lo, hi] = COUNTRIES.find(c => c.name === country)?.yearRange ?? [1930, 2005]
+      let lives = 0, livesSeeing = 0, fired = 0
+      const distinct = new Set()
+      for (let i = 0; i < LIVES; i++) {
+        const birthYear = lo + Math.floor(Math.random() * (hi - lo + 1))
+        const r = playLife(engine, {
+          country, birthYear, watch, setupAge: 0,
+          setup: (s) => ({ ...s, character: { ...s.character, ethnicity } }),
+        })
+        lives++
+        if (r.seen.size) livesSeeing++
+        fired += r.seen.size
+        for (const id of r.seen) distinct.add(id)
+      }
+      const share = lives ? livesSeeing / lives : 0
+      const [mark, note] = verdict(livesSeeing, lives, distinct.size, watch.size)
+      if (mark !== GRN('✓')) problems++
+      console.log(`  ${mark} ${`${country}:${ethnicity}`.padEnd(26)} ${bar(share)} ${String(Math.round(share * 100)).padStart(3)}%  ` +
+        DIM(`${distinct.size}/${watch.size} events · ${(fired / Math.max(1, lives)).toFixed(1)} per life`) + (note ? `  ${YEL(note)}` : ''))
     }
   }
 

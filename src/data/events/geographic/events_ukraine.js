@@ -86,20 +86,20 @@ export const UKRAINE_EVENTS = [
       G.character.country.name === 'Ukraine' &&
       G.currentYear === 2004 &&
       G.age >= 14 &&
-      !G.mem?.ukrOrangeRev,
+      !G.mem?.ukrOrangeRev && !G.mem?.kyivOrangeRevolution,
     text: 'November 2004. The presidential election is held and Viktor Yanukovych is declared the winner. Exit polls show Viktor Yushchenko won by 6 percentage points. A million people appear on Maidan Nezalezhnosti — Independence Square — in orange scarves. The Supreme Court annuls the result. A revote is held in December. Yushchenko wins with 52 percent. What happened between the first count and the second is the Orange Revolution: the country said no to the result and the result changed. Yushchenko had been poisoned with dioxin during the campaign. His face carried the evidence. He survived.',
     choices: [
       {
         text: 'You are on the Maidan. The orange is your color this month.',
         tag: null,
         outcome: 'The cold is real. The crowd is real. The tent city runs for weeks. Something happened here that left a template.',
-        effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('orange_revolution_generation'); p.addFlag('political_active'); p.setMem('ukrOrangeRev', true); },
+        effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('orange_revolution_generation'); p.addFlag('political_active'); p.setMem('ukrOrangeRev', true); p.setMem('kyivOrangeRevolution', true); },
       },
       {
         text: 'You watch it unfold from home. The scale is extraordinary.',
         tag: null,
         outcome: 'You follow it on television. The Maidan you are watching is the same Maidan you will watch again in 2013.',
-        effect: (p) => { p.m += 4; p.addFlag('orange_revolution_generation'); p.setMem('ukrOrangeRev', true); },
+        effect: (p) => { p.m += 4; p.addFlag('orange_revolution_generation'); p.setMem('ukrOrangeRev', true); p.setMem('kyivOrangeRevolution', true); },
       },
     ],
     effect: null,
@@ -113,7 +113,7 @@ export const UKRAINE_EVENTS = [
       G.character.country.name === 'Ukraine' &&
       G.currentYear >= 2013 && G.currentYear <= 2014 &&
       G.age >= 14 &&
-      !G.mem?.ukrEuromaidan,
+      !G.mem?.ukrEuromaidan && !G.mem?.kyivEuromaidan,
     text: (G) => {
       const year = G.currentYear
       if (year <= 2013) {
@@ -126,19 +126,19 @@ export const UKRAINE_EVENTS = [
         text: 'You are there — the cold, the piano, the barricades.',
         tag: null,
         outcome: 'You are in the Maidan through January and February. You are there when the snipers fire. What happens in those weeks is the thing that produces everything that comes after.',
-        effect: (p) => { p.m -= 8; p.m += 10; p.karma += 10; p.r += 6; p.addFlag('euromaidan_generation'); p.addFlag('political_active'); p.setMem('ukrEuromaidan', true); },
+        effect: (p) => { p.m -= 8; p.m += 10; p.karma += 10; p.r += 6; p.addFlag('euromaidan_generation'); p.addFlag('political_active'); p.setMem('ukrEuromaidan', true); p.setMem('kyivEuromaidan', true); },
       },
       {
         text: 'You support from the edges — food, shelter, solidarity.',
         tag: null,
         outcome: 'The perimeter held by the people who brought food and blankets is also part of what the Maidan was.',
-        effect: (p) => { p.m += 5; p.karma += 6; p.addFlag('euromaidan_generation'); p.setMem('ukrEuromaidan', true); },
+        effect: (p) => { p.m += 5; p.karma += 6; p.addFlag('euromaidan_generation'); p.setMem('ukrEuromaidan', true); p.setMem('kyivEuromaidan', true); },
       },
       {
         text: 'You watch from home, frightened of where this is going.',
         tag: null,
         outcome: 'Where it goes: Crimea annexed in March. Donbas in April. Eight years of low-grade war. Then 2022. The fear was accurate about the cost. It was not wrong.',
-        effect: (p) => { p.r += 6; p.m -= 3; p.addFlag('euromaidan_generation'); p.setMem('ukrEuromaidan', true); },
+        effect: (p) => { p.r += 6; p.m -= 3; p.addFlag('euromaidan_generation'); p.setMem('ukrEuromaidan', true); p.setMem('kyivEuromaidan', true); },
       },
     ],
     effect: null,

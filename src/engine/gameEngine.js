@@ -128,6 +128,7 @@ export {
   prisonConjugalVisit,
   prisonBribeGuard,
   prisonStartRiot,
+  livingPartner,
 } from './playerActions'
 
 // ── epitaph.js ────────────────────────────────────────────────────────────────

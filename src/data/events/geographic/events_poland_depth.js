@@ -265,7 +265,7 @@ export const POLAND_DEPTH_EVENTS = [
           p.r += 5
           p.w += 4
           p.addFlag('poland_uk_emigrant')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo('United Kingdom')
           p.setMem('polDepUK', true)
         },
       },
@@ -277,7 +277,7 @@ export const POLAND_DEPTH_EVENTS = [
           p.m -= 3
           p.r += 6
           p.w += 3
-          p.addFlag('poland_returned_emigrant')
+          p.addFlag('poland_returned_emigrant'); p.returnHome()
           p.setMem('polDepUK', true)
         },
       },

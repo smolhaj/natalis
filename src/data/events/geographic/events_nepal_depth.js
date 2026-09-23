@@ -42,8 +42,6 @@ export const NEPAL_DEPTH_EVENTS = [
           p.h += 5
           p.mo += 1000
           p.addFlag('nep_dep_gurkha_generation')
-          p.addFlag('emigrated')
-          p.setResidency('work_visa')
           p.setMem('nepDepGurkha', true)
         },
       },
@@ -268,7 +266,7 @@ export const NEPAL_DEPTH_EVENTS = [
           p.m -= 6
           p.r += 5
           p.addFlag('nepal_gulf_worker')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo(['Qatar', 'Malaysia', 'Saudi Arabia', 'UAE'])
           p.setResidency('work_visa')
           p.setMem('nepDepRemittanceAdult', true)
         },

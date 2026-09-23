@@ -8,6 +8,21 @@
 // row rather than as somewhere a person lives. Strip the parenthetical, and
 // strip the "Rural " prefix, which is a classification and not a name either.
 import { pickFrom } from '../../../utils/random'
+import { PLACES } from '../../places.js'
+
+// The family moves were prose: "The family leaves Jeolla", and forty years
+// later "You have lived in Jeolla your entire life." A move narrated here is a
+// move made — somewhere else in the country the character is living in,
+// towards a city when the reason is a war, because that is where people go.
+const moveWithinCountry = (p, { toCity = false } = {}) => {
+  const st = p._state
+  const here = st?.currentPlace ?? st?.character?.birthPlace
+  const country = (st?.currentCountry ?? st?.character?.country)?.name
+  const others = PLACES.filter(pl => pl.country === country && pl.id !== here?.id)
+  const cities = others.filter(pl => pl.type !== 'rural')
+  const pool = toCity && cities.length ? cities : others
+  if (pool.length) p.relocate(pickFrom(pool).id)
+}
 
 const placeName = (G, fallback = 'here') => {
   const raw = G.place?.name
@@ -42,7 +57,7 @@ export const PLACES_EVENTS = [
       && G.place && !G.mem?.familyWarMoveAck,
     text: (G) => `The family leaves ${placeName(G, 'home')}. Not all at once — first the bags, then the goodbyes, then the road. You are young enough that the adults shield you from the reason and old enough to understand it anyway. The place you are going has a name. The place you are leaving will become the one you keep returning to in memory.`,
     choices: null,
-    effect: (p) => { p.r += 5; p.m -= 5; p.addFlag('family_displaced'); p.setMem('familyWarMoveAck', true) },
+    effect: (p) => { p.r += 5; p.m -= 5; p.addFlag('family_displaced'); p.setMem('familyWarMoveAck', true); moveWithinCountry(p, { toCity: true }) },
   },
 
   {
@@ -57,13 +72,13 @@ export const PLACES_EVENTS = [
         text: 'Accept it. Commit to the new place.',
         tag: null,
         outcome: 'You make friends faster than you expected. The new place becomes real.',
-        effect: (p) => { p.m += 3; p.s += 4; p.setMem('familyCareerMoveAck', true) },
+        effect: (p) => { p.m += 3; p.s += 4; p.setMem('familyCareerMoveAck', true); moveWithinCountry(p) },
       },
       {
         text: 'Resist it quietly. Hold on to what you had.',
         tag: 'resistant_to_change',
         outcome: 'The old friendships don\'t survive the distance. Neither do the comparisons, eventually.',
-        effect: (p) => { p.r += 4; p.m -= 3; p.setMem('familyCareerMoveAck', true) },
+        effect: (p) => { p.r += 4; p.m -= 3; p.setMem('familyCareerMoveAck', true); moveWithinCountry(p) },
       },
     ],
   },
@@ -77,7 +92,13 @@ export const PLACES_EVENTS = [
       && G.place && G.age >= 5 && !G.mem?.familyPovertyMoveAck,
     text: (G) => `The rent becomes impossible. The family moves to a smaller place — a different part of ${placeName(G, 'the city')}, or further out. The new address is a kind of fact you learn not to say out loud. You go to a different school. You start again.`,
     choices: null,
-    effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('childhood_housing_instability'); p.setMem('familyPovertyMoveAck', true) },
+    effect: (p) => {
+      p.m -= 6; p.r += 4; p.addFlag('childhood_housing_instability'); p.setMem('familyPovertyMoveAck', true)
+      // Same city, the cheaper end of it.
+      const here = p._state?.currentPlace ?? p._state?.character?.birthPlace
+      const tier = p._state?.currentNeighborhoodTier
+      if (here?.id) p.relocate(here.id, ['informal', 'working_class'].includes(tier) ? tier : 'working_class')
+    },
   },
 
   {

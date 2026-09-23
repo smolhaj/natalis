@@ -15,7 +15,7 @@ export const ASIA_ARC_EVENTS = [
     phase: null,
     weight: 5,
     when: (G) =>
-      !G.mem?.caEvacuation &&
+      !G.mem?.caEvacuation && !G.mem?.ppEvacuation1975 &&
       G.character.country.name === 'Cambodia' &&
       G.currentYear >= 1975 && G.currentYear <= 1976 &&
       G.age >= 4,
@@ -25,13 +25,13 @@ export const ASIA_ARC_EVENTS = [
         text: 'Pack only what fits in one bag',
         tag: null,
         outcome: 'You leave with almost nothing. The city empties behind you and does not fill again for four years.',
-        effect: (p) => { p.m -= 14; p.h -= 6; p.w -= 15; p.addFlag('khmer_rouge_displaced'); p.setMem('caEvacuation', true); },
+        effect: (p) => { p.m -= 14; p.h -= 6; p.w -= 15; p.addFlag('khmer_rouge_displaced'); p.setMem('caEvacuation', true); p.setMem('ppEvacuation1975', true); },
       },
       {
         text: 'Leave with the clothes you are wearing',
         tag: null,
         outcome: 'There is no time. The column moves and you move with it. What you left behind is gone the same day.',
-        effect: (p) => { p.m -= 16; p.h -= 8; p.w -= 18; p.addFlag('khmer_rouge_displaced'); p.setMem('caEvacuation', true); },
+        effect: (p) => { p.m -= 16; p.h -= 8; p.w -= 18; p.addFlag('khmer_rouge_displaced'); p.setMem('caEvacuation', true); p.setMem('ppEvacuation1975', true); },
       },
     ],
     effect: null,
@@ -210,6 +210,8 @@ export const ASIA_ARC_EVENTS = [
     weight: 5,
     when: (G) =>
       !G.mem?.bdLiberationWar &&
+      // hist_liberation_war_1971 tells the same nine months in one paragraph
+      !G.mem?.histLiberationWar &&
       G.character.country.name === 'Bangladesh' &&
       G.currentYear === 1971 &&
       G.age >= 4,
@@ -238,10 +240,12 @@ export const ASIA_ARC_EVENTS = [
     when: (G) =>
       !G.mem?.bdLiberationVictory &&
       G.character.country.name === 'Bangladesh' &&
-      G.currentYear === 1971 &&
+      // 1972, not 1971: this follows the March event, which owns 1971, and
+      // one event resolves per year — confined to 1971 it could never fire.
+      G.currentYear === 1972 &&
       G.age >= 4 &&
       G.mem?.bdLiberationWar,
-    text: 'On the 16th of December the Pakistani army surrenders to the Indian forces in Dhaka. Ninety-three thousand soldiers lay down their weapons. Bangladesh exists now. People come out of the houses and the camps and the hiding places and walk into the street. There is a sound the crowd makes that you have not heard before. A country is being born while you are standing in it.',
+    text: 'The surrender was signed on the racecourse in Dhaka on the 16th of December, and ninety-three thousand Pakistani soldiers laid down their weapons. On the 10th of January Sheikh Mujib lands at Tejgaon, back from nine months in a Pakistani cell, and the road from the airport back to the same racecourse is one crowd the whole way. People have come out of the houses and the camps and the hiding places to stand in it. There is a sound the crowd makes that you have not heard before. Bangladesh exists now, and you are standing in it.',
     choices: null,
     effect: (p) => {
       p.m += 16;
@@ -591,7 +595,7 @@ export const ASIA_ARC_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) =>
-      !G.mem?.pkFlood2010 &&
+      !G.mem?.pkFlood2010 && !G.mem?.pakDepFloods &&
       G.character.country.name === 'Pakistan' &&
       G.currentYear >= 2010 && G.currentYear <= 2011 &&
       G.age >= 6,
@@ -602,7 +606,7 @@ export const ASIA_ARC_EVENTS = [
       p.m -= 12;
       p.w -= 6;
       p.addFlag('flood_2010_generation');
-      p.setMem('pkFlood2010', true);
+      p.setMem('pkFlood2010', true); p.setMem('pakDepFloods', true);
     },
   },
 

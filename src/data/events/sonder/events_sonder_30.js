@@ -28,7 +28,7 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.sdr30FaceMirror,
     text: () => pick([
-      'You caught your reflection unexpectedly — a shop window, a dark phone screen, a mirror at an angle. The face was yours and you recognized it, but for a half-second before recognition there was just a person. Unfamiliar, briefly, before the familiar reasserted itself.',
+      'You caught your reflection unexpectedly — a shop window, a dark window at night, a mirror at an angle. The face was yours and you recognized it, but for a half-second before recognition there was just a person. Unfamiliar, briefly, before the familiar reasserted itself.',
       'You looked in the mirror this morning and noticed the face has been doing something while you were not watching. Not alarmingly so. Just: continuing in the direction faces go. You looked at it for a moment. Then you went about your morning.',
       'Your face at this age looks like someone in your family at this age. Not exactly like them — close enough that someone who knew them would see it. The resemblance arrived without being invited. You did not choose whose face to borrow.',
     ]),

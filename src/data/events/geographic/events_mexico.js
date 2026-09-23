@@ -187,7 +187,7 @@ export const MEXICO_DEPTH_EVENTS = [
         effect: (p) => {
           p.mo += 2000
           p.m -= 8
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo('United States')
           p.addFlag('mex_crossed_north')
           p.setResidency('undocumented')
           p.setMem('mexGoingNorth', true)

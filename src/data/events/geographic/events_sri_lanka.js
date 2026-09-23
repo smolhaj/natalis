@@ -114,7 +114,7 @@ export const SRI_LANKA_EVENTS = [
         text: 'Go. The war has no exit here.',
         tag: 'left',
         outcome: 'Toronto or London or Melbourne. You carry the photo that fits in your pocket. You become the person the diaspora calls when a new arrival needs help.',
-        effect: (p) => { p.addFlag('tamil_diaspora'); p.addFlag('emigrated'); p.setResidency('refugee_status'); p.setMem('slkDiasDecision', true) },
+        effect: (p) => { p.addFlag('tamil_diaspora'); p.addFlag('emigrated'); p.emigrateTo(['Canada', 'United Kingdom', 'Australia']); p.setResidency('refugee_status'); p.setMem('slkDiasDecision', true) },
       },
       {
         text: 'Stay. Your family is here.',

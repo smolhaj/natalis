@@ -196,7 +196,7 @@ const SAUDI_EVENTS = [
         text: 'The comparison makes returning harder to imagine.',
         tag: null,
         outcome: 'The scholarship created the very condition it was trying to prevent. You are one of the data points in the brain drain calculation.',
-        effect: (p) => { p.e += 10; p.r += 6; p.addFlag('sau_scholarship_generation'); p.addFlag('emigrated'); p.setMem('sau_scholarship', true); },
+        effect: (p) => { p.e += 10; p.r += 6; p.addFlag('sau_scholarship_generation'); p.addFlag('emigrated'); p.emigrateTo(['United States', 'United Kingdom']); p.setMem('sau_scholarship', true); },
       },
     ],
     effect: null,

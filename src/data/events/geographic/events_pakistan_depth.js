@@ -65,7 +65,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
       G.character.country.name === 'Pakistan' &&
       G.currentYear === 2010 &&
       G.age >= 10 &&
-      !G.mem?.pakDepFloods,
+      !G.mem?.pakDepFloods && !G.mem?.pkFlood2010,
     text: () => pick([
       'The monsoon of 2010 is not the monsoon. By August, a fifth of Pakistan is underwater. Twenty million people are displaced — more than the 2004 Indian Ocean tsunami, more than the 2005 Kashmir earthquake, more than Haiti 2010. The Indus river swells to forty times its normal width in places. The flood moves south through the country over weeks, so that when Khyber Pakhtunkhwa is already in recovery, Sindh is just being hit. You watch the satellite maps on television and the maps look like the country is dissolving.',
       'The flood takes the crop. It takes the stored grain. It takes the tools. It takes the livestock and the documents and in some places the houses. What it leaves is wet land that will need months to drain and a debt to the chandler that will take years to pay. The government response comes with delays and the international aid comes with cameras. The cameras leave before the debt is settled.',
@@ -81,7 +81,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
           p.w -= 5
           p.mo -= 2000
           p.addFlag('pak_2010_flood_generation')
-          p.setMem('pakDepFloods', true)
+          p.setMem('pakDepFloods', true); p.setMem('pkFlood2010', true)
         },
       },
       {
@@ -92,7 +92,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
           p.m -= 8
           p.karma += 5
           p.addFlag('pak_2010_flood_generation')
-          p.setMem('pakDepFloods', true)
+          p.setMem('pakDepFloods', true); p.setMem('pkFlood2010', true)
         },
       },
     ],
@@ -133,7 +133,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
           p.r += 8
           p.m -= 5
           p.addFlag('pak_hazara_generation')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo(['Australia', 'Germany', 'United Kingdom'])
           p.setResidency('asylum_seeker')
           p.setMem('pakDepHazara', true)
         },

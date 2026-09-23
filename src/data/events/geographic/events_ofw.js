@@ -96,13 +96,13 @@ export const OFW_EVENTS = [
         text: 'You make a point of being present in every ordinary thing.',
         tag: null,
         outcome: 'It takes months. The distance closes slowly, then all at once.',
-        effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('ofw_returned'); p.setMem('ofwReturnStranger', true) },
+        effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('ofw_returned'); p.returnHome(); p.setMem('ofwReturnStranger', true) },
       },
       {
         text: 'You give them space. You trust the house to speak for you.',
         tag: null,
         outcome: 'The house is solid. The relationship rebuilds at its own pace.',
-        effect: (p) => { p.m += 4; p.r += 5; p.addFlag('ofw_returned'); p.setMem('ofwReturnStranger', true) },
+        effect: (p) => { p.m += 4; p.r += 5; p.addFlag('ofw_returned'); p.returnHome(); p.setMem('ofwReturnStranger', true) },
       },
     ],
     effect: null,
@@ -136,7 +136,7 @@ export const OFW_EVENTS = [
         text: 'Tell them no. It is time to go home.',
         tag: null,
         outcome: 'You book the ticket. The decision has a weight that is also a relief.',
-        effect: (p) => { p.m += 10; p.addFlag('ofw_returned'); p.setMem('ofwContractRenewal', true) },
+        effect: (p) => { p.m += 10; p.addFlag('ofw_returned'); p.returnHome(); p.setMem('ofwContractRenewal', true) },
       },
     ],
     effect: null,
@@ -406,7 +406,7 @@ export const OFW_EVENTS = [
         outcome: 'The contract names an employer in the Gulf. The work is domestic. The salary is fixed.',
         effect: (p) => {
           p.addFlag('ofw_worker')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo(['Saudi Arabia', 'UAE', 'Kuwait', 'Qatar'])
           p.addFlag('ofw_gulf')
           p.setResidency('work_visa')
           p.setMem('ofwDestination', 'gulf')
@@ -421,7 +421,7 @@ export const OFW_EVENTS = [
         outcome: 'The contract names a family in Hong Kong. Sundays are specified as rest days.',
         effect: (p) => {
           p.addFlag('ofw_worker')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo('Singapore')
           p.addFlag('ofw_hongkong')
           p.setResidency('work_visa')
           p.setMem('ofwDestination', 'hongkong')
@@ -436,7 +436,7 @@ export const OFW_EVENTS = [
         outcome: 'The contract is for care work with an elderly family in Rome. The salary is higher.',
         effect: (p) => {
           p.addFlag('ofw_worker')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo('Italy')
           p.addFlag('ofw_italy')
           p.setResidency('work_visa')
           p.setMem('ofwDestination', 'italy')

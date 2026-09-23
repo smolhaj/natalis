@@ -585,7 +585,7 @@ Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 350 tests, including the simulation guardrails
+npm test                 # 406 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
 npm run check-flags      # 3025 covered / 0 partial / 0 orphaned
@@ -595,6 +595,8 @@ npm run check-events     # reachability: dead guards, enum domains, phase/year w
 npm run check-anachronisms  # plays lives and reads every line against when the world held it
 npm run check-bundle     # builds, opens dist in a browser, starts a life — the only
                          # check that exercises the artefact rather than the source
+npm run check-ui         # plays the built game in a browser at 390-1280px and checks the
+                         # screen against the state (save/load, dead partner, prices, choices)
 npm run check-reach      # conditional reach: for a character who IS the person a body of
                          # work was written for, how much of it ever reaches them
 npm run sim              # firing-rate report — what ACTUALLY fires, per 100 lives
@@ -1216,6 +1218,37 @@ It also demonstrates the prose-coverage caveat across an 8× range: yearTexture
 coverage moved 36.0% → 53.3% while **concentration moved 177 → 179 lines
 supplying half the output**. Coverage is a function of n and is meaningless
 without one; concentration is the real statement.
+
+### September 2026: dated events, the unwritten groups, and the screen
+
+- **A one-year event could not reach the person it was written for.** 394
+  events have a 1-2 year window; one event fires per year and anchored holds
+  ~38% of it, so they reached 8.8% of eligible characters (4% at weight <20).
+  `classifyEvent` now sets `event.dated`, and `getNextEvent` lets an eligible
+  dated event claim its year (0.9 in its last year, halving through an unbroken
+  run of dated years), borrowing the year from `anchored` and repaying it
+  (`mem.anchoredDebt`). Pooled reach 77%; register mix moved <1pt.
+  `tests/datedReach.test.js`.
+- **`chain-window`** in `check-events`: B requires a flag/mem key whose only
+  setters open no earlier than B's last year, or a world event sets B's own
+  `!flag` latch first. Found four dead events and seven blocked ones.
+- **New modules for groups nothing named:** Peru 1965-2006
+  (`events_peru_midcentury.js`), Kabyle, Amhara, Afghan Tajik, Brazilian pardo,
+  Cuban mulato, Mende, Hawiye, Halpulaar (Fouta), Malinké (Upper Guinea), each
+  with `homeOf` birthplaces. `pickBirthPlace` reads `weight` and `homeOf`;
+  `unwritten-group` does not count a `homeOf` as writing for a group.
+- **Beta pass six:** emigration moves people (`p.emigrateTo` in 69 events,
+  `src/data/migration.js` as the fallback, `p.returnHome()`); `G.regime` and the
+  mundane layer follow the live country; surnames follow the father; grief
+  lands the year of the death. `tests/claimsAndState.test.js`.
+- **Pass seven, through the real UI** (`npm run check-ui`): saves kept the
+  pending question as null, a dead partner was shown and courted as living,
+  ~25 panel prices were present-day beside era charges.
+- **Open:** ~584 guards read `G.character.country` for present-tense prose, so
+  an emigrant gets ~2.3% of years of home-country events; `classifyEvent`
+  cannot see through module-local guard helpers (`HOME(G)`), filing those
+  events `universal` (Kabylie, Amhara, Gulf); `Guinea:susu_guinean`, Bisaya,
+  Ambundu, Tsonga, Tigre still unwritten.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`

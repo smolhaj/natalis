@@ -73,7 +73,12 @@ export const CZECH_REPUBLIC_EVENTS = [
       IS_CZECH(G) &&
       G.currentYear === 1968 &&
       G.age >= 14 &&
-      G.flags.has('cze_prague_spring_generation') &&
+      // The seven months are carried by the world event (prague_spring_1968),
+      // which reaches every Czech before 1968's event is drawn. Requiring
+      // cze_prague_spring's own flag made this unreachable: that event is also
+      // confined to 1968, and one event resolves per year. (One flag, not
+      // either of two: the dated slot cannot read a disjunction.)
+      G.flags.has('prague_spring_generation') &&
       !G.mem?.czeAugust68,
     text: 'They come at night and by morning there is a tank at the end of Vinohradska with its engine running. The radio stays on until the soldiers reach the door, and what it says is that this is an occupation, that nothing was done to deserve it, and that nobody should resist. A student on your landing holds a tape recorder up against the speaker so that it will exist afterwards. Seven months of the one thing, and one night of the other.',
     context: 'On the night of 20-21 August 1968 roughly 500,000 Warsaw Pact troops and 2,000 tanks from the USSR, Poland, Hungary, Bulgaria and East Germany entered Czechoslovakia. Alexander Dubcek was arrested and flown to Moscow. Czechoslovak Radio broadcast from its Vinohradska studios until troops reached the building. The twenty years of enforced conformity that followed were officially termed normalisation.',
@@ -82,13 +87,13 @@ export const CZECH_REPUBLIC_EVENTS = [
         text: 'You stand in front of a tank. You are not alone.',
         tag: 'Resist',
         outcome: 'The tank does not stop. You move. There is nothing to do with your body except show it and move it. You have stood in front of a tank. This is not nothing.',
-        effect: (p) => { p.m -= 15; p.r += 8; p.karma += 8; p.addFlag('cze_invasion_generation'); p.addFlag('political_active') },
+        effect: (p) => { p.m -= 15; p.r += 8; p.karma += 8; p.addFlag('cze_invasion_generation'); p.addFlag('cze_prague_spring_generation'); p.addFlag('political_active') },
       },
       {
         text: 'You watch from the window. The column takes an hour to pass.',
         tag: 'Witness',
         outcome: 'You count them. You lose count. You will know what you counted for the rest of your life: that you were at a window watching your country be occupied for the second time in thirty years.',
-        effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('cze_invasion_generation') },
+        effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('cze_invasion_generation'); p.addFlag('cze_prague_spring_generation') },
       },
     ],
     effect: null,
@@ -104,7 +109,9 @@ export const CZECH_REPUBLIC_EVENTS = [
       IS_CZECH(G) &&
       G.currentYear >= 1968 && G.currentYear <= 1970 &&
       G.age >= 18 && G.age <= 40 &&
-      G.flags.has('cze_invasion_generation') &&
+      // Everyone in the country in 1968 lived the invasion; a life that drew
+      // the Spring's event that year instead of August's is still that life.
+      (G.flags.has('cze_invasion_generation') || G.flags.has('cze_prague_spring_generation')) &&
       !G.mem?.czeEmigration68,
     text: 'Three hundred thousand Czechs and Slovaks leave between 1968 and 1969, while the borders are briefly porous. The intellectuals, the reformers, the people who had signed things and who know that their names are being written into files. You know people who left in August, September, October. Some of them end up in Vienna, in Paris, in Toronto, in New York. Some of them write from wherever they are. Some of them you never hear from again, not because they died but because a letter to the wrong person can still cost something.',
     choices: [

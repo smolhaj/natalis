@@ -4390,7 +4390,7 @@ export const POLITICAL_FLAGS = {
     category: 'political',
     description: 'Witnessed Nigeria\'s return to civilian rule in 1999 — the first peaceful democratic transfer after sixteen years of military government.',
     intent: 'both',
-    notes: 'Set by nga_democracy_1999.',
+    notes: 'Set by ngm_1999 (events_nigeria_midcentury.js), which absorbed nga_democracy_1999 — the same handover in the same year.',
   },
 
   nga_sharia_transition: {

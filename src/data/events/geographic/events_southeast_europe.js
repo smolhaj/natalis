@@ -72,7 +72,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
         text: 'Leave. Germany, Italy, Spain — anywhere.',
         tag: null,
         outcome: 'You join the first emigration wave. The country you leave is still finding its shape. The country you arrive in has a shape that does not include you yet.',
-        effect: (p) => { p.m -= 4; p.addFlag('romanian_transition_generation'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('romPost89', true) },
+        effect: (p) => { p.m -= 4; p.addFlag('romanian_transition_generation'); p.addFlag('emigrated'); p.emigrateTo(['Germany', 'Italy', 'Spain']); p.setResidency('work_visa'); p.setMem('romPost89', true) },
       },
     ],
     effect: null,

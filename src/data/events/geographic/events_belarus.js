@@ -79,26 +79,30 @@ const BELARUS_EVENTS = [
     id: 'bel_2020_protests',
     phase: null,
     weight: 6,
-    when: (G) => G.character.country.name === 'Belarus' && G.currentYear === 2020 && G.age >= 18 && !G.flags.has('bel_2020_generation'),
-    text: 'August 9, 2020. The election results come in showing Lukashenko with 80%. Tsikhanouskaya\'s parallel count showed she had won. The ballot boxes — people who sat as observers photographed the real counts. A housewife and a teacher and a blogger\'s wife became the opposition because their husbands were in prison. The first days: people arrested, detained in the Okrestina detention centre, accounts of what happened inside. Then Sunday after Sunday: 200,000 people in the streets of Minsk. Workers at the state tractor factory striking. Women forming human chains. The country discovering, over several weeks, how many people it contains.',
+    // Latched on its own marker, not on bel_2020_generation: the 2020 world
+    // event sets that flag before 2020's event is drawn, so the negation closed
+    // this to every Belarusian adult. The world event carries the result and
+    // the Sundays, so this opens after them.
+    when: (G) => G.character.country.name === 'Belarus' && G.currentYear === 2020 && G.age >= 18 && !G.mem?.bel2020Protests,
+    text: 'People who sat as observers photographed the real counts. A housewife and a teacher and a blogger\'s wife became the opposition because their husbands were in prison. The first days: people arrested, detained in the Okrestina detention centre, accounts of what happened inside. Workers at the state tractor factory striking. Women forming human chains. The country discovering, over several weeks, how many people it contains.',
     choices: [
       {
         text: 'You marched every Sunday.',
         tag: 'marched',
         outcome: 'You were in the crowd. The crowd was enormous. The specific feeling of standing in it — that many people, that silent, then that loud.',
-        effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('bel_2020_generation'); p.addFlag('bel_2020_marcher'); },
+        effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('bel_2020_generation'); p.setMem('bel2020Protests', true); p.addFlag('bel_2020_marcher'); },
       },
       {
         text: 'You supported from the edges — food, logistics, money.',
         tag: 'supported',
         outcome: 'You did not march but you made things possible for people who did. This was its own kind of choice.',
-        effect: (p) => { p.m += 4; p.karma += 4; p.addFlag('bel_2020_generation'); },
+        effect: (p) => { p.m += 4; p.karma += 4; p.addFlag('bel_2020_generation'); p.setMem('bel2020Protests', true); },
       },
       {
         text: 'You watched and waited.',
         tag: 'waited',
         outcome: 'You had reasons. A job that would be lost. Children. A calculation that the crackdown would come. It came.',
-        effect: (p) => { p.m -= 4; p.r += 5; p.addFlag('bel_2020_generation'); },
+        effect: (p) => { p.m -= 4; p.r += 5; p.addFlag('bel_2020_generation'); p.setMem('bel2020Protests', true); },
       },
     ],
   },

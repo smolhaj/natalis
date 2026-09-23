@@ -146,7 +146,7 @@ export const ROMANCE_ARC_EVENTS = [
       (G.partner.craziness ?? 30) > 55 &&
       !G.mem?.romanceJealousy,
     text: (G) =>
-      `${G.partner?.name ?? 'Your partner'} goes through your phone. They don't find anything — there is nothing to find. But the fact of it changes the atmosphere of the next few days. You have to decide how much weight to give it.`,
+      `${G.partner?.name ?? 'Your partner'} goes through your ${G.tech('mobile_phone') ? 'phone' : 'letters'}. They don't find anything — there is nothing to find. But the fact of it changes the atmosphere of the next few days. You have to decide how much weight to give it.`,
     choices: [
       {
         text: 'Have the conversation directly',

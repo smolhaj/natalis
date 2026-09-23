@@ -271,7 +271,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
           p.w += 5
           p.mo += 8000
           p.addFlag('ph_ofw_departed')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo(['Saudi Arabia', 'UAE', 'Qatar', 'Singapore'])
           p.setResidency('work_visa')
           p.setMem('phDepOFWCalc', true)
         },

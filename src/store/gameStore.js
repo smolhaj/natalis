@@ -1,7 +1,11 @@
 import { create } from 'zustand'
-import { createCharacter, deriveInitialStats, deriveInitialMoney, deriveInitialParents, deriveInitialSiblings, deriveBirthText, deriveInitialGold, initializeBanked, initializeJointFamily, deriveGenerationalFlags, tick, resolveChoice, applyActivity, attemptCrime, enterCareer, generateEpitaph, askForRaise, quitJob, workHarder, schmoozeBoss, retire, emigrate, meetPotentialPartner, generatePartnerProfile, hookUp, goOnDate, complimentPartner, proposeMarriage, getMarried, fileForDivorce, tryForChild, spendTimeWithChild, callParent, callSibling, adoptChild, getPlasticSurgery, buyProperty, sellProperty, buyVehicle, sellVehicle, adoptPet, visitVet, studyHarder, goToMovies, goClubbing, goShopping, visitSalonSpa, postSocialMedia, promoteSocialMedia, betOnHorses, goToRehab, toggleBirthControl, practiceMartalArts, obtainLicense, interactWithFriend, dropOutOfSchool, abandonChild, useSubstance, bookTrip, startBusiness, manageBusiness, hireEmployee, closeBusiness, prisonWork, prisonCry, prisonConjugalVisit, prisonBribeGuard, prisonStartRiot, upgradeResidency, seekAsylum, relocate, buildG, resolveAutoEvent as applyAutoEventEffect, getCountryRegime } from '../engine/gameEngine'
+import { createCharacter, deriveInitialStats, deriveInitialMoney, deriveInitialParents, deriveInitialSiblings, deriveBirthText, deriveInitialGold, initializeBanked, initializeJointFamily, deriveGenerationalFlags, tick, resolveChoice, applyActivity, attemptCrime, enterCareer, generateEpitaph, askForRaise, quitJob, workHarder, schmoozeBoss, retire, emigrate, meetPotentialPartner, generatePartnerProfile, hookUp, goOnDate, complimentPartner, proposeMarriage, getMarried, fileForDivorce, tryForChild, spendTimeWithChild, callParent, callSibling, adoptChild, getPlasticSurgery, buyProperty, sellProperty, buyVehicle, sellVehicle, adoptPet, visitVet, studyHarder, goToMovies, goClubbing, goShopping, visitSalonSpa, postSocialMedia, promoteSocialMedia, betOnHorses, goToRehab, toggleBirthControl, practiceMartalArts, obtainLicense, interactWithFriend, dropOutOfSchool, abandonChild, useSubstance, bookTrip, startBusiness, manageBusiness, hireEmployee, closeBusiness, prisonWork, prisonCry, prisonConjugalVisit, prisonBribeGuard, prisonStartRiot, upgradeResidency, seekAsylum, relocate, buildG, livingPartner, resolveAutoEvent as applyAutoEventEffect, getCountryRegime } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { inEraMoney } from '../data/economy.js'
+import { EVENTS } from '../data/events'
+import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
+import { CAREERS } from '../data/careers'
+import { rebuildTickEvent } from '../engine/tick'
 
 // Present-day dollars into the money of the year and place. See economy.js —
 // applied at the definition of a cost, never at the deduction.
@@ -31,6 +35,54 @@ const SAVE_MIGRATIONS = {
   }),
 }
 
+// Events carry functions (guards, effects), so they cannot go into a save as
+// they are. They used to be dropped: `pendingEvent: null, queue: []`. Every
+// Age Up is saved with the year's event waiting, so reloading the page — or
+// Menu, then Continue — made the question disappear and let the year be aged
+// past unanswered, and it emptied the queue, which is where the engine puts
+// the beats it guarantees (the first grief, the phase entries, echoes). A save
+// now stores ids and the resolved prose, and a load looks the ids back up.
+let EVENT_INDEX = null
+function eventById(id) {
+  if (!id) return null
+  if (!EVENT_INDEX) {
+    EVENT_INDEX = new Map()
+    // A choice can `inject` a follow-up event that lives nowhere else.
+    const add = (e) => {
+      if (!e?.id || EVENT_INDEX.has(e.id)) return
+      EVENT_INDEX.set(e.id, e)
+      for (const c of e.choices ?? []) add(c.inject)
+    }
+    for (const e of [...EVENTS, ...LIFE_SKELETON_EVENTS, ...CAREERS.flatMap(c => c.events ?? [])]) add(e)
+  }
+  return EVENT_INDEX.get(id) ?? null
+}
+
+function eventRef(e) {
+  if (!e?.id) return null
+  return {
+    id: e.id,
+    text: typeof e.text === 'string' ? e.text : null,
+    choiceTexts: (e.choices ?? []).map(c => (typeof c.text === 'string' ? c.text : null)),
+    isAutomatic: e.isAutomatic === true,
+  }
+}
+
+function eventFromRef(ref, state) {
+  // Events tick builds in place (the graduation fork) are rebuilt from the state.
+  const base = eventById(ref?.id) ?? rebuildTickEvent(ref?.id, state)
+  if (!base) return null
+  // Ids are unique by convention, not by construction; a different shape
+  // means the index found some other event, and a wrong question is worse than none.
+  if ((base.choices?.length ?? 0) !== (ref.choiceTexts?.length ?? 0)) return null
+  const choices = base.choices?.map((c, i) => (ref.choiceTexts?.[i] ? { ...c, text: ref.choiceTexts[i] } : c))
+  // A function the save could not resolve would render as an empty button.
+  if (choices?.some(c => typeof c.text !== 'string')) return null
+  const text = ref.text ?? (typeof base.text === 'string' ? base.text : null)
+  if (text === null) return null
+  return { ...base, text, choices, ...(ref.isAutomatic ? { isAutomatic: true } : {}) }
+}
+
 function serializeState(state) {
   try {
     return JSON.stringify({
@@ -38,9 +90,12 @@ function serializeState(state) {
       saveVersion: SAVE_VERSION,
       usedEventMap: [...(state.usedEventMap ?? new Map()).entries()],
       worldEventsFired: [...(state.worldEventsFired ?? new Set()).values()],
-      // Functions can't be serialized — clear these; they'll be re-derived on next ageUp
       queue: [],
       pendingEvent: null,
+      queueRefs: (state.queue ?? []).map(e => e?.id).filter(Boolean),
+      pendingEventRef: eventRef(state.pendingEvent),
+      // A minigame's outcome callbacks are closures over the moment it began;
+      // there is nothing to rebuild it from.
       pendingMinigame: null,
     })
   } catch { return null }
@@ -58,8 +113,10 @@ function deserializeState(raw) {
     parsed.saveVersion = SAVE_VERSION
     parsed.usedEventMap = new Map(parsed.usedEventMap ?? [])
     parsed.worldEventsFired = new Set(parsed.worldEventsFired ?? [])
-    parsed.queue = parsed.queue ?? []
-    parsed.pendingEvent = parsed.pendingEvent ?? null
+    parsed.queue = (parsed.queueRefs ?? []).map(id => eventById(id) ?? rebuildTickEvent(id, parsed)).filter(Boolean)
+    parsed.pendingEvent = parsed.pendingEventRef ? eventFromRef(parsed.pendingEventRef, parsed) : null
+    delete parsed.queueRefs
+    delete parsed.pendingEventRef
     parsed.pendingMinigame = parsed.pendingMinigame ?? null
     parsed.mode = parsed.mode === 'passive' ? 'passive' : 'active'
     return parsed
@@ -697,9 +754,12 @@ export const useGameStore = create((set, get) => ({
 
   useDatingApp: (filters = {}) => {
     const state = get()
-    if (state.dead || state.partner) return
-    if ((state.money ?? 0) < 100) {
-      set({ log: [...state.log, { age: state.age, text: "You need $100 for the dating app.", isKey: false }] })
+    if (state.dead || livingPartner(state)) return
+    // The fee is era money, like every other price: the gate compared a
+    // nominal balance to a present-day 100 and then charged $$(100).
+    const fee = $$(100, state)
+    if ((state.money ?? 0) < fee) {
+      set({ log: [...state.log, { age: state.age, text: `You need $${fee.toLocaleString()} for the dating app.`, isKey: false }] })
       return
     }
     const overrides = {}
@@ -709,7 +769,7 @@ export const useGameStore = create((set, get) => ({
     const profile = generatePartnerProfile(state, overrides)
     set({
       ...state,
-      money: (state.money ?? 0) - $$(100, state),
+      money: (state.money ?? 0) - fee,
       pendingPartner: profile,
       log: [...state.log, { age: state.age, text: `Dating app match: ${profile.name}, ${profile.age}.`, isKey: false }],
     })
@@ -955,14 +1015,14 @@ export const useGameStore = create((set, get) => ({
     set(promoteSocialMedia(state))
   },
 
-  betOnHorses: (horseIdx, betAmount) => {
+  betOnHorses: (horseIdx, betAmount, field) => {
     const state = get()
     if (state.dead || state.pendingEvent) return
     // Every action-consuming move respects the yearly budget. Only two of
     // these used to, so relationships, performance and happiness could be
     // maxed by repeat-clicking and the budget meant nothing.
     if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
-    set(betOnHorses(state, horseIdx, betAmount))
+    set(betOnHorses(state, horseIdx, betAmount, field))
   },
 
   goToRehab: () => {

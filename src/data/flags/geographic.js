@@ -60,6 +60,13 @@ export const GEOGRAPHIC_FLAGS = {
     timestamped: true,
     notes: 'Has extensive year texture (yearsAbroad gates), integration arc, memory layer. Well covered.',
   },
+  returned_home: {
+    weight: 'minor',
+    category: 'displacement',
+    description: 'Lived abroad and came back: set by the engine when p.returnHome() moves the character back to the country they were born in.',
+    intent: 'none',
+    notes: 'Engine-set. Read by the death screen so a refugee who returned is still one who crossed a border.',
+  },
 
   climate_displaced: {
     weight: 'major',
@@ -3399,6 +3406,454 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Knows that ordinary complaints are the achievement, and has stopped trying to make anyone under thirty hear it that way.',
     intent: 'year_texture',
     notes: 'Set by ngm_ft_1999_after.',
+  },
+
+  // ── PERU 1965-2006 ─────────────────────────────────────────────────────────
+  // Set by events_peru_midcentury.js — the decades a Peruvian born about 1960
+  // actually lives. Every one is read by a follow-through in the same module.
+
+  pe_velasco_1968: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive in Peru for October 1968, when the general took the palace and then the Americans\' oil, and "dignity" was the word on the radio.',
+    intent: 'event',
+    notes: 'Set by pem_velasco_coup. Consumed by pem_ft_velasco_table (the argument at the family table, 1995+).',
+  },
+
+  pe_reforma_comunero: {
+    weight: 'major',
+    category: 'economic',
+    description: 'On the receiving end of the 1969 agrarian reform: the hacienda became a cooperative with initials, and the patrón stopped being owed four days a week.',
+    intent: 'event',
+    notes: 'Set by pem_reforma_agraria. Consumed by pem_ft_cooperativa (parcelled in the sierra, indebted on the sugar coast, burned by Sendero in the Mantaro valley).',
+  },
+
+  pe_reforma_hacienda_lost: {
+    weight: 'major',
+    category: 'economic',
+    description: 'A hacendado family expropriated by the 1969 reform, paid in bonds the inflation ate, and moved to a Lima flat with a dining table too big for the room.',
+    intent: 'event',
+    notes: 'Set by pem_reforma_hacendado. Consumed by pem_ft_hacienda_portrait; also varies pem_ft_velasco_table.',
+  },
+
+  pe_terremoto_1970: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In the Callejón de Huaylas or Chimbote on 31 May 1970, when the ground moved for most of a minute and Huascarán came down on Yungay.',
+    intent: 'event',
+    notes: 'Set by pem_terremoto_1970. Consumed by pem_terremoto_after (1971-72) and pem_ft_yungay (the anniversary at 15:23).',
+  },
+
+  pe_castellano_school: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Taught in Castilian at a sierra school where a first language in Quechua was answered with a ruler.',
+    intent: 'event',
+    notes: 'Set by pem_castellano_school. Consumed by pem_ft_children_spanish; widens pem_quechua_oficial.',
+  },
+
+  pe_quechua_official: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Heard the radio say in 1975 that Quechua was an official language of the Republic, while the district forms stayed in Castilian.',
+    intent: 'event',
+    notes: 'Set by pem_quechua_oficial. Consumed by pem_ft_quechua_congress (the 2006 oath in Quechua).',
+  },
+
+  pe_voted_1980: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive for May 1980, the first election in which Peruvians who could not read could vote, and the night the boxes were burned at Chuschi.',
+    intent: 'event',
+    notes: 'Set by pem_first_vote_1980. Consumed by pem_ft_chuschi (1983-90, remembering the paragraph nobody read).',
+  },
+
+  pe_sendero_assembly: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Stood in the plaza for a Shining Path juicio popular and saw what the list was for.',
+    intent: 'event',
+    notes: 'Set by pem_asamblea_popular. Consumed by pem_ft_assembly_silence; gates per_cvr.',
+  },
+
+  pe_desaparecido_family: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'A relative taken before dawn by soldiers in the emergency zone, never charged, never found; the photograph carried to the barracks gate at Los Cabitos.',
+    intent: 'event',
+    notes: 'Set by pem_desaparecido. Consumed by pem_ft_anfasep; varies per_cvr text.',
+  },
+
+  pe_desplazado: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Fled the war in Ayacucho by night, down the ravines to the road and on to a settlement on a Lima hill full of people from the same province.',
+    intent: 'event',
+    notes: 'Set by pem_desplazado. Consumed by pem_ft_retorno (the repopulation lorry, 1994-2006); pem_invasion, pem_chicha, per_dep_serrano_lima, pem_guzman_capturado read it.',
+  },
+
+  pe_rondero: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Walked the ronda: against cattle thieves in Cajamarca, or with an army shotgun in the self-defence committees of the war.',
+    intent: 'event',
+    notes: 'Set by pem_ronda_cajamarca, pem_ronda_autodefensa. Consumed by pem_ft_ronda; gates per_cvr.',
+  },
+
+  pe_leva: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Taken off a bus by the leva at eighteen and put into two years of obligatory service, which ended for everyone else in 1999.',
+    intent: 'event',
+    notes: 'Set by pem_leva. Consumed by pem_ft_leva.',
+  },
+
+  pe_bajo_a_lima: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Came down from the sierra to Lima over the pass at Ticlio, to an uncle\'s room and the word serrano.',
+    intent: 'event',
+    notes: 'Set by pem_bajada_a_lima, pem_empleada. Consumed by pem_invasion, pem_chicha, pem_ft_club_provincial, pem_ft_fiesta_return, per_dep_serrano_lima.',
+  },
+
+  pe_invasion: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Walked onto the sand at night with a straw mat and a flag and founded a pueblo joven.',
+    intent: 'event',
+    notes: 'Set by pem_invasion. Consumed by pem_ft_titulo (the COFOPRI title, 1996-2010).',
+  },
+
+  pe_empleada: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Sent down to Lima as a girl to live in as a domestic worker: the uniform, the separate plate, the room with no window, Sunday afternoons.',
+    intent: 'event',
+    notes: 'Set by pem_empleada. Consumed by pem_ft_empleada (refusing the same offer for a daughter).',
+  },
+
+  pe_comedor: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Part of the comedores populares and the glass of milk in the Lima settlements of the 1980s.',
+    intent: 'event',
+    notes: 'Set by pem_vaso_de_leche. Consumed by pem_moyano (February 1992).',
+  },
+
+  pe_hiperinflacion: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the inti: prices changing between morning and afternoon, the cambista on the corner, the queue for no milk.',
+    intent: 'event',
+    notes: 'Set by pem_hiperinflacion. Consumed by pem_ft_dollars.',
+  },
+
+  pe_fujishock: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Heard the minister read the new prices on 8 August 1990 and end with "may God help us".',
+    intent: 'event',
+    notes: 'Set by pem_fujishock. Consumed by pem_ft_dollars.',
+  },
+
+  pe_corrientes_oil: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'Grew up on the Río Corrientes after the oil came, with the produced water in the streams and lead in the children\'s blood.',
+    intent: 'event',
+    notes: 'Set by pem_corrientes. Consumed by pem_ft_dorissa (the October 2006 occupation and the Acta de Dorissa).',
+  },
+
+  // Set by events_brazil_pardo.js — the forty-three per cent.
+
+  pardo_colour_words: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in a family where everyone had a different colour word — sarará, moreninha, cor de canela, galego — and nobody said pardo.',
+    intent: 'event',
+    notes: 'Set by br_pd_colour_words. Consumed by br_pd_ft_the_ears.',
+  },
+
+  saw_redencao_de_cam: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Looked for a long time at the grandmother\'s raised hands in A Redenção de Cam, the 1895 painting of a family whitening in three generations.',
+    intent: 'event',
+    notes: 'Set by br_pd_redencao_de_cam. Consumed by br_pd_ft_the_ears.',
+  },
+
+  carteira_colour_written: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Has a colour in the Carteira Profissional that a clerk wrote without asking.',
+    intent: 'event',
+    notes: 'Set by br_pd_carteira_profissional. Read by br_pd_census_adult.',
+  },
+
+  census_recorded_white: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Was recorded branco by a mother answering the census for the household, the lightest of her children.',
+    intent: 'event',
+    notes: 'Set by br_pd_census_child. Read by br_pd_census_adult, when it is the character\'s turn to answer.',
+  },
+
+  declared_negro: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Told a census taker, in so many words, preta or negra — the black movement\'s answer to the continuum.',
+    intent: 'event',
+    notes: 'Set by br_pd_pnad_1976 and br_pd_census_adult. Consumed by br_pd_censo_2022 and br_pd_ft_banca_indeferido.',
+  },
+
+  declared_pardo: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Answered parda when it was their turn to answer for the household.',
+    intent: 'event',
+    notes: 'Set by br_pd_census_adult. Consumed by br_pd_censo_2022.',
+  },
+
+  declared_white: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Answered branca when it was their turn, and nobody argued.',
+    intent: 'event',
+    notes: 'Set by br_pd_census_adult. Consumed by br_pd_censo_2022.',
+  },
+
+  boa_aparencia: {
+    weight: 'moderate',
+    category: 'discrimination',
+    description: 'Was told the vacancy had been filled that morning, at a job advertised for boa aparência.',
+    intent: 'event',
+    notes: 'Set by br_pd_boa_aparencia. Consumed by br_pd_ft_curriculo (the photograph stapled to the CV).',
+  },
+
+  elevador_servico: {
+    weight: 'moderate',
+    category: 'discrimination',
+    description: 'Was pointed to the service lift by a porteiro, and took it.',
+    intent: 'event',
+    notes: 'Set by br_pd_elevador. Consumed by br_pd_ft_placa_elevador (São Paulo\'s 1996 lift sign).',
+  },
+
+  elevador_social: {
+    weight: 'moderate',
+    category: 'discrimination',
+    description: 'Was pointed to the service lift by a porteiro, and walked past him to the social one.',
+    intent: 'event',
+    notes: 'Set by br_pd_elevador. Consumed by br_pd_ft_placa_elevador.',
+  },
+
+  domestica_quarto: {
+    weight: 'major',
+    category: 'labour',
+    description: 'Worked as a live-in domestic, sleeping in the maid\'s room behind the laundry, almost one of the family.',
+    intent: 'event',
+    notes: 'Set by br_pd_domestica / br_pd_domestica_sertao. Consumed by br_pd_ft_pec_domesticas (EC 72, 2013) and br_pd_ft_quartinho.',
+  },
+
+  cabelo_alisado: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Straightened her hair from adolescence — the hot comb, the relaxer, the escova progressiva.',
+    intent: 'event',
+    notes: 'Set by br_pd_cabelo. Consumed by br_pd_ft_cabelo_filha.',
+  },
+
+  cabelo_natural: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Left her hair as it grew, against the advice of people she loved.',
+    intent: 'event',
+    notes: 'Set by br_pd_cabelo. Consumed by br_pd_ft_cabelo_filha.',
+  },
+
+  enquadro: {
+    weight: 'moderate',
+    category: 'discrimination',
+    description: 'Hands on the wall at a bus stop: stopped by police whose radio said cor padrão.',
+    intent: 'event',
+    notes: 'Set by br_pd_enquadro. Consumed by br_pd_ft_filho_documento (the talk with the son).',
+  },
+
+  frente_de_emergencia: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Broke stones on a drought frente de emergência for a reservoir that held nothing.',
+    intent: 'event',
+    notes: 'Set by br_pd_frente_de_emergencia. Consumed by br_pd_ft_cisterna (the plate cistern, 2000s).',
+  },
+
+  nordestino_sp: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left the sertão for São Paulo — galego at home, baiano and pardo on arrival.',
+    intent: 'event',
+    notes: 'Set by br_pd_sertao_to_sao_paulo (which relocates). Consumed by br_pd_ft_baiano and br_pd_ft_volta.',
+  },
+
+  ile_aiye: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Went into the rope with Ilê Aiyê, the bloco a Salvador paper called racist in 1975.',
+    intent: 'event',
+    notes: 'Set by br_pd_ile_aiye. Consumed by br_pd_ft_ile_old.',
+  },
+
+  melhorar_a_raca: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Heard, at a family lunch, that the children of the match would improve the race.',
+    intent: 'event',
+    notes: 'Set by br_pd_melhorar_a_raca. Consumed by br_pd_ft_the_ears.',
+  },
+
+  cotista: {
+    weight: 'major',
+    category: 'education',
+    description: 'Entered university through the racial quota, and was called cotista for it.',
+    intent: 'event',
+    notes: 'Set by br_pd_cotas_vestibular (which schedules the echo). Consumed by br_pd_ft_formatura.',
+  },
+
+  concurso_cota: {
+    weight: 'major',
+    category: 'education',
+    description: 'Ticked the box in a federal concurso and was summoned before a heteroidentification panel.',
+    intent: 'event',
+    notes: 'Set by br_pd_concurso_cota. Consumed by br_pd_ft_banca_deferido / br_pd_ft_banca_indeferido.',
+  },
+
+  banca_deferido: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Confirmed as negro by a heteroidentification panel.',
+    intent: 'none',
+    notes: 'Set by br_pd_ft_banca_deferido. The end of the arc.',
+  },
+
+  banca_indeferido: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Declared not negro enough by a heteroidentification panel, and told how to appeal.',
+    intent: 'none',
+    notes: 'Set by br_pd_ft_banca_indeferido. The end of the arc.',
+  },
+
+  // Set by events_cuba_mulatto.js — the twenty-seven per cent.
+
+  cu_paseo_segregado: {
+    weight: 'moderate',
+    category: 'discrimination',
+    description: 'Walked the outer path of the Sunday promenade in Santa Clara, the white families passing on the inner one.',
+    intent: 'event',
+    notes: 'Set by cu_mu_paseo. Read by cu_mu_playa_1959.',
+  },
+
+  cu_1912_silence: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Learned in a kitchen with the tap running that a great-uncle was an Independiente de Color, and that there is no grave.',
+    intent: 'event',
+    notes: 'Set by cu_mu_1912_silence. Consumed by cu_mu_ft_1912.',
+  },
+
+  cu_1959_playa: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Walked onto the club beach the Sunday the gate first opened, in 1959.',
+    intent: 'event',
+    notes: 'Set by cu_mu_playa_1959. Read by cu_mu_hotel_door, when a door closes again in the 1990s.',
+  },
+
+  cu_race_settled: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Accepted in the 1960s that racism had been abolished, and put the word away.',
+    intent: 'event',
+    notes: 'Set by cu_mu_sociedad_cerrada. Consumed by cu_mu_ft_aponte.',
+  },
+
+  cu_race_noticed: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Kept counting, silently, for thirty years, who sat at the front of the meetings.',
+    intent: 'event',
+    notes: 'Set by cu_mu_sociedad_cerrada. Consumed by cu_mu_ft_aponte.',
+  },
+
+  cu_angola: {
+    weight: 'major',
+    category: 'military',
+    description: 'Served in Angola on the internationalist mission named for Carlota, the enslaved woman of Triunvirato.',
+    intent: 'event',
+    notes: 'Set by cu_mu_angola. Consumed by cu_mu_ft_angola.',
+  },
+
+  cu_sin_fe: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Went through the Special Period without FE — familia en el exterior — while the dollars went downstairs.',
+    intent: 'event',
+    notes: 'Set by cu_mu_tener_fe. Consumed by cu_mu_ft_casa_particular.',
+  },
+
+  cu_hotel_door: {
+    weight: 'moderate',
+    category: 'discrimination',
+    description: 'Was sent round the side of a tourist hotel for being Cuban, in the years of apartheid turístico.',
+    intent: 'event',
+    notes: 'Set by cu_mu_hotel_door. Consumed by cu_mu_ft_hotel_2008.',
+  },
+
+  cu_buena_presencia: {
+    weight: 'moderate',
+    category: 'discrimination',
+    description: 'Lost a front-desk tourism job to buena presencia.',
+    intent: 'event',
+    notes: 'Set by cu_mu_buena_presencia. Consumed by cu_mu_ft_buena_presencia.',
+  },
+
+  cu_carne_pedido: {
+    weight: 'minor',
+    category: 'discrimination',
+    description: 'Handed over the carné on the Malecón and answered everything.',
+    intent: 'none',
+    notes: 'Set by cu_mu_carne (yielding branch).',
+  },
+
+  cu_advertencia: {
+    weight: 'major',
+    category: 'legal',
+    description: 'Holds an acta de advertencia — the first of the three warnings before peligrosidad.',
+    intent: 'event',
+    notes: 'Set by cu_mu_carne (defiant branch). Consumed by cu_mu_ft_aval (the CDR verification).',
+  },
+
+  cu_palestino: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Came from Oriente to Havana with no registered address — a palestino.',
+    intent: 'event',
+    notes: 'Set by cu_mu_palestino (which relocates). Consumed by cu_mu_ft_decreto_217.',
+  },
+
+  cu_iyawo: {
+    weight: 'major',
+    category: 'religion',
+    description: 'Made santo and wore white for a year as an iyawó.',
+    intent: 'event',
+    notes: 'Set by cu_mu_hacer_santo. Consumed by cu_mu_ft_iyawo.',
+  },
+
+  cu_adelantar_raza: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Was told by a grandmother, about their own marriage, that you have to advance the race.',
+    intent: 'event',
+    notes: 'Set by cu_mu_adelantar. Consumed by cu_mu_ft_pelo_bebe.',
   },
 
 }

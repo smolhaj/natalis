@@ -30,6 +30,20 @@ export const PLACES = [
     },
   },
   {
+    id: 'us_minneapolis', name: 'Minneapolis', country: 'United States',
+    type: 'urban', scale: 'city', region: 'Minnesota',
+    // A place people arrive in, not one the birth draw uses: weight 0 keeps
+    // the American birth distribution as it was. It exists so a Somali
+    // resettled in 1990s America can land where most of them did.
+    weight: 0,
+    neighborhoods: {
+      informal:      ['Cedar-Riverside towers', 'Phillips'],
+      working_class: ['Cedar-Riverside', 'Seward', 'Near North'],
+      middle_class:  ['Longfellow', 'Northeast'],
+      elite:         ['Kenwood', 'Linden Hills'],
+    },
+  },
+  {
     id: 'us_los_angeles', name: 'Los Angeles', country: 'United States',
     type: 'urban', scale: 'megacity', region: 'West Coast',
     neighborhoods: {
@@ -748,6 +762,21 @@ export const PLACES = [
       elite:         ['Meireles', 'Varjota', 'Cocó', 'Guararapes'],
     },
   },
+  // Salvador, because the colour line in Brazil is not one line. Four fifths of
+  // the city declares itself preto or pardo; it is where Ilê Aiyê came down
+  // from Curuzu in 1975 and a newspaper called it a racist bloco. Without it the
+  // only urban Northeast the engine could draw was Fortaleza.
+  {
+    id: 'br_salvador', name: 'Salvador', country: 'Brazil',
+    type: 'urban', scale: 'major_city', region: 'Northeast Brazil',
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['Alagados', 'Nordeste de Amaralina', 'Calabetão'],
+      working_class: ['Liberdade', 'Curuzu', 'São Caetano', 'Periperi'],
+      middle_class:  ['Brotas', 'Nazaré', 'Rio Vermelho'],
+      elite:         ['Graça', 'Barra', 'Corredor da Vitória'],
+    },
+  },
   {
     id: 'br_rural', name: 'Rural Bahia (sertão)', country: 'Brazil',
     type: 'rural', scale: 'village', region: 'Northeast Brazil',
@@ -1286,11 +1315,41 @@ export const PLACES = [
   {
     id: 'et_rural', name: 'Rural Oromia', country: 'Ethiopia',
     type: 'rural', scale: 'village', region: 'Oromia',
+    homeOf: ['oromo'],
     neighborhoods: {
       informal:      ['Bonde (temporary structures)', 'Geshey kebele'],
       working_class: ['Fere-gna', 'Merkato'],
       middle_class:  ['Kebele tsehafit bet', 'Genet'],
       elite:         ['Balabat ketema', 'New tin roof area'],
+    },
+  },
+  // Ethiopia had one rural place and it was Oromia, so every rural Amhara the
+  // engine drew — nine in ten of them, in a country that was 90% rural for most
+  // of the period — was born in somebody else's region, and every guard written
+  // for the northern highlands could only ever answer "Oromia". Two, because
+  // the Amhara north is not one place: Gojjam is the rist country and the Fano
+  // heartland; Wollo is the famine province, a third Muslim, and the place the
+  // 1985 resettlement trucks left from.
+  {
+    id: 'et_gojjam', name: 'A Village in Gojjam', country: 'Ethiopia',
+    type: 'rural', scale: 'village', region: 'Gojjam',
+    homeOf: ['amhara'],
+    neighborhoods: {
+      informal:      ['Below the threshing floors', 'The tenant houses by the gully'],
+      working_class: ['Along the market path', 'Near the spring'],
+      middle_class:  ['The houses around the church compound', 'The priest\'s side of the village'],
+      elite:         ['The balabat\'s compound', 'The house with the tin roof'],
+    },
+  },
+  {
+    id: 'et_wollo', name: 'A Village in Wollo', country: 'Ethiopia',
+    type: 'rural', scale: 'village', region: 'Wollo',
+    homeOf: ['amhara'],
+    neighborhoods: {
+      informal:      ['The terraces above the road', 'The houses by the dry riverbed'],
+      working_class: ['The market side', 'Near the mosque and the church'],
+      middle_class:  ['Along the Dessie road', 'The grain trader\'s row'],
+      elite:         ['The old landlord\'s compound', 'The house the Arab money built'],
     },
   },
 
@@ -1378,11 +1437,52 @@ export const PLACES = [
   {
     id: 'sn_rural', name: 'Rural Casamance', country: 'Senegal',
     type: 'rural', scale: 'village', region: 'Casamance',
+    homeOf: ['diola', 'mandinka'],
     neighborhoods: {
       informal:      ['Quartier périphérique', 'Campements'],
       working_class: ['Marché', 'Route principale'],
       middle_class:  ['Centre du village', 'Mosquée area'],
       elite:         ['Maison du chef', 'Dispensaire road'],
+    },
+  },
+  // Senegal had one rural place and it was Casamance, so every rural
+  // Halpulaar the engine drew — four in five of them — was born in the
+  // Diola south, eight hundred kilometres from the river, and every rural
+  // Wolof with them. The Fouta Toro is the middle valley of the Senegal
+  // river, the walo and the jeeri; the Ferlo is the dry country south of it
+  // where the herding Fulɓe water their cattle at the boreholes. The
+  // groundnut basin is where the Wolof and Serer countryside actually is.
+  {
+    id: 'sn_fouta', name: 'A Village in the Fouta Toro', country: 'Senegal',
+    type: 'rural', scale: 'village', region: 'Fouta Toro',
+    homeOf: ['fula_senegal'],
+    neighborhoods: {
+      informal:      ['The subalbe quarter by the landing', 'The huts on the jeeri side'],
+      working_class: ['Along the path to the walo', 'Near the Friday mosque'],
+      middle_class:  ['The cement houses the France money built', 'By the dispensary'],
+      elite:         ['The Thierno\'s compound', 'The chef de village\'s house'],
+    },
+  },
+  {
+    id: 'sn_ferlo', name: 'A Camp in the Ferlo', country: 'Senegal',
+    type: 'rural', scale: 'village', region: 'Ferlo',
+    homeOf: ['fula_senegal'],
+    neighborhoods: {
+      informal:      ['The dry-season camp', 'The grass huts past the thorn fence'],
+      working_class: ['Near the borehole troughs', 'The weekly market ground'],
+      middle_class:  ['The houses by the borehole', 'Near the veterinary post'],
+      elite:         ['The ardo\'s compound', 'The house of the man with three hundred head'],
+    },
+  },
+  {
+    id: 'sn_groundnut', name: 'A Village in the Groundnut Basin', country: 'Senegal',
+    type: 'rural', scale: 'village', region: 'Sine-Saloum',
+    homeOf: ['wolof', 'serer'],
+    neighborhoods: {
+      informal:      ['The navétanes\' huts at the edge', 'Past the last well'],
+      working_class: ['Along the road to Kaolack', 'Near the seccos'],
+      middle_class:  ['By the mosque', 'The cooperative\'s side'],
+      elite:         ['The serigne\'s compound', 'The chef de village\'s house'],
     },
   },
 
@@ -1437,6 +1537,8 @@ export const PLACES = [
   {
     id: 'af_kabul', name: 'Kabul', country: 'Afghanistan',
     type: 'urban', scale: 'major_city', region: 'Eastern Afghanistan',
+    weight: 3,
+    homeOf: ['tajik_afghan', 'pashtun', 'hazara', 'uzbek_afghan'],
     neighborhoods: {
       informal:      ['Chaman-e-Babrak IDP camp', 'Qala-e-Musa', 'Khair Khana informal'],
       working_class: ['Khair Khana', 'Deh Afghanan', 'Baraki Barak area', 'Qalai Zaman Khan'],
@@ -1447,11 +1549,63 @@ export const PLACES = [
   {
     id: 'af_rural', name: 'Rural Helmand', country: 'Afghanistan',
     type: 'rural', scale: 'village', region: 'Southern Afghanistan',
+    homeOf: ['pashtun'],
     neighborhoods: {
       informal:      ['Kochi camp', 'Kalay khodai'],
       working_class: ['Bazar', 'Afshar road'],
       middle_class:  ['Markaz', 'Haji\'s road'],
       elite:         ['Malik\'s compound', 'Commander\'s qala'],
+    },
+  },
+  // Afghanistan had Kabul and rural Helmand, so a rural Tajik — most of them —
+  // was born in the Pashtun south, and the Panjshir, the Shomali vineyards and
+  // Herat, which are where that population's twentieth century happened, did
+  // not exist.
+  {
+    id: 'af_panjshir', name: 'A Village in the Panjshir', country: 'Afghanistan',
+    type: 'rural', scale: 'village', region: 'Panjshir',
+    homeOf: ['tajik_afghan'],
+    neighborhoods: {
+      informal:      ['The houses on the scree', 'Below the mill'],
+      working_class: ['Along the river road', 'By the mosque'],
+      middle_class:  ['The mulberry terraces', 'The malik\'s lane'],
+      elite:         ['The khan\'s qala', 'The stone house above the orchards'],
+    },
+  },
+  {
+    id: 'af_shomali', name: 'A Village on the Shomali Plain', country: 'Afghanistan',
+    type: 'rural', scale: 'village', region: 'Parwan',
+    weight: 2,
+    homeOf: ['tajik_afghan'],
+    neighborhoods: {
+      informal:      ['The mud houses at the end of the karez', 'Behind the drying houses'],
+      working_class: ['The vineyard lanes', 'Along the canal'],
+      middle_class:  ['Inside the orchard walls', 'Near the bazaar on the Charikar road'],
+      elite:         ['The arbab\'s qala', 'The house with three raisin rooms'],
+    },
+  },
+  // Added with the Tajik places, because homeOf on Helmand and the two Tajik
+  // villages left rural Hazaras nowhere to be but the Shomali and the Panjshir.
+  {
+    id: 'af_hazarajat', name: 'A Village in the Hazarajat', country: 'Afghanistan',
+    type: 'rural', scale: 'village', region: 'Bamiyan',
+    homeOf: ['hazara'],
+    neighborhoods: {
+      informal:      ['The caves in the cliff', 'The houses below the snowline'],
+      working_class: ['Along the irrigation channel', 'By the potato fields'],
+      middle_class:  ['Near the imambargah', 'The school road'],
+      elite:         ['The mir\'s fort', 'The house with the glass windows'],
+    },
+  },
+  {
+    id: 'af_herat', name: 'Herat', country: 'Afghanistan',
+    type: 'urban', scale: 'city', region: 'Western Afghanistan',
+    homeOf: ['tajik_afghan'],
+    neighborhoods: {
+      informal:      ['The camp on the Maslakh road', 'Mud houses past the Iraq gate'],
+      working_class: ['The old city by the Friday Mosque', 'Darb-e Qandahar quarter'],
+      middle_class:  ['Shahr-e Naw', 'Along the Walayat road'],
+      elite:         ['The gardens near the Musalla', 'The villas on the Takht-e Safar road'],
     },
   },
 
@@ -1483,11 +1637,97 @@ export const PLACES = [
   {
     id: 'so_mogadishu', name: 'Mogadishu', country: 'Somalia',
     type: 'urban', scale: 'major_city', region: 'Benadir',
+    homeOf: ['somali_hawiye', 'somali_darod', 'somali_dir', 'somali_other'],
     neighborhoods: {
       informal:      ['Badbaado IDP camp', 'Kaxda', 'Huriwaa'],
       working_class: ['Hodan', 'Wadajir', 'Waberi', 'Heliwa'],
       middle_class:  ['Hamar-Weyne', 'Dharkenley', 'Yaaqshiid', 'Bondhere'],
       elite:         ['Boondheere elite', 'Maka Al-Mukarama road', 'Ex-Villa Somalia zone'],
+    },
+  },
+  // Somalia had one place, so every Somali the engine drew — eight in ten of
+  // them rural, most of them pastoralists — was born in Mogadishu, and the
+  // Isaaq with them, in a city most of them would never see. The clan
+  // families live in different parts of the country and the war was fought
+  // over exactly that, so the places are keyed to who lives in them: the
+  // Hawiye on the Shabelle and in the grazing country of Galgaduud, the Isaaq
+  // in Hargeisa and the Haud, the Darod in the Nugaal, the Rahanweyn (most of
+  // the roster's `somali_other`) in Bay, the Dir in the Awdal hills.
+  {
+    id: 'so_shabelle', name: 'A Village on the Shabelle', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Middle Shabelle',
+    homeOf: ['somali_hawiye'],
+    neighborhoods: {
+      informal:      ['The huts past the canal', 'The camp by the Jowhar road'],
+      working_class: ['Along the river path', 'Near the pump house'],
+      middle_class:  ['By the mosque', 'The houses with tin roofs'],
+      elite:         ['The duq\'s compound', 'The house the Italians left'],
+    },
+  },
+  {
+    id: 'so_galgaduud', name: 'The Grazing Country of Galgaduud', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Galgaduud',
+    homeOf: ['somali_hawiye'],
+    neighborhoods: {
+      informal:      ['The aqal at the edge of the camp', 'The camp by the dry well'],
+      working_class: ['The camp by the berkad', 'Near the water trough'],
+      middle_class:  ['The settlement by the borehole', 'The shop by the Dhusamareb road'],
+      elite:         ['The camp of the man with two hundred camels', 'The nabadoon\'s house'],
+    },
+  },
+  {
+    id: 'so_hargeisa', name: 'Hargeisa', country: 'Somalia',
+    type: 'urban', scale: 'city', region: 'Woqooyi Galbeed',
+    homeOf: ['somali_isaaq'],
+    neighborhoods: {
+      informal:      ['The returnee camps', 'State House camp'],
+      working_class: ['Jigjiga Yar', 'Daami', 'Ga\'an Libah'],
+      middle_class:  ['Shacab', 'Koodbuur', 'Masalaha'],
+      elite:         ['Jigjiga Yar villas', 'New Hargeisa'],
+    },
+  },
+  {
+    id: 'so_haud', name: 'The Haud', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Togdheer',
+    homeOf: ['somali_isaaq'],
+    neighborhoods: {
+      informal:      ['The camp by the dry well', 'The aqal past the thorn fence'],
+      working_class: ['The camp by the berkad', 'Near the water point'],
+      middle_class:  ['The settlement by the road', 'The shop by the well'],
+      elite:         ['The camp of the man with the big herd', 'The elder\'s house'],
+    },
+  },
+  {
+    id: 'so_nugaal', name: 'The Nugaal Valley', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Nugaal',
+    homeOf: ['somali_darod'],
+    neighborhoods: {
+      informal:      ['The camp past the wadi', 'The aqal by the dry well'],
+      working_class: ['The camp by the berkad', 'Near the water point'],
+      middle_class:  ['The settlement by the Garowe road', 'The shop by the well'],
+      elite:         ['The camp of the man with the big herd', 'The elder\'s house'],
+    },
+  },
+  {
+    id: 'so_bay', name: 'A Village in Bay', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Bay',
+    homeOf: ['somali_other'],
+    neighborhoods: {
+      informal:      ['The huts past the sorghum pits', 'The edge of the fields'],
+      working_class: ['Along the Baidoa road', 'Near the well'],
+      middle_class:  ['By the mosque', 'The houses near the market'],
+      elite:         ['The malaaq\'s compound', 'The grain trader\'s house'],
+    },
+  },
+  {
+    id: 'so_awdal', name: 'The Awdal Hills', country: 'Somalia',
+    type: 'rural', scale: 'village', region: 'Awdal',
+    homeOf: ['somali_dir'],
+    neighborhoods: {
+      informal:      ['The camp below the hill', 'The aqal by the wadi'],
+      working_class: ['Along the Borama road', 'Near the well'],
+      middle_class:  ['The settlement by the road', 'By the mosque'],
+      elite:         ['The ugaas\'s house', 'The elder\'s house'],
     },
   },
 
@@ -1826,6 +2066,21 @@ export const PLACES = [
       elite:         ['Miramar (5th Avenue)', 'Siboney', 'Kohly', 'Nuevo Vedado top'],
     },
   },
+  // Santiago, because Havana is not Cuba's colour line either. Oriente is the
+  // blackest end of the island, the province of 1912, and after 1997 the place
+  // Havana sent people back to under Decree 217. Weighted to its size against
+  // Havana's.
+  {
+    id: 'cu_santiago', name: 'Santiago de Cuba', country: 'Cuba',
+    type: 'urban', scale: 'major_city', region: 'Eastern Cuba',
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['Los Olmos', 'Chicharrones (edge)', 'San Pedrito'],
+      working_class: ['Los Hoyos', 'Chicharrones', 'Mariana de la Torre', 'Altamira'],
+      middle_class:  ['Sueño', 'Reparto Terrazas', 'Distrito José Martí'],
+      elite:         ['Vista Alegre', 'Terrazas de Vista Alegre'],
+    },
+  },
   {
     id: 'cu_rural', name: 'Rural Pinar del Río', country: 'Cuba',
     type: 'rural', scale: 'village', region: 'Western Cuba',
@@ -1842,6 +2097,7 @@ export const PLACES = [
   {
     id: 'pe_lima', name: 'Lima', country: 'Peru',
     type: 'urban', scale: 'megacity', region: 'Lima Region',
+    weight: 4,
     neighborhoods: {
       informal:      ['Villa El Salvador (early)', 'San Juan de Lurigancho asentamiento', 'Callao chalet'],
       working_class: ['El Agustino', 'San Juan de Miraflores', 'Villa María del Triunfo', 'Comas'],
@@ -1852,11 +2108,177 @@ export const PLACES = [
   {
     id: 'pe_rural', name: 'Rural Ayacucho', country: 'Peru',
     type: 'rural', scale: 'village', region: 'Ayacucho Highlands',
+    homeOf: ['quechua_peruvian'],
     neighborhoods: {
       informal:      ['Asentamiento campesino', 'Rancho bajo'],
       working_class: ['Calle real', 'Mercado'],
       middle_class:  ['Plaza de armas', 'Municipio road'],
       elite:         ['Casa de los hacendados', 'Gamonales'],
+    },
+  },
+  // Peru had two places, Lima and rural Ayacucho, so every rural Peruvian the
+  // engine drew — more than half of the 1960 cohort — was born in the province
+  // where the Shining Path began, and every place guard written for the sierra
+  // could only ever answer "Ayacucho". The rest of the country is not Ayacucho:
+  // the altiplano is Aymara and was hit by drought, not by the war; Cajamarca
+  // invented the rondas against cattle thieves a decade before anyone armed
+  // them against Sendero; the north coast was sugar, and after 1969 the sugar
+  // was cooperatives. `homeOf` keeps the Aymara on the lake and the Achuar on
+  // their river instead of drawing them uniformly across the map.
+  {
+    id: 'pe_arequipa', name: 'Arequipa', country: 'Peru',
+    type: 'urban', scale: 'major_city', region: 'Arequipa',
+    weight: 1.2,
+    neighborhoods: {
+      informal:      ['Cerro Colorado ladera', 'Alto Selva Alegre, the upper slope'],
+      working_class: ['Mariano Melgar', 'Paucarpata', 'Miraflores (Arequipa)'],
+      middle_class:  ['Cayma', 'Umacollo', 'Vallecito'],
+      elite:         ['Yanahuara', 'Selva Alegre', 'A sillar house near the Plaza de Armas'],
+    },
+  },
+  {
+    id: 'pe_trujillo', name: 'Trujillo', country: 'Peru',
+    type: 'urban', scale: 'city', region: 'La Libertad',
+    neighborhoods: {
+      informal:      ['Alto Trujillo', 'El Porvenir, the upper streets'],
+      working_class: ['La Esperanza', 'Florencia de Mora', 'El Porvenir'],
+      middle_class:  ['Urbanización La Noria', 'Centro histórico'],
+      elite:         ['Urbanización El Golf', 'San Andrés', 'Víctor Larco'],
+    },
+  },
+  {
+    id: 'pe_huancayo', name: 'Huancayo', country: 'Peru',
+    type: 'urban', scale: 'city', region: 'Junín',
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['Chilca, the hillside', 'Justicia Paz y Vida'],
+      working_class: ['El Tambo', 'Chilca', 'Pio Pata'],
+      middle_class:  ['San Carlos', 'The streets off Calle Real'],
+      elite:         ['San Carlos, the big houses', 'A house on the Constitución'],
+    },
+  },
+  {
+    id: 'pe_cusco', name: 'Cusco', country: 'Peru',
+    type: 'urban', scale: 'city', region: 'Cusco',
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['The ladera above Santiago', 'Huancaro'],
+      working_class: ['Santiago', 'San Sebastián', 'Belén'],
+      middle_class:  ['Wanchaq', 'Magisterio'],
+      elite:         ['San Blas', 'A colonial house off the Plaza de Armas'],
+    },
+  },
+  {
+    id: 'pe_iquitos', name: 'Iquitos', country: 'Peru',
+    type: 'urban', scale: 'city', region: 'Loreto',
+    weight: 0.6,
+    homeOf: ['amazonian_indigenous_pe'],
+    neighborhoods: {
+      informal:      ['Belén, the houses that float', 'The ribera in Punchana'],
+      working_class: ['Punchana', 'San Juan Bautista', 'Belén, the high part'],
+      middle_class:  ['Near the Plaza de Armas', 'Calle Próspero'],
+      elite:         ['A rubber-era house on the Malecón Tarapacá', 'Santa Rosa'],
+    },
+  },
+  {
+    id: 'pe_chimbote', name: 'Chimbote', country: 'Peru',
+    type: 'urban', scale: 'mid_city', region: 'Áncash',
+    weight: 0.6,
+    neighborhoods: {
+      informal:      ['La Florida', 'The invasion on the dunes', 'San Pedro'],
+      working_class: ['El Progreso', 'Miramar Bajo', 'Buenos Aires'],
+      middle_class:  ['Casco urbano', 'Urbanización Los Pinos'],
+      elite:         ['The managers\' houses by the steelworks', 'Casa Huerta'],
+    },
+  },
+  {
+    id: 'pe_cusco_rural', name: 'Rural Cusco', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Cusco',
+    homeOf: ['quechua_peruvian'],
+    neighborhoods: {
+      informal:      ['A choza on the puna', 'The colonos\' houses'],
+      working_class: ['The comunidad', 'The road to the Sunday feria'],
+      middle_class:  ['The plaza of the district capital', 'The schoolteacher\'s house'],
+      elite:         ['The casa hacienda', 'The gamonal\'s house on the plaza'],
+    },
+  },
+  {
+    id: 'pe_puno_rural', name: 'The Altiplano, Puno', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Puno',
+    homeOf: ['aymara_peruvian', 'quechua_peruvian'],
+    neighborhoods: {
+      informal:      ['An estancia on the pampa', 'A choza near the lake'],
+      working_class: ['The comunidad', 'The Ilave feria'],
+      middle_class:  ['The plaza at Juli', 'The district capital'],
+      elite:         ['The casa hacienda', 'The ganadero\'s house'],
+    },
+  },
+  {
+    id: 'pe_cajamarca_rural', name: 'Rural Cajamarca', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Cajamarca',
+    weight: 1.5,
+    neighborhoods: {
+      informal:      ['A caserío above the valley', 'The peones\' houses'],
+      working_class: ['The comunidad', 'The Chota road'],
+      middle_class:  ['The plaza at Bambamarca', 'The district capital'],
+      elite:         ['The casa hacienda', 'The dairy fundo'],
+    },
+  },
+  {
+    id: 'pe_mantaro_rural', name: 'The Mantaro Valley', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Junín',
+    homeOf: ['quechua_peruvian'],
+    neighborhoods: {
+      informal:      ['A choza in the hills', 'The mine camp barracks'],
+      working_class: ['A comunidad on the valley floor', 'The La Oroya camp'],
+      middle_class:  ['The plaza at Concepción', 'Jauja'],
+      elite:         ['The casa hacienda', 'The engineers\' houses at the mine'],
+    },
+  },
+  {
+    id: 'pe_ancash_rural', name: 'The Callejón de Huaylas', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Áncash',
+    homeOf: ['quechua_peruvian'],
+    neighborhoods: {
+      informal:      ['An estancia under the Cordillera Blanca', 'A choza above the river'],
+      working_class: ['The comunidad', 'The Carhuaz market'],
+      middle_class:  ['The plaza of the district capital', 'The road to Caraz'],
+      elite:         ['The casa hacienda', 'The big house on the plaza'],
+    },
+  },
+  {
+    id: 'pe_chicama', name: 'The Chicama Valley', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'La Libertad',
+    weight: 0.7,
+    neighborhoods: {
+      informal:      ['The cane cutters\' rancherías', 'The barracks at the edge of the cane'],
+      working_class: ['The workers\' rows at Casa Grande', 'Chiclín'],
+      middle_class:  ['The empleados\' houses', 'Chocope'],
+      elite:         ['The hacienda house at Casa Grande'],
+    },
+  },
+  {
+    id: 'pe_chincha', name: 'Chincha', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Ica',
+    weight: 0.6,
+    homeOf: ['afro_peruvian'],
+    neighborhoods: {
+      informal:      ['A callejón in El Carmen', 'A rancho by the cotton'],
+      working_class: ['El Carmen', 'San José', 'Sunampe'],
+      middle_class:  ['Chincha Alta, the centre', 'Pueblo Nuevo'],
+      elite:         ['The casa hacienda at San José'],
+    },
+  },
+  {
+    id: 'pe_amazon_rural', name: 'The Río Corrientes', country: 'Peru',
+    type: 'rural', scale: 'village', region: 'Loreto',
+    weight: 0.5,
+    homeOf: ['amazonian_indigenous_pe'],
+    neighborhoods: {
+      informal:      ['A comunidad on the river', 'A clearing upriver'],
+      working_class: ['A riverside village', 'The road to the oil camp'],
+      middle_class:  ['The mission', 'Trompeteros'],
+      elite:         ['The patrón\'s house', 'The oil company camp'],
     },
   },
 
@@ -3300,6 +3722,8 @@ export const PLACES = [
   {
     id: 'dz_algiers', name: 'Algiers', country: 'Algeria',
     type: 'urban', scale: 'major_city', region: 'Alger',
+    weight: 2,
+    homeOf: ['arab_algerian', 'berber_kabyle'],
     neighborhoods: {
       informal:      ['The bidonvilles at Oued Ouchayah', 'Diar Echems', 'Climat de France'],
       working_class: ['Bab El Oued', 'Belouizdad', 'Kouba', 'Bachdjarah'],
@@ -3310,6 +3734,7 @@ export const PLACES = [
   {
     id: 'dz_oran', name: 'Oran', country: 'Algeria',
     type: 'urban', scale: 'city', region: 'Oran',
+    homeOf: ['arab_algerian'],
     neighborhoods: {
       informal:      ['Planteurs', 'Ras El Aïn shacks'],
       working_class: ['Médina Jdida', 'Sidi El Houari', 'El Hamri'],
@@ -3320,11 +3745,49 @@ export const PLACES = [
   {
     id: 'dz_kabylie', name: 'A Village in Kabylie', country: 'Algeria',
     type: 'rural', scale: 'village', region: 'Kabylie',
+    homeOf: ['berber_kabyle'],
     neighborhoods: {
       informal:      ['Below the last houses', 'By the spring'],
       working_class: ['The road through the village', 'Near the olive press'],
       middle_class:  ['Around the djemaa', 'The village centre'],
       elite:         ['The house the emigrant built', 'Above the terraces'],
+    },
+  },
+  // The Kabylie village was Algeria's only rural place, so every rural Arab
+  // Algerian was born in it and every rural Kabyle had a one-in-five chance of
+  // being born in Oran. Tizi Ouzou is the city the 1980 spring happened in; the
+  // plateau and the Aurès give the rest of the countryside somewhere to be.
+  {
+    id: 'dz_tizi_ouzou', name: 'Tizi Ouzou', country: 'Algeria',
+    type: 'urban', scale: 'mid_city', region: 'Kabylie',
+    homeOf: ['berber_kabyle'],
+    neighborhoods: {
+      informal:      ['The chalets at Oued Aïssi', 'Below the Haute-Ville'],
+      working_class: ['The Haute-Ville', 'Les Genêts', 'The 2000-Logements'],
+      middle_class:  ['Nouvelle-Ville', 'Off the Grande Rue'],
+      elite:         ['The villas above Hasnaoua', 'The Redjaouna road'],
+    },
+  },
+  {
+    id: 'dz_plateaux', name: 'A Village on the High Plateaux', country: 'Algeria',
+    type: 'rural', scale: 'village', region: 'Sétif',
+    homeOf: ['arab_algerian'],
+    neighborhoods: {
+      informal:      ['The gourbis past the silo', 'By the dry oued'],
+      working_class: ['Along the national road', 'Near the wheat cooperative'],
+      middle_class:  ['Around the mosque square', 'The teacher\'s street'],
+      elite:         ['The old colon farmhouse', 'The house with the tractor shed'],
+    },
+  },
+  {
+    id: 'dz_aures', name: 'A Village in the Aurès', country: 'Algeria',
+    type: 'rural', scale: 'village', region: 'Aurès',
+    homeOf: ['berber_other'],
+    neighborhoods: {
+      informal:      ['The old dechra on the cliff', 'Below the gorge road'],
+      working_class: ['The new houses by the road', 'Near the apricot orchards'],
+      middle_class:  ['Around the school', 'The mayor\'s street'],
+      elite:         ['The house the soldier\'s pension built', 'Above the palm gardens'],
     },
   },
 
@@ -3488,6 +3951,7 @@ export const PLACES = [
   {
     id: 'gn_conakry', name: 'Conakry', country: 'Guinea',
     type: 'urban', scale: 'city', region: 'Conakry',
+    homeOf: ['susu_guinean', 'fula_guinean', 'mandinka_guinean', 'kissi_guinean', 'other_guinean'],
     neighborhoods: {
       informal:      ['Kaporo Rails', 'Dimesse', 'Sonfonia squats'],
       working_class: ['Matoto', 'Ratoma', 'Hamdallaye', 'Bonfi'],
@@ -3498,6 +3962,7 @@ export const PLACES = [
   {
     id: 'gn_kankan', name: 'Kankan', country: 'Guinea',
     type: 'urban', scale: 'town', region: 'Haute-Guinée',
+    homeOf: ['mandinka_guinean'],
     neighborhoods: {
       informal:      ['Past the Milo bank', 'Timbo edges'],
       working_class: ['Kabada', 'Salamani', 'Banankoro'],
@@ -3508,11 +3973,50 @@ export const PLACES = [
   {
     id: 'gn_fouta', name: 'The Fouta Djallon', country: 'Guinea',
     type: 'rural', scale: 'village', region: 'Moyenne-Guinée',
+    homeOf: ['fula_guinean'],
     neighborhoods: {
       informal:      ['The tapade past the last one', 'By the stream'],
       working_class: ['The path through the village', 'Near the mosque wall'],
       middle_class:  ['By the mosque', 'The village centre'],
       elite:         ['The almamy\'s compound', 'The house the Dakar money built'],
+    },
+  },
+  // Guinea's only rural place was the Fouta Djallon, so every rural Malinké
+  // the engine drew — more than four in five of them — was born among the
+  // Peul, in the one region of the country whose history with theirs is the
+  // country's sharpest political line. The same was true of every rural Susu
+  // and every Kissi. Four natural regions, four places.
+  {
+    id: 'gn_upper', name: 'A Village in Upper Guinea', country: 'Guinea',
+    type: 'rural', scale: 'village', region: 'Haute-Guinée',
+    homeOf: ['mandinka_guinean'],
+    neighborhoods: {
+      informal:      ['The huts by the rice flats', 'The gold camp past the village'],
+      working_class: ['Along the Siguiri road', 'Near the well'],
+      middle_class:  ['By the mosque', 'The houses near the market'],
+      elite:         ['The dugutigi\'s compound', 'The house the gold built'],
+    },
+  },
+  {
+    id: 'gn_lower', name: 'A Village in Lower Guinea', country: 'Guinea',
+    type: 'rural', scale: 'village', region: 'Basse-Guinée',
+    homeOf: ['susu_guinean'],
+    neighborhoods: {
+      informal:      ['The huts by the mangrove', 'Past the salt pans'],
+      working_class: ['Along the Coyah road', 'Near the rice fields'],
+      middle_class:  ['By the mosque', 'The houses near the market'],
+      elite:         ['The chief\'s compound', 'The house with the generator'],
+    },
+  },
+  {
+    id: 'gn_forest', name: 'A Village in the Forest Region', country: 'Guinea',
+    type: 'rural', scale: 'village', region: 'Guinée Forestière',
+    homeOf: ['kissi_guinean', 'other_guinean'],
+    neighborhoods: {
+      informal:      ['The huts past the coffee', 'The refugee quarter'],
+      working_class: ['Along the Guéckédou road', 'Near the sacred forest'],
+      middle_class:  ['By the church and the mosque', 'The houses near the market'],
+      elite:         ['The chief\'s compound', 'The coffee buyer\'s house'],
     },
   },
 
@@ -3752,6 +4256,7 @@ export const PLACES = [
   {
     id: 'sl_freetown', name: 'Freetown', country: 'Sierra Leone',
     type: 'urban', scale: 'town', region: 'Western Area',
+    homeOf: ['krio', 'temne', 'mende', 'limba', 'susu_sl', 'loko', 'other_sl'],
     neighborhoods: {
       informal:      ['Kroo Bay', 'Susan\'s Bay', 'Moa Wharf', 'Culvert'],
       working_class: ['Kissy', 'Wellington', 'Calaba Town', 'Waterloo'],
@@ -3762,11 +4267,72 @@ export const PLACES = [
   {
     id: 'sl_kono', name: 'Kono District', country: 'Sierra Leone',
     type: 'rural', scale: 'village', region: 'Eastern Province',
+    homeOf: ['kono_sl'],
     neighborhoods: {
       informal:      ['The mining camp by the tailings', 'Past the pits'],
       working_class: ['The village road', 'Near the wash plant'],
       middle_class:  ['By the mosque', 'Near the school'],
       elite:         ['The paramount chief\'s compound', 'The dealer\'s house'],
+    },
+  },
+  // Sierra Leone's only rural place was Kono, so every rural Mende the
+  // engine drew — three in four of them — was born in the diamond district,
+  // and every rural Temne with them. The Mende south and east is rice, swamp
+  // and bush, Bo and Kenema are its towns, and Kailahun is where the war
+  // began in March 1991. The north is the Temne and Limba country.
+  {
+    id: 'sl_kailahun', name: 'A Village in Kailahun', country: 'Sierra Leone',
+    type: 'rural', scale: 'village', region: 'Eastern Province',
+    homeOf: ['mende'],
+    neighborhoods: {
+      informal:      ['The huts by the swamp', 'The farm hut on the upland'],
+      working_class: ['Along the Pendembu road', 'Near the court barri'],
+      middle_class:  ['By the mosque', 'The houses near the school'],
+      elite:         ['The paramount chief\'s compound', 'The coffee buyer\'s house'],
+    },
+  },
+  {
+    id: 'sl_pujehun', name: 'A Village in Pujehun', country: 'Sierra Leone',
+    type: 'rural', scale: 'village', region: 'Southern Province',
+    homeOf: ['mende'],
+    neighborhoods: {
+      informal:      ['The huts by the swamp', 'The fishing camp on the river'],
+      working_class: ['Along the path to the farm', 'Near the court barri'],
+      middle_class:  ['By the mosque', 'The houses near the school'],
+      elite:         ['The paramount chief\'s compound', 'The trader\'s house'],
+    },
+  },
+  {
+    id: 'sl_bo', name: 'Bo', country: 'Sierra Leone',
+    type: 'urban', scale: 'town', region: 'Southern Province',
+    homeOf: ['mende'],
+    neighborhoods: {
+      informal:      ['Gondama camp', 'The huts by the Kpetema road'],
+      working_class: ['Nikibu', 'Salina', 'Lewabu'],
+      middle_class:  ['Bo Old Town', 'Kindia Town'],
+      elite:         ['Reservation', 'Near Bo School'],
+    },
+  },
+  {
+    id: 'sl_kenema', name: 'Kenema', country: 'Sierra Leone',
+    type: 'urban', scale: 'town', region: 'Eastern Province',
+    homeOf: ['mende'],
+    neighborhoods: {
+      informal:      ['The huts past the lorry park', 'The diamond dealers\' back lanes'],
+      working_class: ['Hangha Road', 'Nyandeyama', 'Burma'],
+      middle_class:  ['Kpayama', 'Near the government hospital'],
+      elite:         ['Reservation', 'The Lebanese dealers\' street'],
+    },
+  },
+  {
+    id: 'sl_north', name: 'A Village in Bombali', country: 'Sierra Leone',
+    type: 'rural', scale: 'village', region: 'Northern Province',
+    homeOf: ['temne', 'limba', 'loko', 'susu_sl', 'kuranko', 'yalunka'],
+    neighborhoods: {
+      informal:      ['The huts by the boliland', 'The farm hut on the upland'],
+      working_class: ['Along the Makeni road', 'Near the court barri'],
+      middle_class:  ['By the mosque', 'The houses near the school'],
+      elite:         ['The paramount chief\'s compound', 'The trader\'s house'],
     },
   },
 
@@ -4466,7 +5032,30 @@ export function getPlacesForCountry(countryName) {
   return PLACES.filter(p => p.country === countryName)
 }
 
-export function pickBirthPlace(country, ruralUrban, wealthTier) {
+// A draw among places, honouring two optional fields. `weight` (default 1) is
+// for a country whose capital holds a large share of its towns-people: with
+// seven Peruvian cities drawn uniformly, Lima would get a seventh of urban
+// births against a real share near two fifths. `homeOf` names the groups
+// for whom that place is home: an Aymara is on the altiplano, not in the
+// Chicama cane, and without it the draw is blind to who is being born.
+function drawPlace(places, identity) {
+  let pool = places
+  const eth = identity?.ethnicity
+  if (eth) {
+    const home = places.filter(p => p.homeOf?.includes(eth))
+    if (home.length && Math.random() < 0.85) pool = home
+  }
+  const total = pool.reduce((s, p) => s + (p.weight ?? 1), 0)
+  let r = Math.random() * total
+  for (const p of pool) {
+    r -= p.weight ?? 1
+    if (r <= 0) return p
+  }
+  return pool[pool.length - 1]
+}
+
+/** `identity` is optional — `{ ethnicity }` — and only read by places with `homeOf`. */
+export function pickBirthPlace(country, ruralUrban, wealthTier, identity = null) {
   const countryPlaces = getPlacesForCountry(country.name)
   if (!countryPlaces.length) return null
 
@@ -4478,9 +5067,9 @@ export function pickBirthPlace(country, ruralUrban, wealthTier) {
 
   for (const preferred of typePreference) {
     const matches = countryPlaces.filter(p => p.type === preferred || p.scale === preferred)
-    if (matches.length) return matches[Math.floor(Math.random() * matches.length)]
+    if (matches.length) return drawPlace(matches, identity)
   }
-  return countryPlaces[Math.floor(Math.random() * countryPlaces.length)]
+  return drawPlace(countryPlaces, identity)
 }
 
 export function pickNeighborhoodTier(wealthTier) {

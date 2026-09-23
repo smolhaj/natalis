@@ -135,7 +135,7 @@ export const ERITREA_EVENTS = [
         effect: (p) => {
           p.m -= 5; p.h -= 10;
           p.addFlag('eritrean_refugee');
-          p.addFlag('emigrated');
+          p.addFlag('emigrated'); p.emigrateTo('Sudan');
           p.setResidency('refugee_status');
           p.setMem('eriLeave', true);
         },

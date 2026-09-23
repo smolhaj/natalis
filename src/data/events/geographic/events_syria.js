@@ -172,7 +172,7 @@ export const SYRIA_EVENTS = [
         outcome: 'Turkey first, then the decision about the sea crossing. The boat is a rubber inflatable carrying three times the passengers it was designed for. You do not look at the water.',
         effect: (p) => {
           p.addFlag('left_syria')
-          p.addFlag('emigrated')
+          p.addFlag('emigrated'); p.emigrateTo(['Turkey', 'Germany', 'Sweden'])
           p.setResidency('refugee_status')
           p.m -= 10
           p.mo -= 2000

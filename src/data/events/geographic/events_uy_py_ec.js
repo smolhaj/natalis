@@ -26,16 +26,9 @@ const UY_PY_EC_EVENTS = [
     ],
   },
 
-  {
-    id: 'uru_bordaberry_coup',
-    phase: 'young_adult',
-    weight: 5,
-    when: (G) => G.character.country.name === 'Uruguay' && G.currentYear === 1973 && !G.flags.has('uru_coup_1973'),
-    text: 'June 27, 1973. President Bordaberry closes the parliament and hands power to the military. The coup is not dramatic — there are no tanks in the main plaza, no gunfire. The parliament doors close, and then they stay closed. Uruguay, the country known as the Switzerland of South America, the one with universal suffrage since 1918, the one with divorce and secular education and a welfare state — that Uruguay is gone. The dictatorship will last twelve years.',
-    choices: null,
-    effect: (p) => { p.m -= 14; p.r += 7; p.addFlag('uru_coup_1973'); },
-  },
-
+  // uru_bordaberry_coup was removed: it retold the world event bordaberry_coup_uruguay_1973 in the same year, near
+  // word for word, and negated the flag that world event sets before the year's
+  // event is drawn, so it could never fire. The world event carries it.
   {
     id: 'uru_dictatorship_life',
     phase: 'midlife',
@@ -145,16 +138,9 @@ const UY_PY_EC_EVENTS = [
     effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('ecu_oil_generation'); },
   },
 
-  {
-    id: 'ecu_dollarization',
-    phase: 'young_adult',
-    weight: 5,
-    when: (G) => G.character.country.name === 'Ecuador' && G.currentYear === 2000 && !G.flags.has('ecu_dollarization_generation'),
-    text: 'January 2000. The sucre has lost 75 percent of its value in a year. Banks are closed. Savings have been wiped out. The president announces Ecuador will abandon its currency and adopt the US dollar. You wake up in a country where the price of everything is now calculated in dollars. Your salary, your rent, your savings — all converted at a rate that made you poorer by conversion. The dollar is stable and Ecuador is, for a while, not.',
-    choices: null,
-    effect: (p) => { p.m -= 12; p.w -= 10; p.mo -= 1000; p.addFlag('ecu_dollarization_generation'); },
-  },
-
+  // ecu_dollarization was removed: it retold the world event ecuador_dollarization_2000 in the same year, near
+  // word for word, and negated the flag that world event sets before the year's
+  // event is drawn, so it could never fire. The world event carries it.
   {
     id: 'ecu_yasuni',
     phase: 'midlife',
