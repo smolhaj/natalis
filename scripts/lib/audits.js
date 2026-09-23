@@ -822,12 +822,13 @@ export async function auditUnwrittenGroups() {
   // is still there after somebody has closed it.
   //
   // And exclude the files that merely DECLARE the ids. `countries.js` defines
-  // every one of them and `identity.js` gives their religion distribution, so
+  // every one of them, `identity.js` gives their religion distribution and
+  // `places.js` maps them to a birthplace via `homeOf`, so
   // scanning those makes every id trivially "named" and the audit reports zero
   // forever — the same shape as the negation exemption that made
   // check-anachronisms blind to the sentences worth auditing. Scan the files
   // that would USE an id.
-  const DECLARES = /src[/\\]data[/\\](countries|identity)\.js$/
+  const DECLARES = /src[/\\]data[/\\](countries|identity|places)\.js$/
   let corpus = ''
   for (const { rel, content } of sourceFiles()) {
     if (DECLARES.test(rel)) continue
