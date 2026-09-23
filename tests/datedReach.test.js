@@ -118,13 +118,16 @@ describe('dated events: selection', () => {
     expect(after.mem.datedYears).toContain(1980)
 
     // In debt, an ordinary year's anchored draws go elsewhere.
-    const later = stateIn('Peru', 1990, 40, { anchoredDebt: 50 })
+    // One character for both arms: two separate draws can differ in place and
+    // identity, and with it how much anchored content exists at all.
     const clear = stateIn('Peru', 1990, 40)
+    const later = { ...clear, mem: { ...clear.mem, anchoredDebt: 50 } }
     const anchoredShare = (st) => {
       let a = 0, n = 0
       for (let i = 0; i < 300; i++) {
         const e = getNextEvent(st)
-        if (!e) continue
+        // A dated pick takes its year whatever the debt, by design.
+        if (!e || classifyEvent(e).dated) continue
         n++
         if (classifyEvent(e).register === 'anchored') a++
       }
