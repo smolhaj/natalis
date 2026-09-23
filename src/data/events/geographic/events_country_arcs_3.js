@@ -56,20 +56,20 @@ export const COUNTRY_ARC_3_EVENTS = [
     when: (G) =>
       G.character.country?.name === 'Iran' &&
       G.currentYear >= 1979 && G.currentYear <= 1980 &&
-      !G.mem?.iranRevolutionWeek,
+      !G.mem?.iranRevolutionWeek && !G.mem?.iran_revolution,
     text: 'In the week the Shah leaves and before the plane lands, the streets are a specific kind of elated. People who had not spoken politics in years speak politics now. The word *azadi* — freedom — is on walls, in songs, in the air. The revolution is going to become many things. In this week it is only this.',
     choices: [
       {
         text: 'Go into the streets — you have waited for this',
         tag: null,
         outcome: 'You are part of it. What it becomes is months away.',
-        effect: (p) => { p.m += 8; p.s += 3; p.addFlag('revolution_participant'); p.setPolitical('left'); p.setMem('iranRevolutionWeek', true); },
+        effect: (p) => { p.m += 8; p.s += 3; p.addFlag('revolution_participant'); p.setPolitical('left'); p.setMem('iranRevolutionWeek', true); p.setMem('iran_revolution', true); },
       },
       {
         text: 'Watch from the window — wait to see what this becomes',
         tag: null,
         outcome: 'The caution turns out to be warranted. The reason is not what you expected.',
-        effect: (p) => { p.e += 3; p.setMem('iranRevolutionWeek', true); },
+        effect: (p) => { p.e += 3; p.setMem('iranRevolutionWeek', true); p.setMem('iran_revolution', true); },
       },
     ],
     effect: null,

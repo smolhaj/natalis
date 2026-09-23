@@ -108,20 +108,20 @@ export const CENTRAL_ASIA_EVENTS = [
     id: 'cas_tulip_revolution',
     phase: null,
     weight: 3,
-    when: (G) => IS_KYRGYZ(G) && G.currentYear >= 2005 && G.currentYear <= 2006 && G.age >= 18 && !G.mem.casTulip,
+    when: (G) => IS_KYRGYZ(G) && G.currentYear >= 2005 && G.currentYear <= 2006 && G.age >= 18 && !G.mem.casTulip && !G.mem?.kyrTulip,
     text: 'The results of the parliamentary election are announced. The south of the country does not accept them. Within days the presidential palace is stormed. Akayev flies to Russia. This is the Tulip Revolution — named for a flower, though tulips were not involved. You watch this from wherever you are watching it.',
     choices: [
       {
         text: 'Join the crowd. Something is changing.',
         tag: 'joined',
         outcome: 'Something changes. What changes is: one group of people who had power is replaced by another group of people who want it. This is not nothing. It is also not everything.',
-        effect: (p) => { p.m += 8; p.addFlag('political_active'); p.setMem('casTulip', true) },
+        effect: (p) => { p.m += 8; p.addFlag('political_active'); p.setMem('casTulip', true); p.setMem('kyrTulip', true) },
       },
       {
         text: 'Watch. You have seen promises before.',
         tag: 'watched',
         outcome: 'You were right to be cautious. You were also right that something changed. Both things are true.',
-        effect: (p) => { p.m -= 3; p.setMem('casTulip', true) },
+        effect: (p) => { p.m -= 3; p.setMem('casTulip', true); p.setMem('kyrTulip', true) },
       },
     ],
   },

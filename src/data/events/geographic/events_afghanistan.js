@@ -113,20 +113,20 @@ export const AFGHANISTAN_EVENTS = [
       G.character.country.name === 'Afghanistan' &&
       G.currentYear === 2021 &&
       G.age >= 18 &&
-      !G.mem.afgFall,
+      !G.mem.afgFall && !G.mem?.afg2021,
     text: 'August 15, 2021. Kabul falls in eleven days. The army the United States spent twenty years and eighty-three billion dollars building dissolves without fighting. The president leaves. The Taliban walk into the presidential palace and take photographs in the chairs. At the airport, tens of thousands of Afghans push against the gates. People fall from military transport planes. The evacuation is chaos. The girls\' schools close again. The women who had built careers — doctors, journalists, judges, pilots — disappear into houses. The twenty years are not gone, but what they built has to find new containers.',
     choices: [
       {
         text: 'You get out — through the airport, the border, whatever route is available.',
         tag: null,
         outcome: 'You are out. What you left behind is specific and you know exactly what it is. The country you arrive in does not know your name. You start.',
-        effect: (p) => { p.m -= 20; p.r += 16; p.addFlag('afghan_fall_2021'); p.addFlag('afghan_evacuee'); p.setMem('afgFall', true) },
+        effect: (p) => { p.m -= 20; p.r += 16; p.addFlag('afghan_fall_2021'); p.addFlag('afghan_evacuee'); p.setMem('afgFall', true); p.setMem('afg2021', true) },
       },
       {
         text: 'You stay — by choice, necessity, or because the exit did not come in time.',
         tag: null,
         outcome: 'You stay in the country that has changed again. The people who left are somewhere else now. You navigate the new rules, the new searches, the new calculations of what is sayable and to whom.',
-        effect: (p) => { p.m -= 16; p.r += 12; p.addFlag('afghan_fall_2021'); p.setMem('afgFall', true) },
+        effect: (p) => { p.m -= 16; p.r += 12; p.addFlag('afghan_fall_2021'); p.setMem('afgFall', true); p.setMem('afg2021', true) },
       },
     ],
     effect: null,

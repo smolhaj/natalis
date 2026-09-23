@@ -61,19 +61,11 @@ export const NIGERIA_EVENTS = [
     effect: null,
   },
 
-  {
-    id: 'nga_democracy_1999',
-    phase: null,
-    weight: 4,
-    when: (G) =>
-      G.character.country.name === 'Nigeria' &&
-      G.currentYear === 1999 &&
-      G.age >= 18 &&
-      !G.mem?.ngaDemocracy1999,
-    text: 'May 29, 1999. The handover. Abdulsalami Abubakar transfers power to Olusegun Obasanjo — a Yoruba Christian and former military head of state turned civilian candidate. For the first time since 1983, there is a civilian government. The constitution is not suspended. The specific texture of the change: the broadcasts on NTA, the jubilation in the streets, the specific disorientation of an election result that is being respected. You have been an adult in this country for years and this is the first time you have seen this particular thing happen.',
-    choices: null,
-    effect: (p) => { p.m += 8; p.addFlag('nga_democracy_generation'); p.setMem('ngaDemocracy1999', true); },
-  },
+  // nga_democracy_1999 (the 29 May 1999 handover) was merged into ngm_1999 in
+  // events_nigeria_midcentury.js: the same day, the same year, one slot, and
+  // at weight 4 against 999 it reached 3% of the Nigerians who lived it. ngm_1999
+  // now sets nga_democracy_generation as well, for this module's texture and
+  // follow-through.
 
   {
     id: 'nga_boko_haram',

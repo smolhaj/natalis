@@ -19,6 +19,7 @@ import { fileURLToPath } from 'url'
 import {
   runAllAudits, numericBounds, collectSetFlags, flagChecksWithContext,
   countriesInGuard, auditPhaseReachability, auditWorldEventScope,
+  chainWindowFindings, worldFlagBlockFindings,
 } from '../scripts/lib/audits.js'
 
 const baseline = JSON.parse(
@@ -142,6 +143,82 @@ describe('world event scope analyser', () => {
       corpus.WORLD_EVENTS.pop()
     }
   }, 120000)
+})
+
+describe('chain-window analyser', () => {
+  // Synthetic events and no source files, so nothing outside the list can be
+  // mistaken for a setter. Each case is the shape of a real defect or of a
+  // real false positive the audit must not raise.
+  const run = (events, files = []) => chainWindowFindings(events, { files })
+  const trigger = {
+    id: 't_war', when: (G) => G.currentYear === 1971 && !G.mem?.war,
+    effect: (p) => { p.setMem('war', true); p.addFlag('war_flag') },
+  }
+
+  it('reports a follow-up confined to its trigger\'s own year', () => {
+    // ca_bangladesh_liberation_victory: 1971, behind a mem key only 1971 sets.
+    const victory = { id: 't_victory', when: (G) => G.currentYear === 1971 && G.mem?.war, effect: () => {} }
+    const byFlag = { id: 't_victory_f', when: (G) => G.currentYear === 1971 && G.flags.has('war_flag'), effect: () => {} }
+    const f = run([trigger, victory, byFlag])
+    expect(f.map(x => [x.id, x.code, x.level])).toEqual([
+      ['t_victory', 'same-year-chain', 'error'],
+      ['t_victory_f', 'same-year-chain', 'error'],
+    ])
+  })
+
+  it('reports a follow-up whose every setter opens after it has closed', () => {
+    const early = { id: 't_early', when: (G) => G.currentYear >= 1965 && G.currentYear <= 1969 && G.mem?.war, effect: () => {} }
+    expect(run([trigger, early])[0]?.code).toBe('chain-setter-after')
+  })
+
+  it('is silent once the follow-up has a later year to fire in', () => {
+    const next = { id: 't_next', when: (G) => G.currentYear === 1972 && G.mem?.war, effect: () => {} }
+    const open = { id: 't_open', when: (G) => G.currentYear >= 1971 && G.mem?.war, effect: () => {} }
+    expect(run([trigger, next, open])).toEqual([])
+  })
+
+  it('treats a setter with an open or unreadable window as open', () => {
+    const anyYear = { id: 't_any', when: (G) => G.age > 20 && !G.mem?.war, effect: (p) => { p.setMem('war', true) } }
+    const victory = { id: 't_victory', when: (G) => G.currentYear === 1971 && G.mem?.war, effect: () => {} }
+    expect(run([trigger, anyYear, victory])).toEqual([])
+  })
+
+  it('does not report a flag something outside the events can set', () => {
+    // A world event's addFlags, an engine push, a choice tag: none of these
+    // are events with a year window, and any of them could be the setter.
+    const byFlag = { id: 't_victory_f', when: (G) => G.currentYear === 1971 && G.flags.has('war_flag'), effect: () => {} }
+    const world = [{ rel: 'src/data/worldEvents.js', content: "addFlags: ['war_flag']," }]
+    expect(run([trigger, byFlag], world)).toEqual([])
+    const engine = [{ rel: 'src/engine/tick.js', content: 'state.mem.war = true' }]
+    const victory = { id: 't_victory', when: (G) => G.currentYear === 1971 && G.mem?.war, effect: () => {} }
+    expect(run([trigger, victory], engine)).toEqual([])
+  })
+
+  it('does not read a dead OR branch, a negation or a comparison as a requirement', () => {
+    const or = { id: 't_or', when: (G) => G.currentYear === 1971 && (G.mem?.war || G.age > 60), effect: () => {} }
+    const neg = { id: 't_neg', when: (G) => G.currentYear === 1971 && !G.flags.has('war_flag'), effect: () => {} }
+    const cmp = { id: 't_cmp', when: (G) => G.currentYear === 1971 && (G.mem?.war ?? 0) < 3, effect: () => {} }
+    expect(run([trigger, or, neg, cmp])).toEqual([])
+  })
+
+  it('warns when the setter has one useful year and stays open past it', () => {
+    // id98_suharto_falls (1998) behind id98_crisis_texture (1997-98).
+    const crisis = { id: 't_crisis', when: (G) => G.currentYear >= 1997 && G.currentYear <= 1998, effect: (p) => { p.addFlag('crisis') } }
+    const falls = { id: 't_falls', when: (G) => G.currentYear === 1998 && G.flags.has('crisis'), effect: () => {} }
+    const f = run([crisis, falls])
+    expect(f.map(x => [x.id, x.code, x.level])).toEqual([['t_falls', 'chain-squeezed', 'warn']])
+  })
+
+  it('warns when a world event closes a dated event before its year is drawn', () => {
+    // bel_2020_protests negated the flag belarus_protests_2020 hands out.
+    const ev = { id: 't_protest', when: (G) => G.character.country.name === 'Belarus' && G.currentYear === 2020 && G.age >= 18 && !G.flags.has('gen_2020'), effect: () => {} }
+    const latched = { id: 't_protest2', when: (G) => G.character.country.name === 'Belarus' && G.currentYear === 2020 && !G.mem?.protest, effect: () => {} }
+    const we = { id: 'w_2020', years: [2020, 2021], countries: ['Belarus'], addFlags: ['gen_2020'], effect: () => {}, minAge: 12 }
+    const f = worldFlagBlockFindings([ev, latched], [we], { files: [] })
+    expect(f.map(x => [x.id, x.code])).toEqual([['t_protest', 'world-flag-blocks']])
+    const elsewhere = { ...we, countries: ['Ukraine'] }
+    expect(worldFlagBlockFindings([ev], [elsewhere], { files: [] })).toEqual([])
+  })
 })
 
 // ─── The corpus ───────────────────────────────────────────────────────────────

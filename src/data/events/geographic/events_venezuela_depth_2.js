@@ -97,7 +97,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       G.character.country.name === 'Venezuela' &&
       G.currentYear >= 2013 && G.currentYear <= 2014 &&
       G.age >= 16 &&
-      !G.mem?.venChavezDeath,
+      !G.mem?.venChavezDeath && !G.mem?.ven_chavez_death,
     text: (G) => {
       const isChavista = G.flags.has('ven_chavez_generation') || G.flags.has('ven_missions_beneficiary')
       if (isChavista) {
@@ -110,7 +110,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       p.r += 8
       p.m -= 5
       p.addFlag('ven_chavez_death_witness')
-      p.setMem('venChavezDeath', true)
+      p.setMem('venChavezDeath', true); p.setMem('ven_chavez_death', true)
     },
   },
 
@@ -206,18 +206,21 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       }
       return 'You cross the Simón Bolívar bridge at San Antonio del Táchira into Cúcuta, Colombia. There are Venezuelans you don\'t know on the bridge — families, people alone, people with wheelie suitcases and people with nothing. You have one bag. The bridge is the decision made visible and permanent: the side you came from and the side you are going to. There are Colombians with water and bread at the end of the bridge. There is an NGO table. There is also the road north, which is the rest of this.'
     },
+    // Both branches say you leave, and both set a residency, and neither moved
+    // anybody: the character held a work visa in Caracas. Found once
+    // narrated-move read function-bodied text.
     choices: [
       {
         text: 'You leave with enough to establish something somewhere.',
         tag: 'ven_diaspora',
         outcome: 'The establishment is possible and hard and takes longer than the estimation. The Venezuelan community you find is yourself and people exactly like you — also establishing, also calculating.',
-        effect: (p) => { p.mo -= 2000; p.r += 8; p.addFlag('ven_diaspora'); p.setResidency('work_visa'); p.setMem('venDeparture', true); },
+        effect: (p) => { p.mo -= 2000; p.r += 8; p.addFlag('ven_diaspora'); p.addFlag('emigrated'); p.emigrateTo(['Colombia', 'United States', 'Chile'], { residency: 'work_visa' }); p.setMem('venDeparture', true); },
       },
       {
         text: 'You leave with almost nothing. The departure is the only option left.',
         tag: 'ven_diaspora',
         outcome: 'The walk across the bridge is the option. The option becomes the life. The life is made from this beginning, which is also an end.',
-        effect: (p) => { p.mo -= 500; p.m -= 5; p.h -= 5; p.r += 10; p.addFlag('ven_diaspora'); p.setResidency('refugee_status'); p.setMem('venDeparture', true); },
+        effect: (p) => { p.mo -= 500; p.m -= 5; p.h -= 5; p.r += 10; p.addFlag('ven_diaspora'); p.addFlag('emigrated'); p.emigrateTo('Colombia', { residency: 'refugee_status' }); p.setMem('venDeparture', true); },
       },
     ],
     effect: null,

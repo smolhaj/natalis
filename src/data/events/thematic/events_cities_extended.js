@@ -347,11 +347,11 @@ export const CITIES_EXTENDED_EVENTS = [
     when: (G) =>
       G.place?.id === 'kh_phnom_penh' &&
       G.currentYear === 1975 &&
-      !G.mem?.ppEvacuation1975,
+      !G.mem?.ppEvacuation1975 && !G.mem?.caEvacuation,
     text: () =>
       `April 17, 1975. The Khmer Rouge have entered the city. The soldiers are very young and very serious and none of them are smiling. They are telling everyone through loudspeakers that the Americans will bomb the city in two hours and everyone must leave. You carry what you can. You do not know the bombing is not coming. You join the million people being walked out of Phnom Penh on foot, into the countryside, with no stated destination. The city empties in a day.`,
     choices: null,
-    effect: (p) => { p.m -= 12; p.h -= 5; p.addFlag('survived_khmer_rouge'); p.setMem('ppEvacuation1975', true) },
+    effect: (p) => { p.m -= 12; p.h -= 5; p.addFlag('survived_khmer_rouge'); p.setMem('ppEvacuation1975', true); p.setMem('caEvacuation', true) },
   },
 
   // Event 2: Year Zero survival
@@ -897,11 +897,11 @@ export const CITIES_EXTENDED_EVENTS = [
     when: (G) =>
       G.place?.id === 'ua_kyiv' &&
       G.currentYear >= 2004 && G.currentYear <= 2005 &&
-      !G.mem?.kyivOrangeRevolution,
+      !G.mem?.kyivOrangeRevolution && !G.mem?.ukrOrangeRev,
     text: () =>
       `November 2004. The Maidan Nezalezhnosti is orange — orange tents, orange scarves, orange flags. Three weeks of mass protests after a fraudulent election runoff. The temperature is below zero. People are bringing food to the square in shifts. The Supreme Court annuls the election result. Yushchenko wins the re-run. You stood on the Maidan or you watched it on the screen. Either way, the country has demonstrated something about itself that it will refer to again.`,
     choices: null,
-    effect: (p) => { p.m += 6; p.s += 3; p.addFlag('maidan_generation'); p.setMem('kyivOrangeRevolution', true) },
+    effect: (p) => { p.m += 6; p.s += 3; p.addFlag('maidan_generation'); p.setMem('kyivOrangeRevolution', true); p.setMem('ukrOrangeRev', true) },
   },
 
   {
@@ -912,11 +912,11 @@ export const CITIES_EXTENDED_EVENTS = [
     when: (G) =>
       G.place?.id === 'ua_kyiv' &&
       G.currentYear >= 2013 && G.currentYear <= 2014 &&
-      !G.mem?.kyivEuromaidan,
+      !G.mem?.kyivEuromaidan && !G.mem?.ukrEuromaidan,
     text: () =>
       `Winter 2013–2014. The square again — larger this time, colder, longer. Yanukovych's police used force and the crowd grew instead of dispersing. The Berkut officers shoot into the crowd in February. A hundred and five people die on the Maidan in a week. Yanukovych flees to Russia. The country is changed again and the price of the change is higher than 2004. Something has been won and something terrible is beginning.`,
     choices: null,
-    effect: (p) => { p.m += 3; p.m -= 6; p.addFlag('euromaidan_lived'); p.setMem('kyivEuromaidan', true) },
+    effect: (p) => { p.m += 3; p.m -= 6; p.addFlag('euromaidan_lived'); p.setMem('kyivEuromaidan', true); p.setMem('ukrEuromaidan', true) },
   },
 
   // ── DHAKA ─────────────────────────────────────────────────────────────────────
