@@ -2302,7 +2302,7 @@ export const COUNTRIES = [
     context: 'Peru is Andean highlands, Amazon jungle, and Pacific coast — each region a different world with different languages, food, and access to power. Lima\'s informal economy employs millions; everything can be fixed, sold, or moved through the market on the street corner. The Shining Path insurgency of the 1980s and 90s killed 70,000 people, mostly indigenous Quechua communities caught between the guerrillas and the military. If your surname is Quispe or Mamani you navigate a different Peru than if it\'s García or Torres. Corruption is not a scandal but an infrastructure.',
     yearRange: [1930, 2005],
     regime: 'federal_republic',
-    regimeHistory: [{ year: 1968, to: 'military_dictatorship' }, { year: 1980, to: 'federal_republic' }, { year: 1992, to: 'single_party_authoritarian' }, { year: 2000, to: 'federal_republic' }],
+    regimeHistory: [{ year: 1948, to: 'military_dictatorship' }, { year: 1956, to: 'federal_republic' }, { year: 1962, to: 'military_dictatorship' }, { year: 1963, to: 'federal_republic' }, { year: 1968, to: 'military_dictatorship' }, { year: 1980, to: 'federal_republic' }, { year: 1992, to: 'single_party_authoritarian' }, { year: 2000, to: 'federal_republic' }],
     religionWeights: { christian_catholic: 0.76, christian_protestant: 0.13, animist: 0.06, secular: 0.05 },
     ethnicGroups: [
       { id: 'mestizo_peruvian', name: 'Mestizo', share: 0.596 },

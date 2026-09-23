@@ -21,7 +21,8 @@
     "check-events": "node scripts/check-events.js",
     "sim": "node scripts/sim.js",
     "check-anachronisms": "node scripts/check-anachronisms.js",
-    "check-bundle": "node scripts/check-bundle.js"
+    "check-bundle": "node scripts/check-bundle.js",
+    "check-reach": "node scripts/check-reach.js"
   },
   "dependencies": {
     "react": "^18.3.1",

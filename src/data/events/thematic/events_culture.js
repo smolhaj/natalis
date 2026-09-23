@@ -571,7 +571,10 @@ export const CULTURE_EVENTS = [
     id: 'cult_rural_no_electricity',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.ruralUrban === 'rural' && G.age >= 5 && G.age <= 14 && G.currentYear >= 1950 && G.currentYear <= 1990 && G.character.country.gdp !== 'very_high' && G.character.country.gdp !== 'high',
+    // It sets `first_electricity` and did not read it, while `rural_first_electricity`
+    // in events_texture.js correctly does — so a Nigerian village got the light
+    // twice, six years apart, and both times the mother covered her face and laughed.
+    when: (G) => G.ruralUrban === 'rural' && !G.flags.includes('first_electricity') && !G.flags.includes('village_electrified') && G.age >= 5 && G.age <= 14 && G.currentYear >= 1950 && G.currentYear <= 1990 && G.character.country.gdp !== 'very_high' && G.character.country.gdp !== 'high',
     text: (G) => `The village gets electricity. You are ${G.age} years old. Before that, evenings were oil lamp and moonlight. You watch the first light bulb flicker on in your house and your mother covers her face with her hands and laughs.`,
     choices: null,
     effect: (p) => { p.m += 10; p.e += 5; p.addFlag('first_electricity') },

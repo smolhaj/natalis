@@ -6,11 +6,21 @@
 
 // ── Welfare label helpers ─────────────────────────────────────────────────────
 
+// A benefit has the name of the language you claim it in. Belgium's `leefloon`
+// is the Dutch name and 31% of Belgians are Walloon, whose benefit is the
+// revenu d'intégration sociale; Switzerland's `Sozialhilfe` is German and 23%
+// of the country speaks French (aide sociale) and 8% Italian (aiuto sociale).
+// Germany's `Sozialhilfe` is also wrong before the BSHG of 1961 — what came
+// before it was öffentliche Fürsorge — and the 1950 version of that event also
+// asserts a bank statement and a job-search log.
+const FRANCOPHONE = new Set(['walloon', 'french_swiss', 'bruxellois'])
+const ITALOPHONE = new Set(['italian_swiss'])
+
 const WELFARE_NAMES = {
   'United States':    () => 'SNAP benefits',
   'United Kingdom':   (yr) => yr >= 2013 ? 'Universal Credit' : "Jobseeker's Allowance",
   'Australia':        () => 'Centrelink payments',
-  'Germany':          (yr) => yr >= 2023 ? 'Bürgergeld' : yr >= 2005 ? 'Hartz IV' : 'Sozialhilfe',
+  'Germany':          (yr) => yr >= 2023 ? 'Bürgergeld' : yr >= 2005 ? 'Hartz IV' : yr >= 1962 ? 'Sozialhilfe' : 'öffentliche Fürsorge',
   'France':           (yr) => yr >= 2009 ? 'RSA' : 'RMI',
   'Canada':           () => 'social assistance',
   'Netherlands':      () => 'bijstand',
@@ -20,14 +30,14 @@ const WELFARE_NAMES = {
   'Finland':          () => 'toimeentulotuki',
   'Ireland':          () => "Jobseeker's Benefit",
   'New Zealand':      () => 'Jobseeker Support',
-  'Switzerland':      () => 'Sozialhilfe',
-  'Belgium':          () => 'leefloon',
+  'Switzerland':      (yr, eth) => FRANCOPHONE.has(eth) ? 'aide sociale' : ITALOPHONE.has(eth) ? 'aiuto sociale' : 'Sozialhilfe',
+  'Belgium':          (yr, eth) => FRANCOPHONE.has(eth) ? "le revenu d'intégration" : 'leefloon',
   'Austria':          () => 'Mindestsicherung',
 }
 
 function welfareLabel(G) {
   const fn = WELFARE_NAMES[G.character.country.name] || WELFARE_NAMES[G.currentCountry?.name]
-  if (fn) return fn(G.currentYear)
+  if (fn) return fn(G.currentYear, G.ethnicity)
   // Post-soviet countries have some form
   if (G.archetype === 'post_soviet') return 'state assistance'
   // Wealthy archetypes always have something

@@ -36,7 +36,7 @@
 // Dates used, all checked. Muslim is recognised as a Yugoslav nationality in
 // 1971. The Sarajevo Winter Olympics open 8 February 1984. The first multiparty
 // election is November 1990 and the three nationalist parties take 84% of the
-// vote between them. The independence referendum is 29 February to 1 March
+// seats on 74% of the vote. The independence referendum is 29 February to 1 March
 // 1992, largely boycotted by Serbs, 99.7% yes on 63% turnout. Suada Dilberović
 // and Olga Sučić are shot on the Vrbanja bridge on 5 April 1992. The siege runs
 // 5 April 1992 to 29 February 1996 — 1,425 days, about 11,500 killed, some
@@ -95,7 +95,7 @@ export const BOSNIA_EVENTS = [
     phase: null,
     weight: 999,
     when: (G) => IS_BA(G) && G.currentYear === 1984 && G.age >= 6 && once(G, 'ba_84'),
-    text: 'The Winter Olympics are in Sarajevo and the whole city has been rebuilding itself for three years to be looked at. There is a wolf called Vučko on everything. Jure Franko takes silver in the giant slalom and the country loses its mind over a silver medal. Torvill and Dean skate Boléro at Zetra and get nines across the board. For two weeks the world is here and likes it here, and for the rest of your life this will be one of the two things people abroad know about your city.',
+    text: 'The Winter Olympics are in Sarajevo and the whole city has been rebuilding itself for three years to be looked at. There is a wolf called Vučko on everything. Jure Franko takes silver in the giant slalom and the country loses its mind over a silver medal. Torvill and Dean skate Boléro at Zetra and every one of the nine judges gives them a six. For two weeks the world is here and likes it here, and for the rest of your life this will be one of the two things people abroad know about your city.',
     context: 'The XIV Winter Olympics were held in Sarajevo in February 1984 — the first Winter Games in a socialist country. The bobsleigh track on Trebević and the Zetra hall became front-line positions eight years later, and the Olympic field at Koševo became a cemetery.',
     choices: null,
     effect: (p) => { p.setMem('ba_84', true); p.m += 8; p.addFlag('sarajevo_olympics') },
@@ -106,8 +106,8 @@ export const BOSNIA_EVENTS = [
     phase: null,
     weight: 90,
     when: (G) => IS_BA(G) && G.currentYear === 1990 && G.age >= 16 && once(G, 'ba_1990'),
-    text: 'The first free election in fifty years and the three national parties take eighty-four per cent of it between them. The Communists and the Reformists — the two you could vote for without declaring what you are — split what is left. People vote for their own party the way you would take an umbrella: not because it is raining, because it might. Afterwards the three parties divide the ministries between them by nationality and call it power-sharing, and the arithmetic of the country is now a thing on paper.',
-    context: 'In Bosnia\'s November 1990 election the SDA (Bosniak), SDS (Serb) and HDZ (Croat) took 84% of the vote between them and formed a coalition dividing posts by nationality. The non-national parties were beaten decisively.',
+    text: 'The first free election in fifty years and the three national parties take eighty-four per cent of the assembly between them. The Communists and the Reformists — the two you could vote for without declaring what you are — split what is left. People vote for their own party the way you would take an umbrella: not because it is raining, because it might. Afterwards the three parties divide the ministries between them by nationality and call it power-sharing, and the arithmetic of the country is now a thing on paper.',
+    context: 'In Bosnia\'s November 1990 election the SDA (Bosniak), SDS (Serb) and HDZ (Croat) took 84% of the seats between them on 74% of the vote and formed a coalition dividing posts by nationality. The non-national parties were beaten decisively.',
     choices: [
       {
         text: 'Vote for one of the three. Everyone else is going to.',
@@ -118,7 +118,7 @@ export const BOSNIA_EVENTS = [
       {
         text: 'Vote for the Reformists. Somebody has to.',
         tag: 'defiant',
-        outcome: 'They get thirteen per cent. Your colleague, who voted the same way, says the sentence everyone in this small category will say for thirty years: we were right and it made no difference at all.',
+        outcome: 'They get nine per cent. Your colleague, who voted the same way, says the sentence everyone in this small category will say for thirty years: we were right and it made no difference at all.',
         effect: (p) => { p.setMem('ba_1990', true); p.e += 3; p.addFlag('voted_non_national') },
       },
     ],
@@ -143,7 +143,7 @@ export const BOSNIA_EVENTS = [
     phase: null,
     weight: 999,
     when: (G) => IS_BA(G) && G.currentYear === 1992 && G.age >= 14 && SARAJEVO(G) && once(G, 'ba_bridge'),
-    text: 'There is a demonstration on the fifth of April, tens of thousands of people, and the point of it is that they are all three at once and are saying so out loud in the street. They walk to the parliament. On the Vrbanja bridge somebody fires from the Holiday Inn and Suada Dilberović, who is a medical student from Dubrovnik, and Olga Sučić, who works in the parliament building, are killed. You are close enough to hear the crowd change its sound. The war is four minutes old and the first two people it kills are a Muslim woman and a Croat woman at a demonstration for keeping the country together.',
+    text: 'There is a demonstration on the fifth of April, tens of thousands of people, and the point of it is that they are all three at once and are saying so out loud in the street. They walk to the parliament. On the Vrbanja bridge somebody fires from the Holiday Inn and Suada Dilberović, who is a medical student from Dubrovnik, and Olga Sučić, who works in the parliament building, are killed. You are close enough to hear the crowd change its sound. The siege is four minutes old and the first two people it kills are a Muslim woman and a Croat woman at a demonstration for keeping the country together. There are people already dead elsewhere by now, and whose name goes first in the count is a thing this country will still be arguing about when you are old.',
     context: 'On 5 April 1992 a mass peace demonstration in Sarajevo was fired on from the Holiday Inn, then held by SDS gunmen. Suada Dilberović and Olga Sučić are generally counted the first victims of the siege. The bridge now carries their names.',
     choices: null,
     effect: (p) => { p.setMem('ba_bridge', true); p.m -= 10; p.addFlag('vrbanja_bridge'); p.addFlag('war_began') },
@@ -213,7 +213,7 @@ export const BOSNIA_EVENTS = [
     weight: 400,
     when: (G) => IS_BA(G) && SARAJEVO(G) && G.currentYear >= 1993 && G.currentYear <= 1995 && G.age >= 15 && once(G, 'ba_normal'),
     text: 'There is a theatre season. There is a film festival, held in a basement, and people come to it in good clothes across a street where people get shot. Somebody runs a beauty contest and the winners hold up a banner that says DON\'T LET THEM KILL US. A man plays the cello in the ruins where the bread queue was. None of this is coping and none of it is defiance exactly. It is a city insisting, in the only grammar it has left, on being a city.',
-    context: 'Cultural life in besieged Sarajevo was deliberate and sustained: the Sarajevo Film Festival began in 1993 and continues today, theatres ran seasons, and the "Miss Besieged Sarajevo" contest of May 1993 produced one of the war\'s defining images.',
+    context: 'Cultural life in besieged Sarajevo was deliberate and sustained: basement screenings ran from 1993 and became the Sarajevo Film Festival, founded under siege in 1995 and running still; theatres ran seasons, and the "Miss Besieged Sarajevo" contest of May 1993 produced one of the war\'s defining images.',
     choices: null,
     effect: (p) => { p.setMem('ba_normal', true); p.m += 6; p.s += 3; p.addFlag('siege_culture'); p.addFlag('sarajevo_siege') },
   },
@@ -224,7 +224,7 @@ export const BOSNIA_EVENTS = [
     id: 'ba_white_armbands',
     phase: null,
     weight: 999,
-    when: (G) => IS_BA(G) && !SARAJEVO(G) && (BOSNIAK(G) || CROAT(G)) && G.currentYear >= 1992 && G.currentYear <= 1994 && G.age >= 10 && once(G, 'ba_armband'),
+    when: (G) => IS_BA(G) && !SARAJEVO(G) && (BOSNIAK(G) || CROAT(G)) && G.currentYear === 1992 && G.age >= 10 && once(G, 'ba_armband'),
     text: 'The announcement is on the local radio and it is procedural in tone. Non-Serbs are to mark their houses with a white sheet and to wear a white armband when they go out. Your mother finds a sheet. You watch her tear it into strips at the kitchen table, measuring by eye, the way she would for anything, and the ordinariness of her hands doing it is the part that stays with you. Then the buses start coming for people and everyone finds out what the marking was for.',
     context: 'In Prijedor in May 1992 the Serb authorities ordered non-Serbs to hang white sheets from their homes and wear white armbands. The Omarska, Keraterm and Trnopolje camps operated in the district that summer; the ICTY convicted a number of officials of crimes against humanity there.',
     choices: [
@@ -248,7 +248,7 @@ export const BOSNIA_EVENTS = [
     phase: null,
     weight: 999,
     when: (G) => IS_BA(G) && (BOSNIAK(G) || CROAT(G)) && G.character?.gender === 'male' &&
-      G.currentYear >= 1992 && G.currentYear <= 1995 && G.age >= 16 && G.age <= 60 &&
+      G.currentYear >= 1992 && G.currentYear <= 1993 && G.age >= 16 && G.age <= 60 &&
       G.flags.includes('white_armband') && once(G, 'ba_camp'),
     text: 'They take the men. The place is a mine complex with a hangar and a white house and you are in it for eleven weeks. There is no point describing the eleven weeks and you will not describe them, to anybody, including in the statement you give in 1998, which is accurate and leaves things out. In August the journalists come and the pictures go round the world, and the world looks at them, and what happens after the world looks is a separate question that takes it three more years to answer.',
     context: 'Omarska, Keraterm and Trnopolje held thousands of Bosniak and Croat men in 1992. ITN and Guardian footage from Trnopolje in August 1992 brought the camps to international attention. The ICTY tried and convicted camp commanders and local officials.',
@@ -262,8 +262,8 @@ export const BOSNIA_EVENTS = [
     weight: 999,
     when: (G) => IS_BA(G) && G.currentYear === 1993 && G.age >= 12 && (SERB(G) || BOSNIAK(G)) && once(G, 'ba_ferhadija'),
     text: (G) => SERB(G)
-      ? 'They dynamite the Ferhadija in the middle of the night in May and bulldoze what is left into the river, and the Arnaudija a fortnight later. Four hundred years each. In the morning there is a flat place where a building has been your whole life and the town is quieter than a town should be, and the quietness is a lot of people deciding separately not to say anything. Your father says one sentence about it at the table and then does not mention it again, for years, and the sentence is not one you can repeat outside the house.'
-      : 'They dynamite the Ferhadija in the night and push the stone into the river so that it cannot be put back. Four hundred and twenty years. It was not a mosque you went to particularly. It was the thing at the end of the street that had always been there and that your grandfather described as having always been there. You understand exactly what the demolition is for, which is not to remove a building.',
+      ? 'They dynamite the Ferhadija in the middle of the night in May and bulldoze what is left into the river, and the Arnaudija twenty minutes later, the same night. Four hundred years each. In the morning there is a flat place where a building has been your whole life and the town is quieter than a town should be, and the quietness is a lot of people deciding separately not to say anything. Your father says one sentence about it at the table and then does not mention it again, for years, and the sentence is not one you can repeat outside the house.'
+      : 'They dynamite the Ferhadija in the night and push the stone into the river so that it cannot be put back. Four hundred and fourteen years. It was not a mosque you went to particularly. It was the thing at the end of the street that had always been there and that your grandfather described as having always been there. You understand exactly what the demolition is for, which is not to remove a building.',
     context: 'The Ferhat Pasha (Ferhadija) mosque, built in 1579, and the Arnaudija, built in 1594, were dynamited in Banja Luka in May 1993 and the rubble removed. Sixteen mosques in the city were destroyed. The Ferhadija was rebuilt from recovered stone and reopened in 2016.',
     choices: null,
     effect: (p) => { p.setMem('ba_ferhadija', true); p.m -= 7; p.addFlag('mosques_dynamited') },
@@ -286,7 +286,7 @@ export const BOSNIA_EVENTS = [
     id: 'ba_croat_bosniak_war',
     phase: null,
     weight: 500,
-    when: (G) => IS_BA(G) && (BOSNIAK(G) || CROAT(G)) && G.currentYear >= 1993 && G.currentYear <= 1995 &&
+    when: (G) => IS_BA(G) && (BOSNIAK(G) || CROAT(G)) && G.currentYear >= 1993 && G.currentYear <= 1994 &&
       G.age >= 14 && once(G, 'ba_cbwar'),
     text: 'The other war starts, the one inside the first one. Until last year you and they were on the same side of the same thing and the front line ran somewhere else entirely, and now it runs down a street in Mostar with a boulevard for a no-man\'s-land. The man who was your section commander in 1992 is on the other side of it in 1993. Nobody outside the country can follow this and you can barely follow it and you are in it.',
     context: 'The Croat–Bosniak war of 1993–94 split the former allies and divided Mostar along the Bulevar. It ended with the Washington Agreement of March 1994, which created the Federation of Bosnia and Herzegovina.',
@@ -424,7 +424,11 @@ export const BOSNIA_EVENTS = [
     id: 'ba_srebrenica_july',
     phase: null,
     weight: 999,
-    when: (G) => IS_BA(G) && BOSNIAK(G) && G.currentYear >= 1995 && G.currentYear <= 1996 && G.age >= 8 && Math.random() < 0.3 && once(G, 'ba_sreb'),
+    when: (G) => IS_BA(G) && BOSNIAK(G) && G.currentYear >= 1995 && G.currentYear <= 1996 && G.age >= 8 &&
+      // The enclave, not the country. Without a place test this reached 30% of
+      // every Bosniak the engine draws, including Sarajevans under siege.
+      (G.place?.id === 'ba_rural' || G.flags.includes('village_cleared') || G.flags.includes('collective_centre')) &&
+      Math.random() < 0.18 && once(G, 'ba_sreb'),
     text: (G) => G.character?.gender === 'male' && G.age >= 14 && G.age <= 65
       ? 'The enclave falls on the eleventh of July and the UN does not stop it. At the base at Potočari they separate the men and boys from everyone else, in front of everyone else, with the Dutch soldiers standing there. The other option is the column: twelve thousand men walking sixty miles through the woods to Tuzla with the woods shelled and mined ahead of them. About a third of the column arrives. Over eight thousand men and boys do not arrive anywhere, and it takes twenty years and a DNA laboratory to establish where most of them are.'
       : 'The enclave falls on the eleventh of July and at Potočari they take the men out of the crowd, in front of the crowd, while the Dutch soldiers stand there, and put the women and the children on buses to Tuzla. Your husband. Your brother. Your son, who is fifteen, and whom you tried to keep inside the group by standing in a particular way, which did not work. Over eight thousand. You are on a bus and you are alive and that is the arithmetic that will organise the rest of your life.',
@@ -509,7 +513,7 @@ export const BOSNIA_EVENTS = [
     id: 'ba_dna_identification',
     phase: null,
     weight: 999,
-    when: (G) => IS_BA(G) && G.currentYear >= 2001 && G.age >= 25 &&
+    when: (G) => IS_BA(G) && G.currentYear >= 2003 && G.age >= 25 &&
       (G.flags.includes('srebrenica') || G.flags.includes('bosnia_camp_survivor') || G.flags.includes('ethnic_cleansing_survivor')) &&
       once(G, 'ba_dna'),
     text: 'They take blood from you and from your mother and from your father\'s sister and the blood goes into a database, and then you wait, and the waiting is measured in years. When the call comes it is a laboratory telling you that bones recovered from two separate graves, thirty kilometres apart, are one person and that the person is yours. The second grave was dug to hide the first. You bury what there is, in July, at Potočari, with the others whose call came this year.',
@@ -535,7 +539,7 @@ export const BOSNIA_EVENTS = [
     id: 'ba_leaving',
     phase: null,
     weight: 120,
-    when: (G) => IS_BA(G) && G.currentYear >= 1996 && G.age >= 19 && G.age <= 40 &&
+    when: (G) => IS_BA(G) && G.currentYear >= 2014 && G.age >= 19 && G.age <= 40 &&
       !G.flags.includes('emigrated') && once(G, 'ba_leave'),
     text: 'Everybody is going. Germany is taking nurses and welders and anyone who will do the course, and the queue outside the German embassy starts at four in the morning and is full of people with degrees. The country had four and a half million people in 1991. Your class had twenty-six. There is a group chat and the group chat has members in six countries and it is, functionally, where your class lives now.',
     choices: [

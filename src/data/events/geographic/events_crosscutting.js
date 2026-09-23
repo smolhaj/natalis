@@ -5,6 +5,17 @@
 // Arc 3: Refugee Camp as Childhood (7 events) — cc_camp_*
 
 import { hasTech } from '../../technology.js'
+import { underBombardment } from '../../history.js'
+
+// Flags never clear, so present-tense prose behind a permanent flag never
+// stops: the safe route, the Wednesday market and the run bag all gated on
+// `city_under_bombardment` alone and went on describing a city being shelled
+// for the forty years after the shelling stopped. `ccBombardmentEnd` is the
+// arc's own exit; the table is the world's.
+const stillUnder = (G) =>
+  !G.mem?.ccBombardmentEnd &&
+  (underBombardment(G.currentCountry ?? G.character.country, G.currentYear) ||
+    G.currentYear - (G.mem?.ccBombardmentStartYear ?? G.currentYear) <= 6)
 
 export const CROSSCUTTING_EVENTS = [
 
@@ -153,16 +164,21 @@ export const CROSSCUTTING_EVENTS = [
     id: 'cc_bombardment_first_night',
     phase: null,
     weight: 4,
+    // This had no year term at all, so a Bosnian born in 1962 lived the siege of
+    // Sarajevo from 1974, got the ceasefire in 1977, was still packing a run bag
+    // in 1988, and attended the 1984 Olympics in a city she had been shelled in
+    // for a decade. `archetype === 'conflict_zone'` was the same mistake one
+    // layer down — a statement about now — and Kabul in 1965 was a city you
+    // went to university in. `BOMBARDMENT_YEARS` in history.js carries when.
     when: (G) =>
       !G.mem?.ccBombardmentStart &&
       !G.flags.includes('city_under_bombardment') &&
-      (G.archetype === 'conflict_zone' ||
-        ['Lebanon', 'Syria', 'Iraq', 'Bosnia and Herzegovina', 'Palestine'].includes(G.character.country.name) ||
+      (underBombardment(G.currentCountry ?? G.character.country, G.currentYear) ||
         G.flags.includes('war_zone_civilian')) &&
       G.age >= 5,
     text: 'The first night it starts in earnest, the sound is instructive. Close means a particular compression in the chest — not just heard but felt. The sound that missed you has a different quality, a lateral passage. Silence after a sound is not the absence of sound: it is the two seconds in which you calculate. By morning you understand a vocabulary you did not have yesterday. You do not know yet that you will carry it for the rest of your life.',
     choices: null,
-    effect: (p) => { p.m -= 18; p.h -= 5; p.addFlag('city_under_bombardment'); p.addFlag('traumatized_by_violence'); p.setMem('ccBombardmentStart', true) },
+    effect: (p) => { p.m -= 18; p.h -= 5; p.addFlag('city_under_bombardment'); p.addFlag('traumatized_by_violence'); p.setMem('ccBombardmentStart', true); p.setMem('ccBombardmentStartYear', p._state.currentYear) },
   },
 
   {
@@ -171,7 +187,7 @@ export const CROSSCUTTING_EVENTS = [
     weight: 4,
     cooldown: 2,
     when: (G) =>
-      G.flags.includes('city_under_bombardment') &&
+      G.flags.includes('city_under_bombardment') && stillUnder(G) &&
       G.age >= 5,
     text: 'You take the long way around the intersection near the post office. You have not taken the direct route in six weeks. The knowledge is in your body now — you check without thinking, the way you checked the stove before any of this. Other people in the neighbourhood have made the same calculation. You can tell by how they walk past that corner. Nobody says it. You all know.',
     choices: null,
@@ -184,7 +200,7 @@ export const CROSSCUTTING_EVENTS = [
     weight: 3,
     cooldown: 3,
     when: (G) =>
-      G.flags.includes('city_under_bombardment') &&
+      G.flags.includes('city_under_bombardment') && stillUnder(G) &&
       G.age >= 10,
     text: 'The market near the old bus terminal is open on Wednesday mornings. The vegetable sellers are there; one of the coffee stalls is back. People buy things and discuss prices and complain about the quality of the tomatoes. A kilometre away, something is on fire. You buy what you need and carry it home in the usual bag. The surrealism is total, and nobody mentions it, because mentioning it would make the market disappear.',
     choices: null,
@@ -197,7 +213,7 @@ export const CROSSCUTTING_EVENTS = [
     weight: 3,
     when: (G) =>
       !G.mem?.ccBombardmentBag &&
-      G.flags.includes('city_under_bombardment') &&
+      G.flags.includes('city_under_bombardment') && stillUnder(G) &&
       G.age >= 12,
     text: 'You pack a bag and keep it by the door. This is a practical decision, not a hopeful one. You have thought about what goes in it: the document, the photographs, the small amount of money. The bag is ready. Having it there changes nothing about the shelling. It changes something about how you sleep.',
     choices: [
@@ -223,7 +239,7 @@ export const CROSSCUTTING_EVENTS = [
     weight: 3,
     cooldown: 3,
     when: (G) =>
-      G.flags.includes('city_under_bombardment') &&
+      G.flags.includes('city_under_bombardment') && stillUnder(G) &&
       G.age >= 12,
     text: 'The apartment across the landing has been empty for eleven days. The last time you saw them was on a Tuesday. You do not know if they left before something happened or if they left because something happened or what the difference is now. You do not knock. You have decided, without deciding, not to know. You pass the door each morning. You do not look at it directly.',
     choices: null,
@@ -236,7 +252,7 @@ export const CROSSCUTTING_EVENTS = [
     weight: 4,
     when: (G) =>
       !G.mem?.ccBombardmentChildExplain &&
-      G.flags.includes('city_under_bombardment') &&
+      G.flags.includes('city_under_bombardment') && stillUnder(G) &&
       G.children && G.children.length > 0 &&
       G.age >= 28,
     text: 'Your child asks what the sound was. They are calm when they ask — children learn to be calm about the things that are constant — but they are asking. You have a second to decide what this answer is. The truth in terms they can hold is not the same as the truth.',
@@ -261,9 +277,12 @@ export const CROSSCUTTING_EVENTS = [
     id: 'cc_bombardment_ceasefire',
     phase: null,
     weight: 3,
+    // A ceasefire in the first year is not a ceasefire, it is a pause, and this
+    // one fired eleven years before the run-bag event in the same life.
     when: (G) =>
       !G.mem?.ccBombardmentCeasefire &&
       G.flags.includes('city_under_bombardment') &&
+      G.currentYear - (G.mem?.ccBombardmentStartYear ?? G.currentYear) >= 1 &&
       G.age >= 5,
     // A ceasefire reaches a street by whatever carries news to it; the radio
     // was carrying it in 1937 Myanmar, eighteen years before there were sets.

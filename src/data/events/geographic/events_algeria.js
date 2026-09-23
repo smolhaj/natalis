@@ -285,7 +285,7 @@ export const ALGERIA_EVENTS = [
         text: 'Leave Algeria — now, while there is still a way to leave',
         tag: null,
         outcome: 'You go. The paperwork goes with you. Whether your name was ever on a list, you will never know.',
-        effect: (p) => { p.m -= 15; p.addFlag('algeria_exile'); p.addFlag('decennie_noire_fled'); p.setResidency('asylum_seeker'); p.setMem('algTheList', true); },
+        effect: (p) => { p.m -= 15; p.addFlag('algeria_exile'); p.addFlag('decennie_noire_fled'); p.emigrateTo('France', { residency: 'asylum_seeker' }); p.setMem('algTheList', true); },
       },
       {
         text: 'Move to a relative\'s in another city — enough distance, same country',

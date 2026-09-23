@@ -1,3 +1,4 @@
+import { colonialSchoolLanguage } from '../../history.js'
 // events_society.js
 // Women's rights milestones, healthcare system encounters, and language/identity events.
 // These are educational moments — the player learns when and where things changed,
@@ -246,6 +247,10 @@ export const SOCIETY_EVENTS = [
     when: (G) => {
       if (G.character.gender !== 'female') return false
       if (G.mem?.contraception_era) return false
+      // "The question of when — or whether — you become a mother is now, for
+      // the first time, mostly yours to answer" was printed six years after a
+      // forced sterilisation.
+      if (G.flags.includes('infertile') || G.flags.includes('sterilised_without_consent')) return false
       if (G.age < 18 || G.age > 35) return false
       if (!['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype)) return false
       const contraYears = {
@@ -832,12 +837,23 @@ export const SOCIETY_EVENTS = [
     id: 'colonial_language_instruction',
     phase: 'childhood',
     weight: 4,
+    // The near-duplicate of this, `hist_colonial_language_school`, was rewritten
+    // onto `COLONIAL_SCHOOL_LANGUAGE` — which deliberately excludes Latin
+    // America — precisely because the archetype list put a French classroom in
+    // Peru, Guatemala and Bhutan, and because "French. Or English. Or
+    // Portuguese." offers the character a menu in an event whose whole subject
+    // is which one. This copy kept the archetype guard and the menu sentence.
+    // Grep for every reader of a rule you fix; this was the one that was missed.
     when: (G) =>
-      ['subsaharan', 'developing_urban'].includes(G.character.country.archetype) &&
+      colonialSchoolLanguage(G.character.country.name, G.currentYear) !== null &&
       G.currentYear < 1980 &&
       G.age >= 6 && G.age <= 14 &&
+      !G.mem?.colonial_school_language &&
       !G.mem?.colonial_education,
-    text: 'The school teaches in French. Or English. Or Portuguese. Your mother tongue is not permitted in the classroom. You become fluent in a language that arrived here with colonizers and stayed when they left. Later you will understand this as a gift that was also a taking.',
+    text: (G) => {
+      const lang = colonialSchoolLanguage(G.character.country.name, G.currentYear)
+      return `The school teaches in ${lang}. Your mother tongue is not permitted in the classroom. You become fluent in a language that arrived here with colonizers and stayed when they left. Later you will understand this as a gift that was also a taking.`
+    },
     choices: null,
     effect: (p) => {
       p.e += 5

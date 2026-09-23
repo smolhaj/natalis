@@ -159,7 +159,7 @@ export const COUP_YEARS = {
   'Argentina': [1930, 1943, 1955, 1962, 1966, 1976],
   'Brazil': [1964],
   'Bolivia': [1964, 1971, 1980],
-  'Peru': [1962, 1968, 1975],
+  'Peru': [1930, 1948, 1962, 1968, 1975],
   'Uruguay': [1973],
   'Paraguay': [1954, 1989],
   'Ecuador': [1963, 1972, 1976],
@@ -362,6 +362,60 @@ export function colonialSchoolLanguage(countryName, year) {
 // Each entry is a window in which the named facility did not exist in that
 // country. Selection consults it so an event whose prose assumes one is simply
 // not offered — the arc that was written for those years fires instead.
+/**
+ * The years a country's cities were under sustained bombardment.
+ *
+ * The `cc_bombardment_*` arc in events_crosscutting.js had no year term at all
+ * — only a country list and `age >= 5` — so a Bosnian born in 1962 lived the
+ * siege of Sarajevo from 1974, got the ceasefire in 1977 and was still packing
+ * a run bag in 1988, and then attended the 1984 Olympics in a city she had been
+ * shelled in for a decade. The actual siege, at ages 29 to 33, was one world
+ * event and three headlines.
+ *
+ * `archetype === 'conflict_zone'` is the same mistake one layer down: it is a
+ * statement about now. Afghanistan carries it for the whole roster range, and
+ * Kabul in 1965 was a city you went to university in.
+ *
+ * Ranges are the periods of sustained shelling or air attack on populated
+ * areas, not of war in general — a guerrilla war in the countryside is a
+ * different event and has its own arcs.
+ */
+export const BOMBARDMENT_YEARS = {
+  'Bosnia and Herzegovina': [[1992, 1995]],
+  Lebanon: [[1975, 1990], [2006, 2006]],
+  Syria: [[1982, 1982], [2012, 2018]],
+  Iraq: [[1980, 1988], [1991, 1991], [2003, 2008], [2014, 2017]],
+  Palestine: [[1948, 1949], [1967, 1967], [2000, 2005], [2008, 2009], [2012, 2012], [2014, 2014], [2021, 2021], [2023, 2026]],
+  Afghanistan: [[1979, 1989], [1992, 1996], [2001, 2002]],
+  Yemen: [[1994, 1994], [2015, 2022]],
+  Somalia: [[1991, 1996], [2006, 2012]],
+  Myanmar: [[2021, 2026]],
+  Liberia: [[1990, 1996], [1999, 2003]],
+  'Central African Republic': [[2013, 2015]],
+  Croatia: [[1991, 1995]],
+  Serbia: [[1999, 1999]],
+  Ukraine: [[2014, 2015], [2022, 2026]],
+  Libya: [[2011, 2011], [2014, 2020]],
+  Sudan: [[2023, 2026]],
+  Vietnam: [[1965, 1972]],
+  Cambodia: [[1969, 1975]],
+  Laos: [[1964, 1973]],
+  Germany: [[1940, 1945]],
+  Japan: [[1944, 1945]],
+  'United Kingdom': [[1940, 1941], [1944, 1945]],
+  Spain: [[1936, 1939]],
+  Finland: [[1939, 1944]],
+  Israel: [[1948, 1949], [1973, 1973], [1991, 1991], [2006, 2006], [2023, 2024]],
+  Chechnya: [[1994, 1996], [1999, 2000]],
+}
+
+/** True when this country's cities were being shelled or bombed that year. */
+export function underBombardment(country, year) {
+  const spans = BOMBARDMENT_YEARS[country?.name ?? country]
+  if (!spans) return false
+  return spans.some(([a, b]) => year >= a && year <= b)
+}
+
 export const INSTITUTIONS_SUSPENDED = [
   // Democratic Kampuchea: the most complete case there is.
   { country: 'Cambodia', from: 1975, to: 1979, what: ['school', 'wages', 'money', 'clinic', 'religion', 'post', 'city'] },

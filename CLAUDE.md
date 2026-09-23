@@ -575,10 +575,10 @@ it. Interface copy that promises otherwise is contradicting the engine.
 
 ## Current State
 
-154 countries, 389 named places, 252 world events, 8,207 character events
+154 countries, 393 named places, 252 world events, 8,228 character events
 (2,129 of them the contemplative sonder layer, 158 stranger glimpses, 42 prison
-and political-arrest, 30 Gulf, 42 Guyana, 41 Bosnia), 3,130 registered flags,
-377 ribbons.
+and political-arrest, 30 Gulf, 42 Guyana, 41 Bosnia, 21 Nigeria 1967-99),
+3,153 registered flags, 377 ribbons.
 **0 orphaned, 0 partial flags.**
 
 Verify with:
@@ -595,6 +595,8 @@ npm run check-events     # reachability: dead guards, enum domains, phase/year w
 npm run check-anachronisms  # plays lives and reads every line against when the world held it
 npm run check-bundle     # builds, opens dist in a browser, starts a life — the only
                          # check that exercises the artefact rather than the source
+npm run check-reach      # conditional reach: for a character who IS the person a body of
+                         # work was written for, how much of it ever reaches them
 npm run sim              # firing-rate report — what ACTUALLY fires, per 100 lives
 npm run sim -- --broad   # the same over the whole roster, not the ten default configurations
 ```
@@ -1061,6 +1063,159 @@ the real #ec4899.
 
 **The lesson: play the mode the player plays.** A passive life exercises the
 simulation. It does not touch a single button.
+
+### "Nothing fired" and "nobody was there" print the same number
+
+`npm run sim` reports what fires per 100 lives, and that figure cannot
+distinguish the only two explanations that matter:
+
+- the content is **unreachable** — a broken guard, a chain whose trigger sets a
+  flag its own consumer needs in the same year, a weight of 8 against a field of
+  999s
+- the **population is rare** — a doctor is rare, so doctor events are rare, and
+  that is the engine being correct
+
+A census of the deep career arcs made the problem concrete. Across 280 ordinary
+lives, eight of them — doctor, nurse, lawyer, journalist, engineer, dev,
+accountant, social worker, civil servant, about eighty authored events — fired
+**zero** times. That reads exactly like the prison arc did before it was fixed,
+and it is nothing like it: nobody in that sample ever became a doctor, because
+twenty-two of the forty-nine careers require a degree and about 10% of lives get
+one, which is roughly right for these cohorts.
+
+`npm run check-reach` asks the conditional question instead. It forces the
+condition — hands the character the job and the degree at 24, or draws them from
+the country in question — and measures what share of the body of work reaches
+them. Every career arc passes: 16% of drivers to 79% of software developers see
+one over a forty-year career, and none is dark.
+
+It also gives the honest per-country number, which `sim` cannot: its ten default
+configurations cannot reach 144 countries' modules at all, so a country whose
+module is perfect and a country whose module is broken both report zero. Over 40
+lives each: Germany 1928 93%, Japan 1935 88%, Bosnia 83%, Austria 83%, Qatar 80%,
+Guyana 75% — against Nigeria 1962 at 25% and Peru 1960 at 15%. Nothing there is
+unreachable (the distinct counts climb with `--lives`, which is how you tell),
+but a Nigerian is a quarter as likely to meet their own country's depth module as
+a German, and that is worth knowing.
+
+**The lesson: a small number has two causes and only one of them is a bug.** An
+instrument that shows them identically buries the one that is — the same failure
+as `unwritten-group` reporting a country's own plurality, one level down.
+
+The first thing it found was about the country this document opens by naming.
+`events_nigeria_depth.js` measured **20%, three of its thirteen events**, for a
+Nigerian born in 1962 — and **70%** for one born in 1995. Nothing was broken:
+five of its thirteen events require `currentYear >= 2030`, and a 1962 Nigerian
+would be sixty-eight then against a national life expectancy of 54. Solar after
+NEPA, the last cash, Lagos at thirty million — all correct, all written for
+somebody born thirty years after the person the Vision statement is about.
+
+`events_nigeria_midcentury.js` is 1967 to 1999, which for that character is ages
+five to thirty-seven: Biafra as a child under the blockade, the Udoji arrears and
+the cement armada and FESTAC, Ghana-Must-Go, the whips at the bus stop,
+adjustment, the fuel queue in an oil state, Saro-Wiwa, and the year it stopped.
+The touchstone life now reaches **77%, and all 21 of 21 events fire.**
+
+**Corollary worth keeping: a module can be correct and still be for somebody
+else.** Nothing static can see it, and `sim` cannot either — it reports the
+module firing, because the 1995 cohort is in the sample too.
+
+### The claim the state never checked, again
+
+A fourth beta pass read eight complete life logs end to end. The class it found
+is the one the second pass found — **a claim printed to the player that nothing
+checked against the state** — and four instances of it were on the death screen,
+which is the last thing anybody reads.
+
+| | before | after |
+|---|---|---|
+| a debt's balance after fifty years | $7.1m from a $2,400 bill | $1.0m worst case, median $5,818 |
+| debtor lives the game ever mentions debt to | 0 | 34 of 48 |
+| "Never went to school." after a decade of school events | stamped at 16 | attendance decided at 7 |
+| a retiree's working life on the death screen | absent | named |
+| Japanese lives that could become hibakusha | all of them | the two cities |
+| Bavarians with a Stasi file | all of them | none |
+
+The shapes worth keeping:
+
+**A flag is not a fact about the state.** `never_schooled` was set at sixteen by
+the roll that decides whether *secondary* is completed, from an `everAttended`
+test reading `mem.attendedSchool` — which nothing in the engine or the corpus
+has ever set. Not finishing secondary and never attending anything are different
+facts, and attendance is now decided at seven, when a child would start.
+
+**Nulling a field erases the life that filled it.** `retire()` sets
+`career: null` and all three epitaph readers destructure `career` off state, so
+thirty-one years as a Detective Chief Inspector and thirty-seven as a novelist
+both read as no work at all. The two lives in that sample that died still
+employed got their line, which is how you see it.
+
+**An event with no place guard is a claim about where the character was.**
+`jpn_hibakusha` tested Japan, a year range and an age — so a farmer in rural
+Tohoku, eight hundred kilometres away, became an atomic-bomb survivor and it was
+the first line of his epitaph, "the city unnamed" because there was not one. The
+roster had nowhere to put a guard: Japan carried Tokyo, Osaka and Rural Tohoku.
+Same shape for `east_germany_stasi` and `east_germany_trabant`, which are
+`countries: ['Germany']` — correct, it was one country either side — against a
+roster holding only Berlin and rural Bavaria. Hiroshima, Nagasaki, Leipzig and
+rural Thuringia exist now, and the guards name them.
+
+**And the audit had the same blind spot as the content, for the fourth time.**
+`narrated-move` accepted `setResidency(` as evidence that an event moves
+somebody. It does not — it changes what papers a character holds and leaves them
+exactly where they were, which is how a Cairo character came to hold a work visa
+in her country of birth for forty-two years, collecting diaspora texture under a
+death screen reading "She left Egypt in search of something different." Tightened
+to `relocate` and `emigrateTo` only, and widened past move/relocate/emigrate to
+the shape that hid — "The family takes the step. A new world" — it went from one
+finding to five, all real.
+
+Related, and the reason `tests/careerFit.test.js` exists: `chooseCareer` reads
+`FIELD_FIT[c.field]?.[col] ?? 1`, and that `?? 1` is silent. A career whose
+field has no row is weighted identically for a rural subsistence villager and an
+urban graduate, in every column, and nothing says so. The table is complete
+today — 38 rows for 38 fields — by somebody's diligence and by nothing else, in a
+codebase whose recorded history is of silent fallbacks that were correct until
+they were not.
+
+### The instrument assigned each country one birth year
+
+`npm run sim -- --broad` walks the whole roster, and it gave each country
+exactly ONE birth year, picked by the country's index in `COUNTRIES`. The
+report then printed "distinct countries whose dedicated content appeared", and
+that list was read as which modules ever fire.
+
+It cannot answer that question, and reading it as if it could produced a false
+alarm on seven modules at a sample of 38,500 lives. Germany and Japan both drew
+1975, so `germany_reich` (1933-49) and `japan_war` (1937-52) were reported dark.
+Belarus drew 1935 and Armenia drew 2000. Burkina Faso drew 1962, and that
+module's earliest event needs age ≤ 5 in 1984, so it is written for a cohort
+born about 1965-1980. Every one of them fires for the cohort it was written for,
+and `events_indonesia.js` — singled out as "the one worth looking at" — fires
+perfectly well.
+
+This is **"a module can be correct and still be for somebody else" sitting
+inside the instrument rather than the content**, which is the fourth distinct
+audit in this repo to fail in the same shape as the thing it audits. `--broad`
+now runs every country at all six cohorts (825 configurations, up from 154),
+divides the requested `--lives` across them so the run does not cost six times
+as much (`--lives-per-cohort` opts out), and the report says in as many words
+that a country's absence from that list is a statement about the sample and not
+about the module. `npm run check-reach` is the tool that answers the conditional
+question.
+
+**What the 38,500-life run does confirm**, unchanged from a sample an eighth the
+size: the register mix (contemplative 18.4 / anchored 35.6 / earned 35.1 /
+universal 8.8), repetition at 0.2%, glimpses at 5.17 per life — and
+`geographic` at **158 events per 100 lives**, identical at both sizes. The
+entire country-depth project, 194 modules, reaches a player 1.6 times in a life,
+against 17.7 for `thematic`. No module is dark. The corpus is under-delivered,
+not broken, and that is a different problem with a different fix.
+
+It also demonstrates the prose-coverage caveat across an 8× range: yearTexture
+coverage moved 36.0% → 53.3% while **concentration moved 177 → 179 lines
+supplying half the output**. Coverage is a function of n and is meaningless
+without one; concentration is the real statement.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
@@ -1638,6 +1793,12 @@ scripts/
                                 world contained the thing it named.
   sim.js                      — the firing-rate report. The only audit that can see what the game
                                 actually does, and the counter-check on every static one.
+  check-reach.js              — the conditional counter-check on THAT one. `sim` reports what fires
+                                per 100 lives, which reads the same whether the content is
+                                unreachable or the population is simply rare — eight career arcs fired
+                                zero times across 280 lives because nobody in them became a doctor.
+                                This forces the condition and asks what share of the body of work
+                                reaches the person it was written for.
   lib/
     sim.js                    — the headless harness. `collectLines` records every prose line with the
                                 year and country it printed in; `keepFinalStates` keeps each life's

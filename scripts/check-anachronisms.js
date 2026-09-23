@@ -43,7 +43,7 @@ const CONFIGS = [
   ['India', 1935], ['China', 1940], ['Bhutan', 1960], ['Nepal', 1950],
   ['North Korea', 1955], ['Cuba', 1945], ['Myanmar', 1950],
   ['Russia', 1930], ['Poland', 1935], ['Mongolia', 1950],
-  ['Brazil', 1935], ['Mexico', 1930], ['Peru', 1940],
+  ['Brazil', 1935], ['Mexico', 1930], ['Peru', 1940], ['Peru', 1958],
   ['Guyana', 1932], ['Guyana', 1955],
   ['South Africa', 1945], ['Afghanistan', 1950], ['Yemen', 1945],
   ['Vanuatu', 1950], ['United Kingdom', 1925], ['United States', 1910],

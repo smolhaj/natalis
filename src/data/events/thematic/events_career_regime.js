@@ -426,7 +426,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => (G.career?.field === 'arts' || G.career?.field === 'entertainment' || G.career?.field === 'writing') && repressiveRegime(G) && G.age >= 28,
-    text: 'A prize, an exhibition, a review in a European publication. The government\'s response is measured and quick: this is foreign interference, cultural imperialism, an attempt to destabilize. The work, which was suppressed domestically, is now a diplomatic incident. You sit in your studio and read the review again.',
+    text: (G) => `A prize, an exhibition, a review in a European publication. The government's response is measured and quick: this is foreign interference, cultural imperialism, an attempt to destabilize. The work, which was suppressed domestically, is now a diplomatic incident. ${G.currentYear >= 2005 ? 'You sit in your studio and look at your phone.' : 'You sit in the studio with the door open onto the yard, and nobody comes, and nobody comes, and that is its own message.'}`,
     choices: [
       { text: 'Accept the recognition and speak to the foreign press', tag: null, outcome: 'The statement you give is calm and precise. At home, your telephone is very quiet for several weeks.', effect: (p) => { p.m += 8; p.r += 8; p.karma += 10; p.addFlag('internationally_recognised'); p.addFlag('dissident_reader') } },
       { text: 'Decline and say the work was misunderstood', tag: null, outcome: 'The regime is satisfied. The foreign press is confused. You have bought yourself some time.', effect: (p) => { p.m -= 12; p.r += 12; p.addFlag('denied_recognition'); p.addFlag('compromised') } },

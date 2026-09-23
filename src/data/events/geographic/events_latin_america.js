@@ -540,7 +540,7 @@ export const LATIN_AMERICA_EVENTS = [
       !G.mem?.col_displacement,
     text: 'They arrive one evening — men who are not soldiers or call themselves something else. They say the village will be safer elsewhere. Your family leaves before morning with what can be carried. You arrive in Bogotá or Medellín or Barranquilla in a neighborhood you did not know existed, where the streets are unpaved and the houses were built last year from materials that were not meant to be permanent.',
     choices: null,
-    effect: (p) => { p.m -= 10; p.h -= 5; p.addFlag('colombia_displaced'); p.addFlag('rural_to_urban'); p.setMem('col_displacement', true); },
+    effect: (p) => { p.m -= 10; p.h -= 5; p.addFlag('colombia_displaced'); p.addFlag('rural_to_urban'); p.relocate('co_bogota', 'informal'); p.setMem('col_displacement', true); },
   },
 
   {
@@ -874,6 +874,7 @@ export const LATIN_AMERICA_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Peru' &&
       G.currentYear >= 1983 && G.currentYear <= 1993 &&
+      G.ruralUrban === 'urban' &&
       G.age >= 15 &&
       !G.mem?.per_sendero,
     text: 'The blackouts began first — transmission towers bombed in the mountains, the lights of Lima going out in sections. Then the car bombs. Then the lists. The Shining Path and the army are fighting a war whose front line is sometimes a village market and sometimes a university cafeteria and sometimes this street. The question that replaces every other question: whose side do people think you are on?',
@@ -888,7 +889,7 @@ export const LATIN_AMERICA_EVENTS = [
       {
         text: 'Someone has to speak clearly about what is happening',
         tag: 'principled',
-        outcome: 'Speaking clearly about what is happening is dangerous from multiple directions in 1988. You speak anyway.',
+        outcome: 'Speaking clearly about what is happening is dangerous from more than one direction in these years. You speak anyway.',
         effect: (p) => { p.m -= 6; p.karma += 6; p.addFlag('sendero_generation'); p.addFlag('political_active'); p.setMem('per_sendero', true); },
         inject: null,
       },
@@ -899,10 +900,10 @@ export const LATIN_AMERICA_EVENTS = [
   {
     id: 'la_per_indigenous_crossfire',
     phase: null,
-    weight: 3,
+    weight: 40,
     when: (G) =>
       G.character.country.name === 'Peru' &&
-      G.ruralUrban === 'rural' &&
+      G.ruralUrban === 'rural' && ['pe_rural', 'pe_mantaro_rural'].includes(G.place?.id) &&
       G.currentYear >= 1983 && G.currentYear <= 1993 &&
       G.age >= 8 &&
       !G.mem?.per_indigenous_crossfire,
@@ -914,26 +915,26 @@ export const LATIN_AMERICA_EVENTS = [
   {
     id: 'la_per_fujimori_autogolpe',
     phase: null,
-    weight: 3,
+    weight: 300,
     when: (G) =>
       G.character.country.name === 'Peru' &&
       G.currentYear === 1992 &&
       G.age >= 16 &&
-      !G.mem?.per_fujimori_golpe,
+      !G.mem?.per_fujimori_golpe && !G.mem?.per_autogolpe,
     text: 'April 5, 1992. Fujimori appears on television in military company and announces he is dissolving Congress and suspending the judiciary. He calls it a necessary correction. The polls show sixty percent approval. Terrorism has been catastrophic and the institutions he dissolved were failing. The logic is comprehensible. This is what makes it worth examining.',
     choices: [
       {
         text: 'The institutions were broken — something had to give',
         tag: null,
         outcome: 'Fujimori captures Guzmán within five months and the Shining Path collapses. The democracy that was suspended does not fully return.',
-        effect: (p) => { p.r += 6; p.addFlag('fujimori_supported'); p.setMem('per_fujimori_golpe', true); },
+        effect: (p) => { p.r += 6; p.addFlag('fujimori_supported'); p.setMem('per_fujimori_golpe', true); p.setMem('per_autogolpe', true); },
         inject: null,
       },
       {
         text: 'A democracy that suspends itself is not a solution',
         tag: 'principled',
         outcome: 'The OAS condemns it. The US suspends aid briefly. Fujimori holds new elections and the condemnation fades. The point stands.',
-        effect: (p) => { p.m -= 4; p.karma += 5; p.addFlag('political_active'); p.setMem('per_fujimori_golpe', true); },
+        effect: (p) => { p.m -= 4; p.karma += 5; p.addFlag('political_active'); p.setMem('per_fujimori_golpe', true); p.setMem('per_autogolpe', true); },
         inject: null,
       },
     ],
@@ -948,10 +949,10 @@ export const LATIN_AMERICA_EVENTS = [
       G.character.country.name === 'Peru' &&
       G.currentYear >= 2000 && G.currentYear <= 2002 &&
       G.age >= 25 &&
-      !G.mem?.per_vladivideo,
+      !G.mem?.per_vladivideo && !G.mem?.per_vladi,
     text: 'The videos began appearing in September 2000. Vladimiro Montesinos — Fujimori\'s intelligence chief — had recorded himself bribing congressmen, judges, television channel owners. The videos were systematic, comprehensive — a bureaucracy of corruption on tape. The president flees to Japan via Brunei and faxes his resignation. It is the most documented fall of a government in Latin American history.',
     choices: null,
-    effect: (p) => { p.m -= 4; p.e += 4; p.addFlag('witnessed_truth_commission'); p.setMem('per_vladivideo', true); },
+    effect: (p) => { p.m -= 4; p.e += 4; p.addFlag('witnessed_truth_commission'); p.setMem('per_vladivideo', true); p.setMem('per_vladi', true); },
   },
 
   // ═══════════════════════════════════════════════════════════════════════

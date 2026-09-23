@@ -267,14 +267,21 @@ export function createCharacter(overrides = {}) {
   const literate = Math.random() < literacyChanceFor(country, gender, birthYear)
 
   // Assign birth place
-  const birthPlace = pickBirthPlace(country, ruralUrban, wealthTier)
+  const birthPlace = pickBirthPlace(country, ruralUrban, wealthTier, { ethnicity })
   const birthNeighborhoodTier = pickNeighborhoodTier(wealthTier)
   const birthNeighborhoodName = pickNamedNeighborhood(birthPlace, birthNeighborhoodTier, { ethnicity, religion })
 
   return {
     // Slavic family names take a feminine form: the game was producing Yulia
     // Orlov and her daughters Elena Orlov and Alina Orlov.
-    firstName, surname: surnameFor(namesFrom, surname, gender), name: `${firstName} ${surnameFor(namesFrom, surname, gender)}`,
+    firstName, surname: surnameFor(namesFrom, surname, gender),
+    // The family's surname in its base (masculine, where that is a thing)
+    // form. `character.surname` is this character's own, which in Slavic
+    // naming is already feminised — and every child and sibling inherited
+    // that string verbatim, so a Polina Smirnova had a son called Ivan
+    // Smirnova. `surnameFor` cannot undo it: it returns early for a male.
+    surnameBase: surname,
+    name: `${firstName} ${surnameFor(namesFrom, surname, gender)}`,
     nameCountry: namesFrom === country ? null : namesFrom.name,
     country, gender, birthYear, wealthTier, familyStability, familySize,
     initialStats,
@@ -327,7 +334,7 @@ export function deriveInitialSiblings(char, parents) {
     const firstName = pickUnusedName(gender === 'male' ? c.namePool.male : c.namePool.female, used)
     used.add(nameKey(firstName))
     return {
-      name: `${firstName} ${surnameFor(c, char.surname, gender)}`,
+      name: `${firstName} ${surnameFor(c, char.surnameBase ?? char.surname, gender)}`,
       gender,
       ageDiff: nextAgeDiff(),
       alive: true,

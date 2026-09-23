@@ -106,7 +106,17 @@ export function personName(country, gender, state, opts = {}) {
   const pool = gender === 'male' ? country?.namePool?.male : country?.namePool?.female
   const used = opts.used ?? namesInUse(state)
   const first = pickUnusedName(pool, used)
-  const base = opts.surname !== undefined ? opts.surname : pickFrom(country?.surnames ?? [])
+  let base
+  if (opts.surname !== undefined) {
+    base = opts.surname
+  } else {
+    // Not the household's. A partner met as an adult has their own family
+    // behind them, and drawing blind from a thirty-name pool married a
+    // Stefanie Zimmermann to a Simon Zimmermann.
+    const own = state?.character?.surnameBase ?? state?.character?.surname
+    const pool = (country?.surnames ?? []).filter(n => n !== own)
+    base = pickFrom(pool.length ? pool : (country?.surnames ?? []))
+  }
   return `${first} ${surnameFor(country, base, gender)}`.trim()
 }
 
@@ -121,7 +131,8 @@ export function personName(country, gender, state, opts = {}) {
  * name. A woman without a partner still gives her own.
  */
 export function childSurname(state) {
-  const own = state?.character?.surname ?? ''
+  // The base form: `character.surname` is already feminised in Slavic naming.
+  const own = state?.character?.surnameBase ?? state?.character?.surname ?? ''
   if (state?.character?.gender !== 'female') return own
   const full = state?.partner?.name
   if (!full || !full.includes(' ')) return own

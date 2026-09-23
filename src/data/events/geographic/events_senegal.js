@@ -60,7 +60,7 @@ export const SENEGAL_EVENTS = [
         text: 'Attempt the crossing.',
         tag: 'crossed',
         outcome: 'Seven days. You arrive in Tenerife. The Spanish Red Cross gives you a foil blanket. You give them a false name because you heard it goes better that way.',
-        effect: (p) => { p.m -= 18; p.h -= 10; p.addFlag('emigrated'); p.emigrateTo('Spain'); p.setResidency('undocumented'); p.setMem('senBarca', true) },
+        effect: (p) => { p.m -= 18; p.h -= 10; p.emigrateTo('Spain', { residency: 'undocumented' }); p.setMem('senBarca', true) },
       },
       {
         text: 'Stay. Build something here.',

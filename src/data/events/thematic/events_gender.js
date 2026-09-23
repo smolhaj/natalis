@@ -992,14 +992,18 @@ export const GENDER_EVENTS = [
         text: 'Pursue legal action',
         tag: 'principled',
         outcome: 'A lawyer takes your case pro bono. The case is settled out of court. The money is inadequate. The acknowledgment means more.',
-        effect: (p) => { p.m -= 10; p.mo += 3000; p.karma += 6; p.addFlag('medical_trauma'); p.addFlag('sterilised'); p.addFlag('tubal_ligation'); },
+        // Both branches set only `medical_trauma`, so nothing recorded what had
+        // been done: `tickLifeCourse` kept rolling conceptions, and six years
+        // later the contraception event told her that whether she became a
+        // mother was now, for the first time, mostly hers to answer.
+        effect: (p) => { p.m -= 10; p.mo += 3000; p.karma += 6; p.addFlag('medical_trauma'); p.addFlag('infertile'); p.addFlag('sterilised_without_consent'); p.addFlag('sterilised'); p.addFlag('tubal_ligation'); },
         inject: null,
       },
       {
         text: 'Carry it in silence — no one will believe you',
         tag: null,
         outcome: 'You tell no one for twenty years. Then you tell your daughter. She believes you immediately.',
-        effect: (p) => { p.m -= 15; p.r += 10; p.addFlag('medical_trauma'); p.addFlag('sterilised'); p.addFlag('tubal_ligation'); },
+        effect: (p) => { p.m -= 15; p.r += 10; p.addFlag('medical_trauma'); p.addFlag('infertile'); p.addFlag('sterilised_without_consent'); p.addFlag('sterilised'); p.addFlag('tubal_ligation'); },
         inject: null,
       },
     ],
@@ -1115,9 +1119,15 @@ export const GENDER_EVENTS = [
     id: 'wd_fired_for_pregnancy',
     phase: 'young_adult',
     weight: 3,
+    // It never asked whether she was pregnant, so a Bavarian smallholder whose
+    // two children were born at 22 and 24 was fired for a pregnancy at 27 — and
+    // no branch ended the job, so the letter of termination arrived and she was
+    // promoted in the same career two years later.
     when: (G) =>
       G.character.gender === 'female' &&
       G.career &&
+      (G.flags.includes('pregnant') || G.flags.includes('expecting') ||
+        G.children?.some(c => (G.age - (c.ageAtBirth ?? 99)) <= 1)) &&
       G.character.country.archetype === 'wealthy_west' &&
       G.currentYear >= 1950 && G.currentYear <= 1975,
     text: 'You told your employer you were pregnant. He shook your hand and said congratulations. Your letter of termination arrived four days later. "Restructuring," it says.',
@@ -1127,14 +1137,14 @@ export const GENDER_EVENTS = [
         text: 'Challenge it legally',
         tag: 'principled',
         outcome: 'There is no law protecting you. The solicitor says this plainly. You file anyway. You lose. The process costs you six months.',
-        effect: (p) => { p.mo -= 800; p.m -= 5; p.karma += 3; p.addFlag('principled'); },
+        effect: (p) => { p.mo -= 800; p.m -= 5; p.karma += 3; p.addFlag('principled'); p.clearCareer(); p.addFlag('fired_for_pregnancy'); },
         inject: null,
       },
       {
         text: 'Accept the termination and plan your return',
         tag: null,
         outcome: 'You return to the workforce after the birth. You have to explain the gap in your resume for the rest of your career.',
-        effect: (p) => { p.m -= 6; p.w -= 2; p.r += 4; },
+        effect: (p) => { p.m -= 6; p.w -= 2; p.r += 4; p.clearCareer(); p.addFlag('fired_for_pregnancy'); },
         inject: null,
       },
     ],

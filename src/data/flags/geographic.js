@@ -3220,4 +3220,348 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ba_village_empty.',
   },
 
+
+  // ── NIGERIA 1967-1999 ──────────────────────────────────────────────────────
+  // Set by events_nigeria_midcentury.js — the decades the touchstone life lives.
+
+  nigeria_1966: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Nigeria in September 1966, on one side or the other of the trains coming east.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_1966_north.',
+  },
+
+  biafra_child: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'A child in Biafra under the blockade, where the word at the clinic was kwashiorkor and the children were given the food first.',
+    intent: 'both',
+    notes: 'Set by ngm_biafra_child. Consumed by ngm_ft_biafra_food and the year-texture layer.',
+  },
+
+  biafra_distant: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the war four hundred miles from it, as a thing on the radio and a photograph on a foreign magazine.',
+    intent: 'none',
+    notes: 'Set by ngm_biafra_lagos. No downstream event needed.',
+  },
+
+  no_victor_no_vanquished: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Alive for January 1970 and the three words the country settled on, and for the twenty pounds that followed them.',
+    intent: 'both',
+    notes: 'Set by ngm_no_victor. Consumed by ngm_ft_twenty_pounds and the year-texture layer.',
+  },
+
+  oil_boom_windfall: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Got the Udoji arrears in one piece, spent them, and watched the prices meet the money halfway and settle above it.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_udoji.',
+  },
+
+  cement_armada: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Watched four hundred ships sit off Lagos for a year with cement setting solid in the holds.',
+    intent: 'none',
+    notes: 'Set by ngm_cement_armada. No downstream event needed.',
+  },
+
+  festac_77: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'In Lagos for FESTAC in 1977, when the whole Black world came for a month and this was the capital of something.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_festac.',
+  },
+
+  ghana_must_go: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'In Nigeria in January 1983 when two million people were given two weeks, and the bag got its name.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ghana_must_go.',
+  },
+
+  war_against_indiscipline: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the whips at the bus stop, the frog-jumping in the car park, and how many people were in favour.',
+    intent: 'both',
+    notes: 'Set by ngm_war_against_indiscipline. Consumed by ngm_ft_wai_argument and the year-texture layer.',
+  },
+
+  order_over_freedom: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Queued, and has never been able to explain to their children why they did not mind the whip.',
+    intent: 'none',
+    notes: 'Set by ngm_war_against_indiscipline (yielding choice). No downstream event needed.',
+  },
+
+  andrew_checking_out: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Watched the advert meant to shame people into staying give the country its verb for leaving.',
+    intent: 'both',
+    notes: 'Set by ngm_andrew_checking_out. Consumed by ngm_ft_andrew_late and the year-texture layer.',
+  },
+
+  second_income: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Took a second thing during adjustment, because the household ate, and did not have an evening again for eleven years.',
+    intent: 'none',
+    notes: 'Set by ngm_sap (defiant choice). No downstream event needed.',
+  },
+
+  wages_evaporated: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Held the job through adjustment and did the same work in 1993 for a fifth of what it bought in 1985.',
+    intent: 'none',
+    notes: 'Set by ngm_sap (yielding choice). No downstream event needed.',
+  },
+
+  asuu_strike_generation: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'A four-year degree that took seven, on either side of it — the student or the parent paying the fees again.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_asuu.',
+  },
+
+  fuel_queue_years: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Slept in the car in the queue, in the sixth largest oil producer on earth.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_fuel_queue.',
+  },
+
+  saro_wiwa_1995: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In Nigeria on 10 November 1995, and knew which of the two things he wrote was the one that killed him.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_saro_wiwa.',
+  },
+
+  democracy_1999_lived: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was there on 29 May 1999, after sixteen unbroken years of soldiers.',
+    intent: 'both',
+    notes: 'Set by ngm_1999. Consumed by ngm_ft_1999_after and the year-texture layer.',
+  },
+
+  biafra_carried: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Does not leave food, has never decided not to, and has never said a word to their children about it.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_biafra_food.',
+  },
+
+  the_subtraction: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Permanently aware of a subtraction performed once, in 1970, and entered nowhere.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_twenty_pounds. Suppresses the generous reading of \'no victor, no vanquished\'.',
+  },
+
+  naira_distrust: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Keeps what there is in a plot, a container, or dollars in the house, having watched a currency go from one to twenty.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_sap_money.',
+  },
+
+  wai_reckoning: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Has been on both sides of the argument about whether the whip was worth the queue, and gives the true answer, which persuades nobody.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_wai_argument.',
+  },
+
+  the_ones_who_stayed: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Never tried to leave, has two honest accounts of why, and gives the good one.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_andrew_late.',
+  },
+
+  ordinary_is_the_achievement: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Knows that ordinary complaints are the achievement, and has stopped trying to make anyone under thirty hear it that way.',
+    intent: 'year_texture',
+    notes: 'Set by ngm_ft_1999_after.',
+  },
+
+  // ── PERU 1965-2006 ─────────────────────────────────────────────────────────
+  // Set by events_peru_midcentury.js — the decades a Peruvian born about 1960
+  // actually lives. Every one is read by a follow-through in the same module.
+
+  pe_velasco_1968: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive in Peru for October 1968, when the general took the palace and then the Americans\' oil, and "dignity" was the word on the radio.',
+    intent: 'event',
+    notes: 'Set by pem_velasco_coup. Consumed by pem_ft_velasco_table (the argument at the family table, 1995+).',
+  },
+
+  pe_reforma_comunero: {
+    weight: 'major',
+    category: 'economic',
+    description: 'On the receiving end of the 1969 agrarian reform: the hacienda became a cooperative with initials, and the patrón stopped being owed four days a week.',
+    intent: 'event',
+    notes: 'Set by pem_reforma_agraria. Consumed by pem_ft_cooperativa (parcelled in the sierra, indebted on the sugar coast, burned by Sendero in the Mantaro valley).',
+  },
+
+  pe_reforma_hacienda_lost: {
+    weight: 'major',
+    category: 'economic',
+    description: 'A hacendado family expropriated by the 1969 reform, paid in bonds the inflation ate, and moved to a Lima flat with a dining table too big for the room.',
+    intent: 'event',
+    notes: 'Set by pem_reforma_hacendado. Consumed by pem_ft_hacienda_portrait; also varies pem_ft_velasco_table.',
+  },
+
+  pe_terremoto_1970: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In the Callejón de Huaylas or Chimbote on 31 May 1970, when the ground moved for most of a minute and Huascarán came down on Yungay.',
+    intent: 'event',
+    notes: 'Set by pem_terremoto_1970. Consumed by pem_terremoto_after (1971-72) and pem_ft_yungay (the anniversary at 15:23).',
+  },
+
+  pe_castellano_school: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Taught in Castilian at a sierra school where a first language in Quechua was answered with a ruler.',
+    intent: 'event',
+    notes: 'Set by pem_castellano_school. Consumed by pem_ft_children_spanish; widens pem_quechua_oficial.',
+  },
+
+  pe_quechua_official: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Heard the radio say in 1975 that Quechua was an official language of the Republic, while the district forms stayed in Castilian.',
+    intent: 'event',
+    notes: 'Set by pem_quechua_oficial. Consumed by pem_ft_quechua_congress (the 2006 oath in Quechua).',
+  },
+
+  pe_voted_1980: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive for May 1980, the first election in which Peruvians who could not read could vote, and the night the boxes were burned at Chuschi.',
+    intent: 'event',
+    notes: 'Set by pem_first_vote_1980. Consumed by pem_ft_chuschi (1983-90, remembering the paragraph nobody read).',
+  },
+
+  pe_sendero_assembly: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Stood in the plaza for a Shining Path juicio popular and saw what the list was for.',
+    intent: 'event',
+    notes: 'Set by pem_asamblea_popular. Consumed by pem_ft_assembly_silence; gates per_cvr.',
+  },
+
+  pe_desaparecido_family: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'A relative taken before dawn by soldiers in the emergency zone, never charged, never found; the photograph carried to the barracks gate at Los Cabitos.',
+    intent: 'event',
+    notes: 'Set by pem_desaparecido. Consumed by pem_ft_anfasep; varies per_cvr text.',
+  },
+
+  pe_desplazado: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Fled the war in Ayacucho by night, down the ravines to the road and on to a settlement on a Lima hill full of people from the same province.',
+    intent: 'event',
+    notes: 'Set by pem_desplazado. Consumed by pem_ft_retorno (the repopulation lorry, 1994-2006); pem_invasion, pem_chicha, per_dep_serrano_lima, pem_guzman_capturado read it.',
+  },
+
+  pe_rondero: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Walked the ronda: against cattle thieves in Cajamarca, or with an army shotgun in the self-defence committees of the war.',
+    intent: 'event',
+    notes: 'Set by pem_ronda_cajamarca, pem_ronda_autodefensa. Consumed by pem_ft_ronda; gates per_cvr.',
+  },
+
+  pe_leva: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Taken off a bus by the leva at eighteen and put into two years of obligatory service, which ended for everyone else in 1999.',
+    intent: 'event',
+    notes: 'Set by pem_leva. Consumed by pem_ft_leva.',
+  },
+
+  pe_bajo_a_lima: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Came down from the sierra to Lima over the pass at Ticlio, to an uncle\'s room and the word serrano.',
+    intent: 'event',
+    notes: 'Set by pem_bajada_a_lima, pem_empleada. Consumed by pem_invasion, pem_chicha, pem_ft_club_provincial, pem_ft_fiesta_return, per_dep_serrano_lima.',
+  },
+
+  pe_invasion: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Walked onto the sand at night with a straw mat and a flag and founded a pueblo joven.',
+    intent: 'event',
+    notes: 'Set by pem_invasion. Consumed by pem_ft_titulo (the COFOPRI title, 1996-2010).',
+  },
+
+  pe_empleada: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Sent down to Lima as a girl to live in as a domestic worker: the uniform, the separate plate, the room with no window, Sunday afternoons.',
+    intent: 'event',
+    notes: 'Set by pem_empleada. Consumed by pem_ft_empleada (refusing the same offer for a daughter).',
+  },
+
+  pe_comedor: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Part of the comedores populares and the glass of milk in the Lima settlements of the 1980s.',
+    intent: 'event',
+    notes: 'Set by pem_vaso_de_leche. Consumed by pem_moyano (February 1992).',
+  },
+
+  pe_hiperinflacion: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the inti: prices changing between morning and afternoon, the cambista on the corner, the queue for no milk.',
+    intent: 'event',
+    notes: 'Set by pem_hiperinflacion. Consumed by pem_ft_dollars.',
+  },
+
+  pe_fujishock: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Heard the minister read the new prices on 8 August 1990 and end with "may God help us".',
+    intent: 'event',
+    notes: 'Set by pem_fujishock. Consumed by pem_ft_dollars.',
+  },
+
+  pe_corrientes_oil: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'Grew up on the Río Corrientes after the oil came, with the produced water in the streams and lead in the children\'s blood.',
+    intent: 'event',
+    notes: 'Set by pem_corrientes. Consumed by pem_ft_dorissa (the October 2006 occupation and the Acta de Dorissa).',
+  },
+
 }

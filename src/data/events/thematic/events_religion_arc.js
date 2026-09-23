@@ -8,6 +8,24 @@
 // two traditions side by side and lets the child choose is not a thing that can
 // exist here: the child follows the father, as a matter of registration. Without
 // this the two-traditions event was firing for Coptic families in Egypt.
+// Whether there is a faith here to doubt, leave or return to. The arc's entry
+// door — `rela_first_genuine_doubt` — tested only that the character had not
+// already lost one, which a secular character passes trivially by never having
+// had one, and "Resolve it back toward faith" then set `devout` and unlocked
+// the observance, scripture and congregation events behind it. A secular
+// Chicagoan ran a full religious life on it and died holding `devout`,
+// `lost_faith` and `faith_returned` at the same time.
+const NO_FAITH = new Set(['secular', 'atheist'])
+const HAS_FAITH = (G) =>
+  (!NO_FAITH.has(G.religion) && G.religion != null) ||
+  G.flags.includes('devout') || G.flags.includes('religious_upbringing')
+
+// The theodicy question — if God is good, why did this happen — belongs to the
+// traditions organised around a good and intervening God. It was being put to
+// Buddhists.
+const NON_THEISTIC = new Set(['buddhist', 'jain', 'folk_religion', 'animist'])
+const THEISTIC = (G) => !NON_THEISTIC.has(G.religion)
+
 const RELIGIOUS_PERSONAL_STATUS = [
   'Egypt', 'Saudi Arabia', 'Iran', 'Iraq', 'Jordan', 'Syria', 'Lebanon', 'Yemen',
   'Kuwait', 'Qatar', 'Bahrain', 'UAE', 'Oman', 'Libya', 'Sudan', 'Algeria',
@@ -99,11 +117,13 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_hajj_lifetime',
     phase: null,
     weight: 3,
-    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 35 && G.age <= 65 && !G.mem?.hajj_arc && G.money > 4000,
+    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 35 && G.age <= 65 &&
+      !G.flags.includes('completed_hajj') && !G.flags.includes('hajj_complete') &&
+      G.currentYear - (G.mem?.hajjDeferredYear ?? -99) >= 5 && G.money > 4000,
     text: 'You have been saving for years. The fifth pillar. You arrange everything — the visa, the accommodation, the time off work, someone to care for your family. When you finally arrive in Mecca and join the river of people circling the Ka\'aba, you feel a scale that personal faith rarely reaches.',
     choices: [
-      { text: 'Make the Hajj', tag: 'devout', outcome: 'The tawaf before dawn. Millions of people saying the same words in the same direction. You understand in your body what the mind has held as abstraction. You return different.', effect: (p) => { p.mo -= 5000; p.m += 22; p.karma += 12; p.h -= 5; p.addFlag('devout'); p.addFlag('hajj_complete'); p.setMem('hajj_arc', true) } },
-      { text: 'Wait until the time is more right', tag: null, outcome: 'The pillar does not expire. You continue saving.', effect: (p) => { p.setMem('hajj_arc', false) } },
+      { text: 'Make the Hajj', tag: 'devout', outcome: 'The tawaf before dawn. Millions of people saying the same words in the same direction. You understand in your body what the mind has held as abstraction. You return different.', effect: (p) => { p.mo -= 5000; p.m += 22; p.karma += 12; p.h -= 5; p.addFlag('devout'); p.addFlag('completed_hajj'); p.setMem('hajj_arc', true) } },
+      { text: 'Wait until the time is more right', tag: null, outcome: 'The pillar does not expire. You continue saving.', effect: (p) => { p.setMem('hajjDeferredYear', p._state.currentYear) } },
     ],
     effect: null,
   },
@@ -185,7 +205,8 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_first_genuine_doubt',
     phase: null,
     weight: 4,
-    when: (G) => G.age >= 14 && G.age <= 22 && !G.flags.includes('left_religion') && !G.flags.includes('lost_faith') && !G.mem?.first_doubt,
+    when: (G) => G.age >= 14 && G.age <= 22 && HAS_FAITH(G) && THEISTIC(G) &&
+      !G.flags.includes('left_religion') && !G.flags.includes('lost_faith') && !G.mem?.first_doubt,
     text: 'The question arrives and it is not rhetorical. If God exists and is good, then why did this particular thing happen — the thing, the one that happened last month, that everyone who knows you knows about. The answer your faith gives you does not fit. You sit with the gap.',
     choices: [
       { text: 'Stay in the question — doubt is part of it', tag: null, outcome: 'You do not find an answer. You find that living with the question is different from having an answer and not necessarily worse.', effect: (p) => { p.e += 6; p.r += 5; p.addFlag('faith_crisis'); p.setMem('first_doubt', true) } },
@@ -211,7 +232,7 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_reading_contradicts_teaching',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 15 && G.age <= 25 && !G.flags.includes('left_religion') && !G.mem?.reading_contradicts,
+    when: (G) => G.age >= 15 && G.age <= 25 && HAS_FAITH(G) && !G.flags.includes('left_religion') && !G.mem?.reading_contradicts,
     text: 'You read something — a book on evolutionary biology, a history of religious texts, a comparative religion course — that contradicts what you were taught. Not at the edges but at the foundation. The information is well-sourced. You cannot dismiss it. You have to decide what to do with it.',
     choices: [
       { text: 'Integrate it — faith can survive facts', tag: null, outcome: 'You find a way to hold both. It requires work. The faith that emerges is less certain and more yours.', effect: (p) => { p.e += 8; p.m -= 3; p.r += 4; p.addFlag('faith_crisis'); p.setMem('reading_contradicts', true) } },
@@ -224,7 +245,13 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_leader_behaves_badly',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 18 && G.age <= 45 && !G.flags.includes('left_religion') && !G.mem?.leader_betrayal,
+    // The entry point of a loss-of-faith arc must require a faith. This one and
+    // `reading_contradicts` had no religion term at all, so a secular Japanese
+    // man and an atheist American both got "The religious leader you trusted",
+    // and then the whole chain behind it — telling the family he no longer
+    // believed at 27, the freedom and the loss at 29, being cultural without
+    // belief at 36, and year texture noticing that he does not pray.
+    when: (G) => G.age >= 18 && G.age <= 45 && HAS_FAITH(G) && !G.flags.includes('left_religion') && !G.mem?.leader_betrayal,
     text: 'The religious leader you trusted is found to have been taking money. It is not a large amount and that is somehow the worst detail. The institution closes ranks around him. The investigation is slow and the apology, when it comes, is insufficient. You are left with the question of whether the institution and the faith are the same thing, and whether you can separate them.',
     choices: [
       { text: 'Leave the institution but not the faith', tag: null, outcome: 'You find a smaller congregation. Or you practice at home. The faith survives the institution, barely.', effect: (p) => { p.m -= 8; p.r += 8; p.setMem('leader_betrayal', true) } },

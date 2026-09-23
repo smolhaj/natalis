@@ -262,6 +262,8 @@ export const EVENTS_SONDER_13 = [
     phase: 'midlife',
     weight: 2,
     isGlimpse: true,
+    // A man on a platform looking at a screen in his hand. `hasPhone` is
+    // satisfied by a hallway landline and printed this into 1957.
     when: (G) => place.hasMobile(G) && (!G.mem?.sonder13_stranger_2),
     text: `The man on the platform is checking his phone. On his face for a moment is something — you catch it in the second before he rearranges his face into the neutral expression people wear in public. The something was grief. Or it was good news about someone he loves. You cannot tell and you are not supposed to know and then the train arrives.`,
     choices: null,

@@ -2007,6 +2007,8 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     isGlimpse: true,
+    // A woman on her phone in the street, face changing while you watch —
+    // a pocket screen, not the instrument in the hall.
     when: (G) => place.hasMobile(G) && (!G.mem?.sonderGoodNewsPhonePublic),
     text: 'A woman on her phone in the street whose face changes while you are watching. She goes from ordinary to something else — she laughs, she puts her hand over her mouth. It is good news and it is significant good news and you can see it rebuilding her face from the inside. She does not know you saw.',
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('sonderGoodNewsPhonePublic', true); },

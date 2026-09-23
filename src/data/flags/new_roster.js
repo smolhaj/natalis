@@ -811,4 +811,150 @@ export const NEW_ROSTER_FLAGS = {
     weight: 'major', category: 'legacy', intent: 'event',
     description: 'Talked for an hour into a recorder, and said the bit about the sky twice.',
   },
+
+  // ── Kabyle Algeria (events_kabylie.js) ────────────────────────────────────
+  kab_regrouped: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Moved down the mountain into a French regroupement camp while the village above became a forbidden zone.',
+    notes: 'Set by kab_regroupement. Consumed by kab_ft_regroupement.',
+  },
+  kab_school_no_tamazight: {
+    weight: 'moderate', category: 'education', intent: 'event',
+    description: 'Schooled in an Arabic nobody at home spoke, with the language of the house punished in the yard.',
+    notes: 'Set by kab_school_arabic. Consumed by kab_ft_school_child and kab_official_2016.',
+  },
+  kab_tafsut_1980: {
+    weight: 'major', category: 'political', intent: 'event',
+    description: 'Was there for the Berber Spring of April 1980.',
+    notes: 'Set by kab_spring_campus and kab_spring_village. Consumed by kab_ft_tafsut and kab_official_2016.',
+  },
+  kab_boycott_year: {
+    weight: 'moderate', category: 'education', intent: 'event',
+    description: 'Lost the school year 1994-95 to the schoolbag strike.',
+    notes: 'Set by kab_boycott_pupil. Consumed by kab_ft_boycott.',
+  },
+  kab_matoub_1998: {
+    weight: 'moderate', category: 'cultural', intent: 'event',
+    description: 'Lived through the killing of Matoub Lounès and the week the mountains burned for him.',
+    notes: 'Set by kab_matoub_killed. Consumed by kab_ft_matoub.',
+  },
+  kab_black_spring: {
+    weight: 'major', category: 'political', intent: 'event',
+    description: 'Lived through the Black Spring of 2001 in Kabylie, 126 dead.',
+    notes: 'Set by kab_black_spring_young and kab_black_spring_witness. Consumed by kab_ft_black_spring, kab_aarch, kab_national_2002.',
+  },
+  kab_aarch_delegate: {
+    weight: 'moderate', category: 'community', intent: 'event',
+    description: 'Sat for the village in the aarch coordination of 2001.',
+    notes: 'Set by kab_aarch. Consumed by kab_ft_aarch.',
+  },
+  kab_emigrant_france: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Left the Kabyle village for France, and owes it a line in the notebook.',
+    notes: 'Set by kab_leave_old and kab_leave_new. Consumed by kab_ft_emigrant_money and kab_ft_emigrant_return.',
+  },
+  kab_flag_2019: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Held the Amazigh flag in 2019, the year it became an arrestable thing to carry.',
+    notes: 'Set by kab_flag_2019. Consumed by kab_ft_flag.',
+  },
+
+  // ── Amhara Ethiopia (events_amhara.js) ────────────────────────────────────
+  amh_church_school: {
+    weight: 'moderate', category: 'religion', intent: 'event',
+    description: 'Learned the fidel and the Psalms of David in Ge\'ez under the tree by the church.',
+    notes: 'Set by amh_church_school. Consumed by amh_ft_church_school.',
+  },
+  amh_zemecha_student: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Sent to a southern village in the 1975 Zemecha to teach in Amharic.',
+    notes: 'Set by amh_zemecha. Consumed by amh_ft_zemecha.',
+  },
+  amh_derg_soldier: {
+    weight: 'major', category: 'military', intent: 'event',
+    description: 'Conscripted into the Derg army and sent north.',
+    notes: 'Set by amh_derg_conscript. Consumed by amh_ft_walked_home (May 1991).',
+  },
+  amh_walked_home: {
+    weight: 'moderate', category: 'military', intent: 'event',
+    description: 'Walked home through Tigray when the Derg army dissolved in 1991.',
+    notes: 'Set by amh_ft_walked_home. Consumed by amh_ft_veteran.',
+  },
+  amh_resettled: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Put on a Derg resettlement truck from Wollo to Wollega in the 1984-86 famine.',
+    notes: 'Set by amh_resettlement. Consumed by amh_ft_mete and amh_ft_leave_wollega.',
+  },
+  amh_1991_reclassified: {
+    weight: 'moderate', category: 'identity', intent: 'event',
+    description: 'Became, after 1991, Amhara on a card before Ethiopian anywhere else.',
+    notes: 'Set by amh_1991. Consumed by amh_ft_reclassified.',
+  },
+  amh_2005_voter: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Voted in the 2005 election and saw what the count cost.',
+    notes: 'Set by amh_2005. Consumed by amh_ft_2015.',
+  },
+  amh_2016_protest: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Joined the stay-at-home strikes of the 2016 Amhara protests.',
+    notes: 'Set by amh_2016. Consumed by amh_ft_2018.',
+  },
+  amh_war_2021: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Lived the 2020-22 war from an Amhara village, as its front line or its recruiting ground.',
+    notes: 'Set by amh_war_wollo and amh_war_gojjam. Consumed by amh_ft_after_pretoria.',
+  },
+  amh_gulf_worker: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Went to Saudi Arabia as a domestic worker, by the agency or by the sea road.',
+    notes: 'Set by amh_gulf. Consumed by amh_ft_gulf_contract, amh_ft_gulf_deported, amh_ft_gulf_house.',
+  },
+
+  // ── Tajik Afghanistan (events_afghan_tajik.js) ────────────────────────────
+  taj_panjshir_1982: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Hid in the side valleys of the Panjshir while the Soviet columns burned the villages.',
+    notes: 'Set by taj_panjshir_offensive. Consumed by taj_ft_tanks.',
+  },
+  taj_jamiat_fighter: {
+    weight: 'major', category: 'military', intent: 'event',
+    description: 'Went up to the ridge with Massoud\'s men as a boy.',
+    notes: 'Set by taj_mujahid. Consumed by taj_ft_disarm.',
+  },
+  taj_herat_1979: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Lived through the Herat uprising of March 1979 and its reprisal.',
+    notes: 'Set by taj_herat_1979. Consumed by taj_ft_herat_grave.',
+  },
+  taj_kabul_1992: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Was in Kabul when the mujahideen factions fought over it, 1992-95.',
+    notes: 'Set by taj_kabul_1992. Consumed by taj_ft_amnesty.',
+  },
+  taj_shomali_burned: {
+    weight: 'major', category: 'displacement', intent: 'event',
+    description: 'Driven off the Shomali plain in 1999 when the Taliban cut the vines and burned the villages.',
+    notes: 'Set by taj_shomali_1999. Consumed by taj_ft_replant.',
+  },
+  taj_golden_needle: {
+    weight: 'major', category: 'education', intent: 'event',
+    description: 'Studied literature in Herat under the Taliban, disguised as a sewing class.',
+    notes: 'Set by taj_golden_needle. Consumed by taj_ft_needle.',
+  },
+  taj_massoud_2001: {
+    weight: 'moderate', category: 'political', intent: 'event',
+    description: 'Heard, two days before the towers, that Massoud was dead.',
+    notes: 'Set by taj_massoud. Consumed by taj_ft_massoud_week.',
+  },
+  taj_iran_worker: {
+    weight: 'major', category: 'migration', intent: 'event',
+    description: 'Crossed into Iran without papers to carry cement on Tehran building sites.',
+    notes: 'Set by taj_iran_work. Consumed by taj_ft_deported.',
+  },
+  taj_panjshir_2021: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Was in the Panjshir when the Taliban flag went up over Bazarak, which in forty years had never happened.',
+    notes: 'Set by taj_panjshir_2021. Consumed by taj_ft_valley_after.',
+  },
 }

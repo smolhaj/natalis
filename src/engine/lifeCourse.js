@@ -331,6 +331,15 @@ export function chooseCareer(state) {
     // A rural Sundanese seventeen-year-old in 1977 was picked for Busker and
     // promoted to Superstar by twenty-two, with a twenty-six-year tenure.
     if ((c.fameCareer || ['entertainment', 'sports'].includes(c.field)) && col === 0) fit *= 0.25
+    // Nobody farms in a megacity. `agriculture` is weighted 1 in the urban-poor
+    // column, which is low and is not zero, so the engine made a man who had
+    // moved to Mumbai at nineteen a Smallholder at twenty and an Agricultural
+    // Business Owner until sixty-nine — and then ran both arcs past each other
+    // for four decades: the three-hour commute and the local train at rush hour
+    // in the same life as "the neighbours had it too, which means the price
+    // will be poor". Peri-urban farming around a town or a small city is real,
+    // so the cut is at the two largest scales rather than at "urban".
+    if (c.field === 'agriculture' && ['megacity', 'major_city'].includes(state?.currentPlace?.scale)) fit = 0
     // Smarts open the doors that require them; they do not open the doors that
     // require capital or a name, which the requirements already model.
     const req = c.requirements?.minSmarts ?? 0
@@ -683,6 +692,28 @@ function courseHousing(s) {
     const price = inEraMoney(localisePrice(type.basePrice, c?.gdp, 'local'), c, s.currentYear)
     const deposit = Math.round(price * (type.downPaymentRate ?? 0.2))
     if ((s.money ?? 0) < deposit) return s
+    // A lender tests the income, not only the deposit. Nothing here did, so a
+    // musician on $4,149 a year who happened to have saved a deposit was handed
+    // a terraced house whose annual payment exceeded her entire salary — and
+    // that was free, invisibly, for as long as arrears had no consequence. The
+    // moment three years of them took the house, the engine started repossessing
+    // people at 44 whose only mistake was being sold a mortgage in the first
+    // place: three lives in a row entered arrears at 42 and lost the house at 44.
+    //
+    // Below the line the purchase simply does not happen, which is what "could
+    // not get a mortgage" looks like from inside a life.
+    const mortgage = price - deposit
+    const payment = Math.round(mortgage / 25) + Math.round(mortgage * 0.04)
+    // The textbook line is about a third of GROSS HOUSEHOLD income, and the
+    // state carries one salary — there is no partner income field — so the
+    // figure has to stand in for a household out of a single earner's wage.
+    // Calibrated against the recorded targets rather than picked: at 0.35 it
+    // rejected the median 1975 American household and ownership collapsed to
+    // 18%; at 0.7 it measures US 41-50% and Germany 37-42% against real figures
+    // of 43% and 47%, with repossession down to 1-3 lives in 62.
+    const HOUSEHOLD_CAPACITY = 0.7
+    const income = (s.career?.salary ?? 0) + (s.pensionAnnual ?? 0)
+    if (payment > income * HOUSEHOLD_CAPACITY) return s
     s = {
       ...s,
       money: (s.money ?? 0) - deposit,
