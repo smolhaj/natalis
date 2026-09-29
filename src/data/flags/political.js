@@ -7058,6 +7058,294 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by sov_ft_return_home.',
   },
 
+  ww2_pl_1939: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In Poland in September 1939.',
+    intent: 'none',
+    notes: 'Set by ww2_pl_september.',
+  },
+
+  ww2_pl_occupation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the German occupation of Poland as a teenager or young adult.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_pl_occupation.',
+  },
+
+  ww2_pl_secret_school: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Went to the secret classes (tajne komplety) under occupation.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_pl_occupation.',
+  },
+
+  ww2_pl_ghetto_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Saw the Warsaw ghetto wall, or the 1943 uprising from the other side of it.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_pl_ghetto_wall.',
+  },
+
+  ww2_pl_hid_someone: {
+    weight: 'major',
+    category: 'political',
+    description: 'Hid Jews during the occupation, under the death penalty for the whole household.',
+    intent: 'event',
+    notes: 'Set by ww2_pl_the_knock. Guards ww2_ft_righteous.',
+  },
+
+  ww2_pl_closed_the_door: {
+    weight: 'major',
+    category: 'political',
+    description: 'Turned away Jews who came to the door during the occupation.',
+    intent: 'event',
+    notes: 'Set by ww2_pl_the_knock. Guards ww2_ft_closed_door.',
+  },
+
+  ww2_pl_warsaw_uprising: {
+    weight: 'major',
+    category: 'political',
+    description: 'In Warsaw during the 1944 uprising.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_pl_uprising, with warsaw_uprising_generation.',
+  },
+
+  ww2_pl_righteous: {
+    weight: 'major',
+    category: 'political',
+    description: 'Recognised as Righteous Among the Nations.',
+    intent: 'none',
+    notes: 'Set by ww2_ft_righteous.',
+  },
+
+  ww2_pl_the_question: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Asked late in life whether anybody came to the door.',
+    intent: 'none',
+    notes: 'Set by ww2_ft_closed_door.',
+  },
+
+  ww2_cn_war_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In China in 1937.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_cn_1937.',
+  },
+
+  ww2_cn_went_west: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Went west with a school or university, 1937-39.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_cn_west.',
+  },
+
+  ww2_cn_bombing: {
+    weight: 'major',
+    category: 'political',
+    description: 'In Chongqing through the bombing.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_cn_chongqing.',
+  },
+
+  ww2_cn_conscript: {
+    weight: 'major',
+    category: 'political',
+    description: 'Taken by the Nationalist press-gang.',
+    intent: 'none',
+    notes: 'Set by ww2_cn_conscripted.',
+  },
+
+  ww2_cn_victory: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In China in August 1945.',
+    intent: 'none',
+    notes: 'Set by ww2_cn_surrender.',
+  },
+
+  ww2_ph_bataan: {
+    weight: 'major',
+    category: 'political',
+    description: 'Surrendered on Bataan and survived the march.',
+    intent: 'event',
+    notes: 'Set by ww2_ph_bataan. Guards ww2_ft_bataan_veteran.',
+  },
+
+  ww2_ph_occupation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the Japanese occupation of the Philippines.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_ph_occupation.',
+  },
+
+  ww2_ph_helped_guerrillas: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Helped the guerrillas during the occupation.',
+    intent: 'none',
+    notes: 'Set by ww2_ph_occupation (defiant).',
+  },
+
+  ww2_ph_liberation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Present for the 1944-45 return of the Americans.',
+    intent: 'none',
+    notes: 'Set by ww2_ph_leyte and ww2_ph_manila_1945.',
+  },
+
+  ww2_ph_battle_of_manila: {
+    weight: 'major',
+    category: 'political',
+    description: 'In Manila in February 1945.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_ph_manila_1945.',
+  },
+
+  ww2_ph_equity_paid: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Received the 2009 Filipino veterans equity payment.',
+    intent: 'none',
+    notes: 'Set by ww2_ft_bataan_veteran.',
+  },
+
+  ww2_yu_war_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In Yugoslavia in April 1941.',
+    intent: 'none',
+    notes: 'Set by ww2_yu_april.',
+  },
+
+  ww2_yu_ndh_survivor: {
+    weight: 'major',
+    category: 'political',
+    description: 'A Serb in the Independent State of Croatia in 1941-42 who survived the Ustaše terror.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_yu_ndh_terror.',
+  },
+
+  ww2_yu_kragujevac: {
+    weight: 'major',
+    category: 'political',
+    description: 'In Šumadija in October 1941.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_yu_kragujevac.',
+  },
+
+  ww2_yu_partisan: {
+    weight: 'major',
+    category: 'political',
+    description: 'Fought with the Partisans.',
+    intent: 'event',
+    notes: 'Set by ww2_yu_the_forest. Guards ww2_ft_partisan_pension.',
+  },
+
+  ww2_yu_stayed: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Stayed home through the war in Yugoslavia.',
+    intent: 'none',
+    notes: 'Set by ww2_yu_the_forest.',
+  },
+
+  ww2_yu_wire: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Inside the barbed wire round Ljubljana, 1942.',
+    intent: 'none',
+    notes: 'Set by ww2_yu_ljubljana_wire.',
+  },
+
+  ww2_yu_1945: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In Yugoslavia in May 1945.',
+    intent: 'none',
+    notes: 'Set by ww2_yu_1945.',
+  },
+
+  ww2_yu_partisan_after: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Partisan veteran watching Yugoslavia break up.',
+    intent: 'none',
+    notes: 'Set by ww2_ft_partisan_pension.',
+  },
+
+  ww2_id_occupation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In Indonesia when the Japanese arrived in 1942.',
+    intent: 'none',
+    notes: 'Set by ww2_id_japanese.',
+  },
+
+  ww2_id_romusha: {
+    weight: 'major',
+    category: 'political',
+    description: 'Taken as romusha labour.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_id_romusha.',
+  },
+
+  ww2_id_revolusi: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In Indonesia for the proclamation and the revolution.',
+    intent: 'none',
+    notes: 'Set by ww2_id_merdeka.',
+  },
+
+  ww2_kr_japanese_name: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Given a Japanese name under sōshi-kaimei, 1940.',
+    intent: 'year_texture',
+    notes: 'Set by ww2_kr_names.',
+  },
+
+  ww2_kr_labour_mobilised: {
+    weight: 'major',
+    category: 'political',
+    description: 'Mobilised for labour in Japan.',
+    intent: 'none',
+    notes: 'Set by ww2_kr_mobilised.',
+  },
+
+  ww2_kr_hidden_by_marriage: {
+    weight: 'major',
+    category: 'political',
+    description: 'Married off young to escape the recruiters for girls.',
+    intent: 'event',
+    notes: 'Set by ww2_kr_mobilised. Guards ww2_ft_kim_hak_sun.',
+  },
+
+  ww2_kr_liberation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In Korea on 15 August 1945.',
+    intent: 'none',
+    notes: 'Set by ww2_kr_liberation.',
+  },
+
+  ww2_kr_1991: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Watched Kim Hak-sun testify in 1991.',
+    intent: 'none',
+    notes: 'Set by ww2_ft_kim_hak_sun.',
+  },
+
   dissident_file_known: {
     weight: 'major',
     category: 'political',

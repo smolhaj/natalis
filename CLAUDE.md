@@ -205,7 +205,11 @@ Effect proxy shorthands (all are additive deltas):
 }
 ```
 
-Covers: WWII, Cold War (Berlin Wall, Cuban Missile Crisis, Prague Spring, Polish Solidarity, East Germany Stasi), famines (Holodomor, Great Leap Forward, Ethiopia), economic events (hyperinflation cycles, Japan bubble, Argentina 2001, Celtic Tiger, Korean miracle, Venezuela collapse, Gulf oil boom), national traumas (Troubles, Tiananmen, Apartheid, AIDS crisis), and more.
+The Second World War is NOT a world event; it lives in country modules
+(`events_germany_reich.js`, `events_japan_war.js`, `events_soviet_1929.js`,
+`events_second_world_war.js` for Poland, China, the Philippines, Yugoslavia,
+Indonesia and Korea, and scattered UK/France/Netherlands content).
+Covers: Cold War (Berlin Wall, Cuban Missile Crisis, Prague Spring, Polish Solidarity, East Germany Stasi), famines (Holodomor, Great Leap Forward, Ethiopia), economic events (hyperinflation cycles, Japan bubble, Argentina 2001, Celtic Tiger, Korean miracle, Venezuela collapse, Gulf oil boom), national traumas (Troubles, Tiananmen, Apartheid, AIDS crisis), and more.
 
 ### Country Data (`src/data/countries.js`)
 
@@ -588,7 +592,7 @@ npm run build            # must pass
 npm test                 # 413 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
-npm run check-flags      # 3302 covered / 0 partial / 0 orphaned
+npm run check-flags      # 3338 covered / 0 partial / 0 orphaned
 npm run check-events     # reachability: dead guards, enum domains, phase/year windows,
                          # season/country, silent choices, narrated moves that move nobody,
                          # populations the roster models that the corpus never addresses
@@ -1333,6 +1337,25 @@ money you send") or is a follow-through (`ft_` ids) echoing what they lived
 before leaving. 10.3% of years abroad down to 1.7%, all of it diaspora-shaped,
 with events per year unchanged. `tests/claimsAndState.test.js` fails without it.
 
+**Three more gaps closed after the pass.**
+- *Gulf-born expatriates were citizens.* Everyone started as `citizen`, so a
+  Bangladeshi-Qatari born in Doha became a police officer and owned his house
+  outright. `residencyAtBirth` (`migration.js`) puts them on a parent's visa;
+  the state, police and army are closed to non-nationals and freehold nearly so;
+  the existing `gulf2_the_visa_at_eighteen` arc now reaches 23 of 43.
+- *Grandchildren are people now.* Each adult child has `kids` at the local
+  fertility rate (`courseGrandchildren`); the first queues `late_grandchild_born`;
+  `G.grandchildCount`; the death screen counts them. A Nigerian mother of seven
+  born 1945 has 24-39 grandchildren, the first around forty.
+- *The war where it was lived.* `events_second_world_war.js`: Poland 1939-45
+  (occupation, the secret schools, the ghetto wall, the knock at the door under
+  the death penalty, the rising), China 1937-45, the Philippines 1941-45,
+  Yugoslavia 1941-45 (including Kragujevac and the Ustaše terror), Indonesia
+  1942-49, Korea 1938-45; 25 events, 5 follow-throughs, texture for every flag.
+  Nothing about the war had fired for a Pole between 1939 and 1945.
+- Also: clergy titles follow the faith and the ladder is closed where the faith
+  did not ordain; fame ladders are pyramids above the second rung.
+
 **An age can wait a year; a date cannot.** Every Russian born in 1915 turned
 thirty in 1945, and the scheduled "You are thirty" beat took the ninth of May
 from all of them. `getNextEvent` now lets an eligible dated event of weight ≥100
@@ -1751,6 +1774,9 @@ src/
         events_portugal_depth.js  — Portugal depth arc (retornados from Angola/Mozambique, PREC revolutionary period)
         events_romania_depth.js   — orphanages post-Ceaușescu, post-communist transition, Bucharest earthquake memories
         events_russia_depth.js    — Great Terror 1937–38, Khrushchev thaw, Brezhnev stagnation/blat, kommunalka life
+        events_second_world_war.js — 30 events: Poland 1939-45, China 1937-45, the Philippines 1941-45,
+                                    Yugoslavia 1941-45, Indonesia 1942-49, Korea 1938-45, as lived by
+                                    the character the engine draws in each
         events_soviet_1929.js     — 25 events: every Soviet republic 1929-1956 — collectivisation, the Kazakh and
                                     Volga famines, the Terror, the war from 22 June to 9 May, the deported
                                     peoples and their returns, Stalin's funeral, Tbilisi 1956

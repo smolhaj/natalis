@@ -51,7 +51,8 @@ export const GEORGIA_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Georgia' &&
-      G.currentYear >= 1992 && G.currentYear <= 1994 &&
+      // The text runs to the fall of Sukhumi in September 1993.
+      G.currentYear >= 1993 && G.currentYear <= 1994 &&
       G.age >= 16 &&
       !G.mem?.geoAbkhazia,
     text: 'The Abkhazia conflict, 1992–1993. Georgian troops enter Abkhazia in August 1992; fighting continues for a year; Sukhumi falls in September 1993 and the Georgian army is expelled. Two hundred and fifty thousand Georgians from Abkhazia are displaced — they become IDPs, internally displaced persons, and some will remain displaced for decades. The conflict is widely understood in Georgia as a Russian-backed Abkhazian action against Georgian territorial integrity. Understanding it this way and being able to do anything about it are two different things.',

@@ -5160,6 +5160,59 @@ function* textureCandidates(state, opts = {}) {
     'Every film on television on the ninth of May is about the war, and you watch every one, and cry at the same places, and would not miss it.',
     'The men of your age in the town divide into those who came back and the photographs. You are careful, at weddings, which ones you seat together.',
   ])]
+  // ─── The Second World War where it was lived (events_second_world_war.js) ──
+  if (F.has('ww2_pl_occupation') && currentYear >= 1946 && Math.random() < 0.14) yield [T.earned, pick([
+    'Two lorries at either end of a street still stops you on the pavement. You have never once explained to anybody why you cross over.',
+    'You know the German for "papers" and "out" and "faster" and nothing else, and you have kept it that way on purpose.',
+  ])]
+  if (F.has('ww2_pl_secret_school') && currentYear >= 1946 && Math.random() < 0.12) yield [T.earned, pick([
+    'You still have the Latin grammar from the Tuesday kitchen, with the sewing pattern pressed inside the cover.',
+    'Your certificate from the secret lessons is a sheet in a teacher\'s handwriting that the ministry accepted in 1945 without asking a single question.',
+  ])]
+  if (F.has('ww2_pl_ghetto_witness') && currentYear >= 1950 && Math.random() < 0.16) yield [T.earned, pick([
+    'You cannot ride a carousel. You have never said why, and after a certain age nobody asks.',
+    'The street where the wall was is an ordinary street now, with a bakery. The line of it is marked in the pavement, and you step over it the way you would step over somebody lying down.',
+  ])]
+  if (F.has('ww2_pl_warsaw_uprising') && currentYear >= 1946 && Math.random() < 0.16) yield [T.earned, pick([
+    'At five in the afternoon on the first of August the whole city stops for a minute, sirens and car horns, and you stand where you are with the others.',
+    'The city was rebuilt from paintings, the old town brick by brick to look the way it did. You know which of it is real and which is the copy, and you love the copy anyway.',
+  ])]
+  if (F.has('ww2_cn_war_generation') && currentYear >= 1946 && Math.random() < 0.12) yield [T.earned, pick([
+    'Eight years of war are called eight years in this family, as if everybody knows which eight. Everybody does.',
+    'The sound of aeroplanes overhead is still a question your body asks before your mind answers it.',
+  ])]
+  if (F.has('ww2_cn_went_west') && currentYear >= 1946 && Math.random() < 0.14) yield [T.earned, pick([
+    'You studied chemistry in a temple with the gods looking on. Your students now have a building with heating, and you do not tell them about the temple, because they would think it was a story.',
+    'The people you walked west with are the people you trust. There are fewer of them every year, and they still write.',
+  ])]
+  if (F.has('ww2_cn_bombing') && currentYear >= 1946 && Math.random() < 0.14) yield [T.earned, pick([
+    'A clear summer sky still feels like a threat. You like the fog months. People think it is a quirk.',
+    'You go past the tunnel mouth on the way to the market. There is a plaque now. You walk a little faster there, every time.',
+  ])]
+  if (F.has('ww2_ph_occupation') && currentYear >= 1946 && Math.random() < 0.12) yield [T.earned, pick([
+    'You still have a bundle of the occupation money in a drawer, tied with string, worth nothing, kept for no reason you could give.',
+    'You never bow to anybody. People have noticed it and put it down to pride, and it is not pride.',
+  ])]
+  if (F.has('ww2_ph_battle_of_manila') && currentYear >= 1946 && Math.random() < 0.18) yield [T.earned, pick([
+    'Every February the old people of Ermita and Malate go to the same masses. You know the faces. There are fewer of them every year and nobody else comes.',
+    'Intramuros was rebuilt for tourists. You walk through it with your grandchildren and do not tell them where the bodies were, because the gift shop is there now.',
+  ])]
+  if (F.has('ww2_yu_ndh_survivor') && currentYear >= 1946 && Math.random() < 0.18) yield [T.earned, pick([
+    'You do not go to the town on market day if you can help it. The man who sells the cheese was there, in 1941, in a black cap. Everybody knows it and nobody says it, because that was the settlement.',
+    'Brotherhood and unity, the posters say. You believe it on most days, the way you believe in the weather forecast.',
+  ])]
+  if (F.has('ww2_yu_kragujevac') && currentYear >= 1946 && Math.random() < 0.18) yield [T.earned, pick([
+    'On the twenty-first of October the whole town goes to the field of monuments. The one of the schoolboys is a broken V. You have looked at it every year of your life.',
+    'Your class photograph from 1941 has faces in it that nobody in the town can name any more, except you, and you say the names in order under your breath.',
+  ])]
+  if (F.has('ww2_id_romusha') && currentYear >= 1946 && Math.random() < 0.18) yield [T.earned, pick([
+    'You do not talk about the railway. When the young men on the radio talk about the Japanese years as the time the country woke up, you turn it off.',
+    'You can eat anything. You have eaten things on that island that you will not name to your grandchildren, and so you can eat anything.',
+  ])]
+  if (F.has('ww2_kr_japanese_name') && currentYear >= 1946 && Math.random() < 0.14) yield [T.earned, pick([
+    'Your father\'s old documents are in the Japanese name. You keep them, because they are his, and you never show anybody the front page.',
+    'Your grandchildren learn about 1940 at school, and ask you if it is true that people had to change their names. You say yes, and do not say what you were called.',
+  ])]
   if (F.has('ru_dep_terror_generation') && Math.random() < 0.22) yield [T.anchored, pick([
     'The knock came at night in 1937, or 1938. Not to your door — to a door close enough that you heard it. The apartment was quiet afterward in a way that apartments are not usually quiet.',
     'You learned what Article 58 was before you learned what it meant. Anti-Soviet activity. The phrase covered everything it needed to cover. This was its point.',
@@ -7031,7 +7084,7 @@ function* textureCandidates(state, opts = {}) {
       : 'The World Bank ranked Georgia 8th for ease of doing business. You noticed the ranking, because what it described was an actual change that had happened in a country that had seemed unable to change.',
   ])]
   if (F.has('geo_testigo_generation') && Math.random() < 0.18) yield [T.anchored, pick([
-    'April 9, Rose Revolution, 2008, 2024 — these are not separate events. They are the same argument about what Georgia is and what it refuses to be. You are in possession of the full argument.',
+    currentYear >= 2024 ? 'April 9, Rose Revolution, 2008, 2024 — these are not separate events. They are the same argument about what Georgia is and what it refuses to be. You are in possession of the full argument.' : 'April 9, the Rose Revolution, 2008 — these are not separate events. They are the same argument about what Georgia is.',
     phase === 'late_life'
       ? 'The EU flag on Rustaveli in 2024 among people who were not born when April 9 happened: they are continuing something you were part of beginning. The insistence is the constant. The form it takes changes with the decade.'
       : 'To have lived the Georgia arc is to know that the country\'s answer to each crisis has been to return to Rustaveli Avenue. The avenue keeps receiving it.',
@@ -9569,7 +9622,7 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('kresy_family') && Math.random() < 0.2) yield [T.anchored, pick([
     'Your family calls the city by its Polish name. On maps it appears under a different name, in a different country. The city is there. The streets are there. The name on the street signs is different. The people on the streets speak a different language from the language your family spoke on those streets.',
-    phase === 'late_life'
+    phase === 'late_life' && currentYear >= 1992
       ? 'After 1991, you can go to the city your parents described. Some people from kresy families do go. The buildings are still there, the street layout recognisable. The Polish community is mostly gone. The churches have been converted. You are walking through the material record of a world that ended in 1945 and has not been restored.'
       : 'The Kresy: the eastern borderlands that Poland lost in 1945 — Lwów to Ukraine, Wilno to Lithuania, the areas that were home to millions who were then moved westward into the houses of Germans who were moved westward in turn. The displacement was the largest ethnic reorganisation of European territory in the century.',
   ])]
@@ -13653,7 +13706,7 @@ function* textureCandidates(state, opts = {}) {
     'The Truth Commission existed. The report existed. The case files existed. The convictions were partial. The accounting was partial. What is not partial is that the document exists — which is more than the people who gave the orders planned for.',
   ])]
   if (F.has('per_keiko_era') && Math.random() < 0.18) yield [T.anchored, pick([
-    'The Fujimori name on the ballot three times: 2011, 2016, 2021. Each time by a margin of less than two points. Each time she cried fraud. Each time the fraud was not found. The country learned to hold two things simultaneously.',
+    currentYear >= 2021 ? 'The Fujimori name on the ballot three times: 2011, 2016, 2021. Each time by a margin of less than two points. Each time she cried fraud. Each time the fraud was not found. The country learned to hold two things simultaneously.' : 'The Fujimori name comes back on every ballot, and every time the margin is a couple of points, and every time the count is contested.',
     'The highland-coast split has an electoral expression: it runs through the Keiko vote and the anti-Keiko vote and through what people believe the 1990s were, which depends on whether they were in Lima or in Ayacucho for them.',
   ])]
   if (F.has('per_testigo_generation') && Math.random() < 0.2) yield [T.anchored, pick([
