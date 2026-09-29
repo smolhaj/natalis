@@ -9,7 +9,7 @@ import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhoo
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 import {
   getPhase, GDP_MULT,
-  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES, childNameCountry, nameSourceCountry,
+  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES, childNameCountry, nameSourceCountry, communityPersonName,
 } from './character'
 import {
   buildG, buildEffectProxy, applyProxy, resolveProxyExtras, liveCountry,
@@ -22,22 +22,7 @@ export { enterCareer, getAvailableCareers } from './tick'
 import { earnedGain } from './tick'
 
 function genPartnerName(state, gender) {
-  // A partner met as an adult has their own family behind them, so the surname
-  // is drawn rather than inherited — and the first name avoids everyone
-  // already in this life. See names.js: ten independent draws across four
-  // files produced a partner and a father both called Patrick.
-  //
-  // And from the community they are likeliest to come from. The country pool
-  // alone married a Bangladeshi-Qatari man born in Doha to "Rawda Al
-  // Mohannadi", which in the Gulf of that period is close to impossible, and
-  // gave an emigrant a partner from the host pool as often as from home.
-  const birth = state.character.country
-  const here = state.currentCountry ?? birth
-  const home = (state.character.nameCountry || state.character.nameGroup) ? nameSourceCountry(state.character) : null
-  const abroad = here?.name !== birth?.name
-  if (home && !abroad && chance(0.85)) return personName(home, gender, state)
-  if (abroad && chance(0.5)) return personName(home ?? birth, gender, state)
-  return personName(here, gender, state)
+  return communityPersonName(state, gender, { partner: true })
 }
 
 export function generatePartnerProfile(state, overrides = {}) {

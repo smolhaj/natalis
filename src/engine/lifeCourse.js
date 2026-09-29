@@ -34,7 +34,7 @@ import { inEraMoney } from '../data/economy.js'
 import { institutionExists } from '../data/history.js'
 import { generatePartnerProfile, getMarried, proposeMarriage, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'
-import { livingRuralUrban } from './character'
+import { livingRuralUrban, childNameCountry } from './character'
 import { preferUnsaid, rememberSaid } from './prose'
 import { pickUnusedName, namesInUse } from './names'
 import { gulfNonNational } from '../data/migration.js'
@@ -955,7 +955,7 @@ function grandchildLine(s, c) {
   const which = c.gender === 'female' ? 'daughter' : 'son'
   const babyGender = chance(0.5) ? 'female' : 'male'
   const baby = babyGender === 'female' ? 'daughter' : 'son'
-  const pool = s.character?.country?.namePool?.[babyGender]
+  const pool = childNameCountry(s)?.namePool?.[babyGender]
   const gname = pickUnusedName(pool, namesInUse(s)) || null
   const templates = [
     () => `Your ${which} ${first} has a ${baby}. You hold the baby the way you held ${first}, and your arms remember before you do.`,

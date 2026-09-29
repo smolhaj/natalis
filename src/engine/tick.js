@@ -17,7 +17,7 @@ import {
   GDP_MULT, HYPERINFLATION_DRAIN, getHyperinflation,
   calculateHouseholdContribution, tickFamilyIncome,
   ADULT_TRAITS, CHILD_TRAITS, pickTraits, TRAIT_PROSE, BUSINESS_TYPES, partnerOccupation,
-  getLifeSkeletonMap, getPhaseEntryMap, deriveSeason, livingRuralUrban, childNameCountry,
+  getLifeSkeletonMap, getPhaseEntryMap, deriveSeason, livingRuralUrban, childNameCountry, communityPersonName,
 } from './character'
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
@@ -354,9 +354,8 @@ function buildEffectProxy(state) {
     proxy._newFriends.push(friend)
   }
   proxy.makeFriend = (quality = 65) => {
-    const c = state.character.country
     const gender = chance(0.5) ? 'male' : 'female'
-    const name = personName(c, gender, state)
+    const name = communityPersonName(state, gender)
     if (!proxy._newFriends) proxy._newFriends = []
     proxy._newFriends.push({ name, alive: true, relationshipQuality: clamp(quality + randomBetween(-10, 10), 20, 95) })
   }
@@ -495,8 +494,7 @@ function buildEffectProxy(state) {
     const preferredGender = isLGBTQ ? myGender : (myGender === 'male' ? 'female' : 'male')
     const gender = overrides.gender ?? preferredGender
     const nameGender = gender === 'non-binary' ? pickFrom(['male', 'female']) : gender
-    const c = state.character.country
-    const name = personName(c, nameGender, state)
+    const name = communityPersonName(state, nameGender, { partner: true })
     const age = clamp(randomBetween(Math.max(18, state.age - 5), state.age + 5), 16, 60)
     proxy._newPartner = {
       name, gender, birthGender: gender, age,
@@ -519,9 +517,7 @@ function buildEffectProxy(state) {
 }
 
 function genFriendName(state) {
-  const c = state.character.country
-  const gender = chance(0.5) ? 'male' : 'female'
-  return personName(c, gender, state)
+  return communityPersonName(state, chance(0.5) ? 'male' : 'female')
 }
 
 function resolveProxyExtras(state, proxy) {

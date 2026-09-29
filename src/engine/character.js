@@ -6,7 +6,7 @@ import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/r
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PHASE_ENTRY_EVENTS } from '../data/events/lifecycle/events_phase_entries'
 import { religionFor } from '../data/identity.js'
-import { pickUnusedName, surnameFor, nameKey } from './names'
+import { pickUnusedName, surnameFor, nameKey, personName } from './names'
 import { wageIndex, inEraMoney } from '../data/economy.js'
 import { wasWealthy } from '../data/technology.js'
 import { conflictRiskAt } from '../data/history.js'
@@ -184,6 +184,32 @@ export function childNameCountry(state) {
   const birth = state?.character?.country
   const here = state?.currentCountry ?? birth
   return here?.name === birth?.name ? nameSourceCountry(state?.character) : here
+}
+
+/**
+ * A name for somebody this character meets: a partner, a friend, a colleague.
+ *
+ * Mostly from their own community; otherwise from the same faith in the same
+ * country, and only then from the country at large. The partner and friend
+ * draws read the raw country pool, which in Nigeria is Yoruba and Igbo, so a
+ * Kanuri Muslim woman in 1980 Maiduguri married Chukwudi Obiora. Abroad, half
+ * are from home and half from where they live.
+ */
+export function communityPersonName(state, gender, opts = {}) {
+  const ch = state?.character
+  const birth = ch?.country
+  const here = state?.currentCountry ?? birth
+  const abroad = here?.name !== birth?.name
+  const own = nameSourceCountry(ch)
+  if (abroad) return personName(chance(0.5) ? own : here, gender, state)
+  const loyalty = opts.partner ? 0.85 : 0.75
+  // A marriage across a faith line was rare nearly everywhere in this period,
+  // and for a Muslim woman in most of the roster it was not available at all.
+  const muslimWoman = opts.partner && ch?.gender === 'female' && String(ch?.religion ?? '').startsWith('muslim')
+  if (muslimWoman || chance(loyalty)) return personName(own, gender, state)
+  const sameFaith = nameSourceCountry({ country: here, nameGroup: nameGroupFor(here?.name, null, ch?.religion) })
+  if (opts.partner || chance(0.6)) return personName(sameFaith, gender, state)
+  return personName(here, gender, state)
 }
 
 /** The country whose name pools this character's family draws from. */
