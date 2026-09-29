@@ -112,7 +112,7 @@ export const ROHINGYA_EVENTS = [
     // The burning already carries the river; this is the first year after it.
     when: (G) => G.flags.has('rohingya_displacement') && G.currentYear === 2018 && !G.mem.rohCrossing,
     text: 'The Naf River was twenty minutes by boat, and the boatman took everything you had left. You still see the crossing point when you close your eyes: hundreds of people waiting for the same few boats, carrying children, elderly parents, what remained after the walk. Bangladesh receives you in the specific way of a country that cannot legally refuse you and refuses to want you. The camp at Cox\'s Bazar is larger than most cities now. The hills it stands on were forest in August.',
-    effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('rohingya_coxs_bazar'); p.setMem('rohCrossing', true) },
+    effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('rohingya_coxs_bazar'); p.setMem('rohCrossing', true); p.emigrateTo('Bangladesh', { residency: 'refugee_status' }) },
   },
 
   // ── RESETTLEMENT (late arc) ───────────────────────────────────────────────
