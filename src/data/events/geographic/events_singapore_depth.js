@@ -43,7 +43,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
       G.currentYear >= 1978 && G.currentYear <= 1985 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sgNantah,
-    text: 'Nanyang University — Nantah — was built by the Chinese community in the 1950s, funded by donations from taxi drivers and trishaw riders, to provide Chinese-medium university education. In 1980 it is merged with the University of Singapore into NUS and the Chinese-medium instruction is ended. The government says it is a pragmatic decision: English is the language of the economy. You know this is true. You also know that Nantah was built by hands and savings that understood something about what they were building that the economists do not count.',
+    text: (G) => 'Nanyang University — Nantah — was built by the Chinese community in the 1950s, funded by donations from taxi drivers and trishaw riders, to provide Chinese-medium university education. ' + (G.currentYear >= 1980 ? 'In 1980 it is merged with the University of Singapore into NUS and the Chinese-medium instruction is ended.' : 'Its students are taught on the University of Singapore\'s campus now, in English, and everybody understands what the arrangement is the first step toward.') + ' The government says it is a pragmatic decision: English is the language of the economy. You know this is true. You also know that Nantah was built by hands and savings that understood something about what they were building that the economists do not count.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.addFlag('sg_nantah_generation'); p.setMem('sgNantah', true) },
   },

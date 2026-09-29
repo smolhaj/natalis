@@ -4916,7 +4916,7 @@ function* textureCandidates(state, opts = {}) {
   if (F.has('holodomor_family_memory') && Math.random() < 0.18) yield [T.anchored, pick([
     'Your grandmother does not throw bread away. You know why.',
     'The Holodomor — 1932-33. Six million. The Soviets denied it internationally while it was happening. The bread your grandmother saves is the shape of that denial.',
-    phase === 'late_life'
+    phase === 'late_life' && currentYear >= 2007
       ? 'Ukraine officially recognised the Holodomor as genocide in 2006. The recognition came seventy years after the famine. You were alive for both. What lives in your family is older than the recognition.'
       : 'The specific silence around the famine — what your grandparents would and would not say — is part of how you understand official silence as a tool. You learned it from bread.',
   ])]
@@ -6966,8 +6966,9 @@ function* textureCandidates(state, opts = {}) {
   if (F.has('geo_saakashvili_generation') && Math.random() < 0.2) yield [T.anchored, pick([
     'The Saturday they dismissed the traffic police and the Monday they arrived in new uniforms: the speed was the point. Corruption that had seemed permanent was a policy that could be reversed in a weekend. You watched the weekend.',
     'November 2007: the opposition demonstration, the water cannon, the state of emergency. The same administration that ended the bribe-taking used the state of emergency. You hold both facts about the same era.',
-    phase === 'late_life'
+    phase === 'late_life' && currentYear >= 2009
       ? 'The Saakashvili legacy is contested in ways you did not expect when you watched the customs checkpoints close. The anti-corruption and the November 2007 dispersal are both in the record. So is Batumi. So is the 2008 war happening on his watch. The record is not simple.'
+      : currentYear < 2014 ? 'The World Bank reports start putting Georgia near the top of lists it had always been near the bottom of. You notice, because what they describe is an actual change in a country that had seemed unable to change.'
       : 'The World Bank ranked Georgia 8th for ease of doing business. You noticed the ranking, because what it described was an actual change that had happened in a country that had seemed unable to change.',
   ])]
   if (F.has('geo_testigo_generation') && Math.random() < 0.18) yield [T.anchored, pick([
@@ -7924,7 +7925,7 @@ function* textureCandidates(state, opts = {}) {
   // ─── PARAGUAY TEXTURE ────────────────────────────────────────────────────────
   if (F.has('pry_guarani_speaker') && Math.random() < 0.25) yield [T.anchored, pick([
     'Two languages without deciding to have two languages. Spanish at school. Guaraní at home, in the market, when something needs to be said quickly and in the right register. Paraguay is the only country in South America where this is true — the indigenous language is not preserved in ceremonies but spoken at the bus stop.',
-    phase === 'late_life'
+    phase === 'late_life' && (F.has('grandparent') || (state.children ?? []).some(c => c.alive !== false && (c.age ?? 0) >= 25))
       ? 'Your grandchildren code-switch without thinking about it. This is what it means for a language to be alive — it is what people use when they are not thinking about language. You remember when people said Guaraní would die. It has not died.'
       : 'The words Guaraní has for things Spanish does not have words for. The syllables sitting differently in the mouth. Growing up with two grammars, two rhythms — not as an achievement but as the air of the place.',
   ])]
@@ -8513,7 +8514,10 @@ function* textureCandidates(state, opts = {}) {
       ? 'You were young when the tank went through the gate at Athens Polytechnic. You remember the specific quality of the sound. Some things that happened early stay more clearly than things that happened later.'
       : 'The November 17 uprising was crushed in the night. The crushing also clarified something about the junta\'s position. The students understood. The generals understood the students understood. The tank was the answer.',
   ])]
-  if (F.has('revolution_generation') && Math.random() < 0.22) yield [T.anchored, pick([
+  // `revolution_generation` is also set by Iran 1979, Romania 1989 and a world
+  // event; these three lines are the Greek junta and nothing else, and one
+  // reached an Iranian apostate in London.
+  if (F.has('revolution_generation') && state.character?.country?.name === 'Greece' && Math.random() < 0.22) yield [T.anchored, pick([
     'The radio played Theodorakis the morning after the junta fell. You knew every word. You had known every word for seven years, when knowing them was a small crime. The songs sounding legal did not make them sound different. They sounded exactly the same.',
     phase === 'late_life'
       ? 'July 1974: the junta collapsed and Karamanlis came back from Paris at 2am. You have watched Greek democracy since then. The distance between the marches on the radio and what came after is a measurement you carry.'
@@ -8873,8 +8877,8 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('can_komagata_generation') && Math.random() < 0.2) yield [T.anchored, pick([
     'The Komagata Maru sat in Burrard Inlet for two months. Three hundred and seventy-six British subjects. The continuous journey regulation existed to prevent exactly the journey they had made. You are in Vancouver in 1914 and you understand what the regulation is for.',
-    phase === 'late_life'
-      ? 'Harper apologised in 2016 in the House of Commons. The passengers who were refused entry at gunpoint and killed at Budge Budge in 1914 are not here to hear it. The families of some of them are. The apology is both real and very late.'
+    phase === 'late_life' && currentYear >= 2016
+      ? 'Justin Trudeau apologised in 2016 in the House of Commons. The passengers who were refused entry at gunpoint and killed at Budge Budge in 1914 are not here to hear it. The families of some of them are. The apology is both real and very late.'
       : 'The continuous journey regulation: you had to travel directly from your country of origin. There was no direct steamship service from India to Canada. The regulation was written to prevent the journey you had made. You understand exactly what it was written for.',
   ])]
   if (F.has('can_bathhouse_raids_generation') && Math.random() < 0.25) yield [T.anchored, pick([
@@ -9422,9 +9426,13 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('martial_law_generation') && Math.random() < 0.3) yield [T.anchored, pick([
     'December 13, 1981. 6am. Jaruzelski in uniform on television. Stan wojenny. The tanks, the phones cut, the curfew. Ten thousand interned in the first forty-eight hours. Solidarity illegal. The underground press in church basements.',
-    phase === 'late_life'
+    phase === 'late_life' && currentYear >= 1992
       ? 'The argument about Jaruzelski continues: did he impose martial law to save Poland from Soviet invasion, or to save the party? The KGB files that emerged after 1989 are inconclusive. What is conclusive: it happened. The tanks were in the street. You saw them.'
-      : 'Stan wojenny lasted until July 1983. The internments, the curfew, the censorship, the passport controls. Then it ended officially. The unofficial version of it continued until 1989.',
+      : currentYear >= 1990
+        ? 'Stan wojenny lasted until July 1983. The internments, the curfew, the censorship, the passport controls. Then it ended officially. The unofficial version of it continued until 1989.'
+        : currentYear >= 1984
+          ? 'Stan wojenny was lifted in July 1983. The internments, the curfew, the censorship, the passport controls. It ended officially. The unofficial version of it has not.'
+          : 'Stan wojenny. The internments, the curfew, the censorship, the passport controls. Nobody on the radio says when it ends.',
   ])]
   if (F.has('underground_poland') && Math.random() < 0.25) yield [T.anchored, pick([
     'Tygodnik Mazowsze. CDN. The samizdat in the envelope. The church basement. The person you passed it to without writing their name anywhere. The chain of distribution that has no center.',
@@ -10398,8 +10406,10 @@ function* textureCandidates(state, opts = {}) {
       : 'You watched Brazil run an experiment: what happens when a government actively resists its own public health response. The number came back as the answer.',
   ])]
   if (F.has('bra_hyperinflation_generation') && Math.random() < 0.25) yield [T.anchored, pick([
-    'The price of a coffee changed between when you sat down and when you paid. The Cruzado, the Cruzado Novo, the Cruzeiro — three currencies in eight years. The Plano Real arrived in July 1994 and the price of a coffee became a fixed fact.',
-    phase === 'late_life'
+    currentYear >= 1995
+      ? 'The price of a coffee changed between when you sat down and when you paid. The Cruzado, the Cruzado Novo, the Cruzeiro — three currencies in eight years. The Plano Real arrived in July 1994 and the price of a coffee became a fixed fact.'
+      : 'The price of a coffee changes between when you sit down and when you pay. The Cruzado, the Cruzado Novo, the Cruzeiro. The currency is renamed while the inflation continues.',
+    phase === 'late_life' && currentYear >= 1995
       ? 'You can price a kilo of flour in every currency Brazil issued between 1986 and 1994. You do not entirely trust that the real will be stable tomorrow. The distrust is not irrational — it is formed from specific data.'
       : 'The specific skill of knowing the price is wrong before the cashier notices: you developed it young and it never fully left. Inflation at 2,000% per year is an education in impermanence.',
   ])]
@@ -12169,8 +12179,10 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('mn_inner_mongolia_connection') && Math.random() < 0.2) yield [T.anchored, pick([
     'There are more ethnic Mongolians in China than in Mongolia. The border between them was drawn in 1945 by other countries\' negotiations. The people on both sides did not draw it.',
-    'Your cousins in Inner Mongolia write in the traditional script. They speak Mongolian. In 2020 China required Mandarin as the primary language of instruction in their schools. They kept their children home in protest. The protest was one sentence in the international news.',
-    phase === 'late_life'
+    currentYear >= 2020
+      ? 'Your cousins in Inner Mongolia write in the traditional script. They speak Mongolian. In 2020 China required Mandarin as the primary language of instruction in their schools. They kept their children home in protest. The protest was one sentence in the international news.'
+      : 'Your cousins in Inner Mongolia write in the traditional script. They speak Mongolian. Their children learn Mandarin too, and a little more of it every year.',
+    phase === 'late_life' && currentYear >= 2000
       ? 'The two trajectories — Mongolia since 1990, Inner Mongolia inside China — have diverged in ways neither side fully chose. You have watched both from one side. The letter you get in traditional script from the other side is the evidence of what they have kept.'
       : 'The border that divides you from them is a Soviet-Chinese agreement from 1945. The language you share is older than every border in the region.',
   ])]
@@ -12997,9 +13009,11 @@ function* textureCandidates(state, opts = {}) {
     'The red flag with the Soviet-backed star. The literacy campaigns. The land reform. The Islamic scholars in the prisons. You grew up in the collision of those forces.',
   ])]
   if (F.has('afghan_soviet_war_generation') && Math.random() < 0.22) yield [T.anchored, pick([
-    'A million dead. Five million refugees. Ten years. The Soviet army left in 1989. The country it left behind was a different country from the one it entered.',
+    currentYear >= 1989
+      ? 'A million dead. Five million refugees. Ten years. The Soviet army left in 1989. The country it left behind was a different country from the one it entered.'
+      : 'The dead are counted in villages, not numbers. The refugees are in Peshawar and Mashhad. The Soviet army is still here, and nobody can say when it will leave.',
     'The war was everywhere and nowhere at once — in some provinces it was over the ridge, in others it was in the next village, in Kabul it was in the rockets landing from the south.',
-    phase === 'late_life'
+    phase === 'late_life' && currentYear >= 1993
       ? 'You have been carrying this war for most of your life. The country had wars after that war. You carry those too.'
       : 'The Stinger missiles the CIA provided through Pakistan changed the air war. That is a fact about geopolitics. You experienced it as survival arithmetic.',
   ])]
@@ -13405,8 +13419,8 @@ function* textureCandidates(state, opts = {}) {
   if (F.has('cub_nueva_trova_generation') && Math.random() < 0.17) yield [T.anchored, pick([
     'The Silvio song comes back whole — melody, words, the specific guitar voicing. You learned it before you understood what it was saying. Now you understand. The song is the same and not the same.',
     'Nueva trova is the music of the generation that believed and also doubted and couldn\'t fully separate the two. You carry that ambivalence in the specific key of the songs you know by heart.',
-    phase === 'late_life'
-      ? 'Pablo Milanés died in 2022 in Madrid, in exile. The exile complicated the songs retrospectively, the way exile complicates everything retrospectively. The songs still hold.'
+    phase === 'late_life' && currentYear >= 2023
+      ? 'Pablo Milanés died in Madrid in 2022, having said aloud what he thought of the government. The distance complicated the songs retrospectively, the way distance complicates everything retrospectively. The songs still hold.'
       : 'The songs circulated on cassette before they circulated on record, and on the cassette before the official release they sounded more like what they were — which is to say more ambivalent, more dangerous.',
   ])]
   if (F.has('ph_bpo_generation') && Math.random() < 0.18) yield [T.anchored, pick([
@@ -13443,9 +13457,11 @@ function* textureCandidates(state, opts = {}) {
       : 'A woman is murdered here every day. In that country every day. In this region every hour. The passive construction — is murdered — obscures a subject. There is a subject.',
   ])]
   if (F.has('brazil_dictatorship_lived') && Math.random() < 0.2) yield [T.anchored, pick([
-    'The AI-5 closed Congress, censored the press, authorised torture. It lasted until 1979. The years between 1968 and 1979 are what the word "regime" meant in practice.',
+    currentYear >= 1979
+      ? 'The AI-5 closed Congress, censored the press, authorised torture. It lasted until 1979. The years between 1968 and 1979 are what the word "regime" meant in practice.'
+      : 'The AI-5 closed Congress, censored the press, authorised torture. It is still in force. This is what the word "regime" means in practice.',
     'The economic miracle and the dictatorship occupied the same years. The miracle required the dictatorship to suppress the people arguing about who the miracle was for.',
-    phase === 'late_life'
+    phase === 'late_life' && currentYear >= 1990
       ? 'You have lived through the military years and the abertura and the democracy. Each transition carried the previous era\'s people and structures into the next one. The democracy you are old in is built on foundations you watched being laid.'
       : 'The years of lead: the students, the guerrillas, the unions — the spaces where resistance was possible were systematically closed. What remained was the miracle, which was growing for everyone except the people who asked questions about the growing.',
   ])]
@@ -16459,9 +16475,11 @@ function* textureCandidates(state, opts = {}) {
   ])]
 
   if (F.has('vut_anglophone') && Math.random() < 0.18) yield [T.anchored,
-    'You came out of the English school and there is a part of Port Vila where you cannot follow the conversation, and a school choice made in 1962 did that.']
+    'You came out of the English school and there is a part of Port Vila where you cannot follow the conversation, and a school choice made for you at six did that.']
   if (F.has('vut_francophone') && Math.random() < 0.18) yield [T.anchored,
-    'The French school put you on the losing side of independence, which nobody mentioned at the time and everybody understood by 1981.']
+    currentYear >= 1981
+      ? 'The French school put you on the losing side of independence, which nobody mentioned at the time and everybody understood by 1981.'
+      : 'The French school put you on one side of a line that nobody in Port Vila has drawn out loud yet.']
   if (F.has('vut_rebuilt_kastom') && Math.random() < 0.18) yield [T.anchored,
     'Low, tied down, thatch that gives instead of tearing. It was the old way and it is the one still standing after the next one.']
   if (F.has('vut_rebuilt_modern') && Math.random() < 0.18) yield [T.anchored,

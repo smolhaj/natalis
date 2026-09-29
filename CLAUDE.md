@@ -168,7 +168,7 @@ Event shape:
 **Critical**: `effect` functions receive only `p` (the proxy). `G` is only available in `when` guards. Never put G-dependent logic in effects.
 
 The `G` object (built by `buildG()`) exposes everything event conditions need:
-`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.conflictRisk` (war intensity where the character lives, THIS year — never read `country.conflictRisk`), `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
+`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.conflictRisk` (war intensity where the character lives, THIS year — never read `country.conflictRisk`), `G.hasGrandchildren`, `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
 
 Effect proxy shorthands (all are additive deltas):
 - `p.m` → happiness, `p.h` → health, `p.e` → smarts, `p.s` → charisma, `p.w` → wealth stat, `p.lo` → looks
@@ -1294,6 +1294,20 @@ one per cent); successful crimes paid nothing but the wealth stat; arranged
 matches (`arrangedShare` in `lifeCourse.js`) now exist where most marriages were
 arranged; the utility buttons (call a parent, manage the business) remember
 what they have said.
+
+Two further instruments came out of the pass, both run from the scratchpad and
+worth rebuilding when needed: a **claim checker** that compares each new line
+against the state after the year ("your grandchildren" with none, "your father
+says" after his death, "the office" with no job) and a **button fuzzer** that
+presses every store action at random for sixty lives. The fuzzer found no
+crashes. The claim checker found the grandchild class (grandchildren are not
+modelled as people — `G.hasGrandchildren` is the `grandparent` flag or a living
+child of 25+), parent-alive guards missing on six events, and office and
+work-from-home lines reaching retirees (`employed` in `mundaneLayer.js`).
+
+Same class, one layer up: a defining national period written at weight 3 over
+an eight-year window reaches almost nobody. The Proceso in Argentina reached 0
+of 15 Buenos Aires adults who lived through it; at weight 15, 9 and 5 of 15.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`

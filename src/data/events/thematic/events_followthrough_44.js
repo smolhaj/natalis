@@ -125,7 +125,7 @@ export const FOLLOWTHROUGH_44_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.has('mau_mau_generation') &&
-      G.currentYear >= 2000 &&
+      G.currentYear >= 2014 &&   // the text narrates 2011 and 2013 as past
       G.age >= 55 &&
       !G.mem?.ft44MauMauLate,
     text: 'In 2011, the British Foreign Office acknowledged the existence of 1,500 files it had secretly transferred out of Kenya at independence — classified colonial records of the emergency period. The files described the detention camps, the systematic torture, the forced labour. In 2013, the British government settled with more than 5,000 Kenyans who had been tortured under colonial detention, paying roughly £20 million. The settlement was accompanied by a statement of "sincere regret." Not an apology. The distinction between regret and apology was not incidental. You have lived long enough to see what acknowledgment looks like when it comes: partial, delayed, legally calibrated, real and insufficient simultaneously.',

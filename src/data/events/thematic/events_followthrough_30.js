@@ -672,6 +672,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.has('nga_military_era') &&
+      G.currentYear >= 2003 &&   // "the 1999 transition was real and civilian rule has continued"
       G.age >= 50 &&
       !G.mem?.ft30NgaMilLate,
     text: 'Nine coups in thirty-four years, if you count the attempted ones. You grew up in a country where the political news arrived in uniform. You learned to read the early morning announcements, the closed schools, the suspended constitution as information — not shock but data. The 1999 transition was real and civilian rule has continued. The habits of adaptation that military rule required are less useful now but not gone. The instinct to assess who is in charge before speaking is still in you.',

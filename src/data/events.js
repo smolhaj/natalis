@@ -1680,7 +1680,9 @@ const BASE_EVENTS = [
     id: 'ya_post_soviet_corruption',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.character.country.archetype === 'post_soviet',
+    // Post-Soviet is a period as well as a place; in 1975 Moravia the favour
+    // was blat, and it did not come with money.
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.currentYear >= 1991,
     text: 'Someone wants a favor. They have money and connections. In return, they just need you to sign something.',
     context: null,
     choices: [
@@ -2001,9 +2003,12 @@ const BASE_EVENTS = [
     // officer in the Swedish army, promoted the year before, and for a Qatari
     // one. An army, a ministry and a smallholding are not companies, and none
     // of them restructures you out of a job with careful inhuman language.
+    // Nor does a planned economy: nobody in 1987 Czechoslovakia was
+    // restructured out of a job. China's state-sector layoffs are the 1990s.
     when: (G) => G.career !== null &&
       !['military', 'government', 'religion', 'agriculture', 'politics', 'law_enforcement'].includes(G.career.field) &&
-      !G.career.selfEmployed,
+      !G.career.selfEmployed &&
+      (G.regime !== 'single_party_communist' || (G.currentCountry?.name === 'China' && G.currentYear >= 1995) || (G.currentCountry?.name === 'Vietnam' && G.currentYear >= 1990)),
     text: 'The company restructures. Your role is eliminated. The language used is careful and inhuman.',
     context: null,
     choices: [
@@ -3659,7 +3664,9 @@ const BASE_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) => G.age >= 70 && G.currentYear >= 2010 && !G.flags.includes('tech_adapted'),
-    text: 'The world runs on phones now. Your grandchildren communicate in ways you can\'t quite follow. Some of it you learn. Some of it stays foreign.',
+    text: (G) => G.hasGrandchildren
+      ? 'The world runs on phones now. Your grandchildren communicate in ways you can\'t quite follow. Some of it you learn. Some of it stays foreign.'
+      : 'The world runs on phones now. The young communicate in ways you can\'t quite follow. Some of it you learn. Some of it stays foreign.',
     choices: [
       { text: 'Try to learn it — video calls, apps, the lot', tag: null, outcome: 'You manage more than expected. The connection is worth the effort.', effect: (p) => { p.e += 3; p.m += 6; p.addFlag('tech_adapted') }, inject: null },
       { text: 'Let them come to you in the old ways', tag: null, outcome: 'Some do. Some don\'t. You learn which is which.', effect: (p) => { p.m -= 2; p.addFlag('tech_adapted') }, inject: null },
@@ -6813,7 +6820,7 @@ const BASE_EVENTS = [
     id: 'ps_soviet_nostalgia',
     phase: 'midlife',
     weight: 4,
-    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 30 && !G.mem.ps_nostalgia,
+    when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 30 && G.currentYear >= 1993 && G.parents?.father?.alive && !G.mem.ps_nostalgia,
     text: 'Your father says things were better before. The jobs were stable. The streets were safe. People looked after each other. He watches Soviet-era films and talks about Brezhnev as if he were discussing a golden age. You can see both what he means and everything he is forgetting.',
     choices: [
       {
@@ -7360,7 +7367,7 @@ const BASE_EVENTS = [
     phase: null,
     weight: 2,
     isKey: true,
-    when: (G) => G.conflictRisk > 0.15 && G.age >= 5 && G.age <= 20 && !G.mem.cz_separation && G.parents,
+    when: (G) => G.conflictRisk > 0.15 && G.age >= 5 && G.age <= 20 && !G.mem.cz_separation && G.parents?.father?.alive,
     text: 'Your father is on the other side of a line that did not exist six months ago. You speak on the phone when the network is working. The calls are short and careful. You understand that he is protecting you from information but you also hear it in his voice.',
     context: null,
     choices: [
@@ -8473,7 +8480,7 @@ const BASE_EVENTS = [
     id: 'late_life_grandchildren_time',
     phase: 'late_life',
     weight: 7,
-    when: (G) => G.age >= 62 && G.children && G.children.length > 0 && !G.mem.grandkids_time,
+    when: (G) => G.age >= 62 && G.hasGrandchildren && !G.mem.grandkids_time,
     text: 'Your grandchildren are at the age where you are still interesting to them. They want to know about before — before they existed, before their parents were adults, before everything was already decided.',
     choices: [
       { text: 'Tell them everything — the whole uncurated story', tag: null, outcome: 'Some of it surprises them. You see yourself reflected in their reaction. It\'s not entirely comfortable. It\'s good.', effect: (p) => { p.m += 10; p.r -= 10; p.karma += 5; p.setMem('grandkids_time', true) } },

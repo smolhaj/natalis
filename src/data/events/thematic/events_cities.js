@@ -300,9 +300,9 @@ export const CITY_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     cooldown: 0,
-    when: (G) => G.place?.id === 'mx_mexico_city' && !G.mem?.microbusFirst,
-    text: () =>
-      `The microbus does not have a schedule. It has a route and a driver who interprets the route loosely. The vehicle should legally hold fifteen people and holds twenty-two. The driver has a saint's image on the dashboard and a collection of CDs that date to 2003. The bus stops when you shout, not at designated stops. You shout. He stops. You are almost at the right place.`,
+    when: (G) => G.place?.id === 'mx_mexico_city' && G.currentYear >= 1985 && !G.mem?.microbusFirst,
+    text: (G) =>
+      `The microbus does not have a schedule. It has a route and a driver who interprets the route loosely. The vehicle should legally hold fifteen people and holds twenty-two. The driver has a saint's image on the dashboard and ${G.currentYear >= 2008 ? 'a collection of CDs that date to 2003' : 'a shoebox of cassettes with the labels worn off'}. The bus stops when you shout, not at designated stops. You shout. He stops. You are almost at the right place.`,
     choices: null,
     effect: (p) => { p.m += 2; p.s += 2; p.setMem('microbusFirst', true) },
   },
@@ -360,8 +360,8 @@ export const CITY_EVENTS = [
     weight: 3,
     cooldown: 9,
     when: (G) => G.place?.id === 'ru_moscow',
-    text: () =>
-      `Friday evening train out of Kursky station. Every weekend, the city exhales. The dachas are small — some have running water, some do not — but they have gardens, and the garden is the point. Your neighbor grows tomatoes and cucumbers and charges nothing for them. The grandmother three plots over has been growing the same strawberries since 1967. On Sunday evening the train back fills with people carrying bags of vegetables, looking slightly more like themselves than they did on Friday.`,
+    text: (G) =>
+      `Friday evening train out of Kursky station. Every weekend, the city exhales. The dachas are small — some have running water, some do not — but they have gardens, and the garden is the point. Your neighbor grows tomatoes and cucumbers and charges nothing for them. The grandmother three plots over has been growing the same strawberries ${G.currentYear >= 1977 ? 'since 1967' : 'for as long as anyone on the train can remember'}. On Sunday evening the train back fills with people carrying bags of vegetables, looking slightly more like themselves than they did on Friday.`,
     choices: null,
     effect: (p) => { p.m += 6; p.h += 2; },
   },

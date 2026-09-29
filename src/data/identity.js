@@ -492,6 +492,27 @@ export const ETHNIC_RELIGION = {
   nikkei: { christian_catholic: 0.64, buddhist: 0.20, christian_protestant: 0.10, secular: 0.06 },
   korean_japanese: { christian_protestant: 0.30, buddhist: 0.22, secular: 0.42, christian_catholic: 0.06 },
 
+  // ── Majorities that were inheriting their country's immigrant religions ───
+  // Russia's 10% Muslim is Tatars, Bashkirs, Chechens and Dagestanis; western
+  // Europe's 4-8% is almost entirely people who arrived after 1960, and the
+  // roster models them as their own groups (turkish_german, and so on). Left
+  // unmapped, the majority drew the national figure, so an ethnic Russian in
+  // Stalin-era Siberia was Sunni and so was a German born in 1925 Thuringia.
+  russian: { christian_orthodox: 0.47, secular: 0.43, atheist: 0.08, jewish: 0.01, buddhist: 0.01 },
+  other_russian_minority: { muslim_sunni: 0.35, christian_orthodox: 0.30, secular: 0.25, buddhist: 0.05, atheist: 0.05 },
+  white_british: { secular: 0.42, christian_protestant: 0.38, christian_catholic: 0.11, atheist: 0.085, jewish: 0.005 },
+  german: { secular: 0.37, christian_protestant: 0.29, christian_catholic: 0.29, atheist: 0.05 },
+  french: { christian_catholic: 0.45, secular: 0.43, atheist: 0.11, jewish: 0.01 },
+  nordic: { secular: 0.67, christian_protestant: 0.21, atheist: 0.12 },
+  dutch: { secular: 0.47, christian_catholic: 0.23, christian_protestant: 0.21, atheist: 0.09 },
+  danish: { christian_protestant: 0.77, secular: 0.23 },
+  flemish: { christian_catholic: 0.54, secular: 0.36, atheist: 0.08, christian_protestant: 0.02 },
+  german_swiss: { christian_catholic: 0.35, christian_protestant: 0.28, secular: 0.27, atheist: 0.10 },
+  austrian: { christian_catholic: 0.64, secular: 0.17, atheist: 0.09, christian_protestant: 0.05, christian_other: 0.05 },
+  bulgarian: { christian_orthodox: 0.85, secular: 0.10, atheist: 0.04, christian_catholic: 0.01 },
+  white_australian: { secular: 0.47, christian_catholic: 0.22, christian_protestant: 0.20, atheist: 0.11 },
+  pakeha: { secular: 0.52, christian_protestant: 0.21, christian_catholic: 0.14, atheist: 0.13 },
+
   // ── Groups that were inheriting somebody else's national average ──────────
   // An unmapped group takes the country marginal, which is the right default
   // only where that marginal describes it. These are the cases where it

@@ -494,6 +494,7 @@ export const MENTAL_HEALTH_EVENTS = [
     when: (G) =>
       G.mentalHealth.condition &&
       !G.mem.mhParentRevelation &&
+      G.parents?.father?.alive &&
       G.age >= 30,
     text: 'Your father says — carefully, as if testing whether the words will hold — that he went through something similar in his forties. He never saw a doctor for it. He managed it in the way of his generation and his gender and his country: by not speaking of it, by working more, by going quiet for long periods that the family learned to read around. He does not say why he is telling you this now. You understand.',
     choices: null,

@@ -78,7 +78,7 @@ export const NIGERIA_EVENTS = [
       (G.ethnicity === 'hausa_fulani' || G.ethnicity === 'kanuri' || G.ruralUrban === 'rural') &&
       (G.character?.religion?.startsWith('muslim') || G.character?.birthReligion?.startsWith('muslim')) &&
       !G.mem?.ngaBokoHaram,
-    text: 'The name means "Western education is forbidden." What it has become in the North-East is a different category of thing — the attacks on schools and markets and churches and mosques, the kidnappings, the suicide bombings, the counterinsurgency that takes what it takes. Maiduguri. Borno State. Yobe State. The army checkpoint on the road that is both protection and extortion. The school in Chibok, 276 girls taken in April 2014. The displacement: 2.6 million people by 2016, the largest internal displacement in Nigerian history. You are in the North. This is the air of this decade.',
+    text: (G) => 'The name means "Western education is forbidden." What it has become in the North-East is a different category of thing — the attacks on schools and markets and churches and mosques, the kidnappings, the suicide bombings, the counterinsurgency that takes what it takes. Maiduguri. Borno State. Yobe State. The army checkpoint on the road that is both protection and extortion.' + (G.currentYear >= 2014 ? ' The school in Chibok, 276 girls taken in April 2014.' : '') + (G.currentYear >= 2016 ? ' The displacement: 2.6 million people by 2016, the largest internal displacement in Nigerian history.' : ' The displacement: the camps outside Maiduguri, filling.') + ' You are in the North. This is the air of this decade.',
     choices: [
       {
         text: 'Move your family south, out of the conflict zone.',

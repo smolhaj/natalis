@@ -60,8 +60,8 @@ describe('the pairings that could not exist', () => {
 
   it('leaves religion to the country where ethnicity does not predict it', () => {
     // The right default, and most of the table's job is to stay out of the way.
-    for (const id of ['polish', 'russian', 'han_chinese', 'white_american', 'roma_romanian',
-                      'slovene', 'french', 'japanese', 'korean', 'mestizo_mexican']) {
+    for (const id of ['polish', 'han_chinese', 'white_american', 'roma_romanian',
+                      'slovene', 'japanese', 'korean', 'mestizo_mexican']) {
       expect(ETHNIC_RELIGION[id], `${id} should not be mapped`).toBeUndefined()
     }
     // The table speaks for a minority of groups and defers for the rest.
@@ -69,6 +69,19 @@ describe('the pairings that could not exist', () => {
     expect(Object.keys(ETHNIC_RELIGION).length).toBeLessThan(all.size * 0.7)
     const d = draw('roma_romanian', byName('Romania'))
     expect(d.christian_orthodox).toBeGreaterThan(0.5)
+  })
+
+  it('does not give a majority the religion of its country\'s minorities', () => {
+    // Russia's Muslims are Tatars, Bashkirs, Chechens and Dagestanis, and
+    // western Europe's arrived after 1960 as groups the roster models on their
+    // own. Left unmapped, the majority drew the national figure: an ethnic
+    // Russian in Stalin-era Siberia was Sunni, and so was a German born in
+    // 1925 Thuringia. `russian` and `french` were on the unmapped list above
+    // for exactly that reason, which was the mistake.
+    for (const [id, country] of [['russian', 'Russia'], ['german', 'Germany'], ['french', 'France'],
+                                 ['white_british', 'United Kingdom'], ['nordic', 'Sweden']]) {
+      expect(draw(id, byName(country)).muslim_sunni ?? 0, `${id} in ${country}`).toBe(0)
+    }
   })
 
   it('does not flatten the groups that really are split', () => {

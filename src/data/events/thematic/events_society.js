@@ -819,7 +819,7 @@ export const SOCIETY_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) =>
-      G.age >= 40 &&
+      G.age >= 40 && G.hasGrandchildren &&
       (G.flags.includes('suppressed_language') ||
         ['Ireland', 'Spain', 'Turkey', 'France'].includes(G.character.country.name) ||
         (G.character.country.name === 'United Kingdom' && G.ethnicity === 'welsh_british')) &&

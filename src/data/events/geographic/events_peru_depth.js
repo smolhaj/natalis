@@ -139,7 +139,7 @@ export const PERU_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 2000 &&
       G.age >= 12 && G.age <= 22 &&
       !G.mem?.perDepNikkei,
-    text: `Your grandparents came from Japan between 1899 and 1941. In Peru they became *Nikkei* — Japanese by descent, Peruvian by birth and culture, speaking Spanish and sometimes Japanese, cooking lomo saltado alongside sushi. In 1940 anti-Japanese riots destroyed the businesses of the community in Lima. In the Pacific War years, some Nikkei were interned, or deported to the United States as enemy aliens at Peru's request, or simply watched. Alberto Fujimori was elected president in 1990 — a Nikkei, son of immigrants — which was either a sign of integration or an anomaly depending on who was saying it. You are neither fully Japanese nor not Japanese. The category is specific to Peru and is yours.`,
+    text: (G) => `Your grandparents came from Japan between 1899 and 1941. In Peru they became *Nikkei* — Japanese by descent, Peruvian by birth and culture, speaking Spanish and sometimes Japanese, cooking lomo saltado alongside sushi. In 1940 anti-Japanese riots destroyed the businesses of the community in Lima. In the Pacific War years, some Nikkei were interned, or deported to the United States as enemy aliens at Peru's request, or simply watched.${G.currentYear >= 1990 ? ' Alberto Fujimori was elected president in 1990 — a Nikkei, son of immigrants — which was either a sign of integration or an anomaly depending on who was saying it.' : ''} You are neither fully Japanese nor not Japanese. The category is specific to Peru and is yours.`,
     choices: [
       {
         text: 'The Nikkei community is your world. The Japanese-Peruvian associations, the kenjinkai, the specific food.',

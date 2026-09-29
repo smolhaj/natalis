@@ -305,6 +305,9 @@ const BRAZIL_EVENTS = [
       if (yr <= 1989) {
         return 'The price of a coffee changes between when you sit down and when you pay. The Cruzado, the Cruzado Novo, the Cruzeiro — the currency is renamed while the inflation continues. The Plano Cruzado freezes prices in 1986 and Brazilians mob the supermarkets to enforce it, photographing price labels, reporting stores to television cameras. The freeze lasts eight months. Inflation returns at 2,000% per year. Salaries are indexed by formula; the formula is adjusted; the formula adjusts again. You have developed the specific skill of knowing that a price is wrong before the cashier notices.'
       }
+      if (yr <= 1993) {
+        return 'March 1990. The new president freezes every savings account above fifty thousand cruzados novos for eighteen months. The money in the bank is still yours and you cannot touch it. The currency is renamed again, to the cruzeiro, and the inflation does not notice. Salaries are indexed by formula; the formula is adjusted; the formula adjusts again. You have developed the specific skill of knowing that a price is wrong before the cashier notices.'
+      }
       return 'July 1, 1994. Fernando Henrique Cardoso, Finance Minister, introduces the Plano Real. The old cruzeiro real is exchanged for the new real at a fixed rate. The mechanism is complex — a virtual currency called the URV mediating the transition. What happens next is simple: the inflation stops. Overnight. You go to the supermarket and the price on the shelf is the price at the register. You do not know what to do with this. The generation that grew up with instability has to learn, slowly, that the price of something is a fixed fact.'
     },
     choices: [

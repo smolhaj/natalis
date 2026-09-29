@@ -221,7 +221,7 @@ export const ORAL_TRADITION_EVENTS = [
     weight: 3,
     when: (G) =>
       isOralContext(G) &&
-      G.age >= 13 && G.age <= 20 &&
+      G.age >= 13 && G.age <= 20 && G.parents?.father?.alive &&
       !G.mem?.oralHarvestFail,
     text: `This year's harvest. Your father and the other men stand in the field in the late afternoon and look at what came up. They do not say much. The assessment is made by the length of the silence. Your mother hears the silence when your father comes inside and begins a different kind of calculation — what is in the sacks, what can be sold, which debts are most pressing, whether your uncle in the city can be asked for help and what the asking will cost in the relationship. You are old enough to understand the calculation is happening. You are not yet included in it. You watch your mother's face as she does the arithmetic that is not arithmetic.`,
     choices: null,

@@ -136,9 +136,10 @@ export const HONDURAS_EVENTS = [
     weight: 3,
     when: (G) =>
       IS_HONDURAN(G) &&
+      G.currentYear >= 2000 &&   // the retrospective includes Mitch (1998) and the gangs
       G.age >= 58 &&
       !G.mem?.honLateReckoning,
-    text: 'Honduras is a country that has served as the site of other people\'s projects for a century: the banana companies\' labour pool, the Americans\' staging base, the cartels\' transit corridor. The people who shaped its political economy mostly did not live here. The people who died in its disasters, disappeared in its death squads, fled its gangs, and rebuilt after its hurricane were Hondurans. Xiomara Castro became the first woman president in 2021, Zelaya\'s wife. The Battalion 316 survivors are still waiting for something resembling accountability. The banana companies are still there. You know the whole shape of the thing because you lived inside it.',
+    text: (G) => 'Honduras is a country that has served as the site of other people\'s projects for a century: the banana companies\' labour pool, the Americans\' staging base, the cartels\' transit corridor. The people who shaped its political economy mostly did not live here. The people who died in its disasters, disappeared in its death squads, fled its gangs, and rebuilt after its hurricane were Hondurans.' + (G.currentYear >= 2022 ? ' Xiomara Castro, Zelaya\'s wife, was elected the first woman president in 2021.' : '') + ' The Battalion 316 survivors are still waiting for something resembling accountability. The banana companies are still there. You know the whole shape of the thing because you lived inside it.',
     choices: null,
     effect: (p) => { p.r += 6; p.m += 4; p.karma += 3; p.e += 2; p.setMem('honLateReckoning', true) },
   },

@@ -1231,6 +1231,12 @@ export function buildG(state) {
     // The war the character is living in THIS year, where they live now. The
     // static `country.conflictRisk` is a present-day figure; see WAR_YEARS.
     conflictRisk: conflictRiskAt(liveCountry(state), currentYear),
+    // Grandchildren are not modelled as people. The flag is the event that
+    // announced one; a living child of twenty-five or more is the likeliest
+    // grandparent otherwise. Four late-life lines were telling childless
+    // seventy-year-olds what their grandchildren did on their phones.
+    hasGrandchildren: (state.flags ?? []).includes('grandparent') ||
+      (state.children ?? []).some(c => c.alive !== false && (c.age ?? 0) >= 25),
     lgbtqCriminalized: isLgbtqCriminalized(liveCountry(state), currentYear),
     casteSystem: state.character?.country?.casteSystem ?? false,
     childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
@@ -1609,6 +1615,64 @@ function determineCause(state) {
     return pick(['road accident', 'heart attack', 'cancer', 'an aneurysm', 'an accident', ...(deathYear < 1960 ? ['tuberculosis', 'pneumonia'] : [])])
   }
   return pick(['road accident', 'heart attack', 'cancer', 'pneumonia', ...(deathYear < 1970 ? ['tuberculosis'] : [])])
+}
+
+// ─── Residency over time ─────────────────────────────────────────────────────
+//
+// A status was set once and never moved: an Afghan woman who reached Athens in
+// 2015 was an asylum seeker at fifty-five, and a work visa was a work visa at
+// seventy. Papers change on a timescale of years, and what they change into
+// depends on the country: a claim is decided, a refugee becomes a resident, a
+// resident a citizen — except in the Gulf, where kafala has no path to either.
+const NATURALISES = new Set(['wealthy_west', 'wealthy_east', 'post_soviet', 'developing_urban'])
+function tickResidency(s) {
+  const status = s.residencyStatus ?? 'citizen'
+  if (status === 'citizen') return s
+  const here = liveCountry(s)
+  if (here?.name === s.character?.country?.name) return s
+  const mem = { ...(s.mem ?? {}) }
+  if (mem.residencyStatusFor !== status) {
+    mem.residencyStatusFor = status
+    mem.residencySince = s.currentYear
+    return { ...s, mem }
+  }
+  const held = s.currentYear - (mem.residencySince ?? s.currentYear)
+  const gulf = here?.archetype === 'wealthy_gulf'
+  const rich = ['wealthy_west', 'wealthy_east'].includes(here?.archetype)
+  let next = null, text = null
+  if (status === 'asylum_seeker' && held >= 1 && chance(0.3)) {
+    if (chance(rich ? 0.55 : 0.35)) {
+      next = 'refugee_status'
+      text = pickFrom([
+        'The letter is two pages and the word you are looking for is on the second one. You read the first page anyway, in case.',
+        'The claim is decided. You are allowed to stay. The relief arrives a day late, the way sleep does after a long journey.',
+      ])
+    } else {
+      next = 'undocumented'
+      text = pickFrom([
+        'The claim is refused. There is an appeal, and then there is not, and then you are somebody who is here without being allowed to be.',
+        'The decision says the country you came from is safe. You know which parts of it are, and you are not from those parts.',
+      ])
+    }
+  } else if ((status === 'refugee_status' || status === 'work_visa') && !gulf && held >= 5 && chance(rich ? 0.15 : 0.08)) {
+    next = 'permanent_resident'
+    text = status === 'work_visa'
+      ? 'The permanent card arrives. The job can end now without the country ending with it, which is a sentence you did not know you had been waiting to be able to say.'
+      : 'Permanent residence. The renewals stop. For the first time since you arrived, the year ahead does not have a date in it that could send you back.'
+  } else if (status === 'permanent_resident' && NATURALISES.has(here?.archetype) && held >= 5 && chance(0.12)) {
+    next = 'citizen'
+    text = pickFrom([
+      'The ceremony is in a municipal hall with a flag and a portrait and forty people from thirty countries. You say the words. Afterwards somebody\'s child asks if that means you are from here now, and you do not know what to answer.',
+      'You are handed the certificate and a small paper flag. The passport comes later, in the post. You keep the old one in a drawer, because throwing it away would be a statement you are not ready to make.',
+    ])
+  } else if ((status === 'undocumented' || status === 'tourist_overstay') && rich && held >= 4 && chance(0.04)) {
+    next = 'work_visa'
+    text = 'An amnesty, announced on the radio like weather. You queue for two days with everyone you know and some people you have spent years avoiding, and at the end there is a card with your name on it.'
+  }
+  if (!next) return { ...s, mem }
+  mem.residencyStatusFor = next
+  mem.residencySince = s.currentYear
+  return { ...s, mem, residencyStatus: next, log: [...s.log, { age: s.age, year: s.currentYear, text, isKey: true }] }
 }
 
 // ─── Ribbon assignment ────────────────────────────────────────────────────────
@@ -3415,6 +3479,8 @@ export function tick(state) {
   // Partner aging and natural death
   s = tickPartner(s)
 
+  s = tickResidency(s)
+
   // Undocumented / overstay annual pressure
   if (s.residencyStatus === 'undocumented' || s.residencyStatus === 'tourist_overstay') {
     s.stats = { ...s.stats, health: clamp((s.stats.health ?? 80) - 2, 0, 100), happiness: clamp((s.stats.happiness ?? 50) - 3, 0, 100) }
@@ -3936,9 +4002,11 @@ export function tick(state) {
       s.business = { ...s.business, yearsOpen: (s.business.yearsOpen ?? 0) + 1, revenue: rawRevenue, expenses, performance: perfDrift, value: newValue }
       s.money = (s.money ?? 0) + profit
       s.stats = { ...s.stats, wealth: clamp(s.stats.wealth + (profit > 0 ? 2 : -2), 0, 100) }
-      if (s.business.yearsOpen === 1) s.log = [...s.log, { age: s.age, text: `First year of ${s.business.name}: revenue $${rawRevenue.toLocaleString()}, profit $${profit.toLocaleString()}.`, isKey: true }]
-      else if (profit < 0) s.log = [...s.log, { age: s.age, text: `${s.business.name} had a tough year. Lost $${Math.abs(profit).toLocaleString()}.`, isKey: false }]
-      else s.log = [...s.log, { age: s.age, text: `${s.business.name} earned $${profit.toLocaleString()} profit this year.`, isKey: false }]
+      if (s.business.yearsOpen === 1) s.log = [...s.log, { age: s.age, text: profit >= 0
+        ? `The first year of the ${s.business.name.toLowerCase()} takes in $${rawRevenue.toLocaleString()} and leaves $${profit.toLocaleString()} after everything is paid.`
+        : `The first year of the ${s.business.name.toLowerCase()} takes in $${rawRevenue.toLocaleString()} and costs you $${Math.abs(profit).toLocaleString()} more than that.`, isKey: true }]
+      else if (profit < 0) s.log = [...s.log, { age: s.age, text: `A bad year at the ${s.business.name.toLowerCase()}. It loses $${Math.abs(profit).toLocaleString()}, and you find the money from somewhere.`, isKey: false }]
+      else s.log = [...s.log, { age: s.age, text: `The ${s.business.name.toLowerCase()} clears $${profit.toLocaleString()} this year.`, isKey: false }]
     }
   }
 

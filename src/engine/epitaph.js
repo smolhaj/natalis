@@ -1144,7 +1144,7 @@ export function generateEpitaph(state) {
   } else if (regret > 50) {
     para5.push(oneOf([
       `There were regrets. Most people have them.`,
-      `${He} would have done two or three things differently. Everyone has a list; ${his} was shorter than most.`,
+      `${He} would have done two or three things differently. Everyone has a list; ${character.gender === 'male' ? 'his' : 'hers'} was shorter than most.`,
       `There were things ${he} meant to say to people who were still there to say them to.`,
       `It was not the life ${he} had pictured. Very few of them are.`,
       `${He} made ${his} peace with most of it, and kept the rest to ${him}self.`,

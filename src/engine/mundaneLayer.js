@@ -63,14 +63,18 @@ export function buildMundaneLayer(state) {
   const homeCountry = state.currentCountry ?? state.character?.country ?? null
   const wealthyNow = wasWealthy(homeCountry, currentYear)
   const richHousehold = (state.character?.wealthTier ?? 2) >= 4   // 0-4 index into wealthTierWeights
-  const tech = (t) => hasTech(homeCountry, t, currentYear, { rural: isRural, rich: richHousehold })
+  // A rich household got a telephone line or a car early. A handset it could
+  // not get early, because there was no network yet: "the size of a small
+  // brick" was printing into 1990 Poland, eleven years before the network.
+  const HANDHELD = new Set(['mobile_phone', 'smartphone'])
+  const tech = (t) => hasTech(homeCountry, t, currentYear, { rural: isRural, rich: richHousehold && !HANDHELD.has(t) })
   // The bare arrival year, for lines that are only true while a thing is new.
   const techArrival = (t) => {
     let y = techYear(homeCountry, t)
     if (y >= 9000) return y
     const poor = !isWealthyArch
     if (isRural) y += poor ? 12 : 5
-    if (richHousehold) y -= poor ? 12 : 5
+    if (richHousehold && !HANDHELD.has(t)) y -= poor ? 12 : 5
     return y
   }
   const isSubsaharan = arch === 'subsaharan'
@@ -181,6 +185,9 @@ export function buildMundaneLayer(state) {
 
   const notYoung = phase !== 'early_childhood'
   const working = age >= 16
+  // The office, the commute, the inbox: lines about a job, which a retiree of
+  // seventy and a sixteen-year-old with no work were both being told about.
+  const employed = working && !state.retired && !!state.career && !state.inPrison
   const adult = age >= 18
 
   // These are about electricity and piped water, not about national wealth.
@@ -253,10 +260,10 @@ export function buildMundaneLayer(state) {
   addIf(tech('personal_computer') && currentYear <= techArrival('personal_computer') + 10 && age >= 10,
     'The personal computer is at the desk. Most of what it does is still being discovered.',
   )
-  addIf(tech('cassette') && working && wealthyNow && currentYear >= 1980 && currentYear <= 1998,
+  addIf(tech('cassette') && employed && wealthyNow && currentYear >= 1980 && currentYear <= 1998,
     'The Walkman has made the commute private. The city continues outside the headphones.',
   )
-  addIf(working && wealthyNow && currentYear >= 1985 && currentYear <= 2002,
+  addIf(employed && wealthyNow && currentYear >= 1985 && currentYear <= 2002,
     'The fax machine has arrived at the office. A document that took days now arrives instantly.',
   )
   addIf(tech('personal_computer') && notYoung && currentYear >= 1992 && currentYear <= 2006,
@@ -265,7 +272,7 @@ export function buildMundaneLayer(state) {
   addIf(tech('mobile_phone') && currentYear <= techArrival('mobile_phone') + 4 && age >= 14,
     'The mobile phone is the size of a small brick and calls cost significantly. You use it for genuine emergencies.',
   )
-  addIf(tech('email') && working && currentYear <= techArrival('email') + 8,
+  addIf(tech('email') && employed && currentYear <= techArrival('email') + 8,
     'Email has arrived at the office. The volume of communication has increased without prior consultation.',
   )
   addIf(isDeveloping && !tech('home_internet') && tech('personal_computer') && age >= 12,
@@ -320,7 +327,7 @@ export function buildMundaneLayer(state) {
     'You do the laundry, the shopping, the correspondence. This is called being at home.',
     'There are rooms not intended for you — the meeting, the club, the conversation about money. You manage around them.',
   )
-  addIf(gender === 'female' && era >= 1960 && era <= 1979 && isWealthyArch && working,
+  addIf(gender === 'female' && era >= 1960 && era <= 1979 && isWealthyArch && employed,
     'The job you have was not available to women at this level ten years ago. You are the first, or among the first.',
     'The equal pay conversation is happening in the office. The happening is not the same as the resolution.',
   )
@@ -497,7 +504,7 @@ export function buildMundaneLayer(state) {
   addIf(tech('automobile') && tech('radio') && career,
     'The radio in the car is the hour between the job and the home.',
   )
-  addIf(wealthyNow && era >= 1950 && isUrban && working,
+  addIf(wealthyNow && era >= 1950 && isUrban && employed,
     'The specific rush of hot air before the underground train arrives. You know the timing of this now.',
     'The platform at rush hour is a managed compression of people. The management is mostly polite.',
     'The seat you prefer is at the end of the car. When it is available, the day begins differently.',
@@ -640,7 +647,7 @@ export function buildMundaneLayer(state) {
   addIf(isDeveloping && isUrban,
     'The landlord lives in the same compound. The landlord-tenant relationship requires management.',
     'The alley between houses is the social space. The social space is always occupied.',
-    tech('mobile_phone')
+    tech('smartphone')
       ? 'The power is out again. The candle or the lamp or the phone screen is lit.'
       : 'The power is out again. The candle or the lamp is lit, and the evening rearranges itself around the one light.',
   )
@@ -718,7 +725,7 @@ export function buildMundaneLayer(state) {
   addIf(tech('mobile_phone') && !tech('smartphone') && age >= 12,
     'The text message arrives. Its abbreviations are now fluent to you.',
   )
-  addIf(tech('email') && working,
+  addIf(tech('email') && employed && currentYear <= techArrival('email') + 12,
     'The email inbox has tripled in a year. The management of it is its own task.',
   )
   // Behind the handset, not the decade: `era >= 2010` put the group chat and
@@ -2227,7 +2234,7 @@ export function buildMundaneLayer(state) {
   )
 
   // ── WORK FROM HOME ERA ────────────────────────────────────────────────────
-  addIf(era >= 2020 && phase !== 'early_childhood' && isWealthyArch,
+  addIf(era >= 2020 && phase !== 'early_childhood' && isWealthyArch && employed,
     'The commute that used to be a commute is now the walk from one room to another. The walk takes ten seconds.',
     'The hour at which the working day ends has become uncertain in a way the beginning never was.',
     'You have learned something about your neighbours you would not have known before. Mostly their schedules.',
@@ -2236,7 +2243,9 @@ export function buildMundaneLayer(state) {
   // ── FIRST-GENERATION PROSPERITY TEXTURE ──────────────────────────────────
   addIf(F('poverty_childhood') && phase === 'midlife' && (isWealthyArch || gdp === 'medium_high'),
     'The thing you could buy now that you could not buy then: you buy it without quite deciding to.',
-    'You know the price of things your children do not know the price of. You do not know how to transfer this knowledge.',
+    hasChildren
+      ? 'You know the price of things your children do not know the price of. You do not know how to transfer this knowledge.'
+      : 'You know the price of things the young do not know the price of. You do not know how to transfer this knowledge.',
   )
 
   // ── DIASPORA / IMMIGRANT TEXTURE ─────────────────────────────────────────
@@ -3086,7 +3095,7 @@ export function buildMundaneLayer(state) {
   )
 
   // ── FIRST GENERATION PROFESSIONAL ─────────────────────────────────────────
-  addIf((F('first_gen_educated') || F('poverty_childhood')) && working,
+  addIf((F('first_gen_educated') || F('poverty_childhood')) && employed,
     'The office and the accent and the clothes and the calibration of how much to explain about where you started.',
     'The things that your colleagues assume as given that you did not come with. You learned them. The learning is invisible now.',
   )

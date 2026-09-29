@@ -71,7 +71,8 @@ export const TECHNOLOGY_EVENTS = [
     // newspaper photograph days later, and this gave a Beninese family a set
     // sixteen years before there was one to gather round.
     text: (G) => {
-      const ending = ' Your father says something you will remember for the rest of your life. You are not sure yet what it means to be alive in a world where this is possible.'
+      const elder = G.parents?.father?.alive ? 'Your father' : G.parents?.mother?.alive ? 'Your mother' : 'An old man in the room'
+      const ending = ` ${elder} says something you will remember for the rest of your life. You are not sure yet what it means to be alive in a world where this is possible.`
       if (arrived(G, 'television')) return 'Your family gathers around the television. There is a grainy grey image and an American voice. A man is walking on the moon.' + ending
       if (arrived(G, 'radio')) return 'The radio is on and the adults have stopped talking. A voice reads out what is happening somewhere no one has ever been: a man is walking on the moon. You look up afterwards, because everyone does.' + ending
       return 'Someone comes back from the town with the news and it moves through the village by afternoon: a man has walked on the moon. Nobody here has seen a picture of it. You look up anyway, because everyone does.' + ending

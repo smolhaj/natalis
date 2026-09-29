@@ -148,8 +148,8 @@ export const MENTOR_EVENTS = [
       !G.mem?.hasProtege &&
       (G.mem?.has_mentor || G.flags.has('mentored')),
     text: (G) => {
-      const field = G.career?.title ?? 'your field'
-      return `Someone junior is doing work in ${field} that you recognise — not the competence, which is evident, but the particular hunger in how they ask questions. The hunger is familiar. You are old enough now to understand what it means and what to do about it.`
+      // career.title is a rank ("Trading Company Owner"), not a field.
+      return `Someone junior is doing work you recognise — not the competence, which is evident, but the particular hunger in how they ask questions. The hunger is familiar. You are old enough now to understand what it means and what to do about it.`
     },
     choices: [
       {

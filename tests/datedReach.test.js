@@ -63,7 +63,11 @@ describe('dated events: classification', () => {
       if (e.contemplative) expect(e.dated, e.id).toBeNull()
       if (e.dated) {
         n++
-        expect(e.dated.to - e.dated.from + 1).toBeLessThanOrEqual(DATED_MAX_SPAN)
+        // The inferred window is capped; a declared `claimsYears` is not,
+        // because it exists for the few periods longer than two years that
+        // were the whole of every life inside them (Democratic Kampuchea).
+        if (!e.claimsYears) expect(e.dated.to - e.dated.from + 1).toBeLessThanOrEqual(DATED_MAX_SPAN)
+        else expect(e.dated.to - e.dated.from + 1, e.id).toBeLessThanOrEqual(6)
       }
     }
     expect(n).toBeGreaterThan(250)

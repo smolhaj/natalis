@@ -156,7 +156,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
       G.flags.has('afg_taliban_96_generation') &&
       G.age >= 45 &&
       !G.mem?.ft63Afg96Late,
-    text: `The Taliban era of 1996–2001 lasted five years. By the time you are old enough to think about it historically, you understand that five years is both a short time and the time in which a generation of girls had no formal education, in which all public music stopped, in which the Bamiyan Buddhas were destroyed, in which people lived with the quality of fear that comes from a regime that is both local and certain of its righteousness. The twenty years after (2001–2021) were an interval. When the Taliban returned in 2021 you watched people outside Afghanistan say they were surprised.`,
+    text: (G) => `The Taliban era of 1996–2001 lasted five years. By the time you are old enough to think about it historically, you understand that five years is both a short time and the time in which a generation of girls had no formal education, in which all public music stopped, in which the Bamiyan Buddhas were destroyed, in which people lived with the quality of fear that comes from a regime that is both local and certain of its righteousness.${G.currentYear >= 2022 ? ' The twenty years after (2001–2021) were an interval. When the Taliban returned in 2021 you watched people outside Afghanistan say they were surprised.' : ' The years since 2001 are called the after. You are not sure yet that they are.'}`,
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.setMem('ft63Afg96Late', true) },
   },
@@ -360,6 +360,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
     weight: 2,
     when: (G) =>
       G.flags.has('sa_land_debate_era') &&
+      G.currentYear >= 2024 &&   // "six or seven years" after 2018
       G.age >= 50 &&
       !G.mem?.ft63LandLater,
     text: `The land question has not been resolved. The constitutional amendment process that began in 2018 produced debate, stalled, produced more debate. Land restitution claims continue to move through a process that was extended to 2021, then again. The arithmetic — who owns how much and when it was taken — has not changed. The political salience of the question rises and falls with election cycles and coalition arrangements. Whatever your position in 2018, you hold it now with the modification that comes from watching a large public argument unfold without resolution for six or seven years. The argument itself has taught you something, even if it hasn't settled anything.`,

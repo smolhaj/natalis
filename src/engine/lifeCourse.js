@@ -853,6 +853,17 @@ function courseHousing(s) {
       'Somebody at the works had a word, and then there was a key. You have never been entirely sure which part of that was the system working and which part was the word.',
     ]), true)
   }
+  // A self-build on family land is a village or a town. In Buenos Aires or
+  // Lagos proper the unfinanced home is a flat that came down through the
+  // family, or one bought from somebody in cash with a paper and no bank.
+  if (['megacity', 'major_city'].includes(s.currentPlace?.scale)) {
+    return log(s, pick([
+      'The flat was your grandmother\'s, and then nobody\'s in particular, and then yours. The deed is in a drawer in a name that is not yours, and nobody has asked to see it.',
+      hasMoney
+        ? 'You buy it from a cousin, in cash, in instalments, with a paper you both sign in front of a man whose stamp costs more than the paper.'
+        : 'It comes to you the way things come to you here: somebody leaves, and somebody who knows somebody says it is yours now.',
+    ]), true)
+  }
   return log(s, pick([
     'The house is finished in the sense that you live in it. The upper floor has been waiting for its windows for two years and will wait longer, and everyone builds this way, so nobody remarks on it.',
     'Nobody signs anything. The land is where the family has been, and the arrangement is understood by everyone who needs to understand it, which works perfectly until the day it does not.',

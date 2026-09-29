@@ -1,3 +1,4 @@
+import { INDEPENDENCE_YEAR } from '../../history.js'
 export const ERA_GAP_EVENTS = [
   {
     id: 'eg_bengal_famine_child',
@@ -98,6 +99,11 @@ export const ERA_GAP_EVENTS = [
     weight: 4,
     when: (G) =>
       ['developing_urban', 'developing_unstable', 'subsaharan'].includes(G.character.country?.archetype) &&
+      // "Fifteen or twenty years ago" — true of Ghana in 1972, false of Chile,
+      // which was 150 years into independence when this reached it in 1971.
+      INDEPENDENCE_YEAR[G.character.country?.name] != null &&
+      G.currentYear - INDEPENDENCE_YEAR[G.character.country.name] >= 10 &&
+      G.currentYear - INDEPENDENCE_YEAR[G.character.country.name] <= 25 &&
       G.currentYear >= 1968 && G.currentYear <= 1980 &&
       G.age >= 20 && G.age <= 40 &&
       !G.mem?.independencePromise,

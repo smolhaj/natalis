@@ -353,7 +353,7 @@ export const EVENTS_SONDER_13 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => !G.mem?.sonder13_carry_2,
-    text: `What you carry out of a long life: the things, not the general inventory. The sentence someone said in 1987 that you still think about. The smell of a particular room. The exact weight of a particular silence. Not the events — the texture of the events. The events become stories. The texture stays raw.`,
+    text: `What you carry out of a long life: the things, not the general inventory. The sentence someone said thirty years ago that you still think about. The smell of a particular room. The exact weight of a particular silence. Not the events — the texture of the events. The events become stories. The texture stays raw.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_carry_2', true) },
   },
