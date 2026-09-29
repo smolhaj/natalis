@@ -62,7 +62,7 @@ export const NEPAL_EVENTS = [
       G.currentYear >= 2006 && G.currentYear <= 2008 &&
       G.age >= 16 &&
       !G.mem.nepRepublic,
-    text: 'April 2006. The Jana Andolan II — the second people\'s movement — brings hundreds of thousands into the streets of Kathmandu. King Gyanendra, who seized direct power in 2005, is forced to reinstate parliament. The Maoists sign a peace agreement in November. In May 2008, the Constituent Assembly votes to abolish the monarchy. The 240-year-old Shah dynasty, the world\'s only Hindu kingdom, ends by vote. You are watching the end of the world your parents were born into and the beginning of a federal republic.',
+    text: (G) => 'April 2006. The Jana Andolan II — the second people\'s movement — brings hundreds of thousands into the streets of Kathmandu. King Gyanendra, who seized direct power in 2005, is forced to reinstate parliament. The Maoists sign a peace agreement in November. ' + (G.currentYear >= 2008 ? 'In May 2008, the Constituent Assembly votes to abolish the monarchy. The 240-year-old Shah dynasty, the world\'s only Hindu kingdom, ends by vote. You are watching the end of the world your parents were born into and the beginning of a federal republic.' : 'The king\'s portrait comes down in some offices and stays up in others. You are watching the end of the world your parents were born into, and nobody can yet say what replaces it.'),
     choices: null,
     effect: (p) => { p.m += 8; p.r += 4; p.addFlag('nepal_republic_generation'); p.setMem('nepRepublic', true) },
   },

@@ -109,7 +109,7 @@ export const LIBYA_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2011 &&
       G.age >= 12 && G.age <= 30 &&
       !G.mem?.lbyBenghazi,
-    text: `The country has two centres that are not centres in equal measure. Tripoli is the capital; the government, the money, the attention are concentrated there. Benghazi is the second city — the eastern city, the oil city, the city that considers itself older and less deferential. The revolution of 1969 was carried out by officers mostly from the west and the interior; the resentments of the east run through the whole Gaddafi period as an undercurrent. In 2011 it is Benghazi that starts the revolution and holds it longest. The geography of the country — the coastal ribbon, the vast empty interior — is also a map of its politics.`,
+    text: (G) => `The country has two centres that are not centres in equal measure. Tripoli is the capital; the government, the money, the attention are concentrated there. Benghazi is the second city — the eastern city, the oil city, the city that considers itself older and less deferential. The revolution of 1969 was carried out by officers mostly from the west and the interior; the resentments of the east run through the whole Gaddafi period as an undercurrent.${G.currentYear >= 2011 ? ' In 2011 it is Benghazi that rises first.' : ''} The geography of the country — the coastal ribbon, the vast empty interior — is also a map of its politics.`,
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -130,7 +130,7 @@ export const LIBYA_DEPTH_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2023 &&
       G.age >= 25 &&
       !G.mem?.lbyMigration,
-    text: `After Gaddafi falls the borders are ungoverned. Libya becomes the primary exit point for people crossing the Mediterranean to Europe from sub-Saharan Africa. The International Organisation for Migration counts hundreds of thousands transiting per year. In 2017, CNN airs footage from a market near Sabha where African migrants are being sold as labour. The detention centres on the outskirts of Tripoli and Benghazi hold tens of thousands in conditions that international organisations describe in specific terms. You are living in the country that has become this. The country that became this is not the one you grew up in and also is.`,
+    text: (G) => `After Gaddafi falls the borders are ungoverned. Libya becomes the primary exit point for people crossing the Mediterranean to Europe from sub-Saharan Africa. The International Organisation for Migration counts hundreds of thousands transiting per year.${G.currentYear >= 2018 ? ' In 2017, CNN airs footage from an auction near Tripoli where African migrants are being sold as labour.' : ' The word that the aid workers use for what happens in the southern towns is one you did not expect to hear in this century.'} The detention centres on the outskirts of Tripoli and Benghazi hold tens of thousands in conditions that international organisations describe in specific terms. You are living in the country that has become this. The country that became this is not the one you grew up in and also is.`,
     choices: null,
     effect: (p) => {
       p.m -= 10

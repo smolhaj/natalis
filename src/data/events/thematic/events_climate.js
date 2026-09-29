@@ -426,9 +426,9 @@ export const CLIMATE_EVENTS = [
       const arch = G.currentCountry?.archetype ?? G.character.country.archetype
       const isWealthy = ['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(arch)
       if (isWealthy) {
-        return 'When you were born, climate change was a projection. Scientists had models; politicians had meetings. Now it is the organising fact of your grandchildren\'s lives — which routes are safe, which crops still grow here, which cities are still above water. You lived through the in-between decades, the ones when the decisions were still theoretically available. You are not certain what that means you are responsible for. The question does not leave you.'
+        return `When you were born, climate change was a projection. Scientists had models; politicians had meetings. Now it is the organising fact of ${G.hasGrandchildren ? "your grandchildren's" : "the young's"} lives — which routes are safe, which crops still grow here, which cities are still above water. You lived through the in-between decades, the ones when the decisions were still theoretically available. You are not certain what that means you are responsible for. The question does not leave you.`
       } else {
-        return 'Your grandchildren ask what the land looked like when the rains still came on schedule. You describe the colour of the sorghum in a good year. The smell of the red clay after the first rain of the season. The sound the birds made before the trees thinned. They cannot imagine it. You understand that you are describing something that is gone, and that you are one of the last people who saw it.'
+        return `${G.hasGrandchildren ? 'Your grandchildren ask' : 'The children in the village ask'} what the land looked like when the rains still came on schedule. You describe the colour of the sorghum in a good year. The smell of the red clay after the first rain of the season. The sound the birds made before the trees thinned. They cannot imagine it. You understand that you are describing something that is gone, and that you are one of the last people who saw it.`
       }
     },
     choices: null,

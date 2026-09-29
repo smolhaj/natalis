@@ -350,7 +350,12 @@ export const CULTURE_EVENTS = [
     id: 'cult_lgbtq_arrested',
     phase: 'young_adult',
     weight: 1,
-    when: (G) => G.lgbtqCriminalized && G.age >= 18 && !G.flags.includes('learned_silence') && Math.random() < 0.3,
+    // Fired for every adult in a criminalising country, gay or not: a
+    // Miami schoolteacher with no such thread in her life was held four days
+    // for her orientation and her obituary called it persecution.
+    when: (G) => G.lgbtqCriminalized && G.age >= 18 && !G.flags.includes('learned_silence') &&
+      ['lgbtq_identity', 'same_sex_attracted', 'lgbtq_secret_relationship', 'out', 'questioning_sexuality'].some(f => G.flags.includes(f)) &&
+      Math.random() < 0.3,
     text: 'The police come. You are not sure who told them or exactly what they know. You are held for four days. The interrogation is degrading in ways you will not describe to most people. You are released on condition. Nothing is the same after.',
     choices: null,
     effect: (p) => { p.m -= 25; p.h -= 8; p.r += 20; p.addFlag('arrested_for_orientation'); p.addFlag('learned_silence') },

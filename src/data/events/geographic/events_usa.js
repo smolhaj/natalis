@@ -252,7 +252,7 @@ export const USA_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United States' &&
-      G.currentYear >= 1972 && G.currentYear <= 1975 &&
+      G.currentYear >= 1974 && G.currentYear <= 1975 &&
       G.age >= 16 &&
       !G.mem?.usaWatergate,
     text: 'June 17, 1972. Five men are arrested inside the Democratic National Committee headquarters at the Watergate complex in Washington. The connection to the Committee to Re-Elect the President: the evidence accumulates over two years. "I am not a crook": Nixon at a press conference, November 1973. The Saturday Night Massacre: Nixon orders the special prosecutor fired; the Attorney General and the Deputy Attorney General resign rather than comply. The tapes. Eighteen and a half minutes of silence in a crucial recording. August 9, 1974: Richard Nixon becomes the first president in American history to resign. He boards Marine One from the South Lawn and waves. The gesture becomes its own image of the decade.',

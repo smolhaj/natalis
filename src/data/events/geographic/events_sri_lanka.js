@@ -97,7 +97,7 @@ export const SRI_LANKA_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) => IS_TAMIL(G) && IS_SRI_LANKA(G) && G.currentYear >= 1985 && G.currentYear <= 2000 && G.age >= 6 && G.age <= 16 && !G.mem.slkJaffnaChild,
-    text: 'The school has a schedule now that accounts for shelling. Classes stop when the sound is certain; resume when it\'s uncertain. You learn which sound means how far. You learn this the way children learn anything — by repetition, by watching adults, by the specific calibration of their stillness. In Jaffna in the nineties, the electricity comes at intervals and the library has books that stop at 1982 and you study by kerosene because the exam still happens.',
+    text: 'The school has a schedule now that accounts for shelling. Classes stop when the sound is certain; resume when it\'s uncertain. You learn which sound means how far. You learn this the way children learn anything — by repetition, by watching adults, by the specific calibration of their stillness. In Jaffna in these years, the electricity comes at intervals and the library has books that stop at 1982 and you study by kerosene because the exam still happens.',
     effect: (p) => { p.m -= 10; p.h -= 3; p.addFlag('war_childhood'); p.setMem('slkJaffnaChild', true) },
   },
 
@@ -107,7 +107,7 @@ export const SRI_LANKA_EVENTS = [
     id: 'slk_diaspora_decision',
     phase: 'young_adult',
     weight: 4,
-    when: (G) => IS_TAMIL(G) && IS_SRI_LANKA(G) && G.age >= 18 && G.age <= 32 && !G.mem.slkDiasDecision,
+    when: (G) => IS_TAMIL(G) && IS_SRI_LANKA(G) && G.currentYear >= 1984 && G.currentYear <= 2009 && G.age >= 18 && G.age <= 32 && !G.mem.slkDiasDecision,
     text: 'Canada processes Tamil refugee claims. Britain, Australia, Germany. The Tamil diaspora is already large enough to have a phone tree — someone you know knows someone. The LTTE taxes the diaspora, which you will be asked to contribute to whether you want to or not. The alternative is staying in a country that burned your neighbourhood in 1983 and whose army controls the checkpoints in your city.',
     choices: [
       {

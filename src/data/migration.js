@@ -185,3 +185,30 @@ export function migrationDestinations(country) {
 }
 
 export const __testables = { BY_COUNTRY, BY_ARCHETYPE }
+
+// Born in the Gulf to people who came to the Gulf. The roster draws these
+// groups from the Gulf's own `ethnicGroups` — so they are born there — and
+// every character used to start life as a `citizen`, which in the kafala
+// states is the one thing a child of expatriates cannot be. A Bangladeshi-
+// Qatari born in Doha in 1985 became a police officer, owned his house
+// outright and married a Qatari woman. They are on a parent's visa from birth;
+// `gulf2_the_visa_at_eighteen` is the day that ends.
+export const GULF_EXPATRIATE_IDS = new Set([
+  'south_asian_uae', 'south_asian_qatar', 'south_asian_kuwait', 'south_asian_bahrain',
+  'south_asian_omani', 'south_asian_worker', 'filipino_qatar', 'east_asian_uae',
+  'arab_expat_uae', 'western_expat_uae', 'other_arab_qatar', 'western_qatar',
+  'other_arab_kuwait', 'other_arab_bahrain',
+])
+export const GULF_STATES = new Set(['UAE', 'Qatar', 'Kuwait', 'Bahrain', 'Saudi Arabia', 'Oman'])
+
+/** The papers a character is born holding. */
+export function residencyAtBirth(character) {
+  if (GULF_STATES.has(character?.country?.name) && GULF_EXPATRIATE_IDS.has(character?.ethnicity)) return 'work_visa'
+  return 'citizen'
+}
+
+/** Not a national of the Gulf state they live in. */
+export function gulfNonNational(state) {
+  const here = state?.currentCountry?.name ?? state?.character?.country?.name
+  return GULF_STATES.has(here) && (state?.residencyStatus ?? 'citizen') !== 'citizen'
+}

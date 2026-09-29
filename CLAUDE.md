@@ -168,7 +168,7 @@ Event shape:
 **Critical**: `effect` functions receive only `p` (the proxy). `G` is only available in `when` guards. Never put G-dependent logic in effects.
 
 The `G` object (built by `buildG()`) exposes everything event conditions need:
-`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
+`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.conflictRisk` (war intensity where the character lives, THIS year — never read `country.conflictRisk`), `G.hasGrandchildren`, `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
 
 Effect proxy shorthands (all are additive deltas):
 - `p.m` → happiness, `p.h` → health, `p.e` → smarts, `p.s` → charisma, `p.w` → wealth stat, `p.lo` → looks
@@ -205,7 +205,11 @@ Effect proxy shorthands (all are additive deltas):
 }
 ```
 
-Covers: WWII, Cold War (Berlin Wall, Cuban Missile Crisis, Prague Spring, Polish Solidarity, East Germany Stasi), famines (Holodomor, Great Leap Forward, Ethiopia), economic events (hyperinflation cycles, Japan bubble, Argentina 2001, Celtic Tiger, Korean miracle, Venezuela collapse, Gulf oil boom), national traumas (Troubles, Tiananmen, Apartheid, AIDS crisis), and more.
+The Second World War is NOT a world event; it lives in country modules
+(`events_germany_reich.js`, `events_japan_war.js`, `events_soviet_1929.js`,
+`events_second_world_war.js` for Poland, China, the Philippines, Yugoslavia,
+Indonesia and Korea, and scattered UK/France/Netherlands content).
+Covers: Cold War (Berlin Wall, Cuban Missile Crisis, Prague Spring, Polish Solidarity, East Germany Stasi), famines (Holodomor, Great Leap Forward, Ethiopia), economic events (hyperinflation cycles, Japan bubble, Argentina 2001, Celtic Tiger, Korean miracle, Venezuela collapse, Gulf oil boom), national traumas (Troubles, Tiananmen, Apartheid, AIDS crisis), and more.
 
 ### Country Data (`src/data/countries.js`)
 
@@ -585,10 +589,10 @@ Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 406 tests, including the simulation guardrails
+npm test                 # 416 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
-npm run check-flags      # 3025 covered / 0 partial / 0 orphaned
+npm run check-flags      # 3385 covered / 0 partial / 0 orphaned
 npm run check-events     # reachability: dead guards, enum domains, phase/year windows,
                          # season/country, silent choices, narrated moves that move nobody,
                          # populations the roster models that the corpus never addresses
@@ -1244,11 +1248,127 @@ without one; concentration is the real statement.
 - **Pass seven, through the real UI** (`npm run check-ui`): saves kept the
   pending question as null, a dead partner was shown and courted as living,
   ~25 panel prices were present-day beside era charges.
-- **Open:** ~584 guards read `G.character.country` for present-tense prose, so
-  an emigrant gets ~2.3% of years of home-country events; `classifyEvent`
-  cannot see through module-local guard helpers (`HOME(G)`), filing those
-  events `universal` (Kabylie, Amhara, Gulf); `Guinea:susu_guinean`, Bisaya,
-  Ambundu, Tsonga, Tigre still unwritten.
+- **Closed since:** `classifyEvent` now sees through module-local guard
+  helpers (`HOME(G)`, `isKab(G)`) inside any module listed in
+  `GEOGRAPHIC_MODULES`, so no geographic event is filed `universal`
+  (`tests/eventClassification.test.js`; add every new geographic module to that
+  list). The last 21 `unwritten-group` findings are written, in four regional
+  modules (`events_unwritten_{americas,west_africa,east_south_africa,
+  asia_pacific}.js`, flags in `flags/unwritten_*.js`): 107 events, 40 of them
+  follow-through. `unwritten-group` reports **zero**.
+
+### Pass eight: playing it (`scripts/play.mjs`)
+
+Sixty-odd lives driven through the real store the way a player drives them —
+Age Up, answer, press the activity and money buttons, emigrate, get arrested —
+and read end to end. `node scripts/play.mjs <outdir> '<personas json>'` writes
+each life as a text file with every choice offered and taken.
+
+| | before | after |
+|---|---|---|
+| Syrian born 1985, adult median death age | 32 (war mortality from birth) | 76 (the war starts at 26) |
+| Central African Republic 1970, overall median | 10 | 35 |
+| Germany/Poland/Belarus 1939-45 mortality | peacetime (static 0.01) | wartime |
+| lines stating a year that had not happened yet | ~75 found | 0 in the sweep; `check-anachronisms` now audits it |
+| Khmer Rouge events reaching a rural Cambodian aged 15 in 1975 | 0 of 15 | 8-9 of 15 per event |
+| the same activity line printed in one life | 33× | pooled, remembered |
+| first jobs that were film extra / busker / fast food | ~25% | field-weighted |
+| Saudi women drivers before 2018 | possible | not |
+
+**`conflictRisk` was a statement about now, for the fourth time.** One static
+figure per country, applied to every year of every life, so Syria in 1995 and
+Bosnia in 1980 died at wartime rates and Germany in 1943 at peacetime ones.
+`WAR_YEARS` / `conflictRiskAt(country, year)` in `history.js` replace it
+everywhere it was read (`G.conflictRisk` in guards), and the ≥35 age bands now
+carry war mortality at all. `determineCause` reads the live country, the
+character's own diagnoses, and whether malaria was endemic, and no longer
+returns a bare "illness" for a Swedish taxi driver of thirty-eight.
+
+**A retrospective written from today must be gated on the last year it names.**
+"Stus died in a Soviet camp in 1985" printed in 1963; the 2006 head-tax apology
+printed in 1940. `checkFutureYear` in `scripts/lib/anachronism.js` is the audit.
+
+**A phase is a claim about who lived through something.** Every Year Zero event
+was `phase: 'childhood'`, so the country's defining four years reached only the
+six-to-eleven-year-olds. Events may now declare `claimsYears: { from, to }` to
+use the dated-event claim for windows longer than two years; keep it for periods
+that were the whole of every life inside them.
+
+Also: a flag- or tag-free `cult_lgbtq_arrested` held a straight Miami teacher
+for her orientation; `wipeMoney`/`convertToHardCurrency` subtracted a nominal
+figure through the present-day channel (so "lose 30%" in 1950 Lagos took under
+one per cent); successful crimes paid nothing but the wealth stat; arranged
+matches (`arrangedShare` in `lifeCourse.js`) now exist where most marriages were
+arranged; the utility buttons (call a parent, manage the business) remember
+what they have said.
+
+Two further instruments came out of the pass, both run from the scratchpad and
+worth rebuilding when needed: a **claim checker** that compares each new line
+against the state after the year ("your grandchildren" with none, "your father
+says" after his death, "the office" with no job) and a **button fuzzer** that
+presses every store action at random for sixty lives. The fuzzer found no
+crashes. The claim checker found the grandchild class (grandchildren are not
+modelled as people — `G.hasGrandchildren` is the `grandparent` flag or a living
+child of 25+), parent-alive guards missing on six events, and office and
+work-from-home lines reaching retirees (`employed` in `mundaneLayer.js`).
+
+**The Soviet quarter-century had no content at all.** A Russian born in 1915,
+played 1929-45 across eleven lives, met eleven world-event lines and no Soviet
+event, then "died in conflict" at twenty-nine with nothing to say which. There
+is no Second World War world event anywhere in `worldEvents.js` (the list above
+that says WWII is covered is wrong; the war lives in country modules, and the
+USSR had none). `events_soviet_1929.js` is 20 events and 5 follow-throughs,
+1929-1956, for every republic inside the Union that year: the kolkhoz meeting,
+dekulakisation, the law of five ears, the Kazakh and Volga famines, the Terror
+beyond Russian teenagers, 22 June, the call-up, the evacuation east, occupation,
+the blockade, the death notice (which kills the father in the state, not only in
+the prose), Tashkent taking in other people's children, 9 May, the deported
+peoples (Volga Germans 1941; Chechens and Crimean Tatars 1944, with their
+returns in 1957 and 1989), Stalin's funeral, Tbilisi 1956. Measured: 22 June
+reaches 13 of 14 Russians of 1915; occupation 10 of 15 Belarusians of 1925; the
+Kazakh famine 13 of 15 Kazakhs of 1920; Tbilisi 1956 14 of 17 Georgians of 1930.
+
+**Where you were born is not where you live, for events either.** About 584
+guards read `G.character.country` to decide present-tense prose, and 10% of an
+emigrant's years abroad carried one: Mexico City traffic in Los Angeles, a NEPA
+cut in London, a neighbourhood blasphemy case in Dubai. Rewriting the guards
+would be wrong (most are right at home). `homeFits` in `tick.js` asks the guard
+itself, at draw time, whether it would still fire for somebody born where the
+character lives; if not, it only reaches them when it is written for somebody
+who left (`writtenForAbroad` in `classifyEvent`: a guard reading the live
+country or requiring an emigration flag, or prose like "back home" or "the
+money you send") or is a follow-through (`ft_` ids) echoing what they lived
+before leaving. 10.3% of years abroad down to 1.7%, all of it diaspora-shaped,
+with events per year unchanged. `tests/claimsAndState.test.js` fails without it.
+
+**Three more gaps closed after the pass.**
+- *Gulf-born expatriates were citizens.* Everyone started as `citizen`, so a
+  Bangladeshi-Qatari born in Doha became a police officer and owned his house
+  outright. `residencyAtBirth` (`migration.js`) puts them on a parent's visa;
+  the state, police and army are closed to non-nationals and freehold nearly so;
+  the existing `gulf2_the_visa_at_eighteen` arc now reaches 23 of 43.
+- *Grandchildren are people now.* Each adult child has `kids` at the local
+  fertility rate (`courseGrandchildren`); the first queues `late_grandchild_born`;
+  `G.grandchildCount`; the death screen counts them. A Nigerian mother of seven
+  born 1945 has 24-39 grandchildren, the first around forty.
+- *The war where it was lived.* `events_second_world_war.js`: Poland 1939-45
+  (occupation, the secret schools, the ghetto wall, the knock at the door under
+  the death penalty, the rising), China 1937-45, the Philippines 1941-45,
+  Yugoslavia 1941-45 (including Kragujevac and the Ustaše terror), Indonesia
+  1942-49, Korea 1938-45; 25 events, 5 follow-throughs, texture for every flag.
+  Nothing about the war had fired for a Pole between 1939 and 1945.
+- Also: clergy titles follow the faith and the ladder is closed where the faith
+  did not ordain; fame ladders are pyramids above the second rung.
+
+**An age can wait a year; a date cannot.** Every Russian born in 1915 turned
+thirty in 1945, and the scheduled "You are thirty" beat took the ninth of May
+from all of them. `getNextEvent` now lets an eligible dated event of weight ≥100
+in its last year take the year ahead of a deferrable queued beat (phase entries,
+life-skeleton beats), which stays queued. Victory Day went from 0 to 11 of 11.
+
+Same class, one layer up: a defining national period written at weight 3 over
+an eight-year window reaches almost nobody. The Proceso in Argentina reached 0
+of 15 Buenos Aires adults who lived through it; at weight 15, 9 and 5 of 15.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
@@ -1295,11 +1415,13 @@ src/
     worldEvents.js            — 252 world history events (year+country/archetype gated); 20+ events have `context` fields
     headlines.js              — ~130 major historical headline entries (year-matched, injected as log entries)
     flags/                    — FLAG_REGISTRY split into 10 category files (identity, geographic, economic,
-                                health, relationships, political, prison, world_events, lifecycle, new_roster).
+                                health, relationships, political, prison, world_events, lifecycle, new_roster,
+                                and the four unwritten_* regional files).
                                 2879 registered flags. Pure data, no imports. `npm run check-flags` derives coverage.
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options
+    habitProse.js             — what a repeated activity says once its own line has been said
     assets.js                 — property/vehicle data
     destinations.js           — travel destinations
     illnesses.js              — illness/disease system
@@ -1657,6 +1779,12 @@ src/
         events_portugal_depth.js  — Portugal depth arc (retornados from Angola/Mozambique, PREC revolutionary period)
         events_romania_depth.js   — orphanages post-Ceaușescu, post-communist transition, Bucharest earthquake memories
         events_russia_depth.js    — Great Terror 1937–38, Khrushchev thaw, Brezhnev stagnation/blat, kommunalka life
+        events_second_world_war.js — 30 events: Poland 1939-45, China 1937-45, the Philippines 1941-45,
+                                    Yugoslavia 1941-45, Indonesia 1942-49, Korea 1938-45, as lived by
+                                    the character the engine draws in each
+        events_soviet_1929.js     — 25 events: every Soviet republic 1929-1956 — collectivisation, the Kazakh and
+                                    Volga famines, the Terror, the war from 22 June to 9 May, the deported
+                                    peoples and their returns, Stalin's funeral, Tbilisi 1956
         events_singapore_depth.js — Singapore depth arc (racial harmony performance, NSman arc, dialect suppression)
         events_south_africa_depth.js — Sharpeville 1960, passbook system, Steve Biko 1977, ANC exile, born-free generation
         events_spain_depth.js     — post-Civil War repression, clandestine resistance, Carrero Blanco 1973, Amnesty Law 1977
@@ -1824,6 +1952,9 @@ scripts/
                                 technology.js. Every line it found on its first run was reachable,
                                 correctly guarded and syntactically fine; it was wrong about when the
                                 world contained the thing it named.
+  play.mjs                    — plays lives through the real store like a player (answers, activities,
+                                money buttons, emigration, crime) and writes each life to a text file
+                                to be read end to end. The instrument for "read the log in order".
   sim.js                      — the firing-rate report. The only audit that can see what the game
                                 actually does, and the counter-check on every static one.
   check-reach.js              — the conditional counter-check on THAT one. `sim` reports what fires

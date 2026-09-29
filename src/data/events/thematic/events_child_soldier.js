@@ -9,7 +9,7 @@
 // this game with historical honesty — this is what this is.
 
 const isConflictZone = (G) =>
-  G.currentCountry?.archetype === 'conflict_zone' ||
+  G.conflictRisk > 0.15 ||
   G.flags.has('war_childhood') ||
   G.flags.has('conflict_zone_birth')
 

@@ -236,7 +236,8 @@ describe('historical demography', () => {
     const counts = {}
     for (let i = 0; i < 30000; i++) { const c = pickBirthCountry(); counts[c.name] = (counts[c.name] ?? 0) + 1 }
     // A random human life should look like a random human life.
-    expect(counts['India']).toBeGreaterThan(counts['Tuvalu'] * 10)
+    // Tuvalu can draw zero in 30,000, and undefined * 10 is NaN.
+    expect(counts['India']).toBeGreaterThan((counts['Tuvalu'] ?? 0) * 10)
     // ...without making the small-country writing unreachable.
     expect(Object.keys(counts).length).toBeGreaterThan(120)
   }, 60000)

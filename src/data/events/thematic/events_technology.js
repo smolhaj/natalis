@@ -5,14 +5,14 @@ import { hasTech } from '../../technology.js'
 // A character born in 1955 experiences these differently than one born in 1985.
 // All gate on G.currentYear and G.character.country.gdp / archetype.
 
-const wealthy = (G) => ['very_high','high','medium_high'].includes(G.character.country.gdp)
+const wealthy = (G) => ['very_high','high','medium_high'].includes((G.currentCountry ?? G.character.country).gdp)
 // `wealthy` above reads present-day GDP, which is not a statement about the
 // year the character is living in: it put the first television into a Korean
 // living room in 1951 and a Portuguese one in 1953. `arrived` asks when the
 // thing actually reached this country. See src/data/technology.js.
 const arrived = (G, t) => hasTech(G.currentCountry ?? G.character.country, t, G.currentYear)
-const developing = (G) => ['low_medium','medium'].includes(G.character.country.gdp)
-const poor = (G) => ['very_low','low'].includes(G.character.country.gdp)
+const developing = (G) => ['low_medium','medium'].includes((G.currentCountry ?? G.character.country).gdp)
+const poor = (G) => ['very_low','low'].includes((G.currentCountry ?? G.character.country).gdp)
 
 export const TECHNOLOGY_EVENTS = [
 
@@ -71,7 +71,8 @@ export const TECHNOLOGY_EVENTS = [
     // newspaper photograph days later, and this gave a Beninese family a set
     // sixteen years before there was one to gather round.
     text: (G) => {
-      const ending = ' Your father says something you will remember for the rest of your life. You are not sure yet what it means to be alive in a world where this is possible.'
+      const elder = G.parents?.father?.alive ? 'Your father' : G.parents?.mother?.alive ? 'Your mother' : 'An old man in the room'
+      const ending = ` ${elder} says something you will remember for the rest of your life. You are not sure yet what it means to be alive in a world where this is possible.`
       if (arrived(G, 'television')) return 'Your family gathers around the television. There is a grainy grey image and an American voice. A man is walking on the moon.' + ending
       if (arrived(G, 'radio')) return 'The radio is on and the adults have stopped talking. A voice reads out what is happening somewhere no one has ever been: a man is walking on the moon. You look up afterwards, because everyone does.' + ending
       return 'Someone comes back from the town with the news and it moves through the village by afternoon: a man has walked on the moon. Nobody here has seen a picture of it. You look up anyway, because everyone does.' + ending

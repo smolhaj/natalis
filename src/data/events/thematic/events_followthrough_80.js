@@ -149,7 +149,7 @@ export const FOLLOWTHROUGH_80_EVENTS = [
     weight: 2,
     when: (G) =>
       G.flags.has('jedwabne_reckoning') &&
-      G.currentYear >= 2015 &&
+      G.currentYear >= 2018 &&
       G.age >= 55 &&
       !G.mem?.ft80JedwabneLate,
     text: 'The 2018 Polish law making it a criminal offence to accuse the Polish state or Polish people of complicity in Holocaust crimes: signed, then amended under international pressure, then its criminal penalties removed. The law arrives seventeen years after the Jedwabne acknowledgment. The direction of travel is clear. You have held a position about what happened in Jedwabne since 2001 and the political climate around that position has changed significantly in the intervening years. Your position has not changed. The climate has.',

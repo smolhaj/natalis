@@ -163,7 +163,7 @@ const BRAZIL_EVENTS = [
       const yr = G.currentYear
       return yr <= 1995
         ? 'The official position is that Brazil has no race problem. Gilberto Freyre said in the 1930s that mixture produced a Brazilian identity beyond race — the "racial democracy." You are old enough to count which people are in which rooms. The domestic workers are Black. The doormen are Black. The people in the newspaper photographs of inaugurations are white. The official position says this is about class, not race.'
-        : 'Brazil has more people of African descent than any country outside Africa. The cotas — racial quotas in universities and public service — have been contested since 2001. The census asks you to identify your color: branco, pardo, preto, amarelo, indígena. The categories have a history inside them that is not in the census question. You fill in your color and notice which box feels accurate and which feels invented.'
+        : 'Brazil has more people of African descent than any country outside Africa. ' + (G.currentYear >= 2002 ? 'The cotas — racial quotas in universities and public service — have been contested since 2001. ' : '') + 'The census asks you to identify your color: branco, pardo, preto, amarelo, indígena. The categories have a history inside them that is not in the census question. You fill in your color and notice which box feels accurate and which feels invented.'
     },
     choices: [
       {
@@ -305,6 +305,9 @@ const BRAZIL_EVENTS = [
       if (yr <= 1989) {
         return 'The price of a coffee changes between when you sit down and when you pay. The Cruzado, the Cruzado Novo, the Cruzeiro — the currency is renamed while the inflation continues. The Plano Cruzado freezes prices in 1986 and Brazilians mob the supermarkets to enforce it, photographing price labels, reporting stores to television cameras. The freeze lasts eight months. Inflation returns at 2,000% per year. Salaries are indexed by formula; the formula is adjusted; the formula adjusts again. You have developed the specific skill of knowing that a price is wrong before the cashier notices.'
       }
+      if (yr <= 1993) {
+        return 'March 1990. The new president freezes every savings account above fifty thousand cruzados novos for eighteen months. The money in the bank is still yours and you cannot touch it. The currency is renamed again, to the cruzeiro, and the inflation does not notice. Salaries are indexed by formula; the formula is adjusted; the formula adjusts again. You have developed the specific skill of knowing that a price is wrong before the cashier notices.'
+      }
       return 'July 1, 1994. Fernando Henrique Cardoso, Finance Minister, introduces the Plano Real. The old cruzeiro real is exchanged for the new real at a fixed rate. The mechanism is complex — a virtual currency called the URV mediating the transition. What happens next is simple: the inflation stops. Overnight. You go to the supermarket and the price on the shelf is the price at the register. You do not know what to do with this. The generation that grew up with instability has to learn, slowly, that the price of something is a fixed fact.'
     },
     choices: [
@@ -335,7 +338,7 @@ const BRAZIL_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1996 &&
       G.age >= 18 &&
       !G.mem?.bra_carandiru,
-    text: 'October 2, 1992. The Casa de Detenção de Carandiru in São Paulo — the largest prison in Latin America. A riot begins in one pavilion. Military police enter. When they leave, 111 inmates are dead. None of the prisoners had firearms. The commander, Colonel Ubiratan Guimarães, is acquitted in 2001 by a São Paulo jury and later elected to the state assembly. The Carandiru Massacre enters the language of Brazilian politics as the specific proof of how the state treats its poor and incarcerated. Carandiru is demolished in 2002. A park is built on the site.',
+    text: 'October 2, 1992. The Casa de Detenção de Carandiru in São Paulo — the largest prison in Latin America. A riot begins in one pavilion. Military police enter. When they leave, 111 inmates are dead. None of the prisoners had firearms. The commander, Colonel Ubiratan Guimarães, keeps his rank, and nobody has been tried. The Carandiru Massacre enters the language of Brazilian politics as the specific proof of how the state treats its poor and incarcerated.',
     choices: [
       {
         text: 'One hundred eleven people. The number is not in dispute.',
@@ -439,7 +442,7 @@ const BRAZIL_EVENTS = [
       if (yr <= 2005) {
         return 'Brazil was 90% Catholic in 1970. The census in 2000 shows 74% — still a majority but the Universal Church of the Kingdom of God has 12,000 congregations, a television network, and a presence in every favela. The service is Tuesday and Thursday and Sunday. The bishop says tithe and God will bless you. In the neighborhood the Catholic priest has one mass on Sunday; the evangelical pastor has services three times a week, a youth group, and a cell phone. The pastoral structure is the comparison.'
       }
-      return 'The 2010 census: 64% Catholic, 22% evangelical Protestant. The 2023 projections suggest they have crossed: more evangelicals than Catholics by mid-decade. The change happened in one generation and it happened fastest in the favelas and the interior. The evangelical vote — the bancada evangélica in Congress — is the largest bloc in the legislature. The church that grew on the margins is now writing legislation.'
+      return 'The 2010 census: 64% Catholic, 22% evangelical Protestant. The projections say the lines will cross within a generation. The change happened in one generation and it happened fastest in the favelas and the interior. The evangelical vote — the bancada evangélica in Congress — is the largest bloc in the legislature. The church that grew on the margins is now writing legislation.'
     },
     choices: [
       {
@@ -469,7 +472,10 @@ const BRAZIL_EVENTS = [
       G.currentYear >= 2016 && G.currentYear <= 2020 &&
       G.age >= 25 &&
       !G.mem?.bra_lavajato,
-    text: 'Operação Lava Jato — Car Wash — begins in 2014 with a currency exchange shop in a gas station in Curitiba. By 2016 it has reached the highest levels of Brazilian politics: Petrobras, the construction giants, the PT, the PSDB, every major party. Judge Sérgio Moro sentences Lula to nine years in prison in July 2017. Lula enters prison in April 2018, unable to run in the October election. Jair Bolsonaro wins. Moro becomes Bolsonaro\'s Justice Minister. In 2021 the Supreme Court rules that Moro was biased — the judge who convicted Lula had been secretly coordinating with the prosecution. The conviction is annulled.',
+    text: (G) => 'Operação Lava Jato — Car Wash — begins in 2014 with a currency exchange shop in a gas station in Curitiba. By 2016 it has reached the highest levels of Brazilian politics: Petrobras, the construction giants, the PT, the PSDB, every major party.' +
+      (G.currentYear >= 2017 ? ' Judge Sérgio Moro sentences Lula to nine years in prison in July 2017.' : ' Judge Sérgio Moro is on the cover of every magazine.') +
+      (G.currentYear >= 2019 ? ' Lula enters prison in April 2018, unable to run in the October election. Jair Bolsonaro wins. Moro becomes Bolsonaro\'s Justice Minister.' : G.currentYear >= 2018 ? ' Lula enters prison in April 2018, unable to run in the October election.' : '') +
+      (G.currentYear >= 2019 ? ' Then the leaked messages: the judge and the prosecutors, coordinating. What the case was is being argued again.' : ''),
     choices: [
       {
         text: 'Lava Jato started as genuine anti-corruption and became a political weapon — both things are true',
@@ -480,7 +486,7 @@ const BRAZIL_EVENTS = [
       {
         text: 'The PT was corrupt and Lula\'s conviction was just — the Supreme Court annulment was political',
         tag: null,
-        outcome: 'This position has adherents. The message leaks — Moro coordinating with prosecutors — are in the record. You have decided what to do with them.',
+        outcome: (G) => G.currentYear >= 2019 ? 'This position has adherents. The message leaks — Moro coordinating with prosecutors — are in the record. You have decided what to do with them.' : 'This position has adherents. Millions of them wear the yellow shirt to say so.',
         effect: (p) => { p.r += 4; p.addFlag('bra_lava_jato_generation'); p.setMem('bra_lavajato', true); },
       },
     ],

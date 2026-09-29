@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { createCharacter, deriveInitialStats, deriveInitialMoney, deriveInitialParents, deriveInitialSiblings, deriveBirthText, deriveInitialGold, initializeBanked, initializeJointFamily, deriveGenerationalFlags, tick, resolveChoice, applyActivity, attemptCrime, enterCareer, generateEpitaph, askForRaise, quitJob, workHarder, schmoozeBoss, retire, emigrate, meetPotentialPartner, generatePartnerProfile, hookUp, goOnDate, complimentPartner, proposeMarriage, getMarried, fileForDivorce, tryForChild, spendTimeWithChild, callParent, callSibling, adoptChild, getPlasticSurgery, buyProperty, sellProperty, buyVehicle, sellVehicle, adoptPet, visitVet, studyHarder, goToMovies, goClubbing, goShopping, visitSalonSpa, postSocialMedia, promoteSocialMedia, betOnHorses, goToRehab, toggleBirthControl, practiceMartalArts, obtainLicense, interactWithFriend, dropOutOfSchool, abandonChild, useSubstance, bookTrip, startBusiness, manageBusiness, hireEmployee, closeBusiness, prisonWork, prisonCry, prisonConjugalVisit, prisonBribeGuard, prisonStartRiot, upgradeResidency, seekAsylum, relocate, buildG, livingPartner, resolveAutoEvent as applyAutoEventEffect, getCountryRegime } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { inEraMoney } from '../data/economy.js'
+import { residencyAtBirth } from '../data/migration.js'
 import { EVENTS } from '../data/events'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { CAREERS } from '../data/careers'
@@ -393,7 +394,7 @@ export const useGameStore = create((set, get) => ({
       currentPlace: character.birthPlace ?? null,
       currentNeighborhoodTier: character.birthNeighborhoodTier ?? null,
       currentNeighborhoodName: character.birthNeighborhoodName ?? null,
-      residencyStatus: 'citizen',
+      residencyStatus: residencyAtBirth(character),
       yearsAbroad: 0,
       religion: null,
       classTier: null,
@@ -514,7 +515,7 @@ export const useGameStore = create((set, get) => ({
       currentPlace: character.birthPlace ?? null,
       currentNeighborhoodTier: character.birthNeighborhoodTier ?? null,
       currentNeighborhoodName: character.birthNeighborhoodName ?? null,
-      residencyStatus: 'citizen',
+      residencyStatus: residencyAtBirth(character),
       yearsAbroad: 0,
       religion: null,
       classTier: null,

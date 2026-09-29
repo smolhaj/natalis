@@ -140,7 +140,7 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     phase: null,
     weight: 400,
     when: (G) => IS_NG(G) && G.currentYear === 1977 && G.age >= 8 && once(G, 'ngm_festac'),
-    text: 'FESTAC is a month long and the whole Black world comes to Lagos for it — Stevie Wonder, Gilberto Gil, dancers from Brazil and Jamaica and everywhere the ships went. They build a village to house them all and a national theatre shaped like a military cap. The mask on the posters is an ivory one the British took in 1897 and would not lend back, so the country commissions a copy and puts the copy on everything. For four weeks this is the capital of something. Your mother keeps the commemorative cloth and it is still in the house in 2004.',
+    text: 'FESTAC is a month long and the whole Black world comes to Lagos for it — Stevie Wonder, Gilberto Gil, dancers from Brazil and Jamaica and everywhere the ships went. They build a village to house them all and a national theatre shaped like a military cap. The mask on the posters is an ivory one the British took in 1897 and would not lend back, so the country commissions a copy and puts the copy on everything. For four weeks this is the capital of something. Your mother keeps the commemorative cloth folded in the bottom of the box where the good things are kept.',
     context: 'FESTAC \'77, the Second World Black and African Festival of Arts and Culture, ran in Lagos from 15 January to 12 February 1977 with some 17,000 participants from 56 nations. Its emblem was the 16th-century Benin ivory mask of Idia, looted in 1897; the British Museum declined to lend it, and a replica was used.',
     choices: null,
     effect: (p) => { p.setMem('ngm_festac', true); p.m += 8; p.s += 3; p.addFlag('festac_77') },
@@ -220,7 +220,13 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     id: 'ngm_asuu',
     phase: null,
     weight: 400,
-    when: (G) => IS_NG(G) && G.currentYear >= 1988 && G.currentYear <= 2005 && G.age >= 17 && G.age <= 50 && once(G, 'ngm_asuu'),
+    // A strike at a university reaches the people at one: a student, or the
+    // parent of one. It was reaching a farmer in Benue who never went to
+    // school and whose children were eight and three.
+    when: (G) => IS_NG(G) && G.currentYear >= 1988 && G.currentYear <= 2005 && G.age >= 17 && G.age <= 50 && once(G, 'ngm_asuu') &&
+      (G.age <= 30
+        ? ['university', 'graduate'].includes(G.education?.level) || G.flags.includes('university_enrolled')
+        : (G.children ?? []).some(c => c.alive !== false && c.gender === 'female' && c.age >= 18 && c.age <= 26)),
     text: (G) => G.age <= 30
       ? 'The university is closed again. Not for a week — for five months, then it reopens, then it closes. A four-year degree is taking seven and everybody in your year has aged out of something while waiting: a scholarship, a job advert, a relationship that did not survive two unscheduled years at home. The lecturers are right about the funding. Being right about the funding does not give anybody back the two years.'
       : 'Your daughter has been at university for five years of a four-year degree and is at home again, and the strike is about salaries that have not been paid since March, and the lecturers are right. You have been on the other side of a strike yourself. You find you cannot hold both of those things at once in front of her, so you say nothing and put the fees together again.',

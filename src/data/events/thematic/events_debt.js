@@ -72,8 +72,12 @@ export const DEBT_EVENTS = [
     id: 'debt_first_card',
     phase: 'young_adult',
     weight: 4,
-    when: (G) => WEALTHY_ARCHETYPES.includes(G.archetype) && G.age >= 18 && G.age <= 24 && !G.flags.has('debt_spiral') && !G.mem.debtFirstCard,
-    text: 'The card arrives in the mail. The limit is $500. Within a year, they raise it to $1,500 without asking. The minimum payment is small. The interest rate is in the documentation you didn\'t fully read. The card makes some months possible that wouldn\'t have been.',
+    // Unsolicited bank cards are the United States from the late sixties and
+    // most of the rich world from the eighties — not Sweden in 1967.
+    when: (G) => WEALTHY_ARCHETYPES.includes(G.archetype) &&
+      G.currentYear >= (G.currentCountry?.name === 'United States' ? 1970 : 1985) &&
+      G.age >= 18 && G.age <= 24 && !G.flags.has('debt_spiral') && !G.mem.debtFirstCard,
+    text: 'The card arrives in the mail. The limit is modest. Within a year, they triple it without asking. The minimum payment is small. The interest rate is in the documentation you didn\'t fully read. The card makes some months possible that wouldn\'t have been.',
     choices: [
       {
         text: 'Use it carefully — pay it in full each month.',

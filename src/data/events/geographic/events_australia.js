@@ -252,7 +252,10 @@ export const AUSTRALIA_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1998 &&
       G.age >= 22 &&
       !G.mem?.ausMabo,
-    text: 'June 3, 1992. The High Court hands down its decision in Mabo v Queensland. The doctrine of terra nullius — the legal fiction that Australia was legally unoccupied before 1788 — is overturned after two hundred and four years. The decision recognises that Eddie Mabo and the Meriam people of the Murray Islands had continuous connection to their land before and after British sovereignty was asserted. The government responds with the Native Title Act 1993 to codify the decision. John Howard, then in opposition, will later describe the recasting of Australian history as "the black armband view." The phrase becomes a shorthand for a culture war that will run for decades. You are an Australian adult in the years when the country is deciding what it means that the foundation of its land law was a fiction.',
+    text: (G) => 'June 3, 1992. The High Court hands down its decision in Mabo v Queensland. The doctrine of terra nullius — the legal fiction that Australia was legally unoccupied before 1788 — is overturned after two hundred and four years. The decision recognises that Eddie Mabo and the Meriam people of the Murray Islands had continuous connection to their land before and after British sovereignty was asserted. ' +
+      (G.currentYear >= 1994 ? 'The government responds with the Native Title Act 1993 to codify the decision. ' : 'The government says it will legislate. The mining lobby and the pastoralists say what they think of that. ') +
+      (G.currentYear >= 1997 ? 'John Howard, Prime Minister now, calls the recasting of Australian history "the black armband view." The phrase becomes a shorthand for a culture war. ' : '') +
+      'You are an Australian adult in the years when the country is deciding what it means that the foundation of its land law was a fiction.',
     choices: [
       {
         text: 'Mabo clarified something that was always true. The country needs to reckon with it.',

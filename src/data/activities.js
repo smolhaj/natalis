@@ -493,6 +493,8 @@ export const ACTIVITIES = {
       prose: (G) => {
         if (G.children && G.children.some(c => (c.age ?? 99) < 12)) return 'You are present this year in ways you sometimes are not. The children notice.'
         if (G.partner) return 'You are home for dinner most nights. You are present at dinner. These are not always the same thing.'
+        // A child does not visit the house they live in.
+        if (G.age < 18) return 'You stay close to home this year. The house has more of you in it than usual.'
         if (G.parents && (G.parents.father?.alive || G.parents.mother?.alive)) return 'You visit more often than you have been. One of your parents mentions it.'
         if (G.age > 60) return 'The family is smaller than it used to be. You call who is left.'
         return 'You make time for the people who expected to see more of you.'

@@ -119,7 +119,13 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
       G.currentYear >= 2010 && G.currentYear <= 2016 &&
       G.age >= 28 &&
       !G.mem?.nzPikeRiver,
-    text: 'The Pike River coalmine explodes on 19 November 2010. Twenty-nine men are underground. A second explosion three days later ends any rescue attempt. The mine is not re-entered for nine years. The families of the dead stand at the drift entrance holding photographs at anniversaries. The Royal Commission finds systematic failures of regulation, management, and oversight. One person is convicted. The mine is re-entered in 2019 and evidence is recovered. Some families say it was what they needed. Some say it is not enough. Both are true.',
+    text: (G) => 'The Pike River coalmine explodes on 19 November 2010. Twenty-nine men are underground. A second explosion three days later ends any rescue attempt. ' +
+      (G.currentYear >= 2019 ? 'The mine is not re-entered for nine years. ' : 'The mine is sealed with the men inside it. ') +
+      'The families of the dead stand at the drift entrance holding photographs at anniversaries. ' +
+      (G.currentYear >= 2013 ? 'The Royal Commission finds systematic failures of regulation, management, and oversight. Nobody goes to prison. ' : '') +
+      (G.currentYear >= 2019
+        ? 'The mine is re-entered in 2019 and evidence is recovered. Some families say it was what they needed. Some say it is not enough. Both are true.'
+        : 'They ask for the drift to be re-entered. They are told it is not safe. They keep asking.'),
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('nz_pike_river_generation'); p.setMem('nzPikeRiver', true) },
   },

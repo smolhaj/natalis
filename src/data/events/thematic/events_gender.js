@@ -362,6 +362,9 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'female' &&
       ['subsaharan', 'developing_urban'].includes(G.character.country.archetype) &&
+      // A headmistress and a school policy: this is a schoolgirl, not a
+      // woman of twenty-five, and not one who never went.
+      G.age <= 20 && G.mem?.attendedSchool !== false &&
       !G.flags.includes('education_interrupted'),
     text: 'You become pregnant during your second year. The school has a policy: pregnant students must leave. You had not known this was the policy until the headmistress read it to you from a yellowing document.',
     context: null,

@@ -142,7 +142,7 @@ export const GUATEMALA_EVENTS = [
       G.currentYear >= 2013 &&
       G.age >= 45 &&
       !G.mem?.guaRiosTrial,
-    text: 'Efraín Ríos Montt stands trial for genocide in 2013. He is eighty-five years old. The prosecutor presents the testimony of survivors — Maya men and women who describe what the soldiers did, who gives the orders, what the orders were. On May 10, 2013, the court finds him guilty of genocide and crimes against humanity. He is sentenced to eighty years. Ten days later, the Constitutional Court annuls the verdict on a procedural technicality. Ríos Montt dies in 2018 without serving a day of the sentence. The testimonies are in the court record. The survivors are still alive. The verdict was real for ten days.',
+    text: (G) => 'Efraín Ríos Montt stands trial for genocide in 2013. He is eighty-five years old. The prosecutor presents the testimony of survivors — Maya men and women who describe what the soldiers did, who gives the orders, what the orders were. On May 10, 2013, the court finds him guilty of genocide and crimes against humanity. He is sentenced to eighty years. Ten days later, the Constitutional Court annuls the verdict on a procedural technicality. ' + (G.currentYear >= 2018 ? 'Ríos Montt dies in 2018 without serving a day of the sentence.' : 'Ríos Montt is at home while the lawyers argue about a retrial.') + ' The testimonies are in the court record. The survivors are still alive. The verdict was real for ten days.',
     choices: null,
     effect: (p) => { p.r += 8; p.m += 3; p.e += 3; p.addFlag('gua_rios_montt_witness'); p.setMem('guaRiosTrial', true) },
   },

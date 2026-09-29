@@ -2,6 +2,7 @@ import { FlagSet, getPhase } from './character'
 import { buildG } from './tick'
 import { getCountryDisplayName, withArticle } from '../utils/countryUtils'
 import { WORLD_EVENTS } from '../data/worldEvents'
+import { conflictRiskAt } from '../data/history.js'
 
 // ─── Living identity card ─────────────────────────────────────────────────────
 // 4 sentences in two pairs: exterior (place/era/situation) + interior (wound/desire).
@@ -17,7 +18,8 @@ export function generateIdentityCard(state) {
   // `retire()` nulls the career, so a retiree's whole working life was absent
   // from the death screen: a Detective Chief Inspector with thirty-one years and
   // a Celebrated Author with thirty-seven both read as having never worked.
-  const career = state.career ?? state.mem?.retiredFrom ?? null
+  // retiredFrom can be stamped by a retirement with no job to retire from.
+  const career = state.career ?? (state.mem?.retiredFrom?.title ? state.mem.retiredFrom : null)
   const partner = state.partner?.alive === false ? null : state.partner
   const lostPartner = state.partner?.alive === false ? state.partner : null
   const G = buildG(state)
@@ -243,12 +245,21 @@ export function generateIdentityCard(state) {
 
 const oneOf = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
+function warChildhoodYears(state) {
+  const born = state.character?.birthYear ?? 1960
+  const country = state.character?.country
+  let n = 0
+  for (let y = born; y < born + 12; y++) if (conflictRiskAt(country, y) > 0.1) n++
+  return n
+}
+
 export function generateEpitaph(state) {
   const { character, flags, stats, regret, age, children, partner, money } = state
   // `retire()` nulls the career, so a retiree's whole working life was absent
   // from the death screen: a Detective Chief Inspector with thirty-one years and
   // a Celebrated Author with thirty-seven both read as having never worked.
-  const career = state.career ?? state.mem?.retiredFrom ?? null
+  // retiredFrom can be stamped by a retirement with no job to retire from.
+  const career = state.career ?? (state.mem?.retiredFrom?.title ? state.mem.retiredFrom : null)
   const name = character.firstName
   const He = character.gender === 'male' ? 'He' : 'She'
   const he = He.toLowerCase()
@@ -292,7 +303,11 @@ export function generateEpitaph(state) {
     para1.push(oneOf([
       `The first years were shaped by conflict before ${he} had language for it.`,
       `${He} learned to read a night by its sounds before ${he} learned to read anything else.`,
-      `There was a war on for the whole of ${his} childhood, and ${he} did not know that this was unusual.`,
+      // Only true if it was: a Kabul girl born in 1960 was eighteen when the
+      // war came, and her obituary said it had lasted her whole childhood.
+      ...(warChildhoodYears(state) >= 10
+        ? [`There was a war on for the whole of ${his} childhood, and ${he} did not know that this was unusual.`]
+        : []),
     ]))
   } else if (any('lost_parent_young', 'orphaned')) {
     if (any('poverty_childhood', 'food_insecurity')) {
@@ -733,6 +748,17 @@ export function generateEpitaph(state) {
     para2.push(`${He} lived through the dissolution of collective farming — the paper that said you owned land, and the reality that was more complicated.`)
   }
 
+  // Killed in a war: the obituary named the influenza of his infancy and not
+  // the front he died at twenty-five on.
+  const cause = String(state.causeOfDeath ?? '')
+  if (/conflict|combat|the war|crossfire|fighting|civil war/i.test(cause)) {
+    para2.unshift(f('sov_frontovik')
+      ? `${He} went to the front with an egg in ${his} pocket and a twist of earth from the yard, and did not come back. The notice was a printed form with ${his} name filled in by hand.`
+      : f('served_military') || f('combat_veteran')
+        ? `${He} was killed in the war, at ${age}, in uniform.`
+        : `${He} was killed in the war, at ${age}, without having gone to it; it came to where ${he} was.`)
+  }
+
   // The historical spine, when nothing above has already named it.
   //
   // `worldEventsFired` is the record of what actually reached this character,
@@ -1008,7 +1034,8 @@ export function generateEpitaph(state) {
   if (children?.length > 0) {
     const n = children.length
     const verb = f('absent_parent') ? (character.gender === 'male' ? 'fathered' : 'had') : 'raised'
-    para4.push(`${He} ${verb} ${n === 1 ? 'a child' : `${n} children`}.`)
+    const gk = children.reduce((m, c) => m + (c.kids ?? 0), 0)
+    para4.push(`${He} ${verb} ${n === 1 ? 'a child' : `${n} children`}${gk > 1 ? `, and lived to know ${gk} grandchildren` : gk === 1 ? ', and lived to hold a grandchild' : ''}.`)
   } else if (f('chose_childless')) {
     para4.push(`${He} chose not to have children. It was a complete answer.`)
   } else if (f('ivf_success')) {
@@ -1131,7 +1158,7 @@ export function generateEpitaph(state) {
   } else if (regret > 50) {
     para5.push(oneOf([
       `There were regrets. Most people have them.`,
-      `${He} would have done two or three things differently. Everyone has a list; ${his} was shorter than most.`,
+      `${He} would have done two or three things differently. Everyone has a list; ${character.gender === 'male' ? 'his' : 'hers'} was shorter than most.`,
       `There were things ${he} meant to say to people who were still there to say them to.`,
       `It was not the life ${he} had pictured. Very few of them are.`,
       `${He} made ${his} peace with most of it, and kept the rest to ${him}self.`,
@@ -1198,6 +1225,9 @@ export function generateEpitaph(state) {
  */
 const AMBIENT_WORLD_EVENTS = new Set([
   'internet_revolution', 'corruption_developing', 'paris_agreement_2015',
+  // The household view of the 1918 pandemic, which fires beside the pandemic
+  // itself: "handed him The 1918 Influenza Pandemic and then Spanish Flu".
+  'spanish_flu_1918_b',
 ])
 
 /** The clause an obituary would use for a world event, in priority order. */
@@ -1233,7 +1263,8 @@ export function generateLifeNotes(state) {
   // `retire()` nulls the career, so a retiree's whole working life was absent
   // from the death screen: a Detective Chief Inspector with thirty-one years and
   // a Celebrated Author with thirty-seven both read as having never worked.
-  const career = state.career ?? state.mem?.retiredFrom ?? null
+  // retiredFrom can be stamped by a retirement with no job to retire from.
+  const career = state.career ?? (state.mem?.retiredFrom?.title ? state.mem.retiredFrom : null)
   const f = (flag) => flags.includes(flag)
   const any = (...fs) => fs.some(g => flags.includes(g))
   const notes = [] // [{ priority, text }]
@@ -1341,6 +1372,8 @@ export function generateLifeNotes(state) {
   else if (age >= 40 && !everMarried) add(18, 'Never married.')
   const kids = children?.length ?? 0
   if (kids > 0) add(22, kids === 1 ? 'Had one child.' : `Had ${kids} children.`)
+  const grandkids = (state.children ?? []).reduce((m, c) => m + (c.kids ?? 0), 0)
+  if (grandkids > 0) add(21, grandkids === 1 ? 'Had a grandchild.' : `Had ${grandkids} grandchildren.`)
   else if (age >= 45) add(16, 'Had no children.')
   if ((siblings?.length ?? 0) >= 4) add(14, `One of ${siblings.length + 1}.`)
   if (f('never_schooled')) add(26, 'Never went to school.')

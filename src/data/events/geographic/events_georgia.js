@@ -51,7 +51,8 @@ export const GEORGIA_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Georgia' &&
-      G.currentYear >= 1992 && G.currentYear <= 1994 &&
+      // The text runs to the fall of Sukhumi in September 1993.
+      G.currentYear >= 1993 && G.currentYear <= 1994 &&
       G.age >= 16 &&
       !G.mem?.geoAbkhazia,
     text: 'The Abkhazia conflict, 1992–1993. Georgian troops enter Abkhazia in August 1992; fighting continues for a year; Sukhumi falls in September 1993 and the Georgian army is expelled. Two hundred and fifty thousand Georgians from Abkhazia are displaced — they become IDPs, internally displaced persons, and some will remain displaced for decades. The conflict is widely understood in Georgia as a Russian-backed Abkhazian action against Georgian territorial integrity. Understanding it this way and being able to do anything about it are two different things.',
@@ -227,7 +228,7 @@ export const GEORGIA_EVENTS = [
       G.character.country.name === 'Georgia' &&
       G.age >= 14 && G.age <= 28 &&
       !G.mem?.geoOrthodox,
-    text: 'The Georgian Orthodox church survived the Soviet period by being what the Communist Party could not replace: the form of Georgian national continuity. Patriarch Ilia II has been Catholicos-Patriarch since 1977 and will remain so into his nineties. The cross of Saint Nino — a cross made of braided grapevines, woven together with the hair of the woman who brought Christianity to Georgia in the fourth century. This is the specific origin story: a woman, from Cappadocia, a vine, a cross. The church is not only religion. It is the argument that Georgia exists, has always existed, is not a Soviet category.',
+    text: (G) => (G.currentYear >= 1992 ? 'The Georgian Orthodox church survived the Soviet period by being what the Communist Party could not replace: the form of Georgian national continuity. ' : 'The Georgian Orthodox church survives the Soviet period by being what the Communist Party cannot replace: the form of Georgian national continuity. ') + (G.currentYear >= 2023 ? 'Patriarch Ilia II has been Catholicos-Patriarch since 1977 and remains so into his nineties. ' : G.currentYear >= 1978 ? 'Patriarch Ilia II has been Catholicos-Patriarch since 1977. ' : '') + 'The cross of Saint Nino — a cross made of braided grapevines, woven together with the hair of the woman who brought Christianity to Georgia in the fourth century. This is the specific origin story: a woman, from Cappadocia, a vine, a cross. The church is not only religion. It is the argument that Georgia exists, has always existed, is not a Soviet category.',
     choices: [
       {
         text: 'The church is the spine of what you understand yourself to be Georgian to mean.',

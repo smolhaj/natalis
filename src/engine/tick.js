@@ -24,10 +24,10 @@ import { buildMundaneLayer } from './mundaneLayer'
 import { rememberSaid, preferUnsaid } from './prose'
 import { tickLifeCourse, secondaryChance, primaryChance, unpurchasedHomeName, retirementAge } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
-import { suspendedInstitutions, proseFitsInstitutions, institutionExists } from '../data/history.js'
+import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
 import { hasTech } from '../data/technology.js'
-import { migrationDestinations } from '../data/migration.js'
+import { migrationDestinations, gulfNonNational } from '../data/migration.js'
 
 // What a listed salary is worth where it is paid. The companion question —
 // what it is worth WHEN it is paid — is `wageIndex` in economy.js, and the two
@@ -363,7 +363,10 @@ function buildEffectProxy(state) {
   proxy.setGpa = (gpa) => { proxy._newGpa = gpa }
   proxy.setEnrolled = (enrollment) => { proxy._newEnrolled = enrollment }
   proxy.setMem = (key, value) => { proxy.mem[key] = value }
-  proxy.wipeMoney = (fraction = 1.0) => { proxy.mo -= Math.round((state.money ?? 0) * fraction) }
+  // A fraction of the NOMINAL balance, so it is taken off the nominal balance.
+  // Through `mo` it was denominated a second time: in 1950 Lagos "lose 30%"
+  // took well under one per cent.
+  proxy.wipeMoney = (fraction = 1.0) => { proxy.moNominal -= Math.round((state.money ?? 0) * fraction) }
   proxy.updateChildRel = (idx, delta) => {
     if (!proxy._childRelDeltas) proxy._childRelDeltas = {}
     proxy._childRelDeltas[idx] = (proxy._childRelDeltas[idx] ?? 0) + delta
@@ -467,7 +470,7 @@ function buildEffectProxy(state) {
   proxy.addJointFamilyPool = (delta) => { proxy._jointFamilyPoolDelta = (proxy._jointFamilyPoolDelta ?? 0) + delta }
   proxy.setRosca = (rosca) => { proxy._rosca = rosca }
   proxy.leaveRosca = () => { proxy._rosca = null }
-  proxy.convertToHardCurrency = (amount) => { proxy._hardCurrencyAdd = (proxy._hardCurrencyAdd ?? 0) + amount; proxy.mo -= amount }
+  proxy.convertToHardCurrency = (amount) => { proxy._hardCurrencyAdd = (proxy._hardCurrencyAdd ?? 0) + amount; proxy.moNominal -= amount }
   proxy.reduceHouseholdContribution = () => { proxy._reduceHouseholdContribution = true }
   proxy.setWorkStatus = (val) => { proxy._workStatus = val }
   proxy.removeFirstVehicle = () => { proxy._removeFirstVehicle = true }
@@ -535,7 +538,7 @@ function resolveProxyExtras(state, proxy) {
   if (!next.retired && proxy.flags.includes('retired')) {
     const pension = state.career ? Math.round(state.career.salary * 0.35) : (next.pensionAnnual ?? 0)
     next = { ...next, retired: true, career: null, pensionAnnual: pension,
-      mem: { ...(next.mem ?? {}), retiredFrom: { title: next.career?.title, field: next.career?.field, id: next.career?.id } } }
+      mem: next.career ? { ...(next.mem ?? {}), retiredFrom: { title: next.career.title, field: next.career.field, id: next.career.id } } : next.mem }
   }
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
@@ -791,6 +794,42 @@ function departureFits(e, G) {
   return (G.currentCountry?.name ?? G.character?.country?.name) === G.character?.country?.name
 }
 
+// Where you were born is not where you live. About 584 guards read
+// `G.character.country` to decide present-tense prose, so a Mexican who had
+// lived in Los Angeles for twenty years sat in Mexico City traffic, a Nigerian
+// in London ran a generator through a NEPA cut, and a Pakistani in Dubai was
+// frightened of a blasphemy case in a neighbourhood she had left in 1988:
+// 10% of an emigrant's years carried an event of this kind. Rewriting 584
+// guards would be the wrong repair — most of them are right for the character
+// at home, and some are right abroad.
+//
+// So the question is asked of the guard itself, at the time: would this event
+// still fire if the character had been born where they now live? If not, it
+// is about the birth country. That is fine for somebody still there, for an
+// event written for the diaspora (`writtenForAbroad`), and for a follow-through
+// continuing something the character lived through before leaving. Anything
+// else is life in a place they no longer live in.
+const FOLLOW_THROUGH_ID = /(^|_)ft\d*_/
+
+function homeFits(e, G, Gborn) {
+  if (!Gborn || !e.when) return true
+  if (e.writtenForAbroad) return true
+  // A follow-through is an echo of something the character lived, usually
+  // before leaving. A bare flag prerequisite is not enough to say so:
+  // `used_connections` let a privatisation-agency favour reach a Pole who had
+  // been in Germany for sixteen years.
+  if (FOLLOW_THROUGH_ID.test(e.id ?? '') && (e.continuesFlag?.length || e.continuesMem?.length)) return true
+  try { return !!e.when(Gborn) } catch (_) { return true }
+}
+
+// G as it would be for somebody born in the country they live in, or null
+// when that is where they were born.
+function bornHereG(G) {
+  const here = G.currentCountry
+  if (!here?.name || here.name === G.character?.country?.name) return null
+  return { ...G, character: { ...G.character, country: here } }
+}
+
 function institutionsFit(e, G) {
   const needs = e.assumesInstitutions
   if (!needs) return true
@@ -1001,6 +1040,8 @@ function weightedPick(pool, G, desire, leaning) {
 
 const GRIEF_FIRST = EVENTS.find(e => e.id === 'grief_partner_death') ?? null
 
+const DEFERRABLE_BEAT = /^(phase_entry_|ls_(first_test|the_fork|the_cost|the_reckoning)$)/
+
 export function getNextEvent(state) {
   const phase = getPhase(state.age)
   const G = buildG(state)
@@ -1011,14 +1052,31 @@ export function getNextEvent(state) {
     (e.phase === phase || e.phase == null) && isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
     (!state.inPrison || e.prisonOk === true)
   )
-  if (queueMatch) return queueMatch
+  if (queueMatch) {
+    // The phase-entry and life-skeleton beats are scheduled on an age, and an
+    // age can wait a year. A year-bound event cannot: every Russian born in
+    // 1915 turned thirty in 1945, and "You are thirty" took the ninth of May
+    // from all of them. Where one of these beats meets an eligible event whose
+    // only (or last) year is this one and that was written to claim it, the
+    // year goes to history and the beat stays queued for next year.
+    if (DEFERRABLE_BEAT.test(queueMatch.id ?? '')) {
+      const pressing = [...(EVENTS_BY_PHASE[phase] ?? []), ...(EVENTS_BY_PHASE[null] ?? [])].find(e =>
+        (e.weight ?? 0) >= 100 && isEventAvailable(e, usedEventMap, currentYear) &&
+        classifyEvent(e).dated && e.dated.to === currentYear &&
+        (!e.when || e.when(G)) && (!state.inPrison || e.prisonOk === true))
+      if (pressing) return pressing
+    }
+    return queueMatch
+  }
 
   // Use phase index; also include phase-agnostic events (phase: null) which rely on their when() guards
   const phaseEvents = [...(EVENTS_BY_PHASE[phase] ?? []), ...(EVENTS_BY_PHASE[null] ?? [])]
+  const Gborn = bornHereG(G)
   let pool = phaseEvents.filter(e =>
     isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
     (!state.inPrison || e.prisonOk === true) &&
-    schoolProseFits(classifyEvent(e), G) && institutionsFit(e, G) && departureFits(e, G)
+    schoolProseFits(classifyEvent(e), G) && institutionsFit(e, G) && departureFits(e, G) &&
+    homeFits(e, G, Gborn)
   )
 
   if (state.career && !state.inPrison) {
@@ -1225,6 +1283,16 @@ export function buildG(state) {
     // event already followed them. Content about where a character is FROM
     // reads `G.character.country`, which is what 584 guards already do.
     regime: getCountryRegime(liveCountry(state), currentYear),
+    // The war the character is living in THIS year, where they live now. The
+    // static `country.conflictRisk` is a present-day figure; see WAR_YEARS.
+    conflictRisk: conflictRiskAt(liveCountry(state), currentYear),
+    // Grandchildren are not modelled as people. The flag is the event that
+    // announced one; a living child of twenty-five or more is the likeliest
+    // grandparent otherwise. Four late-life lines were telling childless
+    // seventy-year-olds what their grandchildren did on their phones.
+    grandchildCount: (state.children ?? []).reduce((n, c) => n + (c.kids ?? 0), 0),
+    hasGrandchildren: (state.flags ?? []).includes('grandparent') ||
+      (state.children ?? []).some(c => (c.kids ?? 0) > 0),
     lgbtqCriminalized: isLgbtqCriminalized(liveCountry(state), currentYear),
     casteSystem: state.character?.country?.casteSystem ?? false,
     childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
@@ -1406,8 +1474,8 @@ function lerpIMR(archetype, year) {
 function checkDeath(state) {
   const { age, stats, character, flags } = state
   const lc = liveCountry(state)
-  const cr = lc.conflictRisk ?? 0
   const currentYear = (character.birthYear ?? 1960) + age
+  const cr = conflictRiskAt(lc, currentYear)
   const arch = lc.archetype ?? 'developing_urban'
   let prob = 0
   let skipHcMod = false
@@ -1433,11 +1501,11 @@ function checkDeath(state) {
     if (flags.includes('criminal_life')) prob += 0.015
     if (stats.happiness < 15) prob += 0.02
   } else if (age < 50) {
-    prob = 0.004 + (age - 35) * 0.0003
+    prob = 0.004 + (age - 35) * 0.0003 + cr * 0.02
     if (stats.health < 25) prob += 0.025
     if (flags.includes('smoker')) prob += 0.005
   } else if (age < 65) {
-    prob = 0.012 + (age - 50) * 0.001
+    prob = 0.012 + (age - 50) * 0.001 + cr * 0.015
     if (stats.health < 35) prob += 0.04
     if (flags.includes('smoker')) prob += 0.01
   } else if (age < 75) {
@@ -1470,16 +1538,23 @@ function checkDeath(state) {
   return { dead: true, cause: determineCause(state) }
 }
 
-function determineCause({ age, stats, flags, character }) {
-  const arch = character.country.archetype
-  const cn = character.country.name
-  const hc = character.country.healthcare
+function determineCause(state) {
+  const { age, stats, flags, character } = state
+  // Where the character dies, not where they were born: an emigrant to
+  // Stockholm was dying of malaria because the birth country said subsaharan.
+  const lc = liveCountry(state)
+  const arch = lc.archetype
+  const cn = lc.name
+  const hc = lc.healthcare
   const deathYear = (character.birthYear ?? 1960) + age
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
+  const malaria = malariaEndemic(cn, deathYear)
+  const cr = conflictRiskAt(lc, deathYear)
+  const has = (id) => (state.conditions ?? []).some(c => c.id === id)
 
   if (age < 2) {
     // Neonatal and infant — causes vary by era and context
-    if (arch === 'conflict_zone' || (flags.includes('refugee') && hc === 'very_poor')) {
+    if (cr > 0.15 || (flags.includes('refugee') && hc === 'very_poor')) {
       return pick(['neonatal complications during displacement', 'illness in infancy during conflict', 'complications at birth'])
     }
     if (hc === 'very_poor' || hc === 'poor') {
@@ -1496,7 +1571,7 @@ function determineCause({ age, stats, flags, character }) {
     if (hc === 'very_poor' || hc === 'poor') {
       if (arch === 'subsaharan') return pick(['malaria', 'malnutrition in early childhood', 'cholera', 'diarrheal disease', 'pneumonia', 'measles'])
       if (arch === 'developing_unstable') return pick(['malnutrition', 'diarrheal disease', 'pneumonia', 'preventable illness in early childhood'])
-      if (arch === 'conflict_zone') return pick(['illness during displacement', 'malnutrition during conflict', 'complications during conflict'])
+      if (cr > 0.15) return pick(['illness during displacement', 'malnutrition during conflict', 'complications during conflict'])
       return pick(['malnutrition', 'preventable illness in early childhood', 'diarrheal disease'])
     }
     if (deathYear < 1960) return pick(['measles', 'scarlet fever', 'whooping cough', 'diphtheria', 'illness in early childhood'])
@@ -1520,10 +1595,10 @@ function determineCause({ age, stats, flags, character }) {
     return pick(['killed in combat as a child soldier', 'died in armed conflict', 'shot during military service as a minor'])
   }
 
-  if (character.country.conflictRisk > 0.15 && age < 30 && chance(0.3)) {
-    if (arch === 'conflict_zone') return pick(['killed in the conflict', 'caught in crossfire', 'died in the war'])
+  if (cr > 0.15 && age < 30 && chance(0.3)) {
     if (cn === 'Afghanistan') return pick(['died in the conflict', 'killed in fighting'])
-    if (cn === 'Syria') return pick(['killed in the civil war', 'died in the conflict'])
+    if (cn === 'Syria' && deathYear >= 2011) return pick(['killed in the civil war', 'died in the conflict'])
+    if (arch === 'conflict_zone') return pick(['killed in the conflict', 'caught in crossfire', 'died in the war'])
     if (flags.includes('war_childhood') || flags.includes('refugee')) return 'caught in armed conflict'
     return 'died in conflict'
   }
@@ -1540,6 +1615,17 @@ function determineCause({ age, stats, flags, character }) {
     if (age < 50) return 'cancer, young'
     return pick(['cancer', 'cancer'])
   }
+  // A diagnosis the life log has been carrying for years is the likeliest
+  // thing to be on the certificate. The picker below used to ignore it.
+  if (age >= 18) {
+    if ((has('hiv') || flags.includes('hiv_positive')) && !has('hiv_managed') &&
+        (deathYear < 1996 || hc === 'poor' || hc === 'very_poor') && chance(0.7)) return 'AIDS-related illness'
+    if (has('heart_disease') && chance(0.55)) return age > 60 ? pick(['heart disease', 'heart failure']) : 'heart attack'
+    if (has('diabetes') && chance(0.4)) return pick(['complications of diabetes', 'kidney failure'])
+    if ((has('copd') || has('silicosis') || has('chronic_lung_exposure')) && chance(0.5)) return 'lung disease'
+    if (has('dementia') && age > 65 && chance(0.5)) return 'dementia'
+  }
+
   if (flags.includes('smoker') && age > 50 && chance(0.3)) {
     return pick(['lung cancer', 'lung disease'])
   }
@@ -1560,7 +1646,7 @@ function determineCause({ age, stats, flags, character }) {
 
   if (age > 65) {
     if (arch === 'subsaharan' || arch === 'developing_unstable') {
-      return pick(['heart disease', 'stroke', 'complications from a chronic condition', 'malaria'])
+      return pick(['heart disease', 'stroke', 'complications from a chronic condition', ...(malaria && arch === 'subsaharan' ? ['malaria'] : [])])
     }
     return chance(0.5) ? 'heart disease' : 'stroke'
   }
@@ -1569,15 +1655,80 @@ function determineCause({ age, stats, flags, character }) {
     return chance(0.4) ? 'heart attack' : 'cancer'
   }
 
-  // Young adult / midlife non-conflict deaths
-  if (arch === 'subsaharan' || arch === 'developing_unstable') {
-    if (deathYear < 2000) return pick(['malaria', 'tuberculosis', 'typhoid', 'illness'])
-    return pick(['malaria', 'HIV/AIDS complications', 'illness', 'accident'])
-  }
-  if (arch === 'conflict_zone') return pick(['illness', 'complications from injury', 'died in the conflict'])
+  // Young adult / midlife non-conflict deaths. "Illness" on its own was the
+  // certificate for every rich-world death under fifty, which tells a player
+  // nothing about the world they were in.
   if (flags.includes('drug_addiction') || flags.includes('alcohol_addiction')) return pick(['overdose', 'complications from addiction'])
+  if (cr > 0.1 && chance(0.5)) return pick(['complications from injury', 'died in the conflict', 'caught in crossfire'])
+  if (arch === 'subsaharan' || arch === 'developing_unstable' || arch === 'conflict_zone') {
+    const pool = ['tuberculosis', 'typhoid', 'road accident', 'pneumonia', 'an infection that went untreated']
+    if (malaria && arch !== 'developing_unstable') pool.push('malaria', 'malaria')
+    else if (malaria) pool.push('malaria')
+    if (arch === 'subsaharan' && deathYear >= 1985 && deathYear < 2012) pool.push('HIV/AIDS complications', 'HIV/AIDS complications')
+    return pick(pool)
+  }
+  if (arch === 'wealthy_west' || arch === 'wealthy_east' || arch === 'wealthy_gulf') {
+    return pick(['road accident', 'heart attack', 'cancer', 'an aneurysm', 'an accident', ...(deathYear < 1960 ? ['tuberculosis', 'pneumonia'] : [])])
+  }
+  return pick(['road accident', 'heart attack', 'cancer', 'pneumonia', ...(deathYear < 1970 ? ['tuberculosis'] : [])])
+}
 
-  return 'illness'
+// ─── Residency over time ─────────────────────────────────────────────────────
+//
+// A status was set once and never moved: an Afghan woman who reached Athens in
+// 2015 was an asylum seeker at fifty-five, and a work visa was a work visa at
+// seventy. Papers change on a timescale of years, and what they change into
+// depends on the country: a claim is decided, a refugee becomes a resident, a
+// resident a citizen — except in the Gulf, where kafala has no path to either.
+const NATURALISES = new Set(['wealthy_west', 'wealthy_east', 'post_soviet', 'developing_urban'])
+function tickResidency(s) {
+  const status = s.residencyStatus ?? 'citizen'
+  if (status === 'citizen') return s
+  const here = liveCountry(s)
+  if (here?.name === s.character?.country?.name) return s
+  const mem = { ...(s.mem ?? {}) }
+  if (mem.residencyStatusFor !== status) {
+    mem.residencyStatusFor = status
+    mem.residencySince = s.currentYear
+    return { ...s, mem }
+  }
+  const held = s.currentYear - (mem.residencySince ?? s.currentYear)
+  const gulf = here?.archetype === 'wealthy_gulf'
+  const rich = ['wealthy_west', 'wealthy_east'].includes(here?.archetype)
+  let next = null, text = null
+  if (status === 'asylum_seeker' && held >= 1 && chance(0.3)) {
+    if (chance(rich ? 0.55 : 0.35)) {
+      next = 'refugee_status'
+      text = pickFrom([
+        'The letter is two pages and the word you are looking for is on the second one. You read the first page anyway, in case.',
+        'The claim is decided. You are allowed to stay. The relief arrives a day late, the way sleep does after a long journey.',
+      ])
+    } else {
+      next = 'undocumented'
+      text = pickFrom([
+        'The claim is refused. There is an appeal, and then there is not, and then you are somebody who is here without being allowed to be.',
+        'The decision says the country you came from is safe. You know which parts of it are, and you are not from those parts.',
+      ])
+    }
+  } else if ((status === 'refugee_status' || status === 'work_visa') && !gulf && held >= 5 && chance(rich ? 0.15 : 0.08)) {
+    next = 'permanent_resident'
+    text = status === 'work_visa'
+      ? 'The permanent card arrives. The job can end now without the country ending with it, which is a sentence you did not know you had been waiting to be able to say.'
+      : 'Permanent residence. The renewals stop. For the first time since you arrived, the year ahead does not have a date in it that could send you back.'
+  } else if (status === 'permanent_resident' && NATURALISES.has(here?.archetype) && held >= 5 && chance(0.12)) {
+    next = 'citizen'
+    text = pickFrom([
+      'The ceremony is in a municipal hall with a flag and a portrait and forty people from thirty countries. You say the words. Afterwards somebody\'s child asks if that means you are from here now, and you do not know what to answer.',
+      'You are handed the certificate and a small paper flag. The passport comes later, in the post. You keep the old one in a drawer, because throwing it away would be a statement you are not ready to make.',
+    ])
+  } else if ((status === 'undocumented' || status === 'tourist_overstay') && rich && held >= 4 && chance(0.04)) {
+    next = 'work_visa'
+    text = 'An amnesty, announced on the radio like weather. You queue for two days with everyone you know and some people you have spent years avoiding, and at the end there is a card with your name on it.'
+  }
+  if (!next) return { ...s, mem }
+  mem.residencyStatusFor = next
+  mem.residencySince = s.currentYear
+  return { ...s, mem, residencyStatus: next, log: [...s.log, { age: s.age, year: s.currentYear, text, isKey: true }] }
 }
 
 // ─── Ribbon assignment ────────────────────────────────────────────────────────
@@ -1591,7 +1742,10 @@ function assignRibbon(state) {
 // ─── Career ───────────────────────────────────────────────────────────────────
 
 export function getAvailableCareers(state) {
+  const nonNational = gulfNonNational(state)
   return CAREERS.filter(career => {
+    if (nonNational && ['government', 'law_enforcement', 'military', 'politics'].includes(career.field)) return false
+    if (career.id === 'clergy' && !clergyOpenTo(state)) return false
     if (career.requirements.minAge && state.age < career.requirements.minAge) return false
     if (career.requirements.maxAge && state.age > career.requirements.maxAge) return false
     if (career.partTime && state.career?.field !== 'casual' && state.career) return false
@@ -1648,8 +1802,41 @@ function rankSystem(state) {
   return 'other'
 }
 
+// Which clergy a character could be, from their religion id.
+export function faithKey(religion) {
+  const r = religion ?? ''
+  if (r.startsWith('muslim')) return 'muslim'
+  if (r === 'christian_catholic') return 'catholic'
+  if (r === 'christian_orthodox' || r === 'christian_coptic') return 'orthodox'
+  if (r.startsWith('christian')) return 'protestant'
+  if (r === 'jewish') return 'jewish'
+  if (r === 'hindu') return 'hindu'
+  if (r === 'buddhist') return 'buddhist'
+  if (r === 'sikh') return 'sikh'
+  return null
+}
+
+// Whether this faith ordained somebody of this sex in this year. The ladder
+// had no such test, so a Catholic woman in 1960 Dublin could be a priest.
+function clergyOpenTo(state) {
+  const faith = faithKey(state?.character?.religion)
+  if (!faith) return false
+  if (state?.character?.gender !== 'female') return true
+  const y = state?.currentYear ?? 2000
+  if (faith === 'protestant') return y >= 1970
+  if (faith === 'jewish') return y >= 1980
+  return faith === 'buddhist'
+}
+
+const FAME_FIELDS = new Set(['entertainment', 'sports', 'digital_media', 'arts', 'writing'])
+
 function careerTitle(level, state) {
   const base = state?.character?.gender === 'female' && level.titleFemale ? level.titleFemale : level.title
+  if (level.byFaith) {
+    const faith = faithKey(state?.character?.religion)
+    const female = state?.character?.gender === 'female'
+    return (female && level.byFaith[`${faith}_f`]) || level.byFaith[faith] || base
+  }
   if (!level.ranks) return base
   return level.ranks[rankSystem(state)] ?? base
 }
@@ -1725,7 +1912,15 @@ export function checkPromotion(state) {
   const yearsBonus  = Math.min(state.career.yearsInRole * 0.03, 0.15)
   const peopleFacing = ['politics', 'law', 'entertainment', 'sports', 'education', 'healthcare', 'social_services', 'media'].includes(careerDef.field)
   const charismaBonus = (state.stats.charisma - 50) * (peopleFacing ? 0.003 : 0.001)
-  if (!chance(baseChance + smartsBonus + perfBonus + yearsBonus + charismaBonus)) return state
+  // A fame ladder is a pyramid. Time served got a musician from Busker to
+  // Superstar and a sixty-year-old to Mega Influencer; three of six Gulf lives
+  // in one sample ended at the top rung of the creator ladder on $990,000.
+  // Above the second rung, years do not help and the rungs narrow sharply.
+  const pyramid = FAME_FIELDS.has(careerDef.field) && nextIdx >= 2
+  const p = pyramid
+    ? (baseChance + smartsBonus + perfBonus + charismaBonus) * (nextIdx === careerDef.levels.length - 1 ? 0.06 : 0.35)
+    : baseChance + smartsBonus + perfBonus + yearsBonus + charismaBonus
+  if (!chance(p)) return state
 
   const newLevel = careerDef.levels[nextIdx]
   const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0
@@ -1992,6 +2187,13 @@ export function attemptCrime(state, crimeId) {
     const proxy = buildEffectProxy(updated)
     if (useNewFormat) crime.effect(proxy)
     else crime.successEffect(proxy)
+    // A successful theft paid out in the wealth STAT, which tick() recomputes
+    // from money every year, so a stolen car was worth nothing at all. Every
+    // crime carries an incomeEstimate in present-day money; this is where it
+    // was meant to land. Priced like goods, where the character lives.
+    if (crime.incomeEstimate > 0) {
+      proxy.mo += localCost(Math.round(crime.incomeEstimate * (0.4 + Math.random() * 0.9)), liveCountry(updated)?.gdp)
+    }
     updated = applyProxy(updated, proxy)
     const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
     if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
@@ -3052,8 +3254,18 @@ export function tick(state) {
         s.queue = [...s.queue, {
           id: `prison_parole_release_${s.age}`,
           phase: getPhase(s.age),
-          text: 'You walk out of the gates. The sunlight feels wrong — too bright, too open. Reintegration begins now.',
-          choices: [
+          // The release itself is logged above, this year. This fires the
+          // next, so it is the first year out, not the walk through the gate,
+          // which it used to narrate a second time a year late. And a
+          // political prisoner has no "old contacts" pulling them back to a
+          // life of crime; the pull is the other way.
+          text: s.flags.includes('political_prisoner')
+            ? 'The first year out. People you knew cross the street, or do not, and you learn which is which. The file is still somewhere, and so are the men who opened it.'
+            : 'The first year out. The sunlight still feels wrong some days — too bright, too open. Every form has the box on it.',
+          choices: s.flags.includes('political_prisoner') ? [
+            { text: 'Keep your head down. Work, and nothing else', tag: 'yielding', outcome: 'You find a job that asks no questions and give it no reasons to.', effect: (p) => { p.m += 4; p.addFlag('learned_silence'); }, inject: null },
+            { text: 'Find the others who came out', tag: 'defiant', outcome: 'There are more of you than you thought. Nobody says it is dangerous, because everybody knows.', effect: (p) => { p.m += 6; p.karma += 4; p.addFlag('dissident_network'); }, inject: null },
+          ] : [
             { text: 'Find work and start over', tag: 'determined', outcome: 'The record follows you everywhere. But you keep applying.', effect: (p) => { p.m += 8; p.e += 5; p.addFlag('determined_student'); }, inject: null },
             { text: 'Reconnect with old contacts', tag: null, outcome: 'Some are glad to see you. Some pull you back toward the life you tried to leave.', effect: (p) => { p.m += 4; p.karma -= 5; }, inject: null },
           ],
@@ -3367,6 +3579,8 @@ export function tick(state) {
   // Partner aging and natural death
   s = tickPartner(s)
 
+  s = tickResidency(s)
+
   // Undocumented / overstay annual pressure
   if (s.residencyStatus === 'undocumented' || s.residencyStatus === 'tourist_overstay') {
     s.stats = { ...s.stats, health: clamp((s.stats.health ?? 80) - 2, 0, 100), happiness: clamp((s.stats.happiness ?? 50) - 3, 0, 100) }
@@ -3505,7 +3719,10 @@ export function tick(state) {
       s.education = { ...s.education, level: 'none', enrolled: null }
       s.log = [...s.log, {
         age: s.age, year: s.currentYear, isKey: true,
-        text: pickFrom([
+        text: livingRuralUrban(s) !== 'rural' ? pickFrom([
+          'The other children in the street go to the school and you do not. There is the fee, and the uniform, and the work at home, and nobody lists them to you; you add them up yourself.',
+          'The school is close enough to hear at break time. You hear it from the doorway, with your hands full.',
+        ]) : pickFrom([
           'There is no school to start. The nearest one is a long way off and the family needs what you can do here, and the question does not come up again in any year you can remember.',
           'The other children go and you do not. Nobody sits you down about it. There is work, and you are old enough for some of it now, and that is the whole of the explanation anybody offers.',
         ]),
@@ -3544,7 +3761,16 @@ export function tick(state) {
       s.flags = [...new Set([...s.flags, ...(everAttended ? ['left_school_early'] : ['never_schooled'])])]
       s.log = [...s.log, {
         age: s.age, year: s.currentYear, isKey: true,
-        text: literate
+        // Fees are true of most of the world and false of a Miami high school
+        // in 1966, which is free and compulsory to sixteen: there, leaving
+        // is the job, or the house, or the school giving up on you.
+        text: literate && ['wealthy_west', 'wealthy_east', 'post_soviet'].includes(liveCountry(s)?.archetype)
+          ? pickFrom([
+              'You leave at sixteen, on the first day the law allows. There is a job that will take you, and the money is real in a way the lessons were not.',
+              'You stop going before the end. The school sends one letter, and then it stops sending them.',
+              'You can read, and write your name, and do the arithmetic that the work requires. The certificate goes to other people.',
+            ])
+          : literate
           ? pickFrom([
               'You stop going. There is no last day that anybody marks — there is a week you are needed at home, and then another, and by the time the question comes up again it has answered itself.',
               'School ends because the fees do. Nobody in the house says it is permanent and nobody says it is not.',
@@ -3555,9 +3781,17 @@ export function tick(state) {
                 'The reading never took. You were in the room for some of it and the letters stayed letters, and then you were needed elsewhere.',
                 'You leave without the reading. Nobody says this is what has happened; it is simply what you take with you.',
               ])
-            : pickFrom([
+            : livingRuralUrban(s) === 'rural'
+            ? pickFrom([
                 'There was never a school to leave. The nearest one is a long way off and the family needs what you can do here.',
                 'You do not learn to read. It is not a decision anyone makes; it is simply not among the things that were going to happen to you.',
+              ])
+            // A school a long way off is a village. In Kabul it is two
+            // streets away, and the reason is the fees, or the work, or a
+            // girl being needed at home.
+            : pickFrom([
+                'There was a school two streets away the whole time. It was for other children, and by now everybody has stopped pretending otherwise.',
+                'You do not learn to read. The school is near enough to hear at break time; it is simply not among the things that were going to happen to you.',
               ]),
       }]
     }
@@ -3868,9 +4102,11 @@ export function tick(state) {
       s.business = { ...s.business, yearsOpen: (s.business.yearsOpen ?? 0) + 1, revenue: rawRevenue, expenses, performance: perfDrift, value: newValue }
       s.money = (s.money ?? 0) + profit
       s.stats = { ...s.stats, wealth: clamp(s.stats.wealth + (profit > 0 ? 2 : -2), 0, 100) }
-      if (s.business.yearsOpen === 1) s.log = [...s.log, { age: s.age, text: `First year of ${s.business.name}: revenue $${rawRevenue.toLocaleString()}, profit $${profit.toLocaleString()}.`, isKey: true }]
-      else if (profit < 0) s.log = [...s.log, { age: s.age, text: `${s.business.name} had a tough year. Lost $${Math.abs(profit).toLocaleString()}.`, isKey: false }]
-      else s.log = [...s.log, { age: s.age, text: `${s.business.name} earned $${profit.toLocaleString()} profit this year.`, isKey: false }]
+      if (s.business.yearsOpen === 1) s.log = [...s.log, { age: s.age, text: profit >= 0
+        ? `The first year of the ${s.business.name.toLowerCase()} takes in $${rawRevenue.toLocaleString()} and leaves $${profit.toLocaleString()} after everything is paid.`
+        : `The first year of the ${s.business.name.toLowerCase()} takes in $${rawRevenue.toLocaleString()} and costs you $${Math.abs(profit).toLocaleString()} more than that.`, isKey: true }]
+      else if (profit < 0) s.log = [...s.log, { age: s.age, text: `A bad year at the ${s.business.name.toLowerCase()}. It loses $${Math.abs(profit).toLocaleString()}, and you find the money from somewhere.`, isKey: false }]
+      else s.log = [...s.log, { age: s.age, text: `The ${s.business.name.toLowerCase()} clears $${profit.toLocaleString()} this year.`, isKey: false }]
     }
   }
 

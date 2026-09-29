@@ -181,13 +181,13 @@ export const TANZANIA_DEPTH_EVENTS = [
       G.currentYear >= 2015 && G.currentYear <= 2021 &&
       G.age >= 18 &&
       !G.mem?.tanMagufuli,
-    text: 'He cancels the independence day parade and puts the country to work sweeping the streets instead, and he is there with a broom on the television. He sacks a hospital director on camera. People at the bus stand call him the Bulldozer and mean it warmly, and the newspaper that ran the other story last month is not on the stand. In 2020 he says the country is free of the virus and that steam and prayer will hold. In March they announce he is dead of heart failure.',
+    text: (G) => 'He cancels the independence day parade and puts the country to work sweeping the streets instead, and he is there with a broom on the television. He sacks a hospital director on camera. People at the bus stand call him the Bulldozer and mean it warmly, and the newspaper that ran the other story last month is not on the stand.' + (G.currentYear >= 2020 ? ' In 2020 he says the country is free of the virus and that steam and prayer will hold.' : '') + (G.currentYear >= 2021 ? ' In March they announce he is dead of heart failure.' : ''),
     context: 'John Magufuli was president of Tanzania from 2015 until his death in March 2021. He cut government spending, replaced the independence anniversary with a national clean-up day and dismissed officials publicly, while opposition figures were arrested, newspapers suspended and prosecutions for homosexuality increased. He declared Tanzania free of COVID-19 in June 2020, halted testing and reporting, and rejected vaccines. Officials attributed his death to heart failure; opposition figures said he had contracted the virus.',
     choices: [
       {
         text: `The development was real. The roads. The clean cities. You saw what the Bulldozer was moving.`,
         tag: null,
-        outcome: 'He was also burying the statistics and arresting journalists and dismissing COVID. The accounting of him requires both columns.',
+        outcome: (G) => G.currentYear >= 2020 ? 'He was also burying the statistics and arresting journalists and dismissing COVID. The accounting of him requires both columns.' : 'He is also arresting journalists and closing newspapers. The accounting of him requires both columns.',
         effect: (p) => {
           p.m -= 5
           p.addFlag('tan_magufuli_generation')
@@ -195,9 +195,9 @@ export const TANZANIA_DEPTH_EVENTS = [
         },
       },
       {
-        text: `His death was what COVID denial looks like at the top. The country has a vaccine gap to close.`,
+        text: (G) => G.currentYear >= 2021 ? 'His death was what COVID denial looks like at the top. The country has a vaccine gap to close.' : 'The newspaper that is not on the stand is the story. You notice what is missing.',
         tag: null,
-        outcome: 'Samia Suluhu Hassan becomes president — the first female president in East African history. She reverses the vaccine policy. The damage to the vaccination programme is real but partly repaired.',
+        outcome: (G) => G.currentYear >= 2021 ? 'Samia Suluhu Hassan becomes president — the first female president in East African history. She reverses the vaccine policy. The damage to the vaccination programme is real but partly repaired.' : 'You stop saying some things on the phone. You are not the only one who has stopped.',
         effect: (p) => {
           p.m -= 4
           p.r += 5

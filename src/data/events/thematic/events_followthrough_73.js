@@ -35,7 +35,7 @@ export const FOLLOWTHROUGH_73_EVENTS = [
     when: (G) =>
       G.flags.has('okinawa_battle_generation') &&
       G.character.country.name === 'Japan' &&
-      G.currentYear >= 2000 &&
+      G.currentYear >= 2007 && // the revision and the Ginowan rally are 2007
       G.age >= 65 &&
       !G.mem?.ft64OkinawaTextbook,
     text: 'There is a national controversy about what the Okinawa textbooks say. In 2007 the Ministry of Education instructs publishers to revise the chapter — removing the sentence that the Japanese military ordered civilians to commit suicide. Okinawa prefectural assembly protests. 110,000 people gather at Ginowan Park in September 2007, the largest rally in the prefecture since the reversion. You are old. The sentence that was removed is the sentence that describes something you know was true.',

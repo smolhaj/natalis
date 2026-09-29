@@ -117,15 +117,15 @@ export const UKRAINE_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year <= 2013) {
-        return 'November 21, 2013. Yanukovych — now president — announces he will not sign the EU Association Agreement. Students appear on Maidan within hours. On November 30, the Berkut special police beat the students — a hundred hospitalised. The city responds. By December it is not students. It is a city. The tent city is back. The piano on Hrushevsky Street. The burning barricades in February. The snipers on the rooftops on February 18-20. A hundred and four dead. The Heavenly Hundred — Небесна Сотня.'
+        return 'November 21, 2013. Yanukovych — now president — announces he will not sign the EU Association Agreement. Students appear on Maidan within hours. On November 30, the Berkut special police beat the students — a hundred hospitalised. The city responds. By December it is not students. It is a city. The tent city is back. The field kitchens, the oil drums burning for warmth, the priests walking the line between the crowd and the shields. Nobody on the square knows how it ends.'
       }
-      return 'The Euromaidan. The EU Association Agreement that Yanukovych cancelled. The Berkut beating the students. The burning barricades. The Heavenly Hundred dead. Yanukovych fleeing to Russia on February 21. What came after: Crimea, Donbas, eight years of a not-quite-war. What came after that: February 24, 2022. You were there for the beginning of the chain.'
+      return 'The Euromaidan. The EU Association Agreement that Yanukovych cancelled. The Berkut beating the students. The burning barricades. The Heavenly Hundred dead. Yanukovych fleeing to Russia on February 21. What comes after, within weeks: Crimea, then Donbas. You were there for the beginning of the chain.'
     },
     choices: [
       {
         text: 'You are there — the cold, the piano, the barricades.',
         tag: null,
-        outcome: 'You are in the Maidan through January and February. You are there when the snipers fire. What happens in those weeks is the thing that produces everything that comes after.',
+        outcome: (G) => G.currentYear >= 2014 ? 'You are in the Maidan through January and February. You are there when the snipers fire. What happens in those weeks is the thing that produces everything that comes after.' : 'You are in the Maidan through December. The cold gets into your boots and stays there. You go back the next day, and the next.',
         effect: (p) => { p.m -= 8; p.m += 10; p.karma += 10; p.r += 6; p.addFlag('euromaidan_generation'); p.addFlag('political_active'); p.setMem('ukrEuromaidan', true); p.setMem('kyivEuromaidan', true); },
       },
       {
@@ -137,7 +137,7 @@ export const UKRAINE_EVENTS = [
       {
         text: 'You watch from home, frightened of where this is going.',
         tag: null,
-        outcome: 'Where it goes: Crimea annexed in March. Donbas in April. Eight years of low-grade war. Then 2022. The fear was accurate about the cost. It was not wrong.',
+        outcome: (G) => G.currentYear >= 2014 ? 'Where it goes: Crimea annexed in March. Donbas in April. The fear was accurate about the cost. It was not wrong.' : 'You watch the square on the television every night. You do not know yet what it will cost. You are afraid it will cost a great deal.',
         effect: (p) => { p.r += 6; p.m -= 3; p.addFlag('euromaidan_generation'); p.setMem('ukrEuromaidan', true); p.setMem('kyivEuromaidan', true); },
       },
     ],

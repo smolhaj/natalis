@@ -41,7 +41,7 @@ export const POLAND_EVENTS = [
       G.currentYear >= 1978 && G.currentYear <= 1979 &&
       G.age >= 10 &&
       !G.mem?.polPope,
-    text: 'October 16, 1978. Karol Wojtyła of Kraków becomes the first non-Italian Pope in 455 years. He takes the name John Paul II. In Poland, the announcement arrives on the radio. People come into the street. In 1979, John Paul II visits Poland — his first visit to his homeland as Pope. In Warsaw the crowd is a million people. In Kraków two million. The state that has governed Poland for thirty-four years stands in the square watching two million Poles tell it something about what it does not own.',
+    text: (G) => 'October 16, 1978. Karol Wojtyła of Kraków becomes the first non-Italian Pope in 455 years. He takes the name John Paul II. In Poland, the announcement arrives on the radio. People come into the street.' + (G.currentYear >= 1979 ? ' In June 1979, John Paul II visits Poland — his first visit to his homeland as Pope. In Warsaw the crowd is a million people. In Kraków two million. The state that has governed Poland for thirty-four years stands in the square watching two million Poles tell it something about what it does not own.' : ' The church bells ring in the middle of a working day. The state that has governed Poland for thirty-four years issues a statement of congratulation, and everyone reads it twice.'),
     choices: [
       {
         text: 'The visit is the beginning of something. You feel it in the crowd.',
@@ -68,19 +68,19 @@ export const POLAND_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 1981 &&
       G.age >= 16 &&
       !G.mem?.polSolidarity,
-    text: 'They have sacked a crane operator five months from her pension and the yard stops over it. A man climbs the gate from the outside, which is the wrong direction, and that is the photograph. The list comes to twenty-one points and the eighth one is the one nobody expected them to keep. By the following autumn one Pole in three has a card in a drawer, and nobody in your building has said the word government in an ordinary tone of voice for months.',
+    text: (G) => 'They have sacked a crane operator five months from her pension and the yard stops over it. A man climbs the gate from the outside, which is the wrong direction, and that is the photograph. The list comes to twenty-one points and the eighth one is the one nobody expected them to keep. ' + (G.currentYear >= 1981 ? 'By the following autumn one Pole in three has a card in a drawer' : 'By November the union is registered and the cards are being printed faster than they can be handed out') + ', and nobody in your building has said the word government in an ordinary tone of voice for months.',
     context: 'The Lenin Shipyard in Gdansk struck in August 1980 over the dismissal of crane operator Anna Walentynowicz. Lech Walesa climbed the yard wall to join the strike and led the negotiations that produced the Gdansk Agreement of 31 August, whose first demand was the right to form independent trade unions. Solidarnosc was registered in November 1980 and reached about ten million members, roughly a third of Poland\'s adult population, within fourteen months.',
     choices: [
       {
         text: 'You join. This is the thing you have been waiting for without knowing you were waiting.',
         tag: null,
-        outcome: 'You are in the meeting. The priest says things that would have been impossible eighteen months ago. The window is open. The air is extraordinary. Martial law is thirteen months away. You cannot know that yet.',
+        outcome: 'You are in the meeting. The priest says things that would have been impossible eighteen months ago. The window is open. The air is extraordinary. Nobody in the room knows how long a window stays open.',
         effect: (p) => { p.m += 8; p.karma += 10; p.r += 3; p.addFlag('solidarity_generation'); p.addFlag('solidarity_member'); p.setMem('polSolidarity', true); },
       },
       {
         text: 'You observe with hope and caution. The state is still the state.',
         tag: null,
-        outcome: 'The caution is correct and the hope is also correct. The state is still the state. The state will declare martial law in December 1981. The hope is not wrong — it is early.',
+        outcome: 'The caution is correct and the hope is also correct. The state is still the state. The tanks are still in their barracks. The hope is not wrong. It may only be early.',
         effect: (p) => { p.m += 4; p.r += 4; p.addFlag('solidarity_generation'); p.setMem('polSolidarity', true); },
       },
     ],
@@ -151,7 +151,7 @@ export const POLAND_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1995 &&
       G.age >= 20 &&
       !G.mem?.polShockTherapy,
-    text: 'The Balcerowicz Plan: price liberalization, privatization, currency convertibility. Implemented on January 1, 1990. Within months, prices rise 250 percent. State enterprises shut down. The unemployment that didn\'t exist under communism reaches sixteen percent by 1994. The bazaar economy: the folding tables selling anything that can be traded, the dollar as real currency, the informal economy that carries people through. Poland will become the only major economy in Europe that avoids recession in 2009. The price of that will have been paid in the early nineties.',
+    text: (G) => 'The Balcerowicz Plan: price liberalization, privatization, currency convertibility. Implemented on January 1, 1990. Within months, prices rise 250 percent. State enterprises shut down. The unemployment that didn\'t exist under communism reaches sixteen percent' + (G.currentYear >= 1994 ? ' by 1994' : '') + '. The bazaar economy: the folding tables selling anything that can be traded, the dollar as real currency, the informal economy that carries people through. Whether any of it will have been worth it is a question for a later decade. The price is being paid now.',
     choices: [
       {
         text: 'The transition is painful and necessary. You absorb the cost and build from the new foundation.',

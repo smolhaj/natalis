@@ -62,7 +62,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.currentYear >= 1965 && G.currentYear <= 1976 &&
       G.age >= 15 && G.age <= 45 &&
       !G.mem?.omnDhofar,
-    text: 'In the south there is a war that the rest of the country is not told very much about — Marxist rebels in the jebel, British officers seconded to the Sultan\'s forces, Iranian troops, a firqat of surrendered fighters turned around and sent back up. It ends in 1975 with a declaration and a road and a school in every wadi, which was the actual strategy. If you are Jibbali and from those mountains, the war is the central fact of your family. If you are from the north it is a thing that was happening somewhere hot.',
+    text: (G) => 'In the south there is a war that the rest of the country is not told very much about — ' + (G.currentYear >= 1968 ? 'Marxist rebels' : 'rebels') + ' in the jebel, British officers seconded to the Sultan\'s forces' + (G.currentYear >= 1973 ? ', Iranian troops' : '') + (G.currentYear >= 1971 ? ', a firqat of surrendered fighters turned around and sent back up' : '') + '. ' + (G.currentYear >= 1976 ? 'It ends in 1975 with a declaration and a road and a school in every wadi, which was the actual strategy.' : G.currentYear >= 1971 ? 'The new Sultan is fighting it with an amnesty, a well, a road, a clinic, and it is not over.' : 'Nobody in Muscat will say how it ends.') + ' If you are Jibbali and from those mountains, the war is the central fact of your family. If you are from the north it is a thing that was happening somewhere hot.',
     choices: null,
     effect: (p) => {
       p.m -= 7; p.e += 5

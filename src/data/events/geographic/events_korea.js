@@ -239,7 +239,7 @@ export const KOREA_EVENTS = [
     weight: 4,
     when: (G) =>
       isSouthKorea(G) &&
-      G.currentYear >= 1950 && G.currentYear <= 1965 &&
+      G.currentYear >= 1954 && G.currentYear <= 1965 &&   // after the armistice the text describes
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.krPostwarPoverty,
     text: 'In 1953 South Korea\'s GDP per capita was lower than Sudan\'s. The war ended with an armistice, not a peace treaty, and left behind rubble and three million dead. American aid keeps the country from collapsing outright. Your family eats what is available. The concept of what will be available in the future has not yet stabilised. You have grown up knowing scarcity not as an abstract condition but as the specific weight of the bowl at breakfast. The miracle — the thing people will later call the Miracle on the Han River — is not visible from here. You are living inside the before.',
@@ -260,7 +260,7 @@ export const KOREA_EVENTS = [
       G.currentYear >= 1963 && G.currentYear <= 1979 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.krParkBargain,
-    text: 'Park Chung-hee\'s government does not ask for your political approval. It asks for your labour. The Saemaul Undong campaign rebuilds rural villages: cement, tile roofs, community roads, a sense of directed national purpose. The Han River bridge is built. The steel mill at Pohang is built. POSCO in 1968 is the largest single investment project in Korean history. The economy is growing at 9 percent a year. The price is: no independent unions, no free press, the KCIA in the buildings, the emergency decrees. The bargain is implicit and it is being honoured, at cost, by everyone around you.',
+    text: (G) => 'Park Chung-hee\'s government does not ask for your political approval. It asks for your labour. ' + (G.currentYear >= 1971 ? 'The Saemaul Undong campaign rebuilds rural villages: cement, tile roofs, community roads, a sense of directed national purpose. ' : 'The five-year plans arrive with numbers attached, and a sense of directed national purpose. ') + (G.currentYear >= 1974 ? 'The steel mill at Pohang is built — POSCO, founded in 1968, the largest single investment project in Korean history. ' : G.currentYear >= 1969 ? 'The steel mill at Pohang is being built — POSCO, founded in 1968, the largest single investment project in Korean history. ' : '') + 'The economy is growing at 9 percent a year. The price is: no independent unions, no free press, the KCIA in the buildings' + (G.currentYear >= 1974 ? ', the emergency decrees.' : '.') + ' The bargain is implicit and it is being honoured, at cost, by everyone around you.',
     choices: [
       {
         text: 'You take the bargain. The growth is real.',
@@ -287,7 +287,21 @@ export const KOREA_EVENTS = [
       G.character.birthYear <= 1955 &&
       G.age >= 35 &&
       !G.mem?.krDMZFamily,
-    text: 'You have relatives in the North. This is not unusual — the armistice drew the line through families. A grandparent, an uncle, cousins you have never met. The Red Cross family tracing programme began in 1985; the first reunion meetings in 2000 were held in a hotel in Mount Geumgang, two hours allocated per family, orchestrated by cameras and officials. Some families got one meeting. Some got none. The DMZ is ninety kilometres from Seoul and has been there your entire life. The people on the other side of it are there too, and the distance between ninety kilometres and unreachable is the specific geography of this country.',
+    text: (G) => {
+      const yr = G.currentYear
+      const reunions = yr >= 2003
+        ? 'In 1985 fifty people from each side crossed to visit their home towns, once, on television. The reunions came in 2000, a hundred families at a time in Seoul and Pyongyang, and later at Mount Geumgang: two hours allocated per family, orchestrated by cameras and officials. Some families got one meeting. Some got none.'
+        : yr >= 2001
+          ? 'In 1985 fifty people from each side crossed to visit their home towns, once, on television. The reunions came in 2000, a hundred families at a time in Seoul and Pyongyang: two hours allocated per family, orchestrated by cameras and officials. Some families got one meeting. Most are still waiting.'
+          : yr >= 1986
+            ? 'In 1985 fifty people from each side crossed to visit their home towns, once, on television. Nothing has followed it. Your family was not among the fifty.'
+            : yr >= 1985
+              ? 'This autumn fifty people from each side cross the line to visit their home towns, on television. Your family is not among the fifty.'
+              : yr >= 1983
+                ? 'In 1983 the television ran for months with people holding up placards of names, looking for relatives lost in the war. Families found each other on air, and wept on air. Nobody holding a placard could look north.'
+                : 'There is no letter, no telephone, no list you can put a name on.'
+      return 'You have relatives in the North. This is not unusual — the armistice drew the line through families. A grandparent, an uncle, cousins you have never met. ' + reunions + ' The DMZ is about fifty kilometres from Seoul and has been there your entire life. The people on the other side of it are there too, and the distance between fifty kilometres and unreachable is the specific geography of this country.'
+    },
     choices: null,
     effect: (p) => {
       p.m -= 10; p.r += 10; p.e += 4;

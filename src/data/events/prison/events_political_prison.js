@@ -250,7 +250,9 @@ export const POLITICAL_PRISON_EVENTS = [
     phase: null,
     weight: 1,
     when: (G) =>
-      isRepressive(G) && !G.inPrison && G.age >= 16 && G.age <= 70 &&
+      // A sweep takes young men off the street. It did not take a
+      // sixty-eight-year-old in a house he owned outright, which it had.
+      isRepressive(G) && !G.inPrison && G.age >= 16 && G.age <= 50 && G.stats.wealth < 70 &&
       (G.ethnicity && G.character?.country?.ethnicGroups?.some(g => g.id === G.ethnicity && g.disadvantaged)) &&
       !G.mem?.polArrestCategory,
     text: 'Nobody asks you anything. That is the part that stays with you: there is no interrogation, because there is no question — the category was decided somewhere else and you are simply an instance of it. The man processing the paperwork is bored, and being bored by it is worse than being cruel about it would have been.',

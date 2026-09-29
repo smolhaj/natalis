@@ -155,7 +155,8 @@ export const CONSEQUENCE_EVENTS = [
     id: 'pandemic_isolation_mental',
     phase: null,
     weight: 5,
-    when: (G) => G.flags.includes('lived_through_pandemic') && G.currentYear >= 2020 && G.currentYear <= 2023 && G.age >= 18 && !G.mem?.pandemic_isolation,
+    // Lockdown is 2020-21, and an apartment is a city.
+    when: (G) => G.flags.includes('lived_through_pandemic') && G.currentYear >= 2020 && G.currentYear <= 2021 && G.ruralUrban !== 'rural' && G.age >= 18 && !G.mem?.pandemic_isolation,
     text: 'The weeks of staying inside accumulate into something that stops feeling temporary. The apartment is the same size it always was. The silence has a texture. You speak to people through screens and feel the inadequacy of that. There is no event and no endpoint. There is only today, which looks like yesterday.',
     choices: [
       { text: 'Build a routine and hold to it rigidly', tag: null, outcome: 'The structure keeps you functional. It does not keep you well.', effect: (p) => { p.m -= 8; p.h -= 3; p.e += 3; p.addFlag('pandemic_coped'); p.setMem('pandemic_isolation', true) } },

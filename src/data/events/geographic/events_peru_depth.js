@@ -100,12 +100,12 @@ export const PERU_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2010 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.perDepLaOroya,
-    text: `The La Oroya metallurgical complex has been smelting lead, zinc, copper, and silver in the central Andes since 1922. For most of that time it was owned by a US company. In 1999 a study found that 99 percent of the children of La Oroya had blood lead levels above the WHO threshold. The company had been aware of this for years. The town exists because of the smelter. The smelter had been poisoning the town for generations. These two facts are not contradictory from the inside: the smelter provided the wages. The alternative to the wages was something the mountain offered only in small amounts.`,
+    text: (G) => `The La Oroya metallurgical complex has been smelting lead, zinc, copper, and silver in the central Andes since 1922. ${G.currentYear >= 1997 ? 'It belonged to the Cerro de Pasco Corporation, an American company, until the government nationalised it in 1974; the state ran it until 1997, when another American company, Doe Run, bought it.' : G.currentYear >= 1974 ? 'It belonged to the Cerro de Pasco Corporation, an American company, until the government nationalised it in 1974. The state company runs it now.' : 'It belongs to the Cerro de Pasco Corporation, an American company, and so, in the ways that matter, does the town.'}${G.currentYear >= 2000 ? ' In 1999 a study found that 99 percent of the children of La Oroya had blood lead levels above the WHO threshold. The company had been aware of this for years.' : ' The children have headaches. The river below the stacks runs a colour nobody swims in.'} The town exists because of the smelter. The smelter had been poisoning the town for generations. These two facts are not contradictory from the inside: the smelter provided the wages. The alternative to the wages was something the mountain offered only in small amounts.`,
     choices: [
       {
         text: 'Your father worked there. You grew up knowing what it cost and accepting that it was the cost.',
         tag: null,
-        outcome: 'The blood lead tests, when they finally came, confirmed what the headaches had been suggesting. The company disputed the findings for years. Your father\'s lungs had not waited for the dispute to be resolved.',
+        outcome: (G) => G.currentYear >= 2000 ? 'The blood lead tests, when they finally came, confirmed what the headaches had been suggesting. The company disputed the findings for years. Your father\'s lungs had not waited for the dispute to be resolved.' : 'Nobody tests anybody\'s blood. The headaches are the test. Your father\'s cough is the result, and he goes to the shift anyway.',
         effect: (p) => {
           p.h -= 5
           p.r += 5
@@ -139,7 +139,7 @@ export const PERU_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 2000 &&
       G.age >= 12 && G.age <= 22 &&
       !G.mem?.perDepNikkei,
-    text: `Your grandparents came from Japan between 1899 and 1941. In Peru they became *Nikkei* — Japanese by descent, Peruvian by birth and culture, speaking Spanish and sometimes Japanese, cooking lomo saltado alongside sushi. In 1940 anti-Japanese riots destroyed the businesses of the community in Lima. In the Pacific War years, some Nikkei were interned, or deported to the United States as enemy aliens at Peru's request, or simply watched. Alberto Fujimori was elected president in 1990 — a Nikkei, son of immigrants — which was either a sign of integration or an anomaly depending on who was saying it. You are neither fully Japanese nor not Japanese. The category is specific to Peru and is yours.`,
+    text: (G) => `Your grandparents came from Japan between 1899 and 1941. In Peru they became *Nikkei* — Japanese by descent, Peruvian by birth and culture, speaking Spanish and sometimes Japanese, cooking lomo saltado alongside sushi. In 1940 anti-Japanese riots destroyed the businesses of the community in Lima. In the Pacific War years, some Nikkei were interned, or deported to the United States as enemy aliens at Peru's request, or simply watched.${G.currentYear >= 1990 ? ' Alberto Fujimori was elected president in 1990 — a Nikkei, son of immigrants — which was either a sign of integration or an anomaly depending on who was saying it.' : ''} You are neither fully Japanese nor not Japanese. The category is specific to Peru and is yours.`,
     choices: [
       {
         text: 'The Nikkei community is your world. The Japanese-Peruvian associations, the kenjinkai, the specific food.',

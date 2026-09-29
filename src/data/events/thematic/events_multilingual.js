@@ -100,7 +100,7 @@ export const MULTILINGUAL_EVENTS = [
     id: 'mul_grandparent_tongue',
     phase: 'late_life',
     weight: 3,
-    when: (G) => G.flags.has('emigrated') && G.age >= 60 && !G.mem.mulGrandparentTongue,
+    when: (G) => G.flags.has('emigrated') && G.age >= 60 && G.hasGrandchildren && !G.mem.mulGrandparentTongue,
     text: 'Your grandchild asks why you laugh at different times than everyone else when you watch films together. You explain about the other language — not the grammar but the mood, the way certain ideas sit differently. They listen with the specific half-attention of a child being told something that doesn\'t apply to them. Then they ask you to teach them a word. You teach them the word for the feeling of missing a place you have never been.',
     effect: (p) => { p.m += 8; p.karma += 4; p.setMem('mulGrandparentTongue', true) },
   },

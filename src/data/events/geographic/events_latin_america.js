@@ -180,10 +180,13 @@ export const LATIN_AMERICA_EVENTS = [
   // ARGENTINA
   // ═══════════════════════════════════════════════════════════════════════
 
+  // Both were weight 3 across an eight-year window, so a Buenos Aires woman
+  // who was twenty-one to twenty-eight under the Proceso lived through it
+  // without one line about it in fifteen lives out of fifteen.
   {
     id: 'la_arg_disappeared_colleague',
     phase: null,
-    weight: 3,
+    weight: 15,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
       G.regime === 'military_dictatorship' &&
@@ -214,7 +217,7 @@ export const LATIN_AMERICA_EVENTS = [
   {
     id: 'la_arg_proceso_complicity',
     phase: null,
-    weight: 3,
+    weight: 15,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
       G.regime === 'military_dictatorship' &&

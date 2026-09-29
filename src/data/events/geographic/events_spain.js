@@ -277,7 +277,7 @@ export const SPAIN_EVENTS = [
       G.currentYear >= 2002 && G.currentYear <= 2011 &&
       G.age >= 22 && G.age <= 42 &&
       !G.mem?.esHousing,
-    text: 'Everyone is buying flats. You are either buying a flat or wondering how people are buying flats on those salaries. The developer\'s guarantee is not a guarantee. The bank\'s risk assessment is not an assessment. But the crane is outside the window and the flat appreciates and the broker says this is the new floor, not the ceiling. Then 2008 arrives, specifically, and lasts. In Spain the recession lasts longer than elsewhere. Youth unemployment reaches fifty percent. That is a number. You know people inside the number.',
+    text: (G) => 'Everyone is buying flats. You are either buying a flat or wondering how people are buying flats on those salaries. The developer\'s guarantee is not a guarantee. The bank\'s risk assessment is not an assessment. But the crane is outside the window and the flat appreciates and the broker says this is the new floor, not the ceiling.' + (G.currentYear >= 2012 ? ' Then 2008 arrives, specifically, and lasts. In Spain the recession lasts longer than elsewhere. Youth unemployment reaches fifty percent. That is a number. You know people inside the number.' : G.currentYear >= 2009 ? ' Then 2008 arrives, specifically, and does not leave. The cranes stop where they are. You know people who are out of work, and then you know more of them.' : ' Nobody you know has ever seen a flat lose value.'),
     choices: [
       {
         text: 'You bought.',

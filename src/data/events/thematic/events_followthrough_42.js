@@ -126,10 +126,10 @@ export const FOLLOWTHROUGH_42_EVENTS = [
     weight: 4,
     when: (G) =>
       G.flags.has('red_terror_generation') &&
-      G.currentYear >= 1995 &&
+      G.currentYear >= 2008 &&
       G.age >= 50 &&
       !G.mem?.ft42RedTerrorLate,
-    text: 'The Derg fell in 1991. Mengistu fled to Zimbabwe. The trials began in 2006 and produced convictions in absentia for Mengistu, death sentences for more than seventy officials. Mengistu remains in Harare under Mugabe\'s protection and then under his successors\'. The specific question — why Zimbabwe extends that protection — is not answered. The bodies that were displayed in the streets of Addis Ababa in 1977 and 1978 are not answered by the convictions. The people who survived know what was done and who did it with more precision than any trial record. You carry this knowledge in a country that has been through the Derg, the Tigray war, other violences. Ethiopia does not run out of things to carry.',
+    text: (G) => 'The Derg fell in 1991. Mengistu fled to Zimbabwe. The trials produced convictions in absentia for Mengistu and death sentences for dozens of officials. Mengistu remains in Harare under Mugabe\'s protection' + (G.currentYear >= 2018 ? ' and then under his successors\'' : '') + '. The specific question — why Zimbabwe extends that protection — is not answered. The bodies that were displayed in the streets of Addis Ababa in 1977 and 1978 are not answered by the convictions. The people who survived know what was done and who did it with more precision than any trial record. You carry this knowledge in a country that has been through the Derg' + (G.currentYear >= 2021 ? ', the Tigray war' : '') + ', other violences. Ethiopia does not run out of things to carry.',
     choices: null,
     effect: (p) => { p.r += 8; p.karma += 3; p.m -= 5; p.setMem('ft42RedTerrorLate', true) },
   },

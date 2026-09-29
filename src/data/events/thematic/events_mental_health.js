@@ -494,6 +494,7 @@ export const MENTAL_HEALTH_EVENTS = [
     when: (G) =>
       G.mentalHealth.condition &&
       !G.mem.mhParentRevelation &&
+      G.parents?.father?.alive &&
       G.age >= 30,
     text: 'Your father says — carefully, as if testing whether the words will hold — that he went through something similar in his forties. He never saw a doctor for it. He managed it in the way of his generation and his gender and his country: by not speaking of it, by working more, by going quiet for long periods that the family learned to read around. He does not say why he is telling you this now. You understand.',
     choices: null,
@@ -584,7 +585,7 @@ export const MENTAL_HEALTH_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      G.character.country.archetype === 'conflict_zone' &&
+      G.conflictRisk > 0.1 &&
       !G.mem.mhConflictUntreated &&
       G.age >= 18,
     text: 'You know what trauma does to a body. You have seen it in other people and you can feel it in yourself — the startle response, the nights, the way certain sounds land wrong. Here, the word for it is not used. Survival is the category that contains everything. Treatment is what happens after the other things stop, and the other things have not stopped.',

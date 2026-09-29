@@ -93,7 +93,9 @@ export const EVENTS_SONDER_37 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.age >= 60 && !G.mem?.s37k,
-    text: 'The young doctor is younger than your children. This is not the first time you have noticed this but it is still the fact. They are competent. They know things you don\'t know. The fact of their age is not relevant to their competence. You notice it anyway. This is what medicine looks like from the far side of the scale.',
+    text: (G) => G.children?.length
+      ? 'The young doctor is younger than your children. This is not the first time you have noticed this but it is still the fact. They are competent. They know things you don\'t know. The fact of their age is not relevant to their competence. You notice it anyway. This is what medicine looks like from the far side of the scale.'
+      : 'The young doctor is young enough to be your child. This is not the first time you have noticed this but it is still the fact. They are competent. They know things you don\'t know. The fact of their age is not relevant to their competence. You notice it anyway. This is what medicine looks like from the far side of the scale.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s37k', true) },
   },

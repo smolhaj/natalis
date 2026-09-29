@@ -464,7 +464,7 @@ export const CAREERS = [
         text: 'You see combat. The training did not fully prepare you for what it actually is.',
         choices: null,
         effect: (p) => { p.m -= 12; p.h -= 5; p.addFlag('combat_veteran'); },
-        when: (G) => G.character.country.conflictRisk > 0.1,
+        when: (G) => G.conflictRisk > 0.1,
       },
       {
         id: 'career_soldier_order',
@@ -914,9 +914,11 @@ export const CAREERS = [
     title: 'Religious Leader',
     field: 'religion',
     levels: [
-      { title: 'Deacon', salaryRange: [14000, 24000] },
-      { title: 'Priest / Pastor / Imam', salaryRange: [20000, 38000] },
-      { title: 'Senior Clergy', salaryRange: [30000, 55000] },
+      // "Deacon" was the first rung for everybody, so a Sunni in Doha was a
+      // Deacon. `byFaith` is read by careerTitle in tick.js.
+      { title: 'Deacon', salaryRange: [14000, 24000], byFaith: { muslim: 'Muezzin', catholic: 'Deacon', orthodox: 'Deacon', protestant: 'Curate', jewish: 'Cantor', hindu: 'Temple Assistant', buddhist: 'Novice', sikh: 'Sevadar' } },
+      { title: 'Priest / Pastor / Imam', salaryRange: [20000, 38000], byFaith: { muslim: 'Imam', catholic: 'Priest', orthodox: 'Priest', protestant: 'Pastor', jewish: 'Rabbi', hindu: 'Pujari', buddhist: 'Monk', buddhist_f: 'Nun', sikh: 'Granthi' } },
+      { title: 'Senior Clergy', salaryRange: [30000, 55000], byFaith: { muslim: 'Senior Imam', catholic: 'Monsignor', orthodox: 'Archpriest', protestant: 'Senior Pastor', jewish: 'Senior Rabbi', hindu: 'Head Priest', buddhist: 'Abbot', buddhist_f: 'Senior Nun', sikh: 'Head Granthi' } },
     ],
     requirements: { education: 'university', field: null, minSmarts: 30, minAge: 24 },
     archetypeAvailable: 'all',

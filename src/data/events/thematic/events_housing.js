@@ -93,7 +93,10 @@ export const HOUSING_EVENTS = [
     phase: null,
     weight: 5,
     when: (G) =>
-      ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.archetype) &&
+      // Two years up front is the West African rental market — Lagos, Accra,
+      // Freetown, Douala. It was reaching Buenos Aires in 1978 on the
+      // strength of an archetype.
+      ['Nigeria', 'Ghana', 'Sierra Leone', 'Liberia', 'Cameroon', 'Benin', 'Togo', 'Ivory Coast'].includes(G.currentCountry?.name) &&
       G.ruralUrban !== 'rural' &&
       G.age >= 20 && G.age <= 50 &&
       !G.flags.has('homeowner') &&

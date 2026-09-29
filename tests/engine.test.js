@@ -210,7 +210,18 @@ describe('buildEffectProxy', () => {
     const state = makeState({ money: 10000 })
     const proxy = buildEffectProxy(state)
     proxy.wipeMoney(0.5)
-    expect(proxy.mo).toBe(-5000)
+    // A fraction of the nominal balance is nominal money: it must not pass
+    // through the present-day channel, which denominates it a second time.
+    expect(proxy.moNominal).toBe(-5000)
+    expect(proxy.mo).toBe(0)
+  })
+
+  it('wipeMoney takes the stated fraction in an era where money is worth a different amount', () => {
+    const state = makeState({ money: 10000, currentYear: 1955, age: 30 })
+    const proxy = buildEffectProxy(state)
+    proxy.wipeMoney(0.3)
+    const after = applyProxy(state, proxy)
+    expect(after.money).toBe(7000)
   })
 
   it('scheduleEcho adds to echoQueue with correct fireAtAge', () => {

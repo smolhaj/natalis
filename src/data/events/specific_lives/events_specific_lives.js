@@ -1689,7 +1689,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       // the countries that had email, and North Korea is not one of them.
       hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear) &&
       G.currentYear <= 2008 &&
-      G.age >= 65 && G.age <= 80 &&
+      G.age >= 65 && G.age <= 80 && G.hasGrandchildren &&
       !G.mem?.sl_old_inet,
     text: 'The grandchildren showed you how to use the email. The process of learning was more interesting than they expected and more frustrating than you let them see. What you understood immediately was that the letters your grandchildren wrote to you by email were shorter than the letters they would have written on paper — as if the medium had a maximum length it was comfortable with. You have adapted to the medium. You write short emails. You remember writing long letters.',
     choices: null,

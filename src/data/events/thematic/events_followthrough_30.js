@@ -253,6 +253,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.has('communist_poland_childhood') &&
+      G.currentYear >= 1990 &&
       G.age >= 35 &&
       !G.mem?.ft30CommPol,
     text: 'You grew up in a country that no longer exists. The Poland you learned to read and write in, that gave you your habits of mind and your specific mistrust of certain kinds of authority — that country ended in 1989 and what replaced it is also called Poland. The children born after 1989 know the previous Poland from their parents\' stories. You know it from having lived in it. The knowledge is not transferable.',
@@ -462,7 +463,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('nga_june12_generation') &&
       G.age >= 50 &&
       !G.mem?.ft30NgaJune12,
-    text: 'June 12, 1993. MKO Abiola won. The military annulled it. You remember the feeling of that — not just disappointment but the confirmation of something about the relationship between the ballot and the men with guns. Abiola died in detention in 1998. Buhari declared June 12 Democracy Day in 2018 and named Abiola a posthumous hero. The declaration was both correct and twenty-five years late. You have been measuring by that distance for a long time.',
+    text: (G) => 'June 12, 1993. MKO Abiola won. The military annulled it. You remember the feeling of that — not just disappointment but the confirmation of something about the relationship between the ballot and the men with guns. ' + (G.currentYear >= 2019 ? 'Abiola died in detention in 1998. Buhari declared June 12 Democracy Day in 2018 and named Abiola a posthumous hero. The declaration was both correct and twenty-five years late. You have been measuring by that distance for a long time.' : G.currentYear >= 1999 ? 'Abiola died in detention in 1998. The date is not a holiday. Nobody at the podium in Abuja says his name. You have been measuring by that silence for a long time.' : 'Abiola is in detention. The date is not spoken of on the radio. You have been measuring by that silence for a long time.'),
     choices: null,
     effect: (p) => { p.r += 8; p.e += 4; p.m -= 3; p.setMem('ft30NgaJune12', true) },
   },
@@ -565,9 +566,10 @@ export const FOLLOWTHROUGH_30_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.has('pope_visit_generation') &&
+      G.currentYear >= 2005 &&
       G.age >= 55 &&
       !G.mem?.ft30PopeVisit,
-    text: 'There were nine million people in the street in Warsaw on that Sunday. You were one of them. He said: do not be afraid. He died in April 2005. The crowds in St. Peter\'s Square held signs that said santo subito — sainthood immediately. You watched it from wherever you were and you thought about the man in the white coat on that first visit, in June 1978, and what it had meant in that specific year, in that specific country, with those specific men running it.',
+    text: 'There were a million people in Victory Square in Warsaw on that Saturday. You were one of them. He said: do not be afraid. He died in April 2005. The crowds in St. Peter\'s Square held signs that said santo subito — sainthood immediately. You watched it from wherever you were and you thought about the man in the white coat on that first visit, in June 1979, and what it had meant in that specific year, in that specific country, with those specific men running it.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.m += 2; p.setMem('ft30PopeVisit', true) },
   },
@@ -670,6 +672,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.has('nga_military_era') &&
+      G.currentYear >= 2003 &&   // "the 1999 transition was real and civilian rule has continued"
       G.age >= 50 &&
       !G.mem?.ft30NgaMilLate,
     text: 'Nine coups in thirty-four years, if you count the attempted ones. You grew up in a country where the political news arrived in uniform. You learned to read the early morning announcements, the closed schools, the suspended constitution as information — not shock but data. The 1999 transition was real and civilian rule has continued. The habits of adaptation that military rule required are less useful now but not gone. The instinct to assess who is in charge before speaking is still in you.',
@@ -700,7 +703,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.has('head_tax_generation') &&
-      G.age >= 50 &&
+      G.age >= 50 && G.currentYear >= 2006 &&
       !G.mem?.ft30HeadTax,
     text: 'The head tax was $500 — a year\'s salary for a labourer in 1903. Your family paid it or knew people who paid it or carried the knowledge of it as a weight in the history of belonging here. Stephen Harper\'s apology came in 2006. The surviving head tax payers received $20,000 each; there were about two dozen left. The apology was the right thing to do. The calculation of what was paid and what was returned is a different kind of arithmetic.',
     choices: null,

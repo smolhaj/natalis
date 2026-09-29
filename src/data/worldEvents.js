@@ -89,6 +89,9 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m -= 5; },
     addFlags: ['cold_war_generation'],
     minAge: 6,
+    // Germany has its own, more specific, wall; the two together told a
+    // German the wall came down twice in one year.
+    when: (G) => (G.currentCountry?.name ?? G.character?.country?.name) !== 'Germany',
   },
   {
     id: 'chernobyl',
@@ -206,7 +209,7 @@ export const WORLD_EVENTS = [
     years: [2013, 2020],
     archetypes: 'all',
     countries: ['Lebanon', 'Jordan', 'Turkey', 'Iraq'],
-    narrative: 'The Syrian civil war enters its third, fourth, fifth year. Five million people have left the country. Six million more are displaced inside it. The map of control shifts between the government, rebel factions, and the Islamic State. Aleppo falls in December 2016 after four years of siege. The war continues past any date anyone named as when it would end.',
+    narrative: (G) => 'The Syrian civil war enters its third, fourth, fifth year. Millions have left the country. Millions more are displaced inside it. The map of control shifts between the government, rebel factions, and the Islamic State. ' + (G.currentYear >= 2017 ? 'Aleppo falls in December 2016 after four years of siege. ' : 'Aleppo has been divided and besieged since 2012. ') + 'The war continues past any date anyone named as when it would end.',
     context: 'The Syrian civil war (2011–) produced the largest refugee crisis since WWII. By 2015, 4 million Syrians had fled abroad; 7.6 million were internally displaced. An estimated 500,000+ killed. The siege of Aleppo (2012–16) and chemical weapons use at Ghouta (2013) became defining atrocities. Russia intervened militarily in 2015. The war involved intervention from more than a dozen foreign powers.',
     effect: (p) => { p.m -= 8; p.addFlag('syrian_crisis_witnessed') },
     addFlags: ['syrian_crisis_witnessed'],
@@ -843,7 +846,7 @@ export const WORLD_EVENTS = [
     narrative: 'The wall comes down. People are chipping at it with hammers and their hands. A city divided since before you were born becomes one city. You walk through the gap and it is just a street. It is also the most impossible thing you have ever seen.',
     context: 'The Berlin Wall, thrown up overnight on 13 August 1961, divided East and West Berlin for 28 years; the fortified inner German border divided the two states. On November 9, 1989, the East German government announced citizens could cross freely; crowds immediately overwhelmed the checkpoints. The wall was physically demolished over the following months. Its fall is considered the symbolic end of the Cold War. Germany was formally reunified on October 3, 1990.',
     effect: (p) => { p.m += 15; p.addFlag('wall_generation'); },
-    addFlags: ['wall_generation', 'lived_through_revolution'],
+    addFlags: ['wall_generation', 'lived_through_revolution', 'cold_war_generation'],
     minAge: 5,
   },
   {
@@ -1228,7 +1231,9 @@ export const WORLD_EVENTS = [
     years: [1980, 1984],
     archetypes: 'all',
     countries: ['Poland'],
-    narrative: 'Ten million Poles join the trade union Solidarity — a quarter of the country, the largest labor movement in history. The government declares martial law in December 1981. The union is banned. Thousands are interned. People paste the Solidarity logo — an angular red script — in places it will not be easily found. It means something to see it.',
+    narrative: (G) => G.currentYear >= 1982
+      ? 'Ten million Poles join the trade union Solidarity — a quarter of the country, the largest labor movement in history. In December 1981 the government declares martial law. The union is banned. Thousands are interned. People paste the Solidarity logo — an angular red script — in places it will not be easily found. It means something to see it.'
+      : 'Ten million Poles join the trade union Solidarity — a quarter of the country, the largest labor movement in history. The shipyard gates at Gdańsk are hung with flowers and a portrait of the Pope. People wear the logo — an angular red script — on their lapels, openly, and wait to see what the state will do about it.',
     context: 'Solidarity (Solidarność) was founded in August 1980 at the Gdańsk shipyards, led by electrician Lech Wałęsa, following a wave of strikes. The Gdańsk Agreements gave workers the right to form free trade unions — a radical concession in a Communist state. Within a year, Solidarity had 10 million members. General Jaruzelski declared martial law December 13, 1981; 10,000 activists were interned; the union was banned. Underground, Solidarity continued publishing and organising through the 1980s with support from the Catholic Church and the CIA. It led the Round Table negotiations in 1989, won the first free elections, and began the peaceful dissolution of Communist rule in Eastern Europe.',
     effect: (p) => { p.m -= 10; p.karma += 5; p.addFlag('solidarity_generation'); },
     addFlags: ['solidarity_generation'],
@@ -1253,7 +1258,9 @@ export const WORLD_EVENTS = [
     years: [1991, 1994],
     archetypes: 'all',
     countries: ['Armenia', 'Azerbaijan'],
-    narrative: 'The Armenian-majority enclave of Nagorno-Karabakh declares independence from Azerbaijan. A war for control of the territory and surrounding districts kills twenty to thirty thousand people and displaces over a million. Armenia and Armenian forces take the enclave and seven surrounding districts. Azerbaijan\'s government and army collapse and reorganize. A ceasefire holds in 1994 but no peace treaty is ever signed.',
+    narrative: (G) => G.currentYear >= 1994
+      ? 'The Armenian-majority enclave of Nagorno-Karabakh declares independence from Azerbaijan. A war for control of the territory and surrounding districts kills twenty to thirty thousand people and displaces over a million. Armenian forces take the enclave and seven surrounding districts. Azerbaijan\'s government and army collapse and reorganize. In May 1994 a ceasefire is signed. It is not a peace treaty.'
+      : 'The Armenian-majority enclave of Nagorno-Karabakh declares independence from Azerbaijan. The war for the territory and the districts around it is fought village by village. The dead are counted in the thousands and the displaced in the hundreds of thousands, on both sides of a line that moves every season. Nobody can say when it will stop.',
     context: 'The Nagorno-Karabakh conflict began as a Soviet-era territorial dispute and became a full war after 1991 independence. Armenia backed Karabakh Armenians militarily; Azerbaijan suffered major military reverses and internal political turmoil, including two coups. The Lachin corridor remained the only road between Armenia and Karabakh. The frozen conflict lasted until 2020.',
     effect: (p) => { p.m -= 15; p.h -= 5; p.r += 8; },
     addFlags: [],
@@ -2602,7 +2609,9 @@ export const WORLD_EVENTS = [
     years: [1996, 1997],
     archetypes: null,
     countries: ['DR Congo'],
-    narrative: 'The war that nobody calls a war moves west across the country. Mobutu\'s army dissolves ahead of the advance. In Kinshasa, people wait. Some prepare to leave. Some go to the market anyway because the bread still needs buying. When Kabila\'s Alliance of Democratic Forces for the Liberation of Congo enters the capital in May 1997, Mobutu has already gone. Thirty-two years of *l\'authenticité*, of the presidential leopard-skin hat, of a country renamed Zaïre and then renamed back — ended without a battle for the capital.',
+    narrative: (G) => G.currentYear < 1997
+      ? 'The war that nobody calls a war moves west across the country. Mobutu\'s army dissolves ahead of the advance. In Kinshasa, people wait. Some prepare to leave. Some go to the market anyway because the bread still needs buying. Nobody can say how far the advance will come, or whether the old man will still be in the palace when it does.'
+      : 'The war that nobody calls a war moves west across the country. Mobutu\'s army dissolves ahead of the advance. In Kinshasa, people wait. Some prepare to leave. Some go to the market anyway because the bread still needs buying. When Kabila\'s Alliance of Democratic Forces for the Liberation of Congo enters the capital in May 1997, Mobutu has already gone. Thirty-two years of *l\'authenticité*, of the presidential leopard-skin hat, of a country renamed Zaïre and then renamed back — ended without a battle for the capital.',
     context: 'The First Congo War (1996-97) began in eastern Congo following the Rwandan genocide, as Rwanda and Uganda backed Laurent-Désiré Kabila\'s rebel forces against Mobutu Sese Seko. It ended Mobutu\'s 32-year rule — one of the longest kleptocracies in African history, during which he amassed an estimated $5 billion while the country\'s infrastructure collapsed. Kabila renamed the country back to the Democratic Republic of Congo. The Second Congo War (1998-2003) would kill an estimated 5.4 million people, mainly from disease and hunger.',
     effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('mobutu_fall_generation'); },
     addFlags: ['mobutu_fall_generation'],
@@ -2849,9 +2858,9 @@ export const WORLD_EVENTS = [
     narrative: (G) => {
       const place = G.place?.name || ''
       if (place === 'Bhopal' || (G.character.country?.name === 'India' && Math.random() < 0.15)) {
-        return 'The Union Carbide pesticide plant in Bhopal leaks methyl isocyanate gas at 2am, 3 December. The gas is heavier than air and settles into the low-lying neighbourhoods around the plant. You wake to your eyes burning and your neighbours running without knowing which direction. By morning, 3,000 people are dead within the week. 500,000 are injured. The company\'s CEO flies to India, is briefly arrested, and is released. He flies home. He is never extradited.'
+        return 'The Union Carbide pesticide plant in Bhopal leaks methyl isocyanate gas at 2am, 3 December. The gas is heavier than air and settles into the low-lying neighbourhoods around the plant. You wake to your eyes burning and your neighbours running without knowing which direction. By morning, 3,000 people are dead within the week. 500,000 are injured. The company\'s CEO flies to India, is briefly arrested, and is released. He flies home.'
       }
-      return 'The Union Carbide pesticide plant in Bhopal, Madhya Pradesh, leaks methyl isocyanate gas on the night of 3 December. 3,000 dead in the immediate aftermath; estimates of total deaths range to 15,000. 500,000 people are exposed. The CEO of Union Carbide, Warren Anderson, is arrested in India, released, and never extradited. The company is eventually acquired; the site remains contaminated. The survivors\' compensation, settled in 1989, averages $550 per person.'
+      return 'The Union Carbide pesticide plant in Bhopal, Madhya Pradesh, leaks methyl isocyanate gas on the night of 3 December. 3,000 dead in the immediate aftermath; estimates of total deaths range to 15,000. 500,000 people are exposed. The CEO of Union Carbide, Warren Anderson, is arrested in India, released on bail, and flies home. The survivors wait for compensation. The site remains contaminated.'
     },
     context: 'The Bhopal disaster is the world\'s worst industrial accident. Union Carbide\'s Bhopal plant had been cutting costs; multiple safety systems were non-functional on the night of the leak. The Indian government accepted a $470 million settlement in 1989 — about $550 per affected person. Clean-up of the site has never been completed; groundwater contamination continues. Warren Anderson, Union Carbide\'s CEO, was declared a fugitive in India but the US government refused extradition requests. He died in 2014, never having faced trial.',
     effect: (p) => { p.m -= 6; p.h -= 2; p.addFlag('industrial_disaster_era'); },
@@ -3099,8 +3108,9 @@ export const WORLD_EVENTS = [
     narrative: (G) => {
       const yr = G.currentYear
       if (yr <= 1981) {
-        return '65 countries do not go to the Moscow Olympics. The USA boycott, in response to the Soviet invasion of Afghanistan, takes their athletes with it. The athletes who spent four years preparing for this have their preparation rendered irrelevant by a diplomatic decision that neither side believes will change anything. The Soviet Union invades Afghanistan regardless. The athletes train anyway, for the 1984 Games, which the Soviet bloc then boycotts in return. Both boycotts accomplish nothing except the cancellation of four years of human effort.'
+        return '65 countries do not go to the Moscow Olympics. The USA boycott, in response to the Soviet invasion of Afghanistan, takes their athletes with it. The athletes who spent four years preparing for this have their preparation rendered irrelevant by a diplomatic decision that neither side believes will change anything. The Soviet troops stay in Afghanistan regardless. The athletes train anyway, toward Los Angeles, four years off.'
       }
+      if (yr < 1984) return 'The athletes who stayed home from Moscow are training for Los Angeles. Nobody can say yet who will come.'
       return 'The 1984 Los Angeles Games proceed without the Soviet bloc. 14 countries stay away, mirroring the 1980 Western boycott. The cycle ends. The athletes compete. No political outcome of either boycott is ever identified.'
     },
     context: 'The 1980 Moscow Olympics were boycotted by 65 countries led by the United States, in response to the Soviet invasion of Afghanistan. US President Jimmy Carter initially threatened athletes who defied the boycott with passport revocation. Many athletes who had spent years preparing did not compete. In 1984, the Soviet Union and 13 allies boycotted the Los Angeles Olympics, officially citing security concerns but widely understood as retaliation. Neither boycott had any measurable effect on the political situations that prompted them.',
@@ -3743,7 +3753,7 @@ export const WORLD_EVENTS = [
     years: [2005, 2006],
     archetypes: 'all',
     countries: ['Bolivia'],
-    narrative: 'On December 18, 2005, Evo Morales wins the Bolivian presidential election with 54 percent of the vote — the first outright majority in Bolivian electoral history. An Aymara cocalero from the Chapare, Morales becomes the first indigenous person to hold the presidency of a country where more than 60 percent of the population identifies as indigenous. He takes office on January 22, 2006, in a ceremony that incorporates Aymara spiritual rituals at Tiwanaku before the formal inauguration at Palacio de Quemado.',
+    narrative: (G) => 'On December 18, 2005, Evo Morales wins the Bolivian presidential election with 54 percent of the vote — the first outright majority in Bolivian electoral history. An Aymara cocalero from the Chapare, Morales becomes the first indigenous person to hold the presidency of a country where more than 60 percent of the population identifies as indigenous.' + (G.currentYear >= 2006 ? ' He takes office on January 22, 2006, in a ceremony that incorporates Aymara spiritual rituals at Tiwanaku before the formal inauguration at Palacio de Quemado.' : ' The coca leaf is on the front page of every newspaper in the country.'),
     context: 'Morales\'s victory followed decades of indigenous social movements, the Gas War of 2003, and the Cochabamba Water War of 2000. His party, the Movement for Socialism (MAS), pushed through a new constitution in 2009 that officially recognised Bolivia as a "plurinational state" and enshrined the rights of indigenous peoples. During his tenure, extreme poverty fell from 38 to 18 percent and the economy grew significantly. He was forced to resign in November 2019 after disputed elections, in circumstances still debated as either fraud prevention or coup.',
     effect: (p) => { p.m += 6; p.karma += 4; p.addFlag('bol_evo_generation') },
     addFlags: ['bol_evo_generation'],
@@ -3830,7 +3840,7 @@ export const WORLD_EVENTS = [
     years: [2010, 2011],
     archetypes: 'all',
     countries: ['Ivory Coast'],
-    narrative: 'November 28, 2010. The Independent Electoral Commission announces that Alassane Ouattara has won the presidential election with 54 percent of the vote. Hours later, the Constitutional Council — controlled by outgoing president Laurent Gbagbo\'s allies — annuls the results and declares Gbagbo the winner. The United Nations, the African Union, France, and the United States recognise Ouattara. Gbagbo has the national army. Ouattara has the Forces Nouvelles fighters and international legitimacy. Over the following five months, 3,000 people are killed in Abidjan and the western regions. In April 2011, French forces and Forces Nouvelles capture Gbagbo in his bunker.',
+    narrative: (G) => 'November 28, 2010. The Independent Electoral Commission announces that Alassane Ouattara has won the presidential election with 54 percent of the vote. Hours later, the Constitutional Council — controlled by outgoing president Laurent Gbagbo\'s allies — annuls the results and declares Gbagbo the winner. The United Nations, the African Union, France, and the United States recognise Ouattara. Gbagbo has the national army. Ouattara has the Forces Nouvelles fighters and international legitimacy.' + (G.currentYear >= 2011 ? ' Over the following five months, 3,000 people are killed in Abidjan and the western regions. In April 2011, French forces and Forces Nouvelles capture Gbagbo in his bunker.' : ' The country has two presidents and two oath-takings. In Abidjan, the killings at night begin before the year is out.'),
     context: 'The 2010-2011 Ivorian crisis ended the nine-year division begun by the 2002 coup attempt. Gbagbo\'s refusal to accept electoral defeat drew on the dynamics of ivoirité — the argument that Ouattara, whose parents were from Burkina Faso, was not authentically Ivorian. Gbagbo was transferred to the International Criminal Court in 2011 and charged with crimes against humanity; he was acquitted in 2019 and returned to Ivory Coast in 2021. Alassane Ouattara was re-elected in 2015 and again in 2020. The reunified country achieved strong economic growth from 2012 onward, though political reconciliation remained incomplete.',
     effect: (p) => { p.m -= 14; p.r += 6; p.addFlag('ci_election_crisis_witness'); },
     addFlags: ['ci_election_crisis_witness'],

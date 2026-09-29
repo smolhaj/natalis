@@ -222,7 +222,7 @@ export const PERU_MIDCENTURY_FOLLOWTHROUGH = [
     id: 'pem_ft_leva',
     phase: null,
     weight: 45,
-    when: (G) => G.flags.includes('pe_leva') && G.age >= 40 && once(G, 'pem_ft_leva'),
+    when: (G) => G.flags.includes('pe_leva') && G.currentYear >= 1999 && G.age >= 40 && once(G, 'pem_ft_leva'),
     text: 'When anybody asks what you did in the army you tell them about the cold at the base and the food, which is a story, and not about the other thing, which is not. They took you off a bus. You were eighteen and you had a sack of potatoes for your aunt, and the potatoes stayed on the bus. In 1999 they abolished it — the obligatory service — and you read the article twice to be sure that it meant nobody else\'s son would be pulled off a bus.',
     choices: null,
     effect: (p) => { p.setMem('pem_ft_leva', true); p.r += 4; p.m -= 2 },

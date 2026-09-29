@@ -40,10 +40,13 @@ export const CANADA_DEPTH_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Canada' &&
+      // The roster has no Japanese-Canadian id; 'other_canadian' on the BC
+      // coast is the nearest population this can honestly address.
+      G.ethnicity === 'other_canadian' && G.place?.id === 'ca_vancouver' &&
       G.currentYear >= 1942 && G.currentYear <= 1945 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.canJapInterned,
-    text: 'Order-in-Council P.C. 1486, February 1942. All persons of Japanese origin must leave the hundred-mile Protected Area on the BC coast. Twenty-two thousand people. Your family has been in British Columbia for two generations — born here, raised here, fishing or farming or running a business. The property is seized and sold at a loss by the Custodian of Enemy Property. The proceeds go to pay for your own internment. You are sent to a sugar beet farm in Alberta or a work camp in the Rockies or a ghost town in the BC interior. The war ends in 1945. You are not permitted to return to the coast until 1949.',
+    text: (G) => 'Order-in-Council P.C. 1486, February 1942. All persons of Japanese origin must leave the hundred-mile Protected Area on the BC coast. Twenty-two thousand people. Your family has been in British Columbia for two generations — born here, raised here, fishing or farming or running a business. The property is seized and sold at a loss by the Custodian of Enemy Property. The proceeds go to pay for your own internment. You are sent to a sugar beet farm in Alberta or a work camp in the Rockies or a ghost town in the BC interior. ' + (G.currentYear >= 1945 ? 'The war ends in 1945. You are still not permitted to return to the coast.' : 'Nobody will say when you may go back to the coast.'),
     choices: [
       {
         text: 'Your parents tell you to prove your loyalty through silence and compliance',
@@ -150,7 +153,7 @@ export const CANADA_DEPTH_EVENTS = [
       G.currentYear >= 1900 && G.currentYear <= 1945 &&
       G.age >= 7 && G.age <= 16 &&
       !G.mem?.canPrairie,
-    text: 'The Homestead Act: 160 acres for ten dollars and the promise to break thirty acres within three years. Your family took the offer — Ukrainian or Mennonite or English or Scandinavian, depending on the wave and the decade. The quarter section is a mile from the nearest neighbour. The soil is black and deep and will grow wheat in good years and nothing in the drought years that are coming. The blizzard of 1907 or 1916 or 1936. The grasshoppers. The CPR freight rates that take the margin out of every bushel. The community that forms around the grain elevator, the school, the rink.',
+    text: (G) => 'The Homestead Act: 160 acres for ten dollars and the promise to break thirty acres within three years. Your family took the offer — Ukrainian or Mennonite or English or Scandinavian, depending on the wave and the decade. The quarter section is a mile from the nearest neighbour. The soil is black and deep and will grow wheat in good years and nothing in the dry ones. ' + (() => { const b = [1907, 1916, 1936].filter(y => y < G.currentYear); return b.length ? 'The blizzard of ' + b.join(' or ') + '. ' : 'The blizzards. ' })() + 'The grasshoppers. The CPR freight rates that take the margin out of every bushel. The community that forms around the grain elevator, the school, the rink.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 4; p.h += 2; p.addFlag('can_prairie_homestead'); p.setMem('canPrairie', true) },
   },

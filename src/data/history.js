@@ -476,7 +476,12 @@ export const INSTITUTION_PROSE = [
   ['money', /\bmoney\b|\bcash\b|\brent\b|\bwages?\b|\bsalar(y|ies)\b|the bank\b|your savings|the price of|you can afford|the shop\b|\bmarket\b|the currency|your account\b|the prices\b|who holds the contracts|\bpaid\b/i],
   ['clinic', /the clinic\b|the hospital\b|your doctor|the pharmacy|a prescription|the psychiatrist|the surgery\b|the nurse\b/i],
   ['post', /the postman|a letter arrives|in the post\b|the post office/i],
-  ['city', /the city centre|downtown|the traffic\b|the apartment block|the high street|the boulevard|electrif|the power (comes|is) (on|back)|the first light bulb|the grid\b/i],
+  ['city', /the city centre|downtown|the traffic\b|the apartment block|the high street|the boulevard|electrif|the power (comes|is) (on|back)|the first light bulb|the grid\b|the meters?\b|the government line|power lines?\b|the cables\b/i],
+  // 'religion' was in the Democratic Kampuchea row and matched nothing, so a
+  // Catholic girl of sixteen in 1976 was told about the priest's manner in the
+  // confession booth, a year after the cathedral in Phnom Penh was taken down
+  // stone by stone.
+  ['religion', /confession|the priest\b|\bmass\b|the church\b|the pagoda|the temple\b|the monks?\b|the mosque|the imam\b|the sermon|the congregation|the pew\b|communion|the service\b|\bprayers?\b|the fast\b|ramadan|the rosary/i],
 ]
 
 /**
@@ -501,4 +506,147 @@ export function proseFitsInstitutions(text, countryName, year) {
   const gone = suspendedInstitutions(countryName, year)
   if (gone.size === 0) return true
   return !institutionsAssumed(text).some(k => gone.has(k))
+}
+
+/**
+ * WAR_YEARS — when a country was actually at war, and how hard.
+ *
+ * `country.conflictRisk` is a single present-day number, and every reader
+ * applied it to every year of every life: a Syrian teenager in 1995, twenty
+ * years before the civil war, died at wartime rates (one did, at seventeen,
+ * of "complications from injury"), a Bosnian in 1980 carried the siege's
+ * mortality through Tito's Yugoslavia, and a German in 1943 carried
+ * present-day Germany's 0.01. It is `isWealthyArch` again: a statement about
+ * now, read as history.
+ *
+ * Each span is [from, to, intensity], where intensity is on the scale the
+ * engine already reads conflictRisk on. Outside every span a country has its
+ * peacetime baseline — the static figure capped at PEACETIME_CAP, because the
+ * large static values were describing a war, not the country.
+ */
+const PEACETIME_CAP = 0.03
+
+export const WAR_YEARS = {
+  // The world war, which the static column did not know about at all.
+  Germany: [[1939, 1943, 0.25], [1944, 1945, 0.45]],
+  Poland: [[1939, 1945, 0.55]],
+  Russia: [[1918, 1922, 0.35], [1941, 1945, 0.5], [1994, 1996, 0.04], [1999, 2003, 0.04]],
+  Ukraine: [[1918, 1922, 0.35], [1941, 1945, 0.6], [2014, 2021, 0.05], [2022, 2026, 0.3]],
+  Belarus: [[1941, 1945, 0.65]],
+  Lithuania: [[1941, 1945, 0.35]],
+  Latvia: [[1941, 1945, 0.3]],
+  Estonia: [[1941, 1945, 0.25]],
+  Japan: [[1937, 1943, 0.12], [1944, 1945, 0.35]],
+  China: [[1927, 1936, 0.08], [1937, 1949, 0.3]],
+  'United Kingdom': [[1939, 1945, 0.08]],
+  France: [[1939, 1945, 0.12], [1954, 1962, 0.02]],
+  Netherlands: [[1940, 1945, 0.12]],
+  Belgium: [[1940, 1945, 0.1]],
+  Italy: [[1940, 1945, 0.15]],
+  Greece: [[1940, 1949, 0.25]],
+  Hungary: [[1944, 1945, 0.3], [1956, 1956, 0.05]],
+  Austria: [[1944, 1945, 0.12]],
+  'Czech Republic': [[1944, 1945, 0.1]],
+  Serbia: [[1941, 1945, 0.4], [1991, 1995, 0.04], [1998, 1999, 0.08]],
+  Croatia: [[1941, 1945, 0.4], [1991, 1995, 0.2]],
+  Slovenia: [[1941, 1945, 0.3], [1991, 1991, 0.02]],
+  'Bosnia and Herzegovina': [[1941, 1945, 0.45], [1992, 1995, 0.45]],
+  Finland: [[1939, 1944, 0.12]],
+  Norway: [[1940, 1945, 0.05]],
+  Denmark: [[1940, 1945, 0.02]],
+  Spain: [[1936, 1939, 0.3]],
+  Philippines: [[1941, 1945, 0.25], [1969, 2019, 0.03]],
+  Indonesia: [[1942, 1949, 0.2], [1965, 1966, 0.1]],
+  Singapore: [[1942, 1945, 0.2]],
+  Malaysia: [[1942, 1945, 0.15], [1948, 1960, 0.04]],
+  Myanmar: [[1942, 1945, 0.2], [1948, 2020, 0.08], [2021, 2026, 0.25]],
+  // Asia after 1945
+  'South Korea': [[1950, 1953, 0.45]],
+  'North Korea': [[1950, 1953, 0.5]],
+  Vietnam: [[1946, 1954, 0.2], [1955, 1975, 0.3], [1979, 1979, 0.05]],
+  Cambodia: [[1970, 1979, 0.4], [1980, 1991, 0.1]],
+  Laos: [[1960, 1975, 0.2]],
+  India: [[1947, 1947, 0.12], [1962, 1962, 0.01], [1965, 1965, 0.01], [1971, 1971, 0.01]],
+  Pakistan: [[1947, 1947, 0.2], [1965, 1965, 0.03], [1971, 1971, 0.08], [2004, 2015, 0.08]],
+  Bangladesh: [[1947, 1947, 0.1], [1971, 1971, 0.4]],
+  'Sri Lanka': [[1983, 2009, 0.12]],
+  Nepal: [[1996, 2006, 0.08]],
+  'East Timor': [[1975, 1980, 0.4], [1981, 1999, 0.15]],
+  Afghanistan: [[1978, 2001, 0.35], [2002, 2021, 0.2]],
+  Tajikistan: [[1992, 1997, 0.25]],
+  Armenia: [[1988, 1994, 0.15], [2020, 2020, 0.1]],
+  Azerbaijan: [[1988, 1994, 0.15], [2020, 2020, 0.08]],
+  Georgia: [[1991, 1993, 0.1], [2008, 2008, 0.05]],
+  Moldova: [[1992, 1992, 0.1]],
+  // The Middle East
+  Iran: [[1980, 1988, 0.12]],
+  Iraq: [[1961, 1970, 0.05], [1980, 1988, 0.3], [1991, 1991, 0.3], [2003, 2008, 0.4], [2009, 2013, 0.15], [2014, 2017, 0.3]],
+  Syria: [[1982, 1982, 0.08], [2011, 2019, 0.4], [2020, 2026, 0.15]],
+  Lebanon: [[1975, 1990, 0.3], [2006, 2006, 0.15], [2024, 2024, 0.1]],
+  Israel: [[1948, 1949, 0.2], [1967, 1967, 0.04], [1973, 1973, 0.06], [2023, 2024, 0.04]],
+  Palestine: [[1948, 1949, 0.3], [1967, 1967, 0.2], [1987, 1993, 0.1], [2000, 2005, 0.15], [2008, 2009, 0.2], [2014, 2014, 0.2], [2023, 2026, 0.45]],
+  Yemen: [[1962, 1970, 0.2], [1986, 1986, 0.1], [1994, 1994, 0.1], [2014, 2026, 0.38]],
+  Kuwait: [[1990, 1991, 0.1]],
+  Cyprus: [[1963, 1964, 0.08], [1974, 1974, 0.15]],
+  Turkey: [[1984, 1999, 0.04]],
+  Egypt: [[1967, 1967, 0.03], [1973, 1973, 0.03]],
+  Libya: [[2011, 2011, 0.3], [2014, 2020, 0.15]],
+  Algeria: [[1954, 1962, 0.25], [1991, 2002, 0.2]],
+  // Africa
+  Nigeria: [[1967, 1970, 0.2], [2009, 2026, 0.08]],
+  'DR Congo': [[1960, 1965, 0.2], [1996, 2003, 0.3], [2004, 2026, 0.15]],
+  Ethiopia: [[1974, 1991, 0.2], [1998, 2000, 0.1], [2020, 2022, 0.25]],
+  Eritrea: [[1961, 1991, 0.2], [1998, 2000, 0.2]],
+  Sudan: [[1955, 1972, 0.2], [1983, 2005, 0.25], [2023, 2026, 0.4]],
+  Uganda: [[1971, 1979, 0.15], [1980, 1986, 0.25], [1987, 2006, 0.1]],
+  Angola: [[1961, 1974, 0.15], [1975, 2002, 0.25]],
+  Mozambique: [[1964, 1974, 0.1], [1977, 1992, 0.25], [2017, 2026, 0.05]],
+  Zimbabwe: [[1972, 1979, 0.1], [1983, 1987, 0.05]],
+  Namibia: [[1966, 1989, 0.05]],
+  'South Africa': [[1984, 1994, 0.04]],
+  Kenya: [[1952, 1960, 0.08], [2007, 2008, 0.03]],
+  Rwanda: [[1990, 1993, 0.1], [1994, 1994, 0.6], [1995, 1998, 0.08]],
+  Somalia: [[1988, 1995, 0.4], [1996, 2005, 0.2], [2006, 2026, 0.25]],
+  Liberia: [[1989, 1997, 0.35], [1999, 2003, 0.35]],
+  'Sierra Leone': [[1991, 2002, 0.3]],
+  'Central African Republic': [[1996, 1997, 0.1], [2003, 2011, 0.12], [2012, 2026, 0.35]],
+  Chad: [[1965, 1978, 0.2], [1979, 1987, 0.3], [2005, 2010, 0.15]],
+  Niger: [[1990, 1995, 0.08], [2007, 2009, 0.08], [2015, 2026, 0.2]],
+  Mali: [[1990, 1996, 0.08], [2012, 2026, 0.3]],
+  'Burkina Faso': [[2015, 2026, 0.3]],
+  Cameroon: [[1955, 1971, 0.12], [2014, 2026, 0.2]],
+  'Ivory Coast': [[2002, 2007, 0.2], [2010, 2011, 0.3]],
+  Guinea: [[2000, 2001, 0.05]],
+  Djibouti: [[1991, 1994, 0.1]],
+  // The Americas: wars, and the violence that was not called a war
+  Colombia: [[1948, 1958, 0.15], [1964, 2016, 0.08]],
+  Peru: [[1980, 1999, 0.08]],
+  Guatemala: [[1960, 1977, 0.08], [1978, 1984, 0.25], [1985, 1996, 0.08]],
+  'El Salvador': [[1979, 1992, 0.3], [1993, 2019, 0.1]],
+  Nicaragua: [[1978, 1979, 0.25], [1981, 1990, 0.2]],
+  Honduras: [[2005, 2020, 0.1]],
+  Mexico: [[2006, 2026, 0.08]],
+  Jamaica: [[1976, 1980, 0.15], [1981, 2020, 0.08]],
+  'Trinidad and Tobago': [[2005, 2020, 0.08]],
+  Haiti: [[1991, 1994, 0.08], [2004, 2004, 0.08], [2021, 2026, 0.12]],
+  Guyana: [[1962, 1964, 0.08], [2002, 2008, 0.06]],
+  Argentina: [[1976, 1983, 0.03], [1982, 1982, 0.02]],
+  Chile: [[1973, 1974, 0.03]],
+  'Papua New Guinea': [[1988, 1998, 0.08]],
+  Albania: [[1997, 1997, 0.08]],
+}
+
+/**
+ * The conflict risk a character faces in `year` in `country` — the figure
+ * every mortality and war-texture guard should read instead of the static
+ * `conflictRisk` field.
+ */
+export function conflictRiskAt(country, year) {
+  const name = country?.name ?? country
+  const peacetime = Math.min(country?.conflictRisk ?? 0, PEACETIME_CAP)
+  const spans = WAR_YEARS[name]
+  if (!spans) return peacetime
+  let risk = peacetime
+  for (const [a, b, r] of spans) if (year >= a && year <= b && r > risk) risk = r
+  return risk
 }

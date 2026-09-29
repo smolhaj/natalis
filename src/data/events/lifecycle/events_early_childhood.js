@@ -210,7 +210,7 @@ export const EARLY_CHILDHOOD_2_EVENTS = [
     weight: 4,
     when: (G) =>
       G.age >= 3 && G.age <= 5 &&
-      G.character.country.conflictRisk > 0.12 &&
+      G.conflictRisk > 0.12 &&
       !G.flags.includes('war_childhood') &&
       !G.mem?.ec2WarTextureMemo,
     text: 'There is something in the background that the adults track but don\'t explain. Distant sounds. Changes in routine. A neighbor who isn\'t there one day. You don\'t have the words for what you are watching. You watch it anyway.',
