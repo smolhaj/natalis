@@ -877,7 +877,7 @@ export const COUNTRIES = [
 
   {
     name: 'Georgia', capital: 'Tbilisi', currency: 'Georgian lari', region: 'Caucasus', archetype: 'post_soviet',
-    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1920, name: 'the Democratic Republic of Georgia' }, { from: 1921, until: 1991, name: 'Georgian SSR' }],
+    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1920, name: 'the Democratic Republic of Georgia' }, { from: 1921, until: 1991, name: 'the Georgian SSR' }],
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 74,
     conflictRisk: 0.06, genderGap: 0.25, socialMobility: 'low',
     wealthTierWeights: [0.20, 0.28, 0.30, 0.17, 0.05],
@@ -886,7 +886,6 @@ export const COUNTRIES = [
     languages: ['Georgian', 'Russian'],
     context: 'Georgia is a country of ancient culture wedged between powerful neighbors. Two wars with Russia over South Ossetia and Abkhazia left wounds that haven\'t healed. Wine, hospitality, and a deep attachment to land and family define daily life. A Georgian feast (supra) with a tamada (toastmaster) is a multi-hour social obligation that you do not leave early. The Orthodox Church holds genuine moral authority over daily behavior, not just Sundays. A foreign car with dark windows may well belong to someone connected; do not honk.',
     yearRange: [1930, 2005],
-    historicalNames: [{ until: 1991, name: 'the Georgian SSR' }],
     regime: 'single_party_communist',
     regimeHistory: [{ year: 1921, to: 'single_party_communist' }, { year: 1991, to: 'federal_republic' }],
     religionWeights: { christian_orthodox: 0.84, muslim_sunni: 0.10, christian_armenian: 0.04, secular: 0.02 },
