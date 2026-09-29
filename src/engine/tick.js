@@ -27,7 +27,7 @@ import { withArticle } from '../utils/countryUtils'
 import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
 import { hasTech } from '../data/technology.js'
-import { migrationDestinations } from '../data/migration.js'
+import { migrationDestinations, gulfNonNational } from '../data/migration.js'
 
 // What a listed salary is worth where it is paid. The companion question —
 // what it is worth WHEN it is paid — is `wageIndex` in economy.js, and the two
@@ -1290,8 +1290,9 @@ export function buildG(state) {
     // announced one; a living child of twenty-five or more is the likeliest
     // grandparent otherwise. Four late-life lines were telling childless
     // seventy-year-olds what their grandchildren did on their phones.
+    grandchildCount: (state.children ?? []).reduce((n, c) => n + (c.kids ?? 0), 0),
     hasGrandchildren: (state.flags ?? []).includes('grandparent') ||
-      (state.children ?? []).some(c => c.alive !== false && (c.age ?? 0) >= 25),
+      (state.children ?? []).some(c => (c.kids ?? 0) > 0),
     lgbtqCriminalized: isLgbtqCriminalized(liveCountry(state), currentYear),
     casteSystem: state.character?.country?.casteSystem ?? false,
     childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
@@ -1741,7 +1742,10 @@ function assignRibbon(state) {
 // ─── Career ───────────────────────────────────────────────────────────────────
 
 export function getAvailableCareers(state) {
+  const nonNational = gulfNonNational(state)
   return CAREERS.filter(career => {
+    if (nonNational && ['government', 'law_enforcement', 'military', 'politics'].includes(career.field)) return false
+    if (career.id === 'clergy' && !clergyOpenTo(state)) return false
     if (career.requirements.minAge && state.age < career.requirements.minAge) return false
     if (career.requirements.maxAge && state.age > career.requirements.maxAge) return false
     if (career.partTime && state.career?.field !== 'casual' && state.career) return false
@@ -1798,8 +1802,41 @@ function rankSystem(state) {
   return 'other'
 }
 
+// Which clergy a character could be, from their religion id.
+export function faithKey(religion) {
+  const r = religion ?? ''
+  if (r.startsWith('muslim')) return 'muslim'
+  if (r === 'christian_catholic') return 'catholic'
+  if (r === 'christian_orthodox' || r === 'christian_coptic') return 'orthodox'
+  if (r.startsWith('christian')) return 'protestant'
+  if (r === 'jewish') return 'jewish'
+  if (r === 'hindu') return 'hindu'
+  if (r === 'buddhist') return 'buddhist'
+  if (r === 'sikh') return 'sikh'
+  return null
+}
+
+// Whether this faith ordained somebody of this sex in this year. The ladder
+// had no such test, so a Catholic woman in 1960 Dublin could be a priest.
+function clergyOpenTo(state) {
+  const faith = faithKey(state?.character?.religion)
+  if (!faith) return false
+  if (state?.character?.gender !== 'female') return true
+  const y = state?.currentYear ?? 2000
+  if (faith === 'protestant') return y >= 1970
+  if (faith === 'jewish') return y >= 1980
+  return faith === 'buddhist'
+}
+
+const FAME_FIELDS = new Set(['entertainment', 'sports', 'digital_media', 'arts', 'writing'])
+
 function careerTitle(level, state) {
   const base = state?.character?.gender === 'female' && level.titleFemale ? level.titleFemale : level.title
+  if (level.byFaith) {
+    const faith = faithKey(state?.character?.religion)
+    const female = state?.character?.gender === 'female'
+    return (female && level.byFaith[`${faith}_f`]) || level.byFaith[faith] || base
+  }
   if (!level.ranks) return base
   return level.ranks[rankSystem(state)] ?? base
 }
@@ -1875,7 +1912,15 @@ export function checkPromotion(state) {
   const yearsBonus  = Math.min(state.career.yearsInRole * 0.03, 0.15)
   const peopleFacing = ['politics', 'law', 'entertainment', 'sports', 'education', 'healthcare', 'social_services', 'media'].includes(careerDef.field)
   const charismaBonus = (state.stats.charisma - 50) * (peopleFacing ? 0.003 : 0.001)
-  if (!chance(baseChance + smartsBonus + perfBonus + yearsBonus + charismaBonus)) return state
+  // A fame ladder is a pyramid. Time served got a musician from Busker to
+  // Superstar and a sixty-year-old to Mega Influencer; three of six Gulf lives
+  // in one sample ended at the top rung of the creator ladder on $990,000.
+  // Above the second rung, years do not help and the rungs narrow sharply.
+  const pyramid = FAME_FIELDS.has(careerDef.field) && nextIdx >= 2
+  const p = pyramid
+    ? (baseChance + smartsBonus + perfBonus + charismaBonus) * (nextIdx === careerDef.levels.length - 1 ? 0.06 : 0.35)
+    : baseChance + smartsBonus + perfBonus + yearsBonus + charismaBonus
+  if (!chance(p)) return state
 
   const newLevel = careerDef.levels[nextIdx]
   const salaryMult = gdpSalaryMult[liveCountry(state).gdp] ?? 1.0

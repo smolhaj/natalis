@@ -1034,7 +1034,8 @@ export function generateEpitaph(state) {
   if (children?.length > 0) {
     const n = children.length
     const verb = f('absent_parent') ? (character.gender === 'male' ? 'fathered' : 'had') : 'raised'
-    para4.push(`${He} ${verb} ${n === 1 ? 'a child' : `${n} children`}.`)
+    const gk = children.reduce((m, c) => m + (c.kids ?? 0), 0)
+    para4.push(`${He} ${verb} ${n === 1 ? 'a child' : `${n} children`}${gk > 1 ? `, and lived to know ${gk} grandchildren` : gk === 1 ? ', and lived to hold a grandchild' : ''}.`)
   } else if (f('chose_childless')) {
     para4.push(`${He} chose not to have children. It was a complete answer.`)
   } else if (f('ivf_success')) {
@@ -1371,6 +1372,8 @@ export function generateLifeNotes(state) {
   else if (age >= 40 && !everMarried) add(18, 'Never married.')
   const kids = children?.length ?? 0
   if (kids > 0) add(22, kids === 1 ? 'Had one child.' : `Had ${kids} children.`)
+  const grandkids = (state.children ?? []).reduce((m, c) => m + (c.kids ?? 0), 0)
+  if (grandkids > 0) add(21, grandkids === 1 ? 'Had a grandchild.' : `Had ${grandkids} grandchildren.`)
   else if (age >= 45) add(16, 'Had no children.')
   if ((siblings?.length ?? 0) >= 4) add(14, `One of ${siblings.length + 1}.`)
   if (f('never_schooled')) add(26, 'Never went to school.')

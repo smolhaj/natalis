@@ -3329,9 +3329,11 @@ const BASE_EVENTS = [
   },
   {
     id: 'late_grandchild_born',
-    phase: 'late_life',
+    // Queued by courseGrandchildren when the first grandchild is born, which
+    // is forty in much of the world and not only after fifty.
+    phase: null,
     weight: 6,
-    when: (G) => G.children.length > 0 && G.age >= 52 && !G.flags.includes('grandparent') && G.flags.includes('cared_for_children'),
+    when: (G) => G.grandchildCount > 0 && !G.flags.includes('grandparent'),
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_east') return 'Your child calls. The baby has arrived. In this culture, your role is expected to be central — caregiver, daily presence, family anchor.'
       if (['subsaharan','developing_unstable'].includes(G.character.country.archetype)) return 'The grandchild arrives. In this family, this means you: childcare while the parents work, school pickups, stories at night.'

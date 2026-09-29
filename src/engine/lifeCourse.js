@@ -35,6 +35,8 @@ import { institutionExists } from '../data/history.js'
 import { generatePartnerProfile, getMarried, proposeMarriage, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'
 import { livingRuralUrban } from './character'
+import { gulfNonNational } from '../data/migration.js'
+import { EVENTS } from '../data/events'
 
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v))
 const chance = p => Math.random() < p
@@ -283,7 +285,7 @@ const FIELD_FIT = {
   // protected source, the story that cannot run — and they were all firing
   // for a TikTok influencer, whose epitaph then read "She worked in
   // journalism and learned what it costs to tell the truth."
-  digital_media:     [0.2, 1.2, 1.8],
+  digital_media:     [0.02, 0.12, 0.25],
   academia:          [0.1, 0.6, 1.8],
   science:           [0.05, 0.5, 1.5],
   arts:              [0.3, 0.4, 0.6],
@@ -348,6 +350,8 @@ function segregation(c, state) {
     }
   }
   const gulf = country?.archetype === 'wealthy_gulf' || country?.name === 'Saudi Arabia'
+  // The state, its police and its army are for nationals.
+  if (gulfNonNational(state) && ['government', 'law_enforcement', 'military', 'politics'].includes(c.field)) return 0
   if (gulf && y >= 1975 && GULF_IMPORTED_WORK.has(c.id)) {
     const migrant = country?.ethnicGroups?.some(g => g.id === state.character?.ethnicity && g.disadvantaged)
     if (!migrant) m *= 0.1
@@ -385,6 +389,10 @@ export function chooseCareer(state) {
     // so the cut is at the two largest scales rather than at "urban".
     if (c.field === 'agriculture' && ['megacity', 'major_city'].includes(state?.currentPlace?.scale)) fit = 0
     fit *= segregation(c, state)
+    // Nobody starts a creator channel as their living at sixty. A sixty-year-
+    // old Qatari woman began as a "Micro Creator" and her obituary said she
+    // spent the working years as a Growing Channel.
+    if (c.field === 'digital_media' && state.age > 35) fit *= 0.1
     // Smarts open the doors that require them; they do not open the doors that
     // require capital or a name, which the requirements already model.
     const req = c.requirements?.minSmarts ?? 0
@@ -717,6 +725,8 @@ export function ownershipChance(state) {
     : overTime(OWNERSHIP_BY_ARCHETYPE[c?.archetype] ?? OWNERSHIP_BY_ARCHETYPE.developing_urban, state.currentYear)
   // Someone living on someone else's visa does not buy the flat.
   const r = state.residencyStatus
+  // Freehold for foreigners in the Gulf is a handful of zones from 2002 on.
+  if (gulfNonNational(state)) return base * (state.currentYear >= 2002 ? 0.08 : 0.01)
   if (r && r !== 'citizen' && r !== 'permanent_resident') return base * 0.15
   return base
 }
@@ -886,8 +896,60 @@ export function tickLifeCourse(state) {
   s = courseChildren(s)
   s = courseHousing(s)
   s = courseRetirement(s)
+  s = courseGrandchildren(s)
   return s
 }
+
+/**
+ * Grandchildren. They were not modelled at all — a `grandparent` flag set by
+ * one event and a guess from a child's age — so childless seventy-year-olds
+ * were told what their grandchildren did on their phones and a Nigerian
+ * mother of nine could reach eighty with none. Each living adult child now has
+ * children of their own at the local rate, recorded as `child.kids`. The first
+ * is narrated by the existing late_grandchild_born event; the rest are a line.
+ */
+function courseGrandchildren(s) {
+  const kids = s.children ?? []
+  if (!kids.length) return s
+  const tfr = totalFertility(s)
+  const before = kids.reduce((n, c) => n + (c.kids ?? 0), 0)
+  const born = []
+  const next = kids.map(c => {
+    if (c.alive === false) return c
+    const a = c.age ?? 0
+    if (a < 18 || a > 42) return c
+    const have = c.kids ?? 0
+    let p = tfr / 22
+    if (have >= Math.round(tfr)) p *= 0.12
+    if (a < 21) p *= 0.5
+    if (!chance(clamp(p, 0, 0.5))) return c
+    born.push(c)
+    return { ...c, kids: have + 1 }
+  })
+  if (!born.length) return s
+  let out = { ...s, children: next, mem: { ...(s.mem ?? {}), grandchildCount: before + born.length } }
+  if (before === 0 && !s.flags?.includes('grandparent')) {
+    const ev = GRANDCHILD_EVENT()
+    if (ev && !(s.usedEventMap ?? new Map()).has(ev.id) && !s.queue?.some(e => e.id === ev.id)) {
+      out = { ...out, queue: [ev, ...(s.queue ?? [])] }
+    } else {
+      out = { ...out, flags: [...new Set([...(s.flags ?? []), 'grandparent'])] }
+    }
+    return out
+  }
+  for (const c of born) {
+    const first = c.name?.split(' ')[0] ?? 'your child'
+    const which = c.gender === 'female' ? 'daughter' : 'son'
+    out = log(out, pick([
+      `Your ${which} ${first} has a ${chance(0.5) ? 'daughter' : 'son'}. You hold the baby the way you held ${first}, and your arms remember before you do.`,
+      `Another grandchild, ${first}'s this time. The house is loud on Sundays in a way it has not been for years.`,
+      `${first} calls with the news. You write the name down so that you will say it right the first time.`,
+    ]))
+  }
+  return out
+}
+let _grandchildEvent
+const GRANDCHILD_EVENT = () => (_grandchildEvent ??= EVENTS.find(e => e.id === 'late_grandchild_born') ?? null)
 
 // A home that arrived without a purchase — family land, a self-build, an
 // allocated flat — carries the name of the thing it actually is. The catalogue
