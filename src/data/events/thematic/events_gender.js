@@ -7,6 +7,17 @@ const DESK_FIELDS_WD = new Set([
   'science', 'social_services', 'politics', 'aviation',
 ])
 
+// Secondary school, as the engine decides it: attendance settled at seven,
+// completion at sixteen (a non-finisher gets `left_school_early`), the
+// certificate at eighteen.
+const stillOnSecondaryTrack = (G) =>
+  G.mem?.attendedSchool !== false &&
+  !['never_schooled', 'left_school_early', 'dropped_out', 'child_labor'].some(f => G.flags.includes(f))
+const finishedSecondary = (G) =>
+  G.flags.includes('graduated_hs') || G.flags.includes('university_graduate') ||
+  ['secondary', 'university', 'graduate'].includes(G.education?.level) ||
+  G.education?.enrolled?.type === 'university'
+
 export const GENDER_EVENTS = [
 
   // ── FEMALE EDUCATION GATEKEEPING ───────────────────────────────────────────
@@ -128,6 +139,9 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'female' &&
       G.age >= 17 && G.age <= 22 &&
+      // An acceptance letter needs a secondary school behind it. It reached
+      // girls who had never been to one.
+      stillOnSecondaryTrack(G) && (G.age < 18 || finishedSecondary(G)) &&
       (
         G.character.country.archetype === 'wealthy_gulf' ||
         (G.character.country.archetype === 'subsaharan' && G.character.ruralUrban === 'rural') ||
@@ -372,6 +386,10 @@ export const GENDER_EVENTS = [
       // A headmistress and a school policy: this is a schoolgirl, not a
       // woman of twenty-five, and not one who never went.
       G.age <= 20 && G.mem?.attendedSchool !== false &&
+      // Actually enrolled that year: in a course, or still in secondary (which
+      // the engine closes at eighteen).
+      (G.education?.enrolled != null ||
+        (G.age <= 18 && stillOnSecondaryTrack(G) && !G.flags.includes('graduated_hs'))) &&
       !G.flags.includes('education_interrupted'),
     text: 'You become pregnant during your second year. The school has a policy: pregnant students must leave. You had not known this was the policy until the headmistress read it to you from a yellowing document.',
     context: null,
@@ -1394,6 +1412,9 @@ export const GENDER_EVENTS = [
       G.character.gender === 'male' &&
       ['developing_urban', 'subsaharan'].includes(G.character.country.archetype) &&
       G.parents?.father && G.parents.father.alive === false &&
+      // "Your father has died" fired thirteen years after he had. The estate
+      // meeting is the year of the death or the one after.
+      G.mem?.lost_parent_fatherYear != null && G.currentYear - G.mem.lost_parent_fatherYear <= 2 &&
       (G.siblings ?? []).some(s => s.gender === 'male' && s.ageDiff > 0),
     text: 'Your father has died. In the meeting with the family, the land, the house, the business — all of it goes to your oldest brother. This is how it has always been. You receive a handshake and a blessing.',
     context: null,

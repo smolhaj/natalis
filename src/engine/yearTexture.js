@@ -1,6 +1,6 @@
 import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime, livingRuralUrban, urbanChanceFor } from './character'
 import { pickFrom } from '../utils/random'
-import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt, hasPassengerRail } from '../data/history.js'
+import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt, hasPassengerRail, ADJUSTMENT_PROGRAMME_YEARS } from '../data/history.js'
 import { preferUnsaid, hasSaid } from './prose'
 import { hasTech, wasWealthy } from '../data/technology.js'
 
@@ -190,8 +190,18 @@ function* textureCandidates(state, opts = {}) {
 
   // ─── GRIEF ───────────────────────────────────────────────────────────────────
 
-  if (F.has('partner_died') && mem?.griefPartnerFirst && !mem?.griefPartnerDating) {
-    const name = state.exPartners?.slice(-1)[0]?.name
+  // A dead partner stays on `state.partner` with `alive: false` (so the grief
+  // can name them), and never reaches `exPartners` — reading only exPartners
+  // gave these blocks no name at all. And both blocks are present-tense grief
+  // behind a permanent flag, so they are bounded by the death's own year:
+  // "You keep setting out two of things" printed twelve years after the funeral.
+  const deadPartnerName = (partner && partner.alive === false ? partner.name : null)
+    ?? state.exPartners?.slice(-1)[0]?.name
+  const _deathYr = mem?.partnerDeathYear ?? mem?.widowedYear ?? null
+  const griefFresh = _deathYr == null || currentYear - _deathYr <= 5
+  const livingPartner = partner && partner.alive !== false ? partner : null
+  if (F.has('partner_died') && griefFresh && mem?.griefPartnerFirst && !mem?.griefPartnerDating) {
+    const name = deadPartnerName
     // One sentence for a grief that runs for years, so a life read "The house is
     // still the wrong size" four times. Grief is exempt from the exhaustion
     // rule because a feeling that recurs is supposed to recur — which is the
@@ -208,8 +218,8 @@ function* textureCandidates(state, opts = {}) {
       'There is a particular hour of the evening that is worse than the rest of it, and it is always the same hour.',
     ]]
   }
-  if (F.has('partner_died') && !partner) {
-    const name = state.exPartners?.slice(-1)[0]?.name
+  if (F.has('partner_died') && griefFresh && !livingPartner) {
+    const name = deadPartnerName
     yield [T.urgent, name
       ? pick([`You still reach for ${name} sometimes. The habit hasn't broken yet.`, `${name} is still everywhere in the house.`])
       : pick(['Some mornings the quiet is a different kind of quiet.', 'The bed is the same size. You are still adjusting to that.'])]
@@ -464,8 +474,15 @@ function* textureCandidates(state, opts = {}) {
       'Somebody says you seem well. You say thank you. Both of you are telling the truth about different things.',
     ]]
   }
+  // A therapist is a claim about the health system where the character lives.
+  // `mh.therapy` is set by pressing a button, and in a very_poor system the
+  // diagnosis itself printed "The nearest person who would understand it as an
+  // illness is a long way off" — then, three years later, "The therapist asks
+  // a question that follows you into the week". Same tiers the diagnosis uses.
+  const _hc = (state.currentCountry ?? state.character?.country)?.healthcare ?? 'fair'
+  const therapyHere = !['poor', 'very_poor'].includes(_hc)
   // Managed mental health — the texture of living with it, not through it
-  if (mh.condition && mh.therapy && !mh.medicating && career && Math.random() < 0.35) {
+  if (mh.condition && mh.therapy && therapyHere && !mh.medicating && career && Math.random() < 0.35) {
     yield [T.urgent, pick([
       'The sessions have given you a way to look at certain things. The things are still there. The looking is different.',
       'You go to the sessions. The work continues. You are learning to hold both.',
@@ -479,7 +496,7 @@ function* textureCandidates(state, opts = {}) {
       'The baseline has shifted. You are still learning what that means for everything else.',
     ])]
   }
-  if (mh.therapy && !mh.condition && Math.random() < 0.25) {
+  if (mh.therapy && therapyHere && !mh.condition && Math.random() < 0.25) {
     yield [T.urgent, pick([
       'The sessions are useful in ways that are hard to summarise. You keep going.',
       'Therapy has a way of making things that were background become foreground. This is inconvenient and necessary.',
@@ -781,6 +798,10 @@ function* textureCandidates(state, opts = {}) {
   const _liveName = _liveCountry?.name
   const _railHere = _liveName != null && urbanChanceFor(_liveCountry, currentYear) >= 0.3 &&
     hasPassengerRail(_liveName, currentYear)
+  // A coffee counter and a tip are a city, and a rich one: the line reached a
+  // character in rural Benue.
+  const _cafeHere = livingRuralUrban(state) !== 'rural' && urbanChanceFor(_liveCountry, currentYear) >= 0.5 &&
+    wasWealthy(_liveCountry, currentYear)
   // The desk across from yours is a statement about the job, and it was
   // reaching a head chef, a taxi driver and a day labourer.
   const _atADesk = !!state.career && !state.retired && !state.inPrison && OFFICE_FIELDS.has(state.career.field)
@@ -803,7 +824,7 @@ function* textureCandidates(state, opts = {}) {
       _isNonWest ? 'The market woman arranges her produce before the customers arrive. The arrangement has a logic that is entirely her own.' : 'The woman at the counter has served a hundred people since noon. Something is running underneath the work that is not the work.',
     ] : (phase === 'midlife') ? [
       'At a stoplight: the man in the car beside yours, your age, looking straight ahead at something that is not the intersection. You recognize the posture.',
-      'The woman at the coffee counter has been smiling at customers for four hours. Something that is not the smile is happening behind it. You tip and leave.',
+      _cafeHere && 'The woman at the coffee counter has been smiling at customers for four hours. Something that is not the smile is happening behind it. You tip and leave.',
       'Your neighbor\'s door opens and closes at two in the morning. You don\'t know what schedule that belongs to. You have been curious about it for months and will never ask.',
       'A couple at the restaurant is not speaking — not in the bad way, in the other way. The specific silence of people who don\'t need to. You watch them for a moment without meaning to.',
       _mobileHere
@@ -10738,7 +10759,9 @@ function* textureCandidates(state, opts = {}) {
       : 'Your parents\' generation fought for independence. Your generation grew up inside the result. The result is more complicated than the fight, which is usually how it goes.',
   ])]
   if (F.has('oil_boom_generation') && Math.random() < 0.22) yield [T.anchored, pick([
-    'The oil decade: the infrastructure arriving suddenly — roads, hospitals, buildings — in a country that the week before had had almost none. The speed of the arrival is the defining texture of the era.',
+    // Present tense about the arrival; printed in 2016 it described a boom
+    // thirty-five years gone as happening now.
+    currentYear <= 1985 && 'The oil decade: the infrastructure arriving suddenly — roads, hospitals, buildings — in a country that the week before had had almost none. The speed of the arrival is the defining texture of the era.',
     'Growing up in a petro-state boom: the money made the country into something it had not been and would not have been without the resource. The resource changed the calculus of what work was and who did what.',
     phase === 'midlife' || phase === 'late_life'
       ? 'The boom did not last at the same pitch. What the boom left behind — the infrastructure, the dependence, the revenue structure — is what you are still living inside.'
@@ -11100,10 +11123,14 @@ function* textureCandidates(state, opts = {}) {
     'The legal holiday Nigeria eventually declared for June 12 — the Day of Democracy — is a national acknowledgment that what happened was wrong. The acknowledgment arrived twenty-five years later.',
   ])]
   if (F.has('nga_democracy_generation') && Math.random() < 0.2) yield [T.anchored, pick([
-    'May 29, 1999. For the first time since 1983, there is a civilian government in Nigeria. You have been an adult in this country for years and this is the first time you have seen this particular thing.',
-    phase === 'late_life'
+    // Present tense about the handover itself: printed in 2007 and 2016 it was
+    // a claim that the civilian government was new. Past tense once it is not.
+    currentYear <= 2001
+      ? 'May 29, 1999. For the first time since 1983, there is a civilian government in Nigeria. You have been an adult in this country for years and this is the first time you have seen this particular thing.'
+      : 'May 29, 1999: the first civilian government since 1983. You remember the day as the day a thing you had stopped expecting happened anyway.',
+    phase === 'late_life' && currentYear >= 2004
       ? 'The Fourth Republic has lasted longer than any of the previous attempts. The duration is itself a fact. Democratic consolidation, they call it in the political science textbooks. In the country it looks like the INEC, the governorship elections, the court challenges, the gradual normalization of the argument.'
-      : 'The transfer happened. The specific disorientation: a result being respected. You will spend years figuring out what to do with that fact.',
+      : currentYear <= 2003 && 'The transfer happened. The specific disorientation: a result being respected. You will spend years figuring out what to do with that fact.',
   ])]
   if (F.has('nga_boko_haram_generation') && Math.random() < 0.25) yield [T.anchored, pick([
     'Maiduguri, Chibok, Gwoza. The geography of the insurgency has its own names now. The names correspond to places where things happened that you know about in the specific way that you know about things that are close.',
@@ -14082,12 +14109,17 @@ function* textureCandidates(state, opts = {}) {
       'The estate was built quickly and with intent, and the intent was that people like your family would live somewhere and not somewhere else.',
       'Everything works. The heating, the water, the lifts more often than not. What does not work is the thing nobody will name, which is the postcode on a form.',
     ])]
-    if (nbhTier === 'informal' && informalIsPossible && Math.random() < 0.3) yield [T.anchored, pick([
+    // An unplanned settlement is a thing that happens at the edge of a city. A
+    // rural character on the informal tier is simply poor in a village, and was
+    // being told about a grid line spliced off the main in 1965 rural Benue.
+    const _nbhCountry = state.currentCountry ?? state.character?.country
+    const _gridHere = hasTech(_nbhCountry, 'electricity', currentYear, { rural: false })
+    if (nbhTier === 'informal' && informalIsPossible && livingRuralUrban(state) !== 'rural' && Math.random() < 0.3) yield [T.anchored, pick([
       nbhName
         ? `The water in ${nbhName} runs from the standpipe at the corner until mid-morning. You have arranged your life around this.`
         : 'The water runs from the standpipe until mid-morning. You have arranged your life around this.',
       'The title to the land the house is on is not the kind of title that appears in government records. You know this and you have learned to live with knowing it.',
-      'The electricity comes from a line that someone ran off the main grid years ago. It is reliable in the way things are reliable when a community maintains them together.',
+      _gridHere && 'The electricity comes from a line that someone ran off the main grid years ago. It is reliable in the way things are reliable when a community maintains them together.',
       'When it rains hard, the lane floods. You know which rains are the kind you prepare for and which are the kind you just wait out.',
       phase === 'late_life'
         ? 'You have lived here long enough to see the settlement become a neighbourhood — the shops, the school, the church or mosque, the names the streets acquired because someone started using them.'
@@ -14703,7 +14735,10 @@ function* textureCandidates(state, opts = {}) {
         'The drought years leave marks that last. The body remembers scarcity even when the shelves are full.',
         // The decade bucket again: the SAPs are a thing of the 1980s, and this
         // was reaching 1970 — and handing Nigeria one twelve years early.
-        currentYear >= 1980 && 'The SAP — structural adjustment programme — has arrived. The health clinic has fewer medications. The school has fewer teachers.',
+        // And "has arrived" is a claim about a date: 1986 in Nigeria, and never
+        // in a country that did not sign one. Printed from 1980 it arrived six
+        // years early. The two years after signing, when the cuts landed.
+        (ADJUSTMENT_PROGRAMME_YEARS[cn] ?? []).some(y => currentYear >= y && currentYear <= y + 2) && 'The SAP — structural adjustment programme — has arrived. The health clinic has fewer medications. The school has fewer teachers.',
         'The extended family absorbs the shock that the state cannot. This is efficient and also exhausting.',
         'The church or the mosque is also the mutual aid society, the news network, the credit system. The attendance has reasons beyond the theological.',
         'The informal sector employs more people than the formal sector, and it is not informal to the people working in it.',
@@ -15534,8 +15569,13 @@ function* textureCandidates(state, opts = {}) {
   if (F.has('the_subtraction') && Math.random() < 0.11) yield [T.earned,
     'Twenty pounds. A man with four lorries and a man with nothing, the same twenty pounds, and the government called it a fresh start.']
 
+  // The trains arriving are what September 1966 looked like from Enugu. The
+  // flag is also set for a northern child (ngm_1966_north), who watched the
+  // street empty from the other end of the line.
   if (F.has('nigeria_1966') && Math.random() < 0.10) yield [T.anchored,
-    'September 1966, and the trains coming in with people on them who had left everything, and the adults stopping mid-sentence when a child came into the room.']
+    ['igbo', 'ijaw'].includes(state.character?.ethnicity)
+      ? 'September 1966, and the trains coming in with people on them who had left everything, and the adults stopping mid-sentence when a child came into the room.'
+      : 'September 1966, and the radio repairer\'s shop shut with the stock still in it, and the one sentence your father said at the table that you were not to repeat.']
 
   if (F.has('oil_boom_windfall') && Math.random() < 0.11) yield [T.anchored, pick([
     'For about a year you were a family with a car. Everybody on that street was a family with something. By 1977 the prices had met the money halfway and settled above it.',
@@ -15559,8 +15599,13 @@ function* textureCandidates(state, opts = {}) {
   if (F.has('naira_distrust') && Math.random() < 0.11) yield [T.earned,
     'Whatever there is sits in something — a plot, a container, dollars in the house. Your son calls it superstition. Your son was four in 1986.']
 
-  if (F.has('fuel_queue_years') && Math.random() < 0.11) yield [T.anchored,
-    'Sleeping in the car in the queue, in the sixth largest oil producer on earth, twenty yards from a man selling it out of a jerry can at four times the pump price.']
+  // The queues were the Abacha years and the scarcity ran into the early
+  // 2000s; printed in 2011 it was an echo with no source. And the car is a
+  // claim: most people in the queue were holding a jerry can.
+  if (F.has('fuel_queue_years') && currentYear <= 2004 && Math.random() < 0.11) yield [T.anchored,
+    (state.assets?.vehicles?.length ?? 0) > 0
+      ? 'Sleeping in the car in the queue, in the sixth largest oil producer on earth, twenty yards from a man selling it out of a jerry can at four times the pump price.'
+      : 'Standing in the queue with a jerry can for the generator, in the sixth largest oil producer on earth, twenty yards from a man selling it out of another jerry can at four times the pump price.']
 
   if (F.has('asuu_strike_generation') && Math.random() < 0.10) yield [T.anchored,
     'Four years of degree taking seven, and everybody in that year ageing out of something while they waited — a scholarship, a job advert, somebody.']

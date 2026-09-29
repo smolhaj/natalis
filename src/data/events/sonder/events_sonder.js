@@ -476,7 +476,7 @@ export const SONDER_EVENTS = [
     id: 'mundane_first_winter_coat',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 18 && G.age <= 30 && G.currentYear >= 1930 && !G.mem?.mundaneFirstWinterCoat,
+    when: (G) => G.age >= 18 && G.age <= 30 && G.currentYear >= 1930 && place.hasWinter(G) && !G.mem?.mundaneFirstWinterCoat,
     text: 'You bought a coat that is not the cheapest option available. The decision took longer than it should have. The coat is good. You wear it more than any coat before it. You understand now why people talk about coats the way they do.',
     effect: (p) => { p.m += 1; p.setMem('mundaneFirstWinterCoat', true); },
   },
@@ -678,7 +678,21 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 60 && !G.mem?.mundaneFuneralSuit,
-    text: 'You have worn the same dark suit or the same dark dress to funerals for fifteen years. It is the correct garment. You do not own a better one and do not need to.',
+    // A dark suit reached a Muslim in Kano, who is buried before sundown by
+    // men in white. What one wears to a death is a question about faith and
+    // place, not a constant.
+    text: (G) => {
+      const rel = G.religion ?? ''
+      const male = G.character?.gender === 'male'
+      if (rel.startsWith('muslim')) return male
+        ? 'You have worn the same white kaftan and cap to the janazah for fifteen years. It is washed after each one and folded back into the bottom of the trunk. It is the correct garment. You do not own a better one and do not need to.'
+        : 'You have worn the same plain dark wrapper and the same scarf to the houses of mourning for fifteen years. It is the correct garment. You do not own a better one and do not need to.'
+      if (rel === 'hindu' || rel === 'jain' || rel === 'sikh') return male
+        ? 'You have worn the same white kurta to cremations for fifteen years. It goes into its own cloth afterwards and is not worn for anything else. You do not own a better one and do not need to.'
+        : 'You have worn the same white sari to the mourning for fifteen years. It goes into its own cloth afterwards and is not worn for anything else. You do not own a better one and do not need to.'
+      if (G.archetype === 'subsaharan') return 'For most of the burials of fifteen years the family chose a cloth, and you bought a length of it and had it sewn. They are folded in the trunk, one for each death, and you could name them by colour. There is also the one dark outfit for the burials where nobody chose.'
+      return 'You have worn the same dark suit or the same dark dress to funerals for fifteen years. It is the correct garment. You do not own a better one and do not need to.'
+    },
     effect: (p) => { p.e += 1; p.setMem('mundaneFuneralSuit', true); },
   },
 
@@ -926,7 +940,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     isGlimpse: true,
-    when: (G) => G.currentCountry?.name === 'Nigeria' && G.age >= 18 && G.age <= 42 && !G.mem?.sonderDanfoBus,
+    when: (G) => G.currentCountry?.name === 'Nigeria' && G.place?.id === 'ng_lagos' && G.currentYear >= 1970 && G.age >= 18 && G.age <= 42 && !G.mem?.sonderDanfoBus,
     text: 'In the danfo, the woman beside you reads a Bible with one thumb while her other hand holds the market bag on her lap. She is completely elsewhere — wherever the reading has taken her. The bus lurches through traffic. The bag shifts. Her thumb does not move from the page.',
     effect: (p) => { p.e += 1; p.setMem('sonderDanfoBus', true); },
   },

@@ -1,3 +1,74 @@
+// A gymnasium and an app were printed into a village in Benue. Three places
+// the same decision was made in 2021.
+const RICH_ARCH = ['wealthy_west', 'wealthy_east', 'wealthy_gulf']
+function vaccineText(G) {
+  const rural = G.ruralUrban === 'rural' || G.place?.type === 'rural'
+  const rich = RICH_ARCH.includes(G.currentCountry?.archetype ?? G.archetype)
+  const bracket = 'Someone your age died of the virus last month. Someone else your age had a reaction. These two facts do not simplify the decision — they just bracket it.'
+  if (rich) return `The vaccine is available in your area. The queue at the gymnasium is longer than expected. The information available about it contradicts itself depending on which app you use. ${bracket}`
+  if (rural) return `The health worker comes out on a motorbike with a cold box strapped behind her and sets up at the clinic, and when the clinic fills the queue moves out under the tree. What people say about the injection depends on who they heard it from — the radio, the man at the junction, a message somebody's nephew read out from his phone. ${bracket}`
+  return `The vaccine has come to the health centre. The queue is out of the gate and down the road by seven in the morning, and some days the doses run out before it moves. The messages forwarded on your phone say three different things about it by lunchtime. ${bracket}`
+}
+
+// The elder of the living parents, so the event names one person and kills them.
+function eldestLiving(G) {
+  const f = G.parents?.father, m = G.parents?.mother
+  const fa = f && f.alive !== false, ma = m && m.alive !== false
+  if (fa && ma) return (f.currentAge ?? 0) >= (m.currentAge ?? 0) ? 'father' : 'mother'
+  return fa ? 'father' : ma ? 'mother' : null
+}
+
+function goodbye(which, phase) {
+  const base = phase === 'late_life' ? 'pan_death_without_goodbye_late' : 'pan_death_without_goodbye'
+  const pron = which === 'father' ? 'his' : 'her'
+  const obj = which === 'father' ? 'him' : 'her'
+  return {
+    id: which === 'father' ? base : `${base}_mother`,
+    phase,
+    weight: 2,
+    when: (G) =>
+      G.currentYear >= 2020 &&
+      G.currentYear <= 2021 &&
+      eldestLiving(G) === which &&
+      !G.mem?.panDeath,
+    text: (G) => {
+      const name = G.parents?.[which]?.name
+      const named = name ? ` The nurse reads ${pron} name back to you, ${name}, to be sure she has the right bed.` : ''
+      return `The call comes on a Tuesday. Your ${which} is in the hospital.${named} The rules say: no visitors. The specific rule is the shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing ${which === 'father' ? 'he' : 'she'} hears is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.`
+    },
+    choices: [
+      {
+        text: `You speak to ${obj} on the phone every day until the end`,
+        tag: 'phone_vigil',
+        outcome: `There is no good version of this. There is only the version where ${which === 'father' ? 'he' : 'she'} heard your voice.`,
+        effect: (p) => {
+          p.m -= 20;
+          p.r += 12;
+          p.killParent(which);
+          p.addFlag('pandemic_death_without_goodbye');
+          p.setMem('panDeath', true);
+        },
+      },
+      {
+        text: 'You find a way to get in — regulations or no',
+        tag: 'break_the_rules',
+        outcome: 'You are in the room at the end. It costs you something and you do not regret it.',
+        effect: (p) => {
+          p.m -= 16;
+          p.h -= 5;
+          p.karma += 8;
+          p.r += 8;
+          p.killParent(which);
+          p.addFlag('pandemic_death_without_goodbye');
+          p.addFlag('broke_the_rules_for_this');
+          p.setMem('panDeath', true);
+        },
+      },
+    ],
+    effect: null,
+  }
+}
+
 export const PANDEMIC_EVENTS = [
   {
     id: 'pan_healthcare_worker',
@@ -217,85 +288,14 @@ export const PANDEMIC_EVENTS = [
     },
   },
 
-  {
-    id: 'pan_death_without_goodbye',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) =>
-      G.currentYear >= 2020 &&
-      G.currentYear <= 2021 &&
-      Object.values(G.parents ?? {}).some((par) => par?.alive !== false) &&
-      !G.mem?.panDeath,
-    text: 'The call comes on a Tuesday. Your father, or your mother, is in the hospital. The rules say: no visitors. The specific rule is the shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing they hear is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.',
-    choices: [
-      {
-        text: 'You speak to them on the phone every day until the end',
-        tag: 'phone_vigil',
-        outcome: 'There is no good version of this. There is only the version where they heard your voice.',
-        effect: (p) => {
-          p.m -= 20;
-          p.r += 12;
-          p.addFlag('pandemic_death_without_goodbye');
-          p.setMem('panDeath', true);
-        },
-      },
-      {
-        text: 'You find a way to get in — regulations or no',
-        tag: 'break_the_rules',
-        outcome: 'You are in the room. It costs you something and you do not regret it.',
-        effect: (p) => {
-          p.m -= 16;
-          p.h -= 5;
-          p.karma += 8;
-          p.r += 8;
-          p.addFlag('pandemic_death_without_goodbye');
-          p.addFlag('broke_the_rules_for_this');
-          p.setMem('panDeath', true);
-        },
-      },
-    ],
-    effect: null,
-  },
+  goodbye('father', 'midlife'),
+  goodbye('mother', 'midlife'),
 
-  {
-    id: 'pan_death_without_goodbye_late',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) =>
-      G.currentYear >= 2020 &&
-      G.currentYear <= 2021 &&
-      Object.values(G.parents ?? {}).some((par) => par?.alive !== false) &&
-      !G.mem?.panDeath,
-    text: 'The call comes on a Tuesday. Your father, or your mother, is in the hospital. The rules say: no visitors. The specific rule is the shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing they hear is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.',
-    choices: [
-      {
-        text: 'You speak to them on the phone every day until the end',
-        tag: 'phone_vigil',
-        outcome: 'There is no good version of this. There is only the version where they heard your voice.',
-        effect: (p) => {
-          p.m -= 20;
-          p.r += 12;
-          p.addFlag('pandemic_death_without_goodbye');
-          p.setMem('panDeath', true);
-        },
-      },
-      {
-        text: 'You find a way to get in — regulations or no',
-        tag: 'break_the_rules',
-        outcome: 'You are in the room. It costs you something and you do not regret it.',
-        effect: (p) => {
-          p.m -= 16;
-          p.h -= 5;
-          p.karma += 8;
-          p.r += 8;
-          p.addFlag('pandemic_death_without_goodbye');
-          p.addFlag('broke_the_rules_for_this');
-          p.setMem('panDeath', true);
-        },
-      },
-    ],
-    effect: null,
-  },
+  // Narrated a parent's death and killed nobody, so the parent went on living
+  // in the state — and died again, by name, years later. One event per parent,
+  // for the elder of those still alive, and the effect kills them.
+  goodbye('father', 'late_life'),
+  goodbye('mother', 'late_life'),
 
   {
     id: 'pan_vaccine_choice',
@@ -307,7 +307,7 @@ export const PANDEMIC_EVENTS = [
       G.age >= 20 &&
       G.age <= 75 &&
       !G.mem?.panVaccine,
-    text: 'The vaccine is available in your area. The queue at the gymnasium is longer than expected. The information available about it contradicts itself depending on which app you use. Someone your age died of the virus last month. Someone else your age had a reaction. These two facts do not simplify the decision — they just bracket it.',
+    text: vaccineText,
     choices: [
       {
         text: 'You get vaccinated',
@@ -358,7 +358,7 @@ export const PANDEMIC_EVENTS = [
       G.age >= 20 &&
       G.age <= 75 &&
       !G.mem?.panVaccine,
-    text: 'The vaccine is available in your area. The queue at the gymnasium is longer than expected. The information available about it contradicts itself depending on which app you use. Someone your age died of the virus last month. Someone else your age had a reaction. These two facts do not simplify the decision — they just bracket it.',
+    text: vaccineText,
     choices: [
       {
         text: 'You get vaccinated',
@@ -409,7 +409,7 @@ export const PANDEMIC_EVENTS = [
       G.age >= 20 &&
       G.age <= 75 &&
       !G.mem?.panVaccine,
-    text: 'The vaccine is available in your area. The queue at the gymnasium is longer than expected. The information available about it contradicts itself depending on which app you use. Someone your age died of the virus last month. Someone else your age had a reaction. These two facts do not simplify the decision — they just bracket it.',
+    text: vaccineText,
     choices: [
       {
         text: 'You get vaccinated',

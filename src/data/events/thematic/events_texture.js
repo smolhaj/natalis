@@ -1,5 +1,6 @@
 import { villageElectrificationDue } from '../_electrification.js'
 import { hasTech } from '../../technology.js'
+import { seasonsFor } from '../../../engine/character.js'
 import { INDEPENDENCE_YEAR } from '../../history.js'
 
 // events_texture.js
@@ -10,6 +11,21 @@ import { INDEPENDENCE_YEAR } from '../../history.js'
 const ruralDeveloping = (G) =>
   G.ruralUrban === 'rural' &&
   ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype)
+
+// Who has a manager, a promotion ladder and a list of meetings to be left off.
+// These career events reached a smallholder in Benue and a market trader who
+// owns her stall. Office prose is for desk fields; an employer's prose is for
+// anyone with an employer.
+const DESK_FIELDS = new Set(['finance', 'technology', 'media', 'law', 'government', 'real_estate',
+  'academia', 'science', 'architecture', 'engineering', 'IT', 'social_services', 'education',
+  'interpreter', 'mental_health', 'aviation'])
+const EMPLOYER_FIELDS = new Set([...DESK_FIELDS, 'healthcare', 'pharmacy', 'manufacturing',
+  'law_enforcement', 'hospitality', 'construction', 'electrician', 'plumber', 'transport', 'veterinary'])
+// Own-account work: nobody lays you off from your own field or stall.
+const OWN_ACCOUNT_CAREERS = new Set(['farmer', 'merchant', 'artist', 'novelist', 'content_creator',
+  'musician', 'dentist', 'politician'])
+const deskJob = (G) => !!G.career && DESK_FIELDS.has(G.career.field) && !OWN_ACCOUNT_CAREERS.has(G.career.id)
+const hasEmployer = (G) => !!G.career && EMPLOYER_FIELDS.has(G.career.field) && !OWN_ACCOUNT_CAREERS.has(G.career.id)
 
 const wealthyWest = (G) => G.character.country.archetype === 'wealthy_west'
 const postSoviet = (G) => G.character.country.archetype === 'post_soviet'
@@ -244,7 +260,16 @@ export const TEXTURE_EVENTS = [
       G.age >= 18 && G.age <= 35 &&
       !G.flags.includes('seasonal_migrant') &&
       !G.flags.includes('left_for_city'),
-    text: 'During the dry season, when the field requires less, you go to the city for work. Construction, unloading at the market, whatever is available. You sleep in a room with seven other men from villages like yours. You send money home every two weeks. In three months you return. You do this for several years running. The city becomes familiar in the way of a place you know without belonging to.',
+    // "A room with seven other men" was printed to women. Women went too —
+    // head-porters, house-girls, the women who wash and sell — and slept
+    // somewhere else.
+    text: (G) => {
+      const cn = (G.currentCountry ?? G.character.country)?.name ?? ''
+      const when = seasonsFor(cn).includes('dry') ? 'During the dry season' : 'After the harvest'
+      return G.character.gender === 'female'
+        ? `${when}, when the field requires less, you go to the city for work. Carrying loads at the market on your head, washing clothes in other people's yards, selling what someone else gives you to sell. You sleep on a mat in a room with five other women from villages like yours, and the one who has been coming longest decides where everyone lies. You send money home every two weeks. In three months you return. You do this for several years running. The city becomes familiar in the way of a place you know without belonging to.`
+        : `${when}, when the field requires less, you go to the city for work. Construction, unloading at the market, whatever is available. You sleep in a room with seven other men from villages like yours. You send money home every two weeks. In three months you return. You do this for several years running. The city becomes familiar in the way of a place you know without belonging to.`
+    },
     choices: null,
     effect: (p) => { p.mo += 200; p.s += 3; p.m -= 3; p.addFlag('seasonal_migrant') },
   },
@@ -258,7 +283,13 @@ export const TEXTURE_EVENTS = [
       ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype) &&
       G.currentYear >= 1999 && G.currentYear <= 2010 &&
       !G.flags.includes('has_mobile'),
-    text: 'The mobile phone network reaches your area. There was never a landline — the infrastructure skipped straight from nothing to this. The first phone in the village belongs to a trader who charges a fee to use it. Within eighteen months everyone has one. Your mother learns to use mobile money before she learns to send a text message. The phone does things here that it does not quite do the same way in rich countries.',
+    // Mobile money in 1999-2010 is Kenya's story; for most of this audience it
+    // arrived a decade later (technology.js).
+    text: (G) => 'The mobile phone network reaches your area. There was never a landline — the infrastructure skipped straight from nothing to this. The first phone in the village belongs to a trader who charges a fee to use it. Within eighteen months everyone has one. ' +
+      (hasTech(G.currentCountry ?? G.character.country, 'mobile_money', G.currentYear)
+        ? 'Your mother learns to use mobile money before she learns to send a text message.'
+        : 'Your mother learns to flash a number — ring once and hang up, so the other person pays for the call — before she learns to send a text message.') +
+      ' The phone does things here that it does not quite do the same way in rich countries.',
     choices: null,
     effect: (p) => { p.e += 6; p.m += 8; p.s += 3; p.addFlag('has_mobile'); p.addFlag('mobile_money') },
   },
@@ -694,7 +725,7 @@ export const TEXTURE_EVENTS = [
       G.age >= 35 && G.age <= 50 &&
       !G.flags.includes('laid_off') &&
       !G.flags.includes('career_peak_done'),
-    text: 'There is a period — it lasts perhaps two or three years — when you are at the exact intersection of experience and energy. You know what you are doing and you still have the stamina to do it well. The problems your work presents are the right size. You think about work on the train home, not with dread but with something closer to absorption. You will not call it happiness, exactly. It is more like: fit.',
+    text: 'There is a period — it lasts perhaps two or three years — when you are at the exact intersection of experience and energy. You know what you are doing and you still have the stamina to do it well. The problems your work presents are the right size. You think about work on the way home, not with dread but with something closer to absorption. You will not call it happiness, exactly. It is more like: fit.',
     choices: null,
     effect: (p) => { p.m += 12; p.e += 5; p.s += 4; p.addFlag('career_peak'); p.addFlag('career_peak_done') },
   },
@@ -704,7 +735,7 @@ export const TEXTURE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      G.career &&
+      deskJob(G) &&
       G.age >= 35 && G.age <= 55 &&
       !G.flags.includes('career_politics_done'),
     text: 'A new manager arrives. They are not hostile openly — what they are is territorial. Your visibility, which was an asset before, becomes a problem under the new arrangement. You find yourself left off distribution lists for meetings you used to be in. Your manager\'s manager asks you to be patient. You understand that institutional politics has its own logic, separate from competence, and that you have been caught in it.',
@@ -736,10 +767,10 @@ export const TEXTURE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      G.career &&
+      hasEmployer(G) &&
       G.age >= 38 && G.age <= 55 &&
       !G.flags.includes('career_passed_over_done'),
-    text: (G) => 'The promotion you expected goes to someone else. ' + (hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear) ? 'The announcement is made by email on a Friday afternoon.' : 'You hear it in the corridor on a Friday afternoon, from someone who assumed you already knew.') + '  The person who gets it is less experienced than you and, depending on how honest you are with yourself, possibly less qualified. Your manager calls to say that your contribution is valued. You say the right things. On the train home you think about what "valued" actually means in practice.',
+    text: (G) => 'The promotion you expected goes to someone else. ' + (hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear) ? 'The announcement is made by email on a Friday afternoon.' : 'You hear it in the corridor on a Friday afternoon, from someone who assumed you already knew.') + '  The person who gets it is less experienced than you and, depending on how honest you are with yourself, possibly less qualified. Your manager calls to say that your contribution is valued. You say the right things. On the way home you think about what "valued" actually means in practice.',
     choices: [
       {
         text: 'Accept it and recommit — you can still move up from here',
@@ -788,7 +819,7 @@ export const TEXTURE_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) =>
-      G.career &&
+      G.career && !OWN_ACCOUNT_CAREERS.has(G.career.id) && G.career.field !== 'agriculture' &&
       G.age >= 40 && G.age <= 65 &&
       !G.flags.includes('laid_off') &&
       ['federal_republic', 'parliamentary_republic', 'constitutional_monarchy', 'democracy'].includes(G.regime),
@@ -799,8 +830,7 @@ export const TEXTURE_EVENTS = [
     text: (G) => {
       const arch = G.currentCountry?.archetype ?? G.character.country.archetype
       const rich = ['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(arch)
-      const DESK_FIELDS = ['finance', 'technology', 'media', 'law', 'government', 'real_estate', 'academia', 'science', 'writing', 'architecture', 'politics', 'education']
-      const office = DESK_FIELDS.includes(G.career?.field)
+      const office = deskJob(G)
       const hasCar = (G.assets?.vehicles?.length ?? 0) > 0
       if (!rich) {
         return 'The work stops. There is no meeting and no document — you are told at the end of the day, the way you would be told about the weather, and what you are told is that there is nothing next week. You ask about next month and the answer is that nobody knows, which is truthful and also the end of the conversation. You go home at the normal time. That is the strangest part: the day is the same length.'

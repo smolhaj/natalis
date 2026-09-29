@@ -676,17 +676,26 @@ export const EARLY_LIFE_EVENTS = [
       const arch = G.character.country.archetype
       if (['military_dictatorship', 'single_party_authoritarian', 'single_party_communist'].includes(regime)) {
         // One thing that happened, not a menu of three things that might have.
-        return `${pickFrom([
-          'A neighbour is taken, at an hour chosen so that the street would see it and not be able to say it saw it',
-          'A name comes off the schedule between one term and the next and nobody in the department mentions the gap where the lecture was',
-          'A book you had out last year is not in the catalogue, and the librarian looks at the screen slightly too long before saying so',
-          'A programme is interrupted and replaced by music, and everyone in the room carries on exactly as they were, which tells you more than the interruption did',
-        ])} — and for the first time the system you were born into is visible to you as a system. Not a backdrop. An arrangement that someone made and that benefits someone. You cannot go back to not seeing it.`
+        // The pool reached a rural Benue farmer in 1986 with a university
+        // department and a librarian's screen. Each line needs its room.
+        const c = G.currentCountry ?? G.character.country
+        const rural = G.ruralUrban === 'rural'
+        const atUniversity = G.education?.enrolled?.type === 'university' || G.flags.includes('university_graduate') || G.flags.includes('university_enrolled')
+        const screens = hasTech(c, 'personal_computer', G.currentYear, { rural })
+        const pool = [
+          `A neighbour is taken, at an hour chosen so that the ${rural ? 'compound' : 'street'} would see it and not be able to say it saw it`,
+          ...(atUniversity ? ['A name comes off the schedule between one term and the next and nobody in the department mentions the gap where the lecture was'] : []),
+          ...(G.literate && !rural ? [screens
+            ? 'A book you had out last year is not in the catalogue, and the librarian looks at the screen slightly too long before saying so'
+            : 'A book you had out last year is not on the shelf or in the card drawer, and the librarian looks at the empty slot slightly too long before saying there was never such a book'] : []),
+          ...(hasTech(c, 'radio', G.currentYear, { rural }) ? ['A programme on the radio is interrupted and replaced by music, and everyone in the room carries on exactly as they were, which tells you more than the interruption did'] : []),
+        ]
+        return `${pickFrom(pool)} — and for the first time the system you were born into is visible to you as a system. Not a backdrop. An arrangement that someone made and that benefits someone. You cannot go back to not seeing it.`
       }
       if (['developing_unstable', 'conflict_zone'].includes(arch)) {
         return 'A news story, or a conversation, or the specific way an election result is announced, makes something clear that you had been circling for years. The world has an arrangement. The arrangement is not accidental. People have interests. Some interests are yours and some are not. You are twenty-one or twenty-two and this is the year the politics becomes personal.'
       }
-      return 'The book, or the conversation, or the news cycle of a specific month organises something in you that was disorganised before. You have had opinions. This is different. This is a position — a place you stand in relation to other things, that determines what is visible from it and what is not.'
+      return (G.literate ? 'The book, or the conversation, or the news of a specific month' : 'A conversation, or something said on the radio, or the news of a specific month') + ' organises something in you that was disorganised before. You have had opinions. This is different. This is a position — a place you stand in relation to other things, that determines what is visible from it and what is not.'
     },
     choices: [
       {

@@ -181,6 +181,21 @@ export const isMonsoonCountry = (G) => MONSOON_COUNTRIES.includes(G.currentCount
 export const isHotCountry = (G) =>
   ['subsaharan', 'wealthy_gulf'].includes(G.archetype) || isMonsoonCountry(G)
 
+// A winter: cold as a season that comes and goes. `seasonsFor` is the engine's
+// own classification (the same one `G.season` is derived from), so a line about
+// cold "until spring" cannot reach Benue, where the year is dry and wet.
+import { seasonsFor } from '../../../engine/character'
+export const hasWinter = (G) =>
+  seasonsFor((G.currentCountry ?? G.character?.country)?.name ?? '').includes('winter') &&
+  !isHotCountry(G)
+
+// Somebody who has left the place they were born — for prose about coming back.
+const LEFT_FLAGS = ['emigrated', 'rural_to_urban', 'urban_migrant', 'returned_home',
+  'returned_migrant', 'gulf_returned', 'ofw_returned']
+export const leftHome = (G) =>
+  LEFT_FLAGS.some(f => G.flags?.includes(f)) ||
+  (!!G.place?.id && !!G.character?.birthPlace?.id && G.place.id !== G.character.birthPlace.id)
+
 // ── Institutions, goods, and time that are not universal ─────────────────────
 // A hospital, a named diagnosis, an appointment at an hour.
 export const hasHealthcare = (G) =>
@@ -254,7 +269,7 @@ export const place = {
   hasTrain, hasCommuterTrain, railFilter,
   hasSupermarket, hasBank, worksInOffice, hasCinema,
   isLiterate, wentToSchool, hasBooks,
-  isColdCountry, isMonsoonCountry, isHotCountry,
+  isColdCountry, isMonsoonCountry, isHotCountry, hasWinter, leftHome,
   hasHealthcare, hasFormalJob, hasHousingMarket, hasLeisureTravel,
   hasCafe, hasOwnRoom, hasClock, hasWeekend, hasLeisure, hasPhotographs,
 }

@@ -7,6 +7,35 @@ import { conflictRiskAt } from '../data/history.js'
 // ─── Living identity card ─────────────────────────────────────────────────────
 // 4 sentences in two pairs: exterior (place/era/situation) + interior (wound/desire).
 // Displayed in the Stats tab, regenerated each year.
+
+// Attendance is settled at seven (`mem.attendedSchool`); `never_schooled` is
+// the older flag. Either one means no school, and a line that says "before
+// school" is not true of this person.
+function neverSchooled(state) {
+  return state.mem?.attendedSchool === false || state.flags?.includes('never_schooled')
+}
+
+// The work a life was spent on, which is not always the last job. A Nigerian
+// trader of thirty-eight years who took factory work at sixty was remembered
+// "as an Assembly Worker". `mem.careerYears` (tick.js) counts the years each
+// career was held; the longest wins when it outlasts the last one clearly.
+export function lifeWork(state) {
+  const last = state.career ?? (state.mem?.retiredFrom?.title ? state.mem.retiredFrom : null)
+  const years = state.mem?.careerYears
+  if (!years) return last
+  let best = null
+  for (const [id, rec] of Object.entries(years)) {
+    if (rec?.title && (!best || rec.years > best.years)) best = { id, ...rec }
+  }
+  if (!best) return last
+  if (!last) return { title: best.title, id: best.id }
+  const lastYears = years[last.id]?.years ?? 0
+  if (best.id !== last.id && best.years >= Math.max(8, lastYears * 2)) {
+    return { ...last, title: best.title, id: best.id, field: best.field ?? last.field }
+  }
+  return last
+}
+
 export function generateIdentityCard(state) {
   const F = new FlagSet(state.flags ?? [])
   // The partner object is kept on state after they die, because the grief and
@@ -266,7 +295,7 @@ export function generateEpitaph(state) {
   // from the death screen: a Detective Chief Inspector with thirty-one years and
   // a Celebrated Author with thirty-seven both read as having never worked.
   // retiredFrom can be stamped by a retirement with no job to retire from.
-  const career = state.career ?? (state.mem?.retiredFrom?.title ? state.mem.retiredFrom : null)
+  const career = lifeWork(state)
   const name = character.firstName
   const He = character.gender === 'male' ? 'He' : 'She'
   const he = He.toLowerCase()
@@ -338,7 +367,10 @@ export function generateEpitaph(state) {
   }
 
   if (f('water_walk_childhood')) {
-    para1.push(`For years, ${he} carried water before school. The weight of it became part of ${his} constitution.`)
+    // "Before school" beside "Never went to school." on the same screen.
+    para1.push(neverSchooled(state)
+      ? `For years, ${he} carried water in the mornings while other children went to school. The weight of it became part of ${his} constitution.`
+      : `For years, ${he} carried water before school. The weight of it became part of ${his} constitution.`)
   }
   if (f('talent_discovered')) {
     para1.push(`${He} found a talent young and spent decades finding out where it led.`)
@@ -1271,7 +1303,7 @@ export function generateLifeNotes(state) {
   // from the death screen: a Detective Chief Inspector with thirty-one years and
   // a Celebrated Author with thirty-seven both read as having never worked.
   // retiredFrom can be stamped by a retirement with no job to retire from.
-  const career = state.career ?? (state.mem?.retiredFrom?.title ? state.mem.retiredFrom : null)
+  const career = lifeWork(state)
   const f = (flag) => flags.includes(flag)
   const any = (...fs) => fs.some(g => flags.includes(g))
   const notes = [] // [{ priority, text }]
@@ -1326,7 +1358,7 @@ export function generateLifeNotes(state) {
   if (any('dissident_writer', 'dissident_reader')) add(50, 'A person the state kept a file on.')
   if (f('oral_historian') || f('heritage_language_preserved')) add(50, 'Kept something alive that might have been lost.')
   if (f('mentor') || f('is_mentor')) add(50, 'Mentored others.')
-  if (f('water_walk_childhood')) add(50, 'Carried water before school for years.')
+  if (f('water_walk_childhood')) add(50, neverSchooled(state) ? 'Carried water for the household from childhood.' : 'Carried water before school for years.')
   if (f('village_electrified')) add(50, 'Present when the first light came on in the village.')
 
   // ── The historical spine (priority 45) ──────────────────────────────────
@@ -1383,7 +1415,7 @@ export function generateLifeNotes(state) {
   if (grandkids > 0) add(21, grandkids === 1 ? 'Had a grandchild.' : `Had ${grandkids} grandchildren.`)
   else if (age >= 45) add(16, 'Had no children.')
   if ((siblings?.length ?? 0) >= 4) add(14, `One of ${siblings.length + 1}.`)
-  if (f('never_schooled')) add(26, 'Never went to school.')
+  if (neverSchooled(state)) add(26, 'Never went to school.')
   else if (f('left_school_early')) add(20, 'Left school early.')
   if (money >= 1_000_000) add(18, 'Died wealthy.')
   else if (money < 500 && age >= 40) add(18, 'Died with nothing.')

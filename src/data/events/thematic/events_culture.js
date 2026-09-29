@@ -7,6 +7,31 @@ const CM_SISTER = (G) => (G.siblings ?? []).find(s =>
   G.age + (s.ageDiff ?? 0) >= 12 && G.age + (s.ageDiff ?? 0) <= 17)
 import { wasEasternBloc } from '../../history.js'
 
+// Single-name or single-question votes held under military or military-backed
+// rule. 'name' = one candidate, yes or no; 'question' = a constitutional or
+// confidence plebiscite. Dates: Egypt 1956 (Nasser), 1970 & 1976 (Sadat),
+// 1981/87/93/99 (Mubarak); Syria 1971/78/85/91/99 (Assad); Sudan 1971/77/83
+// (Nimeiry); Algeria 1976 (Boumediene); Greece 1968 constitution, 1973
+// (Papadopoulos); Chile 1978 consulta, 1980 constitution, 1988 (Pinochet);
+// Uruguay 1980 constitution; Bangladesh 1977 (Zia), 1985 (Ershad); Pakistan
+// 1984 (Zia), 2002 (Musharraf); Ghana 1978 Union Government; Mali 1979/1985
+// (Traoré); Iraq 1995/2002 (Saddam); Myanmar 2008 constitution.
+const PLEBISCITES = {
+  Egypt: { 1956: 'name', 1970: 'name', 1976: 'name', 1981: 'name', 1987: 'name', 1993: 'name', 1999: 'name' },
+  Syria: { 1971: 'name', 1978: 'name', 1985: 'name', 1991: 'name', 1999: 'name' },
+  Sudan: { 1971: 'name', 1977: 'name', 1983: 'name' },
+  Algeria: { 1976: 'name' },
+  Greece: { 1968: 'question', 1973: 'name' },
+  Chile: { 1978: 'question', 1980: 'question', 1988: 'name' },
+  Uruguay: { 1980: 'question' },
+  Bangladesh: { 1977: 'name', 1985: 'name' },
+  Pakistan: { 1984: 'name', 2002: 'name' },
+  Ghana: { 1978: 'question' },
+  Mali: { 1979: 'name', 1985: 'name' },
+  Iraq: { 1995: 'name', 2002: 'name' },
+  Myanmar: { 2008: 'question' },
+}
+
 // events_culture.js
 // Regime-, ethnicity-, religion-, and identity-gated events.
 // These are what make playing in 1970s Chile feel different from 2020s Canada.
@@ -73,10 +98,23 @@ export const CULTURE_EVENTS = [
   },
   {
     id: 'cult_dic_election_farce',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.regime === 'military_dictatorship' && G.age >= 18,
-    text: 'There is an election. Voting is mandatory. The ballot has one name on it. You stand in line, mark the box, and hand it to the official. On the way home, an older neighbor walks beside you in silence.',
+    // Was every military_dictatorship year. Most juntas held no vote at all,
+    // and Nigeria's one national vote under the soldiers, June 1993, was two
+    // parties and two names — and then annulled, which is a different
+    // sentence. Now the dated single-name or single-question plebiscites only.
+    phase: null,
+    weight: 300,
+    when: (G) => {
+      const kind = PLEBISCITES[G.currentCountry?.name ?? G.character?.country?.name]?.[G.currentYear]
+      return !!kind && G.age >= 18 && G.regime !== 'democracy' && !G.inPrison
+    },
+    text: (G) => {
+      const kind = PLEBISCITES[G.currentCountry?.name ?? G.character?.country?.name]?.[G.currentYear]
+      const ballot = kind === 'question'
+        ? 'The ballot has one question on it and two boxes, and everyone knows which box the question is for.'
+        : 'The ballot has one name on it, and a box for yes and a box for no.'
+      return `There is a vote. ${ballot} You stand in line, mark it, and hand it to the official, who watches your hand. On the way home, an older neighbour walks beside you in silence.`
+    },
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('experienced_sham_election') },
   },

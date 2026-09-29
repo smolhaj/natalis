@@ -32,13 +32,18 @@ export const LGBTQ_EVENTS = [
       const c = G.currentCountry ?? G.character.country
       const y = G.currentYear
       const rural = G.ruralUrban === 'rural'
-      const source = hasTech(c, 'home_internet', y, { rural })
-        ? 'You read it in a book, or hear it spoken on a television programme, or find it in a search result you typed in private.'
-        : hasTech(c, 'television', y, { rural })
-          ? 'You read it in a magazine someone left behind, or hear it spoken on a television programme late at night with the sound turned low.'
-          : G.literate
-            ? 'You find it in a book that was not meant for you, or in a newspaper, in a sentence about somebody else.'
-            : 'You hear it said by an older boy, as an insult, about a man in the next village. It is meant as a joke. It is not a joke to you.'
+      // Literacy first: the television branch handed a magazine and a search
+      // result to characters who cannot read.
+      const tv = hasTech(c, 'television', y, { rural })
+      const source = G.literate
+        ? (hasTech(c, 'home_internet', y, { rural })
+          ? 'You read it in a book, or hear it spoken on a television programme, or find it in a search result you typed in private.'
+          : tv
+            ? 'You read it in a magazine someone left behind, or hear it spoken on a television programme late at night with the sound turned low.'
+            : 'You find it in a book that was not meant for you, or in a newspaper, in a sentence about somebody else.')
+        : tv
+          ? 'You hear it spoken on a television programme late at night, with the sound turned low and the door shut.'
+          : `You hear it said by an older boy, as an insult, about a man in the next ${rural ? 'village' : 'street'}. It is meant as a joke. It is not a joke to you.`
       return `${source} Words — for what you might be. They land with a precision you were not prepared for. You sit with them for a long time.`
     },
     choices: [

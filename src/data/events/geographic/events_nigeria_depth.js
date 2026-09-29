@@ -3,10 +3,25 @@
 // the #EndSARS 2020 protests, Japa emigration wave, the generator economy,
 // Nollywood and Afrobeats as cultural assertion, church/mosque culture.
 
+import { hasTech } from '../../technology.js'
+
 const IS_NIGERIA = (G) => G.character.country?.name === 'Nigeria'
-const IS_SOUTH = (G) => IS_NIGERIA(G) && ['yoruba', 'igbo', 'ijaw', 'other_nigerian'].includes(G.character.ethnicity)
-const IS_NORTH = (G) => IS_NIGERIA(G) && ['hausa_fulani', 'kanuri'].includes(G.character.ethnicity)
-const IS_LAGOS = (G) => IS_NIGERIA(G) && G.ruralUrban === 'urban' && G.currentYear >= 1970
+// Where the character lives, not what they are: other_nigerian is drawn into
+// Benue, in the Middle Belt, and was being filed as southern.
+const SOUTH_REGIONS = ['Southwest Nigeria', 'Southeast Nigeria', 'Niger Delta']
+const IS_SOUTH = (G) => IS_NIGERIA(G) && (G.place?.region
+  ? SOUTH_REGIONS.includes(G.place.region)
+  : ['yoruba', 'igbo', 'ijaw'].includes(G.character.ethnicity))
+const IS_MIDDLE_BELT = (G) => IS_NIGERIA(G) && G.place?.region === 'Middle Belt Nigeria'
+// Lagos is a place, not "urban": this was sending the Lagos go-slow to Kano.
+const IS_LAGOS = (G) => IS_NIGERIA(G) && G.place?.id === 'ng_lagos' && G.currentYear >= 1970
+
+// On the grid: a city had NEPA from its founding in 1972; a village waited
+// for the wire. Homework needs a school; a television needs a set.
+const ON_GRID = (G) => G.ruralUrban === 'urban'
+  ? G.currentYear >= 1972
+  : hasTech(G.currentCountry ?? G.character.country, 'electricity', G.currentYear, { rural: true })
+const SCHOOLED = (G) => !G.flags.has('never_schooled')
 
 export const NIGERIA_DEPTH_EVENTS = [
 
@@ -20,8 +35,17 @@ export const NIGERIA_DEPTH_EVENTS = [
       IS_NIGERIA(G) &&
       G.currentYear >= 1975 && G.currentYear <= 2010 &&
       G.age >= 5 && G.age <= 20 &&
+      ON_GRID(G) &&
       !G.mem?.ngaDepNepa,
-    text: `NEPA: the National Electric Power Authority. The joke is that the acronym stands for "Never Expect Power Always." The current goes without warning — you are doing homework and the lights go, or you are cooking and the stove dies, or you are watching something on television and the screen goes black. Your family has a procedure: where the candles are, how to start the kerosene lamp, whether tonight is the kind of night where the generator goes on. The generator is an expense that not every family can afford. The sound of generators marks the houses that can. You grow up knowing how to read the sky before dark — whether to get the work done while the light is still available.`,
+    text: (G) => `NEPA: the National Electric Power Authority. The joke is that the acronym stands for "Never Expect Power Always." The current goes without warning — ` +
+      [
+        SCHOOLED(G) && G.age >= 7 ? 'you are doing homework and the bulb goes' : 'you are shelling beans on the step and the bulb behind you goes',
+        'the fan stops mid-turn and the heat comes back into the room at once',
+        hasTech(G.currentCountry ?? G.character.country, 'television', G.currentYear, { rural: G.ruralUrban === 'rural' })
+          ? 'the television goes black in the middle of the one programme everybody waits for'
+          : 'the radio carries on, because the radio is on batteries',
+      ].join(', or ') +
+      `. Your family has a procedure: where the candles are, how to start the kerosene lamp, whether tonight is the kind of night where the generator goes on. The generator is an expense that not every family can afford. The sound of generators marks the houses that can. You grow up knowing how to read the sky before dark — whether to get the work done while the light is still available.`,
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -147,6 +171,29 @@ export const NIGERIA_DEPTH_EVENTS = [
     ],
   },
 
+  // The protesters had parents, and a 1962 child was fifty-eight in 2020.
+  {
+    id: 'nga_dep_endsars_parent',
+    phase: null,
+    weight: 300,
+    claimsYears: { from: 2020, to: 2020 },
+    when: (G) =>
+      IS_NIGERIA(G) &&
+      G.currentYear === 2020 &&
+      G.age > 35 &&
+      (G.children ?? []).some(c => c.alive !== false && c.age >= 18 && c.age <= 35) &&
+      !G.mem?.ngaDepEndSars,
+    text: (G) => {
+      const kid = (G.children ?? []).filter(c => c.alive !== false && c.age >= 18 && c.age <= 35).sort((a, b) => a.age - b.age)[0]
+      const pron = kid.gender === 'female' ? 'she' : 'he'
+      const obj = kid.gender === 'female' ? 'her' : 'him'
+      return `October 2020. ${kid.name.split(' ')[0]} goes out in the morning with a flag and a bottle of water and says ${pron} will be back before dark. You know what SARS is. You knew what the police were before there was a SARS. For twelve days the young fill the roads and you cook for whoever comes through the house. On the twentieth, at the Lekki toll gate, the lights go off and the soldiers come, and your telephone rings and it is not ${obj}, and then it rings again and it is.`
+    },
+    context: 'The #EndSARS protests against the Special Anti-Robbery Squad ran from 8 to 20 October 2020 in cities across Nigeria. On the night of 20 October soldiers opened fire on protesters at the Lekki toll gate in Lagos; a judicial panel later found that protesters were killed there, which the government disputed.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.r += 5; p.setMem('ngaDepEndSars', true) },
+  },
+
   // ── THE JAPA WAVE ─────────────────────────────────────────────────────────────
 
   {
@@ -182,8 +229,8 @@ export const NIGERIA_DEPTH_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      IS_SOUTH(G) &&
-      G.religion === 'christian_protestant' &&
+      (IS_SOUTH(G) || IS_MIDDLE_BELT(G)) &&
+      ['christian_protestant', 'christian_pentecostal'].includes(G.religion) &&
       G.currentYear >= 1985 &&
       G.age >= 8 && G.age <= 18 &&
       !G.mem?.ngaDepPentecostal,

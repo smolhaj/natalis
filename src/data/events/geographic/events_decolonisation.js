@@ -274,7 +274,13 @@ export const DECOLONISATION_EVENTS = [
       !G.mem?.dcBrainDrain &&
       ['subsaharan', 'developing_urban'].includes(G.character.country.archetype) &&
       G.currentYear >= 1985 && G.currentYear <= 2005 &&
-      G.age >= 30,
+      G.age >= 30 &&
+      // "The fourth colleague": the nurse, the engineer, the lecturer. It was
+      // told to farmers. Professionals, whose colleagues these were.
+      (G.currentCountry?.name ?? G.character.country.name) === G.character.country.name &&
+      ['healthcare', 'engineering', 'academia', 'education', 'science', 'pharmacy', 'dentistry',
+        'veterinary', 'law', 'finance', 'technology', 'IT', 'government', 'architecture',
+        'mental_health', 'social_services'].includes(G.career?.field),
     text: (G) => {
       const count = G.currentYear >= 1995 ? 'The fourth colleague' : 'The third colleague'
       return `${count} this year has left for abroad. The nurse who delivered half the babies in this district. The engineer who kept the water treatment plant running. The lecturer whose students used to argue in the corridor long after the session ended. They do not say they are not coming back. They say they will see. You can tell the difference.`

@@ -111,6 +111,9 @@ export const CAREERS = [
         id: 'career_laborer_injury',
         phase: 'midlife',
         weight: 3,
+        // A settlement and a lawsuit need a company and a court that takes
+        // the case. Most day labour in this period had neither: the foreman
+        // paid for the clinic, or did not.
         text: 'A workplace accident leaves you with a serious injury. The company\'s response is cautious and cold.',
         choices: [
           {
@@ -129,7 +132,7 @@ export const CAREERS = [
           },
         ],
         effect: null,
-        when: () => true,
+        when: (G) => (G.archetype === 'wealthy_west' || G.archetype === 'wealthy_east') && G.currentYear >= 1960,
       },
     ],
   },

@@ -1299,6 +1299,7 @@ export const PLACES = [
   {
     id: 'ng_kano', name: 'Kano', country: 'Nigeria',
     type: 'urban', scale: 'major_city', region: 'North Nigeria',
+    homeOf: ['hausa_fulani'],
     neighborhoods: {
       informal:      ['Sabon Gari edge', 'Gwagwarwa', 'Dorayi outskirts'],
       working_class: ['Sabon Gari', 'Fagge', 'Dakata', 'Gwale'],
@@ -1306,16 +1307,130 @@ export const PLACES = [
       elite:         ['GRA', 'Kabuga', 'Sharada industrial', 'Government House area'],
     },
   },
+  // Nigeria had one countryside and it was Benue, so every Igbo, Ijaw, Kanuri
+  // and Hausa villager was born among the Tiv, the Biafran blockade reached a
+  // Middle Belt child, and the Delta never touched an Ijaw life. Benue stays as
+  // the Middle Belt's own place; each of the others has its homeland.
   {
     id: 'ng_rural', name: 'Rural Benue State', country: 'Nigeria',
     type: 'rural', scale: 'village', region: 'Middle Belt Nigeria',
+    homeOf: ['other_nigerian'],
     neighborhoods: {
-      informal:      ['Ajo ama', 'Agatu flats'],
+      informal:      ['The compounds past the yam mounds', 'Agatu flats'],
       working_class: ['Market road', 'Near the motor park'],
       middle_class:  ['Council ward', 'Main junction'],
       elite:         ['Chief\'s compound', 'New bungalow road'],
     },
   },
+  {
+    id: 'ng_rural_north', name: 'A Village near Kano', country: 'Nigeria',
+    type: 'rural', scale: 'village', region: 'North Nigeria',
+    homeOf: ['hausa_fulani'],
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['The compounds past the millet', 'By the borrow pit'],
+      working_class: ['The road to the weekly market', 'Near the grinding mill'],
+      middle_class:  ['Near the Friday mosque', "The Hakimi's ward"],
+      elite:         ["The Hakimi's compound", "The trader's house with the zinc roof"],
+    },
+  },
+  {
+    id: 'ng_rural_borno', name: 'A Village in Borno', country: 'Nigeria',
+    type: 'rural', scale: 'village', region: 'Northeast Nigeria',
+    homeOf: ['kanuri'],
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['The huts past the sorghum', 'By the dry river bed'],
+      working_class: ['The road to the cattle market', 'Near the well'],
+      middle_class:  ['Near the Friday mosque', "The Lawan's ward"],
+      elite:         ["The Lawan's compound", 'The house with the concrete walls'],
+    },
+  },
+  {
+    id: 'ng_maiduguri', name: 'Maiduguri', country: 'Nigeria',
+    type: 'urban', scale: 'city', region: 'Northeast Nigeria',
+    homeOf: ['kanuri'],
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['Bulumkutu', 'Gwange edges'],
+      working_class: ['Gwange', 'Shehuri', 'Hausari'],
+      middle_class:  ['Old GRA edge', 'Bolori'],
+      elite:         ['GRA', "Near the Shehu's palace"],
+    },
+  },
+  {
+    id: 'ng_rural_oyo', name: 'A Town in Oyo', country: 'Nigeria',
+    type: 'rural', scale: 'village', region: 'Southwest Nigeria',
+    homeOf: ['yoruba'],
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['The compounds past the cocoa farm', 'By the stream'],
+      working_class: ['Near the motor park', 'The oja road'],
+      middle_class:  ['Near the church and the mosque', "The Baale's street"],
+      elite:         ["The Baale's compound", 'The storey building the son in Lagos built'],
+    },
+  },
+  {
+    id: 'ng_ibadan', name: 'Ibadan', country: 'Nigeria',
+    type: 'urban', scale: 'city', region: 'Southwest Nigeria',
+    homeOf: ['yoruba'],
+    weight: 0.6,
+    neighborhoods: {
+      informal:      ['Beere', 'Oje', 'Mokola lower'],
+      working_class: ['Mokola', 'Dugbe', 'Gbagi'],
+      middle_class:  ['Bodija', 'Agodi', 'Ring Road'],
+      elite:         ['Iyaganku GRA', 'Jericho', 'Old Bodija'],
+    },
+  },
+  {
+    id: 'ng_rural_east', name: 'A Village in Anambra', country: 'Nigeria',
+    type: 'rural', scale: 'village', region: 'Southeast Nigeria',
+    homeOf: ['igbo'],
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['The compound past the yam barn', 'By the stream'],
+      working_class: ['The road to the Eke market', 'Near the palm-oil press'],
+      middle_class:  ['Near the church', "The umunna's square"],
+      elite:         ["The Igwe's compound", 'The storey building a trader built'],
+    },
+  },
+  {
+    id: 'ng_enugu', name: 'Enugu', country: 'Nigeria',
+    type: 'urban', scale: 'city', region: 'Southeast Nigeria',
+    homeOf: ['igbo'],
+    weight: 0.6,
+    neighborhoods: {
+      informal:      ['Coal Camp', 'Obiagu'],
+      working_class: ['Ogui', 'Asata', 'Uwani'],
+      middle_class:  ['New Haven', 'Trans-Ekulu', 'Achara Layout'],
+      elite:         ['GRA', 'Independence Layout'],
+    },
+  },
+  {
+    id: 'ng_delta', name: 'A Creek Village in the Delta', country: 'Nigeria',
+    type: 'rural', scale: 'village', region: 'Niger Delta',
+    homeOf: ['ijaw'],
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['The houses on stilts past the landing', 'By the mangroves'],
+      working_class: ['The waterside', 'Near the fishing canoes'],
+      middle_class:  ['Near the church', "The chief's landing"],
+      elite:         ["The chief's house", 'The house with the outboard engine'],
+    },
+  },
+  {
+    id: 'ng_port_harcourt', name: 'Port Harcourt', country: 'Nigeria',
+    type: 'urban', scale: 'city', region: 'Niger Delta',
+    homeOf: ['ijaw'],
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['Diobu waterfront', 'Marine Base', 'Abonnema Wharf'],
+      working_class: ['Mile One', 'Mile Three', 'Borokiri'],
+      middle_class:  ['D-Line', 'Rumuola', 'Trans-Amadi'],
+      elite:         ['Old GRA', 'New GRA', 'Peter Odili Road'],
+    },
+  },
+
 
   // ── ETHIOPIA ───────────────────────────────────────────────────────────────
 

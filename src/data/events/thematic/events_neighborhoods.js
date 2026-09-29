@@ -166,6 +166,9 @@ export const NEIGHBORHOOD_EVENTS = [
     cooldown: 0,
     when: (G) =>
       G.neighborhoodTier === 'informal' &&
+      // A block, market sellers paying protection: a city. `informal` is also
+      // the tier of a rural compound, and this reached villages.
+      G.ruralUrban !== 'rural' && G.place?.type !== 'rural' &&
       G.age >= 13 && G.age <= 18 &&
       !G.mem?.gangBlockEvent &&
       ['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'].includes(G.archetype),

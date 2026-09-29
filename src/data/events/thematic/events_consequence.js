@@ -4,6 +4,12 @@
 // COVID downstream, late-life smoking, driving licence, STI arc.
 
 import { hasTech } from '../../technology.js'
+import { numberWord } from '../_words.js'
+
+// Employed by a company with a personnel department.
+const COMPANY_FIELDS = new Set(['finance', 'technology', 'media', 'law', 'real_estate', 'architecture',
+  'engineering', 'IT', 'hospitality', 'manufacturing', 'aviation', 'transport', 'construction',
+  'entertainment', 'pharmacy', 'science', 'digital_media'])
 
 // Somebody who finished secondary school, or went further, can read a form.
 const SCHOOLED_PAST_PRIMARY = (G) =>
@@ -18,7 +24,10 @@ export const CONSEQUENCE_EVENTS = [
     id: 'illiterate_school_shame',
     phase: 'childhood',
     weight: 5,
-    when: (G) => !G.literate && G.age >= 7 && G.age <= 12 && !G.mem?.illiterate_school,
+    // A teacher and a board: the child has to be in the classroom. A
+    // never-schooled child was stood up in front of one.
+    when: (G) => !G.literate && G.mem?.attendedSchool !== false && !G.flags.includes('never_schooled') &&
+      G.age >= 7 && G.age <= 12 && !G.mem?.illiterate_school,
     text: 'The teacher writes something on the board and calls on you to read it aloud. The letters do not assemble into words the way they seem to for the other children. You stand. The silence stretches. Someone behind you laughs. The teacher moves on. You sit down and spend the rest of the lesson looking at your hands.',
     choices: [
       { text: 'Ask the teacher for help after class', tag: null, outcome: 'She gives you extra exercises. Progress is slow and humiliating and real.', effect: (p) => { p.e += 3; p.m -= 8; p.s -= 3; p.addFlag('seeking_literacy'); p.setMem('illiterate_school', true) } },
@@ -179,9 +188,13 @@ export const CONSEQUENCE_EVENTS = [
     phase: null,
     weight: 4,
     // The email arrives on a Tuesday — in North Korea, where it does not.
-    when: (G) => G.flags.includes('lived_through_pandemic') && G.career && G.currentYear >= 2020 && G.currentYear <= 2022 && !G.mem?.pandemic_economic &&
+    // "You are forty-three" was printed at every age, and a company email to
+    // farmers and market traders. A company employee, at their own age.
+    when: (G) => G.flags.includes('lived_through_pandemic') && G.currentYear >= 2020 && G.currentYear <= 2022 && !G.mem?.pandemic_economic &&
+      COMPANY_FIELDS.has(G.career?.field) && !['merchant', 'farmer'].includes(G.career?.id) &&
+      G.age >= 22 && G.age <= 64 &&
       hasTech(G.currentCountry ?? G.character.country, 'email', G.currentYear),
-    text: 'The industry closes or contracts or pivots in a direction that does not include your role. The email arrives on a Tuesday. The company is "restructuring." The redundancy package is legal and inadequate. You are forty-three and your CV has not needed updating in six years.',
+    text: (G) => `The industry closes or contracts or pivots in a direction that does not include your role. The email arrives on a Tuesday. The company is "restructuring." The redundancy package is legal and inadequate. You are ${numberWord(G.age)} and your CV has not needed updating in ${G.age >= 30 ? 'six years' : 'the time you have had it'}.`,
     choices: [
       { text: 'Retrain — this is the forced pivot you never chose', tag: null, outcome: 'The new direction takes two years to pay off. The years are difficult and the direction is yours.', effect: (p) => { p.m -= 10; p.e += 6; p.mo -= 4000; p.addFlag('pandemic_reborn'); p.setMem('pandemic_economic', true) } },
       { text: 'Find equivalent work as fast as possible', tag: null, outcome: 'The new role is similar, slightly worse. You are grateful for it and slightly resentful of the gratitude.', effect: (p) => { p.m -= 8; p.mo -= 2000; p.setMem('pandemic_economic', true) } },

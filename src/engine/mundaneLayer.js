@@ -1,5 +1,5 @@
-import { livingRuralUrban, urbanChanceFor } from './character'
-import { conflictRiskAt, WAR_YEARS } from '../data/history.js'
+import { livingRuralUrban, urbanChanceFor, seasonsFor } from './character'
+import { conflictRiskAt, WAR_YEARS, INDEPENDENCE_YEAR } from '../data/history.js'
 import { preferUnsaid } from './prose'
 import { hasTech, wasWealthy, techYear, RURAL_TECH_OVERRIDES } from '../data/technology'
 // mundaneLayer.js — Daily-life texture that fires alongside main events every year.
@@ -192,6 +192,41 @@ export function buildMundaneLayer(state) {
   // seventy and a sixteen-year-old with no work were both being told about.
   const employed = working && !state.retired && !!state.career && !state.inPrison
   const adult = age >= 18
+  // Desk work, for lines about a meeting on a screen.
+  const DESK_FIELDS = new Set([
+    'finance', 'government', 'law', 'media', 'digital_media', 'technology',
+    'real_estate', 'politics', 'architecture', 'social_services', 'academia',
+    'interpreter', 'engineering', 'science', 'education', 'IT', 'mental_health', 'writing',
+  ])
+  // When money by phone arrived where the character lives. technology.js is
+  // the authority if it carries the row; otherwise the launch years of the
+  // services that actually reached ordinary people.
+  const MOBILE_MONEY_FALLBACK = { Kenya: 2007, Tanzania: 2008, Uganda: 2009, Ghana: 2015, Nigeria: 2018,
+    Rwanda: 2010, Zambia: 2012, Zimbabwe: 2011, 'Ivory Coast': 2009, Senegal: 2014, Somalia: 2009,
+    Bangladesh: 2011, Pakistan: 2009, Philippines: 2004, Mozambique: 2011, 'DR Congo': 2012, Cameroon: 2011 }
+  const _mmTable = techYear(homeCountry, 'mobile_money')
+  const mobileMoneyYear = _mmTable < 9000 ? _mmTable : (MOBILE_MONEY_FALLBACK[cn] ?? 9999)
+  const mobileMoneyHere = currentYear >= mobileMoneyYear
+  // Reading, for the lines that assume it: the same derivation as `G.literate`
+  // in tick.js buildG, because the birth roll is where literacy starts and not
+  // where it ends. "The newspaper is read in a specific order" was printing to
+  // an illiterate woman.
+  const literate = flags.has('became_literate') ? true
+    : (['secondary', 'university', 'graduate'].includes(state.education?.level) ||
+       flags.has('graduated_hs') || flags.has('university_graduate') ||
+       flags.has('vocational_trained') || state.education?.enrolled?.type === 'university') ? true
+    : flags.has('never_schooled') ? false
+    : (state.character?.literate ?? true)
+  // A school play and a school appointment need a living child of school age,
+  // and a parent who is an adult: they reached a two-year-old's parent and a
+  // childless twelve-year-old.
+  const schoolAgeChild = adult && (children ?? []).some(c => c && c.alive !== false && (c.age ?? -1) >= 5 && (c.age ?? -1) <= 16)
+  // Remittance is sent from somewhere to home. The line reached people living
+  // in the house they were born in.
+  const birthPlaceId = state.character?.birthPlace?.id ?? state.character?.birthPlace ?? null
+  const livePlaceId = state.currentPlace?.id ?? state.currentPlace ?? null
+  const awayFromHome = flags.has('emigrated') || (state.currentCountry?.name && state.currentCountry.name !== birthCn) ||
+    (birthPlaceId != null && livePlaceId != null && birthPlaceId !== livePlaceId)
   // Municipal infrastructure — a bus route, a fare — follows urbanisation,
   // not wealth; see `cityEnough` in _sonderGuards.js.
   const cityEnough = (share) => urbanChanceFor(homeCountry, currentYear) >= share
@@ -249,7 +284,7 @@ export function buildMundaneLayer(state) {
     'The telephone is in the hallway. Calls are brief and considered before making them.',
     'The telephone rings. It is for one specific person. Everyone else finds out later.',
   )
-  addIf(tech('newspaper') && adult && currentYear <= 1995,
+  addIf(tech('newspaper') && adult && literate && currentYear <= 1995,
     'The newspaper is folded and read in a specific order. The order has not changed.',
   )
   addIf(currentYear >= 1939 && currentYear <= 1946 && wealthyNow && notYoung,
@@ -373,8 +408,10 @@ export function buildMundaneLayer(state) {
   addIf(runsAHousehold,
     'The day begins before sunrise. By the time the rest of the household wakes, several things are already done.',
     'The market is your domain — the price-checking, the weight, the recognition of freshness. The vendor knows you.',
-    'The children\'s illness falls to you. The school appointment falls to you. The in-law visit falls to you.',
     'You are responsible for more of the visible daily life than the accounting would suggest.',
+  )
+  addIf(runsAHousehold && schoolAgeChild,
+    'The children\'s illness falls to you. The school appointment falls to you. The in-law visit falls to you.',
   )
   addIf(runsAHousehold && !tech('piped_water'),
     'The water is fetched. The fetching is not counted as work because it happens before work begins.',
@@ -484,6 +521,8 @@ export function buildMundaneLayer(state) {
     'The school fees are a number that arrives every term. How to meet the number is worked out.',
     'You eat what is available. What is available is adequate, mostly.',
     'Rain on the roof is the loudest thing. Tonight it is the loudest thing.',
+  )
+  addIf(isPoor && adult && awayFromHome,
     'You send what you can. Home needs what you send.',
   )
   addIf(isPoor && isRural && phase !== 'early_childhood',
@@ -581,7 +620,9 @@ export function buildMundaneLayer(state) {
   const liveRegion = (state.currentCountry ?? state.character?.country)?.region ?? ''
   const westCentral = liveRegion === 'West Africa' || liveRegion === 'Central Africa'
   const horn = ['Ethiopia', 'Eritrea', 'Somalia', 'Djibouti', 'Sudan', 'South Sudan'].includes(currentCn)
-  addIf(liveRegion === 'West Africa',
+  // The cross-border jollof argument is a thing of the internet era; printed
+  // into 1968 and 1977 it was a meme forty years early.
+  addIf(liveRegion === 'West Africa' && currentYear >= 2010,
     'The jollof rice debate — whose version, which country, which occasion — is perennial and unresolvable and also enjoyable.',
   )
   addIf(isSubsaharan && !horn,
@@ -758,7 +799,7 @@ export function buildMundaneLayer(state) {
   addIf(currentYear <= 1950 && adult,
     'The letter took two weeks to arrive and another two weeks to receive a response. The slow conversation has its own rhythm.',
   )
-  addIf(tech('newspaper') && adult && currentYear <= 1990,
+  addIf(tech('newspaper') && adult && literate && currentYear <= 1990,
     'The newspaper is read in a specific order. The order has not changed.',
   )
   addIf(tech('radio') && !tech('television') && notYoung,
@@ -800,17 +841,19 @@ export function buildMundaneLayer(state) {
 
   // ── CHILDREN AT HOME ───────────────────────────────────────────────────────
 
-  addIf(hasChildren && phase !== 'late_life',
+  addIf(schoolAgeChild && phase !== 'late_life',
     'The school run is the first deadline of the day. It is met, most days.',
     'The packed lunch is prepared. What goes in is a negotiation that has been conducted so many times it is no longer called a negotiation.',
     'The homework is supervised. The supervision requires a kind of patience that varies by subject.',
+    'The school play: their face in the crowd, then their face at the front, and the difference between those two.',
+  )
+  addIf(hasChildren && adult && phase !== 'late_life',
     'You are explaining something to a child and in the explaining you are thinking about the explanation for the first time.',
     'Something was broken. The breaking was not intentional. The consequence was negotiated.',
   )
   addIf(hasChildren && children.some(c => (c.age ?? 0) < 10),
     'A temperature at 2am. The forehead is felt. The medicine is found. The night continues.',
     'The bedtime story is the same story for the third time this week. The child does not yet know that knowing it is part of its function.',
-    'The school play: their face in the crowd, then their face at the front, and the difference between those two.',
   )
   addIf(hasChildren && children.some(c => (c.age ?? 0) >= 12 && (c.age ?? 0) <= 18),
     'The teenager is home and not speaking. This is information.',
@@ -845,7 +888,8 @@ export function buildMundaneLayer(state) {
   addIf(cn === 'Nigeria',
     // NEPA was constituted in 1972, and the light is only taken where there is one.
     currentYear >= 1972 && wired && 'NEPA has taken the light again. The generator starts, or does not start.',
-    'The go-slow on the bridge: the danfo at a standstill, the hawkers moving between vehicles.',
+    // The danfo and the bridge are Lagos; this reached rural Benue.
+    livePlaceId === 'ng_lagos' && 'The go-slow on the bridge: the danfo at a standstill, the hawkers moving between vehicles.',
     'The pepper soup is the conversation and the meal simultaneously.',
   )
   addIf(cn === 'Ghana',
@@ -1902,10 +1946,15 @@ export function buildMundaneLayer(state) {
   addIf(F('emigrated') || F('first_generation_immigrant'),
     'The form: the small box for the country of origin, the question of which address is permanent.',
     'The friend who is also from there: the relief of speaking without choosing words carefully.',
-    'The first winter here. It is not the winter you have a word for, and you find yourself dressing for the one you remember.',
     'You are learning the bureaucracy. The bureaucracy is specific to this country and has its own logic.',
     'The job you have here is not the job you had there. The here job is the available job.',
     'Sunday is different here. The day has a different shape. The shape requires adjustment.',
+  )
+  // A first winter needs a country that has one, and it is only first once:
+  // it was reaching emigrants to Lagos and Dubai, and people twenty years in.
+  addIf((F('emigrated') || F('first_generation_immigrant')) && (state.yearsAbroad ?? 0) <= 2 &&
+    currentCn !== birthCn && seasonsFor(currentCn).includes('winter'),
+    'The first winter here. It is not the winter you have a word for, and you find yourself dressing for the one you remember.',
   )
   addIf(F('emigrated') && isMuslim && isWealthyArch,
     'The halal butcher is across town. You go once a week. The going is also seeing people from home.',
@@ -2040,6 +2089,10 @@ export function buildMundaneLayer(state) {
   )
   addIf(era >= 2020 && phase !== 'early_childhood',
     'The news is everywhere and unending and does not require you to seek it out. You have adjusted your seeking.',
+  )
+  // A remote meeting is a desk job with an internet connection, from 2020;
+  // it reached a retiree of seventy-four on the era alone.
+  addIf(currentYear >= 2020 && employed && DESK_FIELDS.has(careerField) && tech('video_call'),
     'The remote meeting: the face on the screen, the background chosen or unchosen, the unmuting.',
   )
   addIf(era >= 2015 && phase === 'adolescence',
@@ -2190,8 +2243,14 @@ export function buildMundaneLayer(state) {
   )
 
   // ── ERA-SPECIFIC: INDEPENDENCE GENERATION ─────────────────────────────────
-  addIf((isSubsaharan || isDeveloping) && era >= 1956 && era <= 1975 && phase !== 'early_childhood',
+  // "The flag is new" is a claim about the country's independence date, not
+  // the character's birth era: it printed sixteen years after the flag went up.
+  const indepYear = INDEPENDENCE_YEAR[cn]
+  const freshFlag = indepYear != null && currentYear >= indepYear && currentYear - indepYear <= 5
+  addIf((isSubsaharan || isDeveloping) && phase !== 'early_childhood' && indepYear != null && currentYear >= indepYear && currentYear - indepYear <= 12,
     'The country is still deciding what it is. This is not a problem — it is the shared situation, and the situation is shared.',
+  )
+  addIf(freshFlag && phase !== 'early_childhood',
     'The new flag at the same buildings. The flag is new.',
   )
 
@@ -3127,9 +3186,16 @@ export function buildMundaneLayer(state) {
   )
 
   // ── TECHNOLOGY ADOPTION — DEVELOPING WORLD ────────────────────────────────
-  addIf(isDeveloping && age >= 12 && currentYear >= 2005 && currentYear <= 2015,
+  addIf(isDeveloping && age >= 12 && currentYear >= 2005 && currentYear <= 2015 && tech('mobile_phone'),
     'The mobile phone arrived before the road did, before the reliable electricity did. The mobile phone has reorganised things that the road and electricity would also have reorganised, but differently.',
-    'M-Pesa or the equivalent: money sent by phone to someone who does not have a bank account. The bank account was never necessary. The phone was.',
+  )
+  // Mobile money is a dated arrival per country (M-Pesa Kenya 2007, Tanzania
+  // 2008), not a 2005 era gate: it reached a 2005 Nigerian thirteen years early.
+  // M-Pesa is named only where it was M-Pesa.
+  addIf(isDeveloping && age >= 16 && mobileMoneyHere && currentYear - mobileMoneyYear <= 8,
+    ['Kenya', 'Tanzania'].includes(cn)
+      ? 'M-Pesa: money sent by phone to someone who does not have a bank account. The bank account was never necessary. The phone was.'
+      : 'Money sent by phone to someone who does not have a bank account. The bank account was never necessary. The phone was.',
   )
   addIf(isSubsaharan && age >= 20 && currentYear >= 2010,
     'The smartphone generation: younger people who have never sent a letter and are surprised that sending a letter was ever the thing.',

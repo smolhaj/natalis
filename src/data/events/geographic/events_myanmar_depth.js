@@ -255,7 +255,7 @@ export const MYANMAR_DEPTH_EVENTS = [
     when: (G) =>
       IS_MYANMAR(G) &&
       G.flags.has('mya_dep_ethnic_minority_war') &&
-      G.age >= 58 &&
+      G.age >= 58 && G.currentYear >= 2022 &&
       !G.mem?.myaDepEthnicWarLate,
     text: `The civil war that was the background texture of your childhood is still ongoing. The specific armed groups have changed names and compositions and alliances. The Tatmadaw that was fighting the KNU in your childhood is the same Tatmadaw that launched the 2021 coup and is now fighting the Chin National Front and the People's Defence Force in addition to the existing ethnic armies. The war that has always been several wars simultaneously is now more wars than it was. The world's longest civil war has not found its ending. You are old enough to have outlived several ceasefires.`,
     choices: null,

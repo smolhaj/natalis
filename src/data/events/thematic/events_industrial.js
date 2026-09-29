@@ -151,6 +151,10 @@ export const INDUSTRIAL_EVENTS = [
       hasRivers(G.character.country?.name) &&
       G.currentYear >= 1960 && G.currentYear <= 2020 &&
       G.age >= 6 && G.age <= 14 &&
+      // Nigeria's branch is an oil facility on a creek, so it is the Delta's:
+      // a child in rural Benue or Borno has no such creek.
+      (G.character.country?.name !== 'Nigeria' ||
+        (G.place ? G.place.region === 'Niger Delta' : G.ethnicity === 'ijaw')) &&
       !G.mem?.riverWrongColour,
     text: (G) => {
       const c = G.character.country?.name || ''

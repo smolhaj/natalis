@@ -1,8 +1,20 @@
+import { hasTech, techYear } from '../../technology.js'
 // events_wealth_system.js
 // Culturally authentic wealth mechanics events:
 // banking access, gold/jewelry, household contributions, ROSCA, hyperinflation,
 // joint family dissolution, marriage wealth transfers, gender financial restrictions,
 // farming debt cycle, mobile money, patron emergence, poverty trap surfacing.
+
+const MOBILE_MONEY_COUNTRIES = ['Kenya', 'Tanzania', 'Uganda', 'Ghana', 'Nigeria', 'Ethiopia',
+  'Rwanda', 'Senegal', 'Mozambique', 'Zambia']
+// A small first deposit in the money people actually counted in.
+const TEST_SUM = {
+  Kenya: 'fifty shillings', Tanzania: 'a thousand shillings', Uganda: 'two thousand shillings',
+  Ghana: 'five cedis', Nigeria: 'five hundred naira', Ethiopia: 'fifty birr', Rwanda: 'five hundred francs',
+  Senegal: 'a thousand francs', Mozambique: 'fifty meticais', Zambia: 'ten kwacha',
+}
+const testSum = (country) => TEST_SUM[country?.name] ??
+  (country?.currency ? `a few ${country.currency.split(' ').pop()}` : 'a little')
 
 export const WEALTH_SYSTEM_EVENTS = [
 
@@ -483,16 +495,19 @@ export const WEALTH_SYSTEM_EVENTS = [
     id: 'ws_mobile_money_adoption',
     phase: null,
     weight: 4,
-    when: (G) => !G.banked && !G.mem?.mobileMoneySeen && G.currentYear >= 2007 &&
-      ['subsaharan'].includes(G.character?.country?.archetype) &&
-      ['Kenya', 'Tanzania', 'Uganda', 'Ghana', 'Nigeria', 'Ethiopia',
-       'Rwanda', 'Senegal', 'Mozambique', 'Zambia'].includes(G.character?.country?.name),
+    // Was 2007 for all ten countries, which is Kenya's year: Nigeria kept mobile
+    // money inside the banks until 2018. The live country's own arrival year,
+    // from technology.js, and its own money in the outcome.
+    when: (G) => !G.banked && !G.mem?.mobileMoneySeen &&
+      MOBILE_MONEY_COUNTRIES.includes(G.currentCountry?.name) &&
+      hasTech(G.currentCountry, 'mobile_money', G.currentYear) &&
+      G.currentYear <= (techYear(G.currentCountry, 'mobile_money') + 6),
     text: 'Someone at the market is using their phone to pay. Not showing a card, not handing over notes — just pressing buttons. You ask them to explain. The SIM card is a bank account. You can send money, receive money, save money. The agent on the corner activates it for you. You do not need to go to a bank branch. There is no branch to go to.',
     choices: [
       {
         text: 'Sign up immediately',
         tag: null,
-        outcome: 'You put in fifty shillings to test it. It works. Something that was not available to you last week is available to you now.',
+        outcome: (G) => `You put in ${testSum(G.currentCountry)} to test it. It works. Something that was not available to you last week is available to you now.`,
         effect: (p) => { p.setBanked(true); p.addFlag('mobile_money_user'); p.setMem('mobileMoneySeen', true); p.m += 8; p.e += 3 },
       },
       {

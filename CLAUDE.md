@@ -589,10 +589,10 @@ Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 429 tests, including the simulation guardrails
+npm test                 # 432 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
-npm run check-flags      # 3385 covered / 0 partial / 0 orphaned
+npm run check-flags      # 3434 covered / 0 partial / 0 orphaned
 npm run check-events     # reachability: dead guards, enum domains, phase/year windows,
                          # season/country, silent choices, narrated moves that move nobody,
                          # populations the roster models that the corpus never addresses
@@ -1406,6 +1406,31 @@ defects, nearly all of one shape: **a guard reading a category as a fact.**
 the thirty thousand lines around it that were written for nobody in
 particular.** Content for a group has to be read *inside a life of that group*,
 because that is the only place the generic content's assumptions show.
+
+### Pass ten: the touchstone life
+
+The Vision names one character: born in Nigeria in 1962. Eighteen of them
+were played across six groups and read. Seventeen were born in Benue, because
+Nigeria had one countryside; June 12 1993 fired 0 of 30 times at weight 5;
+the Biafran blockade child lost 1969 to the moon landing (a weight-2 one-year
+event claimed the year from a weight-999 three-year one); the Sahel drought
+went on every death screen in the south; grandchildren, partners and friends
+were named from the Yoruba-Igbo country pool in Kano.
+
+- Homelands with `homeOf` for every Nigerian group; `communityPersonName` for
+  partners, friends and grandchildren (own pool, then same faith, then country;
+  a Muslim woman's husband is Muslim).
+- `events_nigeria_north.js` and `events_nigeria_south.js`, 82 events; June 12,
+  the Abacha years and the coups are dated; the existing Nigeria modules read
+  where the character lives rather than who they are.
+- The dated claim yields to an eligible event ten times heavier.
+  `guardSpecificity` sees through module helpers and reads `G.place`.
+- One harvest per year (`mem.harvestFactor`), treatments that existed where
+  the character lived, children before marriage by religion and region, the
+  death screen naming the longest work, AIDS arriving by country.
+
+Replayed: June 12 reaches 15 of 24 lives, the Sahel only the north, and 18
+of 24 are born in their own group's homeland.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`

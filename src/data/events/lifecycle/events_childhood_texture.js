@@ -14,7 +14,9 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     id: 'ch_learning_to_read',
     phase: 'childhood',
     weight: 4,
-    when: (G) => G.age >= 6 && G.age <= 8 && !G.mem?.chReadingAck,
+    // The page becoming words is a thing that happens to a child who learns
+    // to read. It happened to children who never would.
+    when: (G) => G.literate && G.mem?.attendedSchool !== false && G.age >= 6 && G.age <= 8 && !G.mem?.chReadingAck,
     text: 'A page that was marks becomes words. You are not sure exactly when it happens — one morning the letters stop being separate things and start being a sentence, and the sentence is about a dog in a field, and the dog is there as clearly as if it were in the room with you. You read it again to make sure.',
     choices: null,
     effect: (p) => {
