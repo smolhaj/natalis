@@ -589,10 +589,10 @@ Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 413 tests, including the simulation guardrails
+npm test                 # 416 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
-npm run check-flags      # 3338 covered / 0 partial / 0 orphaned
+npm run check-flags      # 3385 covered / 0 partial / 0 orphaned
 npm run check-events     # reachability: dead guards, enum domains, phase/year windows,
                          # season/country, silent choices, narrated moves that move nobody,
                          # populations the roster models that the corpus never addresses
@@ -1248,10 +1248,14 @@ without one; concentration is the real statement.
 - **Pass seven, through the real UI** (`npm run check-ui`): saves kept the
   pending question as null, a dead partner was shown and courted as living,
   ~25 panel prices were present-day beside era charges.
-- **Open:** `classifyEvent`
-  cannot see through module-local guard helpers (`HOME(G)`), filing those
-  events `universal` (Kabylie, Amhara, Gulf); `Guinea:susu_guinean`, Bisaya,
-  Ambundu, Tsonga, Tigre still unwritten.
+- **Closed since:** `classifyEvent` now sees through module-local guard
+  helpers (`HOME(G)`, `isKab(G)`) inside any module listed in
+  `GEOGRAPHIC_MODULES`, so no geographic event is filed `universal`
+  (`tests/eventClassification.test.js`; add every new geographic module to that
+  list). The last 21 `unwritten-group` findings are written, in four regional
+  modules (`events_unwritten_{americas,west_africa,east_south_africa,
+  asia_pacific}.js`, flags in `flags/unwritten_*.js`): 107 events, 40 of them
+  follow-through. `unwritten-group` reports **zero**.
 
 ### Pass eight: playing it (`scripts/play.mjs`)
 
@@ -1411,7 +1415,8 @@ src/
     worldEvents.js            — 252 world history events (year+country/archetype gated); 20+ events have `context` fields
     headlines.js              — ~130 major historical headline entries (year-matched, injected as log entries)
     flags/                    — FLAG_REGISTRY split into 10 category files (identity, geographic, economic,
-                                health, relationships, political, prison, world_events, lifecycle, new_roster).
+                                health, relationships, political, prison, world_events, lifecycle, new_roster,
+                                and the four unwritten_* regional files).
                                 2879 registered flags. Pure data, no imports. `npm run check-flags` derives coverage.
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system

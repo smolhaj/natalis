@@ -29,6 +29,7 @@ import { NEW_ROSTER_FLAGS } from './new_roster.js'
 import { UNWRITTEN_WA_FLAGS } from './unwritten_wa.js'
 import { UNWRITTEN_AMERICAS_FLAGS } from './unwritten_americas.js'
 import { UNWRITTEN_ESA_FLAGS } from './unwritten_esa.js'
+import { UNWRITTEN_AP_FLAGS } from './unwritten_ap.js'
 
 export const FLAG_REGISTRY = {
   ...IDENTITY_FLAGS,
@@ -44,6 +45,7 @@ export const FLAG_REGISTRY = {
   ...UNWRITTEN_WA_FLAGS,
   ...UNWRITTEN_AMERICAS_FLAGS,
   ...UNWRITTEN_ESA_FLAGS,
+  ...UNWRITTEN_AP_FLAGS,
 }
 
 export {
