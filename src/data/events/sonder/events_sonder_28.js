@@ -97,9 +97,13 @@ export const EVENTS_SONDER_28 = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && !G.mem?.sdr28HeatInTheBody,
-    text: () => pick([
-      'The specific heat of summer at its peak — not just temperature but weight, the air not moving, the city holding on to everything it has collected since morning. You know this heat. It is the same heat it always is.',
-      'There is a cold that gets into the joints and does not leave until spring. You have known this cold for years now. It arrives, settles in, waits. You have learned what helps and what does not.',
+    // "Cold until spring" reached the tropics. The cold line needs a winter;
+    // where there is none the heat line says it in the local register.
+    text: (G) => pick([
+      place.hasWinter(G)
+        ? `The specific heat of summer at its peak — not just temperature but weight, the air not moving, ${place.isRural(G) ? 'the fields' : 'the city'} holding on to everything collected since morning. You know this heat. It is the same heat it always is.`
+        : `The specific heat of the weeks before the rains — not just temperature but weight, the air not moving, ${place.isRural(G) ? 'the ground' : 'the city'} holding on to everything collected since morning. You know this heat. It is the same heat it always is.`,
+      ...(place.hasWinter(G) ? ['There is a cold that gets into the joints and does not leave until spring. You have known this cold for years now. It arrives, settles in, waits. You have learned what helps and what does not.'] : []),
       'After you were sick for a week, the first day you felt well again your body felt like something given back. You walked outside and the air was ordinary air and it was enough.',
     ]),
     choices: null,

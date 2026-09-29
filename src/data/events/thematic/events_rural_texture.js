@@ -74,7 +74,11 @@ export const RURAL_TEXTURE_EVENTS = [
     text: (G) => {
       const cn = G.currentCountry?.name
       const dist = cn === 'Bangladesh' ? 'the river' : 'the stream below the hill'
-      return `Before school you carry water. The jerry can is five kilograms empty and twenty-five full and the walk takes an hour each way. You know the route in your feet — the path through the cassava, the shallow ford, the place where the big tree fell. This is not the whole of your life, but it structures it: before water, nothing else is possible.`
+      // "Before school" was printed to girls who never went to one.
+      const schooled = G.mem?.attendedSchool !== false && !G.flags.includes('never_schooled') &&
+        !G.flags.includes('left_school_early')
+      const opening = schooled ? 'Before school you carry water.' : 'Before anything else in the day you carry water, and again in the late afternoon.'
+      return `${opening} The jerry can is five kilograms empty and twenty-five full and the walk takes an hour each way. You know the route in your feet — the path through the cassava, the shallow ford, the place where the big tree fell. This is not the whole of your life, but it structures it: before water, nothing else is possible.`
     },
     choices: null,
     effect: (p) => { p.h -= 2; p.e += 1; p.addFlag('water_walk_childhood'); p.setMem('waterWalkEstablished', true) },

@@ -3,6 +3,70 @@
 // Wealth gap texture (P2.11): philanthropy, family approach, isolation, estate planning.
 // Rural-to-urban migration arc (P2.12): first night in city, accommodation, network loss.
 
+import { hasTech } from '../../technology.js'
+import { PLACES } from '../../places.js'
+import { COUNTRIES } from '../../countries.js'
+
+// Where somebody from this village goes when they go to the city. Nigeria is
+// several migrations, not one: the north to Kano, Borno to Maiduguri, the
+// creeks to Port Harcourt, the rest to Lagos (and, once it was a city, from
+// the Middle Belt to Abuja).
+const ARRIVAL_ARCHS = ['developing_urban', 'subsaharan', 'developing_unstable']
+const SCALE_ORDER = ['megacity', 'major_city', 'large_city', 'city', 'mid_city', 'town']
+const topCity = (country) => {
+  const here = PLACES.filter(pl => pl.country === country && pl.type === 'urban')
+  return SCALE_ORDER.map(sc => here.find(pl => pl.scale === sc)).find(Boolean)?.id ?? null
+}
+const NG_DEST = { ng_rural_north: 'ng_kano', ng_rural_borno: 'ng_maiduguri', ng_delta: 'ng_port_harcourt',
+  ng_rural_oyo: 'ng_lagos', ng_rural_east: 'ng_lagos' }
+function arrivalDestination(G) {
+  const country = G.currentCountry?.name ?? G.character.country.name
+  if (country === 'Nigeria') {
+    if (G.place?.id === 'ng_rural' && G.currentYear >= 1995) return 'ng_abuja'
+    return NG_DEST[G.place?.id] ?? 'ng_lagos'
+  }
+  return topCity(country)
+}
+const ARRIVAL_DESTINATIONS = [...new Set([
+  'ng_lagos', 'ng_kano', 'ng_maiduguri', 'ng_port_harcourt', 'ng_abuja',
+  ...COUNTRIES.filter(c => ARRIVAL_ARCHS.includes(c.archetype) && c.name !== 'Nigeria').map(c => topCity(c.name)),
+].filter(Boolean))]
+
+function ruralUrbanArrival(destId) {
+  const dest = PLACES.find(pl => pl.id === destId)
+  return {
+    id: destId === 'ng_lagos' ? 'rural_urban_arrival' : `rural_urban_arrival_${destId}`,
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      !G.mem.ruralUrbanArrival &&
+      G.ruralUrban === 'rural' &&
+      !G.flags.includes('rural_to_urban') &&
+      G.age >= 18 && G.age <= 28 &&
+      ARRIVAL_ARCHS.includes(G.currentCountry?.archetype ?? G.character.country.archetype) &&
+      arrivalDestination(G) === destId,
+    text: (G) => {
+      const lit = hasTech(G.currentCountry ?? G.character.country, 'electricity', G.currentYear)
+      return `${dest.name} at night from the bus window is ${lit ? 'more light than you have ever seen in one place' : 'lamps and cooking fires for longer than any road you have been on'}. You carry two bags. The address in your pocket is for a room in a building where your cousin's friend's cousin lives. The city is the size of the entire district you grew up in, and it is louder, and it does not stop, and for twenty minutes you sit very still on the bus seat and do not know where to begin.`
+    },
+    choices: [
+      {
+        text: 'Start at the address in your pocket — someone you know can explain the rest',
+        tag: null,
+        outcome: 'The cousin\'s contact is real and unexpectedly generous. You sleep on a floor but you are not alone in it.',
+        effect: (p) => { p.m += 5; p.s += 4; p.addFlag('rural_to_urban'); p.setMem('ruralUrbanArrival', true); p.relocate(destId, 'informal') },
+      },
+      {
+        text: 'Walk first — get the shape of the place before committing to any part of it',
+        tag: null,
+        outcome: 'You walk for three hours. You get lost. You find your way back. The city is enormous and navigable.',
+        effect: (p) => { p.m += 2; p.e += 4; p.addFlag('rural_to_urban'); p.setMem('ruralUrbanArrival', true); p.relocate(destId, 'informal') },
+      },
+    ],
+    effect: null,
+  }
+}
+
 export const CAREER_WEALTH_EVENTS = [
 
   // ── CAREER LATE-ARC ──────────────────────────────────────────────────────────
@@ -238,43 +302,10 @@ export const CAREER_WEALTH_EVENTS = [
 
   // ── RURAL-TO-URBAN MIGRATION ARC ─────────────────────────────────────────────
 
-  {
-    id: 'rural_urban_arrival',
-    phase: 'young_adult',
-    weight: 4,
-    when: (G) =>
-      !G.mem.ruralUrbanArrival &&
-      G.ruralUrban === 'rural' &&
-      !G.flags.includes('rural_to_urban') &&
-      G.age >= 18 && G.age <= 28 &&
-      ['developing_urban', 'subsaharan', 'developing_unstable'].includes(G.character.country.archetype),
-    text: (G) => {
-      const country = G.currentCountry?.name ?? G.character.country.name
-      const cityMap = {
-        'Nigeria': 'Lagos', 'Kenya': 'Nairobi', 'Ghana': 'Accra', 'Tanzania': 'Dar es Salaam',
-        'Ethiopia': 'Addis Ababa', 'Senegal': 'Dakar', 'India': 'Mumbai', 'Bangladesh': 'Dhaka',
-        'Pakistan': 'Karachi', 'Philippines': 'Manila', 'Indonesia': 'Jakarta', 'Brazil': 'São Paulo',
-        'Mexico': 'Mexico City', 'Colombia': 'Bogotá',
-      }
-      const city = cityMap[country] ?? 'the city'
-      return `${city} at night from the bus window is more light than you have ever seen in one place. You carry two bags. The address in your pocket is for a room in a building where your cousin's friend's cousin lives. The city is the size of the entire district you grew up in, and it is louder, and it does not stop, and for twenty minutes you sit very still on the bus seat and do not know where to begin.`
-    },
-    choices: [
-      {
-        text: 'Start at the address in your pocket — someone you know can explain the rest',
-        tag: null,
-        outcome: 'The cousin\'s contact is real and unexpectedly generous. You sleep on a floor but you are not alone in it.',
-        effect: (p) => { p.m += 5; p.s += 4; p.addFlag('rural_to_urban'); p.setMem('ruralUrbanArrival', true) },
-      },
-      {
-        text: 'Walk first — get the shape of the place before committing to any part of it',
-        tag: null,
-        outcome: 'You walk for three hours. You get lost. You find your way back. The city is enormous and navigable.',
-        effect: (p) => { p.m += 2; p.e += 4; p.addFlag('rural_to_urban'); p.setMem('ruralUrbanArrival', true) },
-      },
-    ],
-    effect: null,
-  },
+  // Narrated a night bus into Lagos and left the character in the village,
+  // so every later year read the village. One event per destination, because
+  // an effect cannot see where the character is and has to be told.
+  ...ARRIVAL_DESTINATIONS.map(ruralUrbanArrival),
 
   {
     id: 'rural_urban_accommodation',

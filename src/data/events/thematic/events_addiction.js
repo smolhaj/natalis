@@ -311,7 +311,10 @@ const ADDICTION_FAMILY = [
       !G.flags.has('alcohol_addiction') &&
       (G.flags.has('addiction_in_family') || Object.values(G.parents ?? {}).some(p => p.alive !== false)) &&
       !G.mem?.addFamilyFired,
-    text: 'Someone close to you is in the using. Not you — them. The watching is its own particular experience: the specific hope and specific disappointment cycling on a schedule, the way the relationship has reorganised itself around the addiction without anyone deciding to reorganise it. You have read the materials. You know the words. The words are less useful than you expected.',
+    // "You have read the materials" reached characters who cannot read.
+    text: (G) => 'Someone close to you is in the using. Not you — them. The watching is its own particular experience: the specific hope and specific disappointment cycling on a schedule, the way the relationship has reorganised itself around the addiction without anyone deciding to reorganise it. ' +
+      (G.literate ? 'You have read the materials. You know the words.' : 'You have heard what people say about it — the neighbours, the aunt who has seen it before, the ones who pray over it. You know the words.') +
+      ' The words are less useful than you expected.',
     choices: [
       {
         text: 'Al-Anon or similar — support for people who love someone in addiction',

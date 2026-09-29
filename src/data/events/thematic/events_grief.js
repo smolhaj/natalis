@@ -245,6 +245,9 @@ export const GRIEF_EVENTS = [
     when: (G) =>
       G.mem.griefPartnerFirst &&
       !G.mem.griefPartnerNight &&
+      // "The first night" is a claim about when. It printed eight to eighteen
+      // years after the death; mem.partnerDeathYear is set by both death paths.
+      G.mem.partnerDeathYear != null && G.currentYear - G.mem.partnerDeathYear <= 1 &&
       G.age >= 35,
     text: 'The first night. The bed is the same size. You are aware of the whole of it in a way you weren\'t when there were two of you. You wake at 3 AM and there is a second in which you have not remembered yet, and then you remember.',
     choices: null,
@@ -262,6 +265,9 @@ export const GRIEF_EVENTS = [
     when: (G) =>
       G.mem.griefPartnerFirst &&
       !G.mem.griefPartnerWrongWords &&
+      // "The first night" is a claim about when. It printed eight to eighteen
+      // years after the death; mem.partnerDeathYear is set by both death paths.
+      G.mem.partnerDeathYear != null && G.currentYear - G.mem.partnerDeathYear <= 2 &&
       G.age >= 35,
     text: 'People say: at least they didn\'t suffer long. Or: they wouldn\'t want you to be sad. Or: time heals. Or: everything happens for a reason. You understand that these people love you and have nothing adequate to say and so they say what is available. You respond warmly. Afterward you sit somewhere quiet and feel the distance between what was said and what you needed.',
     choices: null,

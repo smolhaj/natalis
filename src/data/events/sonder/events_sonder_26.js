@@ -114,7 +114,8 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_return_smell',
     phase: null,
     weight: 2,
-    when: (G) => place.isRural(G) && (G.age >= 22 && !G.mem?.sdr26ReturnSmell),
+    // "You have been back many times" printed to people who never left.
+    when: (G) => place.leftHome(G) && G.character?.ruralUrban === 'rural' && (G.age >= 22 && !G.mem?.sdr26ReturnSmell),
     text: () => pick([
       'Before you know where you are — before you have made sense of the light or the sounds — there is the smell of the place. Something specific: the wood of the staircase, the dampness of the soil after rain here, the cooking from next door. Memory is faster through that channel than through any other.',
       'You have been back many times. Each return is less of a return — the gap between the place and the memory has closed, the two now closer to the same thing. This is either a loss or a kind of integration. You have not decided which.',

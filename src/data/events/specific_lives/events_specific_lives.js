@@ -1,4 +1,5 @@
 import { numberWord } from '../_words.js'
+import { seasonsFor } from '../../../engine/character.js'
 // events_specific_lives.js
 // Extreme specificity: events that could only fire for one precise combination
 // of person, place, and time. Each one is a life no generic event can reach.
@@ -1734,7 +1735,16 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 60 &&
       !G.mem?.sl_wid_farm,
-    text: 'The farm was your husband\'s name in the official records and now that he is gone the question is what it is. Your son is in the city. The land is here. You know the land in ways your son does not — which fields hold water in wet years, which drainage ditch needs clearing in autumn, which neighbour will help with the harvest if you help with theirs. The knowledge is not on paper anywhere. It is in thirty years of doing it.',
+    // "In autumn" reached Nigeria, where the year is dry and wet; and "your
+    // son" reached women with no son.
+    text: (G) => {
+      const cn = (G.currentCountry ?? G.character.country)?.name ?? ''
+      const when = seasonsFor(cn).includes('autumn') ? 'in autumn' : 'before the rains'
+      const son = (G.children ?? []).find(c => c.alive !== false && c.gender === 'male')
+      const who = son ? ['Your son is in the city.', 'your son does not'] : (G.children ?? []).some(c => c.alive !== false)
+        ? ['Your children are in the city.', 'your children do not'] : ['The family that might have taken it on is gone or elsewhere.', 'nobody else does']
+      return `The farm was your husband\'s name in the official records and now that he is gone the question is what it is. ${who[0]} The land is here. You know the land in ways ${who[1]} — which fields hold water in wet years, which drainage ditch needs clearing ${when}, which neighbour will help with the harvest if you help with theirs. The knowledge is not on paper anywhere. It is in thirty years of doing it.`
+    },
     choices: [
       {
         text: 'Stay and manage it yourself. The knowledge is yours even if the title was his.',
@@ -3079,8 +3089,11 @@ export const SPECIFIC_LIFE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'Nigeria' &&
+      G.currentCountry?.name === 'Nigeria' &&
       G.ruralUrban === 'rural' &&
+      // A creek behind the village and oil company roads: the Delta, not a
+      // village near Kano. Where the character lives, or an Ijaw with no place.
+      (G.place ? G.place.region === 'Niger Delta' : G.ethnicity === 'ijaw') &&
       G.currentYear >= 1980 && G.currentYear <= 2020 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_niger_delta,

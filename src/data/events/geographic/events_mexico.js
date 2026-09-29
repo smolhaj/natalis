@@ -78,7 +78,9 @@ export const MEXICO_DEPTH_EVENTS = [
     weight: 4,
     when: (G) =>
       isMex(G) &&
-      G.currentYear >= 1970 && G.currentYear <= 1984 &&
+      // Names the Halconazo (10 June 1971) and the Liga 23 de Septiembre
+      // (founded 1973) as past; it printed in 1970.
+      G.currentYear >= 1974 && G.currentYear <= 1984 &&
       G.age >= 18 &&
       !G.mem?.mexDirtyWar,
     text: `The Tlatelolco massacre did not end the state's relationship to political opposition — it clarified it. In the years that follow, students who continued organising disappear. The Halcones, a paramilitary group with government authorisation, attack a student march in 1971 and kill at least 25. The rural guerrilla movements — Liga Comunista 23 de Septiembre, PDLP — are systematically dismantled. The people who belonged to them are found, or not found. The phrase used by families is "desaparecido político." The phrase does not make the newspapers.`,

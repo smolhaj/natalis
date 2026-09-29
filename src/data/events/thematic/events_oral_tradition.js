@@ -7,7 +7,7 @@
 // come." Not "you read about it" but a distinct prose register of told knowledge.
 
 import { choleraEndemic } from '../../history.js'
-import { colonialSchoolLanguage } from '../../history.js'
+import { colonialSchoolLanguage, INDEPENDENCE_YEAR } from '../../history.js'
 import { hasTech } from '../../technology.js'
 import { STAPLE } from './events_climate.js'
 
@@ -203,8 +203,16 @@ export const ORAL_TRADITION_EVENTS = [
     weight: 3,
     when: (G) =>
       G.archetype === 'subsaharan' &&
-      G.currentYear >= 1956 && G.currentYear <= 1975 &&
-      G.age >= 5 && G.age <= 16 &&
+      // The teacher runs in on THE morning, not any morning of the era: a
+      // 1962 Nigerian was told at five, in 1967, that independence had just
+      // been announced. The live country's own date, that year or the next.
+      (() => {
+        const iy = INDEPENDENCE_YEAR[G.currentCountry?.name ?? G.character?.country?.name]
+        return iy != null && G.currentYear >= iy && G.currentYear <= iy + 1
+      })() &&
+      G.age >= 6 && G.age <= 16 &&
+      // A schoolroom: only for a child who is in one.
+      G.mem?.attendedSchool !== false && !G.flags.includes('never_schooled') &&
       !G.mem?.oralIndependence,
     text: `The teacher comes running into the schoolroom in the middle of the morning. You have never seen a teacher run. Something has happened in the capital and the radio said it: the country has the same name now without the other name attached in front. Outside, the adults are gathering and some of them are making the sound you have only heard at weddings. The word will arrive properly over the next ten years, in stages — the flag, the money, the officials who speak your grandmother's language.`,
     choices: null,

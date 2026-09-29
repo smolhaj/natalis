@@ -1,6 +1,66 @@
 import { randomBetween } from '../../../utils/random.js'
 import { isIndependenceYear, wasSovietRepublic, colonialSchoolLanguage } from '../../history.js'
 
+// What a child thinks in before the school language. `country.languages.find(
+// l => l !== lang)` gave every Nigerian Hausa — an Ijaw girl in a creek village
+// was told she thought in the language of Kano. Keyed on ethnicity, with the
+// place where an id is a catch-all; `false` means the home language IS the
+// school language (or the group was schooled in a different one), and the
+// event is not theirs. Anything unlisted gets a sentence that names no tongue.
+const HOME_LANGUAGE = {
+  hausa_fulani: 'Hausa', yoruba: 'Yoruba', igbo: 'Igbo', ijaw: 'Ijaw', kanuri: 'Kanuri',
+  akan: 'Twi', mole_dagbani: 'Dagbani', ewe: 'Ewe', ga_dangme: 'Ga',
+  kikuyu: 'Kikuyu', luhya: 'Luhya', kalenjin: 'Kalenjin', luo: 'Dholuo', kamba: 'Kamba', maasai: 'Maa',
+  sukuma: 'Sukuma', chagga: 'Chagga', hehe: 'Hehe', makonde: 'Makonde', ha: 'Ha',
+  baganda: 'Luganda', banyankole: 'Runyankole', basoga: 'Lusoga', bakiga: 'Rukiga', langi: 'Lango', acholi: 'Acholi', asian_ugandan: 'Gujarati',
+  shona: 'Shona', ndebele: 'Ndebele', white_zimbabwe: false,
+  bemba: 'Bemba', tonga_zambia: 'Tonga', chewa_zambia: 'Nyanja', lozi: 'Lozi', nsenga: 'Nsenga', tumbuka_zambia: 'Tumbuka', ngoni_zambia: 'Ngoni',
+  coloured_south_african: 'Afrikaans', white_south_african: false,
+  wolof: 'Wolof', fula_senegal: 'Pulaar', serer: 'Serer', diola: 'Jola', mandinka: 'Mandinka',
+  fula_guinean: 'Pular', mandinka_guinean: 'Maninka', susu_guinean: 'Susu', kissi_guinean: 'Kissi',
+  bambara: 'Bambara', fulani_mali: 'Fulfulde', sarakole_mali: 'Soninke', senufo_mali: 'Senufo', songhai_mali: 'Songhai', dogon: 'Dogon', tuareg_mali: 'Tamasheq', malinke_mali: 'Maninka',
+  mossi: 'Mooré', fulani_burkina: 'Fulfulde', gurma: 'Gourmanchéma', bobo: 'Bobo', lobi_burkina: 'Lobiri', tuareg_burkina: 'Tamasheq',
+  hausa_niger: 'Hausa', zarma_songhai: 'Zarma', tuareg_niger: 'Tamasheq', fulani_niger: 'Fulfulde', kanuri_niger: 'Kanuri',
+  akan_baule: 'Baoulé', akan_agni: 'Agni', senufo: 'Sénoufo', dioula_manding: 'Dioula', kru_bete: 'Bété', malinke_ci: 'Malinké',
+  bamileke: 'Bamileke', beti_ewondo: 'Ewondo', fulani_cameroon: 'Fulfulde', bassa: 'Basaa', hausa_cameroon: 'Hausa',
+  anglophone_northwest: false, anglophone_southwest: false,
+  ewe_togo: 'Ewe', kabye_togo: 'Kabiyè', watchi_togo: 'Ewe', kotokoli_togo: 'Tem', mina_togo: 'Mina',
+  fon_benin: 'Fon', adja_benin: 'Aja', yoruba_benin: 'Yoruba', bariba_benin: 'Baatonum', fulani_benin: 'Fulfulde', somba_benin: 'Ditammari',
+  sara_chad: 'Sara', arab_chadian: 'Chadian Arabic', kanembu_chad: 'Kanembu', ouaddai_chad: 'Maba', zaghawa_chad: 'Zaghawa', toubou_chad: 'Tedaga', fulani_chad: 'Fulfulde', massa_chad: 'Masana',
+  gbaya_car: 'Gbaya', banda_car: 'Banda', mandjia_car: 'Sango', sara_car: 'Sara', mbaka_car: 'Sango', yakoma_car: 'Sango',
+  kongo: 'Kikongo', luba: 'Tshiluba', mongo: 'Lomongo', rwanda_drc: 'Kinyarwanda', azande: 'Zande',
+  hutu: 'Kinyarwanda', tutsi: 'Kinyarwanda', twa: 'Kinyarwanda',
+  makua: 'Makhuwa', tsonga_mozambique: 'Changana', shona_mozambique: 'Shona', maravi: 'Chichewa',
+  ovimbundu: 'Umbundu', ambundu: 'Kimbundu', bakongo: 'Kikongo', lunda_chokwe: 'Chokwe', mestico_angola: false,
+  temne: 'Themne', mende: 'Mende', limba: 'Limba', kono_sl: 'Kono', krio: 'Krio', kuranko: 'Kuranko', susu_sl: 'Susu', loko: 'Loko', yalunka: 'Yalunka',
+  ovambo: 'Oshiwambo', kavango: 'Rukwangali', herero: 'Otjiherero', damara: 'Khoekhoegowab', nama: 'Khoekhoegowab',
+  arab_sudanese: 'Arabic', fur: 'Fur', beja: 'Bedawi', zaghawa: 'Zaghawa', masalit: 'Masalit', nubian: 'Nobiin',
+  somali_hawiye: 'Somali', somali_darod: 'Somali', somali_isaaq: 'Somali', somali_dir: 'Somali', somali_other: 'Somali', somali_issa: 'Somali',
+  tigrinya_eritrean: 'Tigrinya', tigre_eritrean: 'Tigre', saho: 'Saho', afar_eritrean: 'Afar', afar_djibouti: 'Afar', arab_djibouti: 'Arabic',
+  arab_algerian: 'Arabic', berber_kabyle: 'Kabyle', berber_other: 'Tamazight', arab_moroccan: 'Darija', berber_amazigh: 'Tamazight', sahrawi: 'Hassaniya',
+  arab_tunisian: 'Arabic', berber_tunisian: 'Tamazight', jewish_tunisian: 'Judeo-Arabic', arab_libyan: 'Arabic', berber_libyan: 'Tamazight',
+  arab_syrian: 'Arabic', kurdish_syria: 'Kurdish', alawi_syria: 'Arabic', druze_syria: 'Arabic', arab_lebanese: 'Arabic', armenian_lebanese: 'Armenian', palestinian_lebanese: 'Arabic',
+  kinh: 'Vietnamese', tay: 'Tày', muong: 'Mường', thai_viet: 'Tai', hmong_viet: 'Hmong',
+  khmer: 'Khmer', vietnamese_cambodia: 'Vietnamese', cham: 'Cham', chinese_cambodia: 'Teochew',
+  lao_loum: 'Lao', khmu: 'Khmu', hmong: 'Hmong',
+  javanese: 'Javanese', sundanese: 'Sundanese', batak: 'Batak', madurese: 'Madurese', betawi: 'Betawi', minangkabau: 'Minangkabau', chinese_indonesian: 'Hokkien', balinese: 'Balinese',
+  tagalog: 'Tagalog', bisaya: 'Cebuano', ilocano: 'Ilocano',
+  malay_malaysian: 'Malay', chinese_malaysian: 'Hokkien', indian_malaysian: 'Tamil',
+  chinese_singaporean: 'Hokkien', malay_singaporean: 'Malay', indian_singaporean: 'Tamil',
+  bamar: 'Burmese', shan: 'Shan', karen: 'Karen', rakhine: 'Rakhine', rohingya: 'Rohingya', chin: 'Chin', kachin: 'Jingpo',
+  sinhalese: 'Sinhala', sri_lankan_tamil: 'Tamil', sri_lankan_moor: 'Tamil', indian_tamil: 'Tamil', burgher: false,
+  punjabi: 'Punjabi', pashtun: 'Pashto', sindhi: 'Sindhi', muhajir: 'Urdu', baloch: 'Balochi', hazara_pakistani: 'Hazaragi',
+  bengali: 'Bengali', chakma: 'Chakma', bihari: 'Urdu',
+  itaukei: 'Fijian', indo_fijian: 'Fiji Hindi',
+}
+// Catch-all ids that a place can still answer.
+const HOME_LANGUAGE_BY_PLACE = { ng_rural: 'Tiv' }
+function homeLanguage(G) {
+  const byPlace = HOME_LANGUAGE_BY_PLACE[G.place?.id]
+  if (byPlace && /^other_/.test(G.ethnicity ?? '')) return byPlace
+  return HOME_LANGUAGE[G.ethnicity]
+}
+
 export const HISTORICAL_EVENTS = [
 
   // ── RWANDAN GENOCIDE (1994) ─────────────────────────────────────────────────
@@ -365,11 +425,18 @@ export const HISTORICAL_EVENTS = [
     // Bhutan, Nepal, Guatemala, Nicaragua and Soviet Tajikistan. It also
     // offered "French, or English, or Portuguese" as though the character did
     // not know which, in an event whose entire subject is which one.
-    when: (G) => colonialSchoolLanguage(G.character.country.name, G.currentYear) !== null && G.age >= 7 && G.age <= 15 && !G.mem?.colonial_school_language,
+    // Only for a child who is in the school: an unschooled Ijaw was told
+    // what language the lessons were in.
+    when: (G) => colonialSchoolLanguage(G.character.country.name, G.currentYear) !== null && G.age >= 7 && G.age <= 15 &&
+      (G.mem?.attendedSchool === true || (G.mem?.attendedSchool === undefined && G.literate)) &&
+      !G.flags.includes('never_schooled') &&
+      homeLanguage(G) !== false &&
+      !G.mem?.colonial_school_language,
     text: (G) => {
       const lang = colonialSchoolLanguage(G.character.country.name, G.currentYear)
-      const own = G.character.country.languages?.find(l => l !== lang) ?? 'your own language'
-      return `School is taught in ${lang} — the coloniser\'s tongue. You think in ${own} and translate. The children whose ${lang} is best go furthest. This is the arrangement.`
+      const own = homeLanguage(G)
+      const think = own && own !== lang ? `You think in ${own} and translate.` : 'You think in the language of your mother\'s kitchen and translate.'
+      return `School is taught in ${lang} — the coloniser\'s tongue. ${think} The children whose ${lang} is best go furthest. This is the arrangement.`
     },
     choices: [
       { text: 'Master the colonial language — it\'s the key to everything', tag: null, outcome: 'You become fluent. The doors it opens are real. The thing it does to your sense of self takes longer to name.', effect: (p) => { p.e += 8; p.m -= 3; p.setMem('colonial_school_language', true) } },

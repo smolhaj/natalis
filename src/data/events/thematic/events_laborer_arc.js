@@ -1,3 +1,4 @@
+import { seasonsFor } from '../../../engine/character.js'
 // events_laborer_arc.js — Deep laborer career arc
 //
 // The laborer arc is the most universal of working-class arcs: the body
@@ -53,7 +54,11 @@ export const LABORER_ARC_EVENTS = [
       isLaborer(G) &&
       G.age >= 28 &&
       !G.mem?.labWeatherFired,
-    text: `You work in what is available, which is weather. Today it is cold enough that the metal tools need handling differently and the concrete needs timing differently and the morning is two hours of operations modified by cold. You have been doing this long enough that the modification is automatic. The summer version is different modifications — water, shade, pace. The body operates across both. The body has opinions about both, and you have learned which opinions to take seriously.`,
+    // "Cold enough that the metal tools need handling" reached Benue. Where the
+    // year is dry and wet, the two versions are the heat and the rain.
+    text: (G) => seasonsFor((G.currentCountry ?? G.character.country)?.name ?? '').includes('winter')
+      ? `You work in what is available, which is weather. Today it is cold enough that the metal tools need handling differently and the concrete needs timing differently and the morning is two hours of operations modified by cold. You have been doing this long enough that the modification is automatic. The summer version is different modifications — water, shade, pace. The body operates across both. The body has opinions about both, and you have learned which opinions to take seriously.`
+      : `You work in what is available, which is weather. Today the heat is up by ten in the morning, the handles of the tools too hot to hold without a rag, the concrete setting faster than it should, so the heavy work is done early and the rest is water, shade, pace. You have been doing this long enough that the modification is automatic. The rains are different modifications — mud, the trench that fills overnight, the days that are simply lost. The body operates across both. The body has opinions about both, and you have learned which opinions to take seriously.`,
     choices: null,
     effect: (p) => {
       p.m -= 3
