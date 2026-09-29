@@ -1,5 +1,6 @@
 import { randomBetween } from '../utils/random.js'
 import { hasTech, wasWealthy } from './technology.js'
+import { MONSOON_COUNTRIES } from '../engine/character.js'
 import { migrationDestinations } from './migration.js'
 import { FOLLOWTHROUGH_ALL_EVENTS } from './events/followthrough/events_followthrough_all.js'
 import { GENDER_EVENTS } from './events/thematic/events_gender.js'
@@ -496,6 +497,9 @@ import { ORAL_TRADITION_EVENTS } from './events/thematic/events_oral_tradition.j
 const INFORMAL_FIELDS = new Set(['agriculture', 'casual', 'trade', 'religion'])
 const formalEmployer = (G) => !!G.career && !INFORMAL_FIELDS.has(G.career.field) &&
   G.ruralUrban === 'urban'
+// Work without a ladder of colleagues above you: the driver who owns the car,
+// the painter, the writer, the athlete.
+const SELF_EMPLOYED_FIELDS = new Set(['transport', 'arts', 'writing', 'digital_media', 'entertainment', 'sports'])
 
 // Where a whole family could not leave from. Exit was the state's to grant:
 // Bhutan was closed to the outside world until the 1970s and sent almost
@@ -509,6 +513,23 @@ const familyCanLeave = (G) => {
   if (w && G.currentYear >= w[0] && G.currentYear <= w[1]) return false
   return G.regime !== 'single_party_communist'
 }
+
+// Where anxiety has no clinical name in the character's world: the poorer
+// archetypes, read from where they LIVE, and the rich world before the
+// diagnosis was ordinary (GAD entered the DSM in 1980).
+const ANXIETY_UNNAMED = (G) =>
+  ['subsaharan', 'conflict_zone', 'developing_unstable'].includes((G.currentCountry ?? G.character.country)?.archetype) ||
+  G.currentYear < 1980
+
+// A house insurance policy is a claim about a formal market in the place and
+// the year. Read from where the character lives.
+const FLOOD_INSURED = (G) => {
+  const home = G.currentCountry ?? G.character.country
+  return !['developing_unstable', 'subsaharan', 'conflict_zone'].includes(home?.archetype) &&
+    wasWealthy(home, G.currentYear)
+}
+
+const AGE_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty']
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -969,9 +990,15 @@ const BASE_EVENTS = [
   },
   {
     id: 'adol_university_exam',
-    phase: 'adolescence',
+    // Was `phase: 'adolescence'` guarded on smarts alone, which put a 13-year-old
+    // who had never been inside a school in front of the university entrance
+    // exam. The exam belongs to somebody still in school after sixteen — the
+    // secondary track, resolved at 16 in tick.js — in the years it is sat.
+    phase: null,
     weight: 4,
-    when: (G) => G.stats.smarts >= 30,
+    when: (G) => G.stats.smarts >= 30 && G.age >= 16 && G.age <= 19 &&
+      (G.mem?.schoolingResolved || G.flags.includes('graduated_hs')) && G.mem?.attendedSchool !== false &&
+      !['never_schooled', 'left_school_early', 'dropped_out', 'child_labor'].some(f => G.flags.includes(f)),
     text: 'The university entrance exam is approaching. Everything seems to depend on it.',
     context: null,
     choices: [
@@ -4303,25 +4330,34 @@ const BASE_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.stats.happiness < 45 && !G.mentalHealth.condition && !G.mem.mhEvent1,
+    // Read from where the character lives, and from the year: "The SSRI takes
+    // six weeks" printed into 1981 Kano, seven years before fluoxetine was sold
+    // anywhere and in a city where nobody would have named the thing at all.
     text: (G) => {
-      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+      if (ANXIETY_UNNAMED(G))
         return 'The feeling has been there for years — a constant low hum of dread. No one in your community names it. But it is taking a toll on your body.'
       return 'The panic attacks started six months ago. A GP refers you to a mental health assessment. The diagnosis: generalised anxiety disorder.'
     },
     choices: [
       {
-        text: 'Start therapy',
+        text: (G) => ANXIETY_UNNAMED(G) ? 'Go to the clinic about it' : 'Start therapy',
         tag: null,
-        outcome: (G) => ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype)
+        outcome: (G) => ['wealthy_west', 'wealthy_east', 'developing_urban'].includes((G.currentCountry ?? G.character.country).archetype) && G.currentYear >= 1975
           ? 'CBT helps. The progress is slow and measurable. You begin to understand the pattern.'
-          : 'A community health worker offers limited support. It helps more than nothing.',
+          : ANXIETY_UNNAMED(G)
+            ? 'The nurse listens, writes something, and tells you to rest and to pray. It helps more than nothing.'
+            : 'A community health worker offers limited support. It helps more than nothing.',
         effect: (p) => { p.m += 8; p.setMentalHealth({ condition: 'anxiety', therapy: true }); p.setMem('mhEvent1', true); },
         inject: null,
       },
       {
-        text: 'Start medication',
+        text: (G) => ANXIETY_UNNAMED(G) ? 'Buy something for the nerves from the chemist' : 'Start medication',
         tag: null,
-        outcome: 'The SSRI takes six weeks to work. When it does, the edge comes off.',
+        outcome: (G) => ANXIETY_UNNAMED(G)
+          ? 'The tablets come loose in a twist of paper. They help you sleep, and they do not help with much else.'
+          : G.currentYear >= 1990
+            ? 'The SSRI takes six weeks to work. When it does, the edge comes off.'
+            : 'The tablets are the older kind. They take the edge off, and a good deal else with it.',
         effect: (p) => { p.m += 6; p.h -= 2; p.setMentalHealth({ condition: 'anxiety', medicating: true }); p.setMem('mhEvent1', true); },
         inject: null,
       },
@@ -4763,11 +4799,15 @@ const BASE_EVENTS = [
     id: 'mid_marriage_milestone',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.partner?.married && G.age >= 40 && !G.mem.marriageMilestone,
+    // `partner.metAt` is never set anywhere, so this printed "10 years
+    // together" to every couple in the game. `partner.years` is the count
+    // tickPartner keeps, and a milestone is a round one.
+    when: (G) => G.partner?.married && G.partner.alive !== false && G.age >= 40 && !G.mem.marriageMilestone &&
+      [10, 15, 20, 25, 30, 35, 40].includes(G.partner.years ?? 0),
     text: (G) => {
-      const years = G.age - (G.partner.metAt ?? G.age - 10)
-      if (['wealthy_east', 'wealthy_gulf', 'developing_unstable'].includes(G.character.country.archetype))
-        return `You mark ${years} years of marriage. The family gathers. The years are counted as an achievement and an obligation both.`
+      const years = G.partner.years
+      if (['wealthy_east', 'wealthy_gulf', 'developing_unstable'].includes((G.currentCountry ?? G.character.country).archetype))
+        return `You mark ${years} years together. The family gathers. The years are counted as an achievement and an obligation both.`
       return `${years} years together. A milestone, or just another Tuesday. You find yourselves asking what comes next.`
     },
     choices: [
@@ -5862,15 +5902,28 @@ const BASE_EVENTS = [
     weight: 2,
     when: (G) =>
       G.age <= 49 && G.assets?.properties?.length > 0 && !G.mem.flood_damage && G.age >= 22,
+    // Told a Nigerian that "insurance is a distant concept here" and then let
+    // the insurance claim pay out; and called every rainy season on earth a
+    // monsoon. The claim exists only where the policy did, and the monsoon
+    // only where there is one.
     text: (G) => {
-      if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character.country.archetype))
-        return 'The monsoon season has been brutal this year. Water has entered the ground floor of your property. The damage is extensive and insurance is a distant concept here.'
-      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+      const home = G.currentCountry ?? G.character.country
+      if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(home.archetype))
+        return `${MONSOON_COUNTRIES.includes(home.name) ? 'The monsoon' : 'The rainy season'} has been brutal this year. Water has entered the ground floor of your property. The damage is extensive and insurance is a distant concept here.`
+      if (['wealthy_west', 'wealthy_east'].includes(home.archetype) && FLOOD_INSURED(G))
         return 'An unexpected flash flood — the drainage system overwhelmed in minutes. Your ground floor is under thirty centimetres of filthy water. The insurance company has already put you on hold.'
       return 'Heavy rains have overwhelmed the local drainage and your property has flooded. The damage will take months to address.'
     },
     choices: [
-      { text: 'File an insurance claim', tag: null, outcome: 'The assessor takes three weeks. The payout covers most of it, after the excess. The process is exhausting.', effect: (p) => { p.mo -= 1000; p.m -= 10; p.setMem('flood_damage', true); }, inject: null },
+      {
+        text: (G) => FLOOD_INSURED(G) ? 'File an insurance claim' : 'Ask the family to help with the cost',
+        tag: null,
+        outcome: (G) => FLOOD_INSURED(G)
+          ? 'The assessor takes three weeks. The payout covers most of it, after the excess. The process is exhausting.'
+          : 'It comes in pieces, from three households, and each piece arrives with the understanding that you will remember it.',
+        effect: (p) => { p.mo -= 1000; p.m -= 10; p.setMem('flood_damage', true); },
+        inject: null,
+      },
       { text: 'Repair it yourself', tag: null, outcome: 'You rip out the damaged flooring and rebuild it by hand. Your back pays the price. The house recovers; you take longer.', effect: (p) => { p.mo -= 3000; p.m -= 15; p.h -= 5; p.setMem('flood_damage', true); }, inject: null },
       { text: 'Sell the damaged property fast', tag: null, outcome: 'You take a heavy loss to offload the problem. The relief is immediate. The regret sets in later.', effect: (p) => { p.mo -= 8000; p.m -= 20; p.setMem('flood_damage', true); }, inject: null },
     ],
@@ -5989,7 +6042,10 @@ const BASE_EVENTS = [
     id: 'mentor_at_work',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.career !== null && G.career.level <= 3 && !G.mem.has_mentor && G.age >= 21,
+    // "Meetings above your grade" is an organisation with grades in it. It
+    // was guarded on career level alone and reached a Farm Hand.
+    when: (G) => formalEmployer(G) && !SELF_EMPLOYED_FIELDS.has(G.career.field) &&
+      G.career.level <= 3 && !G.mem.has_mentor && G.age >= 21,
     text: 'A senior colleague has taken an interest in your development. They have begun inviting you to meetings above your grade, making introductions, and sharing things the official training programme never would.',
     choices: [
       { text: 'Welcome the mentorship fully', tag: null, outcome: 'Over the next two years they open doors you did not know existed. The relationship shifts your trajectory measurably.', effect: (p) => {
@@ -7418,20 +7474,32 @@ const BASE_EVENTS = [
     weight: 2,
     isKey: true,
     when: (G) => G.conflictRisk > 0.15 && G.age >= 5 && G.age <= 20 && !G.mem.cz_separation && G.parents?.father?.alive,
-    text: 'Your father is on the other side of a line that did not exist six months ago. You speak on the phone when the network is working. The calls are short and careful. You understand that he is protecting you from information but you also hear it in his voice.',
+    // A phone "when the network is working" was printed into 1968; and the
+    // outcome told a six-year-old "You are fourteen". The call is a claim
+    // about a line in the house, and the age is the character's own.
+    text: (G) => {
+      const home = G.currentCountry ?? G.character.country
+      const phone = hasTech(home, 'mobile_phone', G.currentYear) ||
+        hasTech(home, 'landline', G.currentYear, { rural: G.ruralUrban === 'rural' })
+      return phone
+        ? 'Your father is on the other side of a line that did not exist six months ago. You speak on the phone when the network is working. The calls are short and careful. You understand that he is protecting you from information but you also hear it in his voice.'
+        : 'Your father is on the other side of a line that did not exist six months ago. What comes from him comes through people who have crossed it: that he is alive, that he is eating, a sentence he said that they repeat exactly. You understand that he is choosing what reaches you.'
+    },
     context: null,
     choices: [
       {
         text: 'Hold the family together — take on more responsibility',
         tag: null,
-        outcome: 'You are fourteen and you are the one who decides about money. Nobody says this out loud, which is how it becomes permanent.',
+        outcome: (G) => G.age < 12
+          ? 'You are small still, and you are the one who keeps the younger ones quiet when your mother cannot. Nobody says this out loud, which is how it becomes permanent.'
+          : `You are ${AGE_WORDS[G.age] ?? G.age} and you are the one who decides about money. Nobody says this out loud, which is how it becomes permanent.`,
         effect: (p) => { p.m -= 5; p.h += 3; p.karma += 8; p.setMem('cz_separation', true); },
         inject: null,
       },
       {
         text: 'Carry the absence as anger',
         tag: null,
-        outcome: 'It goes somewhere. It goes into school, into a door, into people who had nothing to do with it, and it does not go down.',
+        outcome: 'It goes somewhere. It goes into your hands, into a door, into people who had nothing to do with it, and it does not go down.',
         effect: (p) => { p.h -= 10; p.r += 5; p.setMem('cz_separation', true); },
         inject: null,
       },
@@ -9407,7 +9475,18 @@ export function guardSpecificity(e) {
 // The old list required `at school,` WITH THE COMMA and missed most of the
 // vocabulary. A false positive here costs a never-schooled character one event;
 // a false negative prints a classroom into a life that never had one.
-const SCHOOL_PROSE = /school gate|in the classroom|reach secondary school|your teacher\b|the teacher\b|the schoolroom|at school\b|school uniform|your classmates|the lesson\b|the exam\b|final exams|your class\b|recess\b|the assembly\b|the playground\b|the schoolyard\b|your homework\b|the headmaster\b|the headmistress\b|report card|the blackboard\b|break time\b|after school\b|school day\b|the principal\b|the schoolteacher\b|a classmate\b|a teacher\b|the school\b|your school\b|school report|the pupils?\b|the schoolmaster\b|the school bus\b|the head teacher\b/i
+const SCHOOL_PROSE = /school gate|in the classroom|reach secondary school|your teacher\b|the teacher\b|the schoolroom|at school\b|school uniform|your classmates|the lesson\b|the exam\b|final exams|your class\b|recess\b|the assembly\b|the playground\b|the schoolyard\b|your homework\b|the headmaster\b|the headmistress\b|report card|the blackboard\b|break time\b|after school\b|school day\b|the principal\b|the schoolteacher\b|a classmate\b|a teacher\b|the school\b|your school\b|school report|the pupils?\b|the schoolmaster\b|the school bus\b|the head teacher\b|your classroom|classroom walls?|before school\b|\bin class\b|\bin the class\b(?!\s+(?:that|of|which|system|struggle|who))|sat the school certificate|school certificate exam|entrance exams?\b|home from school|(?:friend|someone|somebody|boy|girl|classmate)s? (?:you know )?from school|\bschool is (?:taught|conducted|suspended|closed|cancelled)/i
+// Pass ten widened it again after Nigerian lives read "the portrait on every
+// classroom wall", "every morning before school", "School is suspended during
+// harvest" and "an old friend from school" to characters who never went. The
+// additions are phrased narrowly on purpose: bare `the class` is social class
+// ("the class that exists because of the factories"), bare `classroom` is as
+// often an adult literacy room or a refugee centre, and bare `from school` is
+// "people who went straight from school" — somebody else.
+//
+// Prose that is ABOUT not attending ("the French of the school you never
+// attended") is written for exactly the character this filter protects.
+const NON_ATTENDANCE_PROSE = /never attended|school you never|never went to school|you do not go to school|without (?:formal )?school(?:ing)?\b|the other children go and you do not/i
 
 // The same idea, one level up: prose that assumes an institution exists at all.
 // A Cambodian character in 1977 was drawing a salary, going to school, being
@@ -9560,8 +9639,13 @@ export function classifyEvent(e) {
   // never classified at all — and a never-schooled character is never-schooled
   // for life, so "the teacher who saw something in you" is as wrong at 50 as
   // the playground is at 8.
-  e.assumesSchool = !/G\.literate|never_schooled|attendedSchool|education\?\.level|G\.education/.test(src) &&
-    SCHOOL_PROSE.test(prose)
+  // `G.literate` is NOT a self-decision: it is the birth roll, and a guard
+  // reading `!G.literate` then narrating the reading-aloud in front of the class
+  // (illiterate_school_shame) put a never-schooled child at a desk. Attendance
+  // is what a classroom line claims, and only a guard that reads attendance —
+  // or prose about its absence — is answering that question itself.
+  e.assumesSchool = !/never_schooled|attendedSchool|education\?\.level|G\.education/.test(src) &&
+    !NON_ATTENDANCE_PROSE.test(prose) && SCHOOL_PROSE.test(prose)
   // An event written ABOUT one of these years is making its own decision — the
   // Khmer Rouge arc says "there is no money now" on purpose — so it opts out,
   // either by consulting the table itself or by carrying one of the flags that
