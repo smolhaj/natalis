@@ -42,7 +42,7 @@ describe('schooling writes literacy back', () => {
     const bad = []
     for (let i = 0; i < 24; i++) {
       let s = born(i % 2 ? 'Angola' : 'Colombia', 1960)
-      for (let y = 0; y < 22 && !s.dead; y++) s = tick(s)
+      for (let y = 0; y < 23 && !s.dead; y++) s = tick(s)
       if (s.flags.includes('graduated_hs') || ['secondary', 'university'].includes(s.education?.level)) {
         if (buildG(s).literate !== true || s.character.literate === false) bad.push(s.character.name)
       }

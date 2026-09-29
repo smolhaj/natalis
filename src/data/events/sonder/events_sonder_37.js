@@ -125,7 +125,7 @@ export const EVENTS_SONDER_37 = [
     phase: 'young_adult',
     weight: 2,
     isGlimpse: true,
-    when: (G) => !G.mem?.s37n,
+    when: (G) => place.hasCommuterTrain(G) && !G.mem?.s37n,
     text: 'The person crying on the train. Not loudly — trying to be small about it. No one is looking at them, which is the urban compact: we will not see your grief in public and you will not have to perform composure for us. The grief is there. The non-looking is also there. Both are correct.',
     choices: null,
     effect: (p) => { p.setMem('s37n', true) },

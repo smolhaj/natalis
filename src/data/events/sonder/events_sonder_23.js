@@ -196,11 +196,11 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23StrangerMoment,
-    text: () => pick([
+    text: (G) => pick(place.railFilter(G, [
       `The stranger on the train makes eye contact for a second longer than usual and you both look away and then there is a moment — the briefest fraction — where you could have spoken and you don't and they don't and the train arrives somewhere and one of you leaves and the moment is over as though it never occurred. Except it occurred.`,
       `An old person on the bench is watching the square with the expression of someone who has seen this square in several different configurations over several decades and is aware of this. You do not speak to them. You watch them watching. This is as close as you get to their experience. It is not very close.`,
       `The child on the path stops and looks at you with the frank assessment of someone who has not yet learned to dissemble, and you look back, and something passes between you that is simply recognition. You are both alive, at this moment, in this place. Then they run after whoever they were with and you continue.`,
-    ]),
+    ])),
     choices: null,
     effect: (p) => { p.setMem('sdr23StrangerMoment', true) },
   },

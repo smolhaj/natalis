@@ -34,6 +34,7 @@ const POST_SOVIET_RURAL = new Set([
   'Romania', 'Bulgaria',
 ])
 
+import { villageElectrificationDue } from '../_electrification.js'
 export const RURAL_TEXTURE_EVENTS = [
 
   // ── WATER WALK (childhood, female, low GDP, pre-2010) ──────────────────────
@@ -287,15 +288,14 @@ export const RURAL_TEXTURE_EVENTS = [
       G.place?.type === 'rural' &&
       (G.currentCountry?.archetype === 'subsaharan' ||
        G.currentCountry?.archetype === 'developing_urban') &&
-      G.currentYear >= 1970 && G.currentYear <= 2010 &&
-      !G.mem?.villageElectrified,
+      villageElectrificationDue(G),
     text: (G) => {
       const cn = G.currentCountry?.name
       const village = G.place?.name ?? 'the village'
       return `The poles went up in March. The wire came in June. On the night in August when the switch was thrown for the first time, the whole village was outside watching. One bulb, over the community well. It is forty watts and it changes nothing structural and it changes everything: the evening is longer now. The world outside this village has been lit for decades. ${village} joins it tonight.`
     },
     choices: null,
-    effect: (p) => { p.m += 8; p.e += 3; p.addFlag('village_electrified'); p.setMem('villageElectrified', true) },
+    effect: (p) => { p.m += 8; p.e += 3; p.addFlag('village_electrified'); p.setMem('villageElectrified', true); p.setMem('village_electrified', true) },
   },
 
   // ── BRAIN DRAIN: TEACHER/NURSE LEAVES ────────────────────────────────────────

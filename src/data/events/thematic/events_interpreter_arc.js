@@ -62,7 +62,8 @@ export const INTERPRETER_ARC_EVENTS = [
     weight: 3,
     when: (G) =>
       G.career?.id === 'interpreter' &&
-      ['conflict_zone', 'developing_unstable'].includes(G.character.country?.archetype) &&
+      // Foreign soldiers fighting here is a war this year.
+      G.conflictRisk >= 0.1 &&
       G.currentYear >= 2001 &&
       !G.mem?.iaMilitary,
     text: `You work with the foreign soldiers as their interpreter. They come from a country that does not speak your language and is fighting in a country where you are visible to both sides. The local commanders know your face from the convoys. Your neighbours know what you do — or assume they do, which functions the same way. The soldiers will be rotated home. You will stay. This asymmetry is discussed in reports but not in conversation.`,

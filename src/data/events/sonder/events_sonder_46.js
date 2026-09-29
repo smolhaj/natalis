@@ -132,7 +132,7 @@ export const EVENTS_SONDER_46 = [
     id: 'sonder_46_n',
     phase: 'midlife',
     weight: 2,
-    when: (G) => place.isRural(G) && (!G.mem?.s36n),
+    when: (G) => place.hasTrain(G) && place.isRural(G) && (!G.mem?.s36n),
     text: 'The window seat on a train you have taken many times. The landscape outside is familiar and also always slightly different — different light, different season, different state of the crops or the buildings going up or the ones coming down. You look out the window with the attention you give to something you know well enough that you can see what has changed.',
     choices: null,
     effect: (p) => { p.setMem('s36n', true) },

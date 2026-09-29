@@ -1,3 +1,4 @@
+import { villageElectrificationDue } from '../_electrification.js'
 import { hasTech } from '../../technology.js'
 import { INDEPENDENCE_YEAR } from '../../history.js'
 
@@ -186,13 +187,12 @@ export const TEXTURE_EVENTS = [
     weight: 3,
     when: (G) =>
       G.ruralUrban === 'rural' &&
-      ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype) &&
-      G.currentYear >= 1960 && G.currentYear <= 1995 &&
-      G.age >= 5 && G.age <= 18 &&
-      !G.flags.includes('first_electricity'),
+      ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.currentCountry?.archetype) &&
+      villageElectrificationDue(G) &&
+      G.age >= 5 && G.age <= 18,
     text: 'Electricity comes to the village. Workers string cables along poles that appeared over several weeks and which you watched without understanding. Then one evening the bulb in your house is switched on. It is not a remarkable bulb. The light is not particularly warm. But the dark outside the window is different now — there is a perimeter where there was not one before. Your mother covers her face with both hands and laughs.',
     choices: null,
-    effect: (p) => { p.m += 12; p.e += 5; p.addFlag('first_electricity') },
+    effect: (p) => { p.m += 12; p.e += 5; p.addFlag('first_electricity'); p.setMem('village_electrified', true) },
   },
 
   {
@@ -269,11 +269,15 @@ export const TEXTURE_EVENTS = [
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
+      // A Western Union slip reaching a village is the remittance economy of
+      // the late twentieth century; this fired in 1942 Papua.
+      G.currentYear >= 1985 &&
       G.age >= 6 && G.age <= 25 &&
       !G.flags.includes('rural_remittance_done'),
     text: (G) => {
       const [city, abroad] = getRemittanceSources(G)
-      return `Money arrives from a relative in the city or abroad — from ${city}, from ${abroad} — in an envelope or a Western Union slip. The amount is specific. Your mother calculates immediately: school fees, the roof, the medical bill that has been pending. There is a portion left over that is not spent but held. The relative's name is said with a particular quality at dinner. You understand that obligation and gratitude are not always easy to separate.`
+      const first = G.mem?.attendedSchool === false || G.flags.includes('never_schooled') ? 'the seed' : 'school fees'
+      return `Money arrives from a relative in the city or abroad — from ${city}, from ${abroad} — in an envelope or a Western Union slip. The amount is specific. Your mother calculates immediately: ${first}, the roof, the medical bill that has been pending. There is a portion left over that is not spent but held. The relative's name is said with a particular quality at dinner. You understand that obligation and gratitude are not always easy to separate.`
     },
     choices: null,
     effect: (p) => { p.mo += 180; p.m += 5; p.r += 3; p.addFlag('remittance_family'); p.addFlag('rural_remittance_done') },

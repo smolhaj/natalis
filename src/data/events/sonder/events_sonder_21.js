@@ -59,11 +59,11 @@ export const EVENTS_SONDER_21 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => !G.mem?.s21StrangerCompetent,
-    text: () => pick([
+    text: (G) => pick(place.railFilter(G, [
       'The plumber arrives and knows the problem before you finish describing it — nods at a specific point, goes directly to the place that caused it, fixes it in twenty minutes. The expertise is complete and quiet. You pay them and they leave and you think: they know exactly what they are doing, and no one outside their work knows this about them.',
       'On the train, someone unfolds a map with the specific efficiency of a person who has used many maps. They locate themselves and fold it back in one motion. The confidence is in the hands, not the face. A whole life of navigation is in the fold.',
       'The market stall vendor counts out your change before you can say anything — already knows the subtraction, has already counted it, hands it to you and is looking at the next customer. The arithmetic is so fast it disappeared. Years of it.',
-    ]),
+    ])),
     choices: null,
     effect: (p) => { p.setMem('s21StrangerCompetent', true) },
   },

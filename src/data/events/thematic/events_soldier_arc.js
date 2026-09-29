@@ -10,7 +10,8 @@ const DEPLOYMENT_CONTEXT = (G) => {
   const c = G.character.country?.name
   const y = G.currentYear
   const a = G.character.country?.archetype
-  if (a === 'conflict_zone') return true
+  // A war this year where the character lives, not a country that has one now.
+  if (G.conflictRisk >= 0.1) return true
   if (c === 'United States' && ((y >= 1950 && y <= 1953) || (y >= 1965 && y <= 1975) || (y >= 1991 && y <= 1991) || (y >= 2001 && y <= 2021))) return true
   if (c === 'United Kingdom' && ((y >= 1950 && y <= 1953) || (y >= 1982 && y <= 1982) || (y >= 1990 && y <= 1991) || (y >= 2001 && y <= 2021))) return true
   if (c === 'Russia' && ((y >= 1979 && y <= 1989) || (y >= 1994 && y <= 1996) || (y >= 1999 && y <= 2009))) return true

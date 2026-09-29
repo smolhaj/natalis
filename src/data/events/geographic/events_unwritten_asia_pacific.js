@@ -52,6 +52,7 @@
 // through the north from the mid-2000s.
 
 const once = (G, key) => !G.mem?.[key]
+const ON_BOUGAINVILLE = (G) => G.place?.id === 'pg_bougainville' || G.place?.region === 'Bougainville'
 
 export const UNWRITTEN_AP_EVENTS = [
 
@@ -421,8 +422,11 @@ export const UNWRITTEN_AP_EVENTS = [
     id: 'uap_bou_blockade',
     phase: null,
     weight: 40,
+    // On the island: the blockade was around Bougainville, and this fired for
+    // a Bougainvillean in Port Moresby. The mainland version follows.
     when: (G) => G.character?.ethnicity === 'islands_bougainville' &&
       (G.currentCountry?.name ?? G.character?.country?.name) === 'Papua New Guinea' &&
+      ON_BOUGAINVILLE(G) &&
       G.currentYear >= 1990 && G.currentYear <= 1994 && G.age >= 6 && once(G, 'uap_bou_blockade'),
     text: 'The government has closed the sea around the island, and nothing comes in: no medicine, no fuel, no soap, no salt. The children who get malaria get it without chloroquine now. Your uncles run the trucks on coconut oil, and a man in the next village has put a car alternator in the creek, and the aid post has light for the first time in a year. At night you hear the helicopters.',
     context: 'Landowners led by Francis Ona sabotaged the Panguna mine from November 1988 and it closed in May 1989. Papua New Guinea withdrew from the island in March 1990 and imposed a blockade from May. The war between the Bougainville Revolutionary Army, the PNG Defence Force and local resistance forces lasted until a truce in 1997; thousands died, most of them of disease and lack of medicine.',
@@ -441,6 +445,21 @@ export const UNWRITTEN_AP_EVENTS = [
       },
     ],
     effect: null,
+  },
+
+  {
+    id: 'uap_bou_blockade_mainland',
+    phase: null,
+    weight: 40,
+    // The same years from Port Moresby or Lae, where the island is a place you
+    // are from and cannot reach, and the news of it is whatever the radio says.
+    when: (G) => G.character?.ethnicity === 'islands_bougainville' &&
+      (G.currentCountry?.name ?? G.character?.country?.name) === 'Papua New Guinea' &&
+      !ON_BOUGAINVILLE(G) &&
+      G.currentYear >= 1990 && G.currentYear <= 1994 && G.age >= 16 && once(G, 'uap_bou_blockade'),
+    text: 'There are no boats to the island now, and no letters. The radio in Moresby calls the people fighting rebels, and at work somebody says it to you as though you would agree. Your family\'s village is on the other side of the blockade. Once, in the second year, a message comes through a priest in Honiara: everyone is alive except two cousins. You read it on the bus and put it in your shirt pocket and do not take it out again for a week.',
+    choices: null,
+    effect: (p) => { p.setMem('uap_bou_blockade', true); p.m -= 6; p.r += 4 },
   },
 
   // ══ PHILIPPINES: BISAYA ══════════════════════════════════════════════════

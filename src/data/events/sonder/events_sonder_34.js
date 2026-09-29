@@ -185,10 +185,10 @@ export const EVENTS_SONDER_34 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !G.mem?.s34FaceOnPlatform,
-    text: () => pick([
+    text: (G) => pick(place.railFilter(G, [
       'A face on the platform: someone you do not know but whose expression you read for no reason except that you were both waiting and there was nothing else to look at. The expression said something — not legibly, but in the way faces say things in transit, where there is no one performing for anyone. The train came. You went different directions.',
       'In a transit space you catch a face at a moment it does not expect to be caught — the private expression between destinations. You see it, the person does not see you seeing it, and for a second you know something about someone you will never know. Then the platform clears and the knowing is gone too.',
-    ]),
+    ])),
     choices: null,
     effect: (p) => { p.setMem('s34FaceOnPlatform', true) },
   },

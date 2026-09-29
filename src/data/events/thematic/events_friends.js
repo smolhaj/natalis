@@ -1,3 +1,4 @@
+import { hasTech } from '../../technology.js'
 // events_friends.js
 // Friend lifecycle events: drifting apart, reconnecting, a friend's crisis bleeding into your life,
 // a friend asking for money, a friend dying. These are not dramatic — they are what friendship
@@ -14,13 +15,20 @@ export const FRIEND_EVENTS = [
     when: (G) => G.friends && G.friends.length > 0 && G.age >= 25 && !G.mem.friendDrift,
     text: (G) => {
       const f = G.friends[0]
-      return `You and ${f?.name ?? 'an old friend'} were close for years. The gap started with distance — different cities, different schedules — and became a habit. You realize you have not spoken in eight months. The last message sits unanswered in a thread from the spring.`
+      // "A thread" is a phone's word; this fired in 1966.
+      const phone = hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear)
+      const last = phone
+        ? 'The last message sits unanswered in a thread from the spring.'
+        : 'Their last letter is still on the shelf, answered in your head many times and on paper not at all.'
+      return `You and ${f?.name ?? 'an old friend'} were close for years. The gap started with distance — different cities, different schedules — and became a habit. You realize you have not spoken in eight months. ${last}`
     },
     choices: [
       {
         text: 'Reach out',
         tag: null,
-        outcome: 'You message. They reply in minutes, as if no time has passed. Something is reclaimed.',
+        outcome: (G) => hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear)
+          ? 'You message. They reply in minutes, as if no time has passed. Something is reclaimed.'
+          : 'You write. The answer comes back within the month, four pages, as if no time has passed. Something is reclaimed.',
         effect: (p) => { p.m += 8; p.s += 3; p.updateFriendRel(0, 10); p.setMem('friendDrift', true) },
       },
       {

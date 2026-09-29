@@ -1,3 +1,4 @@
+import { numberWord } from '../_words.js'
 // Formative wound events (ages 6–11, fire exactly once) and decade reflection events.
 // Each wound reveals a persistent desire that is shown near the Age Up button.
 // The desire is not chosen — it is earned through what happens to the child.
@@ -271,9 +272,14 @@ export const DESIRES_EVENTS = [
         parts.push('You are on your own. You have made something of it.')
       }
 
-      if (F.has('lost_parent')) parts.push('Both your parents are gone, or most of them. The position at the front of the line is yours now.')
-      const adultKids = (G.children ?? []).filter(c => (G.age - (c.ageAtBirth ?? 0)) >= 18)
-      if (adultKids.length > 0) parts.push('Your children are adults. That is strange every single day.')
+      if (F.has('lost_parent') && G.parents?.father?.alive === false && G.parents?.mother?.alive === false) parts.push('Both your parents are gone. The position at the front of the line is yours now.')
+      else if (F.has('lost_parent')) parts.push('One of your parents is gone. The line in front of you is shorter than it was.')
+      // "Your children are adults" needs every living child to be one, not
+      // just the eldest of a family whose youngest is six.
+      const kidAge = (c) => c.age ?? (G.age - (c.ageAtBirth ?? 0))
+      const livingKids = (G.children ?? []).filter(c => c.alive !== false)
+      if (livingKids.length > 0 && livingKids.every(c => kidAge(c) >= 18)) parts.push('Your children are adults. That is strange every single day.')
+      else if (livingKids.some(c => kidAge(c) >= 18)) parts.push('Some of your children are adults and some are not, and you are a different parent to each.')
       if (F.has('went_to_therapy') || F.has('therapy_veteran')) parts.push('You have done some of that work.')
 
       const desireLines = {
@@ -290,7 +296,7 @@ export const DESIRES_EVENTS = [
       const desireLine = desireLines[G.desire] ?? 'There is more past than there used to be.'
       parts.push(desireLine)
 
-      return `You are fifty. ${parts.join(' ')} You are learning to carry it all differently.`
+      return `You are ${numberWord(G.age)}. ${parts.join(' ')} You are learning to carry it all differently.`
     },
     choices: null,
     effect: (p) => { p.setMem('decade50Ack', true) },

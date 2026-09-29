@@ -108,7 +108,7 @@ export const EVENTS_SONDER_53 = [
     id: 'sonder_53_l',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s53l,
+    when: (G) => place.hasTrain(G) && !G.mem?.s53l,
     text: 'Overnight, on a train. The specific experience of getting on at one city and waking in another: the night as transition, the rocking that was also the passage of distance, the window showing nothing and then showing something, the arrival in a city that is already awake and going about its morning while you are still damp with sleep. The overnight train is a specific form of movement that produces a specific sense of translation.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s53l', true) },

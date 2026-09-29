@@ -273,18 +273,25 @@ export const LATE_LIFE_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) =>
+      // Grandchildren are people now (courseGrandchildren), and the first is
+      // narrated by `late_grandchild_born`, which sets `grandparent`. This
+      // guessed at a birth from a child's age alone, so it held "the child for
+      // the first time" after the first had already been announced, and in one
+      // life after the thirteenth. It now needs a real first grandchild that
+      // nobody has told this life about yet, and it takes the same latch.
       G.children && G.children.length > 0 &&
-      G.children.some(c => G.age - c.ageAtBirth >= 25) &&
+      (G.grandchildCount ?? 0) > 0 &&
+      !G.flags.includes('grandparent') &&
       !G.flags.includes('grandchild_born') &&
       !G.mem.grandchildBorn &&
-      G.age >= 45 && G.age <= 80,
+      G.age >= 36 && G.age <= 80,
     text: (G) => {
-      const adult = G.children.find(c => G.age - c.ageAtBirth >= 25)
+      const adult = G.children.find(c => (c.kids ?? 0) > 0) ?? G.children.find(c => G.age - c.ageAtBirth >= 25)
       const parentName = adult?.name ?? 'Your child'
       return `${parentName} calls. There is a noise in the background, new and specific. They say the name they have chosen. You hold the phone and try to locate something adequate to say. Later, at the hospital, you hold the child for the first time and they are so small that it seems impossible. You remember the specific smallness of your own children and you thought you had forgotten this, and you had not.`
     },
     choices: null,
-    effect: (p) => { p.m += 20; p.r -= 6; p.addFlag('grandchild_born'); p.setMem('grandchildBorn', true) },
+    effect: (p) => { p.m += 20; p.r -= 6; p.addFlag('grandchild_born'); p.addFlag('grandparent'); p.setMem('grandchildBorn', true) },
   },
 
   {

@@ -5,6 +5,8 @@
 // dry-season scarcity, village electrification (missing from rural_texture),
 // and the Cochabamba water privatization 2000.
 
+import { villageElectrificationDue } from '../_electrification.js'
+
 const RURAL_LOW_GDP = (G) =>
   ['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.currentCountry?.archetype) &&
   (G.ruralUrban === 'rural' || G.ruralUrban === 'small_town') &&
@@ -42,13 +44,11 @@ export const WATER_INFRA_EVENTS = [
     weight: 4,
     when: (G) =>
       RURAL_LOW_GDP(G) &&
-      G.currentYear >= 1960 && G.currentYear <= 2005 &&
-      G.age >= 5 && G.age <= 16 &&
-      !G.flags.has('village_electrified') &&
-      !G.mem?.wiElectrification,
+      villageElectrificationDue(G) &&
+      G.age >= 5 && G.age <= 16,
     text: 'The government line reached the village in the dry season, which is when the work is easiest. The men who strung the cables worked for a week and then a sub-contractor came and connected the meters. There were three bulbs per household in the initial connection — one per room if your house was the usual size. The first evening with electric light is something you do not know how to describe afterwards: not because it is too emotional but because what changes is too large and too ordinary simultaneously. You can see in the evenings now. The kerosene lamp stays in the cupboard for emergencies.',
     choices: null,
-    effect: (p) => { p.m += 8; p.h += 3; p.e += 5; p.addFlag('village_electrified'); p.setMem('wiElectrification', true) },
+    effect: (p) => { p.m += 8; p.h += 3; p.e += 5; p.addFlag('village_electrified'); p.setMem('wiElectrification', true); p.setMem('village_electrified', true) },
   },
 
   // ── PUMP COMMITTEE ────────────────────────────────────────────────────────────

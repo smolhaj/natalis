@@ -1,3 +1,4 @@
+import { hasTech } from '../../technology.js'
 // events_poverty.js — Burst I
 // Traumatic financial experiences across the life course.
 // Eviction, repossession, foreclosure, debt collectors, wage garnishment,
@@ -544,7 +545,14 @@ export const POVERTY_EVENTS = [
       (G.debt ?? 0) > 3000 &&
       G.money < 500 &&
       G.age >= 25 && G.age <= 55,
-    text: 'Two men arrive at the door with identification and a court order. They are civil enforcement agents — bailiffs is the word your parent used, and you understand now what that word meant. They make an inventory of items in the hallway: the television, a laptop, a bicycle. They put stickers on them. They give you a week to pay the outstanding sum or the items will be collected.',
+    // A laptop in the hallway inventory of 1994 Myanmar.
+    text: (G) => {
+      const c = G.currentCountry ?? G.character.country
+      const items = hasTech(c, 'personal_computer', G.currentYear) ? 'the television, a laptop, a bicycle'
+        : hasTech(c, 'television', G.currentYear) ? 'the television, the radio, a bicycle'
+          : 'the radio, the good chairs, a bicycle'
+      return `Two men arrive at the door with identification and a court order. They are civil enforcement agents — bailiffs is the word your parent used, and you understand now what that word meant. They make an inventory of items in the hallway: ${items}. They put stickers on them. They give you a week to pay the outstanding sum or the items will be collected.`
+    },
     choices: [
       {
         text: 'Borrow money from family to pay the sum and keep the items',
@@ -666,8 +674,22 @@ export const POVERTY_EVENTS = [
       G.money < 600 &&
       G.age >= 18 && G.age <= 55 &&
       !G.flags.has('homeless') &&
-      !G.flags.has('foreclosure_active'),
-    text: 'The notice is under your door when you come in. Section 21, or its equivalent — two months to leave, no reason required, just the fact that you have fallen behind or the landlord wants the property back or both. Two months is a concrete number. You sit on the edge of the bed and count backward from sixty.',
+      !G.flags.has('foreclosure_active') &&
+      // A written notice with a statutory period and a housing adviser to
+      // challenge it is a renter in a country with tenancy law and the
+      // offices that go with it. It reached a smallholder in the rural
+      // Central African Republic, who owned the house he was being evicted from.
+      ['wealthy_west', 'wealthy_east'].includes(G.currentCountry?.archetype) &&
+      G.ruralUrban !== 'rural' &&
+      !(G.assets?.properties?.length > 0) && !G.flags.has('homeowner'),
+    // Section 21 is English law (Housing Act 1988); nobody else has a
+    // statute by that name.
+    text: (G) => {
+      const notice = G.currentCountry?.name === 'United Kingdom' && G.currentYear >= 1989
+        ? 'Section 21'
+        : 'A notice to quit'
+      return `The notice is under your door when you come in. ${notice} — two months to leave, no reason required, just the fact that you have fallen behind or the landlord wants the property back or both. Two months is a concrete number. You sit on the edge of the bed and count backward from sixty.`
+    },
     choices: [
       {
         text: 'Start looking for somewhere else immediately',

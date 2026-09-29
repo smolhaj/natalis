@@ -153,7 +153,7 @@ export const EVENTS_SONDER_56 = [
     phase: 'midlife',
     weight: 2,
     isGlimpse: true,
-    when: (G) => place.hasBooks(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s56q),
+    when: (G) => place.hasTrain(G) && place.hasBooks(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s56q),
     text: 'A stranger on a train is reading the same book you read at twenty-three. The book changed something for you. The stranger is on the page where you remember being changed. You do not speak. You watch them turn the page.',
     choices: null,
     effect: (p) => { p.setMem('s56q', true) },

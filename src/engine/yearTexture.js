@@ -1,6 +1,6 @@
 import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime, livingRuralUrban, urbanChanceFor } from './character'
 import { pickFrom } from '../utils/random'
-import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt } from '../data/history.js'
+import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt, hasPassengerRail } from '../data/history.js'
 import { preferUnsaid, hasSaid } from './prose'
 import { hasTech, wasWealthy } from '../data/technology.js'
 
@@ -59,18 +59,6 @@ const T = {
 // being shaped by anything in particular is also a true thing to narrate.
 const TEXTURE_SHARES = { anchored: 0.46, earned: 0.39, universal: 0.15 }
 
-// Countries on the roster with no passenger line a city commutes on, and the
-// ones where it opened or closed inside the period. Deliberately conservative:
-// absence from all three means a railway is assumed.
-const NO_PASSENGER_RAIL = new Set([
-  'Central African Republic', 'Djibouti', 'Chad', 'Niger', 'Somalia', 'Yemen',
-  'Afghanistan', 'Libya', 'Rwanda', 'Papua New Guinea', 'Bhutan', 'Iceland',
-  'Belize', 'Haiti', 'Oman', 'Kuwait', 'Bahrain', 'Nepal', 'East Timor', 'Fiji',
-  'Samoa', 'Tuvalu', 'Kiribati', 'Marshall Islands', 'Maldives', 'Vanuatu',
-  'Palestine', 'Liberia',
-])
-const RAIL_FROM = { UAE: 2009, Qatar: 2019, Laos: 2021 }
-const RAIL_UNTIL = { Guyana: 1974, 'Sierra Leone': 1974, Cyprus: 1951, Barbados: 1937 }
 // Career fields whose work is done at a desk among other desks.
 const OFFICE_FIELDS = new Set([
   'finance', 'government', 'law', 'media', 'digital_media', 'technology',
@@ -792,8 +780,7 @@ function* textureCandidates(state, opts = {}) {
   const _liveCountry = state.currentCountry ?? state.character?.country
   const _liveName = _liveCountry?.name
   const _railHere = _liveName != null && urbanChanceFor(_liveCountry, currentYear) >= 0.3 &&
-    !NO_PASSENGER_RAIL.has(_liveName) &&
-    currentYear >= (RAIL_FROM[_liveName] ?? 0) && currentYear <= (RAIL_UNTIL[_liveName] ?? 9999)
+    hasPassengerRail(_liveName, currentYear)
   // The desk across from yours is a statement about the job, and it was
   // reaching a head chef, a taxi driver and a day labourer.
   const _atADesk = !!state.career && !state.retired && !state.inPrison && OFFICE_FIELDS.has(state.career.field)
@@ -7100,8 +7087,8 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('geo_orthodox_backbone') && Math.random() < 0.18) yield [T.anchored, pick([
     'The cross of Saint Nino: braided grapevines, woven with her own hair. A woman from Cappadocia who brought Christianity to Georgia in the fourth century. This is the origin story the church keeps returning to. The vine is Georgia. The woman is the transmission.',
-    'Patriarch Ilia II has been Catholicos-Patriarch since 1977. He was ordained in Soviet Georgia. He gave the baptisms that were illegal. He is still there. The continuity is the argument.',
-    phase === 'midlife' || phase === 'late_life'
+    currentYear >= 1978 && currentYear <= 2025 && 'Patriarch Ilia II has been Catholicos-Patriarch since 1977. He was ordained in Soviet Georgia. He gave the baptisms that were illegal. He is still there. The continuity is the argument.',
+    (phase === 'midlife' || phase === 'late_life') && currentYear >= 2000
       ? 'The church is the oldest continuous Georgian institution. The Soviet period, the wars, the 1990s — the church was there through all of it. What it asks in return is a question you have been answering differently at different ages.'
       : 'You are Georgian. The church is Georgian. Whether you go or do not go to the church, you have been formed by the fact of its presence in the national grammar.',
   ])]

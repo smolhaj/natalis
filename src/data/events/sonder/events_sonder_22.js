@@ -30,13 +30,13 @@ export const EVENTS_SONDER_22 = [
     when: (G) => G.age >= 20 && G.age <= 45 && !G.mem?.sdr22CommuteBody,
     // The argument conducted in silence needs two handsets in the carriage; the
     // other two variants are true of any commute in any decade.
-    text: (G) => pick([
+    text: (G) => pick(place.railFilter(G, [
       `Your body knows the commute without you. It boards and finds a standing position and redistributes weight at the turns. You are somewhere else entirely. When you arrive you are surprised, briefly, that you are already here.`,
       `The bus driver knows most of the people who ride every morning. You have watched them greet each other for three years. The driver knows the woman with the green scarf is named Maria. You have never learned the driver's name.`,
       hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear)
         ? `Two people on the train are having an argument by text message with each other. You can see both phones from where you are standing. They are not sitting together. They don't look up.`
         : `Two people on the train are having an argument without speaking. You can read it in the set of their shoulders and in the way one of them is looking out of the window at nothing. They get off at different stops.`,
-    ]),
+    ])),
     choices: null,
     effect: (p) => { p.setMem('sdr22CommuteBody', true) },
   },

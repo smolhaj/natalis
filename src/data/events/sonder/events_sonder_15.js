@@ -347,11 +347,11 @@ export const EVENTS_SONDER_15 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.ruralUrban === 'urban' && G.age >= 30 && !G.mem?.son15Window,
-    text: () => pick([
+    text: (G) => pick(place.railFilter(G, [
       `The lit window across the street, at a time when most of the building is dark. Someone is there. Working, or not sleeping, or watching something, or just there in the way that people are in rooms at unusual hours. The window is the exact measure of how much you can know about another person at a distance.`,
       `You see them on the platform sometimes — not always the same day, but enough that you have a loose idea of their schedule. You have never spoken. You know approximately what their week looks like from the outside. They know the same about you, probably. These arrangements exist everywhere.`,
       `A figure on the opposite balcony, visible through the gap in the buildings, doing something domestic — watering a plant, taking in washing. You see this person regularly in the way that cities arrange for you to see people regularly without ever closing the distance.`,
-    ]),
+    ])),
     choices: null,
     effect: (p) => { p.setMem('son15Window', true) },
   },
@@ -361,11 +361,11 @@ export const EVENTS_SONDER_15 = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 58 && !G.mem?.son15OtherLife,
-    text: () => pick([
+    text: (G) => pick(place.railFilter(G, [
       `You imagine, briefly, the life of the person in the adjacent queue. It's not a real imagining — more like a reflex. They are buying something specific and you project a context for the thing and then you don't.`,
       `On the train, the person across from you has been reading the same page for twenty minutes. They are somewhere that is not the page. Their face is a document that requires more information than you have.`,
       `The couple at the next table are in the middle of something. Not a fight — something subtler. The pauses between what they say. The thing they are not saying in the pauses. You look away. Their dinner is not yours to interpret.`,
-    ]),
+    ])),
     choices: null,
     effect: (p) => { p.setMem('son15OtherLife', true) },
   },

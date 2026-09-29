@@ -31,7 +31,8 @@ export const FOLLOWTHROUGH_88_EVENTS = [
     when: (G) =>
       G.age <= 49 &&
       G.flags.has('sg_spectrum_generation') &&
-      G.currentYear >= 1989 && G.currentYear <= 1996 &&
+      // The prose names 1990 as past.
+      G.currentYear >= 1991 && G.currentYear <= 1996 &&
       G.age >= 25 &&
       !G.mem?.ft88SpectrumReleased,
     text: 'Most of the Operation Spectrum detainees are released between 1988 and 1990, several after signing statements of confession. One — Teo Soh Lung — is re-detained after she speaks to the foreign press. The confessions are contested; several detainees later say they were made under duress. The government never files criminal charges. The case is not tried in a court. It remains in the record as a security matter. The word "Marxist" is in the official documents. The people who were in the room know what the meetings were actually about.',

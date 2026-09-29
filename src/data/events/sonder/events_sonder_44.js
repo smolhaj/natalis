@@ -5,6 +5,7 @@
 // the village you left or didn't leave, memory made of smell.
 
 import { place } from './_sonderGuards.js'
+import { hasTech } from '../../technology.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -236,9 +237,12 @@ export const EVENTS_SONDER_44 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => place.isLiterate(G) && (G.age >= 18 && G.age <= 28 && !G.mem?.s34v),
-    text: () => pick([
+    text: (G) => pick([
       'You are in a new place and you do not have the years of context that tell you what this neighbourhood sounds like at night, what the weather does in March, which shop is reliable. You are relearning a city from the beginning. The relearning is slow. It is also interesting in a way that familiarity will eventually replace.',
-      'You have been reading the newspaper — or the feed, or whatever it is — for long enough to notice that some things recur. The recurrence is not a good sign but it is information. You are learning the grammar of the news, which is different from the content of the news.',
+      // A newspaper to read, in a year and place that had one.
+      ...(hasTech(G.currentCountry ?? G.character.country, 'newspaper', G.currentYear) ? [
+        'You have been reading the newspaper — or the feed, or whatever it is — for long enough to notice that some things recur. The recurrence is not a good sign but it is information. You are learning the grammar of the news, which is different from the content of the news.',
+      ] : []),
     ]),
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s34v', true) },

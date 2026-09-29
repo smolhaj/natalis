@@ -69,6 +69,7 @@ const TIGRE_HOME = (G) => TIGRE(G) && liveCountry(G) === 'Eritrea'
 const BANDA = (G) => G.character?.ethnicity === 'banda_car'
 const BANDA_HOME = (G) => BANDA(G) && liveCountry(G) === 'Central African Republic'
 const BANGUI = (G) => G.place?.id === 'cf_bangui'
+const WAS_BANGUI = (G) => (G.mem?.esa_ban_where ?? G.place?.id) === 'cf_bangui'
 
 const AMB = (G) => G.character?.ethnicity === 'ambundu'
 const AMB_HOME = (G) => AMB(G) && liveCountry(G) === 'Angola'
@@ -158,11 +159,17 @@ export const UNWRITTEN_ESA_EVENTS = [
     id: 'esa_ban_ft_mpoko',
     phase: null,
     weight: 280,
-    when: (G) => BANDA(G) && (G.flags.includes('esa_ban_mpoko') || G.flags.includes('esa_ban_2013')) && G.currentYear >= 2017 && G.age >= 12 && once(G, 'esa_ban_ft_mpoko'),
-    text: (G) => G.flags.includes('esa_ban_mpoko') && !BANGUI(G)
+    // Present-tense prose about the quarter and the church gate: it reached a
+    // Bambari woman living in Germany, and printed the Bangui street to her.
+    // It needs her in the country, and the branch follows where she was in
+    // 2013 (recorded by the trigger), not only where she is now.
+    when: (G) => BANDA_HOME(G) && (G.flags.includes('esa_ban_mpoko') || G.flags.includes('esa_ban_2013')) && G.currentYear >= 2017 && G.age >= 12 && once(G, 'esa_ban_ft_mpoko'),
+    text: (G) => G.flags.includes('esa_ban_mpoko') && !WAS_BANGUI(G)
       ? 'The priests\' compound in Bambari emptied slowly, a family at a time, as the river stopped being a border and then started again. You slept on its floor for most of a year. The church still has the marks on the wall where the mattresses were stacked in the day. When the bell goes you count the people coming through the gate, which is a habit and not a prayer.'
       : G.flags.includes('esa_ban_mpoko')
       ? 'The camp at the airport is gone. They paid each family a little to leave and then took the tarpaulins down, and the ground beside the runway is ground again. When a plane comes in low over the quarter you still look up and count, the way you did for a year under the hangar wing. Your youngest was born there, and will write "Bangui" on every form.'
+      : !WAS_BANGUI(G)
+      ? 'You stayed in the house through the worst of it, with the door braced and the radio low. The neighbours who went to the priests\' compound came back, a family at a time, to roofs that were not there. Nobody on your side of the river says what they did or did not do in 2014. Everyone knows which houses were empty the longest.'
       : 'You stayed in the house through the worst of it, with the door braced and the radio low. The neighbours who went to the airport came back in 2017 to roofs that were not there. Nobody on the street says what they did or did not do in December 2013. Everyone knows which houses were empty the longest.',
     choices: null,
     effect: (p) => { p.setMem('esa_ban_ft_mpoko', true); p.r += 3; p.karma += 1 },
@@ -395,13 +402,13 @@ export const UNWRITTEN_ESA_EVENTS = [
         text: 'Go with her',
         tag: null,
         outcome: 'You sleep on cardboard among ten thousand strangers, and it is safer than your own bed.',
-        effect: (p) => { p.setMem('esa_ban_2013', true); p.h -= 4; p.m -= 6; p.addFlag('esa_ban_mpoko') },
+        effect: (p) => { p.setMem('esa_ban_2013', true); p.setMem('esa_ban_where', p._state.currentPlace?.id ?? p._state.character?.birthPlace?.id ?? null); p.h -= 4; p.m -= 6; p.addFlag('esa_ban_mpoko') },
       },
       {
         text: 'Stay in the house',
         tag: null,
         outcome: 'You brace the door with the table and keep the radio low. Some nights there are footsteps and then there are not.',
-        effect: (p) => { p.setMem('esa_ban_2013', true); p.m -= 7; p.r += 2; p.addFlag('esa_ban_2013') },
+        effect: (p) => { p.setMem('esa_ban_2013', true); p.setMem('esa_ban_where', p._state.currentPlace?.id ?? p._state.character?.birthPlace?.id ?? null); p.m -= 7; p.r += 2; p.addFlag('esa_ban_2013') },
       },
     ],
     effect: null,

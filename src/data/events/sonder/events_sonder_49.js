@@ -28,7 +28,7 @@ export const EVENTS_SONDER_49 = [
     id: 'sonder_49_c',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s49c,
+    when: (G) => place.hasTrain(G) && !G.mem?.s49c,
     text: 'You are on a train and you can see into the lit kitchen of a house going past. A person at the counter, their back to you, doing something. For half a second you see their kitchen, their posture, the particular colour of their wall. Then gone. The life in that kitchen continues without interruption. You will never know what they were making.',
     choices: null,
     effect: (p) => { p.setMem('s49c', true) },

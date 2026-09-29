@@ -11,6 +11,7 @@
 
 import { hasTech, wasWealthy } from '../../technology.js'
 import { urbanChanceFor } from '../../../engine/character'
+import { hasPassengerRail } from '../../history.js'
 
 export const RICH_ARCHETYPES = ['wealthy_west', 'wealthy_east', 'wealthy_gulf']
 export const POOR_ARCHETYPES = ['subsaharan', 'developing_unstable', 'conflict_zone']
@@ -104,8 +105,25 @@ export const hasCar = (G) =>
 
 // An underground railway is rarer than a bus by an order of magnitude: about
 // sixty cities had one before 1990.
+// A passenger railway in the country the character lives in, this year
+// (history.js). "A man on the train closes his eyes" printed in Djibouti in
+// 1998, which had one line and no passenger service anybody commuted on.
+export const hasTrain = (G) =>
+  hasPassengerRail(G.currentCountry ?? G.character?.country, G.currentYear)
+// A train as part of the daily round: a city with a line through it.
+export const hasCommuterTrain = (G) => hasTrain(G) && isUrban(G) && cityEnough(G, 0.3)
+
+// For variant pools where one line of several is set on a train: drop the
+// rail lines where there is no railway, keep the rest.
+const RAIL_WORDS = /\b(train|trains|platform|carriage|metro|tram)\b/i
+export const railFilter = (G, lines) => {
+  if (hasTrain(G)) return lines
+  const kept = lines.filter(l => typeof l !== 'string' || !RAIL_WORDS.test(l))
+  return kept.length ? kept : lines
+}
+
 export const hasMetro = (G) =>
-  isUrban(G) && cityEnough(G, 0.45) && G.currentYear >= (isRich(G) ? 1935 : 1990)
+  hasTrain(G) && isUrban(G) && cityEnough(G, 0.45) && G.currentYear >= (isRich(G) ? 1935 : 1990)
 
 export const hasElevator = (G) =>
   isUrban(G) && cityEnough(G, 0.35) && G.currentYear >= (isRich(G) ? 1940 : 1975)
@@ -233,6 +251,7 @@ export const place = {
   hasElectricity, hasRunningWater, hasAppliances,
   hasPhone, hasMobile, hasInternet, hasRadio, hasTV,
   hasCar, hasMetro, hasElevator, hasFlown, hasBus,
+  hasTrain, hasCommuterTrain, railFilter,
   hasSupermarket, hasBank, worksInOffice, hasCinema,
   isLiterate, wentToSchool, hasBooks,
   isColdCountry, isMonsoonCountry, isHotCountry,

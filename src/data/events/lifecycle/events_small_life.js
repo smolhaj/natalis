@@ -1,3 +1,4 @@
+import { cityEnough } from '../sonder/_sonderGuards.js'
 // Small moments that persist across a life: named friendships, first crushes,
 // formative teachers, small triumphs, stranger kindness, a first place of your own.
 // Every person here gets a name. That name lives in G.mem and comes back.
@@ -554,6 +555,9 @@ export const SMALL_LIFE_EVENTS = [
     when: (G) =>
       !G.mem?.neighbourInformer &&
       ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian'].includes(G.regime) &&
+      // A hall, an elevator and a ministry man are an apartment block in a
+      // city; this reached a rural village.
+      G.ruralUrban === 'urban' && G.place?.type !== 'rural' && cityEnough(G, 0.3) &&
       G.age >= 20 && G.age <= 45,
     text: 'The man across the hall has worked at the ministry for twenty years. He is polite in the elevator. You understand, without anyone saying so, that he notices things. You learn which conversations belong in the stairwell and which ones stay inside.',
     choices: null,

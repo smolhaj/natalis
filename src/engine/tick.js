@@ -24,7 +24,7 @@ import { buildMundaneLayer } from './mundaneLayer'
 import { rememberSaid, preferUnsaid } from './prose'
 import { tickLifeCourse, secondaryChance, primaryChance, unpurchasedHomeName, retirementAge } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
-import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic } from '../data/history.js'
+import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic, choleraEndemic } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
 import { hasTech } from '../data/technology.js'
 import { migrationDestinations, gulfNonNational } from '../data/migration.js'
@@ -1554,8 +1554,16 @@ function determineCause(state) {
   const cn = lc.name
   const hc = lc.healthcare
   const deathYear = (character.birthYear ?? 1960) + age
-  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
   const malaria = malariaEndemic(cn, deathYear)
+  // Cholera did not reach West Africa until the 1970 pandemic, and a Guinean
+  // child of 1955 was dying of it. Same rule as malaria: the disease must have
+  // been there that year.
+  const cholera = choleraEndemic(cn, deathYear)
+  const pick = (arr) => {
+    const ok = arr.filter(x => (malaria || !/malaria/.test(x)) && (cholera || !/cholera/.test(x)))
+    const from = ok.length ? ok : arr
+    return from[Math.floor(Math.random() * from.length)]
+  }
   const cr = conflictRiskAt(lc, deathYear)
   const has = (id) => (state.conditions ?? []).some(c => c.id === id)
 
@@ -3747,6 +3755,15 @@ export function tick(state) {
         ]),
       }]
     }
+  }
+
+  // Any other road to a certificate — the age-18 graduation, an event that
+  // grants the flag, a degree — is reading too. Writing it back here rather
+  // than at each grant is what keeps the state and G.literate from disagreeing.
+  if (s.character?.literate === false && (
+    s.flags.includes('graduated_hs') || s.flags.includes('university_graduate') ||
+    ['secondary', 'university', 'graduate'].includes(s.education?.level))) {
+    s.character = { ...s.character, literate: true }
   }
 
   // Leaving school, at the age and the rate this place and decade actually did.

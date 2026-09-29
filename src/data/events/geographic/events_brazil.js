@@ -95,10 +95,12 @@ const BRAZIL_EVENTS = [
   {
     id: 'bra_diretas_ja_1984',
     phase: null,
-    weight: 4,
+    // The text opens in January 1984, so the event is that year's. At weight
+    // 4 over three years it reached almost nobody who marched.
+    weight: 40,
     when: (G) =>
-      G.character.country.name === 'Brazil' &&
-      G.currentYear >= 1983 && G.currentYear <= 1985 &&
+      (G.currentCountry?.name ?? G.character.country.name) === 'Brazil' &&
+      G.currentYear === 1984 &&
       G.age >= 18 &&
       !G.mem?.bra_diretas,
     text: 'January 1984. The Diretas Já campaign — Direct Elections Now. The rallies grow from tens of thousands to hundreds of thousands to one million in São Paulo, 1.7 million in Rio. The largest democratic demonstrations in Brazilian history. The Dante de Oliveira amendment — which would restore direct presidential elections — comes to a vote in the Chamber of Deputies in April. It falls twenty-two votes short of the two-thirds required. The crowd that filled the Paulistão cannot reach the floor of the chamber.',

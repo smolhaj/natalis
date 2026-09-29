@@ -6,6 +6,7 @@
 // Design principle: "Your grandmother tells you about the year the rains didn't
 // come." Not "you read about it" but a distinct prose register of told knowledge.
 
+import { choleraEndemic } from '../../history.js'
 import { colonialSchoolLanguage } from '../../history.js'
 import { hasTech } from '../../technology.js'
 import { STAPLE } from './events_climate.js'
@@ -175,7 +176,7 @@ export const ORAL_TRADITION_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      G.archetype === 'conflict_zone' &&
+      G.conflictRisk >= 0.1 &&
       G.age >= 13 && G.age <= 21 &&
       !G.mem?.oralViolenceNearby,
     text: `You hear about violence in the next district from the man who walked all night from there. He arrived at dawn and sat down in the compound without taking off his shoes. The adults went to him. Children were told to go inside again. What he said came to you through three people over three days: there were soldiers, or armed men who were not soldiers, or both. There was burning. The count of dead is uncertain because people who count them are also afraid of being counted. You understand that the uncertainty is not ignorance — it is what the event looks like from inside it.`,
@@ -279,6 +280,7 @@ export const ORAL_TRADITION_EVENTS = [
     when: (G) =>
       isOralContext(G) &&
       G.age >= 18 && G.age <= 30 &&
+      choleraEndemic(G.currentCountry ?? G.character?.country, G.currentYear) &&
       !G.mem?.oralDiseaseRumour,
     text: `Something is killing people in the district to the north. The men at the market say it is a spirit. The health worker who comes once a month says cholera, and says the water and the hands. The woman who had it and recovered says it begins as a feeling in the stomach and then the water leaves the body faster than you can put it back. You give her version the most weight, because she is the only one who was in the room.`,
     choices: null,

@@ -197,10 +197,10 @@ export const EVENTS_SONDER_18 = [
       G.ruralUrban === 'urban' &&
       G.age >= 38 && G.age <= 70 &&
       !G.mem?.s18GlassReflection,
-    text: () => pick([
+    text: (G) => pick(place.railFilter(G, [
       `The shop window. The glass panel in the office door. The reflection in the train window at night when the tunnel removes everything outside and substitutes you. The person in the glass is older than the person you carry as the interior version of yourself, the one that does not update at the same rate the face does. There is a routine small shock of recognition and then the glass returns to being a window and not a mirror.`,
       `You caught yourself in glass unexpectedly — not prepared to be seen — and the face in the glass was not the face you were expecting. The face you were expecting is younger. The face in the glass has been there for years, updating in ways you approved in the bathroom mirror but did not integrate into the working image of yourself. The glass corrects this briefly before you look away.`,
-    ]),
+    ])),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s18GlassReflection', true) },
   },
@@ -422,7 +422,7 @@ export const EVENTS_SONDER_18 = [
     phase: null,
     weight: 2,
     when: (G) =>
-      G.ruralUrban === 'urban' &&
+      place.hasTrain(G) && G.ruralUrban === 'urban' &&
       G.currentYear >= 1940 &&
       G.age >= 18 && G.age <= 55 &&
       !G.mem?.s18TrainStationNight,
