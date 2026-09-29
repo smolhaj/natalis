@@ -585,10 +585,10 @@ Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 406 tests, including the simulation guardrails
+npm test                 # 411 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
-npm run check-flags      # 3025 covered / 0 partial / 0 orphaned
+npm run check-flags      # 3302 covered / 0 partial / 0 orphaned
 npm run check-events     # reachability: dead guards, enum domains, phase/year windows,
                          # season/country, silent choices, narrated moves that move nobody,
                          # populations the roster models that the corpus never addresses
@@ -1305,6 +1305,28 @@ modelled as people — `G.hasGrandchildren` is the `grandparent` flag or a livin
 child of 25+), parent-alive guards missing on six events, and office and
 work-from-home lines reaching retirees (`employed` in `mundaneLayer.js`).
 
+**The Soviet quarter-century had no content at all.** A Russian born in 1915,
+played 1929-45 across eleven lives, met eleven world-event lines and no Soviet
+event, then "died in conflict" at twenty-nine with nothing to say which. There
+is no Second World War world event anywhere in `worldEvents.js` (the list above
+that says WWII is covered is wrong; the war lives in country modules, and the
+USSR had none). `events_soviet_1929.js` is 20 events and 5 follow-throughs,
+1929-1956, for every republic inside the Union that year: the kolkhoz meeting,
+dekulakisation, the law of five ears, the Kazakh and Volga famines, the Terror
+beyond Russian teenagers, 22 June, the call-up, the evacuation east, occupation,
+the blockade, the death notice (which kills the father in the state, not only in
+the prose), Tashkent taking in other people's children, 9 May, the deported
+peoples (Volga Germans 1941; Chechens and Crimean Tatars 1944, with their
+returns in 1957 and 1989), Stalin's funeral, Tbilisi 1956. Measured: 22 June
+reaches 13 of 14 Russians of 1915; occupation 10 of 15 Belarusians of 1925; the
+Kazakh famine 13 of 15 Kazakhs of 1920; Tbilisi 1956 14 of 17 Georgians of 1930.
+
+**An age can wait a year; a date cannot.** Every Russian born in 1915 turned
+thirty in 1945, and the scheduled "You are thirty" beat took the ninth of May
+from all of them. `getNextEvent` now lets an eligible dated event of weight ≥100
+in its last year take the year ahead of a deferrable queued beat (phase entries,
+life-skeleton beats), which stays queued. Victory Day went from 0 to 11 of 11.
+
 Same class, one layer up: a defining national period written at weight 3 over
 an eight-year window reaches almost nobody. The Proceso in Argentina reached 0
 of 15 Buenos Aires adults who lived through it; at weight 15, 9 and 5 of 15.
@@ -1717,6 +1739,9 @@ src/
         events_portugal_depth.js  — Portugal depth arc (retornados from Angola/Mozambique, PREC revolutionary period)
         events_romania_depth.js   — orphanages post-Ceaușescu, post-communist transition, Bucharest earthquake memories
         events_russia_depth.js    — Great Terror 1937–38, Khrushchev thaw, Brezhnev stagnation/blat, kommunalka life
+        events_soviet_1929.js     — 25 events: every Soviet republic 1929-1956 — collectivisation, the Kazakh and
+                                    Volga famines, the Terror, the war from 22 June to 9 May, the deported
+                                    peoples and their returns, Stalin's funeral, Tbilisi 1956
         events_singapore_depth.js — Singapore depth arc (racial harmony performance, NSman arc, dialect suppression)
         events_south_africa_depth.js — Sharpeville 1960, passbook system, Steve Biko 1977, ANC exile, born-free generation
         events_spain_depth.js     — post-Civil War repression, clandestine resistance, Carrero Blanco 1973, Amnesty Law 1977

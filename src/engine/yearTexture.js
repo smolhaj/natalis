@@ -5101,6 +5101,65 @@ function* textureCandidates(state, opts = {}) {
       ? 'December 2011: white ribbon, Bolotnaya Square, the briefly possible. February 2022: the border, Tbilisi or Riga or Istanbul, the unthinkable ordinary. You are one of the people who participated in both events. The first event did not prevent the second. You have been thinking about what that means.'
       : 'You stood in Bolotnaya Square. You stood at a border crossing in 2022. The space between those two facts is a decade of Russian political history summarised as personal experience.',
   ])]
+  // ─── Soviet 1929-1956 (events_soviet_1929.js) ──────────────────────────────
+  // Memory lines, each gated some years past the thing it remembers, because a
+  // famine is not yet a habit at the table the year it happens.
+  if (F.has('sov_famine_1932') && currentYear >= 1937 && Math.random() < 0.2) yield [T.earned, pick([
+    'You do not throw bread away. You have never decided not to; your hands simply will not do it, and a crust goes into a bag on a nail for the birds, or the next soup, or nobody.',
+    'At a table where there is plenty you still eat the way you learned to, with an arm around the plate. Nobody has noticed in years. You notice every time.',
+    phase === 'late_life'
+      ? 'There are words for grasses and roots in the village language that nobody under sixty knows. You know them because you ate them.'
+      : 'When the harvest is good you feel it in your chest before you feel anything else, like relief from a pain you had stopped registering.',
+  ])]
+  if (F.has('sov_collectivised') && currentYear >= 1940 && Math.random() < 0.14) yield [T.earned, pick([
+    'The kolkhoz office has a portrait over the desk that changes when the man in Moscow changes. The desk does not change and neither does the man behind it.',
+    'The private plot behind the house feeds you. The collective field feeds the plan. Everybody knows which one gets the good manure and nobody writes it down.',
+    'Workdays, not wages: a mark in a ledger for each day, paid out in grain at the end of the year if there is grain. You learn to read the ledger the way other people read the sky.',
+  ])]
+  if (F.has('sov_terror_witness') && currentYear >= 1940 && Math.random() < 0.16) yield [T.earned, pick([
+    'You have a way of finishing a sentence early. You notice it in other people your age, too: the stop before the name, the change of subject that is so smooth it is almost a courtesy.',
+    'A car idling in the street at night still wakes you. You lie and listen until it drives away, and then you lie and listen to the silence it leaves.',
+    phase === 'late_life'
+      ? 'Your grandchildren read about 1937 in a magazine and ask what it was like. You say it was quiet. They think you mean peaceful.'
+      : 'There are people you knew who are not mentioned, by anyone, ever. You keep a list in your head without meaning to, and it does not get shorter.',
+  ])]
+  if (F.has('sov_evacuated') && currentYear >= 1944 && Math.random() < 0.16) yield [T.earned, pick([
+    'The factory never went back west. Neither did you. The town grew up round the workshop the way a town does round a well, and you have lived longer here than in the place you still call home.',
+    'Someone at work says the name of the city you were evacuated from, and a whole street comes back — the bakery, the stairwell, the smell of the river — that you had not thought of in ten years.',
+  ])]
+  if (F.has('sov_occupation_survivor') && currentYear >= 1946 && Math.random() < 0.18) yield [T.earned, pick([
+    'On the forms there is a question: were you, or your relatives, on occupied territory. You tick the box. You have always ticked it. It has never once helped.',
+    'A dog barking at night on a certain note and you are six again, in the rye, with your grandmother\'s hand over your mouth.',
+    phase === 'late_life' && state.character?.country?.name === 'Belarus' && currentYear >= 1970
+      ? 'At Khatyn there is a bell in each chimney where a house stood, and they ring every thirty seconds. You went once and could not stay for more than a few minutes of it.'
+      : 'You do not talk about the occupation years. Nobody in the district does. There were people who did things, and some of them still live on your street.',
+  ])]
+  if (F.has('sov_blockade_survivor') && currentYear >= 1945 && Math.random() < 0.22) yield [T.earned, pick([
+    'You still cut bread into squares. You have a drawer full of crusts and cannot explain it and have stopped trying.',
+    'The cold of an unheated room in any winter takes you straight to the one winter. It is not a memory; it is the body filing the same report.',
+    phase === 'late_life'
+      ? 'On the twenty-seventh of January you light a candle in the window, the way the city does. The number of you who remember it from the inside gets smaller every year.'
+      : 'People who were not there say "the siege" like the name of a book. You say "the blockade", and you say it the way you would say the name of someone who died.',
+  ])]
+  if (F.has('sov_father_killed_war') && currentYear >= 1947 && Math.random() < 0.18) yield [T.earned, pick([
+    'The photograph on the wall is of a man younger than you are now. You have been older than your father for years, and it still arrives as news every time you look at it.',
+    'In the district everybody\'s father is on the same monument, in small letters, in order. You know where his name is without looking, the way you know where the step is in the dark.',
+    phase === 'late_life' && currentYear >= 2008
+      ? 'They have put the lists online, the dead, with where and when. You find him in a minute, after sixty years of not knowing, and sit in front of the screen until it goes dark on its own.'
+      : 'Your mother never remarried. She said it was the times, and it was, and it was also him.',
+  ])]
+  if (F.has('sov_home_front') && currentYear >= 1946 && Math.random() < 0.12) yield [T.earned, pick([
+    'You were fourteen at a lathe. You mention it once, at a party, and the young people think you are exaggerating, and you let them.',
+    'Your hands learned to work before they finished growing. They are still the most reliable thing about you.',
+  ])]
+  if (F.has('sov_took_in_evacuees') && currentYear >= 1946 && Math.random() < 0.16) yield [T.earned, pick([
+    'One of the children your mother took in writes every New Year, from Minsk, in a Russian that still has your mother\'s words in it.',
+    'At the table there are two names nobody would guess belonged to this family. They do.',
+  ])]
+  if (F.has('sov_war_generation') && currentYear >= 1955 && phase !== 'early_childhood' && Math.random() < 0.1) yield [T.earned, pick([
+    'Every film on television on the ninth of May is about the war, and you watch every one, and cry at the same places, and would not miss it.',
+    'The men of your age in the town divide into those who came back and the photographs. You are careful, at weddings, which ones you seat together.',
+  ])]
   if (F.has('ru_dep_terror_generation') && Math.random() < 0.22) yield [T.anchored, pick([
     'The knock came at night in 1937, or 1938. Not to your door — to a door close enough that you heard it. The apartment was quiet afterward in a way that apartments are not usually quiet.',
     'You learned what Article 58 was before you learned what it meant. Anti-Soviet activity. The phrase covered everything it needed to cover. This was its point.',

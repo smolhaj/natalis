@@ -656,7 +656,7 @@ export const COUNTRIES = [
 
   {
     name: 'Russia', capital: 'Moscow', currency: 'ruble', region: 'Eastern Europe / Central Asia', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'the Soviet Union' }],
+    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1922, name: 'Soviet Russia' }, { from: 1923, until: 1991, name: 'the Soviet Union' }],
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 73,
     conflictRisk: 0.04, genderGap: 0.22, socialMobility: 'low',
     wealthTierWeights: [0.14, 0.22, 0.32, 0.22, 0.10],
@@ -688,7 +688,7 @@ export const COUNTRIES = [
 
   {
     name: 'Ukraine', capital: 'Kyiv', currency: 'hryvnia', region: 'Eastern Europe', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'Soviet Ukraine' }],
+    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1991, name: 'Soviet Ukraine' }],
     gdp: 'low', healthcare: 'poor', lifeExpectancy: 72,
     conflictRisk: 0.08, genderGap: 0.20, socialMobility: 'low',
     wealthTierWeights: [0.18, 0.26, 0.32, 0.18, 0.06],
@@ -749,7 +749,7 @@ export const COUNTRIES = [
 
   {
     name: 'Belarus', capital: 'Minsk', currency: 'Belarusian ruble', region: 'Eastern Europe', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'Byelorussian SSR' }],
+    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1991, name: 'Byelorussian SSR' }],
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 74,
     conflictRisk: 0.03, genderGap: 0.24, socialMobility: 'low',
     wealthTierWeights: [0.16, 0.28, 0.33, 0.18, 0.05],
@@ -877,6 +877,7 @@ export const COUNTRIES = [
 
   {
     name: 'Georgia', capital: 'Tbilisi', currency: 'Georgian lari', region: 'Caucasus', archetype: 'post_soviet',
+    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1920, name: 'the Democratic Republic of Georgia' }, { from: 1921, until: 1991, name: 'Georgian SSR' }],
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 74,
     conflictRisk: 0.06, genderGap: 0.25, socialMobility: 'low',
     wealthTierWeights: [0.20, 0.28, 0.30, 0.17, 0.05],
@@ -909,7 +910,7 @@ export const COUNTRIES = [
 
   {
     name: 'Armenia', capital: 'Yerevan', currency: 'Armenian dram', region: 'Caucasus', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'Armenian SSR' }],
+    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1920, name: 'the First Republic of Armenia' }, { from: 1921, until: 1991, name: 'Armenian SSR' }],
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 75,
     conflictRisk: 0.08, genderGap: 0.27, socialMobility: 'low',
     wealthTierWeights: [0.22, 0.30, 0.28, 0.15, 0.05],
@@ -942,7 +943,7 @@ export const COUNTRIES = [
 
   {
     name: 'Azerbaijan', capital: 'Baku', currency: 'Azerbaijani manat', region: 'Caucasus', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'Azerbaijan SSR' }],
+    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1920, name: 'the Azerbaijan Democratic Republic' }, { from: 1921, until: 1991, name: 'Azerbaijan SSR' }],
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 73,
     conflictRisk: 0.07, genderGap: 0.28, socialMobility: 'low',
     wealthTierWeights: [0.18, 0.26, 0.30, 0.19, 0.07],
@@ -977,7 +978,7 @@ export const COUNTRIES = [
 
   {
     name: 'Kazakhstan', capital: 'Astana', currency: 'Kazakhstani tenge', region: 'Central Asia', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'Kazakh SSR' }],
+    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1935, name: 'Soviet Kazakhstan' }, { from: 1936, until: 1991, name: 'Kazakh SSR' }],
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 74,
     conflictRisk: 0.03, genderGap: 0.27, socialMobility: 'low',
     wealthTierWeights: [0.14, 0.22, 0.32, 0.23, 0.09],
@@ -1014,7 +1015,7 @@ export const COUNTRIES = [
 
   {
     name: 'Uzbekistan', capital: 'Tashkent', currency: 'Uzbekistani soum', region: 'Central Asia', archetype: 'post_soviet',
-    historicalNames: [{ until: 1991, name: 'Uzbek SSR' }],
+    historicalNames: [{ until: 1917, name: 'the Russian Empire' }, { from: 1918, until: 1923, name: 'Soviet Turkestan' }, { from: 1924, until: 1991, name: 'Uzbek SSR' }],
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 72,
     conflictRisk: 0.04, genderGap: 0.31, socialMobility: 'very_low',
     wealthTierWeights: [0.22, 0.30, 0.28, 0.14, 0.06],

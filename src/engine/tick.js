@@ -538,7 +538,7 @@ function resolveProxyExtras(state, proxy) {
   if (!next.retired && proxy.flags.includes('retired')) {
     const pension = state.career ? Math.round(state.career.salary * 0.35) : (next.pensionAnnual ?? 0)
     next = { ...next, retired: true, career: null, pensionAnnual: pension,
-      mem: { ...(next.mem ?? {}), retiredFrom: { title: next.career?.title, field: next.career?.field, id: next.career?.id } } }
+      mem: next.career ? { ...(next.mem ?? {}), retiredFrom: { title: next.career.title, field: next.career.field, id: next.career.id } } : next.mem }
   }
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
@@ -1004,6 +1004,8 @@ function weightedPick(pool, G, desire, leaning) {
 
 const GRIEF_FIRST = EVENTS.find(e => e.id === 'grief_partner_death') ?? null
 
+const DEFERRABLE_BEAT = /^(phase_entry_|ls_(first_test|the_fork|the_cost|the_reckoning)$)/
+
 export function getNextEvent(state) {
   const phase = getPhase(state.age)
   const G = buildG(state)
@@ -1014,7 +1016,22 @@ export function getNextEvent(state) {
     (e.phase === phase || e.phase == null) && isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
     (!state.inPrison || e.prisonOk === true)
   )
-  if (queueMatch) return queueMatch
+  if (queueMatch) {
+    // The phase-entry and life-skeleton beats are scheduled on an age, and an
+    // age can wait a year. A year-bound event cannot: every Russian born in
+    // 1915 turned thirty in 1945, and "You are thirty" took the ninth of May
+    // from all of them. Where one of these beats meets an eligible event whose
+    // only (or last) year is this one and that was written to claim it, the
+    // year goes to history and the beat stays queued for next year.
+    if (DEFERRABLE_BEAT.test(queueMatch.id ?? '')) {
+      const pressing = [...(EVENTS_BY_PHASE[phase] ?? []), ...(EVENTS_BY_PHASE[null] ?? [])].find(e =>
+        (e.weight ?? 0) >= 100 && isEventAvailable(e, usedEventMap, currentYear) &&
+        classifyEvent(e).dated && e.dated.to === currentYear &&
+        (!e.when || e.when(G)) && (!state.inPrison || e.prisonOk === true))
+      if (pressing) return pressing
+    }
+    return queueMatch
+  }
 
   // Use phase index; also include phase-agnostic events (phase: null) which rely on their when() guards
   const phaseEvents = [...(EVENTS_BY_PHASE[phase] ?? []), ...(EVENTS_BY_PHASE[null] ?? [])]

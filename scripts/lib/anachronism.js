@@ -216,6 +216,10 @@ export function checkFutureYear(text, year) {
     const y = Number(m[1])
     if (y <= year) continue
     if (YEAR_NAME.test(lower.slice(m.index + 4, m.index + 20))) continue
+    // The far end of a range that has already begun: "the 1999–2000 dzud",
+    // printed in 1999, is the winter the character is standing in.
+    const range = lower.slice(Math.max(0, m.index - 6), m.index).match(/(1[89]\d\d|20\d\d)\s*[–-]\s*$/)
+    if (range && Number(range[1]) <= year) continue
     if (FUTURE_YEAR_OK.test(clauseAround(lower, m.index))) continue
     return { named: y, year, text }
   }

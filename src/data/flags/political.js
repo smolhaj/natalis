@@ -6866,6 +6866,198 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by the post-release choice queued in tick() for political prisoners.',
   },
 
+  sov_collectivised: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Rural Soviet character present when the village was collectivised, 1930-32.',
+    intent: 'both',
+    notes: 'Set by sov_kolkhoz_meeting. Texture; sov_ft_passport_1974.',
+  },
+
+  sov_slaughtered_the_herd: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Slaughtered the family livestock rather than surrender it to the kolkhoz.',
+    intent: 'none',
+    notes: 'Set by sov_kolkhoz_meeting (defiant).',
+  },
+
+  sov_dekulakised: {
+    weight: 'major',
+    category: 'political',
+    description: 'Family deported as kulaks to a special settlement, 1930-31.',
+    intent: 'event',
+    notes: 'Set by sov_dekulakised. Guards sov_ft_kulak_file.',
+  },
+
+  sov_spikelets: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Rural Soviet child in 1932-33, when gleaning a cut field fell under the law of five ears.',
+    intent: 'none',
+    notes: 'Set by sov_five_ears.',
+  },
+
+  sov_famine_1932: {
+    weight: 'major',
+    category: 'political',
+    description: 'Survived the Soviet famine of 1931-33 on the Kazakh steppe or the Volga.',
+    intent: 'year_texture',
+    notes: 'Set by sov_famine_steppe and sov_famine_volga.',
+  },
+
+  sov_terror_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through 1937-38 in a Soviet republic as a child or adult.',
+    intent: 'both',
+    notes: 'Set by sov_terror_republics. Texture; guards sov_terror_household.',
+  },
+
+  sov_terror_household: {
+    weight: 'major',
+    category: 'political',
+    description: 'Father arrested in the Terror and did not return.',
+    intent: 'event',
+    notes: 'Set by sov_terror_household (killParent). Guards sov_ft_rehabilitated.',
+  },
+
+  sov_deported_people: {
+    weight: 'major',
+    category: 'political',
+    description: 'Deported with an entire people: Volga Germans 1941, Chechens or Crimean Tatars 1944.',
+    intent: 'event',
+    notes: 'Set by sov_deportation_1941/1944. Guards sov_ft_return_home.',
+  },
+
+  sov_war_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In the Soviet Union on 22 June 1941.',
+    intent: 'year_texture',
+    notes: 'Set by sov_june_22.',
+  },
+
+  sov_frontovik: {
+    weight: 'major',
+    category: 'political',
+    description: 'Called up to the Red Army, 1941-44.',
+    intent: 'event',
+    notes: 'Set by sov_call_up. Guards sov_ft_victory_day.',
+  },
+
+  sov_evacuated: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Evacuated east with a factory in 1941-42.',
+    intent: 'year_texture',
+    notes: 'Set by sov_evacuation.',
+  },
+
+  sov_blockade_survivor: {
+    weight: 'major',
+    category: 'political',
+    description: 'Survived the blockade of Leningrad.',
+    intent: 'year_texture',
+    notes: 'Set by sov_blockade.',
+  },
+
+  sov_occupation_survivor: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived under German occupation in Ukraine, Belarus, the Baltic states or Moldova, 1941-44.',
+    intent: 'year_texture',
+    notes: 'Set by sov_occupation.',
+  },
+
+  sov_home_front: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Worked the Soviet home front as a teenager, woman or older man.',
+    intent: 'year_texture',
+    notes: 'Set by sov_home_front.',
+  },
+
+  sov_father_killed_war: {
+    weight: 'major',
+    category: 'political',
+    description: 'Father killed in the war; the death notice came.',
+    intent: 'year_texture',
+    notes: 'Set by sov_pokhoronka (killParent).',
+  },
+
+  sov_took_in_evacuees: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Central Asian family that took in evacuee children, 1941-43.',
+    intent: 'year_texture',
+    notes: 'Set by sov_tashkent_took_in.',
+  },
+
+  sov_victory_1945: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In the Soviet Union on the night of 9 May 1945.',
+    intent: 'none',
+    notes: 'Set by sov_victory.',
+  },
+
+  sov_stalin_death: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'In the Soviet Union in March 1953.',
+    intent: 'none',
+    notes: 'Set by sov_stalin_funeral.',
+  },
+
+  geo_tbilisi_1956: {
+    weight: 'major',
+    category: 'political',
+    description: 'In Tbilisi in March 1956 when the demonstrations for the memory of Stalin were fired on.',
+    intent: 'none',
+    notes: 'Set by sov_tbilisi_1956.',
+  },
+
+  sov_rehabilitation_letter: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Received a posthumous rehabilitation for a father taken in 1937-38.',
+    intent: 'none',
+    notes: 'Set by sov_ft_rehabilitated.',
+  },
+
+  sov_kulak_file_read: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Read the dekulakisation file on the family after 1991.',
+    intent: 'none',
+    notes: 'Set by sov_ft_kulak_file.',
+  },
+
+  sov_kolkhoz_passport: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Collective farmer given an internal passport after 1974.',
+    intent: 'none',
+    notes: 'Set by sov_ft_passport_1974.',
+  },
+
+  sov_veteran: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Red Army veteran on Victory Day after 1965.',
+    intent: 'none',
+    notes: 'Set by sov_ft_victory_day.',
+  },
+
+  sov_returned_home: {
+    weight: 'major',
+    category: 'political',
+    description: 'Returned from deportation: Chechnya 1957, Crimea after 1989.',
+    intent: 'none',
+    notes: 'Set by sov_ft_return_home.',
+  },
+
   dissident_file_known: {
     weight: 'major',
     category: 'political',

@@ -109,6 +109,7 @@ describe('a year that has not happened yet', () => {
     expect(checkFutureYear('The plan says the city will have a metro by 2030.', 2010)).toBeNull()
     expect(checkFutureYear('Vision 2030, or whatever the current plan is called, is the official future.', 2017)).toBeNull()
     expect(checkFutureYear('London won the right to host the 2012 Olympics the day before.', 2005)).toBeNull()
+    expect(checkFutureYear('The 1999–2000 dzud kills 2.4 million animals.', 1999)).toBeNull()
   })
   it('does not fire on the past', () => {
     expect(checkFutureYear('The war ended in 1975.', 1980)).toBeNull()

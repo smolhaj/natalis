@@ -18,7 +18,8 @@ export function generateIdentityCard(state) {
   // `retire()` nulls the career, so a retiree's whole working life was absent
   // from the death screen: a Detective Chief Inspector with thirty-one years and
   // a Celebrated Author with thirty-seven both read as having never worked.
-  const career = state.career ?? state.mem?.retiredFrom ?? null
+  // retiredFrom can be stamped by a retirement with no job to retire from.
+  const career = state.career ?? (state.mem?.retiredFrom?.title ? state.mem.retiredFrom : null)
   const partner = state.partner?.alive === false ? null : state.partner
   const lostPartner = state.partner?.alive === false ? state.partner : null
   const G = buildG(state)
@@ -257,7 +258,8 @@ export function generateEpitaph(state) {
   // `retire()` nulls the career, so a retiree's whole working life was absent
   // from the death screen: a Detective Chief Inspector with thirty-one years and
   // a Celebrated Author with thirty-seven both read as having never worked.
-  const career = state.career ?? state.mem?.retiredFrom ?? null
+  // retiredFrom can be stamped by a retirement with no job to retire from.
+  const career = state.career ?? (state.mem?.retiredFrom?.title ? state.mem.retiredFrom : null)
   const name = character.firstName
   const He = character.gender === 'male' ? 'He' : 'She'
   const he = He.toLowerCase()
@@ -746,6 +748,17 @@ export function generateEpitaph(state) {
     para2.push(`${He} lived through the dissolution of collective farming — the paper that said you owned land, and the reality that was more complicated.`)
   }
 
+  // Killed in a war: the obituary named the influenza of his infancy and not
+  // the front he died at twenty-five on.
+  const cause = String(state.causeOfDeath ?? '')
+  if (/conflict|combat|the war|crossfire|fighting|civil war/i.test(cause)) {
+    para2.unshift(f('sov_frontovik')
+      ? `${He} went to the front with an egg in ${his} pocket and a twist of earth from the yard, and did not come back. The notice was a printed form with ${his} name filled in by hand.`
+      : f('served_military') || f('combat_veteran')
+        ? `${He} was killed in the war, at ${age}, in uniform.`
+        : `${He} was killed in the war, at ${age}, without having gone to it; it came to where ${he} was.`)
+  }
+
   // The historical spine, when nothing above has already named it.
   //
   // `worldEventsFired` is the record of what actually reached this character,
@@ -1211,6 +1224,9 @@ export function generateEpitaph(state) {
  */
 const AMBIENT_WORLD_EVENTS = new Set([
   'internet_revolution', 'corruption_developing', 'paris_agreement_2015',
+  // The household view of the 1918 pandemic, which fires beside the pandemic
+  // itself: "handed him The 1918 Influenza Pandemic and then Spanish Flu".
+  'spanish_flu_1918_b',
 ])
 
 /** The clause an obituary would use for a world event, in priority order. */
@@ -1246,7 +1262,8 @@ export function generateLifeNotes(state) {
   // `retire()` nulls the career, so a retiree's whole working life was absent
   // from the death screen: a Detective Chief Inspector with thirty-one years and
   // a Celebrated Author with thirty-seven both read as having never worked.
-  const career = state.career ?? state.mem?.retiredFrom ?? null
+  // retiredFrom can be stamped by a retirement with no job to retire from.
+  const career = state.career ?? (state.mem?.retiredFrom?.title ? state.mem.retiredFrom : null)
   const f = (flag) => flags.includes(flag)
   const any = (...fs) => fs.some(g => flags.includes(g))
   const notes = [] // [{ priority, text }]
