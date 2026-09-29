@@ -27,7 +27,7 @@ function pick(ev, strat) {
 const allActs = Object.values(ACTIVITIES).flat()
 for (const [idx, p] of personas.entries()) {
   S().setMode(p.mode ?? 'active')
-  S().startCuratedGame({ country: p.country, birthYear: p.year, gender: p.gender })
+  S().startCuratedGame({ country: p.country, birthYear: p.year, gender: p.gender, ethnicity: p.eth })
   useGameStore.setState({ mode: p.mode ?? 'active' })
   const lines = []
   const c = S().character

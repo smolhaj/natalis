@@ -1,3 +1,4 @@
+import { nameGroupFor, namePoolFor } from '../data/groupNames.js'
 import { COUNTRIES } from '../data/countries'
 import { getCountryDisplayName } from '../utils/countryUtils'
 import { pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
@@ -188,7 +189,14 @@ export function childNameCountry(state) {
 /** The country whose name pools this character's family draws from. */
 export function nameSourceCountry(character) {
   const src = character?.nameCountry
-  return (src && COUNTRIES.find(c => c.name === src)) || character?.country
+  const base = (src && COUNTRIES.find(c => c.name === src)) || character?.country
+  const g = namePoolFor(character?.nameGroup)
+  if (!g || !base) return base
+  return {
+    ...base,
+    namePool: { male: g.male ?? base.namePool?.male, female: g.female ?? base.namePool?.female },
+    surnames: g.surnames ?? base.surnames,
+  }
 }
 
 export function createCharacter(overrides = {}) {
@@ -246,6 +254,9 @@ export function createCharacter(overrides = {}) {
   const ethnicity = (() => {
     const groups = country.ethnicGroups
     if (!groups || groups.length === 0) return 'local'
+    // An override must name a group this country actually has, or it would
+    // make a person who cannot exist here.
+    if (overrides.ethnicity && groups.some(g => g.id === overrides.ethnicity)) return overrides.ethnicity
     const group = weightedRandomFromArray(groups, 'share')
     return group.id
   })()
@@ -254,7 +265,9 @@ export function createCharacter(overrides = {}) {
 
   // Drawn after ethnicity and religion, because they decide whose names these are.
   const nameCountry = nameCountryFor(ethnicity, religion)
-  const namesFrom = (nameCountry && COUNTRIES.find(c => c.name === nameCountry)) || country
+  const nameCountryObj = (nameCountry && COUNTRIES.find(c => c.name === nameCountry)) || country
+  const nameGroup = nameGroupFor(country.name, ethnicity, religion)
+  const namesFrom = nameSourceCountry({ country, nameCountry: nameCountryObj === country ? null : nameCountryObj.name, nameGroup })
   const firstName = pickFrom(gender === 'male' ? namesFrom.namePool.male : namesFrom.namePool.female)
   // Several pools carry a name as both a given name and a family name
   // (Afolabi, Adewale, Ikenna), so a life began as "Afolabi Afolabi".
@@ -286,7 +299,8 @@ export function createCharacter(overrides = {}) {
     // Smirnova. `surnameFor` cannot undo it: it returns early for a male.
     surnameBase: surname,
     name: `${firstName} ${surnameFor(namesFrom, surname, gender)}`,
-    nameCountry: namesFrom === country ? null : namesFrom.name,
+    nameCountry: nameCountryObj === country ? null : nameCountryObj.name,
+    nameGroup,
     country, gender, birthYear, wealthTier, familyStability, familySize,
     initialStats,
     religion, ethnicity, ruralUrban, literate,

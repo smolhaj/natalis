@@ -9,7 +9,7 @@ import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhoo
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 import {
   getPhase, GDP_MULT,
-  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES, childNameCountry,
+  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES, childNameCountry, nameSourceCountry,
 } from './character'
 import {
   buildG, buildEffectProxy, applyProxy, resolveProxyExtras, liveCountry,
@@ -33,7 +33,7 @@ function genPartnerName(state, gender) {
   // gave an emigrant a partner from the host pool as often as from home.
   const birth = state.character.country
   const here = state.currentCountry ?? birth
-  const home = state.character.nameCountry ? COUNTRIES.find(c => c.name === state.character.nameCountry) : null
+  const home = (state.character.nameCountry || state.character.nameGroup) ? nameSourceCountry(state.character) : null
   const abroad = here?.name !== birth?.name
   if (home && !abroad && chance(0.85)) return personName(home, gender, state)
   if (abroad && chance(0.5)) return personName(home ?? birth, gender, state)

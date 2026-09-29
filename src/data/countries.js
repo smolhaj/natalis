@@ -2556,7 +2556,7 @@ export const COUNTRIES = [
 
   {
     name: 'Eritrea', capital: 'Asmara', currency: 'Eritrean nakfa', region: 'East Africa', archetype: 'subsaharan',
-    historicalNames: [{ until: 1993, name: 'Eritrea (Ethiopia)' }],
+    historicalNames: [{ until: 1940, name: 'Italian Eritrea' }, { from: 1941, until: 1951, name: 'British-administered Eritrea' }, { from: 1952, until: 1990, name: 'Eritrea (Ethiopia)' }],
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 65,
     conflictRisk: 0.12, genderGap: 0.42, socialMobility: 'very_low',
     wealthTierWeights: [0.55, 0.28, 0.12, 0.04, 0.01],

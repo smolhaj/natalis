@@ -14657,7 +14657,12 @@ function* textureCandidates(state, opts = {}) {
     // ── subsaharan era texture ──
     if (arch === 'subsaharan') {
       if (era <= 1960) yield [T.anchored, pick([
-        'Independence changes the flag. The other structures of the colonial arrangement persist with more tenacity.',
+        // Only in the decade after it happened. This pool opens for every
+        // sub-Saharan country before 1970, so it was telling a 1946 Eritrean —
+        // under a British caretaker, forty-seven years from a flag of its own —
+        // that the flag had changed.
+        INDEPENDENCE_YEAR[cn] && currentYear >= INDEPENDENCE_YEAR[cn] && currentYear <= INDEPENDENCE_YEAR[cn] + 8 &&
+          'Independence changes the flag. The other structures of the colonial arrangement persist with more tenacity.',
         'The harvest determines most things. This is not said aloud in the town but it is understood.',
         'The extended family is the welfare system. It works through obligation rather than taxation. Both have costs.',
         'The corrugated iron roof amplifies rain in a way no architect planned and the occupant long since stopped noticing.',

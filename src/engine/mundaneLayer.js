@@ -531,15 +531,24 @@ export function buildMundaneLayer(state) {
     'Food prepared by someone else always tastes differently than food you prepared yourself.',
     'The recipe came from someone who is not here to explain what they meant by "a handful."',
   )
-  addIf(isSubsaharan || cn === 'Nigeria' || cn === 'Ghana' || cn === 'Cameroon',
+  // `subsaharan` is an economic archetype, not a cuisine: it put jollof rice
+  // and palm wine into Eritrea and Djibouti, which eat injera and drink coffee.
+  const liveRegion = (state.currentCountry ?? state.character?.country)?.region ?? ''
+  const westCentral = liveRegion === 'West Africa' || liveRegion === 'Central Africa'
+  const horn = ['Ethiopia', 'Eritrea', 'Somalia', 'Djibouti', 'Sudan', 'South Sudan'].includes(currentCn)
+  addIf(liveRegion === 'West Africa',
     'The jollof rice debate — whose version, which country, which occasion — is perennial and unresolvable and also enjoyable.',
+  )
+  addIf(isSubsaharan && !horn,
     'Fufu, ugali, sadza, eba — the starch that holds the soup and the evening together.',
+    'The market tomatoes are riper than the shop\'s. You know this. You go to the market.',
+  )
+  addIf(westCentral,
     'The groundnut soup takes time. The time is part of what it is.',
     'The plantain cooks in the oil and the sound of it is correct.',
-    'The market tomatoes are riper than the shop\'s. You know this. You go to the market.',
     'Palm wine is tapped early and drunk before the afternoon changes it.',
   )
-  addIf(cn === 'Ethiopia' || cn === 'Eritrea',
+  addIf(currentCn === 'Ethiopia' || currentCn === 'Eritrea',
     'Injera is spread on the communal plate. The eating is communal. The plate does not belong to any one person.',
     'The coffee ceremony takes time it is not in a hurry about. The time is given.',
     'Tej is the honey wine of occasion. The occasion need not be large to warrant it.',
