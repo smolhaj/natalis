@@ -253,3 +253,33 @@ describe('a family is named from its own tradition', () => {
     expect(childSurname({ character: { gender: 'male', surname: 'Lebedev' }, partner: { name: 'Larisa Mikhailova' } })).toBe('Lebedev')
   })
 })
+
+describe('an emigrant is not told about the street they left as if they were on it', () => {
+  // 10% of an emigrant's years carried an event that only fired because of
+  // where they were born: Mexico City traffic in Los Angeles, a NEPA cut in
+  // London. The engine now asks each guard whether it would still fire for
+  // somebody born where the character lives.
+  it('draws no birth-country event abroad unless it is written for somebody who left', async () => {
+    const { getNextEvent: next } = await import('../src/engine/tick.js')
+    const home = born('Mexico', 1960)
+    const us = COUNTRIES.find(c => c.name === 'United States')
+    const abroad = { ...home, age: 35, currentYear: 1995, currentCountry: us, currentPlace: null, residencyStatus: 'work_visa', flags: [...home.flags, 'emigrated'] }
+    const G = buildG(abroad)
+    const Gborn = { ...G, character: { ...G.character, country: us } }
+    const leaks = []
+    for (let i = 0; i < 300; i++) {
+      const e = next(abroad)
+      if (!e?.when) continue
+      let here = true
+      try { here = !!e.when(Gborn) } catch (_) { /* a guard that throws on a stranger is not a leak */ }
+      if (!here && !e.writtenForAbroad && !/(^|_)ft\d*_/.test(e.id) && !/Math\.random/.test(e.when.toString())) leaks.push(e.id)
+    }
+    expect([...new Set(leaks)]).toEqual([])
+  })
+
+  it('still reaches them with the things written for them', () => {
+    const e = EVENTS.find(x => x.id === 'hist_remittance_pressure')
+    classifyEvent(e)
+    expect(e.writtenForAbroad).toBe(true)
+  })
+})

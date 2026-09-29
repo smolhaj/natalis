@@ -9286,6 +9286,15 @@ const SCHOOL_PROSE = /school gate|in the classroom|reach secondary school|your t
 // Classified from the prose, because the prose is what makes the claim;
 // INSTITUTION_PROSE and INSTITUTIONS_SUSPENDED both live in history.js.
 
+// A guard that reads where the character lives now, or requires a flag saying
+// they left. Matching any identifier with "emigrat" in it caught the
+// once-only latch `!G.mem.ps_late_emigration`, which says nothing either way.
+const ABROAD_AWARE = /currentCountry|yearsAbroad|residencyStatus|homeCountry|returnHome|(?<!!\s*G\.flags\.)(?:has|includes)\(\s*['"][a-z_]*(?:emigrat|diaspora|abroad|exile|refugee|returned_home)[a-z_]*['"]/
+// Phrases that only make sense said from outside. "Send money", "abroad" and
+// "emigrate" were here and let through a Polish mother's children "talking
+// about leaving" to a woman who had left twenty years before.
+const ABROAD_PROSE = /back home|the country you left|the place you left|the village you left|the money you send|remittan|news from home|the diaspora|in exile|for the first time since you left/i
+
 function eventProse(e) {
   let t = ''
   if (typeof e.text === 'string') t = e.text
@@ -9399,6 +9408,15 @@ export function classifyEvent(e) {
   // Vietnamese refugee in California the boat. Computed ahead of the early
   // return, because some events arrive with their register already set.
   if (e.departs === undefined) e.departs = /addFlag\(['"]emigrated['"]\)|emigrateTo\(/.test(effectSource(e))
+  // Written for somebody who has left, or about the life they left from the
+  // outside: the remittance, the call home, the trip back with a child. See
+  // `homeFits` in tick.js, which lets these reach an emigrant and holds back
+  // the birth-country events that describe living there.
+  if (e.writtenForAbroad === undefined) {
+    let whenSrc = ''
+    try { if (typeof e.when === 'function') whenSrc = Function.prototype.toString.call(e.when) } catch (_) { whenSrc = '' }
+    e.writtenForAbroad = ABROAD_AWARE.test(whenSrc) || ABROAD_PROSE.test(eventProse(e))
+  }
   if (e.register !== undefined) return e
   let src = ''
   try { if (typeof e.when === 'function') src = Function.prototype.toString.call(e.when) } catch (_) { src = '' }

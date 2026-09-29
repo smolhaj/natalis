@@ -794,6 +794,42 @@ function departureFits(e, G) {
   return (G.currentCountry?.name ?? G.character?.country?.name) === G.character?.country?.name
 }
 
+// Where you were born is not where you live. About 584 guards read
+// `G.character.country` to decide present-tense prose, so a Mexican who had
+// lived in Los Angeles for twenty years sat in Mexico City traffic, a Nigerian
+// in London ran a generator through a NEPA cut, and a Pakistani in Dubai was
+// frightened of a blasphemy case in a neighbourhood she had left in 1988:
+// 10% of an emigrant's years carried an event of this kind. Rewriting 584
+// guards would be the wrong repair — most of them are right for the character
+// at home, and some are right abroad.
+//
+// So the question is asked of the guard itself, at the time: would this event
+// still fire if the character had been born where they now live? If not, it
+// is about the birth country. That is fine for somebody still there, for an
+// event written for the diaspora (`writtenForAbroad`), and for a follow-through
+// continuing something the character lived through before leaving. Anything
+// else is life in a place they no longer live in.
+const FOLLOW_THROUGH_ID = /(^|_)ft\d*_/
+
+function homeFits(e, G, Gborn) {
+  if (!Gborn || !e.when) return true
+  if (e.writtenForAbroad) return true
+  // A follow-through is an echo of something the character lived, usually
+  // before leaving. A bare flag prerequisite is not enough to say so:
+  // `used_connections` let a privatisation-agency favour reach a Pole who had
+  // been in Germany for sixteen years.
+  if (FOLLOW_THROUGH_ID.test(e.id ?? '') && (e.continuesFlag?.length || e.continuesMem?.length)) return true
+  try { return !!e.when(Gborn) } catch (_) { return true }
+}
+
+// G as it would be for somebody born in the country they live in, or null
+// when that is where they were born.
+function bornHereG(G) {
+  const here = G.currentCountry
+  if (!here?.name || here.name === G.character?.country?.name) return null
+  return { ...G, character: { ...G.character, country: here } }
+}
+
 function institutionsFit(e, G) {
   const needs = e.assumesInstitutions
   if (!needs) return true
@@ -1035,10 +1071,12 @@ export function getNextEvent(state) {
 
   // Use phase index; also include phase-agnostic events (phase: null) which rely on their when() guards
   const phaseEvents = [...(EVENTS_BY_PHASE[phase] ?? []), ...(EVENTS_BY_PHASE[null] ?? [])]
+  const Gborn = bornHereG(G)
   let pool = phaseEvents.filter(e =>
     isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
     (!state.inPrison || e.prisonOk === true) &&
-    schoolProseFits(classifyEvent(e), G) && institutionsFit(e, G) && departureFits(e, G)
+    schoolProseFits(classifyEvent(e), G) && institutionsFit(e, G) && departureFits(e, G) &&
+    homeFits(e, G, Gborn)
   )
 
   if (state.career && !state.inPrison) {

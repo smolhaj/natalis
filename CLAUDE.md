@@ -585,7 +585,7 @@ Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 411 tests, including the simulation guardrails
+npm test                 # 413 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
 npm run check-flags      # 3302 covered / 0 partial / 0 orphaned
@@ -1244,8 +1244,7 @@ without one; concentration is the real statement.
 - **Pass seven, through the real UI** (`npm run check-ui`): saves kept the
   pending question as null, a dead partner was shown and courted as living,
   ~25 panel prices were present-day beside era charges.
-- **Open:** ~584 guards read `G.character.country` for present-tense prose, so
-  an emigrant gets ~2.3% of years of home-country events; `classifyEvent`
+- **Open:** `classifyEvent`
   cannot see through module-local guard helpers (`HOME(G)`), filing those
   events `universal` (Kabylie, Amhara, Gulf); `Guinea:susu_guinean`, Bisaya,
   Ambundu, Tsonga, Tigre still unwritten.
@@ -1320,6 +1319,19 @@ peoples (Volga Germans 1941; Chechens and Crimean Tatars 1944, with their
 returns in 1957 and 1989), Stalin's funeral, Tbilisi 1956. Measured: 22 June
 reaches 13 of 14 Russians of 1915; occupation 10 of 15 Belarusians of 1925; the
 Kazakh famine 13 of 15 Kazakhs of 1920; Tbilisi 1956 14 of 17 Georgians of 1930.
+
+**Where you were born is not where you live, for events either.** About 584
+guards read `G.character.country` to decide present-tense prose, and 10% of an
+emigrant's years abroad carried one: Mexico City traffic in Los Angeles, a NEPA
+cut in London, a neighbourhood blasphemy case in Dubai. Rewriting the guards
+would be wrong (most are right at home). `homeFits` in `tick.js` asks the guard
+itself, at draw time, whether it would still fire for somebody born where the
+character lives; if not, it only reaches them when it is written for somebody
+who left (`writtenForAbroad` in `classifyEvent`: a guard reading the live
+country or requiring an emigration flag, or prose like "back home" or "the
+money you send") or is a follow-through (`ft_` ids) echoing what they lived
+before leaving. 10.3% of years abroad down to 1.7%, all of it diaspora-shaped,
+with events per year unchanged. `tests/claimsAndState.test.js` fails without it.
 
 **An age can wait a year; a date cannot.** Every Russian born in 1915 turned
 thirty in 1945, and the scheduled "You are thirty" beat took the ninth of May
