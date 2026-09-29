@@ -1,7 +1,7 @@
 import { livingRuralUrban, urbanChanceFor } from './character'
 import { conflictRiskAt, WAR_YEARS } from '../data/history.js'
 import { preferUnsaid } from './prose'
-import { hasTech, wasWealthy, techYear } from '../data/technology'
+import { hasTech, wasWealthy, techYear, RURAL_TECH_OVERRIDES } from '../data/technology'
 // mundaneLayer.js — Daily-life texture that fires alongside main events every year.
 //
 // buildMundaneLayer(state) is called from advanceYear() regardless of whether
@@ -74,7 +74,9 @@ export function buildMundaneLayer(state) {
     let y = techYear(homeCountry, t)
     if (y >= 9000) return y
     const poor = !isWealthyArch
-    if (isRural) y += poor ? 12 : 5
+    const ruralOver = isRural ? RURAL_TECH_OVERRIDES[t]?.[homeCountry?.name] : undefined
+    if (ruralOver !== undefined) y = ruralOver
+    else if (isRural) y += poor ? 12 : 5
     if (richHousehold && !HANDHELD.has(t)) y -= poor ? 12 : 5
     return y
   }

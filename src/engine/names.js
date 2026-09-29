@@ -81,12 +81,17 @@ const SLAVIC_FEMININE = [
   [/sky$/, 'skaya'], [/ski$/, 'ska'], [/tsky$/, 'tskaya'],
   [/ov$/, 'ova'], [/ev$/, 'eva'], [/yov$/, 'yova'], [/in$/, 'ina'], [/yn$/, 'yna'],
 ]
+// The Soviet naming system gave Central Asia and Azerbaijan the same -ov/-ova
+// pair (Karimov, Karimova; Aliyev, Aliyeva), and a Russian family keeps it
+// wherever it was born: a Riga or Almaty Russian woman was Svetlana Novikov.
+// `surnameGrammar` is set by a group pool borrowed from another country.
 const SLAVIC_COUNTRIES = new Set([
   'Russia', 'Ukraine', 'Belarus', 'Bulgaria', 'Czech Republic', 'Slovakia', 'Poland',
+  'Kazakhstan', 'Uzbekistan', 'Kyrgyzstan', 'Tajikistan', 'Turkmenistan', 'Azerbaijan',
 ])
 export function surnameFor(country, surname, gender) {
   if (gender !== 'female' || !surname) return surname
-  if (!SLAVIC_COUNTRIES.has(country?.name)) return surname
+  if (!SLAVIC_COUNTRIES.has(country?.surnameGrammar ?? country?.name)) return surname
   for (const [re, tail] of SLAVIC_FEMININE) {
     if (re.test(surname)) return surname.replace(re, tail)
   }

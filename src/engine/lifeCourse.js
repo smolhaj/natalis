@@ -35,6 +35,8 @@ import { institutionExists } from '../data/history.js'
 import { generatePartnerProfile, getMarried, proposeMarriage, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'
 import { livingRuralUrban } from './character'
+import { preferUnsaid, rememberSaid } from './prose'
+import { pickUnusedName, namesInUse } from './names'
 import { gulfNonNational } from '../data/migration.js'
 import { EVENTS } from '../data/events'
 
@@ -612,7 +614,7 @@ function courseChildren(s) {
   if (!chance(clamp(p, 0, 0.85))) return s
 
   const before = s.flags?.includes('expecting')
-  const next = tryForChild(s)
+  const next = tryForChild(s, { silent: true })
   if (!before && next.flags?.includes('expecting')) {
     return { ...next, mem: { ...next.mem, lcLastBirthAge: next.age } }
   }
@@ -938,15 +940,49 @@ function courseGrandchildren(s) {
     return out
   }
   for (const c of born) {
-    const first = c.name?.split(' ')[0] ?? 'your child'
-    const which = c.gender === 'female' ? 'daughter' : 'son'
-    out = log(out, pick([
-      `Your ${which} ${first} has a ${chance(0.5) ? 'daughter' : 'son'}. You hold the baby the way you held ${first}, and your arms remember before you do.`,
-      `Another grandchild, ${first}'s this time. The house is loud on Sundays in a way it has not been for years.`,
-      `${first} calls with the news. You write the name down so that you will say it right the first time.`,
-    ]))
+    out = grandchildLine(out, c)
   }
   return out
+}
+
+// Three fixed templates and no memory: one life read "Ikram calls with the
+// news" four times. The line interpolates the child's name, so the hashed
+// said-lines record cannot see that two of them are the same sentence; the
+// template index is remembered as well, and a fresh one is preferred until
+// all of them have been used.
+function grandchildLine(s, c) {
+  const first = c.name?.split(' ')[0] ?? 'your child'
+  const which = c.gender === 'female' ? 'daughter' : 'son'
+  const babyGender = chance(0.5) ? 'female' : 'male'
+  const baby = babyGender === 'female' ? 'daughter' : 'son'
+  const pool = s.character?.country?.namePool?.[babyGender]
+  const gname = pickUnusedName(pool, namesInUse(s)) || null
+  const templates = [
+    () => `Your ${which} ${first} has a ${baby}. You hold the baby the way you held ${first}, and your arms remember before you do.`,
+    () => `Another grandchild, ${first}'s this time. The house is loud on Sundays in a way it has not been for years.`,
+    () => `${first} calls with the news. You write the name down so that you will say it right the first time.`,
+    () => gname ? `${first}'s ${baby} is called ${gname}. You say it over to yourself for a day until it stops sounding new.`
+      : `${first}'s ${baby} arrives in the night. You hear about it in the morning, and the morning is different.`,
+    () => gname ? `${gname}. ${first}'s. Small, furious, entirely there.`
+      : `A ${baby} for ${first}. Small, furious, entirely there.`,
+    () => `${first} puts the baby in your arms and goes to sit down, and does not ask for it back for an hour.`,
+    () => gname ? `A grandchild called ${gname}. You count them on your fingers afterwards, to be sure of the number.`
+      : `Another grandchild. You count them on your fingers afterwards, to be sure of the number.`,
+    () => `${first} has a ${baby}. Somebody has to tell you twice, because the first time you are still thinking of ${first} at that age.`,
+  ]
+  const used = Array.isArray(s.mem?.gcTemplatesUsed) ? s.mem.gcTemplatesUsed : []
+  let open = templates.map((_, i) => i).filter(i => !used.includes(i))
+  const reset = open.length === 0
+  if (reset) open = templates.map((_, i) => i)
+  const lines = open.map(i => [i, templates[i]()])
+  const fresh = preferUnsaid(s, lines.map(([, t]) => t))
+  const choices = lines.filter(([, t]) => fresh.includes(t))
+  const [idx, text] = pick(choices.length ? choices : lines)
+  const out = log(s, text)
+  return {
+    ...out,
+    mem: rememberSaid({ ...(out.mem ?? {}), gcTemplatesUsed: [...(reset ? [] : used), idx] }, text),
+  }
 }
 let _grandchildEvent
 const GRANDCHILD_EVENT = () => (_grandchildEvent ??= EVENTS.find(e => e.id === 'late_grandchild_born') ?? null)

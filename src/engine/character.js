@@ -196,6 +196,7 @@ export function nameSourceCountry(character) {
     ...base,
     namePool: { male: g.male ?? base.namePool?.male, female: g.female ?? base.namePool?.female },
     surnames: g.surnames ?? base.surnames,
+    surnameGrammar: g.surnameGrammar ?? base.name,
   }
 }
 
@@ -286,7 +287,7 @@ export function createCharacter(overrides = {}) {
   // Assign birth place
   const birthPlace = pickBirthPlace(country, ruralUrban, wealthTier, { ethnicity })
   const birthNeighborhoodTier = pickNeighborhoodTier(wealthTier)
-  const birthNeighborhoodName = pickNamedNeighborhood(birthPlace, birthNeighborhoodTier, { ethnicity, religion })
+  const birthNeighborhoodName = pickNamedNeighborhood(birthPlace, birthNeighborhoodTier, { ethnicity, religion, year: birthYear })
 
   return {
     // Slavic family names take a feminine form: the game was producing Yulia
@@ -379,13 +380,24 @@ export function deriveBirthText(char) {
   // for every character, and the header beside it would say "Rural Sichuan".
   // Three quarters of the world was born rural for most of this game's period,
   // and most of them were not born in a hospital.
-  const archCtx = {
+  // Both of these are statements about the year, not the archetype. The
+  // archetype is what the country is now: Puerto Rico in 1940 had no lane
+  // markings to drive home on, and Afghanistan in 1960 was not at war.
+  const richThen = wasWealthy(country, birthYear)
+  const atWar = conflictRiskAt(country, birthYear) >= 0.08
+  const archCtx = atWar
+    ? `${cn}, ${birthYear}. You are born during a time of conflict. Your mother's first priority was keeping you safe.`
+    : {
     wealthy_west: rural
       ? `In ${cn} in ${birthYear}, the nearest hospital is forty minutes of road away, and you arrive before it is reached.`
-      : `In ${cn} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`,
+      : richThen
+      ? `In ${cn} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`
+      : `In ${cn} in ${birthYear}, you are born at home, with a midwife from two streets over. The paperwork is a line in a register, a week later.`,
     wealthy_east: rural
       ? `${cn}, ${birthYear}. A village clinic, a midwife who has done this for thirty years, grandparents waiting outside with specific opinions about your name.`
-      : `${cn}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`,
+      : richThen
+      ? `${cn}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`
+      : `${cn}, ${birthYear}. A midwife, the back room of the house, grandparents waiting in the next room with specific opinions about your name.`,
     post_soviet: rural
       ? `${cn}, ${birthYear}. A district clinic with one doctor for eleven villages. Your mother walked part of the way.`
       : `${cn}, ${birthYear}. The maternity ward smells of disinfectant. Your mother was not allowed to have your father in the room.`,
@@ -394,13 +406,17 @@ export function deriveBirthText(char) {
       : `${cn}, ${birthYear}. The city is enormous and still growing. The neighbourhood you are born into will shape everything that follows.`,
     developing_unstable: `${cn}, ${birthYear}. The country is in motion — politically, economically, always. You arrive ${stabilityCtx}.`,
     subsaharan: `${cn}, ${birthYear}. You are born ${stabilityCtx}${familySize > 4 ? ', the newest in a large family' : ''}. The sun is already through the window.`,
-    conflict_zone: `${cn}, ${birthYear}. You are born during a time of conflict. Your mother's first priority was keeping you safe.`,
+    conflict_zone: `${cn}, ${birthYear}. You are born ${stabilityCtx}, in a year the country is not at war.`,
     wealthy_gulf: rural
       ? `${cn}, ${birthYear}. Away from the coast the heat is a different kind, and the arrangements for a birth are the ones the family has always used.`
-      : `${cn}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`,
+      : richThen
+      ? `${cn}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`
+      : `${cn}, ${birthYear}. The women of the house do what the women of the house have always done, in the coolest room there is.`,
   }[arch] ?? `${name} enters the world in ${cn}, ${birthYear}.`
 
-  return archCtx
+  // A historical name can begin with a lowercase article ("the Territory of
+  // Papua"), and most of these lines open with it.
+  return archCtx.charAt(0).toUpperCase() + archCtx.slice(1)
 }
 
 export function deriveInitialMoney(char) {
@@ -852,7 +868,10 @@ function assignParentOccupation(wealthTier, archetype, birthYear, gender, family
 }
 
 export function deriveInitialParents(char) {
-  const { country, familyStability, wealthTier, birthYear, surname } = char
+  const { country, familyStability, wealthTier, birthYear } = char
+  // The base form: a daughter's own surname is already feminised, and her
+  // father was being called Shamil Umarova.
+  const surname = char.surnameBase ?? char.surname
   const arch = country.archetype
   const names = nameSourceCountry(char)
   const taken = new Set([nameKey(char.firstName ?? '')])

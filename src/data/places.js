@@ -206,8 +206,12 @@ export const PLACES = [
     id: 'de_berlin', name: 'Berlin', country: 'Germany',
     type: 'urban', scale: 'major_city', region: 'Brandenburg',
     neighborhoods: {
-      informal:      ['Gropiusstadt', 'Märkisches Viertel', 'Hellersdorf-Nord'],
-      working_class: ['Wedding', 'Neukölln', 'Spandau', 'Lichtenberg'],
+      // In a wealthy country this tier is the deprived end of a planned estate
+      // (see the neighbourhood texture in yearTexture.js), not an unplanned
+      // settlement. Gropiusstadt was the ordinary working-class version of it —
+      // a Neukölln social-housing estate that most of its tenants chose.
+      informal:      ['Märkisches Viertel', 'Hellersdorf-Nord'],
+      working_class: ['Wedding', 'Neukölln', 'Spandau', 'Lichtenberg', 'Gropiusstadt'],
       middle_class:  ['Prenzlauer Berg', 'Kreuzberg', 'Friedrichshain', 'Tempelhof'],
       elite:         ['Zehlendorf', 'Dahlem', 'Grunewald', 'Charlottenburg'],
     },
@@ -5292,10 +5296,16 @@ const NEIGHBOURHOOD_IDENTITY = [
   [/brahmin/i,              (id) => id?.ethnicity === 'brahmin'],
   [/muslim|mohalla/i,       (id) => String(id?.religion ?? '').startsWith('muslim')],
   [/christian|colony/i,     (id) => String(id?.religion ?? '').startsWith('christian')],
+  // Estates that did not exist yet. A name is a claim about the year: a 1933
+  // Berlin childhood was being placed in Gropiusstadt, thirty years before the
+  // first block went up. `id.year` is the year the character arrives there.
+  [/^Gropiusstadt$/,        (id) => (id?.year ?? 9999) >= 1965],
+  [/^Märkisches Viertel$/,  (id) => (id?.year ?? 9999) >= 1966],
+  [/^Hellersdorf-Nord$/,    (id) => (id?.year ?? 9999) >= 1986],
 ]
 
 /**
- * `identity` is optional — `{ ethnicity, religion }`. Without it the draw is
+ * `identity` is optional — `{ ethnicity, religion, year }`. Without it the draw is
  * the old one, which is correct for a place whose names carry no such freight.
  */
 export function pickNamedNeighborhood(place, tier, identity = null) {
