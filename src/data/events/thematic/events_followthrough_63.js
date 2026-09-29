@@ -62,7 +62,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
     weight: 2,
     when: (G) =>
       G.flags.has('sa_biko_generation') &&
-      G.age >= 45 &&
+      G.age >= 45 && G.currentYear >= 1999 &&
       !G.mem?.ft63BikoLate,
     text: `The TRC hearings eventually take testimony about Steve Biko. The security policemen who killed him — Gideon Nieuwoudt, Harold Snyman, Ruben Marx, and others — apply for amnesty. Their testimony: they say the beating happened during an interrogation and went further than intended. The TRC denies amnesty for the killing of Biko in 1999, finding that the applicants made false statements. None of them is prosecuted. Nieuwoudt dies in 2005. The ideas Biko articulated are taught in universities. The policemen who killed him are not in prison.`,
     choices: null,

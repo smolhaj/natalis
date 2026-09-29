@@ -3129,12 +3129,12 @@ export const SPECIFIC_LIFE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'United Kingdom' &&
+      (G.currentCountry?.name ?? G.character.country.name) === 'United Kingdom' &&
       G.character.gender === 'female' &&
-      G.currentYear >= 1940 && G.currentYear <= 1946 &&
+      G.currentYear >= 1940 && G.currentYear <= 1945 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_uk_factory_w,
-    text: 'The shift is ten hours on Spitfire wing sections and you are quicker at it than the man who held the bench before the war. Mary in assembly tells you what his rate was and yours is three shillings under it. The foreman says you are a natural, twice, in front of people. In 1945 the men come back and the law gives them their benches, and you go home, which is not the law but is what happens.',
+    text: 'The shift is ten hours on Spitfire wing sections and you are quicker at it than the man who held the bench before the war. Mary in assembly tells you what his rate was and yours is three shillings under it. The foreman says you are a natural, twice, in front of people. When the men come back the law will give them their benches, and you will go home, which is not the law but is what will happen.',
     context: 'The 1941 National Service Act conscripted women aged 20 to 30 into war work. Women in munitions were typically paid 50 to 75 percent of the male rate. The Restoration of Pre-War Practices Act 1942 guaranteed returning men their former jobs; most women in engineering left the industry by 1946.',
     choices: null,
     effect: (p) => { p.setMem('sl_uk_factory_w', true); p.e += 3; p.m -= 4; p.r += 6; p.addFlag('wartime_labour_displaced') },

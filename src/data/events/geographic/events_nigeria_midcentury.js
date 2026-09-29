@@ -58,7 +58,32 @@ const EAST = (G) => IGBO(G) || G.character?.ethnicity === 'ijaw'
 const NORTH = (G) => HAUSA(G) || G.character?.ethnicity === 'kanuri'
 
 const LAGOS = (G) => G.place?.id === 'ng_lagos'
+const URBAN = (G) => G.ruralUrban === 'urban'
+
+// A household on the public payroll: a parent (or the character) in a salaried
+// government or teaching post. The Udoji award and the ASUU strike both reach a
+// house only through one of these.
+const PUBLIC_TITLE = /civil servant|teacher|official|doctor|nurse|police|soldier|clerk|lecturer|professor/i
+const PUBLIC_FIELDS = ['government', 'education', 'academia', 'healthcare', 'military', 'law_enforcement']
+const SALARIED_HOME = (G) =>
+  [G.parents?.father, G.parents?.mother].some(p => p && p.alive !== false && p.occupation &&
+    (PUBLIC_TITLE.test(p.occupation.title ?? '') || (p.occupation.incomeType === 'formal' && URBAN(G)))) ||
+  PUBLIC_FIELDS.includes(G.career?.field)
+const ON_PUBLIC_SIDE = (G) => PUBLIC_FIELDS.includes(G.career?.field) || PUBLIC_TITLE.test(G.career?.title ?? '')
+// A car in the house: owned, or a birth tier that bought one in the boom.
+const CAR_HOME = (G) => (G.assets?.vehicles?.length ?? 0) > 0 || (G.wealthTier ?? 0) >= 3
 const once = (G, key) => !G.mem?.[key]
+
+// The child the lesson did not reach, if there is one to name.
+const SAP_CHILD_LINE = (G) => {
+  const kid = (G.children ?? []).filter(c => c.alive !== false && typeof c.age === 'number')
+    .sort((a, b) => b.age - a.age)[0]
+  if (!kid) return 'The young think this is superstition. The young were not there.'
+  const then = kid.age - (G.currentYear - 1986)
+  const who = kid.gender === 'female' ? 'Your daughter' : 'Your son'
+  return then >= 1 ? `${who} thinks this is superstition. ${who} was ${then} in 1986.`
+    : `${who} thinks this is superstition. ${who} was not born in 1986.`
+}
 
 export const NIGERIA_MIDCENTURY_EVENTS = [
 
@@ -68,10 +93,13 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     id: 'ngm_1966_north',
     phase: null,
     weight: 999,
-    when: (G) => IS_NG(G) && G.currentYear === 1966 && G.age >= 4 && (IGBO(G) || NORTH(G)) && once(G, 'ngm_66'),
+    claimsYears: { from: 1966, to: 1967 },
+    when: (G) => IS_NG(G) && G.currentYear >= 1966 && G.currentYear <= 1967 && G.age >= 4 && (IGBO(G) || NORTH(G)) && once(G, 'ngm_66'),
+    // Widened to 1967 because the 1966 slot went to other dated events two
+    // times in three. In 1967 it is told as last September.
     text: (G) => IGBO(G)
-      ? 'In September the trains start arriving at Enugu and Port Harcourt with people on them who left everything. Your uncle had a shop in Kano for eleven years and comes back with a bag. Nobody uses a number for how many were killed in the north because nobody counted, and the numbers people do use are far apart and all enormous. The adults stop speaking when you come into the room, which is how you learn that this is different from the other things.'
-      : 'They go in September, in a hurry, and the street is a different street afterwards. The man who repaired the radios has gone. The two families at the end have gone. Your father, who traded with them for years, is quiet for a week and then says one sentence at the table about what was done and who did it, and it is not a sentence you are allowed to repeat outside.',
+      ? (G.currentYear === 1967 ? 'Since last September the trains have been arriving' : 'In September the trains start arriving') + ' at Enugu and Port Harcourt with people on them who left everything. Your uncle had a shop in Kano for eleven years and comes back with a bag. Nobody uses a number for how many were killed in the north because nobody counted, and the numbers people do use are far apart and all enormous. The adults stop speaking when you come into the room, which is how you learn that this is different from the other things.'
+      : (G.currentYear === 1967 ? 'They went last September' : 'They go in September') + ', in a hurry, and the street is a different street afterwards. The man who repaired the radios has gone. The two families at the end have gone. ' + (G.parents?.father?.alive ? 'Your father' : 'Your uncle') + ', who traded with them for years, is quiet for a week and then says one sentence at the table about what was done and who did it, and it is not a sentence you are allowed to repeat outside.',
     context: 'After the January 1966 coup and the July counter-coup, massacres of Igbo civilians in northern Nigeria in September and October 1966 killed an estimated 8,000 to 30,000 people and drove more than a million eastward. The exodus is the immediate cause of the Eastern Region\'s secession the following May.',
     choices: null,
     effect: (p) => { p.setMem('ngm_66', true); p.m -= 8; p.addFlag('nigeria_1966') },
@@ -81,6 +109,9 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     id: 'ngm_biafra_child',
     phase: null,
     weight: 999,
+    // Claims its years: a weight-2 moon landing, dated to 1969, was taking
+    // the year from a Biafran child whose starvation ran all three.
+    claimsYears: { from: 1968, to: 1970 },
     when: (G) => IS_NG(G) && EAST(G) && G.currentYear >= 1968 && G.currentYear <= 1970 && G.age >= 4 && G.age <= 16 && once(G, 'ngm_biafra'),
     text: 'The word at the clinic is kwashiorkor and you learn it the way you learn any word, by hearing it about somebody. The hair goes a different colour. The stomach goes out and the arms do not. There is a powdered milk that comes in on the night planes and a queue for it, and a song about the planes that the children sing without being told to. You are given the food first, before the adults, every time, and you are old enough to have noticed that this is a rule and not old enough to ask why.',
     context: 'The Nigerian blockade of Biafra from 1967 caused mass starvation; estimates of civilian deaths run from 500,000 to over two million, overwhelmingly children, mostly from protein deficiency. Nightly relief flights into Uli airstrip, run by church and Red Cross organisations, were for a period the busiest air operation in Africa. The images of Biafran children reshaped international humanitarian practice and led directly to the founding of Médecins Sans Frontières.',
@@ -92,7 +123,7 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     id: 'ngm_biafra_lagos',
     phase: null,
     weight: 400,
-    when: (G) => IS_NG(G) && !EAST(G) && G.currentYear >= 1968 && G.currentYear <= 1970 && G.age >= 8 && once(G, 'ngm_biafra_far'),
+    when: (G) => IS_NG(G) && !EAST(G) && G.currentYear >= 1968 && G.currentYear <= 1970 && G.age >= 6 && once(G, 'ngm_biafra_far'),
     text: 'The war is a thing on the radio and in the newspapers and it is happening about four hundred miles away, and life here does not stop. There is a levy at work. There are soldiers at the bridge who were not there before. A boy two years above you leaves school to enlist and is written about afterwards in the assembly. On the front page of a foreign magazine somebody has left on a bench there is a photograph of a child with the wrong-shaped stomach, and the caption is about your country, and you look at it for a while and then put it back.',
     choices: null,
     effect: (p) => { p.setMem('ngm_biafra_far', true); p.m -= 4; p.e += 2; p.addFlag('biafra_distant') },
@@ -113,23 +144,58 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
 
   // ── THE BOOM ───────────────────────────────────────────────────────────────
 
+  // The award was a public-sector pay rise. It reached a household through a
+  // salaried parent; everybody else met it only as prices. It was giving a
+  // subsistence farm household civil-service arrears, a radiogram and a car.
+  // Three mutually exclusive guards, one latch: the car (which is what
+  // oil_boom_windfall's texture remembers), the salary without the car, and
+  // the prices.
   {
     id: 'ngm_udoji',
     phase: null,
     weight: 500,
-    when: (G) => IS_NG(G) && G.currentYear >= 1974 && G.currentYear <= 1976 && G.age >= 14 && once(G, 'ngm_udoji'),
-    text: 'The Udoji award comes with arrears, which means the money arrives in one piece, and the country spends it in about the same way a country would. Everybody buys something. The word for what happens to the prices afterwards is not a word anybody here has needed before. Your father buys a radiogram and a second-hand Peugeot 504 and for one year you are a family with a car, and everyone on the street is also a family with something, and none of it is wrong exactly, and by 1977 the price of everything has met the money halfway and settled above it.',
+    when: (G) => IS_NG(G) && G.currentYear >= 1974 && G.currentYear <= 1976 && G.age >= 10 && once(G, 'ngm_udoji') && SALARIED_HOME(G) && CAR_HOME(G),
+    text: (G) => 'The Udoji award comes with arrears, which means the money arrives in one piece, and the country spends it the way a country would. Everybody on a salary buys something. The word for what happens to the prices afterwards is not a word anybody here has needed before. ' +
+      (G.parents?.father?.alive ? 'Your father' : 'Your mother') +
+      ' buys a radiogram and a second-hand Peugeot 504, and for one year you are a family with a car, and everyone on the street is also a family with something, and none of it is wrong exactly, and by 1977 the price of everything has met the money halfway and settled above it.',
     context: 'The 1974 Udoji Commission awarded large public-sector pay rises backdated with arrears, injecting a lump sum into the economy at the peak of the oil boom. It is generally blamed for the inflation that followed and remembered as the moment Nigeria learned what an oil windfall does to prices.',
     choices: null,
     effect: (p) => { p.setMem('ngm_udoji', true); p.mo += 900; p.m += 6; p.addFlag('oil_boom_windfall') },
   },
 
   {
+    id: 'ngm_udoji_salary',
+    phase: null,
+    weight: 500,
+    when: (G) => IS_NG(G) && G.currentYear >= 1974 && G.currentYear <= 1976 && G.age >= 10 && once(G, 'ngm_udoji') && SALARIED_HOME(G) && !CAR_HOME(G),
+    text: (G) => 'The Udoji award comes with arrears, all in one piece, and everybody on a salary buys something. ' +
+      (G.parents?.father?.alive ? 'Your father' : 'Your mother') +
+      ' buys a radiogram and pays two years of school fees at once, and the radiogram plays in the evenings with the door open so the street can hear it. The word for what happens to the prices afterwards is not a word anybody here has needed before. By 1977 the price of everything has met the money halfway and settled above it.',
+    context: 'The 1974 Udoji Commission awarded large public-sector pay rises backdated with arrears, injecting a lump sum into the economy at the peak of the oil boom. It is generally blamed for the inflation that followed.',
+    choices: null,
+    effect: (p) => { p.setMem('ngm_udoji', true); p.mo += 400; p.m += 4 },
+  },
+
+  {
+    id: 'ngm_udoji_prices',
+    phase: null,
+    weight: 500,
+    when: (G) => IS_NG(G) && G.currentYear >= 1974 && G.currentYear <= 1976 && G.age >= 10 && once(G, 'ngm_udoji') && !SALARIED_HOME(G),
+    text: 'The Udoji award is paid to government workers with arrears, in one piece, and the country spends it the way a country would. Nobody in your house is a government worker. What arrives here is the other half of it: the price of a tin of milk, a bag of rice, a yard of cloth, walking up a little further every month, and the traders saying it is the salary people in town. Nobody here got arrears. By 1977 everything costs what it cost plus what somebody else was given.',
+    context: 'The 1974 Udoji Commission awarded large public-sector pay rises backdated with arrears. Most Nigerians were farmers and traders outside the public payroll, and met the award only as the inflation that followed.',
+    choices: null,
+    effect: (p) => { p.setMem('ngm_udoji', true); p.m -= 3; p.e += 2 },
+  },
+
+  {
     id: 'ngm_cement_armada',
     phase: null,
     weight: 300,
-    when: (G) => IS_NG(G) && G.currentYear >= 1975 && G.currentYear <= 1977 && G.age >= 12 && (LAGOS(G) || Math.random() < 0.4) && once(G, 'ngm_cement'),
-    text: 'There are four hundred ships off Lagos and they are all full of cement. Somebody in a ministry ordered twenty million tonnes for a country that could land about one, and the ships sit at anchor for the better part of a year on demurrage, and the cement in a good number of them sets solid in the holds. You can see them from the bar beach, a line of them out on the water, and by the second month nobody in the city remarks on it. That is the thing about that decade. There was so much money that a mistake this size was a story rather than a scandal.',
+    when: (G) => IS_NG(G) && G.currentYear >= 1975 && G.currentYear <= 1977 && G.age >= 12 && (LAGOS(G) || URBAN(G) || G.literate) && once(G, 'ngm_cement'),
+    // Deterministic: it was a Math.random() inside the guard. The bar beach is
+    // for the people who could walk to it; everybody else read about it.
+    text: (G) => LAGOS(G) ? 'There are four hundred ships off Lagos and they are all full of cement. Somebody in a ministry ordered twenty million tonnes for a country that could land about one, and the ships sit at anchor for the better part of a year on demurrage, and the cement in a good number of them sets solid in the holds. You can see them from the bar beach, a line of them out on the water, and by the second month nobody in the city remarks on it. That is the thing about that decade. There was so much money that a mistake this size was a story rather than a scandal.'
+      : 'The newspaper has a photograph of the sea off Lagos with ships on it to the horizon, four hundred of them, all full of cement that the port cannot land. Somebody in a ministry ordered twenty million tonnes for a country that could take in about one. Here, a bag of cement for the new room costs twice what it did and the dealer says there is none, and then there is some, for more. There was so much money that decade that a mistake this size was a story rather than a scandal.',
     context: 'The 1975 cement armada: Nigerian ministries ordered some 20 million tonnes of cement against Lagos port capacity of roughly one million, leaving hundreds of ships waiting months at demurrage, much of the cargo hardening in the holds. It became the standing example of oil-boom procurement.',
     choices: null,
     effect: (p) => { p.setMem('ngm_cement', true); p.e += 3; p.addFlag('cement_armada') },
@@ -198,8 +264,8 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     phase: null,
     weight: 999,
     when: (G) => IS_NG(G) && G.currentYear >= 1986 && G.currentYear <= 1993 && G.age >= 18 && once(G, 'ngm_sap'),
-    text: 'The naira was one to the dollar. That is not nostalgia, it is a fact about 1985, and by the end of the decade it is four and by the time you stop counting it is twenty. Your salary does not move. What moves is everything the salary buys, and the arithmetic you do at the end of the month stops being arithmetic and becomes a decision about which of two things the household does without. The word is adjustment. It is explained on the radio by people whose salaries are paid in something else.',
-    context: 'The Structural Adjustment Programme began in July 1986 under Babangida: currency devaluation, subsidy removal, trade liberalisation and public-sector retrenchment, on IMF and World Bank lines. The naira moved from rough parity with the dollar in 1985 to around 4 by 1987 and 22 by 1993. Real wages and the Nigerian middle class both collapsed over the period.',
+    text: 'The naira was one to the dollar. That is not nostalgia, it is a fact about 1985. By 1987 it is four, by the end of the decade it is seven and a half, and by the time you stop counting it is twenty. Your salary does not move. What moves is everything the salary buys, and the arithmetic you do at the end of the month stops being arithmetic and becomes a decision about which of two things the household does without. The word is adjustment. It is explained on the radio by people whose salaries are paid in something else.',
+    context: 'The Structural Adjustment Programme began in July 1986 under Babangida: currency devaluation, subsidy removal, trade liberalisation and public-sector retrenchment, on IMF and World Bank lines. The naira moved from rough parity with the dollar in 1985 to around 4 by 1987, 7.4 by 1989 and 22 by 1993. Real wages and the Nigerian middle class both collapsed over the period.',
     choices: [
       {
         text: 'Take a second thing. Everybody is taking a second thing.',
@@ -226,10 +292,15 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     when: (G) => IS_NG(G) && G.currentYear >= 1988 && G.currentYear <= 2005 && G.age >= 17 && G.age <= 50 && once(G, 'ngm_asuu') &&
       (G.age <= 30
         ? ['university', 'graduate'].includes(G.education?.level) || G.flags.includes('university_enrolled')
-        : (G.children ?? []).some(c => c.alive !== false && c.gender === 'female' && c.age >= 18 && c.age <= 26)),
+        // Five years into a four-year degree is 22 at the youngest, and the
+        // fees are a parent who went to school themselves.
+        : G.literate && (G.children ?? []).some(c => c.alive !== false && c.gender === 'female' && c.age >= 22 && c.age <= 27)),
     text: (G) => G.age <= 30
       ? 'The university is closed again. Not for a week — for five months, then it reopens, then it closes. A four-year degree is taking seven and everybody in your year has aged out of something while waiting: a scholarship, a job advert, a relationship that did not survive two unscheduled years at home. The lecturers are right about the funding. Being right about the funding does not give anybody back the two years.'
-      : 'Your daughter has been at university for five years of a four-year degree and is at home again, and the strike is about salaries that have not been paid since March, and the lecturers are right. You have been on the other side of a strike yourself. You find you cannot hold both of those things at once in front of her, so you say nothing and put the fees together again.',
+      : 'Your daughter has been at university for five years of a four-year degree and is at home again, and the strike is about salaries that have not been paid since March, and the lecturers are right. ' +
+        (ON_PUBLIC_SIDE(G)
+          ? 'You have been on the other side of a strike yourself. You find you cannot hold both of those things at once in front of her, so you say nothing and put the fees together again.'
+          : 'You say so, to her, and it does not help either of you, so you stop saying it and put the fees together again.'),
     context: 'Academic Staff Union of Universities strikes have closed Nigerian federal universities repeatedly since 1988, several times for six months or more, over funding and unpaid salaries. Four-year degrees routinely take six or seven years.',
     choices: null,
     effect: (p) => { p.setMem('ngm_asuu', true); p.m -= 5; p.addFlag('asuu_strike_generation') },
@@ -242,7 +313,13 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     phase: null,
     weight: 500,
     when: (G) => IS_NG(G) && G.currentYear >= 1993 && G.currentYear <= 1999 && G.age >= 16 && once(G, 'ngm_fuel'),
-    text: 'You sleep in the car in the queue, which is a thing hundreds of thousands of people in this country do routinely in the 1990s, in the sixth largest oil producer on earth. The refineries do not work. The crude goes out and the petrol comes back in, imported, and somewhere in that circle a small number of people have become very rich. There is a man selling it in jerry cans at four times the pump price twenty yards from the pump, and everyone knows exactly how he got it, and the queue is still the queue.',
+    // Car, no car, village: the queue was the same shortage lived three ways.
+    text: (G) => ((G.assets?.vehicles?.length ?? 0) > 0
+      ? 'You sleep in the car in the queue, which is a thing hundreds of thousands of people in this country do routinely in the 1990s, in the sixth largest oil producer on earth.'
+      : URBAN(G)
+        ? 'There is no car to queue in, so you queue for the queue: the danfo fare doubles, then the okada fare doubles, and in the morning you walk the first half of the journey and pay for the second. Your neighbour with the generator sends his boy to stand at the pump with two jerrycans from four in the morning, in the sixth largest oil producer on earth.'
+        : 'Kerosene is the shortage that reaches the village: the lamp goes out early, the lorry to market doubles its fare and then does not come, and the man who has any sells it by the bottle at the junction, in the sixth largest oil producer on earth.') +
+      ' The refineries do not work. The crude goes out and the petrol comes back in, imported, and somewhere in that circle a small number of people have become very rich. There is a man selling it in jerrycans at four times the pump price twenty yards from the pump, and everyone knows exactly how he got it, and the queue is still the queue.',
     context: 'Despite being Africa\'s largest oil producer, Nigeria\'s state refineries operated far below capacity through the 1990s and the country imported most of its refined fuel. Chronic scarcity, week-long queues and a large black market were routine under the Abacha government.',
     choices: null,
     effect: (p) => { p.setMem('ngm_fuel', true); p.m -= 4; p.h -= 2; p.addFlag('fuel_queue_years') },
@@ -301,7 +378,7 @@ export const NIGERIA_MIDCENTURY_FOLLOWTHROUGH = [
     phase: null,
     weight: 40,
     when: (G) => G.flags.includes('sap_generation') && G.age >= 45 && once(G, 'ngm_ft_sap'),
-    text: 'You do not trust the naira and you are not pretending to. What money there is sits in something — a plot, a container of goods, dollars in the house if you can get them — because you watched a currency go from one to twenty while the people responsible explained it on the radio, and nothing since has argued you out of the lesson. Your son thinks this is superstition. Your son was four in 1986.',
+    text: (G) => 'You do not trust the naira and you are not pretending to. What money there is sits in something — a plot, a container of goods, dollars in the house if you can get them — because you watched a currency go from one to twenty while the people responsible explained it on the radio, and nothing since has argued you out of the lesson. ' + SAP_CHILD_LINE(G),
     choices: null,
     effect: (p) => { p.setMem('ngm_ft_sap', true); p.addFlag('naira_distrust') },
   },
@@ -332,8 +409,11 @@ export const NIGERIA_MIDCENTURY_FOLLOWTHROUGH = [
     id: 'ngm_ft_1999_after',
     phase: null,
     weight: 40,
-    when: (G) => G.flags.includes('democracy_1999_lived') && G.currentYear >= 2012 && G.age >= 45 && once(G, 'ngm_ft_99'),
-    text: 'Thirteen years of civilians now, which is longer than any stretch this country has had, and the complaints are ordinary complaints — the roads, the power, the thieving. Ordinary is the achievement and nobody under thirty can hear it that way, and you have stopped trying to make them. You would not go back. You are also not going to pretend the thing you have is the thing you queued for in 1993.',
+    when: (G) => G.flags.includes('democracy_1999_lived') && G.currentYear >= 2012 && G.currentYear <= 2014 && G.age >= 45 && once(G, 'ngm_ft_99'),
+    text: (G) => ({ 2012: 'Thirteen', 2013: 'Fourteen', 2014: 'Fifteen' })[G.currentYear] + ' years of civilians now, which is longer than any stretch this country has had, and the complaints are ordinary complaints — the roads, the power, the thieving. Ordinary is the achievement and nobody under thirty can hear it that way, and you have stopped trying to make them. You would not go back.' +
+      (G.flags.includes('nga_june12_generation')
+        ? ' You are also not going to pretend the thing you have is the thing you queued for in 1993.'
+        : ' You are also not going to pretend it is the thing anybody was promised.'),
     choices: null,
     effect: (p) => { p.setMem('ngm_ft_99', true); p.e += 3; p.addFlag('ordinary_is_the_achievement') },
   },
