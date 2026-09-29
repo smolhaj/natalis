@@ -273,6 +273,150 @@ export function malariaEndemic(countryName, year) {
   return year < end
 }
 
+// ── Passenger rail ───────────────────────────────────────────────────────────
+//
+// Countries on the roster with no passenger line a city commutes on, and the
+// ones where it opened or closed inside the period. Deliberately conservative:
+// absence from all three means a railway is assumed. "A man on the train
+// closes his eyes" printed in Djibouti in 1998.
+export const NO_PASSENGER_RAIL = new Set([
+  'Central African Republic', 'Djibouti', 'Chad', 'Niger', 'Somalia', 'Yemen',
+  'Afghanistan', 'Libya', 'Rwanda', 'Papua New Guinea', 'Bhutan', 'Iceland',
+  'Belize', 'Haiti', 'Oman', 'Kuwait', 'Bahrain', 'Nepal', 'East Timor', 'Fiji',
+  'Samoa', 'Tuvalu', 'Kiribati', 'Marshall Islands', 'Maldives', 'Vanuatu',
+  'Palestine', 'Liberia',
+])
+export const RAIL_FROM = { UAE: 2009, Qatar: 2019, Laos: 2021 }
+export const RAIL_UNTIL = { Guyana: 1974, 'Sierra Leone': 1974, Cyprus: 1951, Barbados: 1937 }
+
+/** Was there a passenger railway to ride in this country in this year? */
+export function hasPassengerRail(country, year) {
+  const name = country?.name ?? country
+  return !NO_PASSENGER_RAIL.has(name) &&
+    year >= (RAIL_FROM[name] ?? 0) && year <= (RAIL_UNTIL[name] ?? 9999)
+}
+
+// ── Cholera ──────────────────────────────────────────────────────────────────
+//
+// The cholera arc gated on archetype and 1850-1950, so it put a summer of bad
+// wells on a street in Papua New Guinea, which saw no cholera at all until
+// 2009. Cholera is not a property of poverty in general; it circulated where
+// it circulated. Spans are [from, to], inclusive, and are broad on purpose —
+// the question is "could a family here have lost someone to it in this
+// decade", not an epidemiological record.
+//
+//   - South Asia: endemic throughout; the Ganges delta is its home.
+//   - Egypt and the Middle East: the pilgrimage and pandemic outbreaks to the
+//     1940s (Egypt 1947 was the last great one), then Iraq and Iran in the El
+//     Tor years, and the war outbreaks — Iraq 2007, Yemen 2016, Syria and
+//     Lebanon 2022.
+//   - East and Southeast Asia: Indonesia (where El Tor began in 1961), the
+//     Philippines, Indochina and China, into the 1990s and beyond in places.
+//   - The Russian Empire and early USSR, to the mid-1920s.
+//   - Africa: the seventh pandemic arrived in West Africa in 1970 and has not
+//     left the continent since; Zimbabwe 2008, Somalia and Ethiopia repeatedly.
+//   - Latin America: Peru, January 1991, then the continent, to about 1999.
+//   - Haiti from October 2010; Papua New Guinea 2009-11.
+//   - Never: Oceania otherwise, the Americas 1900-1990, Western Europe after
+//     the 1910s.
+const SOUTH_ASIA_ALWAYS = [[1817, 2100]]
+const AFRICA_SEVENTH = [[1970, 2100]]
+const LATAM_1991 = [[1991, 1999]]
+const RUSSIA_EMPIRE = [[1817, 1925]]
+export const CHOLERA_PRESENT = {
+  'India': SOUTH_ASIA_ALWAYS, 'Bangladesh': SOUTH_ASIA_ALWAYS, 'Pakistan': SOUTH_ASIA_ALWAYS,
+  'Nepal': SOUTH_ASIA_ALWAYS, 'Afghanistan': SOUTH_ASIA_ALWAYS, 'Myanmar': SOUTH_ASIA_ALWAYS,
+  'Sri Lanka': [[1817, 1975]],
+  'Egypt': [[1817, 1950]], 'Saudi Arabia': [[1817, 1935]], 'Turkey': [[1817, 1925]],
+  'Iraq': [[1817, 1935], [1966, 1966], [1978, 1978], [1998, 1999], [2007, 2008], [2015, 2022]],
+  'Iran': [[1817, 1935], [1965, 1970], [1998, 1998], [2005, 2005]],
+  'Syria': [[1817, 1930], [1977, 1977], [2022, 2023]],
+  'Lebanon': [[1817, 1930], [2022, 2023]],
+  'Jordan': [[1817, 1930]],
+  'Palestine': [[1817, 1930], [1970, 1970]],
+  'Yemen': [[1817, 1930], [2016, 2100]],
+  'Kuwait': [[1817, 1930]], 'Bahrain': [[1817, 1930]], 'Qatar': [[1817, 1930]],
+  'Oman': [[1817, 1930]], 'UAE': [[1817, 1930]],
+  'Indonesia': [[1817, 2100]], 'Philippines': [[1817, 2100]],
+  'Vietnam': [[1817, 2010]], 'Cambodia': [[1817, 2000]], 'Laos': [[1817, 2000]],
+  'Thailand': [[1817, 1990]], 'Malaysia': [[1817, 1995]],
+  'China': [[1817, 1950], [1961, 2000]],
+  'South Korea': [[1817, 1946], [1963, 1963], [1969, 1970]],
+  'North Korea': [[1817, 1946]],
+  'Japan': [[1817, 1920]], 'Taiwan': [[1817, 1946]], 'Singapore': [[1817, 1960]],
+  'Russia': RUSSIA_EMPIRE, 'Ukraine': RUSSIA_EMPIRE, 'Belarus': RUSSIA_EMPIRE,
+  'Georgia': RUSSIA_EMPIRE, 'Armenia': RUSSIA_EMPIRE, 'Azerbaijan': RUSSIA_EMPIRE,
+  'Kazakhstan': RUSSIA_EMPIRE, 'Uzbekistan': RUSSIA_EMPIRE, 'Kyrgyzstan': RUSSIA_EMPIRE,
+  'Turkmenistan': RUSSIA_EMPIRE, 'Tajikistan': [[1817, 1925], [1993, 1994]],
+  'Moldova': RUSSIA_EMPIRE, 'Poland': [[1817, 1921]],
+  // Africa, from the seventh pandemic's arrival in 1970.
+  'Nigeria': AFRICA_SEVENTH, 'Ghana': AFRICA_SEVENTH, 'Senegal': AFRICA_SEVENTH,
+  'Guinea': AFRICA_SEVENTH, 'Sierra Leone': AFRICA_SEVENTH, 'Liberia': AFRICA_SEVENTH,
+  'Ivory Coast': AFRICA_SEVENTH, 'Mali': AFRICA_SEVENTH, 'Burkina Faso': AFRICA_SEVENTH,
+  'Niger': AFRICA_SEVENTH, 'Chad': AFRICA_SEVENTH, 'Togo': AFRICA_SEVENTH,
+  'Benin': AFRICA_SEVENTH, 'Cameroon': AFRICA_SEVENTH, 'Central African Republic': AFRICA_SEVENTH,
+  'DR Congo': AFRICA_SEVENTH, 'Angola': AFRICA_SEVENTH, 'Zambia': AFRICA_SEVENTH,
+  'Mozambique': AFRICA_SEVENTH, 'Tanzania': AFRICA_SEVENTH, 'Kenya': AFRICA_SEVENTH,
+  'Uganda': AFRICA_SEVENTH, 'Rwanda': AFRICA_SEVENTH, 'Ethiopia': AFRICA_SEVENTH,
+  'Eritrea': AFRICA_SEVENTH, 'Somalia': AFRICA_SEVENTH, 'Djibouti': AFRICA_SEVENTH,
+  'Sudan': [[1817, 1950], [1970, 2100]], 'Zimbabwe': [[1972, 1974], [1992, 1993], [2008, 2009], [2018, 2019], [2023, 2024]],
+  'South Africa': [[1980, 1987], [2000, 2001], [2008, 2009]],
+  'Namibia': [[1980, 1980], [2006, 2008]],
+  'Algeria': [[1817, 1920], [1971, 1990]], 'Morocco': [[1817, 1920], [1970, 1972]],
+  'Tunisia': [[1817, 1920], [1973, 1973]], 'Libya': [[1817, 1920], [1970, 1972]],
+  // Latin America: absent for most of a century, then the 1991 wave.
+  'Peru': LATAM_1991, 'Ecuador': LATAM_1991, 'Colombia': LATAM_1991, 'Bolivia': LATAM_1991,
+  'Brazil': LATAM_1991, 'Mexico': LATAM_1991, 'Guatemala': LATAM_1991, 'El Salvador': LATAM_1991,
+  'Honduras': LATAM_1991, 'Nicaragua': LATAM_1991, 'Venezuela': LATAM_1991, 'Paraguay': [[1993, 1993]],
+  'Argentina': [[1992, 1998]], 'Chile': [[1991, 1991]], 'Belize': [[1991, 1993]],
+  'Haiti': [[2010, 2100]], 'Dominican Republic': [[2010, 2012]], 'Cuba': [[2012, 2013]],
+  'Papua New Guinea': [[2009, 2011]],
+}
+
+/** Was cholera circulating where this character lives, this year? */
+export function choleraEndemic(country, year) {
+  const spans = CHOLERA_PRESENT[country?.name ?? country]
+  if (!spans) return false
+  return spans.some(([a, b]) => year >= a && year <= b)
+}
+
+// ── Structural adjustment ────────────────────────────────────────────────────
+//
+// "The government has signed a paper in Washington" fired for any subsaharan or
+// developing_urban country between 1984 and 1998 — Algeria in 1984, whose
+// IMF programmes were 1989 and 1994, and Malaysia, Libya and South Africa,
+// which never had one. The year a country signed its (first, or defining)
+// IMF / World Bank adjustment programmes; a country absent from this table
+// did not sign one in the period.
+export const ADJUSTMENT_PROGRAMME_YEARS = {
+  // Africa
+  'Nigeria': [1986], 'Ghana': [1983], 'Kenya': [1980, 1993], 'DR Congo': [1983],
+  'Senegal': [1980, 1985], 'Ivory Coast': [1981], 'Togo': [1983], 'Niger': [1983],
+  'Zambia': [1985, 1991], 'Tanzania': [1986], 'Guinea': [1986], 'Sierra Leone': [1986, 1992],
+  'Mozambique': [1987], 'Uganda': [1987], 'Chad': [1987, 1995], 'Mali': [1982, 1988],
+  'Central African Republic': [1987], 'Cameroon': [1988], 'Benin': [1989], 'Rwanda': [1990],
+  'Burkina Faso': [1991], 'Zimbabwe': [1991], 'Ethiopia': [1992], 'Djibouti': [1996],
+  'Somalia': [1981], 'Sudan': [1979], 'Egypt': [1987, 1991], 'Morocco': [1983],
+  'Tunisia': [1986], 'Algeria': [1989, 1994],
+  // Asia and the Middle East
+  'Turkey': [1980, 2001], 'Philippines': [1980, 1984], 'Sri Lanka': [1977], 'Bangladesh': [1987],
+  'Pakistan': [1988], 'Nepal': [1987], 'India': [1991], 'Jordan': [1989], 'Laos': [1989],
+  'Vietnam': [1994], 'Cambodia': [1994], 'Indonesia': [1997], 'Thailand': [1997],
+  'South Korea': [1997],
+  // The Americas
+  'Jamaica': [1977, 1981], 'Peru': [1978, 1991], 'Mexico': [1982, 1995], 'Brazil': [1983, 1998],
+  'Argentina': [1983, 1991], 'Ecuador': [1983, 2000], 'Uruguay': [1983], 'Chile': [1985],
+  'Dominican Republic': [1985, 1991], 'Bolivia': [1985], 'Trinidad and Tobago': [1988],
+  'Guyana': [1989], 'Venezuela': [1989], 'Honduras': [1990], 'Barbados': [1991],
+  'Nicaragua': [1994], 'Haiti': [1996], 'Colombia': [1999],
+}
+
+/** Did this country sign an adjustment programme in `year` or the year before? */
+export function adjustmentProgrammeNow(country, year) {
+  const ys = ADJUSTMENT_PROGRAMME_YEARS[country?.name ?? country]
+  return !!ys && ys.some(y => year >= y && year <= y + 1)
+}
+
 // ── Rivers ───────────────────────────────────────────────────────────────────
 //
 // `ind_river_wrong_colour` — the creek running the wrong colour below the

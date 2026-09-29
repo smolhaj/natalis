@@ -66,6 +66,11 @@ export const AID_WORKER_EVENTS = [
       ['conflict_zone', 'developing_unstable', 'subsaharan', 'developing_urban'].includes(G.currentCountry?.archetype) &&
       G.age >= 22 && G.age <= 32 &&
       G.currentYear >= 1970 &&
+      // The NGO hires its local staff in the town where the compound is, and
+      // hires people who can write the reports: it turned a rural farmer into
+      // programme staff.
+      G.ruralUrban !== 'rural' &&
+      ['secondary', 'university', 'graduate'].includes(G.education?.level) &&
       HAS_ANY_CAREER(G) &&
       G.stats.smarts >= 50 &&
       !G.flags.has('ngo_worker') &&
@@ -163,7 +168,7 @@ export const AID_WORKER_EVENTS = [
     weight: 4,
     when: (G) =>
       G.flags.has('ngo_worker') &&
-      ['conflict_zone', 'developing_unstable'].includes(G.currentCountry?.archetype) &&
+      (G.conflictRisk >= 0.1 || G.currentCountry?.archetype === 'developing_unstable') &&
       G.age >= 25 && G.age <= 50 &&
       !G.mem?.awEvacuation,
     text: G => G.flags.has('ngo_local_staff')

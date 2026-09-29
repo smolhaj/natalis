@@ -96,7 +96,15 @@ export const RELIGION_EVENTS = [
     id: 'rel_catholic_ivf_conflict',
     phase: 'midlife',
     weight: 4,
-    when: (G) => G.religion === 'christian_catholic' && G.age >= 28 && G.age <= 45 && G.partner && !G.mem?.ivf_religion_conflict && ['wealthy_west', 'developing_urban'].includes(G.character.country.archetype),
+    // "Trying for a child without success" fired while she was pregnant with
+    // her fourth. It needs the trying, or the infertility, and no baby in the
+    // house; and IVF needs to exist (1978, and a clinic within reach).
+    when: (G) => G.religion === 'christian_catholic' && G.age >= 28 && G.age <= 45 && G.partner && G.partner.alive !== false && !G.mem?.ivf_religion_conflict &&
+      (G.flags.includes('trying_for_child') || G.flags.includes('infertile')) &&
+      !G.flags.includes('expecting') && !G.flags.includes('pregnant') &&
+      !G.children?.some(c => c.alive !== false && (c.age ?? 99) <= 2) &&
+      G.currentYear >= 1985 &&
+      ['wealthy_west', 'developing_urban'].includes(G.currentCountry?.archetype ?? G.character.country.archetype),
     text: 'You and your partner have been trying for a child without success. A doctor recommends IVF. The Church\'s position is unambiguous: it is forbidden.',
     choices: [
       { text: 'Follow the Church teaching — natural methods only', tag: 'devout', outcome: 'Years pass with prayers and patience. Eventually: a pregnancy, or peace with childlessness. Either way, your faith holds.', effect: (p) => { p.m -= 8; p.karma += 5; p.setMem('ivf_religion_conflict', true) } },

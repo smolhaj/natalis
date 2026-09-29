@@ -206,8 +206,12 @@ export const PLACES = [
     id: 'de_berlin', name: 'Berlin', country: 'Germany',
     type: 'urban', scale: 'major_city', region: 'Brandenburg',
     neighborhoods: {
-      informal:      ['Gropiusstadt', 'Märkisches Viertel', 'Hellersdorf-Nord'],
-      working_class: ['Wedding', 'Neukölln', 'Spandau', 'Lichtenberg'],
+      // In a wealthy country this tier is the deprived end of a planned estate
+      // (see the neighbourhood texture in yearTexture.js), not an unplanned
+      // settlement. Gropiusstadt was the ordinary working-class version of it —
+      // a Neukölln social-housing estate that most of its tenants chose.
+      informal:      ['Märkisches Viertel', 'Hellersdorf-Nord'],
+      working_class: ['Wedding', 'Neukölln', 'Spandau', 'Lichtenberg', 'Gropiusstadt'],
       middle_class:  ['Prenzlauer Berg', 'Kreuzberg', 'Friedrichshain', 'Tempelhof'],
       elite:         ['Zehlendorf', 'Dahlem', 'Grunewald', 'Charlottenburg'],
     },
@@ -1086,8 +1090,21 @@ export const PLACES = [
     },
   },
   {
+    id: 'ph_cebu', name: 'Cebu City', country: 'Philippines',
+    type: 'urban', scale: 'city', region: 'Central Visayas',
+    homeOf: ['bisaya'],
+    weight: 0.6,
+    neighborhoods: {
+      informal:      ['Pasil', 'Ermita by the fish port', 'Duljo-Fatima'],
+      working_class: ['Mabolo', 'Carbon market side', 'Tisa'],
+      middle_class:  ['Guadalupe', 'Lahug', 'Capitol Site'],
+      elite:         ['Banilad', 'Maria Luisa', 'Beverly Hills'],
+    },
+  },
+  {
     id: 'ph_rural', name: 'Rural Visayas', country: 'Philippines',
     type: 'rural', scale: 'village', region: 'Visayas',
+    homeOf: ['bisaya'],
     neighborhoods: {
       informal:      ['Estero ng baryo', 'Basurahan katabi'],
       working_class: ['Poblacion', 'Market road'],
@@ -1506,6 +1523,19 @@ export const PLACES = [
       working_class: ['Estrada principal', 'Mercado'],
       middle_class:  ['Sede do distrito', 'Perto da escola'],
       elite:         ['Administração', 'Casa dos colonos (old)'],
+    },
+  },
+  // The Tsonga south. Rural Zambézia was Mozambique's only countryside, so a Shangaan from the Limpopo valley was born eight hundred kilometres north of it.
+  {
+    id: 'mz_gaza', name: 'A Village in Gaza', country: 'Mozambique',
+    type: 'rural', scale: 'village', region: 'Gaza',
+    homeOf: ['tsonga_mozambique'],
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['The reed houses by the floodplain', 'Past the cashew trees'],
+      working_class: ['The road to Chókwè', 'Near the irrigation channel'],
+      middle_class:  ['By the church', 'The house the mine money built'],
+      elite:         ["The trader's house with the zinc roof", "Near the administrator's post"],
     },
   },
 
@@ -2610,6 +2640,29 @@ export const PLACES = [
       elite:         ['Diplomatic quarter', 'Setthathirath area', 'Nam Phu fountain zone'],
     },
   },
+  // Vientiane was Laos's only place, so every Lao villager was born in the capital.
+  {
+    id: 'la_uplands', name: 'A Village in the Northern Uplands', country: 'Laos',
+    type: 'rural', scale: 'village', region: 'Luang Prabang',
+    homeOf: ['khmu'],
+    weight: 0.35,
+    neighborhoods: {
+      informal:      ['The houses above the last field', 'Past the burned slope'],
+      working_class: ['The path to the stream', 'Near the rice store'],
+      middle_class:  ['By the new road', 'Near the school'],
+      elite:         ["The headman's house", 'The house with the concrete floor'],
+    },
+  },
+  {
+    id: 'la_lowland', name: 'A Village on the Mekong Plain', country: 'Laos',
+    type: 'rural', scale: 'village', region: 'Savannakhet',
+    neighborhoods: {
+      informal:      ['The houses by the flooded fields', 'Past the buffalo pens'],
+      working_class: ['The road to the wat', 'Near the rice mill'],
+      middle_class:  ['By the wat', 'The village centre'],
+      elite:         ["The headman's house on stilts", 'The house with the tile roof'],
+    },
+  },
 
   // ── GUATEMALA ──────────────────────────────────────────────────────────────
 
@@ -3560,6 +3613,18 @@ export const PLACES = [
       elite:         ['The old family house', 'Near the dzong'],
     },
   },
+  {
+    id: 'bt_paro', name: 'Paro', country: 'Bhutan',
+    type: 'rural', scale: 'village', region: 'Paro',
+    homeOf: ['ngalop'],
+    weight: 0.8,
+    neighborhoods: {
+      informal:      ['The houses above the terraces', 'Past the prayer wheel'],
+      working_class: ['The path to the river', 'Near the mill'],
+      middle_class:  ['Below the dzong', 'Near the school'],
+      elite:         ['The old farmhouse with the painted windows', 'The house near the dzong'],
+    },
+  },
 
   // ── NORTH KOREA ────────────────────────────────────────────────────────────
 
@@ -3790,6 +3855,18 @@ export const PLACES = [
       elite:         ['The house the soldier\'s pension built', 'Above the palm gardens'],
     },
   },
+  {
+    id: 'dz_ghardaia', name: 'Ghardaïa', country: 'Algeria',
+    type: 'urban', scale: 'town', region: "M'zab",
+    homeOf: ['berber_other'],
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['The new blocks outside the valley', 'By the dry wadi'],
+      working_class: ['Near the market square', 'Below the ksar'],
+      middle_class:  ['Inside the ksar walls', 'Beni Isguen'],
+      elite:         ['The summer houses in the palm grove', 'Near the mosque at the top'],
+    },
+  },
 
   // ── TUNISIA ────────────────────────────────────────────────────────────────
 
@@ -3922,6 +3999,18 @@ export const PLACES = [
       elite:         ['The house with the tin roof', 'Near the administration'],
     },
   },
+  {
+    id: 'er_lowland', name: 'A Village in the Barka Lowlands', country: 'Eritrea',
+    type: 'rural', scale: 'village', region: 'Gash-Barka',
+    homeOf: ['tigre_eritrean'],
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['The huts past the thorn fence', 'By the dry riverbed'],
+      working_class: ['The track to the wells', 'Near the camel pens'],
+      middle_class:  ['By the mosque', 'Near the school'],
+      elite:         ["The sheikh's compound", 'The stone house'],
+    },
+  },
 
   // ── DJIBOUTI ───────────────────────────────────────────────────────────────
 
@@ -3938,6 +4027,7 @@ export const PLACES = [
   {
     id: 'dj_rural', name: 'The Afar Interior', country: 'Djibouti',
     type: 'rural', scale: 'village', region: 'Tadjourah',
+    homeOf: ['afar_djibouti'],
     neighborhoods: {
       informal:      ['The daboyta past the lava field', 'By the wells'],
       working_class: ['The track through', 'Near the water point'],
@@ -4111,6 +4201,7 @@ export const PLACES = [
   {
     id: 'ci_cocoa', name: 'The Cocoa Belt', country: 'Ivory Coast',
     type: 'rural', scale: 'village', region: 'Sud-Comoé',
+    homeOf: ['migrant_west_africa'],
     neighborhoods: {
       informal:      ['The workers\' camp in the plantation', 'Past the drying racks'],
       working_class: ['The village road', 'Near the buying station'],
@@ -4225,6 +4316,18 @@ export const PLACES = [
       working_class: ['The track through', 'Near the mission'],
       middle_class:  ['By the church', 'The village centre'],
       elite:         ['The soba\'s compound', 'The house near the road'],
+    },
+  },
+  {
+    id: 'ao_malanje', name: 'A Village in Malanje', country: 'Angola',
+    type: 'rural', scale: 'village', region: 'Malanje',
+    homeOf: ['ambundu'],
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['The huts past the cotton fields', 'By the stream'],
+      working_class: ['The road through', 'Near the cantina'],
+      middle_class:  ['By the mission', 'Near the school'],
+      elite:         ["The soba's compound", "The trader's house"],
     },
   },
 
@@ -4351,11 +4454,36 @@ export const PLACES = [
   {
     id: 'ne_rural', name: 'A Village in the Sahel', country: 'Niger',
     type: 'rural', scale: 'village', region: 'Tahoua',
+    homeOf: ['zarma_songhai'],
     neighborhoods: {
       informal:      ['The straw huts past the millet', 'By the dry wadi'],
       working_class: ['The track through', 'Near the well'],
       middle_class:  ['By the mosque', 'The village centre'],
       elite:         ['The chief\'s compound', 'The banco house with the metal door'],
+    },
+  },
+  {
+    id: 'ne_air', name: 'A Camp in the Aïr', country: 'Niger',
+    type: 'rural', scale: 'village', region: 'Agadez',
+    homeOf: ['tuareg_niger'],
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['The tents past the wadi', 'By the goats'],
+      working_class: ['The track to the gardens', 'Near the well'],
+      middle_class:  ['By the school tent', 'Near the market day ground'],
+      elite:         ["The house of the amenokal's family", 'The mud house in the valley'],
+    },
+  },
+  {
+    id: 'ne_agadez', name: 'Agadez', country: 'Niger',
+    type: 'urban', scale: 'town', region: 'Agadez',
+    homeOf: ['tuareg_niger'],
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['The edge of town toward the desert', 'Dagmanet'],
+      working_class: ['Obitara', 'Near the camel market'],
+      middle_class:  ['Around the Grand Mosque', 'Pays Bas'],
+      elite:         ['The villas by the airport road', 'The old sultanate quarter'],
     },
   },
 
@@ -4404,6 +4532,18 @@ export const PLACES = [
       elite:         ['The chief\'s compound', 'The house with the iron roof'],
     },
   },
+  {
+    id: 'cf_ouaka', name: 'A Village in the Ouaka', country: 'Central African Republic',
+    type: 'rural', scale: 'village', region: 'Ouaka',
+    homeOf: ['banda_car'],
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['The huts past the manioc fields', 'By the stream'],
+      working_class: ['The road to Bambari', 'Near the market'],
+      middle_class:  ['By the church', 'Near the school'],
+      elite:         ["The chief's compound", 'The house with the metal roof'],
+    },
+  },
 
   // ── TOGO ───────────────────────────────────────────────────────────────────
 
@@ -4420,6 +4560,7 @@ export const PLACES = [
   {
     id: 'tg_rural', name: 'The Kara Region', country: 'Togo',
     type: 'rural', scale: 'village', region: 'Kara',
+    homeOf: ['kabye_togo'],
     neighborhoods: {
       informal:      ['The compound past the last field', 'By the stream'],
       working_class: ['The path through', 'Near the mill'],
@@ -4754,6 +4895,18 @@ export const PLACES = [
       elite:         ['The alcalde\'s house', 'The house with the zinc roof'],
     },
   },
+  {
+    id: 'bz_river', name: 'A Village on the Belize River', country: 'Belize',
+    type: 'rural', scale: 'village', region: 'Belize District',
+    homeOf: ['creole_belizean'],
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['The houses by the riverbank', 'Past the pine ridge'],
+      working_class: ['The road to Burrell Boom', 'Near the ferry'],
+      middle_class:  ['By the church', 'Near the school'],
+      elite:         ['The house on the rise', 'The house with the veranda all round'],
+    },
+  },
 
   // ── PUERTO RICO ────────────────────────────────────────────────────────────
 
@@ -4777,6 +4930,18 @@ export const PLACES = [
       elite:         ['La casa del hacendado', 'Cerca del pueblo'],
     },
   },
+  {
+    id: 'pr_loiza', name: 'Loíza', country: 'Puerto Rico',
+    type: 'rural', scale: 'town', region: 'Loíza',
+    homeOf: ['afro_puerto_rican'],
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['Parcelas Suárez', 'Along the Río Grande de Loíza'],
+      working_class: ['Medianía Alta', 'Medianía Baja', 'Piñones'],
+      middle_class:  ['Near the plaza', 'Las Carreras'],
+      elite:         ['The houses by the beach at Piñones', 'The street by the church'],
+    },
+  },
 
   // ── PAPUA NEW GUINEA ───────────────────────────────────────────────────────
 
@@ -4798,6 +4963,42 @@ export const PLACES = [
       working_class: ['The road through', 'Near the coffee shed'],
       middle_class:  ['By the mission', 'Near the aid post'],
       elite:         ['The big man\'s compound', 'The permanent-material house'],
+    },
+  },
+  {
+    id: 'pg_coastal', name: 'A Village on the Papuan Coast', country: 'Papua New Guinea',
+    type: 'rural', scale: 'village', region: 'Central',
+    homeOf: ['papuan_coastal'],
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['The houses on stilts over the water', 'Past the mangroves'],
+      working_class: ['The beach path', 'Near the canoe landing'],
+      middle_class:  ['By the church', 'Near the aid post'],
+      elite:         ["The councillor's house", 'The permanent-material house on the point'],
+    },
+  },
+  {
+    id: 'pg_sepik', name: 'A Village on the Sepik', country: 'Papua New Guinea',
+    type: 'rural', scale: 'village', region: 'East Sepik',
+    homeOf: ['momase'],
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['The houses at the edge of the swamp', 'Past the sago stand'],
+      working_class: ['The river landing', 'Near the canoe shed'],
+      middle_class:  ['By the haus tambaran', 'Near the mission school'],
+      elite:         ["The big man's house", 'The house with the outboard motor'],
+    },
+  },
+  {
+    id: 'pg_bougainville', name: 'A Village in Bougainville', country: 'Papua New Guinea',
+    type: 'rural', scale: 'village', region: 'Bougainville',
+    homeOf: ['islands_bougainville'],
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['The hamlet above the river', 'Past the cocoa block'],
+      working_class: ['The road to Arawa', 'Near the copra dryer'],
+      middle_class:  ['By the church', 'Near the school'],
+      elite:         ["The chief's house", 'The house the mine wages built'],
     },
   },
 
@@ -5095,10 +5296,16 @@ const NEIGHBOURHOOD_IDENTITY = [
   [/brahmin/i,              (id) => id?.ethnicity === 'brahmin'],
   [/muslim|mohalla/i,       (id) => String(id?.religion ?? '').startsWith('muslim')],
   [/christian|colony/i,     (id) => String(id?.religion ?? '').startsWith('christian')],
+  // Estates that did not exist yet. A name is a claim about the year: a 1933
+  // Berlin childhood was being placed in Gropiusstadt, thirty years before the
+  // first block went up. `id.year` is the year the character arrives there.
+  [/^Gropiusstadt$/,        (id) => (id?.year ?? 9999) >= 1965],
+  [/^Märkisches Viertel$/,  (id) => (id?.year ?? 9999) >= 1966],
+  [/^Hellersdorf-Nord$/,    (id) => (id?.year ?? 9999) >= 1986],
 ]
 
 /**
- * `identity` is optional — `{ ethnicity, religion }`. Without it the draw is
+ * `identity` is optional — `{ ethnicity, religion, year }`. Without it the draw is
  * the old one, which is correct for a place whose names carry no such freight.
  */
 export function pickNamedNeighborhood(place, tier, identity = null) {

@@ -179,7 +179,7 @@ export const SCHOOL_EVENTS = [
     when: (G) => {
       const arch = G.character.country.archetype
       return (
-        arch === 'conflict_zone' &&
+        G.conflictRisk >= 0.1 &&
         G.age >= 6 && G.age <= 12 &&
         !G.mem?.schWarZoneOpen
       )

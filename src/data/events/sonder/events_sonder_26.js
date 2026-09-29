@@ -197,10 +197,10 @@ export const EVENTS_SONDER_26 = [
     phase: null,
     weight: 2,
     when: (G) => G.tech('mobile_phone') && (G.age >= 16 && !G.mem?.sdr26OverheardJoy),
-    text: () => pick([
+    text: (G) => pick(place.railFilter(G, [
       'From somewhere down the street: laughter, the kind that has lost control of itself, that is not performing anything. You cannot see who it is. It does not matter. The sound is enough. You walk past it and carry a small residue of it.',
       'The couple at the other end of the carriage. The way she leans her head briefly on his shoulder and he adjusts his position to make it easier for her without commenting on it. Thirty seconds, maybe less. You look away. But you saw it.',
-    ]),
+    ])),
     choices: null,
     effect: (p) => { p.setMem('sdr26OverheardJoy', true) },
   },

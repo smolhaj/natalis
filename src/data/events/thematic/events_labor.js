@@ -1,3 +1,4 @@
+import { hasTech } from '../../technology.js'
 // A shop floor, a break and a bargaining unit exist in some kinds of work and
 // not in others. These are the fields that actually had a union culture in the
 // twentieth century, in the countries and years this module covers.
@@ -218,8 +219,20 @@ export const LABOR_EVENTS = [
       // It does what six workers did before it" requires a job a machine can
       // replace one-for-one. The 1995+ branch generalises to office work; the
       // earlier branches do not generalise at all.
-      (MECHANISABLE_FIELDS.has(G.career?.field) ||
-        (G.currentYear >= 1995 && DESK_FIELDS.has(G.career?.field))) &&
+      //
+      // A disc of software reaches a desk, not a lorry cab or a field: the
+      // 1970-95 branch is for desk work only, from the years an office there
+      // would plausibly have had a computer on it. A machine taking six jobs
+      // is a factory or a building site; it is not a smallholding in a poor
+      // country, where the labour was cheaper than any machine.
+      // A driver's job had no machine to lose it to until the self-driving
+      // articles of the 2010s.
+      ((MECHANISABLE_FIELDS.has(G.career?.field) &&
+        (G.career?.field !== 'transport' || G.currentYear >= 2015) &&
+        !(G.ruralUrban === 'rural' && ['low', 'very_low', 'low_medium'].includes(G.currentCountry?.gdp))) ||
+        (DESK_FIELDS.has(G.career?.field) &&
+          (G.currentYear >= 1995 ||
+            (G.currentYear >= 1970 && hasTech(G.currentCountry ?? G.character.country, 'personal_computer', G.currentYear, { rich: true }))))) &&
       G.currentYear >= 1880 &&
       G.age >= 22,
     text: (G) => {
@@ -232,6 +245,9 @@ export const LABOR_EVENTS = [
       }
       if (year < 1970) {
         return 'The machine arrives in a crate and takes three men to uninstall it from the crate. It does what ' + (field === 'finance' || field === 'admin' ? 'the counting room' : 'six workers') + ' did before it, faster and without stopping for a cigarette break. The foreman calls it progress. You call it by its correct name, which is the same word.'
+      }
+      if (year < 1995 && !DESK_FIELDS.has(field)) {
+        return 'The new machine arrives on a flatbed with its own engineer, who stays a week. It is run by a panel of buttons and a program on a card, and it does what ' + (field === 'agriculture' ? 'a gang of hands did at harvest' : 'a whole shift did') + ' before it, with one person watching it. The engineer is careful not to look at anyone while he explains this. You watch which of you they choose to be the one person.'
       }
       if (year < 1995) {
         return 'The software arrives on a disc. It runs on the new computer they installed last month. The thing it does — ' + (field === 'finance' ? 'the ledger work, the reconciliations' : field === 'media' ? 'the typesetting, the layout' : 'the filing, the calculations') + ' — took three people before. It takes one now, and a different kind of one. You are the kind who did it before.'

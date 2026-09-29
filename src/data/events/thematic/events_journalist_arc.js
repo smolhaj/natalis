@@ -87,7 +87,7 @@ export const JOURNALIST_ARC_EVENTS = [
     weight: 6,
     when: (G) =>
       isJournalist(G) &&
-      ['conflict_zone', 'developing_unstable'].includes(G.character.country?.archetype) &&
+      (G.conflictRisk >= 0.1 || (G.currentCountry ?? G.character.country)?.archetype === 'developing_unstable') &&
       !G.mem?.journColleagueFired,
     text: `A colleague is killed. This is not metaphorical or professional — they were covering something and someone killed them for covering it. You were in the same place a week earlier. You will spend a specific amount of time, over the following years, revisiting the question of whether it could have been you, and what that question is actually asking. The work continues because you continue. You are not sure whether this is a professional virtue or a failure of reckoning.`,
     choices: null,

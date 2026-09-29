@@ -295,7 +295,7 @@ export const EVENTS_SONDER_54 = [
     id: 'sonder_54_ad',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s54ad,
+    when: (G) => place.hasTrain(G) && !G.mem?.s54ad,
     text: 'What you notice you no longer notice. The train that goes past at 6am — you stopped hearing it years ago. The neighbour\'s music on Friday evenings. The particular quality of the air on certain streets. The city has been training you to ignore it, and you have been a good student. The things you no longer notice are no longer in your life in the way they once were. This is adaptation. It is also a form of loss that happens without ceremony.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s54ad', true) },

@@ -221,7 +221,7 @@ export const SONDER_EVENTS = [
     id: 'sonder_platform_farewell',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 18 && G.age <= 35 && G.currentYear >= 1940 && !G.mem?.sonderPlatformFarewell,
+    when: (G) => place.hasTrain(G) && G.age >= 18 && G.age <= 35 && G.currentYear >= 1940 && !G.mem?.sonderPlatformFarewell,
     text: 'At the station, two people are saying goodbye. The train is already at the platform. One of them is holding the other\'s face with both hands. You do not watch. You have seen it. You carry your bag to the other end of the platform and think about something else.',
     effect: (p) => { p.e += 1; p.setMem('sonderPlatformFarewell', true); },
   },
@@ -539,7 +539,7 @@ export const SONDER_EVENTS = [
     id: 'mundane_train_missed',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 18 && G.age <= 38 && G.currentYear >= 1950 && !G.mem?.mundaneTrainMissed,
+    when: (G) => place.hasTrain(G) && G.age >= 18 && G.age <= 38 && G.currentYear >= 1950 && !G.mem?.mundaneTrainMissed,
     text: 'You missed the train by thirty seconds. You watched it leave. The next one is in an hour. You find a place to sit and think about what you would have done with that hour had it been given to you. You do the thing you thought of.',
     effect: (p) => { p.m += 1; p.setMem('mundaneTrainMissed', true); },
   },
@@ -999,7 +999,7 @@ export const SONDER_EVENTS = [
     id: 'sonder_checkpoint_young_soldier',
     phase: null,
     weight: 2,
-    when: (G) => ['conflict_zone', 'developing_unstable'].includes(G.character?.country?.archetype) && G.age >= 18 && G.age <= 42 && !G.mem?.sonderCheckpointYoungSoldier,
+    when: (G) => (G.conflictRisk >= 0.1 || G.character?.country?.archetype === 'developing_unstable') && G.age >= 18 && G.age <= 42 && !G.mem?.sonderCheckpointYoungSoldier,
     text: 'The soldier at the checkpoint is twenty, possibly twenty-one. He checks your document and returns it without looking at your face. He is doing this the way you do your own work — a task repeated many times a day until it becomes motion without intention. You walk through. He returns to waiting.',
     effect: (p) => { p.e += 1; p.setMem('sonderCheckpointYoungSoldier', true); },
   },
@@ -1343,7 +1343,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     isGlimpse: true,
-    when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 1940 && !G.mem?.sonderTrainLipsMoving,
+    when: (G) => place.hasCommuterTrain(G) && G.ruralUrban === 'urban' && G.currentYear >= 1940 && !G.mem?.sonderTrainLipsMoving,
     text: 'A man on the train closes his eyes and his lips move slightly. You cannot tell if he is praying, rehearsing, or remembering. He opens his eyes at his stop and leaves without knowing you saw.',
     effect: (p) => { p.e += 1; p.setMem('sonderTrainLipsMoving', true); },
   },
@@ -1372,7 +1372,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     isGlimpse: true,
-    when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 1940 && !G.mem?.sonderStrangerCryingPlatform,
+    when: (G) => place.hasTrain(G) && G.ruralUrban === 'urban' && G.currentYear >= 1940 && !G.mem?.sonderStrangerCryingPlatform,
     text: 'A woman on the platform is crying in the particular way of someone who hoped they could stop by now. She watches the arrivals board. You do not know if she is waiting for someone or has just said goodbye. Either way it is a complete story you have only seen the middle of.',
     effect: (p) => { p.e += 2; p.setMem('sonderStrangerCryingPlatform', true); },
   },
@@ -2173,8 +2173,15 @@ export const SONDER_EVENTS = [
     phase: 'adolescence',
     weight: 2,
     isGlimpse: true,
-    when: (G) => G.age >= 13 && !G.mem?.sonderTeenageGirlStreetPosture,
-    text: 'A girl of about fifteen walking past a group of older men: the adjustment is so small and so practiced that it\'s almost invisible — the earphones in, the route slightly wider, the phone raised. She has been doing this long enough that the adjustment is automatic. She did not learn it once. She is still learning it.',
+    // Earphones and a raised phone printed into 1970. The posture is older
+    // than the phone; the props are not.
+    when: (G) => G.age >= 13 && G.ruralUrban !== 'rural' && !G.mem?.sonderTeenageGirlStreetPosture,
+    text: (G) => {
+      const props = G.currentYear >= 2005 && hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear)
+        ? 'the earphones in, the route slightly wider, the phone raised'
+        : 'the eyes down, the route slightly wider, the schoolbag moved to the front'
+      return `A girl of about fifteen walking past a group of older men: the adjustment is so small and so practiced that it's almost invisible — ${props}. She has been doing this long enough that the adjustment is automatic. She did not learn it once. She is still learning it.`
+    },
     effect: (p) => { p.e += 2; p.setMem('sonderTeenageGirlStreetPosture', true); },
   },
 
@@ -2568,8 +2575,10 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     isGlimpse: true,
-    when: (G) => G.age >= 18 && G.age <= 28 && !G.mem?.sonderFirstDayNewCity,
-    text: 'Someone arrives in the city for the first time. You can tell by the way they stand at the exit of the train station with their bag and look at the street and then look at the phone and then back at the street. The city does not slow for arrival. The city has been here before you and will be here after you and is not interested in your first day.',
+    // A train station and a phone to check, in any year, in any country. The
+    // arrival is older than both.
+    when: (G) => G.ruralUrban === 'urban' && G.age >= 18 && G.age <= 28 && !G.mem?.sonderFirstDayNewCity,
+    text: (G) => `Someone arrives in the city for the first time. You can tell by the way they stand at the exit of the ${place.hasTrain(G) ? 'train station' : 'bus station'} with their bag and look at the street and then ${place.hasMobile(G) ? 'look at the phone' : 'look at the paper with the address on it'} and then back at the street. The city does not slow for arrival. The city has been here before you and will be here after you and is not interested in your first day.`,
     effect: (p) => { p.m += 1; p.e += 1; p.setMem('sonderFirstDayNewCity', true); },
   },
 
@@ -3057,7 +3066,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 13 &&
-      (G.archetype === 'conflict_zone' || ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian'].includes(G.regime)) &&
+      (G.conflictRisk >= 0.1 || ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian'].includes(G.regime)) &&
       !G.mem?.sonderGlimpseAdSoldier,
     text: 'The soldier at the post is younger than you assumed from a distance. He is bored in the way of someone who has stood in one place for six hours. When his eyes pass over you there is nothing in them, and that is the whole of the encounter.',
     effect: (p) => { p.e += 2; p.setMem('sonderGlimpseAdSoldier', true); },

@@ -9,7 +9,7 @@ import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhoo
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 import {
   getPhase, GDP_MULT,
-  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES, childNameCountry,
+  ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES, childNameCountry, nameSourceCountry,
 } from './character'
 import {
   buildG, buildEffectProxy, applyProxy, resolveProxyExtras, liveCountry,
@@ -33,7 +33,7 @@ function genPartnerName(state, gender) {
   // gave an emigrant a partner from the host pool as often as from home.
   const birth = state.character.country
   const here = state.currentCountry ?? birth
-  const home = state.character.nameCountry ? COUNTRIES.find(c => c.name === state.character.nameCountry) : null
+  const home = (state.character.nameCountry || state.character.nameGroup) ? nameSourceCountry(state.character) : null
   const abroad = here?.name !== birth?.name
   if (home && !abroad && chance(0.85)) return personName(home, gender, state)
   if (abroad && chance(0.5)) return personName(home ?? birth, gender, state)
@@ -198,25 +198,36 @@ export function fileForDivorce(state) {
   }
 }
 
-export function tryForChild(state) {
+export function tryForChild(state, opts = {}) {
   if (!livingPartner(state)) return state
+  // `lifeCourse` calls this every year on its own account. A refusal there is
+  // not something the character asked for, and printing it read as a verdict:
+  // "Having a biological child is no longer possible." seven times between 38
+  // and 44, and then a son.
+  const refuse = (text) => opts.silent ? state
+    : { ...state, log: [...state.log, { age: state.age, text, isKey: false }] }
   if (state.flags.includes('pregnant') || state.flags.includes('expecting')) {
-    return { ...state, log: [...state.log, { age: state.age, text: 'You are already expecting.', isKey: false }] }
+    return refuse('You are already expecting.')
   }
   if (state.birthControl) {
-    return { ...state, log: [...state.log, { age: state.age, text: "You're currently using birth control.", isKey: false }] }
+    return refuse("You're currently using birth control.")
   }
   // Sterilisation was a flag nothing read. A Moscow father who had "the number
   // of children you are going to have" said out loud to a doctor at 33 went on
   // to have two more, and a Swedish woman sterilised without her consent in
   // 1958 — an event written about exactly that — gave birth in 1970.
   if (state.flags.includes('sterilised')) {
-    return { ...state, log: [...state.log, { age: state.age, text: 'That was settled at the clinic, and it stays settled.', isKey: false }] }
+    return refuse('That was settled at the clinic, and it stays settled.')
   }
-  if (state.age > 50 || (state.partner.age ?? 30) > 48) {
-    return { ...state, log: [...state.log, { age: state.age, text: "Having a biological child is no longer possible.", isKey: false }] }
-  }
+  // The limit is the age of whoever would carry the child. It tested the
+  // partner's age whatever the character's gender, so a woman of 38 with a
+  // husband of 49 was told it was over.
   const bearerIsPlayer = state.character?.gender === 'female'
+  const bearerAge = bearerIsPlayer ? state.age : (state.partner.age ?? state.age)
+  const otherAge = bearerIsPlayer ? (state.partner.age ?? state.age) : state.age
+  if (bearerAge > 48 || otherAge > 75) {
+    return refuse('Having a biological child is no longer possible.')
+  }
   const fertChance = state.partner.married ? 0.65 : 0.38
   if (!chance(fertChance)) {
     // All five of the original lines are about years of this — the counting,
@@ -861,7 +872,7 @@ export function relocate(state, destPlaceId, destNeighborhoodTier) {
   }
 
   const tier = destNeighborhoodTier ?? pickNeighborhoodTier(state.classTier ?? state.character?.wealthTier ?? 3)
-  const nbrName = pickNamedNeighborhood(destPlace, tier, { ethnicity: state.character?.ethnicity, religion: state.religion ?? state.character?.religion })
+  const nbrName = pickNamedNeighborhood(destPlace, tier, { ethnicity: state.character?.ethnicity, religion: state.religion ?? state.character?.religion, year: state.currentYear })
   const fromName = fromPlace?.name ?? (state.currentCountry ?? state.character?.country)?.name ?? 'where you were'
 
   const isSameCountry = destPlace.country === (state.currentCountry ?? state.character?.country)?.name
@@ -934,7 +945,7 @@ export function emigrate(state, destCountryName, destPlaceId) {
   }
 
   const destTier = pickNeighborhoodTier(state.classTier ?? state.character?.wealthTier ?? 2)
-  const destNbr = destPlace ? pickNamedNeighborhood(destPlace, destTier, { ethnicity: state.character?.ethnicity, religion: state.religion ?? state.character?.religion }) : null
+  const destNbr = destPlace ? pickNamedNeighborhood(destPlace, destTier, { ethnicity: state.character?.ethnicity, religion: state.religion ?? state.character?.religion, year: state.currentYear }) : null
 
   // A bill you cannot pay does not stop existing. The move was charged through
   // Math.max(0, ...), so a Lagos man holding nothing emigrated to London on a

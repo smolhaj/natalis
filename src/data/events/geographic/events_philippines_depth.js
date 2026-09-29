@@ -17,6 +17,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
     weight: 4,
     when: (G) =>
       isPhilippines(G) &&
+      (G.currentCountry?.name ?? 'Philippines') === 'Philippines' &&
       G.currentYear >= 1985 && G.currentYear <= 2015 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.phOfwDeparture,
@@ -26,7 +27,9 @@ export const PHILIPPINES_DEPTH_EVENTS = [
         text: 'You are the one leaving.',
         tag: null,
         outcome: 'You memorise the faces through the glass. The memory will be accurate for about a year and then will begin to need refreshing from photographs.',
-        effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('ph_dep_ofw_family'); p.setResidency('work_visa'); p.setMem('phOfwDeparture', true) },
+        // `setResidency` changed the papers and left the character in Manila
+        // for the rest of their life. `emigrateTo` puts them where they went.
+        effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('ph_dep_ofw_family'); p.emigrateTo(['Saudi Arabia', 'Saudi Arabia', 'UAE', 'Kuwait', 'Qatar', 'Italy']); p.setMem('phOfwDeparture', true) },
       },
       {
         text: 'You are one of the ones watching.',

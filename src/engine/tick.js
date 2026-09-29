@@ -24,7 +24,7 @@ import { buildMundaneLayer } from './mundaneLayer'
 import { rememberSaid, preferUnsaid } from './prose'
 import { tickLifeCourse, secondaryChance, primaryChance, unpurchasedHomeName, retirementAge } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
-import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic } from '../data/history.js'
+import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic, choleraEndemic } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
 import { hasTech } from '../data/technology.js'
 import { migrationDestinations, gulfNonNational } from '../data/migration.js'
@@ -693,7 +693,7 @@ function resolveProxyExtras(state, proxy) {
     const destPlace = PLACES.find(p => p.id === proxy._relocateTo)
     if (destPlace) {
       const tier = proxy._relocateNeighborhoodTier ?? pickNeighborhoodTier(next.classTier ?? next.character?.wealthTier ?? 3)
-      const nbrName = pickNamedNeighborhood(destPlace, tier, { ethnicity: next.character?.ethnicity, religion: next.religion ?? next.character?.religion })
+      const nbrName = pickNamedNeighborhood(destPlace, tier, { ethnicity: next.character?.ethnicity, religion: next.religion ?? next.character?.religion, year: next.currentYear })
       const here = next.currentCountry ?? next.character?.country
       const destCountry = destPlace.country !== here?.name
         ? COUNTRIES.find(c => c.name === destPlace.country)
@@ -1272,7 +1272,14 @@ export function buildG(state) {
     // works until somebody else is doing it, and returns null for the second.
     // `late_retirement` was guessing at a flat age and firing at 50.
     retirementAge: retirementAge(state),
+    // The birth roll is where literacy starts, not where it ends. A character
+    // who finished secondary, trained in a trade or holds a degree reads, and
+    // the illiteracy arc was reaching a Colombian who had completed secondary
+    // and an Angolan graduate because nothing ever wrote the schooling back.
     literate: flagSet.has('became_literate') ? true
+      : (['secondary', 'university', 'graduate'].includes(state.education?.level) ||
+         flagSet.has('graduated_hs') || flagSet.has('university_graduate') ||
+         flagSet.has('vocational_trained') || state.education?.enrolled?.type === 'university') ? true
       : flagSet.has('never_schooled') ? false
       : (state.character?.literate ?? true),
     // The regime and the archetype are statements about the country the
@@ -1547,8 +1554,16 @@ function determineCause(state) {
   const cn = lc.name
   const hc = lc.healthcare
   const deathYear = (character.birthYear ?? 1960) + age
-  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
   const malaria = malariaEndemic(cn, deathYear)
+  // Cholera did not reach West Africa until the 1970 pandemic, and a Guinean
+  // child of 1955 was dying of it. Same rule as malaria: the disease must have
+  // been there that year.
+  const cholera = choleraEndemic(cn, deathYear)
+  const pick = (arr) => {
+    const ok = arr.filter(x => (malaria || !/malaria/.test(x)) && (cholera || !/cholera/.test(x)))
+    const from = ok.length ? ok : arr
+    return from[Math.floor(Math.random() * from.length)]
+  }
   const cr = conflictRiskAt(lc, deathYear)
   const has = (id) => (state.conditions ?? []).some(c => c.id === id)
 
@@ -1712,7 +1727,11 @@ function tickResidency(s) {
     }
   } else if ((status === 'refugee_status' || status === 'work_visa') && !gulf && held >= 5 && chance(rich ? 0.15 : 0.08)) {
     next = 'permanent_resident'
-    text = status === 'work_visa'
+    // A work visa can outlast the work, or be a parent's: a jobless nineteen-
+    // year-old was told the job could end now.
+    text = status === 'work_visa' && !s.career
+      ? 'The permanent card arrives. Your name is on it, and not as anybody\'s dependant or anybody\'s employee. You keep it somewhere you will not have to look for it.'
+      : status === 'work_visa'
       ? 'The permanent card arrives. The job can end now without the country ending with it, which is a sentence you did not know you had been waiting to be able to say.'
       : 'Permanent residence. The renewals stop. For the first time since you arrived, the year ahead does not have a date in it that could send you back.'
   } else if (status === 'permanent_resident' && NATURALISES.has(here?.archetype) && held >= 5 && chance(0.12)) {
@@ -3714,6 +3733,14 @@ export function tick(state) {
   if (s.age === 7 && s.mem?.attendedSchool === undefined) {
     const attended = (s.character?.literate ?? false) || chance(primaryChance(s))
     s.mem = { ...(s.mem ?? {}), attendedSchool: attended }
+    // A child who starts school mostly learns to read there. The birth roll is
+    // the country's adult literacy figure; the attendance roll runs above it,
+    // and most of the difference is children who were taught. The rest are the
+    // ones who were in the room for a year or two and then needed elsewhere,
+    // which the age-sixteen branch narrates as "the reading never took".
+    if (attended && s.character && s.character.literate === false && chance(0.6)) {
+      s.character = { ...s.character, literate: true }
+    }
     if (!attended) {
       s.flags = [...new Set([...s.flags, 'never_schooled'])]
       s.education = { ...s.education, level: 'none', enrolled: null }
@@ -3728,6 +3755,15 @@ export function tick(state) {
         ]),
       }]
     }
+  }
+
+  // Any other road to a certificate — the age-18 graduation, an event that
+  // grants the flag, a degree — is reading too. Writing it back here rather
+  // than at each grant is what keeps the state and G.literate from disagreeing.
+  if (s.character?.literate === false && (
+    s.flags.includes('graduated_hs') || s.flags.includes('university_graduate') ||
+    ['secondary', 'university', 'graduate'].includes(s.education?.level))) {
+    s.character = { ...s.character, literate: true }
   }
 
   // Leaving school, at the age and the rate this place and decade actually did.
@@ -3745,7 +3781,12 @@ export function tick(state) {
     // world children do both, and treating the two as identical swung the
     // subsistence cohorts from 95% secondary completion straight to 0%.
     const p = secondaryChance(s) * (s.flags.includes('working_young') ? 0.45 : 1)
-    if (alreadyOut || !chance(p)) {
+    const finishes = !alreadyOut && chance(p)
+    // Staying on to the end of secondary is reading, whatever the birth roll said.
+    if (finishes && s.character && s.character.literate === false) {
+      s.character = { ...s.character, literate: true }
+    }
+    if (!finishes) {
       // One source of truth. createCharacter already rolls literacy from the
       // country's own figures at birth; rolling it again here would let a
       // character be illiterate by one mechanism and schooled by the other,

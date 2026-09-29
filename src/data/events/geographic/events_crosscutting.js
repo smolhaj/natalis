@@ -140,7 +140,7 @@ export const CROSSCUTTING_EVENTS = [
       (G.flags.includes('domestic_worker') || G.flags.includes('emigrated')),
     text: 'The contract said eight hours and Sundays off. Here the Sundays are not off and the hours are what the family requires. Your passport is in a drawer in the employer\'s bedroom. He said it was for safekeeping. You did not argue because the agency told you this is how it is done here, and the agency was not wrong, exactly — this is how it is done. You send money home every month through a remittance office two bus stops away. The money arrives. You do not ask too carefully what it costs you to send it.',
     choices: null,
-    effect: (p) => { p.m -= 14; p.h -= 5; p.karma += 8; p.addFlag('gulf_domestic_worker'); p.addFlag('domestic_worker'); p.setMem('ccDomesticOfw', true) },
+    effect: (p) => { p.m -= 14; p.h -= 5; p.karma += 8; p.addFlag('gulf_domestic_worker'); p.addFlag('domestic_worker'); p.setMem('ccDomesticOfw', true); if (p._state.mem?.gulfDomesticYear == null) p.setMem('gulfDomesticYear', p._state.currentYear) },
   },
 
   {
@@ -323,7 +323,10 @@ export const CROSSCUTTING_EVENTS = [
       !G.mem?.ccCampArrival &&
       !G.flags.includes('grew_up_in_camp') &&
       !G.flags.includes('camp_born') &&
-      (G.archetype === 'conflict_zone' || G.residencyStatus === 'refugee_status' || G.residencyStatus === 'asylum_seeker') &&
+      // A war this year, not a country that has one now: this registered a
+      // Central African child in a camp in 1971, twenty-five years before the
+      // mutinies.
+      (G.conflictRisk >= 0.1 || G.residencyStatus === 'refugee_status' || G.residencyStatus === 'asylum_seeker') &&
       G.age >= 3 && G.age <= 12,
     text: 'You are registered at a table outside a tent. The man behind the table asks questions your parents answer. He writes something on a card and hands it to your father. This card is now, in this place, your document of existence — it says who you are and how many of you there are and what you are allowed to receive. You are given a tent number. The tent has a number but not a name. You will live here for longer than anyone at the table is currently imagining.',
     choices: null,

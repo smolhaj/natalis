@@ -1,5 +1,12 @@
 import { hasTech } from '../../technology.js'
 
+// Work done at a desk, for prose that puts somebody back at theirs.
+const DESK_FIELDS_WD = new Set([
+  'finance', 'government', 'IT', 'technology', 'law', 'real_estate', 'media',
+  'digital_media', 'writing', 'interpreter', 'architecture', 'engineering', 'academia',
+  'science', 'social_services', 'politics', 'aviation',
+])
+
 export const GENDER_EVENTS = [
 
   // ── FEMALE EDUCATION GATEKEEPING ───────────────────────────────────────────
@@ -1274,7 +1281,11 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'female' &&
       G.career &&
-      ['developing_urban', 'subsaharan'].includes(G.character.country.archetype),
+      // "Back at your desk two weeks after the birth" needs a desk and a
+      // birth: it reached a farm hand who had had no child that year.
+      DESK_FIELDS_WD.has(G.career.field) &&
+      G.children?.some(c => c.alive !== false && (c.age ?? 99) <= 1) &&
+      ['developing_urban', 'subsaharan'].includes(G.currentCountry?.archetype ?? G.character.country.archetype),
     text: 'Your employer explains that the company does not offer maternity leave. You are back at your desk two weeks after the birth. Your stitches are not healed. Your baby is with a neighbor.',
     context: null,
     choices: [

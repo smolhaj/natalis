@@ -1,6 +1,6 @@
-import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime, livingRuralUrban } from './character'
+import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime, livingRuralUrban, urbanChanceFor } from './character'
 import { pickFrom } from '../utils/random'
-import { wasSovietRepublic, INDEPENDENCE_YEAR, conflictRiskAt } from '../data/history.js'
+import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt, hasPassengerRail } from '../data/history.js'
 import { preferUnsaid, hasSaid } from './prose'
 import { hasTech, wasWealthy } from '../data/technology.js'
 
@@ -58,6 +58,13 @@ const T = {
 // real share rather than a token one, because a life that is not currently
 // being shaped by anything in particular is also a true thing to narrate.
 const TEXTURE_SHARES = { anchored: 0.46, earned: 0.39, universal: 0.15 }
+
+// Career fields whose work is done at a desk among other desks.
+const OFFICE_FIELDS = new Set([
+  'finance', 'government', 'law', 'media', 'digital_media', 'technology',
+  'real_estate', 'politics', 'architecture', 'social_services', 'academia',
+  'interpreter', 'engineering', 'science',
+])
 
 const pickOne = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -767,6 +774,16 @@ function* textureCandidates(state, opts = {}) {
   // The stranger's handset is the most datable object in this pool. It was
   // printing into 1970s London and 1976 Mexico City.
   const _mobileHere = hasTech(state.currentCountry ?? state.character?.country, 'mobile_phone', currentYear)
+  // A stranger on a train needs a train. The man on the train reached the
+  // Central African Republic and Djibouti, neither of which has a passenger
+  // line a city commutes on; a platform needs a city large enough to have one.
+  const _liveCountry = state.currentCountry ?? state.character?.country
+  const _liveName = _liveCountry?.name
+  const _railHere = _liveName != null && urbanChanceFor(_liveCountry, currentYear) >= 0.3 &&
+    hasPassengerRail(_liveName, currentYear)
+  // The desk across from yours is a statement about the job, and it was
+  // reaching a head chef, a taxi driver and a day labourer.
+  const _atADesk = !!state.career && !state.retired && !state.inPrison && OFFICE_FIELDS.has(state.career.field)
 
   const lastSonderAge = mem?.sonderGlimpseAge ?? -99
   if (age >= 12 && (age - lastSonderAge) >= 8 && Math.random() < 0.18) {
@@ -790,18 +807,18 @@ function* textureCandidates(state, opts = {}) {
       'Your neighbor\'s door opens and closes at two in the morning. You don\'t know what schedule that belongs to. You have been curious about it for months and will never ask.',
       'A couple at the restaurant is not speaking — not in the bad way, in the other way. The specific silence of people who don\'t need to. You watch them for a moment without meaning to.',
       _mobileHere
-        ? 'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.'
-        : 'The man on the train has been looking at a photograph from his wallet for the past four stops. He does not put it away. He has been looking at the same image since before you sat down.',
+        ? _railHere && 'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.'
+        : _railHere && 'The man on the train has been looking at a photograph from his wallet for the past four stops. He does not put it away. He has been looking at the same image since before you sat down.',
       _isNonWest ? 'The woman at the standpipe is organising who goes first. There is no official system. There is her, and the system she makes.' : 'The man in the café has been writing in the same notebook for an hour. The pages are covered. Something is being worked out in there that is not available to you.',
       _isNonWest ? 'A man on a motorbike is carrying something too large for a motorbike, slowly, with complete certainty about how to do it.' : 'The couple at the next table is having the specific argument that is about everything except what they are arguing about.',
     ] : (phase === 'young_adult') ? [
-      'The person who has the desk across from yours: you know what they eat for lunch and nothing else about them. An entire life is visible from there and inaccessible.',
+      _atADesk && 'The person who has the desk across from yours: you know what they eat for lunch and nothing else about them. An entire life is visible from there and inaccessible.',
       'Your neighbor comes home at the same time every night. You know this the way you know everything about people you have never spoken to — by the sound of it through the wall.',
-      'A woman on the platform is crying without covering her face. No one speaks to her. The train comes and she gets on. You will never know what that was.',
+      _railHere && 'A woman on the platform is crying without covering her face. No one speaks to her. The train comes and she gets on. You will never know what that was.',
       _mobileHere
         ? 'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.'
         : 'The man at the next table has been holding the same folded letter without opening it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
-      _isNonWest ? 'A young woman at the bus stop has a single bag and the posture of someone who has just made a decision. You don\'t know what the decision was.' : 'The woman at the desk next to yours leaves at exactly five every day. You have been curious about what that is about for months and have not asked.',
+      _isNonWest ? 'A young woman at the bus stop has a single bag and the posture of someone who has just made a decision. You don\'t know what the decision was.' : _atADesk && 'The woman at the desk next to yours leaves at exactly five every day. You have been curious about what that is about for months and have not asked.',
       _isNonWest ? 'Someone sleeping on the pavement outside the bus station. Their things are arranged around them with a precision that makes it clear this is not the first time.' : 'The two people at the corner table have been speaking quietly for two hours. You can\'t tell if this is love or negotiation or both.',
     ] : [
       'A child at the other end of the street is doing something by themselves, absorbed completely. You watch them for a moment. The whole afternoon is in it.',
@@ -811,7 +828,7 @@ function* textureCandidates(state, opts = {}) {
       _isNonWest ? 'A woman is carrying water on her head and also talking to someone and also watching a child ahead of her. Three things at once, flawlessly.' : 'The child on the other side of the fence is conducting a long and serious negotiation with a dog. The dog is attentive.',
       _isNonWest ? 'The old man in the chair outside his door is watching the street the way a person watches something they have watched for forty years.' : 'Someone is sitting in a parked car, engine off, not getting out. You walk past. You don\'t know what the inside of that moment is.',
     ]
-    yield [T.glimpse, sonderPool, (st) => {
+    yield [T.glimpse, sonderPool.filter(Boolean), (st) => {
       if (!st.mem) st.mem = {}
       st.mem.sonderGlimpseAge = st.age
     }]
@@ -7070,8 +7087,8 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('geo_orthodox_backbone') && Math.random() < 0.18) yield [T.anchored, pick([
     'The cross of Saint Nino: braided grapevines, woven with her own hair. A woman from Cappadocia who brought Christianity to Georgia in the fourth century. This is the origin story the church keeps returning to. The vine is Georgia. The woman is the transmission.',
-    'Patriarch Ilia II has been Catholicos-Patriarch since 1977. He was ordained in Soviet Georgia. He gave the baptisms that were illegal. He is still there. The continuity is the argument.',
-    phase === 'midlife' || phase === 'late_life'
+    currentYear >= 1978 && currentYear <= 2025 && 'Patriarch Ilia II has been Catholicos-Patriarch since 1977. He was ordained in Soviet Georgia. He gave the baptisms that were illegal. He is still there. The continuity is the argument.',
+    (phase === 'midlife' || phase === 'late_life') && currentYear >= 2000
       ? 'The church is the oldest continuous Georgian institution. The Soviet period, the wars, the 1990s — the church was there through all of it. What it asks in return is a question you have been answering differently at different ages.'
       : 'You are Georgian. The church is Georgian. Whether you go or do not go to the church, you have been formed by the fact of its presence in the national grammar.',
   ])]
@@ -9334,7 +9351,7 @@ function* textureCandidates(state, opts = {}) {
       ? 'The security lines, the body scanners, the databases, the colour-coded threat level that nobody could explain. The world after 2001 was a world organised around a specific event.'
       : 'The security lines and the databases arrived here too, imported whole from somewhere else, for a thing that happened somewhere else. Nobody asked and the queues are longer.',
     // Printed "still there 0 years later" into 2001 itself.
-    state.currentYear - 2001 >= 4 && `Something changed in 2001 and the change was sold as temporary emergency measures and the measures are still there ${state.currentYear - 2001} years later.`,
+    state.currentYear - 2001 >= 4 && state.currentYear - 2001 <= 25 && `Something changed in 2001 and the change was sold as temporary emergency measures and the measures are still there ${state.currentYear - 2001} years later.`,
   ])]
   if (F.has('katrina_generation') && Math.random() < 0.22) yield [T.anchored, pick([
     'The satellite image of the eye. The levees failing the morning of August 29. The Superdome. The people on the rooftops. "Brownie, you\'re doing a heck of a job." The helicopters flying over.',
@@ -11411,11 +11428,11 @@ function* textureCandidates(state, opts = {}) {
     'The palace animals were well-fed during the 1973 famine. That is the specific fact the Derg used to justify the revolution. The fact is accurate. What followed the revolution is also on the record.',
   ])]
   if (F.has('eth_eritrea_loss') && Math.random() < 0.20) yield [T.anchored, pick([
-    'Ethiopia is landlocked. The ports of Assab and Massawa — through which the country moved most of its imports and exports — are in Eritrea. The 1993 referendum was legitimate. The consequence is the permanent condition of 120 million people.',
-    'The specific weight of a landlocked country in a dry region: everything imported comes through a neighbouring country\'s ports, at their schedules and their goodwill. The Eritrean border closed in 1998 for the war and did not fully reopen for decades.',
+    `Ethiopia is landlocked. The ports of Assab and Massawa — through which the country moved most of its imports and exports — are in Eritrea. The 1993 referendum was legitimate. The consequence is the permanent condition of ${currentYear >= 2020 ? '120 million people' : 'the country'}.`,
+    currentYear >= 2018 && 'The specific weight of a landlocked country in a dry region: everything imported comes through a neighbouring country\'s ports, at their schedules and their goodwill. The Eritrean border closed in 1998 for the war and did not fully reopen for decades.',
     phase === 'late_life'
       ? 'You have lived in landlocked Ethiopia for most of your adult life. The sea is the thing the country does not have, does not discuss, has not discussed since the early 1990s. You are aware of it the way you are aware of an absence that has been there long enough to feel structural.'
-      : 'The 1998 war with Eritrea — fought over a border town called Badme — cost 70,000 lives and ended with the same border. What it also cost was the last period when the ports were operationally available. You learned to route everything through Djibouti instead.',
+      : currentYear >= 2001 && 'The 1998 war with Eritrea — fought over a border town called Badme — cost 70,000 lives and ended with the same border. What it also cost was the last period when the ports were operationally available. You learned to route everything through Djibouti instead.',
   ])]
 
   // ─── IRAN CONTEMPORARY TEXTURE ───────────────────────────────────────────────
@@ -13793,11 +13810,18 @@ function* textureCandidates(state, opts = {}) {
       : 'You learn the schedule of the water — which days, which times, which queue position gets you through before it runs out.',
   ])]
   if (F.has('remittance_family') && Math.random() < 0.2) yield [T.anchored, pick([
-    'The envelope from abroad. The Western Union queue. The month that the transfer did not come and the week of waiting to find out why.',
+    // Western Union's money transfer reached the sending countries' towns in
+    // the late eighties; the dish on the roof is a thing of the nineties. Both
+    // were printing into 1958 and 1959.
+    currentYear >= 1990
+      ? 'The envelope from abroad. The Western Union queue. The month that the transfer did not come and the week of waiting to find out why.'
+      : 'The envelope from abroad, and the notes folded inside it. The month that the envelope did not come and the weeks of waiting to find out why.',
     'The remittance is the margin that makes the other things possible — the school fees, the hospital bill, the roof repair. You have learned to manage around a money supply that comes from somewhere you cannot control.',
     phase === 'midlife' || phase === 'late_life'
       ? 'You have watched what the remittances built — the houses with the foreign-funded second floor, the children who got through school, the funerals that were dignified. The money from elsewhere is the architecture of this place.'
-      : 'The person who left is visible in the house through what their money built. The room addition. The better roof. The satellite dish. They are here in the way money is here.',
+      : currentYear >= 1990 && hasTech(state.currentCountry ?? state.character?.country, 'television', currentYear, { rural: livingRuralUrban(state) === 'rural' })
+        ? 'The person who left is visible in the house through what their money built. The room addition. The better roof. The satellite dish. They are here in the way money is here.'
+        : 'The person who left is visible in the house through what their money built. The room addition. The better roof. They are here in the way money is here.',
   ])]
   if (F.has('food_insecurity') && Math.random() < 0.18) yield [T.anchored, pick([
     'There are years when the question of dinner is a question and years when it is not. You know which years are which and you have made arrangements accordingly.',
@@ -14656,8 +14680,20 @@ function* textureCandidates(state, opts = {}) {
 
     // ── subsaharan era texture ──
     if (arch === 'subsaharan') {
+      const inTown = livingRuralUrban(state) !== 'rural'
+      const faith = state.religion ?? state.character?.religion ?? ''
+      const christian = faith.startsWith('christian')
+      const wired = hasTech(country, 'electricity', currentYear, { rural: !inTown })
+      // One name per city: no place has all three, and the line naming all of
+      // them was reaching Djibouti, Harare and a village with no minibus at all.
+      const minibus = { Kenya: 'matatu', Ghana: 'tro-tro', Nigeria: 'danfo' }[cn]
       if (era <= 1960) yield [T.anchored, pick([
-        'Independence changes the flag. The other structures of the colonial arrangement persist with more tenacity.',
+        // Only in the decade after it happened. This pool opens for every
+        // sub-Saharan country before 1970, so it was telling a 1946 Eritrean —
+        // under a British caretaker, forty-seven years from a flag of its own —
+        // that the flag had changed.
+        INDEPENDENCE_YEAR[cn] && currentYear >= INDEPENDENCE_YEAR[cn] && currentYear <= INDEPENDENCE_YEAR[cn] + 8 &&
+          'Independence changes the flag. The other structures of the colonial arrangement persist with more tenacity.',
         'The harvest determines most things. This is not said aloud in the town but it is understood.',
         'The extended family is the welfare system. It works through obligation rather than taxation. Both have costs.',
         'The corrugated iron roof amplifies rain in a way no architect planned and the occupant long since stopped noticing.',
@@ -14679,17 +14715,17 @@ function* textureCandidates(state, opts = {}) {
         // earliest.
         currentYear >= 2007 && 'Mobile money has made it possible to send and receive money in ways that did not exist a decade ago. This is not a small thing.',
         currentYear >= 1998 && 'The Chinese traders have a shop on the main road now. They sell things that were not available before. The prices are different.',
-        'The pastor\'s church has a bigger congregation than last year\'s. The church is the community center, the loan office, the safety net.',
+        christian && 'The pastor\'s church has a bigger congregation than last year\'s. The church is the community center, the loan office, the safety net.',
         'The young people are saving for the journey. The journey is to the city, or to Europe, or to the Gulf. The direction is away.',
-        'The matatu, the tro-tro, the danfo: the shared minibus that connects the city to itself. The driver knows the system better than any map. The system is not in any map.',
-        'Power cuts so regular they have been accommodated. The candle in the sideboard. The neighbour with the generator who has become a kind of utility.',
+        minibus && inTown && `The ${minibus}: the shared minibus that connects the city to itself. The driver knows the system better than any map. The system is not in any map.`,
+        inTown && wired && 'Power cuts so regular they have been accommodated. The candle in the sideboard. The neighbour with the generator who has become a kind of utility.',
       ])]
       if (era >= 2010) yield [T.anchored, pick([
         noticesDevices && currentYear >= 2013 && 'The smartphone has arrived before the electricity is reliable. Solar charging is a business now.',
         'The middle class is real. It is also precarious in a way the word middle doesn\'t quite capture.',
         noticesDevices && currentYear >= 2013 && 'The diaspora is everywhere — in the remittances, in the WhatsApp groups, in the children who have two accents.',
         'The young people are in two places at once — here and on the phone, here and in their plans, which include a version of elsewhere.',
-        noticesDevices && currentYear >= 2013 && 'The church has a Facebook page and a WhatsApp group and a pastor who sends voice notes. The congregation has distributed itself across the digital infrastructure without leaving the building.',
+        christian && noticesDevices && currentYear >= 2013 && 'The church has a Facebook page and a WhatsApp group and a pastor who sends voice notes. The congregation has distributed itself across the digital infrastructure without leaving the building.',
       ])]
     }
 
@@ -14715,13 +14751,21 @@ function* textureCandidates(state, opts = {}) {
     }
 
     // ── conflict_zone era texture ──
+    // The archetype is what these countries are NOW. Read as history it put
+    // checkpoints, an NGO office and a holding ceasefire into the Central
+    // African Republic of 1969-79, which had no war until 1996. The war lines
+    // ask whether there is a war this year; the aftermath lines whether one
+    // has actually happened.
     if (arch === 'conflict_zone') {
-      yield [T.anchored, pick([
-        'The checkpoint is slower today. No one explains why. The soldiers are different soldiers.',
-        'The NGO has moved its office again. Security considerations. The gap they leave is not filled by anyone.',
+      const atWar = conflictRiskAt(country, currentYear) > 0.03
+      const lastWarEnd = Math.max(0, ...(WAR_YEARS[cn] ?? []).filter(([a, b]) => b < currentYear).map(([, b]) => b))
+      const afterWar = !atWar && lastWarEnd > 0
+      if (atWar || afterWar) yield [T.anchored, pick([
+        atWar && 'The checkpoint is slower today. No one explains why. The soldiers are different soldiers.',
+        atWar && currentYear >= 1975 && 'The NGO has moved its office again. Security considerations. The gap they leave is not filled by anyone.',
         'The hospital is operating at less than capacity. The doctors who left have not come back.',
         'The neighborhood that was full last year has fewer people in it. The leaving was not announced.',
-        'The ceasefire is holding, for now. Everyone knows what for now means in this context.',
+        (atWar || currentYear - lastWarEnd <= 5) && 'The ceasefire is holding, for now. Everyone knows what for now means in this context.',
         'The question is which generation will get to live somewhere without this overhead.',
       ])]
     }
@@ -14826,12 +14870,19 @@ function* textureCandidates(state, opts = {}) {
     }
 
     // ── developing_unstable era texture ──
+    // A statement about a sovereign state with its own ballot, currency and
+    // army. Archetype-only, it told colonial Papua New Guinea in 1932-45 that
+    // the general had been replaced by another general — a country that has
+    // never had a coup, and in those years was not a country.
     if (arch === 'developing_unstable') {
-      yield [T.anchored, pick([
+      const indep = INDEPENDENCE_YEAR[cn]
+      const sovereign = indep == null || indep <= currentYear
+      const hadCoup = (COUP_YEARS[cn] ?? []).some(y => y <= currentYear)
+      if (sovereign) yield [T.anchored, pick([
         'The election results are announced. The question of whether the result is the result is a question people are careful about where they ask it.',
         'The currency is not what it was last year. The prices reflect this. The wages have not caught up.',
-        'The general has been replaced by another general, or by a politician who looks like a general in the important ways.',
-        'The debt to the international lenders is a number that appears in budgets and disappears from daily conversation.',
+        hadCoup && 'The general has been replaced by another general, or by a politician who looks like a general in the important ways.',
+        currentYear >= 1975 && 'The debt to the international lenders is a number that appears in budgets and disappears from daily conversation.',
         'People are managing. Managing is not the same as thriving. It is also not the same as failing. It is its own category.',
       ])]
     }
@@ -16782,7 +16833,7 @@ function* textureCandidates(state, opts = {}) {
     'Somebody hands you a form and you hand it to somebody else, and there is a particular half-second in that exchange that you have felt several thousand times.',
     'You know the shapes of the letters on the shop signs you pass every day. You know them the way you know a face, not the way anybody means it.',
     'You can hold a great deal in your head, because you have had to. People who write things down do not know how much they are not carrying.',
-    'Your child reads aloud to you and you correct the parts about the world, which you know, and not the parts on the page, which you do not.',
+    (state.children ?? []).some(c => c.alive !== false && (c.age ?? 0) >= 7) && 'Your child reads aloud to you and you correct the parts about the world, which you know, and not the parts on the page, which you do not.',
   ])]
 
   // -- Tenure ------------------------------------------------------------------

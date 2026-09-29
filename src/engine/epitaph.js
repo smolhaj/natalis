@@ -34,8 +34,11 @@ export function generateIdentityCard(state) {
   const place = countryWithArticle(country?.name ?? 'somewhere')
   const occupationPhrase = (() => {
     if (state.inPrison) return null // handled in exterior 2
-    if (career) return `working as ${withArticle(career.title)}`
-    if (state.retired) return 'retired'
+    // `career` falls back to the job retired FROM, which is right for the death
+    // screen and wrong here: a ninety-two-year-old who retired in 2008 was
+    // "working as a Project Manager".
+    if (state.career) return `working as ${withArticle(state.career.title)}`
+    if (state.retired || career) return career ? `retired, after years as ${withArticle(career.title)}` : 'retired'
     if (education?.enrolled) return 'studying'
     if (phase === 'early_childhood' || phase === 'childhood') return 'still a child'
     if (phase === 'adolescence') return 'a teenager'
@@ -53,8 +56,12 @@ export function generateIdentityCard(state) {
     exterior.push('You are in prison.')
   } else if (state.wanted || F.has('escaped_prisoner')) {
     exterior.push('You are wanted. Every introduction carries risk.')
-  } else if (G.residencyStatus === 'undocumented' || G.residencyStatus === 'refugee_status') {
+  } else if (G.residencyStatus === 'undocumented') {
     exterior.push('You are living without secure papers — present without permission.')
+  } else if (G.residencyStatus === 'refugee_status') {
+    // Refugee status is protection, not its absence: the state has said you
+    // may stay. What it has not said is for how long, or that you are home.
+    exterior.push('You are here as a refugee — protected, on paper, by a status that can be reviewed.')
   } else if (F.has('climate_displaced')) {
     exterior.push('You have been displaced by the changing climate, still looking for where this life lands.')
   } else if (partner?.married) {

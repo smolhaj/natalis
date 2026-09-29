@@ -40,6 +40,7 @@
 // started in 1994.
 
 import { pickFrom } from '../../../utils/random'
+import { numberWord } from '../_words.js'
 
 const GULF = ['UAE', 'Qatar', 'Kuwait', 'Bahrain', 'Saudi Arabia', 'Oman']
 
@@ -109,6 +110,12 @@ const CITIZEN_IDS = new Set([
 const IS_CITIZEN = (G) => CITIZEN_IDS.has(G.character?.ethnicity)
 
 const here = (G) => G.currentCountry?.name ?? G.character?.country?.name
+
+// Years in the one house, from the year the domestic arc began; older lives
+// without the stamp fall back on time abroad.
+const DOMESTIC_YEARS = (G) => G.mem?.gulfDomesticYear != null
+  ? G.currentYear - G.mem.gulfDomesticYear
+  : (G.yearsAbroad ?? 0)
 
 // "You have been in this country nine years" was a literal, printed to a man in
 // his fourth year and to a man in his twentieth alike.
@@ -463,13 +470,13 @@ export const GULF_EVENTS = [
         text: 'Attach to the children. They are what the days are made of.',
         tag: 'yielding',
         outcome: 'The youngest calls you by a name that is not quite an aunt and not quite a title. She is eleven when you leave. You do not see her again.',
-        effect: (p) => { p.setMem('gulfDomestic', true); p.m += 5; p.r += 8; p.addFlag('gulf_domestic_worker'); p.addFlag('gulf_raised_their_children') },
+        effect: (p) => { p.setMem('gulfDomestic', true); p.setMem('gulfDomesticYear', p._state.currentYear); p.m += 5; p.r += 8; p.addFlag('gulf_domestic_worker'); p.addFlag('gulf_raised_their_children') },
       },
       {
         text: 'Keep the line. You are staff, and staff go home eventually.',
         tag: 'defiant',
         outcome: 'It is a sound policy and it does not survive contact with a four-year-old, entirely, but you hold most of it.',
-        effect: (p) => { p.setMem('gulfDomestic', true); p.m -= 2; p.r += 5; p.addFlag('gulf_domestic_worker') },
+        effect: (p) => { p.setMem('gulfDomestic', true); p.setMem('gulfDomesticYear', p._state.currentYear); p.m -= 2; p.r += 5; p.addFlag('gulf_domestic_worker') },
       },
     ],
     effect: null,
@@ -778,21 +785,27 @@ export const GULF_EVENTS = [
     weight: 30,
     when: (G) =>
       G.flags.includes('gulf_domestic_worker') &&
-      G.age >= 44 &&
+      // It fired at eighty for an Agency Director. The contract ending is the
+      // end of the one job, in the house, in the Gulf, while it is still the
+      // job — and the years are the years she was there.
+      IS_GULF(G) && STILL_LABOUR(G) &&
+      (!G.career || ['casual', 'hospitality'].includes(G.career.field)) &&
+      DOMESTIC_YEARS(G) >= 8 &&
+      G.age >= 34 && G.age <= 62 &&
       !G.mem?.gulfDomesticAfter,
-    text: 'The contract ends because the children are grown and a house with grown children does not need you. There is a payment, which is generous by the standards of what was owed and small by the standards of nineteen years. The mother, who was sharp for two decades, cries at the door and you are genuinely moved and you are also aware that you have no telephone number for anybody in this family and that none of them has asked for yours. You go home with a bag and a set of habits about other people\'s kitchens.',
+    text: (G) => `The contract ends because the children are grown and a house with grown children does not need you. There is a payment, which is generous by the standards of what was owed and small by the standards of ${numberWord(DOMESTIC_YEARS(G))} years. The mother, who was sharp the whole time, cries at the door and you are genuinely moved and you are also aware that you have no telephone number for anybody in this family and that none of them has asked for yours. You go home with a bag and a set of habits about other people's kitchens.`,
     choices: [
       {
         text: 'Ask, at the door, for the youngest one\'s number.',
         tag: 'defiant',
         outcome: 'She gives it. It is used twice in the first year and once in the second, and then it is a number you have.',
-        effect: (p) => { p.setMem('gulfDomesticAfter', true); p.m += 4; p.r += 6; p.addFlag('gulf_kept_the_number') },
+        effect: (p) => { p.setMem('gulfDomesticAfter', true); p.m += 4; p.r += 6; p.addFlag('gulf_kept_the_number'); p.returnHome() },
       },
       {
         text: 'Take the payment and go.',
         tag: 'yielding',
         outcome: 'It was work. You had told yourself that the entire time and it was about two-thirds true, which is the part you carry.',
-        effect: (p) => { p.setMem('gulfDomesticAfter', true); p.m -= 5; p.r += 8; p.addFlag('gulf_left_it_behind') },
+        effect: (p) => { p.setMem('gulfDomesticAfter', true); p.m -= 5; p.r += 8; p.addFlag('gulf_left_it_behind'); p.returnHome() },
       },
     ],
     effect: null,

@@ -1,3 +1,10 @@
+import { villageElectrificationDue } from '../_electrification.js'
+import { numberWord } from '../_words.js'
+
+// A sister of an age to be married off: 12 to 17, alive.
+const CM_SISTER = (G) => (G.siblings ?? []).find(s =>
+  s.alive !== false && s.gender === 'female' &&
+  G.age + (s.ageDiff ?? 0) >= 12 && G.age + (s.ageDiff ?? 0) <= 17)
 import { wasEasternBloc } from '../../history.js'
 
 // events_culture.js
@@ -486,8 +493,9 @@ export const CULTURE_EVENTS = [
     id: 'cult_cm_brother_pressure',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.childMarriageRisk > 0.15 && G.character.gender === 'male' && G.age >= 14,
-    text: 'Your sister is being married off. She is 14. You are 16. You watch the proceedings and something in you does not sit right, but nobody in your household speaks it and you do not have the words or the standing to say it.',
+    // "She is 14. You are 16." printed at fourteen, with or without a sister.
+    when: (G) => G.childMarriageRisk > 0.15 && G.character.gender === 'male' && G.age >= 14 && !!CM_SISTER(G),
+    text: (G) => `Your sister is being married off. She is ${numberWord(G.age + CM_SISTER(G).ageDiff)}. You are ${numberWord(G.age)}. You watch the proceedings and something in you does not sit right, but nobody in your household speaks it and you do not have the words or the standing to say it.`,
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 8; p.addFlag('witnessed_child_marriage') },
   },
@@ -579,10 +587,10 @@ export const CULTURE_EVENTS = [
     // It sets `first_electricity` and did not read it, while `rural_first_electricity`
     // in events_texture.js correctly does — so a Nigerian village got the light
     // twice, six years apart, and both times the mother covered her face and laughed.
-    when: (G) => G.ruralUrban === 'rural' && !G.flags.includes('first_electricity') && !G.flags.includes('village_electrified') && G.age >= 5 && G.age <= 14 && G.currentYear >= 1950 && G.currentYear <= 1990 && G.character.country.gdp !== 'very_high' && G.character.country.gdp !== 'high',
+    when: (G) => G.ruralUrban === 'rural' && villageElectrificationDue(G) && G.age >= 5 && G.age <= 14 && G.currentCountry?.gdp !== 'very_high' && G.currentCountry?.gdp !== 'high',
     text: (G) => `The village gets electricity. You are ${G.age} years old. Before that, evenings were oil lamp and moonlight. You watch the first light bulb flicker on in your house and your mother covers her face with her hands and laughs.`,
     choices: null,
-    effect: (p) => { p.m += 10; p.e += 5; p.addFlag('first_electricity') },
+    effect: (p) => { p.m += 10; p.e += 5; p.addFlag('first_electricity'); p.setMem('village_electrified', true) },
   },
   {
     id: 'cult_rural_no_doctor',
@@ -678,7 +686,11 @@ export const CULTURE_EVENTS = [
     id: 'cult_wealth_remittance_family',
     phase: 'childhood',
     weight: 3,
-    when: (G) => (G.character.country.archetype === 'subsaharan' || G.character.country.archetype === 'developing_unstable') && G.wealthTier >= 2 && G.wealthTier <= 3,
+    // London, Doha, Minneapolis and a Western Union are the diaspora of the
+    // 1980s on, and "it pays the school fees" needs a child at school. It fired
+    // in 1957 rural Angola.
+    when: (G) => (G.character.country.archetype === 'subsaharan' || G.character.country.archetype === 'developing_unstable') && G.wealthTier >= 2 && G.wealthTier <= 3 &&
+      G.currentYear >= 1985 && G.mem?.attendedSchool !== false && !G.flags.includes('never_schooled'),
     text: 'The money arrives from abroad — from London, from Doha, from Minneapolis — in irregular packets that have unpredictable timing and enormous symbolic weight. A relative you have met once sends a Western Union. It pays the school fees. It comes with a different kind of obligation.',
     choices: null,
     effect: (p) => { p.mo += 200; p.m += 5; p.r += 3; p.addFlag('remittance_family') },

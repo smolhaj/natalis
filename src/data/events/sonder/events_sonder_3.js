@@ -81,7 +81,7 @@ export const EVENTS_SONDER_3 = [
     when: (G) =>
       !G.mem?.s3_newsVsExp &&
       (G.character.country.archetype === 'developing_unstable' ||
-       G.character.country.archetype === 'conflict_zone' ||
+       G.conflictRisk >= 0.1 ||
        G.regime === 'single_party_authoritarian' ||
        G.regime === 'military_dictatorship'),
     text: 'Someone abroad has asked you what it is really like. You have tried to explain. The account you gave was true. It was also completely different from the account you carry inside — the texture of it, the smell of the particular season, the way certain conversations happen in the kitchen and different conversations happen in public. The true account is not transferable. What you gave them was the outline of it.',

@@ -1,4 +1,4 @@
-import { isIndependenceYear, isCoupYear } from '../../history.js'
+import { isIndependenceYear, isCoupYear, INDEPENDENCE_YEAR, adjustmentProgrammeNow } from '../../history.js'
 // events_decolonisation.js — BUILD 5
 // Decolonisation era events: independence generation, first coups, structural
 // adjustment, brain drain, mobile leapfrog. Fires for subsaharan and
@@ -74,7 +74,12 @@ export const DECOLONISATION_EVENTS = [
     when: (G) =>
       !G.mem?.dcNewSchool &&
       ['subsaharan', 'developing_urban'].includes(G.character.country.archetype) &&
-      G.currentYear >= 1955 && G.currentYear <= 1975 &&
+      // "A promise the new government made" is a post-independence school. It
+      // fired in Colombia in 1974, a century and a half after its independence.
+      (INDEPENDENCE_YEAR[G.character.country.name] ?? 0) >= 1945 &&
+      G.currentYear >= INDEPENDENCE_YEAR[G.character.country.name] &&
+      G.currentYear <= INDEPENDENCE_YEAR[G.character.country.name] + 15 &&
+      G.mem?.attendedSchool !== false &&
       G.age >= 6 && G.age <= 14 &&
       G.stats.smarts >= 40,
     text: 'The school has been built since your parents were children — part of a promise the new government made that education would no longer be arranged for someone else\'s convenience. The building smells of concrete dust and fresh paint. Textbooks arrived last week from the capital; they are stacked at the front of the room and the teacher distributes them one at a time, as if each one is something to be careful with. The words in them are formal and new. The letters are still the same letters.',
@@ -190,11 +195,15 @@ export const DECOLONISATION_EVENTS = [
   {
     id: 'dc_structural_adjustment',
     phase: null,
-    weight: 4,
+    // A two-year window per country now, not fifteen, so the weight rises to
+    // keep the reach roughly where it was for the countries that signed.
+    weight: 14,
     when: (G) =>
       !G.mem?.dcStructuralAdjustment &&
-      ['subsaharan', 'developing_urban'].includes(G.character.country.archetype) &&
-      G.currentYear >= 1984 && G.currentYear <= 1998 &&
+      // The paper in Washington was signed in particular years by particular
+      // governments (history.js). Algeria signed in 1989, not 1984; Malaysia,
+      // Libya and South Africa never did.
+      adjustmentProgrammeNow(G.currentCountry ?? G.character.country, G.currentYear) &&
       G.age >= 25,
     text: 'The government has signed a paper in Washington. The details arrive incrementally: civil service salaries cut, fertilizer subsidies removed, state-owned companies sold off to buyers who must be from somewhere with foreign currency. The word "conditionality" enters daily speech. No one voted on the conditions. The argument is that there was no alternative. There are people who believe this and people who do not, and all of them are living through the same year.',
     choices: [
@@ -378,13 +387,17 @@ export const DECOLONISATION_EVENTS = [
     weight: 3,
     when: (G) =>
       !G.mem?.dcMobileLeap &&
-      ['subsaharan', 'developing_urban'].includes(G.character.country.archetype) &&
+      // Where the character lives, and a mother alive to be "in the village"
+      // on the other end of it.
+      ['subsaharan', 'developing_urban'].includes(G.currentCountry?.archetype) &&
+      G.parents?.mother?.alive !== false &&
       G.currentYear >= 2002 && G.currentYear <= 2012 &&
       G.age >= 18,
     text: (G) => {
-      const country = G.character.country.name
+      const country = G.currentCountry?.name ?? G.character.country.name
       const mobileMoneyCountries = ['Kenya', 'Tanzania', 'Uganda', 'Ghana', 'Nigeria', 'Ethiopia', 'Rwanda', 'Mozambique']
-      const hasMPesa = mobileMoneyCountries.includes(country)
+      // M-Pesa launched in Kenya in 2007; nobody sent money by phone in 2003.
+      const hasMPesa = mobileMoneyCountries.includes(country) && G.currentYear >= (country === 'Kenya' ? 2007 : 2009)
       if (hasMPesa) {
         return 'The country never had landlines for most people. Then suddenly everyone has a mobile phone — your mother in the village, your cousin at the market stall, the woman who collects water at the standpipe. You can send money to your mother through it. The transfer arrives in seconds. Mobile banking exists here before it exists in most of Europe. The phone is not a luxury. The phone is the infrastructure.'
       }

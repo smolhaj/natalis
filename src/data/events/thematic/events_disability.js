@@ -287,7 +287,7 @@ const ACQUIRED_DISABILITY_EVENTS = [
       if (G.mem?.disAcquiredFired) return false
       if (G.age < 14 || G.age > 62) return false
       const exposed = ['labour', 'construction', 'agriculture', 'transport', 'military', 'mining'].includes(G.career?.field ?? '')
-        || G.flags.has('informal_economy') || G.archetype === 'conflict_zone'
+        || G.flags.has('informal_economy') || G.conflictRisk >= 0.1
       return Math.random() < (exposed ? 0.011 : 0.004)
     },
     text: 'The accident takes four seconds. What comes after takes years. The hospital is the first chapter. Rehabilitation is the second. Understanding what the third chapter is — what the life looks like now, what it can contain, what it cannot — is a process that begins in the rehabilitation ward and does not fully end.',

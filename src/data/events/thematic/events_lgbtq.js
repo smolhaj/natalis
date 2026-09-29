@@ -1,3 +1,5 @@
+import { hasTech } from '../../technology.js'
+import { numberWord } from '../_words.js'
 // events_lgbtq.js
 // Full LGBTQ life arc — from self-recognition through coming out,
 // relationships, community, discrimination, and late-life reflection.
@@ -24,11 +26,25 @@ export const LGBTQ_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => !G.flags.includes('lgbtq_identity') && G.age >= 13 && G.age <= 19 && !G.mem?.lgbtq_named,
-    text: 'You read it in a book, or hear it spoken on a television programme, or find it in a search result you typed in private. Words — for what you might be. They land with a precision you were not prepared for. You sit with them for a long time.',
+    // "A television programme, or a search result" reached a girl in rural
+    // Algeria in 1951. Where the word comes from depends on what the house had.
+    text: (G) => {
+      const c = G.currentCountry ?? G.character.country
+      const y = G.currentYear
+      const rural = G.ruralUrban === 'rural'
+      const source = hasTech(c, 'home_internet', y, { rural })
+        ? 'You read it in a book, or hear it spoken on a television programme, or find it in a search result you typed in private.'
+        : hasTech(c, 'television', y, { rural })
+          ? 'You read it in a magazine someone left behind, or hear it spoken on a television programme late at night with the sound turned low.'
+          : G.literate
+            ? 'You find it in a book that was not meant for you, or in a newspaper, in a sentence about somebody else.'
+            : 'You hear it said by an older boy, as an insult, about a man in the next village. It is meant as a joke. It is not a joke to you.'
+      return `${source} Words — for what you might be. They land with a precision you were not prepared for. You sit with them for a long time.`
+    },
     choices: [
       { text: 'Gay or lesbian — attracted to the same sex. That fits.', tag: null, outcome: 'Something settles. Not everything, but something. You say the word to yourself in the mirror once. Just to hear it.', effect: (p) => { p.m += 6; p.e += 5; p.addFlag('lgbtq_identity'); p.addFlag('orientation_gay'); p.setMem('lgbtq_named', true) } },
       { text: 'Bisexual — attracted to more than one gender. That fits better.', tag: null, outcome: 'The word is less clean than the others but more accurate. You sit with the complexity of it, which turns out to be its own kind of relief.', effect: (p) => { p.m += 6; p.e += 5; p.addFlag('lgbtq_identity'); p.addFlag('orientation_bisexual'); p.setMem('lgbtq_named', true) } },
-      { text: 'Reject it — maybe it does not apply to you', tag: null, outcome: 'You close the tab. But the word stays. You will return to it.', effect: (p) => { p.m -= 5; p.r += 4; p.setMem('lgbtq_named', true) } },
+      { text: 'Reject it — maybe it does not apply to you', tag: null, outcome: 'You put it away. But the word stays. You will return to it.', effect: (p) => { p.m -= 5; p.r += 4; p.setMem('lgbtq_named', true) } },
     ],
     effect: null,
   },
@@ -439,11 +455,17 @@ export const LGBTQ_EVENTS = [
       G.flags.includes('same_sex_attracted') &&
       !G.flags.includes('lgbtq_had_relationship') &&
       G.partner && (G.partner.years ?? 0) >= 3 &&
+      // The arrangement is a marriage to somebody of the other sex.
+      (!G.partner.gender || G.partner.gender !== G.character.gender) &&
       G.age >= 28 && G.age <= 48 &&
       !G.mem?.lgbtqMarriageHappened,
+    // It said "you are thirty-four" to everybody from twenty-eight to
+    // forty-eight, and defaulted a man's wife to "your husband".
     text: (G) => {
-      const name = G.partner?.name?.split(' ')[0] ?? 'your husband'
-      return `${name} is a good person. That is the part that makes it complicated rather than simple. There is no cruelty in the house, no secret being kept from you, nothing you could point at and call a reason. There is only the specific, unremarkable fact that a whole register of feeling has never been in the room, and you have stopped expecting it to be, and you are thirty-four, and this is the arrangement.`
+      const spouse = G.partner?.gender === 'male' || (!G.partner?.gender && G.character.gender === 'female')
+        ? 'your husband' : 'your wife'
+      const name = G.partner?.name?.split(' ')[0] ?? spouse
+      return `${name} is a good person. That is the part that makes it complicated rather than simple. There is no cruelty in the house, no secret being kept from you, nothing you could point at and call a reason. There is only the specific, unremarkable fact that a whole register of feeling has never been in the room, and you have stopped expecting it to be, and you are ${numberWord(G.age)}, and this is the arrangement.`
     },
     choices: [
       {

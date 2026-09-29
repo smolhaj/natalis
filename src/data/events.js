@@ -1,5 +1,6 @@
 import { randomBetween } from '../utils/random.js'
-import { hasTech } from './technology.js'
+import { hasTech, wasWealthy } from './technology.js'
+import { migrationDestinations } from './migration.js'
 import { FOLLOWTHROUGH_ALL_EVENTS } from './events/followthrough/events_followthrough_all.js'
 import { GENDER_EVENTS } from './events/thematic/events_gender.js'
 import { RELIGION_EVENTS } from './events/thematic/events_religion.js'
@@ -489,6 +490,25 @@ import { ROADS_NOT_TAKEN_EVENTS } from './events/thematic/events_roads_not_taken
 import { LETTER_EVENTS } from './events/thematic/events_letters.js'
 import { SEASONAL_EVENTS } from './events/thematic/events_seasonal.js'
 import { ORAL_TRADITION_EVENTS } from './events/thematic/events_oral_tradition.js'
+
+// A job with an employer who keeps records: the layoff, the HR department, the
+// wrongful-termination suit. Not the smallholding, the market stall, day labour.
+const INFORMAL_FIELDS = new Set(['agriculture', 'casual', 'trade', 'religion'])
+const formalEmployer = (G) => !!G.career && !INFORMAL_FIELDS.has(G.career.field) &&
+  G.ruralUrban === 'urban'
+
+// Where a whole family could not leave from. Exit was the state's to grant:
+// Bhutan was closed to the outside world until the 1970s and sent almost
+// nobody abroad as a household before the 2000s; Ne Win's Burma issued
+// passports as a favour; North Korea never; Eritrea's national service made a
+// family departure a flight across the border, which is another event.
+const EXIT_CLOSED = { 'Bhutan': [0, 2005], 'Myanmar': [1962, 1988], 'North Korea': [0, 9999], 'Eritrea': [1998, 9999] }
+const familyCanLeave = (G) => {
+  const c = G.character.country
+  const w = EXIT_CLOSED[c.name]
+  if (w && G.currentYear >= w[0] && G.currentYear <= w[1]) return false
+  return G.regime !== 'single_party_communist'
+}
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -1129,14 +1149,26 @@ const BASE_EVENTS = [
     id: 'adol_family_migration',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => ['developing_urban', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype),
-    text: 'Your family is considering emigrating. An uncle abroad says there is opportunity.',
+    // It moved a 13-year-old Ngalop from Paro to New York in 1968, on a work
+    // visa, into a country that had sent nobody abroad as a household. A family
+    // leaves when the state lets it, from a town or a household that can raise
+    // the fare, and to where the people before them went.
+    when: (G) => ['developing_urban', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype) &&
+      G.currentYear >= 1950 && familyCanLeave(G) &&
+      (G.character.ruralUrban === 'urban' || (G.wealthTier ?? 3) >= 3) &&
+      G.currentCountry?.name === G.character.country.name,
+    text: 'Your family is considering emigrating. An uncle abroad writes that there is work, and a room for all of you until there is another.',
     context: null,
     choices: [
       {
         text: 'Push to go',
         tag: 'ambitious',
-        outcome: 'The family takes the step. A new world, cold and unfamiliar, and a set of papers that say you are allowed to be in it for now.',
+        outcome: (G) => {
+          const there = G.currentCountry?.name
+          return there && there !== G.character.country.name
+            ? `The family takes the step. ${there}: the uncle's front room, a new school, and a set of papers with your name on them under your father's.`
+            : 'The family takes the step and the step does not hold. The papers do not come. You unpack.'
+        },
         // `addFlag('emigrated')` and a work visa, and no verb that moves
         // anybody. A life-log read found a Cairo character holding a work visa
         // in the country she was born in for forty-two years, collecting
@@ -1145,7 +1177,8 @@ const BASE_EVENTS = [
         // something different, and found it, at a cost."
         effect: (p) => {
           p.m -= 5; p.s -= 5; p.e += 5
-          p.emigrateTo(p._state?.character?.country?.archetype === 'subsaharan' ? 'United Kingdom' : 'United States', { residency: 'work_visa' })
+          // A child goes on the family's papers, not a work visa of their own.
+          p.emigrateTo(migrationDestinations(p._state?.character?.country), { residency: 'permanent_resident' })
         },
         inject: null,
       },
@@ -1163,7 +1196,11 @@ const BASE_EVENTS = [
     id: 'adol_driving_licence',
     phase: 'adolescence',
     weight: 3,
-    when: (G) => G.age >= 16 && !G.flags.includes('has_licence'),
+    // Reached an illiterate Papuan villager in 1946. A test is written, a car
+    // has to exist where you are, and somebody has to own one you can learn in.
+    when: (G) => G.age >= 16 && !G.flags.includes('has_licence') && G.literate &&
+      hasTech(G.currentCountry, 'automobile', G.currentYear, { rural: G.ruralUrban === 'rural' }) &&
+      (G.ruralUrban === 'urban' || (G.wealthTier ?? 3) >= 4),
     text: 'You are old enough to learn to drive. The independence it offers is real.',
     context: null,
     choices: [
@@ -1949,7 +1986,7 @@ const BASE_EVENTS = [
     id: 'mid_midlife_crisis',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.regret > 30,
+    when: (G) => G.regret > 30 && G.age >= 40,
     text: 'At forty-something, you look at the life you have built and feel a strange distance from it.',
     context: null,
     choices: [
@@ -5206,7 +5243,8 @@ const BASE_EVENTS = [
     id: 'mid_corporate_hack_opportunity',
     phase: 'midlife',
     weight: 1,
-    when: (G) => G.stats.smarts >= 65 && G.currentYear >= 2005 && !G.mem.corpHack && !G.inPrison,
+    when: (G) => G.stats.smarts >= 65 && G.currentYear >= 2005 && !G.mem.corpHack && !G.inPrison &&
+      ['IT', 'technology', 'finance'].includes(G.career?.field),
     text: 'A former colleague sends an encrypted message. They have found a vulnerability in a corporate payroll system — clean, untraceable, and very profitable. They need your skills.',
     choices: [
       {
@@ -5667,7 +5705,9 @@ const BASE_EVENTS = [
     id: 'childhood_sport_tryout',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.age >= 7 && G.age <= 14 && !G.mem.sport_tryout,
+    // A coach, drills and a team list are a school's, and a town's.
+    when: (G) => G.age >= 7 && G.age <= 14 && !G.mem.sport_tryout &&
+      G.mem.attendedSchool !== false && !G.flags.includes('never_schooled') && G.ruralUrban === 'urban',
     text: 'The coach puts you through the drills. Other kids line up beside you. The tryout is your chance to make the team.',
     choices: [
       {
@@ -5692,7 +5732,8 @@ const BASE_EVENTS = [
     id: 'childhood_reading',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.age >= 6 && G.age <= 10 && !G.mem.childhood_reading,
+    when: (G) => G.age >= 6 && G.age <= 10 && !G.mem.childhood_reading && G.literate &&
+      G.mem.attendedSchool !== false && !G.flags.includes('never_schooled'),
     text: 'You find a book that grabs you and doesn\'t let go. You read it under the covers with a torch. You finish it and immediately turn back to page one.',
     choices: [
       {
@@ -5925,7 +5966,7 @@ const BASE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      G.age <= 49 && G.career !== null && !G.mem.industry_layoffs && G.currentYear >= 1980 && G.age >= 25,
+      G.age <= 49 && formalEmployer(G) && !G.mem.industry_layoffs && G.currentYear >= 1980 && G.age >= 25,
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2008 && G.currentYear <= 2012)
         return 'The financial crisis has reached your industry. Whole departments are being eliminated. The redundancy notices are going out in batches and your name is on the next one.'
@@ -7173,7 +7214,7 @@ const BASE_EVENTS = [
     weight: 3,
     isKey: true,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 10 && G.age <= 18 && !G.mem.ss_fees && G.money < 500,
-    text: 'The head teacher sends you home. The fees for the term haven\'t been paid. You sit in the yard for three days while your mother goes to relatives, to neighbours, to the savings group at the church. The humiliation is specific: the other students watch you leave.',
+    text: (G) => `The head teacher sends you home. The fees for the term haven't been paid. You sit in the yard for three days while your mother goes to relatives, to neighbours, to the savings group${/^christian/.test(G.religion ?? '') ? ' at the church' : ''}. The humiliation is specific: the other students watch you leave.`,
     context: null,
     choices: [
       {
@@ -7246,7 +7287,8 @@ const BASE_EVENTS = [
     id: 'ss_church_community',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 8 && !G.mem.ss_church,
+    when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 8 && !G.mem.ss_church &&
+      /^christian/.test(G.religion ?? ''),
     text: 'Sunday is for church. Not just the service — the after-service, the choir practice, the women\'s fellowship, the youth group, the burial society, the informal lending circle. The church is the neighbourhood\'s skeleton. Your family\'s social life is almost entirely inside its radius.',
     context: null,
     choices: [
@@ -7791,9 +7833,19 @@ const BASE_EVENTS = [
     id: 'cz_late_life_exile',
     phase: 'late_life',
     weight: 4,
-    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 55 && G.flags.includes('refugee') && !G.mem.cz_exile_old,
+    // "Away for longer than you were home" reached a woman abroad 13 of her 60
+    // years, and "your children were born here" one whose seven were all born
+    // before she left. Both are arithmetic the state already holds.
+    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 55 && G.flags.includes('refugee') && !G.mem.cz_exile_old &&
+      G.currentCountry?.name !== G.character.country.name && G.age - 2 * (G.yearsAbroad ?? 0) < 0,
     isKey: true,
-    text: 'You have been away for longer than you were home. The country you left exists now as photographs, phone calls, and the specific way you cook certain things. Your children were born here, in this country that took you in. They speak the new language without an accent. The old place lives in you alone.',
+    text: (G) => {
+      const leftAt = G.age - (G.yearsAbroad ?? 0)
+      const bornHere = (G.children ?? []).some(c => (c.ageAtBirth ?? 0) >= leftAt)
+      return bornHere
+        ? 'You have been away for longer than you were home. The country you left exists now as photographs, phone calls, and the specific way you cook certain things. Your children were born here, in this country that took you in. They speak the new language without an accent. The old place lives in you alone.'
+        : 'You have been away for longer than you were home. The country you left exists now as photographs, phone calls, and the specific way you cook certain things. The old place lives in you, and in fewer people every year.'
+    },
     choices: [
       {
         text: 'The exile is permanent — make peace with it',
@@ -8775,7 +8827,9 @@ const BASE_EVENTS = [
     id: 'lawsuit_wrongful_termination',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 30 && G.career && (G.career.level ?? 0) >= 2 && !G.mem.lawsuit_wrongful_term,
+    // An HR department and a labour court: reached an Angolan farmer.
+    when: (G) => G.age >= 30 && formalEmployer(G) && (G.career.level ?? 0) >= 2 && !G.mem.lawsuit_wrongful_term &&
+      wasWealthy(G.currentCountry, G.currentYear),
     text: 'A former employee has filed a wrongful termination suit. The claims are partially accurate and partially not. HR is involved. You hire a lawyer on a Wednesday afternoon.',
     isKey: true,
     choices: [
@@ -8883,11 +8937,17 @@ const BASE_EVENTS = [
     // at 64 to a man married 37 years, and at 65 to one married 45 — both of
     // whom had buried their own parents by then. It is a first-meeting event;
     // it has to fire near the start.
+    // Professions, politics and a dog's name reached a Khmu upland villager in
+    // 1979. That dinner belongs to a town; the village has its own meeting.
     when: (G) => G.partner && !G.mem.inlaw_met && G.age >= 20 && (G.partner.years ?? 0) <= 2,
     isKey: true,
     // Bringing wine is not a universal courtesy, and in most of the countries
     // this game covers it is the wrong thing to arrive holding.
     text: (G) => {
+      const townish = G.ruralUrban === 'urban' &&
+        (wasWealthy(G.currentCountry, G.currentYear) || (G.wealthTier ?? 0) >= 3)
+      if (!townish)
+        return 'The first meal with your partner\'s family. Their mother watches how you eat. Their father asks who your people are and where they are from, and listens to that answer longer than to anything else you say. You brought what your own mother told you to bring.'
       const dry = /muslim|hindu/.test(G.religion ?? '')
       return dry
         ? 'Dinner at your partner\'s parents\' house. You\'ve prepared. You know their professions, their politics (roughly), which of them does the talking. You bring sweets from the good place and hope it is the right good place.'
@@ -8904,7 +8964,11 @@ const BASE_EVENTS = [
     id: 'inlaw_overbearing',
     phase: null,
     weight: 5,
-    when: (G) => G.partner && G.mem.inlaw_met && !G.mem.inlaw_overbearing,
+    // "Your apartment, your career choices", three calls a week: a town, a
+    // telephone, and a life with a career in it to have opinions about.
+    when: (G) => G.partner && G.mem.inlaw_met && !G.mem.inlaw_overbearing &&
+      G.ruralUrban === 'urban' && hasTech(G.currentCountry, 'landline', G.currentYear) &&
+      (wasWealthy(G.currentCountry, G.currentYear) || (G.wealthTier ?? 0) >= 3),
     text: 'Your partner\'s mother calls three times a week. She has opinions about your apartment, your career choices, your plan (or lack of one) for children. She means well. That doesn\'t make it easier.',
     choices: [
       { text: 'Talk to your partner about setting limits', tag: null, outcome: 'Your partner defends their mother first, then reluctantly agrees. The calls reduce to once a week.', effect: (p) => { p.m += 3; p.partnerRel(-3); p.setMem('inlaw_overbearing', true) } },

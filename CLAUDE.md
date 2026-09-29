@@ -589,7 +589,7 @@ Verify with:
 
 ```
 npm run build            # must pass
-npm test                 # 416 tests, including the simulation guardrails
+npm test                 # 429 tests, including the simulation guardrails
 npm run test:fast        # unit + static audits, seconds not minutes
 npm run test:sim         # the slow guardrails: register mix, prose coverage, demography
 npm run check-flags      # 3385 covered / 0 partial / 0 orphaned
@@ -1369,6 +1369,43 @@ life-skeleton beats), which stays queued. Victory Day went from 0 to 11 of 11.
 Same class, one layer up: a defining national period written at weight 3 over
 an eight-year window reaches almost nobody. The Proceso in Argentina reached 0
 of 15 Buenos Aires adults who lived through it; at weight 15, 9 and 5 of 15.
+
+### Pass nine: reading the lives the new modules were written for
+
+The 21 groups closed at the end of pass eight were played — 63 lives, forced to
+the group with `createCharacter({ ethnicity })` (`play.mjs` takes `"eth"`) — and
+read end to end. The new modules fired well; what the reading found was the
+engine and the older corpus misdescribing these characters, about sixty
+defects, nearly all of one shape: **a guard reading a category as a fact.**
+
+- `conflict_zone` read as "at war this year" (ceasefires and a refugee camp in
+  1969-79 Central African Republic, whose war begins in 1996); `subsaharan` read
+  as a cuisine (jollof in Eritrea) and a church (Sunday service for a Sunni
+  Afar); `developing_unstable` read as a coup history (a general replaced by a
+  general in colonial Papua); archetype read as a grid (three separate
+  electrifications of one Visayan village). Each now reads the fact:
+  `G.conflictRisk`, the live region, the religion, `COUP_YEARS`,
+  `villageElectrificationDue` (`src/data/events/_electrification.js`, one latch
+  shared by all four village-electricity events) and `RURAL_TECH_OVERRIDES`.
+- New history helpers: `choleraEndemic` (cholera reached West Africa in 1970;
+  a Guinean child of 1955 was dying of it), `hasPassengerRail` (sonder trains
+  in Djibouti), `adjustmentProgrammeNow` (Algeria "signed in Washington" in
+  1984; its programmes were 1989 and 1994).
+- **Names by community** (`src/data/groupNames.js`): 91 group and 15 faith pools
+  resolved through `nameSourceCountry`, so the character, parents, siblings,
+  partner and children agree. Every Muslim Eritrean had been named from a
+  Tigrinya Christian pool, an Afar from a Somali one; Papua New Guinea's
+  surnames were its prime ministers. `surnameGrammar` carries the -ova rule to
+  Russian families born outside Russia and to Central Asia.
+- Literacy is written back when schooling succeeds; a secondary graduate had
+  been told "the rest of it is a wall".
+- Sixteen birthplaces with `homeOf` for groups whose only rural place was the
+  wrong one (every rural Lao was born in Vientiane).
+
+**The lesson worth keeping: a module written for a group is only as good as
+the thirty thousand lines around it that were written for nobody in
+particular.** Content for a group has to be read *inside a life of that group*,
+because that is the only place the generic content's assumptions show.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`

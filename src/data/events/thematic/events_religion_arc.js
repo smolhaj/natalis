@@ -26,6 +26,10 @@ const HAS_FAITH = (G) =>
 const NON_THEISTIC = new Set(['buddhist', 'jain', 'folk_religion', 'animist'])
 const THEISTIC = (G) => !NON_THEISTIC.has(G.religion)
 
+// Faiths with no institution above the household or the village to
+// investigate, apologise, or close ranks.
+const NO_INSTITUTION = new Set(['animist', 'folk_religion', 'rastafari'])
+
 const RELIGIOUS_PERSONAL_STATUS = [
   'Egypt', 'Saudi Arabia', 'Iran', 'Iraq', 'Jordan', 'Syria', 'Lebanon', 'Yemen',
   'Kuwait', 'Qatar', 'Bahrain', 'UAE', 'Oman', 'Libya', 'Sudan', 'Algeria',
@@ -120,9 +124,14 @@ export const RELIGION_ARC_EVENTS = [
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 35 && G.age <= 65 &&
       !G.flags.includes('completed_hajj') && !G.flags.includes('hajj_complete') &&
       G.currentYear - (G.mem?.hajjDeferredYear ?? -99) >= 5 && G.money > 4000,
-    text: 'You have been saving for years. The fifth pillar. You arrange everything — the visa, the accommodation, the time off work, someone to care for your family. When you finally arrive in Mecca and join the river of people circling the Ka\'aba, you feel a scale that personal faith rarely reaches.',
+    // The body used to arrive in Mecca and circle the Ka'aba, and then offered
+    // "Wait" — so a character who waited had been, and then made a first hajj
+    // again through `rel_muslim_hajj`. The body stops at the threshold now; the
+    // arrival belongs to the choice that makes it. Both events latch on
+    // `completed_hajj` and share `mem.hajjDeferredYear`.
+    text: 'You have been saving for years. The fifth pillar. The money is nearly enough now, and the rest of it is arrangements — the visa, the accommodation, the time off work, someone to care for your family. Your name can go on this year\'s list if you give it.',
     choices: [
-      { text: 'Make the Hajj', tag: 'devout', outcome: 'The tawaf before dawn. Millions of people saying the same words in the same direction. You understand in your body what the mind has held as abstraction. You return different.', effect: (p) => { p.mo -= 5000; p.m += 22; p.karma += 12; p.h -= 5; p.addFlag('devout'); p.addFlag('completed_hajj'); p.setMem('hajj_arc', true) } },
+      { text: 'Make the Hajj', tag: 'devout', outcome: 'In Mecca you join the river of people circling the Ka\'aba. The tawaf before dawn. Millions of people saying the same words in the same direction. You understand in your body what the mind has held as abstraction. You return different.', effect: (p) => { p.mo -= 5000; p.m += 22; p.karma += 12; p.h -= 5; p.addFlag('devout'); p.addFlag('completed_hajj'); p.setMem('hajj_arc', true) } },
       { text: 'Wait until the time is more right', tag: null, outcome: 'The pillar does not expire. You continue saving.', effect: (p) => { p.setMem('hajjDeferredYear', p._state.currentYear) } },
     ],
     effect: null,
@@ -232,7 +241,8 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_reading_contradicts_teaching',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 15 && G.age <= 25 && HAS_FAITH(G) && !G.flags.includes('left_religion') && !G.mem?.reading_contradicts,
+    // "You read something" needs somebody who reads.
+    when: (G) => G.age >= 15 && G.age <= 25 && HAS_FAITH(G) && G.literate && G.mem?.attendedSchool !== false && !G.flags.includes('left_religion') && !G.mem?.reading_contradicts,
     text: 'You read something — a book on evolutionary biology, a history of religious texts, a comparative religion course — that contradicts what you were taught. Not at the edges but at the foundation. The information is well-sourced. You cannot dismiss it. You have to decide what to do with it.',
     choices: [
       { text: 'Integrate it — faith can survive facts', tag: null, outcome: 'You find a way to hold both. It requires work. The faith that emerges is less certain and more yours.', effect: (p) => { p.e += 8; p.m -= 3; p.r += 4; p.addFlag('faith_crisis'); p.setMem('reading_contradicts', true) } },
@@ -251,8 +261,15 @@ export const RELIGION_ARC_EVENTS = [
     // and then the whole chain behind it — telling the family he no longer
     // believed at 27, the freedom and the loss at 29, being cultural without
     // belief at 36, and year texture noticing that he does not pray.
-    when: (G) => G.age >= 18 && G.age <= 45 && HAS_FAITH(G) && !G.flags.includes('left_religion') && !G.mem?.leader_betrayal,
-    text: 'The religious leader you trusted is found to have been taking money. It is not a large amount and that is somehow the worst detail. The institution closes ranks around him. The investigation is slow and the apology, when it comes, is insufficient. You are left with the question of whether the institution and the faith are the same thing, and whether you can separate them.',
+    //
+    // "The institution closes ranks" needs an institution. An animist Khmu
+    // household, a folk-religion one, a Rastafarian yard have no hierarchy to
+    // close them, and Sunni Islam has no clergy above the mosque — what it has
+    // is the committee that hired the imam and the men who sit on it.
+    when: (G) => G.age >= 18 && G.age <= 45 && HAS_FAITH(G) && !NO_INSTITUTION.has(G.religion) && !G.flags.includes('left_religion') && !G.mem?.leader_betrayal,
+    text: (G) => G.religion === 'muslim_sunni' || G.religion === 'muslim_other'
+      ? 'The imam you trusted is found to have been taking money from the mosque fund. It is not a large amount and that is somehow the worst detail. The committee closes ranks around him — he is somebody\'s cousin, and the committee is the cousins. Nothing is announced. He leads the Friday prayer the following week as if nothing were known. You are left with the question of whether the mosque and the faith are the same thing, and whether you can separate them.'
+      : 'The religious leader you trusted is found to have been taking money. It is not a large amount and that is somehow the worst detail. The institution closes ranks around him. The investigation is slow and the apology, when it comes, is insufficient. You are left with the question of whether the institution and the faith are the same thing, and whether you can separate them.',
     choices: [
       { text: 'Leave the institution but not the faith', tag: null, outcome: 'You find a smaller congregation. Or you practice at home. The faith survives the institution, barely.', effect: (p) => { p.m -= 8; p.r += 8; p.setMem('leader_betrayal', true) } },
       { text: 'Leave both — they cannot be separated', tag: null, outcome: 'You stop. The question of what you believe is still open. You will return to it, differently.', effect: (p) => { p.m -= 12; p.e += 5; p.addFlag('left_religion'); p.setMem('leader_betrayal', true) } },

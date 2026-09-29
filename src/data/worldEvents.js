@@ -183,13 +183,29 @@ export const WORLD_EVENTS = [
     id: 'iraq_war',
     name: 'Iraq War',
     years: [2003, 2011],
-    archetypes: ['conflict_zone', 'wealthy_gulf'],
-    countries: null,
+    // Occupation is a fact about Iraq. Matched by archetype it reached every
+    // conflict zone and every Gulf state for nine years, and a Filipina working
+    // in Kuwait in 2011 was told the invasion was beginning. The rest of the
+    // Gulf gets `iraq_war_news` below: the same night, from across a border.
+    archetypes: 'all',
+    countries: ['Iraq'],
     narrative: 'The invasion begins with televised air strikes on Baghdad in the night. The regime collapses in weeks. The chaos that follows takes years. You watch the map of a country come apart into something with no clear centre. The word reconstruction appears in press releases that do not match the images.',
     context: 'The US-led invasion of Iraq in March 2003 removed Saddam Hussein in three weeks. The subsequent occupation was characterized by de-Ba\'athification, which disbanded the Iraqi military and civil service, and created the conditions for insurgency. No weapons of mass destruction — the stated justification for the war — were found. An estimated 150,000–600,000 Iraqi civilians died through 2006 in violence directly related to the war. The sectarian civil war of 2006–08 killed tens of thousands more. US forces formally withdrew in 2011; the instability they left enabled the rise of the Islamic State in 2013–14.',
     effect: (p) => { p.h -= 10; p.m -= 12; p.w -= 8; },
     addFlags: ['lived_through_occupation'],
     minAge: 0,
+  },
+  {
+    id: 'iraq_war_news',
+    name: 'Iraq War',
+    years: [2003, 2004],
+    archetypes: ['wealthy_gulf'],
+    countries: null,
+    narrative: 'The war next door begins on the television in the night: air strikes on Baghdad, then a column of vehicles on a desert road you could drive to. In the morning the shops open and the traffic is the traffic, and the thing is still going on a few hundred kilometres north.',
+    context: 'The US-led invasion of Iraq in March 2003 was staged largely from the Gulf: the ground forces crossed from Kuwait, and the air campaign was run from bases in Qatar, Saudi Arabia, Bahrain and the UAE. Gulf governments allowed the bases and said little in public. The occupation, the sectarian war that followed it and the rise of the Islamic State were all watched from next door.',
+    effect: (p) => { p.m -= 2 },
+    addFlags: [],
+    minAge: 8,
   },
   {
     id: 'arab_spring',
@@ -296,9 +312,20 @@ export const WORLD_EVENTS = [
     id: 'european_refugee_crisis',
     name: 'European Refugee Crisis',
     years: [2015, 2017],
-    archetypes: ['conflict_zone', 'developing_unstable'],
-    countries: null,
-    when: (G) => !['Central America', 'South America', 'Caribbean', 'North America'].includes(G.character.country.region),
+    // The countries the 2015-16 crossings actually came from, at roughly the
+    // share of each population that made them. Matched by archetype, with no
+    // rate, it put every Pakistani and every Bangladeshi alive in 2015 into a
+    // boat, and a Papuan in Port Moresby was emigrated to Rome.
+    archetypes: 'all',
+    countries: ['Syria', 'Afghanistan', 'Iraq', 'Eritrea', 'Somalia', 'Sudan', 'Nigeria', 'Pakistan', 'Mali', 'Guinea', 'Ivory Coast', 'Senegal', 'Bangladesh'],
+    when: (G) => {
+      const RATE = {
+        Syria: 0.03, Eritrea: 0.02, Afghanistan: 0.01, Iraq: 0.01, Somalia: 0.006,
+        Sudan: 0.003, Guinea: 0.003, 'Ivory Coast': 0.002, Mali: 0.002, Senegal: 0.002,
+        Nigeria: 0.0008, Pakistan: 0.0005, Bangladesh: 0.0003,
+      }
+      return !G.inPrison && Math.random() < (RATE[G.currentCountry?.name] ?? 0)
+    },
     narrative: 'You are among hundreds of thousands crossing the Mediterranean in an inflatable boat. The crossing takes hours. Some boats sink. Whether you reach land, and which land, and what happens when you do — these are decided by wind and coast guards and the politics of countries that are not yours.',
     context: 'The 2015–16 European refugee crisis saw over 1.3 million people seek asylum in Europe — the largest influx since World War II. Most fled Syria, Afghanistan, and Eritrea. The Aegean and central Mediterranean were the main crossings; an estimated 3,771 people drowned in the Mediterranean in 2015 alone. The crisis divided the EU: Germany accepted over one million asylum seekers; Hungary, Poland, and other Eastern European states built fences and refused EU-mandated relocation quotas. The political backlash fuelled the rise of far-right parties across Europe and shaped elections for a decade.',
     effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('refugee'); p.emigrateTo(['Germany', 'Germany', 'Sweden', 'Italy', 'Greece'], { residency: 'asylum_seeker' }) },
@@ -1851,7 +1878,10 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m += 12; p.karma += 5; p.addFlag('voted_end_apartheid'); p.addFlag('post_apartheid_generation'); },
     addFlags: ['voted_end_apartheid'],
     minAge: 18,
-    when: (G) => !G.flags.includes('voted_end_apartheid'),
+    // The ballot was for citizens. An undocumented Mozambican in Johannesburg
+    // was queuing for six hours in this and then "voted" on the death screen.
+    when: (G) => !G.flags.includes('voted_end_apartheid') &&
+      (G.residencyStatus ?? 'citizen') === 'citizen' && G.age >= 18,
   },
 
   {
@@ -3209,7 +3239,7 @@ export const WORLD_EVENTS = [
     // colonised. It is true only where the flag actually changed recently.
     when: (G) => {
       const indep = INDEPENDENCE_YEAR[(G.currentCountry ?? G.character?.country)?.name]
-      return indep != null && G.currentYear - indep >= 5 && G.currentYear - indep <= 25 &&
+      return indep != null && G.currentYear - indep >= 9 && G.currentYear - indep <= 20 &&
         !G.flags.includes('independence_disillusionment')
     },
   },

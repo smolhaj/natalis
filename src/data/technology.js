@@ -265,6 +265,29 @@ export const TECH_OVERRIDES = {
   cassette: { 'Oman': 1978, 'Bhutan': 1985 },
 }
 
+// Where the countryside's date is not the capital's plus a lag. The flat rural
+// lag in hasTech() is a guess about the length of a wire, and in some countries
+// the wire was never run: rural Niger, the Central African Republic, Angola
+// and Mozambique are still mostly off-grid, and a village in highland Papua New
+// Guinea is lit by a solar panel if it is lit at all. Elsewhere the grid went
+// out later than the lag says (upland Laos, the Philippine barrios under the
+// 1970s-80s cooperatives) or earlier (Algeria's post-independence programme).
+// A value here replaces the lag outright; 9999 is "not in any year this game
+// reaches, for an ordinary village household".
+export const RURAL_TECH_OVERRIDES = {
+  electricity: {
+    'Laos': 2005,                     // rural access went from ~16% in 1995 to most villages by the late 2000s
+    'Papua New Guinea': 9999,         // under a fifth of the country on any grid, even now
+    'Philippines': 1990,              // the barangay electrification of the 1970s-80s
+    'Algeria': 1975,                  // the post-1970 rural programme, near-universal by the mid-80s
+    'Bhutan': 2008,                   // the rural push ran from the late 1990s to 2013
+    'Niger': 9999,
+    'Mozambique': 9999,
+    'Angola': 9999,
+    'Central African Republic': 9999,
+  },
+}
+
 /** The year `tech` became ordinary in a household in `country`. */
 export function techYear(country, tech) {
   const row = BASE[tech]
@@ -302,7 +325,13 @@ export function hasTech(country, tech, year, opts = {}) {
   if (y >= 9000) return false
   const arch = typeof country === 'string' ? null : country?.archetype
   const poor = !['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(arch)
-  if (opts.rural && !NO_RURAL_LAG.has(tech)) {
+  const ruralOver = opts.rural
+    ? RURAL_TECH_OVERRIDES[tech]?.[typeof country === 'string' ? country : country?.name]
+    : undefined
+  if (ruralOver !== undefined) {
+    if (ruralOver >= 9000) return false
+    y = ruralOver
+  } else if (opts.rural && !NO_RURAL_LAG.has(tech)) {
     const lag = poor ? 12 : 5
     y += HALF_RURAL_LAG.has(tech) ? Math.round(lag / 2) : lag
   }

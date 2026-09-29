@@ -5,6 +5,11 @@
 
 import { hasTech } from '../../technology.js'
 
+// Somebody who finished secondary school, or went further, can read a form.
+const SCHOOLED_PAST_PRIMARY = (G) =>
+  ['secondary', 'university', 'graduate'].includes(G.education?.level) ||
+  G.flags.includes('graduated_hs') || G.flags.includes('university_graduate')
+
 export const CONSEQUENCE_EVENTS = [
 
   // ── ILLITERACY ──────────────────────────────────────────────────────────────
@@ -26,7 +31,9 @@ export const CONSEQUENCE_EVENTS = [
     id: 'illiterate_employment_barrier',
     phase: 'young_adult',
     weight: 4,
-    when: (G) => !G.literate && !G.flags.includes('became_literate') && G.age >= 18 && G.age <= 30 && !G.mem?.illiterate_job,
+    // `G.literate` is the birth roll; a character can be schooled past it. A
+    // secondary-school graduate stood in front of these twelve boxes.
+    when: (G) => !G.literate && !G.flags.includes('became_literate') && !SCHOOLED_PAST_PRIMARY(G) && G.age >= 18 && G.age <= 30 && !G.mem?.illiterate_job,
     text: 'The job posting requires you to fill in a form. You sit with the form for a long time. The pen is in your hand. There are twelve boxes. You can fill in your name and the date. The rest of it is a wall. The person at the desk glances over and you can see the moment they understand.',
     choices: [
       { text: 'Find a literacy class — this cannot continue', tag: null, outcome: 'The classes are three evenings a week. You are the oldest student by ten years. By the end of the year you can read a menu and a payslip and a letter from school.', effect: (p) => { p.m -= 5; p.e += 8; p.addFlag('became_literate'); p.addFlag('adult_literacy'); p.setMem('illiterate_job', true) } },
@@ -39,7 +46,9 @@ export const CONSEQUENCE_EVENTS = [
     id: 'illiterate_late_discovery',
     phase: 'midlife',
     weight: 3,
-    when: (G) => !G.literate && !G.flags.includes('became_literate') && G.age >= 35 && G.age <= 50 && !G.mem?.illiterate_late,
+    when: (G) => !G.literate && !G.flags.includes('became_literate') && !SCHOOLED_PAST_PRIMARY(G) &&
+      G.children?.some(c => c.alive !== false && c.age >= 5 && c.age <= 12) &&
+      G.age >= 35 && G.age <= 50 && !G.mem?.illiterate_late,
     text: 'Your child brings home a school reader and asks you to help. You have been managing this conversation for years — always busy, always tired. Tonight the book is on the table and your child is waiting and you cannot move around it anymore.',
     choices: [
       { text: 'Tell your child the truth', tag: null, outcome: 'The silence after is short. Your child reads to you instead. Something between you shifts into something more honest.', effect: (p) => { p.m -= 5; p.r += 5; p.karma += 8; p.addFlag('became_literate'); p.setMem('illiterate_late', true) } },

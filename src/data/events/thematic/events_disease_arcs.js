@@ -1,3 +1,5 @@
+import { choleraEndemic } from '../../history.js'
+
 export const DISEASE_ARC_EVENTS = [
   // ── PART A: Cholera arc ───────────────────────────────────────────────────
 
@@ -6,8 +8,13 @@ export const DISEASE_ARC_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) =>
-      ['developing_urban', 'developing_unstable', 'subsaharan'].includes(G.character.country?.archetype) &&
-      G.currentYear >= 1850 && G.currentYear <= 1950 &&
+      // Cholera circulated where it circulated (history.js), not wherever a
+      // country is poor now — this put bad wells on a street in 1940s Papua
+      // New Guinea, which had no cholera until 2009. "Three families on your
+      // street" and the standpipe are a town's prose.
+      choleraEndemic(G.currentCountry ?? G.character.country, G.currentYear) &&
+      G.ruralUrban !== 'rural' &&
+      G.currentYear >= 1855 && G.currentYear <= 1950 &&
       G.age >= 5 &&
       !G.mem?.choleraSeason,
     text: `The well. A doctor in London named John Snow proved the connection in 1854 — contaminated water, not bad air — but the knowledge travels slowly and the infrastructure to act on it travels more slowly still. This summer three families on your street lost someone. You know which wells to avoid. Knowing and being able to afford otherwise are different things.`,
@@ -41,9 +48,11 @@ export const DISEASE_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) =>
-      (G.flags.has('cholera_survivor') ||
-        (['developing_urban', 'developing_unstable', 'subsaharan'].includes(G.character.country?.archetype) &&
-          G.currentYear >= 1830 && G.currentYear <= 1900)) &&
+      // Its only choice is "You have already had it and survived", so it needs
+      // a survivor; and it needs the cholera to be here, now.
+      G.flags.has('cholera_survivor') &&
+      choleraEndemic(G.currentCountry ?? G.character.country, G.currentYear) &&
+      G.ruralUrban !== 'rural' &&
       !G.mem?.choleraEpidemic,
     text: `It moves through the neighbourhood faster than news of it does. The symptoms are specific and terrible: the dehydration that comes in hours, not days. The particular blue-grey the skin turns. The rice-water stool the medical books describe. The doctors call it Asiatic cholera, from British textbooks; it has been in this place far longer than that name has. Your aunt dies on a Wednesday. By Saturday her neighbour is gone too. You watch this and understand that some years are not safe to be alive in.`,
     choices: [

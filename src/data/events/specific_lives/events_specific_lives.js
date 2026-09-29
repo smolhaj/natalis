@@ -1,3 +1,4 @@
+import { numberWord } from '../_words.js'
 // events_specific_lives.js
 // Extreme specificity: events that could only fire for one precise combination
 // of person, place, and time. Each one is a life no generic event can reach.
@@ -2430,9 +2431,14 @@ export const SPECIFIC_LIFE_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.includes('emigrated') &&
+      // Still abroad, long enough for the question, and with children here —
+      // it said "forty years" to somebody twenty-six years out.
+      (G.currentCountry?.name ?? G.character.country.name) !== G.character.country.name &&
+      (G.yearsAbroad ?? 0) >= 20 &&
+      G.children?.some(c => c.alive !== false) &&
       G.age >= 65 &&
       !G.mem?.sl_ll_country_q,
-    text: 'The question of where you want to be buried comes up, not dramatically, but in a conversation about practicalities. You realise you have been living in this country for forty years and have not decided. The country you came from is a different country now — the government changed, the language changed slightly, the neighbourhood you were from has been rebuilt. The country you are in is where your children are. Both of these facts are simultaneously true and do not resolve into an answer.',
+    text: (G) => `The question of where you want to be buried comes up, not dramatically, but in a conversation about practicalities. You realise you have been living in this country for ${numberWord(G.yearsAbroad)} years and have not decided. The country you came from is a different country now — the government changed, the language changed slightly, the neighbourhood you were from has been rebuilt. The country you are in is where your children are. Both of these facts are simultaneously true and do not resolve into an answer.`,
     choices: [
       {
         text: 'Here. The life was here. The end should be here.',
