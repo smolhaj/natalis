@@ -26,6 +26,9 @@ import { PRISON_FLAGS } from './prison.js'
 import { WORLD_EVENT_FLAGS } from './world_events.js'
 import { LIFECYCLE_FLAGS } from './lifecycle.js'
 import { NEW_ROSTER_FLAGS } from './new_roster.js'
+import { UNWRITTEN_WA_FLAGS } from './unwritten_wa.js'
+import { UNWRITTEN_AMERICAS_FLAGS } from './unwritten_americas.js'
+import { UNWRITTEN_ESA_FLAGS } from './unwritten_esa.js'
 
 export const FLAG_REGISTRY = {
   ...IDENTITY_FLAGS,
@@ -38,6 +41,9 @@ export const FLAG_REGISTRY = {
   ...WORLD_EVENT_FLAGS,
   ...LIFECYCLE_FLAGS,
   ...NEW_ROSTER_FLAGS,
+  ...UNWRITTEN_WA_FLAGS,
+  ...UNWRITTEN_AMERICAS_FLAGS,
+  ...UNWRITTEN_ESA_FLAGS,
 }
 
 export {
