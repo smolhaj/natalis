@@ -13,6 +13,58 @@ function inDisasterZone(character, salt, percent) {
   return h % 100 < percent
 }
 
+// The Sahel droughts struck the semi-arid belt, not whole countries. Nigeria
+// was listed whole, so a Yoruba in Ibadan and an Igbo in Enugu — rainforest,
+// eight hundred kilometres from the desert edge — were told the herd was dead
+// on the road south, and the death screen said "Lived through the Sahel
+// Drought". Where the roster has a place, the place decides; where it does
+// not, the peoples of the far north stand in for it. Senegal's Casamance is
+// humid forest south of the Gambia and is not Sahel either.
+const SAHEL_NIGERIA = new Set(['North Nigeria', 'Northeast Nigeria'])
+function inSahelBelt(G) {
+  const country = G.currentCountry?.name ?? G.character?.country?.name
+  const region = G.place?.region
+  if (country === 'Nigeria') {
+    if (region) return SAHEL_NIGERIA.has(region)
+    return G.ethnicity === 'hausa_fulani' || G.ethnicity === 'kanuri'
+  }
+  if (country === 'Senegal' && region === 'Casamance') return false
+  return true
+}
+
+// When HIV became a visible epidemic — funerals people could count — by country.
+// East/Central Africa mid-1980s; southern Africa rising from about 1990 to a
+// peak after 2000; West Africa, the Sahel and the Horn later and lower (AIDS_LOW
+// takes the quieter narrative). Countries with sub-1% prevalence throughout
+// (Senegal, Niger, Eritrea, Somalia, Sudan) are left out.
+const AIDS_ONSET = {
+  'Uganda': 1985, 'Zambia': 1986, 'Tanzania': 1987, 'Rwanda': 1987, 'Zimbabwe': 1987,
+  'DR Congo': 1987, 'Kenya': 1988, 'Central African Republic': 1988,
+  'Ivory Coast': 1991, 'Namibia': 1992, 'South Africa': 1994,
+  'Mozambique': 1995, 'Cameroon': 1995, 'Togo': 1995, 'Burkina Faso': 1994,
+  'Nigeria': 1996, 'Ghana': 1996, 'Ethiopia': 1995, 'Djibouti': 1996, 'Chad': 1998, 'Benin': 1998,
+  'Sierra Leone': 2000, 'Liberia': 2000, 'Guinea': 2000, 'Mali': 2000, 'Angola': 2000,
+}
+const AIDS_LOW = new Set([
+  'Nigeria', 'Ghana', 'Togo', 'Benin', 'Burkina Faso', 'Sierra Leone', 'Liberia', 'Guinea', 'Mali',
+  'Chad', 'Ethiopia', 'Djibouti', 'Angola', 'Cameroon',
+])
+
+// Net oil exporters in 1973-75: OPEC's members then, plus the non-OPEC
+// exporters of the period. Nigeria joined OPEC in 1971, Gabon in 1975.
+const OIL_EXPORTERS_1973 = new Set([
+  'Nigeria', 'Angola', 'Algeria', 'Libya', 'Venezuela', 'Iraq', 'Iran', 'Indonesia',
+  'Ecuador', 'Saudi Arabia', 'Kuwait', 'Qatar', 'UAE', 'Bahrain', 'Oman',
+  'Trinidad and Tobago', 'Syria',
+])
+
+// The Delta was inside Biafra.
+function biafraDelta(state) {
+  const pl = state?.currentPlace ?? state?.character?.birthPlace
+  const id = typeof pl === 'string' ? pl : pl?.id
+  return id === 'ng_delta' || id === 'ng_port_harcourt'
+}
+
 // Partition moved people across two provinces, Punjab and Bengal, and into
 // the cities that took them in. The refugee branch was a flat 22% of every
 // Indian and Pakistani character, so a Dalit girl in rural Uttar Pradesh — a
@@ -412,13 +464,26 @@ export const WORLD_EVENTS = [
     id: 'aids_epidemic_subsaharan',
     name: 'HIV/AIDS Epidemic',
     years: [1985, 2005],
-    archetypes: ['subsaharan'],
-    countries: null,
-    narrative: 'The funerals start to overlap. You go to three in a month, then five. The disease doesn\'t have a face yet — no one says the word aloud. People you know are sick, then dying, and the word used is not the right word. The children left behind are everywhere. The classroom has empty seats that are not explained.',
-    context: 'HIV/AIDS spread primarily through heterosexual transmission in sub-Saharan Africa from the 1970s. By 2000, the region held 70% of global HIV cases with 10% of world population. Zimbabwe peaked at 25% adult prevalence; Botswana at 37%. Life expectancy in several Southern African countries fell 15–20 years between 1990 and 2005. Antiretroviral therapy, available in wealthy countries after 1996, was largely inaccessible in Africa until the early 2000s. PEPFAR, the US programme launched in 2003, eventually funded treatment for millions. The epidemic created a generation of AIDS orphans estimated at 11 million by 2006.',
-    effect: (p) => { p.h -= 10; p.m -= 12; p.addFlag('aids_generation'); },
+    archetypes: null,
+    countries: Object.keys(AIDS_ONSET),
+    // The epidemic did not arrive everywhere in 1985. It was East and Central
+    // Africa's in the mid-eighties, southern Africa's in the nineties (where it
+    // became the worst in the world), and in West Africa, the Sahel and the
+    // Horn it came later and far lower: Nigeria's adult prevalence peaked near
+    // 5.8% in 2001, against Botswana's 37%. A Nigerian of 1985 going to five
+    // funerals a month was describing Kampala.
+    narrative: (G) => AIDS_LOW.has(G.currentCountry?.name ?? G.character?.country?.name)
+      ? 'There is a sickness people speak about sideways. A man from the next street goes thin over a year and is taken back to his village, and the explanation offered is a spirit, or a woman, or nothing. On the radio there is a song about it with a chorus the children repeat. You know one person who has it, and then two, and the second one you are not supposed to know about.'
+      : 'The funerals start to overlap. You go to three in a month, then five. The disease doesn\'t have a face yet — no one says the word aloud. People you know are sick, then dying, and the word used is not the right word. The children left behind are everywhere. The classroom has empty seats that are not explained.',
+    context: 'HIV/AIDS spread primarily through heterosexual transmission in sub-Saharan Africa from the 1970s, reaching epidemic levels first in East and Central Africa (Uganda, Zambia, Zimbabwe, Tanzania) in the mid-1980s, then in southern Africa in the 1990s, where it became the most severe in the world: Zimbabwe peaked at 25% adult prevalence, Botswana at 37%. West Africa and the Horn saw later, lower epidemics — Nigeria peaked near 5.8% around 2001, Ghana near 3.6%, Senegal below 1%. By 2000 the region held 70% of global HIV cases. Antiretroviral therapy, available in wealthy countries after 1996, was largely inaccessible in Africa until the early 2000s; PEPFAR, launched in 2003, eventually funded treatment for millions. The epidemic left an estimated 11 million AIDS orphans by 2006.',
+    effect: (p) => {
+      const c = p._state?.currentCountry?.name ?? p._state?.character?.country?.name
+      if (AIDS_LOW.has(c)) { p.h -= 3; p.m -= 5 } else { p.h -= 10; p.m -= 12 }
+      p.addFlag('aids_generation')
+    },
     addFlags: ['aids_generation'],
     minAge: 12,
+    when: (G) => G.currentYear >= (AIDS_ONSET[G.currentCountry?.name ?? G.character?.country?.name] ?? 9999),
   },
   {
     id: 'khmer_rouge',
@@ -548,7 +613,11 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.w -= 8; p.m -= 5; p.addFlag('oil_shock_generation'); },
     addFlags: ['oil_shock_generation'],
     minAge: 5,
-    when: (G) => !G.flags.includes('oil_shock_generation'),
+    // The shock was a windfall for the countries that sold the oil — Nigeria's
+    // revenue quadrupled and paid the Udoji arrears — so an exporter reading
+    // "Countries that import oil are paying twice" about itself is backwards.
+    when: (G) => !G.flags.includes('oil_shock_generation') &&
+      !OIL_EXPORTERS_1973.has(G.currentCountry?.name ?? G.character?.country?.name),
   },
   {
     id: 'korean_war',
@@ -694,10 +763,11 @@ export const WORLD_EVENTS = [
     countries: ['Senegal', 'Mali', 'Niger', 'Burkina Faso', 'Chad', 'Nigeria'],
     narrative: 'The rains do not come. Then they do not come again. The wells go down and the herd goes thin and then the herd is gone — sold, or dead on the road south. The millet in the granary is counted now rather than scooped. Children in the village look smaller than they should.',
     context: 'The 1968–74 Sahel drought ran across the semi-arid belt south of the Sahara — Mauritania, Senegal, Mali, Upper Volta (now Burkina Faso), Niger, Chad and northern Nigeria — and killed an estimated 100,000 people directly, with far more dying of associated disease. Six consecutive years of below-average rainfall collapsed pastoral and agricultural systems that had survived centuries of variability; an estimated 3.5 million cattle died. The drought exposed how independence-era states had inherited colonial infrastructure designed for extraction, not food security. International food aid systems were not yet organised for rapid deployment, and the response was slow. The drought accelerated urbanisation as pastoralists moved permanently south toward cities, changing regional settlement patterns for good.',
-    effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); },
+    // The year's harvest is the drought's harvest (tick.js reads mem.harvestFactor).
+    effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); p.setMem('harvestFactor', 0.45) },
     addFlags: ['drought_survivor'],
     minAge: 3,
-    when: (G) => G.stats.wealth < 60,
+    when: (G) => G.stats.wealth < 60 && inSahelBelt(G),
   },
   {
     id: 'ethiopia_wollo_famine_1973',
@@ -720,10 +790,11 @@ export const WORLD_EVENTS = [
     countries: ['Senegal', 'Mali', 'Niger', 'Burkina Faso', 'Chad', 'Sudan', 'Nigeria'],
     narrative: 'The second great drought inside twenty years. Camps form at the edge of towns that have no water to spare either. The photographs that circulate in foreign newspapers are of a country to the east of here, and the concert held on the other side of the world is named for that country, and the food that follows the concert is directed there. What arrives here arrives thinner and later, and not for everyone.',
     context: 'The 1984–85 drought struck the entire Sahel — Mauritania, Senegal, Mali, Burkina Faso, Niger, Chad and Sudan — at the same time as the far more heavily reported famine in Ethiopia. Sudan\'s Darfur and Kordofan regions were among the worst affected; an estimated 250,000 people died there. Niger lost much of its livestock and a third of its cereal harvest. Because international attention and the Band Aid and Live Aid fundraising of 1984–85 were focused overwhelmingly on Ethiopia, relief to the western Sahel was slower and smaller in proportion to need — a pattern of media-directed humanitarian response that shaped the aid system for decades afterwards.',
-    effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); },
+    // The year's harvest is the drought's harvest (tick.js reads mem.harvestFactor).
+    effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); p.setMem('harvestFactor', 0.45) },
     addFlags: ['drought_survivor'],
     minAge: 3,
-    when: (G) => G.stats.wealth < 60,
+    when: (G) => G.stats.wealth < 60 && inSahelBelt(G),
   },
   {
     id: 'sahel_drought_2010',
@@ -733,10 +804,11 @@ export const WORLD_EVENTS = [
     countries: ['Niger', 'Chad', 'Mali', 'Burkina Faso', 'Senegal', 'Nigeria'],
     narrative: 'The scientists call it climate-intensified. The word means little when the wells are dry. The rains arrive late again, and shorter than before, and the lean season starts in March instead of June. The cycle is no longer a cycle — it is a direction.',
     context: 'The 2010 Sahel food crisis left roughly 10 million people short of food across Niger, Chad, Mali and Burkina Faso after a failed 2009 rainy season; Niger alone had some 7 million people affected. A second crisis followed in 2012, compounded by the collapse of northern Mali and by high global grain prices. The Sahel is warming at around 1.5 times the global average rate, and the "lean season" between the exhaustion of one harvest and the arrival of the next has been lengthening. Repeated crises at shortening intervals leave households no time to rebuild herds or seed stocks between them.',
-    effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); },
+    // The year's harvest is the drought's harvest (tick.js reads mem.harvestFactor).
+    effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); p.setMem('harvestFactor', 0.45) },
     addFlags: ['drought_survivor'],
     minAge: 3,
-    when: (G) => G.stats.wealth < 60,
+    when: (G) => G.stats.wealth < 60 && inSahelBelt(G),
   },
   {
     id: 'horn_of_africa_famine_2011',
@@ -2862,16 +2934,34 @@ export const WORLD_EVENTS = [
     years: [1967, 1970],
     archetypes: null,
     countries: ['Nigeria'],
+    // Year-dependent: it fires in whichever year of the war a character first
+    // qualifies, and "running for two years" printed in 1967, a month in.
+    // The Ijaw and the other peoples of the Rivers were inside Biafra's
+    // borders without being Igbo, and suspected by both sides.
     narrative: (G) => {
+      const y = G.currentYear
+      const region = G.place?.region
       if (G.ethnicity === 'igbo') {
-        return 'Biafra has declared independence. The federal blockade is total — nothing goes in, including food. The photographs reaching the world show children with the distended stomachs of kwashiorkor protein deficiency. The word that is not being used is famine. The word that is also not being used is starvation. One to two million Biafran civilians die before the secession collapses in January 1970. The federal government\'s reconciliation policy is announced as "No victor, no vanquished."'
+        if (y <= 1967) return 'The East has declared itself Biafra, and the new flag has half a yellow sun on it. The radio from Enugu says the federal government is finished with killing Igbo people in the North and now it will have to kill them here. By the end of the year the roads out are closed and nothing is coming in, including salt.'
+        if (y >= 1970) return 'In January it is over. The soldiers who come into the town are federal and mostly very young, and some of them are kind, and the radio says no victor, no vanquished. Whatever anybody had in a bank before the war, the new government gives each account twenty pounds. People start again from twenty pounds.'
+        return 'The blockade is total — nothing goes in, including food. The word the adults use at the clinic is kwashiorkor. The photographs reaching the world are of children you could name. The word that is not being used is famine, and nobody here can make the count.'
       }
-      return 'The civil war in the east has been running for two years. The photographs coming out — children with swollen stomachs, field hospitals in churches — have reached international newspapers and produced a new kind of response: emergency aid flows from strangers in Europe and America. The secession will not succeed. The question being argued is what the blockade has made of Nigeria\'s claim to unity.'
+      if (G.ethnicity === 'ijaw' || region === 'Niger Delta') {
+        if (y <= 1967) return 'The East has become Biafra and the creeks are inside it whether anybody here voted for that or not. Biafran soldiers come through asking which side the village is on, and the answer that keeps a village safe is whichever side is asking.'
+        if (y >= 1970) return 'The war ends in January, a long way up the road. Here it ended earlier, when the federal troops came through in 1968, and there are people who were called saboteurs by one army and then by the other and are still not back.'
+        return 'Port Harcourt has fallen to the federal side and the creeks change hands with it. Boro, the Ijaw man who declared a Niger Delta republic for twelve days in 1966, came out of prison to fight for Lagos and was killed near Okrika. The old men argue about whether he died for the right country.'
+      }
+      if (y <= 1967) return 'The Eastern Region has declared itself Biafra. The federal government calls the fighting a police action and says it will be over in weeks. There are soldiers at the bridge who were not there last month, and the Igbo family on your street has already gone east.'
+      if (y >= 1970) return 'The war ends in January. The head of state says on the radio that there is no victor and no vanquished, and nobody around you disagrees out loud. Some of the Igbo traders come back and find their shops as they left them, and some find them let to other people, and the difference depends on who was minding them.'
+      return `The civil war in the east has been running for ${y - 1967 >= 2 ? 'two years' : 'a year'}. The photographs coming out — children with swollen stomachs, field hospitals in churches — have reached foreign newspapers, and emergency aid is flowing from strangers in Europe and America. The question being argued is what the blockade has made of Nigeria\'s claim to unity.`
     },
     context: 'The Republic of Biafra declared independence from Nigeria on 30 May 1967, after anti-Igbo pogroms in Northern Nigeria in 1966 killed an estimated 30,000 people and drove more than a million east. The federal military government imposed a total blockade. Approximately 500,000 to 2 million Biafran civilians died of starvation and disease — mostly children, mostly of kwashiorkor — making it one of the first televised humanitarian catastrophes and a formative event for the modern NGO movement: the founders of Médecins Sans Frontières were French doctors who had served in Biafra. Federal forces entered Biafra\'s capital on 15 January 1970. The post-war policy of "No victor, no vanquished" emphasised reconciliation over accountability.',
     effect: (p) => {
-      if (p._state?.character?.ethnicity === 'igbo') {
+      const st = p._state
+      if (st?.character?.ethnicity === 'igbo') {
         p.m -= 15; p.h -= 14; p.w -= 8; p.addFlag('hunger_childhood'); p.addFlag('war_childhood'); p.addFlag('famine_survivor')
+      } else if (st?.character?.ethnicity === 'ijaw' || biafraDelta(st)) {
+        p.m -= 12; p.h -= 8; p.addFlag('war_childhood')
       } else { p.m -= 8; p.h -= 3 }
     },
     addFlags: [],

@@ -1149,7 +1149,17 @@ export function getNextEvent(state) {
     while (run < DATED_LOOKBACK && firedYears.has(currentYear - 1 - run)) run++
     const p = (final.length ? DATED_FINAL_CHANCE : DATED_EARLY_CHANCE) * DATED_DECAY ** run
     if (chance(p)) {
-      const pick = weightedPick(final.length ? final : dated, G, desire, leaning)
+      let pick = weightedPick(final.length ? final : dated, G, desire, leaning)
+      // The claim is for a light event that would otherwise lose its only
+      // year, not a way past a heavy one. A weight-2 moon landing claimed 1969
+      // from a Biafran child whose weight-999 war was eligible the same year —
+      // undated because it runs three years, so the claim could not see it.
+      // Where an eligible event at weight >= 100 outweighs the dated pick
+      // tenfold, the claimed year goes to it instead.
+      const pw = pick?.weight ?? 1
+      const heavy = pool.filter(e => e !== pick && !e.contemplative && !e.isGlimpse &&
+        (e.weight ?? 1) >= 100 && (e.weight ?? 1) >= 10 * pw)
+      if (heavy.length) pick = weightedPick(heavy, G, desire, leaning)
       // Dated events are anchored. Taking a year the draw gave to another
       // register borrows an anchored year, repaid below, so the register mix
       // over a life is what REGISTER_SHARES says it is.
@@ -2500,6 +2510,18 @@ function harvestLine(s, pool) {
 }
 
 /**
+ * This year's harvest as a multiple of an ordinary one: 0.5 to 1.6, the same
+ * spread the agriculture wage always used. War where the character lives
+ * pulls it down, because fields that cannot be reached are not harvested.
+ */
+export function rollHarvestFactor(s) {
+  let f = 1 + randomBetween(-50, 60) / 100
+  const war = conflictRiskAt(liveCountry(s), s.currentYear) ?? 0
+  if (war >= 0.3) f -= Math.min(0.3, war * 0.3)
+  return Math.round(Math.max(0.3, f) * 100) / 100
+}
+
+/**
  * How much of a year this person can actually reach.
  *
  * Deliberately narrow in range — 1 to 3 — because the budget is a shape, not a
@@ -2820,6 +2842,50 @@ function tickFame(state) {
 
 // ─── Illness risk ─────────────────────────────────────────────────────────────
 
+// Treatments that need somebody trained to give them, where the diagnosis text
+// for the poorest tier says that person is not there. A Nigerian of 68 was told
+// "There is no specialist here" and then offered, and given, a successful
+// coronary bypass; a Nigerian of 22 was told "The nearest person who would
+// understand it as an illness is a long way off" and then offered CBT. The
+// offer has to agree with the sentence above it.
+const NEEDS_SPECIALIST = new Set(['bypass_surgery', 'chemotherapy'])
+const NEEDS_CLINICIAN_FOR_MIND = new Set(['antidepressants', 'cbt', 'combined', 'therapy', 'medication', 'rehab'])
+// Where nobody would call it an illness, what a person actually has.
+const UNNAMED_MIND_OPTIONS = [
+  {
+    id: 'family_and_faith', name: 'Lean on family, and on prayer', cost: 0, successChance: 0.3,
+    happinessEffect: 5, healthEffect: 2,
+    outcomeSuccess: 'People sit with you in the evenings without being asked. Somebody prays over you. It lifts, slowly, from the edges in.',
+    outcomeFailure: 'They are kind and they do not understand it, and you stop explaining. It stays.',
+  },
+  {
+    id: 'carry_on', name: 'Carry on as before', cost: 0, successChance: 0.15,
+    happinessEffect: 0, healthEffect: 0,
+    outcomeSuccess: 'The work has to be done and you do it, and one season it is lighter without your having done anything.',
+    outcomeFailure: 'You keep going. That is the whole of the treatment, and it is not enough.',
+  },
+]
+// Antiretrovirals reached ordinary patients in the poorest health systems with
+// the 2004 treatment rollouts, not in 1987.
+const ART_POOR_YEAR = 2004
+
+function treatmentsAvailable(illness, healthcare, year, named) {
+  const poorest = healthcare === 'very_poor'
+  const poorSystem = healthcare === 'poor' || healthcare === 'very_poor'
+  let list = illness.treatments.filter(t => !t.minYear || year >= t.minYear)
+  if (poorest) list = list.filter(t => !NEEDS_SPECIALIST.has(t.id))
+  if (poorSystem && illness.id === 'hiv') list = list.filter(t => t.id !== 'antiretroviral' || year >= ART_POOR_YEAR)
+  if (!named) {
+    list = list.filter(t => !NEEDS_CLINICIAN_FOR_MIND.has(t.id))
+    list = [...list.filter(t => t.id !== 'mindfulness'), ...UNNAMED_MIND_OPTIONS]
+  }
+  if (!list.length) {
+    // Never an event with no choices: the cheapest thing the year had.
+    list = [...illness.treatments].sort((a, b) => (a.cost ?? 0) - (b.cost ?? 0)).slice(0, 1)
+  }
+  return list
+}
+
 function checkIllnessRisk(state) {
   let updated = state
   for (const illness of ILLNESSES) {
@@ -2985,7 +3051,7 @@ function checkIllnessRisk(state) {
       phase: getPhase(state.age),
       weight: 10,
       text: illnessText,
-      choices: illness.treatments.map(t => {
+      choices: treatmentsAvailable(illness, healthcare, state.currentYear, named).map(t => {
         const adjustedCost = inEraMoney(Math.round(t.cost * costMult), liveCountry(state), state.currentYear)
         const willSucceed = Math.random() < clamp(t.successChance * successMod, 0.05, 0.98)
         // A price the player cannot meet is still a price, and the option is
@@ -3133,6 +3199,15 @@ export function tick(state) {
     maxActionsPerYear: actionBudget(state.age + 1, state),
     yearsAbroad: isAbroad ? (state.yearsAbroad ?? 0) + 1 : (state.yearsAbroad ?? 0),
   }
+
+  // The year's harvest, rolled once for everybody and kept in mem, so the
+  // farm income below, the harvest texture it prints, and any event guard
+  // reading `G.mem.harvestFactor` all describe the same season. It used to be
+  // rolled inside the agriculture wage and thrown away: a Nigerian farmer read
+  // "A good harvest" and `rural_failed_harvest` in the same year. A world event
+  // (a Sahel drought) may lower it before the wage is paid, since world events
+  // apply first. Convention: < 0.85 is a bad year, > 1.1 a good one.
+  s.mem = { ...(s.mem ?? {}), harvestYear: s.currentYear, harvestFactor: rollHarvestFactor(s) }
 
   // Phase transition — desire-aware prose + guaranteed phase entry events
   const prevPhase = getPhase(state.age)
@@ -4003,6 +4078,14 @@ export function tick(state) {
       text: 'The land stayed where it was. Whatever the work is here, it is not that.' }] }
   }
 
+  // Years held, per career, so the death screen can name the work a life was
+  // spent on rather than whatever job it ended in (epitaph.js `lifeWork`).
+  if (s.career && !s.inPrison && s.career.id) {
+    const cy = s.mem?.careerYears ?? {}
+    const prev = cy[s.career.id]
+    s.mem = { ...(s.mem ?? {}), careerYears: { ...cy, [s.career.id]: { title: s.career.title, field: s.career.field ?? null, years: (prev?.years ?? 0) + 1 } } }
+  }
+
   // Career income (actual salary → money)
   if (s.career && !s.inPrison) {
     // Cost-of-living re-denomination. The stored wage is nominal, so a wage set
@@ -4057,7 +4140,9 @@ export function tick(state) {
     let annual = s.career.partTime ? Math.round(s.career.salary * 0.5) : s.career.salary
     // Agriculture: harvest variance ±50% — a good year and a bad year feel completely different
     if (s.career.field === 'agriculture') {
-      const harvestFactor = 1 + randomBetween(-50, 60) / 100
+      const harvestFactor = s.mem?.harvestYear === s.currentYear && typeof s.mem.harvestFactor === 'number'
+        ? s.mem.harvestFactor
+        : rollHarvestFactor(s)
       annual = Math.max(0, Math.round(annual * harvestFactor))
       // A bare pickFrom with no repeat suppression: one Nigerian smallholder
       // read "More than the store will hold" five times and "A poor year" four,

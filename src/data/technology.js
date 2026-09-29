@@ -139,6 +139,11 @@ const BASE = {
   smartphone:        [2010, 2010, 2011, 2013, 2014, 2016, 2017, 2018],
   streaming:         [2013, 2013, 2014, 2016, 2017, 2020, 2021, 2022],
   video_call:        [2012, 2012, 2013, 2014, 2015, 2017, 2018, 2019],
+  // Money sent and held on a phone, through an agent rather than a bank. Not a
+  // thing the rich world ever needed (it had the card and the bank branch), so
+  // 9999 there; everywhere else it is a country-by-country story, overridden
+  // below, and the archetype figure is only the conservative fallback.
+  mobile_money:      [9999, 9999, 9999, 9999, 2016, 2017, 2017, 2019],
 }
 
 const ARCH_INDEX = {
@@ -259,7 +264,25 @@ export const TECH_OVERRIDES = {
   washing_machine: { 'Oman': 1988, 'Iceland': 1962, 'Ireland': 1975, 'Portugal': 1985, 'Greece': 1980, 'Japan': 1968, 'South Korea': 1990 },
   colour_television: { 'Oman': 1978, 'Iceland': 1976, 'South Africa': 1976, 'Israel': 1980, 'India': 1982, 'Bhutan': 1999, 'Ireland': 1972 },
   email: { 'Cuba': 2015, 'North Korea': 9999, 'Bhutan': 2003, 'Oman': 1999 },
-  vcr: { 'Oman': 1985, 'Bhutan': 1995, 'North Korea': 1995 },
+  // Nigeria in the oil years: the video club and the set in the parlour from
+  // the mid-eighties, and Nollywood born straight onto VHS with Living in
+  // Bondage in 1992. Ghana's video halls ran from the same years.
+  vcr: { 'Oman': 1985, 'Bhutan': 1995, 'North Korea': 1995, 'Nigeria': 1985, 'Ghana': 1986 },
+  // M-Pesa launched in Kenya in March 2007 and was ordinary within a year;
+  // Tanzania and Uganda followed; West Africa came late and Nigeria last, where
+  // the central bank kept mobile money inside the banks until the 2018
+  // payment-service-bank licences. Figures are the year it became ordinary for
+  // a household, not the launch.
+  mobile_money: {
+    'Kenya': 2007, 'Tanzania': 2008, 'Uganda': 2009, 'Rwanda': 2011, 'Somalia': 2010,
+    'Zimbabwe': 2012, 'Zambia': 2014, 'Ivory Coast': 2012, 'Cameroon': 2014, 'Mali': 2014,
+    'Senegal': 2015, 'Burkina Faso': 2015, 'Ghana': 2015, 'Guinea': 2016, 'Mozambique': 2016,
+    'DR Congo': 2016, 'Sierra Leone': 2016, 'Togo': 2016, 'Benin': 2016, 'Namibia': 2016,
+    'Niger': 2017, 'Chad': 2018, 'Nigeria': 2018, 'Ethiopia': 2021, 'Eritrea': 9999,
+    'Djibouti': 2019, 'Liberia': 2016, 'Haiti': 2012, 'Philippines': 2010,
+    'Bangladesh': 2013, 'Pakistan': 2014, 'China': 2015, 'India': 2017, 'Afghanistan': 2016,
+    'Myanmar': 2018, 'Nepal': 2018, 'Egypt': 2020, 'Cuba': 9999, 'North Korea': 9999,
+  },
   streaming: { 'North Korea': 9999, 'Cuba': 2021, 'Eritrea': 9999 },
   video_call: { 'North Korea': 9999, 'Cuba': 2020, 'Eritrea': 2022 },
   cassette: { 'Oman': 1978, 'Bhutan': 1985 },

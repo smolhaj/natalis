@@ -215,6 +215,11 @@ export function tryForChild(state, opts = {}) {
   }
   const fertChance = state.partner.married ? 0.65 : 0.38
   if (!chance(fertChance)) {
+    // `lifeCourse` calls this silently for unmarried couples too, where it is
+    // modelling an unplanned pregnancy, not a couple trying — and "You try for
+    // a child" printed for unmarried Muslim couples in 1980s Kano. A couple
+    // the player has not steered only try once they are married.
+    if (opts.silent && !state.partner.married) return state
     // All five of the original lines are about years of this — the counting,
     // the word neither of you says — and all five fired on the FIRST failed
     // attempt, in the same year a couple met, and to couples who already had
@@ -466,6 +471,16 @@ export function applyActivity(state, activityId) {
 
   // ── Therapy booking ──────────────────────────────────────────────────────────
   if (activityId === 'book_therapy') {
+    // There is nobody to book where the health system has no one trained in
+    // it, which is the same sentence the diagnosis prints there. Costs nothing
+    // and no action, because nothing happened.
+    const hc = liveCountry(state)?.healthcare
+    if (hc === 'poor' || hc === 'very_poor' || state.currentYear < 1920) {
+      return { ...state, log: [...state.log, { age: state.age, isKey: false, text: pickFrom(preferUnsaid(state, [
+        'There is nobody here who does this. You ask, and the answer is a pastor, an imam, an aunt, or a doctor in the capital who does something else.',
+        'You look for someone to talk to in that way and there is no such person within any distance you could travel.',
+      ])) }] }
+    }
     const cost = $$(120, state)
     if ((state.money ?? 0) < cost) {
       return { ...state, log: [...state.log, { age: state.age, text: "You can't afford therapy right now.", isKey: false }] }

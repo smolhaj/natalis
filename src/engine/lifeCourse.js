@@ -583,6 +583,33 @@ function courseMarriage(s) {
   return getMarried(s)
 }
 
+// Births outside marriage as a share of what the same couple would have inside
+// it. A flat 0.5 put children before the wedding into Muslim households in
+// 1980s Kano, where a pregnancy outside marriage was a matter for the family
+// and, after 2000, for the Sharia courts. The spread is real: under 2% of
+// births in the Gulf, India or Japan; around a third of all births in Western
+// Europe by 2000; consensual unions the commonest form of family across much
+// of Latin America and the Caribbean; and southern Africa, where bridewealth
+// delays formal marriage for years, higher than West Africa.
+const CONSENSUAL_UNION = new Set([
+  'Mexico', 'Guatemala', 'Honduras', 'El Salvador', 'Nicaragua', 'Panama', 'Costa Rica', 'Colombia',
+  'Venezuela', 'Ecuador', 'Peru', 'Bolivia', 'Paraguay', 'Brazil', 'Argentina', 'Uruguay', 'Chile',
+  'Cuba', 'Dominican Republic', 'Haiti', 'Jamaica', 'Trinidad and Tobago', 'Guyana', 'Belize',
+])
+const SOUTHERN_AFRICA = new Set(['South Africa', 'Namibia', 'Zimbabwe'])
+export function premaritalFactor(s) {
+  const c = liveCountry(s)
+  const year = s.currentYear
+  const faith = String(s.religion ?? s.character?.religion ?? '')
+  if (faith.startsWith('muslim') || c?.archetype === 'wealthy_gulf') return 0.03
+  if (faith === 'hindu' || faith.startsWith('sikh') || c?.archetype === 'wealthy_east') return 0.04
+  if (c?.name && CONSENSUAL_UNION.has(c.name)) return 0.55
+  if (c?.name && SOUTHERN_AFRICA.has(c.name)) return year >= 1970 ? 0.5 : 0.3
+  if (c?.archetype === 'wealthy_west') return year < 1965 ? 0.08 : year < 1980 ? 0.2 : 0.5
+  if (c?.archetype === 'post_soviet') return year < 1990 ? 0.12 : 0.35
+  return 0.12
+}
+
 /** Children, at the rate the place and the decade actually had them. */
 function courseChildren(s) {
   // A partner who has died stays on state as { alive: false } so the grief
@@ -603,7 +630,7 @@ function courseChildren(s) {
   let p = tfr / 11
   if (born >= tfr) p *= 0.2
   else if (born >= tfr - 1) p *= 0.5
-  if (!s.partner.married) p *= 0.5
+  if (!s.partner.married) p *= premaritalFactor(s)
   // A recent birth suppresses the next one; birth intervals are rarely annual.
   const since = s.age - (s.mem?.lcLastBirthAge ?? -99)
   if (since < 2) p *= 0.1

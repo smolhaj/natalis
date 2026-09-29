@@ -162,6 +162,17 @@ export const GROUP_NAMES = {
     female: ['Patience', 'Ibinabo', 'Ebiere', 'Tamara', 'Ibiba', 'Blessing', 'Comfort', 'Gift', 'Mercy', 'Faith', 'Grace', 'Joy', 'Favour', 'Peace', 'Esther', 'Victoria', 'Deborah'],
     surnames: ['Alagoa', 'Alamieyeseigha', 'Amachree', 'Boro', 'Briggs', 'Clark', 'Dagogo', 'Dickson', 'Diri', 'Dokubo', 'Ekiye', 'Horsfall', 'Jonathan', 'Okah', 'Sylva', 'Princewill', 'Pondei'],
   },
+  // Other Nigerians: the roster's `other_nigerian` is drawn from Rural Benue,
+  // so the Christian Middle Belt — Tiv and Idoma — names it. Muslim
+  // other_nigerians (Nupe, Gwari, Ebira and others in the north) name in the
+  // northern Islamic tradition, so this pool yields to `Nigeria:muslim` for
+  // them (`yieldsToFaith`).
+  other_nigerian: {
+    yieldsToFaith: ['muslim'],
+    male: ['Terver', 'Aondona', 'Msughter', 'Terhemba', 'Tersoo', 'Sesugh', 'Aondofa', 'Iorwuese', 'Ochai', 'Oche', 'Adakole', 'Agbo', 'Ogbu', 'Samuel', 'Joseph', 'John', 'Emmanuel', 'Peter', 'Daniel', 'Sunday'],
+    female: ['Iveren', 'Doosuur', 'Mbalamen', 'Dooshima', 'Mwuese', 'Seember', 'Mnena', 'Ngodoo', 'Hembadoon', 'Ene', 'Ojoma', 'Ada', 'Grace', 'Comfort', 'Mary', 'Esther', 'Rose', 'Veronica'],
+    surnames: ['Iorliam', 'Tarka', 'Akume', 'Orkar', 'Ortom', 'Akaa', 'Utsaha', 'Adoga', 'Ochoga', 'Aku', 'Alia', 'Suswam', 'Gemade', 'Ameh', 'Ogbeh', 'Abah', 'Onoja', 'Agbo', 'Ode', 'Iyorchia'],
+  },
   kanuri: {
     male: ['Muhammadu', 'Kashim', 'Babagana', 'Modu', 'Kyari', 'Ali', 'Bukar', 'Goni', 'Mustapha', 'Umara', 'Lawan', 'Abba', 'Kolo', 'Mala', 'Maina', 'Ibrahim', 'Umar', 'Mohammed'],
     female: ['Falmata', 'Yagana', 'Kaltum', 'Hadiza', 'Aisha', 'Amina', 'Fatima', 'Hauwa', 'Zainab', 'Hafsat', 'Maryam', 'Halima', 'Zara', 'Bintu', 'Khadija'],
@@ -601,10 +612,16 @@ export const RELIGION_NAMES = {
 
 /** The key a character's family names are drawn under, or null. */
 export function nameGroupFor(countryName, ethnicity, religion) {
-  if (ethnicity && GROUP_NAMES[ethnicity]) return ethnicity
   const faith = String(religion ?? '').split('_')[0]
   const key = `${countryName}:${faith}`
-  return faith && RELIGION_NAMES[key] ? key : null
+  const faithKey = faith && RELIGION_NAMES[key] ? key : null
+  // A group pool normally wins; one that describes only part of a mixed-faith
+  // group steps aside for the faith pool where the faith names differently.
+  if (ethnicity && GROUP_NAMES[ethnicity]) {
+    if (faithKey && GROUP_NAMES[ethnicity].yieldsToFaith?.includes(faith)) return faithKey
+    return ethnicity
+  }
+  return faithKey
 }
 
 export function namePoolFor(key) {
