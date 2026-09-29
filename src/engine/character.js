@@ -8,6 +8,7 @@ import { religionFor } from '../data/identity.js'
 import { pickUnusedName, surnameFor, nameKey } from './names'
 import { wageIndex, inEraMoney } from '../data/economy.js'
 import { wasWealthy } from '../data/technology.js'
+import { conflictRiskAt } from '../data/history.js'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
 // Extends Set with Array.prototype.includes as an alias for has(), so existing
@@ -538,7 +539,11 @@ export function deriveGenerationalFlags(char) {
   }
 
   // ── Child soldier path — conflict zone, born before 2005 ─────────────────
-  if (archetype === 'conflict_zone' && birthYear < 2005 && Math.random() < 0.15) {
+  // Whether a war will be running during this child's own ages 8-16, not
+  // whether the country is at war today.
+  let warInChildhood = 0
+  for (let y = birthYear + 8; y <= birthYear + 16; y++) warInChildhood = Math.max(warInChildhood, conflictRiskAt(country, y))
+  if (warInChildhood > 0.2 && Math.random() < 0.15) {
     flags.push('child_soldier_path')
   }
 

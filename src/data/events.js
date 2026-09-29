@@ -510,7 +510,7 @@ const BASE_EVENTS = [
     id: 'ec_conflict_zone_birth',
     phase: 'early_childhood',
     weight: 3,
-    when: (G) => G.character.country.archetype === 'conflict_zone',
+    when: (G) => G.conflictRisk > 0.15,
     text: 'The sounds of conflict are your first memories. You learn early that the world outside can be dangerous.',
     context: null,
     choices: null,
@@ -520,7 +520,7 @@ const BASE_EVENTS = [
     id: 'ec_displacement',
     phase: 'early_childhood',
     weight: 2,
-    when: (G) => G.character.country.conflictRisk > 0.2,
+    when: (G) => G.conflictRisk > 0.2,
     text: 'Your family flees. You are too young to understand what is being left behind, but old enough to feel the fear.',
     context: null,
     choices: null,
@@ -1027,7 +1027,7 @@ const BASE_EVENTS = [
     id: 'adol_conflict_recruitment',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.character.country.conflictRisk > 0.2,
+    when: (G) => G.conflictRisk > 0.2,
     text: 'Men with weapons come to your town. They are recruiting — or not quite recruiting.',
     context: null,
     choices: [
@@ -1779,7 +1779,7 @@ const BASE_EVENTS = [
     id: 'ya_conflict_zone_work',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.character.country.archetype === 'conflict_zone',
+    when: (G) => G.conflictRisk > 0.15,
     text: 'Work in a conflict zone means operating around checkpoints, bribes, and disappearances. Every day is a calculation.',
     context: null,
     choices: null,
@@ -6789,7 +6789,7 @@ const BASE_EVENTS = [
     phase: 'midlife',
     weight: 4,
     when: (G) => wasSovietRepublic(G.character.country.name) && G.age >= 35 && G.age <= 50 && G.parents && !G.mem.ps_dacha_inherit,
-    text: 'Your parents are passing the dacha to you. The deed is a single typed page from 1967. The roof needs work. The well pump is twenty years old. But in summer it smells exactly as it always has — old wood, hot grass, your grandmother\'s jam.',
+    text: (G) => 'Your parents are passing the dacha to you. The deed is a single typed page ' + (G.currentYear >= 1972 ? 'from 1967' : 'with a violet stamp on it') + '. The roof needs work. The well pump is twenty years old. But in summer it smells exactly as it always has — old wood, hot grass, your grandmother\'s jam.',
     choices: [
       {
         text: 'Keep it and maintain it',
@@ -7298,7 +7298,7 @@ const BASE_EVENTS = [
     id: 'cz_checkpoint',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 10 && !G.mem.cz_checkpoint,
+    when: (G) => G.conflictRisk > 0.15 && G.age >= 10 && !G.mem.cz_checkpoint,
     text: 'There are men with guns at the intersection. They have been there so long you no longer think about them consciously — you route around them, you look at the ground when you pass, you learn which ones take bribes and which ones take other things. Your body knows the protocol before your mind does.',
     context: null,
     choices: [
@@ -7324,7 +7324,7 @@ const BASE_EVENTS = [
     phase: null,
     weight: 2,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 6 && G.age <= 18 && !G.mem.cz_school_attack,
+    when: (G) => G.conflictRisk > 0.15 && G.age >= 6 && G.age <= 18 && !G.mem.cz_school_attack,
     text: 'The sound is ahead of the understanding. Glass. Then dust. Then the alarm you have practised but never heard for real. The school building two streets away has taken a hit. Nobody from your class is hurt. The chemistry teacher\'s car is a frame. School is cancelled for two weeks and then held in the mosque basement.',
     context: null,
     choices: null,
@@ -7334,7 +7334,7 @@ const BASE_EVENTS = [
     id: 'cz_aid_dependency',
     phase: null,
     weight: 2,
-    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 12 && !G.mem.cz_aid,
+    when: (G) => G.conflictRisk > 0.15 && G.age >= 12 && !G.mem.cz_aid,
     text: 'The white trucks come on Tuesdays. WFP, UNHCR, MSF — you know the logos before you know what the letters mean. The queue is orderly because everyone understands the cost of disrupting it. You have grown up knowing what a ration card looks like.',
     context: null,
     choices: [
@@ -7360,7 +7360,7 @@ const BASE_EVENTS = [
     phase: null,
     weight: 2,
     isKey: true,
-    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 5 && G.age <= 20 && !G.mem.cz_separation && G.parents,
+    when: (G) => G.conflictRisk > 0.15 && G.age >= 5 && G.age <= 20 && !G.mem.cz_separation && G.parents,
     text: 'Your father is on the other side of a line that did not exist six months ago. You speak on the phone when the network is working. The calls are short and careful. You understand that he is protecting you from information but you also hear it in his voice.',
     context: null,
     choices: [
@@ -9434,7 +9434,11 @@ export function classifyEvent(e) {
   // for a character who is already inside the arc.
   e.continuesFlag = flagPrerequisites(src)
   guardSpecificity(e)
-  e.dated = e.contemplative ? null : datedWindow(src)
+  // An event may also declare the window it claims (`claimsYears`), for the
+  // few periods that were the whole of every life inside them and run longer
+  // than the two years the inference accepts. Democratic Kampuchea is four
+  // years; its events lost those years to stranger glimpses and a first drink.
+  e.dated = e.contemplative ? null : (e.claimsYears ?? datedWindow(src))
   if (e.contemplative) e.register = 'contemplative'
   else if (e.anchored) e.register = 'anchored'
   else if (EARNED_PROBE.test(src)) e.register = 'earned'

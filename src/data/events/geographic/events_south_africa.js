@@ -72,7 +72,7 @@ export const SOUTH_AFRICA_EVENTS = [
       G.currentYear >= 2012 && G.currentYear <= 2018 &&
       G.age >= 20 &&
       !G.mem?.saStateCapture,
-    text: 'The Gupta family. The state capture. Eskom, Transnet, SAA, the South African Broadcasting Corporation, the National Prosecuting Authority. The systematic diversion of state resources through politically connected contractors over a decade. Nkandla: R246 million in state funds spent on upgrades to Zuma\'s private residence; the fire pool and the chicken run. The Constitutional Court finds that Zuma violated his oath of office. He is not removed until 2018. The word "state capture" enters the language and stays.',
+    text: (G) => 'The Gupta family. The state capture. Eskom, Transnet, SAA, the South African Broadcasting Corporation, the National Prosecuting Authority. The systematic diversion of state resources through politically connected contractors over a decade. Nkandla: R246 million in state funds spent on upgrades to Zuma\'s private residence; the fire pool and the chicken run. ' + (G.currentYear >= 2016 ? 'The Constitutional Court finds that Zuma failed to uphold the constitution. ' : '') + (G.currentYear >= 2018 ? 'He is not removed until 2018. ' : 'He is still president. ') + 'The word "state capture" enters the language and stays.',
     choices: [
       {
         text: 'The corruption is destroying what the 1994 transition was for.',

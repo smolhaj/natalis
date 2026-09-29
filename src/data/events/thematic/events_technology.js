@@ -5,14 +5,14 @@ import { hasTech } from '../../technology.js'
 // A character born in 1955 experiences these differently than one born in 1985.
 // All gate on G.currentYear and G.character.country.gdp / archetype.
 
-const wealthy = (G) => ['very_high','high','medium_high'].includes(G.character.country.gdp)
+const wealthy = (G) => ['very_high','high','medium_high'].includes((G.currentCountry ?? G.character.country).gdp)
 // `wealthy` above reads present-day GDP, which is not a statement about the
 // year the character is living in: it put the first television into a Korean
 // living room in 1951 and a Portuguese one in 1953. `arrived` asks when the
 // thing actually reached this country. See src/data/technology.js.
 const arrived = (G, t) => hasTech(G.currentCountry ?? G.character.country, t, G.currentYear)
-const developing = (G) => ['low_medium','medium'].includes(G.character.country.gdp)
-const poor = (G) => ['very_low','low'].includes(G.character.country.gdp)
+const developing = (G) => ['low_medium','medium'].includes((G.currentCountry ?? G.character.country).gdp)
+const poor = (G) => ['very_low','low'].includes((G.currentCountry ?? G.character.country).gdp)
 
 export const TECHNOLOGY_EVENTS = [
 

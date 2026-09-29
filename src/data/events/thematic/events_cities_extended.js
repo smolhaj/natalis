@@ -850,8 +850,8 @@ export const CITIES_EXTENDED_EVENTS = [
       G.place?.id === 'ie_dublin' &&
       G.currentYear >= 1969 && G.currentYear <= 1994 &&
       !G.mem?.dublinTroubles,
-    text: () =>
-      `The Troubles are across the border but Dublin is not unaffected. The Dublin and Monaghan bombings of 1974 — Ulster Volunteer Force car bombs on a Friday rush hour — killed thirty-three people on the street outside. The television carries images of Belfast regularly. The IRA uses the Republic as a hinterland. The republic's relationship with the North is the thing that is not resolved and is not discussed directly at the dinner table, where everything else is discussed.`,
+    text: (G) =>
+      `The Troubles are across the border but Dublin is not unaffected.${G.currentYear >= 1974 ? ' The Dublin and Monaghan bombings of 1974 — Ulster Volunteer Force car bombs on a Friday rush hour — killed thirty-three people on the street outside.' : ''} The television carries images of Belfast regularly. The IRA uses the Republic as a hinterland. The republic's relationship with the North is the thing that is not resolved and is not discussed directly at the dinner table, where everything else is discussed.`,
     choices: null,
     effect: (p) => { p.m -= 3; p.setMem('dublinTroubles', true) },
   },

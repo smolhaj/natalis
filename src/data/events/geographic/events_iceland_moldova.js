@@ -60,7 +60,7 @@ export const ICELAND_MOLDOVA_EVENTS = [
       G.currentYear >= 1967 && G.currentYear <= 1972 &&
       G.age >= 16 &&
       !G.mem?.islHerring,
-    text: 'The herring does not come. Siglufjörður had twenty-three salting stations and a population that tripled every summer and a brass band, and the fish simply stops arriving — fished out, or moved, and the argument about which will go on for fifty years. The town loses a quarter of its people inside a decade, and keeps losing them after that. The buildings stay. You can walk down to the quay in 1975 and see the racks still standing with nothing on them, which is a specific way for an industry to end: not a closure, an absence.',
+    text: 'The herring does not come. Siglufjörður had twenty-three salting stations and a population that tripled every summer and a brass band, and the fish simply stops arriving — fished out, or moved, and nobody can agree which. The town starts losing its people. The buildings stay. You can walk down to the quay and see the racks still standing with nothing on them, which is a specific way for an industry to end: not a closure, an absence.',
     choices: null,
     effect: (p) => {
       p.mo -= 800; p.m -= 8; p.e += 3

@@ -7,8 +7,10 @@
 const CONFLICT_COUNTRIES = ['Afghanistan', 'Syria', 'Somalia', 'DR Congo', 'Yemen', 'Iraq', 'Myanmar', 'South Sudan', 'Sudan', 'Mali', 'Libya']
 
 const inConflict = (G) =>
-  G.character.country.archetype === 'conflict_zone' ||
-  CONFLICT_COUNTRIES.includes(G.character.country.name) ||
+  // A country on this list was not at war in every year of the roster:
+  // Kabul in 1965 was a city you went to university in. Read the year.
+  G.conflictRisk > 0.15 ||
+  (CONFLICT_COUNTRIES.includes(G.character.country.name) && G.conflictRisk > 0.05) ||
   (G.character.country.archetype === 'developing_unstable' && G.flags.includes('lived_through_coup'))
 
 import { hasTech } from '../../technology.js'

@@ -12,13 +12,16 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_khmer_rouge_city_evacuation',
+    claimsYears: { from: 1975, to: 1976 },
     phase: null,
-    weight: 5,
+    weight: 30,
     when: (G) =>
       !G.mem?.caEvacuation && !G.mem?.ppEvacuation1975 &&
-      G.character.country.name === 'Cambodia' &&
+      G.character.country.name === 'Cambodia' && G.ruralUrban !== 'rural' &&
       G.currentYear >= 1975 && G.currentYear <= 1976 &&
       G.age >= 4,
+    // Villagers were not evacuated; the city came to them. The rural side is
+    // cam_rural_year_zero, which this event's flag used to lock out.
     text: 'Soldiers move through the streets with megaphones. The city is being evacuated, they say. Three days. You will come back when the Americans stop bombing. You take what you can carry in a bag — a change of clothes, a photograph, a pot. The road out of Phnom Penh is a column of people with no end visible in either direction. Wheelchairs, hospital gurneys, men still in surgical bandages. The soldiers say it will be short.',
     choices: [
       {
@@ -39,8 +42,9 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_khmer_rouge_year_zero',
+    claimsYears: { from: 1975, to: 1979 },
     phase: null,
-    weight: 4,
+    weight: 20,
     when: (G) =>
       !G.mem?.caYearZero &&
       G.character.country.name === 'Cambodia' &&
@@ -61,12 +65,13 @@ export const ASIA_ARC_EVENTS = [
 
   {
     id: 'ca_khmer_rouge_denunciation',
+    claimsYears: { from: 1976, to: 1979 },
     phase: null,
-    weight: 3,
+    weight: 20,
     when: (G) =>
       !G.mem?.caDenunciation &&
       G.character.country.name === 'Cambodia' &&
-      G.currentYear >= 1975 && G.currentYear <= 1979 &&
+      G.currentYear >= 1976 && G.currentYear <= 1979 &&
       G.age >= 8,
     text: 'The village cadre calls you forward. He says that an enemy of the revolution has been identified in the village. He names the man — your neighbour, the one whose daughter used to play with you. He asks if you have seen this man behave in ways inconsistent with the revolution. Everyone is watching. The cadre is watching you specifically.',
     choices: [

@@ -4003,6 +4003,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     weight: 4,
     when: (G) =>
       G.flags.includes('lost_generation_japan') &&
+      G.currentYear >= 2011 &&   // the text is written from after the 2010 studies
       G.age >= 55 &&
       !G.mem?.ft15LostGenerationLate,
     text: (G) => {
@@ -5528,7 +5529,14 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.flags.has('arranged_marriage') && G.partner && G.age >= 35 && !G.mem?.ftw26ArrangedMidlife,
-    text: 'You were introduced in your aunt\'s front room with four other people present and a plate of biscuits nobody touched. Twenty years on, you know the exact sound she makes clearing her throat before she disagrees with you, and you start conceding before she has said anything. Your daughter says she wants to find her own person and you say that is good, and mean it. In the car you both listen to the radio without either of you choosing the station.',
+    // The spouse was always "she" and the child always a daughter, which is
+    // half the people this fires for.
+    text: (G) => {
+      const sp = G.partner?.gender === 'male' ? 'he' : 'she'
+      const kid = G.children?.[0]?.gender === 'male' ? 'son' : 'daughter'
+      const kp = kid === 'son' ? 'he' : 'she'
+      return `You were introduced in your aunt's front room with four other people present and a plate of biscuits nobody touched. Twenty years on, you know the exact sound ${sp} makes clearing ${sp === 'he' ? 'his' : 'her'} throat before ${sp} disagrees with you, and you start conceding before ${sp} has said anything. ${G.children?.length ? `Your ${kid} says ${kp} wants to find ${kp === 'he' ? 'his' : 'her'} own person and you say that is good, and mean it. ` : ''}In the car you both listen to the radio without either of you choosing the station.`
+    },
     choices: [
       {
         text: 'It became something you would call love.',

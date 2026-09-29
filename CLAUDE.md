@@ -168,7 +168,7 @@ Event shape:
 **Critical**: `effect` functions receive only `p` (the proxy). `G` is only available in `when` guards. Never put G-dependent logic in effects.
 
 The `G` object (built by `buildG()`) exposes everything event conditions need:
-`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
+`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.conflictRisk` (war intensity where the character lives, THIS year — never read `country.conflictRisk`), `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
 
 Effect proxy shorthands (all are additive deltas):
 - `p.m` → happiness, `p.h` → health, `p.e` → smarts, `p.s` → charisma, `p.w` → wealth stat, `p.lo` → looks
@@ -1250,6 +1250,51 @@ without one; concentration is the real statement.
   events `universal` (Kabylie, Amhara, Gulf); `Guinea:susu_guinean`, Bisaya,
   Ambundu, Tsonga, Tigre still unwritten.
 
+### Pass eight: playing it (`scripts/play.mjs`)
+
+Sixty-odd lives driven through the real store the way a player drives them —
+Age Up, answer, press the activity and money buttons, emigrate, get arrested —
+and read end to end. `node scripts/play.mjs <outdir> '<personas json>'` writes
+each life as a text file with every choice offered and taken.
+
+| | before | after |
+|---|---|---|
+| Syrian born 1985, adult median death age | 32 (war mortality from birth) | 76 (the war starts at 26) |
+| Central African Republic 1970, overall median | 10 | 35 |
+| Germany/Poland/Belarus 1939-45 mortality | peacetime (static 0.01) | wartime |
+| lines stating a year that had not happened yet | ~75 found | 0 in the sweep; `check-anachronisms` now audits it |
+| Khmer Rouge events reaching a rural Cambodian aged 15 in 1975 | 0 of 15 | 8-9 of 15 per event |
+| the same activity line printed in one life | 33× | pooled, remembered |
+| first jobs that were film extra / busker / fast food | ~25% | field-weighted |
+| Saudi women drivers before 2018 | possible | not |
+
+**`conflictRisk` was a statement about now, for the fourth time.** One static
+figure per country, applied to every year of every life, so Syria in 1995 and
+Bosnia in 1980 died at wartime rates and Germany in 1943 at peacetime ones.
+`WAR_YEARS` / `conflictRiskAt(country, year)` in `history.js` replace it
+everywhere it was read (`G.conflictRisk` in guards), and the ≥35 age bands now
+carry war mortality at all. `determineCause` reads the live country, the
+character's own diagnoses, and whether malaria was endemic, and no longer
+returns a bare "illness" for a Swedish taxi driver of thirty-eight.
+
+**A retrospective written from today must be gated on the last year it names.**
+"Stus died in a Soviet camp in 1985" printed in 1963; the 2006 head-tax apology
+printed in 1940. `checkFutureYear` in `scripts/lib/anachronism.js` is the audit.
+
+**A phase is a claim about who lived through something.** Every Year Zero event
+was `phase: 'childhood'`, so the country's defining four years reached only the
+six-to-eleven-year-olds. Events may now declare `claimsYears: { from, to }` to
+use the dated-event claim for windows longer than two years; keep it for periods
+that were the whole of every life inside them.
+
+Also: a flag- or tag-free `cult_lgbtq_arrested` held a straight Miami teacher
+for her orientation; `wipeMoney`/`convertToHardCurrency` subtracted a nominal
+figure through the present-day channel (so "lose 30%" in 1950 Lagos took under
+one per cent); successful crimes paid nothing but the wealth stat; arranged
+matches (`arrangedShare` in `lifeCourse.js`) now exist where most marriages were
+arranged; the utility buttons (call a parent, manage the business) remember
+what they have said.
+
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
 
@@ -1300,6 +1345,7 @@ src/
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options
+    habitProse.js             — what a repeated activity says once its own line has been said
     assets.js                 — property/vehicle data
     destinations.js           — travel destinations
     illnesses.js              — illness/disease system
@@ -1824,6 +1870,9 @@ scripts/
                                 technology.js. Every line it found on its first run was reachable,
                                 correctly guarded and syntactically fine; it was wrong about when the
                                 world contained the thing it named.
+  play.mjs                    — plays lives through the real store like a player (answers, activities,
+                                money buttons, emigration, crime) and writes each life to a text file
+                                to be read end to end. The instrument for "read the log in order".
   sim.js                      — the firing-rate report. The only audit that can see what the game
                                 actually does, and the counter-check on every static one.
   check-reach.js              — the conditional counter-check on THAT one. `sim` reports what fires

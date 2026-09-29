@@ -11,6 +11,7 @@ const LAOS_EVENTS = [
     weight: 6,
     when: (G) =>
       G.character.country.name === 'Laos' &&
+      G.currentYear - G.age >= 1974 &&   // "the war ended before you were born"
       G.age >= 7 && G.age <= 16 &&
       !G.mem?.laos_uxo,
     text: (G) => {

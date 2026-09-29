@@ -107,9 +107,14 @@ export const UKRAINE_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 1991 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.ukrDepSovietId,
-    text: () => pick([
+    text: (G) => pick([
       'You are Ukrainian and Soviet and both at once. The school is in Russian. The films are in Russian. The songs you know by heart are in Russian. The village your grandmother came from speaks Ukrainian, but that Ukrainian sounds old and rural — not the Ukrainian in the official newspaper, which is careful and bureaucratic, not the Ukrainian in the village, which is not for official use. You know who you are. The state has opinions about who you are that are different from your own.',
-      'The Sixties: the shistdesiatnyky — the generation of writers, artists, intellectuals who pushed for Ukrainian culture in the Khrushchev thaw. Ivan Dziuba. Lina Kostenko. Vasyl Stus. What happened to them: Stus died in a Soviet camp in 1985. Dziuba was made to recant. Kostenko was silenced for twenty years. The state that silenced them is the state your career depends on. You know their names. You do not say them at work.',
+      'The Sixties: the shistdesiatnyky — the generation of writers, artists, intellectuals who pushed for Ukrainian culture in the Khrushchev thaw. Ivan Dziuba. Lina Kostenko. Vasyl Stus. ' +
+        (G.currentYear >= 1986 ? 'What happened to them: Stus died in a Soviet camp in 1985. Dziuba was made to recant. Kostenko was silenced for years. '
+          : G.currentYear >= 1974 ? 'What is happening to them: Stus is in a camp. Dziuba has been made to recant. Kostenko\'s books are not in the shops. '
+          : G.currentYear >= 1966 ? 'The arrests began in 1965. The readings are smaller now, and in apartments. '
+          : 'The readings fill halls. Somebody at every reading is writing down who came. ') +
+        'The state that watches them is the state your career depends on. You know their names. You do not say them at work.',
     ]),
     choices: null,
     effect: (p) => {
@@ -172,7 +177,7 @@ export const UKRAINE_DEPTH_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 2015 &&
       G.age >= 16 && G.age <= 45 &&
       !G.mem?.ukrDepLviv,
-    text: 'Lviv. The city that was Lwów under Poland, Lemberg under Austria-Hungary, Lvov under the USSR, Lviv now. The coffee houses on the cobblestones date from a different country. The Greek Catholic church — the Uniate church, Rome-connected and Ukrainian-language, neither Orthodox nor Roman Catholic — survived Soviet suppression and re-emerged in 1990. The history of who lived here and who left or was killed — the Jewish community murdered during the war, the Poles expelled in the post-war border shift, the OUN and UPA partisans who fought both Nazis and Soviets — is the history inside the stones. This city is different from Kyiv. It is more different from Kharkiv. The difference is not always easy to explain to people from the east.',
+    text: (G) => 'Lviv. ' + (G.currentYear >= 1992 ? 'The city that was Lwów under Poland, Lemberg under Austria-Hungary, Lvov under the USSR, Lviv now. ' : 'The city that was Lwów under Poland and Lemberg under Austria-Hungary, Lvov on the official signs now and Lviv to anyone who says it in Ukrainian. ') + 'The coffee houses on the cobblestones date from a different country. The Greek Catholic church — the Uniate church, Rome-connected and Ukrainian-language, neither Orthodox nor Roman Catholic — ' + (G.currentYear >= 1991 ? 'survived Soviet suppression and re-emerged in 1990. ' : 'was dissolved into the Russian Orthodox Church by decree in 1946, and its priests say Mass in apartments with the curtains drawn. ') + 'The history of who lived here and who left or was killed — the Jewish community murdered during the war, the Poles expelled in the post-war border shift, the OUN and UPA partisans who fought both Nazis and Soviets — is the history inside the stones. This city is different from Kyiv. It is more different from Kharkiv. The difference is not always easy to explain to people from the east.',
     choices: null,
     effect: (p) => {
       p.e += 5

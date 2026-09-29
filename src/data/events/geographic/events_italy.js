@@ -111,6 +111,11 @@ export const ITALY_EVENTS = [
       if (year <= 1973) {
         return 'The strategy of tension. The Piazza Fontana bombing in Milan, December 12, 1969: sixteen dead, eighty-eight wounded at the Banca dell\'Agricoltura. The bomb is placed by fascists, the state blames anarchists, the anarchist Pietro Valpreda is arrested, the journalist Pinelli dies falling from a police building. The state and the far right and the secret services are connected in ways that become clear over decades of trials that reach no convictions. The years of lead begin before anyone names them.'
       }
+      // The Moro kidnapping is March 1978; before it, the Brigate Rosse are
+      // the kneecappings and the headlines, not yet the fifty-five days.
+      if (year <= 1977) {
+        return 'The Brigate Rosse. A magistrate shot in the legs outside his house; a factory manager the same way the month after. They call it gambizzazione, and the word is on the radio often enough that children use it. Nobody you know is involved. Everybody you know checks who is behind them on the stairs.'
+      }
       if (year <= 1979) {
         return 'The Brigate Rosse. The Red Brigades take Aldo Moro — former Prime Minister, likely next President — on March 16, 1978. He is held for fifty-five days. The state refuses to negotiate. On May 9, Moro\'s body is found in a car on Via Caetani, equidistant between the DC and PCI headquarters. He had written letters from captivity. The letters say things the state found inconvenient. The state eventually decides the letters were written under duress. The decision takes twenty years.'
       }
@@ -169,18 +174,22 @@ export const ITALY_EVENTS = [
       G.currentYear >= 1994 && G.currentYear <= 2012 &&
       G.age >= 18 &&
       !G.mem?.itBerlusconi,
-    text: 'Silvio Berlusconi enters politics in 1994, ninety days after founding Forza Italia. He owns the three largest private television channels in Italy. He is tried seventeen times and acquitted or amnestied or has the statute of limitations run out each time. He is Prime Minister three times. He changes the laws that apply to him while he governs. He survives the bunga bunga scandals of 2010 and 2011 and continues governing. He is still in the Senate in 2023. The Berlusconi phenomenon is the proof that something in Italian political culture was exactly the right shape to receive him.',
+    text: (G) => 'Silvio Berlusconi enters politics in 1994, ninety days after founding Forza Italia. He owns the three largest private television channels in Italy. He is tried, and tried again, and each time he is acquitted or amnestied or the statute of limitations runs out. ' +
+      (G.currentYear >= 2008 ? 'He is Prime Minister three times. ' : G.currentYear >= 2001 ? 'He is Prime Minister twice. ' : 'He is Prime Minister within months. ') +
+      'He changes the laws that apply to him while he governs. ' +
+      (G.currentYear >= 2012 ? 'The bunga bunga scandals of 2010 and 2011 do not remove him. The bond markets do, in November 2011. ' : G.currentYear >= 2010 ? 'The newspapers are full of the parties at Arcore. He keeps governing. ' : '') +
+      'The Berlusconi phenomenon is the proof that something in Italian political culture was exactly the right shape to receive him.',
     choices: [
       {
         text: 'You vote for him — he is a businessman who speaks plainly.',
         tag: null,
-        outcome: 'You vote for him and you are in the majority that puts him in government. Three governments. The alignment between what he promised and what he delivered is the argument you are still having.',
+        outcome: 'You vote for him and you are in the majority that puts him in government. The alignment between what he promised and what he delivered is the argument you are still having.',
         effect: (p) => { p.m += 2; p.r += 5; p.addFlag('berlusconi_generation'); p.setMem('itBerlusconi', true); },
       },
       {
         text: 'The concentration of media power in the hands of a politician is the problem. Full stop.',
         tag: null,
-        outcome: 'The European Parliament passed resolutions about the conflict of interest. Italy\'s Constitutional Court found it acceptable. The media power and the political power overlapped for twenty years. The overlap is the documented thing.',
+        outcome: 'Foreign newspapers write about the conflict of interest. Italian law finds room for it. The media power and the political power overlap, year after year. The overlap is the documented thing.',
         effect: (p) => { p.m -= 5; p.r += 5; p.karma += 3; p.addFlag('berlusconi_generation'); p.addFlag('media_democracy_concern'); p.setMem('itBerlusconi', true); },
       },
     ],

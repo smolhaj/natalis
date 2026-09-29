@@ -49,7 +49,11 @@ const IRAN_EVENTS = [
       G.currentYear >= 1997 && G.currentYear <= 2005 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.irn_khatami,
-    text: 'Khatami wins with seventy percent of the vote. That number means something — the people who voted included women, students, the young, people who had not voted before because there was no point. The newspapers multiply: three hundred in the first years. The word "civil society" is said in public, in print, with seriousness. The Guardian Council disqualifies reformist candidates from parliament in 2004. The newspapers are closed one by one — there are procedures for this, legal mechanisms, judges who are not reformists. The Supreme Leader is not elected. That fact was always the fact, but the reform era had been a way of not thinking about it continuously. The era ends with the fact clarified.',
+    // The whole arc to 2005 was printing in 1999, five years before the
+    // disqualifications it describes. Before 2004 it is only the opening.
+    text: (G) => G.currentYear < 2004
+      ? 'Khatami wins with seventy percent of the vote. That number means something — the people who voted included women, students, the young, people who had not voted before because there was no point. The newspapers multiply: three hundred in the first years. The word "civil society" is said in public, in print, with seriousness.'
+      : 'Khatami wins with seventy percent of the vote. That number means something — the people who voted included women, students, the young, people who had not voted before because there was no point. The newspapers multiply: three hundred in the first years. The word "civil society" is said in public, in print, with seriousness. The Guardian Council disqualifies reformist candidates from parliament in 2004. The newspapers are closed one by one — there are procedures for this, legal mechanisms, judges who are not reformists. The Supreme Leader is not elected. That fact was always the fact, but the reform era had been a way of not thinking about it continuously. The era ends with the fact clarified.',
     choices: [
       {
         text: 'You believed in it — the reform could have held if the system had allowed it.',

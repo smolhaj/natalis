@@ -32,7 +32,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
       G.flags.has('sa_sharpeville_generation') &&
       G.age >= 55 &&
       !G.mem?.ft63SharpevlleLate,
-    text: `The Sharpeville memorial is opened in 2002. Sixty years later, in 2020, commemorations are cancelled because of COVID. The names are still the names. The sixty-nine who fell are part of what the country officially calls its history now — a history that was being made, not observed, on that day, and that you were inside. You carry this differently now than you did at twenty. The weight has redistributed but has not gone.`,
+    text: (G) => `${G.currentYear >= 2002 ? 'The Sharpeville memorial is opened in 2002. ' : ''}${G.currentYear >= 2020 ? 'Sixty years on, in 2020, the commemorations are cancelled because of COVID. ' : ''}The names are still the names. ${G.currentYear >= 1995 ? 'The sixty-nine who fell are part of what the country officially calls its history now —' : 'The sixty-nine who fell are not in the history the state teaches. It is'} a history that was being made, not observed, on that day, and that you were inside. You carry this differently now than you did at twenty. The weight has redistributed but has not gone.`,
     choices: null,
     effect: (p) => { p.r += 5; p.karma += 3; p.setMem('ft63SharpevlleLate', true) },
   },

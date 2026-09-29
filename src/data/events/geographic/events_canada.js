@@ -42,7 +42,7 @@ export const CANADA_EVENTS = [
       G.currentYear >= 1982 && G.currentYear <= 1985 &&
       G.age >= 16 &&
       !G.mem?.canCharter,
-    text: 'April 17, 1982. The Queen signs the Constitution Act in the rain on Parliament Hill. The Charter of Rights and Freedoms is now part of the Canadian Constitution. It takes rights that existed in statutes and makes them constitutional. Section 15 — equality rights — comes into force in 1985. The notwithstanding clause allows provinces to opt out of certain provisions. Quebec refuses to sign the constitution, which means Quebec exists under a constitution it never ratified, which is a sentence that describes Canada\'s situation for the next several decades.',
+    text: 'April 17, 1982. The Queen signs the Constitution Act in the rain on Parliament Hill. The Charter of Rights and Freedoms is now part of the Canadian Constitution. It takes rights that existed in statutes and makes them constitutional. Section 15 — equality rights — is held back three years, to give governments time to bring their laws into line. The notwithstanding clause allows provinces to opt out of certain provisions. Quebec refuses to sign the constitution, which means Quebec exists under a constitution it never ratified, which is a sentence nobody can say how long will go on describing Canada.',
     choices: [
       {
         text: 'The Charter changes what kind of country Canada is. The rights feel real now.',
@@ -170,7 +170,7 @@ export const CANADA_EVENTS = [
       G.currentYear >= 1885 && G.currentYear <= 1950 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.canHeadTax,
-    text: 'The head tax: $50 in 1885, then $100, then $500 in 1903 — equivalent to two years of wages for a Chinese laborer. The Chinese Exclusion Act of 1923 stops immigration almost entirely. Your family paid the tax, or your grandfather paid it, or someone in the family paid it to build the railroad that built the country and was then told by the country that the cost of staying was $500. The tax is repealed in 1947. The apology comes in 2006. The apology is for the government\'s actions. The government\'s actions are the country\'s actions.',
+    text: (G) => 'The head tax: $50 in 1885' + (G.currentYear >= 1903 ? ', then $100, then $500 in 1903 — equivalent to two years of wages for a Chinese laborer.' : G.currentYear >= 1900 ? ', then $100.' : '.') + (G.currentYear >= 1923 ? ' The Chinese Exclusion Act of 1923 stops immigration almost entirely.' : '') + ' Your family paid the tax, or your grandfather paid it, or someone in the family paid it to build the railroad that built the country and was then told by the country what the cost of staying was.' + (G.currentYear >= 1947 ? ' The Exclusion Act is repealed in 1947.' : '') + ' Nobody in government has said the word sorry. The government\'s actions are the country\'s actions.',
     choices: [
       {
         text: 'The family paid what was demanded and built what was possible within those constraints.',

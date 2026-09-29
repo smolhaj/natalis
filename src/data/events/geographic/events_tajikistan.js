@@ -198,7 +198,7 @@ export const TAJIKISTAN_EVENTS = [
       G.currentYear >= 2008 && G.currentYear <= 2022 &&
       G.age >= 30 &&
       !G.mem?.tajRemit,
-    text: 'The money arrives from Russia. It arrives via Western Union, via Migom, via the man who drives back for weddings and brings cash sewn into jacket linings. When it arrives — on the first of the month, or when the construction project ends, or when the employer pays — the family buys what has been calculated. Flour, cooking oil, school fees, the medical bill that has been waiting. When the ruble falls, as it did in 2014 and in 2022, the family\'s purchasing power falls with it. You are one household in an economy where this is the structure of survival.',
+    text: (G) => 'The money arrives from Russia. It arrives via Western Union, via Migom, via the man who drives back for weddings and brings cash sewn into jacket linings. When it arrives — on the first of the month, or when the construction project ends, or when the employer pays — the family buys what has been calculated. Flour, cooking oil, school fees, the medical bill that has been waiting. When the ruble falls' + (G.currentYear >= 2022 ? ', as it did in 2014 and in 2022,' : G.currentYear >= 2015 ? ', as it did in 2014,' : '') + ' the family\'s purchasing power falls with it. You are one household in an economy where this is the structure of survival.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 3; p.addFlag('taj_remittance_household'); p.setMem('tajRemit', true) },
   },

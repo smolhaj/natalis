@@ -117,7 +117,9 @@ const BANGLADESH_EVENTS = [
       !G.mem?.bng_cyclone_adult,
     text: (G) => {
       const yr = G.currentYear
-      return yr <= 1992
+      return yr < 1991
+        ? 'The cyclone signal numbers on the radio in April and again in October. Signal seven, signal ten. Everyone on the coast knows what 1970 was and nobody talks about it in the season. The khatian — land registration document — is wrapped in plastic and kept high. The sea is the sea.'
+        : yr < 2008
         ? 'April 1991. The cyclone makes landfall at night with a 6-metre storm surge. 138,000 people die. You know which areas were hit because you know people from those areas and some of them you will not hear from again. Chittagong. Cox\'s Bazar. The coastal islands. The khatian — land registration document — is in the mud somewhere. The country organizes the response faster than 1970 but the coast is still the coast and the sea is still the sea.'
         : yr <= 2010
         ? 'Sidr makes landfall November 15, 2007. Category 4. Three thousand dead. The number is lower than 1991 because the cyclone shelters were built and the evacuation system worked and the community knowledge was better. The number is still 3,000. The coast is still the coast. You watch the relief organizations arrive and know some of them and know the geography and the gap between the two.'

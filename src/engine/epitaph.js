@@ -2,6 +2,7 @@ import { FlagSet, getPhase } from './character'
 import { buildG } from './tick'
 import { getCountryDisplayName, withArticle } from '../utils/countryUtils'
 import { WORLD_EVENTS } from '../data/worldEvents'
+import { conflictRiskAt } from '../data/history.js'
 
 // ─── Living identity card ─────────────────────────────────────────────────────
 // 4 sentences in two pairs: exterior (place/era/situation) + interior (wound/desire).
@@ -243,6 +244,14 @@ export function generateIdentityCard(state) {
 
 const oneOf = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
+function warChildhoodYears(state) {
+  const born = state.character?.birthYear ?? 1960
+  const country = state.character?.country
+  let n = 0
+  for (let y = born; y < born + 12; y++) if (conflictRiskAt(country, y) > 0.1) n++
+  return n
+}
+
 export function generateEpitaph(state) {
   const { character, flags, stats, regret, age, children, partner, money } = state
   // `retire()` nulls the career, so a retiree's whole working life was absent
@@ -292,7 +301,11 @@ export function generateEpitaph(state) {
     para1.push(oneOf([
       `The first years were shaped by conflict before ${he} had language for it.`,
       `${He} learned to read a night by its sounds before ${he} learned to read anything else.`,
-      `There was a war on for the whole of ${his} childhood, and ${he} did not know that this was unusual.`,
+      // Only true if it was: a Kabul girl born in 1960 was eighteen when the
+      // war came, and her obituary said it had lasted her whole childhood.
+      ...(warChildhoodYears(state) >= 10
+        ? [`There was a war on for the whole of ${his} childhood, and ${he} did not know that this was unusual.`]
+        : []),
     ]))
   } else if (any('lost_parent_young', 'orphaned')) {
     if (any('poverty_childhood', 'food_insecurity')) {

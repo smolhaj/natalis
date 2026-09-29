@@ -96,7 +96,7 @@ export const NORWAY_EVENTS = [
       !G.mem?.norEURef,
     text: (G) => {
       const yr = G.currentYear
-      return yr <= 1975
+      return yr <= 1994
         ? 'Norway voted against joining the European Community in 1972. The margin was 53.5% against. The people who voted no were farmers and fishers and left-wing urban voters who believed that Norwegian sovereignty and Norwegian natural resources should not be negotiated in Brussels. The people who voted yes thought Norway would be isolated without membership. Norway was not isolated. The debate did not resolve; it postponed.'
         : 'In 1994, Norway voted on EU membership again. The result was 52.2% against. Twice now the country has been offered membership and twice refused. Norway participates in the single market through the EEA and contributes to the EU budget and adopts EU regulations without having a vote on them. This is the arrangement: you get the market without the politics, and you pay for it, and you do not have a vote. Whether this is a good trade is a question that does not have a settled answer in Norwegian public life.'
     },

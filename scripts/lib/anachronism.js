@@ -192,3 +192,32 @@ export function checkAge(text, age) {
   }
   return null
 }
+
+// ─── A year that has not happened yet ────────────────────────────────────────
+//
+// The other half of "a sentence must be true of the world it is printed into".
+// A playthrough pass found sixty-odd lines that name a later year as a fact:
+// Vasyl Stus "died in a Soviet camp in 1985", printed in 1963; the Harper
+// apology of 2006 printed to a head-tax payer in 1940; "February 24, 2022"
+// printed in 2014. Every one was a retrospective written from today and
+// guarded from the start of the period it describes. Nothing here could see
+// them, because none of them names a technology.
+//
+// A year inside a future clause ("will", "by 2030", "until") is not a claim
+// that it has happened, and neither is a name that carries a year (Vision
+// 2030, Agenda 2063, the 2012 Olympics once they are won).
+const FUTURE_YEAR_OK = /\b(will|would|until|till|by|before|next|plans?|planned|planning|vision|agenda|target|targets|projected|projections?|forecasts?|expected|scheduled|deadline|due|promised|promises|aims?|goal|from now|if|when|whether|host)\b/
+const YEAR_NAME = /^\s*(olympics|games|world cup|expo|vision|agenda|plan)\b/
+
+export function checkFutureYear(text, year) {
+  if (typeof text !== 'string' || !text || !year) return null
+  const lower = text.toLowerCase()
+  for (const m of lower.matchAll(/\b(1[89]\d\d|20\d\d)\b/g)) {
+    const y = Number(m[1])
+    if (y <= year) continue
+    if (YEAR_NAME.test(lower.slice(m.index + 4, m.index + 20))) continue
+    if (FUTURE_YEAR_OK.test(clauseAround(lower, m.index))) continue
+    return { named: y, year, text }
+  }
+  return null
+}

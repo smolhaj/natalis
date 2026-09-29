@@ -44,7 +44,7 @@ export const IRELAND_TURKEY_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1994 &&
       G.age >= 16 &&
       !G.mem.ireTroubles,
-    text: 'The Troubles are on the other side of the border but they are not on the other side of anything in the way the border implies. The news from Derry, from Belfast, from the bombs in Dublin in 1974 — seventeen people dead in the city centre, the UVF. The army checkpoints. The word republican has a charge that depends entirely on who says it and to whom. You are in the Republic, which means you are technically not in the conflict, which is not the same as not being in the conflict.',
+    text: (G) => 'The Troubles are on the other side of the border but they are not on the other side of anything in the way the border implies. The news from Derry, from Belfast' + (G.currentYear >= 1974 ? ', from the bombs in Dublin in 1974 — seventeen people dead in the city centre, the UVF' : '') + '. The army checkpoints. The word republican has a charge that depends entirely on who says it and to whom. You are in the Republic, which means you are technically not in the conflict, which is not the same as not being in the conflict.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('troubles_adjacent'); p.setMem('ireTroubles', true) },
   },
@@ -85,7 +85,7 @@ export const IRELAND_TURKEY_EVENTS = [
       G.currentYear >= 2008 && G.currentYear <= 2013 &&
       G.age >= 25 &&
       !G.mem.ireCrash,
-    text: 'The property market collapses. Anglo Irish Bank is nationalized. The government guarantees the bank debts — all of them, €400 billion, in a single September night in 2008. The guarantee will be questioned for years. The IMF and EU arrive in November 2010. The austerity cuts: health, education, social welfare. The emigration starts again. Young people you know are leaving for Australia, Canada, the US. The country that had just stopped exporting its young is exporting them again.',
+    text: (G) => 'The property market collapses. ' + (G.currentYear >= 2009 ? 'Anglo Irish Bank is nationalized. ' : '') + 'The government guarantees the bank debts — all of them, €400 billion, in a single September night in 2008. The guarantee is questioned before the ink is dry. ' + (G.currentYear >= 2011 ? 'The IMF and EU arrive in November 2010. ' : '') + 'The austerity cuts: health, education, social welfare. The emigration starts again. Young people you know are leaving for Australia, Canada, the US. The country that had just stopped exporting its young is exporting them again.',
     choices: [
       {
         text: 'You lose a job, a house, or both.',
@@ -112,7 +112,7 @@ export const IRELAND_TURKEY_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 2015 &&
       G.age >= 30 &&
       !G.mem.ireChurchCollapse,
-    text: 'The reports come out one after another. The Bishop Eamonn Casey affair in 1992. The Brendan Smyth case in 1994. The Ferns Report, the Ryan Report, the Murphy Report. The institution that ran the schools, the hospitals, the Magdalene laundries, the industrial schools — the institution that was, in certain decades, more present in daily Irish life than the state — is producing findings that nobody in the Church or the government is calling satisfactory. The country that was Catholic in a specific and structural way is becoming something else.',
+    text: (G) => 'The reports come out one after another. ' + ['The Bishop Eamonn Casey affair in 1992.', G.currentYear >= 1995 && 'The Brendan Smyth case in 1994.', G.currentYear >= 2006 && 'The Ferns Report.', G.currentYear >= 2010 && 'The Ryan Report, the Murphy Report.'].filter(Boolean).join(' ') + ' The institution that ran the schools, the hospitals, the Magdalene laundries, the industrial schools — the institution that was, in certain decades, more present in daily Irish life than the state — is producing findings that nobody in the Church or the government is calling satisfactory. The country that was Catholic in a specific and structural way is becoming something else.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 7; p.addFlag('irish_church_reckoning'); p.setMem('ireChurchCollapse', true) },
   },
@@ -239,7 +239,7 @@ export const IRELAND_TURKEY_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2012 &&
       G.age >= 20 &&
       !G.mem.turEconomic,
-    text: 'Turkey\'s GDP triples between 2002 and 2012. The AKP government\'s first decade: fiscal discipline, inflation brought down from 68 percent to 8 percent, infrastructure spending — highways, airports, hospitals. Istanbul is building. The middle class is growing in a way that it was not in the 1990s. The people who will become Erdogan\'s base are in many cases people who were excluded from Kemalist patronage networks and who are now, for the first time, economically secure. The growth is real and the question of what it is building toward takes a decade to clarify.',
+    text: (G) => (G.currentYear >= 2012 ? 'Turkey\'s GDP triples between 2002 and 2012. The AKP government\'s first decade: ' : 'The economy grows at a pace nobody in the 1990s would have believed. The AKP government\'s first years: ') + (G.currentYear >= 2005 ? 'fiscal discipline, inflation brought down from 68 percent to single digits, ' : 'fiscal discipline, inflation falling month by month, ') + 'infrastructure spending — highways, airports, hospitals. Istanbul is building. The middle class is growing in a way that it was not in the 1990s. The people who will become Erdogan\'s base are in many cases people who were excluded from Kemalist patronage networks and who are now, for the first time, economically secure. The growth is real and the question of what it is building toward is not yet asked out loud.',
     choices: null,
     effect: (p) => { p.m += 6; p.mo += 1500; p.addFlag('turkish_growth_generation'); p.setMem('turEconomic', true) },
   },

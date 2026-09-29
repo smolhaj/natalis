@@ -283,7 +283,9 @@ export const NEIGHBORHOOD_EVENTS = [
     weight: 3,
     cooldown: 0,
     when: (G) =>
-      G.neighborhoodTier === 'elite' &&
+      // A walled compound and a gated school are Lagos and Nairobi and
+      // Karachi. Östermalm has no wall around it.
+      G.neighborhoodTier === 'elite' && !['wealthy_west', 'wealthy_east'].includes(G.archetype) &&
       G.age >= 8 && G.age <= 14 && !G.mem?.eliteIsoAck,
     text: 'The compound is walled. Outside the wall is the city and the city sounds — but muffled, as if a different life is being lived at a distance. The school you attend is also walled and gated. The children you know all live in places like this one. The world outside is something you see from cars.',
     choices: null,

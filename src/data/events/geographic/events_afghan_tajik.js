@@ -165,7 +165,7 @@ export const AFGHAN_TAJIK_EVENTS = [
     id: 'taj_dari_school',
     phase: null,
     weight: 120,
-    when: (G) => HOME(G) && (G.literate || G.ruralUrban !== 'rural') && G.age >= 7 && G.age <= 11 && G.currentYear >= 1936 && G.currentYear <= 1978 && once(G, 'taj_dari'),
+    when: (G) => HOME(G) && G.mem?.attendedSchool !== false && (G.literate || G.ruralUrban !== 'rural') && G.age >= 7 && G.age <= 11 && G.currentYear >= 1936 && G.currentYear <= 1978 && once(G, 'taj_dari'),
     text: 'The lessons are in Dari, which is what everybody in your street speaks, what the ministries in Kabul write their letters in, and what Hafez wrote in. There is also a Pashto lesson, because the government has declared Pashto the national language, and the Pashto teacher is a man from Paktia who is patient with you in a way the Dari teacher is not. By the end of the year you can read a Pashto sentence aloud without understanding it, which he says is how he learned Dari.',
     choices: null,
     effect: (p) => { p.setMem('taj_dari', true); p.e += 3 },

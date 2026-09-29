@@ -20,10 +20,16 @@ export const CAMBODIA_EVENTS = [
 
   {
     id: 'cam_rural_year_zero',
-    phase: 'childhood',
-    weight: 8,
+    claimsYears: { from: 1975, to: 1979 },
+    // Was `phase: 'childhood'`, which confined the country's defining four
+    // years to characters aged six to eleven: a Kampong Cham girl of fifteen
+    // lived 1975-79 with the electricity arriving and the priest at the
+    // confession booth, and not one line about the cooperative. It happened
+    // to everyone.
+    phase: null,
+    weight: 30,
     when: (G) =>
-      G.character.country.name === 'Cambodia' &&
+      G.character.country.name === 'Cambodia' && G.age >= 4 &&
       G.currentYear >= 1975 && G.currentYear <= 1979 &&
       !G.flags.has('khmer_rouge_displaced') &&
       !G.mem?.camRuralYearZero,
@@ -45,10 +51,12 @@ export const CAMBODIA_EVENTS = [
 
   {
     id: 'cam_family_taken',
-    phase: 'childhood',
-    weight: 6,
+    claimsYears: { from: 1975, to: 1979 },
+    phase: null,
+    weight: 20,
     when: (G) => {
       if (G.character.country.name !== 'Cambodia') return false
+      if (G.age < 4) return false
       if (G.currentYear < 1975 || G.currentYear > 1979) return false
       if (G.mem?.camFamilyTaken) return false
       const hasLivingParent = Object.values(G.parents ?? {}).some(p => p.alive)
@@ -73,7 +81,7 @@ export const CAMBODIA_EVENTS = [
 
   {
     id: 'cam_phnom_penh_return',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character.country.name === 'Cambodia' &&
@@ -200,7 +208,7 @@ export const CAMBODIA_EVENTS = [
 
   {
     id: 'cam_tuol_sleng',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Cambodia' &&

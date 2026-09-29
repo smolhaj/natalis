@@ -286,19 +286,19 @@ const FIELD_FIT = {
   digital_media:     [0.2, 1.2, 1.8],
   academia:          [0.1, 0.6, 1.8],
   science:           [0.05, 0.5, 1.5],
-  arts:              [0.6, 1, 1.2],
-  writing:           [0.2, 0.6, 1],
-  entertainment:     [0.4, 1, 1.2],
-  sports:            [0.5, 1, 1],
+  arts:              [0.3, 0.4, 0.6],
+  writing:           [0.05, 0.15, 0.3],
+  entertainment:     [0.1, 0.3, 0.5],
+  sports:            [0.2, 0.3, 0.4],
   social_services:   [0.3, 1, 1.8],
   mental_health:     [0.05, 0.4, 1.5],
-  interpreter:       [0.2, 0.8, 1],
+  interpreter:       [0.05, 0.2, 0.3],
   veterinary:        [0.5, 0.5, 1],
   aviation:          [0.05, 0.4, 1],
   architecture:      [0.05, 0.5, 1.2],
   dentistry:         [0.1, 0.6, 1.2],
   pharmacy:          [0.2, 1, 1.4],
-  real_estate:       [0.1, 1, 1.6],
+  real_estate:       [0.05, 0.3, 0.5],
   electrician:       [0.8, 2.5, 1.8],
   plumber:           [0.8, 2.5, 1.8],
   IT:                [0.05, 0.8, 2.2],
@@ -320,13 +320,57 @@ function fitColumn(state) {
   return 1
 }
 
+// Occupations were, and mostly still are, segregated by sex and — in the Gulf
+// — by passport. Without this the engine put Saudi women behind the wheel of
+// a taxi decades before they were allowed to drive, a Pakistani woman of 1960
+// in the same cab, and Saudi citizens on the building sites their country
+// imported a workforce to staff.
+const WOMEN_RESTRICTED = new Set(['Saudi Arabia', 'Afghanistan', 'Yemen', 'Pakistan', 'Iran', 'Qatar', 'UAE', 'Kuwait', 'Oman', 'Bahrain'])
+const GULF_IMPORTED_WORK = new Set(['laborer', 'farmer', 'construction_worker', 'fast_food', 'cashier', 'chef', 'driver', 'factory_worker', 'babysitter', 'dog_walker', 'paper_round'])
+function segregation(c, state) {
+  const country = liveCountry(state)
+  const y = state.currentYear ?? 1980
+  let m = 1
+  if (state.character?.gender === 'female') {
+    const eraF = y < 1970 ? 1 : y < 2000 ? 0.7 : 0.45   // how closed the field still was
+    if (c.field === 'transport') m *= 0.08 * (1 + (1 - eraF) * 2)
+    else if (['construction', 'military', 'plumber', 'electrician'].includes(c.field)) m *= 0.12 * (1 + (1 - eraF) * 2)
+    else if (c.field === 'law_enforcement') m *= y < 1975 ? 0.1 : 0.35
+    else if (c.field === 'aviation') m *= y < 1980 ? 0.02 : 0.1
+    if (WOMEN_RESTRICTED.has(country?.name)) {
+      // Teaching girls and nursing women were the open doors; most others shut.
+      if (!['education', 'healthcare', 'casual', 'government', 'agriculture', 'trade', 'manufacturing'].includes(c.field)) m *= 0.15
+      if (country?.name === 'Saudi Arabia' && c.field === 'transport' && y < 2018) m = 0
+      if (['military', 'law_enforcement'].includes(c.field) && y < 2019) m = 0
+      if (country?.archetype === 'wealthy_gulf' || country?.name === 'Saudi Arabia') {
+        if (['agriculture', 'trade', 'manufacturing', 'casual'].includes(c.field)) m *= 0.2
+      }
+    }
+  }
+  const gulf = country?.archetype === 'wealthy_gulf' || country?.name === 'Saudi Arabia'
+  if (gulf && y >= 1975 && GULF_IMPORTED_WORK.has(c.id)) {
+    const migrant = country?.ethnicGroups?.some(g => g.id === state.character?.ethnicity && g.disadvantaged)
+    if (!migrant) m *= 0.1
+  }
+  return m
+}
+
 /** Pick a job the way a life picks one: from what is actually around. */
 export function chooseCareer(state) {
   const available = getAvailableCareers(state).filter(c => !c.partTime || state.age < 20)
   if (!available.length) return null
   const col = fitColumn(state)
+  // FIELD_FIT is a table of FIELDS, and it was applied per CAREER, so a field
+  // with five entry points outweighed a field with one by five to one. The
+  // casual field (paper round, babysitter, dog walker, fast food, cashier) and
+  // the two-career entertainment field together took a large share of first
+  // jobs: across 25 lives each, four German men of 1970 started as film
+  // extras and nine Egyptians of 1990 as fast-food crew. Divide by the number
+  // of careers the field offers this character, so the table means a field.
+  const perField = {}
+  for (const c of available) perField[c.field] = (perField[c.field] ?? 0) + 1
   const weighted = available.map(c => {
-    let fit = FIELD_FIT[c.field]?.[col] ?? 1
+    let fit = (FIELD_FIT[c.field]?.[col] ?? 1) / perField[c.field]
     // A ladder whose top rung is "Superstar" is not entered the way a trade is.
     // A rural Sundanese seventeen-year-old in 1977 was picked for Busker and
     // promoted to Superstar by twenty-two, with a twenty-six-year tenure.
@@ -340,6 +384,7 @@ export function chooseCareer(state) {
     // will be poor". Peri-urban farming around a town or a small city is real,
     // so the cut is at the two largest scales rather than at "urban".
     if (c.field === 'agriculture' && ['megacity', 'major_city'].includes(state?.currentPlace?.scale)) fit = 0
+    fit *= segregation(c, state)
     // Smarts open the doors that require them; they do not open the doors that
     // require capital or a name, which the requirements already model.
     const req = c.requirements?.minSmarts ?? 0
@@ -451,6 +496,19 @@ function coursePartner(s) {
   const profile = generatePartnerProfile(s, male
     ? { minAge: Math.max(s.age >= 22 ? 18 : 16, s.age - 7), maxAge: Math.max(18, s.age + 3) }
     : { minAge: Math.max(16, s.age - 2), maxAge: s.age + 11 })
+  if (chance(arrangedShare(s))) {
+    // Most marriages on the roster, for most of the century, were not met.
+    // They were proposed, by families, and a Riyadh girl in 1988 did not
+    // "start seeing" anybody for weeks before saying so out loud.
+    s = { ...s, partner: { ...profile, arranged: true, engaged: true }, flags: [...new Set([...s.flags, 'first_relationship', 'arranged_marriage'])] }
+    const elder = s.parents?.mother?.alive !== false ? 'mother' : s.parents?.father?.alive !== false ? 'father' : 'aunt'
+    return log(s, pick([
+      `A match is proposed: ${profile.name}. The families have met several times before the two of you do.`,
+      `Your ${elder} has made enquiries, and the enquiries have come back with a name: ${profile.name}.`,
+      `You are shown ${profile.name} across a room full of relatives, and ${profile.name} is shown you. Nobody pretends this is anything other than what it is.`,
+      `The families settle on ${profile.name} over several visits and a great deal of tea. You are asked, at the end, and you say yes.`,
+    ]), true)
+  }
   s = { ...s, partner: profile, flags: [...new Set([...s.flags, 'first_relationship'])] }
   return log(s, pick([
     `You meet ${profile.name}. Nothing about it announces itself as the beginning of anything.`,
@@ -458,6 +516,34 @@ function coursePartner(s) {
     `${profile.name} becomes the person you tell things to first. The change happens before you notice it has.`,
     `You meet ${profile.name}. Later you will disagree about which time was the first time.`,
   ]), true)
+}
+
+/**
+ * How likely a first match is to have been arranged by the families rather
+ * than met — by region and decade, lowered by a city and a degree. Rough
+ * shares from the survey literature, not point estimates: South Asia stays
+ * above three quarters through the whole period, the Gulf nearly as high, the
+ * Arab world and Iran falling from a majority to a large minority, East Asia's
+ * omiai and matchmakers fading out after the war.
+ */
+const SOUTH_ASIA = new Set(['India', 'Pakistan', 'Bangladesh', 'Nepal', 'Afghanistan', 'Bhutan'])
+const MENA = new Set(['Egypt', 'Iran', 'Iraq', 'Syria', 'Jordan', 'Morocco', 'Algeria', 'Tunisia', 'Libya', 'Sudan', 'Yemen', 'Palestine', 'Lebanon', 'Turkey'])
+export function arrangedShare(s) {
+  const c = liveCountry(s)
+  const y = s.currentYear ?? 1970
+  let p = 0
+  if (SOUTH_ASIA.has(c?.name)) p = y < 1990 ? 0.9 : 0.78
+  else if (c?.archetype === 'wealthy_gulf' || c?.name === 'Saudi Arabia' || c?.name === 'Yemen') p = y < 2000 ? 0.9 : 0.72
+  else if (MENA.has(c?.name)) p = y < 1980 ? 0.65 : y < 2000 ? 0.45 : 0.3
+  else if (c?.name === 'Sri Lanka') p = y < 1980 ? 0.6 : 0.35
+  else if (c?.name === 'China') p = y < 1950 ? 0.8 : y < 1980 ? 0.25 : 0.05
+  else if (c?.name === 'Japan') p = y < 1960 ? 0.5 : y < 1980 ? 0.25 : 0.05
+  else if (c?.name === 'South Korea') p = y < 1970 ? 0.5 : y < 1990 ? 0.15 : 0.03
+  if (p === 0) return 0
+  if (livingRuralUrban(s) !== 'rural') p -= 0.12
+  if (['university', 'graduate'].includes(s.education?.level)) p -= 0.15
+  if (s.flags?.includes('widowed') || s.flags?.includes('divorced')) p -= 0.2
+  return clamp(p, 0, 0.95)
 }
 
 /** Marriage, where and when marriage is what people do. */

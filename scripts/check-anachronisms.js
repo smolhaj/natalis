@@ -11,7 +11,7 @@
  * about when the world contained the thing it named.
  */
 import { registerResolveHooks } from './lib/register.js'
-import { checkLine, checkAge } from './lib/anachronism.js'
+import { checkLine, checkAge, checkFutureYear } from './lib/anachronism.js'
 
 registerResolveHooks()
 
@@ -47,6 +47,10 @@ const CONFIGS = [
   ['Guyana', 1932], ['Guyana', 1955],
   ['South Africa', 1945], ['Afghanistan', 1950], ['Yemen', 1945],
   ['Vanuatu', 1950], ['United Kingdom', 1925], ['United States', 1910],
+  // Where the future-year audit found most of its first sixty: retrospectives
+  // written from today and guarded from the start of the period.
+  ['Ukraine', 1945], ['Canada', 1925], ['Taiwan', 1950], ['Libya', 1960],
+  ['Georgia', 1950], ['South Africa', 1965], ['Poland', 1950], ['Ireland', 1975],
 ]
 
 const LIVES = Number(process.env.LIVES ?? 3)
@@ -58,6 +62,7 @@ async function main() {
 
   const tech = new Map()   // key → { count, sample }
   const ages = new Map()
+  const futures = new Map()
   let lines = 0, livesRun = 0, errors = 0, firstError = null
 
   for (const [country, birthYear] of CONFIGS) {
@@ -98,6 +103,12 @@ async function main() {
             if (hit.year < rec.worst) { rec.worst = hit.year; rec.country = where?.name; rec.arrived = hit.arrived }
             tech.set(k, rec)
           }
+          const fh = checkFutureYear(e.text, e.year ?? s.currentYear)
+          if (fh) {
+            const rec = futures.get(fh.text) ?? { ...fh, count: 0, country: where?.name }
+            rec.count++
+            futures.set(fh.text, rec)
+          }
           const ah = checkAge(e.text, e.age ?? s.age)
           if (ah) {
             const rec = ages.get(ah.text) ?? { ...ah, count: 0, worst: ah.age }
@@ -135,13 +146,24 @@ async function main() {
     }
     if (ageHits.length > 25) console.log(dim(`  …and ${ageHits.length - 25} more`))
   }
+  const futureHits = [...futures.values()].sort((a, b) => b.count - a.count)
+  console.log()
+  if (futureHits.length === 0) console.log(green('✓') + ' no line names a year that has not happened yet')
+  else {
+    console.log(red(`✗ ${futureHits.length} line(s) state as fact a year that has not happened yet\n`))
+    for (const h of futureHits.slice(0, 25)) {
+      console.log(`  ${yellow(`${h.country} ${h.year} names ${h.named}`)} ${dim(`×${h.count}`)}`)
+      console.log(`    ${h.text.slice(0, 150)}`)
+    }
+    if (futureHits.length > 25) console.log(dim(`  …and ${futureHits.length - 25} more`))
+  }
   if (errors) {
     console.log()
     console.log(red(`✗ ${errors} life/lives threw — the numbers above are reading a fraction of the corpus`))
     console.log(dim('  ' + (firstError?.stack ?? String(firstError)).split('\n').slice(0, 4).join('\n  ')))
   }
   console.log()
-  process.exit(techHits.length + ageHits.length + errors > 0 ? 1 : 0)
+  process.exit(techHits.length + ageHits.length + futureHits.length + errors > 0 ? 1 : 0)
 }
 
 main().catch(e => { console.error(e); process.exit(2) })

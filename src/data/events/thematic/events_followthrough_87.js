@@ -10,7 +10,7 @@ export const FOLLOWTHROUGH_87_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.has('nz_waitangi_generation') &&
-      G.currentYear >= 1994 &&
+      G.currentYear >= 1999 &&
       G.age >= 45 &&
       !G.mem?.ft87WaitangiSettlement,
     text: 'The Waikato-Tainui settlement comes in 1995: $170 million and land. The Ngāi Tahu settlement in 1998: the same. The Crown apologies are read in Parliament. You have been watching the process for twenty years. The settlements are less than what was taken. They are more than many thought the Crown would give. You accept the partial thing because the partial thing is what exists, and because you have been told often enough that accepting it is not the same as agreeing that it was ever acceptable.',

@@ -137,7 +137,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2010 &&
       G.age >= 30 &&
       !G.mem?.nlBersiap,
-    text: 'Your father or grandfather served in the Dutch East Indies after 1945. He does not speak about it the way veterans speak about liberation. The government calls what happened "police actions" — politionele acties. What the Westerling massacre and the parliamentary inquiry of 2022 call it is "systematic and extreme violence." Your grandfather is dead before the inquiry. He knew what he did. Whether he knew what it was is a different question, one you cannot now ask him.',
+    text: 'Your father or grandfather served in the Dutch East Indies after 1945. He does not speak about it the way veterans speak about liberation. The government calls what happened "police actions" — politionele acties. In 1969 a veteran said on television what he had seen, and the government\'s own report that year called it "excesses". The word was chosen carefully. He knew what he did. Whether he knew what it was is a different question, and not one you know how to ask him.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.addFlag('nl_bersiap_family_memory'); p.setMem('nlBersiap', true) },
   },

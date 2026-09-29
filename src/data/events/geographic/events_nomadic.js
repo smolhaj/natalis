@@ -151,7 +151,7 @@ export const NOMADIC_EVENTS = [
       G.currentYear >= 1999 && G.currentYear <= 2012 &&
       G.age >= 16 &&
       !G.mem.mongolDzud,
-    text: 'Dzud: the Mongolian winter catastrophe where summer drought leaves no stored grass and winter ice seals what little remains under a crust the livestock cannot break through. The 1999–2000 dzud kills 2.4 million animals — a quarter of the national herd. The 2009–10 dzud is worse: 8.5 million animals lost. Your family\'s cattle, sheep, horses — the dzud makes no distinction between what was saved over a decade and what was built over a generation. In the morning you find the animals where you left them and some of them are not moving.',
+    text: (G) => 'Dzud: the Mongolian winter catastrophe where summer drought leaves no stored grass and winter ice seals what little remains under a crust the livestock cannot break through. The 1999–2000 dzud kills 2.4 million animals — a quarter of the national herd.' + (G.currentYear >= 2010 ? ' The 2009–10 dzud is worse: 8.5 million animals lost.' : '') + ' Your family\'s cattle, sheep, horses — the dzud makes no distinction between what was saved over a decade and what was built over a generation. In the morning you find the animals where you left them and some of them are not moving.',
     choices: [
       {
         text: 'The losses are severe. You go to Ulaanbaatar to find work.',

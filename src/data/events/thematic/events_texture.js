@@ -565,7 +565,7 @@ export const TEXTURE_EVENTS = [
       G.character.gender === 'male' &&
       G.age >= 18 && G.age <= 30 &&
       !G.flags.includes('era_korean_war_done'),
-    text: 'The draft notice arrives. Korea. Your mother folds it and refolds it. There is a medical examination, a series of injections, a train. The men on the train are your age and speak in a register that is simultaneously joking and frightened. You serve. The war is over in 1953 and called a ceasefire which is not quite the same as over. You come back. Some of the men on the train do not.',
+    text: (G) => 'The draft notice arrives. Korea. Your mother folds it and refolds it. There is a medical examination, a series of injections, a train. The men on the train are your age and speak in a register that is simultaneously joking and frightened. You serve. ' + (G.currentYear >= 1953 ? 'The war is over in 1953 and called a ceasefire, which is not quite the same as over. ' : 'Nobody on the line can tell you when it ends. ') + 'You come back. Some of the men on the train do not.',
     choices: [
       {
         text: 'Serve and come home changed',

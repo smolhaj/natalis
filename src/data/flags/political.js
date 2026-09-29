@@ -6858,6 +6858,14 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by pol_left_authoritarian_noted. Annual awareness of the surveillance; the ongoing calibration of speech.',
   },
 
+  dissident_network: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Came out of political imprisonment and sought out the others who had been inside, rather than keeping their head down.',
+    intent: 'year_texture',
+    notes: 'Set by the post-release choice queued in tick() for political prisoners.',
+  },
+
   dissident_file_known: {
     weight: 'major',
     category: 'political',

@@ -352,7 +352,9 @@ export const BOSNIA_EVENTS = [
     weight: 300,
     when: (G) => IS_BA(G) && G.currentYear >= 1997 && G.age >= 14 &&
       (G.character?.ruralUrban === 'rural' || G.place?.id === 'ba_rural') && once(G, 'ba_mines'),
-    text: 'You can see the field from the house. It is good land, it was your grandfather\'s, and it has a sign on it with a skull and the year the sign was put up, which was a while ago now. Somebody will come and clear it. They have been coming to clear it since 1998 and there are a lot of fields. A man two villages over went in for firewood in 2003 because he had been going in for firewood his whole life.',
+    text: (G) => G.currentYear >= 2004
+      ? 'You can see the field from the house. It is good land, it was your grandfather\'s, and it has a sign on it with a skull and the year the sign was put up, which was a while ago now. Somebody will come and clear it. They have been coming to clear it since 1998 and there are a lot of fields. A man two villages over went in for firewood in 2003 because he had been going in for firewood his whole life.'
+      : 'You can see the field from the house. It is good land, it was your grandfather\'s, and it has a sign on it with a skull and the year the sign was put up. Somebody will come and clear it. A man from an organisation with initials has been out with a map, and there are a lot of fields. A man two villages over went in for firewood last winter because he had been going in for firewood his whole life.',
     context: 'Bosnia was left with an estimated 1,000 km² of suspected mined land and remains one of the most heavily contaminated countries in Europe. Clearance is still ongoing; casualties continued well into the 2010s, often on land people had farmed for generations.',
     choices: null,
     effect: (p) => { p.setMem('ba_mines', true); p.m -= 4; p.mo -= 200; p.addFlag('mined_land') },

@@ -15,7 +15,7 @@
 import { describe, it, expect } from 'vitest'
 import { COUNTRIES } from '../src/data/countries.js'
 import { hasTech, techYear, wasWealthy, materialWealthYear, MATERIAL_WEALTH_FROM, TECH_KEYS, TECH_OVERRIDES } from '../src/data/technology.js'
-import { checkLine, checkAge } from '../scripts/lib/anachronism.js'
+import { checkLine, checkAge, checkFutureYear } from '../scripts/lib/anachronism.js'
 import { runSimulation } from '../scripts/lib/sim.js'
 
 const byName = (n) => COUNTRIES.find(c => c.name === n)
@@ -97,6 +97,21 @@ describe('the line checker itself', () => {
   it('catches an office email reaching a six-year-old', () => {
     expect(checkAge('The email inbox has tripled in a year.', 6)).toBeTruthy()
     expect(checkAge('The email inbox has tripled in a year.', 40)).toBeNull()
+  })
+})
+
+describe('a year that has not happened yet', () => {
+  it('catches a retrospective printed before the fact', () => {
+    expect(checkFutureYear('Lina Kostenko. Vasyl Stus. Stus died in a Soviet camp in 1985.', 1963)).toBeTruthy()
+    expect(checkFutureYear('What came after that: February 24, 2022.', 2014)).toBeTruthy()
+  })
+  it('lets a future clause and a named year through', () => {
+    expect(checkFutureYear('The plan says the city will have a metro by 2030.', 2010)).toBeNull()
+    expect(checkFutureYear('Vision 2030, or whatever the current plan is called, is the official future.', 2017)).toBeNull()
+    expect(checkFutureYear('London won the right to host the 2012 Olympics the day before.', 2005)).toBeNull()
+  })
+  it('does not fire on the past', () => {
+    expect(checkFutureYear('The war ended in 1975.', 1980)).toBeNull()
   })
 })
 

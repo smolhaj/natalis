@@ -45,7 +45,7 @@ export const UK_EVENTS = [
       G.currentYear >= 1989 && G.currentYear <= 1991 &&
       G.age >= 16 &&
       !G.mem?.ukPollTax,
-    text: 'The Community Charge — the poll tax — replaces the rates with a flat per-person levy. A duke and a dustman pay the same. The logic is that everyone who uses local services should contribute equally; the effect is to transfer the burden from property to individuals. In Scotland it is introduced a year early. On March 31, 1990, Trafalgar Square fills with 200,000 people. The riot that follows runs through central London. Margaret Thatcher will be gone by November.',
+    text: (G) => 'The Community Charge — the poll tax — replaces the rates with a flat per-person levy. A duke and a dustman pay the same. The logic is that everyone who uses local services should contribute equally; the effect is to transfer the burden from property to individuals. In Scotland it is introduced a year early. ' + (G.currentYear >= 1990 ? 'On March 31, 1990, Trafalgar Square fills with 200,000 people. The riot that follows runs through central London. By November Margaret Thatcher is gone.' : 'In England the bills arrive in the spring. People are already saying they will not pay.'),
     choices: [
       {
         text: 'You refuse to pay — non-compliance is the only response.',
@@ -205,7 +205,7 @@ export const UK_EVENTS = [
       G.currentYear >= 1982 && G.currentYear <= 1983 &&
       G.age >= 14 &&
       !G.mem?.ukFalklands,
-    text: 'April 2, 1982. Argentina invades the Falkland Islands. The Task Force is assembled and sails south — eight thousand miles, in April, into the South Atlantic winter. The names come in through the news: HMS Sheffield, HMS Coventry, HMS Ardent. The Belgrano — an Argentine cruiser sailing away from the exclusion zone — is sunk with three hundred and twenty-three men. The campaign lasts seventy-four days. Two hundred and fifty-five British military dead. Six hundred and forty-nine Argentine military dead. Three Falkland Island civilians. The war ends with a 144-seat Conservative majority in June 1983. The seventy-four days reshape the decade.',
+    text: (G) => 'April 2, 1982. Argentina invades the Falkland Islands. The Task Force is assembled and sails south — eight thousand miles, in April, into the South Atlantic winter. The names come in through the news: HMS Sheffield, HMS Coventry, HMS Ardent. The Belgrano — an Argentine cruiser sailing away from the exclusion zone — is sunk with three hundred and twenty-three men. The campaign lasts seventy-four days. Two hundred and fifty-five British military dead. Six hundred and forty-nine Argentine military dead. Three Falkland Island civilians. ' + (G.currentYear >= 1983 ? 'A year later the war returns a 144-seat Conservative majority in June 1983. ' : 'The prime minister who looked finished in the winter looks unbeatable by the summer. ') + 'The seventy-four days reshape the decade.',
     choices: [
       {
         text: 'The islands are British territory. The principle of sovereignty has to mean something.',

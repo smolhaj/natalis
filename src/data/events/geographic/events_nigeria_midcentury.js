@@ -140,7 +140,7 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     phase: null,
     weight: 400,
     when: (G) => IS_NG(G) && G.currentYear === 1977 && G.age >= 8 && once(G, 'ngm_festac'),
-    text: 'FESTAC is a month long and the whole Black world comes to Lagos for it — Stevie Wonder, Gilberto Gil, dancers from Brazil and Jamaica and everywhere the ships went. They build a village to house them all and a national theatre shaped like a military cap. The mask on the posters is an ivory one the British took in 1897 and would not lend back, so the country commissions a copy and puts the copy on everything. For four weeks this is the capital of something. Your mother keeps the commemorative cloth and it is still in the house in 2004.',
+    text: 'FESTAC is a month long and the whole Black world comes to Lagos for it — Stevie Wonder, Gilberto Gil, dancers from Brazil and Jamaica and everywhere the ships went. They build a village to house them all and a national theatre shaped like a military cap. The mask on the posters is an ivory one the British took in 1897 and would not lend back, so the country commissions a copy and puts the copy on everything. For four weeks this is the capital of something. Your mother keeps the commemorative cloth folded in the bottom of the box where the good things are kept.',
     context: 'FESTAC \'77, the Second World Black and African Festival of Arts and Culture, ran in Lagos from 15 January to 12 February 1977 with some 17,000 participants from 56 nations. Its emblem was the 16th-century Benin ivory mask of Idia, looted in 1897; the British Museum declined to lend it, and a replica was used.',
     choices: null,
     effect: (p) => { p.setMem('ngm_festac', true); p.m += 8; p.s += 3; p.addFlag('festac_77') },

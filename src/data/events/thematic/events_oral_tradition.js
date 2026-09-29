@@ -157,7 +157,7 @@ export const ORAL_TRADITION_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) =>
-      isOralContext(G) &&
+      isOralContext(G) && G.ruralUrban === 'rural' &&
       G.age >= 13 && G.age <= 20 &&
       !G.mem?.oralCousinCity,
     text: `Your cousin who went to the city comes back at harvest time. Everyone wants to speak with them. The city they describe: bigger than you can quite imagine, the prices are higher, the streets are not what you expected, there is a job and also a danger. Your cousin brings things back — a cloth, a medicine, a small device — and these objects are as much information as the words. You examine the objects later when the conversation has moved on. The cousin's version of the city and the city itself are not identical. You know this. You will find out how much they differ when and if you go.`,
@@ -313,7 +313,9 @@ export const ORAL_TRADITION_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      (G.archetype === 'conflict_zone' || G.archetype === 'developing_unstable') &&
+      // Soldiers passing through is a war, or a coup's aftermath, in the
+      // year it happens: Kabul in 1976 was two years from either.
+      (G.conflictRisk > 0.08 || (G.archetype === 'developing_unstable' && G.flags.includes('lived_through_coup'))) &&
       G.age >= 14 && G.age <= 25 &&
       !G.mem?.oralSoldiersPassed,
     text: `Soldiers passed through. It is a sentence that can mean six things and you read which one from the adults' faces before anyone speaks. This time they asked for food, took more than they asked for, and moved on. "No one was hurt," your uncle says, and says nothing after it, and means it as good news. You are old enough now to hear the words *this time* in a sentence that does not contain them.`,

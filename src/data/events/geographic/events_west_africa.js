@@ -46,7 +46,7 @@ export const WEST_AFRICA_EVENTS = [
       G.currentYear === 1992 &&
       G.age >= 18 &&
       !G.mem.ghaDemocracy,
-    text: 'Rawlings allows elections in 1992. He wins, standing now as a civilian candidate. The opposition disputes the results but accepts the transition. Ghana becomes a constitutional democracy. For the first time in your adult life, the transfer of power is something other than a gun or a death. The 2000 election — Kufuor wins, Rawlings steps down — will be the first peaceful transfer of power to an opposition candidate in Ghana\'s history. You will be there for that too.',
+    text: 'Rawlings allows elections in 1992. He wins, standing now as a civilian candidate. The opposition disputes the results but accepts the transition. Ghana becomes a constitutional democracy. For the first time in your adult life, the transfer of power is something other than a gun or a death. Whether power will ever pass to someone who is not Rawlings is the question nobody can answer yet.',
     choices: null,
     effect: (p) => { p.m += 6; p.karma += 5; p.addFlag('ghana_democracy_generation'); p.setMem('ghaDemocracy', true) },
   },

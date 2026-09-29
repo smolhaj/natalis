@@ -419,7 +419,7 @@ const SOLDIER_EVENTS = [
       !G.mem?.soldDeploymentDone,
     text: (G) => {
       const country = G.character?.country?.name ?? ''
-      const conflictRisk = G.character?.country?.conflictRisk ?? 0.1
+      const conflictRisk = G.conflictRisk ?? 0.1
       const yr = G.currentYear ?? 2000
       const isHighConflict = conflictRisk > 0.2
 

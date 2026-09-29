@@ -57,7 +57,7 @@ export const MONGOLIA_EVENTS = [
     weight: 5,
     when: (G) =>
       IS_MONGOLIA(G) &&
-      G.currentYear >= 1989 && G.currentYear <= 1991 &&
+      G.currentYear >= 1990 && G.currentYear <= 1991 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.mn1990Rev,
     text: 'January 1990. A group of young people begins a hunger strike in Sukhbaatar Square. The Mongolian People\'s Revolutionary Party has ruled since 1924 — longer than you have been alive, longer than your parents have been alive. The hunger strikers are asking for multi-party elections. The MPRP watches the Soviet Union and calculates. What happens next is not what anyone expected: the Party agrees. No troops. No crackdown. The revolution succeeds by negotiation, which is its own kind of improbable.',

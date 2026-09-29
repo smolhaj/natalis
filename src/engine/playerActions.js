@@ -2,7 +2,8 @@ import { COUNTRIES } from '../data/countries'
 import { DESTINATIONS } from '../data/destinations'
 import { ACTIVITIES, localCost } from '../data/activities'
 import { inEraMoney } from '../data/economy.js'
-import { preferUnsaid, rememberSaid } from './prose.js'
+import { preferUnsaid, rememberSaid, hasSaid } from './prose.js'
+import { habitLines } from '../data/habitProse.js'
 import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
 import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
@@ -11,8 +12,10 @@ import {
   ADULT_TRAITS, CHILD_TRAITS, pickTraits, partnerOccupation, BUSINESS_TYPES, childNameCountry,
 } from './character'
 import {
-  buildG, buildEffectProxy, applyProxy, resolveProxyExtras,
+  buildG, buildEffectProxy, applyProxy, resolveProxyExtras, liveCountry,
 } from './tick'
+import { hasTech } from '../data/technology.js'
+import { livingRuralUrban } from './character'
 
 // Re-export enterCareer and getAvailableCareers so callers that import from gameEngine still work
 export { enterCareer, getAvailableCareers } from './tick'
@@ -23,7 +26,18 @@ function genPartnerName(state, gender) {
   // is drawn rather than inherited — and the first name avoids everyone
   // already in this life. See names.js: ten independent draws across four
   // files produced a partner and a father both called Patrick.
-  return personName(state.currentCountry ?? state.character.country, gender, state)
+  //
+  // And from the community they are likeliest to come from. The country pool
+  // alone married a Bangladeshi-Qatari man born in Doha to "Rawda Al
+  // Mohannadi", which in the Gulf of that period is close to impossible, and
+  // gave an emigrant a partner from the host pool as often as from home.
+  const birth = state.character.country
+  const here = state.currentCountry ?? birth
+  const home = state.character.nameCountry ? COUNTRIES.find(c => c.name === state.character.nameCountry) : null
+  const abroad = here?.name !== birth?.name
+  if (home && !abroad && chance(0.85)) return personName(home, gender, state)
+  if (abroad && chance(0.5)) return personName(home ?? birth, gender, state)
+  return personName(here, gender, state)
 }
 
 export function generatePartnerProfile(state, overrides = {}) {
@@ -313,7 +327,15 @@ export function spendTimeWithChild(state, childIndex) {
   return {
     ...state, children: updated,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 3, 0, 100) },
-    log: [...state.log, { age: state.age, text: `You spend time with ${child.name}. It matters more than you say.`, isKey: false }],
+    ...sayFresh(state, [
+      `You spend time with ${child.name}. It matters more than you say.`,
+      `An afternoon with ${child.name}, doing nothing that will be remembered, which is how the remembered ones are made.`,
+      `${child.name} tells you something they have not told anyone. You try not to make it larger than they meant it.`,
+      `You and ${child.name} have a way of being in a room together now. It took years and neither of you planned it.`,
+      child.age != null && child.age < 12
+        ? `${child.name} wants to show you everything. You look at everything.`
+        : `${child.name} is busy, and makes time anyway. You notice that it is being made.`,
+    ]),
   }
 }
 
@@ -325,7 +347,18 @@ export function callParent(state, key) {
     ...state,
     parents: { ...state.parents, [key]: { ...parent, relationshipQuality: clamp(parent.relationshipQuality + gain, 0, 100) } },
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 2, 0, 100) },
-    log: [...state.log, { age: state.age, text: `You call your ${key}. It is a good conversation.`, isKey: false }],
+    ...sayFresh(state, hasPhone(state) ? [
+      `You call your ${key}. It is a good conversation.`,
+      `You ring your ${key} on an ordinary evening and stay on longer than either of you meant to.`,
+      `Your ${key} answers on the second ring, as if waiting. Perhaps they were.`,
+      `The call is mostly news about people you have never met. You listen to all of it.`,
+      `You call your ${key}, and hear in the first word what kind of week it has been.`,
+    ] : [
+      `You go to see your ${key}. It is a good visit.`,
+      `You sit with your ${key} for an afternoon. Nothing much is said. Nothing much needs to be.`,
+      `You walk over to your ${key}'s and are given food before you are given news.`,
+      `Your ${key} has saved up things to tell you. You hear all of them.`,
+    ]),
   }
 }
 
@@ -357,6 +390,24 @@ export function getPlasticSurgery(state, surgeryType) {
     stats: { ...state.stats, looks: clamp(state.stats.looks - 15, 0, 100), health: clamp(state.stats.health - 10, 0, 100), happiness: clamp(state.stats.happiness - 20, 0, 100) },
     log: [...state.log, { age: state.age, text: `The surgery is botched. The results are worse than before.`, isKey: true }],
   }
+}
+
+// A button pressed every year used to print the same sentence every year —
+// "You call your mother. It is a good conversation." fourteen times in one
+// life. Pick an unheard line and remember it.
+function sayFresh(state, pool, isKey = false) {
+  const fresh = preferUnsaid(state, pool)
+  const text = fresh[Math.floor(Math.random() * fresh.length)]
+  return {
+    log: [...state.log, { age: state.age, text, isKey }],
+    mem: rememberSaid(state.mem ?? {}, text),
+  }
+}
+
+function hasPhone(state) {
+  const c = liveCountry(state)
+  const rural = livingRuralUrban(state) === 'rural'
+  return hasTech(c, 'landline', state.currentYear, { rural }) || hasTech(c, 'mobile_phone', state.currentYear, { rural })
 }
 
 // ─── Activity system ──────────────────────────────────────────────────────────
@@ -409,8 +460,10 @@ export function applyActivity(state, activityId) {
       meditation: ['You sit with it.', 'The practice goes quietly.', 'The mind settles, eventually.', 'Fifteen minutes that are harder and more useful than they look.'],
     }
     const _prosePool = _hobbyProse[hobbyActivity.hobbyId] ?? [`You spend time on ${hobbyActivity.hobbyId}.`]
-    const _proseLine = _prosePool[Math.floor(Math.random() * _prosePool.length)]
+    const _fresh = preferUnsaid(updated, _prosePool)
+    const _proseLine = _fresh[Math.floor(Math.random() * _fresh.length)]
     updated.log = [...updated.log, { age: updated.age, text: _proseLine, isKey: false }]
+    updated.mem = rememberSaid(updated.mem ?? {}, _proseLine)
     updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
     return updated
   }
@@ -556,8 +609,19 @@ export function applyActivity(state, activityId) {
   }
 
   updated.actionsThisYear = state.actionsThisYear + 1
-  const activityLogText = typeof activity.prose === 'function' ? activity.prose(G) : activity.outcome
+  // An activity chosen every year used to print the same sentence every year.
+  // Once its own line has been said, the habit speaks instead.
+  let activityLogText = typeof activity.prose === 'function' ? activity.prose(G) : activity.outcome
+  if (activityLogText && hasSaid(updated, activityLogText)) {
+    const category = Object.keys(ACTIVITIES).find(k => (ACTIVITIES[k] ?? []).some(a => a.id === activityId))
+    const pool = habitLines(activityId, category, G)
+    if (pool?.length) {
+      const fresh = preferUnsaid(updated, pool)
+      activityLogText = fresh[Math.floor(Math.random() * fresh.length)]
+    }
+  }
   updated.log = [...updated.log, { age: state.age, text: activityLogText, isKey: false }]
+  updated.mem = rememberSaid(updated.mem ?? {}, activityLogText)
 
   // Track cumulative activity counts for flag generation in tick()
   const countKey = `act_count_${activityId}`
@@ -586,7 +650,7 @@ export function buyProperty(state, typeId) {
     assets: { ...state.assets, properties: [...(state.assets?.properties ?? []), property] },
     flags: [...new Set([...state.flags, 'homeowner'])],
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 8, 0, 100) },
-    log: [...state.log, { age: state.age, text: `You buy a ${type.name} for $${price.toLocaleString()}. Down payment: $${downPayment.toLocaleString()}.`, isKey: true }],
+    log: [...state.log, { age: state.age, text: `You buy ${/^[aeiou]/i.test(type.name) ? 'an' : 'a'} ${type.name.toLowerCase()} for $${price.toLocaleString()}. The deposit is $${downPayment.toLocaleString()}; the rest belongs to the bank for a long time.`, isKey: true }],
   }
 }
 
@@ -1003,7 +1067,12 @@ export function callSibling(state, siblingIdx) {
     ...state,
     siblings: updated,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 3, 0, 100) },
-    log: [...state.log, { age: state.age, text: `You call ${sib.name}. It is a good conversation.`, isKey: false }],
+    ...sayFresh(state, [
+      hasPhone(state) ? `You call ${sib.name}. It is a good conversation.` : `You go to see ${sib.name}. It is a good afternoon.`,
+      `You and ${sib.name} fall into the old way of talking inside a minute, the one nobody else can follow.`,
+      `${sib.name} remembers it differently. You let them.`,
+      `You and ${sib.name} talk about your parents the way only the two of you can.`,
+    ]),
   }
 }
 
@@ -1421,7 +1490,7 @@ export function bookTrip(state, destinationId) {
 
   // Scale cost by GDP
   const gdpCostMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-  const costMult = gdpCostMult[state.character?.country?.gdp] ?? 1.0
+  const costMult = gdpCostMult[liveCountry(state)?.gdp] ?? 1.0
   const cost = $$(Math.round(dest.cost * costMult), state)
 
   if ((state.money ?? 0) < cost) {
@@ -1538,7 +1607,13 @@ export function manageBusiness(state) {
     business,
     actionsThisYear: state.actionsThisYear + 1,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness - 3, 0, 100) },
-    log: [...state.log, { age: state.age, text: `You put in extra hours managing the ${business.name}. Performance improves.`, isKey: false }],
+    ...sayFresh(state, [
+      `You are at the ${business.name.toLowerCase()} before it opens and after it shuts.`,
+      `You do the books at the kitchen table, late, twice.`,
+      `A supplier is let go and a better one found. It costs you a week.`,
+      `You learn which days are slow and stop pretending they will not be.`,
+      `The regulars know your name. You know what they will ask for before they ask.`,
+    ]),
   }
 }
 

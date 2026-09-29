@@ -370,8 +370,8 @@ export const ADOLESCENCE_2_EVENTS = [
       G.age >= 14 && G.age <= 17 &&
       !G.mem?.adol2FaithDoubt,
     text: (G) => {
-      const rel = G.religion ?? 'your faith'
-      return `You have a question about ${rel} that you cannot ask at home. Not a hostile question — a genuine one. You have looked for the answer in the usual places and found either certainty that doesn\'t satisfy or doubt that frightens you.`
+      // G.religion is an id: this printed "a question about christian_catholic".
+      return `You have a question about the faith you were raised in that you cannot ask at home. Not a hostile question — a genuine one. You have looked for the answer in the usual places and found either certainty that doesn\'t satisfy or doubt that frightens you.`
     },
     choices: [
       {

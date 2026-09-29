@@ -265,7 +265,7 @@ export function buildMundaneLayer(state) {
   addIf(tech('mobile_phone') && currentYear <= techArrival('mobile_phone') + 4 && age >= 14,
     'The mobile phone is the size of a small brick and calls cost significantly. You use it for genuine emergencies.',
   )
-  addIf(tech('email') && working,
+  addIf(tech('email') && working && currentYear <= techArrival('email') + 8,
     'Email has arrived at the office. The volume of communication has increased without prior consultation.',
   )
   addIf(isDeveloping && !tech('home_internet') && tech('personal_computer') && age >= 12,

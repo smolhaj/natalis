@@ -464,7 +464,7 @@ export const CAREERS = [
         text: 'You see combat. The training did not fully prepare you for what it actually is.',
         choices: null,
         effect: (p) => { p.m -= 12; p.h -= 5; p.addFlag('combat_veteran'); },
-        when: (G) => G.character.country.conflictRisk > 0.1,
+        when: (G) => G.conflictRisk > 0.1,
       },
       {
         id: 'career_soldier_order',

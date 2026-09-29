@@ -17,7 +17,7 @@ export const SUDAN_EVENTS = [
       G.currentYear >= 1983 && G.currentYear <= 1989 &&
       G.age >= 16 &&
       !G.mem.sdnSharia,
-    text: 'September 1983. Nimeiry announces the September Laws — Islamic criminal law applied nationwide. Amputation for theft. Flogging for alcohol. Public executions. The legal status of women is reordered. Mahmoud Mohammed Taha, a reformist Islamic scholar who opposed the laws, is publicly executed in January 1985. You are living in the country this has become. In April 1985 Nimeiry is overthrown in a coup while he is abroad. The September Laws are not repealed.',
+    text: (G) => 'September 1983. Nimeiry announces the September Laws — Islamic criminal law applied nationwide. Amputation for theft. Flogging for alcohol. Public executions. The legal status of women is reordered. ' + (G.currentYear >= 1985 ? 'Mahmoud Mohammed Taha, a reformist Islamic scholar who opposed the laws, is publicly executed in January 1985. ' : 'The whisky is poured into the Nile for the cameras. ') + 'You are living in the country this has become.' + (G.currentYear >= 1985 ? ' In April 1985 Nimeiry is overthrown in a coup while he is abroad. The September Laws are not repealed.' : ''),
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('sudan_islamist_law_generation'); p.setMem('sdnSharia', true) },
   },

@@ -161,7 +161,7 @@ export const DECOLONISATION_EVENTS = [
       G.character.country.archetype === 'subsaharan' &&
       G.currentYear >= 1958 && G.currentYear <= 1972 &&
       G.age >= 16 && G.age <= 35,
-    text: 'Someone gives you a pamphlet, or a speech crackles through the radio — Nkrumah at the All-African Peoples\' Conference, Lumumba at independence, the founding of the Organisation of African Unity in Addis Ababa in 1963. The idea is as simple as it is enormous: that the whole continent is one project. That the borders — drawn in Berlin by men who had never been here — are not the last word on what Africa is. For the first time you hear the word *pan-Africanism* used not as a description but as a plan.',
+    text: (G) => 'Someone gives you a pamphlet, or a speech crackles through the radio — ' + ['Nkrumah at the All-African Peoples\' Conference', G.currentYear >= 1960 && 'Lumumba at independence', G.currentYear >= 1963 && 'the founding of the Organisation of African Unity in Addis Ababa in 1963'].filter(Boolean).join(', ') + '. The idea is as simple as it is enormous: that the whole continent is one project. That the borders — drawn in Berlin by men who had never been here — are not the last word on what Africa is. For the first time you hear the word *pan-Africanism* used not as a description but as a plan.',
     choices: [
       {
         text: 'Believe in it — the continent united is the continent free',

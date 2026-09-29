@@ -14,9 +14,12 @@ export const JORDAN_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Jordan' &&
       G.character.ethnicity === 'palestinian_jordanian' &&
+      G.currentYear >= 1949 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem.jorPalestinian,
-    text: 'Your family\'s displacement story is in the house — in which village they came from, which key someone\'s grandfather kept, which papers were left behind in 1948 or 1967. The map of Palestine that your family carries does not match the maps in the Jordanian school curriculum or the Israeli ones. The West Bank is visible from the Amman hills on a clear day. The border that put it in a different country was created within your parents\' or grandparents\' lifetimes. You are Jordanian. You are also from somewhere else.',
+    text: (G) => G.currentYear >= 1968
+      ? 'Your family\'s displacement story is in the house — in which village they came from, which key someone\'s grandfather kept, which papers were left behind in 1948 or 1967. The map of Palestine that your family carries does not match the maps in the Jordanian school curriculum or the Israeli ones. The West Bank is visible from the Amman hills on a clear day. The border that put it in a different country was created within your parents\' or grandparents\' lifetimes. You are Jordanian. You are also from somewhere else.'
+      : 'Your family\'s displacement story is in the house — in which village they came from, which key someone\'s grandfather kept, which papers were left behind in 1948. The map of Palestine that your family carries does not match the maps in the Jordanian school curriculum. The West Bank is part of the kingdom now; the village is on the other side of the armistice line, a few hours away and unreachable. You are Jordanian. You are also from somewhere else.',
     choices: null,
     effect: (p) => { p.r += 8; p.e += 3; p.addFlag('jordanian_palestinian_identity'); p.setMem('jorPalestinian', true) },
   },
@@ -111,7 +114,11 @@ export const JORDAN_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1999 &&
       G.age >= 20 &&
       !G.mem.jorHussein,
-    text: 'King Hussein has been on the throne since 1952. He survived the 1967 war that lost the West Bank, the Black September civil war, assassination attempts, and two peace treaties — one with the PLO in 1974 granting them Palestinian self-representation, one with Israel in 1994. He is, by any measure, a survivor. The monarchy is stable in a region of instability. The price of stability is the wasta system, the bread subsidy, and a political space that exists only at the king\'s sufferance. When he dies of cancer in 1999, the mourning is real.',
+    text: (G) => 'King Hussein has been on the throne since 1952. He survived the 1967 war that lost the West Bank, the Black September civil war, assassination attempts' +
+      (G.currentYear >= 1975 ? ', the Rabat summit of 1974 that named the PLO the sole representative of the Palestinians' : '') +
+      (G.currentYear >= 1995 ? ', and a peace treaty with Israel in 1994' : '') +
+      '. He is, by any measure, a survivor. The monarchy is stable in a region of instability. The price of stability is the wasta system, the bread subsidy, and a political space that exists only at the king\'s sufferance.' +
+      (G.currentYear >= 1999 ? ' When he dies of cancer in 1999, the mourning is real.' : ''),
     choices: null,
     effect: (p) => { p.r += 4; p.addFlag('jordanian_hussein_generation'); p.setMem('jorHussein', true) },
   },
