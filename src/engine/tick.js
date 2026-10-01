@@ -22,9 +22,9 @@ import {
 import { buildYearTexture } from './yearTexture'
 import { buildMundaneLayer } from './mundaneLayer'
 import { rememberSaid, preferUnsaid } from './prose'
-import { tickLifeCourse, secondaryChance, primaryChance, unpurchasedHomeName, retirementAge } from './lifeCourse'
+import { tickLifeCourse, secondaryChance, primaryChance, unpurchasedHomeName, retirementAge, universityPlaceChance } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
-import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic, choleraEndemic } from '../data/history.js'
+import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic, choleraEndemic, healthcareAt, childHazard, adultHazard, warDeathHazard } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
 import { hasTech } from '../data/technology.js'
 import { migrationDestinations, gulfNonNational } from '../data/migration.js'
@@ -104,6 +104,11 @@ const snap = (v) => {
   return Math.abs(v - r) < 1e-6 ? r : v
 }
 
+// sqrt(wage multiplier × price multiplier) per GDP tier: a present-day event
+// figure, placed in the economy of a country of this tier.
+const EVENT_MONEY_MULT = { very_high: 1.0, high: 0.72, medium_high: 0.47, medium: 0.29, low_medium: 0.15, low: 0.088, very_low: 0.052 }
+const EVENT_MONEY_KNEE = 300
+
 function applyProxy(state, proxy) {
   const stats = {
     health:    snap(clamp(state.stats.health    + proxy.h,  0, 100)),
@@ -136,9 +141,35 @@ function applyProxy(state, proxy) {
   // anything small enough to be a bad month is still absorbed, because a
   // character who cannot make a 40 bus fare has a different problem than a
   // credit record.
-  const rawMoney = (state.money ?? 0) + inEraMoney(proxy.mo ?? 0, liveCountry(state), state.currentYear) + (proxy.moNominal ?? 0)
+  //
+  // And where: the 629 figures are rich-world magnitudes, and they were
+  // denominated by the year and never by the place. "The company restructures"
+  // costs 5,000; in 2027 Damascus, on a salary of 900, that was six years'
+  // income going onto a debt nobody narrated, and the commonest single cause of
+  // the silent debt carried by most fifty-year-olds in the poorest
+  // configurations. A delta is scaled to the economy the character lives in —
+  // between what a wage and what a price is worth there, because an authored
+  // windfall or bill is both — so it is the same share of a life everywhere.
+  // Only for authored events (`_placeMoney`, set where an event's effect
+  // runs): the activity and crime prices already go through localCost.
+  //
+  // The corpus is not consistent about it: a rural texture event pays a
+  // remittance of 180 or charges 40 for the clinic, written for the household
+  // it lands in, while the generic layer charges 5,000 and 8,000 written for a
+  // rich one; and a few effects already scale themselves by GDP. So the part
+  // of a figure under EVENT_MONEY_KNEE is left as written, and only what is
+  // above it is placed — the five-figure bill shrinks to the place, and the
+  // small sum that was already local stays the size its author meant.
+  const lc = liveCountry(state)
+  const place = proxy._placeMoney ? (EVENT_MONEY_MULT[lc?.gdp] ?? 1) : 1
+  const mo = proxy.mo ?? 0
+  const placed = place >= 1 || Math.abs(mo) <= EVENT_MONEY_KNEE
+    ? mo
+    : Math.sign(mo) * (EVENT_MONEY_KNEE + (Math.abs(mo) - EVENT_MONEY_KNEE) * place)
+  const rawMoney = (state.money ?? 0) + inEraMoney(Math.round(placed), lc, state.currentYear) + (proxy.moNominal ?? 0)
   const shortfall = rawMoney < 0 ? -rawMoney : 0
-  const debtFloor = inEraMoney(250, liveCountry(state), state.currentYear)
+  const debtFloor = inEraMoney(250, lc, state.currentYear)
+
   const money   = Math.max(0, rawMoney)
   const debt    = shortfall > debtFloor
     ? Math.round((state.debt ?? 0) + shortfall)
@@ -197,7 +228,7 @@ const HC_RECOVERY = { excellent: 0.22, good: 0.20, fair: 0.17, poor: 0.13, very_
 export function healthCeiling(state) {
   const age = state.age ?? 0
   const country = state.currentCountry ?? state.character?.country
-  const hc = country?.healthcare ?? 'fair'
+  const hc = healthcareAt(country, state.currentYear ?? 2000)
   let ceiling = 95
   if (age > 25) ceiling -= (age - 25) * 0.45
   if (age > 60) ceiling -= (age - 60) * 0.55
@@ -220,12 +251,19 @@ export function healthCeiling(state) {
 function applyNaturalAging(state) {
   const { age, stats } = state
   let { happiness, health, smarts, looks, charisma } = stats
-  happiness += (50 - happiness) * 0.04
+  // Adaptation. At 4% a year a single bad event took seventeen years to half
+  // fade, so the year's net of a long corpus of losses — the AIDS years, the
+  // towers, the medical bill, a parent, a child — settled an American adult of
+  // 1950 near 35 and held them there, under the diagnosis thresholds, for the
+  // rest of their life. People adapt faster than that to almost everything;
+  // the losses that do not fade (a child, a partner) are carried by their own
+  // flags and prose, not by a number that never comes back.
+  happiness += (50 - happiness) * 0.07
 
   const country = state.currentCountry ?? state.character?.country
   const ceiling = healthCeiling(state)
   if (health < ceiling) {
-    health += (ceiling - health) * (HC_RECOVERY[country?.healthcare ?? 'fair'] ?? 0.17)
+    health += (ceiling - health) * (HC_RECOVERY[healthcareAt(country, state.currentYear ?? 2000)] ?? 0.17)
   } else {
     health -= (health - ceiling) * 0.35
   }
@@ -375,6 +413,14 @@ function buildEffectProxy(state) {
     proxy._friendRelDeltas[idx] = (proxy._friendRelDeltas[idx] ?? 0) + delta
   }
   proxy.killPartner = () => { proxy._killPartner = true; proxy.mem['lastMajorEvent_bereavement'] = state.currentYear }
+  // An event that narrates a child's death has to make it true. `idx` is the
+  // index in `children`; without one, the youngest living child — which is
+  // the one an infant-death event is about.
+  proxy.killChild = (idx) => {
+    proxy._killChild = idx ?? -1
+    proxy.mem['lastMajorEvent_bereavement'] = state.currentYear
+    proxy.mem['lost_childYear'] = state.currentYear
+  }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
   // Its missing counterpart. Prison could only ever be entered through
   // attemptCrime — a player action behind the crime panel, which passive mode
@@ -536,6 +582,20 @@ function resolveProxyExtras(state, proxy) {
     next = { ...next, retired: true, career: null, pensionAnnual: pension,
       mem: next.career ? { ...(next.mem ?? {}), retiredFrom: { title: next.career.title, field: next.career.field, id: next.career.id } } : next.mem }
   }
+  // A partner replaced or cleared by an event takes the marriage with them.
+  // `married` used to survive both, so a Russian of 1940 whose wife an event
+  // had replaced with a new partner then "married" the new one while the game
+  // still held the first marriage — two weddings, no divorce, no death.
+  const endsUnion = (proxy._clearPartner || (proxy._newPartner !== undefined && proxy._newPartner !== next.partner)) &&
+    next.partner && next.partner.alive !== false
+  if (endsUnion) {
+    const old = next.partner
+    next = {
+      ...next,
+      flags: proxy._newPartner?.married ? next.flags : (next.flags ?? []).filter(f => f !== 'married' && f !== 'engaged'),
+      exPartners: [...(next.exPartners ?? []), { name: old.name, gender: old.gender, years: old.years ?? 0, married: !!old.married, endedYear: next.currentYear, alive: true }],
+    }
+  }
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
   if (proxy._newChild)       next = { ...next, children: [...next.children, proxy._newChild] }
@@ -589,6 +649,20 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._residencyStatus) next = { ...next, residencyStatus: proxy._residencyStatus }
   if (proxy._partnerRelDelta && next.partner) {
     next = { ...next, partner: { ...next.partner, relationshipQuality: clamp((next.partner.relationshipQuality ?? 60) + proxy._partnerRelDelta, 0, 100) } }
+  }
+  if (proxy._killChild !== undefined && next.children?.length) {
+    const living = next.children.map((c, i) => [c, i]).filter(([c]) => c.alive !== false)
+    const target = proxy._killChild >= 0 && next.children[proxy._killChild]?.alive !== false
+      ? proxy._killChild
+      : living.sort(([a], [b]) => (b.ageAtBirth ?? 0) - (a.ageAtBirth ?? 0))[0]?.[1]
+    if (target !== undefined) {
+      const age = Math.max(0, next.age - (next.children[target].ageAtBirth ?? next.age))
+      next = {
+        ...next,
+        children: next.children.map((c, i) => i === target ? { ...c, alive: false, deathYear: next.currentYear, deathAge: age } : c),
+        flags: [...new Set([...(next.flags ?? []), 'lost_child', ...(age <= 2 ? ['lost_child_infant'] : [])])],
+      }
+    }
   }
   if (proxy._killPartner && next.partner) {
     // Same as tickPartner's own death path: the marriage ends with the partner,
@@ -1299,6 +1373,10 @@ export function buildG(state) {
     // The war the character is living in THIS year, where they live now. The
     // static `country.conflictRisk` is a present-day figure; see WAR_YEARS.
     conflictRisk: conflictRiskAt(liveCountry(state), currentYear),
+    // The health system the character could reach this year where they live
+    // (history.js `healthcareAt`). `G.character.country.healthcare` is the
+    // birth country's present-day rating, and is the wrong thing to read.
+    healthcare: healthcareAt(liveCountry(state), currentYear),
     // Grandchildren are not modelled as people. The flag is the event that
     // announced one; a living child of twenty-five or more is the likeliest
     // grandparent otherwise. Four late-life lines were telling childless
@@ -1333,8 +1411,8 @@ export function buildG(state) {
     archetype: liveCountry(state)?.archetype ?? state.character?.country?.archetype ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
-    capital: state.character?.country?.capital ?? '',
-    currency: state.character?.country?.currency ?? '',
+    capital: liveCountry(state)?.capital ?? state.character?.country?.capital ?? '',
+    currency: liveCountry(state)?.currency ?? state.character?.country?.currency ?? '',
     cityName: (state.currentPlace ?? state.character?.birthPlace)?.name ?? state.character?.country?.capital ?? '',
     // lastMajorEvent guard helper — prevents emotional clustering
     // G.yearsSince('bereavement') >= 2 guards miscarriage after parent death, etc.
@@ -1387,6 +1465,7 @@ function applyWorldEvents(state) {
     const wnText = typeof we.narrative === 'function' ? we.narrative(G) : we.narrative
     if (!proseFitsInstitutions(wnText, lived?.name, state.currentYear)) continue
     const proxy = buildEffectProxy(updated)
+    proxy._placeMoney = true
     we.effect(proxy)
     // `addFlags` goes through the proxy too, so a flag that is a claim about
     // the state (`emigrated`) is seen by the same code that makes it true.
@@ -1410,8 +1489,9 @@ function applyWorldEvents(state) {
 
 function applyHeadlines(state) {
   const year = state.currentYear
-  const archetype = state.character?.country?.archetype
-  const countryName = state.character?.country?.name
+  // The news of where the character lives, which is the news they hear.
+  const archetype = liveCountry(state)?.archetype
+  const countryName = liveCountry(state)?.name
   const seenKey = `headline_${year}`
   if (state.mem?.[seenKey]) return state
   const matching = HEADLINES.filter(h => {
@@ -1432,8 +1512,9 @@ function applyHeadlines(state) {
 
 function applySoundtrack(state) {
   const year = state.currentYear
-  const archetype = state.character?.country?.archetype
-  const countryName = state.character?.country?.name
+  // The news of where the character lives, which is the news they hear.
+  const archetype = liveCountry(state)?.archetype
+  const countryName = liveCountry(state)?.name
   const seenKey = `soundtrack_${year}`
   if (state.mem?.[seenKey]) return state
   const matching = SOUNDTRACK.filter(s => {
@@ -1457,68 +1538,53 @@ function applySoundtrack(state) {
 
 // ─── Death ────────────────────────────────────────────────────────────────────
 
-// Historical infant mortality rates (deaths per 1000 live births) by archetype and decade.
-// Sources: UN IGME, Gapminder, World Bank historical series.
-const HISTORICAL_IMR = {
-  wealthy_west:        { 1900: 150, 1920: 100, 1940: 58,  1960: 28,  1980: 12,  2000: 6,   2020: 4   },
-  wealthy_east:        { 1900: 180, 1920: 140, 1940: 90,  1960: 40,  1980: 10,  2000: 4,   2020: 2   },
-  wealthy_gulf:        { 1900: 260, 1920: 240, 1940: 200, 1960: 140, 1980: 60,  2000: 15,  2020: 7   },
-  post_soviet:         { 1900: 230, 1920: 190, 1940: 140, 1960: 75,  1980: 28,  2000: 18,  2020: 8   },
-  developing_urban:    { 1900: 200, 1920: 170, 1940: 150, 1960: 110, 1980: 70,  2000: 35,  2020: 20  },
-  developing_unstable: { 1900: 240, 1920: 210, 1940: 180, 1960: 130, 1980: 90,  2000: 55,  2020: 40  },
-  subsaharan:          { 1900: 300, 1920: 275, 1940: 250, 1960: 190, 1980: 130, 2000: 95,  2020: 55  },
-  conflict_zone:       { 1900: 340, 1920: 310, 1940: 280, 1960: 210, 1980: 160, 2000: 120, 2020: 80  },
-}
+// Child mortality used to be one table keyed on the present-day archetype, so a
+// Korean born in 1955 got Japan's infants' odds and a Syrian born in 1985 got
+// the civil war's. It is keyed to the country and the year now
+// (`childHazard`/`under5At` in history.js), and shared with the character's
+// siblings and children.
 
-function lerpIMR(archetype, year) {
-  const table = HISTORICAL_IMR[archetype] ?? HISTORICAL_IMR.developing_urban
-  const decades = Object.keys(table).map(Number).sort((a, b) => a - b)
-  if (year <= decades[0]) return table[decades[0]] / 1000
-  if (year >= decades[decades.length - 1]) return table[decades[decades.length - 1]] / 1000
-  for (let i = 0; i < decades.length - 1; i++) {
-    if (year >= decades[i] && year <= decades[i + 1]) {
-      const t = (year - decades[i]) / (decades[i + 1] - decades[i])
-      return (table[decades[i]] * (1 - t) + table[decades[i + 1]] * t) / 1000
-    }
-  }
-  return 0.05
+/**
+ * War deaths, kept apart from everything else so that they can be measured
+ * against the record and so that the certificate says what happened. The old
+ * term was `cr × 0.04` a year under 35, multiplied by the health system: a
+ * Syrian cohort lost a fifth of itself in a war that killed about three per
+ * cent of Syria, and most of those deaths were then certified as something
+ * else, because the cause was drawn separately.
+ */
+export function warHazardFor(state, age = state.age, year = (state.character?.birthYear ?? 1960) + age) {
+  const lc = liveCountry(state)
+  const religion = state.religion ?? state.character?.religion
+  const urban = state.character?.ruralUrban !== 'rural' || livingRuralUrban(state) !== 'rural'
+  return warDeathHazard({
+    country: lc, year, age, gender: state.character?.gender,
+    ethnicity: state.character?.ethnicity, religion, urban,
+  })
 }
 
 function checkDeath(state) {
-  const { age, stats, character, flags } = state
+  const { age, stats, flags } = state
   const lc = liveCountry(state)
-  const currentYear = (character.birthYear ?? 1960) + age
-  const cr = conflictRiskAt(lc, currentYear)
-  const arch = lc.archetype ?? 'developing_urban'
+  const currentYear = (state.character?.birthYear ?? 1960) + age
+  const hc = healthcareAt(lc, currentYear)
   let prob = 0
   let skipHcMod = false
 
   if (age < 18) {
-    // Historical archetype-keyed rates — hcMod excluded because archetype already encodes era healthcare
+    // Country-and-year rates already carry the era's medicine.
     skipHcMod = true
-    const imr = lerpIMR(arch, currentYear)
-    if (age < 2) {
-      prob = imr + cr * 0.04
-    } else if (age < 6) {
-      // Under-5 mortality beyond infancy, roughly 12% of IMR per year
-      prob = imr * 0.12 + cr * 0.04
-    } else if (age < 12) {
-      prob = imr * 0.02 + cr * 0.025
-      if (flags.includes('child_soldier')) prob += 0.04
-    } else {
-      prob = imr * 0.015 + cr * 0.05
-      if (flags.includes('child_soldier')) prob += 0.05
-    }
+    prob = childHazard(age, lc, currentYear)
+    if (age >= 6 && flags.includes('child_soldier')) prob += age < 12 ? 0.04 : 0.05
   } else if (age < 35) {
-    prob = 0.002 + cr * 0.04
+    prob = 0.002
     if (flags.includes('criminal_life')) prob += 0.015
     if (stats.happiness < 15) prob += 0.02
   } else if (age < 50) {
-    prob = 0.004 + (age - 35) * 0.0003 + cr * 0.02
+    prob = 0.004 + (age - 35) * 0.0003
     if (stats.health < 25) prob += 0.025
     if (flags.includes('smoker')) prob += 0.005
   } else if (age < 65) {
-    prob = 0.012 + (age - 50) * 0.001 + cr * 0.015
+    prob = 0.012 + (age - 50) * 0.001
     if (stats.health < 35) prob += 0.04
     if (flags.includes('smoker')) prob += 0.01
   } else if (age < 75) {
@@ -1534,7 +1600,7 @@ function checkDeath(state) {
 
   if (!skipHcMod) {
     const hcMod = { excellent: 0.65, good: 0.8, fair: 1.0, poor: 1.25, very_poor: 1.5 }
-    prob *= hcMod[lc.healthcare] ?? 1.0
+    prob *= hcMod[hc] ?? 1.0
   }
   // A very low health stat is a real mortality signal, but this used to be a
   // flat +15%/yr cliff in a model where nothing restored health — the single
@@ -1547,8 +1613,38 @@ function checkDeath(state) {
   // Karma very slightly modifies survival odds
   const karma = state.karma ?? 50
   prob *= clamp(1 - (karma - 50) * 0.002, 0.8, 1.2)
+
+  // The war is rolled first and on its own: neither the health system nor
+  // karma stops a shell.
+  const war = warHazardFor(state, age, currentYear)
+  if (war.p > 0 && chance(war.p)) return { dead: true, cause: warCause(state, war.kind, currentYear), war: true }
   if (!chance(prob)) return { dead: false }
   return { dead: true, cause: determineCause(state) }
+}
+
+/** What a war death is called, by the war and by who died in it. */
+function warCause(state, kind, year) {
+  const lc = liveCountry(state)
+  const cn = lc?.name
+  const age = state.age
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
+  if (cn === 'Cambodia' && year >= 1975 && year <= 1979) {
+    return pick(['hunger, in a work cooperative', 'taken away at night by the cadres', 'exhaustion and fever in the fields', 'executed by the Khmer Rouge'])
+  }
+  if (cn === 'Rwanda' && year === 1994 && kind === 'targeted') return pick(['killed in the genocide', 'killed at a roadblock in the genocide'])
+  if (kind === 'targeted' && (state.religion ?? state.character?.religion) === 'jewish') return pick(['murdered in the Holocaust', 'deported and murdered'])
+  if (kind === 'targeted') return pick(['killed in the massacres', 'killed when the soldiers came to the village', 'taken from the village and killed'])
+  if (state.flags.includes('child_soldier') && age < 18) {
+    return pick(['killed in combat as a child soldier', 'died in armed conflict', 'shot during military service as a minor'])
+  }
+  if (age < 5) return pick(['illness in infancy during conflict', 'killed in a bombing raid during the war', 'malnutrition during conflict'])
+  if (kind === 'combat') {
+    if (cn === 'Syria' && year >= 2011) return pick(['killed in the civil war', 'killed in fighting'])
+    return pick(['killed in combat', 'killed in fighting', 'killed in combat at the front', 'died in the war'])
+  }
+  if (cn === 'Afghanistan') return pick(['died in the conflict', 'killed in fighting', 'killed in an air raid during the war'])
+  if (cn === 'Syria' && year >= 2011) return pick(['killed in the civil war', 'killed by a barrel bomb in the civil war'])
+  return pick(['killed in the conflict', 'caught in crossfire', 'died in the war', 'killed in a bombing raid during the war'])
 }
 
 function determineCause(state) {
@@ -1558,8 +1654,8 @@ function determineCause(state) {
   const lc = liveCountry(state)
   const arch = lc.archetype
   const cn = lc.name
-  const hc = lc.healthcare
   const deathYear = (character.birthYear ?? 1960) + age
+  const hc = healthcareAt(lc, deathYear)
   const malaria = malariaEndemic(cn, deathYear)
   // Cholera did not reach West Africa until the 1970 pandemic, and a Guinean
   // child of 1955 was dying of it. Same rule as malaria: the disease must have
@@ -1616,13 +1712,9 @@ function determineCause(state) {
     return pick(['killed in combat as a child soldier', 'died in armed conflict', 'shot during military service as a minor'])
   }
 
-  if (cr > 0.15 && age < 30 && chance(0.3)) {
-    if (cn === 'Afghanistan') return pick(['died in the conflict', 'killed in fighting'])
-    if (cn === 'Syria' && deathYear >= 2011) return pick(['killed in the civil war', 'died in the conflict'])
-    if (arch === 'conflict_zone') return pick(['killed in the conflict', 'caught in crossfire', 'died in the war'])
-    if (flags.includes('war_childhood') || flags.includes('refugee')) return 'caught in armed conflict'
-    return 'died in conflict'
-  }
+  // War deaths are rolled and named in checkDeath now; a death that reaches
+  // here was not one, and drawing "died in the conflict" for it at random is
+  // what made a third of Syrian deaths in a war year misattributed either way.
 
   if (flags.includes('criminal_life') && age < 40 && chance(0.3)) {
     return pick(['killed in a dispute', 'violence', 'shot'])
@@ -1680,7 +1772,7 @@ function determineCause(state) {
   // certificate for every rich-world death under fifty, which tells a player
   // nothing about the world they were in.
   if (flags.includes('drug_addiction') || flags.includes('alcohol_addiction')) return pick(['overdose', 'complications from addiction'])
-  if (cr > 0.1 && chance(0.5)) return pick(['complications from injury', 'died in the conflict', 'caught in crossfire'])
+  if (cr > 0.1 && chance(0.3)) return pick(['complications from an old injury', 'an infection after the clinic closed'])
   if (arch === 'subsaharan' || arch === 'developing_unstable' || arch === 'conflict_zone') {
     const pool = ['tuberculosis', 'typhoid', 'road accident', 'pneumonia', 'an infection that went untreated']
     if (malaria && arch !== 'developing_unstable') pool.push('malaria', 'malaria')
@@ -2052,7 +2144,19 @@ function fireFromJob(state) {
 // can build it again from the state it was asked in (`mem.hsGpa`).
 function buildGraduationEvent(s, rawGpa) {
   const smarts = s.stats.smarts
-  const canAfford = (s.money ?? 0) >= 8000 || smarts >= 72
+  // Whether a place existed was decided once, at the fork (`mem.uniPlace`,
+  // from the country's tertiary capacity), so a reload rebuilds the same
+  // question. Paying for it is the second gate: free where the state paid
+  // (most of Europe, the Soviet bloc, from the sixties much of the world's
+  // public universities), and otherwise a year's fees in the money of the
+  // place and the year, not a nominal 8,000 — which was a fortune in 1968
+  // and a month's rent in 2008.
+  const lc = liveCountry(s)
+  const freeTuition = !['United States', 'Japan', 'South Korea', 'Philippines', 'Chile'].includes(lc?.name) &&
+    ['wealthy_west', 'post_soviet', 'wealthy_gulf'].includes(lc?.archetype)
+  const fees = inEraMoney(localCost(8000, lc?.gdp), lc, s.currentYear)
+  const canAfford = s.mem?.uniPlace !== false && (freeTuition || (s.money ?? 0) >= fees * 0.5 ||
+    smarts >= 72 || (s.character?.wealthTier ?? 3) >= 4)
   const scholarship = smarts >= 75 || rawGpa >= 3.7
   // The one screen in the game that still read like a menu in a different
   // game: eleven emoji buttons and outcome copy in the register the design
@@ -2060,9 +2164,12 @@ function buildGraduationEvent(s, rawGpa) {
   // potentially lucrative."). It also framed every school system on earth as
   // an American one, printing "You graduate from high school. GPA: 2.62" to a
   // Russian in 1993, and offered IT as a trade in 1946.
-  const uniChoices = (smarts >= 50 && canAfford) ? [{
+  const uniChoices = canAfford ? [{
     text: 'Go on to university',
     tag: null,
+    // A place that was won is mostly taken; the character answering for
+    // themselves takes it about as often as people did.
+    autoWeight: 8,
     outcome: scholarship ? 'You earn a partial scholarship and enroll in university.' : 'You enroll in university. The next four years will shape your career.',
     effect: (p) => {
       p.addFlag('university_enrolled')
@@ -2147,8 +2254,46 @@ export function rebuildTickEvent(id, state) {
     for (const c of e.choices ?? []) { const hit = find(c.inject); if (hit) return hit }
     return null
   }
+  // The phase entries live in their own map, not in EVENTS, and the
+  // diagnosis and parole events are built in place: all three were dropped
+  // from the queue by a reload (1.6% of reloads lost a guaranteed beat).
+  if (id.startsWith('phase_entry_')) return getPhaseEntryMap().get(id) ?? null
+  if (id.startsWith('ls_')) return getLifeSkeletonMap().get(id) ?? null
+  const ill = /^illness_(.+)_(\d+)$/.exec(id)
+  if (ill) {
+    const illness = ILLNESSES.find(i => i.id === ill[1])
+    return illness ? { ...buildIllnessEvent(state, illness).event, id } : null
+  }
+  if (/^prison_parole_release_\d+$/.test(id)) return { ...buildParoleEvent(state), id }
+  if (/^cd_after_\d+$/.test(id)) return { ...buildChildMourningEvent(state), id }
   if (!['hs_graduation', 'uni_field_choice', 'vocational_field_choice'].includes(id)) return null
   return find(buildGraduationEvent(state, state.mem.hsGpa ?? state.gpa ?? 2.0))
+}
+
+
+// The first year out, built from the state so a save can rebuild it by id.
+function buildParoleEvent(s) {
+  return {
+    id: `prison_parole_release_${s.age}`,
+    phase: getPhase(s.age),
+    // The release itself is logged above, this year. This fires the
+    // next, so it is the first year out, not the walk through the gate,
+    // which it used to narrate a second time a year late. And a
+    // political prisoner has no "old contacts" pulling them back to a
+    // life of crime; the pull is the other way.
+    text: s.flags.includes('political_prisoner')
+      ? 'The first year out. People you knew cross the street, or do not, and you learn which is which. The file is still somewhere, and so are the men who opened it.'
+      : 'The first year out. The sunlight still feels wrong some days — too bright, too open. Every form has the box on it.',
+    choices: s.flags.includes('political_prisoner') ? [
+      { text: 'Keep your head down. Work, and nothing else', tag: 'yielding', outcome: 'You find a job that asks no questions and give it no reasons to.', effect: (p) => { p.m += 4; p.addFlag('learned_silence'); }, inject: null },
+      { text: 'Find the others who came out', tag: 'defiant', outcome: 'There are more of you than you thought. Nobody says it is dangerous, because everybody knows.', effect: (p) => { p.m += 6; p.karma += 4; p.addFlag('dissident_network'); }, inject: null },
+    ] : [
+      { text: 'Find work and start over', tag: 'determined', outcome: 'The record follows you everywhere. But you keep applying.', effect: (p) => { p.m += 8; p.e += 5; p.addFlag('determined_student'); }, inject: null },
+      { text: 'Reconnect with old contacts', tag: null, outcome: 'Some are glad to see you. Some pull you back toward the life you tried to leave.', effect: (p) => { p.m += 4; p.karma -= 5; }, inject: null },
+    ],
+    effect: null,
+    when: () => true,
+  }
 }
 
 // ─── Relationship system ──────────────────────────────────────────────────────
@@ -2238,21 +2383,51 @@ export function attemptCrime(state, crimeId) {
 
 // ─── Parent aging and inheritance ────────────────────────────────────────────
 
+/**
+ * Where the character's parents and siblings live. They stayed where the
+ * family was when the character left it as an adult, and went with them when
+ * the family left together.
+ */
+function familyCountry(state) {
+  const live = liveCountry(state)
+  const left = state.mem?.leftHomeAge
+  if (left != null && left >= 18) return state.character?.country ?? live
+  return live
+}
+
+/**
+ * War, for somebody who is not the character: the same table and the same
+ * shape by age and sex, and the same people's fate where a war was aimed at a
+ * people — a family shares its ethnicity.
+ */
+function relativeWarHazard(state, country, age, gender) {
+  return warDeathHazard({
+    country, year: state.currentYear, age, gender,
+    ethnicity: state.character?.ethnicity,
+    religion: state.religion ?? state.character?.religion,
+    urban: state.character?.ruralUrban !== 'rural',
+  }).p
+}
+
 function tickParents(state) {
   if (!state.parents) return state
   let { mother, father } = state.parents
   let log = [...state.log]
   let money = state.money ?? 0
   const deaths = []
+  let earnerLost = false
 
   function ageParent(parent, label) {
     if (!parent.alive) return parent
     const newAge = parent.currentAge + 1
-    let deathProb = 0
-    if (newAge > 90)      deathProb = 0.20 + (newAge - 90) * 0.05
-    else if (newAge > 80) deathProb = 0.08 + (newAge - 80) * 0.012
-    else if (newAge > 70) deathProb = 0.025 + (newAge - 70) * 0.005
-    else if (newAge > 60) deathProb = 0.008
+    // A rich-world table — nothing below sixty, 0.8% a year in the sixties,
+    // everywhere and always — meant no 1962 Nigerian lost a parent to anything
+    // but an authored event before they were grown, in a country where adult
+    // life expectancy was in the forties. The hazard follows the place and the
+    // year the parent is living in, and the war there.
+    const where = familyCountry(state)
+    const war = relativeWarHazard(state, where, newAge, label === 'father' ? 'male' : 'female')
+    const deathProb = 1 - (1 - adultHazard(newAge, where, state.currentYear)) * (1 - war)
 
     if (chance(deathProb)) {
       // The one money path the era layer missed, and the loudest: an informal
@@ -2280,18 +2455,33 @@ function tickParents(state) {
         ? [0, 900 * gdpMult]                                  // there is a house or there is nothing
         : occ?.incomeType === 'informal' ? [0, 2500 * gdpMult]
           : [parentIncome * 0.3, parentIncome * 2.5]
-      const inheritance = inEraMoney(
+      // A child does not inherit into their own pocket; what there was stays
+      // with the household, and what the household loses is the earner.
+      const inheritance = state.age < 16 ? 0 : inEraMoney(
         Math.round(randomBetween(Math.round(estateBand[0]), Math.round(estateBand[1])) * (parent.relationshipQuality / 100)),
         liveCountry(state), state.currentYear,
       )
       money += inheritance
+      if (state.age < 18 && ['formal', 'informal'].includes(occ?.incomeType)) earnerLost = true
       // Losing a parent is the most common grief in a human life. It used to set
       // no flag at all, so none of the memory, grief or texture layers built to
       // metabolize it ever knew it had happened — and it read like a receipt.
       deaths.push({ which: label, name: parent.name, age: newAge, close: parent.relationshipQuality >= 55 })
       const close = parent.relationshipQuality >= 55
       const distant = parent.relationshipQuality < 30
-      const text = distant
+      // The arrangements, the calls and the paperwork are an adult's. A parent
+      // could not die before sixty, so the lines never met a child; now they do.
+      const first = parent.name?.split(' ')[0] ?? label
+      const childLines = [
+        `Your ${label} dies. You are ${state.age}. For a long time afterwards you are the child whose ${label} died, and you know it from the way grown-ups lower their voices.`,
+        `Your ${label}, ${first}, dies when you are ${state.age}. Somebody else's hands do the things ${label === 'mother' ? 'she' : 'he'} used to do, and they do them differently, and you notice every one.`,
+        `Your ${label} is ill, and then is gone. You are ${state.age}, and nobody explains it to you so much as lets you find it out.`,
+      ]
+      const babyLines = [
+        `Your ${label}, ${first}, dies before you are old enough to keep anything of ${label === 'mother' ? 'her' : 'him'}. Everything you will know about ${label === 'mother' ? 'her' : 'him'}, you will know from other people.`,
+        `Your ${label} dies when you are too small to remember it. There is a photograph, later, or there is not, and either way the face is somebody else's description.`,
+      ]
+      const text = state.age < 4 ? pickFrom(babyLines) : state.age < 15 ? pickFrom(childLines) : distant
         ? `Your ${label}, ${parent.name}, dies at ${newAge}. You find you are not sure what you feel, and that this is its own kind of information.`
         : close
           ? `Your ${label}, ${parent.name}, dies at ${newAge}. There is a stretch of days afterwards that you will not be able to account for later.`
@@ -2320,9 +2510,143 @@ function tickParents(state) {
       if (d.close) add.push('lost_parent_close')
     }
     flags = [...new Set([...(state.flags ?? []), ...add])]
+    if (earnerLost && nextMem.primaryEarnerLostAge == null) nextMem.primaryEarnerLostAge = state.age
     mem = nextMem
   }
   return { ...state, parents: { mother, father }, log, money, flags, mem }
+}
+
+// ─── The character's own children ────────────────────────────────────────────
+//
+// Nobody's child ever died. Over 233 children born to Nigerian, Ethiopian and
+// Afghan characters, none — in places where one child in four or five did not
+// see their fifth birthday, and where most mothers of six had buried at least
+// one. The children face the same place-and-year rates the character did as a
+// child (childHazard), then the adult rates, then the war; a child who dies
+// stays in `children` with `alive: false` so the grief layer can name them.
+const CHILD_DEATH_LINES = {
+  infant: [
+    (n) => `${n} dies before the first year is out. There is a fever, and then the fever is the whole of the house for three days, and then it is over.`,
+    (n) => `${n} does not live to be one. You had not yet stopped counting the weeks.`,
+    (n) => `${n} stops feeding, and then stops crying, which is worse. The baby is buried before the week is out.`,
+    (n) => `${n} dies in the rains, of what everyone's children were dying of that season. Being one of many does not make it smaller.`,
+  ],
+  small: [
+    (n, a) => `${n} dies at ${a}. ${n} was talking by then, and the house keeps the sentences.`,
+    (n, a) => `${n} is ill for a week and then dies, at ${a}. The clinic was a day away and you went, and it was not enough.`,
+    (n, a) => `${n} dies at ${a}. For months afterwards you set out one plate too many, and catch it, and do not say anything.`,
+    (n, a) => `You lose ${n} at ${a}. People come and sit with you, and the women who have lost children of their own say the least and stay the longest.`,
+  ],
+  child: [
+    (n, a) => `${n} dies at ${a}. You had stopped being afraid for ${n} in the particular way you are afraid for the small ones, and that is the part you cannot forgive yourself.`,
+    (n, a) => `${n} dies at ${a}. The school sends the other children home early, and some of them come to the house.`,
+    (n, a) => `There is an accident, and ${n} is ${a}, and that is all anybody can tell you, then or later.`,
+  ],
+  adult: [
+    (n, a) => `${n} dies at ${a}. Your child. The order was supposed to go the other way, and everyone at the funeral knows it and nobody says it.`,
+    (n, a) => `${n} dies at ${a}, before you. You had been ready, more or less, for every death but this one.`,
+    (n, a) => `The call is about ${n}, who is ${a}, and who has died. You are still holding the phone when the kettle boils dry.`,
+  ],
+  war: [
+    (n, a) => `${n} is killed at ${a}. The war took a great many people's children that year. It took yours.`,
+    (n, a) => `${n} does not come back. ${a} years old. You are given a reason in a sentence, and the sentence is not a reason.`,
+  ],
+}
+
+function tickChildMortality(state) {
+  const kids = state.children ?? []
+  if (!kids.length) return state
+  const where = liveCountry(state)
+  let mem = state.mem
+  let log = state.log
+  let died = null
+  const say = (pool, ...args) => {
+    const lines = pool.map(f => f(...args))
+    const line = pickFrom(preferUnsaid({ ...state, mem }, lines))
+    mem = rememberSaid(mem, line)
+    return line
+  }
+  const children = kids.map(c => {
+    if (c.alive === false) return c
+    const a = c.age ?? 0
+    if (a < 1) return c
+    // An adult child living abroad is not the household; the rates are close
+    // enough that the household's country stands in for theirs.
+    const ordinary = adultHazard(a, where, state.currentYear)
+    const war = warDeathHazard({
+      country: where, year: state.currentYear, age: a, gender: c.gender,
+      ethnicity: state.character?.ethnicity, religion: state.religion ?? state.character?.religion,
+      urban: state.character?.ruralUrban !== 'rural',
+    }).p
+    const byWar = war > 0 && chance(war)
+    if (!byWar && !chance(ordinary)) return c
+    const first = c.name?.split(' ')[0] ?? 'Your child'
+    const pool = byWar && a >= 5 ? CHILD_DEATH_LINES.war
+      : a <= 1 ? CHILD_DEATH_LINES.infant : a < 6 ? CHILD_DEATH_LINES.small
+        : a < 18 ? CHILD_DEATH_LINES.child : CHILD_DEATH_LINES.adult
+    log = [...log, { age: state.age, year: state.currentYear, text: say(pool, first, a), isKey: true, isDeath: true }]
+    died = died ?? { age: a, name: first, war: byWar }
+    return { ...c, alive: false, deathYear: state.currentYear, deathAge: a }
+  })
+  if (!died) return state
+  const after = { ...(mem ?? {}), lastChildDeath: { name: died.name, age: died.age, year: state.currentYear, war: died.war } }
+  const add = ['lost_child', 'bereaved']
+  if (died.age <= 2) add.push('lost_child_infant')
+  return {
+    ...state,
+    children,
+    log,
+    flags: [...new Set([...(state.flags ?? []), ...add])],
+    mem: { ...after, lost_childYear: state.currentYear, lastMajorEvent_bereavement: state.currentYear },
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness - 12, 0, 100) },
+    // The echo before the stone: the weeks after, the year it happened, said
+    // in the way the place mourned. Queued so it lands in this year, the way
+    // the first grief for a partner is.
+    queue: [buildChildMourningEvent({ ...state, mem: after }), ...(state.queue ?? [])],
+  }
+}
+
+/**
+ * The weeks after a child's death, in the register of where it happened.
+ * The authored arc (events_child_death_arc.js) opens with a pram and a baby
+ * monitor and is phased to the parent's twenties; most children who die in
+ * this engine die in villages, to parents in their thirties. Rebuilt by id on
+ * a reload from `mem.lastChildDeath`.
+ */
+function buildChildMourningEvent(state) {
+  const d = state.mem?.lastChildDeath ?? { name: 'the child', age: 1, year: state.currentYear }
+  const n = d.name
+  const lc = liveCountry(state)
+  const hc = healthcareAt(lc, state.currentYear)
+  const poor = hc === 'poor' || hc === 'very_poor' || livingRuralUrban(state) === 'rural'
+  const pool = d.war ? [
+    `There is no proper funeral for ${n}. There is a place, and a few words, and then everybody has to keep moving.`,
+    `You bury ${n} where you can, and remember the place by a wall and a tree, in case the wall and the tree are still there afterwards.`,
+  ] : d.age >= 18 ? [
+    `You go to the house where ${n} lived, and there is nothing to do there, and you stay all afternoon.`,
+    `For weeks you reach for the phone to tell ${n} something, and then remember, and then sit with the phone in your hand.`,
+    `${n}'s friends come, people you have never met, and each of them knew a version of ${n} you did not. You keep every one.`,
+  ] : poor ? [
+    (state.children ?? []).some(c => c.alive !== false)
+      ? `The women come and sit, and for some days nobody lets you cook. Then the days start again, because the other children have to eat.`
+      : `The women come and sit, and for some days nobody lets you cook. Then the days start again, because days do.`,
+    `There is a small grave now, beside the others. You find reasons to walk past it on the way to things that do not need doing.`,
+    `Somebody tells you it was God's will and somebody else tells you it was the water, and you let them both talk.`,
+    `You do not say ${n}'s name for a long time. When you finally do, at the market, the woman beside you says it back, and that helps more than anything.`,
+  ] : [
+    `The first weeks are forms and casseroles. People bring food because food is a thing that can be brought.`,
+    `${n}'s things stay exactly where they were for longer than anyone advises. You know what you are doing. You do it anyway.`,
+    `People stop mentioning ${n} to spare you, and it is the sparing you cannot bear.`,
+  ]
+  return {
+    id: `cd_after_${d.year}`,
+    phase: null,
+    weight: 999,
+    text: pickFrom(preferUnsaid(state, pool)),
+    choices: null,
+    effect: (p) => { p.m -= 3; p.addFlag('bereaved') },
+    when: () => true,
+  }
 }
 
 // ─── Asset ticking ───────────────────────────────────────────────────────────
@@ -2339,8 +2663,9 @@ function tickPovertyPremium(state) {
   const equity = (state.assets?.properties ?? [])
     .reduce((n, p) => n + Math.max(0, (p.currentValue ?? 0) - (p.mortgage ?? 0)), 0)
   if (equity > money * 4) return state
-  const archetype = state.character?.country?.archetype
-  const gdp = state.character?.country?.gdp
+  // Where the household lives: an emigrant to Stockholm is not poor at Lagos's thresholds.
+  const archetype = liveCountry(state)?.archetype
+  const gdp = liveCountry(state)?.gdp
   const mult = GDP_MULT[gdp] ?? 0.2
   // Welfare states reduce (but don't eliminate) the poverty premium
   const welfareReduction = ['wealthy_west', 'wealthy_east'].includes(archetype) ? 0.4 : 1.0
@@ -2544,6 +2869,27 @@ function actionBudget(age, state) {
 // ─── Farming income variance ──────────────────────────────────────────────────
 // Applied inside tick() directly during career income calculation.
 
+/**
+ * What a house or a vehicle costs to keep for a year, here and now.
+ *
+ * `annualMaintenance` is a rich-world figure in present-day dollars and was
+ * charged through the era only, never localised, so a Bangladeshi smallholder
+ * whose family house the life course had handed him paid a Dutch owner's
+ * $1,200-$4,500 a year to keep it standing — on an income of a few hundred.
+ * 71-96% of fifty-year-olds in the poorest configurations carried four to
+ * eleven years of income in a debt nobody had narrated. The purchase price was
+ * already localised; the upkeep goes through the same path. A home that came
+ * without a purchase — family land, a self-build, an allocated flat — is kept
+ * up the way it was built: with the family's own hands and a few bags of
+ * cement, not a contractor.
+ */
+function upkeep(type, state, item) {
+  const lc = liveCountry(state)
+  const local = localisePrice(type.annualMaintenance, lc?.gdp, type.priceClass ?? 'local')
+  const selfKept = item?.unfinanced || (item?.purchasePrice === 0 && (item?.mortgage ?? 0) === 0)
+  return inEraMoney(Math.round(local * (selfKept ? 0.15 : 1)), lc, state.currentYear)
+}
+
 function tickAssets(state) {
   if (!state.assets) return state
   const { properties, vehicles } = state.assets
@@ -2589,7 +2935,7 @@ function tickAssets(state) {
     const type = PROPERTY_TYPES.find(t => t.id === p.typeId)
     if (!type) { updatedProperties.push(p); continue }
     const newValue = Math.round(p.currentValue * drift * (1 + type.appreciationRate + randomBetween(-2, 2) / 100))
-    money -= inEraMoney(type.annualMaintenance, liveCountry(state), state.currentYear)
+    money -= upkeep(type, state, p)
     if (p.mortgage > 0) {
       const interest = Math.round(p.mortgage * 0.04)
       const payment = Math.min(Math.round(p.mortgage / 25) + interest, p.mortgage + interest)
@@ -2618,7 +2964,7 @@ function tickAssets(state) {
   const updatedVehicles = vehicles.map(v => {
     const type = VEHICLE_TYPES.find(t => t.id === v.typeId)
     if (!type) return v
-    money -= inEraMoney(type.annualMaintenance, liveCountry(state), state.currentYear)
+    money -= upkeep(type, state, v)
     // A car loses value faster than money does, which is the whole of what a
     // car is, so the drift never rescues it above its depreciation.
     return { ...v, currentValue: Math.max(100, Math.round(v.currentValue * drift * (1 - type.depreciationRate))) }
@@ -2640,6 +2986,19 @@ function tickAssets(state) {
   }
 
   const owed = (money < 0 ? -money : 0) + shortfall
+  // The first year the household's bills outrun its money and the difference
+  // goes on the slate. It used to be silent: a debt simply appeared, and the
+  // only line any of those lives ever saw about it was decades later.
+  if (owed > 0 && !(state.debt > 0) && !arrears && !repossessed.length && !mem.shortfallToldYear) {
+    const pool = [
+      'The year costs more than it brings in. The difference is written down somewhere, in a book at a shop or a ledger at a bank, and it is yours now.',
+      'There is a roof to see to and the money for it is not there, so it is found, on terms. You do the sum on the back of something and put the paper away.',
+      'You borrow to cover the year. It is not a large amount, and you are aware of exactly how large it is.',
+    ]
+    const line = pickFrom(preferUnsaid({ ...state, mem }, pool))
+    log = [...log, { age: state.age, year: state.currentYear, isKey: true, text: line }]
+    mem = rememberSaid({ ...mem, shortfallToldYear: state.currentYear }, line)
+  }
   if (arrears && !mem.arrearsToldYear) {
     log = [...log, { age: state.age, text: 'The payment does not go out this month, and then it does not go out the month after. The letter that follows is polite and the second one is not.', isKey: true }]
     mem = { ...mem, arrearsToldYear: state.currentYear }
@@ -2700,19 +3059,40 @@ function tickSiblings(state) {
     return line
   }
 
+  let sibDied = false
   const siblings = state.siblings.map(sib => {
     if (!sib.alive) return sib
     const sibAge = state.age + sib.ageDiff
-    let deathProb = 0
-    if (sibAge > 80) deathProb = 0.06 + (sibAge - 80) * 0.01
-    else if (sibAge > 65) deathProb = 0.015
+    // Siblings died below sixty-five nowhere; they die where and when they live
+    // now, children of the same place and year the character was a child in.
+    // A brother not yet born has nothing to die of.
+    if (sibAge < 1) return sib
+    const where = familyCountry(state)
+    const war = relativeWarHazard(state, where, sibAge, sib.gender)
+    const deathProb = 1 - (1 - adultHazard(sibAge, where, state.currentYear)) * (1 - war)
     if (chance(deathProb)) {
       // One flat line, against three authored variants for a parent. A sibling
       // is the person who remembers the same childhood, and the whole of what
       // is lost is that there is now nobody who does.
       const q = sib.relationshipQuality ?? 60
       const who = `${sib.name} dies at ${sibAge}.`
-      const sibLine = q >= 70
+      const first = sib.name?.split(' ')[0] ?? sib.name
+      const kin = sib.gender === 'male' ? 'brother' : 'sister'
+      const elder = sib.ageDiff > 0
+      // A child dying is not the adult sibling lines: nobody has yet had a
+      // childhood to remember together, and the character is often a child.
+      const sibLine = sibAge < 15
+        ? say(state.age < 12 ? [
+            `Your ${elder ? 'big' : 'little'} ${kin} ${first} dies at ${sibAge}. The grown-ups go quiet when you come into the room, and the place where ${first} slept is cleared by the end of the week.`,
+            `${first} is ill for four days and then is not. You are told where ${first} has gone and you do not believe it for some time.`,
+            `Your ${kin} ${first} dies at ${sibAge}. Your mother does not say the name for a long while afterwards, and so neither do you.`,
+            `${first} dies in the night. In the morning there is one less bowl, and nobody explains the bowl.`,
+          ] : [
+            `Your ${elder ? 'older' : 'younger'} ${kin} ${first} dies at ${sibAge}. You are old enough to be given things to do, and you do them.`,
+            `${first} dies at ${sibAge}. You were the one sent for the medicine, and you think about the road for years.`,
+            `Your ${kin} ${first} dies at ${sibAge}. The house rearranges itself around the space, quickly, the way houses here have learned to.`,
+          ])
+        : q >= 70
         ? `${who} ${say([
             'You spoke every week or you spoke twice a year, and either way there is now nobody alive who remembers the house the way you both remembered it.',
             'At the funeral you are the one people come to, which you had not expected and do not want.',
@@ -2730,12 +3110,20 @@ function tickSiblings(state) {
               'You do not go. You are clear with yourself about why, and the clarity does not do what you wanted it to do.',
             ])}`
       log.push({ age: state.age, text: sibLine, isKey: true, isDeath: true, isTexture: true })
-      return { ...sib, alive: false }
+      sibDied = true
+      return { ...sib, alive: false, deathYear: state.currentYear }
     }
     const drift = (60 - sib.relationshipQuality) * 0.01
     return { ...sib, relationshipQuality: clamp(sib.relationshipQuality + drift + randomBetween(-1, 1), 0, 100) }
   })
 
+  if (sibDied) {
+    return {
+      ...state, siblings, log,
+      mem: { ...(mem ?? {}), lost_siblingYear: state.currentYear, lastMajorEvent_bereavement: state.currentYear },
+      flags: [...new Set([...(state.flags ?? []), 'lost_sibling'])],
+    }
+  }
   return { ...state, siblings, log, mem }
 }
 
@@ -2886,6 +3274,19 @@ function treatmentsAvailable(illness, healthcare, year, named) {
   return list
 }
 
+const MIND = new Set(['clinical_depression', 'anxiety_disorder', 'addiction'])
+const MOOD = new Set(['clinical_depression', 'anxiety_disorder'])
+const MOOD_STATE = { clinical_depression: 'depression', anxiety_disorder: 'anxiety' }
+// Depression became a diagnosis an ordinary GP gave in the 1970s; anxiety
+// disorder is DSM-III, 1980. Before that, and wherever there was nobody to give
+// it, people had what they had and the place had its own words for it.
+const MOOD_NAMED_FROM = { clinical_depression: 1975, anxiety_disorder: 1980 }
+function mindNamed(id, healthcare, year) {
+  if (!MIND.has(id)) return true
+  if (id === 'addiction') return healthcare !== 'poor' && healthcare !== 'very_poor'
+  return (healthcare === 'excellent' || healthcare === 'good') && year >= MOOD_NAMED_FROM[id]
+}
+
 function checkIllnessRisk(state) {
   let updated = state
   for (const illness of ILLNESSES) {
@@ -2900,15 +3301,36 @@ function checkIllnessRisk(state) {
     if (maxY && state.currentYear > maxY) continue
     if (flagRequired && !state.flags.includes(flagRequired)) continue
 
-    let prob = 0.002
+    const mood = MOOD.has(illness.id)
+    // A diagnosis that could not be named there and then is not recorded as
+    // one. Once in a while it is still lived, and said, in the words the place
+    // had for it — but not every year: the latch is the last time it was said.
+    if (mood && !mindNamed(illness.id, healthcareAt(liveCountry(state), state.currentYear), state.currentYear)) {
+      const last = state.mem?.[`mindUnnamed_${illness.id}`]
+      if (last != null && state.currentYear - last < 15) continue
+      if ((state.mem?.mindUnnamedCount ?? 0) >= 2) continue
+    }
+    let prob = mood ? 0 : 0.002
     if (illness.id === 'cancer' && state.age > 50) prob += (state.age - 50) * 0.001
     if (illness.id === 'heart_disease' && state.age > 55) prob += (state.age - 55) * 0.0015
-    if (illness.id === 'clinical_depression' && state.stats.happiness < 30) prob += 0.04
-    if (illness.id === 'anxiety_disorder' && state.stats.happiness < 40) prob += 0.03
     if (illness.id === 'addiction' && state.flags.includes('heavy_drinker')) prob += 0.025
     const riskCount = riskFactors.filter(f => state.flags.includes(f)).length
-    prob += riskCount * 0.005
-    if (state.stats.health < 40) prob *= 1.5
+    if (mood) {
+      // Depression and anxiety ran away: +4% a year under a happiness of 30, a
+      // half-point per risk factor, ×1.6 for a poor health system, and a
+      // diagnosis that fed the unhappiness that caused it. 78% of Nigerian
+      // adults over thirty were diagnosed with clinical depression, in a
+      // country with a handful of psychiatrists. The hazard is now set so a
+      // rich-world lifetime lands near the recorded 15-25%, and the health
+      // system decides whether it is NAMED (mindNamed), not whether it occurs.
+      prob = illness.id === 'clinical_depression' ? 0.0016 : 0.0012
+      if (illness.id === 'clinical_depression' && state.stats.happiness < 30) prob += 0.004
+      if (illness.id === 'anxiety_disorder' && state.stats.happiness < 25) prob += 0.003
+      prob += Math.min(2, riskCount) * 0.001
+    } else {
+      prob += riskCount * 0.005
+    }
+    if (state.stats.health < 40) prob *= mood ? 1.2 : 1.5
 
     // Comorbidity modifiers
     if (illness.id === 'heart_disease') {
@@ -2929,173 +3351,16 @@ function checkIllnessRisk(state) {
       if (state.stats.health < 40) prob *= 1.5
     }
 
-    // Country healthcare quality multiplies base illness risk
+    // Country healthcare quality multiplies base illness risk — of the body.
+    // A poor health system does not make a mind more likely to be ill; it makes
+    // it less likely to be told so, which `mindNamed` handles.
     const hcIllnessMod = { excellent: 0.7, good: 0.85, fair: 1.0, poor: 1.3, very_poor: 1.6 }
-    prob *= hcIllnessMod[liveCountry(state).healthcare] ?? 1.0
+    if (!MIND.has(illness.id)) prob *= hcIllnessMod[healthcareAt(liveCountry(state), state.currentYear)] ?? 1.0
 
     // Pollution exposure increases illness risk significantly
     if (state.flags.includes('pollution_exposure')) prob *= 1.4
 
     if (!chance(prob)) continue
-
-    // Scale treatment costs to country GDP (developing-world costs are lower but so are wages)
-    const gdpCostMult = { very_high: 1.4, high: 1.1, medium_high: 0.9, medium: 0.7, low_medium: 0.5, low: 0.35, very_low: 0.2 }
-    // What the patient pays is not what the treatment costs. There was no term
-    // for this at all, so a Swedish pensioner was billed 63,859 out of pocket
-    // for a bypass in a country with universal cover — which is not a rounding
-    // error, it is the single most consequential fact about being ill in one
-    // country rather than another, and the game had no opinion about it.
-    // Roughly: the share a patient actually meets, by system.
-    const SYSTEM_SHARE = {
-      wealthy_west: 0.12, wealthy_east: 0.25, post_soviet: 0.45, wealthy_gulf: 0.15,
-      developing_urban: 0.70, developing_unstable: 0.85, subsaharan: 0.90, conflict_zone: 0.95,
-    }
-    const NO_SYSTEM = new Set(['United States'])
-    const patientShare = NO_SYSTEM.has(liveCountry(state)?.name)
-      ? 0.55
-      : SYSTEM_SHARE[liveCountry(state)?.archetype] ?? 0.7
-    // Universal coverage is a post-war invention almost everywhere it exists.
-    const coverageYear = liveCountry(state)?.archetype === 'wealthy_west' ? 1948 : 1960
-    const share = state.currentYear >= coverageYear ? patientShare : Math.min(1, patientShare * 2.2)
-    const costMult = (gdpCostMult[liveCountry(state).gdp] ?? 1.0) * share
-    // Also scale treatment success by healthcare quality (poor healthcare = worse outcomes)
-    const hcSuccessMod = { excellent: 1.15, good: 1.05, fair: 1.0, poor: 0.85, very_poor: 0.7 }
-    const successMod = hcSuccessMod[liveCountry(state).healthcare] ?? 1.0
-
-    const archetype = liveCountry(state).archetype ?? 'wealthy_west'
-    const healthcare = liveCountry(state).healthcare ?? 'fair'
-    // One sentence per healthcare tier meant every diagnosis in a life opened
-    // identically. One Egyptian life was told five times, at 39, 48, 51, 71 and
-    // 72, that "the nearest hospital is hours away or the local clinic is
-    // understaffed" — and the "or" is the same defect in miniature, the game
-    // declining to say which. Pools, deduped against what this character has
-    // already been told, so a second diagnosis reads like a second diagnosis.
-    const illnessContext = {
-      excellent: [
-        'The tests come back quickly. The specialist explains everything clearly. You have options.',
-        'You are seen, scanned and told inside a fortnight. The efficiency is its own kind of shock.',
-        'The consultant turns the screen towards you, which you understand is deliberate, and talks you through it twice.',
-        'There is a leaflet. There is a named nurse. There is a number to ring at any hour. None of it makes the sentence easier to hear.',
-      ],
-      good: [
-        'The GP refers you to a specialist. There is a wait. When you get there, the diagnosis is clear.',
-        'Six weeks between the letter and the appointment. You spend them not looking anything up, and then looking everything up.',
-        'The specialist is running ninety minutes behind. When your turn comes he is unhurried, which you had not expected and are grateful for.',
-      ],
-      fair: [
-        'The clinic is busy. You wait two hours. The doctor is straightforward. Treatment is available if you can afford it.',
-        'You go twice before anyone runs a test. The second doctor listens to the whole thing without interrupting.',
-        'The corridor has a row of plastic chairs and everyone in it has been there longer than you.',
-        'The diagnosis costs less than the treatment will, and you are told both numbers in the same breath.',
-      ],
-      poor: [
-        'The nearest hospital is four hours by road. The diagnosis takes longer than it should.',
-        'The clinic has one doctor for the whole district. He is good. There is only one of him.',
-        'You describe it three times to three people before anyone writes it down.',
-        'The machine that would answer it is in the city. Going to the city is a decision about money.',
-      ],
-      very_poor: [
-        'There is no specialist here. The diagnosis is made by a doctor managing too many patients with too little.',
-        'You are told what it probably is. Nobody can tell you what it definitely is, and that distinction turns out to matter.',
-        'The drugs exist. They are not here. Everyone in the room knows both halves of that.',
-      ],
-    }
-    // The context pool is about scans, machines and specialists, and it was
-    // illness-agnostic — so a character was told "The machine that would
-    // answer it is in the city. Going to the city is a decision about money.
-    // You are diagnosed with Addiction." Nothing in a mental-health diagnosis
-    // arrives by machine, and where the diagnosis comes from is most of the
-    // difference between the tiers here too.
-    const MIND = new Set(['clinical_depression', 'anxiety_disorder', 'addiction'])
-    const mindContext = {
-      excellent: [
-        'The assessment takes an hour and a half and nobody looks at the clock. At the end of it there is a word for what you have been doing, which is not the same as a solution and is not nothing.',
-        'The GP asks nine questions off a sheet, and you answer the first six honestly and then hear yourself lying on the seventh, and she waits.',
-      ],
-      good: [
-        'You are on a waiting list for eleven weeks and you spend them deciding it has passed, and then the appointment comes and it has not.',
-        'It is named out loud for the first time by somebody who is not in your family. The naming is a smaller event than you had imagined and it does not undo itself afterwards.',
-      ],
-      fair: [
-        'The doctor is kind and has four minutes. What you get is a word, a suggestion to come back, and the sense that he has said the same thing before lunch.',
-        'You go about something else entirely and it comes out sideways at the end of the appointment, and he sits back down.',
-      ],
-      poor: [
-        'There is one person in the district who could say what this is and they are not a doctor. What you get instead is a set of opinions from people who love you.',
-        'Nobody uses a word for it. There is a description — that you have not been yourself, that you are not eating — and the description does all the work a diagnosis would.',
-      ],
-      very_poor: [
-        'There is no name for it available to you. There is only the fact of it, and the way people have started to talk around you rather than to you.',
-        'The nearest person who would understand it as an illness is a long way off, in a place you have no reason to be going. It stays what it is.',
-      ],
-    }
-    const pool = MIND.has(illness.id)
-      ? (mindContext[healthcare] ?? mindContext.fair)
-      : (illnessContext[healthcare] ?? illnessContext.fair)
-    // "There is no name for it available to you. There is only the fact of it,
-    // and the way people have started to talk around you rather than to you.
-    // You are diagnosed with Anxiety Disorder." The clinical label was appended
-    // unconditionally to a pool whose poor and very_poor tiers exist precisely
-    // to say that no diagnosis was available — 32 of 175 diagnoses in a
-    // 140-life run contradicted themselves in the same breath, in the
-    // "+5 Happiness" register the design document forbids. Where there is no
-    // one to name it, the game does not name it either: the condition is
-    // recorded, and the character has what they have.
-    const named = !(MIND.has(illness.id) && (healthcare === 'poor' || healthcare === 'very_poor'))
-    const illnessText = named
-      ? `${pickFrom(preferUnsaid(state, pool))} You are diagnosed with ${illness.name}.`
-      : pickFrom(preferUnsaid(state, pool))
-
-    const event = {
-      id: `illness_${illness.id}_${state.age}`,
-      phase: getPhase(state.age),
-      weight: 10,
-      text: illnessText,
-      choices: treatmentsAvailable(illness, healthcare, state.currentYear, named).map(t => {
-        const adjustedCost = inEraMoney(Math.round(t.cost * costMult), liveCountry(state), state.currentYear)
-        const willSucceed = Math.random() < clamp(t.successChance * successMod, 0.05, 0.98)
-        // A price the player cannot meet is still a price, and the option is
-        // still there — that is what borrowing for treatment is. Saying so in
-        // the label is the difference between a choice and a trick.
-        const onCredit = adjustedCost > (state.money ?? 0)
-        const label = adjustedCost <= 0
-          ? `${t.name} (free)`
-          : `${t.name} ($${adjustedCost.toLocaleString()}${onCredit ? ', on credit' : ''})`
-        return {
-          text: label,
-          tag: null,
-          outcome: willSucceed ? t.outcomeSuccess : t.outcomeFailure,
-          effect: (p) => {
-            p.moNominal -= adjustedCost
-            p.m += t.happinessEffect ?? 0
-            if (onCredit) p.addFlag('borrowed_for_treatment')
-            if (willSucceed) {
-              // Being ill costs health at diagnosis (see below) and a
-              // successful treatment gives that back — so recovering returns
-              // you to roughly where you were, minus the money, rather than
-              // leaving you better off than the morning before you fell ill.
-              // It must not give back MORE than was taken: the deduction and
-              // this figure are the same fraction of the same number.
-              p.h += Math.round(Math.abs(t.healthEffect ?? 0) * 0.35)
-              // A treatment that worked leaves a MANAGED condition, not an
-              // untreated one. `healthCeiling` charges an unmanaged condition
-              // more than twice what it charges a managed one, permanently, so
-              // leaving every successfully-treated illness unmanaged was a
-              // lifelong penalty for having been cured — and it took the
-              // Nigerian survivor median down about seven years.
-              p.manageCondition(illness.id, true)
-              if (illness.survivorFlag) p.addFlag(illness.survivorFlag)
-            } else {
-              p.h -= Math.round(Math.abs(t.healthEffect ?? 0) * 0.4)
-              p.addFlag(illness.flag)
-            }
-          },
-          inject: null,
-        }
-      }),
-      effect: null,
-      when: () => true,
-    }
 
     // Being ill costs health at the point of diagnosis. Nothing deducted it
     // before, so the only health movement an illness produced was the recovery
@@ -3106,6 +3371,16 @@ function checkIllnessRisk(state) {
     // `_diagnosed` flag ended with `conditions: []`, so the annual drain,
     // `G.conditions` and events_condition_arc.js never engaged for anything the
     // engine diagnosed.
+    const { event, named } = buildIllnessEvent(state, illness)
+    if (!named && MOOD.has(illness.id)) {
+      // Lived and not named: the event, and nothing on the record.
+      updated = {
+        ...updated,
+        mem: { ...(updated.mem ?? {}), [`mindUnnamed_${illness.id}`]: updated.currentYear, mindUnnamedCount: (updated.mem?.mindUnnamedCount ?? 0) + 1 },
+        queue: [...updated.queue, event],
+      }
+      break
+    }
     const worst = Math.max(...illness.treatments.map(t => Math.abs(t.healthEffect ?? 0)), 8)
     const severity = worst >= 28 ? 'severe' : worst >= 15 ? 'moderate' : 'mild'
     // 0.35, matching what a successful treatment gives back. The first pass
@@ -3121,10 +3396,183 @@ function checkIllnessRisk(state) {
         : [...(updated.conditions ?? []), { id: illness.id, severity, diagnosedYear: updated.currentYear, managed: false }],
       flags: [...new Set([...updated.flags, `${illness.id}_diagnosed`])],
       queue: [...updated.queue, event],
+      // The field therapy, rehab and the year texture read. A diagnosis set
+      // the condition and never told it.
+      mentalHealth: MOOD_STATE[illness.id] && !updated.mentalHealth?.condition
+        ? { ...(updated.mentalHealth ?? {}), condition: MOOD_STATE[illness.id] }
+        : updated.mentalHealth,
     }
     break
   }
   return updated
+}
+
+// The diagnosis event, built from the state it is asked in, so a save can
+// rebuild it by id (`illness_<id>_<age>`) instead of dropping it from the queue.
+function buildIllnessEvent(state, illness) {
+  // Scale treatment costs to country GDP (developing-world costs are lower but so are wages)
+  const gdpCostMult = { very_high: 1.4, high: 1.1, medium_high: 0.9, medium: 0.7, low_medium: 0.5, low: 0.35, very_low: 0.2 }
+  // What the patient pays is not what the treatment costs. There was no term
+  // for this at all, so a Swedish pensioner was billed 63,859 out of pocket
+  // for a bypass in a country with universal cover — which is not a rounding
+  // error, it is the single most consequential fact about being ill in one
+  // country rather than another, and the game had no opinion about it.
+  // Roughly: the share a patient actually meets, by system.
+  const SYSTEM_SHARE = {
+    wealthy_west: 0.12, wealthy_east: 0.25, post_soviet: 0.45, wealthy_gulf: 0.15,
+    developing_urban: 0.70, developing_unstable: 0.85, subsaharan: 0.90, conflict_zone: 0.95,
+  }
+  const NO_SYSTEM = new Set(['United States'])
+  const patientShare = NO_SYSTEM.has(liveCountry(state)?.name)
+    ? 0.55
+    : SYSTEM_SHARE[liveCountry(state)?.archetype] ?? 0.7
+  // Universal coverage is a post-war invention almost everywhere it exists.
+  const coverageYear = liveCountry(state)?.archetype === 'wealthy_west' ? 1948 : 1960
+  const share = state.currentYear >= coverageYear ? patientShare : Math.min(1, patientShare * 2.2)
+  const costMult = (gdpCostMult[liveCountry(state).gdp] ?? 1.0) * share
+  // Also scale treatment success by healthcare quality (poor healthcare = worse outcomes)
+  const hcSuccessMod = { excellent: 1.15, good: 1.05, fair: 1.0, poor: 0.85, very_poor: 0.7 }
+  const healthcare = healthcareAt(liveCountry(state), state.currentYear)
+  const successMod = hcSuccessMod[healthcare] ?? 1.0
+
+  // One sentence per healthcare tier meant every diagnosis in a life opened
+  // identically. One Egyptian life was told five times, at 39, 48, 51, 71 and
+  // 72, that "the nearest hospital is hours away or the local clinic is
+  // understaffed" — and the "or" is the same defect in miniature, the game
+  // declining to say which. Pools, deduped against what this character has
+  // already been told, so a second diagnosis reads like a second diagnosis.
+  const illnessContext = {
+    excellent: [
+      'The tests come back quickly. The specialist explains everything clearly. You have options.',
+      'You are seen, scanned and told inside a fortnight. The efficiency is its own kind of shock.',
+      'The consultant turns the screen towards you, which you understand is deliberate, and talks you through it twice.',
+      'There is a leaflet. There is a named nurse. There is a number to ring at any hour. None of it makes the sentence easier to hear.',
+    ],
+    good: [
+      'The GP refers you to a specialist. There is a wait. When you get there, the diagnosis is clear.',
+      'Six weeks between the letter and the appointment. You spend them not looking anything up, and then looking everything up.',
+      'The specialist is running ninety minutes behind. When your turn comes he is unhurried, which you had not expected and are grateful for.',
+    ],
+    fair: [
+      'The clinic is busy. You wait two hours. The doctor is straightforward. Treatment is available if you can afford it.',
+      'You go twice before anyone runs a test. The second doctor listens to the whole thing without interrupting.',
+      'The corridor has a row of plastic chairs and everyone in it has been there longer than you.',
+      'The diagnosis costs less than the treatment will, and you are told both numbers in the same breath.',
+    ],
+    poor: [
+      'The nearest hospital is four hours by road. The diagnosis takes longer than it should.',
+      'The clinic has one doctor for the whole district. He is good. There is only one of him.',
+      'You describe it three times to three people before anyone writes it down.',
+      'The machine that would answer it is in the city. Going to the city is a decision about money.',
+    ],
+    very_poor: [
+      'There is no specialist here. The diagnosis is made by a doctor managing too many patients with too little.',
+      'You are told what it probably is. Nobody can tell you what it definitely is, and that distinction turns out to matter.',
+      'The drugs exist. They are not here. Everyone in the room knows both halves of that.',
+    ],
+  }
+  // The context pool is about scans, machines and specialists, and it was
+  // illness-agnostic — so a character was told "The machine that would
+  // answer it is in the city. Going to the city is a decision about money.
+  // You are diagnosed with Addiction." Nothing in a mental-health diagnosis
+  // arrives by machine, and where the diagnosis comes from is most of the
+  // difference between the tiers here too.
+  const mindContext = {
+    excellent: [
+      'The assessment takes an hour and a half and nobody looks at the clock. At the end of it there is a word for what you have been doing, which is not the same as a solution and is not nothing.',
+      'The GP asks nine questions off a sheet, and you answer the first six honestly and then hear yourself lying on the seventh, and she waits.',
+    ],
+    good: [
+      'You are on a waiting list for eleven weeks and you spend them deciding it has passed, and then the appointment comes and it has not.',
+      'It is named out loud for the first time by somebody who is not in your family. The naming is a smaller event than you had imagined and it does not undo itself afterwards.',
+    ],
+    fair: [
+      'The doctor is kind and has four minutes. What you get is a word, a suggestion to come back, and the sense that he has said the same thing before lunch.',
+      'You go about something else entirely and it comes out sideways at the end of the appointment, and he sits back down.',
+    ],
+    poor: [
+      'There is one person in the district who could say what this is and they are not a doctor. What you get instead is a set of opinions from people who love you.',
+      'Nobody uses a word for it. There is a description — that you have not been yourself, that you are not eating — and the description does all the work a diagnosis would.',
+    ],
+    very_poor: [
+      'There is no name for it available to you. There is only the fact of it, and the way people have started to talk around you rather than to you.',
+      'The nearest person who would understand it as an illness is a long way off, in a place you have no reason to be going. It stays what it is.',
+    ],
+  }
+  const pool = MIND.has(illness.id)
+    ? (mindContext[healthcare] ?? mindContext.fair)
+    : (illnessContext[healthcare] ?? illnessContext.fair)
+  // "There is no name for it available to you. There is only the fact of it,
+  // and the way people have started to talk around you rather than to you.
+  // You are diagnosed with Anxiety Disorder." The clinical label was appended
+  // unconditionally to a pool whose poor and very_poor tiers exist precisely
+  // to say that no diagnosis was available — 32 of 175 diagnoses in a
+  // 140-life run contradicted themselves in the same breath, in the
+  // "+5 Happiness" register the design document forbids. Where there is no
+  // one to name it, the game does not name it either, and nothing goes on the
+  // record (see mindNamed): the character has what they have.
+  const named = mindNamed(illness.id, healthcare, state.currentYear)
+  const illnessText = named
+    ? `${pickFrom(preferUnsaid(state, pool))} You are diagnosed with ${illness.name}.`
+    : pickFrom(preferUnsaid(state, pool))
+
+  const event = {
+    id: `illness_${illness.id}_${state.age}`,
+    phase: getPhase(state.age),
+    weight: 10,
+    text: illnessText,
+    choices: treatmentsAvailable(illness, healthcare, state.currentYear, named).map(t => {
+      const adjustedCost = inEraMoney(Math.round(t.cost * costMult), liveCountry(state), state.currentYear)
+      const willSucceed = Math.random() < clamp(t.successChance * successMod, 0.05, 0.98)
+      // A price the player cannot meet is still a price, and the option is
+      // still there — that is what borrowing for treatment is. Saying so in
+      // the label is the difference between a choice and a trick.
+      const onCredit = adjustedCost > (state.money ?? 0)
+      const label = adjustedCost <= 0
+        ? `${t.name} (free)`
+        : `${t.name} ($${adjustedCost.toLocaleString()}${onCredit ? ', on credit' : ''})`
+      return {
+        text: label,
+        tag: null,
+        outcome: willSucceed ? t.outcomeSuccess : t.outcomeFailure,
+        effect: (p) => {
+          p.moNominal -= adjustedCost
+          p.m += t.happinessEffect ?? 0
+          if (onCredit) p.addFlag('borrowed_for_treatment')
+          if (willSucceed) {
+            // Being ill costs health at diagnosis (see below) and a
+            // successful treatment gives that back — so recovering returns
+            // you to roughly where you were, minus the money, rather than
+            // leaving you better off than the morning before you fell ill.
+            // It must not give back MORE than was taken: the deduction and
+            // this figure are the same fraction of the same number.
+            p.h += Math.round(Math.abs(t.healthEffect ?? 0) * 0.35)
+            // A treatment that worked leaves a MANAGED condition, not an
+            // untreated one. `healthCeiling` charges an unmanaged condition
+            // more than twice what it charges a managed one, permanently, so
+            // leaving every successfully-treated illness unmanaged was a
+            // lifelong penalty for having been cured — and it took the
+            // Nigerian survivor median down about seven years.
+            p.manageCondition(illness.id, true)
+            if (illness.survivorFlag) p.addFlag(illness.survivorFlag)
+            if (named && MOOD.has(illness.id)) {
+              if (['antidepressants', 'medication', 'combined'].includes(t.id)) p.setMentalHealth({ medicating: true })
+              if (['cbt', 'therapy', 'combined'].includes(t.id)) p.setMentalHealth({ therapy: true })
+            }
+          } else {
+            p.h -= Math.round(Math.abs(t.healthEffect ?? 0) * 0.4)
+            // Unnamed, it is not "clinical depression" on anybody's file.
+            if (named || !MOOD.has(illness.id)) p.addFlag(illness.flag)
+          }
+        },
+        inject: null,
+      }
+    }),
+    effect: null,
+    when: () => true,
+  }
+
+  return { event, named }
 }
 
 // ─── Education enrollment tick ────────────────────────────────────────────────
@@ -3179,6 +3627,46 @@ function tickEnrollment(state) {
 
 // ─── Main tick ────────────────────────────────────────────────────────────────
 
+/**
+ * A birth, in the words of this one. "{name} is born. Everything shifts." was
+ * the line for every child in every life — the first and the seventh, a
+ * Stockholm maternity ward in 2004 and a mud-floored room in 1958 — and in a
+ * family of six it was the same sentence six times.
+ */
+function birthLine(s, child) {
+  const n = child.name
+  const first = n.split(' ')[0]
+  const order = (s.children ?? []).length // includes this child
+  const lc = liveCountry(s)
+  const y = s.currentYear
+  const hc = healthcareAt(lc, y)
+  const atHome = hc === 'very_poor' || hc === 'poor' || y < 1940 || livingRuralUrban(s) === 'rural' && hc !== 'excellent' && hc !== 'good'
+  const bearing = s.flags.includes('pregnant') || s.character?.gender === 'female'
+  let pool
+  if (order === 1) {
+    pool = atHome
+      ? [`${n} is born in the room at the back, with the women of the house and a neighbour who has done this many times. You are a parent from the first cry.`,
+        `${n} is born before dawn. By midday half the street has been in to look, and every one of them says whose nose it is.`,
+        `${n} arrives. Somebody puts the baby in your arms and you hold ${first} as if ${first} might be taken back.`]
+      : [`${n} is born. The ward is too warm and the light is wrong and none of it matters.`,
+        `${n} is born at a quarter past four in the morning. You will know that time for the rest of your life.`,
+        `${n} is born. The first night home, you get up four times to check the breathing, and the fourth time you just stay.`]
+    if (!bearing) pool = pool.concat([`${n} is born, and you are let in afterwards. ${first} is smaller than you had imagined and louder.`])
+  } else if (order <= 3) {
+    pool = [`${n} is born. ${first} is nothing like the ${order === 2 ? 'first' : 'others'}, from the first hour, and you are surprised to be surprised.`,
+      `${n} arrives. The older ${order === 2 ? 'child stands at the edge of the bed and studies the newcomer' : 'children take turns holding the baby, badly'}.`,
+      `${n} is born, and the house reorganises itself around one more without anybody deciding how.`,
+      atHome ? `${n} is born at home, quickly this time, while the water is still heating.` : `${n} is born. You know which bag to pack this time, and still forget something.`]
+  } else {
+    pool = [`${n} is born, the ${['fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'][Math.min(6, order - 4)]}. The older ones barely look up, and then the eldest picks ${first} up as if it were nothing.`,
+      `${n} arrives. There is less ceremony than there was for the first, and exactly as much fear.`,
+      `${n} is born. One more mouth, people say, and then they say the other thing, about one more pair of hands.`,
+      `${n} is born. You lie awake doing the sum — the food, the school, the room — and then you stop doing it, because ${first} is here.`]
+    if (!atHome) pool[2] = `${n} is born. The nurse remembers you from last time and does not say so.`
+  }
+  return pickFrom(preferUnsaid(s, pool))
+}
+
 export function tick(state) {
   const isAbroad = state.flags.includes('emigrated') &&
     state.currentCountry?.name !== state.character?.country?.name
@@ -3208,6 +3696,9 @@ export function tick(state) {
   // (a Sahel drought) may lower it before the wage is paid, since world events
   // apply first. Convention: < 0.85 is a bad year, > 1.1 a good one.
   s.mem = { ...(s.mem ?? {}), harvestYear: s.currentYear, harvestFactor: rollHarvestFactor(s) }
+  // The age the character first lived outside the country they were born in:
+  // whether the parents went too (see familyCountry).
+  if (isAbroad && s.mem.leftHomeAge == null) s.mem = { ...s.mem, leftHomeAge: state.age }
 
   // Phase transition — desire-aware prose + guaranteed phase entry events
   const prevPhase = getPhase(state.age)
@@ -3341,27 +3832,7 @@ export function tick(state) {
       s.log = [...s.log, { age: s.age, text: 'You are released from prison.', isKey: true }]
       // Parole event — queue if sentence was long
       if ((s.mem?.originalSentence ?? 0) >= 3) {
-        s.queue = [...s.queue, {
-          id: `prison_parole_release_${s.age}`,
-          phase: getPhase(s.age),
-          // The release itself is logged above, this year. This fires the
-          // next, so it is the first year out, not the walk through the gate,
-          // which it used to narrate a second time a year late. And a
-          // political prisoner has no "old contacts" pulling them back to a
-          // life of crime; the pull is the other way.
-          text: s.flags.includes('political_prisoner')
-            ? 'The first year out. People you knew cross the street, or do not, and you learn which is which. The file is still somewhere, and so are the men who opened it.'
-            : 'The first year out. The sunlight still feels wrong some days — too bright, too open. Every form has the box on it.',
-          choices: s.flags.includes('political_prisoner') ? [
-            { text: 'Keep your head down. Work, and nothing else', tag: 'yielding', outcome: 'You find a job that asks no questions and give it no reasons to.', effect: (p) => { p.m += 4; p.addFlag('learned_silence'); }, inject: null },
-            { text: 'Find the others who came out', tag: 'defiant', outcome: 'There are more of you than you thought. Nobody says it is dangerous, because everybody knows.', effect: (p) => { p.m += 6; p.karma += 4; p.addFlag('dissident_network'); }, inject: null },
-          ] : [
-            { text: 'Find work and start over', tag: 'determined', outcome: 'The record follows you everywhere. But you keep applying.', effect: (p) => { p.m += 8; p.e += 5; p.addFlag('determined_student'); }, inject: null },
-            { text: 'Reconnect with old contacts', tag: null, outcome: 'Some are glad to see you. Some pull you back toward the life you tried to leave.', effect: (p) => { p.m += 4; p.karma -= 5; }, inject: null },
-          ],
-          effect: null,
-          when: () => true,
-        }]
+        s.queue = [...s.queue, buildParoleEvent(s)]
       }
     } else {
       s.prisonSentence = remaining
@@ -3371,6 +3842,7 @@ export function tick(state) {
         if (s.queue.some(e => e.id === prisonEvent.id)) s.queue = s.queue.filter(e => e.id !== prisonEvent.id)
         if (!prisonEvent.choices || prisonEvent.choices.length === 0) {
           const proxy = buildEffectProxy(s)
+          proxy._placeMoney = true
           if (prisonEvent.effect) prisonEvent.effect(proxy)
           s = applyProxy(s, proxy)
           s = resolveProxyExtras(s, proxy)
@@ -3460,8 +3932,10 @@ export function tick(state) {
     }
     if (s.age >= (s.mem.pregnancyYear ?? 0) + 1) {
       const pc = s.mem.pendingChild
-      const archetype = s.character?.country?.archetype
-      const healthcare = s.character?.country?.healthcare
+      // The maternity ward the mother can reach, there and then — not the
+      // birth country's present-day rating.
+      const archetype = liveCountry(s)?.archetype
+      const healthcare = healthcareAt(liveCountry(s), s.currentYear)
       const isHighRisk = (s.currentYear < 1950) || archetype === 'subsaharan' || archetype === 'conflict_zone' ||
         archetype === 'developing_unstable' || s.flags.includes('high_risk_pregnancy') ||
         healthcare === 'very_poor' || healthcare === 'poor'
@@ -3497,7 +3971,9 @@ export function tick(state) {
       } else {
         s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant' && f !== 'expecting'), 'parent'])]
         s.stats = { ...s.stats, happiness: clamp(s.stats.happiness + 10, 0, 100) }
-        s.log = [...s.log, { age: s.age, text: `${child.name} is born. Everything shifts.`, isKey: true }]
+        const line = birthLine(s, child)
+        s.log = [...s.log, { age: s.age, text: line, isKey: true }]
+        s.mem = rememberSaid(s.mem, line)
       }
     }
   }
@@ -3643,6 +4119,7 @@ export function tick(state) {
   // estranged-child, children-abroad and grandparent texture.
   if (s.children?.length) {
     s.children = s.children.map(c => ({ ...c, age: Math.max(0, s.age - (c.ageAtBirth ?? s.age)) }))
+    s = tickChildMortality(s)
 
     // `cared_for_children` gates the late-life grandchild and children-support
     // beats, and was set NOWHERE — so one of those events could never fire and
@@ -3922,7 +4399,7 @@ export function tick(state) {
     s.education = { ...s.education, level: 'secondary' }
     s.flags = [...new Set([...s.flags, 'graduated_hs'])]
     s.gpa = rawGpa
-    s.mem = { ...s.mem, hsGpa: rawGpa }
+    s.mem = { ...s.mem, hsGpa: rawGpa, uniPlace: chance(universityPlaceChance(s)) }
     const graduationEvent = buildGraduationEvent(s, rawGpa)
     s.queue = [graduationEvent, ...s.queue]
   }
@@ -4209,12 +4686,17 @@ export function tick(state) {
   if (s.business?.active) {
     const bt = BUSINESS_TYPES.find(b => b.id === s.business.id)
     if (bt) {
+      // `baseRevenue` is present-day dollars, and it was scaled by the BIRTH
+      // country's present-day GDP and by nothing else, so a consulting firm
+      // opened in 1962 for $160 was taking in present-day revenue in 1962
+      // money and was worth over a million by forty-five. Where the business
+      // trades, and when, like every other figure in the engine.
       const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-      const mult = gdpMult[s.character?.country?.gdp] ?? 1.0
+      const mult = gdpMult[liveCountry(s)?.gdp] ?? 1.0
       const perf = s.business.performance ?? 50
       const [minRev, maxRev] = bt.baseRevenue
-      const scaledMin = Math.round(minRev * mult)
-      const scaledMax = Math.round(maxRev * mult)
+      const scaledMin = inEraMoney(Math.round(minRev * mult), liveCountry(s), s.currentYear)
+      const scaledMax = inEraMoney(Math.round(maxRev * mult), liveCountry(s), s.currentYear)
       const rawRevenue = Math.round(randomBetween(scaledMin, scaledMax) * (perf / 60))
       const expenses = Math.round(rawRevenue * randomBetween(0.35, 0.55))
       const profit = rawRevenue - expenses
@@ -4385,6 +4867,7 @@ export function resolveAutoEvent(state) {
   if (!pendingEvent?.isAutomatic) return state
 
   const proxy = buildEffectProxy(state)
+  proxy._placeMoney = true
   if (pendingEvent.effect) pendingEvent.effect(proxy)
   let s = applyProxy(state, proxy)
   s = resolveProxyExtras(s, proxy)
@@ -4403,6 +4886,7 @@ export function resolveChoice(state, choiceIndex) {
   if (!choice) return state
 
   const proxy = buildEffectProxy(state)
+  proxy._placeMoney = true
   // An event may carry BOTH a top-level effect (once-only latches, setMem
   // guards) and per-choice effects. The top-level one used to be silently
   // dropped here, so its latch never set and the event could re-fire forever.
@@ -4459,7 +4943,9 @@ function disposition(G) {
 }
 
 function scoreChoiceForCharacter(choice, G, index) {
-  let score = 1
+  // A choice may carry how often people in the character's position took it,
+  // where that is known and the keyword reading would get it wrong.
+  let score = choice.autoWeight ?? 1
   const text = `${choice.text ?? ''} ${choice.tag ?? ''}`.toLowerCase()
   const s = G.stats ?? {}
   const disp = disposition(G)
