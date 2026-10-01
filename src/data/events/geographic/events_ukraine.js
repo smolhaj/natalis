@@ -14,7 +14,8 @@ export const UKRAINE_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1985 &&
       G.age >= 7 && G.age <= 14 &&
       !G.mem?.ukrHolodomor,
-    text: 'Your grandmother does not throw bread away. She smooths the crumbs into her palm when she is finished. You ask her once why she does this. She is quiet for longer than you expect. The Holodomor — the Hunger — 1932 to 1933. Six million Ukrainians, though the Soviet government denied there was a famine at all. She was a child during it. She does not speak about it directly. She speaks about bread.',
+    text: 'Your grandmother does not throw bread away. She smooths the crumbs into her palm when she has finished. You ask her once why, and she is quiet for longer than you expect. She was a child in 1932 and 1933, the years of the Hunger, which the government said were not happening. She does not speak about it directly. She speaks about bread.',
+    context: 'The Holodomor famine of 1932-33 killed some 3.5 to 5 million people in Soviet Ukraine.',
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -33,7 +34,7 @@ export const UKRAINE_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 1992 &&
       G.age >= 10 &&
       !G.mem?.ukrIndependence,
-    text: 'August 24, 1991. The Verkhovna Rada votes for independence. The declaration passes with 346 in favor and 1 against. On December 1, 90 percent of Ukrainians vote yes in the referendum — including majorities in every region of the country, including Crimea. The Soviet Union is not yet formally dissolved; it dissolves on December 25. You are in a country that has existed as an independent state for nine weeks when it becomes the successor state to a superpower. The first years are 10,000% inflation and uncertainty about the currency. The independence is also real.',
+    text: 'August 24, 1991, and the Rada votes for independence, and on December 1 the country votes for it in the referendum, every region, Crimea included. On December 25 the Union is gone. Ukraine has been independent nine weeks when it becomes one of the heirs of a superpower. The first years are runaway inflation and nobody sure what the money is. The independence is also real.',
     choices: [
       {
         text: 'The independence is what matters. Everything else can be built.',
@@ -60,7 +61,7 @@ export const UKRAINE_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 2014 &&
       G.age >= 16 &&
       !G.mem?.ukrLanguage,
-    text: 'Ukrainian and Russian. At school you were taught one or the other depending on the region. In Kyiv, in 1990, 87 percent of school instruction was in Russian. By 2000, the proportion has shifted. The question of which language you speak in which room with which person carries a meaning that is not just a language question. In the east it is different from the west. In private it is different from official. You make a choice every day and the choice means something.',
+    text: 'Ukrainian or Russian. At school you were taught in one or the other depending on where you lived, and in Kyiv in 1990 most schools taught in Russian; by 2000 that has shifted. Which language you speak in which room with which person means something more than language. In the east it is different from the west, in private different from official. You choose every day, and the choice means something.',
     choices: [
       {
         text: 'You shift to Ukrainian as your primary language. It is a political act and you mean it.',
@@ -87,12 +88,12 @@ export const UKRAINE_EVENTS = [
       G.currentYear === 2004 &&
       G.age >= 14 &&
       !G.mem?.ukrOrangeRev && !G.mem?.kyivOrangeRevolution,
-    text: 'November 2004. The presidential election is held and Viktor Yanukovych is declared the winner. Exit polls show Viktor Yushchenko won by 6 percentage points. A million people appear on Maidan Nezalezhnosti — Independence Square — in orange scarves. The Supreme Court annuls the result. A revote is held in December. Yushchenko wins with 52 percent. What happened between the first count and the second is the Orange Revolution: the country said no to the result and the result changed. Yushchenko had been poisoned with dioxin during the campaign. His face carried the evidence. He survived.',
+    text: 'November 2004. Yanukovych is declared the winner, and the exit polls say Yushchenko won, and a million people come to Independence Square in orange scarves. The Supreme Court annuls the result and the revote in December goes the other way. The country said no to the count and the count changed. Yushchenko\'s face, poisoned with dioxin during the campaign, carries the evidence.',
     choices: [
       {
         text: 'You are on the Maidan. The orange is your color this month.',
         tag: null,
-        outcome: 'The cold is real. The crowd is real. The tent city runs for weeks. Something happened here that left a template.',
+        outcome: 'It is cold. The tent city runs for weeks. Something happened here that left a template.',
         effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('orange_revolution_generation'); p.addFlag('political_active'); p.setMem('ukrOrangeRev', true); p.setMem('kyivOrangeRevolution', true); },
       },
       {
@@ -117,9 +118,9 @@ export const UKRAINE_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year <= 2013) {
-        return 'November 21, 2013. Yanukovych — now president — announces he will not sign the EU Association Agreement. Students appear on Maidan within hours. On November 30, the Berkut special police beat the students — a hundred hospitalised. The city responds. By December it is not students. It is a city. The tent city is back. The field kitchens, the oil drums burning for warmth, the priests walking the line between the crowd and the shields. Nobody on the square knows how it ends.'
+        return 'November 2013, and Yanukovych says he will not sign the agreement with Europe, and within hours students are on the Maidan. On November 30 the riot police beat them, and the city answers. By December the tent city is back: the field kitchens, the burning oil drums, priests walking the line between the crowd and the shields. Nobody on the square knows how it ends.'
       }
-      return 'The Euromaidan. The EU Association Agreement that Yanukovych cancelled. The Berkut beating the students. The burning barricades. The Heavenly Hundred dead. Yanukovych fleeing to Russia on February 21. What comes after, within weeks: Crimea, then Donbas. You were there for the beginning of the chain.'
+      return 'The Euromaidan: the agreement Yanukovych cancelled, the riot police beating the students, the burning barricades, the Heavenly Hundred, and Yanukovych fleeing to Russia in February. Within weeks, Crimea, then Donbas. You were there for the beginning of the chain.'
     },
     choices: [
       {
@@ -153,7 +154,7 @@ export const UKRAINE_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2021 &&
       G.age >= 10 &&
       !G.mem?.ukrDonbas,
-    text: 'April 2014. Donetsk. The "people\'s republic" is declared. Armed men, some in Russian military equipment with the insignia removed, take the administration building. The map of Ukraine changes and then the change is not officially acknowledged by Russia. The city you grew up in, or the city near you, or the region whose name you have known your whole life, is now the other side of a contact line that runs through the steppe. People leave. People stay. The line moves and then it stabilises and then it becomes eight years of a frozen conflict that is not frozen for the people on either side of it.',
+    text: 'April 2014, Donetsk. Armed men, some in Russian kit with the badges taken off, take the administration building and declare a republic. The city you grew up in, or the one beside it, is now on the other side of a line through the steppe. People leave and people stay. The line moves, and then stops, and becomes eight years of a frozen war that is not frozen for anyone living near it.',
     choices: [
       {
         text: 'You leave. The city is no longer safely yours.',
@@ -182,8 +183,9 @@ export const UKRAINE_EVENTS = [
       !G.mem?.ukrInvasion,
     text: (G) => {
       const place = G.place?.name || 'your city'
-      return `February 24, 2022. The air raid sirens at 5am in ${place}. The explosions. The phone. Russian forces have entered from the north, from Crimea, from the east. Kyiv is shelled. Kharkiv is shelled. Mariupol — Mariupol will be besieged for eighty-six days. The first day: the bank queues, the petrol queues, the traffic out of the city. Zelensky does not leave. He films himself on a phone on a Kyiv street: "We are here." The country that the past eight years were a warning about is now the country that is happening.`
+      return `February 24, 2022. The sirens in ${place} at five in the morning, the explosions, the phone. Kyiv is shelled, Kharkiv is shelled, and by evening there are queues at every bank and every petrol station and a line of cars out of the city. Zelensky does not leave. He films himself on a Kyiv street on a phone: "We are here." The country the past eight years were a warning about is happening now.`
     },
+    context: 'Russian forces invaded from the north, from Crimea and from the east on 24 February 2022. Mariupol was besieged for 86 days.',
     choices: [
       {
         text: 'You stay. This is your country and you are not leaving it.',

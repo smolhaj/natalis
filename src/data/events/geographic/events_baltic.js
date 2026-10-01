@@ -28,10 +28,11 @@ export const BALTIC_EVENTS = [
         return 'You learn, in pieces, what happened to the family members who are not here. June 1941: Soviet security forces loaded Estonian families onto cattle cars in the night. Then again in March 1949: the deportation of the kulaks, as they were called. Twenty thousand people in Estonia alone, in those two operations. Siberia. The ones who came back — some of them — came back different. The ones who did not come back are in the family in a different way.'
       }
       if (country === 'Latvia') {
-        return 'The family members who are not present: you learn about them in pieces, over years. June 14, 1941 is the date in Latvia. Soviet security forces came in the night and took families — women, children, the elderly — to cattle cars going east. The Siberian deportations. Roughly thirty-five thousand Latvians in that first wave; another forty-three thousand in March 1949. Some came back. Many did not. The ones who did not are in the family in a different way than the ones who are here.'
+        return 'You learn about the family members who are not here in pieces, over years. June 14, 1941: Soviet security came in the night and put families, women, children, the old, into cattle cars going east, and in 1949 they came again. Some came back. Many did not. The ones who did not are in the family in a different way from the ones who are here.'
       }
-      return 'June 14, 1941 is the date in Lithuania. Soviet security forces coming in the night, cattle cars east. Then March 1949. Almost ninety thousand Lithuanian deportees across both waves. The family members who are not present — you learn about them in pieces, over years, from adults who lower their voices without being aware of lowering their voices. What happened is both the history of your country and a specific hole in your specific family.'
+      return 'June 14, 1941 is the date in Lithuania. Soviet security forces coming in the night, cattle cars east. Then March 1949. Almost ninety thousand Lithuanian deportees across both waves. The family members who are not present — you learn about them in pieces, over years, from adults who lower their voices without being aware of lowering their voices. What happened is both the history of your country and a hole in your family.'
     },
+    context: 'About 15,000 people were deported from Latvia in June 1941 and about 43,000 in March 1949.',
     choices: [
       {
         text: 'You ask questions. The answers come in fragments, across years.',
@@ -62,7 +63,7 @@ export const BALTIC_EVENTS = [
     text: (G) => {
       const country = G.character.country.name
       const lang = country === 'Estonia' ? 'Estonian' : country === 'Latvia' ? 'Latvian' : 'Lithuanian'
-      return `At school, Russian is the language of advancement. The science textbook is in Russian. The teacher's praise is in Russian. The political terminology — the only correct political terminology — is in Russian. ${lang} is what you speak at home, in the yard, with the grandmother. The two registers feel different in your mouth. At school you are learning that ${lang} belongs to the kitchen and the yard, and that the world is organized in a different language. You are seven years old and you already know this without having the words for it.`
+      return `At school Russian is the language of getting on: the science textbook, the teacher's praise, the only correct political words. ${lang} is for home, the yard, your grandmother. The two feel different in your mouth. You are seven, and already know without the words for it that ${lang} belongs to the kitchen and the world runs in another language.`
     },
     choices: [
       {
@@ -125,18 +126,19 @@ export const BALTIC_EVENTS = [
     text: (G) => {
       const country = G.character.country.name
       if (country === 'Lithuania') {
-        return 'January 13, 1991. Soviet troops move on the Vilnius television tower before dawn. Thirteen people die under tank treads and gunfire — one more would die later. The crowds surrounding the tower are unarmed. The troops take the tower; the transmissions go dark. The crowds do not disperse. By morning there are tens of thousands at the parliament building, which is ringed with barricades made of whatever was to hand. Lithuanian independence — declared on March 11, 1990, and then pressured into suspension by Moscow — holds. The troops stop. The world is watching and the world is watching Lithuania in particular.'
+        return 'January 13, 1991. Soviet troops move on the Vilnius television tower before dawn, and the crowd around it is unarmed, and people die under the tank treads. The broadcasts go dark. The crowd does not leave. By morning tens of thousands are at the parliament behind barricades made of whatever was to hand, and the troops stop, because the world is watching.'
       }
       if (country === 'Latvia') {
-        return 'January 1991. Soviet special forces — the OMON, the black berets — seize the Interior Ministry building in Riga. Five people are killed at various points in the following weeks. The Latvian government broadcasts from a mobile transmitter. The barricades around the parliament are made of concrete blocks, farm machinery, whatever the people brought in from the countryside. Latvian independence was declared May 4, 1990. It has been hanging in the balance since. This week is when it becomes clear that it is going to hold.'
+        return 'January 1991, and the black berets storm the Interior Ministry in Riga, and over the following weeks people are killed. The government broadcasts from a mobile transmitter, and the barricades around parliament are concrete blocks and tractors and whatever the farmers brought in from the countryside. Independence was declared last May and has hung in the balance ever since. This is the week it becomes clear it will hold.'
       }
       return 'January 1991. The Soviet pressure on all three Baltic states is at its peak. In Lithuania, thirteen killed at the TV Tower. In Latvia, five killed in January events. Estonian independence is also formally contested. The question of whether the independence declarations of 1990 will survive is being answered in blood in Vilnius and Riga, and in the barricades and the determination of the people at them. The Soviet Union, it is becoming clear, is not going to do to the Balts what it did to Hungary in 1956.'
     },
+    context: 'Fourteen people were killed at the Vilnius TV tower on 13 January 1991. Lithuania had declared independence on 11 March 1990.',
     choices: [
       {
         text: 'You are at the barricades, or at the parliament, or at the tower. You are there.',
         tag: null,
-        outcome: 'You are one of the conditions. Independence — the specific independence of this specific country — required bodies at the barricades. Your body was one of them.',
+        outcome: 'You are one of the conditions. Independence — the independence of this country — required bodies at the barricades. Your body was one of them.',
         effect: (p) => { p.m += 6; p.m -= 8; p.karma += 10; p.r += 4; p.addFlag('baltic_january_1991'); p.setMem('balt1991', true); },
       },
       {
@@ -164,7 +166,7 @@ export const BALTIC_EVENTS = [
         return 'Latvia\'s citizenship law, adopted in 1994, requires that citizens demonstrate descent from pre-1940 Latvian citizens, or pass a language and civics test. You are Russian. Your family came after the war, during the Soviet period. Under this law you are a "non-citizen" — a category unique to Latvia: not a citizen of Latvia, not formally stateless, but holding a grey passport that does not permit voting and requires visas for most countries. The non-citizen passport is issued to over 700,000 people in the early 1990s.'
       }
       if (country === 'Estonia') {
-        return 'Estonia\'s citizenship law requires naturalization through a language test in Estonian and a civics exam. Your family is Russian — Soviet-era arrivals. You can take the test. The test is not easy in a language you learned as a second language in the Soviet school system. The alternative is to apply for Russian citizenship, which some do. Or to live as an "alien" — that is the official category — which means a specific document, specific restrictions, and the specific experience of being a minority in a country that was occupied partly through the importation of people like your family.'
+        return 'Estonia\'s citizenship law requires naturalization through a language test in Estonian and a civics exam. Your family is Russian — Soviet-era arrivals. You can take the test. The test is not easy in a language you learned as a second language in the Soviet school system. The alternative is to apply for Russian citizenship, which some do. Or to live as an "alien" — that is the official category — which means a document, specific restrictions, and the experience of being a minority in a country that was occupied partly through the importation of people like your family.'
       }
       return 'The post-independence citizenship question. Lithuania handled it differently from Estonia and Latvia — extending citizenship to most Soviet-era residents. But the cultural and political position of Russian-speakers in independent Lithuania is still one of adjustment. The language laws, the national holidays that are not your holidays, the history that is told from a perspective that is not your family\'s perspective.'
     },
@@ -202,7 +204,7 @@ export const BALTIC_EVENTS = [
       if (country === 'Latvia') {
         return 'EU accession 2004. Latvia lost approximately 15 percent of its population by 2015 through emigration — one of the most dramatic population declines in Europe outside of war. Ireland, the UK, Germany. The remittances arrive. The houses in the countryside get renovated from abroad before the schools get funding. You are doing the calculation: what the country offers, what the alternative offers, what it costs to leave and what it costs to stay.'
       }
-      return 'EU accession 2004. The movement begins. Estonia loses a smaller percentage than Latvia or Lithuania, but the demographic is specific: young, educated, mobile. The people the country needs most are making the calculation and the calculation is pointing west. The internet startup ecosystem and the digital economy absorb some of this but not all. You are in the age range where the calculation is real.'
+      return 'EU accession 2004. The movement begins. Estonia loses a smaller percentage than Latvia or Lithuania, but the demographic is specific: young, educated, mobile. The people the country needs most are making the calculation and the calculation is pointing west. The internet startup ecosystem and the digital economy absorb some of this but not all. You are in the age range where the calculation is done at every kitchen table.'
     },
     choices: [
       {

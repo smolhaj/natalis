@@ -47,7 +47,7 @@ export const CULT_EVENTS = [
       G.age >= 9 && G.age <= 15 &&
       !G.flags.has('hcr_born_in') &&
       !G.mem?.hcrChild,
-    text: 'Two meetings per week — one in the middle of the week, one on Sunday. You know the songs and the responses and which section of the handbook applies to which situation. You know that blood is sacred and not to be taken into the body and that a card expressing this is in your wallet now that you are old enough to sign one. You have never had a birthday party. You have not thought about this as something you lack because absence is only absence when you know what is missing. The people in the congregation are your people. You have known them your whole life.',
+    text: 'Two meetings a week, midweek and Sunday. You know the songs and the responses, and which section of the handbook answers which question. In your wallet is a card, signed now that you are old enough, refusing blood. You have never had a birthday party and have never missed one, because you do not know what it is. The people in the congregation have known you your whole life.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 3; p.addFlag('hcr_born_in'); p.addFlag('hcr_member'); p.setMem('hcrChild', true) },
   },
@@ -67,10 +67,10 @@ export const CULT_EVENTS = [
       G.age >= 18 && G.age <= 35 &&
       (G.flags.has('faith_crisis') || G.flags.has('lost_faith') || !G.partner || G.flags.has('lost_parent_young')) &&
       !G.mem?.hcrConvert,
-    text: 'The door knocked at a moment when you were available to it — between things, or freshly arrived somewhere, or recently without the relationships that used to organise your time. They were welcoming in a way: not generic, but detailed. They remembered things you said. There was food. They had answers to questions you had been carrying. The answers were very clear, which was the thing you did not know you were looking for. You went back.',
+    text: 'The knock came when you had room for it: between things, new somewhere, without the people who used to fill your days. They remembered what you said last time. There was food. They had answers to questions you had been carrying, very clear answers, which was what you had not known you were looking for. You went back.',
     choices: [
       {
-        text: 'You keep going. The community is real. The clarity is real.',
+        text: 'You keep going.',
         tag: 'join',
         outcome: 'The study deepens. The community deepens with it. Your social world is beginning to reorganise around this.',
         effect: (p) => { p.m += 10; p.s += 3; p.addFlag('hcr_member'); p.addFlag('hcr_convert'); p.setMem('hcrConvert', true) },
@@ -97,7 +97,7 @@ export const CULT_EVENTS = [
       G.flags.has('hcr_member') &&
       G.age >= 14 && G.age <= 35 &&
       !G.mem?.hcrDeepens,
-    text: 'Your social world has reorganised. The people you spend time with are, almost entirely, members of the congregation. The doctrine explains this as natural — you are spending time with people who share your values, which is what everyone does — and you have noticed that the explanation arrives before the noticing, which means you do not quite form the thought. Outside relationships have become complicated in a way that inside ones are not. Outside friendships require explanations, hedges, silences about what you believe. Inside ones do not.',
+    text: 'Your social world has reorganised. The people you spend time with are, almost entirely, members of the congregation. The doctrine explains this as natural — you are spending time with people who share your values, which is what everyone does — and you have noticed that the explanation arrives before the noticing, which means you do not quite form the thought. Outside relationships have become complicated, and inside ones are simple. Outside friendships require explanations, hedges, silences about what you believe. Inside ones do not.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 3; p.addFlag('hcr_social_reorganised'); p.setMem('hcrDeepens', true) },
   },
@@ -148,7 +148,7 @@ export const CULT_EVENTS = [
       !G.mem?.hcrBlood,
     text: (G) => G.children && G.children.length > 0
       ? 'Your child needs surgery. The surgeon says that without blood products the risk is significantly higher. You have the card. The congregation elder is at the hospital within the hour to support you in upholding it. The hospital has applied to the court for an override, which is standard procedure when the patient is a minor. You are being asked to wait outside while they decide.'
-      : 'You are losing blood. The surgeon explains what is needed. You show the card. The card is laminated and signed and says, in clear language, that you refuse blood products under any circumstances. The surgeon explains that this could mean your death. You understand this. The card was signed with full understanding.',
+      : 'You are losing blood. The surgeon explains what is needed and you show the card, laminated and signed, refusing blood products under any circumstances. The surgeon tells you this may mean your death. You understand. You understood when you signed it.',
     choices: [
       {
         text: 'Uphold the refusal. This is what you believe, what you signed.',
@@ -157,7 +157,7 @@ export const CULT_EVENTS = [
         effect: (p) => { p.h -= 8; p.m -= 5; p.r += 8; p.addFlag('hcr_blood_refused'); p.setMem('hcrBlood', true) },
       },
       {
-        text: 'Accept the treatment. The doctrine is one thing; this is real.',
+        text: 'Accept the treatment. The doctrine is one thing; this is the hospital.',
         tag: 'accept',
         outcome: 'The blood is administered. Medically, it was the right decision. The congregation will hear about this. The hearing will determine consequences.',
         effect: (p) => { p.h += 5; p.m -= 8; p.r += 6; p.addFlag('hcr_doctrine_broken'); p.setMem('hcrBlood', true) },
@@ -180,7 +180,7 @@ export const CULT_EVENTS = [
       (G.flags.has('hcr_first_doubt_internal') || G.flags.has('hcr_doctrine_broken')) &&
       G.age >= 20 && G.age <= 55 &&
       !G.mem?.hcrCommittee,
-    text: 'Three elders in a back room. The chairs are arranged so that they are across a table from you. The questions are about your recent conduct, or your associations, or something you were observed saying. The manner is not unkind. The process has been done this way since before any of them were elders. You are asked whether you are repentant. The question requires an answer they can relay to the congregation.',
+    text: 'Three elders in a back room, across a table from you. The questions are about your conduct, or the company you keep, or something you were heard to say. Nobody is unkind; it has been done this way since before any of them were elders. They ask whether you are repentant, and they need an answer they can take back to the congregation.',
     choices: [
       {
         text: 'Express repentance. Whatever it costs, you are not ready to lose this community.',
@@ -230,7 +230,7 @@ export const CULT_EVENTS = [
       G.flags.has('hcr_shunned') &&
       G.age >= 22 && G.age <= 60 &&
       !G.mem?.hcrShunning,
-    text: 'You see someone you have known since childhood in the supermarket. She sees you. She turns to look at the shelf. It is not cruelty — you understand this because you know the mechanism, you followed the same instruction yourself when others left before you. She is cutting off contact so that you will understand the cost and return. You are the reason she is looking at the shelf. The understanding of why she is doing it does not make the looking at the shelf easier to watch.',
+    text: 'In the supermarket you see a woman you have known since you were children. She sees you and turns to the shelf. It is not cruelty: you followed the same instruction yourself when others left. She is cutting you off so that you will feel what it costs and come back. Knowing why does not make it easier to watch her read the shelf.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.e += 4; p.setMem('hcrShunning', true) },
   },
@@ -248,7 +248,7 @@ export const CULT_EVENTS = [
       G.flags.has('hcr_exited') &&
       G.age >= 24 && G.age <= 60 &&
       !G.mem?.hcrReentry,
-    text: 'You are learning, at thirty-two, or thirty-eight, or forty-five, the specific skills that secular social life runs on and that you were never taught: how to make a friend outside a shared framework, how to date without knowing whether the person also believes the end is coming, how to celebrate birthdays without the complicated childhood freight that comes with the first ones. The learning is possible. The age at which you are doing it is something you try not to dwell on.',
+    text: 'You are learning, at thirty-two, or thirty-eight, or forty-five, the skills that secular social life runs on and that you were never taught: how to make a friend outside a shared framework, how to date without knowing whether the person also believes the end is coming, how to celebrate birthdays without the complicated childhood freight that comes with the first ones. The learning is possible. The age at which you are doing it is something you try not to dwell on.',
     choices: null,
     effect: (p) => { p.m += 6; p.e += 5; p.r += 4; p.addFlag('hcr_rebuilding'); p.setMem('hcrReentry', true) },
   },
@@ -266,7 +266,7 @@ export const CULT_EVENTS = [
       G.age >= 55 &&
       !G.mem?.hcrLate,
     text: (G) => G.flags.has('hcr_exited')
-      ? 'You left. What you lost was the world as you understood it — the social world, the doctrinal world, the explanatory framework that had an answer for everything. What you gained was a life that was actually yours to construct. Both of those things are true and both take the whole of your life to understand. The people you grew up with, if they are still inside, consider you to be spiritually dead. You have had decades to think about what it means to be considered dead by the people who knew you before you knew yourself.'
+      ? 'You left. What you lost was the world as you understood it — the social world, the doctrinal world, the explanatory framework that had an answer for everything. What you gained was a life that was actually yours to construct. It takes the whole of your life to understand either. The people you grew up with, if they are still inside, consider you to be spiritually dead. You have had decades to think about what it means to be considered dead by the people who knew you before you knew yourself.'
       : 'You stayed. The questions that arose at various points were managed, absorbed, set aside. The community is still yours — the social world, the people who have known you across all the decades. Whether the doctrine is true is a question you have made your peace with holding differently at sixty-five than you held it at twenty. What you know is that the leaving would have cost you everything, and you chose not to pay that price, and that is also a choice a person makes.',
     choices: null,
     effect: (p) => { p.e += 5; p.r += 6; p.m += 3; p.setMem('hcrLate', true) },

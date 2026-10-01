@@ -23,7 +23,7 @@ export const BEDOUIN_EVENTS = [
     phase: 'childhood',
     weight: 9,
     when: (G) => IS_BEDOUIN(G) && G.currentYear <= 1970 && G.age >= 6 && G.age <= 14 && !G.mem.bdoTentChild,
-    text: 'The tent comes down in a morning. Every person in the family knows which pole is theirs, which rope, which weight. The camels are loaded in a sequence your father learned from his father. You are moving because the season has ended here and the grazing is better three days north. You know the route by the shape of specific dunes, by the colour of the rock at a particular pass, by the position of certain stars after dark. This knowledge is not taught explicitly. It is acquired through the doing of it.',
+    text: 'The tent comes down in a morning. Every person in the family knows which pole is theirs, which rope, which weight. The camels are loaded in a sequence your father learned from his father. You are moving because the season has ended here and the grazing is better three days north. You know the route by the shape of specific dunes, by the colour of the rock at a pass, by the position of certain stars after dark. Nobody teaches it. You learn it by doing it.',
     choices: null,
     effect: (p) => { p.e += 4; p.h += 3; p.addFlag('bedouin_nomad_childhood'); p.setMem('bdoTentChild', true) },
   },
@@ -39,13 +39,13 @@ export const BEDOUIN_EVENTS = [
       const country = G.character?.country?.name
       const agent = country === 'Jordan' ? 'The district officer arrives from Amman' : 'The government representative arrives from Riyadh'
       const incentive = country === 'Jordan' ? 'a registered plot, a small house, and access to the new school' : 'a house, a monthly stipend, and access to the water pipeline'
-      return `${agent} with an offer that is also an understanding. The king wants his people settled. In exchange: ${incentive}. Your tribe's range is being mapped, titled, and allocated. The migration corridors are narrowing — a new road here, a restricted zone there. Other families have already gone. The offer is genuine. The alternative to the offer is not permanent nomadism. It is a slower version of the same transition, without the subsidy.`
+      return `${agent} with an offer that is also an understanding: the king wants his people settled, and in exchange, ${incentive}. Your tribe's range is being mapped, titled and allocated, and the corridors you migrate along are narrowing, a new road here, a closed zone there. Other families have already gone. If you refuse, you get a slower version of the same thing, without the subsidy.`
     },
     choices: [
       {
         text: 'Accept. The water alone is worth it.',
         tag: null,
-        outcome: 'The house is concrete. The ceiling does not move in the wind. The water comes from a pipe you did not dig. These are gains that are real.',
+        outcome: 'The house is concrete. The ceiling does not move in the wind. The water comes from a pipe you did not dig. The gains are gains.',
         effect: (p) => { p.m += 3; p.h += 5; p.addFlag('bedouin_settled'); p.addFlag('bdo_settled_first_gen'); p.setMem('bdoSettle', true) },
       },
       {
@@ -76,7 +76,7 @@ export const BEDOUIN_EVENTS = [
     phase: 'midlife',
     weight: 5,
     when: (G) => IS_BEDOUIN(G) && G.flags.has('bdo_settled_first_gen') && G.age >= 35 && !G.mem.bdoNavLost,
-    text: 'Your son asks how you would know which way was north without the phone. You show him: the star, the specific angle of the shadow at noon, the way the wind comes from the Nafud in the dry months. He understands the explanation. He does not need the knowledge. You realize, saying it aloud, that you have not used it yourself in fifteen years. The knowledge existed to get a family and their animals across four hundred kilometres of desert without getting lost or running out of water. The desert is still there. The family moves by road now.',
+    text: 'Your son asks how you would find north without the phone, and you show him: the star, the angle of the noon shadow, the wind off the Nafud in the dry months. He understands, and he does not need it. Saying it aloud, you realise you have not used it yourself in fifteen years. It was knowledge for getting a family and its animals across four hundred kilometres of desert without running out of water. The family goes by road now.',
     choices: [
       {
         text: 'Write it down — the knowledge should not disappear',

@@ -24,7 +24,7 @@ export const MEXICO_DEPTH_EVENTS = [
       G.currentYear === 2000 &&
       G.age >= 18 &&
       !G.mem?.mex2000ElectionNight,
-    text: `July 2, 2000. The vote count is still coming in and the Instituto Federal Electoral is updating the numbers on screen. The PRI has governed since 1929. Every president since then has been PRI. The schools, the unions, the IMSS, the ejidos — all built by the PRI, all administered by the PRI. And then Francisco Fox is ahead by nine points and there is no way to read this except the reading that the numbers say. Presidente Zedillo appears on television and concedes. His voice is steady. Something that was always true is now past tense.`,
+    text: `July 2, 2000, and the count is coming in on the screen. The PRI has governed since 1929: every president, every union, the clinics, the ejidos. Then Vicente Fox is ahead by too much to read any other way, and President Zedillo goes on television and concedes in a steady voice. Something that was always true is past tense.`,
     choices: [
       {
         text: 'Go outside. The street is full of people.',
@@ -61,7 +61,7 @@ export const MEXICO_DEPTH_EVENTS = [
       G.currentYear >= 1994 && G.currentYear <= 1996 &&
       G.age >= 18 &&
       !G.mem?.mexTequilaCrisis,
-    text: `In December 1994 the new government devalues the peso in three days. It is called the "Error de diciembre" because someone has to be blamed for an error. In January 1995 the interest rate reaches 80 percent. Savings held in pesos — a year ago worth something — are now worth something smaller. People who had a middle-class life stop having a middle-class life. The IMF loan to Mexico is the largest in its history. The term "efecto tequila" is used by economists who are not here. Here it is used by no one.`,
+    text: `December 1994, and the peso is devalued in three days, and they call it the December error, because someone has to be blamed. By January interest rates are eighty percent, savings in pesos are worth a fraction of last year, and people who had middle-class lives stop having them. Economists abroad call it the tequila effect. Here nobody calls it that.`,
     choices: null,
     effect: (p) => {
       p.w -= 15
@@ -180,7 +180,7 @@ export const MEXICO_DEPTH_EVENTS = [
       G.age >= 20 && G.age <= 35 &&
       !G.flags.has('emigrated') &&
       !G.mem?.mexGoingNorth,
-    text: `Someone in the family has already gone. They send money, sometimes — more in the first years, then the amounts become irregular, then they come back, or they don't. The decision is not mainly about distance. It is about what the work pays here versus what it pays there, and the specific cost of the crossing, and whether the person on the other side who said they would help is reliable, and the question of papers, and the question of what happens if things go wrong, and the question of what you are leaving behind that cannot be replaced by the money you send back.`,
+    text: `Someone in the family has already gone. They send money, sometimes — more in the first years, then the amounts become irregular, then they come back, or they don't. The decision is about what the work pays here versus what it pays there, and the cost of the crossing, and whether the person on the other side who said they would help is reliable, and the question of papers.`,
     choices: [
       {
         text: 'Go north. The calculation adds up.',
@@ -238,10 +238,10 @@ export const MEXICO_DEPTH_EVENTS = [
       G.currentYear === 2018 &&
       G.age >= 20 &&
       !G.mem?.mexAmlo2018,
-    text: `Andrés Manuel López Obrador wins with 53 percent — the largest popular vote in Mexican history. It is his third attempt. He lost in 2006 by less than one percent in disputed circumstances. He lost again in 2012. Now the margin is not in doubt and the party he formed, Morena, has the majority. He calls it the Cuarta Transformación: the independence from Spain, the Reform War, the Revolution, and now this. In the Zócalo the crowd is enormous. The question of what a transformation actually looks like under the conditions that actually exist begins the next morning.`,
+    text: `López Obrador wins on his third try, by a margin nobody can dispute, after losing narrowly and bitterly in 2006 and again in 2012, and his party has the majority. He calls it the Fourth Transformation, after independence, the Reform and the Revolution. The Zócalo is full. The question of what a transformation looks like under the conditions that actually exist begins the next morning.`,
     choices: [
       {
-        text: 'The moment is real. The man has been waiting for this and so have you.',
+        text: 'You are there. The man has been waiting for this and so have you.',
         tag: null,
         outcome: 'The hope is specific: that the political capture of Mexico by its own elites will finally be interrupted. You hold this, carefully.',
         effect: (p) => {
@@ -275,7 +275,7 @@ export const MEXICO_DEPTH_EVENTS = [
       G.flags.has('mex_amlo_generation') &&
       G.currentYear >= 2022 &&
       !G.mem?.mexAmloEcho,
-    text: `The six years under AMLO: the security situation worsened in some metrics, improved in few. The cartels remained. The megaprojects — the Tren Maya, the Dos Bocas refinery — went forward over environmental and Indigenous objections. The morning press conferences became famous for their length and their relationship to evidence. The pandemic response was slow. Poverty programs reached people who had never been reached before. Claudia Sheinbaum won the 2024 election. The question of what the Cuarta Transformación actually transformed is a question different people answer differently, in good faith, from different lived positions.`,
+    text: `Six years of López Obrador: the cartels still there, the killing no better, the train through the Maya forest and the refinery built over the objections of the people who lived there. The morning press conferences become famous for their length and their relation to evidence. Programmes reach poor people who had never been reached before. Sheinbaum wins in 2024. People who lived it in different places answer, in good faith, differently about what was transformed.`,
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -312,7 +312,7 @@ export const MEXICO_DEPTH_EVENTS = [
       G.age >= 35 &&
       Object.values(G.parents ?? {}).some(p => !p.alive) &&
       !G.mem?.mexAltarMuertos,
-    text: `You build the altar the way you were shown: the levels, the photograph, the marigold path from the door so they can find their way back. The food they liked. A glass of water because the journey makes them thirsty. This is not tourism — it is the specific transaction of the living with the dead, which requires the marigolds to be fresh and the photograph to be the right one and the objects arranged in the order that means something to the person they represent. The dead do not stay and they are not gone. The altar is the infrastructure for the specific hours when both things are true.`,
+    text: `You build the altar the way you were shown: the levels, the photograph, the marigold path from the door so they can find their way back. The food they liked. A glass of water because the journey makes them thirsty. This is not tourism — it is the transaction of the living with the dead, which requires the marigolds to be fresh and the photograph to be the right one and the objects arranged in the order that means something to the person they represent. The dead do not stay and they are not gone. The altar is the infrastructure for the hours when both things are true.`,
     choices: null,
     effect: (p) => {
       p.m += 6
@@ -331,7 +331,7 @@ export const MEXICO_DEPTH_EVENTS = [
       G.currentYear >= 1982 && G.currentYear <= 2002 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.mexCdmxTexture,
-    text: `The Hoy No Circula program starts in 1989 to control the smog: your vehicle cannot circulate on a specific day based on the last digit of your plate. The smog is visible, a brown lens over the mountains that on a clear day show Popocatépetl. The METRO at rush hour is a different body temperature from the body temperature of the city above it. The street vendors on Insurgentes have a route and a schedule and a specific product and an understanding with the metro police. This is ordinary life in the largest Spanish-speaking city in the world and it is ordinary in ways that have no outside equivalent.`,
+    text: `The Hoy No Circula program starts in 1989 to control the smog: your vehicle cannot circulate on a day based on the last digit of your plate. The smog is visible, a brown lens over the mountains that on a clear day show Popocatépetl. The METRO at rush hour is a different body temperature from the body temperature of the city above it. The street vendors on Insurgentes have a route and a schedule and a product and an understanding with the metro police. This is ordinary life in the largest Spanish-speaking city in the world and it is ordinary in ways that have no outside equivalent.`,
     choices: null,
     effect: (p) => {
       p.m += 4

@@ -13,7 +13,7 @@ export const FOLLOWTHROUGH_36_EVENTS = [
       G.flags.has('gua_1954_coup_generation') &&
       G.age >= 55 &&
       !G.mem?.ft36CoupLate,
-    text: 'The CIA declassified the Operation PBSUCCESS documents in 1997. The planning cables, the radio disinformation scripts, the list of Guatemalans to be "eliminated" if necessary. What was done to Guatemala in 1954 is now in the official record: the CIA overthrew an elected government because the United Fruit Company\'s fallow land was being redistributed to the landless. The Dulles brothers — one at the State Department, one at the CIA — both had financial connections to United Fruit. This is not a conspiracy theory. It is in the released documents. You have lived long enough to watch a cover story be replaced by its own paperwork.',
+    text: 'The CIA declassified the Operation PBSUCCESS documents in 1997. The planning cables, the radio disinformation scripts, the list of Guatemalans to be "eliminated" if necessary. What was done to Guatemala in 1954 is now in the official record: the CIA overthrew an elected government because the United Fruit Company\'s fallow land was being redistributed to the landless. The Dulles brothers — one at the State Department, one at the CIA — both had financial connections to United Fruit. It is in the released documents. You have lived long enough to watch a cover story be replaced by its own paperwork.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m += 2; p.setMem('ft36CoupLate', true) },
   },
@@ -27,7 +27,8 @@ export const FOLLOWTHROUGH_36_EVENTS = [
       G.currentYear >= 1999 &&
       G.age >= 45 &&
       !G.mem?.ft36ScorchedCEH,
-    text: 'The Commission for Historical Clarification publishes its report in February 1999. It concludes that acts of genocide were committed against Maya groups in four regions: the Ixil area, Rabinal, the Zacualpa area, and the Chuj and Q\'anjob\'al peoples. 669 massacres. 440 villages destroyed. It names the army command structure. It finds the US government bears responsibility for training and supporting the forces that carried out the genocide. It recommends prosecution. None of the named individuals are prosecuted under the report. The report is in the library. You are alive to read it.',
+    text: 'February 1999, and the truth commission\'s report: acts of genocide against the Maya, the massacres listed one by one, the army command named, the United States held responsible for training the men who did it. It recommends prosecution, and nobody named in it is prosecuted on its account. The report is in the library. You are alive to read it.',
+    context: 'The Commission for Historical Clarification documented 626 massacres and found that the state committed acts of genocide against Maya groups between 1981 and 1983.',
     choices: null,
     effect: (p) => { p.r += 7; p.m += 4; p.karma += 3; p.setMem('ft36ScorchedCEH', true) },
   },
@@ -40,7 +41,7 @@ export const FOLLOWTHROUGH_36_EVENTS = [
       G.flags.has('gua_modelo_village_generation') &&
       G.age >= 50 &&
       !G.mem?.ft36ModeloLate,
-    text: 'The model village — the polo de desarrollo — has been a regular village for thirty years now. The military post is gone. The rows of houses are still the rows of houses, though people have added rooms and gardens and walls in the decades since. You live in a house the army built to contain you. The house has become yours in the way that things become yours when enough time passes. The origin does not disappear. It recedes into the structure of the thing, which is its own kind of permanence.',
+    text: 'The model village has been an ordinary village for thirty years. The army post is gone; the rows of houses are still rows, with rooms and gardens and walls added since. You live in a house the army built to keep you in. It has become yours, the way things do after enough time. Where it came from has not gone. It has settled into the walls.',
     choices: null,
     effect: (p) => { p.r += 5; p.m += 4; p.setMem('ft36ModeloLate', true) },
   },
@@ -53,7 +54,8 @@ export const FOLLOWTHROUGH_36_EVENTS = [
       G.flags.has('gua_1996_peace_generation') &&
       G.age >= 55 &&
       !G.mem?.ft36PeaceLate,
-    text: 'The peace accords committed the Guatemalan government to indigenous rights protections, land reform, demilitarisation. Of these commitments: the civil patrols were formally dissolved, the army reduced in size. The land reform did not happen. The indigenous rights framework was drafted and partially implemented. Guatemala is a more stable country than it was in 1996 in measurable ways. It is also a country where 65 percent of the population lives below the poverty line and where the people who committed the genocide are not in prison. The peace is real. So is what it didn\'t resolve.',
+    text: 'The accords promised indigenous rights, land reform, a smaller army. The civil patrols were dissolved and the army shrank. The land reform never came, and the rights framework was drafted and half carried out. There is peace, and most people are poor, and the men who ordered the massacres are not in prison. Both of those are what 1996 left.',
+    context: 'About 65 per cent of Guatemalans lived below the poverty line in the decades after the 1996 peace accords.',
     choices: null,
     effect: (p) => { p.r += 5; p.m += 3; p.e += 3; p.setMem('ft36PeaceLate', true) },
   },
@@ -67,7 +69,8 @@ export const FOLLOWTHROUGH_36_EVENTS = [
       G.currentYear >= 2018 &&
       G.age >= 50 &&
       !G.mem?.ft36RiosDeath,
-    text: 'Efraín Ríos Montt died on April 1, 2018, at ninety-one, while a new trial was pending. He died at home. The original conviction — the one that held for ten days in 2013 before the Constitutional Court annulled it — named him responsible for 1,771 killings in the Ixil region, the forced displacement of 29,000 Maya Q\'anjob\'al people, and the organised sexual violence against Maya women. He denied everything until the end. The survivors who testified are still alive. The ten days the verdict existed are in the court record. Whether that constitutes justice is a question you have thought about for years.',
+    text: 'Ríos Montt dies at home on April 1, 2018, ninety-one years old, with a new trial pending. In 2013 a court convicted him of genocide, and the verdict stood for ten days before the Constitutional Court annulled it. He denied everything to the end. The women who testified are still alive, and the ten days are in the court record. Whether that is justice is a question you have carried for years.',
+    context: 'The 2013 verdict held him responsible for the killing of 1,771 Ixil Maya, the displacement of tens of thousands and organised sexual violence against Maya women.',
     choices: null,
     effect: (p) => { p.r += 8; p.m += 3; p.karma += 3; p.setMem('ft36RiosDeath', true) },
   },

@@ -68,12 +68,12 @@ export const MYANMAR_DEPTH_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1994 &&
       G.age >= 18 &&
       !G.mem?.myaDep1990Election,
-    text: `May 27, 1990: the National League for Democracy wins 80 percent of the seats in the parliamentary election. The SLORC had expected to win. They had designed the election as a controlled demonstration of popularity. The population voted as populations sometimes do: for the party that had spent two years demonstrating that it represented what they wanted rather than what they feared. The SLORC annulled the results, arrested the NLD leaders, and kept Aung San Suu Kyi under house arrest. The world's largest ignored election result became a set of names and a grievance that was still active thirty years later. You voted. You watched what happened to the vote.`,
+    text: `May 27, 1990, and the NLD wins four fifths of the seats. The generals designed the election to show how popular they were, and the people voted, as people sometimes do, for the party that stood for what they wanted rather than what they feared. The junta annuls the result and arrests the winners. You voted, and you watched what happened to the vote.`,
     choices: [
       {
         text: 'You voted NLD. You watched what was done with the result.',
         tag: null,
-        outcome: 'The vote was real. The result was real. The junta\'s response was also real, and the three realities existed simultaneously, producing the specific condition of a country that voted for something and was not permitted to have it.',
+        outcome: 'You vote. The junta\'s response was also real, and the three realities existed simultaneously, producing the condition of a country that voted for something and was not permitted to have it.',
         effect: (p) => {
           p.m -= 8
           p.r += 6
@@ -82,7 +82,7 @@ export const MYANMAR_DEPTH_EVENTS = [
         },
       },
       {
-        text: 'You did not vote. In this country, at this time, casting a ballot was its own kind of risk.',
+        text: 'You did not vote. In this country, at this time, casting a ballot was a risk.',
         tag: null,
         outcome: 'The SLORC recorded who voted and in some cases what they voted. The caution was reasonable. The eighty percent who chose differently than you chose also had reasons.',
         effect: (p) => {
@@ -124,7 +124,7 @@ export const MYANMAR_DEPTH_EVENTS = [
       {
         text: 'You leave before the habit takes hold. Someone you know did not leave in time.',
         tag: null,
-        outcome: 'Hpakant has a specific rate of things that happen to the people who stay too long. You left before your name was in that rate. The person who didn\'t is still in it.',
+        outcome: 'Hpakant has a rate of things that happen to the people who stay too long. You left before your name was in that rate. The person who didn\'t is still in it.',
         effect: (p) => {
           p.h -= 2
           p.r += 4
@@ -193,12 +193,12 @@ export const MYANMAR_DEPTH_EVENTS = [
       G.age >= 18 && G.age <= 40 &&
       G.flags.has('myanmar_coup_2021') &&
       !G.mem?.myaDepSpring,
-    text: `The Spring Revolution: the name given to the civilian resistance to the February 2021 coup. The Civil Disobedience Movement took doctors, teachers, civil servants out of the junta's institutions. People who had never been politically active were making Molotov cocktails in their kitchens in Yangon. The People's Defence Force — the armed wing of the National Unity Government — started operating in the forests and the townships. The junta responded with airstrikes on villages, mass arrests, torture in detention, the specific violence of a military that is killing its own population and using the language of anti-terrorism to describe the killing. The internet is cut. The currency collapses. The military is losing to people with hunting rifles in forests it does not know.`,
+    text: `The Spring Revolution: doctors, teachers, civil servants walk out of the junta's institutions, and people who had never been political make petrol bombs in their kitchens in Yangon. In the forests and townships the People's Defence Force begins to fight. The army answers with air strikes on villages, mass arrests, torture, and calls it counter-terrorism. The internet is cut and the kyat collapses. The army is losing ground to people with hunting rifles in forests it does not know.`,
     choices: [
       {
         text: 'You are in the CDM. You refuse to work for the junta\'s government.',
         tag: null,
-        outcome: 'The CDM costs you your salary and your official status and the specific danger of being on a list. What it gives you is a different kind of standing in the country you are still in, held by the people who are still holding it.',
+        outcome: 'The CDM costs you your salary and your official status and the danger of being on a list. What it gives you is a different kind of standing in the country you are still in, held by the people who are still holding it.',
         effect: (p) => {
           p.mo -= 500
           p.karma += 8
@@ -237,7 +237,7 @@ export const MYANMAR_DEPTH_EVENTS = [
       G.currentYear >= 2021 &&
       G.age >= 45 &&
       !G.mem?.myaDep1990Echo,
-    text: `In 2021, thirty-one years after the election that was not honoured, the military took power again. For the generation that voted in 1990, the coup had a specific quality: the recognition of a pattern already known, the specific grief of a thing returning that you thought you had survived. The people in the streets in 2021 were young enough to have no memory of 1988 or 1990. You had memory of both. The memory did not make the third time easier. It made it more precise.`,
+    text: `In 2021, thirty-one years after the election that was not honoured, the military took power again. For the generation that voted in 1990, the coup had a quality: the recognition of a pattern already known, the grief of a thing returning that you thought you had survived. The people in the streets in 2021 were young enough to have no memory of 1988 or 1990. You had memory of both. The memory did not make the third time easier. It made it more precise.`,
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -257,7 +257,7 @@ export const MYANMAR_DEPTH_EVENTS = [
       G.flags.has('mya_dep_ethnic_minority_war') &&
       G.age >= 58 && G.currentYear >= 2022 &&
       !G.mem?.myaDepEthnicWarLate,
-    text: `The civil war that was the background texture of your childhood is still ongoing. The specific armed groups have changed names and compositions and alliances. The Tatmadaw that was fighting the KNU in your childhood is the same Tatmadaw that launched the 2021 coup and is now fighting the Chin National Front and the People's Defence Force in addition to the existing ethnic armies. The war that has always been several wars simultaneously is now more wars than it was. The world's longest civil war has not found its ending. You are old enough to have outlived several ceasefires.`,
+    text: `The civil war that was the background texture of your childhood is still ongoing. The armed groups have changed names and compositions and alliances. The Tatmadaw that was fighting the KNU in your childhood is the same Tatmadaw that launched the 2021 coup and is now fighting the Chin National Front and the People's Defence Force in addition to the existing ethnic armies. The war that has always been several wars simultaneously is now more wars than it was. The world's longest civil war has not found its ending. You are old enough to have outlived several ceasefires.`,
     choices: null,
     effect: (p) => {
       p.r += 4

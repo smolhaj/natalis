@@ -44,11 +44,11 @@ export const LGBTQ_EVENTS = [
         : tv
           ? 'You hear it spoken on a television programme late at night, with the sound turned low and the door shut.'
           : `You hear it said by an older boy, as an insult, about a man in the next ${rural ? 'village' : 'street'}. It is meant as a joke. It is not a joke to you.`
-      return `${source} Words — for what you might be. They land with a precision you were not prepared for. You sit with them for a long time.`
+      return `${source} Words — for what you might be. They land with a precision you were not prepared for. You read them again, for a long time.`
     },
     choices: [
       { text: 'Gay or lesbian — attracted to the same sex. That fits.', tag: null, outcome: 'Something settles. Not everything, but something. You say the word to yourself in the mirror once. Just to hear it.', effect: (p) => { p.m += 6; p.e += 5; p.addFlag('lgbtq_identity'); p.addFlag('orientation_gay'); p.setMem('lgbtq_named', true) } },
-      { text: 'Bisexual — attracted to more than one gender. That fits better.', tag: null, outcome: 'The word is less clean than the others but more accurate. You sit with the complexity of it, which turns out to be its own kind of relief.', effect: (p) => { p.m += 6; p.e += 5; p.addFlag('lgbtq_identity'); p.addFlag('orientation_bisexual'); p.setMem('lgbtq_named', true) } },
+      { text: 'Bisexual — attracted to more than one gender. That fits better.', tag: null, outcome: 'The word is less clean than the others but more accurate. It is less tidy than the others, and that turns out to be a relief.', effect: (p) => { p.m += 6; p.e += 5; p.addFlag('lgbtq_identity'); p.addFlag('orientation_bisexual'); p.setMem('lgbtq_named', true) } },
       { text: 'Reject it — maybe it does not apply to you', tag: null, outcome: 'You put it away. But the word stays. You will return to it.', effect: (p) => { p.m -= 5; p.r += 4; p.setMem('lgbtq_named', true) } },
     ],
     effect: null,
@@ -151,7 +151,7 @@ export const LGBTQ_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.flags.includes('lgbtq_identity') && G.lgbtqCriminalized && G.age >= 18 && !G.mem?.lgbtq_criminalized_out,
-    text: 'You meet someone who is like you. There is a recognition that happens before any words. You understand that any version of this — anything more than complete invisibility — carries a specific and legal risk. You sit across from this person and you do not say anything directly. You do not need to.',
+    text: 'You meet someone who is like you. There is a recognition that happens before any words. You understand that any version of this — anything more than complete invisibility — carries an and legal risk. You sit across from this person and you do not say anything directly. You do not need to.',
     choices: [
       { text: 'Pursue the connection, cautiously', tag: null, outcome: 'You build something that exists entirely in private spaces. You become expert at coded language, at misdirection. It costs more than it should.', effect: (p) => { p.m += 8; p.r += 10; p.addFlag('lgbtq_secret_relationship'); p.setMem('lgbtq_criminalized_out', true) } },
       { text: 'Walk away from it', tag: null, outcome: 'The safer choice. You watch the person leave. You understand what you are giving up and you do it anyway.', effect: (p) => { p.m -= 12; p.r += 8; p.setMem('lgbtq_criminalized_out', true) } },
@@ -310,7 +310,7 @@ export const LGBTQ_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.flags.includes('lgbtq_identity') && G.lgbtqCriminalized && G.age >= 20 && !G.flags.includes('closeted_survival') && !G.mem?.lgbtq_state_attention,
-    text: 'You are stopped. Not arrested — just stopped, and questioned, and looked at in a way that communicates clearly what they know or suspect. You answer carefully. You are released. The question of how you were seen, and what made you visible, stays with you.',
+    text: 'You are stopped. Not arrested — just stopped, and questioned, and looked at so that you know clearly what they know or suspect. You answer carefully. You are released. The question of how you were seen, and what made you visible, stays with you.',
     choices: null,
     effect: (p) => { p.m -= 15; p.r += 10; p.h -= 4; p.addFlag('learned_silence'); p.setMem('lgbtq_state_attention', true) },
   },
@@ -332,7 +332,7 @@ export const LGBTQ_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) => G.flags.includes('lgbtq_identity') && G.flags.includes('lgbtq_had_relationship') && !G.lgbtqCriminalized && G.partner && G.age >= 50 && !G.mem?.lgbtq_long_partnership,
-    text: 'You have been together a long time. The law that recognizes you came later than you came — you existed before it did, which gives you a particular relationship to the paperwork. You are signing documents that other couples signed automatically thirty years ago. Your partner makes a joke about the waiting room. You both laugh because it is funny and because the other thing, the thing underneath it, is too large to say directly.',
+    text: 'You have been together a long time. The law that recognizes you came later than you came — you existed before it did, which gives you a relationship to the paperwork. You are signing documents that other couples signed automatically thirty years ago. Your partner makes a joke about the waiting room. You both laugh because it is funny and because the other thing, the thing underneath it, is too large to say directly.',
     choices: null,
     effect: (p) => { p.m += 20; p.partnerRel(15); p.setMem('lgbtq_long_partnership', true) },
   },
@@ -342,7 +342,7 @@ export const LGBTQ_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) => G.flags.includes('lgbtq_identity') && G.age >= 55 && !G.mem?.lgbtq_late_reflection,
-    text: 'You think about what it cost. Not just the hard moments — those are clear — but the chronic low expenditure of energy that was always running in the background: the monitoring, the calculation, the editing before speaking. You also think about what it gave: the specific solidarity, the friends who knew everything, the necessity of building something real because the inherited version was not available.',
+    text: 'You think about what it cost. Not just the hard moments — those are clear — but the chronic low expenditure of energy that was always running in the background: the monitoring, the calculation, the editing before speaking. You also think about what it gave: the solidarity, the friends who knew everything, the necessity of building something real because the inherited version was not available.',
     choices: null,
     effect: (p) => { p.m += 8; p.r += 5; p.e += 5; p.setMem('lgbtq_late_reflection', true) },
   },
@@ -364,7 +364,7 @@ export const LGBTQ_EVENTS = [
     phase: 'adolescence',
     weight: 2,
     when: (G) => !G.flags.includes('orientation_asexual') && !G.flags.includes('lgbtq_identity') && G.age >= 13 && G.age <= 17 && !G.mem?.asexual_unnamed,
-    text: 'The other people your age talk about wanting someone in a way that sounds like a language you have not learned. You listen carefully and try to translate it into something you recognise. You find nothing that matches. You look at the people they describe and feel — not what they describe. You assume you are simply a late developer. You wait.',
+    text: 'The other people your age talk about wanting someone, and it sounds like a language you have not learned. You listen carefully and try to translate it into something you recognise. You find nothing that matches. You look at the people they describe and feel — not what they describe. You assume you are simply a late developer. You wait.',
     choices: null,
     effect: (p) => { p.e += 3; p.m -= 3; p.setMem('asexual_unnamed', true) },
   },
@@ -407,7 +407,7 @@ export const LGBTQ_EVENTS = [
     when: (G) => G.flags.includes('orientation_bisexual') && G.age >= 18 && !G.mem?.bisexual_erasure,
     text: 'It comes from both directions. From one: you are experimenting, you will choose eventually. From the other: you are really straight, just performing. You are in a relationship with someone and a third person tells you that your sexuality has been resolved now — that you have landed on a side. You have not landed. You are the same person you were before the relationship. You explain this. It does not take.',
     choices: [
-      { text: 'Correct them directly — your identity is not conditional on your partner', tag: null, outcome: 'The conversation goes nowhere satisfying. But you have said the thing, which has its own value. You stop apologising for the complexity.', effect: (p) => { p.m -= 3; p.e += 5; p.addFlag('bisexual_advocate'); p.setMem('bisexual_erasure', true) } },
+      { text: 'Correct them directly — your identity is not conditional on your partner', tag: null, outcome: 'The conversation goes nowhere satisfying. But you have said the thing. You stop apologising for the complexity.', effect: (p) => { p.m -= 3; p.e += 5; p.addFlag('bisexual_advocate'); p.setMem('bisexual_erasure', true) } },
       { text: 'Let it go — this argument costs more than it is worth', tag: null, outcome: 'You smile. You change the subject. You go home and feel the exhaustion of invisibility from people who were supposed to understand.', effect: (p) => { p.m -= 10; p.r += 7; p.setMem('bisexual_erasure', true) } },
     ],
     effect: null,
@@ -420,7 +420,7 @@ export const LGBTQ_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.includes('lgbtq_secret_relationship') && G.age >= 22 && !G.mem?.lgbtq_secret_rel_ended,
-    text: 'The relationship ends. It was built entirely in private — no photographs, no introductions, no shared history that exists outside the two of you — and when it ends there is nothing external to show for it. The people who might ask "are you alright?" do not know what they would be asking about. You sit with a loss that has no witnesses.',
+    text: 'The relationship ends. It was built entirely in private — no photographs, no introductions, no shared history that exists outside the two of you — and when it ends there is nothing external to show for it. The people who might ask "are you alright?" do not know what they would be asking about. It is a loss that has no witnesses.',
     choices: null,
     effect: (p) => { p.m -= 18; p.r += 12; p.setMem('lgbtq_secret_rel_ended', true) },
   },

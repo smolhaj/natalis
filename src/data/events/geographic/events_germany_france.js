@@ -23,7 +23,7 @@ export const GERMANY_FRANCE_EVENTS = [
       {
         text: 'The prosperity is real and the rebuilding feels like a new beginning.',
         tag: null,
-        outcome: 'The beginning is real. The full Vergangenheitsbewältigung — the coming to terms with the past — will take another two decades to begin in earnest. For now, the Beetle and the washing machine and the television arrive in the house.',
+        outcome: 'It is a beginning. The full Vergangenheitsbewältigung — the coming to terms with the past — will take another two decades to begin in earnest. For now, the Beetle and the washing machine and the television arrive in the house.',
         effect: (p) => { p.m += 6; p.w += 5; p.addFlag('wirtschaftswunder_generation'); p.setMem('gerWirtschaftswunder', true); },
       },
       {
@@ -46,7 +46,7 @@ export const GERMANY_FRANCE_EVENTS = [
       G.age >= 18 && G.age <= 35 &&
       ['turkish_german', 'other_european'].includes(G.ethnicity) &&
       !G.mem?.gerGastarbeiter,
-    text: 'The contract is for two years. The Deutsche Bundesbahn from Munich Hauptbahnhof to the factory town — you learn the route. The Gastarbeiter programme: Germany needs workers, Turkey has workers who need wages. The contract says two years and then home. Anwerbestopp in 1973: the recruitment stops after the oil crisis. But the workers are already here. The families come to join them. The two years become twenty years. The two years become a life.',
+    text: 'The contract is for two years. You learn the train from Munich to the factory town. Germany needs workers and Turkey has workers who need wages, and the contract says two years and then home. In 1973, after the oil crisis, the recruitment stops, but the workers are already here and the families come to join them. Two years becomes twenty. Two years becomes a life.',
     choices: [
       {
         text: 'You send money home and plan to return. The plan keeps extending.',
@@ -79,7 +79,7 @@ export const GERMANY_FRANCE_EVENTS = [
       {
         text: 'You hold both, which means being neither fully — and making peace with that.',
         tag: null,
-        outcome: 'The peace is not certainty. It is the specific comfort of having stopped waiting for a category that fits. You built the category.',
+        outcome: 'The peace is the comfort of having stopped waiting for a category that fits. You built the category.',
         effect: (p) => { p.m -= 3; p.e += 5; p.r += 4; p.addFlag('hyphenated_german'); p.setMem('gerTurkishGerman', true); },
       },
       {
@@ -130,21 +130,21 @@ export const GERMANY_FRANCE_EVENTS = [
       !G.mem?.gerReunification,
     text: (G) => {
       if (G.flags.includes('ddr_generation')) {
-        return 'October 3, 1990. The country you grew up in no longer exists on maps. The street names are changing. The bosses are changing. The currency changed in July — the West German mark at one-to-one for the first 2,000, then two-to-one, which is how the economy was priced. The factories in the east cannot compete at West German prices. Some will close. Treuhandanstalt is the word for the agency that decides which ones.'
+        return 'October 3, 1990, and the country you grew up in is gone from the maps. The street names are changing and the bosses are changing; the money changed in July, one to one for the first few thousand and two to one after. The factories in the east cannot compete at western prices, and some will close. An agency called the Treuhand decides which.'
       }
-      return 'October 3, 1990. Germany is one country. The people from the east arrive and they are German and also not the Germany you knew. The differences are small and large simultaneously: the products they recognise, the prices they expect, the things they expected to find in the west that the west does not actually have. The wall fell a year ago and there is still a wall, which is a different kind of wall.'
+      return 'October 3, 1990. Germany is one country. The people from the east arrive and they are German and also not the Germany you knew. The differences are small and large simultaneously: the products they recognise, the prices they expect, the things they expected to find in the west that the west does not actually have. The wall fell a year ago and there is still a wall, of a different kind.'
     },
     choices: [
       {
         text: 'The reunification is an extraordinary historical moment you embrace.',
         tag: null,
-        outcome: 'You embrace it. The costs arrive over the following years — the unemployment in the east, the "Ostalgie" — but the moment itself was real.',
+        outcome: 'You embrace it. The costs arrive over the following years — the unemployment in the east, the "Ostalgie" — but you were there for the night itself.',
         effect: (p) => { p.m += 8; p.addFlag('reunification_generation'); p.setMem('gerReunification', true); },
       },
       {
         text: 'The reunification produces specific losses you did not expect.',
         tag: null,
-        outcome: 'The things that are lost are real. So is the difficulty of saying this in a context where the fall of the wall is a world-historical triumph. You say it carefully.',
+        outcome: 'Some things are lost. So is the difficulty of saying this in a context where the fall of the wall is a world-historical triumph. You say it carefully.',
         effect: (p) => { p.m -= 4; p.r += 6; p.addFlag('reunification_generation'); p.setMem('gerReunification', true); },
       },
     ],
@@ -160,7 +160,7 @@ export const GERMANY_FRANCE_EVENTS = [
       G.currentYear >= 2015 && G.currentYear <= 2018 &&
       G.age >= 18 &&
       !G.mem?.gerRefugees,
-    text: 'Summer 2015. Angela Merkel says "Wir schaffen das" — we can do this. One million people arrive in Germany over the year. Willkommenskultur: the volunteers at the train stations with food and clothing, the translation apps, the local initiatives. Then: the Cologne New Year attacks, the AfD entering the Bundestag for the first time in 2017, PEGIDA marches in Dresden. The welcome and the backlash coexist. The backlash becomes the governing political fact. "Wir schaffen das" becomes a phrase with contested ownership.',
+    text: 'Summer 2015, and Merkel says Wir schaffen das, we can do this, and a million people come. Volunteers at the stations with food and clothes, translation apps, every town with its welcome group. Then Cologne at New Year, the marches in Dresden, the AfD in the Bundestag. The welcome and the backlash live side by side, and the backlash becomes the political weather.',
     choices: [
       {
         text: 'You volunteer, or you support the Willkommenskultur actively.',
@@ -188,12 +188,13 @@ export const GERMANY_FRANCE_EVENTS = [
       G.age >= 18 &&
       G.ethnicity === 'turkish_german' &&
       !G.mem?.gerNSU,
-    text: 'November 2011. Two members of the Nationalsozialistischer Untergrund — the NSU — die in Zwickau and a third turns herself in. The files reveal what they did from 2000 to 2011: nine Turkish-German and one Greek-German small business owners murdered across Germany. Two police officers killed. Fourteen bank robberies. In the decade between the first murder and this discovery, the police investigation was focused on the victims\' families — drug connections, protection rackets, "honour killings." The police nickname for the murders was Dönermorde. "Kebab murders." Your community buried nine of their own while the state investigated the bereaved. The Verfassungsschutz files related to the NSU were ordered shredded the week after the story broke.',
+    text: 'November 2011. Two men are found dead in a burnt-out caravan in Eisenach and a woman turns herself in, and the files show what the three of them did across Germany for a decade: nine shopkeepers killed, eight Turkish-German, one Greek-German, and a policewoman. For ten years the police investigated the families of the dead. The newspapers called them the kebab murders. Your community buried nine of its own while the state questioned the bereaved, and the week the story broke, the intelligence service shredded its files.',
+    context: 'The National Socialist Underground (NSU) murdered ten people between 2000 and 2007.',
     choices: [
       {
         text: 'You knew one of the families. Or you knew someone who knew one.',
         tag: null,
-        outcome: 'The specific grief and the specific rage arrive together: ten years of murders, ten years of being told it was your community\'s fault, the files being shredded the week the truth came out.',
+        outcome: 'The grief and the rage arrive together: ten years of murders, ten years of being told it was your community\'s fault, the files being shredded the week the truth came out.',
         effect: (p) => { p.m -= 14; p.r += 8; p.addFlag('nsu_generation'); p.addFlag('nsu_mourned'); p.setMem('gerNSU', true); },
       },
       {
@@ -219,13 +220,13 @@ export const GERMANY_FRANCE_EVENTS = [
       G.currentYear === 1968 &&
       G.age >= 15 && G.age <= 35 &&
       !G.mem?.frMai68,
-    text: 'The paving stones come up easily once the first row is out, which is a thing nobody knew about this city until this month. There is no petrol, no post, no trains; ten million people are not at work and the air in the Latin Quarter tastes of tear gas at the back of the throat. On the radio de Gaulle is not there and then, on the thirtieth, he is. In June the same country that built the barricades gives his party the largest majority it has ever had.',
+    text: 'The paving stones come up easily once the first row is out. Nobody knew that about this city until this month. There is no petrol, no post, no trains; ten million people are not at work and the air in the Latin Quarter tastes of tear gas at the back of the throat. On the radio de Gaulle is not there and then, on the thirtieth, he is. In June the same country that built the barricades gives his party the largest majority it has ever had.',
     context: 'The occupation of the Nanterre administration building on 3 May 1968 spread to the Sorbonne and then to a general strike of roughly ten million workers, the largest in French history. De Gaulle left briefly for Baden-Baden to consult the French army in Germany, returned on 30 May and dissolved the National Assembly; his party won a landslide in the June elections. May 1968 reshaped French universities, sexual norms and public language without changing the government.',
     choices: [
       {
         text: 'You are at the barricades, or in the factories, or in both places across the weeks.',
         tag: null,
-        outcome: 'The feeling of those weeks is a specific feeling. The combination of grief and possibility and exhaustion and the sense that something could be otherwise. De Gaulle wins in June. You know what you felt in May.',
+        outcome: 'The feeling of those weeks is a feeling. The combination of grief and possibility and exhaustion and the sense that something could be otherwise. De Gaulle wins in June. You know what you felt in May.',
         effect: (p) => { p.m += 8; p.karma += 8; p.r += 4; p.addFlag('mai_68_generation'); p.addFlag('political_active'); p.setMem('frMai68', true); },
       },
       {
@@ -248,7 +249,7 @@ export const GERMANY_FRANCE_EVENTS = [
       G.currentYear >= 1954 && G.currentYear <= 1962 &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.frAlgeriaWar,
-    text: 'Algeria is not a colony. It is three French departments. This is the official position. The war in Algeria is not a war. It is "les événements" — the events. You are conscripted into the events. In the mechta — the village sweeps — the orders are clear. The question of what the orders are asking you to do is something you will be asking for the rest of your life. France will not officially call it a war until 1999. You were there in a war that did not have a name.',
+    text: 'Algeria, you are taught, is three French departments, and what is happening there is called the events. You are conscripted into the events. On the village sweeps the orders are clear. What the orders were asking you to do is a question you will ask for the rest of your life. France will not call it a war until 1999.',
     choices: [
       {
         text: 'You follow orders. You survive. You come home.',
@@ -287,7 +288,7 @@ export const GERMANY_FRANCE_EVENTS = [
       {
         text: 'The gap between the two Frances is the thing you refuse to bridge alone.',
         tag: null,
-        outcome: 'The refusal is political and correct and costs you things in the specific rooms where bridge-crossing is the cost of entry.',
+        outcome: 'The refusal is political and correct and costs you things in the rooms where bridge-crossing is the cost of entry.',
         effect: (p) => { p.m -= 6; p.r += 5; p.karma += 4; p.addFlag('banlieue_generation'); p.addFlag('political_active'); p.setMem('frBanlieue', true); },
       },
     ],
@@ -305,7 +306,7 @@ export const GERMANY_FRANCE_EVENTS = [
       !G.mem?.frAttacks2015,
     text: (G) => {
       if (G.ethnicity === 'north_african') {
-        return 'January 7: twelve people killed at Charlie Hebdo. November 13: one hundred and thirty at the Bataclan and the café terraces. The people who did this share your family\'s religion in the form they have taken it. You share the name of their religion with them and nothing else about their project. In the days after January you are asked, implicitly and explicitly, to account for yourself. You account for yourself. You go on accounting for yourself. The accounting is open-ended.'
+        return 'January 7: twelve people killed at Charlie Hebdo. November 13: a hundred and thirty at the Bataclan and on the café terraces. The men who did it share your family\'s religion, in the shape they made of it, and nothing else. In the days after you are asked, sometimes in words, to account for yourself, and you do, and you go on doing it.'
       }
       return 'January 7, 2015: twelve dead at Charlie Hebdo. "Je suis Charlie." November 13: one hundred and thirty at the Bataclan, Stade de France, the café terraces of the 10th arrondissement. You know the terraces. You may have been to some of them. The randomness of the evening is part of what the attack is attacking: the ordinary evening out, the concert, the match. The target is the ordinary.'
     },
@@ -313,7 +314,7 @@ export const GERMANY_FRANCE_EVENTS = [
       {
         text: 'You are in Paris, or close to someone who was affected.',
         tag: null,
-        outcome: 'The city changes in a way that takes years to fully see. The terraces slowly fill again. The filling-again is a form of answer.',
+        outcome: 'The city changes, and it takes years to see it. The terraces slowly fill again. The filling-again is a form of answer.',
         effect: (p) => { p.m -= 12; p.h -= 4; p.r += 6; p.addFlag('paris_attacks_generation'); p.setMem('frAttacks2015', true); },
       },
       {

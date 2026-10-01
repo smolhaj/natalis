@@ -29,7 +29,7 @@ const BIRTH_DISABILITY_EVENTS = [
     text: (G) => {
       const type = G.mem?.disabilityType ?? 'physical'
       if (type === 'cerebral_palsy') return 'The diagnosis arrives before the vocabulary to understand it. What your parents understand is this: you will walk differently, or perhaps not walk, and your body will require more — more attention, more appointments, more of everything that families have in finite supply. They begin figuring out how to give it. You do not know yet that there is something to figure out.'
-      if (type === 'down_syndrome') return 'The doctors use a phrase that means something clinical and your parents understand it before you do. The room has a particular feeling in it that you are too young to read. What you do understand, eventually, is that you learn some things more slowly, and that the world has decided what this means for you before you\'ve had a chance to decide yourself.'
+      if (type === 'down_syndrome') return 'The doctors use a phrase that means something clinical and your parents understand it before you do. The room has a feeling in it that you are too young to read. What you do understand, eventually, is that you learn some things more slowly, and that the world has decided what this means for you before you\'ve had a chance to decide yourself.'
       return 'The difference in your body is visible early and named early. The medical system has a category for it. Having a category is useful and does not tell you everything about the life you will live.'
     },
     choices: null,
@@ -136,7 +136,7 @@ const BIRTH_DISABILITY_EVENTS = [
       G.flags.has('born_with_disability') &&
       G.age >= 30 &&
       !G.mem?.disAdvocateFired,
-    text: 'You have accumulated enough experience of the specific friction — the inaccessible building, the well-meaning condescension, the systems that work for everyone except the people they were designed to include — that the knowledge is starting to feel like a resource. Other people are going through what you went through. Some of them are much younger. The choice to use what you know is beginning to look like a choice.',
+    text: 'You have accumulated enough experience of the friction — the inaccessible building, the well-meaning condescension, the systems that work for everyone except the people they were designed to include — that the knowledge is starting to feel like a resource. Other people are going through what you went through. Some of them are much younger. The choice to use what you know is beginning to look like a choice.',
     choices: [
       {
         text: 'Become the person someone younger can find',
@@ -249,12 +249,12 @@ const DEAF_ARC_EVENTS = [
       G.flags.has('born_deaf') &&
       G.age >= 18 &&
       !G.mem?.disDeafHearingFired,
-    text: 'The professional world is hearing. The job interview is hearing. The colleague who says something in the corridor and expects a response. The meeting where the speaker turns away from you. The phone call that is still the primary mode of business in some industries. You navigate this with a combination of technology, preparation, and the specific social labour of making hearing people comfortable with the accommodation they are supposed to provide. The social labour is not acknowledged and is not small.',
+    text: 'The professional world is hearing. The job interview is hearing. The colleague who says something in the corridor and expects a response. The meeting where the speaker turns away from you. The phone call that is still the primary mode of business in some industries. You navigate this with a combination of technology, preparation, and the social labour of making hearing people comfortable with the accommodation they are supposed to provide. The social labour is not acknowledged and is not small.',
     choices: [
       {
         text: 'Navigate it and educate where you can',
         tag: null,
-        outcome: 'The work is manageable when the accommodation is real. The advocacy to make the accommodation real is ongoing.',
+        outcome: 'The work is manageable when the accommodation is there. The advocacy to make the accommodation real is ongoing.',
         effect: (p) => { p.s += 4; p.m -= 5; p.addFlag('deaf_hearing_world_navigated'); p.setMem('disDeafHearingFired', true) },
       },
       {
@@ -333,7 +333,7 @@ const ACQUIRED_DISABILITY_EVENTS = [
     when: (G) =>
       G.flags.has('acquired_disability') &&
       !G.mem?.disRehabFired,
-    text: 'The rehabilitation unit has its own time. Not clock time — the time of incremental recovery, which is measured in what the body can do today that it couldn\'t yesterday, or couldn\'t do last week, which is not the same as yesterday. The physiotherapist is patient and specific. Progress is not linear. The days when progress reverses are the hardest. You are learning a new relationship with your body from the inside, which is different from being told about it.',
+    text: 'The rehabilitation unit runs on its own clock. Not clock time — the time of incremental recovery, which is measured in what the body can do today that it couldn\'t yesterday, or couldn\'t do last week, which is not the same as yesterday. The physiotherapist is patient and specific. Progress is not linear. The days when progress reverses are the hardest. You are learning a new relationship with your body from the inside, which is different from being told about it.',
     choices: null,
     effect: (p) => { p.h += 8; p.m -= 5; p.addFlag('disability_rehabilitation'); p.setMem('disRehabFired', true) },
   },
@@ -371,7 +371,7 @@ const ACQUIRED_DISABILITY_EVENTS = [
     when: (G) =>
       G.flags.has('acquired_disability') &&
       !G.mem?.disNewNormalFired,
-    text: 'The new normal is not a phrase you chose but it is accurate. The life has reorganised itself around the changed body — the job that accommodates it, the home that is accessible, the relationships that continued and the ones that didn\'t, the specific pleasures that are still available and the ones that are not. You are not the person you were before the accident or the diagnosis. You are also not a diminished version of that person. You are a different configuration.',
+    text: 'The new normal is not a phrase you chose but it is accurate. The life has reorganised itself around the changed body — the job that accommodates it, the home that is accessible, the relationships that continued and the ones that didn\'t, the pleasures that are still available and the ones that are not. You are not the person you were before the accident or the diagnosis. You are also not a diminished version of that person. You are a different configuration.',
     choices: null,
     effect: (p) => { p.m += 8; p.addFlag('disability_new_normal'); p.setMem('disNewNormalFired', true) },
   },
@@ -409,7 +409,7 @@ const DISABILITY_CROSSCUTTING = [
     text: (G) => {
       const archetype = G.currentCountry?.archetype ?? 'wealthy_west'
       const isDeveloping = ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(archetype)
-      if (isDeveloping) return 'The city was not designed with you in mind. This is not a policy failure in any official sense — it is just how cities were built and rebuilt without accounting for anyone who moved through them differently. The kerbs, the buildings, the buses. You have built a detailed mental map of what is navigable and what is not. The map is the largest ongoing project of your daily life.'
+      if (isDeveloping) return 'The city was not designed with you in mind. Nobody would call it a policy failure; it is how cities were built and rebuilt without accounting for anyone who moved through them differently. The kerbs, the buildings, the buses. You have built a detailed mental map of what is navigable and what is not. The map is the largest ongoing project of your daily life.'
       return 'The accessibility legislation exists. The compliance is partial. The accessible entrance is at the back, next to the bins. The lift is out of service. The website does not render with a screen reader. The meeting has no interpreter. The gap between the policy and the implementation is where your daily life happens.'
     },
     choices: null,
@@ -436,13 +436,13 @@ const DISABILITY_CROSSCUTTING = [
       {
         text: 'Worth trying — if it helps, it helps',
         tag: null,
-        outcome: 'The treatment has partial effect and full cost. The cost is physical and financial and the partial effect is real. This is most outcomes.',
+        outcome: 'The treatment has partial effect and full cost. The cost is physical and financial and the effect is partial. This is most outcomes.',
         effect: (p) => { p.h += 3; p.mo -= 500; p.addFlag('disability_treatment_tried'); p.setMem('disCureFired', true) },
       },
       {
         text: 'This is not something to be cured',
         tag: null,
-        outcome: 'The refusal is not denial. It is a position about what the disability is. You have arrived at this position slowly and it is yours.',
+        outcome: 'The refusal is a position about what the disability is. You have arrived at this position slowly and it is yours.',
         effect: (p) => { p.m += 4; p.addFlag('disability_identity_formed'); p.setMem('disCureFired', true) },
       },
     ],
@@ -460,7 +460,7 @@ const DISABILITY_CROSSCUTTING = [
     text: (G) => {
       const yr = G.currentYear ?? 2005
       if (yr < 2005) return 'The screen reader, the adapted keyboard, the voice recognition software — the assistive technology is improving at a rate that is outpacing the institutional accommodation. You are assembling your toolkit piece by piece. It is imperfect and real.'
-      return 'The smartphone has changed the specific geometry of accessibility in ways that the designers didn\'t primarily intend. Navigation without having to ask directions. Live captions. Voice to text. Text to speech. The gap is still there. The technology closes parts of it. You use every part that works.'
+      return 'The smartphone has changed the geometry of accessibility in ways that the designers didn\'t primarily intend. Navigation without having to ask directions. Live captions. Voice to text. Text to speech. The gap is still there. The technology closes parts of it. You use every part that works.'
     },
     choices: null,
     effect: (p) => { p.e += 4; p.m += 4; p.addFlag('disability_tech_found'); p.setMem('disTechFired', true) },

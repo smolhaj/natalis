@@ -112,7 +112,7 @@ const ADDICTION_BOTTOM = [
       G.flags.has('addiction_consequences') &&
       !G.flags.has('in_recovery') &&
       !G.mem?.addBottomFired,
-    text: 'There is a moment — not always dramatic, sometimes just a morning — where the accounting is complete and undeniable. What you have spent. What you have lost. What you are. The moment has a quality: the usual defences are not available. The rationalizations are not loading. You are sitting in what is actually true, without the buffer. Rock bottom is not a place. It is this quality of clarity.',
+    text: 'There is a moment — not always dramatic, sometimes just a morning — where the accounting is complete and undeniable. What you have spent. What you have lost. What you are. The moment has a quality: the usual defences are not available. The rationalizations are not loading. You are sitting in what is actually true, without the buffer. Rock bottom turns out to be this quality of clarity.',
     choices: [
       {
         text: 'Ask for help',
@@ -194,7 +194,7 @@ const ADDICTION_RECOVERY = [
       !G.mem?.addFirstRecovFired,
     text: (G) => {
       const isAlcohol = G.flags.has('alcohol_addiction')
-      if (isAlcohol) return 'The first AA meeting is in a church basement with bad coffee. The people in the room have something in common with you that you have not admitted to anyone, including yourself, until now. The format is strange. The stories are specific. One of the stories is yours, told by someone else, which is not something you were prepared for. You go back the following week.'
+      if (isAlcohol) return 'The first AA meeting is in a church basement with bad coffee. The people in the room have something in common with you that you have not admitted to anyone, including yourself, until now. The format is strange. The stories are specific. One of the stories is yours, told by someone else, and you were not prepared for that. You go back the following week.'
       return 'The programme is thirty days. The first three days are not the hard part — the hard part begins around day five, when the using is no longer the immediate problem and the reason you were using becomes the immediate problem. The counsellor says this is normal. It is the most useful thing anyone has said to you in a long time.'
     },
     choices: null,
@@ -210,7 +210,7 @@ const ADDICTION_RECOVERY = [
       !G.flags.has('sobriety') &&
       !G.flags.has('relapsed') &&
       !G.mem?.addEarlyRecovFired,
-    text: 'The first ninety days. The recovery meetings have a shape to them. You are learning the specific discipline of this — different from any other discipline, because the thing you are disciplining against is still chemically present in your body as a preference. The people who have been in it longer have something that is not happiness exactly. You think the word is available. You are aiming at available.',
+    text: 'The first ninety days. The recovery meetings have a shape to them. You are learning the discipline of this — different from any other discipline, because the thing you are disciplining against is still chemically present in your body as a preference. The people who have been in it longer have something that is not happiness exactly. You think the word is available. You are aiming at available.',
     choices: null,
     effect: (p) => { p.h += 5; p.m += 5; p.addFlag('early_recovery'); p.setMem('addEarlyRecovFired', true) },
   },
@@ -251,7 +251,7 @@ const ADDICTION_RECOVERY = [
       !G.flags.has('sobriety') &&
       G.age >= 28 &&
       !G.mem?.addSobrietyFired,
-    text: 'A year. Then two. Then five. The sobriety is not absence — it is presence, a different kind, that requires maintenance. The meetings are part of the week. The sponsor relationship is a kind of friendship. You are not who you were before the addiction and not who you were during it. You are a third thing. The third thing is functional and yours.',
+    text: 'A year, then two, then five. Sobriety turns out to be a presence that needs upkeep: the meetings are part of the week, and the sponsor is a kind of friend. You are not who you were before the drinking and not who you were during it. You are a third thing, and it works, and it is yours.',
     choices: null,
     effect: (p) => { p.h += 10; p.m += 10; p.addFlag('sobriety'); p.addFlag('addiction_recovered'); p.setMem('addSobrietyFired', true) },
   },
@@ -264,7 +264,7 @@ const ADDICTION_RECOVERY = [
       G.flags.has('sobriety') &&
       G.age >= 35 &&
       !G.mem?.addAnnivFired,
-    text: 'The ten-year chip at the meeting. The room is people who understand what ten years means in this context, which is different from what ten years means anywhere else. Someone who is two months clean is in the room. You were that person once. You say the thing that was said to you, which is: it gets different, not easier. You mean it.',
+    text: 'The ten-year chip at the meeting. The room is people who understand what ten years means in this context, unlike anywhere else. Someone who is two months clean is in the room. You were that person once. You say the thing that was said to you: it gets different, not easier. You mean it.',
     choices: null,
     effect: (p) => { p.m += 8; p.karma += 5; p.addFlag('sobriety_decade'); p.setMem('addAnnivFired', true) },
   },
@@ -312,7 +312,7 @@ const ADDICTION_FAMILY = [
       (G.flags.has('addiction_in_family') || Object.values(G.parents ?? {}).some(p => p.alive !== false)) &&
       !G.mem?.addFamilyFired,
     // "You have read the materials" reached characters who cannot read.
-    text: (G) => 'Someone close to you is in the using. Not you — them. The watching is its own particular experience: the specific hope and specific disappointment cycling on a schedule, the way the relationship has reorganised itself around the addiction without anyone deciding to reorganise it. ' +
+    text: (G) => 'Someone close to you is in the using. Not you — them. The watching is its own particular experience: the hope and specific disappointment cycling on a schedule, the way the relationship has reorganised itself around the addiction without anyone deciding to reorganise it. ' +
       (G.literate ? 'You have read the materials. You know the words.' : 'You have heard what people say about it — the neighbours, the aunt who has seen it before, the ones who pray over it. You know the words.') +
       ' The words are less useful than you expected.',
     choices: [

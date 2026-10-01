@@ -59,7 +59,7 @@ export const EMPTY_NEST_EVENTS = [
       if (q >= 70) {
         return `It is just you and ${name} now, for the first time in decades. You discover that you still have things to say to each other that are not about the children, the schedule, the logistics of a family. There is a meal that is just yours. A weekend where nobody needs to be anywhere. The marriage that ran underneath the parenthood for twenty years is still there.`
       } else if (q >= 40) {
-        return `It is just you and ${name} now. The children were the shared project. With the project concluded, the distance between you is more legible than it was when the children were filling the space. This is not a new distance. It is the original distance, finally visible.`
+        return `It is just you and ${name} now. The children were the shared project. With the project concluded, the distance between you is more legible than it was when the children were filling the space. It is the original distance, finally visible.`
       }
       return `It is just you and ${name} now. The distance was always there. The children were, among other things, a way of not having to look at it directly. Now there is nothing between you and the thing.`
     },
@@ -111,7 +111,7 @@ export const EMPTY_NEST_EVENTS = [
       G.flags.has('empty_nest') &&
       G.age >= 48 && G.age <= 62 &&
       !G.mem?.enTheRoom,
-    text: `The room that was theirs has become something else, or it has not become something else, which is a decision in itself. A spare room. A study. The same furniture in the same places, which feels like preservation and also like a failure to move on, except that you are not sure you want to move on from this particular thing. You stand in the doorway sometimes. Not with grief exactly. More with the specific awareness of what a room holds after the person who gave it its character has gone somewhere else.`,
+    text: `The room that was theirs has become something else, or it has not, and either way somebody decided. A spare room. A study. The same furniture in the same places, which feels like preservation and also like a failure to move on, except that you are not sure you want to move on from this thing. You stand in the doorway sometimes. Not with grief exactly. More with the awareness of what a room holds after the person who gave it its character has gone somewhere else.`,
     choices: null,
     effect: (p) => {
       p.m -= 3
@@ -151,7 +151,7 @@ export const EMPTY_NEST_EVENTS = [
       G.flags.has('empty_nest') &&
       G.age >= 68 &&
       !G.mem?.enLateReckoning,
-    text: `The years in the house with children — the specific noise, the food volumes, the car keys always in the wrong place, the homework you helped with and the homework you couldn't help with and the conversations that happened at dinner and the ones that happened at midnight and the ones that never happened — have the quality now of a specific light. Not idealised. Just specific. You know you were tired at the time. You know the good parts and the bad parts both. What remains is not the good parts only. It is the wholeness of the time, the weight of it, how much was in it.`,
+    text: `The years in the house with children — the noise, the food volumes, the car keys always in the wrong place, the homework you helped with and the homework you couldn't help with and the conversations that happened at dinner and the ones that happened at midnight and the ones that never happened — have the quality now of a light. Not idealised. Just specific. You know you were tired at the time. You know the good parts and the bad parts both. What remains is all of it: the weight of the time, how much was in it.`,
     choices: null,
     effect: (p) => {
       p.r += 5

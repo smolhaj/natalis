@@ -31,7 +31,7 @@ export const NOMADIC_EVENTS = [
       G.currentYear >= 1965 &&
       G.age >= 16 && G.age <= 35 &&
       !G.mem.maasaiPark,
-    text: 'The land your grandfather moved cattle across is now a conservation area. The Serengeti. The Maasai Mara. The names are the same but the permissions have changed. Colonial-era game laws that moved the Maasai off the best grazing for wildlife management were inherited by the independent governments without revision. The tourist dollars go to lodges and park fees; the compensation to Maasai communities is a fraction of that and contested. A lion is worth more as a photograph than your cattle are worth as cattle, by the pricing structure the world has settled on. You have not settled on it.',
+    text: 'The land your grandfather moved cattle across is a conservation area now: the Serengeti, the Mara, the same names, new permissions. The colonial game laws that moved the Maasai off the best grazing were taken over unchanged by the independent governments. The tourist money goes to lodges and park fees, and the communities get a contested fraction. By the prices the world has settled on, a lion is worth more as a photograph than your cattle are as cattle. You have not settled on them.',
     choices: [
       {
         text: 'You pursue land rights through community organisations and the courts.',
@@ -58,18 +58,18 @@ export const NOMADIC_EVENTS = [
       G.flags.includes('maasai_pastoralist') &&
       G.age >= 18 && G.age <= 32 &&
       !G.mem.maasaiCityQ,
-    text: 'Nairobi is a few hours away. Your age-set has a member who went to secondary school on a scholarship — first from the section — and came back three years later in trousers, and is now doing something with a phone in an office in the city. You have a choice your father\'s father did not have, which is also a problem he did not have. The world your childhood prepared you for and the world preparing to receive you are not the same world. The cattle are waiting. The question is which world you are waiting for.',
+    text: 'Nairobi is a few hours away. Your age-set has a member who went to secondary school on a scholarship — first from the section — and came back three years later in trousers, and is now doing something with a phone in an office in the city. You have a choice your father\'s father did not have, and a problem he did not have. The world your childhood prepared you for and the world preparing to receive you are not the same world. The cattle are waiting. The question is which world you are waiting for.',
     choices: [
       {
         text: 'You go. You carry the age-set knowledge as a private thing.',
         tag: null,
-        outcome: 'The first months are a specific kind of hard. The city has no map for what you know. But the adaptability built into you by crossing distances with animals through bad seasons is real.',
+        outcome: 'The first months are a kind of hard. The city has no map for what you know. But crossing distances with animals through bad seasons built an adaptability into you that the city cannot see.',
         effect: (p) => { p.m -= 6; p.s += 4; p.addFlag('rural_to_urban'); p.addFlag('nomadic_heritage'); p.setMem('maasaiCityQ', true) },
       },
       {
         text: 'You stay. The pastoral system still works, still has value.',
         tag: null,
-        outcome: 'The age-set ceremonies. The beadwork that records status. The specific intelligence of a life organised around animals and movement and weather. You stay inside it.',
+        outcome: 'The age-set ceremonies. The beadwork that records status. The intelligence of a life organised around animals and movement and weather. You stay inside it.',
         effect: (p) => { p.m += 4; p.r += 3; p.addFlag('nomadic_heritage'); p.setMem('maasaiCityQ', true) },
       },
     ],
@@ -90,7 +90,7 @@ export const NOMADIC_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 1985 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem.bedouinChildhood,
-    text: 'The government has a settlement programme: tents replaced by concrete rooms, seasonal migration routes replaced by a fixed address that can be recorded in the census. The oil revenues in the Gulf or the development loans elsewhere are funding the conversion of the desert margin into towns. The patriarch resists. The young men go first. The goats and the camels go last. Your family sits between two worlds with the specific discomfort of a transition nobody asked for — the migration routes your grandfather knew are being fenced, named, sold, allocated. The world the routes ran through is becoming smaller faster than the routes can adapt.',
+    text: 'The government has a settlement programme: tents replaced by concrete rooms, seasonal migration routes replaced by a fixed address that can be recorded in the census. The oil revenues in the Gulf or the development loans elsewhere are funding the conversion of the desert margin into towns. The patriarch resists. The young men go first. The goats and the camels go last. Your family sits between two worlds with the discomfort of a transition nobody asked for — the migration routes your grandfather knew are being fenced, named, sold, allocated. The world the routes ran through is becoming smaller faster than the routes can adapt.',
     choices: [
       {
         text: 'The new house is solid. You accept the trade.',
@@ -162,7 +162,7 @@ export const NOMADIC_EVENTS = [
       {
         text: 'You rebuild from what survives and what you can borrow from neighbours.',
         tag: null,
-        outcome: 'The neighbour who loans a ewe. The calf that makes it through. The specific arithmetic of recovery: what you need to restore a viable herd, and how many good years that requires.',
+        outcome: 'The neighbour who loans a ewe. The calf that makes it through. The arithmetic of recovery: what you need to restore a viable herd, and how many good years that requires.',
         effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('mongolian_dzud_survived'); p.setMem('mongolDzud', true) },
       },
     ],

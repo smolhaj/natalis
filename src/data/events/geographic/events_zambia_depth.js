@@ -24,7 +24,8 @@ export const ZAMBIA_DEPTH_EVENTS = [
       G.currentYear >= 1955 && G.currentYear <= 1965 &&
       G.age >= 5 && G.age <= 18 &&
       !G.mem?.zmbDepTongaKariba,
-    text: `The Kariba Dam was built between 1955 and 1959 across the Zambezi Gorge, creating one of the world's largest man-made lakes. The BaTonga people — approximately 57,000 of them — lived in the river valley and the gorge and were told to move. Many refused. The water would not rise, they said: Nyaminyami, the river spirit whose domain this was, would not permit it. The water rose. The villages went under. The government brought lorries and moved people to resettlement areas on the plateau that did not have the river access, the fishing rights, the specific ecology the BaTonga had organised their lives around for centuries. Your family is one of the families that moved or was moved.`,
+    text: `The Kariba Dam is built across the Zambezi gorge in the late fifties, and the BaTonga who live in the valley are told to move. Many refuse: the water will not rise, they say, because Nyaminyami, the river spirit, will not allow it. The water rises and the villages go under, and the government's lorries take people up to resettlement land on the plateau, with no river, no fishing, none of what their lives were built around. Your family is one of the families that moved, or was moved.`,
+    context: 'About 57,000 Tonga people were displaced by the Kariba Dam (1955-1959).',
     choices: [
       {
         text: 'Your family moved. The new place was not the old place and has never become the old place.',
@@ -168,7 +169,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
       G.flags.has('zmb_dep_aids_orphan') &&
       G.age >= 22 && G.age <= 35 &&
       !G.mem?.zmbDepAidsOrphanAdult,
-    text: `Your grandparent who raised you is old or gone now. You are the adult. The gap in the middle generation is part of the specific shape of your life — the absence of parents between you and the people who raised you, the absence of aunts and uncles in their expected numbers. You are from a generation with a different demographic structure. You build your adult life in this structure: with more responsibility for the generation above, less resource from the generation that should have been between you.`,
+    text: `Your grandparent who raised you is old or gone now. You are the adult. The gap in the middle generation is part of the shape of your life — the absence of parents between you and the people who raised you, the absence of aunts and uncles in their expected numbers. You are from a generation with a different demographic structure. You build your adult life in this structure: with more responsibility for the generation above, less resource from the generation that should have been between you.`,
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -216,7 +217,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
       {
         text: 'The family ate less. The less was distributed specifically — the children first, the adults working with what remained.',
         tag: null,
-        outcome: 'The distribution pattern in the hungry household is its own kind of knowledge. You know it from the inside. The outside doesn\'t have this information.',
+        outcome: 'The way food is shared out in a hungry household is knowledge too. You know it from the inside. The outside doesn\'t have this information.',
         effect: (p) => {
           p.h -= 4
           p.r += 4
@@ -228,7 +229,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
       {
         text: 'The family found alternatives — cassava from relatives in the village, the informal market, arrangement.',
         tag: null,
-        outcome: 'The resilience was real and required. The network of rural relatives that urban families maintained became useful in this specific way.',
+        outcome: 'The resilience was real and required. The network of rural relatives that urban families maintained became useful in this way.',
         effect: (p) => {
           p.h -= 2
           p.r += 3

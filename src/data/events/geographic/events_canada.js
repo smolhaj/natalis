@@ -14,8 +14,9 @@ export const CANADA_EVENTS = [
       G.age >= 14 &&
       !G.mem?.canOctoberCrisis,
     text: (G) => {
-      return 'October 1970. The Front de libération du Québec kidnaps James Cross, the British trade commissioner, and then Pierre Laporte, the Quebec Labour Minister. Trudeau invokes the War Measures Act — suspended civil liberties, mass arrests. Nearly five hundred people detained without charge. "Just watch me," Trudeau said when asked how far he would go. Laporte is found dead in the trunk of a car on October 17. Cross is released in December. The War Measures Act is the only time Canada has suspended civil liberties in peacetime. The FLQ is broken. The question of Quebec is not.'
+      return 'October 1970. The FLQ kidnaps the British trade commissioner and then the Quebec labour minister, and Trudeau suspends civil liberties: soldiers on the streets, hundreds detained without charge. "Just watch me," he says. Laporte is found dead in the trunk of a car. The FLQ is broken. The question of Quebec is not.'
     },
+    context: 'The War Measures Act was invoked on 16 October 1970; 497 people were detained. It is the only peacetime use of the act in Canadian history.',
     choices: [
       {
         text: 'The government response was necessary. The state had to act.',
@@ -69,7 +70,7 @@ export const CANADA_EVENTS = [
       G.currentYear === 1990 &&
       G.age >= 18 &&
       !G.mem?.canMeech,
-    text: 'The Meech Lake Accord would have recognized Quebec as a "distinct society" within Canada — a constitutional acknowledgement of what Quebec had been asking for since 1982. The accord needed ratification by all ten provinces. On June 22, 1990, Elijah Harper, a Cree politician in the Manitoba legislature, holds up a single eagle feather and votes no — not in support of Quebec, but because Indigenous peoples were not consulted. The accord fails. Three days later, Newfoundland\'s premier says he would have voted against it too. Meech dies. The separatist Bloc Québécois forms. The next referendum will come in five years.',
+    text: 'The Meech Lake Accord would have recognised Quebec as a distinct society, and it needs all ten provinces. On June 22, 1990, Elijah Harper, a Cree member of the Manitoba legislature, holds up an eagle feather and votes no, because nobody asked Indigenous peoples. The accord dies. The Bloc Québécois is founded. The next referendum is five years away.',
     choices: null,
     effect: (p) => {
       p.m -= 4
@@ -91,10 +92,11 @@ export const CANADA_EVENTS = [
     text: (G) => {
       const hasFrenchSurname = G.character.surname && /Tremblay|Martin|Roy|Côté|Gagnon|Bouchard|Leblanc|Fortin|Hébert/.test(G.character.surname)
       if (hasFrenchSurname) {
-        return 'October 30, 1995. The question: "Do you agree that Quebec should become sovereign, after having made a formal offer to Canada for a new economic and political partnership?" The polls show the Yes side and the No side essentially tied. You are watching with family. On television the numbers go: Yes ahead, No ahead, Yes ahead. The No side wins by 50.58 percent. Parizeau goes on television and blames "money and the ethnic vote." You carry what he said for the rest of your life — the implication of who belongs to the decision about who belongs.'
+        return 'October 30, 1995, and the referendum on sovereignty, and the polls have the two sides level. You watch with your family as the numbers go Yes ahead, No ahead, Yes ahead. No wins by a hair. Parizeau goes on television and blames money and the ethnic vote. You carry what he said for the rest of your life, and what it implied about who gets to belong to the decision about who belongs.'
       }
-      return 'October 30, 1995. The Quebec sovereignty referendum. The question is about sovereignty-association — political independence with an economic partnership offer to Canada. The polls showed it too close to call. On the night: 50.58 percent No, 49.42 percent Yes. The margin was 54,000 votes out of five million. If the result had been Yes, Canada would have entered constitutional territory with no map. The result was No, but the margin is the fact that people carry.'
+      return 'October 30, 1995. The question is sovereignty with an offer of partnership to Canada, and it is too close to call all night. In the end it is No, by a little over fifty-four thousand votes out of nearly five million. Had it gone the other way, the country would have walked into constitutional ground with no map. People carry the margin more than the result.'
     },
+    context: 'No won 50.58 percent to 49.42 percent, a margin of about 54,000 votes.',
     choices: [
       {
         text: 'Canada held. The result was close and that is the lesson.',
@@ -122,7 +124,7 @@ export const CANADA_EVENTS = [
       G.age >= 25 &&
       (G.conditions?.length > 0 || (G.stats?.health ?? 50) < 60) &&
       !G.mem?.canHealthcare,
-    text: 'The health card. You show it at the hospital or the clinic or the emergency room. The treatment happens. The billing does not follow. The absence of the billing is the thing you explain to people from the United States, or from countries where the choice between treatment and other things is a real choice. The absence of the billing is also imperfect: the wait times, the shortage of family doctors in certain provinces, the dental and vision that are not covered, the pharmaceuticals that are not covered. The system is the argument about what public means. The argument continues but the card still works.',
+    text: 'You show the health card at the clinic or the emergency room, and the treatment happens, and no bill follows. That is what you explain to Americans. The system is also imperfect: the waits, the shortage of family doctors in some provinces, the teeth and eyes and prescriptions it does not cover. The argument about what public means goes on. The card still works.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -142,7 +144,8 @@ export const CANADA_EVENTS = [
       G.currentYear >= 2015 && G.currentYear <= 2022 &&
       G.age >= 18 &&
       !G.mem?.canTRC,
-    text: 'The Truth and Reconciliation Commission releases its final report in 2015: 94 Calls to Action. The residential schools: 150,000 children separated from their families over 150 years. The National Day for Truth and Reconciliation is established. The unmarked graves at former school sites are found — the Ground Penetrating Radar surveys at Kamloops and elsewhere. Each survey produces a number that is added to the known number. The known number grows. The "sorry" that was said in 2008 by Stephen Harper sits differently after the graves are found. You are trying to understand what your relationship to this history is.',
+    text: 'The Truth and Reconciliation Commission reports in 2015, with ninety-four Calls to Action, on the schools that took children from their families for a hundred and fifty years. Then the radar surveys at Kamloops and elsewhere, and the unmarked graves, each survey adding to a number that keeps growing. The apology Harper made in 2008 sits differently after the graves. You are trying to understand what your own relation to this history is.',
+    context: 'About 150,000 First Nations, Inuit and Métis children attended residential schools between the 1880s and 1996.',
     choices: [
       {
         text: 'You engage with the Calls to Action — specifically, with the ones that apply to you.',
@@ -198,7 +201,7 @@ export const CANADA_EVENTS = [
       G.age >= 22 && G.age <= 40 &&
       (G.stats?.wealth ?? 50) < 70 &&
       !G.mem?.canHousing,
-    text: 'Toronto or Vancouver or increasingly any Canadian city of consequence. The average home price in Toronto crosses one million dollars. A one-bedroom rental in Vancouver requires thirty percent of a median income. The waiting list for social housing in Toronto is twelve years. The government\'s advice — stress tests, first-time buyer incentives, affordability plans — produces the specific frustration of policy that does not fit the problem it is addressing. Your parents bought their house for $180,000. The house is worth $1.3 million. The number is not available to you. The number is available to them.',
+    text: 'Toronto or Vancouver, or by now any city that matters. The average house crosses a million dollars, a one-bedroom eats a third of a wage, and the list for social housing is twelve years long. The government\'s plans fit some other problem. Your parents bought their house for $180,000 and it is worth more than a million now. That number is available to them. It is not available to you.',
     choices: [
       {
         text: 'You look elsewhere — a smaller city, a different province.',
@@ -209,7 +212,7 @@ export const CANADA_EVENTS = [
       {
         text: 'You rent and build your life without the house as the foundation of it.',
         tag: null,
-        outcome: 'The life is built. The wealth that the house would have been — the equity, the inheritance — is absent from the accounting. The accounting is different but the life is real.',
+        outcome: 'The life is built. The wealth that the house would have been — the equity, the inheritance — is absent from the accounting. The accounting is different, and the life goes on.',
         effect: (p) => { p.m -= 4; p.r += 3; p.addFlag('canadian_housing_generation'); p.addFlag('permanent_renter'); p.setMem('canHousing', true); },
       },
     ],

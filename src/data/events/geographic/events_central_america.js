@@ -21,7 +21,7 @@ export const CENTRAL_AMERICA_EVENTS = [
     phase: 'childhood',
     weight: 4,
     when: (G) => isCentralAmerica(G) && civilWarYears(G) && !G.flags.includes('war_childhood'),
-    text: 'The fighting is far enough away that you do not see it, but close enough that you know it is there. Adults speak in a particular way when they are not telling you something. The soldiers at the checkpoint wave the truck through or they do not. You have learned the difference in their posture between both.',
+    text: 'The fighting is far enough away that you do not see it, but close enough that you know it is there. Adults speak in a way when they are not telling you something. The soldiers at the checkpoint wave the truck through or they do not. You have learned the difference in their posture between both.',
     choices: null,
     effect: (p) => { p.m -= 8; p.h -= 3; p.addFlag('war_childhood'); p.r += 3 },
   },
@@ -192,7 +192,7 @@ export const CENTRAL_AMERICA_EVENTS = [
        (G.character.country.name === 'Guatemala'   && G.currentYear >= 1996 && G.currentYear <= 1997)) &&
       (G.flags.includes('war_childhood') || G.flags.includes('civil_war_lived')) &&
       !G.mem?.peaceAccordsMemo,
-    text: 'The date has been announced for weeks. When it arrives it is quieter than you expected. The fireworks happen in the capital. Here, the church bells ring. You sit with people you have known for years and no one says what everyone is thinking, which is: twelve years. Seventy-five thousand people. Now what.',
+    text: 'The date has been announced for weeks. When it arrives it is quieter than you expected. The fireworks happen in the capital. Here, the church bells ring. You sit among people you have known for years and no one says what everyone is thinking, which is: twelve years. Seventy-five thousand people. Now what.',
     choices: null,
     effect: (p) => {
       p.m += 12; p.r -= 5; p.addFlag('peace_accords_generation')

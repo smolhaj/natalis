@@ -81,7 +81,7 @@ export const FOLLOWTHROUGH_42_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 45 &&
       !G.mem?.ft42SaigonLate,
-    text: 'Vietnam has changed. The country that you knew as the Republic of Vietnam is the southern part of a unified country that the Communist Party renamed. The cities have been renamed. The streets have been renamed. The new generation in Ho Chi Minh City — still Saigon in your mouth — has no memory of the Republic and regards the war as history. The Việt Kiều diaspora has its own relationship to this: some go back, open businesses, build lives between. Some hold the wound tight and do not go back. Some went back once and then stayed. You have your version of this reckoning, which is not the same as anyone else\'s.',
+    text: 'The country you knew as the Republic of Vietnam is the south of a country the Party renamed, and the cities and the streets have new names. The young in Ho Chi Minh City, still Saigon in your mouth, have no memory of the Republic and think of the war as history. Some of the people who left go back, open businesses, live between; some hold the wound and never go; some went once and stayed. You have your own version of this reckoning.',
     choices: null,
     effect: (p) => { p.r += 7; p.m -= 4; p.e += 4; p.setMem('ft42SaigonLate', true) },
   },
@@ -97,7 +97,7 @@ export const FOLLOWTHROUGH_42_EVENTS = [
       G.currentYear >= 2001 &&
       G.age >= 50 &&
       !G.mem?.ft42SovietCollapseLate,
-    text: 'The Soviet Union was described to your generation as permanent. It was not described as permanent explicitly, just by the weight of everything around it — the institutions, the syllabi, the assumptions in the newspaper, the architecture. Then it ended in August 1991 and was dissolved in December of the same year. You have spent the decades since holding that fact — that a system described by everything around it as permanent had a last day, a specific one, and then stopped. The question of whether the current order is also temporary is one you are now qualified to ask with the kind of seriousness that most people in stable countries are not.',
+    text: 'The Soviet Union was described to your generation as permanent. It was not described as permanent explicitly, just by the weight of everything around it — the institutions, the syllabi, the assumptions in the newspaper, the architecture. Then it ended in August 1991 and was dissolved in December of the same year. You have spent the decades since holding that fact — that a system described by everything around it as permanent had a last day, a one, and then stopped. The question of whether the current order is also temporary is one you are now qualified to ask with the kind of seriousness that most people in stable countries are not.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 5; p.m += 2; p.setMem('ft42SovietCollapseLate', true) },
   },
@@ -129,7 +129,7 @@ export const FOLLOWTHROUGH_42_EVENTS = [
       G.currentYear >= 2008 &&
       G.age >= 50 &&
       !G.mem?.ft42RedTerrorLate,
-    text: (G) => 'The Derg fell in 1991. Mengistu fled to Zimbabwe. The trials produced convictions in absentia for Mengistu and death sentences for dozens of officials. Mengistu remains in Harare under Mugabe\'s protection' + (G.currentYear >= 2018 ? ' and then under his successors\'' : '') + '. The specific question — why Zimbabwe extends that protection — is not answered. The bodies that were displayed in the streets of Addis Ababa in 1977 and 1978 are not answered by the convictions. The people who survived know what was done and who did it with more precision than any trial record. You carry this knowledge in a country that has been through the Derg' + (G.currentYear >= 2021 ? ', the Tigray war' : '') + ', other violences. Ethiopia does not run out of things to carry.',
+    text: (G) => 'The Derg fell in 1991. Mengistu fled to Zimbabwe. The trials produced convictions in absentia for Mengistu and death sentences for dozens of officials. Mengistu remains in Harare under Mugabe\'s protection' + (G.currentYear >= 2018 ? ' and then under his successors\'' : '') + '. The question — why Zimbabwe extends that protection — is not answered. The bodies that were displayed in the streets of Addis Ababa in 1977 and 1978 are not answered by the convictions. The people who survived know what was done and who did it with more precision than any trial record. You carry this knowledge in a country that has been through the Derg' + (G.currentYear >= 2021 ? ', the Tigray war' : '') + ', other violences. Ethiopia does not run out of things to carry.',
     choices: null,
     effect: (p) => { p.r += 8; p.karma += 3; p.m -= 5; p.setMem('ft42RedTerrorLate', true) },
   },

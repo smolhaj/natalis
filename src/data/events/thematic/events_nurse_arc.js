@@ -17,7 +17,7 @@ export const NURSE_ARC_EVENTS = [
     when: (G) =>
       isNurse(G) &&
       !G.mem?.nurFirstDeathFired,
-    text: `You are there when it happens. The doctor has been called and has not yet arrived; you are the person in the room. You have been trained for this and the training is accurate — you know what to do and you do it. But knowing what to do and the experience of doing it are not the same thing. Afterwards, in the hallway, you write the time in the notes. A colleague asks how you are. You say fine. You are fine. You understand that fine and the experience you just had can be simultaneously true, and that this simultaneous truth is what the job requires.`,
+    text: `You are there when it happens. The doctor has been called and has not come, and you are the person in the room, and the training is accurate: you know what to do and you do it. Afterwards, in the corridor, you write the time in the notes. A colleague asks how you are, and you say fine, and you are fine, and you know the job requires both of those to be true.`,
     choices: null,
     effect: (p) => {
       p.m -= 9
@@ -52,7 +52,7 @@ export const NURSE_ARC_EVENTS = [
       isNurse(G) &&
       G.age >= 30 &&
       !G.mem?.nurAdvocateFired,
-    text: `You disagree with a treatment decision. You have the clinical knowledge and the observation hours — you know this patient in a way the ward round does not, because you are here for twelve hours and the ward round is here for four minutes. You find the channel: not confrontation, but documentation, escalation through the right route, the specific words that cannot be dismissed without consequence. The decision is revised. You do not receive a formal acknowledgement. You did not expect one.`,
+    text: `You disagree with a treatment decision. You have the clinical knowledge and the observation hours — you know this patient in a way the ward round does not, because you are here for twelve hours and the ward round is here for four minutes. You find the channel: not confrontation, but documentation, escalation through the right route, the words that cannot be dismissed without consequence. The decision is revised. You do not receive a formal acknowledgement. You did not expect one.`,
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -70,7 +70,7 @@ export const NURSE_ARC_EVENTS = [
       isNurse(G) &&
       G.age >= 36 &&
       !G.mem?.nurGriefFired,
-    text: `The grief is not a single thing. It is accumulated — a weight of individual losses that you processed and filed and moved past and that are nevertheless still there, filed. You know when you developed the clinical distance because you can remember the first time you noticed yourself using it, in the corridor after a death, noting your own efficiency of emotion. The distance is a professional tool and also something that cost you something to build. Both of these are true. You stopped being surprised that both of these are true some years ago.`,
+    text: `The grief is not a single thing. It is accumulated — a weight of individual losses that you processed and filed and moved past and that are nevertheless still there, filed. You know when you developed the clinical distance because you can remember the first time you noticed yourself using it, in the corridor after a death, noting your own efficiency of emotion. The distance is a professional tool and also something that cost you something to build. You stopped being surprised that both of these are true some years ago.`,
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -107,7 +107,7 @@ export const NURSE_ARC_EVENTS = [
       isNurse(G) &&
       G.age >= 35 &&
       !G.mem?.nurRecogFired,
-    text: `A family writes. Or comes in. Or tracks you down through the administrative routes and leaves a message with the ward. They have found you specifically — your name, the shift, the date — to say what it meant. Not the treatment. Not the outcome, which was what it was. They mean the thing you did in the room at the specific hour, which you may or may not clearly remember. You write back. You say what there is to say. The correspondence is brief. It sits with you for a long time.`,
+    text: `A family tracks you down through the ward office — your name, the shift, the date — to say what it meant. Not the treatment, or the outcome, which was what it was. The thing you did in the room at that hour, which you may or may not remember. You write back and say what there is to say. You keep the letter.`,
     choices: null,
     effect: (p) => {
       p.m += 14

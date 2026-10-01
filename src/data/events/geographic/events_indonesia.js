@@ -176,7 +176,7 @@ export const INDONESIA_EVENTS = [
       {
         text: 'Stay but do not rebuild. Work for someone else.',
         tag: 'stayed_changed',
-        outcome: 'The decision not to rebuild is its own kind of grief. You stay. The neighbourhood changes around you over the years.',
+        outcome: 'The decision not to rebuild is a grief. You stay. The neighbourhood changes around you over the years.',
         effect: (p) => { p.m -= 8; p.addFlag('id98_rebuilt') },
       },
     ],

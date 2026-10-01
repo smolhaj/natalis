@@ -8,7 +8,7 @@ export const PALESTINE_DEPTH_EVENTS = [
       G.age >= 12 && G.age <= 18 &&
       G.currentYear >= 1995 &&
       !G.mem?.pdThirdGen,
-    text: `The key is on a hook by the door. It has been there for as long as you have been alive. It was there for your father's life, and before that for your grandfather's — the one who carried it from the village in 1948. It is a real key, not symbolic; the lock it opened was real, in a house that was real. The house is no longer a house. The village exists on a different map now, under a different name. The key is for a door that is not there.`,
+    text: `The key is on a hook by the door. It has been there for as long as you have been alive. It was there for your father's life, and before that for your grandfather's — the one who carried it from the village in 1948. It is a key, not a symbol; it opened a lock, in a house. The house is no longer a house. The village exists on a different map now, under a different name. The key is for a door that is not there.`,
     choices: null,
     effect: (p) => {
       p.m -= 8;
@@ -64,7 +64,7 @@ export const PALESTINE_DEPTH_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 25 && G.age <= 45 &&
       !G.mem?.pdResettlement,
-    text: `The papers come after twenty-two years on the resettlement list. Sweden or Canada — the UNHCR official explains that this is an opportunity, which is correct, and which explains nothing about what it feels like to leave a place you have complained about your entire life and discover, at the airport, that you did not know you were attached to it. The attachment is not to the camp. It is to something the camp contains that you cannot take with you.`,
+    text: `The papers come after twenty-two years on the resettlement list. Sweden or Canada — the UNHCR official explains that this is an opportunity, which is correct, and which explains nothing about what it feels like to leave a place you have complained about your entire life and discover, at the airport, that you did not know you were attached to it. The attachment is to something the camp contains that you cannot take with you.`,
     choices: [
       {
         text: 'Take the resettlement. Survival means going.',
@@ -82,7 +82,7 @@ export const PALESTINE_DEPTH_EVENTS = [
       {
         text: 'Refuse. This is not the return that means something.',
         tag: 'refuse',
-        outcome: `You turn down the resettlement. The list closes. You are still here, which is still not where you are from.`,
+        outcome: `You turn down the resettlement. The list closes. You are still here, and still not where you are from.`,
         effect: (p) => {
           p.m -= 8;
           p.r += 15;

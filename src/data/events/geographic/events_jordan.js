@@ -33,7 +33,7 @@ export const JORDAN_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1972 &&
       G.age >= 16 &&
       !G.mem.jorBlackSeptember,
-    text: 'September 1970. The PLO has been operating as a state within a state in Jordan — running its own checkpoints, taxing, governing Palestinian refugee camps, planning cross-border operations that bring Israeli reprisals on Jordanian soil. King Hussein, who has tolerated this for three years, orders the Jordanian army to move. The fighting lasts ten days. Several thousand die — most of them Palestinian. The PLO is expelled to Lebanon, where it will help trigger another civil war. The event is called Black September. It is a rupture in the relationship between Palestinians and the Hashemite kingdom that shapes everything afterward.',
+    text: 'September 1970. The PLO has been a state within the state for three years, running its own checkpoints and camps and raids that bring Israeli reprisals onto Jordanian soil, and King Hussein orders the army in. The fighting lasts ten days and thousands die, most of them Palestinian, and the PLO is driven out to Lebanon. They call it Black September. Everything between Palestinians and the kingdom afterwards is shaped by it.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 9; p.addFlag('jordan_black_september_generation'); p.setMem('jorBlackSeptember', true) },
   },
@@ -46,10 +46,10 @@ export const JORDAN_EVENTS = [
       G.character.country.name === 'Jordan' &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem.jorWasta,
-    text: 'Wasta: the Arabic word for connection, influence, the weight of who you know and which family you belong to. In Jordan it operates more reliably than merit in employment, university admission, government permits, legal proceedings. You either have wasta or you spend time cultivating it or you find the third path — doing more than is required to make up for what you lack. The army is different: getting a son in is a family aspiration across tribal lines. The system is not hidden. It is the infrastructure.',
+    text: 'Wasta: the Arabic word for connection, influence, the weight of who you know and which family you belong to. In Jordan it operates more reliably than merit in employment, university admission, government permits, legal proceedings. You either have wasta or you spend time cultivating it or you find the third path — doing more than is required to make up for what you lack. The army is different: getting a son in is a family aspiration across tribal lines. The system is in plain sight. It is the infrastructure.',
     choices: [
       {
-        text: 'You have family connections — wasta that opens a particular door.',
+        text: 'You have family connections — wasta that opens a door.',
         tag: null,
         outcome: 'The door opens. You are aware of what opened it. That awareness is the beginning of the moral accounting.',
         effect: (p) => { p.s += 5; p.mo += 800; p.addFlag('jordanian_wasta_used'); p.setMem('jorWasta', true) },
@@ -73,12 +73,12 @@ export const JORDAN_EVENTS = [
       G.currentYear === 1994 &&
       G.age >= 18 &&
       !G.mem.jorPeaceTreaty,
-    text: 'October 1994. King Hussein and Israeli Prime Minister Yitzhak Rabin sign the Wadi Araba Treaty. Jordan becomes the second Arab country to make peace with Israel, after Egypt in 1979. The official position: normalisation and security cooperation. The street position: more complicated. Palestinian-Jordanians who are 48% of the population — the largest ethnic group in Jordan — are the group for whom this peace is most complicated. The king was the custodian of the Haram al-Sharif in Jerusalem. The treaty does not change the occupation of the West Bank. You have an opinion about what this means.',
+    text: 'October 1994. King Hussein and Rabin sign the peace at Wadi Araba, and Jordan is the second Arab country after Egypt to do it. The palace says normalisation and security. The street says something more complicated, and nobody\'s view is more complicated than that of the half of the country that is Palestinian. The treaty does not end the occupation of the West Bank. You have your own view of what it means.',
     choices: [
       {
         text: 'You accept the peace as pragmatic and necessary.',
         tag: null,
-        outcome: 'Jordan needed the treaty for its economy, its security, its relationship with the United States. The pragmatic case is real. You know the Palestinian case too.',
+        outcome: 'Jordan needed the treaty for its economy, its security, its relationship with the United States. You know the Palestinian case too.',
         effect: (p) => { p.r += 5; p.addFlag('jordanian_peace_generation'); p.setMem('jorPeaceTreaty', true) },
       },
       {
@@ -100,7 +100,8 @@ export const JORDAN_EVENTS = [
       G.currentYear >= 2012 && G.currentYear <= 2016 &&
       G.age >= 20 &&
       !G.mem.jorSyria,
-    text: 'By 2014, Jordan has received 1.3 million Syrian refugees — roughly ten percent of the country\'s total population, arriving in three years. The camps — Zaatari, Azraq — become some of the largest in the world. The refugees settle not only in camps but in Amman, Zarqa, Irbid. The schools run double shifts. The water system, already under stress — Amman gets running water once a week — is strained further. Jordanians are divided: hospitality against burden, solidarity against competition for jobs and services. The government accepts the refugees and then starts restricting movement. You are watching what a country looks like when this arrives.',
+    text: 'The Syrians come, in three years about a tenth of the country\'s population. Zaatari and Azraq become some of the largest camps in the world, and most of the refugees live not in camps but in Amman, Zarqa, Irbid. The schools run double shifts, and the water, already coming to Amman once a week, is stretched further. Jordanians are divided between hospitality and burden. The government takes them in, and then begins to restrict them.',
+    context: 'Jordan registered about 1.3 million Syrians by 2015, roughly ten percent of its population.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 2; p.addFlag('jordanian_syrian_refugee_host'); p.setMem('jorSyria', true) },
   },
@@ -118,7 +119,7 @@ export const JORDAN_EVENTS = [
       (G.currentYear >= 1975 ? ', the Rabat summit of 1974 that named the PLO the sole representative of the Palestinians' : '') +
       (G.currentYear >= 1995 ? ', and a peace treaty with Israel in 1994' : '') +
       '. He is, by any measure, a survivor. The monarchy is stable in a region of instability. The price of stability is the wasta system, the bread subsidy, and a political space that exists only at the king\'s sufferance.' +
-      (G.currentYear >= 1999 ? ' When he dies of cancer in 1999, the mourning is real.' : ''),
+      (G.currentYear >= 1999 ? ' When he dies of cancer in 1999, people weep in the streets.' : ''),
     choices: null,
     effect: (p) => { p.r += 4; p.addFlag('jordanian_hussein_generation'); p.setMem('jorHussein', true) },
   },

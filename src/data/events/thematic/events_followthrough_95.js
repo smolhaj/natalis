@@ -29,7 +29,7 @@ export const FOLLOWTHROUGH_95_EVENTS = [
       G.flags.has('nam_swapo_exile_generation') &&
       G.age >= 55 &&
       !G.mem?.ft95Exile,
-    text: 'The years in exile are part of the national narrative now — the liberation struggle, the PLAN fighters, the camps in Zambia and Angola, the hard conditions, the return. What is less in the narrative: the Lubango dungeons, where SWAPO held and tortured members accused of being SADF spies, hundreds of them, including people who were not spies. The accusations came during the paranoia of the late 1980s. The truth commission — the one that was supposed to address this — was proposed and not established. The people who were in Lubango who came back are in the same country as the people who sent them there. The liberation movement that freed Namibia also imprisoned and in some cases killed Namibians. Both of these are true. The national narrative contains one and submerges the other.',
+    text: 'The years in exile are part of the national narrative now — the liberation struggle, the PLAN fighters, the camps in Zambia and Angola, the hard conditions, the return. What is less in the narrative: the Lubango dungeons, where SWAPO held and tortured members accused of being SADF spies, hundreds of them, including people who were not spies. The accusations came during the paranoia of the late 1980s. The truth commission — the one that was supposed to address this — was proposed and not established. The people who were in Lubango who came back are in the same country as the people who sent them there. The liberation movement that freed Namibia also imprisoned and in some cases killed Namibians. The national narrative contains one and submerges the other.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.setMem('ft95Exile', true) },
   },
@@ -43,7 +43,7 @@ export const FOLLOWTHROUGH_95_EVENTS = [
       G.flags.has('nam_border_war_generation') &&
       G.age >= 55 &&
       !G.mem?.ft95BorderWar,
-    text: 'The people you were fighting against in the bush are citizens of the country you live in now. Some of them are in government. Some of them are your neighbors. The war ended in 1989; Namibia became independent in 1990; SWAPO — the movement — won the election and formed the government. The specific question of what you were doing and what they were doing has no official resolution. There was no South African Truth and Reconciliation process for the Namibian border war. The reconciliation happened by not having the conversation. You have lived inside the not-having-the-conversation for thirty years. It is its own kind of peace, of the kind that requires not too many questions.',
+    text: 'The men you fought in the bush are citizens of the country you live in now; some are in government, some are your neighbours. The war ended in 1989 and SWAPO won the election and formed the government, and there was never a truth commission for the border war. The reconciliation happened by not having the conversation, and you have lived inside that for thirty years. It is a peace, of the kind that requires not too many questions.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.setMem('ft95BorderWar', true) },
   },

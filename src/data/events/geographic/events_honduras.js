@@ -52,7 +52,7 @@ export const HONDURAS_EVENTS = [
       G.currentYear >= 1982 && G.currentYear <= 1990 &&
       G.age >= 18 &&
       !G.mem?.honContra,
-    text: 'The Americans built bases in the south, near the Nicaraguan border. The Contras train there. The US calls Honduras a sovereign nation and treats it as a staging area. Both of these things are true simultaneously and neither cancels the other. Your government negotiated the use of your territory and the Americans did not have to negotiate very hard. The money arrived. The bases appeared. The Nicaraguan war is fought partly from your country\'s soil, and what Honduras receives for this is the presence of the Americans, which is both protection and occupation depending on the day.',
+    text: 'The Americans built bases in the south, near the Nicaraguan border. The Contras train there. The US calls Honduras a sovereign nation and treats it as a staging area. Your government negotiated the use of your territory and the Americans did not have to negotiate very hard. The money arrived. The bases appeared. The Nicaraguan war is fought partly from your country\'s soil, and what Honduras receives for this is the presence of the Americans, protection or occupation depending on the day.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 2; p.m -= 5; p.setMem('honContra', true) },
   },
@@ -68,7 +68,8 @@ export const HONDURAS_EVENTS = [
       G.currentYear === 1998 &&
       G.age >= 15 &&
       !G.mem?.honMitch,
-    text: 'Hurricane Mitch makes landfall in late October 1998 and stalls over Honduras for four days. Seven thousand people die. Eighty percent of the country\'s crops are destroyed. Bridges are gone. Roads are gone. The Choluteca River floods in a way that makes its old bed irrelevant — after the flood it runs in a completely different channel. USAID calls it the worst natural disaster in two centuries of Honduran history. The infrastructure that took thirty years to build is gone in four days. The Hondurans who were already leaving for the United States begin to leave at a rate that changes the character of entire regions.',
+    text: 'Mitch comes ashore in late October and stalls over the country for four days. The crops are gone, the bridges are gone, the roads are gone, and the Choluteca floods so hard it leaves its old bed and runs in a new channel. Thirty years of building gone in four days. The people who were already leaving for the north begin to leave at a rate that changes whole regions.',
+    context: 'Hurricane Mitch (October 1998) killed about 7,000 people in Honduras and destroyed some 70 to 80 percent of the country\'s crops and transport infrastructure.',
     choices: null,
     effect: (p) => { p.m -= 15; p.h -= 5; p.r += 8; p.mo -= 2000; p.addFlag('hon_mitch_survivor'); p.setMem('honMitch', true) },
   },
@@ -84,7 +85,7 @@ export const HONDURAS_EVENTS = [
       G.currentYear === 2009 &&
       G.age >= 22 &&
       !G.mem?.honZelaya,
-    text: 'At four in the morning on June 28, 2009, soldiers drag President Manuel Zelaya from the presidential residence in his pyjamas and fly him to Costa Rica. The Supreme Court called it constitutional. The military called it constitutional. The private sector called it constitutional. Zelaya had proposed a constitutional referendum — not a change to the constitution, a poll asking whether people wanted a constitutional assembly. The United States initially called it a coup and then mostly didn\'t. The international community suspended aid. The coup government held elections. Honduras has been living with the consequences since.',
+    text: 'At four in the morning on June 28, 2009, soldiers take President Zelaya from his house in his pyjamas and fly him to Costa Rica. The Supreme Court, the army and the business chambers all say it is constitutional. He had proposed a poll asking whether people wanted a constitutional assembly. Washington first calls it a coup, and then mostly doesn\'t. Honduras has been living with what followed ever since.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 7; p.e += 3; p.addFlag('hon_zelaya_generation'); p.setMem('honZelaya', true) },
   },
@@ -123,7 +124,7 @@ export const HONDURAS_EVENTS = [
       G.ruralUrban === 'urban' &&
       G.age >= 22 &&
       !G.mem?.honGang,
-    text: 'San Pedro Sula has the highest murder rate of any city on earth outside a declared war zone. The statistic is from 2012 and 2013 and 2014 — the worst years. The neighbourhood you live in has boundaries. You know them the way you know the streets: this block is Barrio 18, this corner is MS-13. The gang boundary is not marked on any official map. You carry it in your body the way you carry all knowledge you received without being taught. You do not cross the wrong line. This is the whole of the calculation.',
+    text: 'San Pedro Sula has the highest murder rate of any city on earth outside a war. Your neighbourhood has borders: this block is Barrio 18, that corner MS-13, and no official map shows them. You carry them in your body, like all the knowledge nobody taught you. You do not cross the wrong line. That is the whole calculation.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.setMem('honGang', true) },
   },

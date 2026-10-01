@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 
 // The prose says a parent has died. Effects only receive `p`, so read the
 // living parents off `p._state` — the established escape hatch — and kill one.
@@ -216,18 +217,18 @@ export const GRIEF_EVENTS = [
     // the hospital car park" is the game declining to say which. It knows how
     // long they were together, which is the thing that is actually different
     // between one of these and another.
-    text: (G) => `They are gone.${(G.deceasedPartner?.years ?? 0) >= 30 ? ` ${G.deceasedPartner.years} years.` : ''} The specific arrangement of the world without them is something you cannot yet picture. You understood, abstractly, that this day existed in the future. The abstract is now the present tense.`,
+    text: (G) => `They are gone.${(G.deceasedPartner?.years ?? 0) >= 30 ? ` ${G.deceasedPartner.years} years.` : ''} The arrangement of the world without them is something you cannot yet picture. You understood, abstractly, that this day existed in the future. The abstract is now the present tense.`,
     choices: [
       {
         text: 'Call someone — you should not be alone right now',
         tag: null,
-        outcome: 'They come. The night is long and the company is real. You are grateful for it even as you don\'t fully register it.',
+        outcome: 'They come. The night is long and nobody leaves. You are grateful for it even as you don\'t fully register it.',
         effect: (p) => { p.m -= 22; p.r += 10; p.addFlag('partner_died'); p.setMem('griefPartnerFirst', true) },
       },
       {
         text: 'Go home alone',
         tag: null,
-        outcome: 'The house is quiet in a way that is new. Every room is full of them. You do not sleep.',
+        outcome: 'The house is quiet, and the quiet is new. Every room is full of them. You do not sleep.',
         effect: (p) => { p.m -= 28; p.h -= 5; p.r += 12; p.addFlag('partner_died'); p.setMem('griefPartnerFirst', true) },
       },
     ],
@@ -372,7 +373,7 @@ export const GRIEF_EVENTS = [
       Math.random() < 0.03,
     text: (G) => {
       const child = G.children[0]
-      return `${child?.name ?? 'Your child'} dies. There is no way to write this. No parent expects to outlive their child. The grief is not an arc with a resolution — it is a reorganization. Everything after has a different shape.`
+      return `${child?.name ?? 'Your child'} dies. There is no way to write this. No parent expects to outlive a child. The grief is not an arc with a resolution — it is a reorganization. Everything after has a different shape.`
     },
     choices: null,
     effect: (p) => { p.m -= 35; p.h -= 10; p.r += 25; p.addFlag('lost_child'); p.addFlag('bereaved'); p.setLastMajorEvent('bereavement'); p.setMem('griefChildDeath', true) },
@@ -418,7 +419,7 @@ export const GRIEF_EVENTS = [
       Math.random() < 0.04,
     text: (G) => {
       const sib = G.siblings[0]
-      return `${sib?.name ?? 'Your sibling'} dies suddenly. An accident, or a diagnosis that moved faster than expected. They are the same age as you — or younger — and that is the thing you cannot stop returning to.`
+      return gendered(`${sib?.name ?? 'Your sibling'} dies suddenly. An accident, or a diagnosis that moved faster than expected. They are the same age as you — or younger — and that is the thing you cannot stop returning to.`, sib)
     },
     choices: null,
     effect: (p) => { p.m -= 22; p.r += 12; p.addFlag('lost_sibling'); p.setMem('griefSiblingCall', true) },
@@ -476,7 +477,7 @@ export const GRIEF_EVENTS = [
       Math.random() < 0.06,
     text: (G) => {
       const friend = G.friends[0]
-      return `${friend?.name ?? 'A close friend'} dies. They are the same age as you, within a year or two. The specific wrongness of this — the too-soon quality — is something that does not process the way older deaths do. You keep expecting to see them somewhere.`
+      return `${friend?.name ?? 'A close friend'} dies. They are the same age as you, within a year or two. The wrongness of this — the too-soon quality — is something that does not process the way older deaths do. You keep expecting to see them somewhere.`
     },
     choices: null,
     effect: (p) => { p.m -= 18; p.r += 10; p.addFlag('lost_friend'); p.setMem('griefFriendYoung', true) },
@@ -536,7 +537,7 @@ export const GRIEF_EVENTS = [
       !G.mem.griefProlonged &&
       G.age >= 40 &&
       G.stats.happiness < 40,
-    text: 'Three years. The grief is as raw as the first year. This is not, it turns out, a universally normal trajectory. Most people\'s acute grief restructures itself over time. Yours has not. You are not failing at grief. But you are not moving through it either. Someone uses the term prolonged grief disorder. There is a treatment for it.',
+    text: 'Three years, and the grief is as raw as in the first. Most people\'s grief changes shape over time; yours has not. Someone uses the words prolonged grief disorder, and there is a treatment for it.',
     choices: [
       {
         text: 'Seek specialized grief therapy',
@@ -617,7 +618,7 @@ export const GRIEF_EVENTS = [
       G.flags.includes('lost_parent') &&
       !G.mem.griefParentHouse &&
       G.age >= 35,
-    text: 'You are the one who volunteered to clear the house. Or you were assigned it, which amounts to the same thing. The practical inventory of a life: the drawer with the rubber bands and the dead batteries and the envelope of photos from the seventies. The coat still hanging by the door. The specific smell of the room that you now understand is temporary — in six months the new people will repaint and the smell will be gone and that will be that.',
+    text: 'You are the one who volunteered to clear the house. Or you were assigned it, which amounts to the same thing. The practical inventory of a life: the drawer with the rubber bands and the dead batteries and the envelope of photos from the seventies. The coat still hanging by the door. The smell of the room that you now understand is temporary — in six months the new people will repaint and the smell will be gone and that will be that.',
     choices: [
       {
         text: 'Take your time — this is the last time the house is theirs',
@@ -643,7 +644,7 @@ export const GRIEF_EVENTS = [
       G.flags.includes('lost_parent') &&
       !G.mem.griefParentHoliday &&
       G.age >= 35,
-    text: 'The first holiday without them. You do not fully account for it in advance. Then the day arrives and the phone number you have had for thirty years would just ring. The space where the call used to go is real. You sit through it. The family gathers and doesn\'t quite know what to do with the absence either, and you collectively construct something that is not quite the old version but is not nothing.',
+    text: 'The first holiday without them. You do not fully account for it in advance. Then the day arrives and the phone number you have had for thirty years would just ring. There is a space where the call used to go. You sit through it. The family gathers and doesn\'t quite know what to do with the absence either, and you collectively construct something that is not quite the old version but is not nothing.',
     choices: null,
     effect: (p) => { p.m -= 14; p.r += 8; p.setMem('griefParentHoliday', true) },
   },
@@ -778,7 +779,7 @@ export const GRIEF_EVENTS = [
       if (kids > 0) {
         return `The house does not become quiet, which is what you had somehow expected. There are ${kids === 1 ? 'a child' : `${kids} children`} in it and they need feeding at the usual times, and the ordinary machinery of a week turns out to be the thing that gets you from one end of it to the other. You are grateful for that and you also resent it, and both of those are true at four in the afternoon on the same Tuesday.`
       }
-      return 'You are too young for this in a way that other people keep saying out loud. There is no established role for what you are. The widows in this place are thirty years older than you and they are kind and they are not, in the end, describing the same thing.'
+      return 'You are too young for this, and other people keep saying so out loud. There is no established role for what you are. The widows in this place are thirty years older than you and they are kind and they are not, in the end, describing the same thing.'
     },
     choices: [
       {

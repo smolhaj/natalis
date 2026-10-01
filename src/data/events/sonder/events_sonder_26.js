@@ -34,7 +34,7 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => place.isLiterate(G) && (G.age >= 18 && !G.mem?.sdr26OfficialWindow),
     text: () => pick([
-      'The official behind the window has seen this form many times. You can tell. The way they handle it — the specific economy of where they place the stamp, the pause before they sign — is the movement of someone who has done this enough times that the form no longer has information in it, only procedure.',
+      'The official behind the window has seen this form many times. You can tell. The way they handle it — the economy of where they place the stamp, the pause before they sign — is the movement of someone who has done this enough times that the form no longer has information in it, only procedure.',
       'You explain the situation for the second time. The person you are explaining it to is the third person you have explained it to. The situation is not complicated. The path through the system to handle it, however, was not designed for situations like it, and so it keeps arriving at a wall.',
     ]),
     choices: null,
@@ -75,8 +75,8 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => place.hasMetro(G) && (G.age >= 16 && !G.mem?.sdr26TrainCarriage),
     text: () => pick([
-      'The overnight train. You share the compartment with three people you will never see again. By morning you have not spoken a full sentence to any of them, but you know their sleeping sounds, the way one of them reaches for water at 2am, the particular weight of the silence at the station stop where two of them get off and the compartment is suddenly mostly yours.',
-      'The metro at rush hour: the specific negotiation of space, the unspoken etiquette of where the eyes go, the moment a seat opens and the calculation — visible on three faces — of who is nearest, who is most entitled, who will move for it. Most of the time people get this right without speaking.',
+      'The overnight train. You share the compartment with three people you will never see again. By morning you have not spoken a full sentence to any of them, but you know their sleeping sounds, the way one of them reaches for water at 2am, the weight of the silence at the station stop where two of them get off and the compartment is suddenly mostly yours.',
+      'The metro at rush hour: the negotiation of space, the unspoken etiquette of where the eyes go, the moment a seat opens and the calculation — visible on three faces — of who is nearest, who is most entitled, who will move for it. Most of the time people get this right without speaking.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr26TrainCarriage', true) },
@@ -171,7 +171,7 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => G.age >= 45 && !G.mem?.sdr26BodyNoise,
     text: () => pick([
-      'The body has started making sounds. Small ones: the knee on the stairs, the back when you twist a certain way, the particular note the shoulder makes that has been there for years now. You have learned which sounds are information and which are just the body narrating its operations.',
+      'The body has started making sounds. Small ones: the knee on the stairs, the back when you twist a certain way, the note the shoulder makes that has been there for years now. You have learned which sounds are information and which are just the body narrating its operations.',
       'Someone your age mentions a body thing in passing — a joint, a sleep pattern, a thing that takes longer to heal — and you recognise it immediately, and so does everyone else in the room. This is a new kind of shared language. You are entering a demographic.',
     ]),
     choices: null,
@@ -215,7 +215,7 @@ export const EVENTS_SONDER_26 = [
     when: (G) => place.hasHealthcare(G) && (G.age >= 18 && !G.mem?.sdr26HospitalLight),
     text: () => pick([
       'Hospitals have their own light — a fluorescent quality that is neither day nor night, that makes the hour ambiguous and flattens everything. You have been here enough times to recognise the light before you remember where you are. It is the light of waiting and of not knowing, and it is the same in hospitals everywhere you have been.',
-      'The corridor between the wards. The squeak of shoes on the linoleum. The particular trolley sound. A smell — the antiseptic, the meals trolley, something chemical beneath both. The body recognises hospital as a category before the mind processes the specifics. You are here again.',
+      'The corridor between the wards. The squeak of shoes on the linoleum. The trolley sound. A smell — the antiseptic, the meals trolley, something chemical beneath both. The body recognises hospital as a category before the mind processes the specifics. You are here again.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr26HospitalLight', true) },
@@ -227,7 +227,7 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => place.wentToSchool(G) && (G.age >= 28 && !G.mem?.sdr26SchoolBuildingAgain),
     text: () => pick([
-      'You are in a school building — for a child\'s event, for some other reason — and the smell is the same smell. The wooden floors, the chalk-dust residue even in rooms that haven\'t used chalk in years, the particular acoustic of a corridor. You are in this building now and also briefly, involuntarily, in the other one.',
+      'You are in a school building — for a child\'s event, for some other reason — and the smell is the same smell. The wooden floors, the chalk-dust residue even in rooms that haven\'t used chalk in years, the acoustic of a corridor. You are in this building now and also briefly, involuntarily, in the other one.',
       'The chairs in the school hall are the same design as the chairs in the school hall of the school you attended. The same design, possibly the same chairs. Thirty years of children have sat in them and they are still making the same sound on the floor.',
     ]),
     choices: null,
@@ -301,8 +301,8 @@ export const EVENTS_SONDER_26 = [
       // The hour is universal; the sounds in it are not. A house with no
       // refrigerator in it still settles and still ticks.
       hasTech(G.currentCountry ?? G.character.country, 'refrigerator', G.currentYear, { rural: G.ruralUrban === 'rural' })
-        ? 'The hour after everyone else is asleep belongs to you in a way that other hours do not. You do not always use it for anything. Sometimes you sit in it. The house makes its own sounds in this hour — settling, the refrigerator cycling, the heating adjusting to the drop in temperature. You know all of them.'
-        : 'The hour after everyone else is asleep belongs to you in a way that other hours do not. You do not always use it for anything. Sometimes you sit in it. The house makes its own sounds in this hour — the roof contracting, an animal in the yard, someone turning over in the next room. You know all of them.',
+        ? 'The hour after everyone else is asleep belongs to you as other hours do not. You do not always use it for anything. Sometimes you sit in it. The house makes its own sounds in this hour — settling, the refrigerator cycling, the heating adjusting to the drop in temperature. You know all of them.'
+        : 'The hour after everyone else is asleep belongs to you as other hours do not. You do not always use it for anything. Sometimes you sit in it. The house makes its own sounds in this hour — the roof contracting, an animal in the yard, someone turning over in the next room. You know all of them.',
       'An hour of doing nothing in particular: not resting, not working, not waiting for something. Just — the afternoon moving through the window, the sounds from outside, your own thoughts going where they go. Nothing is required of you in this hour. This is rarer than it sounds.',
     ]),
     choices: null,
@@ -315,7 +315,7 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => G.age >= 16 && !G.mem?.sdr26SmallPleasure,
     text: () => pick([
-      'The first coffee of the morning, the temperature of it, the particular quality of the first ten minutes before the day has established its character. You are protective of this and you are right to be.',
+      'The first coffee of the morning, the temperature of it, the quality of the first ten minutes before the day has established its character. You are protective of this and you are right to be.',
       'The walk you take for no reason. Not exercise, not transit — just the neighbourhood at this speed, in this light, the angle of approach you take to the park. Nobody required this of you. You required it of yourself.',
       'Clean sheets on a night when you are genuinely tired. The window open. The temperature exactly right for the blanket weight you want. These conditions come together perhaps six times a year.',
     ]),
@@ -385,8 +385,8 @@ export const EVENTS_SONDER_26 = [
     weight: 2,
     when: (G) => G.age >= 25 && !G.mem?.sdr26HabitDiscovered,
     text: () => pick([
-      'You notice you have developed a habit — not one you chose, just one that grew: always putting the keys in the same pocket, always starting the morning in a particular sequence, always taking the same route when you have options. The habit has been there long enough to feel structural. You can\'t remember installing it.',
-      'A small ritual at the end of the workday: a thing that closes the work off from the rest of the evening. You developed it without intending to and depend on it now. Without it the evening feels open at one end in a way that takes time to settle.',
+      'You notice you have developed a habit — not one you chose, just one that grew: always putting the keys in the same pocket, always starting the morning in a sequence, always taking the same route when you have options. The habit has been there long enough to feel structural. You can\'t remember installing it.',
+      'A small ritual at the end of the workday: a thing that closes the work off from the rest of the evening. You developed it without intending to and depend on it now. Without it the evening feels open at one end, and that takes time to settle.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr26HabitDiscovered', true) },

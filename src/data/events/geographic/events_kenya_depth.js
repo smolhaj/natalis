@@ -19,7 +19,7 @@ export const KENYA_DEPTH_EVENTS = [
       G.currentYear >= 1980 &&
       G.age >= 16 && G.age <= 45 &&
       !G.mem?.kenMatatu,
-    text: `The matatu: the minivan that is not just a minivan. The graffiti wrapping — Tupac, football clubs, politicians' slogans, abstract designs in chrome — that marks out the routes as competing aesthetics. The tout leaning from the sliding door calling destinations into the air. The music that is always too loud and which you have stopped noticing the loudness of. The driver who knows the shortcut through the back road that saves twenty minutes when the Uhuru Highway has its accident. You have commuted on matatus for years. The knowledge required — which number goes where, which tout to trust, when to board and when to wait for the next — is the knowledge of living in this city.`,
+    text: `The matatu: Tupac on the back window, a football crest, chrome lettering, a politician's slogan. The tout leans out of the sliding door calling the route into the air, and the music is too loud and you no longer hear that it is. The driver knows the back road that saves twenty minutes when Uhuru Highway has its accident. Which number goes where, which tout to trust, when to board and when to wait: you have learned the city this way.`,
     choices: null,
     effect: (p) => { p.e += 2; p.s += 2; p.addFlag('ken_dep_matatu_generation'); p.setMem('kenMatatu', true) },
   },
@@ -33,7 +33,7 @@ export const KENYA_DEPTH_EVENTS = [
       G.currentYear >= 2004 && G.currentYear <= 2010 &&
       G.flags.has('ken_dep_matatu_generation') &&
       !G.mem?.kenMatatu2003,
-    text: `In 2003 Michuki rules: seat belts, speed governors, reflective jackets, no music above a certain decibel. The Ministry of Transport enforces the rules for months and then the enforcement relaxes and the matatus negotiate their way back to something approximating what they were. The graffiti is still there. The tout is still leaning from the door. The music is loud again. The speed governor makes a sound the driver knows how to work around. The Michuki rules are still technically in effect and have been partially absorbed.`,
+    text: `In 2003 Michuki's rules come in: seat belts, speed governors, reflective jackets, quieter music. For a few months the rules are enforced, then the enforcement slackens, and the matatus negotiate their way back to most of what they were. The graffiti stays, the tout leans out, the music is loud again. The driver knows how to work around the governor's sound.`,
     choices: null,
     effect: (p) => { p.r += 2; p.e += 2; p.setMem('kenMatatu2003', true) },
   },
@@ -49,7 +49,8 @@ export const KENYA_DEPTH_EVENTS = [
       G.currentYear === 2013 &&
       G.age >= 16 &&
       !G.mem?.kenWestgate,
-    text: `September 21, 2013. Al-Shabaab gunmen enter Westgate Shopping Mall on a Saturday when it is full. Sixty-seven people are killed over four days; the Kenyan Defence Forces' response is later criticised and then investigated. The mall is in Westlands, in the middle of the city, a place where the Nairobi middle class spends Saturday afternoons. The choice of location is specific — the place was chosen to be a place that people like you go to. You know people who were there or people who know people who were there. The city is a different city for a period after the Saturday in question. Then it becomes the same city again, which is its own kind of knowledge.`,
+    text: `September 21, 2013, a Saturday, and gunmen walk into Westgate when it is full, and the siege lasts four days. The mall is in Westlands, the middle of the city, where the Nairobi middle class spends its Saturday afternoons; the place was chosen because people like you go there. You know people who were there, or people who know people who were. For a while the city is a different city. Then it is the same city again.`,
+    context: 'Sixty-seven people were killed in the Westgate attack.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 7; p.addFlag('ken_dep_westgate_generation'); p.setMem('kenWestgate', true) },
   },
@@ -65,7 +66,7 @@ export const KENYA_DEPTH_EVENTS = [
       G.currentYear >= 1970 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem?.kenRunner,
-    text: `In school you run. Everyone runs — to school in the morning, in the PE class, the inter-school competitions. You have been told that the altitude helps, that the boys who grew up herding cattle over the hills of the Rift Valley arrived at competition already built for what running requires. The Kalenjin athletes in the Olympics are not a mystery to you in the way they are to the sports scientists who come to study them. They are your neighbours, or they have the same training you do, or they are the older brothers of your classmates who came back with medals. You run because this is what people here do, and because you can.`,
+    text: `In school you run. Everyone runs — to school in the morning, in the PE class, the inter-school competitions. You have been told that the altitude helps, that the boys who grew up herding cattle over the hills of the Rift Valley arrived at competition already built for what running requires. The Kalenjin athletes in the Olympics are no mystery to you. They are your neighbours, or they have the same training you do, or they are the older brothers of your classmates who came back with medals. You run because this is what people here do, and because you can.`,
     choices: [
       {
         text: 'You are genuinely fast. This becomes something to pursue.',
@@ -90,10 +91,14 @@ export const KENYA_DEPTH_EVENTS = [
     when: (G) =>
       isKenya(G) &&
       G.flags.has('athletic_pathway') &&
+      // The circuit is for the ones whose bodies kept the promise. A flag from
+      // a district meet at twelve sent schoolteachers and clerks to Rotterdam.
+      (G.fitness ?? 50) >= 65 && (G.stats?.health ?? 50) >= 65 &&
+      (!G.career || G.career.field === 'sports') &&
       G.currentYear >= 1985 &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.kenRunnerEurope,
-    text: `The road race circuit: Rotterdam, Berlin, Chicago, London. The prize money in US dollars. The agent who takes fifteen percent and arranges the travel and the contracts. You run in conditions that are different from the hills — the flat city streets, the crowds, the watching of the clock in a way that racing at home is not about. What you earn in one marathon is more than your father earned in a year. The responsibility to the family at home — the school fees, the land, the brick house — is present in the race. It is not the only reason you run but it is in the race with you.`,
+    text: `Rotterdam, Berlin, Chicago, London. The agent takes fifteen percent and arranges the flights and the hotel with the breakfast you cannot eat before a race. The streets are flat and the crowd is loud and you run against the clock instead of the man beside you. What you win in one marathon is more than your father earned in a year, and the school fees and the land and the brick house run the race with you.`,
     choices: null,
     effect: (p) => { p.m += 5; p.mo += 8000; p.karma += 4; p.setMem('kenRunnerEurope', true) },
   },
@@ -110,7 +115,7 @@ export const KENYA_DEPTH_EVENTS = [
       G.age >= 16 && G.age <= 40 &&
       G.stats?.wealth <= 30 &&
       !G.mem?.kenKibera,
-    text: `Kibera: the informal settlement two kilometres from the city centre, a hundred thousand people on a square kilometre depending on who is counting and when. The iron-sheet roof. The water kiosk at the end of the row where you buy your twenty litres. The electricity that runs from a junction box someone wired in 2003 and which charges for connection by the month. The businesses along the road — the phone charging station, the mpishi who serves lunch, the tailor with the foot-pedal Singer. What the government calls an eyesore and what you call home are the same place. The eyesore has a church on every other corner and a school that the parents in it built with harambee contributions when the government school had no room.`,
+    text: `Kibera, two kilometres from the city centre. An iron-sheet roof, the water kiosk at the end of the row where you buy twenty litres, the electricity from a junction box somebody wired years ago and charges for by the month. Along the road the phone-charging stall, the woman who cooks lunch, the tailor at his foot-pedal Singer. The government calls it an eyesore. There is a church on every other corner and a school the parents built with harambee money when the government school was full.`,
     choices: null,
     effect: (p) => { p.r += 3; p.s += 3; p.e += 2; p.setMem('kenKibera', true) },
   },
@@ -126,7 +131,7 @@ export const KENYA_DEPTH_EVENTS = [
       G.currentYear >= 1995 &&
       G.age >= 18 && G.age <= 26 &&
       !G.mem?.kenHelb,
-    text: `The Higher Education Loans Board. The HELB loan that arrives in tranches to cover tuition and a portion of upkeep. The conditions: you must begin repayment one year after graduating or one year after getting a formal job, whichever comes first. The KRA — the tax authority — will report you to HELB if your employer submits your PAYE. The loan is not forgiven. The families that could not top up the upkeep tranche and the families that could produce a difference you can see in the dorm rooms: who goes home for the weekend and who stays. You are managing this calculation at a point in life that already has several calculations running simultaneously.`,
+    text: `The HELB loan comes in tranches: the fees and part of the upkeep. Repayment starts a year after you graduate or get a payslip, and the tax office will tell them when you do. In the hostel you can see which families can top up the upkeep: who goes home at the weekend and who stays. You add this calculation to the others already running.`,
     choices: null,
     effect: (p) => { p.e += 4; p.r += 3; p.mo -= 1000; p.setMem('kenHelb', true) },
   },
@@ -143,7 +148,7 @@ export const KENYA_DEPTH_EVENTS = [
       G.age >= 22 && G.age <= 38 &&
       G.career?.field === 'healthcare' &&
       !G.mem?.kenDiasporaNurse,
-    text: `The pathway is established: the Kenya Medical Training College or the university nursing programme, the registration with the Nursing Council, the IELTS exam, the NMC application to the UK Nursing and Midwifery Council, the sponsorship letter from an NHS trust or a care home chain. Your colleagues are doing it in sequence. One leaves, then two, then four. The department in the Kenyatta National Hospital or the Coast General has a roster with gaps that are not being filled. The Ministry of Health condemns the emigration. The Ministry does not offer the salary that would stop it. You are deciding whether to go.`,
+    text: `The path is well worn: the nursing diploma, the IELTS, the registration in Britain, the sponsorship letter from an NHS trust or a care-home chain. One colleague goes, then two, then four, and the gaps on the ward roster at Kenyatta stay empty. The ministry condemns it and does not offer the salary that would stop it. You are deciding whether to go.`,
     choices: [
       {
         text: 'You go. The calculation resolves to leave.',

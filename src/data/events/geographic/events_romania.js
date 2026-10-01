@@ -14,7 +14,7 @@ export const ROMANIA_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 1989 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem?.romSecuritate,
-    text: 'You learn to speak in two registers before you can name the difference. At school: the correct version. At home, with the door closed and the television turned up: the other version. Your father stops mid-sentence when there is a knock at the door. An uncle stops visiting. No one explains why. The word Securitate is not used in front of children but the shape of it is everywhere — in the pause before answering a question, in the specific selection of what to tell a teacher, in the way your parents look at each other across a room when something happens.',
+    text: 'You learn to speak in two registers before you can name the difference. At school: the correct version. At home, with the door closed and the television turned up: the other version. Your father stops mid-sentence when there is a knock at the door. An uncle stops visiting. No one explains why. The word Securitate is not used in front of children but the shape of it is everywhere — in the pause before answering a question, in the selection of what to tell a teacher, in the way your parents look at each other across a room when something happens.',
     choices: [
       {
         text: 'You absorb the double register. It becomes the way you move through the world.',
@@ -25,7 +25,7 @@ export const ROMANIA_EVENTS = [
       {
         text: 'You believe some of what the school teaches. The gap is not yet visible to you.',
         tag: null,
-        outcome: 'The gap becomes visible later, in a specific moment that you will remember for the rest of your life.',
+        outcome: 'The gap becomes visible later, in a moment that you will remember for the rest of your life.',
         effect: (p) => { p.m -= 2; p.addFlag('securitate_generation'); p.setMem('romSecuritate', true); },
       },
     ],
@@ -42,7 +42,8 @@ export const ROMANIA_EVENTS = [
       G.currentYear >= 1967 && G.currentYear <= 1989 &&
       G.age >= 16 &&
       !G.mem?.romDecree779,
-    text: 'Decree 779, 1966: abortion is banned. Contraception is unavailable. The official rationale is demographic: Romania needs workers for the communist project. The doctor who comes to the factory every few months is not there for your health — the gynecological examination is to confirm that workers are pregnant when they should be pregnant. The women in the corridor know this. The conversation in the corridor is not the conversation that is supposed to happen there. Women count the weeks. Women know the names of women who know what to do when counting the weeks becomes urgent. Twelve thousand women die from illegal procedures in the twenty-three years of the decree.',
+    text: 'Decree 770, 1966: abortion banned, contraception unavailable, because the state needs workers. The doctor who comes to the factory every few months is there to check that the women are pregnant when they should be. The women in the corridor know this, and the conversation in the corridor is not the official one. Women count the weeks, and know the names of women who know what to do when the counting becomes urgent.',
+    context: 'About 10,000 women died from illegal abortions in Romania between 1966 and 1989.',
     choices: [
       {
         text: 'You navigate the system — the careful counting, the careful friendships.',
@@ -72,9 +73,9 @@ export const ROMANIA_EVENTS = [
     text: (G) => {
       const age = G.age
       if (age <= 20) {
-        return 'December 16, 1989. The protests begin in Timișoara around a pastor named Tőkés László. By December 21, Ceaușescu addresses a crowd in Bucharest that boos him. This has never happened before. The confusion on his face is broadcast live. The helicopter lifts off from the Central Committee roof on December 22. On Christmas Day, Nicolae and Elena Ceaușescu are executed after a summary trial that lasts ninety minutes. The television shows the body. You are watching the television.'
+        return 'December 1989. It starts in Timișoara around a pastor, and on December 21 Ceaușescu stands on the balcony in Bucharest and the crowd boos him, which has never happened, and the confusion on his face is broadcast live. The next day a helicopter lifts him off the roof of the Central Committee. On Christmas Day he and Elena are shot after a trial that lasts an hour or so, and the television shows the bodies. You are watching the television.'
       }
-      return 'December 1989. The only violent revolution in Eastern Europe\'s 1989 wave. The army changing sides on December 22. The television occupied by people who are not the television people from before. A hundred and four hours of shooting in the streets of Bucharest — the "terrorists" whose identity was never definitively established. On Christmas Day: the ninety-minute trial, the body shown on television, the specific quality of a Monday afternoon when something that defined your entire life ends in ninety minutes on a television screen.'
+      return 'December 1989. The only violent revolution in Eastern Europe\'s 1989 wave. The army changing sides on December 22. The television occupied by people who are not the television people from before. A hundred and four hours of shooting in the streets of Bucharest — the "terrorists" whose identity was never definitively established. On Christmas Day: the ninety-minute trial, the body shown on television, the quality of a Monday afternoon when something that defined your entire life ends in ninety minutes on a television screen.'
     },
     choices: [
       {
@@ -102,7 +103,7 @@ export const ROMANIA_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2000 &&
       G.age >= 18 &&
       !G.mem?.romTransition,
-    text: 'The transition. The FSN — the National Salvation Front — which is formed of former communist officials. Iliescu, who was in the party. The Mineriads: in June 1990, miners come to Bucharest on trains and beat protesters in University Square with clubs while the police watches. The state that replaced the communist state has the shape of the communist state in certain lights. The economy: hyperinflation, then reform, then hyperinflation again, then IMF conditions. The queue at the currency exchange. The dollar that holds value when the leu does not.',
+    text: 'The National Salvation Front is made of former communist officials, and Iliescu was in the party. In June 1990 miners come to Bucharest by train and beat the protesters in University Square with clubs while the police watch. In certain lights, the state that replaced the communist state has its shape. Then hyperinflation, reform, hyperinflation again, IMF conditions, and the queue at the exchange, the dollar holding its value while the leu does not.',
     choices: [
       {
         text: 'Adapt. Build what you can with the materials available.',

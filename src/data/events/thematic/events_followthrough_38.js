@@ -16,7 +16,7 @@ export const FOLLOWTHROUGH_38_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 50 &&
       !G.mem?.ft38SomozaLate,
-    text: 'Somoza was assassinated in Asunción, Paraguay, in September 1980 — a year after he fled. A group linked to Montoneros, the Argentine guerrilla movement, killed him with a rocket launcher in the street. He had arrived with his holdings: real estate, banks, manufacturing. The Somoza fortune that was built on Nicaragua was spent in exile. His death was reported here with a specific quietness — not celebration, because the country was already past him, already deep in the war the Contra were fighting from Honduras. He is a man who happened to a country, and the country continued.',
+    text: 'Somoza was assassinated in Asunción, Paraguay, in September 1980 — a year after he fled. A group linked to Montoneros, the Argentine guerrilla movement, killed him with a rocket launcher in the street. He had arrived with his holdings: real estate, banks, manufacturing. The Somoza fortune that was built on Nicaragua was spent in exile. His death was reported here with a quietness — not celebration, because the country was already past him, already deep in the war the Contra were fighting from Honduras. He is a man who happened to a country, and the country continued.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.setMem('ft38SomozaLate', true) },
   },

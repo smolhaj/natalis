@@ -103,7 +103,7 @@ export const GUINEA_EVENTS = [
       {
         text: 'You leave. Dakar, Paris, Montreal — somewhere the work is possible.',
         tag: 'exiled',
-        outcome: 'The taxi to the airport. You carry two bags and the particular sensation of not knowing whether you are going to return. The city out the window in the morning light looks exactly like itself.',
+        outcome: 'The taxi to the airport. You carry two bags and the sensation of not knowing whether you are going to return. The city out the window in the morning light looks exactly like itself.',
         effect: (p) => { p.m -= 10; p.e += 8; p.w += 2; p.addFlag('guinea_exile'); p.addFlag('emigrated'); p.emigrateTo(['Senegal', 'France', 'Canada']); p.setResidency('work_visa'); p.setMem('gnEducatedLeaves', true) },
       },
       {
@@ -137,7 +137,8 @@ export const GUINEA_EVENTS = [
       G.currentYear >= 2009 && G.currentYear <= 2011 &&
       G.age >= 20 && G.age <= 50 &&
       !G.mem?.gnStadium,
-    text: 'September 28, 2009. The opposition fills the national stadium in Conakry to protest Moussa Dadis Camara standing for president. Presidential Guard soldiers enter through multiple gates. The firing begins without warning. One hundred and fifty-seven people are killed inside the stadium. Soldiers rape women openly, in the stands, while others continue firing. Everything is recorded — by witnesses, by cameras, eventually by a UN commission of inquiry. Dadis Camara is shot by his own aide-de-camp three months later and evacuated to Burkina Faso. The ICC investigation begins. The trial, when it comes, comes slowly.',
+    text: 'September 28, 2009. The opposition fills the national stadium in Conakry, and the presidential guard comes in through the gates and opens fire without warning. Inside the stadium, in the stands, soldiers rape women while others keep firing. Everything is filmed. Three months later Dadis Camara is shot by his own aide and flown out of the country. The trial, when it comes, comes slowly.',
+    context: 'At least 157 people were killed and more than 100 women raped in the stadium massacre of 28 September 2009. The trial opened in Conakry in 2022.',
     effect: (p) => { p.m -= 20; p.h -= 8; p.r += 10; p.addFlag('guinea_stadium_2009_witness'); p.setMem('gnStadium', true) },
   },
 
@@ -165,7 +166,7 @@ export const GUINEA_EVENTS = [
       G.flags.has('camp_boiro_family_loss') &&
       G.age >= 55 &&
       !G.mem?.gnCampBoiroGrief,
-    text: 'The official Commission of Inquiry begins its work decades after the fact. Families are asked to come forward. You go. You sit in a room with a form that asks for name, date of arrest, date of death. You leave the last field blank — you still do not know the date. The form asks for it anyway. You leave it blank and hand the paper back. Outside, in the parking lot, you stand in the heat for a while before you can think of where to go next.',
+    text: 'Decades later a commission of inquiry begins, and families are asked to come forward, and you go. You sit in a room with a form that asks for name, date of arrest, date of death. You leave the last field blank, because you still do not know the date, and hand it back. Outside in the car park you stand in the heat for a while before you can think where to go.',
     effect: (p) => { p.m -= 12; p.r += 6; p.karma += 8; p.setMem('gnCampBoiroGrief', true) },
   },
 
@@ -178,7 +179,7 @@ export const GUINEA_EVENTS = [
       G.flags.has('guinea_stadium_2009_witness') &&
       G.age >= 50 &&
       !G.mem?.gnStadiumLate,
-    text: 'Alpha Condé wins the 2010 election. Then another. Thirteen years after the stadium, a military coup removes him too. The soldiers who gave the orders in September 2009 are tried at last — the trial opens in 2022, in the same city. The verdict arrives. You read about it on a phone, the way you read about everything now. The verdict is what it is. The 157 names do not change.',
+    text: 'Alpha Condé is elected in 2010, and again, and then the soldiers remove him too. The men who gave the orders in the stadium in September 2009 are tried at last, in 2022, in the same city. You read the verdict on a phone, the way you read everything now. It is what it is. The names of the dead do not change.',
     effect: (p) => { p.m -= 6; p.r += 5; p.karma += 6; p.e += 3; p.setMem('gnStadiumLate', true) },
   },
 
@@ -216,7 +217,7 @@ export const GUINEA_EVENTS = [
       G.flags.has('voted_no_1958') &&
       G.age >= 60 &&
       !G.mem?.gnVotedNoLate,
-    text: 'You voted No in 1958 because Sékou Touré said poverty in freedom was better than riches in servitude. You have had the poverty. The freedom arrived and departed in irregular intervals. When you think about September 28, 1958, what you remember is not the slogan but the specific quality of the morning after — the sense that the country had made an irrevocable choice, and that you were part of the we that made it. You still are.',
+    text: 'You voted No in 1958 because Sékou Touré said poverty in freedom was better than riches in servitude. You have had the poverty. The freedom arrived and departed in irregular intervals. When you think about September 28, 1958, what you remember is not the slogan but the quality of the morning after — the sense that the country had made an irrevocable choice, and that you were part of the we that made it. You still are.',
     effect: (p) => { p.m += 5; p.r += 5; p.e += 3; p.setMem('gnVotedNoLate', true) },
   },
 

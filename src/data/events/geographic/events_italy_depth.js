@@ -41,7 +41,7 @@ export const ITALY_DEPTH_EVENTS = [
       G.currentYear >= 1948 && G.currentYear <= 1990 &&
       G.age >= 20 && G.age <= 55 &&
       !G.mem?.itDcPci,
-    text: 'The Italian anomaly. The PCI — the Partito Comunista Italiano — is the largest Communist Party in Western Europe. Under the Cold War convention known as the conventio ad excludendum, it cannot govern Italy regardless of votes received. In 1976 the PCI wins 34.4 percent and still does not govern. Berlinguer proposes the Compromesso Storico — a historic compromise with the DC. Aldo Moro is murdered by the Brigate Rosse before it can happen. The PCI under Berlinguer becomes something different from Moscow: Eurocommunist, the moral opposition. You vote for a party that cannot win in the way winning works, or you vote for a party that governs through corruption and anticommunism.',
+    text: 'The Italian anomaly: the largest Communist Party in the West, and a rule nobody wrote down that it may not govern however many votes it gets. In 1976 it takes over a third of the vote and still does not govern, and Berlinguer proposes a historic compromise with the Christian Democrats, and the Red Brigades kill Moro before it can happen. You vote for a party that cannot win the way winning works, or for one that governs through patronage and anticommunism.',
     choices: [
       {
         text: 'You are PCI — the tessera in the pocket, the Feste dell\'Unità, the permanent opposition.',
@@ -69,7 +69,7 @@ export const ITALY_DEPTH_EVENTS = [
       G.age >= 10 && G.age <= 30 &&
       G.religion?.startsWith('christian') &&
       !G.mem?.itVaticano,
-    text: 'Vatican II opens in October 1962 and closes in 1965. The Mass is now in Italian: the Latin that was uniform across the world becomes the language you actually speak. The priest faces the congregation. The altar turns. The window that John XXIII described throwing open: the air of the world comes in. In Italy, where the Church and daily life are inseparable in ways they are not elsewhere, the changes land differently. The divorce referendum of 1974 — Catholics vote 60 percent to keep divorce, against the position of the bishops. The population that prays is not the population that obeys.',
+    text: 'Vatican II, and the Mass is in Italian now instead of a Latin the same everywhere; the priest turns to face you; the window the Pope spoke of opens and the air of the world comes in. In Italy, where the Church and daily life are one thing, it lands harder. In 1974 the bishops tell Catholics to vote against divorce, and most of them vote to keep it. The country that prays is not the country that obeys.',
     choices: null,
     effect: (p) => { p.m += 2; p.r += 3; p.addFlag('postconciliar_generation'); p.setMem('itVaticano', true); },
   },
@@ -84,7 +84,7 @@ export const ITALY_DEPTH_EVENTS = [
       G.age >= 28 && G.age <= 60 &&
       G.flags.has('mani_pulite_generation') &&
       !G.mem?.itSecondaRep,
-    text: 'After Mani Pulite, the Second Republic was supposed to happen. The old parties were gone. The new parties would be different. But Berlusconi in 1994 is not a clean break — he arrives with his television channels and his Milan AC and his Fininvest apparatus already assembled. The center-left coalitions reorganize: Ulivo, then Prodi, then Rutelli. The institutional reforms never arrive. The electoral law is modified repeatedly. Italy has nine governments in fifteen years after Mani Pulite and the First Republic is gone and the Second Republic has not arrived and the space between them becomes permanent.',
+    text: 'After Clean Hands the Second Republic was supposed to begin, with new parties that would be different. Then Berlusconi arrives in 1994, with his television channels and his football club and his company already assembled, and the centre-left reorganises itself under one name after another, and the reforms never come. Government follows government. The First Republic is gone and the Second has not arrived, and the space between them becomes permanent.',
     choices: [
       {
         text: 'Something different could have been built here. The moment was real and it passed.',
@@ -138,7 +138,7 @@ export const ITALY_DEPTH_EVENTS = [
       G.currentYear >= 2011 && G.currentYear <= 2013 &&
       G.age >= 25 &&
       !G.mem?.itSpread,
-    text: 'November 2011. The spread — the differential between Italian and German government bond yields — reaches 575 basis points. The spread is not a number anyone knew before this year; it becomes the number on every news programme. Berlusconi resigns. Mario Monti, a technocrat, is appointed Prime Minister without election. He governs with a cabinet of professors and bankers and passes the Salva Italia decree: pension reform, IMU property tax on primary residences, austerity. The retirement age rises. Esodati appear as a category — workers who left their jobs expecting a pension that has now changed. Italy is governed by people who were not elected to save something that may not be saveable.',
+    text: 'November 2011, and the spread, a number nobody had heard of a year ago, is on every news bulletin. Berlusconi resigns and a professor is made prime minister without an election, with a cabinet of professors and bankers. The pension age goes up, the house tax comes back, and a new word appears, esodati, for people who left work expecting a pension that no longer exists. Italy is governed by people nobody elected, to save something that may not be savable.',
     choices: [
       {
         text: 'The austerity is necessary. The alternative is Greece.',
@@ -165,7 +165,7 @@ export const ITALY_DEPTH_EVENTS = [
       G.currentYear >= 2022 && G.currentYear <= 2024 &&
       G.age >= 25 &&
       !G.mem?.itMeloni,
-    text: 'October 2022. Giorgia Meloni becomes Prime Minister — the first woman to hold the office. Her party, Fratelli d\'Italia, traces its lineage through the post-fascist MSI and Alleanza Nazionale. The flame in the party logo is the MSI flame. In her acceptance speech she is Giorgia — mother, Christian, Italian — and each noun is deliberate. European leaders respond with alarm and pragmatism. In Italy the vote is read differently: protest vote, patriot vote, anti-immigration vote, and vote by people who have not voted in a generation. The first woman prime minister arrives from the right, and the left does not know what to do with the fact.',
+    text: 'October 2022, and Giorgia Meloni is prime minister, the first woman to hold the office, from a party descended from the post-fascist MSI, with the MSI\'s flame still in its logo. In her speech she is Giorgia, mother, Christian, Italian, and each noun is chosen. Europe responds with alarm and then with pragmatism. Italians read the vote as protest, as patriotism, as against immigration, as people voting for the first time in a generation. The first woman prime minister has come from the right, and the left does not know what to do with that.',
     choices: [
       {
         text: 'The vote for Meloni is a vote against the system that failed Italy. You understand it, even if you didn\'t cast it.',
@@ -174,9 +174,9 @@ export const ITALY_DEPTH_EVENTS = [
         effect: (p) => { p.r += 5; p.addFlag('italy_meloni_2022'); p.setMem('itMeloni', true); },
       },
       {
-        text: 'The lineage matters. A party descended from the MSI governing Italy is a specific fact that doesn\'t dissolve.',
+        text: 'The lineage matters. A party descended from the MSI governing Italy is a fact that doesn\'t dissolve.',
         tag: null,
-        outcome: 'The lineage matters and the government does what it does. Both things are true simultaneously, and the truth of both is the argument that runs through the full legislature.',
+        outcome: 'The lineage matters and the government does what it does. The argument runs through the whole legislature.',
         effect: (p) => { p.m -= 4; p.r += 6; p.karma += 3; p.addFlag('italy_meloni_2022'); p.setMem('itMeloni', true); },
       },
     ],

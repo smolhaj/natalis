@@ -69,7 +69,7 @@ const SAUDI_EVENTS = [
       G.currentYear >= 1979 && G.currentYear <= 1980 &&
       G.age >= 14 &&
       !G.mem?.sau_mosque_siege,
-    text: 'November 20, 1979. The first day of the Islamic year 1400. Juhayman al-Otaybi and four to five hundred armed men seize the Grand Mosque in Mecca. The Haram — the most sacred place in Islam, entry forbidden to non-Muslims, weapons forbidden to all — is now held by militants who announce that the Mahdi has arrived. The Saudi government\'s response takes two weeks. French special forces are brought in covertly, converted to Islam for the duration of the operation. Four hundred and fifty dead. The kingdom\'s response is not liberalization but intensification: more mutaween, stricter morality enforcement, Wahhabist education expanded. The siege\'s lesson, as the government reads it, is that the religious establishment must be appeased rather than challenged.',
+    text: 'November 1979, the first day of a new Islamic century, and armed men seize the Grand Mosque in Mecca and announce that the Mahdi has come. It takes the government two weeks, and French commandos brought in secretly, to take it back. Afterwards the kingdom does not loosen; it tightens: more religious police, stricter morals, more of the clerics\' curriculum. The lesson the government draws is that the religious establishment must be fed, not fought.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('sau_siege_generation'); p.setMem('sau_mosque_siege', true); },
   },
@@ -89,13 +89,13 @@ const SAUDI_EVENTS = [
       const isFemale = G.character.gender === 'female'
       return isFemale
         ? 'The hay\'a — the Commission for the Promotion of Virtue and Prevention of Vice — patrols the mall. Their job is specific: no gender mixing, correct dress, no music in public, women not without a mahram. You are wearing what you should be wearing. Your abaya is correct. The mutawi looks at you anyway and the look contains the authority it contains. You learn, young, the difference between being correctly covered and being seen.' + (G.currentYear >= 2002 ? ' The 2002 school fire is still talked about: the girls pushed back inside because they were not wearing their abayas. Fifteen died. The mutaween were there.' : '')
-        : 'The hay\'a car — white Toyota Land Cruiser — parks near the mall entrance. The men inside have the authority to detain, to issue reports, to make demands that you cannot easily refuse. You have learned the schedule of their patrols. You have learned which malls are less actively monitored. The knowledge of the specific geography of enforcement is its own education — the practical curriculum of living in a system that has opinions about how you spend your afternoon.'
+        : 'The hay\'a car — white Toyota Land Cruiser — parks near the mall entrance. The men inside have the authority to detain, to issue reports, to make demands that you cannot easily refuse. You have learned the schedule of their patrols. You have learned which malls are less actively monitored. The knowledge of the geography of enforcement is its own education — the practical curriculum of living in a system that has opinions about how you spend your afternoon.'
     },
     choices: [
       {
         text: 'Navigate it — you know the rules and the gaps in the rules.',
         tag: null,
-        outcome: 'The navigation is real. It requires attention you would rather spend on other things. The attention is the tax.',
+        outcome: 'You learn to navigate. It requires attention you would rather spend on other things. The attention is the tax.',
         effect: (p) => { p.e += 3; p.s += 3; p.r += 4; p.addFlag('sau_mutaween_era'); p.setMem('sau_mutaween', true); },
       },
       {
@@ -149,12 +149,12 @@ const SAUDI_EVENTS = [
       G.currentYear >= 1980 &&
       G.age >= 20 && G.age <= 40 &&
       !G.mem?.sau_wasta,
-    text: 'Wasta: connections, influence, the ability to call someone who calls someone. You need something from a government office. The official channel is slow and the outcome is uncertain. Your uncle knows someone. Your father\'s friend is a cousin of the deputy director. The call is made. The thing gets done in two days instead of six months. The question underneath it is not whether wasta works — it clearly does. The question is what kind of society it builds over decades: the advantage that accrues to those who have it, the ceiling that stays low for those who don\'t.',
+    text: 'Wasta: connections, the ability to call someone who calls someone. You need something from a ministry, and the official channel is slow and its outcome uncertain. Your father\'s friend is a cousin of the deputy director, and the call is made, and the thing is done in two days instead of six months. Nobody doubts that wasta works. The question is what it builds over decades, for the people who have it and the people who don\'t.',
     choices: [
       {
         text: 'Use it — this is how things are done here.',
         tag: null,
-        outcome: 'The thing gets done. You understand how the system operates from the inside now, which is different from understanding it from outside.',
+        outcome: 'The thing gets done. You understand how the system operates from the inside now.',
         effect: (p) => { p.s += 5; p.w += 4; p.addFlag('sau_wasta_system'); p.setMem('sau_wasta', true); },
       },
       {
@@ -246,7 +246,7 @@ const SAUDI_EVENTS = [
     text: (G) => {
       const isFemale = G.character.gender === 'female'
       return isFemale
-        ? 'Cinema. Concerts. Women driving. Women in the stadiums. The mutaween no longer have arrest powers. The changes arrive faster than the framework for understanding them. Mohammed bin Salman is thirty-two. The reforms are real. Also real: the activists who campaigned for women\'s driving rights are in detention while the driving ban was lifted. The two facts exist simultaneously and the country is asking you to hold them together without resolving the contradiction.'
+        ? 'Cinemas. Concerts. Women driving, women in the stadium, and the religious police without the power to arrest. The changes arrive faster than anyone can make sense of them, under a crown prince of thirty-two. And the women who campaigned for the right to drive are in prison while the ban is lifted. The country asks you to hold both and not to ask about the second.'
         : 'The concert was sold out — Mariah Carey in Riyadh, in a country where public music was restricted three years ago. The Ritz Carlton in Riyadh was briefly converted into a detention facility for two hundred businessmen and princes accused of corruption. The NEOM megacity is under construction in the desert with money the kingdom may not have by the time it finishes. The pace is disorienting. You are twenty-five years old and your country is trying to compress forty years of social change into a decade.'
     },
     choices: null,
@@ -268,7 +268,7 @@ const SAUDI_EVENTS = [
     text: (G) => {
       const isWoman = G.character.gender === 'female'
       return isWoman
-        ? 'The driving ban that your mother lived under and you lived under is now lifted. The cinemas are open. The concerts. The world your granddaughter is growing up in is not the world you were allowed to grow up in. You cannot decide if this is a vindication or an indictment. Both, probably, with the specific mathematics of: too late for you, just in time for her.'
+        ? 'The driving ban that your mother lived under and you lived under is now lifted. The cinemas are open. The concerts. The world your granddaughter is growing up in is not the world you were allowed to grow up in. You cannot decide if this is a vindication or an indictment. Both, probably, with the mathematics of: too late for you, just in time for her.'
         : 'The country was built in fifty years on oil that will not last forever and a religious compact that has been renegotiated without being called a renegotiation. You have watched the Grand Mosque seized and retaken, the Americans invited in and never quite asked to leave, the reforms announced by a crown prince who also ordered the killing of a journalist. The arc bends in a direction but does not straighten.'
     },
     choices: null,

@@ -54,7 +54,7 @@ export const DISEASE_ARC_EVENTS = [
       choleraEndemic(G.currentCountry ?? G.character.country, G.currentYear) &&
       G.ruralUrban !== 'rural' &&
       !G.mem?.choleraEpidemic,
-    text: `It moves through the neighbourhood faster than news of it does. The symptoms are specific and terrible: the dehydration that comes in hours, not days. The particular blue-grey the skin turns. The rice-water stool the medical books describe. The doctors call it Asiatic cholera, from British textbooks; it has been in this place far longer than that name has. Your aunt dies on a Wednesday. By Saturday her neighbour is gone too. You watch this and understand that some years are not safe to be alive in.`,
+    text: `It moves through the neighbourhood faster than news of it does. The symptoms are specific and terrible: the dehydration that comes in hours, not days. The blue-grey the skin turns. The rice-water stool the medical books describe. The doctors call it Asiatic cholera, from British textbooks; it has been in this place far longer than that name has. Your aunt dies on a Wednesday. By Saturday her neighbour is gone too. You watch this and understand that some years are not safe to be alive in.`,
     choices: [
       {
         text: 'You have already had it and survived. Your body has some immunity now.',
@@ -189,7 +189,7 @@ export const DISEASE_ARC_EVENTS = [
     when: (G) =>
       G.flags.has('asian_crisis_generation') &&
       !G.mem?.asianCrisisIMF,
-    text: `The IMF package arrives with conditions attached. Interest rates raised. Budget cuts. Government enterprises to be privatised. The economists who designed it work in Washington and will return there. You are here. The specific condition that affects you most is the cut to the public sector where your brother works — the logic being that reducing government expenditure restores "confidence." The word confidence refers to something that is not your brother's salary.`,
+    text: `The IMF package arrives with conditions attached. Interest rates raised. Budget cuts. Government enterprises to be privatised. The economists who designed it work in Washington and will return there. You are here. The condition that affects you most is the cut to the public sector where your brother works — the logic being that reducing government expenditure restores "confidence." The word confidence refers to something that is not your brother's salary.`,
     choices: null,
     effect: (p) => {
       p.mo -= 2000;

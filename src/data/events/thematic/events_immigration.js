@@ -257,7 +257,7 @@ export const IMMIGRATION_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.flags.includes('imm_detained') && !G.flags.includes('deportation_hearing_done'),
-    text: 'You have a lawyer — a duty lawyer, who has met you once. The hearing room is small. A judge reads a summary of your case from a file. You are given time to speak. You have been in this country for six years. You pay taxes, or you did when you could. You have people here. You say these things. The judge takes notes.',
+    text: 'You have a lawyer, a duty lawyer you have met once. The hearing room is small, and a judge reads a summary of your case from a file. You have been here six years; you paid taxes when you could; you have people here. You say these things. The judge takes notes.',
     choices: [
       { text: 'Make the strongest case you can — every detail matters', tag: null, outcome: 'The hearing is continued to a second date. There is no resolution. But there is more time, and time has its uses.', effect: (p) => { p.m -= 15; p.r += 8; p.e += 3; p.addFlag('deportation_hearing_done') } },
       { text: 'Accept the outcome — you are exhausted and have no more fight left', tag: null, outcome: 'The order is signed. You have fourteen days. You spend them in a kind of grief that has no name in either of your languages.', effect: (p) => { p.m -= 25; p.r += 18; p.addFlag('deportation_hearing_done'); p.addFlag('deportation_ordered') } },
@@ -270,7 +270,7 @@ export const IMMIGRATION_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.flags.includes('deportation_ordered') && !G.flags.includes('deported'),
-    text: 'The flight is at 6 AM. An officer accompanies you to the gate. He is not unkind. You have one bag. Everything else was left with people who said they would hold it. The shame is not about what you did — you were trying to live — but about returning without the thing you went to get. During the flight you do not sleep. You think about what comes next with the specific clarity of someone who has no other choice but to plan.',
+    text: 'The flight is at 6 AM. An officer accompanies you to the gate. He is not unkind. You have one bag. Everything else was left with people who said they would hold it. The shame is not about what you did — you were trying to live — but about returning without the thing you went to get. During the flight you do not sleep. You think about what comes next with the clarity of someone who has no other choice but to plan.',
     choices: [
       { text: 'Start planning the return immediately', tag: null, outcome: 'The knowledge you accumulated doesn\'t disappear. The route back is different but it exists.', effect: (p) => { p.m -= 20; p.r += 15; p.e += 3; p.setResidency('citizen'); p.addFlag('deported') } },
       { text: 'Accept this chapter is closed', tag: null, outcome: 'You build something here. It is not what you imagined. It is something.', effect: (p) => { p.m -= 15; p.r += 10; p.setResidency('citizen'); p.addFlag('deported') } },
@@ -405,13 +405,13 @@ export const IMMIGRATION_EVENTS = [
       G.age >= 18,
     text: (G) => {
       const dest = G.currentCountry?.name ?? 'the new country'
-      return `You are processed at the airport in ${dest} on a Tuesday morning. A caseworker meets you with a folder — appointments, numbers to call, the address of the accommodation. The folder is comprehensive in a way that assumes you already know how everything works. You do not know how anything works. The caseworker is kind. You follow her to a car and watch the country through the window and understand nothing you are seeing.`
+      return `You are processed at the airport in ${dest} on a Tuesday morning. A caseworker meets you with a folder — appointments, numbers to call, the address of the accommodation. The folder is comprehensive and assumes you already know how everything works. You do not know how anything works. The caseworker is kind. You follow her to a car and watch the country through the window and understand nothing you are seeing.`
     },
     choices: [
       {
         text: 'Learn everything — ask every question, read every document',
         tag: null,
-        outcome: 'The folder becomes dog-eared. You learn the bus route, the office hours, the specific person at the welfare office who is more patient than the others. The knowledge is its own foothold.',
+        outcome: 'The folder becomes dog-eared. You learn the bus route, the office hours, the person at the welfare office who is more patient than the others. The knowledge is its own foothold.',
         effect: (p) => { p.e += 6; p.m -= 8; p.addFlag('resettlement_arrived'); p.setMem('resettlementArrival', true) },
       },
       {
@@ -517,7 +517,7 @@ export const IMMIGRATION_EVENTS = [
       !G.mem?.resettlementContactHome,
     text: (G) => {
       const origin = G.character.country.name
-      return `You have a number for your sister in ${origin}. The connection drops twice before you hear her voice clearly. She asks if you are safe. You say yes. She asks what it is like. You try to describe it and stop. The gap between what you are experiencing and what she can imagine is not her fault or yours. You tell her you are well and that you miss her and that you are working on it. All three things are true.`
+      return `You have a number for your sister in ${origin}, and the line drops twice before you hear her clearly. She asks if you are safe, and you say yes. She asks what it is like, and you start to describe it and stop. You tell her you are well, that you miss her, that you are working on it.`
     },
     choices: null,
     effect: (p) => { p.m += 8; p.r += 10; p.s += 3; p.addFlag('maintained_contact_home'); p.setMem('resettlementContactHome', true) },

@@ -31,7 +31,7 @@ export const CHINA_EVENTS = [
       const parents = Object.values(G.parents ?? {})
       const fatherAlive = parents.some(p => p.gender === 'male' && p.alive !== false)
       if (fatherAlive) return 'The class enemy label arrives at school before you understand what it means. Your father was an engineer — that is the past tense the designation requires. The teacher pauses before saying your name at roll call. The other children have been told not to sit next to you at lunch. You learn to walk to school a different way every day so you do not have to see the slogans they have painted on your building door.'
-      return 'Your mother taught university. Past tense now. She has been sent to study sessions every evening for three weeks. She comes home later each night. She no longer talks at dinner about what she is reading. The books have gone from the shelves. You are not sure where. You have learned not to ask where.'
+      return 'Your mother taught university. Past tense now. She has been sent to study sessions every evening for three weeks and comes home later each night, and no longer talks at dinner about what she is reading. The books have gone from the shelves. You have learned not to ask where.'
     },
     choices: null,
     effect: (p) => { p.m -= 8; p.addFlag('class_enemy_family'); p.setMem('cnClassEnemyFired', true) },
@@ -39,15 +39,23 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_sent_down_youth',
-    phase: 'young_adult',
-    weight: 9,
+    // Up to the Mountains and Down to the Countryside took some seventeen
+    // million urban school-leavers between 1968 and the late 1970s, most of
+    // them sixteen to twenty. It was `phase: 'young_adult'` at weight 9, which
+    // cut off the sixteen- and seventeen-year-olds who were its core and lost
+    // the rest of its years to the open pool: a Shanghai girl who was eighteen
+    // to twenty-two across 1968-72 never met it. It was the whole of those
+    // lives, so it claims its years.
+    phase: null,
+    weight: 30,
+    claimsYears: { from: 1968, to: 1973 },
     when: (G) =>
       isChina(G) &&
       G.currentYear >= 1968 && G.currentYear <= 1978 &&
       G.ruralUrban === 'urban' &&
-      G.age >= 16 && G.age <= 22 &&
-      !G.mem?.cnSentDownFired,
-    text: 'The notice comes on a Tuesday. All urban youth are to go to the countryside to be re-educated by the peasants. This is not optional. The person reading it to the assembly does not pause for questions. You have one week to prepare. Your parents stand at the train station until the train is gone. The farm you are assigned to is in a province whose name you have seen on maps but never had reason to think about. That is the place where you will spend the next several years.',
+      G.age >= 15 && G.age <= 24 &&
+      !G.mem?.cnSentDownFired && !G.mem?.sent_down,
+    text: 'The notice comes on a Tuesday: all urban youth are to go to the countryside and be re-educated by the peasants. The person reading it to the assembly does not pause for questions. You have a week. Your parents stand on the platform until the train is gone. The farm you are assigned to is in a province you have only seen on maps, and you will be there for years.',
     choices: [
       {
         text: 'Go — survive it, come back changed',
@@ -74,7 +82,7 @@ export const CHINA_EVENTS = [
       G.flags.has('sent_down_youth') &&
       G.currentYear >= 1975 && G.currentYear <= 1982 &&
       !G.mem?.cnSentDownReturnFired,
-    text: 'The policy is reversed. You can return to the city. The city has not waited. Your family has changed. Your place in it has changed. You are in your mid-twenties and your peers who stayed graduated university while you were planting rice in a province you never asked to live in. You have four years of agricultural knowledge and a body that can work and the education you were taken from is still inaccessible. The path back is not straight. You begin looking for the oblique one.',
+    text: 'The policy is reversed and you can go back to the city, and the city has not waited for you. The few who were kept back were given the factory places while you were planting rice in a province you never asked to live in. You come back with a body that can work and an education that stopped where they stopped it. You begin looking for the oblique way back.',
     choices: null,
     effect: (p) => { p.m += 5; p.e -= 5; p.addFlag('sent_down_returned'); p.setMem('cnSentDownReturnFired', true) },
   },
@@ -156,7 +164,7 @@ export const CHINA_EVENTS = [
       {
         text: 'One child — within the policy',
         tag: null,
-        outcome: 'The choice is made within the structure. Many families make this choice. The only child grows up inside a particular kind of concentrated attention.',
+        outcome: 'The choice is made within the structure. Many families make this choice. The only child grows up inside a kind of concentrated attention.',
         effect: (p) => { p.m -= 3; p.addFlag('one_child_policy_complied'); p.setMem('cnOneChildFired', true) },
       },
       {
@@ -184,12 +192,12 @@ export const CHINA_EVENTS = [
       G.currentYear === 1989 &&
       G.age >= 15 && G.age <= 40 &&
       !G.mem?.cnTiananmenPersonalFired,
-    text: 'You are in the city when it happens. Not necessarily in Beijing — but in the city, and the news is coming through the television and the radio and the people returning from the square. The students have been there for seven weeks. Then they are not there. The official account says very little. What happened is known in the specific private way things are known in this country — you know, the people around you know, and the knowing goes into a place that is not discussed. The city is very quiet for several days.',
+    text: 'You are in the city when it happens. Not necessarily in Beijing — but in the city, and the news is coming through the television and the radio and the people returning from the square. The students have been there for seven weeks. Then they are not there. The official account says very little. What happened is known in the private way things are known in this country — you know, the people around you know, and the knowing goes into a place that is not discussed. The city is very quiet for several days.',
     choices: [
       {
         text: 'You witnessed it from Beijing — you were near the square',
         tag: null,
-        outcome: 'The specific images stay. The specific sounds. The silence that follows is different when you were there — it is not only political. It is personal.',
+        outcome: 'The images stay. The sounds. The silence that follows is different when you were there. It is personal.',
         effect: (p) => { p.m -= 15; p.addFlag('tiananmen_witness'); p.setMem('cnTiananmenPersonalFired', true) },
       },
       {
@@ -215,19 +223,19 @@ export const CHINA_EVENTS = [
     text: (G) => {
       const yr = G.currentYear ?? 1993
       const destination = yr < 1995 ? 'Guangdong province' : 'Shenzhen or Dongguan or one of the manufacturing cities'
-      return `Everyone from the village who is of working age is on the train. The factory in ${destination} takes workers without asking much. The dormitory is a room with eight bunks. The hours are long. The money is more than you have seen in a month in the village. You send money home every month. Your parents know you are working. You do not tell them specifically what the work is like, because there is no useful purpose in telling them.`
+      return `Everyone of working age from the village is on the train, and the factory in ${destination} takes workers without asking much. The dormitory is a room with eight bunks and the hours are long, and the money is more than a month in the village ever made. You send money home every month. You do not tell your parents what the work is like, because there is no use in telling them.`
     },
     choices: [
       {
         text: 'Work, save, build here — the city is the future',
         tag: null,
-        outcome: 'The years in the factory are hard and the foundation is real. The savings accumulate. You learn the city in the margins of the shift work.',
+        outcome: 'The years in the factory are hard, and you come out of them with a trade. The savings accumulate. You learn the city in the margins of the shift work.',
         effect: (p) => { p.h -= 5; p.mo += 1500; p.addFlag('rural_to_urban'); p.addFlag('migrant_worker_china'); p.setMem('cnVillageCityFired', true) },
       },
       {
         text: 'Work, but stay connected to where you came from',
         tag: null,
-        outcome: 'You go back for the harvest and for the festivals. The identity of someone between two places is its own kind of life.',
+        outcome: 'You go back for the harvest and for the festivals. You live between two places, and belong to the train between them.',
         effect: (p) => { p.mo += 800; p.m -= 3; p.addFlag('rural_to_urban'); p.addFlag('migrant_worker_china'); p.addFlag('village_connection_kept'); p.setMem('cnVillageCityFired', true) },
       },
     ],
@@ -295,7 +303,7 @@ export const CHINA_EVENTS = [
       G.currentYear >= 1983 && G.currentYear <= 2013 &&
       (G.siblings ?? []).length === 0 &&
       !G.mem?.cnOnlyChildFired,
-    text: 'You are the only child in a household that has reorganised itself around you. This is not indulgence exactly — it is pressure with love behind it. Six adults (your parents, both sets of grandparents) holding one child\'s future. The responsibility of being the single person carrying the family\'s accumulated investment and hope is not heavy the way a stone is heavy. It is heavy the way weather is heavy — it surrounds everything and is the condition under which everything else happens.',
+    text: 'You are the only child in a household that has reorganised itself around you. This is not indulgence exactly — it is pressure with love behind it. Six adults (your parents, both sets of grandparents) holding one child\'s future. The responsibility of being the single person carrying the family\'s accumulated investment and hope is heavy the way weather is heavy: it surrounds everything.',
     choices: null,
     effect: (p) => { p.e += 3; p.m -= 5; p.addFlag('little_emperor'); p.setMem('cnOnlyChildFired', true) },
   },
@@ -334,7 +342,7 @@ export const CHINA_EVENTS = [
       {
         text: 'Get in — this is the moment and the place',
         tag: null,
-        outcome: 'You build something inside the ecosystem. Whether the numbers materialise the way you planned or not, the skills and the connections are real.',
+        outcome: 'You build something inside the ecosystem. Whether the numbers materialise the way you planned or not, you keep the skills and the people.',
         effect: (p) => { p.e += 6; p.m += 5; p.addFlag('china_tech_generation'); p.addFlag('china_entrepreneur'); p.setMem('cnTechGenFired', true) },
       },
       {
@@ -359,7 +367,7 @@ export const CHINA_EVENTS = [
     text: (G) => {
       const yr = G.currentYear ?? 2021
       const city = yr === 2020 ? 'Wuhan' : 'Shanghai or one of the other cities under protocol'
-      return `The building committee notification arrives: the compound is sealed. In ${city} this means weeks — the number changes without announcement. Food comes by delivery or by community box at the entrance. The QR code on your phone determines whether you are permitted outside. You begin listing the specific things not available in your apartment. The list gets longer. The officials on the daily briefing call the policy scientific. You think about what the word scientific is doing in that sentence.`
+      return `The building committee's notice arrives: the compound is sealed. In ${city} that means weeks, and the number changes without announcement. Food comes by delivery, or in a box at the gate, and the QR code on your phone decides whether you may go out. On the daily briefing the officials call the policy scientific. You think about what the word scientific is doing in that sentence.`
     },
     choices: [
       {
@@ -466,7 +474,7 @@ export const CHINA_EVENTS = [
       const parents = Object.values(G.parents ?? {})
       const livingParent = parents.find(p => p.alive !== false)
       const label = livingParent?.gender === 'male' ? 'father' : 'mother'
-      return `The session is in the school courtyard. You are made to stand in the centre while your classmates and the teacher read the charges against your ${label}. The Red Guard leader asks if you confirm them. You understand what the expected answer is. You also understand what the other answer costs. The session lasts two hours. You walk home through streets you have walked every day of your life. They look different now.`
+      return `The session is in the school courtyard. You stand in the centre while your classmates and the teacher read the charges against your ${label}, and the Red Guard leader asks if you confirm them. You know the expected answer, and what the other answer costs. It lasts two hours. You walk home through streets you have walked every day of your life, and they look different now.`
     },
     choices: [
       {
@@ -506,7 +514,7 @@ export const CHINA_EVENTS = [
       {
         text: 'Stay silent — find the minimum that gets you through',
         tag: null,
-        outcome: 'You say nothing. The session ends. You are neither protected nor punished today. The silence is its own kind of record.',
+        outcome: 'You say nothing. The session ends. You are neither protected nor punished today. The silence goes into the record too.',
         effect: (p) => { p.m -= 8; p.addFlag('struggle_session_witnessed'); p.setMem('cnStruggleWitnessFired', true) },
       },
     ],
@@ -584,7 +592,7 @@ export const CHINA_EVENTS = [
       G.career != null &&
       G.age >= 22 && G.age <= 42 &&
       !G.mem?.cn996BurnoutFired,
-    text: 'The schedule is nine in the morning to nine at night, six days a week. This is not in the contract. It is understood. The company provides dinner for people who stay past eight, which is how staying past eight becomes normal. You have not seen your apartment in daylight in two weeks. You are producing good work. The hourly rate, were you calculating it, would be considerably below what the salary suggests. You have started calculating it.',
+    text: 'Nine in the morning to nine at night, six days a week. It is not in the contract and everybody understands it. The company provides dinner for anyone who stays past eight, and so staying past eight becomes normal. You have not seen your flat in daylight in two weeks. You have started working out what the hourly rate really is.',
     choices: [
       {
         text: 'Absorb it — this is the entry price and it will not always be like this',
@@ -613,7 +621,7 @@ export const CHINA_EVENTS = [
       G.age >= 27 && G.age <= 38 &&
       !G.partner &&
       !G.mem?.cnLeftoverFired,
-    text: 'The state media term is 剩女 — "leftover women": educated, employed, unmarried over twenty-five. There is a campaign. There are marriage markets in People\'s Park on Sunday mornings where parents display their children\'s profiles on laminated cards. Your mother has considered attending one on your behalf without telling you first. The pressure is not abstract — it is a specific conversation at every family gathering, a specific look when you arrive alone. You have a salary and an apartment and the particular loneliness of being told the loneliness is your deficiency.',
+    text: 'The state media term is 剩女 — "leftover women": educated, employed, unmarried over twenty-five. There is a campaign. There are marriage markets in People\'s Park on Sunday mornings where parents display their children\'s profiles on laminated cards. Your mother has considered attending one on your behalf without telling you first. The pressure is not abstract — it is a conversation at every family gathering, a look when you arrive alone. You have a salary and an apartment and the loneliness of being told the loneliness is your deficiency.',
     choices: [
       {
         text: 'Refuse the label — you will not be sorted by a government campaign',
@@ -681,7 +689,7 @@ export const CHINA_EVENTS = [
       {
         text: 'Leave — before the option closes',
         tag: null,
-        outcome: 'You begin the process of departure. The process has its own calendar and costs. You begin it.',
+        outcome: 'You begin the process of departure. The process has a calendar and a price. You begin it.',
         effect: (p) => { p.m -= 5; p.addFlag('china_left_for_silence'); p.addFlag('emigrated'); p.setMem('cnXiFired', true) },
       },
     ],
@@ -697,7 +705,7 @@ export const CHINA_EVENTS = [
       G.flags.has('sent_down_intellectual') &&
       G.age >= 35 && G.age <= 58 &&
       !G.mem?.cnSentDownEchoFired,
-    text: 'What the countryside gave you that the professors didn\'t: you know what a harvest failure looks like from inside it. You know what it costs a family when the state quota cannot be met. You know what cold is when the walls are not insulated. These are not metaphors or research — they are texture. When you write or argue or teach now, this specific quality is present. Some of your contemporaries who were not sent down have noticed it. It cannot be taught and cannot be bought back.',
+    text: 'What the countryside gave you that the professors didn\'t: you know what a harvest failure looks like from inside it. You know what it costs a family when the state quota cannot be met. You know what cold is when the walls are not insulated. These are not metaphors or research — they are texture. When you write or argue or teach now, this quality is present. Some of your contemporaries who were not sent down have noticed it. It cannot be taught and cannot be bought back.',
     choices: null,
     effect: (p) => { p.e += 5; p.m += 4; p.addFlag('sent_down_intellectual_echo'); p.setMem('cnSentDownEchoFired', true) },
   },
@@ -757,7 +765,7 @@ export const CHINA_EVENTS = [
       {
         text: 'The inspection passes without discovery',
         tag: null,
-        outcome: 'The officer leaves. Another year of the current arrangement extends forward. The specific quality of relief after that kind of morning has its own texture.',
+        outcome: 'The officer leaves. Another year of the current arrangement extends forward. The relief after that kind of morning is thin and sweet, like tea with too much sugar.',
         effect: (p) => { p.m += 2; p.addFlag('china_heihaizi_uncaught'); p.setMem('cnHeihaiziInspectionFired', true) },
       },
       {
@@ -781,7 +789,7 @@ export const CHINA_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 35 &&
       !G.mem?.cnHeihaiziPolicyFired,
-    text: 'The two-child policy is announced. More important to you than the headline is the amnesty registration window that follows: unregistered births from the one-child era can now be documented without the full penalty structure. The phrase "registration window" is the most significant thing you have read in years. Your child is a young adult who has spent their whole life navigating the absence of a national ID card — no train ticket under their own name, no university application, no hospital card on file. The window is open for a specific period.',
+    text: 'The two-child policy is announced. More important to you than the headline is the amnesty registration window that follows: unregistered births from the one-child era can now be documented without the full penalty structure. The phrase "registration window" is the most significant thing you have read in years. Your child is a young adult who has spent their whole life navigating the absence of a national ID card — no train ticket under their own name, no university application, no hospital card on file. The window is open for a period.',
     choices: [
       {
         text: 'You go to the civil affairs office the first week',
@@ -810,10 +818,10 @@ export const CHINA_EVENTS = [
       !G.mem?.cnHeihaiziLateFired,
     text: (G) => {
       if (G.flags.has('china_heihaizi_registered')) {
-        return 'The second child is registered now — a full legal person with an ID card, a passport, the ability to book a train ticket. There was a period, a decade or more, when none of that was true. You watched your child build a life inside that constraint. What they developed in those years — the specific self-reliance, the knowledge of where you stand with institutions — is theirs now. The registration did not remove what was built in the absence of it.'
+        return 'The second child is registered now — a full legal person with an ID card, a passport, the ability to book a train ticket. There was a period, a decade or more, when none of that was true. You watched your child build a life inside that constraint. What they developed in those years — the self-reliance, the knowledge of where you stand with institutions — is theirs now. The registration did not remove what was built in the absence of it.'
       }
       if (G.flags.has('china_heihaizi_fine_paid')) {
-        return 'The fine was paid, eventually — you have calculated what it cost in total. The child grew up in a counted-against way. You are proud of them with the specific quality of pride you feel for someone who built themselves out of materials that should have been better.'
+        return 'The fine was paid, eventually — you have calculated what it cost in total. The child grew up in a counted-against way. You are proud of them with the quality of pride you feel for someone who built themselves out of materials that should have been better.'
       }
       return 'The one-child policy — the hiding, the years of calculation whenever an official document was required — settled into the texture of your child\'s life without resolving cleanly. They are an adult. The accounting of what they lost is theirs to do. What you can say is: you wanted them, and you had them, and you stayed with what that cost.'
     },

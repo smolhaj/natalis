@@ -22,12 +22,13 @@ export const EGYPT_DEPTH_EVENTS = [
       G.currentYear === 1973 &&
       G.age >= 10 &&
       !G.mem?.egyOctober,
-    text: `October 6, 1973. Yom Kippur. Egyptian forces cross the Suez Canal under a barrage of artillery covering 2,000 guns — the greatest artillery concentration since World War Two. The Bar-Lev Line, which Israel considered impenetrable, is breached in the first hours. Soldiers use water cannons to cut through the sand berms. The crossing works. For the first days the army advances across the Sinai. The radio — the same radio that announced the Naksa of 1967 — now reports real advances, and for once the reports are accurate. The canal is Egypt's. The shame of '67 is not erased, but something else has been put next to it.`,
+    text: `October 6, 1973. The guns open up along the canal, and the soldiers cut through the sand walls of the Bar-Lev Line with water cannon, and the army crosses. For the first days the radio, the same radio that announced the defeat of 1967, reports advances, and for once the reports are true. The shame of '67 is not erased, but something else has been put next to it.`,
+    context: 'About 2,000 artillery pieces opened the crossing on 6 October 1973, the largest barrage since the Second World War.',
     choices: [
       {
         text: `Your brother is in the army. You listen to every broadcast.`,
         tag: null,
-        outcome: 'He comes back. The war ends in a ceasefire brokered under US pressure, which is a different ending than a victory — but the crossing was real, and the crossing is what stays.',
+        outcome: 'He comes back. The war ends in a ceasefire brokered under US pressure, not a victory, but you were at the crossing, and the crossing is what stays.',
         effect: (p) => {
           p.m += 10
           p.addFlag('october_war_generation')
@@ -107,7 +108,8 @@ export const EGYPT_DEPTH_EVENTS = [
       G.age >= 18 &&
       G.flags.has('arab_spring_disillusionment') &&
       !G.mem?.egySisi,
-    text: `June 2013. A year after Morsi's election, millions sign the Tamarod petition demanding early elections. June 30: massive protests. July 3: General Abdel Fattah el-Sisi announces Morsi's removal. The Muslim Brotherhood's year in power is over. Three weeks later, the Rabaa al-Adawiya sit-in is dispersed. Somewhere between 800 and 2,600 protesters are killed in a few hours — the largest mass killing in Egypt's modern history. El-Sisi wins the 2014 presidential election with 96.9% of the vote. The Emergency Law, which Mubarak maintained for thirty years and which briefly lapsed under Morsi, is back.`,
+    text: `June 2013, a year after Morsi's election. Millions sign the petition, millions are in the streets on June 30, and on July 3 General Sisi announces that Morsi is gone. Three weeks later the sit-in at Rabaa is cleared, and in a few hours hundreds of people are killed. Sisi is elected the next year with nearly all the votes. The emergency law is back.`,
+    context: 'Human Rights Watch documented at least 817 people killed at Rabaa al-Adawiya on 14 August 2013; Sisi won the 2014 election with 96.9 percent.',
     choices: [
       {
         text: `The Brotherhood's year was a warning. Sisi ended it.`,
@@ -122,7 +124,7 @@ export const EGYPT_DEPTH_EVENTS = [
       {
         text: `You left Mubarak's Egypt for Sisi's Egypt. The bodies in Rabaa are the price of the new stability.`,
         tag: null,
-        outcome: 'You carry Tahrir and Rabaa together. The one that was supposed to open the country and the one that closed it again. A specific kind of historical disillusionment that only Egyptians of your generation can properly calibrate.',
+        outcome: 'You carry Tahrir and Rabaa together. The one that was supposed to open the country and the one that closed it again. A kind of historical disillusionment that only Egyptians of your generation can properly calibrate.',
         effect: (p) => {
           p.m -= 14
           p.r += 10
@@ -147,7 +149,7 @@ export const EGYPT_DEPTH_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 2025 &&
       G.age >= 20 &&
       !G.mem?.egyCairo,
-    text: `Cairo holds twenty million people. Twenty-one million. Twenty-two. The population figure is precise in the census and imprecise in the street, where the number is simply everyone, always, in every direction. The apartment you rent or own has one-third of the square metres of an apartment in the city where your cousin now lives in Germany. The commute is a specific measurement of how the city works: bridges over the Nile at rush hour; the underground's Helwan line; the microbus routes that the official system never extended to. You become a specialist in the city's bypass routes the way people who live in difficult terrain become specialists in the terrain.`,
+    text: `Cairo holds twenty million people. Twenty-one million. Twenty-two. The population figure is precise in the census and imprecise in the street, where the number is simply everyone, always, in every direction. The apartment you rent or own has one-third of the square metres of an apartment in the city where your cousin now lives in Germany. The commute is a measurement of how the city works: bridges over the Nile at rush hour; the underground's Helwan line; the microbus routes that the official system never extended to. You become a specialist in the city's bypass routes the way people who live in difficult terrain become specialists in the terrain.`,
     choices: null,
     effect: (p) => {
       p.m -= 5
@@ -230,7 +232,7 @@ export const EGYPT_DEPTH_EVENTS = [
       G.flags.has('egy_camp_david_generation') &&
       G.age >= 60 &&
       !G.mem?.egyCampDavidLate,
-    text: `The 1979 peace treaty is, as of your old age, the longest-held peace between Israel and any Arab state. Sadat was assassinated for it in 1981. Mubarak maintained it for thirty years. Sisi has maintained it. The Arab League expelled Egypt and then readmitted Egypt without the treaty ever being cancelled. The Palestinians did not get a state. Egypt got the Sinai and got out of the war. The moral accounting of this is something the region has not completed and you have not completed and may not complete. Sadat is considered a hero by some accounts and a traitor by others, and he is dead, which is the cost he paid for the position he took.`,
+    text: `The 1979 treaty has held longer than any peace between Israel and an Arab state. Sadat was killed for it; Mubarak and Sisi kept it. The Arab League threw Egypt out and took it back without the treaty ever being cancelled. Egypt got the Sinai and got out of the war, and the Palestinians did not get a state. The region has not finished its accounting of this, and neither have you.`,
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -249,7 +251,7 @@ export const EGYPT_DEPTH_EVENTS = [
       G.flags.has('october_war_generation') &&
       G.age >= 65 &&
       !G.mem?.egyOctoberLate,
-    text: `The crossing of the canal is now fifty years past. The television specials air. The soldiers who crossed are old men. You watch the archive footage: the water cannons cutting through the sand berms, the bridges going across, the soldiers in the Sinai. The crossing was real. The wars before it were also real. The peace that followed — the exile from the Arab League, Sadat's death, the cold peace that has maintained itself for four decades — is all part of the same sequence. You have lived all of it from inside the country.`,
+    text: `The crossing of the canal is now fifty years past. The television specials air. The soldiers who crossed are old men. You watch the archive footage: the water cannons cutting through the sand berms, the bridges going across, the soldiers in the Sinai. The wars before it were also real. The peace that followed — the exile from the Arab League, Sadat's death, the cold peace that has maintained itself for four decades — is all part of the same sequence. You have lived all of it from inside the country.`,
     choices: null,
     effect: (p) => {
       p.r += 4

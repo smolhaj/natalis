@@ -28,7 +28,7 @@ export const INTERPRETER_ARC_EVENTS = [
       ['post_soviet', 'conflict_zone', 'developing_unstable'].includes(G.character.country?.archetype) &&
       G.currentYear >= 1990 &&
       !G.mem?.iaTribunal,
-    text: `The woman testifying is describing what happened in her village in April 1993. You translate sentence by sentence, as required. The translation must be exact — this is the court's requirement — which means you translate the specific words she uses for what was done to her and to her children. After three hours you take a break in the corridor. A prosecutor asks how you are. It is the first time anyone has asked this in the course of the proceedings. You do not know what to say.`,
+    text: `The woman testifying is describing what happened in her village in April 1993. You translate sentence by sentence, as required. The translation must be exact — this is the court's requirement — which means you translate the words she uses for what was done to her and to her children. After three hours you take a break in the corridor. A prosecutor asks how you are. It is the first time anyone has asked this in the course of the proceedings. You do not know what to say.`,
     choices: null,
     effect: (p) => {
       p.m -= 20;
@@ -102,7 +102,7 @@ export const INTERPRETER_ARC_EVENTS = [
       {
         text: 'Stay and hide. Wait for the visa to come through.',
         tag: 'stay_hide',
-        outcome: `You move in with a cousin in a different district. You wait. The waiting is its own kind of life.`,
+        outcome: `You move in with a cousin in a different district. You wait. The waiting is a life.`,
         effect: (p) => {
           p.r += 10;
           p.m -= 20;

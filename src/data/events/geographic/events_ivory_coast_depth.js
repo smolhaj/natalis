@@ -33,7 +33,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
       G.currentYear >= 1980 &&
       G.age >= 12 && G.age <= 18 &&
       !G.flags.has('ci_nouchi_generation'),
-    text: 'The language that belongs to your age group is not French. It is Nouchi — the street argot of Abidjan that mixes French, Dioula, Bété, Guéré, with sounds borrowed from everywhere the city has gathered people. Nouchi is what you speak in the quartier, at the maquis, on the football pitch. Your teachers do not speak it. Your parents speak it imperfectly and with expressions from a version that was already out of date. The slang is yours and of your time. Zouglou music runs underneath it — the music that young people invented to talk about corruption and unemployment in a way that was too specific to be banned and too coded to be understood by the people it was talking about.',
+    text: 'The language of your age group is Nouchi — the street argot of Abidjan that mixes French, Dioula, Bété, Guéré, with sounds borrowed from everywhere the city has gathered people. Nouchi is what you speak in the quartier, at the maquis, on the football pitch. Your teachers do not speak it. Your parents speak it imperfectly and with expressions from a version that was already out of date. The slang is yours and of your time. Zouglou music runs underneath it — the music that young people invented to talk about corruption and unemployment in a way that was too specific to be banned and too coded to be understood by the people it was talking about.',
     choices: null,
     effect: (p) => { p.m += 4; p.s += 3; p.addFlag('ci_nouchi_generation') },
   },
@@ -47,7 +47,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 15 && G.age <= 35 &&
       !G.flags.has('ci_yamoussoukro_basilica'),
-    text: 'The Basilica of Our Lady of Peace in Yamoussoukro is the largest church in the world — larger than St. Peter\'s in Rome. Houphouët-Boigny built it in his home village at a cost estimated between three hundred million and six hundred million dollars, in a country where one in three people is Muslim and the village it stands in has forty thousand inhabitants. The Pope consecrated it in 1990 on the condition that an attached hospital be built. The hospital was built. The basilica seats seven thousand and can accommodate more. On any given Sunday the pews are largely empty. The air conditioning keeps running. The peacocks wander the esplanade. The scale of the thing is its own commentary, though the commentary was never official.',
+    text: 'The Basilica of Our Lady of Peace in Yamoussoukro is bigger than St Peter\'s, built by the president in his home village in a country where a third of the people are Muslim. The Pope consecrated it on condition that a hospital be built beside it, and the hospital was built. It seats seven thousand. On most Sundays the pews are nearly empty, the air conditioning runs, and the peacocks wander the esplanade.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 3; p.addFlag('ci_yamoussoukro_basilica') },
   },
@@ -61,7 +61,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
       G.currentYear >= 2002 && G.currentYear <= 2011 &&
       G.age >= 20 &&
       !G.flags.has('ci_dozo_witness'),
-    text: 'The Dozos arrived in the village in their hunters\' dress — the talisman-covered tunics, the traditional amulets believed to make them bulletproof. They were a traditional hunters\' society from the Manding-speaking north, and during the civil war the Dozos became a security force in areas where the state\'s security forces were absent or had switched sides. They operated checkpoints. They investigated accusations of sorcery. They identified rebels. The village appreciated them and was also afraid of them in a specific way — the kind of fear that comes from a force that has authority without accountability, that operates in the zone between tradition and the immediate present.',
+    text: 'The Dozos arrived in the village in their hunters\' dress — the talisman-covered tunics, the traditional amulets believed to make them bulletproof. They were a traditional hunters\' society from the Manding-speaking north, and during the civil war the Dozos became a security force in areas where the state\'s security forces were absent or had switched sides. They operated checkpoints. They investigated accusations of sorcery. They identified rebels. The village appreciated them and was also afraid of them in a way — the kind of fear that comes from a force that has authority without accountability, that operates in the zone between tradition and the immediate present.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('ci_dozo_witness') },
   },
@@ -75,7 +75,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
       G.age >= 20 && G.age <= 35 &&
       (G.career?.field === 'finance' || G.career?.field === 'government' || G.stats?.smarts >= 60) &&
       !G.flags.has('ci_cfa_awareness'),
-    text: 'You are at the counter changing money for a trip and the rate to the euro is the same number it was the last time and the time before. Somebody at work explains that half the reserves sit in an account in Paris and the rate is set where the euro is set. Your cousin in Accra deals with a currency that moves every week and he envies you for about a minute a year. Both things they taught you about this are true and neither of them was taught in the same lesson.',
+    text: 'You are at the counter changing money for a trip and the rate to the euro is the same number it was the last time and the time before. Somebody at work explains that half the reserves sit in an account in Paris and the rate is set where the euro is set. Your cousin in Accra deals with a currency that moves every week and he envies you for about a minute a year. Neither of the things they taught you about this was taught in the same lesson.',
     context: 'The West African CFA franc was pegged to the French franc from 1945 and to the euro since 1999, with convertibility guaranteed by the French Treasury. Member states were required to deposit fifty percent of foreign reserves with the Banque de France until 2019, when the requirement was ended and the currency renamed the eco in principle. Monetary policy remains anchored to the European Central Bank\'s rate.',
     choices: null,
     effect: (p) => { p.e += 4; p.r += 2; p.addFlag('ci_cfa_awareness') },
@@ -94,8 +94,9 @@ export const IVORY_COAST_DEPTH_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       const peaceYears = yr - 2011
-      return `Abidjan is building again. The cranes on the Plateau. The new bridge over the lagoon. ${peaceYears >= 5 ? 'Eight years of seven-percent growth.' : 'The economy growing faster than it has in twenty years.'} Ouattara\'s government prosecuted some of Gbagbo\'s supporters for war crimes. Gbagbo was sent to the ICC in The Hague. He was acquitted in 2019. Most of those who committed atrocities on Ouattara\'s side were not prosecuted. The commission for dialogue, truth, and reconciliation produced a report. The report exists. The three thousand people killed in 2010 and 2011 did not reduce in number when the commission produced its report. You live in a country that is growing and in which the accounting for what happened is incomplete, which is a condition you have learned to hold without it collapsing.`
+      return `Abidjan is building again: the cranes on the Plateau, the new bridge over the lagoon. ${peaceYears >= 5 ? 'Eight years of seven-percent growth.' : 'The economy growing faster than it has in twenty years.'} Gbagbo went to The Hague and was acquitted; most of the killers on the other side were never charged. The reconciliation commission wrote a report, and the report exists. You live in a country that is growing and has not finished counting, and you have learned to hold that without it collapsing.`
     },
+    context: 'About 3,000 people were killed in the 2010-11 post-election crisis. Laurent Gbagbo was acquitted by the International Criminal Court in 2019.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.addFlag('ci_ouattara_era_witness') },
   },
@@ -109,7 +110,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
       G.ruralUrban === 'urban' &&
       G.age >= 16 && G.age <= 30 &&
       !G.flags.has('ci_abidjan_lagoon_generation'),
-    text: 'The Ébrié Lagoon divides Abidjan from itself. The wooden ferries — pinasses — cross between Treichville and the Plateau for less than the bridge costs. The fishermen who work the lagoon go out before dawn in pirogues. Their catch — tilapia, capitaine, crayfish — arrives at the market at Koumassi at five in the morning. You know the people who work the water the way urban people know a system that is visible from every bridge but is not the city\'s main story. The lagoon has been here longer than Abidjan. The lagoon will be here after. The city built itself around it without quite knowing what to do with it.',
+    text: 'The Ébrié Lagoon divides Abidjan from itself. The wooden ferries cross from Treichville to the Plateau for less than the bridge costs, and the fishermen go out in pirogues before dawn, and their tilapia and crayfish are in the Koumassi market by five. The lagoon is visible from every bridge and is not the city\'s main story. It was here before Abidjan and will be here after it. The city built itself around it without quite knowing what to do with it.',
     choices: null,
     effect: (p) => { p.m += 3; p.s += 2; p.addFlag('ci_abidjan_lagoon_generation') },
   },

@@ -31,7 +31,7 @@ export const POLITICAL_PRISON_EVENTS = [
     when: (G) =>
       isRepressive(G) && !G.inPrison && G.age >= 18 && G.age <= 65 &&
       !G.mem?.polArrestRemark,
-    text: 'You said it in a room with six people in it. You have gone over the six of them many times since, and you have never settled on which one, which is its own kind of punishment. They come at the hour they come at, which everyone knows about and nobody says. The charge is read to you in a language so formal it takes a moment to understand that it is about you.',
+    text: 'You said it in a room with six people in it. You have gone over the six of them many times since, and you have never settled on which one. They come at the hour they come at, which everyone knows about and nobody says. The charge is read to you in a language so formal it takes a moment to understand that it is about you.',
     choices: [
       {
         text: 'Say nothing at all.',
@@ -178,12 +178,12 @@ export const POLITICAL_PRISON_EVENTS = [
       isRepressive(G) && !G.inPrison && G.age >= 22 &&
       (G.career?.field === 'media' || G.flags.has('censored_journalist') || G.flags.has('dissident_writer')) &&
       !G.mem?.polArrestJournalist,
-    text: 'The piece ran on a Thursday. On Friday the editor is not in the building and nobody will say where he is, and by Monday the masthead has been reset without either of your names on it. What they want from you, across four days of questions, is not a retraction. It is the two people who spoke to you, and you find that you already knew you were not going to give them, which is a relief and also the end of a number of things.',
+    text: 'The piece ran on a Thursday. On Friday the editor is not in the building and nobody will say where he is, and by Monday the masthead has been reset without either of your names on it. What they want from you, across four days of questions, is the two people who spoke to you, and you find that you already knew you were not going to give them, which is a relief and also the end of a number of things.',
     choices: [
       {
         text: 'Protect the sources.',
         tag: 'defiant',
-        outcome: 'Both of them stay out of it. One of them will find you, years later, and say nothing about it at all, which is how you will know that they knew.',
+        outcome: 'Both of them stay out of it. One of them will find you, years later, and say nothing about it at all, and that is how you will know that they knew.',
         effect: (p) => {
           p.setMem('polArrestJournalist', true)
           p.m -= 12; p.karma += 12; p.e += 4
@@ -275,7 +275,7 @@ export const POLITICAL_PRISON_EVENTS = [
       isRepressive(G) && !G.inPrison &&
       G.character?.gender === 'male' && G.age >= 18 && G.age <= 26 &&
       !G.flags.has('served_military') && !G.mem?.polArrestRefusedService,
-    text: 'The letter comes the way everyone\'s letter comes. You do not report on the date, and for eleven days nothing happens, which is long enough to begin constructing a life in which nothing happens. On the twelfth day two men who are not military police, and who are polite, explain the article of the code you are now inside.',
+    text: 'The letter comes the way everyone\'s letter comes. You do not report on the date, and for eleven days nothing happens, long enough to begin constructing a life in which nothing happens. On the twelfth day two men who are not military police, and who are polite, explain the article of the code you are now inside.',
     choices: [
       {
         text: 'Report late and serve.',

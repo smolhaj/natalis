@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // Consolidated follow-through events — all 29 original files merged.
 // Design rule: every event here REQUIRES a specific prior flag as its gate.
 // The event exists because the flag represents something that shaped the character
@@ -154,7 +155,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     weight: 2,
     cooldown: 8,
     when: (G) => G.flags.has('authoritarian_childhood') && G.career && G.age >= 24,
-    text: 'Your manager wants to speak with you. The old reflex activates before you can stop it — the specific bracing of someone who grew up knowing that authority means news you weren\'t expecting.',
+    text: 'Your manager wants to speak with you. The old reflex activates before you can stop it — the bracing of someone who grew up knowing that authority means news you weren\'t expecting.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 2 },
   },
@@ -191,7 +192,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     weight: 2,
     cooldown: 0,
     when: (G) => G.flags.has('first_gen_university') && (G.children ?? []).some(c => c.age >= 17) && !G.mem?.firstGenChildApplyAck,
-    text: 'Your child is filling out university applications. You sit with the forms. The forms are different now but the feeling is the same — the first person in a family doing something for the first time, and the weight of that.',
+    text: 'Your child is filling out university applications. The forms stay on the table for a week. The forms are different now but the feeling is the same — the first person in a family doing something for the first time, and the weight of that.',
     choices: null,
     effect: (p) => { p.m += 8; p.karma += 5; p.setMem('firstGenChildApplyAck', true) },
   },
@@ -236,7 +237,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       },
       {
         text: 'Keep to the plan.',
-        outcome: 'The flight home feels different from the flight here. Both feel like going home, which is its own kind of problem.',
+        outcome: 'The flight home feels different from the flight here. Both feel like going home, and that is the problem.',
         effect: (p) => { p.r += 3; p.setMem('emigrantHomeVisitAck', true) },
       },
     ],
@@ -300,7 +301,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     weight: 1,
     cooldown: 0,
     when: (G) => G.flags.has('lost_friend') && G.age >= 40 && !G.mem?.lostFriendPhotoAck,
-    text: 'You find an old photo. Your friend is in it. You both look young. You sit with this for a while — not grief exactly, not anymore, but something that lives in the same neighbourhood.',
+    text: 'You find an old photo. Your friend is in it. You both look young. For a while you do not move — not grief exactly, not anymore, but something that lives in the same neighbourhood.',
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 3; p.setMem('lostFriendPhotoAck', true) },
   },
@@ -311,7 +312,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     weight: 1,
     cooldown: 0,
     when: (G) => G.flags.has('boarding_school') && G.age >= 32 && !G.mem?.boardingSchoolMemoryAck,
-    text: 'You pass a building that looks like it. The smell reaches you before the sight does — a specific clean institutional smell — and you are seven years old for a moment. Then you are not.',
+    text: 'You pass a building that looks like it. The smell reaches you before the sight does — a clean institutional smell — and you are seven years old for a moment. Then you are not.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('boardingSchoolMemoryAck', true) },
   },
@@ -442,7 +443,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     weight: 2,
     cooldown: 6,
     when: (G) => G.flags.has('harvest_failure') && G.age >= 28,
-    text: 'A dry summer. The forecast says rain next week. Something in you reads it differently than a forecast — you have felt this before. The arithmetic of dry ground and time. The specific patience of waiting for rain that might not come.',
+    text: 'A dry summer. The forecast says rain next week. Something in you reads it differently than a forecast — you have felt this before. The arithmetic of dry ground and time. The patience of waiting for rain that might not come.',
     choices: null,
     effect: (p) => { p.r += 2; p.e += 2 },
   },
@@ -492,7 +493,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     weight: 2,
     cooldown: 8,
     when: (G) => G.flags.has('ethnic_minority_conflict') && G.career && G.age >= 30,
-    text: 'A room. The configuration of who is in it. You read this kind of room quickly, automatically, in a way that people who haven\'t needed to don\'t. You are never quite only a professional in rooms like this.',
+    text: 'A room. The configuration of who is in it. You read this kind of room quickly, automatically, the way people who have needed to always do. You are never quite only a professional in rooms like this.',
     choices: null,
     effect: (p) => { p.e += 3; p.r += 2 },
   },
@@ -553,7 +554,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     text: (G) => {
       const isAuth = ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(G.regime)
       if (isAuth) {
-        return 'A colleague mentions a name — an author, an idea — in a way that is a test. You know how to fail this test safely. You are very good at it by now.'
+        return 'A colleague mentions a name — an author, an idea — and it is a test. You know how to fail this test safely. You are very good at it by now.'
       }
       return 'A colleague has not read the things you read in the years when reading them meant something. You explain. You notice that without the risk, the books mean something slightly different. This is not a complaint.'
     },
@@ -653,7 +654,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       (G.flags.has('faith_crisis') || G.flags.has('questioned_faith')) &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.ft3_faith_settled,
-    text: 'The crisis has been open for years now. You notice it has quietly resolved without closing — you have stopped asking the question that used to keep you awake, not because you found the answer but because you found a way to live around it. Whether that is maturity or surrender or something in between is not clear. What is clear: you are not the same person who walked out of the service, the yeshiva, the mosque, the skeptic\'s meeting room. You are whoever came after.',
+    text: 'The crisis has been open for years now. You notice it has quietly resolved without closing — you have stopped asking the question that used to keep you awake, not because you found the answer but because you found a way to live around it. Whether that is maturity or surrender or something in between, you could not say; you are not the person who walked out of the service, the yeshiva, the mosque, the skeptic\'s meeting room. You are whoever came after.',
     choices: [
       {
         text: 'You found your way back to something like faith',
@@ -665,7 +666,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You found your way out entirely',
         tag: null,
-        outcome: 'The absence is not a wound anymore. It is a room you have furnished differently.',
+        outcome: 'The absence has become a room you have furnished differently.',
         effect: (p) => { p.m += 4; p.e += 3; p.addFlag('secular_settled'); p.setMem('ft3_faith_settled', true); },
         inject: null,
       },
@@ -698,7 +699,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.mem?.ft3_child_out_years,
     text: (G) => {
       const recent = G.flags.has('lgbtq_parent_rejection') || (G.children ?? []).some(c => (c.relationshipQuality ?? 50) < 35)
-      if (recent) return 'Years have passed since your child came out to you. The distance between you has not closed the way you told yourself it would. The conversation you owe them has been postponed so many times it has become its own kind of statement.'
+      if (recent) return 'Years have passed since your child came out to you. The distance between you has not closed the way you told yourself it would. The conversation you owe them has been postponed so many times it has become a statement.'
       return 'Years have passed since your child came out to you. What you thought would be a crisis became instead a chapter — one of many. Their life has not collapsed. If anything, the version of them you know now is more fully who they were always becoming. You think about the year you were afraid of this, and you find it harder to understand that person.'
     },
     choices: [
@@ -730,7 +731,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.career &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.ft3_integrity_tested,
-    text: 'You are asked — politely, indirectly, in a way that could be misunderstood — to sign off on something that is not quite right. Not illegal. Not the kind of thing anyone will lose sleep over. It is the second time this year. The person asking is someone you work well with. The company needs the quarter to close a particular way. You have principles. You also have a mortgage.',
+    text: 'You are asked — politely, indirectly, deniably — to sign off on something that is not quite right. Not illegal. Not the kind of thing anyone will lose sleep over. It is the second time this year. The person asking is someone you work well with. The company needs the quarter to close a way. You have principles. You also have a mortgage.',
     choices: [
       {
         text: 'Decline — the same answer as always',
@@ -789,7 +790,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.friends && G.friends.length > 0 &&
       G.age >= 35 && G.age <= 50 &&
       !G.mem?.ft3_friend_decade,
-    text: 'You have had this friendship for more than a decade now. The thing you notice is that you have stopped performing for them. You say the half-formed thought out loud, the embarrassing opinion, the fear that does not yet have a name. They do the same. It is not dramatic — most of what the friendship consists of is ordinary coordination: scheduling, logistics, checking in. But underneath that is the specific rarity of a person who has known you for long enough to have watched you change and still turns up.',
+    text: 'You have had this friendship for more than a decade now. The thing you notice is that you have stopped performing for them. You say the half-formed thought out loud, the embarrassing opinion, the fear that does not yet have a name. They do the same. It is not dramatic — most of what the friendship consists of is ordinary coordination: scheduling, logistics, checking in. But underneath that is the rarity of a person who has known you for long enough to have watched you change and still turns up.',
     choices: null,
     effect: (p) => { p.m += 8; p.updateFriendRel(0, 8); p.setMem('ft3_friend_decade', true); },
   },
@@ -839,7 +840,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.career &&
       G.age >= 45 &&
       !G.mem?.ft4CorporateScandalLate,
-    text: 'A journalist has found something from fifteen years ago. Not everything — not the internal memo you still have in a personal folder — but enough to raise a question. You are asked by the communications team to prepare a statement. The statement they have drafted is not false. It is not the whole truth.',
+    text: 'A journalist has found something from fifteen years ago. Not everything — not the internal memo you still have in a personal folder — but enough to raise a question. You are asked by the communications team to prepare a statement. The statement they have drafted is true, as far as it goes.',
     choices: [
       {
         text: 'Sign the statement as drafted',
@@ -884,7 +885,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.money > 3000 &&
       G.age >= 30 &&
       !G.mem?.ft4HarvestPantry,
-    text: 'You have money now — enough that the question of eating is not the question anymore. The year the rains didn\'t come is not something you explain to people who weren\'t there. What you have instead is a pantry stocked further than the week requires, and a specific unease around waste that your children find eccentric.',
+    text: 'You have money now — enough that the question of eating is not the question anymore. The year the rains didn\'t come is not something you explain to people who weren\'t there. What you have instead is a pantry stocked further than the week requires, and an unease around waste that your children find eccentric.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('ft4HarvestPantry', true); },
   },
@@ -899,7 +900,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('civil_war_lived') &&
       G.age >= 30,
-    text: 'The news covers a conflict somewhere. You watch the correspondent standing in front of a building you recognise from some internal archive — not the building specifically but the specific quality of the rubble, the specific posture of the children at the edge of the frame. You know what the correspondent does not say. You know what comes after the frame.',
+    text: 'The news covers a conflict somewhere. You watch the correspondent standing in front of a building you recognise from some internal archive — not the building specifically but the quality of the rubble, the posture of the children at the edge of the frame. You know what the correspondent does not say. You know what comes after the frame.',
     choices: null,
     effect: (p) => { p.r += 3; p.e += 2; },
   },
@@ -915,7 +916,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('ethnic_minority_conflict') &&
       G.career &&
       G.age >= 28,
-    text: 'The question of where you are really from is a different question in your mouth than in the mouth of someone asking it. You have learned to answer the surface version — the city, the country — without engaging the deeper one, which is about belonging and has no short answer. Some days this is exhausting. Some days it is simply a thing you do.',
+    text: 'The question of where you are really from is a different question in your mouth than in the mouth of someone asking it. You have learned to answer the surface version — the city, the country — and leave the deeper one, about belonging, which has no short answer. Some days this is exhausting. Some days it is simply a thing you do.',
     choices: null,
     effect: (p) => { p.r += 3; p.s += 2; },
   },
@@ -931,7 +932,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('dissident_reader') &&
       ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian'].includes(G.regime) &&
       G.age >= 20,
-    text: 'A colleague you thought you trusted asks what you have been reading lately. The question is casual. The question is never casual here. You name something safe. The specific cost of this is not large. The accumulated cost of all the times you name something safe is something you do not add up.',
+    text: 'A colleague you thought you trusted asks what you have been reading lately. The question is casual. The question is never casual here. You name something safe. The cost of this is not large. The accumulated cost of all the times you name something safe is something you do not add up.',
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 3; p.e += 2; },
   },
@@ -949,7 +950,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       (G.yearsAbroad ?? 0) >= 5 &&
       G.age >= 20 &&
       !G.mem?.ft4RefugeeAnniversary,
-    text: 'Five years since you arrived. You know the date the way you know a scar — not consciously, but there when you press it. The country is legible now: which bus goes where, what to say at the post office, the specific joke that means you belong to a group you did not choose. The other country has become the country of a version of yourself you can no longer exactly reach.',
+    text: 'Five years since you arrived. You know the date the way you know a scar — not consciously, but there when you press it. The country is legible now: which bus goes where, what to say at the post office, the joke that means you belong to a group you did not choose. The other country has become the country of a version of yourself you can no longer exactly reach.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 5; p.setMem('ft4RefugeeAnniversary', true); },
   },
@@ -1032,7 +1033,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('resistance_through_art') &&
       G.age >= 60 &&
       !G.mem?.ft5ResistanceArtRecog,
-    text: 'A younger person asks what it cost to make work that could not be made openly. You try to describe the arithmetic — the specific omissions, the double meanings the censor read as submission and the audience read as something else. What you cannot explain is why the constraint produced something that the freedom of later years did not. You are not sure you understand it yourself.',
+    text: 'A younger person asks what it cost to make work that could not be made openly. You try to describe the arithmetic — the omissions, the double meanings the censor read as submission and the audience read as something else. What you cannot explain is why the constraint produced something that the freedom of later years did not. You are not sure you understand it yourself.',
     choices: null,
     effect: (p) => { p.m += 5; p.karma += 4; p.setMem('ft5ResistanceArtRecog', true); },
   },
@@ -1064,7 +1065,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('compromised') &&
       G.age >= 55 &&
       !G.mem?.ft5CompromisedLedger,
-    text: 'You are old enough now to see the accumulation. Each individual decision made sense at the time — this was not the hill, the cost was too high, someone else would have done it anyway. The accumulation is something that individual decisions do not prepare you for. It is not a single thing you did. It is a person you became one small step at a time.',
+    text: 'You are old enough now to see the accumulation. Each individual decision made sense at the time — this was not the hill, the cost was too high, someone else would have done it anyway. The accumulation is something that individual decisions do not prepare you for. You became it one small step at a time.',
     choices: [
       {
         text: 'Name it to yourself — this is what happened',
@@ -1075,7 +1076,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'Each decision was the right one at the time',
         tag: null,
-        outcome: 'You have spent a long time getting good at this particular argument.',
+        outcome: 'You have spent a long time getting good at this argument.',
         effect: (p) => { p.r += 6; p.setMem('ft5CompromisedLedger', true); },
       },
     ],
@@ -1109,7 +1110,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('intimidated_into_silence') &&
       G.age >= 35 &&
       !G.mem?.ft5IntimidatedBody,
-    text: 'Years later you are in a meeting and someone in authority asks a question and you feel the old reflex before you can name it — the specific pause, the recalibration of what is safe to say. The car that followed you is not there anymore. The regime that required it may not even exist. The body keeps its own record independently of events.',
+    text: 'Years later you are in a meeting and someone in authority asks a question and you feel the old reflex before you can name it — the pause, the recalibration of what is safe to say. The car that followed you is not there anymore. The regime that required it may not even exist. The body keeps its own record independently of events.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.setMem('ft5IntimidatedBody', true); },
   },
@@ -1125,7 +1126,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('independence_generation_self') &&
       G.age >= 55 &&
       !G.mem?.ft5IndependenceReckoning,
-    text: 'You were there when the flag was raised and the crowd was so loud you could not hear the music. The country has been independent for most of your life now. The accounting is not simple. The things that were promised and arrived. The things that were promised and did not. The specific thing that was not the colonial power and also was not the dream. You hold this without resolving it because that is the only honest way to hold it.',
+    text: 'You were there when the flag was raised and the crowd was so loud you could not hear the music. The country has been independent for most of your life now. The accounting is not simple. The things that were promised and arrived. The things that were promised and did not. The thing that was not the colonial power and also was not the dream. You hold this without resolving it because that is the only honest way to hold it.',
     choices: null,
     effect: (p) => { p.m -= 3; p.e += 5; p.r += 4; p.setMem('ft5IndependenceReckoning', true); },
   },
@@ -1141,7 +1142,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('first_coup_witness') &&
       G.age >= 40 &&
       !G.mem?.ft5FirstCoupPattern,
-    text: 'It was not the last coup. That is the thing no one told you about the first one — that it initiates you into a recurring experience. The announcement on the radio, the specific voice that says the government has been dissolved, the specific days of not knowing. By the third or fourth time you have a body of knowledge about what follows: who goes to ground, which institutions survive, which promises will be made and unmade. The knowledge is not reassuring. It is just accurate.',
+    text: 'It was not the last coup. Nobody told you that the first one initiates you into a recurring experience. The announcement on the radio, the voice that says the government has been dissolved, the days of not knowing. By the third or fourth time you have a body of knowledge about what follows: who goes to ground, which institutions survive, which promises will be made and unmade. The knowledge does not reassure you. It is only accurate.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 5; p.setMem('ft5FirstCoupPattern', true); },
   },
@@ -1200,7 +1201,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.mem?.famArcPrice && !G.mem?.famArcBody,
     text: (G) => {
       const isChild = G.age < 12
-      if (isChild) return 'You are hungry in a way that is different from the hunger before a meal. That hunger is impatient. This hunger is quiet. It stops asking and starts being there all the time, like weather. The children are the first to show it. Your mother watches you the way people watch something they cannot fix.'
+      if (isChild) return 'You are hungry, and it is not the hunger before a meal. That hunger is impatient. This hunger is quiet. It stops asking and starts being there all the time, like weather. The children are the first to show it. Your mother watches you the way people watch something they cannot fix.'
       return 'The hunger stops being urgent after the second week. It becomes background — present the way cold is present in winter, a fact the body adjusts around. You eat when something is available. Between times, your body learns to do less: slow thoughts, slow movement, sleep that is not restful.'
     },
     choices: null,
@@ -1216,7 +1217,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.mem?.famArcBody && !G.mem?.famArcSelling,
     text: (G) => {
       const hasAnimals = G.flags.has('rural_upbringing') || G.ruralUrban === 'rural'
-      if (hasAnimals) return 'The goat goes first — the one your father named. The buyer pays less than it is worth because everyone knows what everyone\'s situation is. The money feeds the household for three weeks. The goat is gone. You understand, at whatever age you are, that this is irreversible in a way that money cannot undo.'
+      if (hasAnimals) return 'The goat goes first — the one your father named. The buyer pays less than it is worth because everyone knows what everyone\'s situation is. The money feeds the household for three weeks. The goat is gone. You understand, at whatever age you are, that this is irreversible and that money cannot undo it.'
       return 'The object your mother brought from her home village. The sewing machine that was a wedding gift. Each thing has a price and a story and the price is always less than the story. You watch the inventory of the household diminish and understand something about how wealth works that you will not be able to unlearn.'
     },
     choices: [
@@ -1281,7 +1282,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('first_love_over') &&
       G.age >= 35 &&
       !G.mem?.ft6FirstLoveMidlife,
-    text: 'You think of them occasionally — not with longing exactly but with the specific curiosity reserved for the person who taught you what an ending actually costs. Before them you had understood love as something that, once found, continued. They were the one who made the correction. You carry a different kind of knowledge because of how that finished.',
+    text: 'You think of them occasionally — not with longing exactly but with the curiosity reserved for the person who taught you what an ending actually costs. Before them you had understood love as something that, once found, continued. They were the one who made the correction. You carry a different kind of knowledge because of how that finished.',
     choices: null,
     effect: (p) => {
       p.karma += 3
@@ -1297,7 +1298,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('liberation_generation_reckoning') &&
       G.age >= 65 &&
       !G.mem?.ft6LiberationLate,
-    text: 'From here the distance is visible. The generation changed specific things — law, language, the surface of what could be said aloud — and did not change other things that were harder to reach. You are not disappointed exactly. You are accounting. What a generation can move in one lifetime is not nothing. It is also not everything that needed to move.',
+    text: 'From here the distance is visible. The generation changed specific things — law, language, the surface of what could be said aloud — and did not change other things that were harder to reach. You are not disappointed exactly. You are accounting. A generation can move a great deal in one lifetime, and still not everything that needed to move.',
     choices: null,
     effect: (p) => {
       p.m += 6
@@ -1316,7 +1317,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.age >= 65 &&
       !G.mem?.ft6LongMarriageLate,
     text: (G) =>
-      `What it became in the end is not what it was at the beginning and is not a lesser version of it. The body is different; what happens between you and ${G.partner?.name ?? 'your partner'} is different. There is a specific knowledge of another person that can only be accumulated over time and cannot be transferred. You have that. You are aware it is not held by everyone.`,
+      `What it became in the end is not what it was at the beginning and is not a lesser version of it. The body is different; what happens between you and ${G.partner?.name ?? 'your partner'} is different. There is a knowledge of another person that can only be accumulated over time and cannot be transferred. You have that. You are aware it is not held by everyone.`,
     choices: null,
     effect: (p) => {
       p.m += 9
@@ -1333,7 +1334,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('cultural_intimacy_silence') &&
       G.age >= 58 &&
       !G.mem?.ft6CulturalIntimacyEcho,
-    text: 'You hear younger people speak of these things with a directness that was not available in the language you grew up with. You do not feel deprived of what they have. The things that were carried in silence were still carried — held in gesture, in proximity, in the specific texture of lives lived alongside each other. A different way of holding it. Not absent.',
+    text: 'You hear younger people speak of these things with a directness that was not available in the language you grew up with. You do not feel deprived of what they have. The things that were carried in silence were still carried — held in gesture, in proximity, in the texture of lives lived alongside each other. A different way of holding it. Not absent.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -1351,7 +1352,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.age >= 72 &&
       !G.mem?.ft6IntimacyPartnerDecline,
     text: (G) =>
-      `The body changes again. What passes between you and ${G.partner?.name ?? 'your partner'} is quieter now — less motion, more presence. A hand held for a long time. The specific warmth of another person who has known you for decades and is still here, in the same room, in the same life. You understand this as a form of intimacy that the younger version of you could not have understood.`,
+      `The body changes again. What passes between you and ${G.partner?.name ?? 'your partner'} is quieter now — less motion, more presence. A hand held for a long time. The warmth of another person who has known you for decades and is still here, in the same room, in the same life. You understand this as a form of intimacy that the younger version of you could not have understood.`,
     choices: null,
     effect: (p) => {
       p.m += 7
@@ -1388,7 +1389,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.career !== null &&
       G.age >= 26 &&
       !G.mem?.ft6ClassGapCareer,
-    text: 'You are in a room with people who grew up different from you. The specific knowledge you carry — of what everything costs, of what it took to get here, of what was not assumed — is not visible to them. It is not a wound. It is an orientation. You notice things they don\'t notice. You understand things they have to be told.',
+    text: 'You are in a room with people who grew up different from you. The knowledge you carry — of what everything costs, of what it took to get here, of what was not assumed — is invisible to them, and you do not hold it against them. It is an orientation. You notice things they don\'t notice. You understand things they have to be told.',
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -1425,7 +1426,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('raised_by_extended_family') &&
       G.age >= 38 &&
       !G.mem?.ft6RaisedExtendedMidlife,
-    text: 'The person who raised you when your parent wasn\'t there — the grandmother, the aunt, the household that reorganised around the gap — you think of them with a specific kind of loyalty that does not diminish. They taught you things by accident: how to read weather, how to be quiet when required, how to be enough when you are not what was planned for. You carry her with you without naming it.',
+    text: 'The person who raised you when your parent wasn\'t there — the grandmother, the aunt, the household that reorganised around the gap — you think of them with a kind of loyalty that does not diminish. They taught you things by accident: how to read weather, how to be quiet when required, how to be enough when you are not what was planned for. You carry her with you without naming it.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -1444,7 +1445,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.flags.includes('the_cycle_repeated') &&
       G.age >= 35 &&
       !G.mem?.ft6UnderstoodCostNoEmig,
-    text: 'You did not leave. You built the life you built from here, which is not what your parent built from abroad. The accounting still sits with you — the material gain, the specific cost, both columns true. You chose not to repeat it. Whether this is wisdom or its own form of cost, you cannot entirely say.',
+    text: 'You did not leave. You built the life you built from here, and it is not what your parent built from abroad. The accounting still sits with you — the material gain, the cost, both columns true. You chose not to repeat it. Whether this is wisdom or its own form of cost, you cannot entirely say.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -1463,7 +1464,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('witness_to_exodus') &&
       G.age >= 65 &&
       !G.mem?.ft6WitnessExodusLate,
-    text: 'You watched the country change as people left and did not come back, or came back different. You were the continuity — the one who knew what the street looked like before, who remembered the names of the families who used to live in those houses. This is its own kind of knowledge. Not everyone wanted to hold it, and you did.',
+    text: 'You watched the country change as people left and did not come back, or came back different. You were the continuity — the one who knew what the street looked like before, who remembered the names of the families who used to live in those houses. Not everyone wanted to hold it, and you did.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -1486,7 +1487,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('sport_path_closed') &&
       G.age >= 35 &&
       !G.mem?.ft7SportPathMidlife,
-    text: 'You watch a match and one of the players is your age when you stopped — which means they have eight years left, or four, depending on how their body holds. You were never going to be them. You knew this by twenty-three. What you still carry is not the disappointment, which has mostly gone, but the specific knowledge of what the game actually requires: the hours, the discipline, the indifference to weather and inconvenience. That knowledge did not disappear when the path did.',
+    text: 'You watch a match and one of the players is your age when you stopped — which means they have eight years left, or four, depending on how their body holds. You were never going to be them. You knew this by twenty-three. What you still carry is not the disappointment, which has mostly gone, but the knowledge of what the game actually requires: the hours, the discipline, the indifference to weather and inconvenience. That knowledge did not disappear when the path did.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -1503,7 +1504,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('stopped_playing') &&
       G.age >= 60 &&
       !G.mem?.ft7StoppedPlayingEcho,
-    text: 'A grandchild, or a neighbour\'s child, or someone on television plays the game. You watch them with the particular attention of a person who knows from inside what the movement costs and what it requires. What you remember is not the score of any match but the specific feel of a clean contact — the moment when the body does exactly what you asked it to do. You carried that longer than you expected.',
+    text: 'A grandchild, or a neighbour\'s child, or someone on television plays the game. You watch them with the attention of a person who knows from inside what the movement costs and what it requires. What you remember is not the score of any match but the feel of a clean contact — the moment when the body does exactly what you asked it to do. You carried that longer than you expected.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -1522,7 +1523,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.mem?.ft7WorldCupTeaching,
     text: (G) => {
       const child = G.children?.[0]
-      return `A World Cup year. You explain to ${child?.name ?? 'your child'} why this particular tournament, this particular team, means more than a game means. You are not sure you can explain it adequately — the thing you are trying to give them access to is an experience from your own childhood that exists only inside you. You try anyway. Some of it lands. Some of it doesn't, which is how all transmissions of this kind go.`
+      return gendered(`A World Cup year. You explain to ${child?.name ?? 'your child'} why this tournament, this team, means more than a game means. You are not sure you can explain it adequately — the thing you are trying to give them access to is an experience from your own childhood that exists only inside you. You try anyway. Some of it lands. Some of it doesn't.`, child)
     },
     choices: null,
     effect: (p) => {
@@ -1542,7 +1543,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.mem?.ft7PassedFootballOnLate,
     text: (G) => {
       const child = G.children?.[0]
-      return `${child?.name ?? 'Your child'} watches a match the way you taught them to watch — knowing what they're looking for, having opinions, caring about the result in a way that is slightly absurd and also completely genuine. You recognise this in them. You did not know whether this particular thing would transfer when you tried to give it. It transferred.`
+      return gendered(`${child?.name ?? 'Your child'} watches a match the way you taught them to watch — knowing what they're looking for, having opinions, caring about the result absurdly and completely. You recognise this in them. You did not know whether this thing would transfer when you tried to give it. It transferred.`, child)
     },
     choices: null,
     effect: (p) => {
@@ -1562,7 +1563,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('flood_crisis_witnessed') &&
       G.age >= 35 &&
       !G.mem?.ft7FloodCrisisMidlife,
-    text: 'A news story about flooding somewhere. The images are familiar in structure — submerged roads, furniture on rooftops, people wading — but the specific geography is somewhere else. The number of dead is in the lower third. You watch it with the specific attention of someone who knows what comes after the cameras leave: the mould in the walls, the seed stock that didn\'t survive, the school that reopens late because the building needs work and the money hasn\'t come.',
+    text: 'A news story about flooding somewhere. The images are familiar in structure — submerged roads, furniture on rooftops, people wading — but the geography is somewhere else. The number of dead is in the lower third. You watch it with the attention of someone who knows what comes after the cameras leave: the mould in the walls, the seed stock that didn\'t survive, the school that reopens late because the building needs work and the money hasn\'t come.',
     choices: null,
     effect: (p) => {
       p.karma += 4
@@ -1595,7 +1596,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('survived_major_storm') &&
       G.age >= 55 &&
       !G.mem?.ft7SurvivedMajorStormLate,
-    text: 'Another typhoon season. The younger people in the family have not been through the worst of it; you have. You prepare without drama and check that others are prepared. The knowledge is not impressive — it is practical. You are the person who knows which house is too close to the water and which radio frequency the coast guard uses. This is what surviving something and staying gives you: the specific competence of having done it before.',
+    text: 'Another typhoon season. The younger people in the family have not been through the worst of it; you have. You prepare without drama and check that others are prepared. The knowledge is not impressive — it is practical. You are the person who knows which house is too close to the water and which radio frequency the coast guard uses. This is what surviving something and staying gives you: the competence of having done it before.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -1615,7 +1616,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('liberation_war_witnessed') &&
       G.age >= 20 &&
       !G.mem?.ft7BholaSurvivorLiberation,
-    text: 'The cyclone and the war arrive in the same two-year span of your life. The government that did not send the relief ships is the same government that sent the soldiers. This connection is not made by the international community but it is made by everyone here. The specific inadequacy of the response to the cyclone in November 1970 is part of the accounting of what happened in 1971. You know this without having been told it explicitly.',
+    text: 'The cyclone and the war arrive in the same two-year span of your life. The government that did not send the relief ships is the same government that sent the soldiers. This connection is not made by the international community but it is made by everyone here. The inadequacy of the response to the cyclone in November 1970 is part of the accounting of what happened in 1971. You know this without having been told it explicitly.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -1725,7 +1726,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('childhood_object') &&
       G.age >= 40 &&
       !G.mem?.ft8ChildhoodObjectMidlife,
-    text: 'You find the thing — or something like it. The object from when you were small that was yours in the particular way early possessions are yours before you understand ownership. You are not sure why you still have it. You are not sure why you are standing here holding it.',
+    text: 'You find the thing — or something like it. The object from when you were small that was yours in the way early possessions are yours before you understand ownership. You are not sure why you still have it. You are not sure why you are standing here holding it.',
     choices: null,
     effect: (p) => {
       p.m += 6
@@ -1741,7 +1742,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('compromised') &&
       G.age >= 60 &&
       !G.mem?.ft8CompromisedLate,
-    text: 'You did the thing. At the time it seemed like the only available move — the choices were uneven, the circumstances were real, and you made the calculation most people in that position would have made. You have repeated this accounting to yourself enough times to know all the parts of it. The part that stays is not the accounting. It is the moment before the calculation, when you knew what the right thing was.',
+    text: 'You did the thing. At the time it seemed like the only available move — the choices were uneven, the circumstances were real, and you made the calculation most people in that position would have made. You have repeated this accounting to yourself enough times to know all the parts of it. What stays is the moment before the calculation, when you knew what the right thing was.',
     choices: null,
     effect: (p) => {
       p.m -= 3
@@ -1904,7 +1905,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'Stay where you are',
         tag: null,
-        outcome: 'You stay. The stability is real. The question of what the other path held stays with you quietly.',
+        outcome: 'You stay. The question of what the other path held stays with you quietly.',
         effect: (p) => { p.m += 3; p.r += 5; p.setMem('ft8DesireSafety', true) },
       },
     ],
@@ -1956,7 +1957,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(G.regime) &&
       G.inPrison &&
       !G.mem?.ft9TortureSurvived,
-    text: 'They take you into a room with no windows and ask questions they already know the answers to. The point is not the information — the point is that you understand they can do this. That is the whole point. You do not break in the way they want. You break in ways they don\'t count.',
+    text: 'They take you into a room with no windows and ask questions they already know the answers to. The point is that you understand they can do this. You do not break in the way they want. You break in ways they don\'t count.',
     choices: null,
     effect: (p) => {
       p.m -= 20
@@ -1976,7 +1977,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('torture_survived') &&
       G.age >= 35 &&
       !G.mem?.ft9TortureMidlife,
-    text: 'The body keeps the record. There are things that trigger it — a particular quality of silence, the sound of a door locking, the way someone stands in a doorway. You know the difference between the past and the present. The nervous system does not always agree. You have learned to work around this. It costs something every time.',
+    text: 'The body keeps the record. There are things that trigger it — a quality of silence, the sound of a door locking, the way someone stands in a doorway. You know the difference between the past and the present. The nervous system does not always agree. You have learned to work around this. It costs something every time.',
     choices: null,
     effect: (p) => {
       p.m -= 5
@@ -2013,7 +2014,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('traumatized_by_violence') &&
       G.age >= 20 &&
       !G.mem?.ft9ViolenceTraumaBody,
-    text: 'You know this about yourself: there are things that happen in the body before the mind catches up. A loud sound, a certain kind of movement in the periphery, the particular posture of a person moving toward you too quickly. The reaction is faster than thought. You have learned to manage it. Management is not the same as it not being there.',
+    text: 'You know this about yourself: there are things that happen in the body before the mind catches up. A loud sound, a certain kind of movement in the periphery, the posture of a person moving toward you too quickly. The reaction is faster than thought. You have learned to manage it. Management is not the same as it not being there.',
     choices: [
       {
         text: 'Talk to someone — you cannot manage this alone indefinitely',
@@ -2091,7 +2092,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('genocide_survivor') &&
       G.age >= 65 &&
       !G.mem?.ft9GenThinning,
-    text: 'The ones who were there are dying of ordinary things now — age, illness, the accumulated weight of years. You read the name and you know which memory attaches to it. Each one that goes takes with them a specific version of what happened. You are still here. You are not sure if that is luck or something else.',
+    text: 'The ones who were there are dying of ordinary things now — age, illness, the accumulated weight of years. You read the name and you know which memory attaches to it. Each one that goes takes with them a version of what happened. You are still here. You are not sure if that is luck or something else.',
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -2129,7 +2130,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.age >= 38 &&
       !G.mem?.ft9MiscarriageArithmetic,
     text: () => {
-      return 'A child passes you on the street — five or six years old, running ahead of their parent. You do the arithmetic before you mean to. That is the age. Not every time, and not in a way that disrupts the day. The year that loss happened has a particular quality to it. This is just what the mind does with dates.'
+      return 'A child passes you on the street — five or six years old, running ahead of their parent. You do the arithmetic before you mean to. That is the age. Not every time, and never enough to disrupt the day. The year that loss happened has a quality to it. This is just what the mind does with dates.'
     },
     choices: null,
     effect: (p) => {
@@ -2148,7 +2149,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.partner !== null &&
       G.age >= 40 &&
       !G.mem?.ft9MultipleMiscarriagePartner,
-    text: 'You and your partner have stopped talking about it directly. What it meant. What it cost. The grief was shared but it was not the same grief, and neither of you had the right words for the difference. You are still here together. That is not a small thing. There are couples who didn\'t survive that particular weight.',
+    text: 'You and your partner have stopped talking about it directly. What it meant. What it cost. The grief was shared but it was not the same grief, and neither of you had the right words for the difference. You are still here together. That is not a small thing. There are couples who didn\'t survive that weight.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -2258,7 +2259,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('lost_sibling') &&
       G.age >= 35 &&
       !G.mem?.ft9LostSibObjects,
-    text: 'At some point someone has to deal with their things. If not you, then someone else — but the responsibility finds you. The objects carry the particular quality of belonging to someone who no longer exists. Some of it you can give away. Some of it you cannot explain keeping. You keep it anyway.',
+    text: 'At some point someone has to deal with their things. If not you, then someone else — but the responsibility finds you. The objects carry the quality of belonging to someone who no longer exists. Some of it you can give away. Some of it you cannot explain keeping. You keep it anyway.',
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -2293,7 +2294,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.siblings.length === 0 &&
       G.age >= 65 &&
       !G.mem?.ft9LostSibLastOne,
-    text: 'You are the last one. There is a story about a dog and a broken gate that only worked when your sister told the second half of it, and now it is a story about a dog. Nobody left can be asked whether the kitchen wall was green or whether you are remembering somebody else\'s kitchen. At your grandson\'s birthday you tell them the version you have and they laugh in the right place, which is not the same as being corrected.',
+    text: 'You are the last one. There is a story about a dog and a broken gate that only worked when your sister told the second half of it, and now it is a story about a dog. Nobody left can be asked whether the kitchen wall was green or whether you are remembering somebody else\'s kitchen. At your grandson\'s birthday you tell them the version you have and they laugh in the right place, and nobody corrects you.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 5; p.setMem('ft9LostSiblingLast', true) },
   },
@@ -2367,7 +2368,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.mem?.ft10HKRights &&
       G.currentYear >= 2019 &&
       G.age >= 22 && G.age <= 55,
-    text: 'The protests fill the streets on your one day off. You watch from the edge — you have papers here, a contract, and you cannot afford to be swept up in something. But you watch. The young people with umbrellas and hard hats, the specific courage of people who are being photographed by the state and know it. You are not a citizen of this place. The things they are trying to hold onto are things that also protect you, in ways the protest organizers are probably not thinking about. You go back to the flat before dark.',
+    text: 'The protests fill the streets on your one day off. You watch from the edge — you have papers here, a contract, and you cannot afford to be swept up in something. But you watch. The young people with umbrellas and hard hats, the courage of people who are being photographed by the state and know it. You are not a citizen of this place. The things they are trying to hold onto are things that also protect you, in ways the protest organizers are probably not thinking about. You go back to the flat before dark.',
     choices: null,
     effect: (p) => {
       p.m -= 5
@@ -2386,7 +2387,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.flags.has('ofw_returned') &&
       !G.mem?.ft10ItalyBadante &&
       G.age >= 22 && G.age <= 55,
-    text: 'You are called a *badante* here — a carer. The old woman you look after is ninety-one and has been a widow for twenty years and does not always know where she is, but she knows you. She calls you by a name that is not yours, which was the name of someone who worked here before. You have stopped correcting her. Her daughter visits on Saturdays and looks at you with a complicated expression that you have learned to read as gratitude and guilt in equal measure, which is also what you feel about being here at all. You write home about the apartment, the food, the good coffee. You do not write about the name she calls you.',
+    text: 'You are called a *badante* here — a carer. The old woman you look after is ninety-one and has been a widow for twenty years and does not always know where she is, but she knows you. She calls you by a name that is not yours, which was the name of someone who worked here before. You have stopped correcting her. Her daughter visits on Saturdays and looks at you with gratitude and guilt in equal measure, and that is also what you feel about being here at all. You write home about the apartment, the food, the good coffee. You do not write about the name she calls you.',
     choices: null,
     effect: (p) => {
       p.m -= 5
@@ -2406,7 +2407,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.flags.has('ofw_returned') &&
       !G.mem?.ft10ItalyCommunity &&
       G.age >= 22 && G.age <= 55,
-    text: 'The church in the next town holds a Filipino mass on the second Sunday of each month. You go when you can. The singing is in a language you dream in, and the priest is from Cebu, and someone always brings pansit in a pot that gets passed around afterward in the car park. You have found the person who handles the remittance service and the person who knows which agency to avoid and the person who was here fifteen years ago and will tell you, quietly, what happens to people who do not keep their papers in order. The community has its own knowledge economy. You learn it fast.',
+    text: 'The church in the next town holds a Filipino mass on the second Sunday of each month. You go when you can. The singing is in a language you dream in, and the priest is from Cebu, and someone always brings pansit in a pot that gets passed around afterward in the car park. You have found the person who handles the remittance service and the person who knows which agency to avoid and the person who was here fifteen years ago and will tell you, quietly, what happens to people who do not keep their papers in order. The community knows things the office does not. You learn it fast.',
     choices: null,
     effect: (p) => {
       p.m += 7
@@ -2424,7 +2425,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('ofw_runaway') &&
       !G.flags.has('ofw_returned') &&
       !G.mem?.ft10RunawayShelter,
-    text: 'The shelter is run by a Filipino organization that has seen this before. They have a protocol: document everything, change your SIM card, do not go back to the old neighbourhood. A woman behind a desk takes down your employer\'s name without looking surprised, which is either reassuring or not. You are not undocumented — technically — but your contract was with an employer who no longer has you, which puts you in a category that the embassy describes as \'complex\'. You wait. You fill out forms. You call home and say things are fine because they are fine, in the sense that you are safe, which is not the same as fine.',
+    text: 'The shelter is run by a Filipino organization that has seen this before. They have a protocol: document everything, change your SIM card, do not go back to the old neighbourhood. A woman behind a desk takes down your employer\'s name without looking surprised. You are not undocumented — technically — but your contract was with an employer who no longer has you, which puts you in a category that the embassy describes as \'complex\'. You wait. You fill out forms. You call home and say things are fine because you are safe, and safe is not the same as fine.',
     choices: [
       {
         text: 'Focus on finding a new legitimate placement',
@@ -2487,7 +2488,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.flags.has('ofw_broker_paid') &&
       !G.mem?.ft10BrokerPaidOff &&
       G.age >= 24,
-    text: 'The notebook shows zero. You have paid back the agency fee, the interest on the agency fee, and what the lender called \'administrative costs\' which you now understand is a word for a number they add when they want to. You close the notebook. You do not celebrate because the money that went to the loan was money that could have gone home, and you think about this in a way that isn\'t productive. But zero is zero. You send an extra two thousand pesos home this month and don\'t explain why.',
+    text: 'The notebook shows zero. You have paid back the agency fee, the interest on the agency fee, and what the lender called \'administrative costs\' which you now understand is a word for a number they add when they want to. You close the notebook. You do not celebrate, because the money that went to the loan could have gone home, and you keep doing that sum at night. But zero is zero. You send an extra two thousand pesos home this month and don\'t explain why.',
     choices: null,
     effect: (p) => {
       p.m += 10
@@ -2509,7 +2510,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     text: (G) => {
       const inExile = G.flags.has('algeria_exile') || G.flags.has('emigrated')
       if (inExile) {
-        return 'You read about the men who drew up the lists. Some have had their sentences reduced under the amnesty provisions. One has become a local official in a town east of Oran. You find this out through someone who still knows someone. You sit with the information for several days. There is nothing to do with it. That is the specific nature of impunity — it gives you something to know and nowhere to put it.'
+        return 'You read about the men who drew up the lists. Some have had their sentences reduced under the amnesty provisions. One has become a local official in a town east of Oran. You find this out through someone who still knows someone. For several days you tell nobody. There is nothing to do with it. That is the nature of impunity — it gives you something to know and nowhere to put it.'
       }
       return 'The years of it are over. The people who came for journalists and teachers and novelists are mostly out of the hills or dead or in government — that last one still surprises you, though it shouldn\'t. You have been asked, more than once, to write about that period. You have started and stopped four times. The problem is not the words. The problem is the question of who the words are for.'
     },
@@ -2549,9 +2550,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     text: (G) => {
       const inExile = G.flags.has('algeria_exile') || G.flags.has('emigrated')
       if (inExile) {
-        return 'Something in the news — a checkpoint, a disappearance, a government that says it is restoring order — and the decade comes back in a particular way. Not as memory exactly. As a reflex. Your body remembers before your mind does: the small adjustment, the checking of exits, the calculation of who is in the room and what they know. You have been here thirty years. The reflex is still from there.'
+        return 'Something in the news — a checkpoint, a disappearance, a government that says it is restoring order — and the decade comes back in a way. Not as memory exactly. As a reflex. Your body remembers before your mind does: the small adjustment, the checking of exits, the calculation of who is in the room and what they know. You have been here thirty years. The reflex is still from there.'
       }
-      return 'The decade is not discussed in the way you might expect. People who lived through it know which conversations to have and which to let settle. The younger ones sometimes ask. You answer partially, which is the only way to answer. Fully would take more than they are ready to hold, and you have learned to be careful with the weight of it.'
+      return 'The decade is not discussed in the way you might expect. People who lived through it know which conversations to have and which to let settle. The younger ones sometimes ask. You answer partially. There is no other way to answer. Fully would take more than they are ready to hold, and you have learned to be careful with the weight of it.'
     },
     choices: null,
     effect: (p) => {
@@ -2574,7 +2575,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('institutional_complicity') &&
       G.age >= 45 &&
       !G.flags.has('institutional_reckoning'),
-    text: 'A survivor is named in the news. Then another. The commission\'s findings run to four hundred pages and you do not need to read them to know what they contain. The silence you kept was practical — you told yourself it was pastoral — and now it has a public name. You sit with the newspaper until the light changes.',
+    text: 'A survivor is named in the news. Then another. The commission\'s findings run to four hundred pages and you do not need to read them to know what they contain. The silence you kept was practical — you told yourself it was pastoral — and now it has a public name. You hold the newspaper until the light changes.',
     choices: null,
     effect: (p) => { p.m -= 12; p.karma -= 10; p.addFlag('institutional_reckoning') },
   },
@@ -2602,7 +2603,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'Take the predatory credit card offer. Start rebuilding.',
         tag: 'debt_rebuilt_credit',
-        outcome: 'The interest rate is twenty-nine percent. You pay the full balance every month, which is the only way this works. After eighteen months, a second card arrives unsolicited. The score has moved.',
+        outcome: 'The interest rate is twenty-nine percent. You pay the full balance every month. It is the only way this works. After eighteen months, a second card arrives unsolicited. The score has moved.',
         effect: (p) => { p.mo -= 300; p.addFlag('debt_rebuilt_credit'); p.m -= 2; p.w += 2 },
       },
     ],
@@ -2619,7 +2620,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('earthquake_family_loss') &&
       G.age >= 20 &&
       !G.flags.has('earthquake_grief_resolved'),
-    text: 'The anniversary of the earthquake comes back every January. You know it by the light, the specific flat grey of the twelfth, before you have checked the date. You still have the rosary your aunt pressed into your hand the last time you visited — a small plastic thing, blue beads, worth nothing except that she touched it. You take it from the drawer in the morning and put it back before work.',
+    text: 'The anniversary of the earthquake comes back every January. You know it by the light, the flat grey of the twelfth, before you have checked the date. You still have the rosary your aunt pressed into your hand the last time you visited — a small plastic thing, blue beads, worth nothing except that she touched it. You take it from the drawer in the morning and put it back before work.',
     choices: null,
     effect: (p) => { p.m -= 6; p.addFlag('earthquake_grief_resolved') },
   },
@@ -2663,7 +2664,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('id98_witness_bystander') &&
       G.age >= 40 &&
       !G.flags.has('id98_late_reckoning'),
-    text: 'It has been years. The trials that were promised did not come. The men who organised what happened in May 1998 went into politics, gave speeches, had buildings named after them. You saw what you saw from your window — the smoke, the direction people were running, the specific moment you decided to step back from the glass. The account you could have given is still inside you, uncollected.',
+    text: 'It has been years. The trials that were promised did not come. The men who organised what happened in May 1998 went into politics, gave speeches, had buildings named after them. You saw what you saw from your window — the smoke, the direction people were running, the moment you decided to step back from the glass. The account you could have given is still inside you, uncollected.',
     choices: null,
     effect: (p) => { p.m -= 8; p.karma -= 5; p.addFlag('id98_late_reckoning') },
   },
@@ -2775,7 +2776,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('swahili_educated') &&
       G.age >= 30 && G.age <= 52 &&
       !G.mem?.ft11SwahiliCeiling,
-    text: 'The international role requires a particular English — not the English you learned alongside Swahili, but the English of reports, negotiations, and the precision that comes from having spent your entire education in it. You are qualified for everything except the language of the room. The language of the room is not in the job description.',
+    text: 'The international role requires an English — not the English you learned alongside Swahili, but the English of reports, negotiations, and the precision that comes from having spent your entire education in it. You are qualified for everything except the language of the room. The language of the room is not in the job description.',
     choices: [
       {
         text: 'Apply in the English you have',
@@ -2876,7 +2877,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.flags.has('forced_harvest') && G.age >= 48 && !G.mem?.ft11ForcedHarvest,
-    text: 'September still has a particular weight. You are aware of it every year — the moment when school should be starting, which is also the moment the quota had to be met, which is also the moment your hands were doing something that had nothing to do with what you were supposed to be learning. The school seasons are behind you now. September still knows.',
+    text: 'September still has a weight. You are aware of it every year — the moment when school should be starting, which is also the moment the quota had to be met, which is also the moment your hands were doing something that had nothing to do with what you were supposed to be learning. The school seasons are behind you now. September still knows.',
     choices: null,
     effect: (p) => { p.m -= 3; p.e += 2; p.setMem('ft11ForcedHarvest', true) },
   },
@@ -2952,7 +2953,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('hai_transition_generation') &&
       G.age >= 48 &&
       !G.mem?.ft11HaitiTransition,
-    text: 'February the seventh, and the radio plays the same songs it plays every February the seventh. You were on the Champ de Mars that morning in 1986 and you remember the noise a city makes when a long thing ends, which is not cheering exactly. You have believed several different things since about what that morning was the beginning of. The boy selling water at the junction was not born for another twenty years and knows the date because it is a holiday.',
+    text: 'February the seventh, and the radio plays the same songs it plays every February the seventh. You were on the Champ de Mars that morning in 1986 and you remember the noise a city makes when a long thing ends, and it is not cheering exactly. You have believed several different things since about what that morning was the beginning of. The boy selling water at the junction was not born for another twenty years and knows the date because it is a holiday.',
     context: 'Jean-Claude Duvalier fled Haiti on 7 February 1986, ending twenty-nine years of family rule. The date became a national holiday. He returned to Haiti in 2011 and died in 2014 without being tried.',
     choices: null,
     effect: (p) => { p.m -= 3; p.e += 4; p.r += 2; p.setMem('ft11HaitiTransition', true) },
@@ -2969,7 +2970,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('colonial_subject') &&
       G.age >= 25 &&
       !G.mem?.ft11ColonialElection,
-    text: 'The results come in from the mainland. You are an American citizen and you will live under the outcome — the policy, the court appointments, the conditions of the next four years. You had no vote. That is the specific constitutional arrangement of your citizenship: American citizen, no vote for president, represented in Congress by a delegate who cannot vote on the floor. The other word for this arrangement is not used in the official documents.',
+    text: 'The results come in from the mainland. You are an American citizen and you will live under the outcome — the policy, the court appointments, the conditions of the next four years. You had no vote. That is the constitutional arrangement of your citizenship: American citizen, no vote for president, represented in Congress by a delegate who cannot vote on the floor. The other word for this arrangement is not used in the official documents.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 3; p.setMem('ft11ColonialElection', true) },
   },
@@ -2999,7 +3000,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('amazigh_recognition_era') &&
       G.age >= 48 &&
       !G.mem?.ft11AmazighLate,
-    text: 'The constitution recognised Tamazight in 2011. The government sign went up — your grandmother\'s letters on official signage, in the language she taught you behind a closed door. You stood in front of that sign for a long time. The recognition was real. The resources did not follow at the same pace. You have learned to hold both of those things without requiring them to resolve into a single feeling.',
+    text: 'The constitution recognised Tamazight in 2011. The government sign went up — your grandmother\'s letters on official signage, in the language she taught you behind a closed door. You stood in front of that sign for a long time. The resources did not follow at the same pace. You have learned to hold both of those things without requiring them to resolve into a single feeling.',
     choices: null,
     effect: (p) => { p.m += 6; p.setMem('ft11AmazighLate', true) },
   },
@@ -3011,7 +3012,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.has('ofw_new_placement') && G.age >= 22 && !G.mem?.ft11OfwNewPlacement,
-    text: 'The new contract is better. The employer is not unkind. You have calibrated your expectations accordingly, which is itself information about what your expectations used to be. The work is the same work. The money goes home at the same rate. The difference between this situation and the last one is not visible to anyone who hasn\'t lived inside both.',
+    text: 'The new contract is better. The employer is not unkind. You have lowered your expectations, and you notice how high they used to be. The work is the same work. The money goes home at the same rate. The difference between this situation and the last one is not visible to anyone who hasn\'t lived inside both.',
     choices: null,
     effect: (p) => { p.m += 6; p.setMem('ft11OfwNewPlacement', true) },
   },
@@ -3023,7 +3024,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.has('informal_abroad') && G.age >= 20 && !G.mem?.ft11InformalAbroad,
-    text: 'You are working without papers, in a country that is not yours, in an arrangement that depends on no one official noticing. You have learned which streets, which hours, which conversations are navigable. The specific knowledge of a person operating just below the threshold of official attention accumulates into competence. You do not celebrate this. It is what the situation requires.',
+    text: 'You are working without papers, in a country that is not yours, in an arrangement that depends on no one official noticing. You have learned which streets, which hours, which conversations are navigable. The knowledge of a person operating just below the threshold of official attention accumulates into competence. You do not celebrate this. It is what the situation requires.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 3; p.setMem('ft11InformalAbroad', true) },
   },
@@ -3035,7 +3036,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.flags.has('care_work_done') && G.age >= 45 && !G.mem?.ft11CareWorkLate,
-    text: 'You cared for someone until there was nothing more to care for. The specific weight of it — the things you learned to do, the hours, what you witnessed — is not the kind of thing that translates into a summary. You were present for something that most people arrange not to see up close. You are still carrying what that cost, and what it gave. They are the same thing from different angles.',
+    text: 'You cared for someone until there was nothing more to care for. The weight of it — the things you learned to do, the hours, what you witnessed — is not the kind of thing that translates into a summary. You were present for something that most people arrange not to see up close. You are still carrying what that cost, and what it gave. They are the same thing from different angles.',
     choices: null,
     effect: (p) => { p.m += 5; p.karma += 6; p.setMem('ft11CareWorkLate', true) },
   },
@@ -3050,7 +3051,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('ofw_cycle_witness') &&
       G.age >= 48 &&
       !G.mem?.ft11OfwCycleWitness,
-    text: 'Your child is now the age you were when you left. They are talking about going. You hear yourself in the reasons they give and in the things they don\'t say. You have the specific receipts — what the contract costs, what the absence costs, what the money makes possible and what it doesn\'t. You are not certain that knowing would have changed what you decided. You are less certain it would change what they decide.',
+    text: 'Your child is now the age you were when you left. They are talking about going. You hear yourself in the reasons they give and in the things they don\'t say. You have the receipts — what the contract costs, what the absence costs, what the money makes possible and what it doesn\'t. You are not certain that knowing would have changed what you decided. You are less certain it would change what they decide.',
     choices: null,
     effect: (p) => { p.m -= 5; p.karma += 4; p.setMem('ft11OfwCycleWitness', true) },
   },
@@ -3090,7 +3091,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'Go back in. The work matters more than the credit.',
         tag: 'leave_mark_acted',
-        outcome: 'You go back. The work survives. The cost is real. You find you can live with it more easily than you expected.',
+        outcome: 'You go back. The work survives. It costs. You find you can live with it more easily than you expected.',
         effect: (p) => { p.m -= 6; p.karma += 8; p.r -= 4; p.setMem('ft11DesireLeaveMark', true) },
       },
       {
@@ -3142,7 +3143,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('military_service') &&
       G.age >= 40 && G.age <= 60 &&
       !G.mem?.ft11MilReunion,
-    text: 'Someone from your service years gets back in touch — a reunion, or a message, or a name in someone else\'s news. You had forgotten how well you knew those people, or at least how much you knew about them in a specific context. The context was extreme enough that what you knew felt like more than it was. The person in the message is the same person. They are also someone who has had twenty years of life you weren\'t part of.',
+    text: 'Someone from your service years gets back in touch — a reunion, or a message, or a name in someone else\'s news. You had forgotten how well you knew those people, or at least how much you knew about them in a context. The context was extreme enough that what you knew felt like more than it was. The person in the message is the same person. They are also someone who has had twenty years of life you weren\'t part of.',
     choices: [
       {
         text: 'Respond. Go, if there\'s a gathering.',
@@ -3199,7 +3200,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'Go closer. Walk through it.',
         tag: null,
-        outcome: 'The sensory memory is more complete than the visual one. A smell, a particular quality of light, something about the acoustics of that street. You stay longer than you intended.',
+        outcome: 'The sensory memory is more complete than the visual one. A smell, a quality of light, something about the acoustics of that street. You stay longer than you intended.',
         effect: (p) => { p.m -= 4; p.r += 4; p.e += 2; p.setMem('ft11LostHomeReturn', true) },
       },
       {
@@ -3263,7 +3264,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You made your peace with being somewhat outside.',
         tag: null,
-        outcome: 'The outside has its own texture. You have furnished it over time.',
+        outcome: 'Outside smells of diesel and other people\'s cooking. You have furnished it over time.',
         effect: (p) => { p.m += 2; p.karma += 5; p.setMem('ft12Belong', true) },
       },
     ],
@@ -3279,7 +3280,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.age >= 62 &&
       !G.flags.has('desire_be_seen_fulfilled') &&
       !G.mem.ft12BeSeen,
-    text: 'What you wanted was to be recognized: not famous, necessarily, but seen — the specific you, not the category you occupied. It happened sometimes. A teacher once. A colleague for a period. A partner who saw you clearly for a year before seeing something else. The recognition was real when it arrived. What surprised you was how briefly it satisfied the thing it was supposed to satisfy. You would be seen and then still feel the same need. You are still not sure what the need is, exactly. Closer than a need for approval, more precise than a need for love.',
+    text: 'What you wanted was to be recognized: not famous, but seen, you and not the category you occupied. It happened sometimes: a teacher once, a colleague for a while, a partner who saw you clearly for a year before seeing something else. What surprised you was how briefly it satisfied. You would be seen, and then the need was still there, and you are still not sure what it is.',
     choices: [
       {
         text: 'You have been seen. The moments were enough.',
@@ -3334,12 +3335,12 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.flags.has('desire_connection_fulfilled') &&
       !G.partner &&
       !G.mem.ft12Connection,
-    text: 'What you wanted was close proximity to another person — not the abstraction of love but the specific daily practice of a life alongside someone who knew what you were actually like and remained. You had pieces of it. A relationship that lasted a decade. A friendship of the kind that doesn\'t require explanation. A child who calls on a regular basis. These were real. What you also had was the specific loneliness of people who know what they want and have only had partial versions of it.',
+    text: 'What you wanted was close proximity to another person — not the abstraction of love but the daily practice of a life alongside someone who knew what you were actually like and remained. You had pieces of it. A relationship that lasted a decade. A friendship of the kind that doesn\'t require explanation. A child who calls on a regular basis. What you also had was the loneliness of people who know what they want and have only had partial versions of it.',
     choices: [
       {
         text: 'The partial versions were enough.',
         tag: null,
-        outcome: 'Not everything you want arrives complete. What arrived was real.',
+        outcome: 'Not everything you want arrives complete. What arrived, arrived.',
         effect: (p) => { p.m += 5; p.karma += 4; p.setMem('ft12Connection', true) },
       },
       {
@@ -3389,12 +3390,12 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.age >= 62 &&
       !G.flags.has('desire_freedom_fulfilled') &&
       !G.mem.ft12Freedom,
-    text: 'The freedom you wanted was not just absence of constraint — it was the specific feeling of moving through the world without owing anyone an explanation. You had moments of it. Some years were freer than others. What you also had was the discovery that freedom without attachment has its own costs, and that the constraints you accumulated over time — children, debts, a place you had put down roots — were also the things that made the freedom worth having when it arrived.',
+    text: 'The freedom you wanted was not just absence of constraint — it was the feeling of moving through the world without owing anyone an explanation. You had moments of it. Some years were freer than others. What you also had was the discovery that freedom without attachment has its own costs, and that the constraints you accumulated over time — children, debts, a place you had put down roots — were also the things that made the freedom worth having when it arrived.',
     choices: [
       {
         text: 'You found enough of it.',
         tag: null,
-        outcome: 'The specific years that were free. The choices that were yours. You count them and they are enough.',
+        outcome: 'The years that were free. The choices that were yours. You count them and they are enough.',
         effect: (p) => { p.m += 6; p.setMem('ft12Freedom', true) },
       },
       {
@@ -3416,12 +3417,12 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.age >= 62 &&
       !G.flags.has('desire_redemption_fulfilled') &&
       !G.mem.ft12Redemption,
-    text: 'The thing you did, or the thing that was done to you, that required making right — you spent a portion of your life in its vicinity. Making amends, or preparing to. Carrying the weight of it in a way that expressed itself as effort in other domains. Whether the redemption actually happened is a different question from whether you moved toward it. You moved toward it. The arrival is harder to confirm.',
+    text: 'The thing you did, or the thing that was done to you, that required making right — you spent a portion of your life in its vicinity. Making amends, or preparing to. Carrying the weight of it as effort in other domains. Whether the redemption actually happened is a different question from whether you moved toward it. You moved toward it. The arrival is harder to confirm.',
     choices: [
       {
         text: 'You did what you could. It is enough.',
         tag: null,
-        outcome: 'The account is not settled but the effort was real. You put it down.',
+        outcome: 'The account is not settled, but you tried. You put it down.',
         effect: (p) => { p.m += 5; p.karma += 8; p.r -= 4; p.setMem('ft12Redemption', true) },
       },
       {
@@ -3525,7 +3526,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'midlife',
     weight: 4,
     when: (G) => G.flags.includes('multilingual_identity') && (G.children ?? []).length > 0 && G.age >= 32 && !G.flags.includes('multilingual_inheritance_passed'),
-    text: 'Your child mixes languages in a single sentence in a way that is grammatically impossible in either language and perfectly clear in both simultaneously. You understand every word and the logic of the construction. The construction would be opaque to someone with only one of the languages. You are laughing before they finish.',
+    text: 'Your child mixes languages in a single sentence that is grammatically impossible in either language and perfectly clear in both. You understand every word and the logic of the construction. The construction would be opaque to someone with only one of the languages. You are laughing before they finish.',
     choices: null,
     effect: (p) => {
       p.addFlag('multilingual_inheritance_passed')
@@ -3569,7 +3570,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'Stay with the life built here.',
         tag: 'stay',
-        outcome: 'The life you have built in this country is real. Your children do not speak Kurmanji at home. The decision makes sense and it is still a loss of a particular kind.',
+        outcome: 'The life you have built in this country is yours. Your children do not speak Kurmanji at home. The decision makes sense and it is still a loss of a kind.',
         effect: (p) => { p.addFlag('kurd_europe_question_faced'); p.r += 2; },
       },
       {
@@ -3620,7 +3621,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'midlife',
     weight: 4,
     when: (G) => G.flags.includes('debt_recovered') && !G.flags.includes('debt_free_milestone'),
-    text: 'You paid the last of it. The number is zero. You have checked it three times because the zero has not been there before. The years of payments. The specific arithmetic of every month, the interest that ate the first years of repayments, the slow turn of the principal. All of it: gone.',
+    text: 'You paid the last of it. The number is zero. You have checked it three times because the zero has not been there before. The years of payments. The arithmetic of every month, the interest that ate the first years of repayments, the slow turn of the principal. All of it: gone.',
     choices: null,
     effect: (p) => {
       p.addFlag('debt_free_milestone')
@@ -3714,7 +3715,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('civil_rights_movement_participant') &&
       G.age >= 65 &&
       !G.mem?.ft14CivilRightsLegacy,
-    text: 'Someone asks you about it — a grandchild, a student, a journalist. You tell the part that is tellable. There is another part. The part about what it cost the people around you, the specific faces of the specific people who paid things you did not pay. The movement became history and you became a person who was in the history. Being a person who was in the history is different from being in the history. The history is cleaner than the thing itself.',
+    text: 'Someone asks you about it — a grandchild, a student, a journalist. You tell the part that is tellable. There is another part. The part about what it cost the people around you, the faces of the people who paid things you did not pay. The movement became history and you became a person who was in the history. Being a person who was in the history is different from being in the history. The history is cleaner than the thing itself.',
     choices: [
       {
         text: 'You tell it as fully as you can. What happened is worth being told.',
@@ -3725,7 +3726,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You tell the version that is tellable. Some of it stays with you.',
         tag: null,
-        outcome: 'The part that stays with you is real. It does not need to be told to be real.',
+        outcome: 'One part stays with you. It does not need to be told to be real.',
         effect: (p) => { p.r += 5; p.setMem('ft14CivilRightsLegacy', true); },
       },
     ],
@@ -3742,7 +3743,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.currentYear >= 1982 &&
       G.age >= 40 &&
       !G.mem?.ft14VietnamWall,
-    text: 'The Vietnam Veterans Memorial, Washington DC. Black granite. Fifty-eight thousand, two hundred and eighty names. You find the ones you are looking for. You can see your reflection in the granite as you touch the letters. The wall does not ask you to be fine. It does not ask you about your feelings about the war. It does not ask you about the withdrawal agreement or the domino theory or the credibility of American commitments in Southeast Asia. It asks you to find the name.',
+    text: 'Washington, the black granite, the names. You find the ones you came for and see your own face in the stone as you touch the letters. The wall does not ask you to be fine, or what you think about the war, or the domino theory, or the withdrawal. It asks you to find the name.',
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -3767,7 +3768,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year <= 1980) {
-        return 'January 21, 1977. Carter\'s first day in office. Pardon for all who evaded the draft. The pardon is administrative: it restores civil rights and cancels prosecution. It is not an apology. The country did not apologize for asking. You did not ask for an apology. You made a decision that cost you certain things. The pardon addresses the legal consequences. The weight of the decision is not a legal consequence.'
+        return 'January 21, 1977, Carter\'s first day: a pardon for everyone who evaded the draft. It restores your civil rights and cancels the prosecution. It is not an apology, and you did not ask for one. You made a decision that cost you certain things, and the pardon addresses the legal ones.'
       }
       return 'The Vietnam era. You refused. The pardon came in 1977 and was administrative — civil rights restored, prosecution cancelled. The country has moved on from the debate about whether you were right. The debate, which once defined you in certain rooms, is now historical. History is lighter than the original thing.'
     },
@@ -3827,7 +3828,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('aus_vietnam_vet') &&
       G.age >= 55 &&
       !G.mem?.ft14AusVietnamLate,
-    text: 'The Welcome Home Parade, 1987. Fourteen years after the last troops came home. Sydney. Eighteen thousand veterans march. Some of them are still angry about the fourteen years. Some of them are grateful. Some of them are both. The speeches are careful. The crowd is large. What the parade cannot give back is the fourteen years in which the country did not ask how you were, in which the war did not officially have a welcome home, in which you arranged your own relationship with what you carried.',
+    text: 'The Welcome Home Parade, Sydney, 1987, fourteen years after the last troops came home. Some of the men marching are still angry about the fourteen years, some are grateful, some are both. The speeches are careful and the crowd is large. What the parade cannot give back is the fourteen years in which nobody asked how you were.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -3882,7 +3883,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('anni_di_piombo_generation') &&
       G.age >= 60 &&
       !G.mem?.ft14AnniDiPiomboLate,
-    text: 'The bar on the corner has the photograph of the bank in Piazza Fontana behind the till, curling at the edge, and nobody remembers who put it there. Your knee still tells you when it is going to rain, which is from the Saturday in 1977 and not from age. The trials went up and came back down and went up again for forty years and you stopped following the appeals somewhere in the nineties. When the students come around with a recorder for a project you tell them the times and the streets and not the rest.',
+    text: 'The bar on the corner has the photograph of the bank in Piazza Fontana behind the till, curling at the edge, and nobody remembers who put it there. Your knee still tells you when it is going to rain, and that is the Saturday in 1977, not age. The trials went up and came back down and went up again for forty years and you stopped following the appeals somewhere in the nineties. When the students come around with a recorder for a project you tell them the times and the streets and not the rest.',
     context: 'Italy\'s anni di piombo ran from the 1969 Piazza Fontana bombing to the mid-1980s, with over 400 killed. Many prosecutions - Piazza Fontana among them - ended without a final conviction after decades of appeals, and state intelligence files remain partly classified.',
     choices: null,
     effect: (p) => { p.r += 5; p.h -= 2; p.e += 2; p.setMem('ft14AnniPiomboLate', true) },
@@ -3951,7 +3952,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('salaryman_life') &&
       G.age >= 60 &&
       !G.mem?.ft15SalarymanRetirement,
-    text: 'The retirement ceremony is held in a conference room. Your direct reports have prepared remarks. Someone has bought a clock. The clock has your name engraved on it. You receive it with both hands and bow. The managing director says you have given everything. What you gave was the commute, the late train, the evenings that became the company\'s evenings, the decades of being a man whose address changed when the company needed it to change. The clock is accurate. It will continue to be accurate when you are not in the office.',
+    text: 'The retirement ceremony is in a conference room. Someone has bought a clock with your name engraved on it, and you receive it with both hands and bow, and the managing director says you gave everything. What you gave was the commute, the late train, the evenings that became the company\'s, the decades of moving house when the company needed you moved. The clock is accurate. It will go on being accurate when you are not in the office.',
     choices: [
       {
         text: 'The company was your life. That is a true statement and you do not know how to feel about it.',
@@ -3962,7 +3963,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You always knew it was a bargain. You gave the company the years. The company gave you the decades of certainty.',
         tag: null,
-        outcome: 'The bargain was real. The certainty was real. The regret is real and does not contradict the other things.',
+        outcome: 'You kept the bargain. The regret is real and does not contradict the other things.',
         effect: (p) => { p.r += 3; p.m += 5; p.e += 2; p.setMem('ft15SalarymanRetirement', true); },
       },
     ],
@@ -4033,7 +4034,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year >= 2021) {
-        return 'The seawall is fifteen meters high. It runs along the coast for 400 kilometers. The government built it to protect the towns from the next wave. The towns the wave took are behind the seawall, rebuilt or not rebuilt or half-rebuilt, depending on the town. From inside the town you cannot see the ocean. The ocean has been put out of sight. This is the protection. You lived here before the seawall. The ocean was part of what it meant to live here. The seawall is also part of what it means to live here now.'
+        return 'The seawall is fifteen metres high and runs along the coast for four hundred kilometres. Behind it are the towns the wave took, rebuilt, half-rebuilt, or not. From inside the town you cannot see the ocean. You lived here before the wall, when the ocean was part of what it meant to live here.'
       }
       return 'March 11, each year. The siren test. The four-minute warning that did not reach everyone in time. The evacuation routes that were marked and the people who turned back to get something from the house. You know which turning took you up the hill. You know which part of that knowledge is luck and which part is the drill you had done every year since school.'
     },
@@ -4045,7 +4046,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
         effect: (p) => { p.r += 4; p.m -= 3; p.m += 5; p.karma += 4; p.setMem('ft15TohokuLate', true); },
       },
       {
-        text: 'You do not go back to the coast. The distance is its own kind of keeping.',
+        text: 'You do not go back to the coast. You keep it by staying away.',
         tag: null,
         outcome: 'What you are keeping is yours. The date still comes each year regardless.',
         effect: (p) => { p.r += 6; p.m += 2; p.setMem('ft15TohokuLate', true); },
@@ -4090,7 +4091,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('anpo_generation') &&
       G.age >= 60 &&
       !G.mem?.ft15AnpoLate,
-    text: 'Your granddaughter has a worksheet about the treaty and asks what the Diet building looked like that night. You tell her about the linked arms and the particular noise a hundred thousand people make chanting in time, which is not the noise of a stadium. She writes down the date. There is no line on the worksheet for the noise, so it does not go anywhere. The treaty renewed itself again this year, the way it has every year since, without anyone having to sign anything.',
+    text: 'Your granddaughter has a worksheet about the treaty and asks what the Diet building looked like that night. You tell her about the linked arms and the noise a hundred thousand people make chanting in time, nothing like a stadium. She writes down the date. There is no line on the worksheet for the noise, so it does not go anywhere. The treaty renewed itself again this year, the way it has every year since, without anyone having to sign anything.',
     context: 'The 1960 Anpo protests against the revised US-Japan Security Treaty were the largest in modern Japanese history. Kishi Nobusuke resigned after ratification. A student, Michiko Kanba, was killed in the crush at the Diet gates on 15 June 1960. The treaty has renewed automatically since 1970.',
     choices: null,
     effect: (p) => { p.r += 3; p.e += 2; p.m -= 2; p.setMem('ft15AnpoLate', true) },
@@ -4106,7 +4107,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('corralito_survivor') &&
       G.age >= 55 &&
       !G.mem?.ft15CorralitoLate,
-    text: 'The money is behind the wardrobe in an envelope, in dollars, and you count it twice a year. Your daughter keeps hers in an app and finds the envelope funny. You have tried to explain that December and it comes out as a story about queues and a spoon on a saucepan, which is not the part that matters. The part that matters is the morning at the kitchen table when you did the arithmetic and found that ten years had come to a third of itself. You have not opened a savings account since.',
+    text: 'The money is behind the wardrobe in an envelope, in dollars, and you count it twice a year. Your daughter keeps hers in an app and finds the envelope funny. You have tried to explain that December and it comes out as a story about queues and a spoon on a saucepan, and the part that matters stays out. The part that matters is the morning at the kitchen table when you did the arithmetic and found that ten years had come to a third of itself. You have not opened a savings account since.',
     context: 'The corralito of December 2001 capped bank withdrawals at 250 pesos a week. In January 2002 the peso was devalued and dollar deposits were forcibly converted at 1.4 pesos while the market rate ran past 3, wiping out most of the real value of savings.',
     choices: null,
     effect: (p) => { p.e += 4; p.w -= 1; p.m -= 2; p.r += 2; p.setMem('ft15CorralitoLate', true) },
@@ -4148,7 +4149,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('arg_savings_destroyed') &&
       G.age >= 55 &&
       !G.mem?.ft15ArgSavingsLate,
-    text: 'You rebuilt, in a smaller shape, in a currency that is not this one. Your mother did the same after 1989 and you remember thinking she was superstitious about banks. At the Sunday lunch your nephew explains a stablecoin to you and you listen the whole way through and say that it sounds sensible. Then you go home and check the envelope, which is where it was.',
+    text: 'You rebuilt, in a smaller shape, in a currency that is not this one. Your mother did the same after 1989 and you remember thinking she was superstitious about banks. At the Sunday lunch your nephew explains a stablecoin to you and you listen the whole way through and say that it sounds sensible. Then you go home and check the envelope. It is where it was.',
     context: 'Argentine hyperinflation peaked at over 3,000 percent in 1989. The 2002 pesification destroyed dollar savings a second time within one working lifetime. Household dollar hoarding outside the banking system is estimated in the hundreds of billions.',
     choices: null,
     effect: (p) => { p.e += 3; p.w -= 2; p.r += 3; p.setMem('ft15ArgSavingsLate', true) },
@@ -4165,10 +4166,11 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year >= 2019) {
-        return 'The Kirchner decade: 2003–2015. 8% annual growth for seven years. Poverty fell from 54% to 27%. The CONADEP trials resumed. Human rights as state policy. The flip side: the INDEC statistics falsification, the inflation that was real but not officially counted, the energy subsidies that became unsustainable, the institutional damage. Argentina defaulted again in 2014 and again in 2020. The recovery was real. The recovery did not solve the structural problem. Nothing in Argentina has yet solved the structural problem.'
+        return 'The Kirchner years: growth, poverty halved, the trials of the junta\'s men resumed. Also the statistics office lying about inflation, the subsidies nobody could afford, the default in 2014 and the next one in 2020. For a while there was a recovery. Nothing in Argentina has yet solved the structural problem.'
       }
       return 'Néstor Kirchner died in 2010. He was sixty years old. The recovery he led — GDP doubled in eight years, poverty cut in half — is the economic fact. The method — the confrontation with the IMF, the debt restructuring, the export taxes — is the argument. You lived through both the economic fact and the argument. The argument is still running.'
     },
+    context: 'Between 2003 and 2015 Argentina grew at about 8 percent a year for several years and official poverty fell from 54 to 27 percent; INDEC\'s inflation figures were manipulated from 2007.',
     choices: null,
     effect: (p) => {
       p.r += 3
@@ -4216,7 +4218,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You attend the afgantsy gatherings. These are the people who understand without explanation.',
         tag: null,
-        outcome: 'The understanding without explanation is what the association is for. You have been coming for thirty years. The people who are gone from the list now are gaps in a specific kind of conversation.',
+        outcome: 'The understanding without explanation is what the association is for. You have been coming for thirty years. The people who are gone from the list now are gaps in a kind of conversation.',
         effect: (p) => { p.m += 5; p.r += 4; p.karma += 4; p.setMem('ft16AfghanLate', true); },
       },
       {
@@ -4254,13 +4256,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.mem?.ft16UkraineExileLate,
     text: (G) => {
       const country = G.currentCountry?.name || 'the country you are in'
-      return `You are in ${country}. You have been here since 2022. The question of when you will go back assumes there is something to go back to that resembles what you left, which is a question with no current answer. You follow Russian news in the way that people follow the news of a place they both are and are not from. Your documents say one thing. Your accent says another. The people around you who know you call you Russian and you do not correct them and you are not sure that they are wrong.`
+      return `You are in ${country}. You have been here since 2022. The question of when you will go back assumes there is something to go back to that resembles what you left, and nobody can answer it. You follow Russian news in the way that people follow the news of a place they both are and are not from. Your documents say one thing. Your accent says another. The people around you who know you call you Russian and you do not correct them and you are not sure that they are wrong.`
     },
     choices: [
       {
         text: 'You are building a life here. The country you are from is the country you are from.',
         tag: null,
-        outcome: 'The building is real. The country you are from does not stop being what it is because you have left it.',
+        outcome: 'The building stands. The country you are from does not stop being what it is because you have left it.',
         effect: (p) => { p.m += 4; p.r += 3; p.setMem('ft16UkraineExileLate', true); },
       },
       {
@@ -4282,12 +4284,12 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.age >= 35 &&
       G.currentYear >= 2024 &&
       !G.mem?.ft16UkraineVetLate,
-    text: 'The briefing described a three-day operation. The operation is in its second year. The casualties are not published. The men from your unit who are gone are described in official communications as having died in the performance of their duty defending the motherland, which is true and is also the entire official account. What was found in Ukraine — the specific things, the towns, the people — is not in the official account. You are home now. Home has the same streets. You have a different relationship with the streets because you have come back from something the streets do not know about.',
+    text: 'The briefing described a three-day operation. The operation is in its second year. The casualties are not published. The men from your unit who are gone are described in official communications as having died in the performance of their duty defending the motherland, and that is the entire official account. What was found in Ukraine — the things, the towns, the people — is not in the official account. You are home now. Home has the same streets. You have a different relationship with the streets because you have come back from something the streets do not know about.',
     choices: [
       {
         text: 'You find a way to speak about it. The speaking matters, even imperfectly.',
         tag: null,
-        outcome: 'What is spoken imperfectly is better than what is not spoken. This is not always true. In this case you believe it is.',
+        outcome: 'What is spoken imperfectly is usually better than what is not spoken. Not always. In this case you believe it is.',
         effect: (p) => { p.r += 4; p.m += 3; p.karma += 4; p.setMem('ft16UkraineVetLate', true); },
       },
       {
@@ -4352,7 +4354,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.age >= 40 &&
       G.currentYear >= 2022 &&
       !G.mem?.ft17EuromaidanLate,
-    text: 'The Heavenly Hundred Memorial is on Instytutska Street where some of them died. The names are on it. You were in the Maidan in those weeks in 2013 and 2014 when the things that led to everything that came after were being decided in the cold and the smoke. What came after: Crimea in March 2014. Donbas in April. Eight years of a frozen conflict. February 24, 2022. The memorial was shelled in March 2022 and repaired. The chain that began in the tent city on Maidan is still the chain. You are still in it.',
+    text: 'The Heavenly Hundred memorial is on Instytutska Street, where some of them died, with the names on it. You were on the Maidan in those weeks, in the cold and the smoke. Then Crimea, then Donbas, eight years of a frozen war, then February 2022, and in March the memorial itself was shelled and repaired. The chain that began in the tent city is still the chain, and you are still in it.',
     choices: [
       {
         text: 'What we did on Maidan was necessary. What came after was the price of necessary things.',
@@ -4381,7 +4383,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.mem?.ft17UkrRefugeeLate,
     text: (G) => {
       const country = G.currentCountry?.name || 'the country you are in'
-      return `You have been in ${country} since 2022. The ceasefire, if it comes, will come in conditions you cannot yet see. The reconstruction, if it comes, will take decades. The country you left is still fighting. The question of returning is not abstract: it is the specific address, the specific apartment, the specific city, and what the city looks like now versus what it looked like on February 23, 2022. You follow the news every morning. This is not a temporary arrangement anymore. This is your life.`
+      return `You have been in ${country} since 2022. The ceasefire, if it comes, will come in conditions you cannot yet see. The reconstruction, if it comes, will take decades. The country you left is still fighting. The question of returning is not abstract: it is the address, the apartment, the city, and what the city looks like now versus what it looked like on February 23, 2022. You follow the news every morning. This was supposed to be temporary, and it is your life.`
     },
     choices: null,
     effect: (p) => {
@@ -4410,7 +4412,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year >= 2012) {
-        return 'The CNSAS — the National Council for the Study of the Securitate Archives — has been operating since 1999. You can request your file. People have requested their files and found the names of people they knew. The neighbour who was an informer. The colleague. Sometimes: the spouse. The files contain reports that are accurate and reports that the informer invented to meet a quota. The distinction is hard to make from the inside of the report. You can request your file. Some people do not request their file.'
+        return 'Since 1999 you have been able to ask for your Securitate file. People who asked found the names of people they knew: the neighbour, the colleague, sometimes the spouse. The files hold reports that are accurate and reports an informer made up to meet a quota, and from inside the report it is hard to tell which. You can request your file. Some people never do.'
       }
       return 'The Securitate files are being opened. The CNSAS exists and is cataloguing them. The people whose names appear as informers are sometimes people you know. Sometimes they were informers under coercion and sometimes they were informers for other reasons. The distinction is relevant and is also difficult to establish from documents. You grew up in the system the documents describe. You know the system in a way the documents do not contain.'
     },
@@ -4453,7 +4455,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('romania_1989_generation') &&
       G.age >= 50 &&
       !G.mem?.ft18Rev1989Late,
-    text: 'Every December the television runs the same footage and every December you watch it with the sound down. Your daughter was born after, and asks once who was shooting on the twenty-second. You tell her the truth, which is that you were there and you do not know. The trial has been open longer than she has been alive, and the man on the fourth floor who was Securitate still puts his bins out on Tuesdays, same as everyone.',
+    text: 'Every December the television runs the same footage and every December you watch it with the sound down. Your daughter was born after, and asks once who was shooting on the twenty-second. You tell her the truth: you were there and you do not know. The trial has been open longer than she has been alive, and the man on the fourth floor who was Securitate still puts his bins out on Tuesdays, same as everyone.',
     context: 'Over a thousand people died in December 1989, most after Ceaușescu had fled, shot by unidentified gunmen the state called terrorists. Ion Iliescu was charged with crimes against humanity in 2015; proceedings continue.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 3; p.m -= 3; p.setMem('ft18Rev1989Late', true) },
@@ -4470,7 +4472,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.mem?.ft18EUEmigLate,
     text: (G) => {
       const country = G.currentCountry?.name || 'Western Europe'
-      return `You have been in ${country} since the accession years. Romania is in the news periodically — the anti-corruption protests, the government instability, the Colectiv nightclub fire, the pandemic. You follow it in the way that people follow the news of a country that is still theirs from a distance. The village you came from has fewer people each year. The school may already be closed. You send money. The money changes things at the house but not at the school. You know the calculation you made when you left was the right calculation for you. You also know what the right calculation cost the place you made it from.`
+      return `You have been in ${country} since the accession years, and Romania comes to you as news: the anti-corruption protests, the Colectiv fire, the governments falling. The village you came from has fewer people every year, and the school may already be closed. The money you send changes the house and not the school. The calculation you made when you left was right for you. You know what it cost the place you made it from.`
     },
     choices: null,
     effect: (p) => {
@@ -4491,7 +4493,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('doi_moi_generation') &&
       G.age >= 55 &&
       !G.mem?.ft18DoiMoiLate,
-    text: 'You still have a ration coupon in the drawer with the old ID, soft as cloth from the folding. The alley you grew up in has a bubble tea place at the end of it and the traffic starts at half five in the morning. Your daughter transfers you money from an app and asks why you will not use the card. You tell her the truth, which is that you like to count it.',
+    text: 'You still have a ration coupon in the drawer with the old ID, soft as cloth from the folding. The alley you grew up in has a bubble tea place at the end of it and the traffic starts at half five in the morning. Your daughter transfers you money from an app and asks why you will not use the card. You tell her the truth: you like to count it.',
     context: 'The Đổi Mới reforms began in 1986. Growth averaged around 7 percent for two decades and the poverty rate fell from roughly 60 percent to under 10 percent by 2010, while the Communist Party retained a monopoly on political power.',
     choices: null,
     effect: (p) => { p.m += 4; p.e += 2; p.w += 2; p.setMem('ft18DoiMoiLate', true) },
@@ -4581,7 +4583,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('kadar_compromise_generation') &&
       G.age >= 55 &&
       !G.mem?.ft19KadarLate,
-    text: 'The question the Kádár years raised and did not answer: what did the compromise cost? Not in political terms — the cost there is documented. In another register. The specific kind of person produced by a society that says: do not aspire beyond what the deal allows, do not ask about the tanks, do not organize. The person who is competent and careful and does not talk about certain things. You are looking at that person in the mirror, and it is the first time you are looking with something like clarity.',
+    text: 'The question the Kádár years raised and did not answer: what did the compromise cost? Not in political terms — the cost there is documented. In another register. The kind of person produced by a society that says: do not aspire beyond what the deal allows, do not ask about the tanks, do not organize. The person who is competent and careful and does not talk about certain things. You are looking at that person in the mirror, and it is the first time you are looking with something like clarity.',
     choices: [
       {
         text: 'The deal was what was available. You took what was available. That is the accurate accounting.',
@@ -4633,7 +4635,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('normalization_generation') &&
       G.age >= 55 &&
       !G.mem?.ft19NormLate,
-    text: 'The file came back thinner than you expected, and the informer code name in it is one you can put a face to within about four seconds. He is still alive. You see him at the shop by the tram stop and he nods and you nod, which is what you have both done for thirty years. Your son says you should say something and you say that the file does not show what the man was threatened with, which is true, and is also not the reason.',
+    text: 'The file came back thinner than you expected, and the informer code name in it is one you can put a face to within about four seconds. He is still alive. You see him at the shop by the tram stop and he nods and you nod, as you have both done for thirty years. Your son says you should say something and you say that the file does not show what the man was threatened with, which is true, and not the reason.',
     context: 'Czechoslovak normalisation after 1968 required hundreds of thousands of loyalty declarations. The 1991 lustration law barred former StB collaborators from office; the registers were published in 2003 and did not record what coercion had been applied.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 2; p.setMem('ft19NormalizationLate', true) },
@@ -4664,7 +4666,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year >= 2019) {
-        return 'Thirty years after November 1989, Czech politics has produced Andrej Babiš — a billionaire prime minister who is also an accused secret-police collaborator, charged with EU subsidy fraud, who controls several major newspapers. Havel died in 2011. The specific mood of the Havel years — the philosopher at the castle, the playwright as president — lasted for a particular window. What came after is what came after. You watched all of it.'
+        return 'Thirty years after November 1989, Czech politics has produced Andrej Babiš — a billionaire prime minister who is also an accused secret-police collaborator, charged with EU subsidy fraud, who controls several major newspapers. Havel died in 2011. The mood of the Havel years — the philosopher at the castle, the playwright as president — lasted for a window. What came after is what came after. You watched all of it.'
       }
       return 'The Velvet Revolution was supposed to install something. What it installed, in the first decade: rapid privatization, the oligarchisation of the privatized assets, restitution claims. And also: the opening, the EU, genuine prosperity. The question is what the revolution was for exactly, and whether it delivered that. The answer is not simple — which is itself a kind of answer.'
     },
@@ -4689,7 +4691,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       if (year >= 2004) {
         return 'Since independence, the deportations have been officially memorialized. June 14 is Mourning and Hope Day in Latvia and Lithuania; June 14 is the Day of Mourning in Estonia. The memorials list names. Some of the names in the list are names from your family. The listing of the name is official acknowledgment. Official acknowledgment does not restore the person. It is still something — the naming is still something — and you feel both what it is and what it is not.'
       }
-      return 'The family members who were deported in 1941 or 1949 — the ones who came back changed and the ones who did not come back — have been with you your whole life as an absence with a known shape. You are old enough now to understand the historical dimension: the Soviet system that produced the deportations, the policy decisions behind them, the numbers. The numbers and the specific names in your family are two different kinds of knowledge that you carry together.'
+      return 'The family members who were deported in 1941 or 1949 — the ones who came back changed and the ones who did not come back — have been with you your whole life as an absence with a known shape. You are old enough now to understand the historical dimension: the Soviet system that produced the deportations, the policy decisions behind them, the numbers. The numbers and the names in your family are two different kinds of knowledge that you carry together.'
     },
     choices: null,
     effect: (p) => { p.r += 5; p.m -= 2; p.karma += 3; p.setMem('ft20DeportLate', true); },
@@ -4707,7 +4709,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       const year = G.currentYear
       const country = G.character?.country?.name || ''
       if (year >= 2021 && country === 'Lithuania') {
-        return 'Thirty years since January 13, 1991. The cases against Soviet commanders for war crimes and crimes against humanity proceeded through the Lithuanian courts for decades. Russia did not extradite anyone. The convictions stand in Lithuanian law; their enforcement is another matter. The thirteen killed at the TV Tower are named in the memorial. You were there, or near enough that the distance does not matter anymore. The specific night — the cold, the noise, the crowds — is the founding memory of everything that came after.'
+        return 'Thirty years since January 13, 1991. The cases against Soviet commanders for war crimes and crimes against humanity proceeded through the Lithuanian courts for decades. Russia did not extradite anyone. The convictions stand in Lithuanian law; their enforcement is another matter. The thirteen killed at the TV Tower are named in the memorial. You were there, or near enough that the distance does not matter anymore. The night — the cold, the noise, the crowds — is the founding memory of everything that came after.'
       }
       return 'Independence has been real for most of your adult life now. The country is in the EU and NATO, which are the structures that would have seemed unimaginable in January 1991. The January events — when it was unclear whether the independence declarations would survive — belong to the founding story. You were part of the founding story. The founding story is now taught to people who weren\'t born yet.'
     },
@@ -4728,7 +4730,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       if (year >= 2022) {
         return 'February 2022: Russia invades Ukraine. In the Baltic states, the Russian-speaking community is asked, implicitly and sometimes explicitly, to declare a position. The position of the Estonian and Latvian governments is that Russian speakers who are citizens or permanent residents are welcome but that the Russian state is not. The position is not the same as the community receiving it. You have been living this division — between your language community and your residential community — your entire adult life. 2022 sharpened it into something that required a daily answer.'
       }
-      return 'The citizenship question resolved itself, for you, decades ago. What did not resolve is the specific position of Russian speakers in countries where the history of the Russian presence is inseparable from the history of Soviet occupation. You have lived your adult life in the gap between those two histories. The gap has been narrowing or widening depending on the decade. You have watched both movements.'
+      return 'The citizenship question resolved itself, for you, decades ago. What did not resolve is the position of Russian speakers in countries where the history of the Russian presence is inseparable from the history of Soviet occupation. You have lived your adult life in the gap between those two histories. The gap has been narrowing or widening depending on the decade. You have watched both movements.'
     },
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m -= 3; p.setMem('ft20RusMinLate', true); },
@@ -4750,13 +4752,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You go back. The country is different enough to try again.',
         tag: null,
-        outcome: 'The return is real. The country is different. You are also different. The combination produces something neither of you planned for.',
+        outcome: 'You go back. The country is different. You are also different. The combination produces something neither of you planned for.',
         effect: (p) => { p.m += 6; p.r += 4; p.setMem('ft20EUBaltLate', true); },
       },
       {
         text: 'You stay where you are. The roots took hold while you were not paying attention.',
         tag: null,
-        outcome: 'The life here is the life. The country you came from is something you carry inside the life here. Both are real.',
+        outcome: 'The life here is the life. The country you came from is something you carry inside the life here.',
         effect: (p) => { p.m += 4; p.r += 5; p.setMem('ft20EUBaltLate', true); },
       },
     ],
@@ -4808,7 +4810,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('abkhazia_displaced_connection') &&
       G.age >= 55 &&
       !G.mem?.ft21AbkLate,
-    text: 'The IDP families from Abkhazia: thirty years in some cases without return. The hotels that became permanent residences. The children who grew up displaced and the grandchildren who know Abkhazia only from stories. Georgia maintains that return will happen when Abkhazia returns to Georgian sovereignty. Abkhazia, with Russian support, maintains it will not. The specific apartment in Sukhumi — the specific eucalyptus trees in the yard — still exist. They are not yours to return to. They may not be yours to return to within your lifetime.',
+    text: 'The IDP families from Abkhazia: thirty years in some cases without return. The hotels that became permanent residences. The children who grew up displaced and the grandchildren who know Abkhazia only from stories. Georgia maintains that return will happen when Abkhazia returns to Georgian sovereignty. Abkhazia, with Russian support, maintains it will not. The apartment in Sukhumi — the eucalyptus trees in the yard — still exist. They are not yours to return to. They may not be yours to return to within your lifetime.',
     choices: [
       {
         text: 'You have made peace with the probability that the return will not happen in your life.',
@@ -4892,7 +4894,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.flags.has('azr_baku_pogrom_witness') && G.age >= 55 && !G.mem.ft22_pogrom_late_done,
-    text: 'The door on the fourth floor. You walked past it for months before a new family moved in. You never told your children what happened there in January 1990. Not what the neighbors did. Not what you did — which was nothing, which was looking at the floor when they listed the names in the stairwell. You have carried this particular weight long enough that you have stopped noticing it. But it is there.',
+    text: 'The door on the fourth floor. You walked past it for months before a new family moved in. You never told your children what happened there in January 1990. Not what the neighbors did. Not what you did — which was nothing, which was looking at the floor when they listed the names in the stairwell. You have carried this weight long enough that you have stopped noticing it. But it is there.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 7; p.karma -= 3; p.setMem('ft22_pogrom_late_done', true); },
   },
@@ -4962,7 +4964,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('paid_bribe') &&
       !G.mem?.ft23BribeEcho,
-    text: 'The first time you paid it was a specific amount to a specific person in a specific situation. Since then the transactions have not been dramatic — a small amount at a checkpoint, an expedited document, a look that everyone in the room understands. You have become fluent in a system you did not build and cannot avoid. You think about the people who built it sometimes.',
+    text: 'The first time you paid it was an amount to a person in a situation. Since then the transactions have not been dramatic — a small amount at a checkpoint, an expedited document, a look that everyone in the room understands. You have become fluent in a system you did not build and cannot avoid. You think about the people who built it sometimes.',
     choices: [
       {
         text: 'You have made a point of refusing since — you are not going to be that person',
@@ -5035,7 +5037,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You have made peace with staying — this is your life',
         tag: null,
-        outcome: 'You stopped looking at that particular horizon. The life here is real and yours.',
+        outcome: 'You stopped looking at that horizon. The life here is real and yours.',
         effect: (p) => { p.m += 6; p.r -= 3; p.setMem('ft23ConsidEmig', true) },
       },
       {
@@ -5058,7 +5060,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('radio_childhood') &&
       G.age >= 55 &&
       !G.mem?.ft23RadioMemory,
-    text: 'You learned to read the world through a speaker — the specific sound of a particular broadcaster\'s voice, the way the whole family oriented toward the set at the same hour. The news arrived as sound, which meant it arrived as presence. You could not watch it happen. You could only hear it described, which gave it a particular quality — closer to story, further from spectacle. You are not sure that was worse.',
+    text: 'You learned to read the world through a speaker — the sound of a broadcaster\'s voice, the way the whole family oriented toward the set at the same hour. The news arrived as sound, which meant it arrived as presence. You could not watch it happen. You could only hear it described, which gave it a quality — closer to story, further from spectacle. You are not sure that was worse.',
     choices: null,
     effect: (p) => { p.m += 7; p.e += 3; p.setMem('ft23RadioMemory', true) },
   },
@@ -5088,7 +5090,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('earthquake_survivor') &&
       !G.mem?.ft23EarthquakeEcho,
-    text: 'The ground moved once when you did not expect it to. Years later, certain sounds — a truck on a rough road, something heavy dropped in another room — produce a response in your body before your mind catches up. You are not frightened. Your nervous system has its own record of events, and it is not finished with the accounting.',
+    text: 'The ground moved once when you did not expect it to. Years later, certain sounds — a truck on a rough road, something heavy dropped in another room — produce a response in your body before your mind catches up. You are not frightened. Your nervous system kept its own record, and it is not finished with the accounting.',
     choices: null,
     effect: (p) => { p.e += 3; p.r += 2; p.setMem('ft23EarthquakeEcho', true) },
   },
@@ -5131,7 +5133,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You miss competing — the coaching is real but the loss is also real',
         tag: null,
-        outcome: 'Both things are true. The grief for the performance career is its own kind of grief — specific and not always socially legible.',
+        outcome: 'You grieve for the performance career, quietly, in a way few people around you would understand.',
         effect: (p) => { p.m += 3; p.r += 4; p.setMem('ft24AthCoach', true) },
       },
     ],
@@ -5147,7 +5149,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('failure_integrated') &&
       !G.mem?.ft24FailureInt,
-    text: 'The failure is something you can think about now without the particular nausea. Not because it became less of a failure — it did not — but because you have done what it turns out you needed to do with it. You have looked at it straight. You know what the failure cost and what it meant and roughly what you should have done differently. That is not nothing. Most people do not actually do this.',
+    text: 'The failure is something you can think about now without the nausea. Not because it became less of a failure — it did not — but because you have done what it turns out you needed to do with it. You have looked at it straight. You know what the failure cost and what it meant and roughly what you should have done differently. That is not nothing. Most people do not actually do this.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 4; p.karma += 3; p.setMem('ft24FailureInt', true) },
   },
@@ -5162,7 +5164,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('manages_chronic_condition') &&
       !G.mem?.ft24ManagesChronic,
-    text: 'The condition is managed, which means it is present in a particular way — not as crisis, but as infrastructure. The medication taken at the same time every day. The things avoided. The check-ups that are now permanent items on the calendar. You have negotiated a version of your life that accommodates this, and the negotiation has become routine, which is a different thing from the condition being gone.',
+    text: 'The condition is managed, which means it is present in a way — not as crisis, but as infrastructure. The medication taken at the same time every day. The things avoided. The check-ups that are now permanent items on the calendar. You have negotiated a version of your life that accommodates this, and the negotiation has become routine, though the condition has not gone.',
     choices: [
       {
         text: 'You have made a reasonable peace with the management',
@@ -5171,7 +5173,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
         effect: (p) => { p.m += 6; p.e += 3; p.setMem('ft24ManagesChronic', true) },
       },
       {
-        text: 'Some days the management is tiring in a way that is hard to explain',
+        text: 'Some days the management is tiring and hard to explain',
         tag: null,
         outcome: 'Not in crisis — that is important. But the ongoing cost is real, and invisible to most people.',
         effect: (p) => { p.m += 2; p.h -= 2; p.setMem('ft24ManagesChronic', true) },
@@ -5190,7 +5192,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('party_member') &&
       G.age >= 55 &&
       !G.mem?.ft24PartyReckoning,
-    text: 'You joined for practical reasons, which is the honest account. The ideology was a performance you delivered well enough to be unremarkable, and the advancement was real. Thirty years on, the flat is still the flat the membership got you. Your daughter asks what you actually believed and you give her the practical account, and she takes it well, which is somehow worse.',
+    text: 'You joined for practical reasons. The ideology was a performance you delivered well enough to be unremarkable, and the promotions came. Thirty years on, the flat is still the flat the membership got you. Your daughter asks what you actually believed and you give her the practical account, and she takes it well, and that is somehow worse.',
     choices: [
       {
         text: 'Pragmatism was the right call — you used the system rather than being used by it',
@@ -5217,7 +5219,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('found_community') &&
       !G.mem?.ft24FoundComm,
-    text: 'The community that found you — or that you found — has been part of the life for years now. The people in it have watched you change and you have watched them. There are funerals now, which was not the case when you first arrived. The community holds things about you that other people in your life do not know, and you hold the same for them. That is a specific kind of trust.',
+    text: 'The community that found you — or that you found — has been part of the life for years now. The people in it have watched you change and you have watched them. There are funerals now, which was not the case when you first arrived. The community holds things about you that other people in your life do not know, and you hold the same for them. That is a kind of trust.',
     choices: null,
     effect: (p) => { p.m += 9; p.s += 3; p.karma += 4; p.setMem('ft24FoundComm', true) },
   },
@@ -5259,7 +5261,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('class_awareness') &&
       !G.mem?.ft24ClassAware,
-    text: 'There was a moment — a room you were in, a conversation you heard, something about the ease of someone who grew up without the particular constraints — when the mechanism became visible. Since then you have been able to read the room in a way that is not always comfortable. You understand how the advantage distributes. The people inside the advantage often cannot see it. You have been on both sides of that perception.',
+    text: 'There was a moment — a room you were in, a conversation you heard, something about the ease of someone who grew up without the constraints — when the mechanism became visible. Since then you read every room, and it is not always comfortable. You understand how the advantage distributes. The people inside the advantage often cannot see it. You have been on both sides of that perception.',
     choices: null,
     effect: (p) => { p.e += 5; p.m -= 2; p.r += 3; p.setMem('ft24ClassAware', true) },
   },
@@ -5275,7 +5277,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('vision_impaired') &&
       G.age >= 65 &&
       !G.mem?.ft24VisionAdapt,
-    text: 'The world is still readable, but the reading requires more. Larger print. Better light. The phone held closer. You have adapted in ways you could not have predicted before the adaptation was necessary — the other senses compensate in small ways, and some things you relied on vision for you now do by memory and touch. You are not blind. You are living in a smaller perceptual radius, which is a different experience.',
+    text: 'The world is still readable, but the reading requires more. Larger print. Better light. The phone held closer. You have adapted in ways you could not have predicted before the adaptation was necessary — the other senses compensate in small ways, and some things you relied on vision for you now do by memory and touch. You are not blind. You are living in a smaller radius.',
     choices: null,
     effect: (p) => { p.e += 3; p.m -= 3; p.h -= 2; p.setMem('ft24VisionAdapt', true) },
   },
@@ -5294,12 +5296,12 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('gambler') &&
       !G.mem?.ft25GamblerMid,
-    text: 'The gambling started as something occasional and became a habit, or it was always a habit and you are only now honest about that. You know the specific pull of it: the moment before the outcome, which is the only moment in the day when the result is still open. Your regular life has plenty of uncertainty but no single moment where everything resolves cleanly in under two minutes. The table offers that. The cost is the arithmetic of what it has taken from you — money, mostly, but also the hours and occasionally the trust of someone who knew about the hours.',
+    text: 'The gambling started as something occasional and became a habit, or it was always a habit and you are only now honest about that. You know the pull of it: the moment before the outcome, the only moment in the day when the result is still open. Your regular life has plenty of uncertainty but no single moment where everything resolves cleanly in under two minutes. The table offers that. The cost is the arithmetic of what it has taken from you — money, mostly, but also the hours and occasionally the trust of someone who knew about the hours.',
     choices: [
       {
         text: 'You have stopped — the accounting was finally clear enough.',
         tag: null,
-        outcome: 'The stopping was not easy. It is not the same as the pull going away. You still know where the tables are.',
+        outcome: 'The stopping was not easy, and the pull did not go away with it. You still know where the tables are.',
         effect: (p) => { p.m += 5; p.karma += 4; p.setMem('ft25GamblerMid', true) },
       },
       {
@@ -5354,7 +5356,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You are glad you became the parent. The reluctance was real but so is this.',
         tag: null,
-        outcome: 'Both things were real. The one that lasted is the relationship.',
+        outcome: 'Both things happened. The one that lasted is the relationship.',
         effect: (p) => { p.m += 9; p.karma += 4; p.setMem('ft25ReluctantParent', true) },
       },
       {
@@ -5395,13 +5397,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You intend to return. Sudan is where you belong.',
         tag: null,
-        outcome: 'The intention is real. The return is contingent on things that are not yet resolved.',
+        outcome: 'You mean it. The return is contingent on things that are not yet resolved.',
         effect: (p) => { p.r += 7; p.m += 3; p.setMem('ft25KhartoumDisp', true) },
       },
       {
         text: 'You have begun to build a life here. Return is no longer certain.',
         tag: null,
-        outcome: 'The building is real. The guilt of building is also real.',
+        outcome: 'The building stands. The guilt of building is also real.',
         effect: (p) => { p.m += 5; p.r += 5; p.setMem('ft25KhartoumDisp', true) },
       },
     ],
@@ -5465,7 +5467,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.flags.has('stayed_too_long') && G.age >= 35 && !G.mem?.ftw26StayedPattern,
-    text: 'You have noticed the pattern. It is not only about relationships. You stay in situations past the point when you know — jobs, conversations, versions of yourself. You call it loyalty. Sometimes it is. Sometimes it is fear of the void that follows. You are learning to tell the difference, which is harder than it sounds when you are inside the situation you are considering leaving.',
+    text: 'You have noticed the pattern. It is not only about relationships. You stay in situations past the point when you know — jobs, conversations, versions of yourself. You call it loyalty. Sometimes it is. Sometimes it is fear of the void that follows. You are learning to tell the difference, from inside the situation you are considering leaving.',
     effect: (p) => { p.e += 3; p.r += 2; p.setMem('ftw26StayedPattern', true); },
   },
 
@@ -5496,7 +5498,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) => G.flags.has('black_tax_contributor') && G.age >= 38 && G.age <= 55 && !G.mem?.ftw26BlackTaxMidlife,
-    text: 'The arithmetic of what you have sent home over fifteen years — school fees, hospital bills, the roof that needed replacing, the cousin who needed a deposit for a job in the city, the mother\'s medicine. You have never written it down. If you wrote it down you would see a figure that explains exactly why your savings look the way they do. You have not written it down because the family did not ask you to choose. They asked you to help. You helped. The arithmetic is not a complaint. It is just a fact you carry.',
+    text: 'The arithmetic of what you have sent home over fifteen years — school fees, hospital bills, the roof that needed replacing, the cousin who needed a deposit for a job in the city, the mother\'s medicine. You have never written it down. If you wrote it down you would see a figure that explains exactly why your savings look the way they do. You have not written it down because the family did not ask you to choose. They asked you to help. You helped. You do not complain about the arithmetic. You carry it.',
     choices: [
       {
         text: 'It has cost you, but you would not have done it differently.',
@@ -5507,7 +5509,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'You wish someone had told you what it would cost.',
         tag: 'Honest cost',
-        outcome: 'The wish is legitimate. The obligation was also real. Both are true.',
+        outcome: 'The wish is legitimate. The obligation was also real.',
         effect: (p) => { p.r += 4; p.m -= 3; p.setMem('ftw26BlackTaxMidlife', true); },
       },
     ],
@@ -5545,7 +5547,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
         effect: (p) => { p.m += 5; p.e += 2; p.setMem('ftw26ArrangedMid', true) },
       },
       {
-        text: 'It became a life, which is not the same thing.',
+        text: 'It became a life instead.',
         tag: 'Honest distance',
         outcome: 'A functional life is also real. You have not pretended it was something it wasn\'t.',
         effect: (p) => { p.r += 4; p.setMem('ftw26ArrangedMidlife', true); },
@@ -5572,7 +5574,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.flags.has('foster_care') && G.age >= 22 && G.age <= 34 && !G.mem?.ftw26FosterIdentity,
-    text: 'The question of where you are from is not a simple one. The place where you grew up is real. The people who raised you are real. The gap between those facts and the word "family" is also real, and it sits differently on different days. Sometimes you are entirely fine. Sometimes you are at a table where everyone is related in a way that is not your way, and you feel it as a specific variety of alone that is hard to explain to someone who has not felt it.',
+    text: 'The question of where you are from is not a simple one. The gap between those facts and the word "family" is also real, and it sits differently on different days. Sometimes you are entirely fine. Sometimes you are at a table where everyone is related and you are not, and you feel a kind of alone that is hard to explain to someone who has not felt it.',
     choices: [
       {
         text: 'You have built your own version of family by now.',
@@ -5596,7 +5598,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) => G.flags.has('depression_era_childhood') && G.age >= 65 && !G.mem?.ftw26DepressionLate,
-    text: 'You grew up in a household that remembered the Depression as a recent fact, not a historical one. The cupboard kept full of tins. The shoes mended instead of replaced. The specific saying about money and what you should not count on. You carried these habits into a world of abundance that arrived after the war and never quite made sense to you — abundance always felt provisional, like something that could withdraw.',
+    text: 'You grew up in a household that remembered the Depression as a recent fact, not a historical one. The cupboard kept full of tins. The shoes mended instead of replaced. The saying about money and what you should not count on. You carried these habits into a world of abundance that arrived after the war and never quite made sense to you — abundance always felt provisional, like something that could withdraw.',
     effect: (p) => { p.e += 2; p.r += 3; p.setMem('ftw26DepressionLate', true); },
   },
 
@@ -5677,7 +5679,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.currentYear >= 2004 &&
       G.age >= 35 &&
       !G.mem?.ft27FreedomDayDecade,
-    text: 'Ten years. Or twenty. The freedom is real — you can go where you could not go before, vote where you could not vote before, live where you could not live before. The inequality is also real, more concentrated than the numbers suggested it would be by this point. You are holding both of these things simultaneously, which is what being South African in this decade means: knowing the distance between what April 1994 was and what 2004 is, and choosing what to do with that distance every day.',
+    text: 'Ten years. Or twenty. The freedom is real — you can go where you could not go before, vote where you could not vote before, live where you could not live before. The inequality is also real, more concentrated than the numbers suggested it would be by this point. You hold both, as everyone South African in this decade does: the distance between what April 1994 was and what 2004 is, and what to do with that distance every day.',
     choices: null,
     effect: (p) => { p.e += 5; p.r += 4; p.m -= 2; p.setMem('ft27FreedomDayDecade', true) },
   },
@@ -5761,7 +5763,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('moneylender_debt') &&
       G.age >= 22 && G.age <= 50 &&
       !G.mem?.ft27MoneylenderOngoing,
-    text: 'The debt to the moneylender from that season — the interest compounds. You know this now in a way you did not know it when you borrowed, which is how the interest is designed to work. Every harvest is first the moneylender\'s. What remains is yours. The what-remains is the margin you are farming on. You have developed a relationship with the arithmetic of it: not acceptance, exactly, but a working knowledge of what is possible within the structure.',
+    text: 'The debt to the moneylender from that season — the interest compounds. You know this now as you did not when you borrowed. The interest is designed that way. Every harvest is first the moneylender\'s. What remains is yours. The what-remains is the margin you are farming on. You have developed a relationship with the arithmetic of it: not acceptance, exactly, but a working knowledge of what is possible within the structure.',
     choices: [
       {
         text: 'You find a way to pay it down — slowly, with everything you can spare.',
@@ -5797,13 +5799,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       {
         text: 'Sell some of it. The crisis is the crisis the gold is for.',
         tag: 'sell',
-        outcome: 'The jeweller pays fairly, which is to say below market but above desperation. The box is lighter. The crisis resolves.',
+        outcome: 'The jeweller pays below market and above desperation. The box is lighter. The crisis resolves.',
         effect: (p) => { p.e += 3; p.m += 2; p.r += 2; p.setMem('ft27GoldCrisis', true) },
       },
       {
         text: 'Not yet. This is not yet that crisis.',
         tag: 'hold',
-        outcome: 'You find another way. The gold stays in the box. You check the box more often now, which is either reassurance or something else.',
+        outcome: 'You find another way. The gold stays in the box. You check the box more often now.',
         effect: (p) => { p.m += 2; p.r += 4; p.setMem('ft27GoldCrisis', true) },
       },
     ],
@@ -5820,7 +5822,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.mem?.ft27GoldLate,
     text: G => G.flags.has('sold_gold_emergency')
       ? 'The gold your grandmother left is gone. You sold it in a crisis year — the right decision, given the crisis. What you have is the knowledge of what it was for: not savings, but a weight of metal that said someone before you had accumulated something and wanted you to have it. That intention survived the sale. The gold didn\'t, but the intention did.'
-      : 'The gold your grandmother left is still here. You open the box periodically. The bangles, or the chain, or the earrings — still there, still hers, still not yet the crisis they were kept for. You have decided they will go to your daughter, which is how these things travel: slowly, through the hands of people who almost sold them.',
+      : 'The gold your grandmother left is still here. You open the box periodically. The bangles, or the chain, or the earrings — still there, still hers, still not yet the crisis they were kept for. You have decided they will go to your daughter. That is how these things travel: slowly, through the hands of people who almost sold them.',
     choices: null,
     effect: (p) => { p.r += 4; p.m += 4; p.e += 2; p.setMem('ft27GoldLate', true) },
   },
@@ -5863,7 +5865,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('addiction_family_boundary') &&
       G.age >= 55 &&
       !G.mem?.ft28AddBoundLate,
-    text: 'You held the boundary. You knew you could not carry someone else\'s recovery — the specific knowledge of that is one of the things you have learned that cannot be transferred. The boundary was the right call. It was also a cost in the relationship that did not fully resolve in all cases. At this distance you hold both: the correctness of the position and the thing it cost.',
+    text: 'You held the boundary. You knew you could not carry someone else\'s recovery — the knowledge of that is one of the things you have learned that cannot be transferred. The boundary was the right call. It was also a cost in the relationship that did not fully resolve in all cases. At this distance you hold both: the correctness of the position and the thing it cost.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m += 2; p.setMem('ft28AddBoundLate', true) },
   },
@@ -5879,7 +5881,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('addiction_family_supported') &&
       G.age >= 35 && G.age <= 60 &&
       !G.mem?.ft28AddSuppEcho,
-    text: 'The support group was not about fixing the person you loved — it was about managing the life that surrounds the not-being-fixed. That reframe did not stay inside the original context. You find it distributing into the rest of your life: the things you can and cannot control, the people you can and cannot manage, the specific quality of attention you now bring to situations where the outcome is not yours to determine.',
+    text: 'The support group was not about fixing the person you loved — it was about managing the life that surrounds the not-being-fixed. That reframe did not stay inside the original context. You find it distributing into the rest of your life: the things you can and cannot control, the people you can and cannot manage, the quality of attention you now bring to situations where the outcome is not yours to determine.',
     choices: null,
     effect: (p) => { p.e += 5; p.m += 5; p.s += 2; p.setMem('ft28AddSuppEcho', true) },
   },
@@ -5925,7 +5927,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('resisted_addiction') &&
       G.age >= 55 &&
       !G.mem?.ft28ResistAddLate,
-    text: 'You know what you chose against. The person who took the other path is still a reference point, dimming over decades but not gone — the specific trajectory you watched and declined. The declining was not virtue exactly; it was a particular combination of temperament, timing, and luck that you have never been able to fully separate into its components. At this distance you count it.',
+    text: 'You know what you chose against. The person who took the other path is still a reference point, dimming over decades but not gone — the trajectory you watched and declined. The declining was not virtue exactly; it was a combination of temperament, timing, and luck that you have never been able to fully separate into its components. At this distance you count it.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 3; p.karma += 3; p.setMem('ft28ResistAddLate', true) },
   },
@@ -6102,7 +6104,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('anglophone_crisis_inside') &&
       G.currentYear >= 2023 &&
       !G.mem?.cmrInsideLate,
-    text: 'It has been years now. The specific dates: the lawyers\' strike, October 2016. The internet shutdown, January 2017. The first village burnings, 2018. The name "Ambazonia" declared by the separatist leadership. The split between the armed factions. The children who have not been to school since the boycott began. You were inside this and you are still inside it. The phrase that keeps occurring to you is not "When will it end?" — that question has no available answer. The phrase is "What will be left?"',
+    text: 'It has been years now: the lawyers\' strike, the internet shutdown, the first village burnings, the factions splitting, the children who have not been to school since the boycott began. You are still inside it. You have stopped asking when it will end. What you ask is what will be left.',
     choices: null,
     effect: (p) => { p.r += 10; p.m -= 6; p.e += 3; p.addFlag('anglophone_inside_reckoned'); p.setMem('cmrInsideLate', true); },
   }

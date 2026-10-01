@@ -32,7 +32,7 @@ export const BOLIVIA_EVENTS = [
       G.currentYear >= 1955 && G.currentYear <= 1975 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.bol1952,
-    text: 'The 1952 revolution is recent enough that your grandparents remember it as a specific day. The MNR, Paz Estenssoro, the miners marching on La Paz in April: the haciendas broken up, the tin mines nationalized, the indigenous people given the vote for the first time. Your family\'s place in this story depends on which side of the land question they were on.',
+    text: 'The 1952 revolution is recent enough that your grandparents remember it as a day. The MNR, Paz Estenssoro, the miners marching on La Paz in April: the haciendas broken up, the tin mines nationalized, the indigenous people given the vote for the first time. Your family\'s place in this story depends on which side of the land question they were on.',
     choices: [
       {
         text: 'Your family received land from the reform',
@@ -43,7 +43,7 @@ export const BOLIVIA_EVENTS = [
       {
         text: 'Your family lost property in the reform',
         tag: 'dispossessed',
-        outcome: 'The story is told with a specific bitterness that never fully resolves. The land was the family and the family is the land and now neither is what it was.',
+        outcome: 'The story is told with a bitterness that never fully resolves. The land was the family and the family is the land and now neither is what it was.',
         effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('bol_1952_dispossessed'); p.setMem('bol1952', true) },
       },
     ],
@@ -84,7 +84,7 @@ export const BOLIVIA_EVENTS = [
       G.currentYear >= 1984 && G.currentYear <= 1986 &&
       G.age >= 16 &&
       !G.mem?.bolHyper,
-    text: 'The annual inflation rate reaches twenty-four thousand percent. The price of bread changes between when you walk into the market and when you reach the front of the queue. Wages are paid in the morning because by the afternoon the money is worth significantly less. The government prints new denominations. The old ones are bundled in newspaper because carrying them in a wallet is impractical. People with dollars or assets survive this differently than people without. The economist Jeffrey Sachs will later call the stabilisation a success story. You will remember it as the year you stopped being able to plan anything more than a week ahead.',
+    text: 'Inflation reaches twenty-four thousand percent, and the price of bread changes between walking into the market and reaching the front of the queue. Wages are paid in the morning because by afternoon they are worth less, and people carry money wrapped in newspaper because it will not fit in a wallet. People with dollars live through it differently. An American economist will later call the stabilisation a success. You remember it as the year you stopped being able to plan more than a week ahead.',
     choices: null,
     effect: (p) => { p.m -= 15; p.mo -= Math.round((p._state?.money ?? 0) * 0.4); p.r += 6; p.addFlag('bol_hyperinflation_survived'); p.setMem('bolHyper', true) },
   },
@@ -161,7 +161,7 @@ export const BOLIVIA_EVENTS = [
       {
         text: 'The election matters but the economy, the institutions, the extraction relationships remain unchanged',
         tag: 'skeptical',
-        outcome: 'You watch the celebrations with a specific feeling that is not the opposite of hope. More like: the memory of what hope has previously turned into in this country.',
+        outcome: 'You watch the celebrations with a feeling that is not the opposite of hope. More like: the memory of what hope has previously turned into in this country.',
         effect: (p) => { p.m += 3; p.e += 4; p.addFlag('bol_evo_generation'); p.setMem('bolEvo', true) },
       },
     ],

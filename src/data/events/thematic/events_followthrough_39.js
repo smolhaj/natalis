@@ -33,7 +33,7 @@ export const FOLLOWTHROUGH_39_EVENTS = [
       G.flags.has('lived_through_occupation') &&
       G.age >= 50 &&
       !G.mem?.ft39OccupationLate,
-    text: 'You know what occupation looks like from the inside — the checkpoint that is not your checkpoint, the soldier who does not speak your language giving instructions in a language you are required to understand. The word sovereignty has a weight for you. When politicians use it in speeches you hear something different from what they intend. You hear the specific absence of it — what it meant to live in a place that your country\'s government did not control. The people who have not experienced this use the word differently, lighter, as if it were just a fact about maps rather than a fact about where you can go and at what hour.',
+    text: 'You know what occupation looks like from the inside — the checkpoint that is not your checkpoint, the soldier who does not speak your language giving instructions in a language you are required to understand. The word sovereignty has a weight for you. When politicians use it in speeches you hear something different from what they intend. You hear the absence of it — what it meant to live in a place that your country\'s government did not control. The people who have not experienced this use the word differently, lighter, as if it were just a fact about maps rather than a fact about where you can go and at what hour.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m -= 3; p.setMem('ft39OccupationLate', true) },
   },
@@ -48,7 +48,7 @@ export const FOLLOWTHROUGH_39_EVENTS = [
       G.flags.has('lived_through_revolution') &&
       G.age >= 50 &&
       !G.mem?.ft39RevolutionLate,
-    text: 'The revolution is old enough now that there are people who study it — historians, documentarians, young people who were not born until after it. They have a relationship to it that is different from yours: clean, settled, already the past. For you it was the specific atmosphere of weeks when everything was suspended — when no one was certain what the rules were because the rules were changing. You have struggled to explain this to people who learned about it from a book. The particular quality of uncertainty during upheaval. The way normal life continued alongside the extraordinary. The coffee still had to be made.',
+    text: 'The revolution is old enough now that there are people who study it — historians, documentarians, young people who were not born until after it. They have a relationship to it that is different from yours: clean, settled, already the past. For you it was the atmosphere of weeks when everything was suspended — when no one was certain what the rules were because the rules were changing. You have struggled to explain this to people who learned about it from a book. The quality of uncertainty during upheaval. The way normal life continued alongside the extraordinary. The coffee still had to be made.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.setMem('ft39RevolutionLate', true) },
   },
@@ -78,7 +78,7 @@ export const FOLLOWTHROUGH_39_EVENTS = [
       G.flags.has('post_soviet_shock') &&
       G.age >= 55 &&
       !G.mem?.ft39PostSovietLate,
-    text: 'The state guaranteed certain things — work, housing, medicine, a pension — and then the state stopped guaranteeing them. Not slowly but over months. The factories closed. The savings became worthless. The institutions that organised daily life — the enterprise, the collective, the clinic — either disappeared or charged fees they had not charged before. You were an adult with a career and a life built on certain assumptions, and the assumptions stopped being true. You rebuilt. Most people rebuilt. But rebuilding is not the same as not having lost anything. You are alert to the fragility of economic arrangements in a way that people who grew up after the transition are not.',
+    text: 'The state guaranteed work, a flat, medicine, a pension, and then over a few months it stopped. The factories closed, the savings became paper, and the clinic and the enterprise either vanished or began charging. You were an adult with a career built on certain assumptions, and the assumptions stopped being true. You rebuilt; most people did. You are alert now to how fragile an economy is, as people who grew up after the transition are not.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m -= 3; p.setMem('ft39PostSovietLate', true) },
   },
@@ -109,7 +109,7 @@ export const FOLLOWTHROUGH_39_EVENTS = [
       G.flags.has('drought_survivor') &&
       G.age >= 35 &&
       !G.mem?.ft39DroughtLate,
-    text: 'You do not waste water. This is not a value you hold — it is a reflex installed by the years when there was not enough. You turn taps off completely. You reuse what can be reused. You notice when others leave water running in a way that suggests they have never lived through the specific anxiety of watching a well level drop, of being told the reserve would last another three weeks. This knowledge has settled into your body and is now part of how you move through a day. You do not think about it. You just do not waste water.',
+    text: 'You do not waste water. This is not a value you hold — it is a reflex installed by the years when there was not enough. You turn taps off completely. You reuse what can be reused. You notice when others leave water running, and you can tell they have never watched a well level drop, or been told the reserve would last another three weeks. This knowledge has settled into your body and is now part of how you move through a day. You do not think about it. You just do not waste water.',
     choices: null,
     effect: (p) => { p.r += 3; p.e += 2; p.setMem('ft39DroughtLate', true) },
   },
@@ -125,7 +125,7 @@ export const FOLLOWTHROUGH_39_EVENTS = [
       G.currentYear >= 2020 &&
       G.age >= 50 &&
       !G.mem?.ft39ClimateWitnessLate,
-    text: 'You have a lifespan of comparison that younger people do not have. You remember the seasons as they were and you know what they are now. The river that was at a certain level when you were a child. The snow that used to stay until March. The bird that used to arrive at the same week every spring and now arrives earlier or does not arrive at all. This is not second-hand information from a report. It is your own memory laid against the present. The scientists\' data and your personal memory arrive at the same conclusion, which makes the conclusion feel different from data alone.',
+    text: 'You have a lifespan of comparison that younger people do not have. You remember the seasons as they were and you know what they are now. The river that was at a certain level when you were a child. The snow that used to stay until March. The bird that used to arrive at the same week every spring and now arrives earlier or does not arrive at all. It is your own memory laid against the present. The scientists\' data and your personal memory arrive at the same conclusion, which makes the conclusion feel different from data alone.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.m -= 3; p.setMem('ft39ClimateWitnessLate', true) },
   },

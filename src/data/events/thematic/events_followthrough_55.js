@@ -68,7 +68,7 @@ export const FOLLOWTHROUGH_55_EVENTS = [
       G.age >= 38 && G.age <= 55 &&
       G.regret >= 40 &&
       !G.mem?.ft55RegretMidHigh,
-    text: `The accounting in the middle of a life, when the things that were lost are now fully lost and the things that remain are visible in the light of what wasn't chosen — this accounting has a particular quality. You are not old enough for it to be retrospective. You are still inside it. The life continues. The regret is structural: it shapes what you notice, what you avoid, what you find yourself working against without fully naming why.`,
+    text: `The accounting in the middle of a life, when the things that were lost are now fully lost and the things that remain are visible in the light of what wasn't chosen — this accounting has a quality. You are not old enough for it to be retrospective. You are still inside it. The life continues. The regret is structural: it shapes what you notice, what you avoid, what you find yourself working against without fully naming why.`,
     choices: [
       {
         text: 'You can still change the direction. Not everything, but something.',
@@ -308,7 +308,7 @@ export const FOLLOWTHROUGH_55_EVENTS = [
       G.age >= 65 &&
       G.regret >= 25 &&
       !G.mem?.ft55RegretNotLived,
-    text: `There is a life you did not live. Not a fantasy — something more specific: the direction you considered and didn't take, the person you were becoming in a particular year before the path narrowed. You can feel the shape of it even now, from the inside of the life you did live. The two lives are not entirely separate. The one you lived was shaped by what you didn't choose. What you didn't choose was shaped by who you were. The whole thing was you.`,
+    text: `There is a life you did not live. Not a fantasy — something more specific: the direction you considered and didn't take, the person you were becoming in a year before the path narrowed. You can feel the shape of it even now, from the inside of the life you did live. The two lives are not entirely separate. The one you lived was shaped by what you didn't choose. What you didn't choose was shaped by who you were. The whole thing was you.`,
     choices: null,
     effect: (p) => {
       p.r += 5

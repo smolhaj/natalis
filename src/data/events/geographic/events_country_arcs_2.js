@@ -55,7 +55,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.career &&
       G.currentYear >= 1959 && G.currentYear <= 1962 &&
       !G.mem?.chinaGreatLeapCadre,
-    text: 'The quota arrives from the county office and you must enforce it. You know the village granary. You know what is left. If you fill this quota the village will not have enough to eat through spring. If you do not fill it, the county will send someone who will. You have a family. The man across the table from you has a family. The quota has a deadline.',
+    text: 'The quota comes down from the county and you must collect it. You know the village granary and what is left in it. If you fill the quota the village will not eat through the spring; if you do not, the county will send someone who will. You have a family, and so does the man across the table. The quota has a deadline.',
     choices: [
       {
         text: 'Report the true figures — refuse to fill a quota that will starve people',
@@ -80,7 +80,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.character.country.name === 'China' &&
       G.currentYear >= 1966 && G.currentYear <= 1969 &&
       !G.mem?.chinaRedGuard,
-    text: 'The schools have closed. Mao has called on the youth to make revolution. There is a specific energy in the city — the arm bands, the little red books, the loudspeakers reading passages at a volume that means something is happening. You could be part of this. Part of you wants to be. The enemy is the teacher who humiliated you in class last year, the old customs, everything that held you down.',
+    text: 'The schools have closed. Mao has called on the youth to make revolution. There is an energy in the city — the arm bands, the little red books, the loudspeakers reading passages at a volume that means something is happening. You could be part of this. Part of you wants to be. The enemy is the teacher who humiliated you in class last year, the old customs, everything that held you down.',
     choices: [
       {
         text: 'Join enthusiastically — this is your moment',
@@ -132,12 +132,12 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.ruralUrban === 'urban' &&
       G.currentYear >= 1968 && G.currentYear <= 1976 &&
       !G.mem?.chinaSendDown,
-    text: 'The assignment arrives. You are going to a commune in Yunnan Province. They call it re-education through labour. You have lived in the city your entire life. You pack what fits in one bag. The train platform is full of young people in the same position. Some of them are crying. Some of them believe this is correct. You will be gone for years — how many years you do not know yet.',
+    text: 'The assignment arrives: a commune in Yunnan, re-education through labour. You have lived in the city all your life, and you pack what fits in one bag. The platform is full of young people in the same position; some are crying and some believe it is right. You will be gone for years, and you do not know yet how many.',
     choices: [
       {
         text: 'Accept the assignment — resist the bitterness for as long as you can',
         tag: null,
-        outcome: 'You learn to plant rice and to read clouds and to be a different kind of person than you planned to be. The years taken from you are real. So is what grew in their place.',
+        outcome: 'You learn to plant rice and to read clouds and to be a different kind of person than you planned to be. They took years from you. Something grew in their place.',
         effect: (p) => { p.m -= 10; p.h += 4; p.e += 5; p.r += 8; p.setMem('chinaSendDown', true); p.addFlag('sent_down_generation'); p.addFlag('cultural_revolution_witnessed'); },
       },
       {
@@ -157,7 +157,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.character.country.name === 'China' &&
       G.currentYear >= 1978 && G.currentYear <= 1985 &&
       !G.mem?.chinaDengReforms,
-    text: 'Two years ago this was illegal. Now the government is telling you to do it. You have found a stall in the market and you are selling things. You do not know what to call what you are doing — the word "entrepreneur" has not been rehabilitated yet. Your father thinks you are confused. You are confused. The money coming in is real.',
+    text: 'Two years ago this was illegal. Now the government is telling you to do it. You have found a stall in the market and you are selling things. You do not know what to call what you are doing — the word "entrepreneur" has not been rehabilitated yet. Your father thinks you are confused. You are confused.',
     choices: [
       {
         text: 'Open the stall — see where this goes',
@@ -188,13 +188,13 @@ export const COUNTRY_ARC_2_EVENTS = [
       {
         text: 'Hold onto what you witnessed — do not let the version replace the memory',
         tag: null,
-        outcome: 'You carry a private record. For decades you will calibrate conversations about this by the specific fraction-of-a-second pause before someone responds.',
+        outcome: 'You carry a private record. For decades you will calibrate conversations about this by the fraction-of-a-second pause before someone responds.',
         effect: (p) => { p.m -= 12; p.e += 8; p.r += 6; p.setMem('chinaTiananmen', true); p.addFlag('tiananmen_witnessed'); p.addFlag('dissident_reader'); p.setPolitical('dissident'); },
       },
       {
         text: 'Process it privately and move forward — living here requires adaptation',
         tag: null,
-        outcome: 'You learn the specific skill of holding two histories simultaneously: the one you know and the one it is safe to speak. It is a skill with a cost.',
+        outcome: 'You learn the skill of holding two histories simultaneously: the one you know and the one it is safe to speak. It is a skill with a cost.',
         effect: (p) => { p.m -= 10; p.r += 10; p.setMem('chinaTiananmen', true); p.addFlag('tiananmen_witnessed'); p.addFlag('learned_silence'); },
       },
     ],
@@ -209,7 +209,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 2015 &&
       G.children && G.children.length >= 1 &&
       !G.mem?.chinaOneChildParent,
-    text: 'The policy is enforced at the work unit. Your supervisor calls you in. You have one child. The policy permits one. If you have another the fine is a year\'s salary — possibly more, depending on who counts. The family planning official comes by once a quarter to verify. Your neighbour had a second child and lost her government position. You know what you want and you know what it costs.',
+    text: 'Your supervisor calls you in about the policy. You have one child, which is what it permits. A second would cost a year\'s salary in fines, perhaps more, depending on who is counting, and the family planning official comes round every quarter. Your neighbour had a second and lost her post. You know what you want and what it costs.',
     choices: [
       {
         text: 'Comply — one child is what the state permits and you cannot afford otherwise',
@@ -234,7 +234,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.character.country.name === 'China' &&
       G.currentYear >= 1985 && G.currentYear <= 2005 &&
       !G.mem?.chinaOnlyChild,
-    text: 'You are the only child of two only children. There are no cousins. At the dinner table: you, your parents, your four grandparents. Eight eyes following you through the meal. Your report card is read aloud. Your illness is a family emergency. Your ambition is not entirely your own. You have never had a room to yourself — not in the way an only child in a different country would mean it. Your room is full of expectation.',
+    text: 'You are the only child of two only children. At dinner: you, your parents and four grandparents, eight eyes following you through the meal. Your report card is read aloud; your cold is a family emergency; your ambition is not entirely yours. Your room is full of expectation.',
     choices: null,
     effect: (p) => { p.e += 5; p.m -= 4; p.r += 5; p.setMem('chinaOnlyChild', true); p.addFlag('little_emperor'); },
   },
@@ -250,7 +250,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2015 &&
       G.flags.includes('little_emperor') &&
       !G.mem?.ocpMissingSisters,
-    text: 'You are sorting through your parents\' things and find a photograph of a baby girl who is not you. You are an only child. Your mother has never mentioned a pregnancy before yours. The photograph is dated fourteen months before your birth. You have counted things and arrived at a number and the number is one — one child who did not arrive, who did not grow up in this apartment, who is not sitting at this table. The photograph is small. You put it back where you found it. You do not bring it up at dinner. You understand, without being told, that it is not to be brought up.',
+    text: 'Sorting your parents\' things, you find a photograph of a baby girl who is not you, dated fourteen months before you were born. Your mother never mentioned another pregnancy. You count, and arrive at one: one child who did not grow up in this apartment. You put the photograph back where you found it. You do not bring it up at dinner.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 12; p.setMem('ocpMissingSisters', true); p.addFlag('ocp_missing_sibling'); },
   },
@@ -284,7 +284,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       {
         text: 'Carry it — this is what family means here',
         tag: null,
-        outcome: 'You carry it. Some years are harder than others. You become very good at managing several things at once, which is not a skill you chose to develop.',
+        outcome: 'You carry it. Some years are harder than others. You become very good at managing several things at once, a skill you did not choose to develop.',
         effect: (p) => { p.m -= 12; p.h -= 5; p.karma += 8; p.setMem('ocpSoleSupport', true); p.addFlag('filial_burden'); },
       },
       {
@@ -306,7 +306,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.flags.includes('little_emperor') &&
       G.age >= 30 &&
       !G.mem?.ocpPolicyLifted,
-    text: 'The government announces the two-child policy. After thirty-five years of the one-child policy — the fines, the forced procedures, the family planning officials who visited quarterly, the entire apparatus of demographic control — the government is now telling you to have a second child. You sit with this announcement for a while. The decision about whether to try is yours in a way it was not before, and the biology of the situation may have opinions of its own, and the city apartment that was sized for a family of three does not automatically expand.',
+    text: 'The government announces the two-child policy. After thirty-five years of the one-child policy — the fines, the forced procedures, the family planning officials who visited quarterly, the entire apparatus of demographic control — the government is now telling you to have a second child. You read the announcement twice. The decision about whether to try is yours in a way it was not before, and the biology of the situation may have opinions of its own, and the city apartment that was sized for a family of three does not automatically expand.',
     choices: [
       {
         text: 'Consider it — this is different now',
@@ -339,13 +339,13 @@ export const COUNTRY_ARC_2_EVENTS = [
       {
         text: 'Take a seat at the counter — this is the moment',
         tag: null,
-        outcome: 'You sit down and fold your hands on the counter. The time passes very slowly. When it is over you are still there. So is the counter. Something has shifted, by a fraction, which is how it shifts.',
+        outcome: 'You sit down and fold your hands on the counter. The time passes very slowly. When it is over you are still there. So is the counter. Something has shifted, by a fraction.',
         effect: (p) => { p.m += 5; p.karma += 10; p.s += 5; p.setMem('usaCivilRightsAction', true); p.addFlag('civil_rights_generation'); p.addFlag('political_active'); p.setPolitical('left'); },
       },
       {
         text: 'Stay back — the cost of being visible is real and the family cannot afford it',
         tag: null,
-        outcome: 'You watch from across the street. You are not inside history in the way you might have been. This is a fact you carry.',
+        outcome: 'You watch from across the street. You missed it. You carry that.',
         effect: (p) => { p.m -= 5; p.r += 10; p.setMem('usaCivilRightsAction', true); p.addFlag('civil_rights_generation'); },
       },
     ],
@@ -360,7 +360,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       (G.flags.includes('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
       G.currentYear >= 1963 && G.currentYear <= 1964 &&
       !G.mem?.usaChurchBombing,
-    text: 'The news arrives about the Sixteenth Street Baptist Church in Birmingham. Four girls. The oldest was fourteen. A Sunday morning. The same age as you, or close. Your mother sits down in the kitchen chair and does not move for a long time. You understand, with the specific clarity of being a child who has just understood something adult, that being alive in this country is a different thing depending on who you are.',
+    text: 'The news arrives about the Sixteenth Street Baptist Church in Birmingham. Four girls. The oldest was fourteen. A Sunday morning. The same age as you, or close. Your mother sits down in the kitchen chair and does not move for a long time. You understand, with the clarity of being a child who has just understood something adult, that being alive in this country is a different thing depending on who you are.',
     choices: null,
     effect: (p) => { p.m -= 15; p.r += 10; p.e += 6; p.setMem('usaChurchBombing', true); p.addFlag('civil_rights_generation'); },
   },
@@ -375,7 +375,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.currentYear >= 1969 && G.currentYear <= 1972 &&
       G.age >= 18 && G.age <= 26 &&
       !G.mem?.usaVietnamDraft,
-    text: 'The lottery draws a number for each birthday. Yours is low enough. Low enough means you go. The notice comes in an envelope you recognise by its weight before you open it. Men you know are in Canada. One is in a graduate programme that will last exactly as long as it needs to. You are not those men. You have two weeks.',
+    text: 'The lottery gives a number to every birthday, and yours is low enough, and low enough means you go. You know the envelope by its weight before you open it. Men you know are in Canada; one is in a graduate programme that will last exactly as long as it needs to. You are not those men. You have two weeks.',
     choices: [
       {
         text: 'Report for induction — you go',
@@ -420,7 +420,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       (G.flags.includes('lgbtq') || G.flags.includes('lgbtq_identity') || G.flags.includes('out') || G.flags.includes('gay') || G.flags.includes('queer')) &&
       G.currentYear >= 1981 && G.currentYear <= 1995 &&
       !G.mem?.usaAids,
-    text: 'The third funeral in eight months. Before this one there were two others. At the first funeral the family used a different word for the cause. The government has a number for deaths and does not have a response. ACT UP is in the streets. You know people in ACT UP. You have been to the vigils where names are read until the candles burn down. The Names Project is piecing together a quilt that is now larger than any room you have been in.',
+    text: 'The third funeral in eight months; at the first, the family gave the cause a different name. The government has a number for the deaths and no response to them. ACT UP is in the streets and you know people in it, and you have stood at vigils where names are read until the candles burn down. The quilt is now larger than any room you have ever been in.',
     choices: [
       {
         text: 'Join the demonstrations — the rage is the only appropriate response',
@@ -447,7 +447,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.stats.wealth < 50 &&
       G.career &&
       !G.mem?.usaRustBelt,
-    text: 'The notice goes up on a Thursday. The mill is closing. Not reducing — closing. The last pour will be next month. Your father worked this floor for twenty-three years. You have worked it for four. The town grew up around this building and it has not prepared for what happens when the building empties. Neither have you.',
+    text: 'The notice goes up on a Thursday: the mill is closing, not shrinking, closing, with the last pour next month. Your father worked this floor for twenty-three years and you have worked it for four. The town grew up around the building and has not prepared for it to empty. Neither have you.',
     choices: [
       {
         text: 'Stay — your family is here, you will find something',
@@ -458,7 +458,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       {
         text: 'Leave — follow the work somewhere else',
         tag: null,
-        outcome: 'You go. The leaving costs you things the new place cannot replace. You find work. The specific kind of belonging you had in that town you do not find again.',
+        outcome: 'You go. The leaving costs you things the new place cannot replace. You find work. The kind of belonging you had in that town you do not find again.',
         effect: (p) => { p.m -= 8; p.r += 8; p.setMem('usaRustBelt', true); p.addFlag('rust_belt_generation'); p.relocate('us_houston'); },
       },
     ],
@@ -499,7 +499,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       (G.religion?.startsWith('muslim') || (G.ethnicity && (G.ethnicity.toLowerCase().includes('arab') || G.ethnicity.toLowerCase().includes('south_asian') || G.ethnicity.toLowerCase().includes('middle_east')))) &&
       G.currentYear >= 2001 && G.currentYear <= 2005 &&
       !G.mem?.usaPost911Airport,
-    text: 'The security line at the airport is routine until it is not. You are pulled aside. Your passport is American. They know this. The questions are specific in a way that makes their logic clear. You calculate, as you have been calculating in many rooms since September, each word before it leaves your mouth. The other passengers watch or look away. Both are a kind of answer.',
+    text: 'The airport security line is routine until it is not, and you are taken aside. Your passport is American, and they know it, and the questions make their logic plain. As in many rooms since September, you weigh each word before it leaves your mouth. The other passengers watch or look away.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.e += 5; p.setMem('usaPost911Airport', true); p.addFlag('post_911_american'); p.addFlag('discrimination_experienced'); },
   },
@@ -524,7 +524,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       {
         text: 'Arrive carefully — you have learned not to believe in easy promises',
         tag: null,
-        outcome: 'The city is better than where you came from and worse than what was promised, which is what you expected. You make do. Making do is not nothing.',
+        outcome: 'The city is better than where you came from and worse than what was promised, as you expected. You make do. Making do is not nothing.',
         effect: (p) => { p.m += 2; p.e += 5; p.setMem('usaGreatMigration', true); p.addFlag('great_migration_family'); p.addFlag('civil_rights_generation'); },
       },
     ],
@@ -600,14 +600,18 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ca2_japan_anpo_protests',
-    phase: 'young_adult',
-    weight: 3,
+    phase: null,
+    weight: 12,
     when: (G) =>
+      // The Diet is in Tokyo, and the same June was also narrated by
+      // `jpn_anpo_protests` (events_japan.js); the two share a latch now, and
+      // this one, which puts you at the gate, is for Tokyo.
       G.character.country.name === 'Japan' &&
+      G.place?.id === 'jp_tokyo' &&
       G.currentYear === 1960 &&
-      G.age >= 18 && G.age <= 28 &&
-      !G.mem?.japanAnpo,
-    text: 'The Diet building is surrounded. You are outside it with several hundred thousand other people — the largest protest in Japanese postwar history — opposed to the automatic renewal of the US-Japan security treaty, which passed inside the building at midnight while the opposition legislators were physically barred from the chamber. You are inside history being made clumsily. The treaty is now law. You are still outside the building.',
+      G.age >= 17 && G.age <= 28 &&
+      !G.mem?.japanAnpo && !G.mem?.jpn_anpo,
+    text: 'The Diet building is surrounded, and you are outside it with several hundred thousand other people, against the security treaty. Inside, at midnight, it passes with the opposition barred from the chamber. You hear about it from a man with a transistor radio held up to his ear. You are still outside the building.',
     choices: [
       {
         text: 'Stay in the street — the attempt matters even if the outcome is already decided',
@@ -685,12 +689,12 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.character.country.name === 'Japan' &&
       G.flags.includes('salaryman_life') &&
       !G.mem?.japanKaroshi,
-    text: 'It is 10:45pm. The office has fifteen people still in it. Your manager left at 6pm — he can do this because he is senior enough that his departure is not read as lack of dedication. You are not yet senior enough. The last train is at midnight. You have been doing this for eleven years. There is a word for the death that comes from this: *karoshi*. The country has a word for it because it happens enough to need one.',
+    text: 'It is quarter to eleven at night and fifteen people are still in the office. Your manager left at six, because he is senior enough that leaving is not read as a lack of devotion, and you are not. The last train is at midnight, and you have done this for eleven years. There is a word for the death that comes of it, karoshi. A country only needs a word for something that happens often enough.',
     choices: [
       {
         text: 'Push through — this is what the work requires and you have always understood that',
         tag: null,
-        outcome: 'You take the last train three nights a week for the next four years. Your health declines in the specific way that extended sleeplessness and chronic stress declines health. The work is done.',
+        outcome: 'You take the last train three nights a week for the next four years. Your health declines in the way that extended sleeplessness and chronic stress declines health. The work is done.',
         effect: (p) => { p.h -= 12; p.w += 6; p.r += 8; p.setMem('japanKaroshi', true); p.addFlag('karoshi_adjacent'); },
       },
       {
@@ -711,7 +715,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1993 &&
       G.money > 5000 &&
       !G.mem?.japanBubble,
-    text: 'In 1988 your uncle told you to buy equities, and you did. In 1989 the Nikkei hit 38,957 and everyone you knew was talking about the day it would hit 50,000. It is now three years later. The Nikkei is at 16,000. The apartment you were considering buying in Setagaya would have required twenty-five years of salary. The man who sold it instead lost forty percent of his purchase price in eighteen months. You have lost less than that. Thirty years of stagnation have a name now: the Lost Decade. At the time it simply feels like the floor dropping.',
+    text: 'In 1988 your uncle told you to buy shares and you did, and in 1989 everyone you knew was talking about the day the Nikkei would reach fifty thousand. Three years later it is at sixteen. The flat in Setagaya you nearly bought, at twenty-five years of salary, is worth less than half that now. Later they will call it the Lost Decade. At the time it simply feels like the floor dropping.',
     choices: [
       {
         text: 'Hold what remains — the loss is real, you will rebuild slowly',
@@ -722,7 +726,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       {
         text: 'Liquidate now — take what remains before it falls further',
         tag: null,
-        outcome: 'You sell at the bottom, which you do not know is the bottom until it is not. The money you hold is real money, which is not nothing when the banks are failing.',
+        outcome: 'You sell at the bottom, which you do not know is the bottom until it is not. The money you hold is real money, and that is not nothing when the banks are failing.',
         effect: (p) => { p.m -= 8; p.mo -= 1500; p.setMem('japanBubble', true); p.addFlag('lost_decade_generation'); },
       },
     ],
@@ -736,7 +740,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Japan' &&
       !G.mem?.japanEarthquakeDrill,
-    text: 'The drill is the same every year. The alarm sounds. You get under the desk. You wait. The teacher says a word and you file into the yard in a line. In the yard there is a chart showing which buildings are safe and which are not. You have memorised the evacuation route from your house. The bag by the door at home has water, a radio, a copy of your family register, and two days of food. Your mother checks it on the first of every month. This is not fear. This is ordinary preparedness in a country that sits on four tectonic plates.',
+    text: 'The drill is the same every year: the alarm, under the desk, the teacher\'s word, the line into the yard. You know the evacuation route from your house by heart. The bag by the door has water, a radio, a copy of the family register and two days of food, and your mother checks it on the first of every month. Everybody does it, in a country that sits on four tectonic plates.',
     choices: null,
     effect: (p) => { p.m -= 2; p.e += 4; p.setMem('japanEarthquakeDrill', true); p.addFlag('earthquake_country'); },
   },
@@ -750,7 +754,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.currentYear >= 1993 && G.currentYear <= 2005 &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.japanLostGen,
-    text: 'The year you graduate, the companies announce they are not hiring. Not fewer: not hiring. The generation before yours entered sōgōshoku — management track, permanent employment, company housing, forty years of certainty. What you have is haken, dispatch work. No benefits. No seniority. No guarantee of next month. Calling it a gap between expectation and reality misses the specificity: the expectation was built into the society and then the floor was removed and you were standing on it.',
+    text: 'The year you graduate the companies announce they are not hiring, not fewer, not at all. The generation before you went into management tracks with company housing and forty years of certainty. You get dispatch work: no benefits, no seniority, no promise of next month. The expectation was built into the whole society, and then the floor was taken out while you were standing on it.',
     choices: [
       {
         text: 'Take the irregular work and keep trying for permanent employment.',
@@ -761,7 +765,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       {
         text: 'Redirect. The track you were promised does not exist; build a different one.',
         tag: null,
-        outcome: 'The redirection is harder than the original path would have been, and produces something that is yours in a way the original path would not have been. The trade is real.',
+        outcome: 'The redirection is harder than the original path would have been, and produces something that is yours in a way the original path would not have been.',
         effect: (p) => { p.m -= 5; p.e += 4; p.r += 3; p.addFlag('lost_generation_japan'); p.setMem('japanLostGen', true); },
       },
     ],
@@ -804,12 +808,13 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.currentYear === 2011 &&
       G.age >= 10 &&
       !G.mem?.japanTohoku,
-    text: 'March 11, 2:46 in the afternoon. The shaking goes on longer than any shaking should go on. Magnitude 9.0 — the strongest recorded in Japan. Forty minutes later the tsunami comes ashore. In Tōhoku the water is fifteen meters high in some places. In Ishinomaki, in Rikuzentakata, in Kesennuma. The wave takes everything to a line and leaves rubble on one side of the line. Twenty thousand dead, most by drowning, in under an hour. Then: Fukushima Daiichi, reactors one through three, the hydrogen explosions you watch on television.',
+    text: 'March 11, 2:46 in the afternoon, and the shaking goes on longer than any shaking should. Forty minutes later the sea comes ashore, fifteen metres high in places: Ishinomaki, Rikuzentakata, Kesennuma. The wave takes everything to a line and leaves the wreckage on one side of it. Then Fukushima Daiichi, and the explosions you watch on television.',
+    context: 'The magnitude 9.0 Tōhoku earthquake and tsunami of 11 March 2011 killed nearly 20,000 people.',
     choices: [
       {
         text: 'You were in Tōhoku, in the affected area.',
         tag: null,
-        outcome: 'The rebuilding takes years. The specific things that were there before and are not there after — you know them by name.',
+        outcome: 'The rebuilding takes years. The things that were there before and are not there after — you know them by name.',
         effect: (p) => { p.m -= 15; p.h -= 8; p.r += 8; p.addFlag('tohoku_survivor'); p.addFlag('fukushima_generation'); p.setMem('japanTohoku', true); },
       },
       {
@@ -832,7 +837,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.flags.includes('fukushima_generation') &&
       G.age >= 18 &&
       !G.mem?.japanNuclearReckoning,
-    text: 'Japan had fifty-four nuclear reactors before March 11. By May 2012 they have all been taken offline — the first time since 1970 the country has operated without nuclear power. The debate is not about technology. It is about who bears the risk, who was told the risk was acceptable, who made that decision, and what the distance is between those categories. Fukushima Daiichi is in Fukushima. The people who made the TEPCO decisions were not in Fukushima.',
+    text: 'Japan had fifty-four nuclear reactors before March 11. By May 2012 they have all been taken offline — the first time since 1970 the country has operated without nuclear power. The debate is about who bears the risk, who was told the risk was acceptable, and who decided. Fukushima Daiichi is in Fukushima. The people who made the TEPCO decisions were not in Fukushima.',
     choices: [
       {
         text: 'Nuclear energy as a category has changed for you after Fukushima.',

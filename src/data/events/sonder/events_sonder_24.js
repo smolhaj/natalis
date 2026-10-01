@@ -23,7 +23,7 @@ export const EVENTS_SONDER_24 = [
     when: (G) => G.age >= 30 && !G.mem?.sdr24Shop,
     text: () => pick([
       'The shop is gone. Not recently — years ago — but you still catch yourself about to turn down that street before remembering.',
-      'The bakery closed and something that felt permanent turned out not to be. The street is different now in a way that does not have a name.',
+      'The bakery closed and something that felt permanent turned out not to be. The street is different now and there is no name for how.',
       'You walked past the space and it had been a different shop for years, and still you registered the absence of the thing it used to be.',
     ]),
     choices: null,
@@ -78,7 +78,7 @@ export const EVENTS_SONDER_24 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.sdr24OldHabit,
     text: () => pick([
-      'You stopped the habit years ago and still sometimes reach for it — the cigarette, the drink, the walk, the particular worry — before remembering it is not part of the life now.',
+      'You stopped the habit years ago and still sometimes reach for it — the cigarette, the drink, the walk, the worry — before remembering it is not part of the life now.',
       'The habit you kept from twenty is still with you, slightly embarrassing, fully functional. You have explained it to new people several times by now.',
       'You picked up the habit from someone who is no longer in your life and it has outlasted the relationship by many years. That is the kind of thing you only notice occasionally.',
     ]),
@@ -107,7 +107,7 @@ export const EVENTS_SONDER_24 = [
     when: (G) => G.age >= 30 && !G.mem?.sdr24NameSaid,
     text: (G) => pick([
       `Someone said your name the way only one other person has ever said it, and you turned around expecting the wrong face.`,
-      `The name you use now is not the name you were called at home, and sometimes when you hear the home-name it startles you, which is information about how far you have come.`,
+      `The name you use now is not the name you were called at home, and sometimes when you hear the home-name it startles you, and that tells you how far you have come.`,
       `Your name sounds different in other languages. People make small adjustments without asking. You have never fully settled which version is yours.`,
     ]),
     choices: null,
@@ -149,7 +149,7 @@ export const EVENTS_SONDER_24 = [
     when: (G) => G.age >= 25 && !G.mem?.sdr24StrangerLaugh,
     text: () => pick([
       'You heard laughter from the next room and it was so specific — that precise register — that you almost called a name that would have been wrong.',
-      'The stranger at the table laughed and you missed someone, briefly, in a way that had nothing to do with the stranger and everything to do with the sound.',
+      'The stranger at the table laughed and you missed someone, briefly, and it had nothing to do with the stranger and everything to do with the sound.',
       'The quality of laughter changes across a life. You have been in rooms with laughter that you will not hear again in quite that form.',
     ]),
     choices: null,
@@ -162,7 +162,7 @@ export const EVENTS_SONDER_24 = [
     weight: 2,
     when: (G) => G.age >= 55 && !G.mem?.sdr24TimeSounds,
     text: () => pick([
-      'The clock in the hallway. The particular sound of an empty Sunday afternoon. The sound of a place when everyone is asleep. Time has textures you could pick out of a lineup.',
+      'The clock in the hallway. The sound of an empty Sunday afternoon. The sound of a place when everyone is asleep. Time has textures you could pick out of a lineup.',
       'You can reconstruct certain years from sound: what was playing, what the traffic was doing, whether the window was open, which neighbour was up late.',
       'The sound of old age is partly the quiet. The fewer sounds in a room and the weight each one carries.',
     ]),
@@ -192,7 +192,7 @@ export const EVENTS_SONDER_24 = [
     text: () => pick([
       'You knew who was home by the sound of the door. The weight of a hand on a handle is personal. You still know this.',
       'The door of the apartment is a sound and you can hear it from anywhere in the building and know immediately whether it is yours.',
-      'In the old house the third stair had a particular sound. You can hear it exactly. The stair is probably still there.',
+      'In the old house the third stair had a sound. You can hear it exactly. The stair is probably still there.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr24DoorSound', true) },
@@ -206,7 +206,7 @@ export const EVENTS_SONDER_24 = [
     text: () => pick([
       'You have given out several keys over the course of this life. Not all of them have come back. Somewhere there are keys to places you no longer live.',
       'The key to the first place that was yours alone. You kept it for years after moving. Some objects require a long goodbye.',
-      'The weight of a key is the weight of belonging somewhere specific. When you lost that key, the moment before you found it had a particular quality of suspended life.',
+      'The weight of a key is the weight of belonging somewhere specific. When you lost that key, the moment before you found it had a quality of suspended life.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr24HouseKey', true) },
@@ -233,7 +233,7 @@ export const EVENTS_SONDER_24 = [
     when: (G) => G.age >= 32 && !G.mem?.sdr24Tuesday,
     text: () => pick([
       'There was a Tuesday, entirely unremarkable in advance, on which something happened that changed the shape of the next several years. It looked like an ordinary Tuesday.',
-      'The day you remember best from that period was not the obvious day. It was a Wednesday in March, or a Tuesday, ordinary until it wasn\'t.',
+      'The day you remember best from that period was a Wednesday in March, or a Tuesday, ordinary until it wasn\'t.',
       'Sometimes the important days announce themselves. More often they do not. You cannot know which ordinary morning is the last ordinary morning.',
     ]),
     choices: null,
@@ -302,7 +302,7 @@ export const EVENTS_SONDER_24 = [
     weight: 2,
     when: (G) => G.age >= 22 && !G.mem?.sdr24Airport,
     text: () => pick([
-      'The airport at 5am. Everyone in the terminal is going somewhere and the terminal is a kind of suspension — not here, not there, the between-state that has its own quality.',
+      'The airport at 5am. Everyone in the terminal is going somewhere and the terminal is a suspension: not here, not there.',
       'The gate area before a long flight. Everyone carrying what they decided was worth carrying. Everyone about to be somewhere else.',
       'You have watched more departures than you will arrivals. The arithmetic of that only becomes visible later.',
     ]),
@@ -332,7 +332,7 @@ export const EVENTS_SONDER_24 = [
     text: () => pick([
       'There are roads you have driven so many times that the hands do it without the mind. The hands know every curve. The mind can be elsewhere.',
       'The road you took every day for ten years you could still drive in the dark, though you moved away and the road has probably changed.',
-      'A road has its own personality after enough trips. The quality of its light at a certain hour, the bend where something happened once.',
+      'A road has a personality after enough trips. The quality of its light at a certain hour, the bend where something happened once.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr24Roads', true) },
@@ -358,7 +358,7 @@ export const EVENTS_SONDER_24 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.sdr24SmallCeremony,
     text: () => pick([
-      'The small ceremony you keep: the cup of tea at the same time, the walk on the same day of the week, the particular way you mark the end of something. Small and load-bearing.',
+      'The small ceremony you keep: the cup of tea at the same time, the walk on the same day of the week, the way you mark the end of something. Small and load-bearing.',
       'You didn\'t decide to make it a ritual. It became one because you did it enough times and now the skipping of it has a quality.',
       'The private ceremony requires no audience and produces no record. That is its function — the thing you do that is only for you.',
     ]),
@@ -373,7 +373,7 @@ export const EVENTS_SONDER_24 = [
     when: (G) => G.age >= 42 && !G.mem?.sdr24HealthYear,
     text: () => pick([
       'You can identify, approximately, the last year you did not think about your health most days. It was not recently.',
-      'At some age the body becomes a daily item on a list. Not a crisis — just a thing to be managed the way a car is managed, which is not how it felt before.',
+      'At some age the body becomes a daily item on a list. Not a crisis — just a thing to be managed the way a car is managed, and it did not feel like that before.',
       'The year you went to the doctor for the first time for something you\'d ignored. The appointment took fifteen minutes. The category shift took longer.',
     ]),
     choices: null,
@@ -388,7 +388,7 @@ export const EVENTS_SONDER_24 = [
     text: () => pick([
       'The light on in the apartment across the street, 11pm. Someone is still awake over there. The light is the only evidence of an entire life going on simultaneously.',
       'Walking past a window and the inside of someone\'s evening: a television, a lamp, a figure. The complete unknowability of what that evening is.',
-      'The lit window: the simplest version of the thought that other people\'s lives are full from the inside. That fullness, in that specific apartment, you will never know.',
+      'The lit window: the simplest version of the thought that other people\'s lives are full from the inside. That fullness, in that apartment, you will never know.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr24OtherLight', true) },

@@ -22,9 +22,9 @@ export const LIFE_SKELETON_EVENTS = [
         be_seen: `Someone is noticed for something you did, or did equally well, or could do better. The injustice of it is minor in the scheme of things. It does not feel minor.`,
         safety: `Something disrupts the order you have been maintaining. The plan fails. The old fear moves through you. You are better at pretending it is not there than you are at it not being there.`,
         connection: `You reach toward someone — in friendship, in confidence, in need — and the reaching goes wrong. The distance that opens is familiar. This is not the first time.`,
-        leave_mark: `You make something — a piece of work, an effort, a thing that mattered to you — and nobody notices. The invisibility of it sits on you in a way that feels both disproportionate and exact.`,
+        leave_mark: `You make something — a piece of work, an effort, a thing that mattered to you — and nobody notices. The invisibility of it sits on you, disproportionate and exact.`,
         freedom: `A limit arrives — from family, school, circumstance — and the familiar tightening happens. Not frustration only. Something older. The feeling of a cage you did not choose.`,
-        redemption: `You fail someone, or witness a failure, or are complicit in one. The weight of it is specific. You will carry it longer than the situation deserves.`,
+        redemption: `You fail someone, or witness a failure, or are complicit in one. You will carry it longer than the situation deserves.`,
       }
       return texts[d] ?? `Something in adolescence asks the question your childhood was already asking, only louder.`
     },
@@ -66,12 +66,12 @@ export const LIFE_SKELETON_EVENTS = [
         belong: `You have people around you — ${coping === 'collect' ? 'carefully gathered' : 'carefully fitted into'}. A moment presents itself: the path that deepens into these people and this life, and the path that asks whether you have actually been seen in it.`,
         be_seen: `You have made yourself visible in some arena by now. Two paths clarify: the one that goes further in that direction, and the one that trades visibility for something less public and more real.`,
         safety: `The structures you have built are holding. Two paths present themselves: the one that reinforces the safety further, and the one that risks something — deliberately, carefully — while you still have time.`,
-        connection: `You have people who are yours. Two paths clarify: the one that goes deeper into these specific ties, and the one that asks what you have left undone in yourself.`,
+        connection: `You have people who are yours. Two paths clarify: the one that goes deeper into these ties, and the one that asks what you have left undone in yourself.`,
         leave_mark: `What you have been building is taking shape. Two paths present themselves: the one that completes it, and the one that asks whether it is the right thing to be completing.`,
         freedom: `You are further from the original cage than you have ever been. Two paths clarify: the one that keeps moving, and the one that asks what you would build if you were willing to stay somewhere long enough.`,
         redemption: `The work of repair and atonement has been ongoing. Two paths: the one that continues, and the one that asks when it is enough to have tried.`,
       }
-      return texts[d] ?? `You are thirty, and the fork in the path is visible. Both directions are real.`
+      return texts[d] ?? `You are ${G.age}, and you can see two ways on from here, and either would take the rest of your thirties.`
     },
     choices: [
       {
@@ -106,7 +106,7 @@ export const LIFE_SKELETON_EVENTS = [
           : `You changed the course. The old ambitions are further away. At forty, you can see what was traded, and what was gained, and you are still working out whether the exchange was fair.`,
         belong: forkChoice === 'stayed'
           ? `You are embedded in people and place. You are known here. At forty, you notice the shape of what the belonging costs — the parts of yourself that got quietly set aside to make the fit work.`
-          : `You renegotiated the belonging at some point — chose different rooms, different versions of yourself. The cost at forty is a loneliness specific to someone who chose their isolation.`,
+          : `You renegotiated the belonging at some point — chose different rooms, different versions of yourself. The cost at forty is the loneliness of someone who chose it.`,
         be_seen: forkChoice === 'stayed'
           ? `You are visible. People know your name in the relevant arenas. At forty you find yourself wondering what the visibility is hiding, and whether you built it partly for that purpose.`
           : `You stepped back from the visibility. At forty, the cost arrives: occasional doubt about whether you gave up too soon, or gave up the wrong thing.`,
@@ -114,13 +114,13 @@ export const LIFE_SKELETON_EVENTS = [
           ? `The structures held. You are safe, by most definitions. At forty the cost presents itself: the things you did not do because they felt risky, the life slightly smaller than it might have been.`
           : `You took the risk. At forty, you can see the full accounting — what it cost, what it opened, whether it was worth it. The answer changes depending on the day.`,
         connection: forkChoice === 'stayed'
-          ? `The people in your life are real. The ties are deep. At forty, the cost is visible: what you deprioritized when you prioritized this.`
+          ? `The people in your life are there. The ties are deep. At forty, the cost is visible: what you deprioritized when you prioritized this.`
           : `You chose yourself at some point, or chose differently. The cost at forty is visible: the connections that did not survive the choice.`,
         leave_mark: forkChoice === 'stayed'
           ? `The thing is taking shape. At forty, the cost of it is visible — the time it took, the other things displaced, the question of whether it is actually good or just done.`
           : `You changed what you were building. At forty, you can see what the change cost: the abandoned project, the years that went into something you did not finish.`,
         freedom: forkChoice === 'stayed'
-          ? `You kept moving. The freedom is real. At forty, the cost is visible: the roots not put down, the people left when you left, the thing you might have made if you had stayed somewhere.`
+          ? `You kept moving. At forty, the cost is visible: the roots not put down, the people left when you left, the thing you might have made if you had stayed somewhere.`
           : `You stayed somewhere, tried to build something. At forty, the cost of the staying is visible — the constraint of it, the way freedom narrows when you are responsible for something.`,
         redemption: forkChoice === 'stayed'
           ? `You have been working at it for years. At forty, you have to look honestly at the ledger: what has been repaired, what has not, whether the debt is actually finite.`
@@ -146,7 +146,7 @@ export const LIFE_SKELETON_EVENTS = [
         belong: `You have been in rooms your whole life, making yourself fit. At fifty-five, the question: did you ever actually belong anywhere, or did you get very good at the performance of it? The honest answer may surprise you.`,
         be_seen: `You have been visible and invisible in the ways available to you. At fifty-five, the question is clearer: what did you want to be seen as, and was any of the seeing ever for that thing?`,
         safety: `The structures held, or they did not. At fifty-five, the accounting: was the safety worth the cost of building it? The threat that drove you — was it as large as it felt?`,
-        connection: `At fifty-five, you can look at the connections of a lifetime. Which ones were real. Which ones you built from your own need. What the difference between those two things has meant.`,
+        connection: `At fifty-five, you can look at the connections of a lifetime. Which ones held. Which ones you built from your own need. What the difference between those two things has meant.`,
         leave_mark: `The mark question resolves itself, at fifty-five, into something smaller and more honest: not what you built for history, but what survives you in the people who knew you. That is the only mark that is actually yours.`,
         freedom: `At fifty-five, you can see the shape of the freedom you built — what it cost, what it enabled, what it closed off. Whether the life that resulted was freer than the one you fled. This is not obvious.`,
         redemption: `The debt question — whatever debt you named it — is at fifty-five either settled or clearly unsettleable. You have made enough, or the making-enough was never the mechanism that was going to work.`,

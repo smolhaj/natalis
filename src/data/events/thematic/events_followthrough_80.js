@@ -92,7 +92,7 @@ export const FOLLOWTHROUGH_80_EVENTS = [
       G.currentYear >= 2004 &&
       G.age >= 30 &&
       !G.mem?.ft80UprisingMuseum,
-    text: 'The Warsaw Uprising Museum opens on August 1, 2004 — the sixtieth anniversary. The building, the exhibition, the names. The museum makes visible what was carried in private for sixty years. You walk through it and find things you recognize from what the adults said. Some of the things you recognize because you were there. The museum is simultaneously the thing that was needed for sixty years and a specific artifact of the moment when it finally became possible to build it.',
+    text: 'The Warsaw Uprising Museum opens on August 1, 2004 — the sixtieth anniversary. The building, the exhibition, the names. The museum makes visible what was carried in private for sixty years. You walk through it and find things you recognize from what the adults said. Some of the things you recognize because you were there. The museum is simultaneously the thing that was needed for sixty years and an artifact of the moment when it finally became possible to build it.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -231,7 +231,7 @@ export const FOLLOWTHROUGH_80_EVENTS = [
       G.currentYear >= 2016 &&
       G.age >= 28 &&
       !G.mem?.ft80PolandReturn,
-    text: 'The return. The savings are real and the English is real and the comparative perspective on how other countries do certain things is real. The Poland you return to has changed politically and economically since you left. You have changed. The combination produces a person who is Polish in ways that are specific and also has a distance from the place that only leaving and returning produces. You are inside and slightly outside simultaneously. This is its own position.',
+    text: 'The return. You come back with savings and English, and with a sense of how other countries do certain things. The Poland you return to has changed politically and economically since you left. You have changed. The combination produces a person who is Polish in ways that are specific and also has a distance from the place that only leaving and returning produces. You are inside and slightly outside simultaneously. This is its own position.',
     choices: null,
     effect: (p) => {
       p.r += 4

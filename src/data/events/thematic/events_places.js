@@ -254,7 +254,7 @@ export const PLACES_EVENTS = [
     when: (G) => G.place?.scale === 'megacity' && G.age >= 18 && G.age <= 25 && !G.mem?.megacityOverwhelmAck,
     text: (G) => {
       const city = placeName(G, 'the city')
-      return `${city} contains more people than some countries. You are twenty-something and some days the scale of it — the endless buildings, the metro crowds at rush hour, the fact that you can walk for two hours and never leave it — tips from exciting into something else. It's not loneliness exactly. It's the specific vertigo of being very small in something very large.`
+      return `${city} contains more people than some countries. You are twenty-something and some days the scale of it — the endless buildings, the metro crowds at rush hour, the fact that you can walk for two hours and never leave it — tips from exciting into something else. It's not loneliness exactly. It's the vertigo of being very small in something very large.`
     },
     choices: null,
     effect: (p) => { p.r += 2; p.m -= 2; p.setMem('megacityOverwhelmAck', true) },
@@ -268,7 +268,7 @@ export const PLACES_EVENTS = [
     when: (G) => G.place?.type === 'rural' && G.age >= 7 && !G.mem?.villageKnowledgeAck,
     text: (G) => {
       const place = placeName(G, 'here')
-      return `In ${place} everyone knows what you did last Tuesday. The privacy you will later want does not exist here, and neither does the loneliness. The village watches you grow up the way it watches the seasons, with matter-of-fact attention. This is its own kind of being held.`
+      return `In ${place} everyone knows what you did last Tuesday. The privacy you will later want does not exist here, and neither does the loneliness. The village watches you grow up the way it watches the seasons, with matter-of-fact attention. This is being held.`
     },
     choices: null,
     effect: (p) => { p.m += 3; p.s += 2; p.setMem('villageKnowledgeAck', true) },
@@ -298,7 +298,7 @@ export const PLACES_EVENTS = [
     text: (G) => {
       const oldCity = G.birthPlace?.name ?? 'the city'
       const newPlace = placeName(G, 'here')
-      return `You left ${oldCity} for ${newPlace}. People said: you'll miss it. You do, sometimes — the restaurants, the museums, the specific anonymity. But you sleep better here. The morning is quieter. There is a pace to the days that the city would not have given you. You have stopped explaining to people why you came.`
+      return `You left ${oldCity} for ${newPlace}. People said: you'll miss it. You do, sometimes — the restaurants, the museums, the anonymity. But you sleep better here. The morning is quieter. There is a pace to the days that the city would not have given you. You have stopped explaining to people why you came.`
     },
     choices: null,
     effect: (p) => { p.m += 5; p.h += 3; p.setMem('cityReturnVillageAck', true) },
@@ -328,7 +328,7 @@ export const PLACES_EVENTS = [
     when: (G) => (G.flags.has('bankrupt') || G.flags.has('financial_ruin') || G.stats.wealth < 20) && G.neighborhoodTier === 'middle_class' && G.age >= 30 && !G.mem?.movingDownNbrAck,
     text: (G) => {
       const old = neighbourhoodName(G) ?? 'where you were'
-      return `The finances make ${old} impossible. The move to a cheaper place is practical. You do it without drama, because the drama is internal — the specific recalibration of who you thought you were becoming, now measured against where you actually are. The new street is fine. You just didn\'t expect to be here.`
+      return `The finances make ${old} impossible. The move to a cheaper place is practical. You do it without drama, because the drama is internal — the recalibration of who you thought you were becoming, now measured against where you actually are. The new street is fine. You just didn't expect to be here.`
     },
     choices: null,
     effect: (p) => { p.r += 6; p.m -= 5; p.setMem('movingDownNbrAck', true) },
@@ -371,7 +371,7 @@ export const PLACES_EVENTS = [
     when: (G) => G.place?.type === 'rural' && G.career?.id === 'farmer' && G.age >= 22 && !G.mem?.farmingPlaceFitAck,
     text: (G) => {
       const place = placeName(G, 'here')
-      return `The land in ${place} is what your work is about. Not an abstraction, not a career path — the actual ground, the specific water table, the weather patterns you can now read before the forecast confirms them. Most people you know from school work in offices in other cities. You are here. You know things they don\'t.`
+      return `The land in ${place} is what your work is about. Not an abstraction, not a career path — the actual ground, the water table, the weather patterns you can now read before the forecast confirms them. Most people you know from school work in offices in other cities. You are here. You know things they don't.`
     },
     choices: null,
     effect: (p) => { p.m += 4; p.e += 3; p.setMem('farmingPlaceFitAck', true) },
@@ -416,7 +416,7 @@ export const PLACES_EVENTS = [
     text: (G) => {
       const birth = G.birthPlace?.name ?? 'where you were born'
       const now = placeName(G, 'here')
-      return `Someone asks where you\'re from and you hesitate in a way that used to feel like a problem. ${birth} is one answer. ${now} is another. There are habits you carry from each, and things you miss from each, and you have stopped ranking them.`
+      return `Someone asks where you're from and you hesitate, which used to feel like a problem. ${birth} is one answer. ${now} is another. There are habits you carry from each, and things you miss from each, and you have stopped ranking them.`
     },
     choices: null,
     effect: (p) => { p.m += 3; p.e += 2; p.setMem('multipleHomesAck', true) },

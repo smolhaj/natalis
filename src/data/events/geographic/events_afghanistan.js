@@ -31,7 +31,8 @@ export const AFGHANISTAN_EVENTS = [
       G.currentYear >= 1979 && G.currentYear <= 1989 &&
       G.age >= 16 &&
       !G.mem.afgSoviet,
-    text: 'December 1979. Soviet forces enter Afghanistan. By the end of the war in 1989, five million Afghans are refugees — in Pakistan, in Iran, in the diaspora. One million are dead. The mujahideen are armed by the CIA through Pakistan\'s ISI. The weapons are sophisticated and they work. The Soviet army cannot pacify the countryside. The countryside is not pacifiable. You are in this war or you are a refugee from it. There is almost no third option.',
+    text: 'December 1979, and the Soviet army comes in. The mujahideen are armed through Pakistan with weapons that work, and the countryside cannot be pacified. By the end, a third of the country has left for Pakistan or Iran. You are in this war or you are a refugee from it. There is almost no third option.',
+    context: 'The Soviet war in Afghanistan (1979-1989) killed an estimated one million Afghans and made about five million refugees.',
     choices: [
       {
         text: 'You are fighting — as mujahideen, as a soldier, or in the resistance.',
@@ -42,7 +43,7 @@ export const AFGHANISTAN_EVENTS = [
       {
         text: 'You flee — to Pakistan, to Iran, or to the diaspora.',
         tag: null,
-        outcome: 'Peshawar, Quetta, Tehran. The camp or the city apartment of the diaspora cousin. You are Afghan in a place that is not Afghanistan. That is the condition. It becomes permanent for longer than you expected.',
+        outcome: 'Peshawar, Quetta, Tehran. The camp or the city apartment of the diaspora cousin. You are Afghan in a place that is not Afghanistan. It becomes permanent for longer than you expected.',
         effect: (p) => { p.m -= 14; p.r += 10; p.addFlag('afghan_soviet_war_generation'); p.addFlag('afghan_refugee'); p.setMem('afgSoviet', true) },
       },
     ],
@@ -58,7 +59,8 @@ export const AFGHANISTAN_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1995 &&
       G.age >= 20 &&
       !G.mem.afgCivilWar,
-    text: '1992. The Soviet-backed government collapses. Najibullah is hiding in the UN compound — he will be there for four years before the Taliban hang him. The mujahideen factions that fought the Soviets together cannot agree on who governs. Kabul becomes the front line between them. Gulbuddin Hekmatyar shells the city from the south. Massoud holds the north. Dostum switches sides. Seventy thousand civilians die in Kabul alone during four years of rocket fire and atrocity. The city that survived the Soviets does not survive the men who defeated them.',
+    text: '1992. The Soviet-backed government falls, and Najibullah hides in the UN compound, where he will stay four years until the Taliban hang him. The factions that fought the Soviets together cannot agree who governs, and Kabul becomes the front line between them: Hekmatyar shelling from the south, Massoud in the north, Dostum changing sides. The city that survived the Soviets does not survive the men who beat them.',
+    context: 'Rocket fire and fighting between mujahideen factions in Kabul from 1992 to 1996 killed tens of thousands of civilians.',
     choices: null,
     effect: (p) => { p.m -= 14; p.h -= 3; p.r += 10; p.addFlag('afghan_civil_war_generation'); p.setMem('afgCivilWar', true) },
   },
@@ -100,7 +102,7 @@ export const AFGHANISTAN_EVENTS = [
       G.currentYear >= 2001 && G.currentYear <= 2012 &&
       G.age >= 16 &&
       !G.mem.afgUSInvasion,
-    text: 'October 2001. The United States invades after September 11. The Taliban collapse in weeks. Kabul falls without a fight. The girls\' schools reopen. The music comes back. The international NGOs arrive with their Land Cruisers and their salaries. The Kabul bubble inflates: restaurants, hotels, the new middle class of the aid economy, an elected government, a new constitution, girls in school in numbers that have not existed before. The war is still happening somewhere, but Kabul is something people are building. That is a specific feeling that people who were there know.',
+    text: 'October 2001. The Americans come and the Taliban collapse in weeks, and Kabul falls without a fight. The girls\' schools reopen and the music comes back. Then the Land Cruisers, the salaries, the new restaurants and the elected government, and girls in school in numbers there have never been before. The war is still happening somewhere, but Kabul is something people are building, and the people who were there know that feeling.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 3; p.r += 5; p.addFlag('afghan_2001_generation'); p.setMem('afgUSInvasion', true) },
   },
@@ -114,7 +116,8 @@ export const AFGHANISTAN_EVENTS = [
       G.currentYear === 2021 &&
       G.age >= 18 &&
       !G.mem.afgFall && !G.mem?.afg2021,
-    text: 'August 15, 2021. Kabul falls in eleven days. The army the United States spent twenty years and eighty-three billion dollars building dissolves without fighting. The president leaves. The Taliban walk into the presidential palace and take photographs in the chairs. At the airport, tens of thousands of Afghans push against the gates. People fall from military transport planes. The evacuation is chaos. The girls\' schools close again. The women who had built careers — doctors, journalists, judges, pilots — disappear into houses. The twenty years are not gone, but what they built has to find new containers.',
+    text: 'Kabul falls in eleven days. The army that twenty years of money built dissolves without fighting, the president leaves, and the Taliban take photographs of each other in the palace chairs. At the airport tens of thousands push against the gates, and people fall from the wheels of the transport planes. The girls\' schools close again. The women who had become doctors, journalists, judges, pilots disappear into houses.',
+    context: 'Kabul fell on 15 August 2021. The United States had spent some 83 billion dollars building the Afghan security forces.',
     choices: [
       {
         text: 'You get out — through the airport, the border, whatever route is available.',

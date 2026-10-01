@@ -18,7 +18,7 @@ export const MALI_EVENTS = [
       G.currentYear >= 1955 &&
       G.age >= 8 && G.age <= 14 &&
       !G.mem?.mliEmpire,
-    text: 'The teacher writes three words on the board: Ghana. Mali. Songhai. Three empires, here, before Europe\'s medieval period had ended. Mansa Musa\'s pilgrimage to Mecca in 1324 distributed so much gold that it depressed the price of gold across North Africa and the Middle East for a generation. Timbuktu had 100,000 people and 25,000 students at its universities when Paris had 200,000. The teacher says: this is where you are from. Not from poverty. From this.',
+    text: 'The teacher writes three words on the board: Ghana, Mali, Songhai. Empires, here, while Europe was still in its middle ages. When Mansa Musa went to Mecca he gave away so much gold that its price fell across Cairo for a generation, and Timbuktu was full of scholars. The teacher says: this is where you are from. Not from poverty. From this.',
     choices: null,
     effect: (p) => { p.e += 4; p.m += 3; p.addFlag('mali_empire_memory'); p.setMem('mliEmpire', true); },
   },
@@ -46,7 +46,7 @@ export const MALI_EVENTS = [
       {
         text: 'Keep some fields for subsistence crops.',
         tag: 'Hedge',
-        outcome: 'You eat when the cash crop fails. This is not a strategy the agricultural extension officers recommend. It is the reason your family does not starve.',
+        outcome: 'You eat when the cash crop fails. No agricultural extension officer recommends it. It is the reason your family does not starve.',
         effect: (p) => { p.h += 3; p.m -= 2; p.addFlag('mali_cotton_generation'); p.setMem('mliCotton', true); },
       },
     ],
@@ -63,7 +63,7 @@ export const MALI_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1990 &&
       G.age >= 18 &&
       !G.mem?.mliTraore,
-    text: 'November 19, 1968: Lieutenant Moussa Traoré removes Modibo Keïta on the radio. The socialist experiment — nationalized industries, pan-African ambitions, a national currency — ends overnight. What replaces it is the UDPM: the Democratic Union of the Malian People, the only legal party, which is not democratic and is not a union and does not serve the Malian people in any obvious way. The country continues. Crops grow, markets open, children go to school. But what cannot be said is very precisely what cannot be said. You learn the vocabulary of the unsayable early.',
+    text: 'November 19, 1968: Lieutenant Moussa Traoré removes Modibo Keïta on the radio. The socialist experiment — nationalized industries, pan-African ambitions, a national currency — ends overnight. What replaces it is the UDPM: the Democratic Union of the Malian People, the only legal party, not democratic, not a union, and of no obvious service to the Malian people. The country continues. Crops grow, markets open, children go to school. But what cannot be said is very precisely what cannot be said. You learn the vocabulary of the unsayable early.',
     choices: [
       {
         text: 'Find a position within the system — government work, relative stability.',
@@ -91,7 +91,7 @@ export const MALI_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 1993 &&
       G.age >= 16 &&
       !G.mem?.mliRevolution,
-    text: 'March 22, 1991. The protesters have been in the streets for days — students, workers, women\'s groups. Traoré orders the army to fire on them. General Amadou Toumani Touré, commanding officer of the presidential guard, refuses the order. Other officers follow. Within twenty-four hours, Traoré is arrested in his own home. The transitional government forms within weeks. An election in June produces a president. For the first time since 1968, the country is governed by someone the people chose. You are twenty-three years old or thirty-five or forty-four, and you have not seen this happen before in your adult life.',
+    text: 'March 1991. The protesters have been in the streets for days, students, workers, the market women, and Traoré orders the army to fire. The commander of the presidential guard refuses, and other officers follow him, and within a day Traoré is under arrest in his own house. By June there is an election, and for the first time since 1968 the country is governed by someone people chose. You have not seen anything like it in your adult life.',
     choices: [
       {
         text: 'You were in the streets when it happened.',
@@ -124,7 +124,7 @@ export const MALI_EVENTS = [
       {
         text: 'Hold on to the nomadic way of life.',
         tag: 'Nomadic',
-        outcome: 'The desert is yours in a way that no document confirms and no government can take away. The price is invisibility to every system that requires a fixed address.',
+        outcome: 'The desert is yours, and no document confirms it and no government can take it away. The price is invisibility to every system that requires a fixed address.',
         effect: (p) => { p.m += 3; p.addFlag('tuareg_malian'); p.addFlag('tuareg_nomadic_life'); p.setMem('mliTuareg', true); },
       },
       {
@@ -163,7 +163,8 @@ export const MALI_EVENTS = [
       G.currentYear >= 2012 && G.currentYear <= 2013 &&
       G.flags.includes('mali_2012_crisis_lived') &&
       !G.mem?.mliTimbuktu,
-    text: 'In Timbuktu, under Ansar Dine and AQIM, the shrines of Muslim saints are destroyed with pickaxes — idolatry, they say. Music is banned. Women must cover fully. The 14th-century mosques that have stood for seven centuries are permitted. The ancient manuscripts — 300,000 of them, the largest collection of medieval Islamic scholarship in sub-Saharan Africa — are in private homes and the Ahmed Baba Institute. Librarians have been moving them, box by box, for months, south to Bamako before the Islamists can find them. Most are saved. You hear about this from someone who helped carry them.',
+    text: 'In Timbuktu, under the Islamists, the shrines of the saints are broken with pickaxes, music is banned, women must cover completely. For months the librarians have been moving the old manuscripts out of the houses and the Ahmed Baba Institute, box by box, south to Bamako, before anyone can find them. Most are saved. You hear about it from someone who helped carry them.',
+    context: 'Timbuktu\'s private and public libraries held some 300,000 manuscripts; most were evacuated to Bamako in 2012.',
     choices: null,
     effect: (p) => { p.m -= 8; p.e += 3; p.addFlag('timbuktu_generation'); p.setMem('mliTimbuktu', true); },
   },
@@ -179,12 +180,12 @@ export const MALI_EVENTS = [
       G.currentYear >= 2013 && G.currentYear <= 2014 &&
       G.flags.includes('mali_2012_crisis_lived') &&
       !G.mem?.mliServal,
-    text: 'January 11, 2013. France launches Operation Serval. Hollande announces it in the afternoon; the jets are flying by midnight. Malian soldiers and French Special Forces retake Konna, then Diabaly, then Gao, then Timbuktu. In the streets of Bamako people cheer French soldiers — soldiers from the country that colonized this one for sixty years. You notice the contradiction and you do not resolve it. The jihadists are pushed north into the Adrar des Ifoghas mountains. A French soldier dies. The country is not what it was before March 2012, and no one knows what it is instead.',
+    text: 'January 2013, and the French jets are flying by midnight. Konna, Diabaly, Gao, Timbuktu are taken back, and in Bamako people cheer French soldiers, soldiers of the country that colonised this one. You notice the contradiction and do not resolve it. The jihadists are pushed north into the mountains. The country is not what it was before 2012, and nobody knows what it is instead.',
     choices: [
       {
         text: 'Feel the relief. The immediate crisis is over.',
         tag: 'Relief',
-        outcome: 'Whatever the politics, people are not being killed in the streets today who were yesterday. This is not nothing.',
+        outcome: 'Whatever the politics, people are not being killed in the streets today who were yesterday.',
         effect: (p) => { p.m += 6; p.addFlag('mali_serval_witness'); p.setMem('mliServal', true); },
       },
       {
@@ -207,7 +208,7 @@ export const MALI_EVENTS = [
       G.currentYear >= 2020 &&
       G.flags.includes('mali_democracy_generation') &&
       !G.mem?.mliSahelReckoning,
-    text: 'The democracy lasted twenty years. Two coups in 2020 and 2021; a military junta governing now with Russian support. France expelled. Wagner Group in. The jihadist violence you watched move through the north in 2012 has spread across the centre and south. The cycle of coups — 1968, 1991, 2012, 2020, 2021 — has a rhythm that you have lived through more of than you expected. You marched in 1991 or you remember those who did. The march felt like the end of something. It turns out to have been the middle.',
+    text: 'The democracy lasted twenty years. Then the coups of 2020 and 2021, the junta, the French told to leave and the Russians invited in, and the jihadist violence that was in the north in 2012 spreading through the centre and south. You have lived through more of the coups than you expected. You marched in 1991, or you remember those who did. It felt like the end of something. It turns out to have been the middle.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 8; p.e += 2; p.addFlag('mali_long_witness'); p.setMem('mliSahelReckoning', true); },
   },

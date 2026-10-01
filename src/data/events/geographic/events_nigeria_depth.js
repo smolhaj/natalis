@@ -95,7 +95,7 @@ export const NIGERIA_DEPTH_EVENTS = [
       {
         text: 'You pass but not as well as hoped. You will sit it again.',
         tag: null,
-        outcome: 'The year of sitting it again: the specific texture of being the one who is not yet in university while your mates are. You sit it again. You pass. The delay becomes the story you tell differently as you get older.',
+        outcome: 'The year of sitting it again: the texture of being the one who is not yet in university while your mates are. You sit it again. You pass. The delay becomes the story you tell differently as you get older.',
         effect: (p) => { p.m -= 4; p.r += 4; p.e += 2; p.setMem('ngaDepWaecJamb', true) },
       },
     ],
@@ -112,7 +112,7 @@ export const NIGERIA_DEPTH_EVENTS = [
       G.currentYear >= 1985 &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem?.ngaDepGoSlow,
-    text: `The go-slow: Lagos traffic, specifically. Not a traffic jam in the way that other cities have traffic jams — a complete shutdown of the arterial roads that can run from morning to evening with no visible resolution. Third Mainland Bridge, Carter Bridge, the Lekki-Epe Expressway, Apapa road. You budget the journey the way a sailor budgets the weather. You leave at 4am or you wait until 10pm or you accept two hours of movement that covers four kilometres. The danfo buses and the okadas fill the gaps that personal cars cannot navigate. The go-slow is not a problem to solve — it is a condition to live inside. Lagosians become experts at managing the interior of the wait.`,
+    text: `The go-slow: not a traffic jam as other cities have them, but the arteries shut from morning to evening with no visible reason, Third Mainland, Carter Bridge, Lekki-Epe, the Apapa road. You budget a journey the way a sailor budgets weather: leave at four in the morning, or wait until ten at night, or accept two hours for four kilometres. The danfos and okadas fill the gaps. Lagosians become experts at managing the inside of a wait.`,
     choices: null,
     effect: (p) => {
       p.r += 3
@@ -154,7 +154,7 @@ export const NIGERIA_DEPTH_EVENTS = [
       G.currentYear === 2020 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.ngaDepEndSars,
-    text: `October 2020. The Special Anti-Robbery Squad — SARS — has been brutalising young Nigerians for thirty years: extorting people with laptops and dreadlocks and foreign accents, detaining people for their phones and their tattoos, killing people in custody and on the road. A video circulates of a SARS officer shooting a young man in Delta State. The protests begin on Twitter and arrive in the streets of Lagos, Abuja, Port Harcourt, Enugu. #EndSARS. For twelve days the largest youth protest in Nigerian history. On October 20, at the Lekki toll gate, soldiers open fire on protesters who are waving Nigerian flags and singing the national anthem. The government disputed the casualty figures. The videos existed.`,
+    text: `October 2020. For years SARS has robbed young Nigerians for having laptops or dreadlocks or an accent, detained them for their phones, killed them in custody and on the road. A video of an officer shooting a young man in Delta State goes round, and the protests move from Twitter into the streets of Lagos, Abuja, Port Harcourt, Enugu. On October 20 at the Lekki toll gate, soldiers open fire on young people waving the flag and singing the national anthem. The government disputes the numbers. The videos exist.`,
     choices: [
       {
         text: 'You are at the protests. The generation of 2020.',
@@ -205,7 +205,7 @@ export const NIGERIA_DEPTH_EVENTS = [
       G.currentYear >= 2020 &&
       G.age >= 20 && G.age <= 38 &&
       !G.mem?.ngaDepJapa,
-    text: `Japa: Yoruba for "run fast." The wave of young Nigerians leaving in the 2020s — Canada, the UK, the US, Germany, Australia. Not the migration of the 1980s structural adjustment era, not the flight of the military years. This is different: educated, skilled, connected, choosing to leave because the naira has collapsed, the electricity does not come, the roads are what they are, SARS was what it was and was replaced by SWAT which is what SWAT is. The doctors leave and the hospitals are short. The nurses leave and the hospitals are shorter. Your classmates are in Brampton and Peckham and Calgary. The group chat has people in every time zone except this one. You are deciding.`,
+    text: `Japa: run fast. The young are leaving, to Canada, the UK, Germany, not like the eighties or the military years, but the educated and the skilled, because the naira has collapsed and the light does not come and SARS was replaced by SWAT. The doctors leave and the hospitals are short; the nurses leave and the hospitals are shorter. Your classmates are in Brampton and Peckham and Calgary, and the group chat has someone in every time zone but this one. You are deciding.`,
     choices: [
       {
         text: 'You japa. You apply, you get through, you go.',
@@ -216,7 +216,7 @@ export const NIGERIA_DEPTH_EVENTS = [
       {
         text: 'You stay. Someone has to stay and build the place.',
         tag: null,
-        outcome: 'You stay. The group chat is still going. The people who left ask how things are. You tell them honestly, which takes a particular kind of honesty.',
+        outcome: 'You stay. The group chat is still going. The people who left ask how things are. You tell them honestly, which takes a kind of honesty.',
         effect: (p) => { p.karma += 5; p.r += 5; p.addFlag('nga_dep_stayed_generation'); p.setMem('ngaDepJapa', true) },
       },
     ],

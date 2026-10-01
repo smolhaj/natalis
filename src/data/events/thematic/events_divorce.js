@@ -21,7 +21,7 @@ export const DIVORCE_EVENTS = [
       (G.partner.relationshipQuality ?? 60) < 30 &&
       G.age >= 22 &&
       !G.mem?.divLongEndFired,
-    text: 'The marriage is not ending. It has already ended — the ending happened somewhere in the last two years, in the specific silences, in the things you stopped saying, in the two of you increasingly managing a situation rather than living in one. What remains now is the formal recognition of what is already true. The word divorce is not said yet. The fact it describes has been present for some time.',
+    text: 'The marriage is not ending. It has already ended — the ending happened somewhere in the last two years, in the silences, in the things you stopped saying, in the two of you increasingly managing a situation rather than living in one. What remains now is the formal recognition of what is already true. The word divorce is not said yet. The fact it describes has been present for some time.',
     choices: [
       {
         text: 'Try once more — couples therapy, a direct conversation',
@@ -156,7 +156,7 @@ export const DIVORCE_EVENTS = [
       hasDivorced(G) &&
       G.flags.has('divorce_legal_done') &&
       !G.mem?.divFirstYearFired,
-    text: 'The first year after is the year of learning what you have always taken for granted: the shared decision-making, the simple reporting of a day to someone who cares how it went, the presence in a bed, the planning of a future that assumed a specific person would be in it. These are not dramatic losses. They are structural losses. The structure of the daily life had a shape. The shape is gone.',
+    text: 'The first year after is the year of learning what you have always taken for granted: the shared decision-making, the simple reporting of a day to someone who cares how it went, the presence in a bed, the planning of a future that assumed a person would be in it. The losses are structural. The structure of the daily life had a shape. The shape is gone.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('divorce_year_one'); p.setMem('divFirstYearFired', true) },
   },
@@ -169,7 +169,7 @@ export const DIVORCE_EVENTS = [
       hasDivorced(G) &&
       G.flags.has('divorce_legal_done') &&
       !G.mem?.divFirstYearFired,
-    text: 'The first year after is the year of learning what you have always taken for granted: the shared decision-making, the simple reporting of a day to someone who cares how it went, the presence in a bed, the planning of a future that assumed a specific person would be in it. These are not dramatic losses. They are structural losses. The structure of the daily life had a shape. The shape is gone.',
+    text: 'The first year after is the year of learning what you have always taken for granted: the shared decision-making, the simple reporting of a day to someone who cares how it went, the presence in a bed, the planning of a future that assumed a person would be in it. The losses are structural. The structure of the daily life had a shape. The shape is gone.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('divorce_year_one'); p.setMem('divFirstYearFired', true) },
   },
@@ -215,7 +215,7 @@ export const DIVORCE_EVENTS = [
       G.flags.has('divorce_year_one') &&
       G.age >= 40 &&
       !G.mem?.divIntegrationFired,
-    text: 'Five years out, or ten, the divorce has become part of the landscape of the life rather than its defining feature. You think about your former partner rarely and then specifically — a song, a place, a turn of phrase one of the children uses that you recognise. The marriage shaped you in ways the divorce did not undo. The regret, if there is any, is no longer about the decision. It is about the things that couldn\'t be recovered: the specific years, the version of the life that was possible in them.',
+    text: 'Five years out, or ten, the divorce has become part of the landscape of the life rather than its defining feature. You think about your former partner rarely and then specifically — a song, a place, a turn of phrase one of the children uses that you recognise. The marriage shaped you in ways the divorce did not undo. The regret, if there is any, is no longer about the decision. It is about the things that couldn\'t be recovered: the years, the version of the life that was possible in them.',
     choices: null,
     effect: (p) => { p.m += 5; p.r -= 3; p.addFlag('divorce_integrated'); p.setMem('divIntegrationFired', true) },
   },
@@ -231,7 +231,7 @@ export const DIVORCE_EVENTS = [
       G.children && G.children.length > 0 &&
       G.age >= 55 &&
       !G.mem?.divChildrenGrownFired,
-    text: 'The children are grown and have their own understanding of what happened. You do not control the understanding. Some of it is accurate. Some of it is formed from the specific vantage point of the child in the middle, which is a vantage point no adult can fully correct for. What you get, at sixty or sixty-five, is the relationship with your adult children as they are — not as the product of the marriage that didn\'t survive, but as their own complete people, making their own judgements about the past they came from.',
+    text: 'The children are grown and have their own understanding of what happened. You do not control the understanding. Some of it is accurate. Some of it is formed from the vantage point of the child in the middle, which is a vantage point no adult can fully correct for. What you get, at sixty or sixty-five, is the relationship with your adult children as they are — not as the product of the marriage that didn\'t survive, but as their own complete people, making their own judgements about the past they came from.',
     choices: null,
     effect: (p) => { p.m += 5; p.r -= 4; p.addFlag('divorce_children_grown'); p.setMem('divChildrenGrownFired', true) },
   },

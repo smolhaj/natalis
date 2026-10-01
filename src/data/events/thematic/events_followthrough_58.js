@@ -110,7 +110,7 @@ export const FOLLOWTHROUGH_58_EVENTS = [
       G.currentYear >= 2017 && G.currentYear <= 2022 &&
       G.age >= 25 &&
       !G.mem?.ft58PurgeMidlife,
-    text: `After July 15 the list expanded in ways that were not always legible. The stated logic was the Gülen network in the state. The actual application was broader. Academics who had signed a peace petition the previous January found themselves on lists. Journalists. Judges. Teachers at schools with no demonstrable connection to the religious movement being targeted. You know people who were dismissed or detained. You know people who left the country in the months after. The state of emergency ran for two years. The emergency decrees produced changes that the normal legislative process would have required years to pass.`,
+    text: `After July 15 the lists grew in ways that were not always legible. The stated target was the Gülen network in the state; the lists also took academics who had signed a peace petition, journalists, judges, teachers at schools with no connection to anything. You know people who were dismissed or detained, and people who left in the months after. The emergency ran two years, and its decrees changed what would have taken a parliament a decade.`,
     choices: null,
     effect: (p) => { p.m -= 7; p.r += 5; p.e += 2; p.setMem('ft58PurgeMidlife', true) },
   },
@@ -125,7 +125,7 @@ export const FOLLOWTHROUGH_58_EVENTS = [
       G.flags.has('trk_dep_military_generation') &&
       G.age >= 55 &&
       !G.mem?.ft58MilCohort,
-    text: `Some of the men you served with, you have not seen since the discharge. Some became the friends you met at the gate when it was over and have kept in contact across the decades. The service was a specific time — not the best time, not the worst — and the men who went through it with you carry a version of the same time. When you meet one of them now, the thing that is recognised is not the person you were at twenty-two. It is the fact of having been in the same place at the same time, which is its own form of knowledge about someone.`,
+    text: `Some of the men you served with, you have not seen since the discharge. Some became the friends you met at the gate when it was over and have kept in contact across the decades. The service was a time — not the best time, not the worst — and the men who went through it with you carry a version of the same time. When you meet one of them now, the thing that is recognised is not the person you were at twenty-two. It is the fact of having been in the same place at the same time, which is its own form of knowledge about someone.`,
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('ft58MilCohort', true) },
   },
@@ -142,7 +142,7 @@ export const FOLLOWTHROUGH_58_EVENTS = [
       G.currentYear >= 2006 && G.currentYear <= 2015 &&
       G.age >= 25 &&
       !G.mem?.ft58AmmanResettled,
-    text: `The interview date came. The decision arrived — by letter, by phone call from the agency, by a notification you had been waiting months to receive. A country: Sweden, Canada, Australia, the United States, Germany. The resettlement process has its own timetable and its own requirements and you navigate them because after Amman there is nothing left that is difficult. You arrive. The language begins. The winter is different from the winter anywhere you have been. The food takes time. The work takes time. The Iraqi community in this city is already here, from earlier waves, and they give you what the hemşehri association gives migrants everywhere: the fact of being known.`,
+    text: `The decision arrives, by letter or by a phone call from the agency you have waited months for: Sweden, Canada, Australia, the United States, Germany. After Amman nothing about the process is difficult. You arrive, and the language begins, and the winter is unlike any winter you have known. The Iraqis who came in earlier waves are already here, and they give you what migrants give each other everywhere: being known.`,
     choices: null,
     effect: (p) => { p.m += 5; p.e += 3; p.setMem('ft58AmmanResettled', true) },
   },

@@ -33,7 +33,7 @@ export const FOLLOWTHROUGH_78_EVENTS = [
       G.currentYear >= 1952 && G.currentYear <= 1956 &&
       G.age >= 16 &&
       !G.mem?.ft78EvitaDeath,
-    text: 'July 26, 1952. Eva Perón dies at thirty-three of cervical cancer. The state of mourning runs two weeks. The radio announces it. The queues at the Ministry of Labour to view the body run days. The embalming: she is preserved by a Spanish doctor, Pedro Ara, in a process that takes a year. Then the coup comes in 1955 and the military hides the body for sixteen years — they steal it, afraid even of a corpse. The body\'s location is a state secret until 1971. You do not know where she is. The country does not know where she is.',
+    text: 'July 1952. Eva Perón dies at thirty-three, and the radio announces it, and the queues to see her body run for days. A Spanish doctor spends a year embalming her. Then in 1955 the generals take power, and they are so afraid of her, even dead, that they steal the body and hide it for sixteen years. You do not know where she is. Nobody in the country knows.',
     choices: null,
     effect: (p) => {
       p.m -= 7
@@ -73,7 +73,7 @@ export const FOLLOWTHROUGH_78_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 45 &&
       !G.mem?.ft78MalvinasLate,
-    text: 'The veterans\' associations count the suicides. More Argentine veterans have died by suicide since 1982 than died in the war itself. The number is not official. It is kept by the veterans who are left. The war lasted 74 days. The aftermath has lasted decades. The islands are still called the Malvinas in Argentina, still considered Argentine in the constitution, still a grievance that political parties invoke when they need one. You were there for 74 days. You have been coming back from those 74 days for the rest of your life.',
+    text: 'The veterans count the suicides themselves: more men from the islands have killed themselves since 1982 than died in the war, by their count, which is not the government\'s. The war lasted seventy-four days. The islands are still the Malvinas, still Argentine in the constitution, still a grievance any party can pick up when it needs one. You were there for seventy-four days, and you have been coming back from them ever since.',
     choices: null,
     effect: (p) => {
       p.r += 8
@@ -115,7 +115,7 @@ export const FOLLOWTHROUGH_78_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 35 &&
       !G.mem?.ft78AMIAImpunity,
-    text: 'The case is still open. Thirty years later, no one has been convicted in an Argentine court. The investigation has implicated Iranian officials, then been dropped, then reopened, then become the subject of a prosecutor found dead in his apartment hours before he was due to testify to congress — Alberto Nisman, 2015. The 85 dead have the specific indignity of remaining victims of an unsolved crime in the jurisdiction where they were killed. Justice delayed is a phrase that gets used. You have lived inside the delay.',
+    text: 'The case is still open. Thirty years later, no one has been convicted in an Argentine court. The investigation has implicated Iranian officials, then been dropped, then reopened, then become the subject of a prosecutor found dead in his apartment hours before he was due to testify to congress — Alberto Nisman, 2015. The 85 dead have the indignity of remaining victims of an unsolved crime in the jurisdiction where they were killed. Justice delayed is a phrase that gets used. You have lived inside the delay.',
     choices: null,
     effect: (p) => {
       p.m -= 5

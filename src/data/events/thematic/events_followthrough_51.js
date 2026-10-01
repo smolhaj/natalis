@@ -55,7 +55,7 @@ export const FOLLOWTHROUGH_51_EVENTS = [
       G.currentYear - G.mem.lgbtq_family_rejectionYear < 20 &&
       G.age >= 28 &&
       !G.mem?.ft51LgbtqRejection10,
-    text: `Ten years since the conversation that ended something between you and your family. The world has changed enough in that time that the silence seems stranger now than it did then — there is language for it now, visibility, the fact of people like you everywhere in public. None of that closes the specific absence. Some losses get further away. This one has a weight that stays about the same distance.`,
+    text: `Ten years since the conversation that ended something between you and your family. The world has changed enough in that time that the silence seems stranger now than it did then — there is language for it now, visibility, the fact of people like you everywhere in public. None of that closes the absence. Some losses get further away. This one has a weight that stays about the same distance.`,
     choices: [
       {
         text: 'You have made a family from the people who chose you. That is its own thing.',
@@ -250,7 +250,7 @@ export const FOLLOWTHROUGH_51_EVENTS = [
       G.currentYear - G.mem.writing_in_drawerYear >= 10 &&
       G.age >= 30 &&
       !G.mem?.ft51WritingDrawer10,
-    text: `The manuscript has been in the drawer for ten years. You know exactly how long because you remember the year you stopped working on it, the specific reason you told yourself at the time, which turned out to be a season's reason rather than a real one. It is still there. Ten years has not improved or worsened it. Ten years has only meant that opening the drawer is now a bigger thing than it was when you first closed it.`,
+    text: `The manuscript has been in the drawer for ten years. You know exactly how long because you remember the year you stopped working on it, the reason you told yourself at the time, which turned out to be a season's reason rather than a real one. It is still there. Ten years has not improved or worsened it. Ten years has only meant that opening the drawer is now a bigger thing than it was when you first closed it.`,
     choices: [
       {
         text: 'You take it out. You don\'t know what you\'ll do with it. That\'s not the point yet.',
@@ -410,7 +410,7 @@ export const FOLLOWTHROUGH_51_EVENTS = [
       G.currentYear - G.mem.lost_friendYear >= 10 &&
       G.age >= 38 &&
       !G.mem?.ft51LostFriend10,
-    text: `Ten years. The shape of the friendship is still present in the way a word you've stopped saying is still present — in the space where it used to go. You still reach for them sometimes in a particular kind of moment: something very funny, or very bad, or very strange. The reaching happens before the remembering. That gap — the reach and then the absence — has not narrowed particularly in ten years. You have just become more familiar with it.`,
+    text: `Ten years. The shape of the friendship is still present in the way a word you've stopped saying is still present — in the space where it used to go. You still reach for them sometimes in a kind of moment: something very funny, or very bad, or very strange. The reaching happens before the remembering. That gap — the reach and then the absence — has not narrowed particularly in ten years. You have just become more familiar with it.`,
     choices: null,
     effect: (p) => {
       p.m -= 4

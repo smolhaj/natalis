@@ -29,7 +29,8 @@ export const NETHERLANDS_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 1975 &&
       G.age >= 7 && G.age <= 16 &&
       !G.mem?.nl_hunger_winter,
-    text: 'Your parents do not waste food. This is not philosophy — it is the Hunger Winter. The winter of 1944–45: the Germans blocked food supplies to the western Netherlands in retaliation for a railway strike. Twenty-two thousand Dutch civilians died of starvation. Your parents were children or teenagers. They ate tulip bulbs. Your mother finishes everything on her plate. She does not explain why. You understand why in the way children understand things that are never explained — by shape and silence, by watching what adults do with their hands around certain subjects.',
+    text: 'Your parents do not waste food. It is not a philosophy: it is the Hunger Winter, when the Germans cut off the west of the country and people ate tulip bulbs. Your parents were children then. Your mother finishes everything on her plate and does not explain why. You understand it the way children understand things nobody explains, by watching what adults do with their hands around certain subjects.',
+    context: 'About 20,000 people died in the Dutch famine of 1944-45.',
     choices: null,
     effect: (p) => { p.e += 3; p.addFlag('nl_hunger_winter_generation'); p.setMem('nl_hunger_winter', true); },
   },
@@ -80,7 +81,7 @@ export const NETHERLANDS_EVENTS = [
       {
         text: 'You are part of it, or on its edges',
         tag: null,
-        outcome: 'Amsterdam in the late 1960s and 1970s is doing something that Amsterdam keeps doing — producing a politics of creative disruption that is hard to replicate elsewhere because it requires a specific Dutch tolerance for its own contradiction.',
+        outcome: 'Amsterdam in the late 1960s and 1970s is doing something that Amsterdam keeps doing — producing a politics of creative disruption that is hard to replicate elsewhere because it requires a Dutch tolerance for its own contradiction.',
         effect: (p) => { p.m += 4; p.addFlag('nl_provo_generation'); p.setPolitical('left'); p.setMem('nl_provo', true); },
       },
       {
@@ -109,7 +110,7 @@ export const NETHERLANDS_EVENTS = [
       {
         text: 'The city becoming more itself — more varied, more interesting',
         tag: null,
-        outcome: 'This is one Dutch response: the pragmatic welcome, the tolerance that is not always warm but is usually functional. The new Dutch are becoming Dutch in the Dutch way, which is to say they are doing it themselves.',
+        outcome: 'This is one Dutch response: the pragmatic welcome, the tolerance that is not always warm but is usually functional. The new Dutch are becoming Dutch in the Dutch way: by themselves.',
         effect: (p) => { p.m += 3; p.addFlag('nl_multicultural_generation'); p.setMem('nl_surinamese', true); },
       },
       {
@@ -133,7 +134,8 @@ export const NETHERLANDS_EVENTS = [
       G.currentYear >= 1995 && G.currentYear <= 1997 &&
       G.age >= 20 &&
       !G.mem?.nl_srebrenica,
-    text: 'July 1995. The Dutch UN battalion — Dutchbat — is in Srebrenica, a "safe area" under UN protection. When Mladic\'s forces arrive, the Dutch soldiers hand the men and boys over. Eight thousand Muslim men and boys are executed in the following days. The Dutch soldiers had had their weapons confiscated and were massively outnumbered. They were also instructed not to use force. Some of them attended a party with Mladic. The Netherlands spends the next thirty years not fully agreeing on what happened and why. The word used is "trauma." It is also used in the Hague courts in a different register.',
+    text: 'July 1995. The Dutch battalion is in Srebrenica, a UN safe area, when Mladić\'s forces arrive, and the Dutch soldiers hand over the men and boys. Over the next days the men and boys are shot. The Dutch were outnumbered, had been told not to use force, and some of them drank with Mladić. The Netherlands spends the next thirty years disagreeing about what happened. The word it uses is trauma; the courts in The Hague use other words.',
+    context: 'About 8,000 Bosniak men and boys were murdered after the fall of Srebrenica on 11 July 1995.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.karma += 4; p.addFlag('nl_srebrenica_generation'); p.setMem('nl_srebrenica', true); },
   },
@@ -149,7 +151,7 @@ export const NETHERLANDS_EVENTS = [
       G.currentYear >= 2002 && G.currentYear <= 2003 &&
       G.age >= 20 &&
       !G.mem?.nl_fortuyn,
-    text: 'May 6, 2002. Pim Fortuyn — sociology professor, LPF party leader, anti-immigration politician, openly gay — is shot in the car park of a radio station in Hilversum. His killer is an animal rights activist. Nine days before the election he would have won. The Netherlands has no frame for this. Fortuyn was not far-right in the way the Europeans understand far-right: he cited gay rights as a reason Islam was incompatible with Dutch liberalism, attacked pillarization as paternalistic, and wore silk scarves. He was also calling for strict immigration limits in a country that had not had this conversation publicly. The gunman has a different cause. The country sits with all of this at once.',
+    text: 'May 6, 2002. Pim Fortuyn is shot in the car park of a radio station in Hilversum, nine days before an election he might have won. He was a sociology professor in silk scarves, openly gay, who said Islam was a threat to Dutch freedoms and wanted the borders closed, and nobody here has a frame for him. The man who shot him was an animal rights activist. The country holds all of it at once.',
     choices: [
       {
         text: 'He was saying things that needed to be said, however he said them',

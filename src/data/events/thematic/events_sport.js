@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_sport.js
 // BUILD 39 — Sport as a Social Institution
 // Football, cricket, Jesse Owens, the World Cup, the local match,
@@ -39,7 +40,7 @@ export const SPORT_EVENTS = [
       if (['Nigeria', 'Ghana', 'Senegal', 'Morocco', 'Egypt', 'Ivory Coast', 'Cameroon'].includes(cn)) {
         return 'Sunday afternoon. Every boy from three streets shows up at the pitch beside the school. Teams are sorted by shouting. Someone brought a ball. The argument about who plays where takes longer than the first half. By the time the light is orange the score has been disputed twice, a match replay requested and denied, and you have played six games instead of one.'
       }
-      return 'The club exists for children your age and you go on Saturdays. The coach is a man from the neighbourhood who played semi-professionally and did not quite make it. He is serious about this in a way that exceeds what the situation requires. You are serious about it too. The seriousness is the point.'
+      return 'The club exists for children your age and you go on Saturdays. The coach is a man from the neighbourhood who played semi-professionally and did not quite make it. He is more serious about this than the situation requires. You are serious about it too. The seriousness is the point.'
     },
     choices: null,
     effect: (p) => {
@@ -227,16 +228,16 @@ export const SPORT_EVENTS = [
       const cn = G.character.country.name
       const yr = G.currentYear
       if (cn === 'Brazil' && yr === 1970) {
-        return 'Pelé\'s team plays football that has no equivalent in any other era — the speed, the movement, the goals that seem to exceed what goals are supposed to be. The country is under a military dictatorship and the government uses the tournament as evidence that everything is fine. You know this. You also know the goal against Italy in the final was the best thing you have ever seen. Both are true.'
+        return 'Pelé\'s team plays football that has no equivalent in any other era — the speed, the movement, the goals that seem to exceed what goals are supposed to be. The country is under a military dictatorship and the government uses the tournament as evidence that everything is fine. You know this. You also know the goal against Italy in the final was the best thing you have ever seen.'
       }
       if (cn === 'Argentina' && yr === 1978) {
-        return 'Argentina hosts and wins the tournament while the dictatorship operates detention centres less than a mile from the stadium. The junta planned it this way — the Cup as proof to the world that the country was stable and proud. You watch the matches. You know what is happening nearby. You watch the matches anyway. This is the specific moral experience of a country at war with itself.'
+        return 'Argentina hosts and wins the tournament while the dictatorship operates detention centres less than a mile from the stadium. The junta planned it this way — the Cup as proof to the world that the country was stable and proud. You watch the matches. You know what is happening nearby. You watch the matches anyway. This is the moral experience of a country at war with itself.'
       }
       if (cn === 'France' && yr === 1998) {
         return 'Zidane heads in two. The team that wins the World Cup is multiracial in a way France hasn\'t been before — Zidane, Thuram, Desailly, Vieira. In the streets that night something feels possible that didn\'t feel possible that morning. Three years later you will remember this as something that was true and also did not last.'
       }
       if (['Nigeria', 'Ghana', 'Senegal', 'Morocco', 'Egypt', 'Ivory Coast', 'Cameroon'].includes(cn)) {
-        return 'The national team reaches the tournament. The country watches together in a way it does not for anything else — bars full at midday, offices clearing in the afternoon, the specific collective attention of a place that has agreed, temporarily, to care about the same thing at the same time.'
+        return 'The national team reaches the tournament. The country watches together in a way it does not for anything else — bars full at midday, offices clearing in the afternoon, the collective attention of a place that has agreed, temporarily, to care about the same thing at the same time.'
       }
       return 'The World Cup is on. The country is watching. This is a different kind of collective attention from what ordinary days contain — a temporary permission to care about something with your whole body, loudly, in public, alongside strangers you will never meet again.'
     },
@@ -305,7 +306,7 @@ export const SPORT_EVENTS = [
       !G.mem?.sptTeachingGame,
     text: (G) => {
       const child = G.children?.[0]
-      return `${child?.name ?? 'Your child'} is old enough. You take them to a match, or you kick a ball in the garden, or you sit beside them while the television shows the game you learned to love before they were born. You aren't sure whether the thing you loved will transfer. But you find yourself wanting to give them access to it — this particular way of being in a crowd, of caring about something with strangers, of letting the afternoon contain no other task.`
+      return gendered(`${child?.name ?? 'Your child'} is old enough. You take them to a match, or you kick a ball in the garden, or you sit beside them while the television shows the game you learned to love before they were born. You aren't sure whether the thing you loved will transfer. But you find yourself wanting to give them access to it — this way of being in a crowd, of caring about something with strangers, of letting the afternoon contain no other task.`, child)
     },
     choices: null,
     effect: (p) => {

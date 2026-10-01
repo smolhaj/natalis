@@ -19,7 +19,7 @@ export const TEACHER_ARC_EVENTS = [
     when: (G) =>
       isTeacher(G) &&
       !G.mem?.tchFirstClassFired,
-    text: 'The first class is thirty-two students and you are twenty-three and you have been trained for this and the training, it turns out, is preparation for a general case and this is a specific room. The specific room has its own social structure, its own energies, its own particular child in the back row who is already watching you to see how you handle the child in the second row who is testing you before you have had time to establish the terms. You manage. What you do not manage, you recover from.',
+    text: 'The first class is thirty-two students and you are twenty-three and you have been trained for this and the training, it turns out, is preparation for a general case and this is a room. The room has its own social structure, its own energies, its own particular child in the back row who is already watching you to see how you handle the child in the second row who is testing you before you have had time to establish the terms. You manage. What you do not manage, you recover from.',
     choices: null,
     effect: (p) => { p.m -= 3; p.e += 2; p.s += 3; p.addFlag('teacher_first_classroom'); p.setMem('tchFirstClassFired', true) },
   },
@@ -32,7 +32,7 @@ export const TEACHER_ARC_EVENTS = [
       isTeacher(G) &&
       G.flags.has('teacher_first_classroom') &&
       !G.mem?.tchStudentFired,
-    text: 'There is a student who is different. Not the easiest student — often the hardest one, the one with the home situation that arrives in the classroom every day before the student does. You spend more time than the timetable accounts for. You adjust the approach. Something shifts. It is not dramatic — there is no specific moment that you could point to. But the shift is real, and you know it is real, and the student knows it, and neither of you says it directly, because that\'s not how this particular thing works.',
+    text: 'There is a student who is different. Not the easiest student — often the hardest one, the one with the home situation that arrives in the classroom every day before the student does. You spend more time than the timetable accounts for. You adjust the approach. Something shifts. It is not dramatic — there is no specific moment that you could point to. But the shift is real, and you know it is real, and the student knows it, and neither of you says it directly, because that\'s not how this thing works.',
     choices: null,
     effect: (p) => { p.m += 8; p.karma += 8; p.addFlag('teacher_that_student'); p.setMem('tchStudentFired', true) },
   },
@@ -70,7 +70,7 @@ export const TEACHER_ARC_EVENTS = [
     when: (G) =>
       isTeacher(G) &&
       !G.mem?.tchParentFired,
-    text: 'The parent arrives with a grievance and a certainty about the grievance that does not accommodate any version of events other than the version the child reported at home. You have the other version, and the grade book, and the pattern of behaviour, and the record. The conversation is one of the specific challenges of the job that the training did not fully address: the parent who loves their child too specifically to see them clearly, and the child watching to see what happens when two adults in authority disagree.',
+    text: 'The parent arrives with a grievance and a certainty about the grievance that does not accommodate any version of events other than the version the child reported at home. You have the other version, and the grade book, and the pattern of behaviour, and the record. The conversation is one of the challenges of the job that the training did not fully address: the parent who loves their child too specifically to see them clearly, and the child watching to see what happens when two adults in authority disagree.',
     choices: null,
     effect: (p) => { p.m -= 5; p.s += 2; p.addFlag('teacher_parent_conflict'); p.setMem('tchParentFired', true) },
   },
@@ -97,7 +97,7 @@ export const TEACHER_ARC_EVENTS = [
       isTeacher(G) &&
       (G.currentCountry?.gdp === 'low' || G.currentCountry?.gdp === 'very_low' || G.currentCountry?.gdp === 'low_medium') &&
       !G.mem?.tchResourceFired,
-    text: 'The school has one textbook per three students. The textbook is eight years old. The chalk is your own — bought from the market on the way in. The roof of the second classroom has a section where rain comes through and during the long rains the section moves. You teach around it. The students who want to learn are learning. What they are learning with is the minimum. What you are providing, between the minimum and what they deserve, is your own energy. The subtraction is steady.',
+    text: 'The school has one textbook for three students, eight years old, and the chalk is yours, bought at the market on the way in. In the second classroom the rain comes through the roof, and in the long rains the leak moves and you teach around it. The students who want to learn are learning, with the minimum. Whatever is between the minimum and what they deserve comes out of you, and it comes out steadily.',
     choices: null,
     effect: (p) => { p.m -= 5; p.h -= 3; p.karma += 10; p.addFlag('teacher_resource_poor'); p.setMem('tchResourceFired', true) },
   },
@@ -110,7 +110,7 @@ export const TEACHER_ARC_EVENTS = [
       isTeacher(G) &&
       G.age >= 45 &&
       !G.mem?.tchLateCareerFired,
-    text: 'The students are now younger than your own children, if you have children, or younger than you were when you started. You have taught the same subject enough times that it is no longer a performance — it is something closer to conversation, and the conversation has depth in it that the first version did not. The new teachers look to you, occasionally, for the thing that is not in the training: how to survive the third week of March when everything is hard, how to still find the particular student worth the particular effort.',
+    text: 'The students are now younger than your own children, if you have children, or younger than you were when you started. You have taught the same subject enough times that it is no longer a performance — it is something closer to conversation, and the conversation has depth in it that the first version did not. The new teachers look to you, occasionally, for the thing that is not in the training: how to survive the third week of March when everything is hard, how to still find the student worth the effort.',
     choices: null,
     effect: (p) => { p.m += 5; p.e += 2; p.addFlag('teacher_late_career'); p.setMem('tchLateCareerFired', true) },
   },

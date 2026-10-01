@@ -14,8 +14,8 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.age >= 12 && !G.mem?.sdr30SeasonReturns,
     text: () => pick([
-      'The season came back. Whatever this season brings — the heat, the cold, the rain at a particular angle — it arrived again and you recognized it immediately. The body recognized it before the mind did. You have had this season before.',
-      'The smell of this particular month: the particular combination of damp and warmth or cold and smoke or whatever this month smells like in this place. You know it before you know what you are smelling. It has always smelled like this.',
+      'The season came back. Whatever this season brings — the heat, the cold, the rain at an angle — it arrived again and you recognized it immediately. The body recognized it before the mind did. You have had this season before.',
+      'The smell of this month: the combination of damp and warmth or cold and smoke or whatever this month smells like in this place. You know it before you know what you are smelling. It has always smelled like this.',
       'Another winter, or another summer, or another rainy season. The count of them has grown large enough that the return feels like greeting something rather than experiencing it for the first time. You have been here before. The season has been here before. This is the resumption of a conversation.',
     ]),
     choices: null,
@@ -70,7 +70,7 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.sdr30WhatYouCarry,
     text: () => pick([
-      'There are things you carry that you did not know you were carrying. Not memories exactly — textures. The way a particular kind of institutional room makes you feel. The voice register that makes you close up. The smell that opens something. These responses exist because something installed them. You discovered them by bumping into them.',
+      'There are things you carry that you did not know you were carrying. Not memories exactly — textures. The way a kind of institutional room makes you feel. The voice register that makes you close up. The smell that opens something. These responses exist because something installed them. You discovered them by bumping into them.',
       'You noticed today that you do a thing your parent did. Not something you were taught — something absorbed. A gesture, a phrase, a reaction. The absorption happened without awareness. The thing is in you now and comes out without prompting.',
       'What you believe without knowing you believe it: the deeper set of assumptions that only surfaces when something contradicts them. Most of these you have never articulated. Some of them are wrong. You find the wrong ones slowly, by running into them.',
     ]),
@@ -86,7 +86,7 @@ export const EVENTS_SONDER_30 = [
     text: () => pick([
       'There is a conversation you have never had with someone you love. Not because it could not be had — because you both decided, separately, that you could live with not having it. This may have been the right decision. It may not have been. The conversation is still there, unhad.',
       'You and someone you are close to have never talked about certain things — the things that are obvious from the outside, the things that shaped the texture of the relationship. You talk around them. The talking around is also a form of communication. Neither of you is unaware of the shape of what is not said.',
-      'The late-life conversation that starts "I wanted to ask you something." You have been meaning to start it for years. It is still possible. You have not started it. The time for it is not unlimited, which is something you know without saying.',
+      'The late-life conversation that starts "I wanted to ask you something." You have been meaning to start it for years. It is still possible. You have not started it. The time for it is not unlimited, and you know it without saying.',
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('sdr30ConversationNotHad', true) },
@@ -112,9 +112,9 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.sdr30InheritedThing,
     text: () => pick([
-      'You are using a thing someone else used before you — a tool, a piece of furniture, an object that has moved from their hands to yours. The object contains their use of it somehow. Not literally. But when you use it there is an awareness that you are not the first person to do this particular action with this particular thing.',
+      'You are using a thing someone else used before you — a tool, a piece of furniture, an object that has moved from their hands to yours. The object contains their use of it somehow. Not literally. But when you use it there is an awareness that you are not the first person to do this action with this thing.',
       'Something was passed to you without ceremony. It was just there and then you were the one who had it. You have had it long enough that it is yours now and not theirs, though sometimes you think of them when you use it.',
-      'The recipe, the method, the way of doing a specific task that you learned from someone and have been doing since. You have been doing it long enough that it feels like yours. It is also theirs. Both are true simultaneously.',
+      'The recipe, the method, the way of doing a task that you learned from someone and have been doing since. You have been doing it long enough that it feels like yours. It is also theirs.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr30InheritedThing', true) },
@@ -140,7 +140,7 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => place.isLiterate(G) && (G.age >= 50 && !G.mem?.sdr30Handwriting),
     text: () => pick([
-      'You found something written in someone\'s handwriting. Not typed — handwritten, in the particular way their hand moved on paper. The handwriting is more specific than a photograph somehow. You knew immediately whose it was. This is what they looked like holding a pen.',
+      'You found something written in someone\'s handwriting. Not typed — handwritten, in the way their hand moved on paper. The handwriting is more specific than a photograph somehow. You knew immediately whose it was. This is what they looked like holding a pen.',
       'Your own handwriting from twenty years ago: recognisably yours, somewhat different. The letters were formed with more deliberateness then, or with less, depending on the time. The hand changes over decades. The change is too slow to notice directly.',
       'A note someone left you, kept for years: the handwriting faded but still legible. The thing they wrote was ordinary — a list, a reminder, a few words. The handwriting is what remains when the occasion for the writing is long past.',
     ]),
@@ -155,7 +155,7 @@ export const EVENTS_SONDER_30 = [
     when: (G) => G.age >= 14 && !G.mem?.sdr30TheGesture,
     text: () => pick([
       'Someone touched your arm briefly in passing — reassurance, connection, nothing requiring a response. The touch lasted half a second. The half-second was enough. The body registers these things without the mind having to interpret them.',
-      'A gesture someone makes when they are talking: the particular way they use their hands to mean something, the shape a hand makes when they are looking for a word. You have watched this for so long you would know it anywhere.',
+      'A gesture someone makes when they are talking: the way they use their hands to mean something, the shape a hand makes when they are looking for a word. You have watched this for so long you would know it anywhere.',
       'You made a gesture today that belongs to someone else — something you absorbed without noticing and now do without thinking. The gesture came out of you as if it were yours. It is yours. It was theirs first.',
     ]),
     choices: null,
@@ -168,7 +168,7 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.age >= 18 && place.hasElectricity(G) && !G.mem?.sdr30LightAtHome,
     text: () => pick([
-      'The particular light of this house at this time of day — afternoon in winter, morning in summer, whatever combination this is. You know this light. It is specific to this house at this hour. Elsewhere it is different. Here it is this.',
+      'The light of this house at this time of day — afternoon in winter, morning in summer, whatever combination this is. You know this light. It is specific to this house at this hour. Elsewhere it is different. Here it is this.',
       'When you come home and the light is already on inside, which means someone is in there. Or no light is on, and the house is waiting. The light in the window is information before it is anything else.',
       'You leave the light on sometimes when you go out. Not for security — for yourself when you come back. Coming home to a lit room is different from coming home to a dark one. The difference is small and real.',
     ]),
@@ -182,9 +182,9 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.age >= 55 && !G.mem?.sdr30PriceOfThings,
     text: () => pick([
-      'You remember what this cost twenty years ago. Not with nostalgia — just with the particular precision that economic memory produces. The mind keeps these numbers without being asked. The price has changed and the number from before is still there.',
-      'The thing that used to be cheap and is no longer cheap. You remember the first time you noticed the price had changed past the point of being ordinary. The change was not large. It was the direction of it.',
-      'What you could buy on what you earned at a particular age, versus now. The ratio has not improved in all the ways you expected. In some ways it has. In others: you do more, earn more, have less of certain things than people with equivalent effort had a generation before you. The arithmetic of this is not your fault and is still true.',
+      'You remember what this cost twenty years ago. Not with nostalgia — just with the precision that economic memory produces. The mind keeps these numbers without being asked. The price has changed and the number from before is still there.',
+      'The thing that used to be cheap and is no longer cheap. You remember the first time you noticed the price had changed past the point of being ordinary. The change was small. It was the direction of it.',
+      'What you could buy on what you earned at an age, versus now. The ratio has not improved in all the ways you expected. In some ways it has. In others: you do more, earn more, have less of certain things than people with equivalent effort had a generation before you. The arithmetic of this is not your fault and is still true.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr30PriceOfThings', true) },
@@ -211,7 +211,7 @@ export const EVENTS_SONDER_30 = [
     when: (G) => G.age >= 40 && !G.mem?.sdr30TheDecade,
     text: () => pick([
       'The decade has a character that you can see now that you are in it — differently than you could see the character of the previous decade while you were inside it. Each decade only becomes fully visible from the outside, as it is ending. You are inside this one still.',
-      'The decade you spent in a particular place, with particular people, doing a particular kind of work: it has a texture that other decades do not have. The texture came from all of it together, which you could not see while you were in the middle of accumulating it.',
+      'The decade you spent in a place, with particular people, doing a kind of work: it has a texture that other decades do not have. The texture came from all of it together, which you could not see while you were in the middle of accumulating it.',
       'Looking back at your thirties, or your twenties, or your forties: it is a country you have been to. You know it but you do not live there now. The people you were friends with there are still your friends but they also live somewhere else now — in their current decade.',
     ]),
     choices: null,
@@ -224,7 +224,7 @@ export const EVENTS_SONDER_30 = [
     weight: 2,
     when: (G) => G.age >= 28 && !G.mem?.sdr30TheApology,
     text: () => pick([
-      'You apologized for something, or someone apologized to you, and both of you knew the apology was real. These are not common. The common ones are performed. The real ones have a different weight.',
+      'You apologized for something, or someone apologized to you, and both of you meant it. These are not common. The common ones are performed. The real ones have a different weight.',
       'There is an apology you owe that you have not made. You know what it would require. You have not required it of yourself yet. The window for it may still be open.',
       'Someone apologized to you years after the fact. The apology arrived when the wound it addressed had mostly healed. The timing made it different from what it would have been. You received it. You were not sure what to do with it after.',
     ]),
@@ -295,8 +295,8 @@ export const EVENTS_SONDER_30 = [
     when: (G) => G.age >= 16 && !G.mem?.sdr30BodyEffort,
     text: () => pick([
       'Physical effort: the quality of the body when it is doing something that requires all of it. Not pain. Not ease. The complete engagement of the body in a task. Whatever the task is — it takes all of you and for the time it takes all of you there is nothing else.',
-      'The tiredness after work that uses the body: different from the tiredness of sitting still all day. The body that has been used is tired in a way that wants rest in a way. You have learned the difference between kinds of tired.',
-      'Lifting something heavy: the particular attention to weight, to balance, to what the back is doing. The body has a competence in this that the mind just watches. You have always been able to do this. You are now checking whether you still can.',
+      'The tiredness after work that uses the body: different from the tiredness of sitting still all day. The body that has been used is tired and wants rest. You have learned the difference between kinds of tired.',
+      'Lifting something heavy: the attention to weight, to balance, to what the back is doing. The body has a competence in this that the mind just watches. You have always been able to do this. You are now checking whether you still can.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr30BodyEffort', true) },
@@ -379,7 +379,7 @@ export const EVENTS_SONDER_30 = [
     when: (G) => G.age >= 16 && !G.mem?.sdr30BeingIntroduced,
     text: () => pick([
       'Someone introduced you to someone else: "This is—" and then the version of you that exists in their description. The description is accurate and is not quite you. The gap between what someone says about you and what you are is the space your full self lives in.',
-      'You introduced someone. The words you chose to describe them told you something about what you think is most important about them, which is different from what they think is most important about themselves.',
+      'You introduced someone. The words you chose to describe them told you what you think is most important about them, and it is not what they think is most important about themselves.',
       'You were described in passing to someone who did not know you: a name, a context, what you do. The version of you that arrived in that room before you arrived was made entirely of those three things. You walked in and began to exceed the description.',
     ]),
     choices: null,
@@ -405,7 +405,7 @@ export const EVENTS_SONDER_30 = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 8 && !G.mem?.sdr30TreeInWind,
-    text: `A tree moving in wind: the specific motion of branches and leaves when the wind is doing something, which is different from the tree when nothing is moving. You watched it for a moment. There was nothing else to it. The tree was doing what trees do in wind. You noticed.`,
+    text: `A tree moving in wind: the motion of branches and leaves when the wind is doing something, and the tree when nothing is moving. You watched it for a moment. There was nothing else to it. The tree was doing what trees do in wind. You noticed.`,
     choices: null,
     effect: (p) => { p.setMem('sdr30TreeInWind', true) },
   },

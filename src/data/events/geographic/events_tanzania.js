@@ -15,7 +15,7 @@ export const TANZANIA_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => IS_TANZANIA(G) && G.flags.has('ujamaa_generation') && G.age >= 60 && !G.mem.tanUjamaaLate,
-    text: 'The village is still there. Not the ujamaa village — that was dismantled in the 1980s — but the settlement that formed around it, which stayed because people had built their lives around the infrastructure that arrived with the collective. The school. The borehole. The things Nyerere was right about were real. The things he was wrong about were also real. You hold both at once, which is what this generation learned to do.',
+    text: 'The village is still there. Not the ujamaa village — that was dismantled in the 1980s — but the settlement that formed around it, which stayed because people had built their lives around the infrastructure that arrived with the collective. The school. The borehole. Nyerere was right about some things. The things he was wrong about were also real. You hold both at once, as this generation learned to do.',
     effect: (p) => { p.m += 4; p.setMem('tanUjamaaLate', true) },
   },
 
@@ -49,7 +49,7 @@ export const TANZANIA_EVENTS = [
       {
         text: 'The vision is worth believing in.',
         tag: 'believed',
-        outcome: 'You join a cooperative. The cooperative is real and it works, at first, which is what makes what comes later harder to accept.',
+        outcome: 'You join a cooperative. The cooperative works, at first, and that makes what comes later harder to accept.',
         effect: (p) => { p.m += 8; p.addFlag('ujamaa_generation'); p.setMem('tanArusha', true) },
       },
       {
@@ -66,7 +66,7 @@ export const TANZANIA_EVENTS = [
     phase: 'midlife',
     weight: 4,
     when: (G) => IS_TANZANIA(G) && G.ruralUrban === 'rural' && G.currentYear >= 1973 && G.currentYear <= 1977 && G.flags.has('ujamaa_generation') && !G.mem.tanVillagisation,
-    text: 'Operation Vijiji: the government moves five million people into planned villages. The order comes to your area in the dry season, which is the wrong season to move. The fields your family has worked are three kilometres from the new village site. The government brings lorries for some families; others walk. The new village has a school and a borehole and no relationship to the soil around it.',
+    text: 'Operation Vijiji: the government moves five million people into planned villages. The order comes to your area in the dry season, the wrong season to move. The fields your family has worked are three kilometres from the new village site. The government brings lorries for some families; others walk. The new village has a school and a borehole and no relationship to the soil around it.',
     choices: [
       {
         text: 'Comply. The school will matter for the children.',
@@ -88,7 +88,7 @@ export const TANZANIA_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => IS_TANZANIA(G) && G.currentYear >= 1967 && G.currentYear <= 1990 && G.stats.smarts >= 55 && G.age >= 18 && G.age <= 28 && !G.mem.tanSwahili,
-    text: 'Tanzania teaches in Swahili — primary and secondary. Your education is in your language, which produces a specific national coherence: you can talk to anyone in the country. It also produces a ceiling. University and professional training require English. Your Kenyan and Ugandan peers who were taught in English their whole lives navigate international opportunities differently than you do.',
+    text: 'Tanzania teaches in Swahili — primary and secondary. Your education is in your language, which produces a national coherence: you can talk to anyone in the country. It also produces a ceiling. University and professional training require English. Your Kenyan and Ugandan peers who were taught in English their whole lives navigate international opportunities differently than you do.',
     effect: (p) => { p.m -= 4; p.e += 3; p.addFlag('swahili_educated'); p.setMem('tanSwahili', true) },
   },
 
@@ -97,7 +97,7 @@ export const TANZANIA_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => IS_TANZANIA(G) && G.currentYear >= 1995 && G.currentYear <= 1996 && !G.mem.tanMultiparty,
-    text: 'The first multiparty elections. CCM has governed since independence; it will win this election and the next and the ones after that. But the atmosphere in the polling station is different from the previous decades. There is an opposition candidate whose name is on the ballot. The ballot exists. Tanzania has never had a coup. In this region, that is a specific achievement.',
+    text: 'The first multiparty elections. CCM has governed since independence; it will win this election and the next and the ones after that. But the atmosphere in the polling station is different from the previous decades. There is an opposition candidate whose name is on the ballot. The ballot exists. Tanzania has never had a coup. In this region, that is an achievement.',
     effect: (p) => { p.m += 6; p.addFlag('multiparty_generation'); p.setMem('tanMultiparty', true) },
   },
 ]

@@ -86,7 +86,7 @@ export const SMALL_LIFE_EVENTS = [
       G.age >= 13 && G.age <= 17 && !G.mem?.friendSharedSeasonAck,
     text: (G) => {
       const name = G.mem?.firstFriendName ?? G.friends[0]?.name ?? 'your closest friend'
-      return `You and ${name} spend most of one season together without planning to. Nowhere important. Just time and proximity and the specific freedom of being old enough to wander and young enough to have nowhere to be. You will refer to this period later without being fully able to explain what you're referring to.`
+      return `You and ${name} spend most of one season together without planning to. Nowhere important. Just time and proximity and the freedom of being old enough to wander and young enough to have nowhere to be. You will refer to this period later without being fully able to explain what you're referring to.`
     },
     choices: null,
     effect: (p) => {
@@ -251,7 +251,7 @@ export const SMALL_LIFE_EVENTS = [
           text: (G) => {
             const title = G.mem?.formativeTeacherTitle ?? 'Ms'
             const name = G.mem?.formativeTeacherName ?? 'your teacher'
-            return `${title} ${name} lends you something — a book, an article, a name to look up — without making it a formal thing. You understand this as a specific kind of trust.`
+            return `${title} ${name} lends you something — a book, an article, a name to look up — without making it a formal thing. You understand this as a kind of trust.`
           },
           choices: null,
           effect: (p) => { p.e += 5; p.m += 3; p.addFlag('teacher_extended_trust') },
@@ -361,7 +361,7 @@ export const SMALL_LIFE_EVENTS = [
     weight: 3,
     cooldown: 0,
     when: (G) => G.age >= 18 && G.age <= 25 && !G.mem?.firstOwnPlaceAck,
-    text: 'A place that is entirely yours — rented, shared, small, it doesn\'t matter. When you close the door, there is only your quiet in the room. You don\'t know yet what a specific luxury this is.',
+    text: 'A place that is entirely yours — rented, shared, small, it doesn\'t matter. When you close the door, there is only your quiet in the room. You don\'t know yet what a luxury this is.',
     choices: null,
     effect: (p) => {
       p.m += 6
@@ -407,7 +407,7 @@ export const SMALL_LIFE_EVENTS = [
       G.age >= 26 && G.age <= 52 &&
       !G.flags.has('left_stable_job') &&
       !G.mem?.leftStableJobAsked,
-    text: 'The job is not bad. That is the difficulty with it. The pay arrives on the same date every month, the people are reasonable, and you can see the next fifteen years of it from where you are standing. Someone at a table outside a café asks what you actually want to do and you answer too quickly, which tells you the answer has been ready for a while.',
+    text: 'The job is fine. That is the difficulty with it. The pay arrives on the same date every month, the people are reasonable, and you can see the next fifteen years of it from where you are standing. Someone at a table outside a café asks what you actually want to do and you answer too quickly, which tells you the answer has been ready for a while.',
     choices: [
       {
         text: 'Hand in the notice',
@@ -459,7 +459,7 @@ export const SMALL_LIFE_EVENTS = [
       G.flags.has('has_garden') &&
       !G.mem?.gardenYears &&
       G.age >= 62,
-    text: 'The beds are different every year and the same every year. You know this soil. You have put things into it and taken things out of it for two decades. People ask what your secret is. There isn\'t one. It is just time and attention, which turns out to be the secret to most things.',
+    text: 'The beds are different every year and the same every year. You know this soil. You have put things into it and taken things out of it for two decades. People ask what your secret is. There isn\'t one. Time and attention, which turn out to be the secret to most things.',
     choices: null,
     effect: (p) => { p.m += 5; p.h += 2; p.karma += 3; p.setMem('gardenYears', true) },
   },
@@ -472,7 +472,7 @@ export const SMALL_LIFE_EVENTS = [
       !G.mem?.letterEvent &&
       G.currentYear < 1998 &&
       (G.siblings?.length > 0 || G.flags.has('emigrated') || G.flags.has('sibling_emigrated')),
-    text: 'It comes in a pale envelope. The handwriting is familiar in a way that arrives before recognition. You open it at the kitchen table and read it twice — once fast, once slowly. The news is ordinary and specific: a job, a landlord, the name of a street.',
+    text: 'It comes in a pale envelope. You know the handwriting before you recognise it. You open it at the kitchen table and read it twice — once fast, once slowly. The news is ordinary and specific: a job, a landlord, the name of a street.',
     choices: [
       {
         text: 'Write back immediately',
@@ -523,8 +523,8 @@ export const SMALL_LIFE_EVENTS = [
       G.age >= 32 && G.age <= 58,
     text: pickFrom([
       'It starts with the fence, which has been leaning into your side for two years and is now definitively on it. You have been tolerant. This time you knock.',
-      'It starts with the music at eleven at night, three nights running, and the particular bass note that comes up through the floor. You have been tolerant for two years. This time you knock.',
-      'It starts with where they park, which is not a thing you ever imagined caring about, and which you now care about with a clarity that alarms you. This time you knock.',
+      'It starts with the music at eleven at night, three nights running, and the bass note that comes up through the floor. You have been tolerant for two years. This time you knock.',
+      'It starts with where they park, not a thing you ever imagined caring about, and which you now care about with a clarity that alarms you. This time you knock.',
     ]),
     choices: [
       {

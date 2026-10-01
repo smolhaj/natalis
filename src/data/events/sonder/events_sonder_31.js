@@ -38,7 +38,7 @@ export const EVENTS_SONDER_31 = [
     weight: 2,
     when: (G) => G.age >= 14 && G.age <= 19 && !G.mem?.s31c,
     text: () => pick([
-      'The group you are part of has a particular sound — the way several people laugh at once, the frequency that is specific to this configuration and will not recur when the configuration changes.',
+      'The group you are part of has a sound — the way several people laugh at once, the frequency that is specific to this configuration and will not recur when the configuration changes.',
       'You are carrying something for someone — a message, a small errand, a secret that was told to you because they needed somewhere to put it. The weight of it is not nothing.',
     ]),
     choices: null,
@@ -65,7 +65,7 @@ export const EVENTS_SONDER_31 = [
     when: (G) => G.age >= 38 && G.age <= 52 && !G.mem?.s31e,
     text: () => pick([
       'Someone younger than you asks for your advice and you give it, and then afterwards you think about what you would have said to yourself at their age, which is different, which is always different.',
-      'The thing you do well that has no name for itself — the particular skill of knowing when a room has shifted, of reading the temperature of a gathering. No one trained you. You watched, and then you knew.',
+      'The thing you do well that has no name for itself — the skill of knowing when a room has shifted, of reading the temperature of a gathering. No one trained you. You watched, and then you knew.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s31e', true) },
@@ -155,7 +155,7 @@ export const EVENTS_SONDER_31 = [
     weight: 2,
     when: (G) => G.age >= 42 && G.age <= 58 && !G.mem?.s31m,
     text: () => pick([
-      'The things you know now that you will not be able to pass on — not because no one would listen but because the thing you know cannot be transferred in words, only arrived at by living. The particular knowledge that dies with the person who holds it.',
+      'The things you know now that you will not be able to pass on — not because no one would listen but because the thing you know cannot be transferred in words, only arrived at by living. The knowledge that dies with the person who holds it.',
       'Someone is telling you a story you have heard them tell before. You let them. The story is not for your information.',
     ]),
     choices: null,
@@ -169,7 +169,7 @@ export const EVENTS_SONDER_31 = [
     when: (G) => G.age >= 15 && G.age <= 20 && !G.mem?.s31n,
     text: () => pick([
       'The song that belongs to this year. In twenty years it will play and you will be exactly here, involuntarily, before the memory surfaces — smell and temperature and something unresolved.',
-      'You are in the middle of the thing that will later be the story. You cannot feel the middle as a middle. You can only feel it as the present, which is what it is.',
+      'You are in the middle of the thing that will later be the story. You cannot feel the middle as a middle. You can only feel it as the present.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s31n', true) },
@@ -247,7 +247,7 @@ export const EVENTS_SONDER_31 = [
     when: (G) => G.age >= 65 && !G.mem?.s31t,
     text: () => pick([
       'You have become, for certain people in your family, the person who was there before. The keeper of the before. The weight of this is different from what you expected.',
-      'The sound the house makes when everyone else has left. You have been in enough houses to know that each has its own version of this sound. This one is yours.',
+      'The sound the house makes when everyone else has left. You have been in enough houses to know that each has a version of this sound. This one is yours.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s31t', true) },
@@ -259,7 +259,7 @@ export const EVENTS_SONDER_31 = [
     weight: 2,
     when: (G) => G.age >= 45 && G.age <= 60 && !G.mem?.s31u,
     text: () => pick([
-      'The part of you that is still the age you were at a specific moment — the year the particular thing happened — and the rest of you that has continued aging around it.',
+      'The part of you that is still the age you were at a moment — the year the thing happened — and the rest of you that has continued aging around it.',
       'The city changed around you while you were living your life in it. Now a neighbourhood you knew has a different name in the mouth of someone who moved here recently. They are not wrong. The old name is also not wrong.',
     ]),
     choices: null,
@@ -273,7 +273,7 @@ export const EVENTS_SONDER_31 = [
     when: (G) => G.age >= 20 && G.age <= 30 && !G.mem?.s31v,
     text: () => pick([
       'The mistake you made that you have explained to yourself in every possible way. The explaining is now finished. What remains is the fact of what happened, which does not need explanation.',
-      'Something is beginning. You can feel it the way you can feel the pressure before weather changes. The feeling is not a guarantee of anything. It is accurate more often than not.',
+      'Something is beginning. You can feel it the way you can feel the pressure before weather changes. The feeling guarantees nothing, and it is right more often than not.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s31v', true) },
@@ -286,7 +286,7 @@ export const EVENTS_SONDER_31 = [
     when: (G) => G.age >= 70 && !G.mem?.s31w,
     text: () => pick([
       'The grandchild or young person who looks at you and does not see what you know about yourself. To them you have always been this. The before is entirely invisible.',
-      'You have lost track of how many times you have told a particular story. The story has changed in the telling — small adjustments, compressions, the part that turns out to be the important part now. You do not know how close it is to what actually happened.',
+      'You have lost track of how many times you have told a story. The story has changed in the telling — small adjustments, compressions, the part that turns out to be the important part now. You do not know how close it is to what actually happened.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s31w', true) },
@@ -298,7 +298,7 @@ export const EVENTS_SONDER_31 = [
     weight: 2,
     when: (G) => G.age >= 36 && G.age <= 48 && !G.mem?.s31x,
     text: () => pick([
-      'The apology you owe someone who is no longer reachable. The apology you have made to the version of them you carry, which is not the same as the actual apology and knows it is not.',
+      'The apology you owe someone who is no longer reachable. The apology you have made to the version of them you carry is not the actual apology, and knows it is not.',
       'The long period of not knowing what you wanted followed by the moment of knowing clearly. The moment itself is quiet. No announcement. Just the difference between one kind of confusion and having something to move toward.',
     ]),
     choices: null,
@@ -325,7 +325,7 @@ export const EVENTS_SONDER_31 = [
     when: (G) => G.age >= 30 && G.age <= 40 && !G.mem?.s31z,
     text: () => pick([
       'The decade is ending. Not officially — it is just a number. But the person who started this decade and the person ending it are different in ways that feel significant and are hard to account for.',
-      'You are reading something and you stop and put it down because the sentence did something. You sit with it for a moment. Then you pick the thing back up.',
+      'You are reading something and you stop and put it down because the sentence did something. Then you pick the thing back up.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s31z', true) },

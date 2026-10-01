@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_late_life.js
 // The full late-life arc: retirement, partner aging and death, grandchildren,
 // health decline, legacy, and the slow shrinkage of the social world.
@@ -24,7 +25,7 @@ export const LATE_LIFE_EVENTS = [
       {
         text: 'Mark it somehow — dinner, a bottle of something good',
         tag: null,
-        outcome: 'You sit with the strangeness of it. It feels correct and strange simultaneously.',
+        outcome: 'It is strange, and you let it be strange. It feels correct and strange simultaneously.',
         effect: (p) => { p.m += 8; p.addFlag('retired'); p.setMem('retireVoluntary', true) },
       },
       {
@@ -79,7 +80,7 @@ export const LATE_LIFE_EVENTS = [
       !G.flags.includes('retired') &&
       !G.mem.retireGradual &&
       G.age >= 60 && G.age <= 68,
-    text: 'Three days a week, then two. You negotiate it carefully — the transition protects a pension contribution, gives someone time to learn the role. The mornings you stay home you do not know what to do with yourself until eleven. You clean things that are already clean. You start a project you abandon. You sit with a cup of coffee for forty minutes.',
+    text: 'Three days a week, then two. You negotiate it carefully — the transition protects a pension contribution, gives someone time to learn the role. The mornings you stay home you do not know what to do with yourself until eleven. You clean things that are already clean. You start a project you abandon. You drink a cup of coffee for forty minutes.',
     choices: [
       {
         text: 'Use the free days to build something new',
@@ -187,7 +188,7 @@ export const LATE_LIFE_EVENTS = [
       G.age >= 68 && G.age <= 85,
     text: (G) => {
       const name = G.partner.name ?? 'Your partner'
-      return `${name} looks at you from the chair across the room. Then: "I'm sorry, do I know you?" The question is completely ordinary in tone. You say yes, of course, and give your name, and something in their face relaxes, and you understand that what relaxed was not recognition. You were a stranger who gave a reassuring answer. You go to the kitchen and stand at the sink until you can come back.`
+      return gendered(`${name} looks at you from the chair across the room. Then: "I'm sorry, do I know you?" The question is completely ordinary in tone. You say yes, of course, and give your name, and something in their face relaxes, and you understand that what relaxed was not recognition. You were a stranger who gave a reassuring answer. You go to the kitchen and stand at the sink until you can come back.`, G.partner)
     },
     choices: [
       {
@@ -219,9 +220,9 @@ export const LATE_LIFE_EVENTS = [
       const name = G.partner.name ?? 'Your partner'
       const wasCaregiver = G.flags.includes('caregiver_partner')
       if (wasCaregiver) {
-        return `${name} dies at home, which is what they wanted. You are in the room. There is a sound, and then there is not a sound, and the difference between those two things is the whole of it. You have been preparing for this. The preparation is not preparation. You sit next to the bed for a long time before you call anyone. The house is the same house. Everything in it is wrong.`
+        return gendered(`${name} dies at home, as they wanted. You are in the room. There is a sound, and then there is not a sound, and the difference between those two things is the whole of it. You have been preparing for this. The preparation is not preparation. You sit next to the bed for a long time before you call anyone. The house is the same house. Everything in it is wrong.`, G.partner)
       }
-      return `${name} dies. There was no warning that counted as one, and nothing about it could be made abstract in advance. You have been with this person for most of your adult life. The shape of every day was built around them. You stand in a room of your own home and do not know what room to go to.`
+      return gendered(`${name} dies. There was no warning that counted as one, and nothing about it could be made abstract in advance. You have been with this person for most of your adult life. The shape of every day was built around them. You stand in a room of your own home and do not know what room to go to.`, G.partner)
     },
     choices: [
       {
@@ -248,7 +249,7 @@ export const LATE_LIFE_EVENTS = [
       G.flags.includes('widowed') &&
       !G.mem.lateWidowhoodFirstYear &&
       G.age >= 60,
-    text: 'The practical presence of them is everywhere you did not expect. The side of the bed. The second cup you still automatically start. The specific sound the house makes when there is only one person in it. You find a note in a coat pocket — a list from the shops, unremarkable. You do not throw it away. The year passes in the way that grief years pass: longer and faster simultaneously, the weeks dissolving and the evenings not.',
+    text: 'The practical presence of them is everywhere you did not expect. The side of the bed. The second cup you still automatically start. The sound the house makes when there is only one person in it. You find a note in a coat pocket — a list from the shops, unremarkable. You do not throw it away. The year passes in the way that grief years pass: longer and faster simultaneously, the weeks dissolving and the evenings not.',
     choices: null,
     effect: (p) => { p.m -= 14; p.r += 8; p.setMem('lateWidowhoodFirstYear', true) },
   },
@@ -288,7 +289,7 @@ export const LATE_LIFE_EVENTS = [
     text: (G) => {
       const adult = G.children.find(c => (c.kids ?? 0) > 0) ?? G.children.find(c => G.age - c.ageAtBirth >= 25)
       const parentName = adult?.name ?? 'Your child'
-      return `${parentName} calls. There is a noise in the background, new and specific. They say the name they have chosen. You hold the phone and try to locate something adequate to say. Later, at the hospital, you hold the child for the first time and they are so small that it seems impossible. You remember the specific smallness of your own children and you thought you had forgotten this, and you had not.`
+      return `${parentName} calls. There is a noise in the background, new and specific. They say the name they have chosen. You hold the phone and try to locate something adequate to say. Later, at the hospital, you hold the child for the first time and they are so small that it seems impossible. You remember the smallness of your own children and you thought you had forgotten this, and you had not.`
     },
     choices: null,
     effect: (p) => { p.m += 20; p.r -= 6; p.addFlag('grandchild_born'); p.addFlag('grandparent'); p.setMem('grandchildBorn', true) },
@@ -302,7 +303,7 @@ export const LATE_LIFE_EVENTS = [
       G.flags.includes('grandchild_born') &&
       !G.mem.grandchildRelationship &&
       G.age >= 60 && G.age <= 80,
-    text: 'The child asks you to read the same book for the eleventh time. You read it for the eleventh time with the same voice and the same pauses in the same places, because the sameness is the whole point. Later you are trying to explain something — how things used to work, or how a thing is made — and they are paying attention with their whole body. The attention children give when something is genuinely interesting to them is a specific quality of light.',
+    text: 'The child asks you to read the same book for the eleventh time. You read it for the eleventh time with the same voice and the same pauses in the same places, because the sameness is the whole point. Later you are trying to explain something — how things used to work, or how a thing is made — and they are paying attention with their whole body. The attention children give when something is genuinely interesting to them is a quality of light.',
     choices: null,
     effect: (p) => { p.m += 14; p.r -= 5; p.setMem('grandchildRelationship', true) },
   },
@@ -341,7 +342,7 @@ export const LATE_LIFE_EVENTS = [
       G.flags.includes('grandchild_born') &&
       !G.mem.grandchildDeath &&
       Math.random() < 0.025,
-    text: "The grandchild dies. There is no way to arrange language around this. The parents' grief is the largest thing in any room, and you move around it, and your own grief is also present but there is no frame for it. You watch your child break. You cannot do what parents are supposed to do for their children, which is absorb some of it. This is the worst order of things.",
+    text: "The grandchild dies. There is no way to arrange language around this. The parents' grief is the largest thing in any room, and you move around it, and your own grief is also present but there is no frame for it. You watch your child break. You cannot do what parents are supposed to do for their children: absorb some of it. This is the worst order of things.",
     choices: null,
     effect: (p) => { p.m -= 30; p.h -= 8; p.r += 20; p.addFlag('lost_grandchild'); p.addFlag('bereaved'); p.setMem('grandchildDeath', true) },
   },
@@ -503,7 +504,7 @@ export const LATE_LIFE_EVENTS = [
       !G.mem.legacyMemoir &&
       G.age >= 60 && G.age <= 80 &&
       G.stats.smarts >= 50,
-    text: 'You open a document, or find a notebook, or dig out the drawer of things you have been keeping without purpose. The impulse is not vanity — it is closer to the feeling that the particular texture of the things you experienced will simply disappear when you do, and that seems like a waste. You write a page. It is worse than you hoped and more specific than you expected.',
+    text: 'You open a document, or find a notebook, or dig out the drawer of things you have been keeping without purpose. The impulse is not vanity — it is closer to the feeling that the texture of the things you experienced will simply disappear when you do, and that seems like a waste. You write a page. It is worse than you hoped and more specific than you expected.',
     choices: [
       {
         text: 'Keep going — write it for whoever comes after',
@@ -608,7 +609,7 @@ export const LATE_LIFE_EVENTS = [
       {
         text: 'Visit occasionally, on your own terms',
         tag: null,
-        outcome: 'The relationship with it is honest, which is more than it was before.',
+        outcome: 'The relationship with it is honest now.',
         effect: (p) => { p.m += 4; p.r -= 3; p.setMem('legacyFaithReturn', true) },
       },
     ],
@@ -625,7 +626,7 @@ export const LATE_LIFE_EVENTS = [
       G.age >= 60,
     text: (G) => {
       if (G.career?.field === 'education') {
-        return 'A former student finds you. They explain what they are doing now — something substantial — and they tell you, directly, that you were the reason they stayed in school. You do not have a prepared response for this. You sit with the discomfort of being thanked for something you remember as ordinary.'
+        return 'A former student finds you. They explain what they are doing now — something substantial — and they tell you, directly, that you were the reason they stayed in school. You do not have a prepared response for this. You do not know what to do with being thanked for something you remember as ordinary.'
       }
       return 'An old colleague sends a message. Something you did years ago — a decision you barely remember, a day\'s work you thought nothing of — had a consequence you never knew about. The information arrives too late to change anything and changes something anyway.'
     },
@@ -673,7 +674,7 @@ export const LATE_LIFE_EVENTS = [
       G.regret > 20 &&
       G.age >= 60 &&
       (G.flags.includes('lost_parent') || G.flags.includes('widowed') || G.flags.includes('lost_sibling')),
-    text: 'There was something you meant to say. You knew you meant to say it and you kept not saying it — waiting for the right moment, the right afternoon, the occasion that would make the saying feel natural. The person is gone now. The thing you meant to say exists only in you. It will go with you. You sit with this, and the weight of it, and the fact that the weight is fair.',
+    text: 'There was something you meant to say. You knew you meant to say it and you kept not saying it — waiting for the right moment, the right afternoon, the occasion that would make the saying feel natural. The person is gone now. The thing you meant to say exists only in you. It will go with you. You carry it, and the weight of it, and the weight is fair.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 10; p.setMem('lateRegretUnsaid', true) },
   },
@@ -864,7 +865,7 @@ export const LATE_LIFE_EVENTS = [
       const yearContext = G.currentYear >= 2020
         ? 'Everything requires an app now. The form you need to fill in is only online. The doctor sends you a link. The bank requires two-factor authentication through a phone you do not know how to configure correctly.'
         : 'The internet has reorganized services in ways that assume a user who is comfortable and fast and young. The form has expired by the time you have found where to click.'
-      return `${yearContext} You ask a grandchild to help. They do it in four seconds, patiently, without condescension, which is somehow more humbling than impatience would have been. You thank them and sit with the small specific loss of competence.`
+      return `${yearContext} You ask a grandchild to help. They do it in four seconds, patiently, without condescension, and that is more humbling than impatience would have been. You thank them and sit with the small specific loss of competence.`
     },
     choices: null,
     effect: (p) => { p.m -= 8; p.e -= 3; p.r += 5; p.setMem('lateDigitalLeftBehind', true) },
@@ -890,7 +891,7 @@ export const LATE_LIFE_EVENTS = [
       !G.mem.lateAcceptance &&
       G.age >= 75 &&
       (G.regret < 20 || G.karma >= 65),
-    text: 'It is an ordinary afternoon. You are sitting somewhere you often sit. The light is doing something specific. You are not actively happy, or unhappy, or arranging anything in your mind. You are simply present in a life that happened. The particular shape of it — the places, the people, the things you did and did not do — is the shape it is. You do not feel that the accounting is finished or perfect. You feel that the accounting is what it is, and you are still here, and the afternoon is still happening.',
+    text: 'It is an ordinary afternoon. You are sitting somewhere you often sit. The light is doing something specific. You are not actively happy, or unhappy, or arranging anything in your mind. You are simply present in a life that happened. The shape of it — the places, the people, the things you did and did not do — is the shape it is. You do not feel that the accounting is finished or perfect. You feel that the accounting is what it is, and you are still here, and the afternoon is still happening.',
     choices: null,
     effect: (p) => { p.m += 12; p.r -= 10; p.karma += 6; p.addFlag('acceptance'); p.setMem('lateAcceptance', true) },
   },
@@ -1082,7 +1083,7 @@ export const LATE_LIFE_EVENTS = [
       G.character.country.archetype === 'wealthy_west' &&
       G.currentYear >= 2000 &&
       !G.mem?.elder_dismissal,
-    text: 'You say something in a meeting — a sensible thing, based on forty years of watching this kind of decision play out. The room continues. Not rudely: no one is rude. The conversation simply moves on as if you had not spoken, and then, three minutes later, a younger colleague says something adjacent to what you said, and that gets a response. You sit with this for the rest of the afternoon.',
+    text: 'You say something in a meeting — a sensible thing, based on forty years of watching this kind of decision play out. The room continues. Not rudely: no one is rude. The conversation simply moves on as if you had not spoken, and then, three minutes later, a younger colleague says something adjacent to what you said, and that gets a response. You turn it over for the rest of the afternoon.',
     choices: [
       {
         text: 'Say it again, differently — make them hear it',
@@ -1099,7 +1100,7 @@ export const LATE_LIFE_EVENTS = [
       {
         text: 'Make a note — you know what you know',
         tag: null,
-        outcome: 'The record exists whether or not the room wanted it. This is its own kind of stubbornness.',
+        outcome: 'The record exists whether or not the room wanted it. This is stubbornness.',
         effect: (p) => { p.m -= 3; p.e += 2; p.setMem('elder_dismissal', true); p.addFlag('elder_invisible'); },
       },
     ],
@@ -1115,7 +1116,7 @@ export const LATE_LIFE_EVENTS = [
       G.currentYear >= 2012 &&
       G.character.country.archetype === 'wealthy_west' &&
       !G.mem?.elder_phone_lesson,
-    text: 'A grandchild — or a child, or a neighbour\'s child — explains something on a screen. They are patient in the way that young people are patient when they expect not to be understood. What they do not know is that you have watched four revolutions in how information moves, and you understand the structure of this one even if you do not know the particular gesture that makes it go. You let them explain. You do not say what you know.',
+    text: 'A grandchild — or a child, or a neighbour\'s child — explains something on a screen. They are patient in the way that young people are patient when they expect not to be understood. What they do not know is that you have watched four revolutions in how information moves, and you understand the structure of this one even if you do not know the gesture that makes it go. You let them explain. You do not say what you know.',
     choices: null,
     effect: (p) => { p.m += 5; p.r += 3; p.setMem('elder_phone_lesson', true); p.addFlag('elder_invisible'); },
   },
@@ -1184,7 +1185,7 @@ export const LATE_LIFE_EVENTS = [
       G.flags.includes('recon_attempted') &&
       !G.mem?.recon_resolved &&
       G.age >= 63,
-    text: 'They responded. Not everything is resolved by the response — some of it will never be resolved, and both of you know that — but there is now a conversation happening where there was silence. The relationship that comes back is not the relationship that was there before. It is something smaller and more carefully made. It may be enough.',
+    text: 'They responded. Not everything is resolved by the response — some of it will never be resolved, and both of you know that — but there is now a conversation happening where there was silence. The relationship that comes back is smaller than the one before, and more carefully made. It may be enough.',
     choices: [
       {
         text: 'Take it at the pace it comes',
@@ -1219,7 +1220,7 @@ export const LATE_LIFE_EVENTS = [
       G.flags.includes('recon_attempted') &&
       !G.mem?.recon_resolved &&
       G.age >= 63,
-    text: 'There is no response. Or there is a response, and it closes rather than opens. You sit with what you sent and the silence that came back. Some estrangements have reasons that survive any amount of time. The attempt was real. What you do with its failure is a different question.',
+    text: 'There is no response. Or there is a response, and it closes rather than opens. You reread what you sent, and listen to the silence that came back. Some estrangements have reasons that survive any amount of time. What you do with its failure is a different question.',
     choices: [
       {
         text: 'Try once more, differently',
@@ -1230,7 +1231,7 @@ export const LATE_LIFE_EVENTS = [
       {
         text: 'Accept that this is the answer',
         tag: null,
-        outcome: 'The acceptance is not peace — it is the shape of the relationship now, which is absence. You learn to carry it.',
+        outcome: 'The acceptance is not peace. The relationship now is absence. You learn to carry it.',
         effect: (p) => { p.m -= 8; p.r += 10; p.karma += 4; p.setMem('recon_resolved', true); p.addFlag('permanently_estranged'); },
       },
     ],
@@ -1302,7 +1303,7 @@ export const LATE_LIFE_EVENTS = [
     when: (G) => G.age >= 68,
     text: (G) => {
       const opts = [
-        'You find yourself thinking about someone from forty years ago with a specificity that surprises you. The memory is precise: the colour of a coat, a particular phrase.',
+        'You find yourself thinking about someone from forty years ago with a specificity that surprises you. The memory is precise: the colour of a coat, a phrase.',
         'You remember something you had not thought of in decades. The memory arrives complete, with texture.',
         'A name comes back to you while you\'re doing something else. The name brings the whole person with it.',
         'The past is not receding. If anything it is becoming more detailed. You wonder if this is how it ends — living forward and backward simultaneously.',
@@ -1365,7 +1366,7 @@ export const LATE_LIFE_EVENTS = [
     text: (G) => {
       const opts = [
         'A difficult year. You are still here at the end of it.',
-        'The difficulty has a texture. You have become familiar with it, which is not the same as accepting it.',
+        'The difficulty has a texture. You have become familiar with it, without accepting it.',
         'Some years you endure. This is one of those years.',
         'You get through it. That is the year\'s achievement.',
       ]

@@ -32,7 +32,7 @@ export const WEST_AFRICA_EVENTS = [
       G.currentYear >= 1979 && G.currentYear <= 1992 &&
       G.age >= 18 &&
       !G.mem.ghaRawlings,
-    text: 'Jerry Rawlings: the flight lieutenant who executed three former heads of state by firing squad in 1979 and came back with another coup in 1981. The PNDC — the Provisional National Defence Council — runs the country. The corruption tribunals are real and the violence is real. The structural adjustment programme the IMF requires cuts wages and public employment. The economy is being restructured in ways that produce growth in the statistics and pain in the street-level reality of the people you know.',
+    text: 'Jerry Rawlings: the flight lieutenant who executed three former heads of state by firing squad in 1979 and came back with another coup in 1981. The PNDC — the Provisional National Defence Council — runs the country. The corruption tribunals sit, and there is violence. The structural adjustment programme the IMF requires cuts wages and public employment. The economy is being restructured in ways that produce growth in the statistics and pain in the street-level reality of the people you know.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('rawlings_generation'); p.setMem('ghaRawlings', true) },
   },
@@ -123,7 +123,7 @@ export const WEST_AFRICA_EVENTS = [
       G.currentYear >= 1973 && G.currentYear <= 1981 &&
       G.age >= 18 &&
       !G.mem.ngaOilBoom,
-    text: 'Oil at $35 a barrel. Nigeria joins OPEC in 1971 and the 1973 oil shock makes the country suddenly, visibly wealthy — the federal government, at least. The phrase is "oil boom." Lagos is building. The roads are being constructed. Salaries in government are high. The naira is strong. The structural problem — that the oil money is flowing through a military government and a patronage system rather than into productive capacity — is legible but not dominant in the feeling of the moment. The feeling of the moment is abundance.',
+    text: '1973, and the oil price quadruples, and Nigeria, in OPEC two years, is suddenly rich, the federal government at least. Lagos is building: roads, flyovers, high government salaries, a strong naira. That the money runs through a military government and a patronage system instead of into anything that makes things can be seen if you look. It is not what the moment feels like. The moment feels like abundance.',
     choices: null,
     effect: (p) => { p.m += 6; p.mo += 1000; p.addFlag('nigerian_oil_boom_generation'); p.setMem('ngaOilBoom', true) },
   },
@@ -151,7 +151,7 @@ export const WEST_AFRICA_EVENTS = [
       G.currentYear === 1995 &&
       G.age >= 25 &&
       !G.mem.ngaSaroWiwa,
-    text: 'November 10, 1995. Ken Saro-Wiwa and eight other Ogoni activists are hanged by the Abacha military government. Saro-Wiwa had been documenting what Shell\'s oil extraction had done to the Niger Delta: the oil spills, the gas flaring, the contamination of the land and water the Ogoni people depended on. His trial was internationally recognized as unjust. The Commonwealth suspends Nigeria. The execution happens anyway. The oil continues to be extracted. The delta continues to burn.',
+    text: 'November 10, 1995. Ken Saro-Wiwa and eight other Ogoni men are hanged by Abacha\'s government. He had been writing down what the oil companies did to the Delta: the spills, the flaring, the poisoned creeks and fields. The world called the trial a sham and the Commonwealth suspended Nigeria. The hanging happened anyway. The oil is still being pumped.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.karma += 5; p.addFlag('saro_wiwa_generation'); p.setMem('ngaSaroWiwa', true) },
   },
@@ -165,7 +165,7 @@ export const WEST_AFRICA_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2010 &&
       G.age >= 18 &&
       !G.mem.nga419,
-    text: 'Section 419 of the Nigerian Criminal Code: advance-fee fraud. The letters — later the emails — went out by the millions. The phenomenon had a name: 419. You know people who were involved, or you know what it meant to be Nigerian abroad and have people assume you were involved, which is a different problem. The specific damage of a national stereotype attached to a country of 120 million people for the activities of a small number within it. You have had to manage the assumption in contexts where the assumption was already made.',
+    text: 'Section 419 of the Nigerian Criminal Code: advance-fee fraud. The letters — later the emails — went out by the millions. The phenomenon had a name: 419. You know people who were involved, or you know what it meant to be Nigerian abroad and have people assume you were involved, a different problem. The damage of a national stereotype attached to a country of 120 million people for the activities of a small number within it. You have had to manage the assumption in contexts where the assumption was already made.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('nigerian_diaspora_stigma'); p.setMem('nga419', true) },
   },
@@ -179,7 +179,7 @@ export const WEST_AFRICA_EVENTS = [
       G.currentYear === 2020 &&
       G.age >= 16 && G.age <= 40 &&
       !G.mem?.ngaEndSARS,
-    text: 'October 2020. SARS — the Special Anti-Robbery Squad — has been extrajudicially killing, extorting, and brutalising young Nigerians for thirty years. The evidence circulates online. The hashtag becomes the movement: #EndSARS. Young Nigerians shut down major highways. Lagos, Abuja, Port Harcourt, Enugu. The protests are organised entirely through Twitter and WhatsApp. On October 20, at the Lekki toll gate in Lagos, soldiers open fire on protesters waving Nigerian flags. The army disputes the numbers. The Twitter videos do not dispute.',
+    text: 'October 2020. For years SARS has been robbing and beating and killing young Nigerians, and now the videos are everywhere, and the hashtag becomes a movement, and the young shut the highways in Lagos, Abuja, Port Harcourt, Enugu. On October 20 at the Lekki toll gate, soldiers open fire on protesters waving the national flag. The army disputes the numbers. The videos do not.',
     choices: [
       {
         text: 'You are at the toll gate or at another protest that week.',
@@ -233,7 +233,7 @@ export const WEST_AFRICA_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2015 &&
       G.age >= 18 &&
       !G.mem?.ngaNEPA,
-    text: '"NEPA has taken light." The phrase is embedded in daily life so completely that you know the power is going before you can confirm it has gone — from the specific stutter of the ceiling fan. The National Electric Power Authority is so reliably unreliable that Nigerians call it Never Expect Power Always. Your day organises around the generator: the diesel cost, the starting cord, the decibel level that determines whether you can sleep or work. The generator is not a backup. It is the primary system. The national grid is the backup, for the hours it works. Owning a generator, or sharing access to one, is the dividing line between two kinds of life.',
+    text: '"NEPA has taken light." The phrase is embedded in daily life so completely that you know the power is going before you can confirm it has gone — from the stutter of the ceiling fan. The National Electric Power Authority is so reliably unreliable that Nigerians call it Never Expect Power Always. Your day organises around the generator: the diesel cost, the starting cord, the decibel level that determines whether you can sleep or work. The generator is the primary system. The national grid is the backup, for the hours it works. Owning a generator, or sharing access to one, is the dividing line between two kinds of life.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('nepa_generation'); p.setMem('ngaNEPA', true) },
   },
@@ -248,7 +248,7 @@ export const WEST_AFRICA_EVENTS = [
       G.age >= 18 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.ngaLagosGoSlow,
-    text: 'The Lagos go-slow. You know it the way you know weather: variable but reliably present. The Third Mainland Bridge at 7am. The Apongbon junction at 5pm. A trip that should take twenty minutes takes two hours without any particular reason — a stalled danfo, a junction where the traffic lights have not worked in three years, a truck blocking two lanes while its driver argues with another driver. The hawkers work the stalled traffic: water sachets, newspapers, phone chargers, cooked corn, fan ice. They are more efficient than anything else moving on the road. You buy from them. The car is not moving. There is time.',
+    text: 'The Lagos go-slow. You know it the way you know weather: Third Mainland Bridge at seven, Apongbon at five, a twenty-minute trip that takes two hours for no reason anyone can find, a stalled danfo, a junction whose lights have not worked in three years. The hawkers work the stopped traffic: sachet water, newspapers, phone chargers, roast corn, fan ice. They are the only thing on the road that moves. The car is not moving. There is time.',
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 3; p.addFlag('lagos_go_slow_generation'); p.setMem('ngaLagosGoSlow', true) },
   },
@@ -266,7 +266,7 @@ export const WEST_AFRICA_EVENTS = [
       G.currentYear >= 1957 && G.currentYear <= 1968 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem?.ghaNkrumahSchool,
-    text: 'The school was built while you were young enough to not remember a time without it. Nkrumah\'s government built secondary schools in regions that had none; it built the University of Ghana at Legon and told a generation that education was not for the colonial elite but for anyone Ghana produced. Your father went as far as class six; you will go further. This is not abstract progress — it has a specific building with specific teachers and specific examination results that determine what you become. The building exists because someone decided that you should exist as a person who goes to school.',
+    text: 'The school was built while you were young enough to not remember a time without it. Nkrumah\'s government built secondary schools in regions that had none; it built the University of Ghana at Legon and told a generation that education was not for the colonial elite but for anyone Ghana produced. Your father went as far as class six; you will go further. This is not abstract progress — it has a building with specific teachers and specific examination results that determine what you become. The building exists because someone decided that you should exist as a person who goes to school.',
     choices: null,
     effect: (p) => {
       p.e += 8; p.m += 5; p.karma += 3;
@@ -285,7 +285,7 @@ export const WEST_AFRICA_EVENTS = [
       G.currentYear >= 1966 && G.currentYear <= 1972 &&
       G.age >= 16 &&
       !G.mem?.gha1966Coup,
-    text: 'February 24, 1966. Nkrumah is in Hanoi, on a peace mission to Vietnam, when the National Liberation Council announces it has taken power. The police and army. The coup is bloodless. The idea it ended was not bloodless. You grew up with the pan-African project — the speeches, the schools, the sense that Ghana was the place that would show what independence could mean. The NLC dismantles the state farms, privatises what had been built, accepts IMF conditions that reverse the development programme. Nkrumah lives in Guinea until 1972 as a guest of Sékou Touré. You follow his statements from exile. They sound different now — the same ideas in a smaller room.',
+    text: 'February 1966, and Nkrumah is in Hanoi on a peace mission when the soldiers and police announce they have taken power. The coup is bloodless; what it ends is not. You grew up inside the pan-African project, the speeches, the schools, the sense that Ghana would show what independence could mean. The new council sells off the state farms and accepts the IMF\'s terms. Nkrumah\'s statements come from Conakry now, the same ideas in a smaller room.',
     choices: null,
     effect: (p) => {
       p.m -= 14; p.e += 5; p.r += 8; p.karma -= 3;

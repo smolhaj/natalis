@@ -117,7 +117,7 @@ export const ILLNESS_EVENTS = [
       const hc = G.character.country.healthcare ?? 'fair'
       const archetype = G.character.country.archetype
       if (hc === 'excellent' || hc === 'good') {
-        return 'The scan was precautionary. The result is not. Early-stage — that word, early, does significant work in the oncologist\'s sentence. Treatable. A course of treatment, monitoring, and the statistical likelihood of a full recovery. The word cancer has landed. You sit with it for a while.'
+        return 'The scan was precautionary. The result is not. Early-stage — that word, early, does significant work in the oncologist\'s sentence. Treatable. A course of treatment, monitoring, and the statistical likelihood of a full recovery. The word cancer has landed. You let it stay there for a while.'
       }
       return 'The doctor says the word and your body processes it before your mind does. Cancer. The treatment is available and the prognosis is cautiously good — if you can complete the full course. That qualifier, if, carries a lot of weight depending on what the treatment costs and what you can access.'
     },
@@ -416,7 +416,7 @@ export const ILLNESS_EVENTS = [
       {
         text: 'Rehabilitation — adapt and rebuild',
         tag: null,
-        outcome: 'The rehabilitation is long and the progress is slow. What you rebuild is real. The limitation is permanent but managed.',
+        outcome: 'The rehabilitation is long and the progress is slow. You rebuild some of it. The limitation is permanent but managed.',
         effect: (p) => { p.h -= 10; p.m -= 15; p.mo -= 3000; p.addCondition('disability_injury', 'moderate'); p.manageCondition('disability_injury', true); p.addFlag('disability'); p.addFlag('manages_chronic_condition'); p.setMem('illInjury', true) },
       },
       {

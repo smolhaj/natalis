@@ -37,7 +37,7 @@ export const CHILD_SOLDIER_EVENTS = [
     when: (G) =>
       G.flags.has('child_soldier_taken') &&
       !G.mem?.csIndocFired,
-    text: 'The process is not complicated. You are given a weapon and a uniform and you are told you are a soldier. You are told who the enemy is. You are told what soldiers do. The commanders are very clear about what happens to soldiers who do not do what soldiers do. The threat is not abstract — you have seen what happens. The ideology is simpler than you expected: the world is divided into us and the enemy and the enemy is not fully human. You learn to say the parts of this that are required. You do not learn to believe all of them.',
+    text: 'They give you a weapon and a uniform and tell you that you are a soldier, and who the enemy is, and what soldiers do. They are very clear about what happens to soldiers who do not do it, and you have seen it happen. The idea is simpler than you expected: there is us, and there is the enemy, who is not fully human. You learn to say the parts that are required. You do not learn to believe all of them.',
     choices: null,
     effect: (p) => { p.m -= 15; p.addFlag('child_soldier_indoctrinated'); p.setMem('csIndocFired', true) },
   },
@@ -49,7 +49,7 @@ export const CHILD_SOLDIER_EVENTS = [
     when: (G) =>
       G.flags.has('child_soldier_indoctrinated') &&
       !G.mem?.csOrderFired,
-    text: 'The commander gives you an order. The order is to harm a specific person — a prisoner, a villager, a captured fighter from the other side. You understand what the order is. The commander is watching. The other soldiers are watching. You understand what happens to soldiers who refuse. You are a child with a weapon in a situation designed to leave you no real choice, which does not mean there is no choice.',
+    text: 'The commander gives you an order to hurt someone: a prisoner, a villager, a captured boy from the other side. The commander is watching and so are the others. You know what happens to the ones who refuse. You are a child with a weapon in a situation built to leave no choice, which is not the same as there being none.',
     choices: [
       {
         text: 'You carry out the order',
@@ -77,7 +77,7 @@ export const CHILD_SOLDIER_EVENTS = [
       !G.mem?.csLibFired,
     text: (G) => {
       const escaped = Math.random() < 0.4
-      if (escaped) return 'The chance comes and you take it. The window is three minutes — you know this from watching the rotation for four months. You go. Three of you go. One is caught. You are not one who is caught. You walk for two days to reach the UN compound. The person at the gate looks at you for a long time before speaking.'
+      if (escaped) return 'The chance comes and you take it. The window is three minutes; you have watched the rotation for four months. Three of you go and one is caught, and it is not you. You walk for two days to the UN compound. The man at the gate looks at you for a long time before he speaks.'
       return 'The armed group is routed by the government forces or the peacekeepers or by internal collapse — the exact mechanism matters less than the result. You are free in a very specific and incomplete sense: you are no longer in the unit, and you do not know where you are, and you do not know how to be a person who is not in the unit.'
     },
     choices: null,
@@ -91,7 +91,7 @@ export const CHILD_SOLDIER_EVENTS = [
     when: (G) =>
       G.flags.has('child_soldier_free') &&
       !G.mem?.csDDRFired,
-    text: 'The DDR programme — disarmament, demobilisation, reintegration — is what the UN and the NGOs have. You go through it. The programme has a structure and the structure helps and also the structure is designed for a general case and you are a specific person. The counsellors are doing their best with large caseloads and the best is partial. You are given documents — a certificate, an identity card. You are told you can go to school. You have not been to school in three years. You were twelve when you left.',
+    text: 'The programme is called DDR: disarmament, demobilisation, reintegration. It is built for the general case and you are one person. The counsellors have too many files. You are given a certificate and an identity card and told you can go back to school. You were twelve when you left it.',
     choices: null,
     effect: (p) => { p.h += 5; p.m += 5; p.addFlag('child_soldier_ddr'); p.setMem('csDDRFired', true) },
   },
@@ -103,7 +103,7 @@ export const CHILD_SOLDIER_EVENTS = [
     when: (G) =>
       G.flags.has('child_soldier_ddr') &&
       !G.mem?.csReturnFired,
-    text: "The village knows what happened and some of the village knows what you did there. The welcome is genuine and complicated. Your mother's face when she sees you. You did not know if she would still be alive. She did not know if you would. The reunion contains everything — love and the knowledge of what happened in between and the decision, made by both of you without discussion, to hold the knowledge somewhere that does not come to the surface immediately. Maybe later. Not yet.",
+    text: "Some of the village knows what happened, and some of it knows what you did. Your mother's face when she sees you: she did not know you were alive, and you did not know she was. The two of you decide, without a word, to put what happened in between somewhere it will not come up yet. Maybe later.",
     choices: null,
     effect: (p) => { p.m += 8; p.r += 5; p.addFlag('child_soldier_returned_home'); p.setMem('csReturnFired', true) },
   },
@@ -116,7 +116,7 @@ export const CHILD_SOLDIER_EVENTS = [
       G.flags.has('child_soldier_free') &&
       G.age >= 16 &&
       !G.mem?.csCivilFired,
-    text: 'The civilian life does not fit. This is not metaphorical — the specific skills the years built are military skills, and the school demands civilian skills, and the civilian world demands civilian skills, and you have gaps where those should be. The gap between sixteen and twenty-two, the years of normal development, the things you would have learned. The body has responses built into it by the years in the unit that civilian contexts don\'t know how to receive. A loud noise. A uniform. The wrong kind of eye contact.',
+    text: 'Civilian life does not fit. The years in the unit taught you things the school has no use for, and left gaps where sixteen to twenty-two should have been. Your body answers to things a classroom cannot see: a loud noise, a uniform, the wrong kind of eye contact.',
     choices: null,
     effect: (p) => { p.m -= 10; p.addFlag('child_soldier_civilian_hard'); p.addFlag('trauma_responses'); p.setMem('csCivilFired', true) },
   },
@@ -130,12 +130,12 @@ export const CHILD_SOLDIER_EVENTS = [
       G.flags.has('child_soldier_taken') &&
       G.age >= 30 &&
       !G.mem?.csMoralMidFired,
-    text: 'In midlife the accounting is different. The child you were when it happened is clearly a child now — you can see the age from outside. You were twelve. You were given a weapon and an ideology and a choice that was not a choice. Understanding this does not undo what was done. It changes the frame. The frame change is not comfort. It is something more useful than comfort: it is accurate.',
+    text: 'In midlife the child you were is plainly a child; you can see the age from outside now. Twelve, with a weapon and an ideology and a choice that was not a choice. Knowing it does not undo anything. It is not comfort. It is accurate.',
     choices: [
       {
         text: 'Seek out people who survived the same — there is a language for it',
         tag: null,
-        outcome: 'The organisation for former child soldiers exists. The language is there. Being in a room with people who know the weight is not resolution. It is accompanied carrying.',
+        outcome: 'The organisation for former child soldiers exists. The language is there. Being in a room with people who know the weight is accompanied carrying.',
         effect: (p) => { p.r -= 8; p.m += 6; p.karma += 5; p.addFlag('child_soldier_community'); p.setMem('csMoralMidFired', true) },
       },
       {
@@ -156,7 +156,7 @@ export const CHILD_SOLDIER_EVENTS = [
       G.flags.has('child_soldier_taken') &&
       G.age >= 55 &&
       !G.mem?.csLateFired,
-    text: 'Late in life the children you know are the age you were when it happened. Looking at them — their faces, the specific gap between what they understand and what they don\'t yet understand — you understand something about yourself at twelve that you could not have understood from inside it. You were not a soldier. They made you into something with that name. The name was false. The things that were done and that you did were real. Both things are true. You are old enough to hold them both without needing them to resolve.',
+    text: 'Late in life the children you know are the age you were when it happened. Looking at them — their faces, the gap between what they understand and what they don\'t yet understand — you understand something about yourself at twelve that you could not have understood from inside it. You were not a soldier. They made you into something with that name. The name was false. You are old enough to hold them both without needing them to resolve.',
     choices: null,
     effect: (p) => { p.r -= 10; p.m += 8; p.karma += 8; p.addFlag('child_soldier_late_reckoning'); p.setMem('csLateFired', true) },
   },

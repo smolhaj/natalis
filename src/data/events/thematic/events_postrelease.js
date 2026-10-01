@@ -74,7 +74,7 @@ export const POSTRELEASE_EVENTS = [
       if (category === 'financial' || category === 'white_collar') {
         return 'The position is entry-level. The company does background checks on everyone. You disclosed the conviction in your cover letter — the advice was to get ahead of it. You wait to find out whether the honesty costs you the interview.'
       }
-      return 'The job pays enough to live on. The application asks about criminal history. You sit with the form for longer than the form expects.'
+      return 'The job pays enough to live on. The application asks about criminal history. The form stays in front of you longer than the form expects.'
     },
     choices: [
       {
@@ -222,7 +222,7 @@ export const POSTRELEASE_EVENTS = [
       {
         text: 'Go — face the consequences afterward',
         tag: null,
-        outcome: 'The officer hears the explanation. He files a report. He does not recommend revocation. You are grateful in a way that costs you something.',
+        outcome: 'The officer hears the explanation. He files a report. He does not recommend revocation. You are grateful, and it costs you something.',
         effect: (p) => { p.m -= 10; p.karma += 5; p.addFlag('parole_breach_forgiven') },
       },
     ],
@@ -279,7 +279,7 @@ export const POSTRELEASE_EVENTS = [
     text: (G) => {
       const category = getRecordCategory(G.criminalRecord)
       if (G.currentCountry?.name === 'United States' && category === 'drug') {
-        return 'No housing because of the record. No job because of no fixed address. Drug treatment is conditional on stable housing. Stable housing is conditional on income. Income is conditional on employment. Employment is conditional on the record. The record is permanent. You are not stupid. You can see exactly what this is.'
+        return 'No housing because of the record. No job without an address. Treatment depends on housing, housing on income, income on a job, and the job on the record, which is permanent. You are not stupid. You can see exactly what this is.'
       }
       return 'The arithmetic does not work. The legal options require resources you do not have. The illegal options are available. You are not back where you started. You are in a place that was built to put you back.'
     },
@@ -323,7 +323,7 @@ export const POSTRELEASE_EVENTS = [
       {
         text: 'Accept the situation as the cost of what happened',
         tag: null,
-        outcome: 'A particular kind of resignation: not peace, but the absence of active struggle against what cannot be changed today.',
+        outcome: 'A kind of resignation: not peace, but the absence of active struggle against what cannot be changed today.',
         effect: (p) => { p.setMem('prUsaRightsLost', true); p.m -= 8; p.r += 5 },
       },
     ],

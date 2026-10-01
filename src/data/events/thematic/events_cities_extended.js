@@ -39,7 +39,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.flags.has('witnessed_wall_fall') &&
       !G.mem?.berlinReunificationFelt,
     text: () =>
-      `The city is one now — officially. The Ossis and the Wessis navigate each other with a careful politeness that conceals genuine difference. The East is being renovated at a speed that also erases it. A neighborhood you knew as a child has new cafes and unchanged apartments and a rent increase that is coming. Something was won. Something is also being lost. Both things are true on the same street.`,
+      `The city is one now — officially. The Ossis and the Wessis navigate each other with a careful politeness that conceals genuine difference. The East is being renovated at a speed that also erases it. A neighborhood you knew as a child has new cafes and unchanged apartments and a rent increase that is coming. Something was won. Something is also being lost.`,
     choices: null,
     effect: (p) => { p.e += 3; p.setMem('berlinReunificationFelt', true) },
   },
@@ -71,7 +71,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear === 1961 &&
       !G.mem?.berlinWallWentUp,
     text: () =>
-      `August 13, 1961. You wake up and the city is different. Overnight, soldiers laid barbed wire along the sector border. By the end of the week it will be concrete blocks. The city you could cross freely yesterday cannot be crossed today. You stand at the end of a street that now ends at wire. On the other side, a man stands looking at the same wire from the other direction. You do not speak. There is nothing to say yet.`,
+      `August 13, 1961. You wake up and overnight the soldiers have run barbed wire along the sector border, and by the end of the week it will be concrete. The city you crossed yesterday cannot be crossed today. You stand at the end of a street that now ends at wire, and on the other side a man stands looking at the same wire from the other direction. Neither of you says anything. There is nothing to say yet.`,
     choices: null,
     effect: (p) => { p.m -= 8; p.addFlag('berlin_wall_era_lived'); p.setMem('berlinWallWentUp', true) },
   },
@@ -124,7 +124,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1953 && G.currentYear <= 1965 &&
       !G.mem?.seoulWarRuinsSeen,
     text: () =>
-      `Seoul after the war. The city changed hands four times and shows it. The Han River bridges were destroyed. The government buildings are shells. Your family has returned from wherever you sheltered and the neighborhood is half-standing, half-rubble. A child at school has no father. Another has no house. Everyone has something missing. The country is one of the poorest on earth. There is a government plan and it does not explain where to start.`,
+      `Seoul after the war. The city changed hands four times and shows it: the bridges over the Han down, the government buildings shells. Your family comes back from wherever you sheltered to a neighbourhood half standing. One child at school has no father and another no house, and everyone has something missing. There is a government plan, and it does not say where to start.`,
     choices: null,
     effect: (p) => { p.m -= 5; p.setMem('seoulWarRuinsSeen', true) },
   },
@@ -140,7 +140,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1953 && G.currentYear <= 1975 &&
       !G.mem?.seoulDividedFamily,
     text: () =>
-      `Your mother keeps a photograph of her sister on the dresser. Her sister lives in Pyongyang — or did, in 1950, which is the last information anyone has. Letters do not go there. The Red Cross has a programme but the list is very long and moving slowly. The photograph is from before the war. Your mother looks at it in the evenings. She does not talk about it, which is how you know it is the most important thing.`,
+      `Your mother keeps a photograph of her sister on the dresser. Her sister lives in Pyongyang — or did, in 1950, which is the last information anyone has. Letters do not go there. The Red Cross has a programme but the list is very long and moving slowly. The photograph is from before the war. Your mother looks at it in the evenings. She does not talk about it, and that is how you know it is the most important thing.`,
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 3; p.addFlag('seoul_divided_family'); p.setMem('seoulDividedFamily', true) },
   },
@@ -172,7 +172,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear === 1987 &&
       !G.mem?.seoulDemocracyStruggle,
     text: () =>
-      `June 1987. The protests began after a student died during interrogation. By June 10 there are a million people in the streets. The tear gas is constant — the city smells of it for weeks. The university students in front are running from the police. On June 29, Roh Tae-woo announces direct elections. The country has been negotiating this since Gwangju 1980 and something has finally given. You are in the crowd or watching it on television. Either way, you know you are inside something that will be in history books.`,
+      `June 1987. A student died under interrogation in January, and now there are a million people in the streets and the city smells of tear gas for weeks. The students at the front run from the riot police and come back. On June 29 Roh Tae-woo announces direct elections. Something that has been pushed since Gwangju has finally given, and you know you are inside something that will be in the history books.`,
     choices: null,
     effect: (p) => { p.m += 6; p.e += 3; p.addFlag('seoul_democracy_generation'); p.setMem('seoulDemocracyStruggle', true) },
   },
@@ -188,7 +188,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear === 1988 &&
       !G.mem?.seoulOlympics,
     text: () =>
-      `Seoul 1988. One hundred and fifty-nine countries. The opening ceremony is watched by two billion people, which is a number that has never applied to South Korea before. The country that was a basket case in 1953 is now running an Olympics. You know what this means and you do not need to explain it to anyone who was here for the war. For a week the city is not about anything else.`,
+      `Seoul 1988. One hundred and fifty-nine countries. The opening ceremony is watched by two billion people, a number that has never applied to South Korea before. The country that was a basket case in 1953 is now running an Olympics. You know what this means and you do not need to explain it to anyone who was here for the war. For a week the city is not about anything else.`,
     choices: null,
     effect: (p) => { p.m += 8; p.setMem('seoulOlympics', true) },
   },
@@ -249,7 +249,7 @@ export const CITIES_EXTENDED_EVENTS = [
         effect: (p) => { p.m -= 4; p.karma += 6; p.addFlag('witnessed_madres'); p.setMem('plazaDeMayoSeen', true) },
       },
       {
-        text: 'Walk past. The risk is real.',
+        text: 'Walk past.',
         tag: null,
         outcome: 'You walk past. That evening you think about the woman with the photograph. You think about her often.',
         effect: (p) => { p.m -= 5; p.r += 4; p.setMem('plazaDeMayoSeen', true) },
@@ -316,7 +316,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1990 &&
       !G.mem?.khmerSilenceCarried,
     text: () =>
-      `Your children ask you what it was like. You tell them some of it — enough to understand the shape of it — but not all of it. The not-all-of-it is not a decision you made. It is the body's decision. Some things do not translate into the language of dinner tables and school reports. The years between 1975 and 1979 exist in a different register from everything else. You carry them separately.`,
+      `Your children ask you what it was like. You tell them some of it — enough to understand the shape of it — but not all of it. The body decided, not you. Some things do not translate into the language of dinner tables and school reports. The years between 1975 and 1979 exist in a different register from everything else. You carry them separately.`,
     choices: null,
     effect: (p) => { p.r += 3; p.m -= 2; p.setMem('khmerSilenceCarried', true) },
   },
@@ -383,7 +383,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.flags.has('survived_khmer_rouge') &&
       !G.mem?.ppReturn,
     text: () =>
-      `The Vietnamese army entered in January 1979 and it ended. You make your way back to Phnom Penh — walking, or riding something, or paying someone to carry you. The city is empty in the way of a place that has been forcibly emptied. The house you lived in has different people in it now, or nobody. You do not ask who they are. You find a space and you begin again, which is what the survivors of Year Zero spend the next decade doing.`,
+      `The Vietnamese army entered in January 1979 and it ended. You make your way back to Phnom Penh — walking, or riding something, or paying someone to carry you. The city is empty in the way of a place that has been forcibly emptied. The house you lived in has different people in it now, or nobody. You do not ask who they are. You find a space and you begin again, as the survivors of Year Zero spend the next decade doing.`,
     choices: null,
     effect: (p) => { p.m += 4; p.h += 3; p.setMem('ppReturn', true) },
   },
@@ -410,15 +410,20 @@ export const CITIES_EXTENDED_EVENTS = [
   // Event 2: Iran-Iraq War in Tehran
   {
     id: 'city_tehran_iran_iraq_war',
-    phase: 'midlife',
-    weight: 3,
+    // Written for a parent with a son of fighting age, and it says so. It was
+    // `phase: 'midlife'` with no son in the guard, so it reached childless
+    // thirty-year-olds and missed every parent over fifty.
+    phase: null,
+    weight: 12,
     cooldown: 0,
     when: (G) =>
       G.place?.id === 'ir_tehran' &&
       G.currentYear >= 1980 && G.currentYear <= 1988 &&
-      !G.mem?.tehranWarYears,
+      (G.children ?? []).some(c => c.alive !== false && c.gender === 'male' &&
+        (c.age ?? (G.age - (c.ageAtBirth ?? 0))) >= 15 && (c.age ?? (G.age - (c.ageAtBirth ?? 0))) <= 24) &&
+      !G.mem?.tehranWarYears && !G.mem?.iranIraqWarSon,
     text: () =>
-      `Iraq is bombing Tehran. The raids come at night, which is when the blackout curtains go up and families move to interior rooms. The siren system gives you some warning. The bread lines are longer because of rationing. At the front, young men are being sent in human waves, some with keys to paradise that the clerics gave them. You have a son who is old enough. This is the calculation Tehran families make every morning.`,
+      `Iraq is bombing Tehran. When the siren goes the blackout curtains come down and the family moves to the inner room. The bread queue is longer every month. At the front, boys are walking into the minefields with plastic keys around their necks. Your son is old enough, and every morning you do the arithmetic.`,
     choices: [
       {
         text: 'Your son volunteers. You do not stop him.',
@@ -446,7 +451,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1980 &&
       G.flags.has('tehran_revolution_witness'),
     text: () =>
-      `The morality police are on Vali-e-Asr Street this afternoon. A woman ahead of you is being told her hijab is incorrect — she knows how to argue the regulation back and they let her go. You know which phrases are safe at the office and which are not. The satellite dish on your roof is technically illegal and the building manager has not reported it, which is its own form of social contract. The private and the public are two different countries with one address.`,
+      `The morality police are on Vali-e-Asr Street this afternoon. A woman ahead of you is being told her hijab is incorrect — she knows how to argue the regulation back and they let her go. You know which phrases are safe at the office and which are not. The satellite dish on your roof is technically illegal and the building manager has not reported it: a social contract. The private and the public are two different countries with one address.`,
     choices: null,
     effect: (p) => { p.m -= 3; p.e += 2; },
   },
@@ -462,7 +467,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1997 && G.currentYear <= 2005 &&
       !G.mem?.khatamiBrief,
     text: () =>
-      `Khatami wins the presidency and something opens — briefly. The newspapers multiply. The cafes allow some of what was not allowed. University students are talking in ways that were not possible in 1990. You notice it the way you notice a room when someone opens a window. Then, gradually, the window closes again — the Guardian Council blocks reformist candidates, the judiciary prosecutes journalists. The opening was real. The closing is also real. This is the shape of the hope available in Tehran.`,
+      `Khatami wins the presidency and something opens — briefly. The newspapers multiply. The cafes allow some of what was not allowed. University students are talking in ways that were not possible in 1990. You notice it the way you notice a room when someone opens a window. Then, gradually, the window closes again — the Guardian Council blocks reformist candidates, the judiciary prosecutes journalists. The closing is also real. This is the shape of the hope available in Tehran.`,
     choices: null,
     effect: (p) => { p.m += 4; p.e += 3; p.setMem('khatamiBrief', true) },
   },
@@ -530,7 +535,7 @@ export const CITIES_EXTENDED_EVENTS = [
       (G.character.country?.name === 'Trinidad and Tobago' || G.character.country?.name === 'Jamaica' || G.character.country?.name === 'Barbados' || G.character.country?.name === 'India' || G.character.country?.name === 'Pakistan') &&
       !G.mem?.windrushLondonArrival,
     text: () =>
-      `London. The landlady's sign says No Coloureds, No Irish, No Dogs. You find a room through a man from home who knows someone. The room is small and the gas meter takes coins. The British you had imagined from films is not this Britain. This Britain is cold in a way that is not entirely about weather. At work they call you by a shorter version of your name without asking. You learn which pubs will serve you. There are more of them than you expected. There are also fewer.`,
+      `London. The landlady's sign says No Coloureds, No Irish, No Dogs, and you find a room through a man from home who knows someone; the gas meter takes coins. This Britain is cold, and not only in the weather. At work they shorten your name without asking. You learn which pubs will serve you, and there are more of them than you expected, and fewer.`,
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 3; p.addFlag('windrush_generation'); p.setMem('windrushLondonArrival', true) },
   },
@@ -559,7 +564,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.place?.id === 'uk_london' &&
       G.currentYear >= 1973 && G.currentYear <= 1996,
     text: () =>
-      `There has been another bomb. The pub or the railway station or the department store — London has learned to read the news a certain way during the IRA campaign. The litter bins were removed from Tube stations years ago; now they're just gaps where bins used to be. You check under your car if you have one. You know which buildings are protected by barriers. The city functions through it, which is its own statement about what people will absorb in order to continue their lives.`,
+      `There has been another bomb. The pub or the railway station or the department store — London has learned to read the news a certain way during the IRA campaign. The litter bins were removed from Tube stations years ago; now they're just gaps where bins used to be. You check under your car if you have one. You know which buildings are protected by barriers. The city functions through it, and that says what people will absorb in order to continue their lives.`,
     choices: null,
     effect: (p) => { p.m -= 3; p.h -= 1; },
   },
@@ -624,7 +629,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1968 && G.currentYear <= 1973 &&
       !G.mem?.spMiracleLived,
     text: () =>
-      `São Paulo, the Brazilian economic miracle. The Avenida Paulista is under construction. GDP growing at ten percent a year. The newspapers report figures but not the AI-5 — the institutional act that abolished habeas corpus, suspended political rights, censored the press. The DOPS operates quietly. Caetano Veloso has been arrested and exiled. The radio plays music that says things obliquely. The city is thriving and something else is also happening. Most people in São Paulo know this and arrange not to think about it.`,
+      `São Paulo in the miracle years: Avenida Paulista going up, the economy growing at ten percent. The newspapers print the figures and not the decree that abolished habeas corpus; the political police work quietly; Caetano has been arrested and sent abroad. The radio plays songs that say things sideways. The city is thriving, and something else is also happening, and most people arrange not to think about it.`,
     choices: null,
     effect: (p) => { p.m += 3; p.mo += 1500; p.addFlag('military_dictatorship_lived'); p.setMem('spMiracleLived', true) },
   },
@@ -639,7 +644,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1979 && G.currentYear <= 1985 &&
       !G.mem?.spAbertura,
     text: () =>
-      `Abertura — opening. The military government is releasing its grip slowly and deliberately, at a speed it controls. The amnesty law of 1979 pardons the exiles who return — and also pardons the torturers, which is part of the deal. The Diretas Já movement fills the streets of São Paulo in 1984: one million people demanding direct elections. The elections they demand are denied and then given to them indirectly — and then, in 1989, directly. This is what democracy sounds like when it is being negotiated back from people who took it.`,
+      `Abertura — opening. The military government is releasing its grip slowly and deliberately, at a speed it controls. The amnesty law of 1979 pardons the exiles who return — and also pardons the torturers. That is the deal. The Diretas Já movement fills the streets of São Paulo in 1984: one million people demanding direct elections. The elections they demand are denied and then given to them indirectly — and then, in 1989, directly. This is what democracy sounds like when it is being negotiated back from people who took it.`,
     choices: null,
     effect: (p) => { p.m += 5; p.s += 2; p.setMem('spAbertura', true) },
   },
@@ -687,7 +692,7 @@ export const CITIES_EXTENDED_EVENTS = [
       !G.mem?.rioEventMoment,
     text: (G) =>
       G.currentYear === 2014
-        ? `The World Cup. Half of Rio has been evicted and their homes demolished for the infrastructure. The Maracanã is full. The team collapses 7–1 against Germany in Belo Horizonte and the country goes quiet in a way — not silence but the specific tone of a collective humiliation. Football is not just football here. Everyone knew this already. The score makes it undeniable.`
+        ? `The World Cup. Half of Rio has been evicted and their homes demolished for the infrastructure. The Maracanã is full. The team collapses 7–1 against Germany in Belo Horizonte and the country goes quiet in a way — not silence but the tone of a collective humiliation. Football is not just football here. Everyone knew this already. The score makes it undeniable.`
         : `The Olympics. Three hundred thousand people were displaced for the infrastructure over the last six years. The venues are ready. The Copacabana beach venue is beautiful. In the cidade maravilhosa the gap between what was advertised and what was built is, as always, the story.`,
     choices: null,
     effect: (p) => { p.m -= 3; p.e += 2; p.setMem('rioEventMoment', true) },
@@ -736,7 +741,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear === 1998 &&
       !G.mem?.jakarta1998Fall,
     text: () =>
-      `May 1998. The rupiah has lost eighty percent of its value in six months. Students occupy the parliament building. The riots begin on May 13 and for three days Jakarta burns in specific places — the Chinese Indonesian neighborhoods. The mobs have lists of addresses. This is not spontaneous. Your Chinese Indonesian colleagues have gone to ground or left the country. On May 21, Suharto resigns after thirty-two years. Thirty-two years ends on a Tuesday afternoon on television. The city is stunned and then continues.`,
+      `May 1998. The rupiah has lost most of its value and the students are on the roof of the parliament. On May 13 the riots begin, and for three days Jakarta burns in particular places, the Chinese neighbourhoods; the mobs have lists of addresses. Your Chinese Indonesian colleagues have gone to ground or left. On May 21 Suharto resigns on television after thirty-two years, on a weekday morning. The city is stunned and then continues.`,
     choices: null,
     effect: (p) => { p.m -= 5; p.wipeMoney(0.2); p.setMem('jakarta1998Fall', true) },
   },
@@ -754,7 +759,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1960 &&
       !G.mem?.warsawPostwarRebuild,
     text: () =>
-      `Warsaw was eighty-five percent destroyed. The decision to rebuild it exactly as it was — street by street, building by building, using prewar photographs and paintings — is one of the stranger decisions in architectural history. The Stare Miasto, the Old Town, will be rebuilt as a copy of itself. It will be beautiful and real and also not the original, which is the condition of postwar Warsaw in a different register.`,
+      `Warsaw was eighty-five percent destroyed. The decision to rebuild it exactly as it was — street by street, building by building, using prewar photographs and paintings — is one of the stranger decisions in architectural history. The Stare Miasto, the Old Town, will be rebuilt as a copy of itself. It will be beautiful and real and also not the original, as postwar Warsaw was.`,
     choices: null,
     effect: (p) => { p.e += 3; p.setMem('warsawPostwarRebuild', true) },
   },
@@ -784,7 +789,8 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1996 &&
       !G.mem?.warsawShockTherapy,
     text: () =>
-      `The Balcerowicz Plan — shock therapy. Price controls removed overnight. Subsidies ended. State enterprises privatized or left to collapse. Inflation at six hundred percent. The state shops have real goods now and nobody can afford them. A colleague who worked for thirty years at the same factory is let go and the concept of a severance package does not quite exist yet. The macroeconomists call it a success. It is a success. The cost of the success is distributed unequally, as the cost of everything is.`,
+      `Shock therapy: price controls gone overnight, subsidies ended, the state firms sold or left to die. The state shops have real goods now and nobody can afford them. A colleague who worked thirty years at the same factory is let go, into a world where severance is still a foreign word. The economists call it a success, and it is, and its cost falls unequally, as costs do.`,
+    context: 'The Balcerowicz Plan took effect on 1 January 1990; inflation in 1990 was about 585 percent.',
     choices: null,
     effect: (p) => { p.m -= 4; p.wipeMoney(0.2); p.setMem('warsawShockTherapy', true) },
   },
@@ -803,7 +809,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.ethnicity === 'black_south_african' &&
       !G.mem?.jhbPassLaws,
     text: () =>
-      `The dompas — the reference book — must be on your person at all times in Johannesburg. It specifies where you are permitted to be, when, and why. To be in the city without the right endorsements is a criminal offense. The police check at the bus stop, at the train station, at the corner near your employer's building. Half the men on the pavement are doing the same sum you are doing, which is whether the endorsement stamped in March is still good.`,
+      `The dompas — the reference book — must be on your person at all times in Johannesburg. It specifies where you are permitted to be, when, and why. To be in the city without the right endorsements is a criminal offense. The police check at the bus stop, at the train station, at the corner near your employer's building. Half the men on the pavement are doing the same sum you are doing: whether the endorsement stamped in March is still good.`,
     choices: null,
     effect: (p) => { p.m -= 6; p.addFlag('apartheid_pass_book'); p.setMem('jhbPassLaws', true) },
   },
@@ -881,7 +887,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 2008 && G.currentYear <= 2012 &&
       !G.mem?.dublinCrash2008,
     text: () =>
-      `The government has guaranteed the banks' liabilities, which are forty percent of GDP, which means the debt belongs to the public. The IMF arrives. The austerity budget cuts public sector pay, healthcare, education. Your mortgage is now worth more than your house. The people who caused this are still employed. The children are emigrating again. The specific bitterness of a country that believed it had escaped its history and then found its history waiting for it.`,
+      `The government has guaranteed the banks' liabilities, which are forty percent of GDP, which means the debt belongs to the public. The IMF arrives. The austerity budget cuts public sector pay, healthcare, education. Your mortgage is now worth more than your house. The people who caused this are still employed. The children are emigrating again. The bitterness of a country that believed it had escaped its history and then found its history waiting for it.`,
     choices: null,
     effect: (p) => { p.m -= 7; p.wipeMoney(0.2); p.setMem('dublinCrash2008', true) },
   },
@@ -899,7 +905,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 2004 && G.currentYear <= 2005 &&
       !G.mem?.kyivOrangeRevolution && !G.mem?.ukrOrangeRev,
     text: () =>
-      `November 2004. The Maidan Nezalezhnosti is orange — orange tents, orange scarves, orange flags. Three weeks of mass protests after a fraudulent election runoff. The temperature is below zero. People are bringing food to the square in shifts. The Supreme Court annuls the election result. Yushchenko wins the re-run. You stood on the Maidan or you watched it on the screen. Either way, the country has demonstrated something about itself that it will refer to again.`,
+      `November 2004, and the Maidan is orange: tents, scarves, flags, three weeks of it after a rigged runoff, in temperatures below zero, with people bringing food to the square in shifts. The Supreme Court annuls the result and Yushchenko wins the rerun. You stood on the square or watched it on the screen. The country has shown something about itself that it will come back to.`,
     choices: null,
     effect: (p) => { p.m += 6; p.s += 3; p.addFlag('maidan_generation'); p.setMem('kyivOrangeRevolution', true); p.setMem('ukrOrangeRev', true) },
   },
@@ -947,7 +953,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2015 &&
       !G.mem?.dhakaGarmentEconomy,
     text: () =>
-      `The garment factories employ four million people in Bangladesh, eighty percent of them women. The wage is some amount per month that represents enough, which is different from enough. The building you work in or pass every morning has eight floors and produces shirts for European and American retailers at a price that requires the building to be built to a particular specification. The Rana Plaza building collapsed in 2013, killing eleven hundred people. The specification was not met. This is the economy of your city and it is also the economy of the world.`,
+      `The garment factories employ four million people in Bangladesh, eighty percent of them women. The wage is some amount per month that represents enough, and is not enough. The building you work in or pass every morning has eight floors and produces shirts for European and American retailers at a price that requires the building to be built to a specification. The Rana Plaza building collapsed in 2013, killing eleven hundred people. The specification was not met, and that is the economy of your city and of the world.`,
     choices: null,
     effect: (p) => { p.m -= 2; p.e += 3; p.setMem('dhakaGarmentEconomy', true) },
   },
@@ -980,7 +986,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 2007 && G.currentYear <= 2009 &&
       !G.mem?.harareHyperinflation,
     text: () =>
-      `The price of bread has changed since this morning. The one-hundred-trillion-dollar note was issued last year and is already worthless — you use it to light the fire. The official exchange rate is a fiction and the parallel rate changes hourly. Salaries are paid weekly because monthly would be meaningless by the end of the month. The doctors and teachers have left or are leaving. The supermarket shelves are the specific empty of a command economy that has lost control of its commands. The word for this is Zimbabwe, which used to mean something else.`,
+      `The price of bread has changed since this morning. The one-hundred-trillion-dollar note was issued last year and is already worthless — you use it to light the fire. The official exchange rate is a fiction and the parallel rate changes hourly. Salaries are paid weekly because monthly would be meaningless by the end of the month. The doctors and teachers have left or are leaving. The supermarket shelves are the empty of a command economy that has lost control of its commands. The word for this is Zimbabwe, which used to mean something else.`,
     choices: null,
     effect: (p) => { p.m -= 12; p.wipeMoney(0.7); p.addFlag('harare_hyperinflation_lived'); p.setMem('harareHyperinflation', true) },
   },
@@ -1145,7 +1151,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1995 && G.currentYear <= 2010 &&
       !G.mem?.shanghaiPudong,
     text: () =>
-      `Pudong. Ten years ago it was farmland across the river. Now it is the Oriental Pearl Tower and the Jin Mao Building and the specific skyline that Shanghai is presenting to the world as evidence of something. The construction never stops — the cranes are visible from Puxi at night by their flashing lights. You are watching a city build its own mythology in real time. The mythology is also real: the city genuinely changed and is still changing and the rate of change itself is the statement.`,
+      `Pudong. Ten years ago it was farmland across the river. Now it is the Oriental Pearl Tower and the Jin Mao Building and the skyline that Shanghai is presenting to the world as evidence of something. The construction never stops — the cranes are visible from Puxi at night by their flashing lights. You are watching a city build its own mythology in real time. The mythology is also real: the city genuinely changed and is still changing and the rate of change itself is the statement.`,
     choices: null,
     effect: (p) => { p.m += 3; p.e += 2; p.setMem('shanghaiPudong', true) },
   },
@@ -1229,7 +1235,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.place?.id === 'tr_istanbul' &&
       G.currentYear >= 1960 && G.currentYear <= 2000,
     text: (G) => {
-      if (G.currentYear >= 1960 && G.currentYear < 1972) return `There has been a coup. The radio is playing classical music, which is how you know. The constitution is suspended; the National Unity Committee has announced the new order. Istanbul has absorbed this — the bridges are still running, the Grand Bazaar will open at nine. Turkey's relationship with its military is the background architecture of the republic.`
+      if (G.currentYear >= 1960 && G.currentYear < 1972) return `There has been a coup. The radio is playing classical music, and so you know. The constitution is suspended; the National Unity Committee has announced the new order. Istanbul has absorbed this — the bridges are still running, the Grand Bazaar will open at nine. Turkey's relationship with its military is the background architecture of the republic.`
       if (G.currentYear >= 1980 && G.currentYear < 1984) return `The 1980 coup suspended all political activity. Six hundred and fifty thousand people were detained in the first three years. The constitution was rewritten by the military and ratified by ninety-one percent — a figure that requires some understanding of how the question was framed and who was in the room. Istanbul navigates this the way it navigates everything: by continuing.`
       return `There has been another political crisis. Istanbul absorbs it, as it has absorbed successive governments and coups since 1923. The city has been a capital of three empires and is not easily disrupted.`
     },
@@ -1244,7 +1250,7 @@ export const CITIES_EXTENDED_EVENTS = [
     cooldown: 9,
     when: (G) => G.place?.id === 'tr_istanbul',
     text: () =>
-      `The Bosphorus at dusk from the Galata Bridge. The tankers going north to the Black Sea pass the ferries going east to the Asian shore pass the fishing boats going nowhere in particular. The specific geography of Istanbul — a city on two continents, a strait that is also a city street — produces a kind of person who has made a habit of standing on the bridge and looking both ways at once.`,
+      `The Bosphorus at dusk from the Galata Bridge. The tankers going north to the Black Sea pass the ferries going east to the Asian shore pass the fishing boats going nowhere in particular. The geography of Istanbul — a city on two continents, a strait that is also a city street — produces a kind of person who has made a habit of standing on the bridge and looking both ways at once.`,
     choices: null,
     effect: (p) => { p.m += 4; },
   },

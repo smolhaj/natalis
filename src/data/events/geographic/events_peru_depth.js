@@ -35,7 +35,7 @@ export const PERU_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 2000 &&
       G.age >= 16 && G.age <= 34 &&
       !G.mem?.perDepSerranoLima,
-    text: `Lima is a city that knows you came from the sierra as soon as you open your mouth. The accent, the specific words, the way you say certain vowels. The term for someone from the highlands, *cholo*, can be an insult or a greeting depending on who says it and how. The barriada you arrive in — the invasion settlement on the desert land to the north or south of the city — is full of people who arrived the same way, speaking Quechua to each other at home and Spanish in the street. The city does not welcome you. The city absorbs you according to the rules the city has, which are not the rules of the highlands.`,
+    text: `Lima is a city that knows you came from the sierra as soon as you open your mouth. The accent, the words, the way you say certain vowels. The term for someone from the highlands, *cholo*, can be an insult or a greeting depending on who says it and how. The barriada you arrive in — the invasion settlement on the desert land to the north or south of the city — is full of people who arrived the same way, speaking Quechua to each other at home and Spanish in the street. The city does not welcome you. The city absorbs you according to the rules the city has, which are not the rules of the highlands.`,
     choices: [
       {
         text: 'You learn to flatten the accent. You become someone the city accepts.',
@@ -116,7 +116,7 @@ export const PERU_DEPTH_EVENTS = [
       {
         text: 'Your family left before the worst of it. Someone told your mother to leave.',
         tag: null,
-        outcome: 'The families who stayed were the ones who had no better option. Your mother\'s decision — the specific warning she acted on — was the margin between you and the statistics.',
+        outcome: 'The families who stayed were the ones who had no better option. Your mother\'s decision — the warning she acted on — was the margin between you and the statistics.',
         effect: (p) => {
           p.e += 2
           p.karma += 3
@@ -142,9 +142,9 @@ export const PERU_DEPTH_EVENTS = [
     text: (G) => `Your grandparents came from Japan between 1899 and 1941. In Peru they became *Nikkei* — Japanese by descent, Peruvian by birth and culture, speaking Spanish and sometimes Japanese, cooking lomo saltado alongside sushi. In 1940 anti-Japanese riots destroyed the businesses of the community in Lima. In the Pacific War years, some Nikkei were interned, or deported to the United States as enemy aliens at Peru's request, or simply watched.${G.currentYear >= 1990 ? ' Alberto Fujimori was elected president in 1990 — a Nikkei, son of immigrants — which was either a sign of integration or an anomaly depending on who was saying it.' : ''} You are neither fully Japanese nor not Japanese. The category is specific to Peru and is yours.`,
     choices: [
       {
-        text: 'The Nikkei community is your world. The Japanese-Peruvian associations, the kenjinkai, the specific food.',
+        text: 'The Nikkei community is your world. The Japanese-Peruvian associations, the kenjinkai, the food.',
         tag: null,
-        outcome: 'The community is small enough that everyone knows everyone across two generations. This is a specific intimacy that feels like home and like a boundary simultaneously.',
+        outcome: 'The community is small enough that everyone knows everyone across two generations. This is an intimacy that feels like home and like a boundary simultaneously.',
         effect: (p) => {
           p.s += 3
           p.m += 3
@@ -155,7 +155,7 @@ export const PERU_DEPTH_EVENTS = [
       {
         text: 'You are Peruvian. The Nikkei identity is a heritage, not a community you primarily inhabit.',
         tag: null,
-        outcome: 'Peru claims you fully. The Japanese side is the grandmother\'s dishes and the specific shape of the face that Peru sees as foreign. You move between these without making it a question.',
+        outcome: 'Peru claims you fully. The Japanese side is the grandmother\'s dishes and the shape of the face that Peru sees as foreign. You move between these without making it a question.',
         effect: (p) => {
           p.m += 2
           p.addFlag('per_dep_nikkei_identity')
@@ -177,7 +177,7 @@ export const PERU_DEPTH_EVENTS = [
       G.currentYear >= 1960 &&
       G.age >= 6 && G.age <= 18 &&
       !G.mem?.perDepAfro,
-    text: `The Afro-Peruvian communities of the southern coast — Chincha, Cañete, El Carmen — are the descendants of enslaved people brought to work the coastal haciendas, the vineyards, the sugar plantations. The music is *festejo* and *landó*, the rhythms that Nicomedes Santa Cruz collected and restored in the 1950s and 60s when they were nearly lost. The cajon — the box drum — was invented here, by enslaved people who were forbidden drums and used what was available. Peru's official racial hierarchy placed Afro-Peruvians at the bottom, below the indigenous and the mestizo. The coastal communities existed within this hierarchy and also outside it, in the specific culture of the southern coast that knew what it was without needing the hierarchy's permission.`,
+    text: `The Afro-Peruvian communities of the southern coast — Chincha, Cañete, El Carmen — are the descendants of enslaved people brought to work the coastal haciendas, the vineyards, the sugar plantations. The music is *festejo* and *landó*, the rhythms that Nicomedes Santa Cruz collected and restored in the 1950s and 60s when they were nearly lost. The cajon — the box drum — was invented here, by enslaved people who were forbidden drums and used what was available. Peru's official racial hierarchy placed Afro-Peruvians at the bottom, below the indigenous and the mestizo. The coastal communities existed within this hierarchy and also outside it, in the culture of the southern coast that knew what it was without needing the hierarchy's permission.`,
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -199,7 +199,7 @@ export const PERU_DEPTH_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2015 &&
       G.age >= 16 && G.age <= 35 &&
       !G.mem?.perDepVraem,
-    text: `The VRAEM — *Valle de los Ríos Apurímac, Ene y Mantaro* — is the highest coca-producing valley in the world. The valley floor is impossible to reach by road from most of Peru. The Sendero Luminoso remnants control certain routes. The FARC occasionally crosses from Colombia to compare operations. The helicopter comes sometimes with eradication teams and goes. The coca grows back. The alternative crops — cacao, coffee — have buyers in theory and in practice require a road and a cold chain and a state presence that the valley does not have. The coca buyer comes to you. The logic of the valley is the logic of access.`,
+    text: `The VRAEM is the biggest coca valley in the world, and from most of Peru you cannot reach it by road. What is left of the Shining Path controls some of the paths. Sometimes the helicopter comes with an eradication team, and goes, and the coca grows back. Cacao and coffee have buyers in theory, if there were a road and a cold store and a state. The coca buyer comes to you.`,
     choices: [
       {
         text: 'You grow coca. The calculation does not offer another crop that makes sense.',
@@ -243,7 +243,7 @@ export const PERU_DEPTH_EVENTS = [
     context: 'Pedro Castillo, a rural schoolteacher and union leader, won Peru\'s 2021 election by about 44,000 votes, the first president from the sierra campesino class in the country\'s history. He attempted to dissolve Congress in December 2022, was impeached and arrested. His vice-president Dina Boluarte succeeded him; security forces killed around fifty protesters and bystanders, most of them in the southern regions, in the weeks that followed.',
     choices: [
       {
-        text: 'His election was real. That the establishment destroyed it does not make it not real.',
+        text: 'He was elected. That the establishment destroyed it does not make it not real.',
         tag: null,
         outcome: 'The dead in the south are from the departments that voted for him by the highest margins. The relationship between this fact and the official response is not subtle.',
         effect: (p) => {
@@ -256,7 +256,7 @@ export const PERU_DEPTH_EVENTS = [
       {
         text: 'His government was corrupt and incompetent. The result was the result.',
         tag: null,
-        outcome: 'The corruption charges are real. The question of whether they were applied symmetrically — whether a Lima president would have faced the same constitutional scrutiny — is the question you are left holding.',
+        outcome: 'The corruption charges stick. The question of whether they were applied symmetrically — whether a Lima president would have faced the same constitutional scrutiny — is the question you are left holding.',
         effect: (p) => {
           p.r += 4
           p.m -= 4
@@ -299,7 +299,7 @@ export const PERU_DEPTH_EVENTS = [
       G.flags.has('per_dep_smelter_generation') &&
       G.age >= 50 &&
       !G.mem?.perDepSmelterEcho,
-    text: `The lead exposure of a childhood in a smelter town is not an event with a specific date. It is a long-term alteration to the blood, the nervous system, the kidneys, that runs in the background for decades. The 2007 lawsuit against Doe Run — the Missouri company that acquired the La Oroya complex — was settled out of court. The company entered bankruptcy. The smelter closed in 2009. The children who grew up there are adults now, carrying in their bodies the industrial history of a valley that someone else profited from.`,
+    text: `The lead exposure of a childhood in a smelter town has no date. It runs in the blood, the nervous system, the kidneys, for decades. The 2007 lawsuit against Doe Run — the Missouri company that acquired the La Oroya complex — was settled out of court. The company entered bankruptcy. The smelter closed in 2009. The children who grew up there are adults now, carrying in their bodies the industrial history of a valley that someone else profited from.`,
     choices: null,
     effect: (p) => {
       p.h -= 4

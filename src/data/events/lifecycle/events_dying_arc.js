@@ -33,7 +33,7 @@ export const DYING_ARC_EVENTS = [
     when: (G) =>
       !G.mem?.daGivingAwayDone &&
       G.age >= 77 && G.age <= 88,
-    text: 'You have been moving things. Not dramatically — a book to someone who would value it, a tool to someone who would use it, a piece of furniture that belongs with a particular person more than it belongs with you. You are not giving away your life. You are sending certain parts of it where they should end up while you are still there to place them. There is a satisfaction in this that you did not anticipate.',
+    text: 'You have been moving things. Not dramatically — a book to someone who would value it, a tool to someone who would use it, a piece of furniture that belongs with a person more than it belongs with you. You are not giving away your life. You are sending certain parts of it where they should end up while you are still there to place them. There is a satisfaction in this that you did not anticipate.',
     choices: [
       {
         text: 'You give thoughtfully — each thing to the right person',
@@ -117,7 +117,7 @@ export const DYING_ARC_EVENTS = [
     when: (G) =>
       !G.mem?.daNightQuestionDone &&
       G.age >= 80 && G.age <= 92,
-    text: 'You wake at three in the morning, which is when the questions arrive that the day keeps at a distance. You are not frightened exactly. You are aware, in the specific way of people who have been this age, that you do not know how much time there is. You lie in the dark and think about this with a quality of attention that is neither panic nor peace but something in between — a kind of sitting with it, the way you\'d sit with anything you cannot change.',
+    text: 'You wake at three in the morning, when the questions arrive that the day keeps at a distance. You are not frightened exactly. You are aware, in the way of people who have been this age, that you do not know how much time there is. You lie in the dark and think about this with a quality of attention that is neither panic nor peace but something in between — a kind of sitting with it, the way you\'d sit with anything you cannot change.',
     choices: null,
     effect: (p) => {
       p.setMem('daNightQuestionDone', true)

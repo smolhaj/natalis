@@ -14,7 +14,7 @@ export const FOLLOWTHROUGH_62_EVENTS = [
       G.flags.has('ken_dep_matatu_generation') &&
       G.age >= 55 &&
       !G.mem?.ft62MatLate,
-    text: `The BRT — the bus rapid transit line on Thika Road, then Ngong Road — replaced some of the routes you knew. The matatus still run, and the touts still call, but the specific configuration of routes and times and shortcuts you accumulated over twenty or thirty years of Nairobi commuting is no longer the only way to know the city. You observe the new commuters consulting apps for arrival times. The app gives a time. The matatu arrives at approximately the time. The gap between the approximation and the reality is something you could read without the app, but you have learned to let the app be enough.`,
+    text: `The BRT — the bus rapid transit line on Thika Road, then Ngong Road — replaced some of the routes you knew. The matatus still run, and the touts still call, but the configuration of routes and times and shortcuts you accumulated over twenty or thirty years of Nairobi commuting is no longer the only way to know the city. You observe the new commuters consulting apps for arrival times. The app gives a time. The matatu arrives at approximately the time. The gap between the approximation and the reality is something you could read without the app, but you have learned to let the app be enough.`,
     choices: null,
     effect: (p) => { p.r += 3; p.m += 2; p.setMem('ft62MatLate', true) },
   },
@@ -43,7 +43,7 @@ export const FOLLOWTHROUGH_62_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2020 &&
       G.age >= 18 &&
       !G.mem?.ft62WestgateAfter,
-    text: `After Westgate the security architecture of Nairobi changed. The bollards outside malls. The bag search at every entrance — a frisking that became normal in the way that things become normal: through repetition until the noticing stops. The Garissa University attack in April 2015 killed 148 students. The attacks continued in different forms and in different places. The question that kept recurring was not whether to go out but what level of vigilance was the appropriate one to carry into ordinary life. You reached an equilibrium. Everyone did. The equilibrium was not the same as the feeling of safety.`,
+    text: `After Westgate the city changes: bollards outside the malls, the bag search at every door, the frisking that becomes normal through repetition until nobody notices it. Garissa comes the next year, and the students killed there. The question is no longer whether to go out but how much watchfulness to carry into an ordinary day. Everyone finds a balance. The balance is not the same as feeling safe.`,
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 5; p.setMem('ft62WestgateAfter', true) },
   },

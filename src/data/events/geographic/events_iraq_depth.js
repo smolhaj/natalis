@@ -25,7 +25,7 @@ export const IRAQ_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2014 &&
       G.age >= 6 && G.age <= 20 &&
       !G.mem?.irqYazidiIdentity,
-    text: `The Peacock Angel — Tawsi Melek — is not the devil the Muslims think he is. This is the first and most important distinction. You learn it early and carry it always: the theology that outsiders collapse into condemnation is, from the inside, something more careful, more ancient, more strange. The religion predates Islam and may predate the Abrahamic faiths entirely. The sacred books are kept in copper vessels and are not shown to non-Yazidis. The castes — sheikh, pir, murid — are not arbitrary; they are the structure through which knowledge is transmitted. You are Yazidi in Sinjar and in the Nineveh Plains. Your world is specific and older than most people realise.`,
+    text: `Tawsi Melek, the Peacock Angel, is not the devil outsiders take him for, and that is the first thing you learn and the thing you carry always. The faith is older than Islam, perhaps older than Abraham; the sacred books are kept in copper vessels and not shown to outsiders; the castes of sheikh, pir and murid are how knowledge is handed down. You are Yazidi, in Sinjar or the Nineveh Plains. Your world is older than most people realise.`,
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -66,7 +66,7 @@ export const IRAQ_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1990 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.irqMarshWorld,
-    text: `The Mesopotamian marshes between the Tigris and Euphrates are a world made of water and reed. The Ma'dan — the Marsh Arabs — have lived here for millennia in floating villages, houses built on artificial islands of layered reed, moved when the water dictates. The water buffalo in the channels between the reed islands. The birds in their thousands. The fish traps. The specific quality of the air and light over open water that is also not ocean, that is something older — this is what some believe is the Garden of Eden. You are growing up in it.`,
+    text: `The Mesopotamian marshes between the Tigris and Euphrates are a world made of water and reed. The Ma'dan — the Marsh Arabs — have lived here for millennia in floating villages, houses built on artificial islands of layered reed, moved when the water dictates. The water buffalo in the channels between the reed islands. The birds in their thousands. The fish traps. The quality of the air and light over open water that is also not ocean, that is something older — this is what some believe is the Garden of Eden. You are growing up in it.`,
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -86,7 +86,7 @@ export const IRAQ_DEPTH_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 2003 &&
       G.flags.has('irq_dep_marsh_generation') &&
       !G.mem?.irqMarshDrained,
-    text: `After the 1991 uprising, Saddam drains the marshes. Dams, diversions, embankments — the Mesopotamian wetlands that covered 20,000 square kilometres are reduced to ten percent of their original extent in twelve years. The floating villages are now desert. The water buffalo are gone. The birds that nested here since before recorded history no longer come. The government calls it an agricultural reclamation project. The marsh Arabs, hundreds of thousands of them, are displaced — into refugee camps in Iran, into the slums of Basra and Baghdad. The world you grew up in has been unmade by decree.`,
+    text: `After the 1991 uprising Saddam drains the marshes: dams, diversions, embankments, and in a decade the wetlands are a tenth of what they were. The floating villages are desert; the buffalo are gone; the birds that nested here since before anyone wrote anything down do not come. The government calls it land reclamation. The Marsh Arabs go to camps in Iran and the slums of Basra and Baghdad. The world you grew up in has been unmade by decree.`,
     choices: null,
     effect: (p) => {
       p.m -= 15
@@ -130,7 +130,8 @@ export const IRAQ_DEPTH_EVENTS = [
       G.currentYear >= 1993 && G.currentYear <= 2002 &&
       G.age >= 20 &&
       !G.mem?.irqSanctionsDaily,
-    text: `The pharmacies have shortages that are not a temporary disruption but the permanent condition. You go with a prescription and the pharmacist shakes his head — not this month, not in this district. The teachers' salary is now worth twelve dollars. The flour at the state distribution point sometimes has sand in it. The middle class that Iraq's oil wealth built — the engineers, doctors, teachers — is eating into its last savings. The UN Oil-for-Food programme provides some things and not others and is administered through a system that Saddam's government can partially redirect. You are educated and resourceful and you are managing. Others are not managing.`,
+    text: `The pharmacies' shortages are not a disruption but the permanent condition: not this month, not in this district. A teacher's salary is worth a few dollars, and the state flour sometimes has sand in it. The engineers, doctors and teachers the oil money made are eating their last savings, while Oil-for-Food provides some things and not others, through a system the government can bend. You are educated and resourceful and you are managing. Others are not.`,
+    context: 'UN sanctions on Iraq ran from 1990 to 2003; the Oil-for-Food programme began in 1996.',
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -170,12 +171,13 @@ export const IRAQ_DEPTH_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2015 &&
       G.age >= 20 &&
       !G.mem?.irqChristianExodus,
-    text: `After 2003 the threat is specific: the envelope under the door, the phone call, the bomb at the church entrance. The Christian communities of Iraq numbered 1.4 million in 2003. By 2014 it is 400,000. By 2018 it is 250,000. The families you grew up with are in Sweden, in Detroit, in Sydney. The church is attended now by old people and by those who stayed because they could not leave or would not leave on principle. The neighbourhood that was the neighbourhood of your community has changed. The church still stands. The congregation has not.`,
+    text: `After 2003 the threat is particular: the envelope under the door, the phone call, the bomb at the church gate. The families you grew up with are in Sweden, in Detroit, in Sydney. On Sundays the church holds the old, and the ones who could not leave, and the ones who would not on principle. The church still stands. The congregation does not.`,
+    context: 'Iraq\'s Christian population fell from about 1.4 million in 2003 to around 250,000 by the late 2010s.',
     choices: [
       {
         text: 'Leave. Iraq is not safe for your family.',
         tag: null,
-        outcome: 'You join the diaspora. The departure is not a resolution. It is a different kind of grief — for the place and the community you are leaving behind.',
+        outcome: 'You join the diaspora. The departure resolves nothing. It is a grief for the place and the community you are leaving behind.',
         effect: (p) => { p.m -= 10; p.r += 8; p.setResidency('work_visa'); p.setMem('irqChristianExodus', true) },
       },
       {

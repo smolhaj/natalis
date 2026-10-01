@@ -60,7 +60,7 @@ const RWANDA_EVENTS = [
     text: (G) => {
       const isTutsi = G.ethnicity === 'tutsi'
       return isTutsi
-        ? 'Radio Télévision Libre des Mille Collines has been on air since July. It plays popular music. It calls Tutsi inyenzi: cockroaches. It runs skits where cockroaches are exterminated. Your neighbors listen to it. Some of them laugh at the skits. The radio is on all day in the shop and in the bar. The language fills the room and then the room becomes the country. You begin to calculate the distance between you and the door.'
+        ? 'The new radio station plays popular music, and calls Tutsi inyenzi, cockroaches, and runs comedy sketches in which the cockroaches are exterminated. Your neighbours listen. Some of them laugh. It is on all day in the shop and in the bar, and the language fills the room, and then the room is the country. You begin to measure the distance between you and the door.'
         : 'The new station — RTLM — plays good music and it also plays a kind of talk that builds week by week. The Tutsi are called inyenzi. They are described as threats to be dealt with. The station reads out names of people who are described as enemies. Some of the names belong to people in your neighborhood. The language has become ordinary in the room before you notice that it has become ordinary.'
     },
     choices: null,
@@ -81,7 +81,7 @@ const RWANDA_EVENTS = [
     text: (G) => {
       const isTutsi = G.ethnicity === 'tutsi'
       return isTutsi
-        ? 'April 7. The roadblocks are made of whatever was at hand — tree trunks, bicycle frames, stones. The radio is broadcasting names and addresses. Your mother says to go to the church. The church at Nyamata has a blue roof. Eight thousand people went to the church at Nyamata. The churches were not safe. This is what you learn at thirteen in April 1994: the places you were taught to go when afraid are not safe. This is the education that runs underneath everything that comes after.'
+        ? 'April 7. The roadblocks are made of whatever was at hand: tree trunks, bicycle frames, stones, and the radio reads out names and addresses. Your mother says go to the church. The church at Nyamata has a blue roof, and thousands of people went into it. At thirteen, in April 1994, you learn that the places you were taught to go when afraid are not safe, and everything after is built on top of that.'
         : 'April 7. Your father\'s friends from the cell come to the house early. They have things in their hands. The radio says the inyenzi are attacking from everywhere and everyone must defend the homeland. The Tutsi family down the road — the children went to your school, you know their names — your father is explaining something to you. The explaining takes a long time and says less than what happens afterward.'
     },
     choices: null,
@@ -102,7 +102,7 @@ const RWANDA_EVENTS = [
     text: (G) => {
       const isTutsi = G.ethnicity === 'tutsi'
       return isTutsi
-        ? 'One hundred days. You calculate it later: April 7 to July 18. The calculation is not something you do in April. In April you are running or hiding or sitting very still in a place that you hope has not been listed. The radio coordinates the roadblocks. The interahamwe work by neighborhood, by sector, by hill. People who knew your name tell others where you are. The hiding has a specific quality: you are counting on people who you cannot contact to not say your name. Some of them do not say your name. Some of them do.'
+        ? 'One hundred days. You count it later; in April you are running, or hiding, or sitting very still somewhere you hope is not on a list. The radio coordinates the roadblocks, and the interahamwe work by neighbourhood, by sector, by hill. People who know your name tell others where you are. You are counting on people you cannot reach not to say your name. Some of them do not. Some of them do.'
         : 'One hundred days. The interahamwe checkpoints, the sector meetings, the lists. The men who are not killing are expected to explain why not. The official radio says this is self-defense. The words — inyenzi, inzoka, ibyitso — have been in the air since the previous year. The RTLM says the graves are only half full, that the work is not finished. You are navigating between what is being asked of you and what you can live with having done.'
     },
     choices: [
@@ -134,7 +134,8 @@ const RWANDA_EVENTS = [
       G.currentYear >= 1994 && G.currentYear <= 1997 &&
       G.age >= 18 &&
       !G.mem?.rwa_goma,
-    text: 'The RPF has taken Kigali. Two million Hutu crossed into Zaire in four days — the UN calls it the fastest mass movement of people in recorded history. The camps at Goma are built on volcanic rock so hard that latrines cannot be dug. Cholera kills 50,000 people in one month. The génocidaires are in the camps alongside families who fled fearing reprisal. The international aid arrives. The interahamwe control the camp committees and receive the aid on behalf of the population. The humanitarian organizations know this and continue anyway because there are two million people who need food. You are in this system.',
+    text: 'The RPF has Kigali, and a vast number of Hutu cross into Zaire in four days, and the camps at Goma are built on volcanic rock too hard to dig latrines in. Cholera comes. The men who ran the killing are in the camps alongside families who fled for fear of reprisal, and they run the camp committees, and they receive the aid on everyone\'s behalf. The aid organisations know, and keep feeding, because the people in the camps need food. You are inside this.',
+    context: 'About a million people crossed into Goma in July 1994; cholera killed some 50,000 in the camps that month.',
     choices: [
       {
         text: 'You stay in the camp. Returning is not safe — what happened in 1994 cannot simply be walked back.',
@@ -168,8 +169,9 @@ const RWANDA_EVENTS = [
       const isTutsi = G.ethnicity === 'tutsi'
       return isTutsi
         ? 'The gacaca court meets in the field outside the sector office. The man who killed your cousin is sitting ten metres from you. The gacaca is about establishing what happened and who did it — not exactly justice in the Western sense, not exactly reconciliation in the therapeutic sense. Something older: the community listing what it knows in public. You are asked to speak. What you have to say has been accumulating since April 1994.'
-        : 'The gacaca court meets in the field. One point five million cases in total. The courts work by category: organizers, killers, those who looted. Confession and testimony reduce sentences. The design is that the community knows — that the knowing in public is how the country moves forward. Your position in this process depends on what you did or refused to do during the hundred days. You are in the field. The public accounting begins.'
+        : 'The gacaca court meets in the field. It works by category, organisers, killers, looters, and confession and testimony reduce the sentence; the idea is that the community knows, and that knowing it in public is how the country goes on. Where you stand in it depends on what you did or refused to do in the hundred days. You are in the field. The public accounting begins.'
     },
+    context: 'Gacaca community courts tried nearly two million genocide cases between 2002 and 2012.',
     choices: [
       {
         text: 'You say what you know. The saying is its own thing, separate from what follows.',
@@ -202,7 +204,7 @@ const RWANDA_EVENTS = [
     context: 'Rwanda under Paul Kagame has recorded roughly eight percent annual GDP growth, a seventy percent fall in infant mortality since 1994, and among the lowest urban crime rates in Africa. Umuganda, mandatory community service, falls on the last Saturday of each month. Ethnic identification is prohibited in public life. Opposition figures have been imprisoned or died in unexplained circumstances and presidential results are routinely returned above ninety percent.',
     choices: [
       {
-        text: 'What has been rebuilt from 1994 is real. What it required can be accounted for separately.',
+        text: 'Some of what was destroyed in 1994 has been rebuilt. What it required can be accounted for separately.',
         tag: null,
         outcome: 'Rwanda has rebuilt faster than anyone projected. The accounting of how is still ongoing and still contested.',
         effect: (p) => { p.m += 4; p.addFlag('rwa_kagame_generation'); p.setMem('rwa_kagame', true); },

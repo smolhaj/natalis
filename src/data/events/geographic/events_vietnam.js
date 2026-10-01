@@ -128,7 +128,7 @@ export const VIETNAM_EVENTS = [
       (G.mem.boat_personYear == null || G.currentYear - G.mem.boat_personYear <= 2) &&
       G.currentYear >= 1977 && G.currentYear <= 1993 &&
       G.age >= 16,
-    text: 'The camp is on a small island. There are more people than the camp was built for. The food allocation is calculated by UNHCR formula. You are a number on a form. The interview will determine which country, if any, will accept you. First interview, then screening, then waiting for the result, then appeal. Some people have been here two years. You have a neighbour who has been here four. He is teaching children in a makeshift classroom because there is nothing else to do with the time.',
+    text: 'The camp is on a small island and holds more people than it was built for. Your rations are calculated by formula and you are a number on a form. There is an interview, and screening, and the wait for the result, and an appeal. Some people have been here two years. Your neighbour has been here four, and teaches the children in a lean-to because there is nothing else to do with the time.',
     choices: [
       {
         text: 'Study, work within the camp — use the time',
@@ -255,7 +255,7 @@ export const VIETNAM_EVENTS = [
       !G.flags.includes('south_vietnamese_diaspora') &&
       G.currentYear >= 1990 &&
       G.age >= 28,
-    text: 'The wire transfer goes every month. Not all of it, but enough that your family in Vietnam can do things that would otherwise be impossible — send a younger sibling to university, repair the roof, manage a medical bill. You are two places simultaneously. The place you live and the place you fund. The weight of it is not a complaint. It is just the shape of your life.',
+    text: 'The wire transfer goes every month. Not all of it, but enough that your family in Vietnam can do things that would otherwise be impossible — send a younger sibling to university, repair the roof, manage a medical bill. You are two places simultaneously. The place you live and the place you fund. You do not complain about the weight of it. It is the shape of your life.',
     choices: null,
     effect: (p) => { p.m -= 4; p.karma += 8; p.mo -= 500; p.addFlag('sends_remittances'); p.setMem('vnRemittanceFamily', true) },
   },
@@ -318,7 +318,7 @@ export const VIETNAM_EVENTS = [
       G.character.country.name === 'Vietnam' &&
       G.currentYear >= 2014 && G.currentYear <= 2016 &&
       G.age >= 18,
-    text: "May 2014. China places an oil rig in waters Vietnam claims as its exclusive economic zone. In the Hà Tĩnh and Bình Dương industrial zones, protests turn into attacks on factories. Workers burn buildings belonging to companies that look Chinese — some of them Taiwanese, some South Korean, caught in the visual logic of the moment. The Vietnamese Communist Party that fought France and America cannot openly oppose China; the two parties are ideological siblings and economic partners. The nationalism the party has cultivated cannot be fully directed. It runs in the streets for a week and then is suppressed. You are living in a country that has a complicated relationship with its largest neighbour, and always will.",
+    text: "May 2014. China parks an oil rig in water Vietnam claims, and in the industrial zones the protests turn into attacks on factories that look Chinese, some of them Taiwanese, some Korean. The Party that fought France and America cannot openly oppose China, its ideological sibling and biggest partner, and the nationalism it has cultivated cannot be steered. It runs in the streets for a week and then is put down. Your country's relation to its biggest neighbour is complicated, and always will be.",
     choices: null,
     effect: (p) => { p.r += 5; p.addFlag('vn_sino_tension_generation'); p.setMem('vnSCS', true) },
   },

@@ -35,7 +35,7 @@ export const MEMORY_LAYER_EVENTS = [
       G.currentYear - (G.mem?.lost_parent_motherYear ?? 0) >= 7,
     text: (G) => {
       const yearsAgo = G.currentYear - (G.mem?.lost_parent_motherYear ?? G.currentYear - 10)
-      return `Someone on the street uses an inflection your mother used — a particular way of ending a sentence, the small vocal lift that meant she was listening. You stop walking. It is nothing, a stranger, but for a second it is not nothing. She has been dead for ${yearsAgo} years and your body has not finished accounting for it.`
+      return `Someone on the street uses an inflection your mother used — a way of ending a sentence, the small vocal lift that meant she was listening. You stop walking. It is nothing, a stranger, but for a second it is not nothing. She has been dead for ${yearsAgo} years and your body has not finished accounting for it.`
     },
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('memLayerMotherVoice', true) },
@@ -54,7 +54,7 @@ export const MEMORY_LAYER_EVENTS = [
     text: (G) => {
       const yearsAgo = G.currentYear - (G.mem?.emigratedYear ?? G.currentYear - 15)
       const country = G.character?.country?.name ?? 'home'
-      return `A smell returns you to it — something cooking, or the particular quality of light through a window at a certain hour, or a type of rain. ${country}, ${yearsAgo} years ago. The specific place you left, not the abstraction. You are here and you are momentarily also there, and the two places exist at the same time and cannot be reconciled, only held.`
+      return `A smell returns you to it — something cooking, or the quality of light through a window at a certain hour, or a type of rain. ${country}, ${yearsAgo} years ago. The place you left, not the abstraction. You are here and you are momentarily also there, and the two places exist at the same time and cannot be reconciled, only held.`
     },
     choices: null,
     effect: (p) => { p.r += 4; p.setMem('memLayerEmiSmell', true) },
@@ -83,7 +83,7 @@ export const MEMORY_LAYER_EVENTS = [
       !G.mem?.memLayerFirstLove &&
       (G.mem?.first_love_overYear ?? 0) > 0 &&
       G.currentYear - (G.mem?.first_love_overYear ?? 0) >= 15,
-    text: 'You hear a name that is not their name, that sounds like their name, in a crowd, and for half a second your body responds. You were a different person then — the gap between that version of yourself and this one is not nostalgia exactly, more like the photograph of someone you knew well who moved away. You would not go back. But the photograph is real.',
+    text: 'You hear a name that is not their name, that sounds like their name, in a crowd, and for half a second your body responds. You were a different person then — the gap between that version of yourself and this one is not nostalgia exactly, more like the photograph of someone you knew well who moved away. You would not go back. But you keep the photograph.',
     choices: null,
     effect: (p) => { p.setMem('memLayerFirstLove', true) },
   },
@@ -132,7 +132,7 @@ export const MEMORY_LAYER_EVENTS = [
       (G.flags.has('refugee_status') || G.flags.has('displaced')) &&
       G.age >= 40 && G.age <= 58 &&
       !G.mem?.memLayerBorder,
-    text: 'In a queue — bank, airport, it does not matter — you notice the particular way you hold your documents. Prepared. Alert. The queue is routine and you know it and your hands do not know it. The body remembers the queue where it mattered. The body keeps its own records.',
+    text: 'In a queue — bank, airport, it does not matter — you notice the way you hold your documents. Prepared. Alert. The queue is routine and you know it and your hands do not know it. The body remembers the queue where it mattered. The body keeps its own records.',
     choices: null,
     effect: (p) => { p.r += 4; p.setMem('memLayerBorder', true) },
   },
@@ -145,7 +145,7 @@ export const MEMORY_LAYER_EVENTS = [
       G.flags.has('boarding_school') &&
       G.age >= 38 && G.age <= 55 &&
       !G.mem?.memLayerBoarding,
-    text: 'Your own child or a child nearby wakes in the night, disoriented. You go in and your body already knows what to do — the particular calm that comes from having been the one who had to manage the night alone, for years, and learned to do it. The boarding school prepared you for nothing you intended to be prepared for and several things you needed.',
+    text: 'Your own child or a child nearby wakes in the night, disoriented. You go in and your body already knows what to do — the calm that comes from having been the one who had to manage the night alone, for years, and learned to do it. The boarding school prepared you for nothing you intended to be prepared for and several things you needed.',
     choices: null,
     effect: (p) => { p.setMem('memLayerBoarding', true) },
   },
@@ -160,7 +160,7 @@ export const MEMORY_LAYER_EVENTS = [
       !G.mem?.memLayerFailure &&
       (G.mem?.knows_failureYear ?? 0) > 0 &&
       G.currentYear - (G.mem?.knows_failureYear ?? 0) >= 8,
-    text: 'You pass the building. Different name on the door now, or different tenant, or torn down — the specific form depends on how long it has been. You had an idea in there. The idea failed. You know now that the failure was instructive and you believe this and it is also still the failure. The two things are not mutually exclusive and never were.',
+    text: 'You pass the building. Different name on the door now, or different tenant, or torn down — the form depends on how long it has been. You had an idea in there. The idea failed. You know now that the failure was instructive and you believe this and it is also still the failure. The two things are not mutually exclusive and never were.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('memLayerFailure', true) },
   },
@@ -177,7 +177,7 @@ export const MEMORY_LAYER_EVENTS = [
       G.currentYear - (G.mem?.lost_friendYear ?? 0) >= 4,
     text: (G) => {
       const yearsAgo = G.currentYear - (G.mem?.lost_friendYear ?? G.currentYear - 6)
-      return `You think of something you would have said to them. A piece of news, an observation, a joke that is their specific type of joke. The reflex still fires — the impulse to tell them — before the reason it cannot reaches you. ${yearsAgo} years. The reflex takes longer to learn than the fact does.`
+      return `You think of something you would have said to them. A piece of news, an observation, a joke that is their type of joke. The reflex still fires — the impulse to tell them — before the reason it cannot reaches you. ${yearsAgo} years. The reflex takes longer to learn than the fact does.`
     },
     choices: null,
     effect: (p) => { p.r += 4; p.setMem('memLayerFriend', true) },
@@ -206,7 +206,7 @@ export const MEMORY_LAYER_EVENTS = [
       G.flags.has('war_childhood') &&
       G.age >= 38 && G.age <= 58 &&
       !G.mem?.memLayerWar,
-    text: 'A car backfires three streets over. You are not afraid — you understand what the sound is — but there is a half-second before you understand it where your body does something your mind does not authorise. The body has its own timeline. The war was in childhood and is also here, in that half-second, contained but present.',
+    text: 'A car backfires three streets over. You are not afraid — you understand what the sound is — but there is a half-second before you understand it where your body does something your mind does not authorise. The body keeps its own time. The war was in childhood and is also here, in that half-second, contained but present.',
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('memLayerWar', true) },
   },

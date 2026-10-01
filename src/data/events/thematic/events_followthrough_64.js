@@ -43,7 +43,7 @@ export const FOLLOWTHROUGH_64_EVENTS = [
       G.flags.has('ph_dep_moro_identity') &&
       G.age >= 30 &&
       !G.mem?.ft64MoroMidlife,
-    text: `The Bangsamoro Organic Law passed in 2019. After fifty years of armed conflict — the MNLF, the MILF, the Marawi siege — there is now a regional parliament and a chief minister. The peace agreement does not mean the same thing to everyone who lived through the conflict. You have specific decades inside it. You have specific people you are counting. The BOL is real. What it produces will take more decades to know than you may have left. You watch the younger people in the BARMM with a particular kind of attention.`,
+    text: `The Bangsamoro Organic Law passed in 2019. After fifty years of armed conflict — the MNLF, the MILF, the Marawi siege — there is now a regional parliament and a chief minister. The peace agreement does not mean the same thing to everyone who lived through the conflict. You have specific decades inside it. You have specific people you are counting. The BOL is real. What it produces will take more decades to know than you may have left. You watch the younger people in the BARMM with a kind of attention.`,
     choices: null,
     effect: (p) => { p.r += 4; p.e += 3; p.setMem('ft64MoroMidlife', true) },
   },
@@ -86,7 +86,7 @@ export const FOLLOWTHROUGH_64_EVENTS = [
       G.flags.has('ph_dep_seaman_family') &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.ft64SeamanMidlife,
-    text: `The nine-month contracts made a life measured differently from lives measured in quarters or academic years. You know this measurement. The children grew in nine-month blocks while the parent was away. The homecoming was an event with a specific structure: the arrival, the shopping bags from Dubai or Rotterdam, the adjustment period before the house remembered how to have someone in it who had been at sea. You have been the parent or the child or the spouse inside this structure. All three have a weight.`,
+    text: `The nine-month contracts made a life measured differently from lives measured in quarters or academic years. You know this measurement. The children grew in nine-month blocks while the parent was away. The homecoming was an event with a structure: the arrival, the shopping bags from Dubai or Rotterdam, the adjustment period before the house remembered how to have someone in it who had been at sea. You have been the parent or the child or the spouse inside this structure. All three have a weight.`,
     choices: null,
     effect: (p) => { p.r += 5; p.m -= 3; p.setMem('ft64SeamanMidlife', true) },
   },
@@ -99,7 +99,7 @@ export const FOLLOWTHROUGH_64_EVENTS = [
       G.flags.has('ph_dep_seaman_family') &&
       G.age >= 55 &&
       !G.mem?.ft64SeamanLate,
-    text: `A quarter of the world's seafarers are Filipino. The system ran through the POEA, the OWWA, the manning agencies, the shipping lines in Greece and Japan and Norway. The Philippine maritime worker was a global export alongside copper wire and electronics. You were inside this system. The sea was the work and the world's cargo moved partly because of you. The pension is modest. The world that moved does not remember the specific hands that moved it.`,
+    text: `A quarter of the world's seafarers are Filipino. The system ran through the POEA, the OWWA, the manning agencies, the shipping lines in Greece and Japan and Norway. The Philippine maritime worker was a global export alongside copper wire and electronics. You were inside this system. The sea was the work and the world's cargo moved partly because of you. The pension is modest. The world that moved does not remember the hands that moved it.`,
     choices: null,
     effect: (p) => { p.r += 6; p.e += 2; p.setMem('ft64SeamanLate', true) },
   },

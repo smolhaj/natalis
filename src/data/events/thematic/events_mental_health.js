@@ -204,7 +204,7 @@ export const MENTAL_HEALTH_EVENTS = [
       G.flags.includes('mh_sought_help') &&
       !G.mem.mhTherapyFirst &&
       G.age >= 18,
-    text: 'You expected to lie on a couch and be told things about your childhood. Instead there are two chairs, and she asks what brings you here, and you realize you have never actually said it out loud in a direct sentence before. The session is fifty minutes. You leave exhausted in a way that is different from sad — something has been moved, not resolved.',
+    text: 'You expected to lie on a couch and be told things about your childhood. Instead there are two chairs, and she asks what brings you here, and you realize you have never actually said it out loud in a direct sentence before. The session is fifty minutes. You leave exhausted, and it is different from sad — something has been moved, not resolved.',
     choices: null,
     effect: (p) => { p.m -= 3; p.e += 4; p.setMentalHealth({ therapy: true }); p.setMem('mhTherapyFirst', true) },
   },
@@ -217,7 +217,7 @@ export const MENTAL_HEALTH_EVENTS = [
       G.mentalHealth.therapy &&
       !G.mem.mhBreakthrough &&
       G.age >= 20,
-    text: 'She asks about the way you described your father, and then asks whether you notice that you describe your manager the same way. You stop. You sit with this for a very long time without speaking. The connection is obvious now that you see it and you cannot believe you could not see it before.',
+    text: 'She asks about the way you described your father, and then asks whether you notice that you describe your manager the same way. You stop. For a very long time you do not speak. The connection is obvious now that you see it and you cannot believe you could not see it before.',
     choices: null,
     effect: (p) => { p.m += 10; p.r -= 10; p.e += 5; p.addFlag('self_knowledge'); p.setMem('mhBreakthrough', true) },
   },
@@ -387,7 +387,7 @@ export const MENTAL_HEALTH_EVENTS = [
       G.age >= 22 && G.age <= 38 &&
       !G.mem.mhPostnatal &&
       G.stats.happiness < 50,
-    text: 'The baby is six weeks old. You love them — you are certain of this — and you also cannot stop crying and you feel nothing and you feel too much and you have not slept properly since before the birth. Your partner asks what\'s wrong and you say nothing because nothing is the correct word and also a lie. The health visitor uses a specific term. It has a treatment.',
+    text: 'The baby is six weeks old. You love them — you are certain of this — and you also cannot stop crying and you feel nothing and you feel too much and you have not slept properly since before the birth. Your partner asks what\'s wrong and you say nothing because nothing is the correct word and also a lie. The health visitor uses a term. It has a treatment.',
     choices: [
       {
         text: 'Accept the referral and treatment',
@@ -512,7 +512,7 @@ export const MENTAL_HEALTH_EVENTS = [
       G.mem.mhGoodPeriod &&
       !G.mem.mhWarningSigns &&
       G.age >= 30,
-    text: 'You know the sequence now. First the sleep changes. Then the appetite. Then the slowness in the morning that is different from tiredness. Then the thing where the future closes. You can read it twelve weeks out. You call the therapist at week two. This is not the same as curing it. It is the difference between a flood and knowing when the river rises.',
+    text: 'You know the sequence now: first the sleep changes, then the appetite, then the slowness in the morning that is not tiredness, then the future closing. You can see it coming twelve weeks out, and you call the therapist at week two. It is not a cure. It is the difference between a flood and knowing when the river rises.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 6; p.h += 3; p.addFlag('self_knowledge'); p.setMem('mhWarningSigns', true) },
   },

@@ -16,7 +16,7 @@ export const MYANMAR_EVENTS = [
       G.currentYear >= 1962 && G.currentYear <= 1988 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem.myaSocialist,
-    text: 'Ne Win\'s Burmese Way to Socialism has been in place for years. The economy is nationalised, the foreign companies are gone, the foreign press does not circulate. The country has turned inward in a specific way: the outside world is present as an absence, a category of things that are not available here. At school, the curriculum is what the government has approved. At home, the BBC can sometimes be heard on shortwave, depending on the night and the weather.',
+    text: 'Ne Win\'s Burmese Way to Socialism has been in place for years. The economy is nationalised, the foreign companies are gone, the foreign press does not circulate. The country has turned inward in a way: the outside world is present as an absence, a category of things that are not available here. At school, the curriculum is what the government has approved. At home, the BBC can sometimes be heard on shortwave, depending on the night and the weather.',
     choices: null,
     effect: (p) => { p.e -= 3; p.r += 4; p.addFlag('myanmar_socialist_generation'); p.setMem('myaSocialist', true) },
   },
@@ -58,7 +58,7 @@ export const MYANMAR_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2006 &&
       G.age >= 20 &&
       !G.mem.myaSlorc,
-    text: 'The NLD won the 1990 elections with 82 percent of the seats. The junta never transferred power. The elected MPs were arrested, exiled, or lived under surveillance. Aung San Suu Kyi is under house arrest. The economy is run by the military\'s cronies. Jade, rubies, teak — the country\'s resources leave through channels that do not appear in official statistics. The International Labour Organisation documents forced labour on construction projects and in conflict zones. You navigate this as the background condition of adulthood.',
+    text: 'The NLD won the 1990 election by a landslide and the generals never handed over. The elected members were arrested or went abroad or live under watch, and Aung San Suu Kyi is under house arrest. The generals\' friends run the economy; the jade and rubies and teak leave by channels no statistic records, and forced labour builds the roads. This is the background condition of your adult life.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('myanmar_junta_generation'); p.setMem('myaSlorc', true) },
   },
@@ -72,7 +72,7 @@ export const MYANMAR_EVENTS = [
       G.currentYear === 2007 &&
       G.age >= 16 &&
       !G.mem.myaSaffron,
-    text: 'September 2007. Tens of thousands of monks in saffron robes march through Rangoon and Mandalay. They are carrying bowls turned upside down — a ritual refusal to accept alms from the military, a religious censure the generals cannot ignore and cannot easily shoot. Crowds join. The junta shuts the internet, cuts the phone lines, and moves against the monasteries at night. Monks are beaten and arrested. Photojournalist Kenji Nagai is shot at point-blank range. The protest is crushed. The world watched it happen in real time on the few video clips that escaped before the lines went down.',
+    text: 'September 2007, and tens of thousands of monks walk through Rangoon and Mandalay with their alms bowls turned upside down, refusing the generals\' offerings, a censure the junta can neither ignore nor easily shoot. Crowds join them. Then the internet goes off and the phones are cut, and the soldiers go into the monasteries at night. A Japanese photographer is shot at point-blank range in the street. The few clips that got out before the lines went dead are how the world watched.',
     choices: [
       {
         text: 'You were among the crowd that joined the monks.',
@@ -99,7 +99,8 @@ export const MYANMAR_EVENTS = [
       G.currentYear === 2008 &&
       G.age >= 10 &&
       !G.mem.myaNargis,
-    text: 'May 2, 2008. Cyclone Nargis makes landfall in the Irrawaddy Delta. The storm surge is five metres. 140,000 people die — most in the Delta, where the land is low and flat and the warning did not reach in time. The international community offers aid. The junta delays and obstructs. Foreign rescue teams are kept out for weeks. The aid that arrives is distributed through military channels. The UN calls it a catastrophe compounded by a political decision. You know what the Delta looked like before. The before and after are not reconcilable.',
+    text: 'Nargis comes ashore in the Delta with a wall of water five metres high, where the land is low and flat and the warning never reached. The world offers help and the generals keep the foreign rescue teams out for weeks; what aid arrives goes through the army. You knew what the Delta looked like before. The before and after do not fit together.',
+    context: 'Cyclone Nargis made landfall on 2 May 2008. About 140,000 people died, most in the Irrawaddy Delta. The junta delayed foreign aid for weeks.',
     choices: [
       {
         text: 'You are in the Irrawaddy Delta.',
@@ -126,7 +127,7 @@ export const MYANMAR_EVENTS = [
       G.currentYear >= 2011 && G.currentYear <= 2015 &&
       G.age >= 20 &&
       !G.mem.myaCivilian,
-    text: 'Thein Sein\'s quasi-civilian government begins releasing political prisoners. Aung San Suu Kyi is freed, stands for parliament, wins her seat. Foreign investment arrives. The press censorship eases — for the first time in your adult life the newspaper does not print what the government has approved and nothing else. You are aware that the generals still control the military ministries and twenty-five percent of parliament seats are reserved for the army. The opening is real. The question of how far it goes is the question everyone is asking.',
+    text: 'Thein Sein\'s quasi-civilian government begins releasing political prisoners. Aung San Suu Kyi is freed, stands for parliament, wins her seat. Foreign investment arrives. The press censorship eases — for the first time in your adult life the newspaper does not print what the government has approved and nothing else. You are aware that the generals still control the military ministries and twenty-five percent of parliament seats are reserved for the army. The question of how far it goes is the question everyone is asking.',
     choices: null,
     effect: (p) => { p.m += 10; p.r += 3; p.addFlag('myanmar_civilian_hope_generation'); p.setMem('myaCivilian', true) },
   },
@@ -140,7 +141,7 @@ export const MYANMAR_EVENTS = [
       G.currentYear === 2021 &&
       G.age >= 16 &&
       !G.mem.myaCoup2021,
-    text: 'February 1, 2021. The military arrests Aung San Suu Kyi and President Win Myint before dawn and declares a year-long state of emergency. The NLD won 83 percent of the vote in November. The coup is the military\'s answer to that result. Within days, millions of civil servants, doctors, teachers, railway workers are on strike in the Civil Disobedience Movement — the CDM. The military shoots into crowds. By end of year, the death toll is over a thousand and a guerrilla resistance, the PDF, is fighting in townships and forests. The decade of opening is over.',
+    text: 'February 1, 2021. Before dawn the army arrests Aung San Suu Kyi and the president, three months after the NLD won the election by a landslide. Within days doctors, teachers, railway workers and civil servants walk out in their millions, and the army shoots into the crowds. By the end of the year a guerrilla resistance is fighting in the townships and the forests. The decade of opening is over.',
     choices: [
       {
         text: 'You join the Civil Disobedience Movement.',
@@ -151,7 +152,7 @@ export const MYANMAR_EVENTS = [
       {
         text: 'You stay low and survive.',
         tag: null,
-        outcome: 'The calculus is specific: family, dependants, the particular kind of risk your position carries. You know what other people are doing. You have not stopped asking whether you should be doing it.',
+        outcome: 'The calculus is specific: family, dependants, the kind of risk your position carries. You know what other people are doing. You have not stopped asking whether you should be doing it.',
         effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('myanmar_coup_2021'); p.setMem('myaCoup2021', true) },
       },
     ],

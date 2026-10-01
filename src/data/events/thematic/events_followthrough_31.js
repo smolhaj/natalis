@@ -16,7 +16,7 @@ export const FOLLOWTHROUGH_31_EVENTS = [
       G.flags.has('kyr_osh_uzbek_witness') &&
       G.age >= 50 &&
       !G.mem?.ft31OshUzbek,
-    text: 'It has been more than a decade since June 2010. The men who organised it have not been prosecuted. The Kyrgyz neighbours you had before it — some you still see. Some moved away. The ones you still see: you have a relationship with them that exists around a shared silence. You both know what the silence contains. Some days it sits lightly. Some days it is the whole room. Your children who were born after it know the story from you. Their relationship to this country is not yours — they have not decided yet what it is. You watch them deciding.',
+    text: 'It has been more than a decade since June 2010, and nobody who organised it has been tried. Some of the Kyrgyz neighbours you had before are still neighbours, and between you there is a shared silence, and you both know what is in it. Some days it sits lightly; some days it is the whole room. Your children, born after, know the story from you. You watch them deciding what this country is to them.',
     choices: [
       {
         text: 'You have chosen to stay and regard this as your country, damaged as it is.',
@@ -71,7 +71,7 @@ export const FOLLOWTHROUGH_31_EVENTS = [
       G.flags.has('taj_gbao_witness') &&
       G.age >= 50 &&
       !G.mem?.ft31PamiriGbao,
-    text: 'The May 2022 operation in GBAO is in the body in the way that remembered violence is — not as a sequence of events but as a set of associations: the sound of a particular vehicle, the timing of something, the quality of a silence that means something specific. The Pamiri community continues. The continuity is its own form of statement. You are part of the continuity, which means the statement includes you.',
+    text: 'The May 2022 operation in GBAO is in the body in the way that remembered violence is — not as a sequence of events but as a set of associations: the sound of a vehicle, the timing of something, the quality of a silence that means something specific. The Pamiri community continues. The continuity is its own form of statement. You are part of the continuity, which means the statement includes you.',
     choices: null,
     effect: (p) => { p.r += 8; p.m += 4; p.karma += 5; p.e += 3; p.setMem('ft31PamiriGbao', true) },
   },
@@ -125,7 +125,7 @@ export const FOLLOWTHROUGH_31_EVENTS = [
       G.flags.has('uzb_thaw_generation') &&
       G.age >= 60 &&
       !G.mem?.ft31UzbThaw,
-    text: 'Mirziyoyev has been in power since 2016. He released political prisoners and opened the economy and restored relations with Uzbekistan\'s neighbours, which Karimov had damaged systematically for decades. You have watched the opening with the specific wariness of someone who watched the closing. The mahalla committees are still there. The security services are still there. The fundamental architecture of the state has not changed. The air is different. Both things are true.',
+    text: 'Mirziyoyev has been in power since 2016. He released political prisoners and opened the economy and restored relations with Uzbekistan\'s neighbours, which Karimov had damaged systematically for decades. You have watched the opening with the wariness of someone who watched the closing. The mahalla committees are still there. The security services are still there. The fundamental architecture of the state has not changed. The air is different.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 4; p.m += 3; p.setMem('ft31UzbThaw', true) },
   },
@@ -153,7 +153,7 @@ export const FOLLOWTHROUGH_31_EVENTS = [
       (G.flags.has('kaz_qantar_protester') || G.flags.has('kaz_qantar_witness')) &&
       G.age >= 55 &&
       !G.mem?.ft31Qantar,
-    text: 'The word Qantar is still in the language, carried by the people who use it differently from the official use. The official use is "restored order." Your use is something else. The 238 dead have been counted and have not been accounted for. The 10,000 arrested have had their various outcomes. Some are free. Some are still in. The CSTO troops left. The country continues under Tokayev, who used the crisis to consolidate power in a way that Nazarbayev had not yet managed. You hold what you hold. The country continues.',
+    text: 'The word Qantar is still in the language, used differently from the official way, which is "restored order." The dead have been counted and not accounted for; of the thousands arrested, some are free and some are still in. The CSTO troops left. Tokayev used the crisis to take what Nazarbayev had kept. The country continues.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.m += 2; p.setMem('ft31Qantar', true) },
   },
@@ -167,7 +167,7 @@ export const FOLLOWTHROUGH_31_EVENTS = [
       G.flags.has('kazakh_speaker') &&
       G.age >= 60 &&
       !G.mem?.ft31SteppeLang,
-    text: 'The language that was almost gone is official now and mandatory now and the grandchildren speak it better than you spoke it at their age. The recovery is real and incomplete and continuing. You learned Kazakh from people who were also learning it, which means you carry a version of it that is itself a historical artifact — the Kazakh of the recovery years, not the Kazakh of before. Enough has been recovered to call it a language and a living one. You know what was not recovered. Both are true.',
+    text: 'The language that was almost gone is official now and mandatory now and the grandchildren speak it better than you spoke it at their age. The recovery is real and incomplete and continuing. You learned Kazakh from people who were also learning it, which means you carry a version of it that is itself a historical artifact — the Kazakh of the recovery years, not the Kazakh of before. Enough has been recovered to call it a language and a living one. You know what was not recovered.',
     choices: null,
     effect: (p) => { p.m += 7; p.karma += 5; p.r += 4; p.e += 3; p.setMem('ft31SteppeLang', true) },
   },
@@ -184,7 +184,7 @@ export const FOLLOWTHROUGH_31_EVENTS = [
        G.flags.has('uzb_karimov_era')) &&
       G.age >= 65 &&
       !G.mem?.ft31PostwarLate,
-    text: 'You have outlived the period that shaped you. The Cold War ended. The Soviet Union ended. The particular form of the world you were born into has been replaced by something different, which is also imperfect and which is also changing. You have watched more transitions than the previous generation and fewer than the next will watch. That seems like the accurate accounting of what it was to be your age in your century.',
+    text: 'You have outlived the period that shaped you. The Cold War ended. The Soviet Union ended. The form of the world you were born into has been replaced by something different, which is also imperfect and which is also changing. You have watched more transitions than the previous generation and fewer than the next will watch. That seems like the accurate accounting of what it was to be your age in your century.',
     choices: null,
     effect: (p) => { p.m += 5; p.r += 5; p.karma += 4; p.e += 3; p.setMem('ft31PostwarLate', true) },
   },

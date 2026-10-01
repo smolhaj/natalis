@@ -351,7 +351,7 @@ export const NEIGHBORHOOD_EVENTS = [
       (G.mem?.stallNeighborName || G.mem?.firstFriendName || G.mem?.hawkerRouteSet),
     text: (G) => {
       const name = G.mem?.stallNeighborName ?? G.mem?.firstFriendName ?? 'people you no longer see'
-      return `You think about ${name} sometimes. The specific geography of an earlier life — the street, the light at a particular time of day, the sound of it. These things have stopped existing in the world but they exist exactly as they were inside you.`
+      return `You think about ${name} sometimes. The geography of an earlier life — the street, the light at a time of day, the sound of it. These things have stopped existing in the world but they exist exactly as they were inside you.`
     },
     choices: null,
     effect: (p) => { p.setMem('nbrGoodYearsAck', true); p.m += 5; p.r += 3 },

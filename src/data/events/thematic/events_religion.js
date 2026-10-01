@@ -171,7 +171,7 @@ export const RELIGION_EVENTS = [
     phase: 'childhood',
     weight: 7,
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 8 && G.age <= 12 && !G.mem?.ramadan_first,
-    text: 'This Ramadan, you tell your parents you want to fast the full month with the adults. Your mother touches your face. The first suhoor wakes you before dawn — your grandmother\'s hands moving in the dark kitchen, the specific smell of food that is also a clock. You eat before the fajr call. Then the long day begins.',
+    text: 'This Ramadan, you tell your parents you want to fast the full month with the adults. Your mother touches your face. The first suhoor wakes you before dawn — your grandmother\'s hands moving in the dark kitchen, the smell of food that is also a clock. You eat before the fajr call. Then the long day begins.',
     choices: [
       { text: 'Complete the full fast every day', tag: 'devout', outcome: 'By the third week the hunger becomes something you manage rather than suffer. The iftar — the date first, always, then water, then the meal — acquires a weight that ordinary food never has. On the last night you hear the moon announced and understand that Eid al-Fitr is earned, not given. You carry this knowledge for the rest of your life.', effect: (p) => { p.m += 10; p.h -= 3; p.e += 4; p.karma += 5; p.addFlag('devout'); p.setMem('ramadan_first', true) } },
       { text: 'Break it on the third day', tag: null, outcome: 'You eat a date when no one is watching. The shame is immediate and specific — not the shame of punishment but the shame of a promise you made to yourself. You tell no one. Next year you manage it.', effect: (p) => { p.m -= 3; p.r += 3; p.setMem('ramadan_first', true) } },
@@ -230,9 +230,13 @@ export const RELIGION_EVENTS = [
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 30 && G.age <= 60 &&
       !G.flags.includes('completed_hajj') && !G.flags.includes('hajj_complete') &&
       G.currentYear - (G.mem?.hajjDeferredYear ?? -99) >= 5 && G.money > 5000,
-    text: 'You have saved for years. The fifth pillar. Your name goes on the list, and when the confirmation comes, your hands are not steady. Two million Muslims converging from every country on earth — the same five days, the same sequence: Mecca, then Mina on the 8th of Dhul Hijjah, then the plain of Arafat where you stand from noon until sunset and ask for what you cannot ask anywhere else. Then Muzdalifah under an open sky, sleeping on stones, collecting pebbles for the stoning at Jamarat. The body does not forgive this easily. The soul is another matter.',
+    // The body narrated the whole pilgrimage — Mina, Arafat, Muzdalifah, the
+    // pebbles — and then offered "Save more first", so a character who waited
+    // had been to Mecca in the text and went again, for the first time, years
+    // later. The body stops at the list now, as `rela_hajj_lifetime` does.
+    text: 'You have saved for years. The fifth pillar. The agent in town has this year\'s list, a deposit, and a date by which your name must be on it, or it is another year.',
     choices: [
-      { text: 'Go — this year', tag: 'devout', outcome: 'On the second night in Mina your shoes blister through. The tawaf at the Ka\'aba before dawn — seven circuits, millions of shoulders, the black stone at the corner — you weep without embarrassment. The man next to you is from Indonesia and speaks no Arabic and no language you share, and you understand each other completely. You come home changed in ways you cannot yet describe and may never fully articulate.', effect: (p) => { p.mo -= 6000; p.m += 20; p.karma += 10; p.h -= 5; p.addFlag('completed_hajj'); p.setMem('hajj', true) } },
+      { text: 'Go — this year', tag: 'devout', outcome: 'Mina, then the plain of Arafat from noon until sunset, then a night on the stones at Muzdalifah. At the Ka\'aba before dawn, seven circuits among millions of shoulders, you weep without embarrassment. The man beside you is from Indonesia and you share no language, and you understand each other completely.', effect: (p) => { p.mo -= 6000; p.m += 20; p.karma += 10; p.h -= 5; p.addFlag('completed_hajj'); p.setMem('hajj', true) } },
       { text: 'Save more first — it should be done properly', tag: null, outcome: 'You wait. The pillar does not go anywhere. You return to the saving.', effect: (p) => { p.setMem('hajjDeferredYear', p._state.currentYear) } },
     ],
   },
@@ -430,7 +434,7 @@ export const RELIGION_EVENTS = [
     text: 'Your family keeps a small shrine for the ancestors. Food is placed there before meals. Decisions are made with reference to what the ancestors would approve. The dead are not gone; they are involved.',
     choices: [
       { text: 'Participate — the ancestors deserve honour', tag: 'devout', outcome: 'The ritual gives structure to grief and continuity. You understand why your grandmother says the dead are never truly absent.', effect: (p) => { p.m += 8; p.karma += 5; p.addFlag('devout'); p.setMem('ancestor_worship', true) } },
-      { text: 'Observe but keep your distance', tag: null, outcome: 'You respect the tradition without fully entering it. You are in between — which is its own kind of position.', effect: (p) => { p.m += 3; p.setMem('ancestor_worship', true) } },
+      { text: 'Observe but keep your distance', tag: null, outcome: 'You respect the tradition without fully entering it. You are in between.', effect: (p) => { p.m += 3; p.setMem('ancestor_worship', true) } },
     ],
   },
 
@@ -453,7 +457,7 @@ export const RELIGION_EVENTS = [
     phase: null,
     weight: 6,
     when: (G) => ['secular', 'atheist'].includes(G.religion) && G.age >= 14 && G.age <= 22 && !G.mem?.atheist_family_clash && ['subsaharan', 'developing_urban', 'developing_unstable', 'post_soviet', 'conflict_zone', 'wealthy_gulf'].includes(G.character.country.archetype),
-    text: 'You tell your family you don\'t believe anymore. The silence that follows is its own kind of sound. Your mother looks as though you have said something that cannot be unsaid.',
+    text: 'You tell your family you don\'t believe anymore. The silence that follows is loud. Your mother looks as though you have said something that cannot be unsaid.',
     choices: [
       { text: 'Stand firm — this is your honest position', tag: null, outcome: 'The relationship survives, changed. Some things are never mentioned again. You learn that honesty has a price and decide it\'s worth paying.', effect: (p) => { p.m -= 8; p.e += 6; p.r += 5; p.setMem('atheist_family_clash', true) } },
       { text: 'Soften it — "I\'m still figuring it out"', tag: null, outcome: 'This buys peace but not resolution. You live in an ambiguity that is more comfortable for everyone and less honest for you.', effect: (p) => { p.m -= 3; p.r += 8; p.setMem('atheist_family_clash', true) } },
@@ -498,7 +502,7 @@ export const RELIGION_EVENTS = [
     when: (G) => G.flags.includes('devout') && G.age >= 16 && G.age <= 28 && !G.mem?.faith_crisis_evolution &&
       ['christian_protestant', 'christian_catholic', 'christian_orthodox'].includes(G.religion) &&
       ['wealthy_west', 'wealthy_east', 'post_soviet', 'developing_urban'].includes(G.character.country.archetype),
-    text: 'In a biology class — or a university lecture, or a book you picked up without expecting it — natural selection is explained with a precision and explanatory power that your Sunday school never addressed. You sit with the question that nobody in your faith community has answered satisfactorily: if the world was created over six days and the genealogies in Genesis are literal, what do you do with 3.8 billion years of microbial life in the fossil record? The two things do not fit together. You have known this was a tension. Now you cannot un-know it.',
+    text: 'In a biology class — or a university lecture, or a book you picked up without expecting it — natural selection is explained with a precision and explanatory power that your Sunday school never addressed. Nobody in your faith community has answered the question: if the world was created over six days and the genealogies in Genesis are literal, what do you do with 3.8 billion years of microbial life in the fossil record? The two things do not fit together. You have known this was a tension. Now you cannot un-know it.',
     choices: [
       { text: 'Accept theistic evolution — God as the author of the process', tag: null, outcome: 'You find theologians and scientists who have walked this road before you. The faith is smaller and more honest. It survives.', effect: (p) => { p.e += 8; p.m -= 2; p.r += 2; p.addFlag('questioned_faith'); p.setMem('faith_crisis_evolution', true) } },
       { text: 'Reject creationism entirely — and feel the rest of the structure loosen', tag: null, outcome: 'One load-bearing wall comes down. Others follow. You are in a different place when the process ends — not certain of where, but honest about the journey.', effect: (p) => { p.e += 10; p.m -= 6; p.clearFlag('devout'); p.addFlag('questioned_faith'); p.setMem('faith_crisis_evolution', true) } },
@@ -551,7 +555,7 @@ export const RELIGION_EVENTS = [
     text: 'Ramadan in a country where almost nobody else is fasting. The workday does not pause for Maghrib. Your colleagues eat lunch at the table next to yours and do not notice. You wake before dawn for suhoor alone — no family, no call to prayer audible through the window — and the fast is held together by intention rather than architecture. At iftar you break it with a date and water in a break room and call your mother.',
     choices: [
       { text: 'Keep the fast fully, privately', tag: 'devout', outcome: 'By the end of the month you understand something about interiority — that the practice does not require a collective infrastructure to be real. The Eid prayer you attend in a community center in an industrial part of the city is the most alive thing you have felt all year.', effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('devout'); p.setMem('ramadan_minority', true) } },
-      { text: 'Modify the fast — make it workable', tag: null, outcome: 'You fast on the weekends and manage what you can during the week. You feel guilty and pragmatic in roughly equal measure. The intention is real. The execution is human.', effect: (p) => { p.m -= 2; p.r += 3; p.setMem('ramadan_minority', true) } },
+      { text: 'Modify the fast — make it workable', tag: null, outcome: 'You fast on the weekends and manage what you can during the week. You feel guilty and pragmatic in roughly equal measure. You mean it. The execution is human.', effect: (p) => { p.m -= 2; p.r += 3; p.setMem('ramadan_minority', true) } },
       { text: 'Let this Ramadan pass — next year you will be better placed', tag: null, outcome: 'You watch the month come and go. The absence is noticeable in the way that skipping something important is always noticeable.', effect: (p) => { p.m -= 4; p.r += 4; p.setMem('ramadan_minority', true) } },
     ],
     effect: null,

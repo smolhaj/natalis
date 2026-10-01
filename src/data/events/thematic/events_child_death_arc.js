@@ -68,7 +68,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
       const cause = infantCauseText(G)
       const infant = G.children.find(c => G.age - c.ageAtBirth <= 1)
       const name = infant?.name ?? 'The baby'
-      return `${name} dies of ${cause}\n\nYou are not prepared for the specific scale of it — a person measured in weeks, and the space they leave. You thought small loss would be small grief. It is not. The grief is the size of everything that was going to happen and now will not.`
+      return `${name} dies of ${cause}\n\nYou are not prepared for the scale of it — a person measured in weeks, and the space they leave. You thought small loss would be small grief. It is not. The grief is the size of everything that was going to happen and now will not.`
     },
     choices: [
       {
@@ -107,9 +107,9 @@ export const CHILD_DEATH_ARC_EVENTS = [
     text: (G) => {
       const isInfant = G.flags.includes('lost_child_infant')
       if (isInfant) {
-        return 'The things that were purchased: unworn. The pram. The monitor. Objects that were preparation and are now monuments to what didn\'t happen. People bring food. They do not know what to say, which means they say the things that are available: that they are sorry, that time helps, that your child is at peace. None of this is wrong and none of it lands. You thank them. The food is in the refrigerator. You are not eating.'
+        return 'The things you bought are unworn: the pram, the monitor, preparations that have become monuments. People bring food. They do not know what to say, so they say what is available: sorry, time helps, at peace. None of it is wrong and none of it lands. The food is in the refrigerator. You are not eating.'
       }
-      return 'The house is full of their objects. The shoes by the door. The book they were reading that is still facedown on the same page. The specific arrangement of the bed. People say you do not have to do anything about any of it right away. They are right and also you do not know how to be in the house with all of it unchanged. You learn to be in the house with all of it unchanged. This takes longer than you would have predicted.'
+      return 'The house is full of their objects. The shoes by the door. The book they were reading that is still facedown on the same page. The arrangement of the bed. People say you do not have to do anything about any of it right away. They are right and also you do not know how to be in the house with all of it unchanged. You learn to be in the house with all of it unchanged. This takes longer than you would have predicted.'
     },
     choices: null,
     effect: (p) => {
@@ -164,7 +164,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
       G.mem?.childDeathFirstWeeks &&
       !G.mem?.childDeathRoomDecision &&
       G.age >= 30,
-    text: 'The question that arrives at some point and does not leave: what do you do with the room? The specific room. People have opinions about it — some people think keeping it as it was is healthy, some think it is not. Neither camp has lived in your house, which means neither camp has authority here. This is yours to decide.',
+    text: 'The question that arrives at some point and does not leave: what do you do with the room? The room. People have opinions about it — some people think keeping it as it was is healthy, some think it is not. Neither camp has lived in your house, which means neither camp has authority here. This is yours to decide.',
     choices: [
       {
         text: 'Keep it. You are not ready to change it.',
@@ -178,7 +178,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
       {
         text: 'Change it, slowly. It can hold something else without erasing what it was.',
         tag: 'changed',
-        outcome: 'You take months. Each object moved is a decision. The room becomes something else. They are not in the room any more in the same way. They are in other places now.',
+        outcome: 'You take months. Each object moved is a decision. The room becomes something else. They are in other places now.',
         effect: (p) => {
           p.addFlag('child_death_room_repurposed'); p.m -= 3; p.r -= 3
           p.setMem('childDeathRoomDecision', true)
@@ -242,7 +242,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
       (G.children ?? []).filter(c => !G.flags.includes('lost_child') || G.children.indexOf(c) > 0).length > 1 &&
       !G.mem?.childDeathSiblings &&
       G.age >= 32,
-    text: 'Your other child or children are grieving. They are also watching you grieve, which is a specific burden to put on a child. They go quiet in ways they didn\'t before, or they become louder, or they develop a particular vigilance about you — checking you are all right, becoming small adults you did not ask them to become. You are their parent. You are also broken. Both things have to be true in the same house.',
+    text: 'Your other child or children are grieving. They are also watching you grieve, a burden to put on a child. They go quiet in ways they didn\'t before, or they become louder, or they develop a vigilance about you — checking you are all right, becoming small adults you did not ask them to become. You are their parent. You are also broken. Both have to live in the same house.',
     choices: [
       {
         text: 'Talk to them directly about their sibling, and about grief.',
@@ -282,7 +282,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
       if (isInfant) {
         return 'The birthday comes — the first one. The day they were born and also, now, the day you remember they are gone. You have not agreed with your partner on what to do with it. Some parents mark it; some cannot. You find yourself awake early, not by design, and you understand that the body has remembered something the mind was trying not to dwell on. You do with the day whatever you can do with the day.'
       }
-      return 'The birthday arrives. You have been watching it approach for weeks — trying not to watch it, watching it anyway. The night before, you think about what you would have been doing this time last year: the cake question, the presents, the argument they would have had about what they wanted. None of that happens. The day passes in a way that does not correspond to its weight. You go through it and come out the other side and you are still here and they are still gone.'
+      return 'The birthday arrives. You have been watching it approach for weeks — trying not to watch it, watching it anyway. The night before, you think about what you would have been doing this time last year: the cake question, the presents, the argument they would have had about what they wanted. None of that happens. The day passes, and its hours do not correspond to its weight. You go through it and come out the other side and you are still here and they are still gone.'
     },
     choices: null,
     effect: (p) => {
@@ -307,7 +307,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
       if (isInfant) {
         return 'You are somewhere public — a park, a waiting room, a birthday party for a colleague\'s child. A child is the age yours would be. They have learned to walk. They are talking in incomplete sentences that are nonetheless perfectly expressive. You watch them for a moment longer than you should. You leave before you have to explain your face.'
       }
-      return 'You are somewhere you didn\'t expect it, and a child is exactly the age yours would be. They are doing something ordinary — kicking a ball, arguing with a sibling, reading on a bus — and you understand in a flash what the years you didn\'t have would have looked like. The specificity of it is what you are not prepared for. Not abstract grief: this particular child, this particular age, this particular ordinary afternoon they are living and your child is not.'
+      return 'You are somewhere you didn\'t expect it, and a child is exactly the age yours would be. They are doing something ordinary — kicking a ball, arguing with a sibling, reading on a bus — and you understand in a flash what the years you didn\'t have would have looked like. The specificity of it is what you are not prepared for. Not abstract grief: this child, this age, this ordinary afternoon they are living and your child is not.'
     },
     choices: null,
     effect: (p) => {
@@ -341,7 +341,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
       {
         text: 'Carry it quietly. Some things don\'t need to be spoken.',
         tag: 'quiet',
-        outcome: 'It is understood without being said. You have been reading each other for decades. The understanding is real.',
+        outcome: 'It is understood without being said. You have been reading each other for decades.',
         effect: (p) => {
           p.addFlag('bereaved_parent_marriage_survived'); p.m += 4; p.updatePartnerRel(6)
           p.setMem('childDeathMarriageReflection', true)

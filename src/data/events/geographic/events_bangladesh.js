@@ -33,7 +33,7 @@ const BANGLADESH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1980 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.bng_bhola,
-    text: 'November 13, 1970. The cyclone makes landfall in the night. Up to 500,000 people die on the low coastal islands of East Pakistan. The relief from the central government in West Pakistan is inadequate — too slow, too little, too politically indifferent. Your family has lost someone, or your family knows someone who lost everyone. The dead are not in the newspapers yet. The anger is. The connection between what Dhaka controls and what Islamabad does not is articulated in different places and in different voices, but it is the same statement: they do not govern us because they do not consider us the same as them.',
+    text: 'November 1970, and the cyclone comes ashore at night on the low islands of the coast, and hundreds of thousands die. The help from West Pakistan is too slow, too small, too indifferent. Your family has lost someone, or knows someone who lost everyone. The anger is in the newspapers before the dead are: they do not govern us because they do not think of us as the same as them.',
     choices: null,
     effect: (p) => { p.m -= 6; p.h -= 3; p.addFlag('bng_cyclone_generation'); p.setMem('bng_bhola', true); },
   },
@@ -52,14 +52,15 @@ const BANGLADESH_EVENTS = [
     text: (G) => {
       const age = G.age
       return age >= 20
-        ? 'March 25–26, 1971. Operation Searchlight begins at midnight. The Pakistani army targets Dhaka first: the University, the Hindu neighborhoods, the police barracks. Then the rest of the country. Nine months of war. The Mukti Bahini — the liberation fighters — operate from the countryside and from India. You know people who joined them. You know people who didn\'t come back. On December 16, 1971, ninety-three thousand Pakistani soldiers surrender. The country is free. The dead are between one and three million, depending on which count you use. No count is wrong in the way that matters.'
+        ? 'Operation Searchlight begins at midnight in Dhaka: the University, the Hindu neighbourhoods, the police barracks, then the rest of the country. For nine months the Mukti Bahini fight from the countryside and from India, and you know people who joined them and people who did not come back. On December 16 the Pakistani army surrenders and the country is free. Nobody agrees how many died, and no count is wrong in the way that matters.'
         : 'The war is nine months of your adolescence. The army comes to your area or it comes close. Your family moves, or hides, or keeps going to work because stopping would attract attention. The Mukti Bahini fighters — some of them boys not much older than you — move through at night. December 16: the Pakistani army surrenders. This is Victory Day. You will remember where you were when you heard.'
     },
+    context: 'The Pakistani army began Operation Searchlight on 25-26 March 1971. About 93,000 Pakistani soldiers surrendered on 16 December 1971. Estimates of the dead range from several hundred thousand to three million.',
     choices: [
       {
         text: 'You join the Mukti Bahini or work for the resistance in whatever way your age allows',
         tag: null,
-        outcome: 'Joi Bangla. The country that emerges from the war carries its fighters in a specific relationship to what they did and what it cost. You are in that relationship now.',
+        outcome: 'Joi Bangla. The country that emerges from the war carries its fighters in a relationship to what they did and what it cost. You are in that relationship now.',
         effect: (p) => { p.s += 4; p.h -= 5; p.addFlag('bng_mukti_bahini'); p.addFlag('bng_liberation_generation'); p.setMem('bng_liberation', true); },
       },
       {
@@ -83,7 +84,8 @@ const BANGLADESH_EVENTS = [
       G.currentYear >= 1974 && G.currentYear <= 1976 &&
       G.age >= 20 &&
       !G.mem?.bng_famine,
-    text: 'Three years after independence. One to 1.5 million people die of starvation. The new country does not have the administrative infrastructure to distribute food aid. The food aid is there. The floods came. The government did not move fast enough. Sheikh Mujibur Rahman — Bangabandhu, Father of the Nation, the man who gave the March 7 speech — is in the presidential palace. The people are dying in the countryside. The distance between those two facts is what the famine produces as political feeling.',
+    text: 'Three years after independence, and the floods, and the food aid that is there and does not reach. The new state does not have the machinery to move it, and it does not move fast enough. Bangabandhu, the man of the March 7 speech, is in the palace, and in the countryside people are dying. The distance between those two facts is what the famine leaves behind as politics.',
+    context: 'The Bangladesh famine of 1974 killed an estimated several hundred thousand to 1.5 million people.',
     choices: null,
     effect: (p) => { p.m -= 8; p.h -= 5; p.addFlag('bng_famine_generation'); p.setMem('bng_famine', true); },
   },
@@ -99,7 +101,7 @@ const BANGLADESH_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1977 &&
       G.age >= 20 &&
       !G.mem?.bng_mujib,
-    text: 'August 15, 1975. Before dawn. A military faction enters the presidential residence. Sheikh Mujibur Rahman — the Bangabandhu, the father of the nation, the man whose voice at Ramna Race Course in March 1971 was the speech that started everything — is killed with most of his family. His daughters Sheikh Hasina and Sheikh Rehana are in Germany and survive. The military takes power. The country that fought nine months for its freedom is now, four years later, under military rule. The gap between what the war was for and what it produced is the political terrain of the next twenty years.',
+    text: 'August 15, 1975, before dawn. Soldiers enter the president\'s house and kill Bangabandhu, the father of the nation, the voice of the March speech, with most of his family; his daughters are in Germany and live. Four years after nine months of war for freedom, the country is under military rule. The gap between what the war was for and what it produced is the politics of the next twenty years.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('bng_coup_generation'); p.setMem('bng_mujib', true); },
   },
@@ -120,11 +122,12 @@ const BANGLADESH_EVENTS = [
       return yr < 1991
         ? 'The cyclone signal numbers on the radio in April and again in October. Signal seven, signal ten. Everyone on the coast knows what 1970 was and nobody talks about it in the season. The khatian — land registration document — is wrapped in plastic and kept high. The sea is the sea.'
         : yr < 2008
-        ? 'April 1991. The cyclone makes landfall at night with a 6-metre storm surge. 138,000 people die. You know which areas were hit because you know people from those areas and some of them you will not hear from again. Chittagong. Cox\'s Bazar. The coastal islands. The khatian — land registration document — is in the mud somewhere. The country organizes the response faster than 1970 but the coast is still the coast and the sea is still the sea.'
+        ? 'April 1991, and the cyclone comes ashore at night with the sea six metres high behind it. You know which places were hit because you know people from them, and some you will not hear from again: Chittagong, Cox\'s Bazar, the islands. The land papers are somewhere in the mud. The response is faster than 1970, but the coast is still the coast and the sea is still the sea.'
         : yr <= 2010
         ? 'Sidr makes landfall November 15, 2007. Category 4. Three thousand dead. The number is lower than 1991 because the cyclone shelters were built and the evacuation system worked and the community knowledge was better. The number is still 3,000. The coast is still the coast. You watch the relief organizations arrive and know some of them and know the geography and the gap between the two.'
         : 'The cyclone warning system is sophisticated now. The shelters are concrete. The evacuation routes are trained into the communities. When the storms come — and they come every few years — the death toll is lower than anyone would have thought possible thirty years ago. The sea is also warmer than thirty years ago. The two facts are in the same sentence now.'
     },
+    context: 'The 1991 Bangladesh cyclone killed about 138,000 people.',
     choices: null,
     effect: (p) => { p.h -= 4; p.r += 5; p.addFlag('bng_cyclone_survivor'); p.setMem('bng_cyclone_adult', true); },
   },
@@ -181,12 +184,12 @@ const BANGLADESH_EVENTS = [
     // The village phone ladies are a 1997 programme and mobile money later
     // still; the bank itself opened in 1983, and this was lending for a
     // handset in 1986.
-    text: (G) => `The Grameen Bank offers small loans — taka amounts that the formal banking system would not consider — to women in rural groups who collectively guarantee each other\'s repayment. Muhammad Yunus\'s idea: poor women are creditworthy if you structure the loan correctly. The loan is for a sewing machine, or ${hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear) ? 'a handset to rent calls out from' : 'a goat'}, or stock for a small shop. The group meets weekly. The repayment rate is ninety-eight percent. What the loan enables — the scale of it, the supply chain of microentrepreneurship across the country — is real. What it sometimes traps people in is also real.`,
+    text: (G) => `The Grameen Bank offers small loans — taka amounts that the formal banking system would not consider — to women in rural groups who collectively guarantee each other's repayment. Muhammad Yunus's idea: poor women are creditworthy if you structure the loan correctly. The loan is for a sewing machine, or ${hasTech(G.currentCountry ?? G.character.country, 'mobile_phone', G.currentYear) ? 'a handset to rent calls out from' : 'a goat'}, or stock for a small shop. The group meets weekly. The repayment rate is ninety-eight percent. What it sometimes traps people in is also real.`,
     choices: [
       {
         text: 'You take the loan and build something small but yours',
         tag: null,
-        outcome: 'The loan is repaid and another follows. The income is not large but it is yours in a way that was not previously available. The weekly meeting is also a social infrastructure.',
+        outcome: 'The loan is repaid and another follows. The income is not large but it is yours, which it has never been before. The weekly meeting is also a social infrastructure.',
         effect: (p) => { p.e += 3; p.w += 4; p.mo += 500; p.addFlag('bng_microloan_generation'); p.setMem('bng_grameen', true); },
       },
       {
@@ -212,7 +215,8 @@ const BANGLADESH_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 25 &&
       !G.mem?.bng_dhaka,
-    text: 'Dhaka is one of the densest cities on earth. Twenty-two million people in a metropolitan area that was two million in 1975. The rickshaws in the street number four hundred thousand. The CNG auto-rickshaws. The buses that do not stop for long. The flood water in July in the streets of Dhanmondi, mid-thigh, the office workers with trousers held up. The garment economy drew the country to the city and the city expanded to hold it and the city is still expanding. The infrastructure does not keep up with the expansion. The expansion does not slow.',
+    text: 'Dhaka. Rickshaws, CNGs, buses that barely stop, and in July the flood water mid-thigh in the streets of Dhanmondi, the office workers holding their trousers up. The garment economy drew the country to the city and the city grew to hold it and is still growing, faster than any road or drain. In 1975 it was two million people. Nobody now is sure how many it is.',
+    context: 'Greater Dhaka grew from about two million people in 1975 to over twenty million by the 2020s.',
     choices: null,
     effect: (p) => { p.s += 2; p.r += 3; p.addFlag('bng_dhaka_generation'); p.setMem('bng_dhaka', true); },
   },
@@ -257,7 +261,7 @@ const BANGLADESH_EVENTS = [
       G.currentYear >= 1993 &&
       G.age >= 21 && G.age <= 40 &&
       !G.mem?.bngMalaysiaLife,
-    text: 'The construction site is in Johor Bahru or in Selangor or on the Petronas Twin Towers or on one of the new industrial parks in Penang. The hours are ten to twelve. The dormitory is a converted shipping container. The phone plan works for calls home on Sundays. The employer controls the work permit, which means he controls whether you stay. The math: monthly salary 1,100 ringgit, send 800 home, keep 300 for food and the phone and the occasional bus. The family debt from the dalal will be cleared in three years, two years if the overtime continues. You have agreed not to think about the three percent a month.',
+    text: 'The construction site is in Johor Bahru or Selangor or Penang, ten to twelve hours a day, and the dormitory is a shipping container. The employer holds your permit, which means he decides whether you stay. Your phone plan covers a call home on Sundays. Out of each month\'s pay you send most home and keep a little for food and the phone, and the debt to the broker will be cleared in three years, two if the overtime holds. You have agreed with yourself not to think about the interest.',
     choices: [
       {
         text: 'Send the maximum home. You can live on very little.',
@@ -289,7 +293,7 @@ const BANGLADESH_EVENTS = [
       {
         text: 'The remittances built something real. The years were worth it.',
         tag: null,
-        outcome: 'The second floor is real. The fees are paid. The accounting on the years abroad is: it worked, and it cost something you are still calculating.',
+        outcome: 'The second floor goes up. The fees are paid. The accounting on the years abroad is: it worked, and it cost something you are still calculating.',
         effect: (p) => { p.m += 8; p.r += 5; p.addFlag('bng_remittance_generation'); p.setMem('bngMalaysiaReturn', true); },
       },
       {
@@ -313,7 +317,7 @@ const BANGLADESH_EVENTS = [
       G.currentYear >= 2024 && G.currentYear <= 2025 &&
       G.age >= 20 &&
       !G.mem?.bng_2024,
-    text: 'July 2024. University students march against the quota system that reserves thirty percent of civil service jobs for descendants of 1971 Liberation War fighters. The government calls the protesters "Razakars" — collaborators with the Pakistani army in 1971, the worst word in Bangladesh. The students continue. Security forces open fire. At least 300 are killed. On August 5, Sheikh Hasina — the Prime Minister, daughter of the Bangabandhu, who has governed for fifteen consecutive years — boards a military helicopter and leaves. The country wakes up the next morning to the question of what comes next.',
+    text: 'July 2024. The students march against the quota that reserves civil service jobs for the descendants of the freedom fighters, and the government calls them Razakars, collaborators, the worst word in Bangladesh. They keep marching, and the security forces open fire. On August 5 Sheikh Hasina, Bangabandhu\'s daughter, prime minister for fifteen years, leaves by military helicopter. The country wakes the next morning to the question of what comes next.',
     choices: [
       {
         text: 'The movement did something that had seemed impossible — it ended fifteen years of one-party rule in a day',

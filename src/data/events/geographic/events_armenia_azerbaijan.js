@@ -14,9 +14,9 @@ const ARMENIA_AZ_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       if (yr <= 1965) {
-        return 'April 24 comes and your grandmother goes quiet. She does not explain it. Later you understand: her mother was fourteen when they were marched into the Syrian desert. Her mother survived because a Turkish neighbor hid her for three weeks. You are here because of that neighbor. You have no word yet for what almost erased your family. The word will come. You will say it your whole life.'
+        return 'April 24 comes and your grandmother goes quiet and does not explain. Later you understand: her mother was fourteen when they were marched into the Syrian desert, and survived because a Turkish neighbour hid her for three weeks. You are here because of that neighbour. You have no word yet for what almost erased your family. The word will come, and you will say it your whole life.'
       }
-      return 'At school on April 24, the lesson stops. The teacher folds her hands and says: we remember. Then she opens the window, because people are already gathering on the hill with candles. Your grandfather was born in Van in 1908. He never talked about before. You go home and look at the photograph of a woman you were told was your great-grandmother. She is not smiling. Nobody in the photograph is smiling.'
+      return 'On April 24 the lesson stops. The teacher folds her hands and says: we remember, and opens the window, because people are already going up the hill with candles. Your grandfather was born in Van in 1908 and never talked about before. At home you look at the photograph of a woman you were told was your great-grandmother. Nobody in the photograph is smiling.'
     },
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 5; p.e += 3; p.addFlag('arm_genocide_memory_bearer'); },
@@ -53,7 +53,7 @@ const ARMENIA_AZ_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.character.country.name === 'Armenia' && G.currentYear >= 1988 && G.currentYear <= 1991 && !G.flags.has('arm_baku_refugee_host') && !G.flags.has('arm_baku_refugee'),
-    text: 'A family arrives from Baku. Cousins of cousins — you have never met them. They carry two suitcases. The wife\'s hands shake when she drinks tea. She says: we had three days. She says: the neighbors helped us get out. She does not say what the other neighbors did. They sleep in your living room for four months. By spring, they are not going back.',
+    text: 'A family arrives from Baku, cousins of cousins you have never met, with two suitcases. The wife\'s hands shake when she drinks tea. She says: we had three days, and the neighbours helped us get out. She does not say what the other neighbours did. They sleep in your living room for four months, and by spring they are not going back.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 4; p.karma += 4; p.addFlag('arm_baku_refugee_host'); },
   },
@@ -65,7 +65,7 @@ const ARMENIA_AZ_EVENTS = [
     when: (G) => G.character.country.name === 'Armenia' && G.currentYear >= 1992 && G.currentYear <= 1997 && !G.flags.has('arm_dark_winter_survivor'),
     text: (G) => {
       const yr = G.currentYear
-      return `The electricity comes on for one hour, ${yr <= 1993 ? 'sometimes two' : 'sometimes less'}. You boil water when it comes on. You fill every container. The apartment is ${yr <= 1994 ? 'eight' : 'six'} degrees in January. Your neighbor cut down his fruit trees for firewood last month. You watch your breath in your own kitchen. People are leaving — by the tens of thousands, to Russia, to America, to anywhere. You stay, or you are not sure yet if you can leave.`
+      return `The electricity comes on for an hour, ${yr <= 1993 ? 'sometimes two' : 'sometimes less'}, and when it does you boil water and fill every container. The flat is ${yr <= 1994 ? 'eight' : 'six'} degrees in January, and your neighbour cut down his fruit trees for firewood last month. You watch your breath in your own kitchen. People are leaving by the tens of thousands, to Russia, to America, to anywhere, and you are not sure yet whether you can.`
     },
     choices: [
       {
@@ -88,7 +88,7 @@ const ARMENIA_AZ_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) => G.character.country.name === 'Armenia' && G.character.gender === 'male' && G.age >= 18 && G.age <= 32 && G.currentYear >= 1991 && G.currentYear <= 1994 && !G.flags.has('arm_karabakh_veteran_1'),
-    text: 'The call comes in spring. Or you volunteer before it comes. Karabakh — Artsakh — the enclave of Armenian villages inside Azerbaijan. The road through the Lachin corridor is the only lifeline. You go. The mountains are very cold. The town of Shushi, at the top of the cliffs, is the key to everything. When it falls — to the Armenian side — the men around you weep. It takes you a long time to understand why.',
+    text: 'The call comes in spring, or you volunteer before it comes. Karabakh, the Armenian villages inside Azerbaijan, and the Lachin road the only way in. The mountains are very cold. When Shushi falls, at the top of its cliffs, the men around you weep. It takes you a long time to understand why.',
     choices: [
       {
         text: 'You fought in the mountains.',
@@ -112,7 +112,7 @@ const ARMENIA_AZ_EVENTS = [
     when: (G) => G.character.country.name === 'Armenia' && G.currentYear >= 1995 && G.currentYear <= 2015 && !G.flags.has('arm_diaspora_encounter'),
     text: (G) => {
       const yr = G.currentYear
-      return `A man from Los Angeles is visiting. He calls himself Armenian. He is Armenian. His grandfather left ${yr > 2000 ? 'in 1915, from Van' : 'in 1920'}. His Armenian is older than yours — the Western dialect, the words your grandmother used. He is generous. He does not know how to use the marshrutka. He photographs everything with a large camera. He says Yerevan is not what he imagined. You are not sure if he means better or worse. He gives your cousin two hundred dollars and says: for the family.`
+      return `A man from Los Angeles is visiting. He calls himself Armenian, and he is: his grandfather left ${yr > 2000 ? 'Van in 1915' : 'in 1920'}, and his Armenian is older than yours, the western words your grandmother used. He cannot use the marshrutka and he photographs everything. He says Yerevan is not what he imagined, and you cannot tell whether he means better or worse. He gives your cousin two hundred dollars and says: for the family.`
     },
     choices: null,
     effect: (p) => { p.m += 3; p.r += 4; p.e += 2; p.addFlag('arm_diaspora_encounter'); },
@@ -147,7 +147,7 @@ const ARMENIA_AZ_EVENTS = [
     when: (G) => G.character.country.name === 'Armenia' && G.currentYear === 2020 && !G.flags.has('arm_war_2020_loss'),
     text: (G) => {
       const isVet = G.flags.has('arm_karabakh_veteran_1')
-      return `September 27. The war starts before dawn. It is not like 1991. There are drones now — Turkish drones, Azerbaijani drones — and the Armenian positions cannot see them coming. By October the towns are falling. ${isVet ? 'You served in these mountains. You know the roads, the villages. You call your old unit contacts and nobody picks up.' : 'The boys going to the front are eighteen, nineteen.'} November 9: Pashinyan signs the ceasefire at three in the morning. By morning everyone knows. Shushi is gone. Hadrut is gone. The Lachin corridor stays open, the last thread. He will say later he had no choice. Perhaps he did not.`
+      return `September 27. The war starts before dawn, and it is not like 1991: there are drones now, and the positions cannot see them coming. ${isVet ? 'You served in these mountains. You call your old unit contacts and nobody picks up.' : 'The boys going to the front are eighteen, nineteen.'} On November 9 Pashinyan signs the ceasefire at three in the morning, and by breakfast everyone knows. Shushi is gone. Hadrut is gone. The Lachin corridor stays open, the last thread.`
     },
     choices: null,
     effect: (p) => { p.m -= 20; p.r += 12; p.addFlag('arm_war_2020_loss'); },
@@ -187,7 +187,7 @@ const ARMENIA_AZ_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.character.country.name === 'Azerbaijan' && G.currentYear >= 1988 && G.currentYear <= 1990 && !G.flags.has('azr_baku_pogrom_witness'),
-    text: 'In January 1990, before the soldiers came, there were three days in Baku when Armenian families were found by lists. You know someone who hid an Armenian neighbor. You know someone who did not. The neighborhood you grew up in had Armenian families on every block. By February they are gone — to Yerevan, to Moscow, wherever they could get to. The apartment on the fourth floor where the Hakobyan family lived: empty. The door is still unlocked. Nobody touches their things for months.',
+    text: 'In January 1990, before the soldiers came, there were three days in Baku when Armenian families were found by lists. You know someone who hid an Armenian neighbour, and someone who did not. By February the Armenian families on every block are gone, to Yerevan, to Moscow, wherever they could get. The Hakobyans\' flat on the fourth floor is empty, the door still unlocked, and nobody touches their things for months.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 8; p.karma -= 4; p.addFlag('azr_baku_pogrom_witness'); },
   },
@@ -199,7 +199,7 @@ const ARMENIA_AZ_EVENTS = [
     when: (G) => G.character.country.name === 'Azerbaijan' && G.currentYear >= 1993 && G.currentYear <= 2000 && !G.flags.has('azr_karabakh_idp') && !G.mem.azr_idp_checked,
     text: (G) => {
       const yr = G.currentYear
-      return `You are from ${yr <= 1994 ? 'Agdam — the town they call the Hiroshima of the Caucasus' : 'one of the villages in the Lachin corridor'}, or your family is. The ceasefire came in 1994 and you are on the wrong side of it. The government puts you in a railway carriage converted to housing, or an unfinished Soviet apartment block in Baku, or a camp in the western lowlands. You brought a photograph of the house. You brought the title deed. You told your children: this is where we are from. They say: but we are from here. You say: no. You mean it.`
+      return `You are from ${yr <= 1994 ? 'Agdam, which they call the Hiroshima of the Caucasus' : 'one of the villages in the Lachin corridor'}, or your family is, and the 1994 ceasefire left it on the other side. The government puts you in a railway carriage, or an unfinished block in Baku, or a camp in the lowlands. You brought a photograph of the house and the title deed. Your children say: but we are from here. You say: no. You mean it.`
     },
     choices: null,
     effect: (p) => { p.m -= 16; p.r += 10; p.addFlag('azr_karabakh_idp'); p.setMem('azr_idp_checked', true); },
@@ -220,7 +220,7 @@ const ARMENIA_AZ_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.character.country.name === 'Azerbaijan' && G.currentYear >= 2005 && G.currentYear <= 2020 && !G.flags.has('azr_press_silence') && !G.mem.azr_press_checked,
-    text: 'A journalist you know is arrested. The charge is "hooliganism" or "tax evasion" or something else that means: you wrote about the wrong person. The opposition newspaper closes. The website is blocked. You have learned what you do not search for on your work computer, what you do not say in certain taxis, which names you avoid in text messages. You are not afraid, exactly. You are careful. There is a difference and also no difference.',
+    text: 'A journalist you know is arrested for hooliganism, or tax evasion, or some other word that means he wrote about the wrong person. The opposition paper closes; the website is blocked. You have learned what not to search for on the work computer, what not to say in certain taxis, which names to leave out of text messages. You are not afraid, exactly. You are careful.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('azr_press_silence'); p.setMem('azr_press_checked', true); },
   },
@@ -232,7 +232,7 @@ const ARMENIA_AZ_EVENTS = [
     when: (G) => G.character.country.name === 'Azerbaijan' && G.currentYear === 2020 && !G.flags.has('azr_war_victory_2020'),
     text: (G) => {
       const isIDP = G.flags.has('azr_karabakh_idp')
-      return `September 27. The war begins. The drones are precise. Armenian positions fall in hours, then days. ${isIDP ? 'You have not seen your village in twenty-six years. You still have the deed. You still have the photograph. Your children are watching the map with you.' : 'Your cousin volunteers the second week.'} November 9: the ceasefire. Shushi — Shusha, as you call it, the cultural capital — is Azerbaijani again. Aliyev reads the agreement on television with the generals behind him. On the Azerbaijani side of the ceasefire line, a town that was rubble for thirty years. On your side: the flag. You feel something you expected to be simple. It is not simple.`
+      return `September 27, and the drones are precise; the positions fall in hours, then days. ${isIDP ? 'You have not seen your village in twenty-six years. You still have the deed and the photograph, and your children are watching the map with you.' : 'Your cousin volunteers the second week.'} On November 9 the ceasefire, and Shusha is Azerbaijani again, and Aliyev reads the agreement on television with the generals behind him. You feel something you expected to be simple. It is not simple.`
     },
     choices: null,
     effect: (p) => { p.m += 8; p.r += 6; p.addFlag('azr_war_victory_2020'); },
@@ -243,7 +243,7 @@ const ARMENIA_AZ_EVENTS = [
     phase: 'midlife',
     weight: 4,
     when: (G) => G.character.country.name === 'Azerbaijan' && G.currentYear >= 2023 && G.flags.has('azr_karabakh_idp') && !G.flags.has('azr_karabakh_return_2023'),
-    text: 'September 2023: the remaining Armenian forces in Karabakh surrender in twenty-four hours. The Armenians of Karabakh leave — nearly all of them, in a column of cars that stretches for miles. By October, the region is empty of the population it has had for centuries. You can go back. The government arranges buses. You go on the bus. The house your parents described is a ruin. The mulberry tree in the yard is still standing. You stand under it for a long time. You do not know what you thought you would feel.',
+    text: 'September 2023. The Armenian forces in Karabakh surrender in a day, and the people leave, nearly all of them, in a column of cars that stretches for miles. You can go back, later, on a bus the government arranges. The house your parents described is a ruin. The mulberry tree in the yard is still standing, and you stand under it for a long time.',
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 8; p.addFlag('azr_karabakh_return_2023'); },
   },

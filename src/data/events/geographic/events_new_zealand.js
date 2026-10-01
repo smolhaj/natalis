@@ -32,7 +32,7 @@ export const NEW_ZEALAND_EVENTS = [
       G.currentYear >= 1981 && G.currentYear <= 1982 &&
       G.age >= 16 &&
       !G.mem?.nzSpringbok,
-    text: 'The South African Springboks arrive in New Zealand to play rugby in the middle of apartheid. The tour should have been cancelled — half the country says it should have been cancelled — but it wasn\'t. The matches are played inside police cordons. Protestors and counter-protestors face each other in the streets. Friends stop talking. Families argue across tables. In Hamilton, protestors invade the pitch. In Auckland, a flour bomb plane circles the stadium. The country has not been this divided in living memory over anything.',
+    text: 'The Springboks come to play rugby in the middle of apartheid, and half the country says the tour should have been cancelled. The matches are played inside police cordons, and protesters and fans face each other in the streets. Friends stop speaking; families argue across the table. In Hamilton the protesters take the pitch, and in Auckland a light plane drops flour bombs on the stadium. Nobody alive can remember the country this divided.',
     choices: [
       {
         text: 'You protest — the tour is a endorsement of apartheid',
@@ -115,7 +115,7 @@ export const NEW_ZEALAND_EVENTS = [
     text: 'Australia is four hours away and pays more for the same work. The flight is a logic problem: same language, easier visa, higher wages, bigger city. A quarter of all New Zealanders live in Australia at any given time. The question is not exotic — not whether to emigrate to London or New York, but whether to cross the Tasman to a country that is familiar enough that it doesn\'t really feel like leaving. Your friends are asking the question. Some have already answered it.',
     choices: [
       {
-        text: 'You go — Australia is the rational choice for your particular situation',
+        text: 'You go — Australia is the rational choice for your situation',
         tag: 'left',
         outcome: 'You go. You come back for Christmas. The coming back for Christmas becomes the way you maintain the connection to the place you left.',
         effect: (p) => { p.w += 5; p.mo += 1500; p.m -= 5; p.addFlag('nz_left_for_australia'); p.addFlag('expat'); p.setMem('nzBrainDrain', true) },
@@ -123,7 +123,7 @@ export const NEW_ZEALAND_EVENTS = [
       {
         text: 'You stay — New Zealand is where you understand yourself',
         tag: 'stayed',
-        outcome: 'You watch people leave. You are still here. The people who left call New Zealand Paradise when they come back to visit, which is not the same as living in it.',
+        outcome: 'You watch people leave. You are still here. The people who left call New Zealand Paradise when they come back to visit, which is easy when you do not live in it.',
         effect: (p) => { p.m += 4; p.r += 2; p.addFlag('nz_stayer'); p.setMem('nzBrainDrain', true) },
       },
     ],
@@ -152,7 +152,7 @@ export const NEW_ZEALAND_EVENTS = [
       G.currentYear >= 2019 && G.currentYear <= 2020 &&
       G.age >= 20 &&
       !G.mem?.nzAttack,
-    text: 'A white supremacist attacks two mosques in Christchurch during Friday prayers. Fifty-one people die. The killer livestreams it. The prime minister appears in front of the cameras within hours in a black hijab and says "They are us." The gun buyback legislation is passed in twenty-six days. New Zealand has been proud of its sense of safety — the distance from the world\'s violence, the doors left unlocked — and that pride now has a specific wound in it.',
+    text: 'A white supremacist attacks two mosques in Christchurch during Friday prayers. Fifty-one people die. The killer livestreams it. The prime minister appears in front of the cameras within hours in a black hijab and says "They are us." The gun buyback legislation is passed in twenty-six days. New Zealand has been proud of its sense of safety — the distance from the world\'s violence, the doors left unlocked — and that pride now has a wound in it.',
     choices: [
       {
         text: 'You are in Christchurch — this is not an abstraction',
@@ -163,7 +163,7 @@ export const NEW_ZEALAND_EVENTS = [
       {
         text: 'You watch from elsewhere in New Zealand — present but at a remove',
         tag: 'watching',
-        outcome: 'The prime minister\'s face is what you remember: the specific look of someone who understands what has just happened and is deciding, in real time, what to do about it.',
+        outcome: 'The prime minister\'s face is what you remember: the look of someone who understands what has just happened and is deciding, in real time, what to do about it.',
         effect: (p) => { p.m -= 9; p.karma += 4; p.addFlag('nz_christchurch_attack_generation'); p.setMem('nzAttack', true) },
       },
     ],
@@ -177,7 +177,7 @@ export const NEW_ZEALAND_EVENTS = [
       IS_NZ(G) &&
       G.age >= 65 &&
       !G.mem?.nzLate,
-    text: 'You have lived in one of the most geographically remote countries on earth. This shapes things in ways that are hard to name until you are old enough to see the shape. The distance kept certain things out and kept certain things in. The landscape — the mountains, the coast, the light — is not neutral. You carry it the way people carry the place they are from, which is completely and without meaning to.',
+    text: 'You have lived in one of the most geographically remote countries on earth. This shapes things in ways that are hard to name until you are old enough to see the shape. The distance kept certain things out and kept certain things in. The landscape — the mountains, the coast, the light — is not neutral. You carry it the way people carry the place they are from: completely and without meaning to.',
     choices: null,
     effect: (p) => { p.m += 7; p.r -= 4; p.karma += 3; p.setMem('nzLate', true) },
   },

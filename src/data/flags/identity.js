@@ -1756,6 +1756,16 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by partition_india_refugee world event.',
   },
 
+  trans_identity: {
+    weight: 'major', category: 'identity', intent: 'event',
+    description: 'Heard the word in somebody else\'s sentence and recognised themselves in it.',
+    notes: 'Set by lgbtq_trans_identity. Follow-through: lgbtq_trans_telling, lgbtq_trans_papers, lgbtq_trans_late.',
+  },
+  trans_told_family: {
+    weight: 'moderate', category: 'identity', intent: 'event',
+    description: 'Told a parent, at the kitchen table, in the wrong order.',
+    notes: 'Set by lgbtq_trans_telling. Read by lgbtq_trans_late.',
+  },
   partition_india_memory: {
     weight: 'moderate',
     category: 'identity',

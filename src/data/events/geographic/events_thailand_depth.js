@@ -23,7 +23,7 @@ export const THAILAND_DEPTH_EVENTS = [
       G.currentYear === 1973 &&
       G.age >= 16 &&
       !G.mem?.thaDepOct73,
-    text: 'October 14, 1973. The students have been arrested for distributing pamphlets calling for a constitution. The crowds grow. At Ratchadamnoen Avenue, in front of the Grand Palace, five hundred thousand people. The Thanom Kittikachorn government orders the army to fire. Seventy-seven students die. Then Thanom resigns and goes into exile. The king — Bhumibol — appears on television and asks for order and this is understood as withdrawal of royal support from the regime. In three days, a military dictatorship that has run Thailand for fifteen years falls to students in the street. You were in the crowd or you watched it happen and the country becomes, briefly, something it was not before.',
+    text: 'October 1973. Students arrested for handing out leaflets about a constitution, and the crowds grow, half a million on Ratchadamnoen. The government orders the army to fire and students die in the street. Then the king appears on television, and the generals leave the country, and a dictatorship of fifteen years falls to students in three days. The country becomes, briefly, something it was not.',
     choices: [
       {
         text: 'You are in the crowd at Ratchadamnoen.',
@@ -73,7 +73,7 @@ export const THAILAND_DEPTH_EVENTS = [
       {
         text: 'You go to Bangkok. The factory or the construction site.',
         tag: null,
-        outcome: 'The dormitory. The six-day week. The foreman who knows your province and employs accordingly. The city pays. The city costs. Both are true in the same month.',
+        outcome: 'The dormitory. The six-day week. The foreman who knows your province and employs accordingly. The city pays. The city costs.',
         effect: (p) => {
           p.w += 5
           p.mo += 2000
@@ -111,12 +111,12 @@ export const THAILAND_DEPTH_EVENTS = [
       G.character.gender === 'male' &&
       G.stats.wealth < 55 &&
       !G.mem?.thaDepMuayThai,
-    text: 'The muay thai camp takes boys at twelve. The trainer has been training fighters from this province for twenty years. You train twice a day: mornings at the camp, afternoons in the heat. The art is five limbs — fists, elbows, knees, shins, and the clinch. It is also the path for a boy from a poor family to fight at Rajadamnern or Lumpinee, the two stadiums in Bangkok where the big gamblers sit and the fighters earn real money. The boys who make it to the stadiums send money home. Most do not make it to the stadiums. The training is still the training.',
+    text: 'The muay thai camp takes boys at twelve, under a trainer who has made fighters in this province for twenty years: mornings at the camp, afternoons in the heat, fists, elbows, knees, shins and the clinch. It is the road for a poor boy to Rajadamnern or Lumpinee, where the big gamblers sit and fighters earn real money and send it home. Most boys never get there. The training is still the training.',
     choices: [
       {
         text: 'You fight through the provincial circuits toward Bangkok.',
         tag: null,
-        outcome: 'The fights at the local stadium: five hundred baht for a win. Then a hundred thousand people watching at Lumpinee on a Friday. Then the calculation about how many years before the damage adds up. The money is real while it is real.',
+        outcome: 'The fights at the local stadium: five hundred baht for a win. Then a hundred thousand people watching at Lumpinee on a Friday. Then the calculation about how many years before the damage adds up. The money lasts while it lasts.',
         effect: (p) => {
           p.h -= 5
           p.s += 5
@@ -152,7 +152,7 @@ export const THAILAND_DEPTH_EVENTS = [
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.thaDepMerit,
     text: () => pick([
-      'Tam bun — making merit. The monks walk in single file before dawn with their lacquered alms bowls. Your mother wakes at five to prepare the rice, the sticky rice, the vegetables. The act of placing food in the bowl accumulates merit — a specific spiritual economy in which the intention to give and the giving are both tracked and both return. The spirit house in the courtyard has fresh garlands today: the san phra phum requires daily tending. The Buddhism and the animism are not distinct practices. They are one practice with different vocabularies.',
+      'Tam bun — making merit. The monks walk in single file before dawn with their lacquered alms bowls. Your mother wakes at five to prepare the rice, the sticky rice, the vegetables. The act of placing food in the bowl accumulates merit — a spiritual economy in which the intention to give and the giving are both tracked and both return. The spirit house in the courtyard has fresh garlands today: the san phra phum requires daily tending. The Buddhism and the animism are one practice with two vocabularies.',
       'The lotus, the incense, the gold leaf you press onto the Buddha image: the daily texture of Thai Buddhist life is tactile and specific. The merit economy runs through everything — the temple fair, the funeral donation, the scholarship to a poor student. Your grandmother knows the merit value of each act the way she knows the price of market vegetables. Karma is an accounting system. Merit is the deposit.',
     ]),
     choices: null,
@@ -174,7 +174,7 @@ export const THAILAND_DEPTH_EVENTS = [
       G.character.country.name === 'Thailand' &&
       G.age >= 16 && G.age <= 40 &&
       !G.mem?.thaDepSongkran,
-    text: 'Songkran: the Thai New Year, April 13-15. The ritual pouring of water — the elderly receiving the first blessing, the younger generation pouring water over their hands and asking for forgiveness and good luck for the year. Then, in the street version: the water guns, the pickup trucks with water barrels, the entire country soaked for three days. The buses home from Bangkok are fully booked a month before. Isan empties back to itself. The family table in the village, the elder blessing, the tam bun at the temple in the morning before the afternoon chaos. The water washes away the old year. You carry this home and you carry this in Bangkok depending on the year.',
+    text: 'Songkran, the new year in April. In the morning the young pour water over the hands of the old and ask their blessing; in the afternoon the whole country is soaked from water guns and pickup trucks with barrels in the back. The buses out of Bangkok are full a month ahead, and Isan fills up again with its own people. The water washes the old year away.',
     choices: null,
     effect: (p) => {
       p.m += 7
@@ -197,7 +197,7 @@ export const THAILAND_DEPTH_EVENTS = [
       G.age >= 18 && G.age <= 35 &&
       G.stats.wealth < 45 &&
       !G.mem?.thaDepBar,
-    text: 'Pattaya, Patpong, Walking Street, the islands in high season. The bar work economy exists inside a specific Thai calculation: the wage in the factory is lower, the hours are longer, the future is the same. The bar pays more. The foreign men have money. Some of them are manageable; some are not; all of them can be read within five minutes if you have been doing this long enough. You know women who got a visa from it, who got a house from it, who got nothing from it, who got hurt from it. The knowledge is distributed and specific. You make the decision in your circumstances with your information. Other people\'s opinions are not your circumstances.',
+    text: 'Pattaya, Patpong, Walking Street, the islands in high season. The factory pays less, the hours are longer, the future is the same, and the bar pays more. The foreign men have money, and you can read any of them within five minutes if you have done this long enough. You know women who got a visa from it, or a house, or nothing, or hurt. You decide in your circumstances with your information, and other people\'s opinions are not your circumstances.',
     choices: [
       {
         text: 'You take the work. The money is real and you need it.',
@@ -235,7 +235,7 @@ export const THAILAND_DEPTH_EVENTS = [
       G.character.country.name === 'Thailand' &&
       G.age >= 7 && G.age <= 18 &&
       !G.mem?.thaDepRoyal,
-    text: 'The portrait of the King is in every room that matters: the school classroom, the government office, the shop, the restaurant, the hospital waiting area. When the national anthem plays at eight in the morning and six in the evening, everyone stops — in the street, in the train station, in the market. The cinema plays the royal anthem before every film and everyone stands. King Bhumibol\'s photograph is the King\'s photograph and later his son\'s and the face changes but the ritual does not. The monarchy is not one thing you think about. It is the water the country swims in.',
+    text: 'The portrait of the King is in every room that matters: the school classroom, the government office, the shop, the restaurant, the hospital waiting area. When the national anthem plays at eight in the morning and six in the evening, everyone stops — in the street, in the train station, in the market. The cinema plays the royal anthem before every film and everyone stands. King Bhumibol\'s photograph is the King\'s photograph and later his son\'s and the face changes but the ritual does not. The monarchy is the water the country swims in.',
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -255,7 +255,7 @@ export const THAILAND_DEPTH_EVENTS = [
       G.currentYear === 2011 &&
       G.age >= 18 &&
       !G.mem?.thaDepFlood2011,
-    text: 'The 2011 monsoon season is extraordinary. By October a third of Thailand\'s provinces are underwater. The Chao Phraya river and its tributaries overflow simultaneously. The industrial estates north of Bangkok — home to hard drive factories, auto parts manufacturers, electronics assembly — flood under three metres of water. The global supply chain for hard drives and Toyota parts stops. Eight hundred people die. The water reaches the outskirts of Bangkok; the government builds temporary barriers to keep it out of the centre; the outer districts flood. Forty-five billion dollars in damage. The water takes three months to drain.',
+    text: '2011, and the monsoon does not stop. By October a third of the provinces are under water, and the industrial estates north of Bangkok, the hard drives and the car parts, are three metres deep, and factories on the other side of the world stop for lack of them. The water reaches the edge of Bangkok, and the government\'s sandbag walls keep it out of the centre by sending it into the outer districts. It takes three months to drain.',
     choices: [
       {
         text: 'Your home or workplace floods.',

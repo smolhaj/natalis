@@ -107,7 +107,7 @@ export const SOCIAL_WORKER_ARC_EVENTS = [
       isSW(G) &&
       G.age >= 36 &&
       !G.mem?.swColleagueFired,
-    text: `A colleague who was good at this job — genuinely good, the kind that the cases went better for having them on — has left. Not to another organisation but out of the field entirely. You understand this. You have understood it for a long time as an abstract possibility and now it is a specific person's specific decision, and their specific reason for leaving is a reason you recognise from your own experience of the work, and you are still here, and you are thinking about that fact.`,
+    text: `A colleague who was good at this job — genuinely good, the kind that the cases went better for having them on — has left. Not to another organisation but out of the field entirely. You understand this. You have understood it for a long time as an abstract possibility and now it is a person's specific decision, and their reason for leaving is a reason you recognise from your own experience of the work, and you are still here, and you are thinking about that fact.`,
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -143,7 +143,7 @@ export const SOCIAL_WORKER_ARC_EVENTS = [
       G.flags.has('sw_secondary_trauma') &&
       G.age >= 55 &&
       !G.mem?.swTraumaEchoFired,
-    text: `The kind of tiredness has become structural. You have learned to identify when it is affecting your professional judgement and to compensate for it, which is itself a kind of expertise. You have learned when to take leave and what the difference is between the tiredness that leave addresses and the tiredness that is permanent. Both kinds are real. You are not the person who entered this field, in ways that are partly the specific damage of secondary trauma and partly just the accumulation of being the person this work produced. Both of those things are also real.`,
+    text: `The kind of tiredness has become structural. You have learned to identify when it is affecting your professional judgement and to compensate for it, which is itself a kind of expertise. You have learned when to take leave and what the difference is between the tiredness that leave addresses and the tiredness that is permanent. Both kinds are real. You are not the person who entered this field, in ways that are partly the damage of secondary trauma and partly just the accumulation of being the person this work produced. Both of those things are also real.`,
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -161,7 +161,7 @@ export const SOCIAL_WORKER_ARC_EVENTS = [
       isSW(G) &&
       G.age >= 60 &&
       !G.mem?.swLateFired,
-    text: `The accounting: you chose to work with people at the worst points of their lives, sustained that choice for thirty-something years, and the system you worked within was imperfect in specific ways that you tried to address from inside, with mixed results. The outcomes you could influence you influenced. The outcomes you couldn't, you documented. Some of the cases closed well. The good-outcome file is real. What you carry out of the career, alongside the system failures and the weight and the colleague who left, is also this: the specific family that changed shape because you were the worker assigned to them. That happened. It's in the record.`,
+    text: `The accounting: you chose to work with people at the worst points of their lives, sustained that choice for thirty-something years, and the system you worked within was imperfect in specific ways that you tried to address from inside, with mixed results. The outcomes you could influence you influenced. The outcomes you couldn't, you documented. Some of the cases closed well. There is a good-outcome file. What you carry out of the career, alongside the system failures and the weight and the colleague who left, is also this: the family that changed shape because you were the worker assigned to them. That happened. It's in the record.`,
     choices: null,
     effect: (p) => {
       p.m += 12

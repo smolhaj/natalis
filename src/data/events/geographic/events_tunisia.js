@@ -32,7 +32,7 @@ export const TUNISIA_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2010 &&
       G.age >= 18 &&
       !G.mem.tunBenAli,
-    text: 'Ben Ali has been in power since 1987. The arrangement is specific: the state provides bread at subsidised prices, keeps the universities running, maintains a functional civil service. In exchange, politics does not exist except as a performance. The RCD party controls everything. The secret police — the police politique — knows which conversations happened in which cafés. Dissidents are in prison or exile. The press prints what it is permitted to print. The country is stable in the way that a thing under pressure is stable.',
+    text: 'Ben Ali has ruled since 1987, and the deal is clear: cheap bread, working universities, a functioning civil service, and no politics except as theatre. The party controls everything; the political police know which conversations happened in which café; dissidents are in prison or abroad. The country is stable the way something under pressure is stable.',
     choices: [
       {
         text: 'You learn the art of living in the permitted spaces.',
@@ -43,7 +43,7 @@ export const TUNISIA_EVENTS = [
       {
         text: 'You have contact with dissident ideas — through a relative, a text, a friend who has been abroad.',
         tag: null,
-        outcome: 'The ideas arrive with a specific risk attached. You know who you can discuss them with. The list is short.',
+        outcome: 'The ideas arrive with a risk attached. You know who you can discuss them with. The list is short.',
         effect: (p) => { p.m -= 5; p.r += 6; p.addFlag('tunisian_ben_ali_generation'); p.addFlag('regime_self_censorship'); p.setMem('tunBenAli', true) },
       },
     ],
@@ -59,7 +59,7 @@ export const TUNISIA_EVENTS = [
       G.currentYear === 2011 &&
       G.age >= 14 &&
       !G.mem.tunRevolution,
-    text: 'December 17, 2010. Mohamed Bouazizi, a 26-year-old street vendor in Sidi Bouzid, sets himself on fire outside the regional government office after a municipal inspector confiscates his cart and slaps him. He dies eighteen days later. The protests that begin in Sidi Bouzid spread to Tunis. By January 14, 2011 — twenty-eight days after Bouazizi\'s act — Ben Ali and his family are on a plane to Saudi Arabia. He had been in power for twenty-three years. The regional contagion — Egypt, Libya, Syria, Yemen, Bahrain — begins immediately. Tunisia started it. Tunisia is the only one that finishes it with a democracy.',
+    text: 'December 2010. In Sidi Bouzid an inspector takes a fruit seller\'s cart and slaps him, and he sets himself on fire outside the governor\'s office, and dies eighteen days later. The protests reach Tunis. Twenty-eight days after the fire, Ben Ali and his family are on a plane to Saudi Arabia after twenty-three years. Egypt, Libya, Syria, Yemen and Bahrain follow. Tunisia started it, and Tunisia is the only one to come out of it with a democracy.',
     choices: [
       {
         text: 'You are in Tunis when Ben Ali falls.',
@@ -100,12 +100,12 @@ export const TUNISIA_EVENTS = [
       G.currentYear === 2021 &&
       G.age >= 20 &&
       !G.mem.tunSaied,
-    text: 'July 25, 2021. President Kais Saied — elected in 2019 as an anti-corruption outsider — suspends parliament and assumes emergency powers. He rules by decree. In 2022 he dissolves the independent electoral commission, writes a new constitution without meaningful consultation, concentrates authority in the presidency. The Nobel-winning constitution is gone. The judges are purged. The journalists are charged. The experiment that the world watched is being dismantled from within by someone who was elected to defend it.',
+    text: 'July 25, 2021. President Saied, elected as the man against corruption, suspends parliament and rules by decree. Then he dissolves the electoral commission, writes a new constitution with hardly anyone\'s help, purges the judges, charges the journalists. The constitution the world gave a Nobel to is gone. The experiment is being taken apart from inside by the man elected to keep it.',
     choices: [
       {
         text: 'You supported the revolution and cannot accept what has been done with it.',
         tag: null,
-        outcome: 'You are in the generation that built the thing and are watching it be unmade. The specific grief of that does not have a name.',
+        outcome: 'You are in the generation that built the thing and are watching it be unmade. The grief of that does not have a name.',
         effect: (p) => { p.m -= 14; p.r += 10; p.addFlag('tunisian_saied_generation'); p.setMem('tunSaied', true) },
       },
       {

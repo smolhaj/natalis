@@ -42,7 +42,13 @@ export const FOLLOWTHROUGH_65_EVENTS = [
       G.flags.has('vn_dep_con_lai') &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.ft65ConLaiYoung,
-    text: `You are old enough now to understand the full shape of what you are — the child of a war's intersection, carrying a face that carries the evidence. In Vietnam you were the American; in America you were Vietnamese. The Amerasian Homecoming Act was meant to resolve this and instead revealed it more fully. The resolution, if there is one, comes from inside: what you decide the face means, what you carry it as, the story you build for yourself that is truer than the ones the two countries handed you.`,
+    text: (G) => {
+      const kid = G.character.gender === 'female' ? 'girl' : 'boy'
+      if (G.currentCountry?.name !== 'Vietnam') return `In Vietnam you were the American. Here you are Vietnamese, and the other Vietnamese know exactly what you are, and the people at work ask where you are from and then where you are really from. You have stopped explaining. You keep one photograph of your mother in your wallet.`
+      return G.currentYear >= 1990
+        ? `Most of the con lai you grew up with have gone on the flights. You stayed. The woman at the market who has sold you rice for ten years still calls you the American's ${kid}, not unkindly.`
+        : `You are grown, and the face has not stopped being the first thing anybody reads. The woman at the market still calls you the American's ${kid}, not unkindly.`
+    },
     choices: null,
     effect: (p) => { p.r += 6; p.m -= 3; p.e += 4; p.setMem('ft65ConLaiYoung', true) },
   },
@@ -55,7 +61,7 @@ export const FOLLOWTHROUGH_65_EVENTS = [
       G.flags.has('vn_dep_con_lai') &&
       G.age >= 50 &&
       !G.mem?.ft65ConLaiLate,
-    text: `The war that made you ended before you could remember it. You are the evidence of a specific historical moment — the intersection of two armies in a specific country in a specific decade — walking through years that those armies would not have predicted. The countries moved on. You moved on inside them. The face they left you is still your face. You have made your peace with it, or something close enough to peace that the difference is no longer urgent.`,
+    text: `The war that made you ended before you could remember it. The armies went home and the countries moved on, and you moved on inside them. Somebody's grandchild asks, at a wedding, why you look the way you do. You tell the short version, which you have polished over fifty years until it no longer cuts the hand.`,
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.setMem('ft65ConLaiLate', true) },
   },
@@ -83,7 +89,7 @@ export const FOLLOWTHROUGH_65_EVENTS = [
       G.flags.has('vn_dep_doi_moi_generation') &&
       G.age >= 55 &&
       !G.mem?.ft65DoiMoiLate,
-    text: `You remember what the economy was before the reform and what it was during and what it became. The memory is specific — the prices, the queues, the cousin's Honda, the cafe that opened, the foreign factory that arrived — and the trajectory inside the memory is the whole arc of modern Vietnam. The party that presided over the worst of the post-war years is the same party that presided over the growth. Both of these facts are true and you hold both in the same mind because you lived inside both in the same life.`,
+    text: `You remember what the economy was before the reform and what it was during and what it became. The memory is specific — the prices, the queues, the cousin's Honda, the cafe that opened, the foreign factory that arrived — and the trajectory inside the memory is the whole arc of modern Vietnam. The party that presided over the worst of the post-war years is the same party that presided over the growth. You hold both in the same mind because you lived inside both in the same life.`,
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.setMem('ft65DoiMoiLate', true) },
   },

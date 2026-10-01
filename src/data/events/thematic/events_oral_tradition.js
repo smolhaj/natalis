@@ -39,7 +39,7 @@ export const ORAL_TRADITION_EVENTS = [
       G.age >= 6 && G.age <= 13 &&
       G.parents?.mother &&
       !G.mem?.oralGrandFamine,
-    text: (G) => `Your grandmother tells you about the year the rains didn't come. She tells it the same way each time, which means it is one of the true stories — the true stories get told the same way because something in the telling has fixed. The ${stapleOf(G)} that came up and then stopped. The second planting that also stopped. The animals before the people. Your grandfather walking two days to the next village to find a man who had grain. What the man asked for the grain. Whether your grandfather paid it. Your grandmother pauses the same way each time she reaches this part.`,
+    text: (G) => `Your grandmother tells you about the year the rains didn't come, the same way every time, which is how you know it is one of the true stories. The ${stapleOf(G)} that came up and then stopped. The second planting that stopped too. The animals before the people. Your grandfather walking two days to find a man with grain, and what the man asked for it. Your grandmother pauses in the same place every time.`,
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -57,7 +57,7 @@ export const ORAL_TRADITION_EVENTS = [
       isOralContext(G) &&
       G.age >= 7 && G.age <= 14 &&
       !G.mem?.oralMarketNews,
-    text: (G) => `Your father or uncle comes back from the market in the nearest town. The market is where news arrives — carried by the truck drivers, by the traders, by the people who have been somewhere you haven't been. This week the price of ${stapleOf(G)} is up. There was a meeting in the district capital about the new road. Someone says the government is changing, which could mean many things. You know how to read the adult faces when the market news is bad: the specific stillness, the way the conversation stops and starts in a different direction. You cannot always hear the market news. You always learn the face that reads it.`,
+    text: (G) => `Your father comes back from the market in town, where the news arrives with the lorry drivers and the traders. This week ${stapleOf(G)} costs more. There was a meeting in the district capital about the road. Someone says the government is changing, which could mean anything. You cannot always hear the market news, but you have learned to read it in the adults' faces: the stillness, the conversation turning another way.`,
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -88,9 +88,9 @@ export const ORAL_TRADITION_EVENTS = [
     text: (G) => {
       const lang = colonialSchoolLanguage(G.character.country.name, G.currentYear)
       if (lang) {
-        return `There is one radio in the village. It belongs to the man who was a soldier and came back with money and a radio. He keeps it at his house but brings it out for important events — football matches, political speeches, announcements. People crowd around it. The radio speaks ${lang}, which some people understand well and others understand partially and some don't understand at all. The man with the radio translates the important parts. Or he doesn't translate and someone else does. Or the translation is a summary that is not quite what the radio said, adjusted for what the translator thinks people should know.`
+        return `There is one radio in the village, belonging to the man who came back from the army with money and a radio. He brings it out for football matches and speeches, and people crowd round. It speaks ${lang}, which some follow well, some partly, some not at all. Somebody translates the important parts, and the version people take home is what the translator thinks they should know.`
       }
-      return `There is one radio in the village. It belongs to the man who was a soldier and came back with money and a radio. He keeps it at his house but brings it out for important events — football matches, political speeches, announcements. People crowd around it. The radio speaks the language properly, in the way of the capital and the newsreader, and everyone can follow the words. What has to be translated is the other thing: what the announcement means, who it is aimed at, what will follow from it. The man with the radio does that part, and people take his version home with them. Sometimes his version is not what the radio said at all.`
+      return `There is one radio in the village, belonging to the man who came back from the army with money and a radio. He brings it out for football matches and speeches, and people crowd round. Everyone can follow the newsreader's words. What needs translating is what they mean: who it is aimed at and what will follow. The man with the radio does that part, and people take his version home, and sometimes it is not what the radio said at all.`
     },
     choices: null,
     effect: (p) => {
@@ -108,7 +108,7 @@ export const ORAL_TRADITION_EVENTS = [
       isOralContext(G) &&
       G.age >= 8 && G.age <= 15 &&
       !G.mem?.oralStranger,
-    text: `A stranger arrives. This is an event. In a village of people who know each other, a stranger is information — where they come from, why they came, what they carry, what they say. Adults go to speak with the stranger. Children are sent inside but listen from inside. The stranger stayed one night or three nights or a week. What the stranger said is told at secondhand: your mother tells your father, your father tells someone else, the version reaches you through three or four tellings. What the stranger actually said and what you received are probably not identical. You understand this. The received version is still news.`,
+    text: `A stranger arrives, and in a village where everyone knows everyone, a stranger is news. The adults go to talk to him and the children are sent inside to listen through the wall. He stays one night or three or a week. What he said reaches you through three or four tellings, your mother to your father to a neighbour, and is probably not what he said. It is still news.`,
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -125,7 +125,7 @@ export const ORAL_TRADITION_EVENTS = [
       isOralContext(G) &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.oralDeathSpreads,
-    text: `A death in the village spreads the same way. You hear it first as a sound at night — a particular cry that starts from one direction and spreads. You have learned what this cry is for. By morning everyone knows. The information about how and when fills in over the following days through conversation — who saw the person last, who the person spoke to, what the person said. The story of the death becomes the village story of the death, which is not the same thing as what happened but is all that survives. You are learning that events become stories, and that the stories are how events live.`,
+    text: `A death in the village arrives as a sound at night, a cry that starts in one direction and spreads, and you know what it means. By morning everyone knows. Over the next days the rest fills in: who saw them last, what they said. The village's story of the death is not exactly what happened, but it is what will survive.`,
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -161,7 +161,7 @@ export const ORAL_TRADITION_EVENTS = [
       isOralContext(G) && G.ruralUrban === 'rural' &&
       G.age >= 13 && G.age <= 20 &&
       !G.mem?.oralCousinCity,
-    text: `Your cousin who went to the city comes back at harvest time. Everyone wants to speak with them. The city they describe: bigger than you can quite imagine, the prices are higher, the streets are not what you expected, there is a job and also a danger. Your cousin brings things back — a cloth, a medicine, a small device — and these objects are as much information as the words. You examine the objects later when the conversation has moved on. The cousin's version of the city and the city itself are not identical. You know this. You will find out how much they differ when and if you go.`,
+    text: `Your cousin who went to the city comes back for the harvest and everyone wants a turn with them. The city they describe is bigger than you can picture, dearer, a job and also a danger. They bring a length of cloth, a medicine, a small machine, and later, when the talk has moved on, you study the objects as closely as you listened. The cousin's city and the city are not the same. You will find out how different if you go.`,
     choices: null,
     effect: (p) => {
       p.e += 4
@@ -179,7 +179,7 @@ export const ORAL_TRADITION_EVENTS = [
       G.conflictRisk >= 0.1 &&
       G.age >= 13 && G.age <= 21 &&
       !G.mem?.oralViolenceNearby,
-    text: `You hear about violence in the next district from the man who walked all night from there. He arrived at dawn and sat down in the compound without taking off his shoes. The adults went to him. Children were told to go inside again. What he said came to you through three people over three days: there were soldiers, or armed men who were not soldiers, or both. There was burning. The count of dead is uncertain because people who count them are also afraid of being counted. You understand that the uncertainty is not ignorance — it is what the event looks like from inside it.`,
+    text: `A man walks all night from the next district and sits down in the compound at dawn without taking off his shoes. The children are sent inside. What he said reaches you through three people over three days: soldiers, or armed men who were not soldiers, and burning. Nobody knows how many are dead, because the people who would count them are afraid of being counted. That uncertainty is not ignorance. It is what the thing looks like from inside.`,
     choices: [
       {
         text: 'Your family begins to discuss whether to leave.',
@@ -232,7 +232,7 @@ export const ORAL_TRADITION_EVENTS = [
       isOralContext(G) &&
       G.age >= 13 && G.age <= 20 && G.parents?.father?.alive &&
       !G.mem?.oralHarvestFail,
-    text: `This year's harvest. Your father and the other men stand in the field in the late afternoon and look at what came up. They do not say much. The assessment is made by the length of the silence. Your mother hears the silence when your father comes inside and begins a different kind of calculation — what is in the sacks, what can be sold, which debts are most pressing, whether your uncle in the city can be asked for help and what the asking will cost in the relationship. You are old enough to understand the calculation is happening. You are not yet included in it. You watch your mother's face as she does the arithmetic that is not arithmetic.`,
+    text: `The men stand in the field in the late afternoon and look at what came up, and say almost nothing. The length of the silence is the verdict. Your mother hears it when your father comes in and starts her own reckoning: what is in the sacks, what can be sold, which debt is most pressing, what it would cost to ask the uncle in the city. You are old enough to know it is happening and not old enough to be included.`,
     choices: null,
     effect: (p) => {
       p.m -= 5
@@ -270,7 +270,7 @@ export const ORAL_TRADITION_EVENTS = [
       isOralContext(G) &&
       G.age >= 8 && G.age <= 15 &&
       !G.mem?.oralElderKnowledge,
-    text: `The elder in your family or village who carries the history that is not in any book. Who married who in what year. The name of the ancestor who came from elsewhere and why they came. Which families share blood that makes certain marriages forbidden. Where the boundaries of the land run and how the boundaries were agreed. You are at the age when you are beginning to receive some of this, in pieces, when the elder judges you ready for a piece. The knowledge is not all given at once. It is given on a schedule the elder controls, which is how the elder controls something.`,
+    text: `The old woman who carries the history that is in no book: who married whom, which ancestor came from elsewhere and why, which families share blood and cannot marry, where the boundary stones are and how they were agreed. You are old enough now to be given some of it, a piece at a time, when she judges you ready. She decides the schedule. That is one of the things she controls.`,
     choices: null,
     effect: (p) => {
       p.e += 4
@@ -309,7 +309,7 @@ export const ORAL_TRADITION_EVENTS = [
       G.education &&
       G.age >= 8 && G.age <= 14 &&
       !G.mem?.oralTeacherSaid,
-    text: `The teacher is the person in the village who knows things from outside. Not just the subjects — the capital city, the news, the way things are done elsewhere. You tell your parents what the teacher said, and sometimes your parents believe it and sometimes they don't, and the calibration between teacher-knowledge and parent-knowledge is something you are working out. The teacher said the government is building a dam upriver. Your father says the government has been saying this for fifteen years. The teacher said it is going to happen now. Your father says: wait and see. You have learned that "wait and see" is one answer to information you cannot verify.`,
+    text: `The teacher knows things from outside: the capital, the news, how things are done elsewhere. The teacher says the government is building a dam upriver. Your father says the government has been saying so for fifteen years. The teacher says this time it will happen. Your father says: wait and see.`,
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -349,7 +349,7 @@ export const ORAL_TRADITION_EVENTS = [
        G.character.religion === 'animist') &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem?.oralProphet,
-    text: `A preacher or imam or healer came to the village and stayed for three days. You were not allowed to all the meetings — some were for adults. What you heard from the adults after: they said he had power. The evidence of the power was discussed in specific cases: the woman with the swollen leg, the man who could not sleep, the child with the fever. Your parents' response to the preacher is the register that matters: whether they accepted what he said, whether they doubted it privately, whether they gave money. The preacher left and the conversations about him continued for a month. Whether what he said was real is not something you can settle at this age.`,
+    text: `A preacher came and stayed three days, and some of the meetings were for adults only. Afterwards they talked of his power, case by case: the woman's swollen leg, the man who could not sleep, the child's fever. What you watched was your parents: whether they believed him, whether they doubted him privately, whether they gave money. The talk went on for a month after he left.`,
     choices: null,
     effect: (p) => {
       p.r += 4

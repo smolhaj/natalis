@@ -112,7 +112,7 @@ export const BOSNIA_EVENTS = [
       {
         text: 'Vote for one of the three. Everyone else is going to.',
         tag: 'yielding',
-        outcome: 'It is not a vote for anything. It is a vote against being the only house on the street with nobody speaking for it.',
+        outcome: 'It is a vote against being the only house on the street with nobody speaking for it.',
         effect: (p) => { p.setMem('ba_1990', true); p.addFlag('voted_national_party') },
       },
       {
@@ -263,7 +263,7 @@ export const BOSNIA_EVENTS = [
     when: (G) => IS_BA(G) && G.currentYear === 1993 && G.age >= 12 && (SERB(G) || BOSNIAK(G)) && once(G, 'ba_ferhadija'),
     text: (G) => SERB(G)
       ? 'They dynamite the Ferhadija in the middle of the night in May and bulldoze what is left into the river, and the Arnaudija twenty minutes later, the same night. Four hundred years each. In the morning there is a flat place where a building has been your whole life and the town is quieter than a town should be, and the quietness is a lot of people deciding separately not to say anything. Your father says one sentence about it at the table and then does not mention it again, for years, and the sentence is not one you can repeat outside the house.'
-      : 'They dynamite the Ferhadija in the night and push the stone into the river so that it cannot be put back. Four hundred and fourteen years. It was not a mosque you went to particularly. It was the thing at the end of the street that had always been there and that your grandfather described as having always been there. You understand exactly what the demolition is for, which is not to remove a building.',
+      : 'They dynamite the Ferhadija in the night and push the stone into the river so that it cannot be put back. Four hundred and fourteen years. You did not go to that mosque particularly. It was the thing at the end of the street that had always been there, as your grandfather said. You understand exactly what the demolition is for, and it is not to remove a building.',
     context: 'The Ferhat Pasha (Ferhadija) mosque, built in 1579, and the Arnaudija, built in 1594, were dynamited in Banja Luka in May 1993 and the rubble removed. Sixteen mosques in the city were destroyed. The Ferhadija was rebuilt from recovered stone and reopened in 2016.',
     choices: null,
     effect: (p) => { p.setMem('ba_ferhadija', true); p.m -= 7; p.addFlag('mosques_dynamited') },
@@ -380,7 +380,7 @@ export const BOSNIA_EVENTS = [
     weight: 999,
     when: (G) => IS_BA(G) && SERB(G) && G.character?.gender === 'male' &&
       G.currentYear >= 1992 && G.currentYear <= 1995 && G.age >= 18 && G.age <= 45 && once(G, 'ba_vrs'),
-    text: 'They come for you with a list and the list has your address on it and there is no mechanism, in the place you live, in 1992, for not being on it. You spend most of two years on a hillside above a valley, cold, bored, badly fed, occasionally very frightened, doing what you are told at the scale of a rifle. Men you were at school with are somewhere below you. You think about that at night and you think about it less than you would expect during the day, which is the part you are going to have to account for.',
+    text: 'They come for you with a list and the list has your address on it and there is no mechanism, in the place you live, in 1992, for not being on it. You spend most of two years on a hillside above a valley, cold, bored, badly fed, occasionally very frightened, doing what you are told at the scale of a rifle. Men you were at school with are somewhere below you. You think about that at night, and less than you would expect during the day, and you will have to account for that.',
     context: 'The Army of Republika Srpska conscripted widely from the Bosnian Serb population. Most of its soldiers were ordinary conscripts. The ICTY prosecuted commanders and specific units; the ICTY and ICJ found the Srebrenica killings of July 1995 to be genocide.',
     choices: [
       {
@@ -403,7 +403,7 @@ export const BOSNIA_EVENTS = [
     phase: null,
     weight: 500,
     when: (G) => IS_BA(G) && SERB(G) && G.currentYear >= 1993 && G.currentYear <= 1997 && G.age >= 20 && once(G, 'ba_sshame'),
-    text: 'Somebody in the town has a satellite dish and what the foreign channels are saying about the people you are from is not something you can dismiss and not something you can repeat at the café. The local radio has its own version. You hold both of them in your head at the same time for about three years and the strain of that is a specific thing that people who have not done it do not understand. Your mother says: they are lying about us. You say: about some of it.',
+    text: 'Somebody in the town has a satellite dish and what the foreign channels are saying about the people you are from is not something you can dismiss and not something you can repeat at the café. The local radio has its own version. You hold both of them in your head at the same time for about three years and the strain of that is a thing that people who have not done it do not understand. Your mother says: they are lying about us. You say: about some of it.',
     choices: [
       {
         text: 'Say the rest of it out loud, in your own town.',
@@ -433,7 +433,7 @@ export const BOSNIA_EVENTS = [
       Math.random() < 0.18 && once(G, 'ba_sreb'),
     text: (G) => G.character?.gender === 'male' && G.age >= 14 && G.age <= 65
       ? 'The enclave falls on the eleventh of July and the UN does not stop it. At the base at Potočari they separate the men and boys from everyone else, in front of everyone else, with the Dutch soldiers standing there. The other option is the column: twelve thousand men walking sixty miles through the woods to Tuzla with the woods shelled and mined ahead of them. About a third of the column arrives. Over eight thousand men and boys do not arrive anywhere, and it takes twenty years and a DNA laboratory to establish where most of them are.'
-      : 'The enclave falls on the eleventh of July and at Potočari they take the men out of the crowd, in front of the crowd, while the Dutch soldiers stand there, and put the women and the children on buses to Tuzla. Your husband. Your brother. Your son, who is fifteen, and whom you tried to keep inside the group by standing in a particular way, which did not work. Over eight thousand. You are on a bus and you are alive and that is the arithmetic that will organise the rest of your life.',
+      : 'The enclave falls on the eleventh of July and at Potočari they take the men out of the crowd, in front of the crowd, while the Dutch soldiers stand there, and put the women and the children on buses to Tuzla. Your husband. Your brother. Your son, who is fifteen, and whom you tried to keep inside the group by standing in a way, which did not work. Over eight thousand. You are on a bus and you are alive and that is the arithmetic that will organise the rest of your life.',
     context: 'Srebrenica was a UN-declared "safe area" held by a Dutch battalion. After its fall on 11 July 1995 more than 8,000 Bosniak men and boys were murdered. The ICTY and the International Court of Justice both found the killings to constitute genocide; Radovan Karadžić and Ratko Mladić were convicted of it.',
     choices: null,
     effect: (p) => { p.setMem('ba_sreb', true); p.m -= 20; p.addFlag('srebrenica'); p.addCondition('shell_shock', 'severe') },
@@ -457,7 +457,7 @@ export const BOSNIA_EVENTS = [
     phase: null,
     weight: 999,
     when: (G) => IS_BA(G) && SERB(G) && G.currentYear >= 1996 && G.currentYear <= 1997 && G.age >= 10 && once(G, 'ba_suburbs'),
-    text: 'Under the agreement the Sarajevo suburbs go to the Federation in March and the people in them are told, by their own leadership, to leave. Sixty thousand do. Some burn their flats on the way out so that nobody else can have them. People go to the cemeteries with tools and take their dead with them, which is a sentence that reads as rhetoric and was a practical activity undertaken by ordinary families over several days. You are from Grbavica. You were from Grbavica.',
+    text: 'Under the agreement the Sarajevo suburbs go to the Federation in March, and the people in them are told by their own leaders to leave, and tens of thousands do. Some burn their flats on the way out so nobody else will have them. People go to the cemeteries with tools and take their dead with them, which reads as rhetoric and was ordinary families\' work over several days. You are from Grbavica. You were from Grbavica.',
     context: 'Under Dayton, Serb-held districts of Sarajevo — Grbavica, Ilidža, Vogošća, Hadžići and Ilijaš — transferred to the Federation in February–March 1996. Around 60,000 Serb residents left, many after appeals from the Republika Srpska leadership; arson and the disinterment of family graves were widely reported.',
     choices: [
       {
@@ -601,7 +601,7 @@ export const BOSNIA_FOLLOWTHROUGH = [
     phase: null,
     weight: 40,
     when: (G) => G.flags.includes('vrs_conscript') && G.age >= 45 && once(G, 'ba_ft_vrs'),
-    text: 'Your son asks, once, directly, at an age where he is entitled to. You give him the true version, which is that you were nineteen and on a hill and did what you were told at the scale of a rifle, and that you did not do the other thing, and that you also did not stop anybody. He takes it better than you expected. What he does with it is his, and you have handed him something you carried for thirty years, which is both a relief and a thing you have done to him.',
+    text: 'Your son asks, once, directly, at an age where he is entitled to. You give him the true version, which is that you were nineteen and on a hill and did what you were told at the scale of a rifle, and that you did not do the other thing, and that you also did not stop anybody. He takes it better than you expected. What he does with it is his, and you have handed him something you carried for thirty years, a relief and a thing you have done to him.',
     choices: null,
     effect: (p) => { p.setMem('ba_ft_vrs', true); p.m += 3; p.r -= 4; p.addFlag('told_the_son') },
   },

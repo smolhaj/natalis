@@ -165,7 +165,7 @@ export const UNWRITTEN_ESA_EVENTS = [
     // 2013 (recorded by the trigger), not only where she is now.
     when: (G) => BANDA_HOME(G) && (G.flags.includes('esa_ban_mpoko') || G.flags.includes('esa_ban_2013')) && G.currentYear >= 2017 && G.age >= 12 && once(G, 'esa_ban_ft_mpoko'),
     text: (G) => G.flags.includes('esa_ban_mpoko') && !WAS_BANGUI(G)
-      ? 'The priests\' compound in Bambari emptied slowly, a family at a time, as the river stopped being a border and then started again. You slept on its floor for most of a year. The church still has the marks on the wall where the mattresses were stacked in the day. When the bell goes you count the people coming through the gate, which is a habit and not a prayer.'
+      ? 'The priests\' compound in Bambari emptied slowly, a family at a time, as the river stopped being a border and then started again. You slept on its floor for most of a year. The church still has the marks on the wall where the mattresses were stacked in the day. When the bell goes you count the people coming through the gate, a habit and not a prayer.'
       : G.flags.includes('esa_ban_mpoko')
       ? 'The camp at the airport is gone. They paid each family a little to leave and then took the tarpaulins down, and the ground beside the runway is ground again. When a plane comes in low over the quarter you still look up and count, the way you did for a year under the hangar wing. Your youngest was born there, and will write "Bangui" on every form.'
       : !WAS_BANGUI(G)

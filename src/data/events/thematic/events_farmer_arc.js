@@ -20,7 +20,7 @@ export const FARMER_ARC_EVENTS = [
     when: (G) =>
       isFarmer(G) &&
       !G.mem?.farmFirstSeasonFired,
-    text: `The first season that is yours — not your father's, not your mother's — is the season in which you understand how much of farming is waiting. You plant at the right time, which you know from the signs and from having been taught. Then you wait for the rain. The rain comes or it does not come in the right quantity and at the right time. When it comes right, the crop grows, and the gap between planting and harvest is filled with the specific work of maintaining and watching. When it does not come right, the work between planting and harvest is different work: the work of managing what is happening and the work of not saying it in front of the children.`,
+    text: `The first season that is yours — not your father's, not your mother's — is the season in which you understand how much of farming is waiting. You plant at the right time, which you know from the signs and from having been taught. Then you wait for the rain. The rain comes or it does not come in the right quantity and at the right time. When it comes right, the crop grows, and the gap between planting and harvest is filled with the work of maintaining and watching. When it does not come right, the work between planting and harvest is different work: the work of managing what is happening and the work of not saying it in front of the children.`,
     choices: null,
     effect: (p) => {
       p.m -= 4
@@ -38,7 +38,7 @@ export const FARMER_ARC_EVENTS = [
       isFarmer(G) &&
       G.flags.has('farmer_first_season') &&
       !G.mem?.farmGoodYearFired,
-    text: `The year when everything goes right. The rains arrive at the right time. The crop comes through clean. The market is not bad. You have enough to eat, enough to sell, enough to carry over. This is not wealth — it does not feel like what wealth feels like, which you know from other people's lives. But it is sufficiency, and sufficiency after years of the arithmetic coming up short feels like something specific. You remember this year. You reference it in later years as the standard.`,
+    text: `The year everything goes right: the rains on time, the crop clean, a fair price. Enough to eat, enough to sell, enough to carry over. It is not wealth; you know what wealth feels like from other people's lives, and it is not this. It is enough, after years of the sums coming up short, and for the rest of your life it is the year you measure the others against.`,
     choices: null,
     effect: (p) => {
       p.m += 12
@@ -91,7 +91,7 @@ export const FARMER_ARC_EVENTS = [
       isFarmer(G) &&
       ['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.character.country?.archetype) &&
       !G.mem?.farmTitleFired,
-    text: `The government is titling land. The process is: you go to the district office, you present yourself and your boundaries, someone comes to measure, you pay a fee, you receive a document. The document means the land is legally yours in a way that it was not before. You have farmed this land for twenty years. Your father farmed it before you. The document is supposed to clarify something that did not feel unclear. What the document actually clarifies is who the land belongs to when someone with a bigger claim decides they need it.`,
+    text: `The government is titling land. The process is: you go to the district office, you present yourself and your boundaries, someone comes to measure, you pay a fee, you receive a document. The document means the land is legally yours, as it was not before. You have farmed this land for twenty years. Your father farmed it before you. The document is supposed to clarify something that did not feel unclear. What the document actually clarifies is who the land belongs to when someone with a bigger claim decides they need it.`,
     choices: [
       {
         text: 'Get the title — documentation protects you',

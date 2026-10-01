@@ -27,7 +27,7 @@ export const LEBANON_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1990 &&
       G.age >= 5 && G.age <= 40 &&
       !G.mem?.lbnStairwell,
-    text: 'When the shelling starts after dark, the whole building moves downstairs. You know the neighbours by the specific sounds of their hurry — the family above you in hard shoes, the old man with the cane a beat behind everyone else. In the stairwell you sit on the third step, which is your step, because you have been doing this long enough to have a step. Someone brings a transistor radio. Someone else brings almonds in a small dish. The shelling goes until two in the morning. You learn, in the stairwell, things about your neighbours you would not otherwise know: who has nightmares, who prays aloud, whose husband does not come down.',
+    text: 'When the shelling starts after dark, the whole building moves downstairs. You know the neighbours by the sounds of their hurry — the family above you in hard shoes, the old man with the cane a beat behind everyone else. In the stairwell you sit on the third step, which is your step, because you have been doing this long enough to have a step. Someone brings a transistor radio. Someone else brings almonds in a small dish. The shelling goes until two in the morning. You learn, in the stairwell, things about your neighbours you would not otherwise know: who has nightmares, who prays aloud, whose husband does not come down.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -50,7 +50,7 @@ export const LEBANON_EVENTS = [
     text: (G) =>
       isChristian(G)
         ? 'You are crossing from East to West. The checkpoint is on the Museum crossing — the only open passage today. The militiaman looks at your ID card, looks at your face, looks at the name. Your name is a Christian name. On this side, today, that is the correct answer. He hands it back without expression. You walk through and keep the same pace until you are out of sight.'
-        : 'You are crossing from West to East. The checkpoint is on the Museum crossing. The militiaman looks at your ID card, looks at your face. Your name is a Muslim name. He looks at it longer than the ones before you. Then he hands it back. You walk through and keep the same pace. On the other side a woman asks you for directions in a voice that assumes you belong here. You give them correctly.',
+        : 'You are crossing from West to East at the Museum crossing. The militiaman looks at your card and your face, and your name is a Muslim name, and he looks at it longer than the others. Then he hands it back. You walk through at the same pace. On the other side a woman asks you for directions as if you belong here, and you give them correctly.',
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -70,7 +70,7 @@ export const LEBANON_EVENTS = [
       G.currentYear >= 1976 && G.currentYear <= 1989 &&
       G.age >= 6 && G.age <= 15 &&
       !G.mem?.lbnMountainSummer,
-    text: 'In June your mother sends you to relatives in the mountain — the Metn or the Chouf, depending on who has room. The village does not have the sound. You wake up on the first morning and the absence of it is its own kind of loud. The cousins here play outside until dark. You go with them but you keep track of the doors and the stairs out of habit, because the habit is faster than the thought. After a week you forget to do it. After ten days the city feels remote and possible from here, like a thing that happens to other people. At the end of August your mother comes for you and you descend back into Beirut together and the city receives you.',
+    text: 'In June your mother sends you to relatives in the mountain, the Metn or the Chouf, whoever has room. The village does not have the sound, and on the first morning the absence of it is loud. You play outside with the cousins until dark, still keeping track of the doors and the stairs, because the habit is faster than the thought, and after a week you forget to. At the end of August your mother comes for you, and you go back down into Beirut together, and the city receives you.',
     choices: null,
     effect: (p) => {
       p.m += 12
@@ -90,7 +90,7 @@ export const LEBANON_EVENTS = [
       G.currentYear >= 1976 && G.currentYear <= 1989 &&
       G.age >= 8 &&
       G.flags.includes('civil_war_lived'),
-    text: 'The radio announces a ceasefire at ten in the morning. By eleven the barber on the corner has opened. By noon the smell of grilling meat comes from somewhere down the block. People walk in the middle of the street because the middle of the street has been empty for weeks and walking in the middle of it is something you can do now. The phones work. You call your aunt across the line and she picks up on the first ring, which means she has been close to the phone. The conversation lasts three minutes and contains almost no information and is completely necessary. The ceasefire holds for four days. Then it doesn\'t.',
+    text: 'The radio announces a ceasefire at ten, and by eleven the barber on the corner has opened and by noon someone down the block is grilling meat. People walk down the middle of the street because they can. You call your aunt across the line and she picks up on the first ring, and the call lasts three minutes and says almost nothing and is completely necessary. The ceasefire holds for four days.',
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -107,7 +107,7 @@ export const LEBANON_EVENTS = [
       G.currentYear >= 1978 && G.currentYear <= 1990 &&
       G.age >= 13 && G.age <= 20 &&
       !G.mem?.lbnNameQuestion,
-    text: 'You learn, before you are fifteen, which version of your name to use at which crossing. This is not deception — it is navigation. Your first name can go either way. Your family name is harder to manage. There is a trick with the pronunciation, a slight elision that makes it ambiguous. Your father taught it to you without discussing why, and you understood why without asking. You use it and it works and you feel something you do not name for years — the specific weight of having to be legible to the people who control whether you pass.',
+    text: 'You learn, before you are fifteen, which version of your name to use at which crossing. This is not deception — it is navigation. Your first name can go either way. Your family name is harder to manage. There is a trick with the pronunciation, a slight elision that makes it ambiguous. Your father taught it to you without discussing why, and you understood why without asking. You use it and it works and you feel something you do not name for years — the weight of having to be legible to the people who control whether you pass.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -129,7 +129,7 @@ export const LEBANON_EVENTS = [
       G.age >= 10 &&
       G.flags.includes('civil_war_lived') &&
       !G.mem?.lbnTaifOpens,
-    text: 'The Taif Agreement is signed in October 1989. The fighting does not stop immediately — it takes until October 1990 for the last militia positions to fall to the Syrian-backed Lebanese Army. But at some point in 1990 or 1991 the green line is removed. You walk down a street that was a front line last year. The buildings on either side are present in the way that ruins are present — roofless, window-empty, flowering with weeds from the top floors down. The street itself is ordinary. You walk the length of it. At the far end there is a man selling cigarettes from a cart, which is either a very ordinary thing or a very extraordinary one. You buy a pack and walk back.',
+    text: 'Taif is signed, and it takes another year for the last positions to fall, but at some point the green line is gone. You walk down a street that was a front line, between buildings with no roofs and no glass and weeds growing down from the top floors. The street itself is ordinary. At the far end a man is selling cigarettes from a cart. You buy a pack and walk back.',
     choices: null,
     effect: (p) => {
       p.m += 14
@@ -173,7 +173,7 @@ export const LEBANON_EVENTS = [
       G.currentYear >= 2005 && G.currentYear <= 2020 &&
       G.age >= 25 &&
       !G.mem?.lbnDiasporaWatching,
-    text: 'You are in Sydney or Paris or São Paulo. The election results come in and you watch them on your laptop with the sound low because it is 3 AM here and the city outside is asleep and indifferent. The results are the same as the results always are — the same families, the same confessional arithmetic, the same parties that have governed since before you left and will govern after you die. You write a message to your cousin and then delete it. You close the laptop and lie in the dark and you are in two places simultaneously, which is a thing you have become very good at and which has no convenient word in any of your three languages.',
+    text: 'You are in Sydney or Paris or São Paulo. The election results come in and you watch them on your laptop with the sound low because it is 3 AM here and the city outside is asleep and indifferent. The results are the same as the results always are — the same families, the same confessional arithmetic, the same parties that have governed since before you left and will govern after you die. You write a message to your cousin and then delete it. You close the laptop and lie in the dark and you are in two places at once, a thing you have become very good at and which has no convenient word in any of your three languages.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -215,7 +215,7 @@ export const LEBANON_EVENTS = [
       G.currentYear >= 2019 && G.currentYear <= 2021 &&
       G.age >= 16 &&
       !G.mem?.lbnThawra,
-    text: 'It begins with a tax on WhatsApp calls — a tax on the app most people use because regular calls are too expensive. Within hours the streets fill. You go down because everyone goes down, and because the joke going around is that they tried to charge us for talking and we went to the streets to talk for free. The crowd on Martyrs\' Square is the largest you have seen in your lifetime. Christians and Shia and Sunni and Druze are standing in the same space holding the same signs, which has not happened in the same square for decades. Someone has a speaker playing Fairouz. You stay until midnight. Walking home, you feel something that is either hope or its convincing imitation — you have not had enough experience of hope to know the difference.',
+    text: 'It begins with a tax on WhatsApp calls, the app everyone uses because ordinary calls cost too much, and within hours the streets are full. The joke going round is that they tried to charge us for talking so we went out to talk for free. On Martyrs\' Square Christians and Shia and Sunni and Druze stand together holding the same signs, for the first time in decades, and someone\'s speaker is playing Fairouz. Walking home after midnight you feel something that is either hope or a good imitation of it. You have not had enough of it to know the difference.',
     choices: [
       {
         text: 'Go back every day. This one might be different.',

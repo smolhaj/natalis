@@ -58,7 +58,7 @@ export const MOZAMBIQUE_EVENTS = [
       G.currentYear === 1986 &&
       G.age >= 8 &&
       !G.mem.mozMachel,
-    text: 'October 19, 1986. Samora Machel\'s plane crashes into a hillside in South Africa near the Mozambican border. Machel and thirty-three others are dead. The South African government says it was pilot error. There is a Soviet-made navigation beacon near the crash site, repositioned. The evidence that the apartheid government lured the plane off course is substantial. Machel has been president since independence — the only president Mozambique has ever had. He is dead. Joaquim Chissano becomes president. The suspicion about what happened does not go away.',
+    text: 'October 1986. Samora Machel\'s plane flies into a hillside just inside South Africa, and Machel is dead, the only president the country has ever had. Pretoria says pilot error. Near the wreck there is a radio beacon nobody can explain. Chissano becomes president, and the suspicion never goes away.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('mozambican_machel_generation'); p.setMem('mozMachel', true) },
   },
@@ -72,7 +72,7 @@ export const MOZAMBIQUE_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1995 &&
       G.age >= 20 &&
       !G.mem.mozPeace,
-    text: 'October 1992. The General Peace Agreement is signed in Rome. FRELIMO and RENAMO sit across from each other after fifteen years of a war that killed one million people. The UN peacekeeping mission — ONUMOZ — deploys. In 1994 there are elections. Chissano wins. Afonso Dhlakama, RENAMO\'s leader, accepts the result. The ceasefire holds. The mines are still in the ground — there are thousands of landmines — but the war is over. The reconstruction of the clinics and the schools and the bridges begins. That work takes decades.',
+    text: 'October 1992. In Rome, FRELIMO and RENAMO sign the peace, after fifteen years of a war that killed a million people. The blue helmets come, and in 1994 there are elections, and Dhlakama loses and accepts it. The ceasefire holds. The mines are still in the ground, but the war is over, and the long work begins on the clinics and the schools and the bridges.',
     choices: null,
     effect: (p) => { p.m += 10; p.r += 4; p.addFlag('mozambican_peace_generation'); p.setMem('mozPeace', true) },
   },
@@ -102,7 +102,7 @@ export const MOZAMBIQUE_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 25 &&
       !G.mem.mozGas,
-    text: 'The gas. Enormous offshore gas deposits are discovered in the Rovuma Basin in the north. The numbers are extraordinary — among the largest in Africa. Total, ENI, ExxonMobil announce projects worth tens of billions. Then, in 2017, an insurgency begins in Cabo Delgado, Mozambique\'s northernmost province — also where the gas is. The group is locally called Al-Shabaab, no connection to the Somali group. By 2021 they have killed thousands, displaced 900,000 people, and Total has evacuated its Afungi gas base. The gas is still there. So are the displaced. The connection between the resource and the violence is not simple and it is not a coincidence.',
+    text: 'The gas. Offshore in the north they find some of the largest deposits in Africa, and the foreign companies announce projects worth tens of billions. Then, in 2017, an insurgency in Cabo Delgado, the province where the gas is. By 2021 the gas company has evacuated its base and hundreds of thousands of people have fled their villages. The gas is still there, and so are the displaced, and the connection is not simple and not a coincidence.',
     choices: null,
     effect: (p) => { p.r += 8; p.m -= 6; p.addFlag('mozambican_gas_generation'); p.setMem('mozGas', true) },
   },

@@ -125,7 +125,7 @@ export const FACTORY_ARC_EVENTS = [
       isFactory(G) &&
       G.age >= 42 &&
       !G.mem?.facClosureFired,
-    text: `The plant is closing. The announcement came from a holding company whose headquarters are in a country whose name you recognise but which has no connection to this facility except ownership. The severance is what the contract specifies. The job centre has a retraining programme for workers over forty. The retraining programme has a waiting list. You have been doing this particular thing with your body for twenty years and the market for people who do this particular thing has moved to somewhere else, and you are here.`,
+    text: `The plant is closing. The announcement came from a holding company whose headquarters are in a country whose name you recognise but which has no connection to this facility except ownership. The severance is what the contract specifies. The job centre has a retraining programme for workers over forty. The retraining programme has a waiting list. You have been doing this thing with your body for twenty years and the market for people who do this thing has moved to somewhere else, and you are here.`,
     choices: null,
     effect: (p) => {
       p.w -= 10
@@ -161,7 +161,7 @@ export const FACTORY_ARC_EVENTS = [
       G.flags.has('factory_injury') &&
       G.age >= 55 &&
       !G.mem?.facInjuryEchoFired,
-    text: `The joint has opinions now that it did not have before the injury. Not constantly — in the morning, in cold weather, when you have been in a position that asks too much of it. The compensation settled. The recovery was real. The souvenir is permanent. You have learned to forecast the weather from it with reasonable accuracy, which is the kind of joke that people who carry these things make when they want to talk about them without talking about them.`,
+    text: `The joint has opinions now that it did not have before the injury. Not constantly — in the morning, in cold weather, when you have been in a position that asks too much of it. The compensation settled. The souvenir is permanent. You have learned to forecast the weather from it with reasonable accuracy, which is the kind of joke that people who carry these things make when they want to talk about them without talking about them.`,
     choices: null,
     effect: (p) => {
       p.h -= 4
@@ -178,7 +178,7 @@ export const FACTORY_ARC_EVENTS = [
       isFactory(G) &&
       G.age >= 60 &&
       !G.mem?.facLateFired,
-    text: `The accounting: you sold the motion to someone who needed the motion done, and they paid you, and you raised what you raised and housed what you housed and fed what you fed on the wages that represented that exchange. The body is the record of what that cost. The wrist, the shoulder, the knee that goes wrong in certain weather — these are the record. There was solidarity, or the absence of solidarity, and both had consequences. The plant is closed or it is still open; either way you are no longer in it. The work was real. You did it. The wages were real. You spent them.`,
+    text: `The accounting: you sold the motion to someone who needed the motion done, and they paid you, and you raised what you raised and housed what you housed and fed what you fed on the wages that represented that exchange. The body is the record of what that cost. The wrist, the shoulder, the knee that goes wrong in certain weather — these are the record. There was solidarity, or the absence of solidarity, and both had consequences. The plant is closed or it is still open; either way you are no longer in it. You did it. You spent them.`,
     choices: null,
     effect: (p) => {
       p.m += 8

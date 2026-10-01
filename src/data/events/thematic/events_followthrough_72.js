@@ -14,7 +14,7 @@ export const FOLLOWTHROUGH_72_EVENTS = [
       G.currentYear >= 1974 && G.currentYear <= 1976 &&
       G.age >= 18 &&
       !G.mem?.ft72ThaWindow,
-    text: 'The three years between October 1973 and October 1976 are the democratic window. A constitution. Freedom to organize unions. Student newspapers. Political parties that compete rather than serve as facades. The left and the right are both visible in the same country simultaneously, arguing in print. It is unusual and you know it is unusual even while you are living inside it. The argument about what Thailand should be is happening in the open. You do not know yet that the argument will be closed again, violently, in three years.',
+    text: 'October 1973 to October 1976, the window: a constitution, unions allowed, student newspapers, parties that actually compete. Left and right argue in print in the same country at the same time, and you know how unusual it is even while you are inside it. The argument about what Thailand should be is happening in the open. You do not know yet that in three years it will be closed again, violently.',
     choices: null,
     effect: (p) => {
       p.m += 5

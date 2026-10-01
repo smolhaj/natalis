@@ -11,7 +11,7 @@ export const BURKINA_EVENTS = [
     phase: 'early_childhood',
     weight: 3,
     when: (G) => IS_BURKINABE(G) && G.currentYear === 1984 && G.age <= 5 && !G.mem?.bfa_vaccinated,
-    text: 'Health workers come to every village in Burkina Faso this week. They have vaccinated 2.5 million children in eight days — measles, meningitis, yellow fever. Your arm hurts. The week feels organised in a way that ordinary life rarely is. It is the president\'s program.',
+    text: 'Health workers come to every village in Burkina Faso this week. They have vaccinated 2.5 million children in eight days — measles, meningitis, yellow fever. Your arm hurts. For a week the days have a shape that ordinary life rarely has. It is the president\'s program.',
     effect: (p) => { p.h += 6; p.addFlag('burkina_vaccinated_child'); p.setMem('bfa_vaccinated', true); },
   },
 
@@ -99,7 +99,7 @@ export const BURKINA_EVENTS = [
       {
         text: 'Watch from a distance, uncertain what follows.',
         tag: 'Watch',
-        outcome: 'The smoke is real. The chanting is real. You feel the city change and cannot be certain whether it is hope or something more complicated.',
+        outcome: 'There is smoke. There is chanting. You feel the city change and cannot be certain whether it is hope or something more complicated.',
         effect: (p) => { p.m += 6; p.addFlag('burkina_2014_uprising'); p.setMem('bfa_2014_noted', true); },
       },
     ],

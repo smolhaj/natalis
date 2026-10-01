@@ -80,7 +80,7 @@ export const SOUTH_SOUTH_EVENTS = [
       G.flags.has('bangladesh_malaysia_migrant') &&
       G.age >= 55 &&
       !G.mem?.ssBDMYLate,
-    text: `You have done the total. What you sent home over twenty years is a real number — it built the house, paid for two educations, kept your parents through the end of their lives. The years that built it are also real. You were not there for them. Both things are true and neither one cancels the other.`,
+    text: `You have done the total. What you sent home over twenty years is a real number — it built the house, paid for two educations, kept your parents through the end of their lives. The years that built it are also real. You were not there for them.`,
     choices: null,
     effect: (p) => {
       p.m += 6;

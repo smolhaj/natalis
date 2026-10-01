@@ -38,7 +38,7 @@ export const AID_WORKER_EVENTS = [
       G.stats.smarts >= 55 &&
       !G.flags.has('ngo_worker') &&
       !G.mem?.awEntry,
-    text: 'You attend three days of briefings before your departure — conflict sensitivity training, security protocols, cultural awareness, mandatory-reporting obligations. The person leading the sessions has been doing this for fifteen years and their voice has the specific flatness of someone who has stopped being surprised. On the last day, they show photographs of the place you are going. You have researched it, read the reports, formed a clear picture. The photographs are different from the picture.',
+    text: 'You attend three days of briefings before your departure — conflict sensitivity training, security protocols, cultural awareness, mandatory-reporting obligations. The person leading the sessions has been doing this for fifteen years and their voice has the flatness of someone who has stopped being surprised. On the last day, they show photographs of the place you are going. You have researched it, read the reports, formed a clear picture. The photographs are different from the picture.',
     choices: [
       {
         text: 'You have been preparing for this for a long time.',
@@ -108,7 +108,7 @@ export const AID_WORKER_EVENTS = [
       {
         text: 'You raise it with the country director.',
         tag: 'raised',
-        outcome: 'The country director listens carefully and explains the structure. Nothing changes. You have said it, which is different from it having been heard.',
+        outcome: 'The country director listens carefully and explains the structure. Nothing changes. You have said it. It has not necessarily been heard.',
         effect: (p) => { p.m -= 8; p.e += 4; p.karma += 5; p.addFlag('ngo_raised_pay_gap'); p.setMem('awSalaryGap', true) },
       },
     ],
@@ -172,7 +172,7 @@ export const AID_WORKER_EVENTS = [
       G.age >= 25 && G.age <= 50 &&
       !G.mem?.awEvacuation,
     text: G => G.flags.has('ngo_local_staff')
-      ? 'The security incident happens at 4pm. By 6pm there is an evacuation order — for international staff. The compound becomes a different place in those two hours. You watch your international colleagues pack. You have been told to shelter in place, which is the phrase for: stay where you are, we cannot take you with us. You stand by the gate and watch the vehicles leave. Your colleague who arrived three months ago and has been learning the community work you already know perfectly — you watch them get into the vehicle. There is a moment where they look back. There is not much that can be said in that moment. The vehicles leave. You go back inside.'
+      ? 'The security incident happens at four. By six there is an evacuation order, for international staff. You have been told to shelter in place, the phrase for: stay where you are, we cannot take you with us. You stand by the gate and watch your colleague who arrived three months ago, still learning the work you know perfectly, get into the vehicle and look back. The vehicles leave. You go back inside.'
       : 'The security incident happens at 4pm on a Tuesday. By 6pm there is an evacuation order for international staff. The compound becomes a different place in those two hours — you can see, in how people move, which category of person they are. You pack a bag. Your colleague — who has worked with you for four years, who knows this community better than anyone who will ever be sent by this organisation — stands by the gate and watches you get into the vehicle. You look back. There is nothing to say that does not make it worse. The vehicle moves.',
     choices: null,
     effect: (p) => {
@@ -220,12 +220,12 @@ export const AID_WORKER_EVENTS = [
       G.flags.has('ngo_worker') &&
       G.age >= 32 && G.age <= 52 &&
       !G.mem?.awBurnout,
-    text: 'You are not depressed — you know what depression looks like and this is different. It is more like a switch that does not turn all the way on anymore. You can do the work. The work gets done. What has changed is the quality of attention you bring to it: you used to read every case file as if it were a person; now you read them efficiently. You used to lose sleep over specific families; now you process them. The literature calls this compassion fatigue, which is a name that makes it sound like your fault — as if you ran out of something you should have budgeted better.',
+    text: 'You know what depression looks like and this is different: more like a switch that does not turn all the way on anymore. You can do the work. The work gets done. What has changed is the quality of attention you bring to it: you used to read every case file as if it were a person; now you read them efficiently. You used to lose sleep over specific families; now you process them. The literature calls this compassion fatigue, a name that makes it sound like your fault — as if you ran out of something you should have budgeted better.',
     choices: [
       {
         text: 'You take a leave and try to return to it later.',
         tag: 'leave',
-        outcome: 'The leave helps. Not completely. The switch that does not turn all the way on does not fully repair. But it improves, which is something.',
+        outcome: 'The leave helps. Not completely. The switch that does not turn all the way on does not fully repair. But it improves.',
         effect: (p) => { p.m += 8; p.h += 5; p.addFlag('aw_burnout_break'); p.setMem('awBurnout', true) },
       },
       {
@@ -254,7 +254,7 @@ export const AID_WORKER_EVENTS = [
       (G.flags.has('ngo_worker') || G.flags.has('ngo_local_staff')) &&
       G.age >= 60 &&
       !G.mem?.awReckoning,
-    text: 'You read the studies when they come out. They are thorough and they are not wrong. You also know the things that are not in them: the clinic that stayed open on a supply chain your office held together, the children who are thirty now because of a fortnight in 1997 that no indicator framework was built to see. Both are true at once and you have never found the sentence that holds them. You spent a career trying and you are not sure how you did.',
+    text: 'You read the studies when they come out. They are thorough and they are not wrong. You also know the things that are not in them: the clinic that stayed open on a supply chain your office held together, the children who are thirty now because of a fortnight in 1997 that no indicator framework was built to see. You have never found the sentence that holds them. You spent a career trying and you are not sure how you did.',
     context: 'Research on aid dependency, NGO-driven labour-market distortion and the costs of rotating expatriate expertise became mainstream in the humanitarian sector from the late 1990s onward.',
     choices: null,
     effect: (p) => { p.e += 5; p.r += 5; p.m += 4; p.karma += 5; p.setMem('awReckoning', true) },
@@ -285,7 +285,7 @@ export const AID_WORKER_EVENTS = [
       G.flags.has('aw_evacuated_and_left') &&
       G.age >= 55 &&
       !G.mem?.awEvacuatedEcho,
-    text: 'There is a thing that happens when you tell people you worked in humanitarian aid for a long time. Their faces arrange themselves in a particular expression — admiration, something close to awe. You accept this. You also know that the thing the expression is responding to is not the full account. The full account includes the Tuesday afternoon when the security order came, and you packed a bag, and you got into a vehicle, and through the back window you watched your colleague standing at the gate. You have worked out, in the years since, that your colleague was fine — that staying was survivable. This helps. It does not change what you did.',
+    text: 'There is a thing that happens when you tell people you worked in humanitarian aid for a long time. Their faces arrange themselves in an expression — admiration, something close to awe. You accept this. You also know that the thing the expression is responding to is not the full account. The full account includes the Tuesday afternoon when the security order came, and you packed a bag, and you got into a vehicle, and through the back window you watched your colleague standing at the gate. You have worked out, in the years since, that your colleague was fine — that staying was survivable. This helps. It does not change what you did.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.karma += 3; p.setMem('awEvacuatedEcho', true) },
   },

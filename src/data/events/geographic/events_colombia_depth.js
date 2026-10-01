@@ -71,9 +71,9 @@ export const COLOMBIA_DEPTH_EVENTS = [
     context: 'Medellin had the highest homicide rate in the world in the early 1990s and won the Urban Land Institute\'s Innovative City of the Year award in 2013. The Metrocable lines, the Comuna 13 escalators and the Spanish Park library connected hillside settlements the city had previously ignored, and homicides fell by about 95 percent. Part of the decline followed the 2003 demobilisation of paramilitary blocs that imposed their own order on the comunas.',
     choices: [
       {
-        text: 'The transformation is real. You live in it and you know what Medellín was.',
+        text: 'You live in it and you know what Medellín was.',
         tag: null,
-        outcome: 'The cable car takes twelve minutes to the hillside where it used to take a specific courage to go after dark. The change is not rhetorical. It has the texture of actual changed conditions.',
+        outcome: 'The cable car takes twelve minutes to the hillside where it used to take a courage to go after dark. The change is not rhetorical. It has the texture of actual changed conditions.',
         effect: (p) => {
           p.m += 6
           p.e += 2
@@ -114,7 +114,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
       {
         text: 'You grow it. There is no other calculation that works.',
         tag: null,
-        outcome: 'The coca economy has its own logic and you are inside it. The fumigation planes arrive and you replant. The buyer\'s scales are consistently wrong in one direction. You keep precise records of what you are owed.',
+        outcome: 'The coca economy has a logic and you are inside it. The fumigation planes arrive and you replant. The buyer\'s scales are consistently wrong in one direction. You keep precise records of what you are owed.',
         effect: (p) => {
           p.mo += 800
           p.r += 5
@@ -189,7 +189,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
       {
         text: 'You stay. Your community has been on this coast for three hundred years.',
         tag: null,
-        outcome: 'The Afro-Colombian communities of the Pacific have collective territorial rights under Law 70 of 1993. The rights are real. The enforcement of the rights against armed groups is the question that Law 70 did not answer.',
+        outcome: 'The Afro-Colombian communities of the Pacific have collective territorial rights under Law 70 of 1993. The enforcement of the rights against armed groups is the question that Law 70 did not answer.',
         effect: (p) => {
           p.r += 6
           p.addFlag('col_afrocolombiano_choco')
@@ -216,7 +216,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
     text: `You arrived in the city with nothing that the city recognises as the beginning of a life. The title to the land you left is in a house you cannot return to. The relationship networks — the neighbour who lends the seed, the cousin with the truck, the credit at the village store — do not exist here. The city's informal settlement at its edge — the ladera in Medellín, the falda del cerro in Bogotá — is where the other families who arrived the same way are. You build in the same way they built: the first wall from whatever material is available, the second wall when there is more money, the roof that does not quite reach the edge for the first two winters. The city does not ask where you came from. The city also does not help with where you are.`,
     choices: [
       {
-        text: 'You build and stay. The city becomes yours through the specific work of staying in it.',
+        text: 'You build and stay. The city becomes yours through the work of staying in it.',
         tag: null,
         outcome: 'Ten years in, the neighbourhood has water and electricity and a paved street because the community organised for it. The house has three rooms. You know everyone for six blocks.',
         effect: (p) => {
@@ -253,7 +253,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 2000 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.colDepCafetero,
-    text: `The year is measured by the coffee harvest. October and November are the months your whole family picks — mornings in the rows with the basket tied at the waist, the specific soreness of reaching upward for hours, the smell of wet coffee cherries that you will always associate with October. The price your father gets for the quintal of dried beans is set in New York by a market he has no access to and no influence over. A good year means the loan for the school uniform is paid before January. A bad year means the debt extends and the uniform comes in February. The farm is two hectares of coffee and one hectare of food crops and it is the entire economic universe of your childhood.`,
+    text: `The year is measured by the coffee harvest. October and November are the months your whole family picks — mornings in the rows with the basket tied at the waist, the soreness of reaching upward for hours, the smell of wet coffee cherries that you will always associate with October. The price your father gets for the quintal of dried beans is set in New York by a market he has no access to and no influence over. A good year means the loan for the school uniform is paid before January. A bad year means the debt extends and the uniform comes in February. The farm is two hectares of coffee and one hectare of food crops and it is the entire economic universe of your childhood.`,
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -274,12 +274,12 @@ export const COLOMBIA_DEPTH_EVENTS = [
       G.age >= 40 &&
       (G.flags.has('col_violencia_generation') || G.flags.has('col_farc_era') || G.flags.has('col_paramilitary_era') || G.flags.has('col_falsos_positivos_generation')) &&
       !G.mem?.colDepJep,
-    text: `The Jurisdicción Especial para la Paz — the Special Jurisdiction for Peace — invites testimony. The mechanism: if the perpetrator tells the truth, the sentence is restriction of movement rather than prison. If they lie, they face the full sentence. The assumption is that truth is worth something on its own — that knowing what happened is a form of justice even when it does not look like punishment. You have lived through things that the JEP is now trying to understand. Whether you testify or not, you have information the tribunal needs. You sit with the question of what telling it would do.`,
+    text: `The Jurisdicción Especial para la Paz — the Special Jurisdiction for Peace — invites testimony. The mechanism: if the perpetrator tells the truth, the sentence is restriction of movement rather than prison. If they lie, they face the full sentence. The assumption is that truth is worth something on its own — that knowing what happened is a form of justice even when it does not look like punishment. You have lived through things that the JEP is now trying to understand. Whether you testify or not, you have information the tribunal needs. You turn over what telling it would do.`,
     choices: [
       {
         text: 'You testify. The truth on record matters even if the sentence does not.',
         tag: null,
-        outcome: 'The testimony is recorded. The facts enter the official account. What it did to give testimony — the specific cost and the specific relief of it — is yours to hold.',
+        outcome: 'The testimony is recorded. The facts enter the official account. What it did to give testimony — the cost and the relief of it — is yours to hold.',
         effect: (p) => {
           p.karma += 6
           p.r += 4

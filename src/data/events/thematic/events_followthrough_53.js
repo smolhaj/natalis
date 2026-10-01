@@ -17,12 +17,12 @@ export const FOLLOWTHROUGH_53_EVENTS = [
       G.desire === 'prove_worth' &&
       G.age >= 62 &&
       !G.mem?.ft53ProveWorthLate,
-    text: `The question that ran the life: are you enough? You spent decades operating from the answer you were given too early — not enough, not quite, not proven — and then spending most of your working years trying to revise that answer through achievement. Some of the achievements are real. The answer is not settled in the way you expected settling to feel. It is more that the question has become less urgent. Not answered: quieter. The energy it took to keep the question alive has gradually gone elsewhere.`,
+    text: `The question that ran the life: are you enough? You spent decades operating from the answer you were given too early — not enough, not quite, not proven — and then spending most of your working years trying to revise that answer through achievement. Some of the achievements stand. The question has become less urgent, which is not how you expected settling to feel. Not answered: quieter. The energy it took to keep the question alive has gradually gone elsewhere.`,
     choices: [
       {
         text: 'The question is quieter now. You didn\'t answer it — you outlived the need for it.',
         tag: null,
-        outcome: 'Outliving the need is not the same as resolution. It is its own thing. The life you built while answering the question is real regardless.',
+        outcome: 'Outliving the need is not the same as resolution. The life you built while answering the question is real regardless.',
         effect: (p) => {
           p.m += 5
           p.r += 3
@@ -30,7 +30,7 @@ export const FOLLOWTHROUGH_53_EVENTS = [
         },
       },
       {
-        text: 'You still need to prove it. That is not a failure. It is the shape of this particular engine.',
+        text: 'You still need to prove it. It is the shape of this engine.',
         tag: null,
         outcome: 'Some desires don\'t resolve; they keep you moving. The movement has produced a life. That is also a form of answer.',
         effect: (p) => {
@@ -54,7 +54,7 @@ export const FOLLOWTHROUGH_53_EVENTS = [
       G.desire === 'belong' &&
       G.age >= 62 &&
       !G.mem?.ft53BelongLate,
-    text: `You wanted to belong — to a place, a people, a version of the world that would claim you. You spent time trying to find the group that would make you feel that way. Some of the groups were real and some of the belonging was real. At this age the belonging you have is the belonging you made: the people who know you, the place you call home because you kept coming back to it. Whether the belonging you made matches the belonging you wanted is a question you've had time to sit with.`,
+    text: `You wanted to belong — to a place, a people, a version of the world that would claim you. You spent time trying to find the group that would make you feel that way. Some of the groups held, and some of the belonging. At this age the belonging you have is the belonging you made: the people who know you, the place you call home because you kept coming back to it. Whether the belonging you made matches the belonging you wanted is a question you've had time to sit with.`,
     choices: [
       {
         text: 'The made belonging is enough. It is actually belonging — it just required building.',
@@ -182,7 +182,7 @@ export const FOLLOWTHROUGH_53_EVENTS = [
       G.desire === 'leave_mark' &&
       G.age >= 62 &&
       !G.mem?.ft53LeaveMarkLate,
-    text: `The mark you wanted to leave: evidence that you were here, that the being-here mattered, that something was different because you passed through it. The mark that exists is not always the one you planned. Some of what you built has already dispersed. Some of it is still here in a form you recognize. Some of the mark is in people rather than in objects — in a student, a child, a person whose life went differently because you were in it. That kind of mark is harder to see and does not survive in an archive. It is real.`,
+    text: `The mark you wanted to leave: evidence that you were here, that the being-here mattered, that something was different because you passed through it. The mark that exists is not always the one you planned. Some of what you built has already dispersed. Some of it is still here in a form you recognize. Some of the mark is in people rather than in objects — in a student, a child, a person whose life went differently because you were in it. That kind of mark is harder to see and does not survive in an archive.`,
     choices: [
       {
         text: 'The mark is smaller and more precise than you imagined. That is what marks are.',
@@ -257,7 +257,7 @@ export const FOLLOWTHROUGH_53_EVENTS = [
       G.desire === 'redemption' &&
       G.age >= 62 &&
       !G.mem?.ft53RedemptionLate,
-    text: `The thing you needed to be redeemed for: you know what it is. The need to be made right — to repair, to be different, to be not the person who did that or didn't do that — has been the running current of the life. Some of the repair has happened. Some was not possible. You have done what you could and it has been enough for some things and not enough for others. Redemption is apparently not a destination. It is more like a direction. You are still facing it. That is not failure. That is what redemption looks like from the inside of a real life.`,
+    text: `You know what it is you needed to be redeemed for. The need to put it right has run under the whole life. Some of the repair happened, and some was never possible. Redemption turns out to be a direction rather than a place. You are still facing it.`,
     choices: [
       {
         text: 'The direction is enough. You have kept facing it. The keeping is the thing.',

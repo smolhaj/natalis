@@ -21,7 +21,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2015 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.phOfwDeparture,
-    text: `The departure ritual: the whole family at NAIA Terminal 1, sometimes uncles and cousins who drove two hours because this is the kind of thing you are present for. The OFW queue is its own queue. The signs say "Bagong Bayani" — New Hero — and the government means it, because the remittances are twenty percent of GDP. The departure tax. The window where you process your OWWA membership card. Then the terminal, and the family on the other side of the glass, getting smaller. You are going to Saudi or Hong Kong or Italy or the US. The balikbayan box will arrive before you do.`,
+    text: `The departure: the whole family at Terminal 1, uncles and cousins who drove two hours, because this is the kind of thing you turn up for. The OFW queue is its own queue, under a sign that says Bagong Bayani, new hero, and the government means it, because the money sent home holds up the economy. The tax, the window for your welfare card, and then the family on the other side of the glass, getting smaller. The balikbayan box will arrive before you do.`,
     choices: [
       {
         text: 'You are the one leaving.',
@@ -34,7 +34,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       {
         text: 'You are one of the ones watching.',
         tag: null,
-        outcome: 'Your parent or sibling or spouse goes through the gate. The drive home is quiet in a specific way. The first phone call comes two days later.',
+        outcome: 'Your parent or sibling or spouse goes through the gate. The drive home is quiet in a way. The first phone call comes two days later.',
         effect: (p) => { p.m -= 6; p.addFlag('ph_dep_ofw_family'); p.setMem('phOfwDeparture', true) },
       },
     ],
@@ -51,7 +51,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear >= 1988 && G.currentYear <= 2015 &&
       G.age >= 5 && G.age <= 18 &&
       !G.mem?.phBalikbayanBox,
-    text: `The box arrives before Christmas: a balikbayan box, a hundred-litre cardboard cube reinforced with tape, sent by ship because the shipping is cheaper than air. The contents are specific: Spam, Oreos, Hershey's, clothes that are one size larger than you are because your parent estimated you from nine months ago, shoes, a toy or two, medicine. The relatives in the US or Saudi or Japan pack these things and seal them and they travel six weeks by sea. You know the brands from the box before you know the country they came from. The box is a letter in the language of what is available there and unaffordable here.`,
+    text: `The box arrives before Christmas: a balikbayan box, a hundred-litre cardboard cube reinforced with tape, sent by ship because the shipping is cheaper than air. The contents: Spam, Oreos, Hershey's, clothes that are one size larger than you are because your parent estimated you from nine months ago, shoes, a toy or two, medicine. The relatives in the US or Saudi or Japan pack these things and seal them and they travel six weeks by sea. You know the brands from the box before you know the country they came from. The box is a letter in the language of what is available there and unaffordable here.`,
     choices: null,
     effect: (p) => { p.m += 6; p.r += 4; p.setMem('phBalikbayanBox', true) },
   },
@@ -68,7 +68,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 2020 &&
       G.age >= 14 && G.age <= 45 &&
       !G.mem?.phJeepney,
-    text: `The jeepney: extended from American military jeeps left after WWII, painted in chrome and saints and province names and the driver's family. The barker shouts the route: Monumento, Quiapo, EDSA. You board from behind and pass your fare forward — person to person down the aisle — to the driver, who makes change without looking and drives at the same time. The ventilation is the open sides. The saints on the dashboard have specific names and provenance. The air inside holds the exhaust of EDSA traffic for the whole route. You have taken this route so many times that you know which saints are on the dashboard of which jeepney.`,
+    text: `The jeepney: extended from American military jeeps left after WWII, painted in chrome and saints and province names and the driver's family. The barker shouts the route: Monumento, Quiapo, EDSA. You board from behind and pass your fare forward — person to person down the aisle — to the driver, who makes change without looking and drives at the same time. The ventilation is the open sides. The saints on the dashboard each have a name and a story of where they came from. The air inside holds the exhaust of EDSA traffic for the whole route. You have taken this route so many times that you know which saints are on the dashboard of which jeepney.`,
     choices: null,
     effect: (p) => { p.r += 3; p.m += 3; p.setMem('phJeepney', true) },
   },
@@ -84,12 +84,12 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear >= 1972 && G.currentYear <= 1983 &&
       G.age >= 17 && G.age <= 28 &&
       !G.mem?.phCampusMartialLaw,
-    text: `The universities in 1970 were full of rallies before the declaration. After September 1972 the rallies stop. The ROTC is compulsory and the ROTC colonel is connected to the military intelligence apparatus in specific ways that are understood but not stated. The progressive organisations have gone underground or stopped. Some students know people who have disappeared: arrested under Proclamation 1081, held in Camp Crame or Fort Magsaysay, returned changed or not returned. The library still has the books. The conversations are specific rooms, specific people, specific trust.`,
+    text: `The universities in 1970 were full of rallies before the declaration. After September 1972 the rallies stop. The ROTC is compulsory and the ROTC colonel is connected to the military intelligence apparatus in ways that are understood but not stated. The progressive organisations have gone underground or stopped. Some students know people who have disappeared: arrested under Proclamation 1081, held in Camp Crame or Fort Magsaysay, returned changed or not returned. The library still has the books. The conversations happen in certain rooms, with certain people, on trust.`,
     choices: [
       {
         text: 'You stay inside the allowed — you have a family to protect and a degree to finish.',
         tag: null,
-        outcome: 'The degree is real. The protection is real. The calculation is something you will carry, and will sometimes call prudence and sometimes call something else.',
+        outcome: 'You earn the degree. It protects you. The calculation is something you will carry, and will sometimes call prudence and sometimes call something else.',
         effect: (p) => { p.m -= 5; p.r += 6; p.addFlag('marcos_generation'); p.setMem('phCampusMartialLaw', true) },
       },
       {
@@ -113,7 +113,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear >= 1986 && G.currentYear <= 1995 &&
       G.age >= 14 &&
       !G.mem?.phImeldaShoes,
-    text: `When the Marcoses fled to Hawaii in 1986, the inventory of Malacañang Palace found 3,000 pairs of shoes in Imelda's closet. This is now the fact that structures how the world sees the Philippines in the Marcos years — a detail that stands for all the details. You have a more specific set of facts: the hospitals that weren't built, the newspapers that stayed closed, the friends of your parents who didn't come back from the detention centres. The shoes are true. The shoes are also the easiest true thing to put in a sentence.`,
+    text: `When the Marcoses fled to Hawaii in 1986, the inventory of Malacañang Palace found 3,000 pairs of shoes in Imelda's closet. This is now the fact that structures how the world sees the Philippines in the Marcos years — a detail that stands for all the details. You have a narrower set of facts: the hospitals that weren't built, the newspapers that stayed closed, the friends of your parents who didn't come back from the detention centres. The shoes are true. The shoes are also the easiest true thing to put in a sentence.`,
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.setMem('phImeldaShoes', true) },
   },
@@ -129,12 +129,12 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2010 &&
       G.age >= 8 && G.age <= 18 &&
       !G.mem?.phMoroIdentity,
-    text: `You grow up in Mindanao knowing the word Moro — originally a Spanish slur for Muslim Filipinos, now claimed. The MNLF under Nur Misuari has been fighting since 1969 for a separate state. The MILF broke away from the MNLF in 1984. The military operations have names: Oplan Ultimatum, Oplan Lambat-Bitag. The AFP soldiers at the checkpoint are not from Mindanao. They look at your name and they look at you. The name is the thing that explains everything to them about you. You are learning to carry the explanation differently in different rooms.`,
+    text: `You grow up in Mindanao knowing the word Moro, once a Spanish insult for Muslims, now claimed. The MNLF has fought for a separate state since 1969, and the MILF broke away from it in 1984, and the army's operations have names. The soldiers at the checkpoint are not from Mindanao. They look at your name and then at you, and the name tells them everything they think they need. You learn to carry it differently in different rooms.`,
     choices: [
       {
         text: 'Your family is in the conflict zones. You have moved for safety.',
         tag: null,
-        outcome: 'The displacement is specific: a town name, a house left, a school interrupted. These specifics do not simplify into the word "refugee." They remain themselves.',
+        outcome: 'The displacement has a town name, a house left, a school interrupted. These do not reduce to the word "refugee." They remain themselves.',
         effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('ph_dep_moro_identity'); p.setMem('phMoroIdentity', true) },
       },
       {
@@ -158,7 +158,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear >= 2019 &&
       G.age >= 25 &&
       !G.mem?.phBangsamoro,
-    text: `January 2019: the Bangsamoro Organic Law passes the plebiscite. After fifty years of armed conflict — the MNLF, the MILF, Camp Abubakar, the Marawi siege of 2017 — there is now a Bangsamoro Autonomous Region in Muslim Mindanao with its own parliament and chief minister. The peace agreement does not mean the same thing to everyone in Mindanao. It means different things depending on which decade you spent in the conflict, which family members you are counting, which groups you trust to implement it. You have opinions calibrated by specific experience. The BOL is real. What it produces will take decades to know.`,
+    text: `January 2019: the Bangsamoro Organic Law passes the plebiscite. After fifty years of armed conflict — the MNLF, the MILF, Camp Abubakar, the Marawi siege of 2017 — there is now a Bangsamoro Autonomous Region in Muslim Mindanao with its own parliament and chief minister. The peace agreement does not mean the same thing to everyone in Mindanao. It means different things depending on which decade you spent in the conflict, which family members you are counting, which groups you trust to implement it. You have opinions calibrated by experience. The BOL is signed into law. What it produces will take decades to know.`,
     choices: null,
     effect: (p) => { p.r += 4; p.e += 3; p.m += 4; p.setMem('phBangsamoro', true) },
   },
@@ -174,12 +174,12 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 2015 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.phSeaman,
-    text: `A quarter of the world's seafarers are Filipino. The training is in Manila or Cebu — marine engineering, seamanship, STCW certification. Then the agency: you sign a nine-month contract with a Norwegian shipping company or a Greek tanker operator or a Japanese cargo firm. The ship is not Filipino. The flag is Panama or Liberia or the Marshall Islands, which are flags of convenience. You are the crew. The remittance goes home every month through a money-changing service on a street near the port in whatever city you're in. The nine months become a life that is measured in contracts.`,
+    text: `A quarter of the world's seafarers are Filipino. You train in Manila or Cebu, get the certificates, and the agency signs you for nine months with a Norwegian company or a Greek tanker or a Japanese cargo line, under a flag of Panama or Liberia or the Marshall Islands. You are the crew. The money goes home every month from an exchange stall near whatever port you are in. The nine months become a life counted in contracts.`,
     choices: [
       {
         text: 'You become a seaman. The nine-month contract becomes a way of life.',
         tag: null,
-        outcome: 'The life is specific: the months aboard and the months home, the children who grow in between, the savings account that grows differently from the savings of people on land.',
+        outcome: 'The life is the months aboard and the months home, the children who grow in between, the savings account that grows differently from the savings of people on land.',
         effect: (p) => { p.mo += 8000; p.m -= 5; p.r += 5; p.addFlag('ph_dep_seaman_family'); p.setMem('phSeaman', true) },
       },
       {
@@ -204,7 +204,7 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear >= 2002 && G.currentYear <= 2020 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.phBpo,
-    text: `The BPO boom: business process outsourcing. By 2010 the Philippines overtakes India as the world's call center capital. The offices are in Makati, BGC, Ortigas, Cebu IT Park — air-conditioned at the temperature Americans set their thermostats. The shift is night shift because the Americans are awake. You change your sleep cycle. You adopt an American accent or a neutral accent, which is the same thing. Your name becomes "James" or "Karen" for the call. Between calls you eat in the cafeteria with the other people who have done what you've done to their sleep and their name. The salary is 25,000 pesos a month, which is more than a teacher makes.`,
+    text: `By 2010 the call centres of Makati, Ortigas and Cebu have overtaken India's. The air conditioning is set to an American thermostat, and the shift is the night shift, because the Americans are awake. You change your sleep, and your accent, and on the calls your name is James or Karen. Between calls you eat in the cafeteria with other people who have done the same to their nights and their names. It pays more than teaching.`,
     choices: [
       {
         text: 'The BPO job is the best job available and you take it seriously.',
@@ -234,18 +234,18 @@ export const PHILIPPINES_DEPTH_EVENTS = [
       G.currentYear === 2009 &&
       G.age >= 16 &&
       !G.mem?.phOndoy,
-    text: `September 26, 2009. Tropical Storm Ondoy drops a month of rain on Metro Manila in six hours. The Marikina River overflows. Cainta, Pasig, Marikina, Quezon City. People on rooftops. The water inside houses reaches the second floor. The rescue boats are private bangkas because the official rescue has a different timeline. You spend the storm on a roof or in a car or watching the water enter at the doorway. The Twitter feeds map which streets are passable. This is the first disaster where the response routes through social media because the official channels cannot process the scale fast enough.`,
+    text: `September 2009, and Ondoy drops a month of rain on Manila in six hours, and the Marikina River comes over its banks. People on rooftops; the water in the houses up to the second floor. The rescue boats are private bangkas, because the official rescue runs on another timeline. You spend the storm on a roof or in a car or watching the water come in at the door, while strangers on Twitter map which streets are still passable.`,
     choices: [
       {
         text: 'Your home flooded.',
         tag: null,
-        outcome: 'The inventory of what the water took is specific. The drying out takes weeks. The mud smell in the walls takes longer. You know now exactly what elevation your house sits at.',
+        outcome: 'The inventory of what the water took is exact. The drying out takes weeks. The mud smell in the walls takes longer. You know now exactly what elevation your house sits at.',
         effect: (p) => { p.m -= 8; p.h -= 4; p.mo -= 5000; p.r += 5; p.addFlag('ph_dep_ondoy_survivor'); p.setMem('phOndoy', true) },
       },
       {
         text: 'You were safe and spent the storm helping others.',
         tag: null,
-        outcome: 'The rope, the bangka, the dry clothing you passed over a fence. The faces of people you pulled out of water are specific.',
+        outcome: 'The rope, the bangka, the dry clothing you passed over a fence. You remember the face of each person you pulled out of the water.',
         effect: (p) => { p.karma += 7; p.m -= 4; p.addFlag('ph_dep_ondoy_survivor'); p.setMem('phOndoy', true) },
       },
     ],

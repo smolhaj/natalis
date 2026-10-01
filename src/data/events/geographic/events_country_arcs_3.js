@@ -57,7 +57,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       G.character.country?.name === 'Iran' &&
       G.currentYear >= 1979 && G.currentYear <= 1980 &&
       !G.mem?.iranRevolutionWeek && !G.mem?.iran_revolution,
-    text: 'In the week the Shah leaves and before the plane lands, the streets are a specific kind of elated. People who had not spoken politics in years speak politics now. The word *azadi* — freedom — is on walls, in songs, in the air. The revolution is going to become many things. In this week it is only this.',
+    text: 'In the week the Shah leaves and before the plane lands, the streets are a kind of elated. People who had not spoken politics in years speak politics now. The word *azadi* — freedom — is on walls, in songs, in the air. The revolution is going to become many things. In this week it is only this.',
     choices: [
       {
         text: 'Go into the streets — you have waited for this',
@@ -109,10 +109,13 @@ export const COUNTRY_ARC_3_EVENTS = [
     when: (G) =>
       G.character.country?.name === 'Iran' &&
       G.currentYear >= 1981 && G.currentYear <= 1988 &&
-      G.children?.length > 0 &&
-      G.age >= 38 &&
-      !G.mem?.iranIraqWarSon,
-    text: 'Your son is eighteen. The Basij offers boys a plastic key to paradise to wear around their necks before they walk into the minefields ahead of the regular army. Some go because they believe. Some because there is social pressure to believe. Some because a family in the wrong category cannot afford a son who refuses. Your son is eighteen.',
+      // "Your son is eighteen" is a claim about a child the state must hold.
+      // `children.length > 0 && age >= 38` sent it to mothers of daughters and
+      // of six-year-olds.
+      (G.children ?? []).some(c => c.alive !== false && c.gender === 'male' &&
+        (c.age ?? (G.age - (c.ageAtBirth ?? 0))) >= 16 && (c.age ?? (G.age - (c.ageAtBirth ?? 0))) <= 22) &&
+      !G.mem?.iranIraqWarSon && !G.mem?.tehranWarYears,
+    text: 'Your son is of the age. The Basij offers boys a plastic key to paradise to wear around their necks before they walk into the minefields ahead of the regular army. Some go because they believe. Some because there is social pressure to believe. Some because a family in the wrong category cannot afford a son who refuses. Your son is of the age.',
     choices: [
       {
         text: 'Find a way to keep him back — connections, paperwork, anything',
@@ -168,7 +171,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       G.ethnicity === 'white_south_african' &&
       G.currentYear >= 1970 && G.currentYear <= 1990 &&
       !G.mem?.saWhiteBeneficiary,
-    text: 'Maria leaves on the six o\'clock bus to Soweto. She has worked in your house for eleven years and you do not know her children\'s names. This is not a thought you have had before. It is not comfortable. The evening news discusses the situation in the townships. Your father says it will sort itself out. You do not say what you think.',
+    text: 'Maria leaves on the six o\'clock bus to Soweto. She has worked in your house for eleven years and you do not know her children\'s names. You have not had this thought before, and it is uncomfortable. The evening news discusses the situation in the townships. Your father says it will sort itself out. You do not say what you think.',
     choices: null,
     effect: (p) => { p.r += 8; p.karma -= 3; p.addFlag('apartheid_beneficiary'); p.setMem('saWhiteBeneficiary', true); },
   },
@@ -238,7 +241,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       G.currentYear === 2009 &&
       G.age >= 16 &&
       !G.mem?.iranGreenMovement,
-    text: 'June 2009. Mahmoud Ahmadinejad is declared the winner of the presidential election before the polling stations have closed. Mir-Hossein Mousavi and millions of others say the result is fraudulent. "Mousavi returned my vote" becomes a sentence. Green becomes a colour with a political meaning. On June 20 Neda Agha-Soltan is shot on Kargar Street, and the video of her dying reaches every phone on earth within hours. The Basij are on the rooftops. The Basij are in the streets. The chant is "Allahu Akbar" at night from the rooftops — the same chant as 1979, the same phrase, used against the government the phrase was used to create.',
+    text: 'June 2009, and Ahmadinejad is declared the winner before the polls have closed. "Where is my vote?" becomes a sentence, green becomes a political colour, and at night the city shouts Allahu Akbar from the rooftops, the same words as 1979, against the state those words made. On June 20 Neda Agha-Soltan is shot on Kargar Street and the video of her dying is on every phone on earth within hours. The Basij are on the roofs and in the streets.',
     choices: [
       {
         text: 'You are in the street, in the green.',
@@ -265,7 +268,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       G.currentYear >= 2022 && G.currentYear <= 2024 &&
       G.age >= 14 &&
       !G.mem?.iranMahsa,
-    text: 'September 16, 2022. Mahsa Amini, 22, dies in police custody three days after being arrested by the morality police for improper hijab. The hashtag is Zan, Zendegi, Azadi — Woman, Life, Freedom. High-school girls take off their headscarves and burn them. Students at universities join. The protests spread to 164 cities. The security forces kill more than 500. For the first time since 1979, the Islamic Republic is challenged not by a political faction but by a generation that does not believe in what the Republic believes about them.',
+    text: 'September 2022, and Mahsa Amini, twenty-two, dies in the custody of the morality police, arrested for her hijab. Zan, Zendegi, Azadi: woman, life, freedom. Schoolgirls pull off their scarves and burn them, the universities join, the protests reach every city, and the security forces kill hundreds. For the first time since 1979 the Republic is challenged not by a faction but by a generation that does not believe what the Republic believes about them.',
     choices: [
       {
         text: 'You cut your hair. You burn your hijab. You are in the street.',
@@ -302,7 +305,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       !G.mem?.saFirstVote,
     text: (G) => {
       if (G.ethnicity === 'black_south_african') {
-        return 'April 27, 1994. You are in a queue that began forming at four in the morning. It does not move fast. It does not need to. People have brought food and umbrellas. Some are elderly — they have been waiting for this vote for seventy years, or their whole lives. When you reach the booth and make your mark and fold the paper and put it in the box, the ballot officer stamps your thumb with ink. You walk out with your thumb raised. You have voted. This is the first time you have voted in the country where you were born.'
+        return 'April 27, 1994. The queue began forming at four in the morning, and it does not move fast, and it does not need to. People have brought food and umbrellas, and some of the old have waited for this their whole lives. You make your mark and fold the paper and put it in the box, and the officer inks your thumb. You walk out with your thumb raised. It is the first time you have voted in the country where you were born.'
       }
       if (G.ethnicity === 'white_south_african') {
         return 'April 27, 1994. You have voted before. This is different: the country in which you are voting has changed its definition of who belongs to it. The queue at the polling station includes people who have never been in this queue. You voted for de Klerk or you voted for the National Party or you voted for the ANC or you spoiled your ballot from uncertainty about what kind of country is being made. Whatever you voted, you voted in the first election of the new country.'
@@ -328,7 +331,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       G.flags.includes('post_apartheid_generation') &&
       G.age >= 20 &&
       !G.mem?.saMandela,
-    text: 'The phrase is "Rainbow Nation." The country has a constitution that is cited internationally as a model. Mandela appears everywhere — in the jersey at the Rugby World Cup final, at the state banquet, on the television in his characteristic floral shirts. There is an extraordinary amount of goodwill being generated and extended in this period. You know the structural problems have not been resolved: the land, the housing, the inequality metric that is still the worst in the world. Both of these things are true and you hold them at the same time.',
+    text: 'The phrase is "Rainbow Nation." The country has a constitution that is cited internationally as a model. Mandela appears everywhere — in the jersey at the Rugby World Cup final, at the state banquet, on the television in his characteristic floral shirts. There is an extraordinary amount of goodwill being generated and extended in this period. You know the structural problems have not been resolved: the land, the housing, the inequality metric that is still the worst in the world. You hold them at the same time.',
     choices: [
       {
         text: 'Allow the hope to be what it is.',
@@ -355,18 +358,18 @@ export const COUNTRY_ARC_3_EVENTS = [
       G.currentYear === 2012 &&
       G.age >= 18 &&
       !G.mem?.saMarikana,
-    text: 'August 16, 2012. Striking platinum miners at the Lonmin mine in Marikana have been in a wildcat strike for ten days. The police encircle a group of around 3,000 miners at a koppie. Thirty-four are shot dead. The police is the South African Police Service. The government is the ANC government — the liberation movement. The mine is owned by Lonmin; the ANC Youth League has a financial relationship with one of its principals. The sentence "the ANC government shot striking miners" is the sentence that restructures the next decade of South African politics.',
+    text: 'August 16, 2012. The platinum miners at Marikana have been on a wildcat strike for ten days, and the police surround a crowd of them on a small hill and open fire, and thirty-four men are dead. The police are the police of the ANC government, the liberation movement. "The ANC government shot striking miners" is the sentence that reshapes the next decade of South African politics.',
     choices: [
       {
         text: 'This is the point where the promise of 1994 definitively breaks.',
         tag: null,
-        outcome: 'You were not naive in 1994 but the specific image of a democratic police force shooting workers is a different thing from the abstractions of inequality.',
+        outcome: 'You were not naive in 1994 but the image of a democratic police force shooting workers is a different thing from the abstractions of inequality.',
         effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('marikana_generation'); p.addFlag('post_apartheid_disillusionment'); p.setMem('saMarikana', true); },
       },
       {
         text: 'The situation was complicated — the violence came from multiple directions.',
         tag: null,
-        outcome: 'The complication is real. The 34 dead are also real. The complications and the dead do not cancel each other.',
+        outcome: 'It is complicated. The 34 dead are also real. The complications and the dead do not cancel each other.',
         effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('marikana_generation'); p.setMem('saMarikana', true); },
       },
     ],
@@ -382,7 +385,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       G.currentYear >= 2008 && G.currentYear <= 2024 &&
       G.age >= 18 &&
       !G.mem?.saLoadshedding,
-    text: 'The schedules are on your phone now: Stage 2, Stage 4, Stage 6. Eskom, the state electricity utility, has been running its coal fleet past maintenance cycles for decades and not building replacement capacity. The load-shedding is planned, announced in advance, and then the power goes off for two, four, six hours depending on the stage. You buy a generator or an inverter or candles. The productive hours of the economy are being cut. The specific experience is learning to cook, to work, to sleep around a schedule that the state has imposed on ordinary life.',
+    text: 'The schedules are on your phone now: Stage 2, Stage 4, Stage 6. Eskom, the state electricity utility, has been running its coal fleet past maintenance cycles for decades and not building replacement capacity. The load-shedding is planned, announced in advance, and then the power goes off for two, four, six hours depending on the stage. You buy a generator or an inverter or candles. The productive hours of the economy are being cut. The experience is learning to cook, to work, to sleep around a schedule that the state has imposed on ordinary life.',
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -402,7 +405,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       G.character.country?.name === 'France' &&
       G.currentYear >= 1940 && G.currentYear <= 1944 &&
       !G.mem?.franceOccupationGrey,
-    text: 'The Germans are in Paris. Life continues with adjustments. You go to work. You buy food — less of it, at higher prices. You do not read certain newspapers. You do not mention colleagues who have not come back. The Milice is French, not German. The choices in front of you are not, for most people, the dramatic ones. They are the smaller ones, made daily, whose accumulated weight will not be clear until later.',
+    text: 'The Germans are in Paris and life goes on with adjustments. You go to work. You buy less food at higher prices, you do not read certain newspapers, and you do not mention the colleagues who have not come back. The Milice is French. For most people the choices are the small daily ones, whose weight will not be clear until later.',
     choices: [
       {
         text: 'Find small ways to resist — a document passed wrong, a silence kept',
@@ -413,7 +416,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       {
         text: 'Survive — what matters is to still be here when this ends',
         tag: null,
-        outcome: 'You survive. When it ends, this is not the story anyone tells, which is its own experience.',
+        outcome: 'You survive. When it ends, this is not the story anyone tells.',
         effect: (p) => { p.m -= 5; p.r += 3; p.addFlag('occupation_survivor'); p.setMem('franceOccupationGrey', true); },
       },
     ],
@@ -434,7 +437,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       {
         text: 'You were warned — you are not at your registered address',
         tag: null,
-        outcome: 'Someone told you. You stay with people who did not ask questions. This is not safety. It is not being taken.',
+        outcome: 'Someone told you. You stay with people who did not ask questions. You are not safe. You are only not taken.',
         effect: (p) => { p.m -= 15; p.addFlag('vel_dhiv_escaped'); p.addFlag('hidden_wartime'); p.setMem('franceVelDhiv', true); },
       },
       {
@@ -513,12 +516,12 @@ export const COUNTRY_ARC_3_EVENTS = [
       ['yoruba', 'hausa_fulani'].includes(G.ethnicity) &&
       G.currentYear >= 1967 && G.currentYear <= 1970 &&
       !G.mem?.nigeriaBiafraFederal,
-    text: 'The war is being fought for Nigerian unity, which is what the radio says. What you have seen — the photographs, the reports coming back from the east — is something else. The word *kwashiorkor* is in the newspapers now. The children with the swollen stomachs are not abstractions. They are Nigerians. The blockade is the instrument.',
+    text: 'The war is being fought for Nigerian unity, which is what the radio says. What you have seen — the photographs, the reports coming back from the east — is something else. The word *kwashiorkor* is in the newspapers now. The children with the swollen stomachs are Nigerians. The blockade is the instrument.',
     choices: [
       {
         text: 'The secession had to be stopped — a precedent there would have broken everything',
         tag: null,
-        outcome: 'The logic is not wrong. It is also not complete. Both remain true for a long time.',
+        outcome: 'The logic holds, as far as it goes.',
         effect: (p) => { p.e += 3; p.m -= 5; p.setMem('nigeriaBiafraFederal', true); },
       },
       {
@@ -540,7 +543,7 @@ export const COUNTRY_ARC_3_EVENTS = [
       G.flags.some(f => ['biafra_experienced', 'biafra_displacement'].includes(f)) &&
       G.currentYear >= 1971 && G.currentYear <= 1977 &&
       !G.mem?.nigeriaPostBiafra,
-    text: 'The government\'s reconciliation policy is "No victor, no vanquished." The oil boom that follows is real. Lagos is building itself too fast. The war is supposed to be over, which means not discussed. The silence is official. The thing underneath it is not.',
+    text: 'The government\'s reconciliation policy is "No victor, no vanquished." The oil boom that follows changes the skyline of Lagos in five years. Lagos is building itself too fast. The war is supposed to be over, which means not discussed. The silence is official. The thing underneath it is not.',
     choices: null,
     effect: (p) => { p.r += 8; p.addFlag('biafra_memory'); p.setMem('nigeriaPostBiafra', true); },
   },

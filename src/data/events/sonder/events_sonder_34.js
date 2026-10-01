@@ -44,7 +44,7 @@ export const EVENTS_SONDER_34 = [
     when: (G) => !G.mem?.s34JokeTwoPeople,
     text: () => pick([
       'There was a joke that required two specific people to be funny. Outside the two people, the setup did not work. You were one of the two people. The other person has not been in your life for years. The joke is still available to you — the whole architecture of it — and has nowhere to go.',
-      'A shared joke is a small private language. You had one with someone. The language still exists in you and the other speaker is not in your life. This is not grief, exactly. It is closer to carrying a coin from a currency that no longer circulates.',
+      'A shared joke is a small private language. You had one with someone. The language still exists in you and the other speaker is not in your life. It is closer to carrying a coin from a currency that no longer circulates.',
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s34JokeTwoPeople', true) },
@@ -56,7 +56,7 @@ export const EVENTS_SONDER_34 = [
     weight: 2,
     when: (G) => !G.mem?.s34SmellOfCoat,
     text: () => pick([
-      'There is a smell that belongs to a specific person — a coat, a soap, a particular combination that you cannot reconstruct but that you recognise completely when it arrives. The smell appears sometimes in unexpected places and for a moment places you in a room you have not been in for decades.',
+      'There is a smell that belongs to a person — a coat, a soap, a combination that you cannot reconstruct but that you recognise completely when it arrives. The smell appears sometimes in unexpected places and for a moment places you in a room you have not been in for decades.',
       'Someone from a long time ago had a smell that was not cologne or anything named — the accumulation of daily life into a scent that belonged to that person. You have encountered it again in strangers and each time you are briefly somewhere else.',
     ]),
     choices: null,
@@ -69,7 +69,7 @@ export const EVENTS_SONDER_34 = [
     weight: 2,
     when: (G) => !G.mem?.s34MispronouncedWord,
     text: () => pick([
-      'There was a word you mispronounced for years — not badly, just wrongly, and in a way that no one corrected you because the mispronunciation was not so far off as to interrupt the sentence. When you finally heard the correct version you discovered the shape of your mistake. You still sometimes feel the old shape in your mouth before you catch it.',
+      'There was a word you mispronounced for years — not badly, just wrongly, and no one corrected you because the mispronunciation was not so far off as to interrupt the sentence. When you finally heard the correct version you discovered the shape of your mistake. You still sometimes feel the old shape in your mouth before you catch it.',
       'You learned some words from reading and some from hearing, and the ones you learned from reading you sometimes pronounced incorrectly until someone said the word aloud near you and the gap closed. There is still a gap somewhere, probably, that has not closed yet.',
     ]),
     choices: null,
@@ -96,7 +96,7 @@ export const EVENTS_SONDER_34 = [
     when: (G) => place.hasElectricity(G) && (!G.mem?.s34EmptyHouseSound),
     text: () => pick([
       'An empty house sounds different from a house with people in it. The difference is not absence of voice — it is something structural, the way the building sits with its own sounds when no one is there to cover them. The settling, the refrigerator, the thing that ticks for no obvious reason. You know which sounds are yours.',
-      'Coming home to an empty house has a quality that coming home to a full house does not. The quality is not simply loneliness, though loneliness can be inside it. It is also a kind of belonging — the house recognising you as the one it has been waiting for.',
+      'Coming home to an empty house has a quality that coming home to a full house does not. There is loneliness inside it, and also a kind of belonging — the house recognising you as the one it has been waiting for.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s34EmptyHouseSound', true) },
@@ -148,7 +148,7 @@ export const EVENTS_SONDER_34 = [
     when: (G) => place.hasTV(G) && (!G.mem?.s34WindowAcross),
     text: () => pick([
       'From your window you can see a window in the building across the way. The light in it goes on and off at intervals that suggest a life with its own schedule, its own reasons for being awake at eleven or midnight or two. You know nothing about the life. You have watched the light for a long time.',
-      'The lighted window across the way: someone in it, or the light left on, or a television. The window is not yours and the life behind it is not yours and the ordinary miracle of another specific life going on behind a specific window has become ordinary enough that you only sometimes notice it.',
+      'The lighted window across the way: someone in it, or the light left on, or a television. The window is not yours and the life behind it is not yours and the ordinary miracle of another specific life going on behind a window has become ordinary enough that you only sometimes notice it.',
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s34WindowAcross', true) },
@@ -160,7 +160,7 @@ export const EVENTS_SONDER_34 = [
     weight: 2,
     when: (G) => !G.mem?.s34CountingHabit,
     text: () => pick([
-      'You count things when you are anxious or bored or in a room where nothing requires your attention. Steps, lights, people, the tiles in a ceiling. The counting organises the space in a way that is not useful but is calming. You have been doing this since before you were aware that you were doing it.',
+      'You count things when you are anxious or bored or in a room where nothing requires your attention. Steps, lights, people, the tiles in a ceiling. The counting organises the space; it is not useful, but it calms you. You have been doing this since before you were aware that you were doing it.',
       'A friend pointed out that you count things and you realised they were right and that you had been doing it for so long you had stopped noticing. The counting has no particular end — you do not do anything with the number. The count is the thing.',
     ]),
     choices: null,
@@ -173,7 +173,7 @@ export const EVENTS_SONDER_34 = [
     weight: 2,
     when: (G) => !G.mem?.s34ParticularChair,
     text: () => pick([
-      'There is a chair that is yours in the way that no one decided but everyone understands. In your parents\' house, in your own house, somewhere you have lived — a particular chair that accumulated meaning by repetition until the chair and the person became the same thing in certain conversations. When someone else sits in the chair it registers in the room.',
+      'There is a chair that is yours in the way that no one decided but everyone understands. In your parents\' house, in your own house, somewhere you have lived — a chair that accumulated meaning by repetition until the chair and the person became the same thing in certain conversations. When someone else sits in the chair it registers in the room.',
       'The chair at the table that is yours: not assigned, just accumulated. The angle to the window that works. The distance from the heat. The way the room opens from that seat so you can see the door. These are things you noticed once, years ago, and the choice stuck.',
     ]),
     choices: null,
@@ -225,7 +225,7 @@ export const EVENTS_SONDER_34 = [
     weight: 2,
     when: (G) => G.age >= 50 && !G.mem?.s34ThingNotSaid,
     text: () => pick([
-      'There is something you did not say to someone who is gone. Not a confession — something ordinary, an acknowledgement, a piece of information that would have landed well. The situation passed and you thought there would be another and there was not. The unsaid thing is not dramatic. That is part of what makes it stay.',
+      'There is something you did not say to someone who is gone. Not a confession — something ordinary, an acknowledgement, a piece of information that would have landed well. The situation passed and you thought there would be another and there was not. The unsaid thing is small. That is part of what makes it stay.',
       'The word you did not say in time: not a declaration but a small remark that would have let someone know you were paying attention. The opportunity closed. The person is gone or the moment is gone. The remark is still in you, waiting for a situation that will never have the same shape.',
     ]),
     choices: null,
@@ -252,7 +252,7 @@ export const EVENTS_SONDER_34 = [
     when: (G) => place.hasPhotographs(G) && (!G.mem?.s34PhotographNotTaken),
     text: () => pick([
       'There are moments you decided not to photograph because you wanted to be in them without the camera between you and them. The moments are not documented. Whether the decision was right — whether being present was better than having the record — you cannot evaluate because you cannot compare the two versions of what happened.',
-      'The photograph you did not take is always the more vivid one in memory, which is partly because memory has nothing to compete with. The photographs you took are accurate about specific surfaces. The things you did not photograph are the ones the memory renders in full.',
+      'The photograph you did not take is always the more vivid one in memory, partly because memory has nothing to compete with. The photographs you took are accurate about specific surfaces. The things you did not photograph are the ones the memory renders in full.',
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s34PhotographNotTaken', true) },
@@ -264,7 +264,7 @@ export const EVENTS_SONDER_34 = [
     weight: 2,
     when: (G) => G.age >= 45 && !G.mem?.s34VoiceStillHeard,
     text: () => pick([
-      'The voice of someone gone: you can still produce it in your head, the specific pitch and rhythm and the particular phrases that person used. The voice has not degraded. You are not sure if you are remembering the voice or constructing a version that resembles it closely enough. The distinction has started to matter less.',
+      'The voice of someone gone: you can still produce it in your head, the pitch and rhythm and the phrases that person used. The voice has not degraded. You are not sure if you are remembering the voice or constructing a version that resembles it closely enough. The distinction has started to matter less.',
       'You can hear someone\'s voice who has been dead for years. The hearing is internal, produced from memory, assembled from the recordings you carry without knowing you are carrying them. The voice says things the person might have said. Sometimes it says things you wish the person had said. You can usually tell the difference.',
     ]),
     choices: null,
@@ -291,7 +291,7 @@ export const EVENTS_SONDER_34 = [
     when: (G) => G.age >= 35 && !G.mem?.s34BodyKnewFirst,
     text: () => pick([
       'The body knew before the mind. You felt the wrongness of something before you had assembled the argument for the wrongness. The signal was specific — a tightness, a reluctance, a change in the quality of your attention — and you have learned to read it. The reading comes earlier than it used to.',
-      'There are things the body decided before you made a decision. The weight of dread before a day you did not yet know would go badly. The lightness before something you did not yet know would go well. The body has information and it delivers the information in its own format, which is not propositional.',
+      'There are things the body decided before you made a decision. The weight of dread before a day you did not yet know would go badly. The lightness before something you did not yet know would go well. The body has information and delivers it in its own format, not in sentences.',
     ]),
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s34BodyKnewFirst', true) },
@@ -329,8 +329,8 @@ export const EVENTS_SONDER_34 = [
     weight: 2,
     when: (G) => G.age >= 55 && !G.mem?.s34LastGoodYear,
     text: () => pick([
-      'There is a year in the past that you think of as the last one before something changed. The year itself was not special — it was full of ordinary problems. But after it, something shifted: a relationship, a health thing, a capacity you had that reduced. You did not know at the time that you were in the last good year of that particular arrangement.',
-      'Looking back: a year that was the last year of a particular kind of ease. Not the last happy year — you have had happy moments since — but the last year of a specific configuration that made certain things naturally possible. The year passed and you did not mark it because you did not know yet.',
+      'There is a year in the past that you think of as the last one before something changed. The year itself was not special — it was full of ordinary problems. But after it, something shifted: a relationship, a health thing, a capacity you had that reduced. You did not know at the time that you were in the last good year of that arrangement.',
+      'Looking back: a year that was the last year of a kind of ease. Not the last happy year — you have had happy moments since — but the last year of a configuration that made certain things naturally possible. The year passed and you did not mark it because you did not know yet.',
     ]),
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('s34LastGoodYear', true) },
@@ -342,7 +342,7 @@ export const EVENTS_SONDER_34 = [
     weight: 2,
     when: (G) => !G.mem?.s34StrangerHelped,
     text: () => pick([
-      'There is a stranger you helped once in a way that was small and required nothing from you — directions, a held door, a piece of information. You have thought about that stranger occasionally since. You do not know what happened next for them. The small help is complete in itself and you will never know if it mattered.',
+      'There is a stranger you helped once, in a small way that required nothing from you — directions, a held door, a piece of information. You have thought about that stranger occasionally since. You do not know what happened next for them. The small help is complete in itself and you will never know if it mattered.',
       'You helped someone you did not know and will not see again. The help was proportionate and the person left and you returned to whatever you were doing. Somewhere a small good thing happened in the world because you were there at that moment. It is enough that it happened. It does not need to be remembered.',
     ]),
     choices: null,

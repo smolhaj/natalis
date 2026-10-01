@@ -81,7 +81,7 @@ export const CONDITION_ARC_2_EVENTS = [
       {
         text: 'Connect with it, but keep a foot in the hearing world.',
         tag: null,
-        outcome: 'You carry both. Neither fully claims you. This is its own kind of life.',
+        outcome: 'You carry both. Neither fully claims you. This is a life too.',
         effect: (p) => { p.m += 5; p.e += 2; p.setMem('condDeafCommunity', true) },
       },
     ],
@@ -259,7 +259,7 @@ export const CONDITION_ARC_2_EVENTS = [
         back_pain: 'the back', hiv: 'HIV', blindness: 'the vision', deafness: 'the hearing',
         chronic_depression: 'the depression', disability_injury: 'the injury',
       }[c?.id] ?? 'the condition'
-      return `${name.charAt(0).toUpperCase() + name.slice(1)} has been managed for over a decade, but age changes what managed means. The doctor explains the progression in terms that are careful and numerical. The condition is entering a stage where the treatment options shift and what was stable becomes a new negotiation. You are not surprised. You have known the condition long enough to know it has its own calendar, and you have arrived at the next page.`
+      return `${name.charAt(0).toUpperCase() + name.slice(1)} has been managed for over a decade, but age changes what managed means. The doctor explains the progression in terms that are careful and numerical. The condition is entering a stage where the treatment options shift and what was stable becomes a new negotiation. You are not surprised. You have known the condition long enough to know its calendar, and you have arrived at the next page.`
     },
     choices: null,
     effect: (p) => { p.h -= 8; p.m -= 5; p.r += 4; p.setMem('condLateSeverity', true) },
@@ -287,7 +287,7 @@ export const CONDITION_ARC_2_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.flags.has('hiv_disclosed') && G.currentYear >= 1996 && G.age >= 25 && !G.mem?.condHivVisible,
-    text: `You told someone, then others. The visibility has its own economy: the conversations it opens, the relief of not calculating what to hide, the occasional person who responds with a strangeness you had to factor in. The community around the disease has its own culture — built in the crisis years and still present, the particular solidarity of a group that knows what it lost and what it learned from losing it. You are part of that now. It is not what you would have chosen. It is what you have.`,
+    text: `You told someone, then others. Being visible opens some conversations, spares you calculating what to hide, and now and then meets a strangeness you had to factor in. The community around the disease has its own culture — built in the crisis years and still present, the solidarity of a group that knows what it lost and what it learned from losing it. You are part of that now. It is what you have.`,
     choices: null,
     effect: (p) => { p.m += 5; p.s += 3; p.setMem('condHivVisible', true) },
   },

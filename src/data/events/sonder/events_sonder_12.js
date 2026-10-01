@@ -14,7 +14,7 @@ export const EVENTS_SONDER_12 = [
     phase: 'childhood',
     weight: 2,
     when: (G) => place.hasRadio(G) && (G.age >= 7 && G.age <= 14 && !G.mem?.s12SoundRadio),
-    text: 'On a long journey — the back of a car or a bus or a train — the radio loses its station and becomes a kind of static that has almost a tune in it. You look out the window and the landscape moves and the static continues. You are not thinking about anything in particular. This is one of the quieter things you remember.',
+    text: 'On a long journey — the back of a car or a bus or a train — the radio loses its station and becomes a kind of static that has almost a tune in it. You look out the window and the landscape moves and the static continues. You are thinking about nothing at all, and you remember it.',
     choices: null,
     effect: (p) => { p.r += 2; p.m += 1; p.setMem('s12SoundRadio', true) },
   },
@@ -39,7 +39,7 @@ export const EVENTS_SONDER_12 = [
       G.flags.has('emigrant') &&
       G.age >= 20 &&
       !G.mem?.s12SoundAdhanGone,
-    text: 'The first time you notice its absence, you have been here several months. The call to prayer was five times a day for as long as you were alive and you did not always hear it consciously — it was part of the texture of the air. Here, there is no call. The air in the morning is different. It is not wrong. It is simply different from what you did not know you expected.',
+    text: 'The first time you notice its absence, you have been here several months. The call to prayer was five times a day for as long as you were alive and you did not always hear it consciously — it was part of the texture of the air. Here, there is no call. The air in the morning is different. It is simply different from what you did not know you expected.',
     choices: null,
     effect: (p) => { p.r += 3; p.m -= 1; p.setMem('s12SoundAdhanGone', true) },
   },
@@ -52,7 +52,7 @@ export const EVENTS_SONDER_12 = [
       (G.flags.has('rust_belt_community') || G.flags.has('factory_generation') || G.flags.has('industrial_worker')) &&
       G.age >= 35 &&
       !G.mem?.s12SoundMachineryGone,
-    text: 'The plant has been closed long enough now that you have stopped expecting the sound. For years, on certain mornings, your body would expect it — the low continuous frequency that was the background note of growing up here, the thing that meant the shift was running. It is gone. What took its place is the absence that has its own sound, which is nothing at all.',
+    text: 'The plant has been closed long enough now that you have stopped expecting the sound. For years, on certain mornings, your body would expect it — the low continuous frequency that was the background note of growing up here, the thing that meant the shift was running. It is gone. What took its place is an absence with a sound: nothing at all.',
     choices: null,
     effect: (p) => { p.r += 4; p.setMem('s12SoundMachineryGone', true) },
   },
@@ -102,7 +102,7 @@ export const EVENTS_SONDER_12 = [
       (G.character.country?.archetype === 'subsaharan' || G.character.country?.archetype === 'developing_urban' || G.character.country?.archetype === 'developing_unstable') &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.s12SoundRainRoof,
-    text: 'Rain on a corrugated iron roof is not like rain anywhere else. It is too loud to speak over. It makes everything outside — the road, the trees, the neighbour\'s compound — seem very far away, and makes everything inside — the table, the faces of the people you are with — very close. When the rain stops, the silence is enormous and then ordinary very quickly.',
+    text: 'Rain on a corrugated iron roof is too loud to speak over. It makes everything outside — the road, the trees, the neighbour\'s compound — seem very far away, and makes everything inside — the table, the faces of the people you are with — very close. When the rain stops, the silence is enormous and then ordinary very quickly.',
     choices: null,
     effect: (p) => { p.m += 2; p.r += 2; p.setMem('s12SoundRainRoof', true) },
   },
@@ -115,7 +115,7 @@ export const EVENTS_SONDER_12 = [
       (G.character.country?.archetype === 'subsaharan' || G.character.country?.archetype === 'developing_urban' || G.character.country?.archetype === 'post_soviet' || G.character.country?.archetype === 'developing_unstable') &&
       G.age >= 5 && G.age <= 14 &&
       !G.mem?.s12SoundMarket,
-    text: 'The market sound is not one sound. It is the sum of every voice bargaining, calling, greeting, arguing — the particular density of human exchange at close quarters. As a child it was overwhelming. You learned to navigate it. Now you know where each sound is coming from. The boy selling bread calls from the left. The woman with cloth calls from the right. The sound became a map you can read.',
+    text: 'The market sound is the sum of every voice bargaining, calling, greeting, arguing — human exchange at close quarters. As a child it was overwhelming. You learned to navigate it. Now you know where each sound is coming from. The boy selling bread calls from the left. The woman with cloth calls from the right. The sound became a map you can read.',
     choices: null,
     effect: (p) => { p.m += 2; p.e += 1; p.r += 1; p.setMem('s12SoundMarket', true) },
   },
@@ -128,7 +128,7 @@ export const EVENTS_SONDER_12 = [
       (G.flags.has('emigrant') || G.residencyStatus === 'permanent_resident' || G.residencyStatus === 'work_visa') &&
       G.age >= 18 &&
       !G.mem?.s12SoundAirport,
-    text: 'Airports in different countries sound the same. The announcement voices have the same cadence regardless of language. The same gate-door sounds, the same wheel of luggage on the same floor. It is a space designed to be nowhere in particular, and the sound is part of that design. You have passed through this particular nowhere enough times now that it is almost familiar, which is the closest nowhere can come to home.',
+    text: 'Airports in different countries sound the same. The announcement voices have the same cadence regardless of language. The same gate-door sounds, the same wheel of luggage on the same floor. It is a space designed to be nowhere in particular, and the sound is part of that design. You have passed through this nowhere enough times now that it is almost familiar, as close as nowhere comes to home.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s12SoundAirport', true) },
   },
@@ -183,7 +183,7 @@ export const EVENTS_SONDER_12 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.age >= 18 && !G.mem?.s12MakeSewing,
-    text: 'Mending something — a tear, a loose button, a seam that has opened — requires sitting still with a needle and thread and the patience of small precise repetition. The patch will show. The button will not match exactly. The thing will be wearable again, which is the point. There is something in the slowness of it that is not unpleasant.',
+    text: 'Mending something — a tear, a loose button, a seam that has opened — requires sitting still with a needle and thread and the patience of small precise repetition. The patch will show. The button will not match exactly. The thing will be wearable again. That is the point. There is something in the slowness of it that is not unpleasant.',
     choices: null,
     effect: (p) => { p.m += 2; p.r += 1; p.setMem('s12MakeSewing', true) },
   },
@@ -203,7 +203,7 @@ export const EVENTS_SONDER_12 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 28 && !G.mem?.s12MakeRepair,
-    text: 'You fixed something that was broken — a pipe, a chair, a clock, an appliance — and the satisfaction of it was larger than the thing merited. The broken object became an intact object through your attention to it. This is not nothing. It is a small completed thing in a day that may have none. You notice how long it has been since you made a thing that worked.',
+    text: 'You fixed something that was broken — a pipe, a chair, a clock, an appliance — and the satisfaction of it was larger than the thing merited. The broken object became an intact object through your attention to it. It is a small completed thing in a day that may have none. You notice how long it has been since you made a thing that worked.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 1; p.setMem('s12MakeRepair', true) },
   },
@@ -213,7 +213,7 @@ export const EVENTS_SONDER_12 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.currentYear >= 1995 && G.age >= 35 && !G.mem?.s12MakeHandwriting,
-    text: 'You write something by hand — a card, a list, a note to someone — and notice your handwriting. It has not changed since you were in your twenties. The specific letter-forms are the ones you settled into without deciding to settle. The pen is slower than typing. The slower pace produces different sentences. You are not sure if they are worse or better.',
+    text: 'You write something by hand — a card, a list, a note to someone — and notice your handwriting. It has not changed since you were in your twenties. The letter-forms are the ones you settled into without deciding to settle. The pen is slower than typing. The slower pace produces different sentences. You are not sure if they are worse or better.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s12MakeHandwriting', true) },
   },
@@ -251,7 +251,7 @@ export const EVENTS_SONDER_12 = [
       (G.regime === 'single_party_communist' || G.regime === 'single_party_authoritarian' || G.regime === 'military_dictatorship' || G.regime === 'theocracy') &&
       G.age >= 16 &&
       !G.mem?.s12OfficialNewspaper,
-    text: 'The newspaper arrives. You read it. You know how to read the official newspaper, which is not the same as reading a newspaper. You understand the gap between the page and the known. When something is not mentioned, you note the not-mentioning. When something is described in a particular way, you note the description. You have become fluent in a second language that runs underneath the first one.',
+    text: 'The newspaper arrives. You read it. You know how to read the official newspaper, a different skill from reading a newspaper. You understand the gap between the page and the known. When something is not mentioned, you note the not-mentioning. When something is described in a way, you note the description. You have become fluent in a second language that runs underneath the first one.',
     choices: null,
     effect: (p) => { p.e += 2; p.r += 2; p.setMem('s12OfficialNewspaper', true) },
   },
@@ -300,7 +300,7 @@ export const EVENTS_SONDER_12 = [
       (G.regime === 'single_party_communist' || G.regime === 'single_party_authoritarian' || G.regime === 'military_dictatorship' || G.regime === 'theocracy') &&
       G.age >= 14 &&
       !G.mem?.s12OfficialAnnouncement,
-    text: 'The announcement comes on the radio — the formal voice, the particular music that precedes it when what follows is significant. You wait for the announcement to end and then wait for what the announcement did not say. Both take about the same amount of time. The second waiting is more informative.',
+    text: 'The announcement comes on the radio — the formal voice, the music that precedes it when what follows is significant. You wait for the announcement to end and then wait for what the announcement did not say. Both take about the same amount of time. The second waiting is more informative.',
     choices: null,
     effect: (p) => { p.e += 2; p.r += 2; p.setMem('s12OfficialAnnouncement', true) },
   },
@@ -325,7 +325,7 @@ export const EVENTS_SONDER_12 = [
     when: (G) => place.isLiterate(G) && ((G.flags.has('revolution_witness') || G.flags.has('post_communist_transition') || G.flags.has('trujillo_generation') || G.political_leaning === 'dissident') &&
       G.age >= 30 &&
       !G.mem?.s12OfficialPhoto),
-    text: 'A photograph in the newspaper of the leader who is no longer there. It appears in a retrospective, or a historical exhibition, or a reference in a feature about something else. The face you spent years looking up at — from squares, from walls, from currency. Now it appears in the past tense, which is where it belongs. You look at it longer than you expected to.',
+    text: 'A photograph in the newspaper of the leader who is no longer there. It appears in a retrospective, or a historical exhibition, or a reference in a feature about something else. The face you spent years looking up at — from squares, from walls, from currency. Now it appears in the past tense, where it belongs. You look at it longer than you expected to.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 2; p.setMem('s12OfficialPhoto', true) },
   },
@@ -357,7 +357,7 @@ export const EVENTS_SONDER_12 = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 8 && G.age <= 16 && !G.mem?.s12HourAfterSchool,
-    text: 'The walk home from school — or the ride, or the journey — with the day released and the afternoon still unconsumed. This is the freest hour. Nothing is required yet. You are between obligation and obligation. You have discovered that this hour does not last, which is why you remember it as longer than it was.',
+    text: 'The walk home from school — or the ride, or the journey — with the day released and the afternoon still unconsumed. This is the freest hour. Nothing is required yet. You are between obligation and obligation. You have discovered that this hour does not last, and so you remember it as longer than it was.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 2; p.setMem('s12HourAfterSchool', true) },
   },
@@ -377,7 +377,7 @@ export const EVENTS_SONDER_12 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.age >= 18 && !G.mem?.s12HourDawn,
-    text: 'Dawn in this place has a quality — the particular colour of the light before the sun is fully over the horizon, the particular sounds the birds or the streets make at this hour, the temperature of the air before the day\'s heat begins. You have seen it a number of times, usually by accident or necessity. It is always slightly surprising that this is what it looks like.',
+    text: 'Dawn in this place has a quality — the colour of the light before the sun is fully over the horizon, the sounds the birds or the streets make at this hour, the temperature of the air before the day\'s heat begins. You have seen it a number of times, usually by accident or necessity. It is always slightly surprising that this is what it looks like.',
     choices: null,
     effect: (p) => { p.m += 2; p.r += 2; p.setMem('s12HourDawn', true) },
   },
@@ -387,7 +387,7 @@ export const EVENTS_SONDER_12 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.age >= 18 && !G.mem?.s12HourNewYear,
-    text: 'The hour just after midnight on a new year. The noise subsides. The people you are with are tired or moved or just drunk. Someone is already asleep. You are in the new year now, which is indistinguishable from the old year except in the number. You sit with this for a moment. The year feels briefly enormous and then ordinary very quickly.',
+    text: 'The hour just after midnight on a new year. The noise subsides. The people you are with are tired or moved or just drunk. Someone is already asleep. You are in the new year now, the same as the old year except in the number. You stand at the window a moment. The year feels briefly enormous and then ordinary very quickly.',
     choices: null,
     effect: (p) => { p.r += 2; p.m += 1; p.setMem('s12HourNewYear', true) },
   },
@@ -408,7 +408,7 @@ export const EVENTS_SONDER_12 = [
     phase: null,
     weight: 2,
     when: (G) => place.hasTV(G) && (G.age >= 8 && G.age <= 16 && !G.mem?.s12HourSunday),
-    text: 'A Sunday afternoon in childhood has a quality that no other time has — slow, slightly airless, the week not yet begun, the weekend already used. Whatever your family does on Sunday afternoons, you are doing it now: the meal, the visiting, the television, the street football, the walk, the specific boredom. This particular slow quality is what you will remember as what Sundays were, even when Sundays become like every other day.',
+    text: 'A Sunday afternoon in childhood has a quality that no other time has — slow, slightly airless, the week not yet begun, the weekend already used. Whatever your family does on Sunday afternoons, you are doing it now: the meal, the visiting, the television, the street football, the walk, the boredom. This slow quality is what you will remember as what Sundays were, even when Sundays become like every other day.',
     choices: null,
     effect: (p) => { p.m += 2; p.r += 3; p.setMem('s12HourSunday', true) },
   },

@@ -576,6 +576,21 @@ export const NEW_ROSTER_FLAGS = {
     weight: 'major', category: 'historical', intent: 'year_texture',
     description: 'A father or brother called up; the ordinary condition of every street.',
   },
+  de_wehrmacht_soldier: {
+    weight: 'major', category: 'historical', intent: 'event',
+    description: 'Called up himself, 1939-45: the barracks, the train east or west, the section.',
+    notes: 'Set by dereich_own_call_up. Follow-through: dereich_ft_surrender, dereich_ft_wehrmacht_exhibition.',
+  },
+  de_pow_west: {
+    weight: 'moderate', category: 'historical', intent: 'event',
+    description: 'Surrendered to the western Allies in 1945; the meadow camp by the Rhine, home by autumn.',
+    notes: 'Set by dereich_ft_surrender. Read by dereich_ft_wehrmacht_exhibition.',
+  },
+  de_pow_east: {
+    weight: 'major', category: 'historical', intent: 'event',
+    description: 'Taken by the Soviets in 1945; years in a camp past the Urals.',
+    notes: 'Set by dereich_ft_surrender. Follow-through: dereich_ft_heimkehrer, dereich_ft_wehrmacht_exhibition.',
+  },
   de_father_lost_east: {
     weight: 'major', category: 'loss', intent: 'both',
     description: 'Missing in the east. No grave, no date.',
@@ -786,6 +801,16 @@ export const NEW_ROSTER_FLAGS = {
   jp_sumi_nuri: {
     weight: 'major', category: 'identity', intent: 'event',
     description: 'Blacked out their own textbook, at their own desk, with their calligraphy brush.',
+  },
+  jp_soldier: {
+    weight: 'major', category: 'historical', intent: 'event',
+    description: 'The red paper: called up himself, 1937-45, seen off with flags and a thousand-stitch belt.',
+    notes: 'Set by jpw_akagami. Follow-through: jpw_ft_demobilised, jpw_ft_senyukai.',
+  },
+  jp_soldier_notebook: {
+    weight: 'moderate', category: 'historical', intent: 'event',
+    description: 'Kept a notebook at the front that nobody was allowed to read.',
+    notes: 'Set by jpw_akagami. Read by jpw_ft_senyukai.',
   },
   jp_takenoko: {
     weight: 'major', category: 'economic', intent: 'event',

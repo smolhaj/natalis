@@ -18,7 +18,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.son15CountingMoney,
     text: () => pick([
-      `You count the money on the table. You know the total before you finish counting because you have done this arithmetic many times. The counting is not about arriving at a number. It is about the handling, the confirmation that the number is what you think it is.`,
+      `You count the money on the table. You know the total before you finish counting because you have done this arithmetic many times. The counting is about the handling, the confirmation that the number is what you think it is.`,
       `You check the balance. The number is the same as it was yesterday, which means nothing went wrong and nothing went right. The number that means nothing went wrong is the goal most months.`,
       `The price has gone up. Not by much. You calculate what "not by much" means across a month, across a year. The numbers are small and the calculation is familiar and you have been doing it for long enough that you don't notice you're doing it anymore.`,
     ]),
@@ -64,7 +64,7 @@ export const EVENTS_SONDER_15 = [
     text: () => pick([
       `You have spent years in transit between the place where you sleep and the place where you work. The time in between has a quality — neither place, neither thing. You have read there, slept there, thought things there that you did not think anywhere else. The commute is where a portion of your life actually happened.`,
       `You know this route so well that your body navigates it without your permission. You have looked up to find yourself at the station without any memory of walking from the bus. The route is in the body now, not in the mind.`,
-      `The commute takes forty minutes each way. You have done this five days a week for nine years. You have spent a significant fraction of your waking life in this particular transit, between these particular streets, looking at these particular facades.`,
+      `The commute takes forty minutes each way. You have done this five days a week for nine years. You have spent a significant fraction of your waking life in this transit, between these streets, looking at these facades.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('son15CommuteYears', true) },
@@ -80,7 +80,7 @@ export const EVENTS_SONDER_15 = [
     text: () => pick([
       `The queue moves at its own pace. The pace is the pace of the counter, not of the people waiting. Everyone in the queue knows this. The adjustment you make is to the queue's pace, not the other way around.`,
       `You fill out the form. The form has a section for information you do not have. You find the information. You return. The form has changed. This is not unusual.`,
-      `You have been told to come back on a specific day. You come back on that day. You are told to come back on a different day. You carry your documents in a folder now and the folder is familiar in the hand.`,
+      `You have been told to come back on a day. You come back on that day. You are told to come back on a different day. You carry your documents in a folder now and the folder is familiar in the hand.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('son15Queue', true) },
@@ -92,7 +92,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => place.isLiterate(G) && (G.age >= 20 && G.age <= 40 && !G.mem?.son15Stamp),
     text: () => pick([
-      `The document requires a stamp. This is not a metaphor. There is an actual stamp, in an office, held by a specific person, that makes the document valid. You find the office. The person with the stamp is not there today.`,
+      `The document requires a stamp. This is not a metaphor. There is an actual stamp, in an office, held by a person, that makes the document valid. You find the office. The person with the stamp is not there today.`,
       `You have been told it is processed. Then you are told it has not been received. Then you are told it was received but not processed. The information changes without the document moving. You note this and continue.`,
       `The official form has a reference number. The reference number refers to your case. Your case has a status. The status has been "pending" for some months. You check the status and it is still pending and you have started to understand that "pending" is the default state of most things that are in the process of being decided.`,
     ]),
@@ -110,7 +110,7 @@ export const EVENTS_SONDER_15 = [
     text: () => pick([
       `Your hands have your father's shape. You noticed this at some point and did not pursue the thought. It has the quality of a door you can open or leave closed.`,
       `You watch your own hands doing something — a familiar task, something routine — and there is a moment where the hands feel borrowed. Someone else's hands. Then the moment passes and they are yours again.`,
-      `Your hands know things your mind doesn't. The lock combination entered without thinking. The bread kneaded by feel. The specific firmness of the child's shoulder to tell you whether they're upset or just tired. The hands carry knowledge that doesn't pass through the brain.`,
+      `Your hands know things your mind doesn't. The lock combination entered without thinking. The bread kneaded by feel. The firmness of the child's shoulder to tell you whether they're upset or just tired. The hands carry knowledge that doesn't pass through the brain.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('son15Hands', true) },
@@ -123,7 +123,7 @@ export const EVENTS_SONDER_15 = [
     when: (G) => G.age >= 60 && !G.mem?.son15Grip,
     text: () => pick([
       `The grip is not what it was. Not gone — still functional, still reliable — but you notice now that you hold things with more attention than you used to. The grip is no longer assumed.`,
-      `You carry things carefully now. Not all things — the grocery bag, the briefcase, the ordinary objects — but certain things, things with weight or fragility or meaning. You carry them in both hands, which is a recent development.`,
+      `You carry things carefully now. Not all things — the grocery bag, the briefcase, the ordinary objects — but certain things, things with weight or fragility or meaning. You carry them in both hands now.`,
       `Opening jars. The jar opener that lives in the second drawer that you bought two years ago and use without embarrassment. The body finds workarounds. The workarounds are just methods.`,
     ]),
     choices: null,
@@ -183,7 +183,7 @@ export const EVENTS_SONDER_15 = [
     when: (G) => G.age >= 35 && G.age <= 55 && !G.mem?.son15WhatGiven,
     text: () => pick([
       `Your parents gave you things you didn't ask for and things you didn't know you needed and things you would have preferred they hadn't. The accounting is complicated. You have stopped trying to settle it.`,
-      `The thing that was given to you at a specific moment — not a gift exactly, but a thing that was given, a word or a chance or a phone call — changed the direction of something. You know what direction you were going before. You know the new direction. The thing was small enough that the giver may not remember it.`,
+      `The thing that was given to you at a moment — not a gift exactly, but a thing that was given, a word or a chance or a phone call — changed the direction of something. You know what direction you were going before. You know the new direction. The thing was small enough that the giver may not remember it.`,
       `What you have been given: you try to list it occasionally. The list is always longer than you expect. The things you did not ask for are on the list. The things that cost someone something are on the list. The list keeps adding to itself.`,
     ]),
     choices: null,
@@ -198,7 +198,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => G.children?.length > 0 && G.age >= 38 && !G.mem?.son15ThingPassed,
     text: () => pick([
-      `Your child does the thing you do. The gesture, the way of saying a particular phrase. You watch them do it and feel something that is partly recognition and partly something less comfortable — you did not mean to give them that one.`,
+      `Your child does the thing you do. The gesture, the way of saying a phrase. You watch them do it and feel something that is partly recognition and partly something less comfortable — you did not mean to give them that one.`,
       `They will have things from you that they do not know are from you. Patterns installed so early they feel like personality. You can see some of them from the outside. You could not always.`,
       `Something from your family that you swore you would not pass on: you have passed it on in a different form. The form is different enough that it took you a while to recognise it. You recognise it now.`,
     ]),
@@ -214,7 +214,7 @@ export const EVENTS_SONDER_15 = [
     text: () => pick([
       `There is a version of your life they will never know about — before them. The person you were for the years before they existed. It is not hidden, but it is also not narrated. The stories you have told them are curated. The uncurated version lives only in you.`,
       `They will not know how close things came to being different. The job you almost didn't take. The city you almost didn't move to. The person you almost didn't speak to. The contingency underneath what looks to them like their origin story.`,
-      `What you went through before they arrived: some of it you have told, some of it you have not. The untold portion is not secret. It is just not relevant to them, yet, in the way that it was relevant to you when you were going through it. It may become relevant later.`,
+      `What you went through before they arrived: some of it you have told, some of it you have not. The untold portion is not secret. It is just not theirs to need, yet. It may become relevant later.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('son15WontKnow', true) },
@@ -230,7 +230,7 @@ export const EVENTS_SONDER_15 = [
     text: () => pick([
       `The body knows the morning before you do. The quality of the day is available in the first few minutes after waking, before you have thought anything deliberately. You have learned to read this and mostly to trust it.`,
       `There are things you can tell about a room when you walk in — the temperature of the interaction, whether something is wrong — before you have processed any specific information. This used to feel like intuition. It is probably just pattern recognition from long enough in similar rooms.`,
-      `Your body learned something during a specific period of your life and hasn't unlearned it. The alertness to a certain kind of sound. The assessment of a doorway before you walk through it. The legacy of an earlier set of conditions.`,
+      `Your body learned something during a period of your life and hasn't unlearned it. The alertness to a certain kind of sound. The assessment of a doorway before you walk through it. The legacy of an earlier set of conditions.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('son15BodyKnowledge', true) },
@@ -258,8 +258,8 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => place.hasPhotographs(G) && (G.age >= 35 && !G.mem?.son15NotPhotographed),
     text: () => pick([
-      `You did not take a photograph at the moment when a photograph would have been most accurate. What the place looked like. What the light was doing. The face of the person at the moment before it changed. The image is in memory only, which is not the same as having it.`,
-      `The ones you wish you had taken: a list that grew quietly over years. A room you lived in. A face before. A light on a specific afternoon. The camera was somewhere else or you didn't think of it or you thought the moment would recur. The moment did not recur.`,
+      `You did not take a photograph at the moment when a photograph would have been most accurate. What the place looked like. What the light was doing. The face of the person at the moment before it changed. The image is in memory only, and that is not having it.`,
+      `The ones you wish you had taken: a list that grew quietly over years. A room you lived in. A face before. A light on an afternoon. The camera was somewhere else or you didn't think of it or you thought the moment would recur. The moment did not recur.`,
       `There are photographs of this period. None of them are the image you would have taken if you had been thinking about it. The image you would have taken is only in your memory, where it is very precise and will eventually not be.`,
     ]),
     choices: null,
@@ -318,7 +318,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.son15Cup,
     text: () => pick([
-      `There is a cup you use every morning. It has been broken and mended. It has moved houses. You use it without thinking and when you think about it you can trace back the specific origin — a specific kitchen, a specific person who had it before you. The cup has a history that is not its history.`,
+      `There is a cup you use every morning. It has been broken and mended. It has moved houses. You use it without thinking and when you think about it you can trace back the origin — a kitchen, a person who had it before you. The cup has a history that is not its history.`,
       `You have a collection of things you did not choose to collect — the aggregated small objects of years. The mug from a conference. The bowl from a market. The glass that was part of a set that is now only this glass. They sit together on a shelf without coherence. They are the record of where you've been.`,
       `The chair you always sit in. This is not dramatic — just the chair. But it is the chair, not the other chairs, for reasons you could not fully explain and have stopped trying to.`,
     ]),
@@ -332,7 +332,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => G.age >= 62 && !G.mem?.son15WhatKept,
     text: () => pick([
-      `You have moved houses several times. The things that survived all the moves: not the things you expected. A letter. A particular photograph. A tool that was impractical to keep. These are the things that apparently you were unwilling to leave behind.`,
+      `You have moved houses several times. The things that survived all the moves: not the things you expected. A letter. A photograph. A tool that was impractical to keep. These are the things that apparently you were unwilling to leave behind.`,
       `What you have kept and what it says about you: this is an archaeology you can do in an afternoon. The objects are honest. They kept the things they kept without rationalising it.`,
       `You could tell a version of your life that was only the objects. The objects you have now vs. the objects you had at thirty. The difference is specific. The things that left are specific. The things that stayed.`,
     ]),
@@ -378,7 +378,7 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => G.age >= 38 && !G.mem?.son15Maintenance,
     text: () => pick([
-      `The ongoing maintenance of a life: the appointments, the renewals, the subscriptions, the servicing of the things that need to be serviced to keep functioning. This is not living exactly. It is the condition under which living is possible. You attend to it.`,
+      `The ongoing maintenance of a life: the appointments, the renewals, the subscriptions, the servicing of the things that need to be serviced to keep functioning. It is the condition under which living is possible. You attend to it.`,
       `There is always something that needs doing. This is not a complaint — it is a structural feature of having things and people and commitments in the world. The list is never finished. You have accepted this.`,
       `You pay the bill before it becomes a reminder. This is a behaviour you developed at some point and can now not remember learning. The version of yourself that did not do this is available in memory but not in practice.`,
     ]),
@@ -422,8 +422,8 @@ export const EVENTS_SONDER_15 = [
     weight: 2,
     when: (G) => G.age >= 68 && !G.mem?.son15UnderstandNow,
     text: () => pick([
-      `What you understand now that you didn't at forty: some of it is obvious in retrospect, which is what makes it useful in retrospect and not in prospect. The understanding that arrives on time is rarer than the understanding that arrives late.`,
-      `The advice you could give your younger self: you try to assemble this occasionally. The list always sounds obvious. It wasn't obvious at the time. This is the entire problem with advice.`,
+      `What you understand now that you didn't at forty: some of it is obvious in retrospect, and useful only in retrospect. The understanding that arrives on time is rarer than the understanding that arrives late.`,
+      `The advice you could give your younger self: you try to assemble this occasionally. The list always sounds obvious. It wasn't obvious at the time. That is the trouble with advice.`,
       `You know things now that took time to learn and that you could not have been told. Not complicated things. Simple things. Things that simple that someone would have had to live the time in order to know them.`,
     ]),
     choices: null,
@@ -437,7 +437,7 @@ export const EVENTS_SONDER_15 = [
     when: (G) => G.age >= 70 && !G.mem?.son15EarlierSelf,
     text: () => pick([
       `The person you were at thirty would not fully recognise the person you are now, and vice versa. The change was continuous and so you did not notice most of it. What remains is continuity of memory and certain habits and the body that was there throughout.`,
-      `You catch yourself doing something you used to do at a specific age. It's not regression — it's the thing returning because the circumstances have returned. The self is more contextual than it seems from inside.`,
+      `You catch yourself doing something you used to do at an age. It's not regression — it's the thing returning because the circumstances have returned. The self is more contextual than it seems from inside.`,
       `The fears you had at twenty-five: most of them were not the thing you should have been afraid of. The things you should have been attentive to were quieter. You were not listening to the quiet things.`,
     ]),
     choices: null,

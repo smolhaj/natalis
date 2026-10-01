@@ -23,7 +23,7 @@ export const IVORY_COAST_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 16 && G.age <= 35 &&
       !G.mem?.ciCocoa,
-    text: 'Ivory Coast grows a third of the world\'s cocoa. The trees take four years to bear fruit. You plant them and you wait. When the pods come they are red and yellow and heavy, and you harvest them with a machete and split each one and spread the beans on mats to ferment. The smell of fermenting cocoa is the smell of this life. The world price is set in London and New York. You do not set it. Some years the price is high and you build a concrete block room onto the house. Some years the price falls and you do not.',
+    text: 'Cocoa trees take four years to bear. You plant them and you wait, and when the pods come they are red and yellow and heavy, and you split them with a machete and spread the beans on mats to ferment. The smell of fermenting cocoa is the smell of this life. The price is set in London and New York. Some years it is high and you build a concrete room onto the house, and some years it falls and you do not.',
     choices: [
       {
         text: 'Plant more trees — more land, future income.',
@@ -67,7 +67,7 @@ export const IVORY_COAST_EVENTS = [
       G.currentYear >= 1999 && G.currentYear <= 2000 &&
       G.age >= 16 &&
       !G.mem?.ciCoup1999,
-    text: 'Christmas Eve, 1999. General Robert Guéï and a group of soldiers call themselves the National Committee of Public Salvation and announce on radio that Bédié has been removed. The announcement comes at midnight. By morning the soldiers have renamed themselves a junta and are deciding who will be allowed to run for president. Alassane Ouattara — who was excluded from the 1995 election for being insufficiently Ivorian — is excluded again. The election that follows is between Guéï and Laurent Gbagbo. Guéï announces himself the winner. The streets fill with protesters. Guéï leaves the country. Gbagbo is president.',
+    text: 'Christmas Eve, 1999, and at midnight soldiers on the radio announce that Bédié is gone. By morning they are a junta deciding who may run for president, and Ouattara is excluded again for not being Ivorian enough. Guéï runs against Gbagbo and declares himself the winner. The streets fill, and Guéï leaves the country, and Gbagbo is president.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('ci_coup_1999_witness'); p.setMem('ciCoup1999', true); },
   },
@@ -95,7 +95,7 @@ export const IVORY_COAST_EVENTS = [
       {
         text: 'You work in trade — the market, the informal sector.',
         tag: 'Informal',
-        outcome: 'No fixed salary, no job security, no paper. The market has its own rules and you know them.',
+        outcome: 'No fixed salary, no job security, no paper. The market has rules and you know them.',
         effect: (p) => { p.s += 3; p.m += 2; p.addFlag('ci_abidjan_generation'); p.setMem('ciAbidjan', true); },
       },
     ],
@@ -112,7 +112,8 @@ export const IVORY_COAST_EVENTS = [
       G.currentYear >= 2010 && G.currentYear <= 2011 &&
       G.age >= 20 &&
       !G.mem?.ciElection2010,
-    text: 'November 28, 2010. The Independent Electoral Commission announces that Alassane Ouattara has won the presidential election with 54 percent of the vote. The Constitutional Council, controlled by Laurent Gbagbo\'s allies, annuls the results and declares Gbagbo the winner. The UN, the African Union, France, and the United States recognise Ouattara. Gbagbo has the military. Ouattara has international recognition and the Forces Nouvelles fighters from the north. The country divides again — not along a zone of confidence this time but street by street in Abidjan. Three thousand people die. It lasts five months.',
+    text: 'November 2010. The electoral commission says Ouattara won, and the Constitutional Council, which is Gbagbo\'s, says Gbagbo won. The world recognises Ouattara; Gbagbo has the army. This time the country does not divide along a line but street by street in Abidjan. It lasts five months.',
+    context: 'About 3,000 people were killed in the 2010-11 post-election crisis.',
     choices: [
       {
         text: 'Your neighbourhood is Gbagbo territory. You navigate it.',
@@ -152,7 +153,7 @@ export const IVORY_COAST_EVENTS = [
       {
         text: 'You learn to code-switch — French, the Plateau, the credentials that cross the line.',
         tag: 'Navigate',
-        outcome: 'The credentials get you into rooms where the question of where you are from is not asked immediately. It is always asked eventually.',
+        outcome: 'The credentials get you into rooms where the question of where you are from is asked eventually rather than immediately.',
         effect: (p) => { p.e += 3; p.m -= 3; p.addFlag('ci_northern_identity'); p.setMem('ciNorthSouth', true); },
       },
     ],

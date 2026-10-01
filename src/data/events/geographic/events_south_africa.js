@@ -16,7 +16,7 @@ export const SOUTH_AFRICA_EVENTS = [
       G.currentYear >= 1976 && G.currentYear <= 1978 &&
       G.age >= 10 && G.age <= 20 &&
       !G.mem?.saSoweto76,
-    text: 'They tell you half your subjects will now be taught in Afrikaans, which is not your language and is not the teachers\' language either. On the sixteenth you walk from Morris Isaacson with a placard made from a cardboard box, and the column is mostly fifteen and sixteen year olds and it is a fine cold morning. The police are at the corner of Vilakazi Street. A boy of thirteen is carried past you in another boy\'s arms and somebody takes the photograph that the whole world will see by Friday.',
+    text: 'They tell you half your subjects will now be taught in Afrikaans, not your language and not the teachers\' language either. On the sixteenth you walk from Morris Isaacson with a placard made from a cardboard box, and the column is mostly fifteen and sixteen year olds and it is a fine cold morning. The police are at the corner of Vilakazi Street. A boy of thirteen is carried past you in another boy\'s arms and somebody takes the photograph that the whole world will see by Friday.',
     context: 'On 16 June 1976 students in Soweto marched against a decree requiring half of secondary instruction to be in Afrikaans. Police opened fire; Hector Pieterson, aged 13, was among the first killed, and Sam Nzima\'s photograph of him being carried by Mbuyisa Makhubo became the defining image of apartheid abroad. Protests spread nationwide and more than 600 people, most of them students, were killed within the year. The Afrikaans instruction requirement was withdrawn in 1979.',
     choices: [
       {
@@ -52,7 +52,7 @@ export const SOUTH_AFRICA_EVENTS = [
       if (eth === 'white_south_african') {
         return 'February 11, 1990. Victor Verster Prison. Your parents have different responses to this event. The television shows the gates opening and Mandela walking out after twenty-seven years and raising his fist and the crowd. The ANC has been banned since 1960. Now it is not. The country you have grown up in is changing at a speed that the day before yesterday felt impossible.'
       }
-      return 'February 11, 1990. The gates at Victor Verster Prison open. Nelson Mandela, who has been in prison since 1964, walks out. Twenty-seven years. The crowd on the road to Paarl. The raised fist. The country does not resolve into peace immediately: the violence of the transition years is still ahead. But the man who the government said was a terrorist and a criminal has just walked out of their prison and the government could not stop it.'
+      return 'February 11, 1990, and the gates of Victor Verster prison open, and Mandela walks out after twenty-seven years. The crowds along the road to Paarl; the raised fist. Peace does not come at once; the violence of the transition is still ahead. But the man the government called a terrorist has walked out of its prison, and it could not stop him.'
     },
     choices: null,
     effect: (p) => {
@@ -100,7 +100,7 @@ export const SOUTH_AFRICA_EVENTS = [
       G.currentYear >= 1994 && G.currentYear <= 2012 &&
       G.age >= 22 &&
       !G.mem?.saWhiteEmig,
-    text: 'The "chicken run." The phrase used for white South Africans leaving after 1994 — to Australia, New Zealand, the UK, Canada. A million left in the decade after the transition. The people who leave say crime, or opportunities, or their children\'s future. The people who stay say the leavers were never really committed to the country. The people who leave carry South Africa with them in the way that people carry the country they grew up in when they no longer live there: the specific quality of the light in November, the food, the sounds, the guilt about the country they were born with structural advantages in and then left.',
+    text: 'The "chicken run." The phrase used for white South Africans leaving after 1994 — to Australia, New Zealand, the UK, Canada. A million left in the decade after the transition. The people who leave say crime, or opportunities, or their children\'s future. The people who stay say the leavers were never really committed to the country. The people who leave carry South Africa with them in the way that people carry the country they grew up in when they no longer live there: the quality of the light in November, the food, the sounds, the guilt about the country they were born with structural advantages in and then left.',
     choices: [
       {
         text: 'You leave. The country you were offered advantages in is no longer the country you can stay in.',

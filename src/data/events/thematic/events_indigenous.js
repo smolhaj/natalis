@@ -20,7 +20,7 @@ export const INDIGENOUS_EVENTS = [
       G.currentYear >= 1910 && G.currentYear <= 1970 &&
       G.age >= 4 && G.age <= 12 &&
       !G.mem?.stolenGen,
-    text: 'Government welfare officers arrive at the settlement. It is official. You are taken from your family. At the dormitory, speaking your language is punished. Your name is replaced with a number and a Christian first name. The people who run the place are not uniformly cruel — some believe they are helping you. This does not change what is happening. You will not see your mother for eleven years. When you do, you will have lost the fluency for it.',
+    text: 'The welfare officers come to the settlement, and it is official, and you are taken. At the dormitory your language is punished, and your name is replaced with a number and a Christian first name. Some of the people who run the place believe they are helping you. It does not change what is happening. You will not see your mother for eleven years, and when you do, you will have lost the words to talk to her.',
     choices: [
       {
         text: 'There is no choice.',
@@ -40,7 +40,7 @@ export const INDIGENOUS_EVENTS = [
       G.flags.includes('stolen_generation_survivor') &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.stolenGenReturn,
-    text: 'You find her. She is older than you expected — you had frozen her at a particular age in your mind. There is a conversation that does not go the way you had practised it for years. The language is only partly there. You sit together in silence for a while and this is not nothing. It is a small warm thing in a very large cold space.',
+    text: 'You find her. She is older than you expected — you had frozen her at an age in your mind. There is a conversation that does not go the way you had practised it for years. The language is only partly there. You sit together in silence for a while and this is not nothing. It is a small warm thing in a very large cold space.',
     choices: null,
     effect: (p) => { p.m += 8; p.r += 15; p.setMem('stolenGenReturn', true); },
   },
@@ -80,7 +80,7 @@ export const INDIGENOUS_EVENTS = [
       G.character.ethnicity === 'aboriginal' &&
       G.currentYear >= 2008 && G.currentYear <= 2010 &&
       !G.mem?.apologyPersonal,
-    text: 'The Prime Minister stands in Parliament and says: we are sorry. The word sorry. It is said. People around you are weeping. You are not sure what you feel — something more complicated than joy and less complete than relief. He says: for the laws and policies of successive Parliaments and governments that have inflicted profound grief, suffering and loss. He names the Stolen Generations. Your grandmother was one of them. She has been dead for four years and did not hear this. You are hearing it for her, and it is too late, and it is also something.',
+    text: 'The prime minister stands in Parliament and says sorry, the word itself, and people around you are weeping. He names the Stolen Generations. Your grandmother was one of them. She has been dead four years and did not hear it. You hear it for her, and it is too late, and it is something.',
     choices: null,
     effect: (p) => { p.m += 10; p.r += 8; p.addFlag('apology_generation'); p.setMem('apologyPersonal', true); },
   },
@@ -125,7 +125,7 @@ export const INDIGENOUS_EVENTS = [
       G.currentYear >= 1870 && G.currentYear <= 1975 &&
       G.age >= 5 && G.age <= 12 &&
       !G.mem?.boardingSchool,
-    text: 'The government school is a day\'s ride from the reservation. Kill the Indian, save the man — this is the official policy. They cut your hair on the first day. Your braids fall on the floor and you watch them as if they belong to someone else, which they now do. You are given a new name. English only. Punished for the language of your grandmother. This is federal policy. It is also happening to children you will not see again for years. You learn what they want to teach you. You do not forget what they want you to forget.',
+    text: 'The government school is a day\'s ride from the reservation. On the first day they cut your hair, and you watch your braids on the floor as if they belonged to someone else, which they now do. You are given a new name and English only, and you are punished for your grandmother\'s language. You learn what they want to teach you. You do not forget what they want you to forget.',
     choices: [
       {
         text: 'There is no choice.',
@@ -187,7 +187,7 @@ export const INDIGENOUS_EVENTS = [
       G.character.country.name === 'United States' &&
       G.currentYear >= 1968 && G.currentYear <= 1980 &&
       !G.mem?.aimMovement,
-    text: 'The American Indian Movement is occupying Alcatraz, then Wounded Knee. Young men and women with rifles and treaty rights, in a country that has been ignoring the treaties since they were signed. The government calls them terrorists. They call themselves what they have always been. You feel something that has not had a name until now: the specific anger of a people who have been patient past any reasonable measure. You are that anger also.',
+    text: 'The American Indian Movement is occupying Alcatraz, then Wounded Knee. Young men and women with rifles and treaty rights, in a country that has been ignoring the treaties since they were signed. The government calls them terrorists. They call themselves what they have always been. You feel something that has not had a name until now: the anger of a people who have been patient past any reasonable measure. You are that anger also.',
     choices: [
       {
         text: 'Get involved — this is the moment',
@@ -241,7 +241,7 @@ export const INDIGENOUS_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 1985 &&
       G.age >= 1 && G.age <= 8 &&
       !G.mem?.sixtiesScoop,
-    text: 'A social worker from the province comes to the house. Your parents are young and poor and Indigenous and the social worker has a checklist. You are removed for your own protection. You are placed with a white family in a city you have never been to. They are not unkind. You grow up not knowing your language, your clan, your family. You grow up not knowing what you do not know, which is the specific architecture of this kind of loss.',
+    text: 'A social worker from the province comes to the house. Your parents are young and poor and Indigenous and the social worker has a checklist. You are removed for your own protection. You are placed with a white family in a city you have never been to. They are not unkind. You grow up not knowing your language, your clan, your family. You grow up not knowing what you do not know, which is the architecture of this kind of loss.',
     choices: [
       {
         text: 'There is no choice.',
@@ -325,7 +325,7 @@ export const INDIGENOUS_EVENTS = [
       {
         text: 'Commit to the revival — become a carrier of the language',
         tag: null,
-        outcome: 'You are not fluent. You are also not the endpoint of this particular loss, which is what matters.',
+        outcome: 'You are not fluent. You are also not the endpoint of this loss, which is what matters.',
         effect: (p) => { p.karma += 10; p.s += 5; p.addFlag('maori_language_carrier'); p.addFlag('cultural_leader'); p.setMem('kohangaReo', true); },
       },
       {
@@ -346,7 +346,7 @@ export const INDIGENOUS_EVENTS = [
       G.character.ethnicity === 'maori' &&
       G.currentYear >= 1995 &&
       !G.mem?.treatySettlement,
-    text: 'A Treaty settlement comes through for your iwi. Decades of negotiation. A sum of money, a formal apology, some land returned. Your grandfather thought he would see this. He did not. The settlement does not return everything that was taken — it is not designed to, because the mathematics of what was taken cannot be solved in money. It is something. People argue about whether something is enough. You know the answer is no and that no is not the same as nothing.',
+    text: 'A Treaty settlement comes through for your iwi after decades of negotiation: money, an apology, some land returned. Your grandfather thought he would see it, and did not. It does not return everything that was taken; the arithmetic of what was taken cannot be done in money. People argue about whether something is enough. You know the answer is no, and that no is not the same as nothing.',
     choices: [
       {
         text: 'Get involved in iwi governance — help steward what was returned',
@@ -459,7 +459,7 @@ export const INDIGENOUS_EVENTS = [
       G.currentYear >= 1930 && G.currentYear <= 2000 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem?.samiMigration,
-    text: 'The spring migration is not a journey between places. It is a reading of everything — the ice thickness under the hooves, the way a particular peak holds weather, the sound a herd makes when it is calm versus the sound it makes when something is wrong. Your grandfather does not teach this as instruction. He does it and you are there. What you are learning cannot be put in the school curriculum because the school curriculum has no category for it.',
+    text: 'The spring migration is not a journey between places. It is a reading of everything — the ice thickness under the hooves, the way a peak holds weather, the sound a herd makes when it is calm versus the sound it makes when something is wrong. Your grandfather does not teach this as instruction. He does it and you are there. What you are learning cannot be put in the school curriculum because the school curriculum has no category for it.',
     choices: null,
     effect: (p) => { p.e += 5; p.m += 10; p.addFlag('sami_reindeer_knowledge'); p.setMem('samiMigration', true); },
   },
@@ -518,8 +518,8 @@ export const INDIGENOUS_EVENTS = [
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.samiHidden,
     text: (G) => G.flags.has('sami_boarding_survivor')
-      ? 'Your parents did not tell you to hide it — they simply did not mention it in the contexts where it could cause difficulty. You understood without being told. The neighbours who know your family know; the city does not need to know. The specific object you were taught to put away when visitors came was not a shameful object — it was the object that required explanation, and explanation was expensive in ways that varied by the year and who was doing the explaining.'
-      : 'Your grandmother stopped speaking Northern Sami in public somewhere in the 1950s. She did not stop speaking it at home entirely, but home was a specific category that the door closed on. What she carried was not hidden from you — it was held carefully. You have grown up knowing what you are and not always knowing what to do with that knowledge in rooms that have no category for it.',
+      ? 'Your parents did not tell you to hide it — they simply did not mention it in the contexts where it could cause difficulty. You understood without being told. The neighbours who know your family know; the city does not need to know. The object you were taught to put away when visitors came was not a shameful object — it was the object that required explanation, and explanation was expensive in ways that varied by the year and who was doing the explaining.'
+      : 'Your grandmother stopped speaking Northern Sami in public somewhere in the 1950s. She did not stop speaking it at home entirely, but home was a category that the door closed on. What she carried was not hidden from you — it was held carefully. You have grown up knowing what you are and not always knowing what to do with that knowledge in rooms that have no category for it.',
     choices: [
       {
         text: 'You begin to say it openly. This is who you are and the explanation is the other person\'s work now.',
@@ -564,7 +564,7 @@ export const INDIGENOUS_EVENTS = [
       !G.mem?.samiLate,
     text: (G) => {
       if (G.flags.has('sami_language_returned')) {
-        return 'The language came back, partially. Enough to speak to your grandchildren in — a sentence here, the names of things, the specific word for the weather that Northern Sami has and Norwegian does not. It did not come back the way it was. It came back the way things come back: changed by the years it was gone, arriving as a living thing that has been through something rather than the preserved thing you thought you were recovering.'
+        return 'The language came back, partially. Enough to speak to your grandchildren in — a sentence here, the names of things, the word for the weather that Northern Sami has and Norwegian does not. It did not come back the way it was. It came back the way things come back: changed by the years it was gone, arriving as a living thing that has been through something rather than the preserved thing you thought you were recovering.'
       }
       if (G.flags.has('sami_boarding_survivor')) {
         return 'What the boarding school took from you can be calculated and the calculation is not short. The language is the most visible item on the list — the direct line to the grandmother, the naming systems for animals and weather and terrain that have no equivalent. But there are things on the list that are harder to name: the way of knowing a landscape that requires the right words, and the relationship to time that the Sami calendar encodes. You carry what you retained. You know what you did not retain.'
@@ -596,7 +596,7 @@ export const INDIGENOUS_EVENTS = [
       G.age >= 6 && G.age <= 14 &&
       G.currentYear >= 1950 && G.currentYear <= 2010 &&
       !G.mem?.amazonForestKnow,
-    text: 'What you are learning is not called education. It does not happen at a desk. You follow your father into the forest and the forest is a library — the tree that indicates water below, the plant whose bark reduces fever, the specific behaviour of the river at the start of the dry season, the constellation names that mark the fishing calendar. None of this is in a book. All of it is in the knowledge of specific people who learned it the same way: by following someone who already knew.',
+    text: 'What you are learning is not called education. It does not happen at a desk. You follow your father into the forest and the forest is a library — the tree that indicates water below, the plant whose bark reduces fever, the behaviour of the river at the start of the dry season, the constellation names that mark the fishing calendar. None of this is in a book. All of it is in the knowledge of specific people who learned it the same way: by following someone who already knew.',
     choices: null,
     effect: (p) => { p.e += 6; p.m += 10; p.addFlag('amazon_forest_knowledge'); p.setMem('amazonForestKnow', true); },
   },
@@ -673,7 +673,7 @@ export const INDIGENOUS_EVENTS = [
       {
         text: 'Coordinate with other indigenous communities — this is a collective fight.',
         tag: 'network',
-        outcome: 'The network of communities facing the same pressure becomes its own kind of strength — one the forest taught you: what is connected is harder to clear.',
+        outcome: 'The network of communities facing the same pressure becomes a strength, one the forest taught you: what is connected is harder to clear.',
         effect: (p) => { p.s += 6; p.karma += 6; p.addFlag('amazon_territory_defender'); p.addFlag('amazon_legal_fighter'); p.setMem('amazonFunai', true); },
       },
     ],
@@ -700,7 +700,7 @@ export const INDIGENOUS_EVENTS = [
       {
         text: 'The danger to those who speak is real. You know this now in a new way.',
         tag: 'careful',
-        outcome: 'You continue the work with a specific new knowledge of what speaking costs.',
+        outcome: 'You continue the work with a new knowledge of what speaking costs.',
         effect: (p) => { p.m -= 8; p.r += 6; p.setMem('amazonBagua', true); },
       },
     ],
@@ -746,7 +746,7 @@ export const INDIGENOUS_EVENTS = [
       G.flags.has('amazon_forest_knowledge') &&
       G.age >= 35 && G.age <= 60 &&
       !G.mem?.amazonPassingKnow,
-    text: 'Your children are at the age you were when you learned what you know. The question is whether you can teach it the way you were taught — by presence, by following, by the specific landscape — when the landscape has changed and the children have school schedules and phones and a different relationship with what the forest means. The knowledge does not transfer through explanation. It requires a particular kind of time and a particular kind of attention that neither you nor your children move through in the same way you once did.',
+    text: 'Your children are at the age you were when you learned what you know. The question is whether you can teach it the way you were taught — by presence, by following, by the landscape — when the landscape has changed and the children have school schedules and phones and a different relationship with what the forest means. The knowledge does not transfer through explanation. It requires a kind of time and a kind of attention that neither you nor your children move through in the same way you once did.',
     choices: [
       {
         text: 'You take them. The time exists if you make it exist.',

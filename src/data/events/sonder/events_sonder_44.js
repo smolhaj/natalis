@@ -17,7 +17,7 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 32 && !G.mem?.s34a,
     text: () => pick([
-      'You are learning where your body keeps things. The shoulders for certain kinds of worry. The jaw at night when things are unresolved. The stomach before a particular kind of conversation. You did not know you were going to have this body for so long. You assumed there would be a different arrangement.',
+      'You are learning where your body keeps things. The shoulders for certain kinds of worry. The jaw at night when things are unresolved. The stomach before a kind of conversation. You did not know you were going to have this body for so long. You assumed there would be a different arrangement.',
       'The body at twenty-six is just the body. You don\'t notice it the way you will later. This is a gift you don\'t know is a gift.',
     ]),
     choices: null,
@@ -56,7 +56,7 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 24 && G.age <= 36 && !G.mem?.s34f),
     text: () => pick([
-      'You are working late. Not because you have to, tonight, but because the work is in a particular state that makes it hard to stop — the problem is almost solved, the document is almost finished. You notice you have been here four hours past when you thought you\'d leave. The office or the workspace is quiet. This version of concentration, of being alone with the almost-finished thing, has a texture.',
+      'You are working late. Not because you have to, tonight, but because the work is in a state that makes it hard to stop — the problem is almost solved, the document is almost finished. You notice you have been here four hours past when you thought you\'d leave. The office or the workspace is quiet. This version of concentration, of being alone with the almost-finished thing, has a texture.',
       'The commute has become so familiar that you no longer have memories of it. You arrive. There is no narrative of arriving — just the before and the after. This is true of things you do every day: the automatic makes no deposit in memory.',
     ]),
     choices: null,
@@ -82,7 +82,7 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => G.age >= 14 && G.age <= 19 && !G.mem?.s34h,
     text: () => pick([
-      'You are becoming someone. The process is uncomfortable in a way that nobody told you about in advance — the not-yet of it, the way you are finishing one version of yourself before the next one is ready. The gap between the versions is where most of adolescence lives.',
+      'You are becoming someone. The process is uncomfortable and nobody told you about it in advance — the not-yet of it, the way you are finishing one version of yourself before the next one is ready. The gap between the versions is where most of adolescence lives.',
       'You have discovered the version of yourself that exists in someone else\'s eyes. It\'s different from the version you carry. You\'re not sure which is more accurate. You try to reconcile them. You will spend years on this.',
     ]),
     choices: null,
@@ -173,7 +173,7 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => G.age >= 15 && G.age <= 20 && !G.mem?.s34q,
     text: () => pick([
-      'You notice you have started saying something your parents say. A particular phrase. A way of responding to news. You catch it coming out of your mouth and there is a moment of recognition that is both amusing and slightly alarming. You are downloading something.',
+      'You notice you have started saying something your parents say. A phrase. A way of responding to news. You catch it coming out of your mouth and there is a moment of recognition that is both amusing and slightly alarming. You are downloading something.',
       'The teacher who is difficult is also the teacher whose class you are learning the most in. You don\'t know yet whether to be grateful for this. You hold both things: resentment of the difficulty and the thing the difficulty is producing.',
     ]),
     choices: null,
@@ -186,7 +186,7 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 50 && !G.mem?.s34r,
     text: () => pick([
-      'Sleep has changed. You wake at three and cannot return. The thoughts that come at three are a specific category of thought — the ones about things you can\'t fix, amplified to fill the time. You have developed strategies. The strategies work sometimes.',
+      'Sleep has changed. You wake at three and cannot return. The thoughts that come at three are a category of thought — the ones about things you can\'t fix, amplified to fill the time. You have developed strategies. The strategies work sometimes.',
       'There is a friendship that is no longer what it was. Not because of a falling-out — there was no falling-out — but because you and this person are in different configurations of life now and the overlap has narrowed. The friendship still exists but in a reduced version. You grieve the fuller version without quite admitting this is what you are doing.',
     ]),
     choices: null,
@@ -238,10 +238,10 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => place.isLiterate(G) && (G.age >= 18 && G.age <= 28 && !G.mem?.s34v),
     text: (G) => pick([
-      'You are in a new place and you do not have the years of context that tell you what this neighbourhood sounds like at night, what the weather does in March, which shop is reliable. You are relearning a city from the beginning. The relearning is slow. It is also interesting in a way that familiarity will eventually replace.',
+      'You are in a new place and you do not have the years of context that tell you what this neighbourhood sounds like at night, what the weather does in March, which shop is reliable. You are relearning a city from the beginning. The relearning is slow. It is also interesting, until familiarity replaces it.',
       // A newspaper to read, in a year and place that had one.
       ...(hasTech(G.currentCountry ?? G.character.country, 'newspaper', G.currentYear) ? [
-        'You have been reading the newspaper — or the feed, or whatever it is — for long enough to notice that some things recur. The recurrence is not a good sign but it is information. You are learning the grammar of the news, which is different from the content of the news.',
+        'You have been reading the newspaper — or the feed, or whatever it is — for long enough to notice that some things recur. The recurrence is not a good sign but it is information. You are learning the grammar of the news, not only the content.',
       ] : []),
     ]),
     choices: null,
@@ -280,7 +280,7 @@ export const EVENTS_SONDER_44 = [
     weight: 2,
     when: (G) => G.age >= 72 && !G.mem?.s34y,
     text: () => pick([
-      'The era has a name now. Historians have put a bracket around the period you lived through and given it a name. It\'s not what you would have called it. The name describes the period from outside. From inside, the period was specific and daily and often uncertain. You were inside. The historians are outside. Both are true.',
+      'The era has a name now. Historians have put a bracket around the period you lived through and given it a name. It\'s not what you would have called it. The name describes the period from outside. From inside, the period was specific and daily and often uncertain. You were inside. The historians are outside.',
       'The things you made. The children, if you had them. The objects, the work. Some of what you made will outlast you. You are not certain which parts. You hope you are right about which parts.',
     ]),
     choices: null,
@@ -320,7 +320,7 @@ export const EVENTS_SONDER_44 = [
     when: (G) => G.season === 'winter' && (G.age >= 65 && G.age <= 78 && !G.mem?.s34ab),
     text: () => pick([
       'You are less interested in being right. This happened gradually. At forty you were considerably more interested in being right than you are now. You are not sure if this is wisdom or tiredness. Maybe they are the same thing. Maybe it doesn\'t matter what it\'s called.',
-      'The parts of the life that you are glad to be done with. There are some. The commute in winter, or the performance review, or the specific anxiety of early parenthood, or the years when money was not enough. You have arrived past those. The arrival is quiet and you would have wanted to know it was coming.',
+      'The parts of the life that you are glad to be done with. There are some. The commute in winter, or the performance review, or the anxiety of early parenthood, or the years when money was not enough. You have arrived past those. The arrival is quiet and you would have wanted to know it was coming.',
     ]),
     choices: null,
     effect: (p) => { p.m += 4; p.r += 3; p.setMem('s34ab', true) },

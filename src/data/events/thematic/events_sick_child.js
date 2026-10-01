@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_sick_child.js — Parent of a seriously ill child
 //
 // Not child death — that arc is in events_child_death_arc.js.
@@ -36,7 +37,7 @@ function diagnosisText(G) {
   if (arch === 'subsaharan' || arch === 'developing_urban') {
     return `The doctors name what is wrong with ${name}. The treatment exists, costs money, and requires a facility you will have to travel to. You start doing mathematics you have never had to do before — the kind that measures life against money and tries not to acknowledge what it is measuring.`
   }
-  return `The doctor says it plainly, which you later realize was a mercy. ${name} is ill. Not briefly — this is the kind of illness that rearranges things. You sit with this information for a moment, and then you begin.`
+  return `The doctor says it plainly, which you later realize was a mercy. ${name} is ill. Not briefly — this is the kind of illness that rearranges things. For a moment you do nothing, and then you begin.`
 }
 
 // ── events ────────────────────────────────────────────────────────────────
@@ -95,9 +96,9 @@ export const SICK_CHILD_EVENTS = [
     text: (G) => {
       const arch = G.character?.country?.archetype ?? 'developing_urban'
       if (arch === 'wealthy_west' || arch === 'wealthy_east') {
-        return 'Your life reorganizes itself without asking. The appointments become the structure of the week. You learn the names of the nurses and which ones answer questions honestly. You learn how to read the look on the doctor\'s face before the words arrive. The other rooms in your life — the job, the dinner conversations, the weekend plans — become a parallel life you continue out of necessity. You are competent in all of it. You are somewhere else.'
+        return 'Your life rearranges itself without asking. The appointments become the shape of the week. You learn the nurses\' names and which of them answer a question straight, and you learn to read the doctor\'s face before the words. The job and the dinners and the weekends go on as a second life you keep up because you must. You are somewhere else.'
       }
-      return 'Your life reorganizes itself around need. The journey to the clinic, the cost of the medication, the schedule that cannot be missed — these become the week\'s architecture. The other children require things you give them. Your partner takes the load you cannot carry. You take the load they cannot. The family is building something without a blueprint, under conditions it did not choose.'
+      return 'Your life rearranges itself around need: the trip to the clinic, the price of the medicine, the schedule that cannot slip. The other children still need things and you give them. Your partner carries what you cannot, and you carry what they cannot. The family is building something with no plan, in conditions it did not choose.'
     },
     choices: null,
     effect: (p) => { p.m -= 10; p.h -= 5; p.setMem('sickChildHospitalFired', true) },
@@ -114,8 +115,8 @@ export const SICK_CHILD_EVENTS = [
       !!G.partner &&
       !G.mem?.sickChildPartnerFired,
     text: (G) => {
-      const pName = G.partner?.name ?? 'Your partner'
-      return `${pName} and you are in this together, which is different from being in it the same way. The grief is the same subject with different textures. Some nights the gap between your textures is a manageable distance. Some nights it is not. You are both trying. You can both see the trying and it helps and it is not enough and it helps anyway.`
+      const pName = G.partner?.name ?? 'your partner'
+      return `You and ${pName} are in this together, which is not the same as being in it the same way. Some nights the distance between how each of you carries it is small. Some nights it is not. You can each see the other trying, and it helps, and it is not enough, and it helps anyway.`
     },
     choices: [
       {
@@ -175,7 +176,7 @@ export const SICK_CHILD_EVENTS = [
       !G.mem?.sickChildCareerFired,
     text: (G) => {
       const field = G.career?.field ?? 'work'
-      return `The ${field} continues. You continue in it, in the way you continue most things right now — functionally, from a distance. The job requires things of you and you give them. What you cannot give it is the part of your attention that is always somewhere else. Your colleagues know something is happening at home. Most of them have the grace not to ask. Some cover for you without making it a gift that requires repayment. You note this.`
+      return `The ${field} goes on, and you go on in it, from a little distance. You give the job what it asks for, except the part of your attention that is always somewhere else. Your colleagues know something is happening at home and most of them do not ask. One or two cover for you without making it a favour to be repaid. You notice.`
     },
     choices: null,
     effect: (p) => { p.w -= 3; p.e -= 3; p.setMem('sickChildCareerFired', true) },
@@ -197,7 +198,7 @@ export const SICK_CHILD_EVENTS = [
         return ca >= 2 && ca <= 18
       })
       const name = recoverChild?.name ?? 'Your child'
-      return `${name}'s numbers improve. Not all at once — the body does not work that way — but the trend is unmistakable. The specialist uses the phrase "cautiously optimistic," which you have been trained by this experience to translate accurately. It means: probably. It means: we can stop holding our breath quite so tightly.\n\nYou do not celebrate immediately. You have learned the difference between improvement and over. You let it be real for a few days before you allow yourself to feel the relief.`
+      return `${name}'s numbers improve. Not all at once, but the line is going the right way. The specialist says "cautiously optimistic", and you have learned to translate it: probably, and you can breathe a little. You do not celebrate yet. You give it a few days before you let yourself feel the relief.`
     },
     choices: null,
     effect: (p) => {
@@ -223,7 +224,7 @@ export const SICK_CHILD_EVENTS = [
         return ca >= 2 && ca <= 18
       })
       const name = child?.name ?? 'Your child'
-      return `The doctors use the word "managed." What they mean is: not resolved. What they mean is: ${name} will live with this and you will live with it alongside them. The treatment plan exists and is followed. The condition is stable. The condition is permanent.\n\nYou spend a week with this information before you can absorb what it means for the shape of the years ahead. Then you absorb it and adjust and go back to the appointments.`
+      return `The doctors say "managed", which means not resolved. ${name} will live with this, and so will you. The plan exists and is followed; the condition is stable, and it is permanent. It takes you a week to take in what that means for the years ahead. Then you go back to the appointments.`
     },
     choices: null,
     effect: (p) => {
@@ -249,7 +250,7 @@ export const SICK_CHILD_EVENTS = [
         return ca >= 22 && ca <= 42
       })
       const name = grownChild?.name ?? 'Your child'
-      return `${name} is grown and healthy and leading the specific life they have assembled. You watch them from the distance that grown children create, and you understand that the illness was part of what they are — the particular patience they have, the specific relationship with their own body, something about how they take care of people in small ways that others miss.\n\nYou do not know if you would undo it, even if you could. You know what it cost. You know what came through it.`
+      return `${name} is grown and healthy and leading the life they have assembled. You watch them from the distance that grown children create, and you understand that the illness was part of what they are — the patience they have, the relationship with their own body, something about how they take care of people in small ways that others miss.\n\nYou do not know if you would undo it, even if you could. You know what it cost. You know what came through it.`
     },
     choices: null,
     effect: (p) => {
@@ -272,7 +273,7 @@ export const SICK_CHILD_EVENTS = [
     text: (G) => {
       const child = G.children?.find(c => G.age - c.ageAtBirth >= 20)
       const name = child?.name ?? 'Your child'
-      return `${name} is an adult now and manages most of it independently and calls when they need something specific. The condition has not resolved. The management has. You have both learned the difference between supporting someone and doing it for them, and the line has moved several times over the years as the condition evolved and as they grew into their own understanding of what they needed.\n\nYou are still needed. This is not the same as the early years. It is a different kind of being needed — requested rather than required, considered on both sides.`
+      return gendered(`${name} is an adult now, manages most of it alone, and calls when something is needed. The condition has not gone; the managing has settled. Over the years the two of you have moved the line between helping and taking over, several times. You are still needed, but asked now rather than required.`, child)
     },
     choices: null,
     effect: (p) => {

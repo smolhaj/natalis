@@ -36,7 +36,7 @@ export const LAWYER_ARC_EVENTS = [
       isLawyer(G) &&
       G.flags.has('lawyer_first_client') &&
       !G.mem?.lawGuiltFired,
-    text: `Your client tells you, in confidence, that they did it. The law is specific about what this means for your representation: you cannot put them on the stand to lie, but you can — and must — require the prosecution to prove its case. The system depends on this. You know the argument because you were taught it and because it is correct. You make it again to yourself on the drive home. The argument is still correct on the drive home. It is also not the only thing in the car.`,
+    text: `Your client tells you, in confidence, that they did it. You may not put them on the stand to lie, and you must still make the prosecution prove its case; the system depends on it. You know the argument and it is correct. You make it to yourself again on the drive home, and it is still correct. It is not the only thing in the car.`,
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -73,7 +73,7 @@ export const LAWYER_ARC_EVENTS = [
       isLawyer(G) &&
       G.age >= 34 &&
       !G.mem?.lawProBonoFired,
-    text: `You take a case for nothing. The client cannot pay and the case matters. The firm allows this once a year, sometimes twice, in the general direction of professional virtue. You give the case the same hours as the cases that bill. You win it, or don't, but you give it the same hours. On the way out after the final hearing you notice something in yourself that has not been present in the office for a while. The word for it might be the point.`,
+    text: `You take a case for nothing: the client cannot pay and the case matters. The firm allows it once or twice a year. You give it the same hours as the cases that bill. Win or lose, on the way out after the last hearing you notice something in yourself that has been missing from the office for a while.`,
     choices: null,
     effect: (p) => {
       p.m += 10
@@ -91,7 +91,7 @@ export const LAWYER_ARC_EVENTS = [
       isLawyer(G) &&
       (G.regime === 'single_party_authoritarian' || G.regime === 'military_dictatorship' || G.regime === 'single_party_communist') &&
       !G.mem?.lawRegimeFired,
-    text: `You practise law in a system that uses the law as an instrument. This is not a metaphor. You understand which provisions exist to be enforced and which exist to create the appearance of procedure for cases where the outcome was determined before the case began. You navigate this. Navigating it means something specific: knowing where the actual law ends and the performance of law begins, and representing clients within both. Some of your colleagues do not make this distinction. Some of them believe the performance is the law.`,
+    text: `You practise law in a system that uses the law as an instrument. You know which provisions exist to be enforced and which exist to give a decided case the look of procedure. Your work is knowing where the law ends and the performance begins, and representing clients in both. Some of your colleagues no longer see the line. Some of them think the performance is the law.`,
     choices: [
       {
         text: 'Stay in the system — you can do more from inside',
@@ -128,7 +128,7 @@ export const LAWYER_ARC_EVENTS = [
       isLawyer(G) &&
       G.age >= 40 &&
       !G.mem?.lawWrongfulFired,
-    text: `You become aware — through a conversation, a news item, a professional contact — that someone you prosecuted or inadequately defended may have been innocent. Not certainly. Not with the legal standard of proof. But with the standard of what you believe when you consider all the information you have now that you did not have then. The appeals system is slow and uncertain. You make some inquiries. The inquiries lead somewhere and nowhere.`,
+    text: `Through a conversation, a news item, a contact, you learn that someone you prosecuted, or did not defend well enough, may have been innocent. Not to the legal standard. To the standard of what you believe now, with what you did not know then. The appeals system is slow. You make some inquiries, and they lead somewhere and nowhere.`,
     choices: null,
     effect: (p) => {
       p.m -= 14
@@ -164,7 +164,7 @@ export const LAWYER_ARC_EVENTS = [
       G.flags.has('lawyer_dissident_cases') &&
       G.age >= 45 &&
       !G.mem?.lawDissidentEchoFired,
-    text: `The cases you took that the state did not like have consequences that arrive on a delay. Some of those consequences are professional: doors that close, associations that don't form. Some are personal, in the way that practising law against the grain of the system is personal — the calculation you make each time between the outcome for the client and the cost to yourself. You have kept taking them. The calculation has changed. The clients have been worth the calculation. Most of them.`,
+    text: `The cases the state did not like cost you later: doors that stayed closed, associations that never formed. Each time you weighed the client's outcome against what it would cost you, and you kept taking them. The weighing has changed over the years. The clients were worth it. Most of them.`,
     choices: null,
     effect: (p) => {
       p.m -= 3
@@ -182,7 +182,7 @@ export const LAWYER_ARC_EVENTS = [
       G.flags.has('lawyer_wrongful_conviction_doubt') &&
       G.age >= 58 &&
       !G.mem?.lawWrongfulEchoFired,
-    text: `The inquiry reached its conclusion, or failed to reach one. The appeals system did what appeals systems do. You do not know with legal certainty whether the person was innocent. You know what you believe. Believing and knowing are different categories and the law has built significant architecture on that distinction, architecture you have spent your career inside. You understand why the distinction exists. You also understand that the distinction does not make the uncertainty settle.`,
+    text: `The inquiry ended, or failed to. The appeals did what appeals do. You do not know, to the law's standard, whether that person was innocent; you know what you believe. You have spent a career inside the distinction between believing and knowing, and you understand why it exists. It does not make the doubt settle.`,
     choices: null,
     effect: (p) => {
       p.m -= 7

@@ -85,7 +85,7 @@ export const EVENTS_SONDER_23 = [
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr23SmallCelebration,
     text: () => pick([
       `The small celebration: just the two of you, or just you, at a table with something good to eat and drink and the thing you wanted to acknowledge. Not the planned party. The quiet marking of a thing that mattered. These tend to be the ones you remember.`,
-      `You are briefly, genuinely happy about something that is objectively small. A task completed. A letter received. A particular meal in a particular place. The happiness is proportionate to the thing, which means the proportions are working. You file this as evidence.`,
+      `You are briefly, genuinely happy about something that is objectively small. A task completed. A letter received. A meal in a place. The happiness is proportionate to the thing, which means the proportions are working. You file this as evidence.`,
       `The birthday no one else knows about — an anniversary of something private, a date that means something only to you. You mark it in the way you mark it: a certain food, or a certain route, or simply sitting with it for a minute before the day continues.`,
     ]),
     choices: null,
@@ -100,7 +100,7 @@ export const EVENTS_SONDER_23 = [
     text: () => pick([
       `You composed it entirely in your head: what you would say if you were going to say it. The person it was addressed to, the argument you would make, the thing you most needed them to understand. You did not send it. You send instead the ordinary emails you send. The composed letter exists only in you and is perfectly expressed there.`,
       `The apology you haven't made. Not because you don't think it's owed — you do — but because the timing never felt right and then more time passed and now it would require so much explanation of the delay that the apology itself might get lost. The owing remains. So does the silence.`,
-      `There are things you would tell your younger self if you could. You have occasionally tried to write them down. The list gets longer and harder to finish. The problem is that the younger self wouldn't have been ready to hear it, which is why it took this long to know it.`,
+      `There are things you would tell your younger self if you could. You have occasionally tried to write them down. The list gets longer and harder to finish. The problem is that the younger self wouldn't have been ready to hear it; that is why it took this long to know it.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr23LetterUnsent', true) },
@@ -126,7 +126,7 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 40 && G.age <= 65 && !G.mem?.sdr23BirthdayAgain,
     text: () => pick([
-      `The birthday arrives again. You are not sure how to feel about the number, which is bigger than the last number by the usual increment and feels larger somehow. The body has not changed overnight. The number has. The gap between these two facts is where most of the birthday exists.`,
+      `The birthday arrives again. You are not sure how to feel about the number, bigger than the last one by the usual increment and somehow larger. The body has not changed overnight. The number has. The gap between these two facts is where most of the birthday exists.`,
       `People say happy birthday and you accept it and thank them and it is pleasant and also slightly beside the point. The point is not the day but the year that produced it — the year you have just finished living. The year doesn't get summarised by the cake.`,
       `You are older than you expected to be at this age — by which you mean: you did not expect, from the inside, to feel so continuous with earlier versions of yourself. You thought something would feel more resolved by now. The resolution is apparently not a feeling. It is, at most, a quieter version of the same questions.`,
     ]),
@@ -140,7 +140,7 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr23ObjectInherited,
     text: () => pick([
-      `The object that came from them: a watch that doesn't run, or a pot with a specific dent, or a photograph in a frame you would never have chosen. The object carries a history that is not legible from looking at it. You know the history. When you are gone, the object will not.`,
+      `The object that came from them: a watch that doesn't run, or a pot with a dent, or a photograph in a frame you would never have chosen. The object carries a history that is not legible from looking at it. You know the history. When you are gone, the object will not.`,
       `You use the tool that was theirs. The handle is worn in the shape of their grip, not yours. When you hold it, you hold the evidence of a different hand. You use it anyway. Over time, your grip will meet theirs in the wood.`,
       `The book that has their handwriting in the margin — a word underlined, a question mark, a date. The margin notes are a conversation with a text that preceded you. The conversation is finished. You read both sides of it.`,
     ]),
@@ -168,8 +168,8 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 60 && !G.mem?.sdr23SkillWatched,
     text: () => pick([
-      `Someone is very good at something and you are watching them do it. The butcher making a specific cut. The welder with the arc perfect. The chef plating in the seconds before service. There is something in watching genuine competence that produces a attention. You are not in a hurry to look away.`,
-      `The old man repairs the thing — the clock, the shoe, the engine — with movements so practised they are nearly invisible. He is not thinking about the movements. He is thinking about something else entirely, or nothing, while his hands do their decades of accumulated knowledge. You observe the whole thing without him noticing.`,
+      `Someone is very good at something and you are watching them do it. The butcher making a cut. The welder with the arc perfect. The chef plating in the seconds before service. There is something in watching genuine competence that produces a attention. You are not in a hurry to look away.`,
+      `The old man repairs the thing — the clock, the shoe, the engine — with movements so practised they are nearly invisible. He is thinking about something else entirely, or nothing, while his hands do their decades of accumulated knowledge. You observe the whole thing without him noticing.`,
       `The musician plays the difficult passage not as though it is difficult but as though the difficulty has been dissolved by repetition into fluency. This is what practice actually produces: not perfection but invisibility. The difficulty becomes undetectable from the outside. It still exists inside.`,
     ]),
     choices: null,
@@ -182,8 +182,8 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr23Interruption,
     text: () => pick([
-      `The phone rang in the middle of the thought and the thought is now gone. You wait for it to come back. It does not come back. The thought was probably not remarkable — you have approximately 70,000 of them per day, most of them unremarkable — but the specific one that was interrupted is gone, and in its absence it feels like it might have been the one that mattered.`,
-      `Someone knocks on the door at the exact moment of concentration and the concentration dissolves. You answer the door. By the time you return to the desk, the specific state of mind that had been producing has not returned with you. You attempt to reconstruct it. The reconstruction is not the same thing.`,
+      `The phone rang in the middle of the thought and the thought is now gone. You wait for it to come back. It does not come back. The thought was probably not remarkable — you have approximately 70,000 of them per day, most of them unremarkable — but the one that was interrupted is gone, and in its absence it feels like it might have been the one that mattered.`,
+      `Someone knocks on the door at the exact moment of concentration and the concentration dissolves. You answer the door. By the time you return to the desk, the state of mind that had been producing has not returned with you. You attempt to reconstruct it. The reconstruction is not the same thing.`,
       `You are mid-sentence and something requires your attention. You attend to it and return. "You were saying," someone says. You were. You cannot recover what you were saying from the inside — you were in the middle of it, not observing it. The sentence does not return.`,
     ]),
     choices: null,
@@ -211,8 +211,8 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23ReturnTrip,
     text: () => pick([
-      `The return trip is always different from the outward trip. You are travelling toward what you know rather than away from it. The familiar sequence — the sequence of arrivals that means you are nearly home — has a specific comfort and a specific constraint. You are nearly home. Home will require things of you again.`,
-      `You return to a place you lived before and it is smaller than you remember. Not the place — the place is the same size. Your orientation to it has expanded. The place that once contained your whole world now fits inside the expanded version. This is not a loss exactly. It is a change in scale.`,
+      `The return trip is always different from the outward trip. You are travelling toward what you know rather than away from it. The familiar sequence — the sequence of arrivals that means you are nearly home — has a comfort and a constraint. You are nearly home. Home will require things of you again.`,
+      `You return to a place you lived before and it is smaller than you remember. Not the place — the place is the same size. Your orientation to it has expanded. The place that once contained your whole world now fits inside the expanded version. It is a change in scale.`,
       `Coming back from somewhere feels more complete than leaving. There is more information in the return: what changed while you were gone, what didn't, what you were carrying all along that you could only see from a distance. The trip away was necessary to make the return legible.`,
     ]),
     choices: null,
@@ -225,8 +225,8 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr23SoundHome,
     text: () => pick([
-      `The specific acoustic signature of the place you live: the way sound moves in these streets, what you hear in the mornings, the layering of traffic and birds and neighbours and the particular hum of this neighbourhood. You know all of it without having catalogued it. It is the baseline against which silence or different sounds register as wrong.`,
-      `Away from home, you hear a sound that is exactly the sound you hear at home — a specific bell, a particular engine noise, a bird call — and for a fraction of a second you are there. Then you are here. The sound was evidence of similarity between two places you hadn't known were alike.`,
+      `The acoustic signature of the place you live: the way sound moves in these streets, what you hear in the mornings, the layering of traffic and birds and neighbours and the hum of this neighbourhood. You know all of it without having catalogued it. It is the baseline against which silence or different sounds register as wrong.`,
+      `Away from home, you hear a sound that is exactly the sound you hear at home — a bell, an engine noise, a bird call — and for a fraction of a second you are there. Then you are here. The sound was evidence of similarity between two places you hadn't known were alike.`,
       `The sounds of childhood: specific, irrecoverable. The bell on the corner that was torn down. The vendor's call that changed when the vendor changed. The dog three doors down who died. The acoustic environment of childhood is gone, except in you, where it is perfectly preserved and completely inaccessible to anyone else.`,
     ]),
     choices: null,
@@ -268,7 +268,7 @@ export const EVENTS_SONDER_23 = [
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23NewsHabit,
     text: () => pick([
       `You have a news habit that is not entirely healthy. You check, and the checking produces an anxious alertness that is not quite information and not quite ignorance. You know more than you want to know about things you cannot affect. You know less than you should about things close at hand.`,
-      `The news is bad again. This is not a new condition — the news has been bad for as long as you have been old enough to read it — but the specific badness of today's news requires a recalibration of how you feel about the world. You recalibrate and continue. The world continues regardless.`,
+      `The news is bad again. This is not a new condition — the news has been bad for as long as you have been old enough to read it — but the badness of today's news requires a recalibration of how you feel about the world. You recalibrate and continue. The world continues regardless.`,
       `You stop reading the news for a week, as an experiment. The world does not deteriorate notably in your absence from its reports. You return to it slightly less convinced that the monitoring is necessary, slightly more convinced that it is habitual. The habit is still the habit.`,
     ]),
     choices: null,
@@ -296,7 +296,7 @@ export const EVENTS_SONDER_23 = [
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr23ChildhoodFriend,
     text: () => pick([
       `You run into a childhood friend, or a photograph of one — and there is the shock of the face: the same face, aged, with the same underlying structure you knew at ten. You do the arithmetic. They are the same age as you. Of course they are. You are surprised anyway.`,
-      `The childhood friend you lost contact with: you have occasionally thought about finding them and have not. The finding would require explaining the gap, and the gap has its own history, and the history might not survive the finding. The not-finding preserves a version of the friendship that the finding might not.`,
+      `The childhood friend you lost contact with: you have occasionally thought about finding them and have not. The finding would require explaining the gap, and the gap has a history, and the history might not survive the finding. The not-finding preserves a version of the friendship that the finding might not.`,
       `You meet the childhood friend as adults and discover you don't have much to talk about beyond the childhood. The shared past is real and the present selves are strangers. You spend an hour talking about people from then and part without making plans for another meeting, both of you understanding that this was the meeting.`,
     ]),
     choices: null,
@@ -325,7 +325,7 @@ export const EVENTS_SONDER_23 = [
     text: () => pick([
       `You are more patient now than you were at thirty. This happened without a project. Somewhere the urgency that produced the impatience found less to be urgent about. The world still does not move at the right pace. You have stopped requiring it to.`,
       `You wait without needing the waiting to end. This is new. At twenty it was not available. At forty it was theoretical. At this age it is an actual state you can reliably enter: sitting with the slow thing, the delayed thing, the thing that arrives when it arrives.`,
-      `The young person in front of you is impatient and you remember being exactly that impatient and you do not say so because they would not find it useful. You wait. They will learn this specific lesson themselves, the same slow way everyone learns it.`,
+      `The young person in front of you is impatient and you remember being exactly that impatient and you do not say so because they would not find it useful. You wait. They will learn this lesson themselves, the same slow way everyone learns it.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr23Patience', true) },
@@ -337,8 +337,8 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 55 && G.age <= 80 && !G.mem?.sdr23BodyKnown,
     text: () => pick([
-      `You know this body in the way you know old territory: where the difficult ground is, what to avoid, the paths that still work. The knowledge is not comfortable or easy. It is detailed and hard-won. You have been inside this body for sixty years and have learned its specific requirements.`,
-      `The body's rhythms are known now. The times of the day when it is reliable and the times when it is not. The foods that work and the ones that have stopped working. The amount of sleep it needs. The specific signal it sends before a bad day. You have become fluent in a language of one.`,
+      `You know this body in the way you know old territory: where the difficult ground is, what to avoid, the paths that still work. The knowledge is detailed and hard-won. You have been inside this body for sixty years and have learned its requirements.`,
+      `The body's rhythms are known now. The times of the day when it is reliable and the times when it is not. The foods that work and the ones that have stopped working. The amount of sleep it needs. The signal it sends before a bad day. You have become fluent in a language of one.`,
       `Your body has lasted longer than you expected. Not indefinitely — but longer. You take this as evidence that you have done some things right, or that you are lucky, or both. The distinction matters less at this age than the fact of the lasting.`,
     ]),
     choices: null,
@@ -351,8 +351,8 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr23Prayer,
     text: () => pick([
-      `Whether or not you believe, there are moments where the only available gesture is prayer. Not because you have evidence of its efficacy. Because the thing is too large for any other response. You say the words, or have no words, and remain in the position of asking. This is not the same as believing. It is its own thing.`,
-      `You find yourself doing the thing your grandmother did — making the gesture, saying the specific phrase — that she did when things were beyond managing. You did not think you had kept this. It arrived without invitation in the moment it was needed.`,
+      `Whether or not you believe, there are moments where the only available gesture is prayer. Not because you have evidence of its efficacy. Because the thing is too large for any other response. You say the words, or have no words, and remain in the position of asking. It is not believing. It is something else.`,
+      `You find yourself doing the thing your grandmother did — making the gesture, saying the phrase — that she did when things were beyond managing. You did not think you had kept this. It arrived without invitation in the moment it was needed.`,
       `The not-quite-prayer of the person who is not sure: you direct something toward something and the directing itself is the act. Whether anything receives it is not something you can know. The act is real regardless.`,
     ]),
     choices: null,
@@ -365,7 +365,7 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 58 && G.age <= 80 && !G.mem?.sdr23Afternoon,
     text: () => pick([
-      `The afternoon that belongs to you: no appointments, no obligations, a span of hours that are yours to organise. You used to not have these. You weren't sure you wanted them. You have found that you do. The afternoon is not empty — it has reading, or walking, or the pleasure of doing one thing slowly. It is the luxury of pace.`,
+      `The afternoon that belongs to you: no appointments, no obligations, a span of hours that are yours to organise. You used to not have these. You weren't sure you wanted them. You have found that you do. The afternoon has reading, or walking, or the pleasure of doing one thing slowly.`,
       `At this age you can stop in the afternoon without explaining why. The explanation was required at thirty: why you were not working, why you were sitting, what you were doing with the time. The question has fallen away. The afternoon is its own justification now.`,
       `Late afternoon in the place you live: the quality of this hour in this season in this home. You know it so well you can hold it from the inside as a recognisable thing. The recognition is a form of gratitude, though you would not necessarily call it that.`,
     ]),
@@ -394,7 +394,7 @@ export const EVENTS_SONDER_23 = [
     when: (G) => G.age >= 35 && G.age <= 70 && !G.mem?.sdr23EarlyMorning,
     text: () => pick([
       `You are up before anyone else in the household. The hour is yours. The coffee is hot, the house is quiet, the day has not yet made its demands. You have arranged for this hour — consciously or through the body's own alarm — because you know what it produces. The hour produces the best version of the day's beginning.`,
-      `Early morning in the market, before the city is fully awake: the vendors arranging their produce with the precision of people who have done this every day for years. The specific aesthetic of plenty before the buying begins. The arrangement is temporary and deliberate.`,
+      `Early morning in the market, before the city is fully awake: the vendors arranging their produce with the precision of people who have done this every day for years. The aesthetic of plenty before the buying begins. The arrangement is temporary and deliberate.`,
       `The world at six in the morning is running on different people than the world at noon. The early people are different in rhythm, quieter, more purposeful. You are among them at this hour. You feel, briefly, like a member of a different population.`,
     ]),
     choices: null,
@@ -407,9 +407,9 @@ export const EVENTS_SONDER_23 = [
     weight: 2,
     when: (G) => G.age >= 60 && G.age <= 85 && !G.mem?.sdr23LongView,
     text: () => pick([
-      `The long view, which is now available: looking back at the decade when you were thirty from sixty, you can see things that weren't visible from inside them. The decade that felt like crisis was formation. The choice that felt catastrophic turned out to be generative. The long view does not make the hard things less hard. It makes them legible.`,
+      `The long view is available now: looking back at the decade when you were thirty from sixty, you can see things that weren't visible from inside them. The decade that felt like crisis was formation. The choice that felt catastrophic turned out to be generative. The long view does not make the hard things less hard. It makes them legible.`,
       `You can see the whole shape of several relationships now — where they started, how they changed, what they were at their best and worst, how they ended or didn't. The shape requires time to become visible. You now have the time.`,
-      `From here you can see the person you were at thirty-five, which seemed like the present at the time but is now clearly the past, as a person with a particular set of concerns and competencies and blind spots. The blind spots are visible now. They were the definition of blind spots then.`,
+      `From here you can see the person you were at thirty-five, which seemed like the present at the time but is now clearly the past, as a person with a set of concerns and competencies and blind spots. The blind spots are visible now. They were the definition of blind spots then.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr23LongView', true) },

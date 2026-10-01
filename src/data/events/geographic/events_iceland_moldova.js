@@ -25,7 +25,7 @@ export const ICELAND_MOLDOVA_EVENTS = [
       G.currentYear >= 1940 && G.currentYear <= 1946 &&
       G.age >= 12 &&
       !G.mem?.islOccupation,
-    text: 'The British come in May and the Americans replace them the next year, and there are more soldiers on the island than there are men of working age. They build the airfield at Keflavík and the roads to it, and they pay in cash, weekly, which is a thing that has essentially not happened here before. Your father leaves the farm for the airfield. Within four years the turf houses are being abandoned faster than any policy managed in forty. People call it the blessed war, quietly, and are aware of what it means that they do.',
+    text: 'The British come in May and the Americans replace them the next year, and there are more soldiers on the island than there are men of working age. They build the airfield at Keflavík and the roads to it, and they pay in cash, weekly, a thing that has essentially not happened here before. Your father leaves the farm for the airfield. Within four years the turf houses are being abandoned faster than any policy managed in forty. People call it the blessed war, quietly, and are aware of what it means that they do.',
     choices: [
       { text: 'Take the wage', tag: null, outcome: 'You are paid weekly for the first time in your life and you never go back to the farm.', effect: (p) => { p.mo += 900; p.w += 6; p.m += 5; p.addFlag('isl_occupation_wages'); p.addFlag('isl_left_the_farm') } },
       { text: 'Stay on the land', tag: 'defiant', outcome: 'You keep the sheep. The neighbours go and the valley thins and you are still there in 1970.', effect: (p) => { p.m += 2; p.h += 3; p.mo -= 200; p.addFlag('isl_stayed_farming') } },
@@ -42,7 +42,7 @@ export const ICELAND_MOLDOVA_EVENTS = [
       ((G.currentYear >= 1958 && G.currentYear <= 1961) || (G.currentYear >= 1972 && G.currentYear <= 1976)) &&
       G.age >= 14 &&
       !G.mem?.islCodWar,
-    text: 'The limit goes out — four miles, then twelve, then fifty, then two hundred — and each time the Royal Navy sends frigates and each time Iceland sends coastguard vessels with a net-cutter on a cable. There is no army. There is a threat to leave NATO and close the base, which is the entire arsenal and turns out to be enough. The frigates go home. A country of two hundred thousand people has won a dispute with Britain three times by having something Britain wanted more than it wanted the fish.',
+    text: 'The limit goes out — four miles, then twelve, then fifty, then two hundred — and each time the Royal Navy sends frigates and each time Iceland sends coastguard vessels with a net-cutter on a cable. There is no army. There is a threat to leave NATO and close the base, the entire arsenal, and it turns out to be enough. The frigates go home. A country of two hundred thousand people has won a dispute with Britain three times by having something Britain wanted more than it wanted the fish.',
     choices: null,
     effect: (p) => {
       p.m += 10; p.karma += 4; p.e += 4
@@ -60,7 +60,7 @@ export const ICELAND_MOLDOVA_EVENTS = [
       G.currentYear >= 1967 && G.currentYear <= 1972 &&
       G.age >= 16 &&
       !G.mem?.islHerring,
-    text: 'The herring does not come. Siglufjörður had twenty-three salting stations and a population that tripled every summer and a brass band, and the fish simply stops arriving — fished out, or moved, and nobody can agree which. The town starts losing its people. The buildings stay. You can walk down to the quay and see the racks still standing with nothing on them, which is a specific way for an industry to end: not a closure, an absence.',
+    text: 'The herring does not come. Siglufjörður had twenty-three salting stations and a population that tripled every summer and a brass band, and the fish simply stops arriving — fished out, or moved, and nobody can agree which. The town starts losing its people. The buildings stay. You can walk down to the quay and see the racks still standing with nothing on them. That is how an industry ends: not a closure, an absence.',
     choices: null,
     effect: (p) => {
       p.mo -= 800; p.m -= 8; p.e += 3
@@ -131,7 +131,7 @@ export const ICELAND_MOLDOVA_EVENTS = [
       G.currentYear >= 1946 && G.currentYear <= 1951 &&
       G.age >= 6 &&
       !G.mem?.mdaDeport,
-    text: 'Operation Iug takes them in one night in July — thirty-five thousand people, the families of anyone with too much land or the wrong relative, to Kurgan and Tyumen. The lists were made locally, which is the part nobody in the village will discuss for the next sixty years, because the person who made the list also stayed. Before that came the famine of 1946 and 1947, and the requisition quotas that caused it, and the words people use for that year are not the words in the textbook.',
+    text: 'Operation Iug takes them in one night in July — thirty-five thousand people, the families of anyone with too much land or the wrong relative, to Kurgan and Tyumen. The lists were made locally. Nobody in the village will discuss that part for the next sixty years, because the person who made the list also stayed. Before that came the famine of 1946 and 1947, and the requisition quotas that caused it, and the words people use for that year are not the words in the textbook.',
     choices: [
       { text: 'Your family is on the list', tag: null, outcome: 'Four days in a cattle car. You are in Siberia for eight years and you come back to a house with someone else in it.', effect: (p) => { p.m -= 20; p.h -= 12; p.mo -= 1500; p.addFlag('mda_deported_family'); p.addFlag('displaced'); p.addFlag('lost_home') } },
       { text: 'Your family is not', tag: null, outcome: 'You watch the carts go past the end of the lane at four in the morning. Nobody in your house goes to the window.', effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('mda_deportation_witness'); p.addFlag('aut_taught_silence') } },
@@ -278,7 +278,7 @@ export const ICELAND_MOLDOVA_FOLLOWTHROUGH = [
       G.currentYear >= 2012 &&
       G.age >= 25 &&
       !G.mem?.islFtTrials,
-    text: 'The bankers go to prison. Not all of them and not for long, but they go, with names everyone knows and a sentence handed down in a courtroom in Reykjavík, and no other country manages it. It does not give you back the six years. It does something else, which is harder to put a number on and which you notice every time you read about a different country\'s crisis.',
+    text: 'The bankers go to prison. Not all of them and not for long, but they go, with names everyone knows and a sentence handed down in a courtroom in Reykjavík, and no other country manages it. It does not give you back the six years. It does something else, harder to put a number on, and you notice it every time you read about a different country\'s crisis.',
     choices: null,
     effect: (p) => {
       p.m += 8; p.karma += 5
@@ -296,7 +296,7 @@ export const ICELAND_MOLDOVA_FOLLOWTHROUGH = [
       G.children?.length > 0 &&
       G.age >= 30 &&
       !G.mem?.mdaFtVideo,
-    text: 'The call is on Sunday and it is twelve minutes long and your mother holds the phone at the wrong angle so you spend most of it looking at the ceiling of your own kitchen. Your child answers questions politely. There is a particular silence that happens about eight minutes in, every week, and you have both learned to fill it with a question about school. You have paid for the house they are standing in and you have not stood in it for three years.',
+    text: 'The call is on Sunday and it is twelve minutes long and your mother holds the phone at the wrong angle so you spend most of it looking at the ceiling of your own kitchen. Your child answers questions politely. There is a silence that happens about eight minutes in, every week, and you have both learned to fill it with a question about school. You have paid for the house they are standing in and you have not stood in it for three years.',
     choices: [
       { text: 'Go home. Take the loss.', tag: 'defiant', outcome: 'You go back with less than you planned and you are there for the rest of their childhood.', effect: (p) => { p.mo -= 2200; p.m += 14; p.karma += 8; p.updateChildRel(0, 22); p.addFlag('mda_returned_home'); p.returnHome() } },
       { text: 'Another two years. Then.', tag: 'yielding', outcome: 'Two years becomes six. The politeness on the calls does not change and that is how you know.', effect: (p) => { p.mo += 4000; p.m -= 12; p.r += 10; p.updateChildRel(0, -14); p.addFlag('mda_stayed_abroad_too_long') } },
@@ -333,7 +333,7 @@ export const ICELAND_MOLDOVA_FOLLOWTHROUGH = [
     text: 'The archives open and the lists are in them, with the signatures at the bottom. You could go and look. Everyone in the village of a certain age knows roughly whose grandfather held the pen, and has known for fifty years, and the knowledge has been managed by not being said. Somebody has proposed a memorial at the station. The argument about the wording has been running for four years.',
     choices: [
       { text: 'Read the list', tag: 'defiant', outcome: 'You find the name. It is the name you expected. Knowing is not better and you would do it again.', effect: (p) => { p.e += 6; p.m -= 8; p.addFlag('mda_read_the_list') } },
-      { text: 'Leave it closed', tag: 'yielding', outcome: 'The village keeps working, which is what the silence was for.', effect: (p) => { p.m += 2; p.r += 6; p.addFlag('mda_left_it_closed') } },
+      { text: 'Leave it closed', tag: 'yielding', outcome: 'The village keeps working. That was what the silence was for.', effect: (p) => { p.m += 2; p.r += 6; p.addFlag('mda_left_it_closed') } },
     ],
     effect: null,
   },

@@ -58,7 +58,7 @@ export const DECOLONISATION_EVENTS = [
       {
         text: 'Turn off the radio and sit with what this might mean',
         tag: null,
-        outcome: 'The silence after the radio is switched off is its own kind of answer. The question is not whether it happened. The question is what it is going to cost.',
+        outcome: 'The silence after the radio is switched off is an answer. The question is not whether it happened. The question is what it is going to cost.',
         effect: (p) => { p.m += 4; p.e += 7; p.r += 3; p.addFlag('independence_generation_self'); p.addFlag('independence_cautious'); p.setMem('dcIndependenceMorning', true) },
       },
     ],
@@ -289,7 +289,7 @@ export const DECOLONISATION_EVENTS = [
       {
         text: 'Decide to stay and hold the line',
         tag: null,
-        outcome: 'You stay. The line is thinner each year. You become expert at doing more with less, which is a skill and also a slow cost.',
+        outcome: 'You stay. The line is thinner each year. You become expert at doing more with less, and it costs you slowly.',
         effect: (p) => { p.m -= 7; p.karma += 7; p.e += 3; p.addFlag('brain_drain_era'); p.addFlag('stayed_through_exodus'); p.setMem('dcBrainDrain', true) },
       },
       {

@@ -58,7 +58,7 @@ export const ADOLESCENCE_2_EVENTS = [
       {
         text: 'Apologise and accept the consequence',
         tag: null,
-        outcome: 'The punishment is real. So is the relief of having it handled.',
+        outcome: 'You are punished, and there is relief in having it handled.',
         effect: (p) => { p.setMem('adol2Curfew', 'accepted'); p.m -= 2; p.karma += 2 },
       },
       {
@@ -83,7 +83,7 @@ export const ADOLESCENCE_2_EVENTS = [
     weight: 2,
     cooldown: 0,
     when: (G) => G.age >= 13 && G.age <= 17 && !G.mem?.adol2Authority,
-    text: 'A teacher or authority figure treats you in a way that you know is wrong. Not abusive — something smaller. They assume something about you that isn\'t true. They dismiss something that deserved to be heard. You have a choice about what to do with that.',
+    text: 'A teacher or authority figure treats you badly and you know it is wrong. Not abusive — something smaller. They assume something about you that isn\'t true. They dismiss something that deserved to be heard. You have a choice about what to do with that.',
     choices: [
       {
         text: 'Say something in the moment',
@@ -119,7 +119,7 @@ export const ADOLESCENCE_2_EVENTS = [
       const smart = G.stats?.smarts ?? 50
       if (smart >= 70) return 'You sit the exam you have been preparing for. You do well. Well enough that people start saying things about your future as if it\'s been decided. You\'re not sure if that\'s a gift or a cage.'
       if (smart >= 50) return 'You sit the exam. Your results are solid and unremarkable. Exactly what they are. You turn them over trying to find the story you\'re supposed to read in them.'
-      return 'The exam results are not what you needed them to be. You sit with the paper for a long time before you show it to anyone.'
+      return 'The exam results are not what you needed them to be. You keep the paper folded for a long time before you show it to anyone.'
     },
     choices: [
       {
@@ -147,7 +147,7 @@ export const ADOLESCENCE_2_EVENTS = [
     text: (G) => {
       const arch = G.character?.country?.archetype
       if (arch === 'subsaharan' || arch === 'developing_urban' || arch === 'developing_unstable') {
-        return 'You are nominated to sit for a scholarship examination. Your school has produced one winner in the last decade. Your family is quiet on the morning of the test in a way that means they are waiting.'
+        return 'You are nominated to sit for a scholarship examination. Your school has produced one winner in the last decade. Your family is quiet on the morning of the test, which means they are waiting.'
       }
       return 'You are put forward for a competitive scholarship. You prepare alone at the kitchen table after the family has gone to bed. The outcome will either open something or close something. You don\'t know which until you know.'
     },
@@ -195,7 +195,7 @@ export const ADOLESCENCE_2_EVENTS = [
       {
         text: 'Leave and find work — the school isn\'t working for you',
         tag: null,
-        outcome: 'You leave. The freedom is real. So is the constraint that arrives later.',
+        outcome: 'You leave. The freedom is yours, and so is the constraint that arrives later.',
         effect: (p) => {
           p.setMem('adol2Dropout', 'left')
           p.addFlag('left_school_early')
@@ -219,7 +219,7 @@ export const ADOLESCENCE_2_EVENTS = [
       {
         text: 'Confront them directly',
         tag: null,
-        outcome: 'The confrontation is uncomfortable and real. They apologise in a way that doesn\'t quite land. The friendship changes permanently.',
+        outcome: 'The confrontation is uncomfortable and real. They apologise, and it doesn\'t quite land. The friendship changes permanently.',
         effect: (p) => { p.setMem('adol2PeerBetrayal', 'confronted'); p.m -= 5; p.s += 3; p.addFlag('betrayal_adolescence') },
       },
       {
@@ -244,12 +244,12 @@ export const ADOLESCENCE_2_EVENTS = [
     weight: 2,
     cooldown: 0,
     when: (G) => G.age >= 13 && G.age <= 17 && !G.mem?.adol2Rumour,
-    text: 'There is a story going around about you. It is mostly untrue. The part that isn\'t is not the worst part, which is that it\'s mostly untrue.',
+    text: 'There is a story going around about you. It is mostly untrue. The part that isn\'t is not the worst part. The worst part is that it\'s mostly untrue.',
     choices: [
       {
         text: 'Deny it publicly — force the correction',
         tag: null,
-        outcome: 'The denial draws more attention to the rumour than it had. Eventually it fades, which is what all rumours do.',
+        outcome: 'The denial draws more attention to the rumour than it had. Eventually it fades, as rumours do.',
         effect: (p) => { p.setMem('adol2Rumour', 'denied'); p.m -= 5; p.s += 2 },
       },
       {
@@ -277,7 +277,7 @@ export const ADOLESCENCE_2_EVENTS = [
     text: (G) => {
       const arch = G.character?.country?.archetype
       if (arch === 'conflict_zone' || arch === 'developing_unstable') {
-        return 'A boy from your school does not come back. The reason is specific and the specific reason matters and no one talks about it directly. It is the first time you understand that young people die.'
+        return 'A boy from your school does not come back. The reason is specific and the reason matters and no one talks about it directly. It is the first time you understand that young people die.'
       }
       return pickFrom([
         'Someone your age dies on a road, on a Tuesday, four streets from where you both live. You were not close to them but you knew them, and the funeral is the first one you attend where the person in the coffin is your age.',
@@ -408,7 +408,7 @@ export const ADOLESCENCE_2_EVENTS = [
       const arch = G.character?.country?.archetype
       const sub = arch === 'subsaharan' || arch === 'developing_unstable'
       return sub
-        ? 'A group of older boys want you to come with them tonight. The thing they are doing is unclear. The invitation is clear. Staying home has its own cost.'
+        ? 'A group of older boys want you to come with them tonight. The thing they are doing is unclear. The invitation is clear. Staying home costs something.'
         : 'Everyone is doing something and whether you join or don\'t is the thing being watched. The thing itself matters less than the fact of being watched.'
     },
     choices: [
@@ -467,7 +467,7 @@ export const ADOLESCENCE_2_EVENTS = [
       G.age >= 13 && G.age <= 16 &&
       !G.mem?.adol2Shoplifting &&
       !G.flags.has('criminalRecord'),
-    text: 'You take something small from a shop without paying. For some, this is a moment of transgression. For others it is ordinary. The specific thing you took is less important than the specific feeling before you did it — the moment of deciding — and the specific feeling after.',
+    text: 'You take something small from a shop without paying. For some, this is a moment of transgression. For others it is ordinary. The thing you took is less important than the feeling before you did it — the moment of deciding — and the feeling after.',
     choices: [
       {
         text: 'Do it, just this once',
@@ -549,7 +549,7 @@ export const ADOLESCENCE_2_EVENTS = [
       {
         text: 'Reject the standard — consciously',
         tag: null,
-        outcome: 'Intellectually satisfying and socially somewhat costly. Both are true.',
+        outcome: 'Intellectually satisfying and socially somewhat costly.',
         effect: (p) => { p.setMem('adol2Body', 'rejected'); p.m += 2; p.karma += 3; p.s += 2 },
       },
     ],
@@ -591,12 +591,12 @@ export const ADOLESCENCE_2_EVENTS = [
       (G.wealthTier >= 4 || G.stats?.wealth >= 65) &&
       G.age >= 14 && G.age <= 17 &&
       !G.mem?.adol2Privilege,
-    text: 'You are old enough to notice something you had not noticed before: the things that were easy for you are not easy for everyone. The ease is not an achievement. It is a circumstance. You sit with this.',
+    text: 'You are old enough to notice something you had not noticed before: the things that were easy for you are not easy for everyone. The ease is a circumstance, not an achievement.',
     choices: [
       {
         text: 'Acknowledge it and try to act differently because of it',
         tag: null,
-        outcome: 'The action is imperfect. The acknowledgment is real. Both matter.',
+        outcome: 'The action is imperfect. Both matter.',
         effect: (p) => { p.setMem('adol2Privilege', 'acknowledged'); p.karma += 6; p.m += 2 },
       },
       {
@@ -642,7 +642,7 @@ export const ADOLESCENCE_2_EVENTS = [
     weight: 2,
     cooldown: 0,
     when: (G) => G.age >= 14 && G.age <= 17 && !G.mem?.adol2Service,
-    text: 'Through school, a religious organisation, or your own initiative, you spend time doing something for people outside your immediate circle. It is not glamorous. It is occasionally meaningful in ways that are hard to articulate.',
+    text: 'Through school, a religious organisation, or your own initiative, you spend time doing something for people outside your immediate circle. It is unglamorous and occasionally meaningful in ways that are hard to articulate.',
     choices: null,
     effect: (p) => {
       p.setMem('adol2Service', true)

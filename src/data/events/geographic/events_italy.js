@@ -13,7 +13,7 @@ export const ITALY_EVENTS = [
       G.currentYear >= 1955 && G.currentYear <= 1968 &&
       G.age >= 16 && G.age <= 35 &&
       !G.mem?.itMiracolo,
-    text: 'The years of the miracolo economico. Italy goes from the rubble of the war to the fifth largest economy in the world in fifteen years. The Fiat 500 comes out in 1957 — the car of the economic miracle, small enough for the narrow streets, cheap enough for a factory worker. The television arrives in the house. The refrigerator arrives. The washing machine. Carosello on television after the news: the advertisements before bed. The country is building itself out of the prewar poverty and building too fast and too unevenly to notice where the cracks are going.',
+    text: 'The economic miracle: from the rubble of the war to one of the biggest economies in the world in fifteen years. The Fiat 500, small enough for the old streets and cheap enough for a factory worker. Then the television in the house, the refrigerator, the washing machine, and Carosello after the news, the advertisements before bed. The country builds itself out of the old poverty too fast and too unevenly to see where the cracks are going.',
     choices: [
       {
         text: 'The prosperity is real and you feel it. Something extraordinary is happening.',
@@ -76,7 +76,7 @@ export const ITALY_EVENTS = [
     text: (G) => {
       const isWorking = G.stats?.wealth < 45 || G.career?.field === 'manufacturing'
       if (isWorking) {
-        return 'The Hot Autumn of 1969. Not just the students — the factories. Fiat, Pirelli, Falck steel. The workers occupy the floor and the demands are about time: hours, shifts, the pace of the line. The unions are not fast enough and the workers go around them. 150 million hours of strikes. The Statuto dei lavoratori — the workers\' statute — passes in 1970. You have a contract now. The contract was won on the floor.'
+        return 'The Hot Autumn of 1969, and not just the students: Fiat, Pirelli, the steelworks. The workers take the floor and the demands are about time, the hours, the shifts, the speed of the line, and when the unions are too slow the workers go around them. In 1970 the workers\' statute passes. You have a contract now. It was won on the floor.'
       }
       return '1968. The facoltà occupied. The lezioni dialogate. Trento, Torino, Pisa — the students who read Marcuse and Mao and occupied the lecture halls and wrote manifestos on the walls. Then the Hot Autumn of 1969: the workers at Fiat and Pirelli take up what the students started and make it material. 150 million hours of strikes. The movement becomes two overlapping movements and the overlap is the thing that frightens the establishment.'
     },
@@ -117,7 +117,7 @@ export const ITALY_EVENTS = [
         return 'The Brigate Rosse. A magistrate shot in the legs outside his house; a factory manager the same way the month after. They call it gambizzazione, and the word is on the radio often enough that children use it. Nobody you know is involved. Everybody you know checks who is behind them on the stairs.'
       }
       if (year <= 1979) {
-        return 'The Brigate Rosse. The Red Brigades take Aldo Moro — former Prime Minister, likely next President — on March 16, 1978. He is held for fifty-five days. The state refuses to negotiate. On May 9, Moro\'s body is found in a car on Via Caetani, equidistant between the DC and PCI headquarters. He had written letters from captivity. The letters say things the state found inconvenient. The state eventually decides the letters were written under duress. The decision takes twenty years.'
+        return 'March 16, 1978. The Red Brigades take Aldo Moro, and hold him for fifty-five days, and the state refuses to negotiate. On May 9 his body is found in the boot of a car on Via Caetani, halfway between the headquarters of the two big parties. He wrote letters from captivity that said things the state found inconvenient, and the state decided he wrote them under duress.'
       }
       return 'The bombing at Bologna Centrale, August 2, 1980. Eighty-five dead in the second-class waiting room. The attack is later attributed to the fascist Nuclei Armati Rivoluzionari with possible state involvement. The trials run for years. Italy has been living with political violence for a decade. The violence is from the right and from the left and from the state and the distinctions are sometimes clear and sometimes not clear at all. You have learned to live in a country where the news contains these events.'
     },
@@ -125,7 +125,7 @@ export const ITALY_EVENTS = [
       {
         text: 'You know someone who was there, or near somewhere it happened.',
         tag: null,
-        outcome: 'The proximity changes how you carry the decade. The abstract political violence becomes the specific face of a specific person who happened to be on a specific piazza.',
+        outcome: 'The proximity changes how you carry the decade. The abstract political violence becomes the face of a person who happened to be on a piazza.',
         effect: (p) => { p.m -= 12; p.h -= 3; p.r += 7; p.addFlag('anni_di_piombo_generation'); p.addFlag('political_violence_witnessed'); p.setMem('itAnniDiPiombo', true); },
       },
       {
@@ -147,7 +147,7 @@ export const ITALY_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1996 &&
       G.age >= 18 &&
       !G.mem?.itManiPulite,
-    text: 'February 17, 1992. Mario Chiesa, president of a Milan nursing home, is arrested trying to flush cash down a toilet. This is the beginning of Mani Pulite — Clean Hands. The bribe was routine: contracts were won through tangenti, percentages, a systematic corruption that financed all the major political parties. Within two years, the magistrates in Milan have investigated four thousand people, the entire Italian political class. Andreotti is tried for Mafia association. Craxi flees to Tunisia. The Christian Democrats disband in 1994, having governed Italy for almost fifty years. The First Republic ends in a toilet in Milan.',
+    text: 'February 1992, and the head of a Milan old people\'s home is caught flushing banknotes down a toilet. It is the start of Clean Hands. Every contract had its percentage, and the percentages paid for every major party, and within two years the magistrates are investigating the whole political class. Craxi flees to Tunisia. The Christian Democrats, who governed for almost fifty years, dissolve. The First Republic ends in a toilet in Milan.',
     choices: [
       {
         text: 'The system that ran the country since the war is exposed and it deserved to be.',
@@ -158,7 +158,7 @@ export const ITALY_EVENTS = [
       {
         text: 'Something is being destroyed that held things together, however badly.',
         tag: null,
-        outcome: 'The holding-together was imperfect and the holding-together was real. What the DC and PSI did with the tangenti also paid for things. The things are not defended by pointing this out. But Berlusconi is the alternative, and the alternative is information.',
+        outcome: 'The holding-together was imperfect and it held. What the DC and PSI did with the tangenti also paid for things. The things are not defended by pointing this out. But Berlusconi is the alternative, and the alternative is information.',
         effect: (p) => { p.m -= 4; p.r += 6; p.addFlag('mani_pulite_generation'); p.setMem('itManiPulite', true); },
       },
     ],
@@ -237,9 +237,9 @@ export const ITALY_EVENTS = [
     text: (G) => {
       const isNorthAfrican = G.ethnicity === 'moroccan_italian'
       if (isNorthAfrican) {
-        return 'The crossing: rubber boat or wooden boat, forty people or two hundred. Lampedusa is the island closest to Tunisia and to Libya. The Italian coast guard or the NGO ships or nothing. You paid for this passage. The price is in the range of what would take months to save. You are in the water in the dark. The water is the Mediterranean, which is also the sea the travel posters use. This is the other version of the same sea.'
+        return 'A rubber boat or a wooden one, forty people or two hundred, aimed at Lampedusa, the island closest to Tunisia and Libya. The coast guard, or the rescue ships, or nothing. You paid months of savings for this. You are in the water in the dark, on the same sea the travel posters use.'
       }
-      return 'You arrived in Italy not through the airport but by other means. The caporale at the farm in Puglia or Calabria pays in cash. The cash disappears into the debt for the crossing. The crossing is paid before you earn anything. You are legal or not legal depending on a piece of paper that changes the meaning of everything else. You are in Italy. Italy is the country you aimed for. Italy is not what you aimed for.'
+      return 'You came to Italy not through the airport. The caporale on the farm in Puglia pays in cash, and the cash goes into the debt for the crossing, which was owed before you earned anything. You are legal or not depending on a piece of paper that changes the meaning of everything else. Italy is the country you aimed for. It is not what you aimed for.'
     },
     choices: [
       {

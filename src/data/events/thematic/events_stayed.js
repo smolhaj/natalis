@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_stayed.js
 // BUILD 23 — The Diaspora Who Didn't Leave
 // The experience of staying in a country being emptied by emigration.
@@ -74,7 +75,7 @@ export const STAYED_EVENTS = [
     text: (G) => {
       const cn = G.character.country.name
       if (cn === 'Ireland') {
-        return 'The people who stayed had the country to themselves for a while — cheaper rents, less competition, a particular closeness among those who were still there. Then the Tiger arrived and filled it back up with returnees who had made enough elsewhere. The years of staying feel, in retrospect, like a different country entirely.'
+        return 'The people who stayed had the country to themselves for a while — cheaper rents, less competition, a closeness among those who were still there. Then the Tiger arrived and filled it back up with returnees who had made enough elsewhere. The years of staying feel, in retrospect, like a different country entirely.'
       }
       if (cn === 'Zimbabwe') {
         return 'The professionals left first — the doctors, the teachers, the engineers. Their posts were not filled. The hospitals ran on nurses doing the work of doctors; the schools ran on unqualified teachers. You watch what is left when the ones who could leave have left. You are part of what is left.'
@@ -103,7 +104,7 @@ export const STAYED_EVENTS = [
       !G.mem?.staSiblingVisit,
     text: (G) => {
       const sib = G.siblings?.[0]
-      return `${sib?.name ?? 'Your sibling'} visits from wherever they went. The comparison happens even when you agree not to make it: their salary, your house; their city, your city; what they gave up and what you gave up. You are both defensive in different directions. The visit is good and the visit costs something.`
+      return gendered(`${sib?.name ?? 'Your sibling'} visits from wherever they went. The comparison happens even when you agree not to make it: their salary, your house; their city, your city; what they gave up and what you gave up. You are both defensive in different directions. The visit is good and the visit costs something.`, sib)
     },
     choices: null,
     effect: (p) => {

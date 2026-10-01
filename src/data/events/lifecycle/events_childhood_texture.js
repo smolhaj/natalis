@@ -75,7 +75,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => G.age >= 8 && G.age <= 10 && !G.mem?.chFirstLieAck,
-    text: 'You tell a lie and it works. Nothing happens. The specific thing you dreaded — the voice, the question, the look — does not come. You are surprised by how easy it was, and then surprised by how long you think about it afterward.',
+    text: 'You tell a lie and it works. Nothing happens. The thing you dreaded — the voice, the question, the look — does not come. You are surprised by how easy it was, and then surprised by how long you think about it afterward.',
     choices: [
       {
         text: 'You tell the truth the next day.',
@@ -106,7 +106,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
       if (smart <= 40) {
         return 'The results are not what you hoped. You look at the paper and then at the desk and then at the paper again. The teacher says something to you that means well and lands wrong. You fold the paper twice and put it in your pocket.'
       }
-      return 'Your results are fine. Neither disappointing nor remarkable. You sit with this information for a while, trying to work out how you feel about being exactly where you were expected to be.'
+      return 'Your results are fine. Neither disappointing nor remarkable. For a while you try to work out how you feel about being exactly where you were expected to be.'
     },
     choices: null,
     effect: (p) => {
@@ -121,7 +121,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => G.age >= 7 && G.age <= 11 && !G.mem?.chWeekSickAck,
-    text: 'You are ill for a week. The days are long and without structure. The ceiling becomes familiar in a way that ceilings usually aren\'t. Someone brings you something to drink at intervals. Outside, the world continues at its regular speed. You listen to it through the wall.',
+    text: 'You are ill for a week. The days are long and without structure. The ceiling becomes familiar, as ceilings usually aren\'t. Someone brings you something to drink at intervals. Outside, the world continues at its regular speed. You listen to it through the wall.',
     choices: null,
     effect: (p) => {
       p.h -= 3
@@ -136,7 +136,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => G.age >= 8 && G.age <= 11 && !G.mem?.chAdultArgAck,
-    text: 'You hear your parents arguing. Not the words — the words are in another room — but the shape of it, the specific rise and fall of voices that means something is wrong. You lie still and wait for it to end. Eventually it does. In the morning nothing is said about it. You take your cue from them.',
+    text: 'You hear your parents arguing. Not the words — the words are in another room — but the shape of it, the rise and fall of voices that means something is wrong. You lie still and wait for it to end. Eventually it does. In the morning nothing is said about it. You take your cue from them.',
     choices: null,
     effect: (p) => {
       p.m -= 3
@@ -155,7 +155,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
       const arch = G.character.country.archetype
       const rural = G.ruralUrban === 'rural'
       if (rural) {
-        return 'An animal you have given a name to dies. On a farm this is not unusual — you were told not to name them, which is why you named it. Someone buries it without ceremony. You are present for the burial. You do not cry, which surprises you, because you thought you would.'
+        return 'An animal you have given a name to dies. On a farm this is not unusual — you were told not to name them, and so you named it. Someone buries it without ceremony. You are present for the burial. You do not cry, which surprises you, because you thought you would.'
       }
       return 'A small animal — a stray dog, a neighbour\'s cat, something you found and kept briefly — is no longer there. You look for it for several days. After a while you stop looking, but you do not stop expecting to see it.'
     },
@@ -173,7 +173,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => G.age >= 8 && G.age <= 11 && !G.mem?.chExcludedAck,
-    text: 'A group you considered yourself part of does not include you in something. You find out later — through the carelessness of someone who assumed you already knew, or through the specific silence of people who share a thing you are not sharing. You say nothing about it to anyone. You reassess.',
+    text: 'A group you considered yourself part of does not include you in something. You find out later — through the carelessness of someone who assumed you already knew, or through the silence of people who share a thing you are not sharing. You say nothing about it to anyone. You reassess.',
     choices: null,
     effect: (p) => {
       p.m -= 4
@@ -188,7 +188,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => G.age >= 9 && G.age <= 11 && !G.mem?.chRemarkableAck,
-    text: 'You do something that surprises you — solve a problem you didn\'t know you could solve, make something you didn\'t know you could make, say something in front of people that you immediately cannot imagine having said. It is not that you succeed. It is that you didn\'t know you were going to.',
+    text: 'You do something that surprises you — solve a problem you didn\'t know you could solve, make something you didn\'t know you could make, say something in front of people that you immediately cannot imagine having said. You didn\'t know you were going to succeed.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -254,7 +254,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     text: (G) => {
       const female = G.character.gender === 'female'
       if (female) {
-        return 'Your body is changing and it is doing so without your permission. People notice before you are ready for them to notice. Some of them say things about it. You learn to carry yourself in a particular way, a new way, that you did not have to think about before.'
+        return 'Your body is changing and it is doing so without your permission. People notice before you are ready for them to notice. Some of them say things about it. You learn to carry yourself in a way, a new way, that you did not have to think about before.'
       }
       return 'Something is different. Your voice, your height, the way you move through a room — all of it is shifting, without schedule, in ways you cannot predict from one morning to the next. You inspect the changes and are not sure whether to be alarmed or pleased or neither.'
     },
@@ -275,7 +275,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
     text: (G) => {
       const arch = G.character.country.archetype
       if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(arch)) {
-        return 'You find work. It is not what you thought work would feel like — it is harder in some ways and simpler in others. At the end of the week there is money, which is yours, which is something you have not had before in this specific way. Earning it is different from receiving it.'
+        return 'You find work. It is not what you thought work would feel like — it is harder in some ways and simpler in others. At the end of the week there is money, and it is yours, as no money has been before. Earning it is different from receiving it.'
       }
       return 'You get a small job — something after school or on weekends. The first paycheck is a small amount of money that feels significant out of all proportion to its size. You have been given money before. This is different.'
     },
@@ -289,7 +289,7 @@ export const CHILDHOOD_TEXTURE_EVENTS = [
       {
         text: 'Spend it on something you wanted.',
         tag: 'spent_it',
-        outcome: 'The thing is good. The money is gone. Both facts are true at the same time.',
+        outcome: 'The thing is good. The money is gone.',
         effect: (p) => { p.mo += 50; p.m += 4; p.addFlag('early_earner'); p.setMem('adolFirstWorkAck', true) },
       },
     ],

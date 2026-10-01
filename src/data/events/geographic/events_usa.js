@@ -35,7 +35,7 @@ export const USA_EVENTS = [
       {
         text: 'Your parents are very deliberate about teaching you your worth alongside the rules.',
         tag: null,
-        outcome: 'The worth is taught. The rules are still the rules. The two coexist — the dignity your family built and the system that denies it — and the coexistence is not comfortable but it is real.',
+        outcome: 'The worth is taught. The rules are still the rules. The two coexist — the dignity your family built and the system that denies it — and the coexistence is not comfortable.',
         effect: (p) => { p.m -= 5; p.e += 5; p.karma += 3; p.addFlag('jim_crow_childhood'); p.addFlag('civil_rights_generation'); p.setMem('usaJimCrow', true); },
       },
     ],
@@ -52,7 +52,7 @@ export const USA_EVENTS = [
       G.currentYear >= 1940 && G.currentYear <= 1970 &&
       G.age >= 16 && G.age <= 35 &&
       !G.mem?.usaGreatMigration,
-    text: 'The train goes north. Chicago, Detroit, Cleveland, New York — your family has people in one of these cities, or you have a letter, or you have heard enough to know that whatever is at the end of the line is not what is behind you. The South was the known country. The North is the promised country. The North has its own arrangements about where you live and where you work. The arrangements are not legal the way Jim Crow was legal. They are informal, which makes them harder to name and no easier to escape.',
+    text: 'The train goes north. Chicago, Detroit, Cleveland, New York — your family has people in one of these cities, or you have a letter, or you have heard enough to know that whatever is at the end of the line is not what is behind you. The South was the known country. The North is the promised country. The North has its own arrangements about where you live and where you work. The arrangements are informal, unlike Jim Crow, which makes them harder to name and no easier to escape.',
     choices: [
       {
         text: 'You make the move. The North is different from what you expected, in both directions.',
@@ -118,21 +118,21 @@ export const USA_EVENTS = [
       !G.mem?.usaKingAssassination,
     text: (G) => {
       if (G.ethnicity === 'black_american') {
-        return 'April 4, 1968. Memphis. The bullet hits Martin Luther King at 6:01pm on the balcony of the Lorraine Motel. He was thirty-nine years old. He had been in Memphis to support the sanitation workers\' strike. In cities across the country — Washington, Baltimore, Chicago, Louisville — the fires start that night. The grief and the rage are the same thing. You do not know yet that this is the end of one phase and the beginning of another, but you feel that it is.'
+        return 'April 4, 1968, Memphis. Martin Luther King is shot on the balcony of the Lorraine Motel at one minute past six; he was thirty-nine, and in Memphis for the sanitation workers. That night the fires start in Washington, Baltimore, Chicago, Louisville. The grief and the rage are the same thing. You feel that something has ended and something else begun.'
       }
-      return 'April 4, 1968. Martin Luther King is shot on the balcony of the Lorraine Motel in Memphis. He was there for the sanitation workers\' strike. He was thirty-nine. In more than a hundred cities there are riots that night and in the days that follow. Two months later, Robert Kennedy will also be shot. The year keeps taking things. The country is trying to tell itself something and cannot agree on what.'
+      return 'April 4, 1968. Martin Luther King is shot in Memphis, where he had come for the sanitation workers\' strike; he was thirty-nine. In more than a hundred cities there are riots that night and in the days after. Two months later Robert Kennedy is shot too. The year keeps taking things, and the country cannot agree on what it is trying to tell itself.'
     },
     choices: [
       {
         text: 'The grief is total. Something ends here.',
         tag: null,
-        outcome: 'Something does end. The movement continues in new forms and with new faces. The absence of this particular voice is permanent and specific.',
+        outcome: 'Something does end. The movement continues in new forms and with new faces. The absence of this voice is permanent and specific.',
         effect: (p) => { p.m -= 15; p.r += 8; p.addFlag('king_assassination_generation'); p.addFlag('civil_rights_generation'); p.setMem('usaKingAssassination', true); },
       },
       {
         text: 'The grief becomes something harder — a reckoning with what has always been true.',
         tag: null,
-        outcome: 'The reckoning is ongoing. The harder thing is not certainty but the specific clarity that comes after illusions have been removed.',
+        outcome: 'The reckoning is ongoing. The harder thing is not certainty but the clarity that comes after illusions have been removed.',
         effect: (p) => { p.m -= 12; p.karma += 6; p.r += 6; p.addFlag('king_assassination_generation'); p.addFlag('civil_rights_generation'); p.setMem('usaKingAssassination', true); },
       },
     ],
@@ -152,12 +152,12 @@ export const USA_EVENTS = [
       G.currentYear >= 1963 && G.currentYear <= 1964 &&
       G.age >= 14 &&
       !G.mem?.usaJFK,
-    text: 'November 22, 1963. Dallas. The motorcade passes the Texas School Book Depository at 12:30pm. Three shots. Walter Cronkite removes his glasses on CBS and tells America that President Kennedy died at Parkland Memorial Hospital at 1:00pm Central Standard Time. He was forty-six years old and had taken office a thousand days before with the words: "ask not what your country can do for you." The flight back: Lyndon Johnson takes the oath on Air Force One with Jacqueline Kennedy standing beside him in her stained dress. Oswald is arrested ninety minutes after the shooting. On Sunday he is shot in the Dallas Police basement, live on television. The question about what happened and why will be open for sixty years.',
+    text: 'November 22, 1963. Dallas, half past twelve, three shots. On CBS Walter Cronkite takes off his glasses and says the President is dead. On the plane back, Johnson takes the oath with Jacqueline Kennedy beside him in her stained dress. On Sunday the man they arrested is shot in the police basement, live on television. The question of what happened and why will stay open for sixty years.',
     choices: [
       {
         text: 'The grief is like losing someone you knew. Something promised has been taken.',
         tag: null,
-        outcome: 'The grief is collective in a way that does not feel political at first — it is the loss of something that had not yet arrived. The country goes to the funeral in black and white.',
+        outcome: 'The grief is collective and does not feel political at first — it is the loss of something that had not yet arrived. The country goes to the funeral in black and white.',
         effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('jfk_assassination_generation'); p.setMem('usaJFK', true); },
       },
       {
@@ -187,7 +187,7 @@ export const USA_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year >= 1969) {
-        return 'December 1, 1969. The first Vietnam draft lottery. Birthdates on blue plastic capsules in a drum. September 14: capsule one. If your number is below 195 you will almost certainly go. If your number is above 195, probably not. You watch the television and wait to find out what your birthday means in this year. The number comes up. Now you know where you stand.'
+        return 'December 1, 1969, the first draft lottery since the Second World War: birthdays on blue plastic capsules drawn from a drum on television. September 14 is number one. Below a certain number you will almost certainly go; above it, probably not. You watch and wait to learn what your birthday means this year, and the number comes up, and now you know.'
       }
       return 'The notice comes in the mail — the Selective Service. You have been classified 1-A: available for military service. The war in Vietnam is expanding. You know men who have already gone. Some have come back and do not talk about it in the way you would expect. The question of what you do next is not abstract.'
     },
@@ -224,7 +224,7 @@ export const USA_EVENTS = [
       G.currentYear >= 1966 && G.currentYear <= 1975 &&
       G.age >= 19 && G.age <= 28 &&
       !G.mem?.usaVietnamReturn,
-    text: 'You are back. The airport. American concrete, American light. You are wearing civilian clothes because the recruiter said not to wear the uniform — some airports have people who shout things. You find out about this from the recruiter the day before you fly out, which is the first time the country has acknowledged that the people who sent you there have thoughts about your return. You are twenty or twenty-two or twenty-four and you have seen what you have seen and the country needs you to be fine.',
+    text: 'You are back. The airport. American concrete, American light. You are wearing civilian clothes because the recruiter said not to wear the uniform — some airports have people who shout things. You find out about this from the recruiter the day before you fly out, the first time the country has acknowledged that the people who sent you there have thoughts about your return. You are twenty or twenty-two or twenty-four and you have seen what you have seen and the country needs you to be fine.',
     choices: [
       {
         text: 'You are fine, or you pretend to be fine, because the alternative has no support structure.',
@@ -255,12 +255,12 @@ export const USA_EVENTS = [
       G.currentYear >= 1974 && G.currentYear <= 1975 &&
       G.age >= 16 &&
       !G.mem?.usaWatergate,
-    text: 'June 17, 1972. Five men are arrested inside the Democratic National Committee headquarters at the Watergate complex in Washington. The connection to the Committee to Re-Elect the President: the evidence accumulates over two years. "I am not a crook": Nixon at a press conference, November 1973. The Saturday Night Massacre: Nixon orders the special prosecutor fired; the Attorney General and the Deputy Attorney General resign rather than comply. The tapes. Eighteen and a half minutes of silence in a crucial recording. August 9, 1974: Richard Nixon becomes the first president in American history to resign. He boards Marine One from the South Lawn and waves. The gesture becomes its own image of the decade.',
+    text: 'June 1972, and five men are arrested inside the Democratic headquarters at the Watergate. It takes two years for the thread to reach the White House: "I am not a crook," the Saturday Night Massacre, the tapes, the eighteen and a half minutes of silence. In August 1974 Nixon resigns, the first president ever to do it, and boards the helicopter on the South Lawn and turns and waves.',
     choices: [
       {
         text: 'The system worked. The corruption was exposed and the man who ran it left office.',
         tag: null,
-        outcome: 'The system worked with help from specific reporters, a specific source in a parking garage, specific judges, and officials who resigned rather than comply. The system worked. That is different from the system working automatically.',
+        outcome: 'The system worked with help from specific reporters, a source in a parking garage, specific judges, and officials who resigned rather than comply. The system worked. That is different from the system working automatically.',
         effect: (p) => { p.m -= 4; p.r += 4; p.addFlag('watergate_generation'); p.setMem('usaWatergate', true); },
       },
       {
@@ -290,7 +290,7 @@ export const USA_EVENTS = [
       // novelist with `career: null`. The plant has to be somewhere you work.
       ['manufacturing', 'construction', 'trade', 'transport'].includes(G.career?.field) &&
       !G.mem?.usaRustbelt,
-    text: 'The notice goes up on Friday. The plant is closing. Thirty years of the same shift, the same parking lot, the same men in the same places in the locker room — and now there is a date six months out. NAFTA. Automation. Cheaper production somewhere the company is not obligated to. The union fights and loses or the union is already gone. The severance package is described in a document that takes a lawyer to read. You do not have a lawyer.',
+    text: 'The notice goes up on a Friday: the plant is closing. Thirty years of the same shift, the same parking lot, the same men in the same places in the locker room, and now a date six months out. NAFTA, automation, a cheaper somewhere else. The union fights and loses, or the union is already gone. The severance is described in a document it takes a lawyer to read, and you do not have a lawyer.',
     choices: [
       {
         text: 'You retrain. The retraining programs exist in theory.',
@@ -328,7 +328,7 @@ export const USA_EVENTS = [
       {
         text: 'You learn to navigate these encounters and survive them.',
         tag: null,
-        outcome: 'Navigating them takes a kind of expenditure that does not appear in any account book but is real and depleting. You develop the specific posture of a man who has been stopped many times and survived each time.',
+        outcome: 'Navigating them takes a kind of expenditure that does not appear in any account book but is real and depleting. You develop the posture of a man who has been stopped many times and survived each time.',
         effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('war_on_drugs_era'); p.addFlag('overpoliced_community'); p.setMem('usaWarOnDrugs', true); },
       },
       {
@@ -358,7 +358,7 @@ export const USA_EVENTS = [
       const place = G.place
       const isNYC = place && (place.name === 'New York' || place.name === 'Manhattan' || place.name === 'Brooklyn' || place.name === 'Queens')
       if (isNYC) {
-        return 'You see the second plane hit from wherever you are in the city. Or you are underground on the subway and come up to a sky that is wrong. The towers are ten minutes\' walk from somewhere you have been recently. The smoke changes direction with the wind. By 9:59 the South Tower is gone and by 10:28 the North Tower is gone and you are standing in the street with everyone else in a city that is very quiet. The phones are not working. You need to reach someone. The streets are full of paper.'
+        return 'You see the second plane hit from wherever you are in the city, or you come up out of the subway into a sky that is wrong. The towers are ten minutes\' walk from somewhere you were last week. By half past ten both are gone, and you are standing in the street with everyone else in a city that has gone very quiet. The phones do not work, and you need to reach someone. The streets are full of paper.'
       }
       return 'You hear about it on the radio, or someone tells you, or the television in the break room is on when you walk past. You find a screen and watch the footage repeat. The second plane, the collapse. You know people in New York or you don\'t. The country changes in the afternoon — the flights grounded, the buildings evacuated, the borders closed — and you spend the rest of the day at a television or a phone trying to understand what has happened and what comes next.'
     },
@@ -395,15 +395,16 @@ export const USA_EVENTS = [
     text: (G) => {
       const isBlack = G.ethnicity === 'black_american'
       if (isBlack) {
-        return 'August 29, 2005. The levees fail. The water comes up inside the house. You go to the attic and then to the roof. The helicopters fly over. You have family in the Lower Ninth Ward or New Orleans East or Tremé. The Superdome: thirty thousand people in a football stadium without power, without enough food, without enough medicine, for three days. Michael Brown, the FEMA director who had no emergency management experience: "Brownie, you\'re doing a heck of a job." Sixty-seven percent of those who died in New Orleans were Black. Eighty percent of the city was underwater. The neighborhoods that had been there for generations do not come back.'
+        return 'The levees fail and the water comes up inside the house, and you go to the attic and then the roof, and the helicopters fly over. You have family in the Lower Ninth or New Orleans East or Tremé. Thirty thousand people in the Superdome for days, without power or enough food. On the television the president tells the head of FEMA he is doing a heck of a job. The neighbourhoods that had been there for generations do not all come back.'
       }
-      return 'August 28, 2005. The satellite image shows the eye of the storm: a Category 4 hurricane nearly 200 miles across, aimed at a city built below sea level whose levees were rated for a Category 3. The levees fail 24 hours after landfall. The Superdome. Thirty thousand people on rooftops waiting. "Brownie, you\'re doing a heck of a job." The president\'s flyover at altitude. Two thousand dead. Eighty percent of the city underwater. The Lower Ninth Ward, Tremé, Lakeview — some neighborhoods come back and some do not. The gap between what the response was and what the need was: visible from the air, on the television, in every medium simultaneously.'
+      return 'The satellite picture on the television is a storm nearly as wide as the state, aimed at a city below sea level whose levees were built for less. A day after landfall the levees go. People wait on rooftops. The president looks down from Air Force One. Some neighbourhoods come back and some do not, and the gap between what was needed and what came is visible from the air.'
     },
+    context: 'Hurricane Katrina struck on 29 August 2005. About 80 percent of New Orleans flooded; Black residents were a disproportionate share of the dead.',
     choices: [
       {
         text: 'You are in New Orleans, or you have people there. The waiting is unbearable.',
         tag: null,
-        outcome: 'You reach them, or you don\'t reach them until days later, or you don\'t reach them at all. The specific experience of waiting to know whether people you love are alive is not something that generalizes.',
+        outcome: 'You reach them, or you don\'t reach them until days later, or you don\'t reach them at all. The experience of waiting to know whether people you love are alive is not something that generalizes.',
         effect: (p) => { p.m -= 14; p.h -= 4; p.r += 7; p.addFlag('katrina_generation'); p.addFlag('gulf_coast_displaced'); p.setMem('usaKatrina', true); },
       },
       {
@@ -430,7 +431,8 @@ export const USA_EVENTS = [
       G.age >= 25 &&
       (G.stats?.wealth ?? 50) < 55 &&
       !G.mem?.usaForeclosure,
-    text: 'The letter from the bank arrives. It uses language designed to be incomprehensible: "notice of default," "notice of trustee\'s sale." What it means is that in ninety days the house will be taken. The mortgage was sold twice before it reached the bank that now holds it. The adjustable rate adjusted. The payment doubled. You were sold something based on a model that assumed house prices only went up. The house prices went down. Eight million American families will receive this letter between 2008 and 2012. You are one of them.',
+    text: 'The letter from the bank uses words built not to be understood: notice of default, notice of trustee\'s sale. It means the house will be taken in ninety days. The mortgage was sold twice before it reached this bank, the rate adjusted, the payment doubled. You were sold something on a model that assumed prices only went up, and prices went down. Millions of families get this letter. You are one of them.',
+    context: 'About eight million US homes went through foreclosure between 2008 and 2012.',
     choices: [
       {
         text: 'You fight it — modification, refinancing, every option the bank presents.',
@@ -464,15 +466,15 @@ export const USA_EVENTS = [
     text: (G) => {
       const isRural = G.ruralUrban === 'rural'
       if (isRural) {
-        return 'OxyContin in 1996. The pharmaceutical company\'s sales representatives tell the doctors that the addiction risk is less than one percent. The doctors prescribe it for back pain, for shoulder injuries, for the ordinary pain of physical work. The one-percent figure was taken out of context from a letter in the New England Journal of Medicine. By 2010, enough OxyContin is being prescribed in the US to medicate every adult American continuously for a month. In your town, you know who is on it. You know who the on-it became something else. You know the house where the parents died within a year of each other and no one was surprised.'
+        return 'OxyContin, 1996, and the company\'s representatives tell the doctors the risk of addiction is under one percent, a figure lifted out of context from a letter in a medical journal. The doctors prescribe it for backs, for shoulders, for the ordinary pain of physical work. In your town you know who is on it, and who being on it turned into something else. You know the house where both parents died within a year of each other and nobody was surprised.'
       }
-      return 'Someone you know — a cousin, a coworker, someone from your neighborhood — has been on OxyContin for their back, or their shoulder, or the nerve damage from an accident. The pain was real. The prescription was for the pain. The dependency arrived quietly. The OxyContin got expensive or got cut off; the heroin was cheaper. The obituary says "passed away unexpectedly." You understand the language.'
+      return 'Someone you know — a cousin, a coworker, someone from your neighborhood — has been on OxyContin for their back, or their shoulder, or the nerve damage from an accident. The prescription was for the pain. The dependency arrived quietly. The OxyContin got expensive or got cut off; the heroin was cheaper. The obituary says "passed away unexpectedly." You understand the language.'
     },
     choices: [
       {
         text: 'You lose someone to it. The loss arrives in the form of an ordinary phone call.',
         tag: null,
-        outcome: 'The phone call is from someone in the family or a mutual friend. The word "overdose" is used or it is not used but the meaning is the same. The grief has a specific texture because the death could have been prevented at multiple points where prevention was not available.',
+        outcome: 'The phone call is from someone in the family or a mutual friend. The word "overdose" is used or it is not used but the meaning is the same. The grief has a texture because the death could have been prevented at multiple points where prevention was not available.',
         effect: (p) => { p.m -= 14; p.r += 8; p.h -= 3; p.addFlag('opioid_crisis_touched'); p.addFlag('lost_someone_opioids'); p.setMem('usaOpioids', true); },
       },
       {
@@ -501,9 +503,9 @@ export const USA_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year <= 2005) {
-        return 'April 20, 1999. Columbine. Two students kill twelve classmates and a teacher. Before Columbine there were no active shooter drills. After Columbine there are active shooter drills. The drill is: when the alarm sounds, lock the classroom door, close the blinds, push the desks to the corner, sit against the wall below the window, and be quiet. You practice this. You practice this with your backpack on, so you have practised both the drill and the question of whether the backpack stops anything.'
+        return 'April 20, 1999, Columbine, and two students kill twelve classmates and a teacher. Before Columbine there were no lockdown drills; after it there are. When the alarm sounds you lock the door, close the blinds, push the desks into the corner, sit against the wall under the window and are quiet. You practise it with your backpack on, wondering whether the backpack would stop anything.'
       }
-      return 'The drill is a standard part of school now. ALICE: Alert, Lockdown, Inform, Counter, Evacuate. The school has a plan. The plan is for an event that is statistically unlikely but has happened in enough specific schools that it is no longer theoretical. You know the exits. You know where the classrooms lock from. You have thought, without meaning to, about what you would do. You went to school in a country where this is what going to school involves.'
+      return 'The drill is a normal part of school now: Alert, Lockdown, Inform, Counter, Evacuate. It is for an event that is unlikely and has happened at enough schools to be no longer theoretical. You know the exits, and which classrooms lock from inside, and you have thought without meaning to about what you would do. You went to school in a country where this is part of going to school.'
     },
     choices: null,
     effect: (p) => {
@@ -600,7 +602,7 @@ export const USA_EVENTS = [
       G.age >= 17 && G.age <= 21 &&
       G.stats.smarts >= 45 &&
       !G.mem?.usaPromissoryNote,
-    text: 'The form is called a Master Promissory Note and you sign it on a laptop in the guidance office between fourth and fifth period. The number is larger than your father earns in a year, and the woman helping you says everyone does this, which is true. There is a box to confirm you have read the terms. You check it. You are seventeen and you have committed the first decade of your working life.',
+    text: 'The form is called a Master Promissory Note and you sign it on a laptop in the guidance office between fourth and fifth period. The number is larger than your father earns in a year, and the woman helping you says everyone does this. It is true. There is a box to confirm you have read the terms. You check it. You are seventeen and you have committed the first decade of your working life.',
     context: 'US student loan debt passed $1 trillion in 2012 and $1.6 trillion by 2020, held by about 43 million borrowers. Average debt at graduation for a four-year public institution ran near $30,000; federal loans require no credit check and no assessment of ability to repay.',
     choices: [
       {
@@ -668,12 +670,12 @@ export const USA_EVENTS = [
       G.currentYear >= 2016 &&
       G.age >= 15 && G.age <= 45 &&
       !G.mem?.usaTableFracture,
-    text: 'Your uncle says the thing at the table and this year nobody laughs it off. Your mother stands to fetch something from the kitchen that she does not need. Afterward, in the car, your father explains that this is just how he is, which is the explanation you have been handed every year since you were small. You have started deciding in advance which rooms you will be a whole person in.',
+    text: 'Your uncle says the thing at the table and this year nobody laughs it off. Your mother stands to fetch something from the kitchen that she does not need. Afterward, in the car, your father explains that this is just how he is, the explanation you have been handed every year since you were small. You have started deciding in advance which rooms you will be a whole person in.',
     choices: [
       {
         text: 'Say it back to him, at the table, in front of everyone.',
         tag: null,
-        outcome: 'The table goes quiet in a way that is not relief. Two people text you that night to say you were right. Neither of them said anything at the time.',
+        outcome: 'The table goes quiet, and it is not relief. Two people text you that night to say you were right. Neither of them said anything at the time.',
         effect: (p) => { p.m -= 4; p.s += 3; p.karma += 3; p.addFlag('political_active'); p.setMem('usaTableFracture', true) },
       },
       {

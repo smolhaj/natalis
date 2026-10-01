@@ -28,7 +28,7 @@ const NORTH_KOREA_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       // Randomly assign songbun at this moment of revelation
-      return `The job assignment comes. ${yr <= 1980 ? 'Your work unit placement' : 'The application for the factory position'} depends on your Songbun — your family class, determined by what your grandparents did and who they were. A grandfather who fled to the South in 1950. A great-uncle who had a Bible. A parent who once questioned something in a way that was noted. These are the facts that determine your ceiling. You understand this the way you understand weather: it is there before you wake up, and it determines what you can do with the day.`
+      return `The job assignment comes. ${yr <= 1980 ? 'Your work unit placement' : 'The application for the factory position'} depends on your Songbun — your family class, determined by what your grandparents did and who they were. A grandfather who fled to the South in 1950. A great-uncle who had a Bible. A parent who once questioned something, and was noted. These are the facts that determine your ceiling. You understand this the way you understand weather: it is there before you wake up, and it determines what you can do with the day.`
     },
     choices: [
       {
@@ -51,7 +51,7 @@ const NORTH_KOREA_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.character.country.name === 'North Korea' && G.age >= 18 && !G.flags.has('dprk_criticism_session') && !G.mem.dprk_crit_checked,
-    text: 'Every week: the saenghwal chonghwa. The self-criticism session in your work unit or study group. You stand and confess your failures — tardiness, insufficient revolutionary zeal, a moment of distraction during political study. Then your peers criticize you. The criticism must be neither too lenient (which looks like protection) nor too harsh (which looks like factional attack). You have learned to calibrate it. The calibration is a skill. You teach your children to calibrate it before they need to.',
+    text: 'Every week, the life review. You stand in your work unit and confess your failures, lateness, insufficient zeal, a moment\'s distraction in political study, and then your colleagues criticise you, neither too gently, which looks like protecting you, nor too harshly, which looks like faction. You have learned the calibration. You teach your children it before they need it.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 1; p.s -= 3; p.addFlag('dprk_criticism_session'); p.setMem('dprk_crit_checked', true); },
   },
@@ -63,7 +63,7 @@ const NORTH_KOREA_EVENTS = [
     when: (G) => G.character.country.name === 'North Korea' && G.currentYear >= 1994 && G.currentYear <= 1998 && !G.flags.has('dprk_arduous_march'),
     text: (G) => {
       const yr = G.currentYear
-      return `The Public Distribution System stopped delivering in ${yr <= 1995 ? '1994' : 'recent years'}. The rations were already thin; now there are no rations. The state calls it the Arduous March, after Kim Il-sung's guerrilla campaign in the Manchurian winter. The metaphor requires you to be a soldier marching toward victory. You are a person who cannot buy grain because the grain has not come. The people dying are not the ones who are called dying. You find ways to eat. Some people around you do not find ways.`
+      return `The public distribution stopped in ${yr <= 1995 ? '1994' : 'recent years'}; the rations were thin, and now there are none. The state calls it the Arduous March, after Kim Il-sung's winter campaign in Manchuria, a metaphor that makes you a soldier marching to victory. You are a person who cannot buy grain because the grain has not come. You find ways to eat. Some people around you do not.`
     },
     choices: [
       {
@@ -112,7 +112,7 @@ const NORTH_KOREA_EVENTS = [
     when: (G) => G.character.country.name === 'North Korea' && !G.flags.has('dprk_execution_witness') && !G.mem.dprk_exec_checked,
     text: (G) => {
       const yr = G.currentYear
-      return `The announcement comes through the work unit: attendance at the public execution is mandatory. The crime is ${yr >= 2012 ? 'watching foreign media or distributing banned content' : 'economic crimes during the difficult period'}. The field outside the city. The crowd required to watch. You watch. You have been taught that the watching is a service to the state and also to the criminal — whose crime is understood by the people witnessing the consequence. The logic is audible. You do not look away. You have learned that looking away is also noted.`
+      return `The work unit announces that attendance at the execution is compulsory. The crime is ${yr >= 2012 ? 'watching foreign media or passing it on' : 'economic crimes during the difficult period'}. The field outside the town, the crowd made to watch. You have been taught the watching is a service. You do not look away; you have learned that looking away is also noted.`
     },
     choices: null,
     effect: (p) => { p.m -= 16; p.r += 8; p.addFlag('dprk_execution_witness'); p.setMem('dprk_exec_checked', true); },
@@ -123,7 +123,7 @@ const NORTH_KOREA_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) => G.character.country.name === 'North Korea' && G.age >= 20 && G.age <= 45 && !G.flags.has('dprk_defection_considered'),
-    text: 'You have begun the calculation. The Tumen River at its narrowest: knee-deep and crossable at night when the guards look away — which they sometimes do, for money. China sends back those it catches; being sent back means political prison. From China: Mongolia is safer than going south, which is surveilled. Thailand, or Mongolia, routes to the South Korean embassy, to Hanawon, to a country that is technically yours but that you have been taught is the enemy. The family you leave behind is in danger if you go. The family you could have in a different life requires going. You run the numbers. You run them again.',
+    text: 'You have begun the calculation. The Tumen at its narrowest is knee-deep and can be crossed at night when the guards look away, which they sometimes do for money. China sends back the ones it catches, and being sent back means a camp. From China, Mongolia is safer than going south; then an embassy, and a country that is technically yours that you were taught is the enemy. The family you leave will be in danger. You run the numbers, and run them again.',
     choices: [
       {
         text: 'You decide to cross.',
@@ -145,7 +145,7 @@ const NORTH_KOREA_EVENTS = [
     phase: 'midlife',
     weight: 5,
     when: (G) => G.flags.has('dprk_defected') && G.currentCountry?.name === 'South Korea' && !G.flags.has('dprk_hanawon_complete'),
-    text: 'The Hanawon resettlement facility outside Seoul. Three months of South Korean orientation — how to use a cashcard, how to navigate the subway, what a supermarket is, the difference between the Korean you speak and the Korean they speak, which contains English words you have never heard and pronunciation that sounds slightly wrong. The counselor says: the adjustment takes years. She has said this to many people. The people who went through Hanawon before you figured out how to become South Koreans. You do not know yet if you can become a South Korean. You are, technically, already one — the constitution says so. The cashcard works when you tap it.',
+    text: 'Hanawon, outside Seoul: three months of learning how to use a transit card, the subway, a supermarket, a Korean full of English words you have never heard. The counsellor says the adjustment takes years; she has said it to many people. You do not know yet whether you can become a South Korean, though the constitution says you already are. The card works when you tap it.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 5; p.addFlag('dprk_hanawon_complete'); },
   },

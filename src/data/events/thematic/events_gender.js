@@ -1,4 +1,5 @@
 import { hasTech } from '../../technology.js'
+import { abortionLegal, unplannedPregnancyPremise } from '../_law.js'
 
 // Work done at a desk, for prose that puts somebody back at theirs.
 const DESK_FIELDS_WD = new Set([
@@ -590,7 +591,7 @@ export const GENDER_EVENTS = [
       {
         text: 'Find small ways to assert yourself — learn, build relationships, earn money',
         tag: 'resilient',
-        outcome: 'Small freedoms become larger ones over years. It is slow. It is real.',
+        outcome: 'Small freedoms become larger ones over years. It is slow.',
         effect: (p) => { p.m += 3; p.s += 4; p.e += 3; },
         inject: null,
       },
@@ -798,14 +799,15 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'female' &&
       G.character.country.name === 'United States' &&
-      G.currentYear >= 1950 && G.currentYear <= 1972,
+      G.currentYear >= 1950 && G.currentYear <= 1972 &&
+      unplannedPregnancyPremise(G),
     text: (G) => `It is ${G.currentYear}. You are pregnant and you cannot have this baby. The doctor you see privately in his home office charges two hundred dollars and does not look at you. He is not the worst option you were told about.`,
     context: null,
     choices: [
       {
         text: 'Go through with the illegal procedure',
         tag: null,
-        outcome: 'It works. The risk was real. You did not know how real until afterward, when you read about the women who did not survive theirs.',
+        outcome: 'It works. You did not know how real until afterward, when you read about the women who did not survive theirs.',
         effect: (p) => { p.h -= 8; p.m -= 6; p.mo -= 200; p.r += 3; p.addFlag('had_abortion'); },
         inject: null,
       },
@@ -820,7 +822,7 @@ export const GENDER_EVENTS = [
         text: 'Continue the pregnancy',
         tag: null,
         outcome: 'You have the child. Your life reroutes entirely. Whether this is the right choice is something only you will ever know.',
-        effect: (p) => { p.m -= 4; p.r += 5; p.addFlag('unplanned_parent'); },
+        effect: (p) => { p.m -= 4; p.r += 5; p.addFlag('unplanned_parent'); p.addFlag('pregnant'); p.addFlag('expecting'); },
         inject: null,
       },
     ],
@@ -831,10 +833,15 @@ export const GENDER_EVENTS = [
     id: 'ra_illegal_abortion',
     phase: 'young_adult',
     weight: 3,
+    // "Abortion is illegal here" is a statement about the law, and it was gated
+    // on the present-day gender gap — so it reached an Indian woman nineteen
+    // years after the 1971 Act. It reads the law (`abortionLegal`, _law.js) in
+    // the country she lives in that year, and "you are pregnant" needs somebody
+    // to be pregnant by. The US, Ireland and Poland have their own events.
     when: (G) =>
-      G.character.gender === 'female' &&
-      G.character.country.genderGap > 0.25 &&
-      !['United States', 'Ireland'].includes(G.character.country.name),
+      unplannedPregnancyPremise(G) &&
+      !abortionLegal(G.currentCountry ?? G.character.country, G.currentYear) &&
+      !['United States', 'Ireland', 'Poland'].includes((G.currentCountry ?? G.character.country)?.name),
     text: 'Abortion is illegal here. You know women who have done it and women who have died doing it. You are pregnant and you know what you want. The question is how to survive wanting it.',
     context: null,
     choices: [
@@ -846,9 +853,9 @@ export const GENDER_EVENTS = [
         inject: null,
       },
       {
-        text: 'Find pills through an underground network',
+        text: 'Find a doctor who will do it at night, for money',
         tag: null,
-        outcome: 'They arrive wrapped in packaging that says something else. The process is painful and private. You are alone through it.',
+        outcome: 'A clinic after hours with the blinds down, and cash counted in front of you. It is quick and he does not use your name. You go home on the bus and lie down and tell everyone it is your stomach.',
         effect: (p) => { p.h -= 6; p.m -= 7; p.mo -= 80; p.addFlag('had_abortion'); },
         inject: null,
       },
@@ -856,7 +863,7 @@ export const GENDER_EVENTS = [
         text: 'Continue the pregnancy',
         tag: null,
         outcome: 'You had no safe option. What follows is your life.',
-        effect: (p) => { p.r += 6; p.addFlag('unplanned_parent'); },
+        effect: (p) => { p.r += 6; p.addFlag('unplanned_parent'); p.addFlag('pregnant'); p.addFlag('expecting'); },
         inject: null,
       },
     ],
@@ -870,7 +877,8 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'female' &&
       G.character.country.name === 'Ireland' &&
-      G.currentYear >= 1983 && G.currentYear <= 2018,
+      G.currentYear >= 1983 && G.currentYear <= 2018 &&
+      unplannedPregnancyPremise(G),
     text: (G) => `It is ${G.currentYear}. Ireland's constitution enshrines the equal right to life of the mother and the unborn. You are pregnant and you are not ready for this. England is ninety minutes by plane. Your friend went last year and told no one for years.`,
     context: null,
     choices: [
@@ -885,7 +893,7 @@ export const GENDER_EVENTS = [
         text: 'Continue the pregnancy',
         tag: null,
         outcome: 'You find ways forward. The country made your choice for you.',
-        effect: (p) => { p.r += 5; p.addFlag('unplanned_parent'); },
+        effect: (p) => { p.r += 5; p.addFlag('unplanned_parent'); p.addFlag('pregnant'); p.addFlag('expecting'); },
         inject: null,
       },
       {
@@ -1763,7 +1771,7 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.age >= 13 && G.age <= 18 &&
       !G.flags.includes('same_sex_attracted'),
-    text: (G) => `There is someone you cannot stop thinking about. This is not new — you have felt this before. What is new is that this person is the same gender as you. You sit with this information in the quiet of your room and understand that it changes things. How many things, you do not yet know.`,
+    text: (G) => `There is someone you cannot stop thinking about. This is not new — you have felt this before. What is new is that this person is the same gender as you. You lie in your room in the quiet and understand that it changes things. How many things, you do not yet know.`,
     context: null,
     choices: [
       {
@@ -2012,7 +2020,7 @@ export const GENDER_EVENTS = [
       {
         text: 'Throw yourself into caretaking — be present for those who are sick',
         tag: 'caretaker',
-        outcome: 'The hospital rooms. The hands to hold. The weight of it is extraordinary. So is what it means to have been there.',
+        outcome: 'The hospital rooms. The hands to hold. The weight of it is extraordinary, and so is having been there.',
         effect: (p) => { p.m -= 8; p.karma += 10; p.addFlag('caretaker'); },
         inject: null,
       },
@@ -2053,9 +2061,16 @@ export const GENDER_EVENTS = [
   {
     id: 'lgbtq_trans_identity',
     phase: null,
-    weight: 3,
+    weight: 1,
+    // "The word exists" is a claim about where and when the word circulated
+    // far enough to reach a teenager, and this fired for everybody at weight 3,
+    // in 1931 Oman as readily as 2015 Berlin, and then nothing ever followed
+    // it: no family, no papers, no later life. It is gated on the word's reach
+    // now, and the arc below carries it.
     when: (G) =>
       G.age >= 14 && G.age <= 22 &&
+      ((['wealthy_west', 'wealthy_east'].includes(G.archetype) && G.currentYear >= 1992) ||
+        (G.ruralUrban === 'urban' && G.currentYear >= 2008)) &&
       !G.flags.includes('trans_identity'),
     text: 'The word exists. Someone else used it in a sentence that was not about you and you heard yourself in it. It explains something you have been trying to explain to yourself since childhood. The clarity is real and frightening and, underneath that, a relief you were not expecting.',
     context: null,
@@ -2064,7 +2079,7 @@ export const GENDER_EVENTS = [
         text: 'Accept it and begin exploring what it means',
         tag: 'self_aware',
         outcome: 'The journey is long. The vocabulary is yours, now.',
-        effect: (p) => { p.m += 3; p.addFlag('trans_identity'); p.addFlag('same_sex_attracted'); },
+        effect: (p) => { p.m += 3; p.addFlag('trans_identity'); },
         inject: null,
       },
       {
@@ -2083,6 +2098,46 @@ export const GENDER_EVENTS = [
       },
     ],
     effect: null,
+  },
+
+  {
+    id: 'lgbtq_trans_telling',
+    phase: null,
+    weight: 12,
+    when: (G) => G.flags.includes('trans_identity') && G.age >= 16 && G.age <= 32 &&
+      (G.parents?.mother?.alive !== false || G.parents?.father?.alive !== false) && !G.mem?.transTelling,
+    text: (G) => G.lgbtqCriminalized
+      ? 'You have rehearsed it for a year. Here the law has a word for what you are, and it is not the word you would use. You sit across from your mother at the kitchen table and the radio is on, and you have still not decided whether to say it.'
+      : 'You have rehearsed it for a year, in the shower and on the bus, and it comes out in the kitchen in the wrong order. Your mother puts the cup down very carefully.',
+    choices: [
+      { text: 'Say all of it.', tag: 'defiant', outcome: 'You say all of it. She asks one question, the wrong one, and then a second, which is better. It takes a long time, and it is not finished when you leave the table.', effect: (p) => { p.m -= 4; p.r -= 2; p.karma += 3; p.addFlag('trans_told_family'); p.setMem('transTelling', true) } },
+      { text: 'Talk about something else.', tag: 'yielding', outcome: 'You ask about your cousin\'s wedding instead. She answers at length, relieved, and you both know something was set down on the table and picked up again.', effect: (p) => { p.m -= 6; p.r += 5; p.setMem('transTelling', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'lgbtq_trans_papers',
+    phase: null,
+    weight: 6,
+    when: (G) => G.flags.includes('trans_identity') && G.age >= 19 && G.age <= 45 && !G.mem?.transPapers,
+    text: (G) => (G.archetype === 'wealthy_west' && G.currentYear >= 2010)
+      ? 'There is a form, a fee, a letter from a doctor and a wait of some months, and then a card arrives in the post with your name on it. You use it to buy a train ticket you did not need, to watch the clerk read it and hand it back.'
+      : 'The name on your identity card is the one you were given. Every bank, every clinic, every policeman at a checkpoint reads it aloud and then looks up at your face. You learn which counters to queue at, and which clerks.',
+    choices: null,
+    effect: (p) => { p.m -= 2; p.setMem('transPapers', true) },
+  },
+
+  {
+    id: 'lgbtq_trans_late',
+    phase: null,
+    weight: 4,
+    when: (G) => G.flags.includes('trans_identity') && G.age >= 50 && !G.mem?.transLate,
+    text: (G) => G.flags.includes('trans_told_family')
+      ? 'A young person at the clinic asks how long you have been out, and you count it on your fingers, and it is more than half your life. They look at you as if you were a monument. You are going to the pharmacy after this, and then home to make soup.'
+      : 'Nobody in the family ever said it out loud, and now most of the people who might have are dead. You look at the photographs from when you were sixteen. You know exactly what you were thinking in every one of them.',
+    choices: null,
+    effect: (p) => { p.r += 3; p.setMem('transLate', true) },
   },
 
   {

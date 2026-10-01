@@ -11,7 +11,7 @@ export const TEACHER_POWER_EVENTS = [
       G.currentYear >= 1960 &&
       G.age >= 22 && G.age <= 35 &&
       !G.mem?.tpcRuralPosting,
-    text: `The posting is to a school two hours from the nearest town on a road that becomes a river in rainy season. The village has a headman, a market every Thursday, and a school with three classrooms and a corrugated iron roof that amplifies the rain. You are the highest social status in the village. You earn the lowest salary in the district. Both of these things are true at the same time.`,
+    text: `The posting is to a school two hours from the nearest town on a road that becomes a river in rainy season. The village has a headman, a market every Thursday, and a school with three classrooms and a corrugated iron roof that amplifies the rain. You are the highest social status in the village. You earn the lowest salary in the district.`,
     choices: null,
     effect: (p) => {
       p.m += 6;
@@ -28,7 +28,7 @@ export const TEACHER_POWER_EVENTS = [
     when: (G) =>
       G.flags.has('rural_teacher') &&
       !G.mem?.tpcNoBooks,
-    text: `There are thirty-two students and six textbooks. You write the lesson on the board. The chalk runs out in March and the replacement order, submitted in January, arrives in October. By then you have been writing on the board with a stick of charcoal for seven months, which works well enough but turns your hands grey by afternoon. The students have learned to read your writing in charcoal. They do not complain about it. They take what they are given because what they are given is what there is.`,
+    text: `Thirty-two students and six textbooks. The chalk runs out in March; the replacement ordered in January arrives in October. In between you write the lesson in charcoal, which works and turns your hands grey by afternoon. The students learn to read it without complaint. They take what they are given because it is what there is.`,
     choices: null,
     effect: (p) => {
       p.m -= 6;
@@ -45,7 +45,7 @@ export const TEACHER_POWER_EVENTS = [
     when: (G) =>
       G.flags.has('rural_teacher') &&
       !G.mem?.tpcExStudent,
-    text: `She has read every book in the school three times. You can see it in the way she waits for the question before you finish asking it — not impatience, something more specific than that. You write a letter to the district education office about a scholarship. The office acknowledges receipt. Six months later, a second letter arrives to say the deadline for that scholarship passed in April. You write the letter in February. The reply came in November.`,
+    text: `She has read every book in the school three times, and she has the answer before you finish asking. In February you write to the district office about a scholarship for her. The office acknowledges receipt. In November a second letter comes to say the deadline passed in April.`,
     choices: [
       {
         text: 'Find another way. Write to the secondary school directly, to the NGO, to anyone.',
@@ -81,7 +81,7 @@ export const TEACHER_POWER_EVENTS = [
       G.flags.has('rural_teacher') &&
       G.age >= 30 && G.age <= 50 &&
       !G.mem?.tpcInspection,
-    text: `Two men arrive from the district office with clipboards and government shirts. You have spent a week preparing. The classroom with no roof in the rainy season has a temporary tarpaulin; you borrowed it from the headman. The textbook count is laid out carefully. The men write things down with a focus that suggests the writing is the point, not the school. They leave after two hours without saying anything evaluative. A report will be sent, they say. It is sent to the district, not to you.`,
+    text: `Two men arrive from the district office with clipboards and government shirts. You spent a week getting ready: a tarpaulin borrowed from the headman over the roofless room, the textbooks counted and laid out. The men write with great attention, as if the writing were the point. They leave after two hours without saying what they thought. The report goes to the district, not to you.`,
     choices: null,
     effect: (p) => {
       p.m -= 8;
@@ -98,7 +98,7 @@ export const TEACHER_POWER_EVENTS = [
       G.flags.has('rural_teacher') &&
       G.age >= 28 && G.age <= 50 &&
       !G.mem?.tpcSalary,
-    text: `Four months without salary. The explanation from the district is that the payroll forms were lost in a processing transition, which is either true or a particular kind of lie that cannot be proven to be a lie. Your students come every morning. You teach every morning. The headman's wife brings you yams twice a week without being asked to. You are not sure whether this is dignity or something you do not have a word for yet — the state you are in when the work continues after the reason to do it has been removed.`,
+    text: `Four months without salary. The explanation from the district is that the payroll forms were lost in a processing transition, which is either true or a kind of lie that cannot be proven to be a lie. Your students come every morning. You teach every morning. The headman's wife brings you yams twice a week without being asked to. You are not sure whether this is dignity or something you do not have a word for yet — the state you are in when the work continues after the reason to do it has been removed.`,
     choices: null,
     effect: (p) => {
       p.mo -= 1200;
@@ -116,7 +116,7 @@ export const TEACHER_POWER_EVENTS = [
       G.flags.has('rural_teacher') &&
       G.age >= 55 &&
       !G.mem?.tpcReturn,
-    text: `A car pulls up outside the school you still teach in. The student you remember as a child — the one who always sat in front, who waited before speaking — steps out in a suit. He is a doctor now, at the city hospital. He has driven four hours specifically to find you. He does not come in for long. He stands in the courtyard of the school, which has not changed, and says what he came to say. You do not know what to do with it, which is not the same as not being glad.`,
+    text: `A car stops outside the school. The boy who sat at the front and waited before he spoke gets out in a suit; he is a doctor at the city hospital now, and he has driven four hours to find you. He stands in the courtyard, which has not changed, and says what he came to say. He does not stay long. You do not know what to do with it, which is not the same as not being glad.`,
     choices: null,
     effect: (p) => {
       p.m += 20;
@@ -134,7 +134,7 @@ export const TEACHER_POWER_EVENTS = [
       G.flags.has('rural_teacher') &&
       G.age >= 65 &&
       !G.mem?.tpcLate,
-    text: `You count the students. Over forty years, roughly twelve hundred children sat in front of you. You don't know most of what happened to them. Some stayed in the village. Some left and didn't come back. A few came back to say something. The ones you remember most are not always the ones who made the most of what you gave them — sometimes it's the one who sat in the back and said nothing, about whom you wonder still.`,
+    text: `Over forty years, about twelve hundred children sat in front of you. You do not know what became of most of them. Some stayed, some left and never came back, a few came back to say something. The ones you think about most are not always the ones who did most with it. Sometimes it is a quiet one from the back row, and you still wonder.`,
     choices: null,
     effect: (p) => {
       p.m += 12;
@@ -156,7 +156,7 @@ export const TEACHER_POWER_EVENTS = [
       G.age >= 4 && G.age <= 10 &&
       G.currentYear >= 1955 && G.currentYear <= 1995 &&
       !G.mem?.copBirth,
-    text: `Your father's photograph is on the wall of the district office. You learn this because someone mentions it in front of you and another person nods in a way that means they already knew. At school, the teacher's manner is different with you than with the other children — not unkind, the opposite. A particular kind of careful. You are four or six or eight years old. You do not know what to do with the difference, but you notice it.`,
+    text: `Your father's photograph is on the wall of the district office. You learn this because someone mentions it in front of you and another person nods; they already knew. At school, the teacher's manner is different with you than with the other children — not unkind, the opposite. A kind of careful. You are four or six or eight years old. You do not know what to do with the difference, but you notice it.`,
     choices: null,
     effect: (p) => {
       p.w += 5;
@@ -173,7 +173,7 @@ export const TEACHER_POWER_EVENTS = [
       G.flags.has('child_of_power') &&
       G.age >= 14 && G.age <= 25 &&
       !G.mem?.copDoors,
-    text: `The scholarship that others competed for and didn't get. The university place that came through quickly. The job that appeared without advertisement. Nobody says why. Your father doesn't explain and you don't ask. The people around you notice. Whether they say so depends on what your father is in a position to do for them. You notice that they notice.`,
+    text: `A scholarship others competed for and did not get. A university place that came through at once. A job nobody advertised. Your father does not explain and you do not ask. People notice, and whether they say so depends on what your father can do for them. You notice them noticing.`,
     choices: null,
     effect: (p) => {
       p.w += 8;
@@ -191,7 +191,7 @@ export const TEACHER_POWER_EVENTS = [
       G.flags.has('child_of_power') &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.copCosts,
-    text: `You learn, gradually, where the salary comes from. Not from his work exactly, but from the contracts he controls, the land he signs off, the import licences that pass through his office and stop at the right desk. You have always lived well. You now understand the mechanism of it. The mechanism is not unusual. It is how things work. You have to decide what you think that means.`,
+    text: `You learn, slowly, where the money comes from. Not the salary: the contracts he controls, the land he signs for, the import licences that pass through his office and stop at the right desk. You have always lived well. Now you know how it works, and that it is how things work here. You have to decide what you think about that.`,
     choices: [
       {
         text: 'Look away. This is how things work. You did not build the system.',
@@ -246,7 +246,7 @@ export const TEACHER_POWER_EVENTS = [
       G.flags.has('power_fell') &&
       G.age >= 35 && G.age <= 60 &&
       !G.mem?.copAfterFall,
-    text: `You have rebuilt something. It is smaller than what you had and it is yours in a different way — earned through something other than the photograph on the wall. The distance between the two versions of your life is one phone call, one morning, one change in who holds which office. You know this in a way that people who have not lived both versions do not know it.`,
+    text: `You have rebuilt something. It is smaller than what you had and it is yours in a different way — earned through something other than the photograph on the wall. The distance between the two versions of your life is one phone call, one morning, one change in who holds which office. You know this as people who have not lived both versions do not.`,
     choices: null,
     effect: (p) => {
       p.m += 8;

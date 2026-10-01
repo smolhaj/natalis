@@ -24,9 +24,10 @@ export const GREECE_DEPTH_EVENTS = [
       const year = G.currentYear
       const isClose = year <= 1940
       return isClose
-        ? 'Your family came from somewhere else. Smyrna, Pontus, Eastern Thrace, Istanbul — the geography changes with which grandparent is speaking. In 1922, the Greek population of Asia Minor was expelled by the Turkish army after the catastrophic defeat at the end of the Greek-Turkish War. A million and a half people. Your family were among them. Your grandmother still knows the name of the street she lived on there, the name of the market, the specific smell of the harbour. She speaks of it the way people speak of places they have been told they cannot go back to, which is with a particular precision. The word *prosfygas* — refugee — is what your family is, and also what it carries.'
+        ? 'Your family came from somewhere else, Smyrna or Pontus or Thrace or the City, depending on which grandparent is talking: the Greeks of Asia Minor, driven out in 1922. Your grandmother still knows the name of her street there, the market, the smell of the harbour, and speaks of it precisely, the way people speak of places they have been told they cannot go back to. Prosfygas, refugee, is what your family is, and also what it carries.'
         : 'Your grandparents were prosfyges — the Greek refugees expelled from Asia Minor in 1922 after the Great Catastrophe. A million and a half people driven from cities their families had lived in for generations. The neighbourhood you live in was built for families like yours: the houses identical, the plots measured, the names of the streets often reproducing the names of the streets left behind. Your family still says *ekei* — over there — for a place they have never seen, meaning the place before the catastrophe, the place that was taken. Grief at this distance becomes something else: an orientation, a loyalty to a place that exists only in speech.'
     },
+    context: 'About 1.2 million Orthodox Christians came to Greece in the 1923 population exchange after the Asia Minor catastrophe.',
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 5; p.e += 3; p.addFlag('greek_prosfyges_family'); p.setMem('grProsfyges', true) },
   },
@@ -75,13 +76,14 @@ export const GREECE_DEPTH_EVENTS = [
       const isChild = G.age <= 14
       const isYoungAdult = G.age >= 18
       if (isChild) {
-        return 'The Germans arrived in April 1941. By winter, the food was gone. The bread ration in Athens was 100 grams per day in October. By November it was nothing. People collapsed in the streets. The death carts came in the mornings. Your mother keeps a small amount of flour and does not tell you where she keeps it. You learn what hunger is not as an abstraction but as a specific physical presence that occupies the same place as thought. The famine kills more than 100,000 in Athens alone. You are still alive. You understand that this is not guaranteed.'
+        return 'The Germans came in April and by winter the food was gone. People collapse in the streets, and the carts come in the mornings for the ones who did not get up. Your mother keeps a little flour and does not tell you where. You learn hunger not as an idea but as something that takes up the place where thinking used to be. You are still alive, and you understand that this is not guaranteed.'
       }
       if (isYoungAdult) {
-        return 'The Axis occupation — German, Italian, Bulgarian — divided the country into three zones. Athens was German. The city was requisitioned: the food, the transport, the buildings, the remaining supplies. By the winter of 1941-42, the city was starving. The queues at the few soup kitchens ran around blocks. The bodies of those who had died in the street were collected each morning by carts from the municipality. An estimated 300,000 Greeks died of famine-related causes during the occupation. You are in the city, or a village whose supply lines are cut, and the system of ordinary life has been replaced by the system of survival, which operates on different principles.'
+        return 'The occupation divides the country three ways, and Athens is German. The food, the transport, the buildings are requisitioned, and by the winter of 1941 the city is starving: queues round the block at the few soup kitchens, carts collecting the dead from the streets each morning. You are in the city, or in a village whose supply lines are cut, and ordinary life has been replaced by the system of survival, which works on other principles.'
       }
-      return 'The winter of 1941-42 in Greece under Axis occupation. The bread ration is 100 grams a day and then nothing. The city is starving. Bodies in the streets at dawn. The soup kitchens — organised by the Red Cross, by the Church, by people who organise anyway — cannot cover the need. More than 300,000 Greeks will die of famine-related causes during the occupation years. You survive this winter. What you understand about food, and about what a government controls, is learned here and does not leave.'
+      return 'The winter of 1941, and the bread ration is a hundred grams a day and then nothing. Bodies in the streets at dawn. The soup kitchens, run by the Red Cross, the Church, and people who organise anyway, cannot meet the need. You survive the winter. What you learn here about food, and about what a government controls, does not leave you.'
     },
+    context: 'The occupation famine of 1941-42 killed an estimated 100,000 or more people in the Athens area alone; the bread ration fell to around 100 grams a day.',
     choices: null,
     effect: (p) => { p.m -= 16; p.h -= 6; p.r += 6; p.addFlag('greek_katochi_generation'); p.setMem('grKatochi', true) },
   },
@@ -98,7 +100,7 @@ export const GREECE_DEPTH_EVENTS = [
       G.age >= 18 && G.age <= 38 &&
       G.flags.has('greek_katochi_generation') &&
       !G.mem?.grElasChoice,
-    text: 'EAM — the National Liberation Front — is organising. The armed wing, ELAS, controls large parts of the countryside and has driven the Axis forces out of some regions. The communists dominate EAM but the coalition is broader: socialists, liberals, people who have no politics and simply want the Germans out. Joining means weapons training, sabotage, hiding from reprisals. Not joining means watching from the occupied city while the mountain villages are burned in retaliation for attacks. The resistance is real. The divisions inside the resistance are also real.',
+    text: 'EAM — the National Liberation Front — is organising. The armed wing, ELAS, controls large parts of the countryside and has driven the Axis forces out of some regions. The communists dominate EAM but the coalition is broader: socialists, liberals, people who have no politics and simply want the Germans out. Joining means weapons training, sabotage, hiding from reprisals. Not joining means watching from the occupied city while the mountain villages are burned in retaliation for attacks. The divisions inside the resistance are also real.',
     choices: [
       {
         text: 'You join. The occupation has made the choice clear.',
@@ -138,8 +140,9 @@ export const GREECE_DEPTH_EVENTS = [
       if (wasElas) {
         return 'The liberation that came in 1944 became something else. The Dekemvriana — the December battles in Athens between ELAS and the British-backed government forces — ended with the Varkiza Agreement, and then the White Terror, and then the democratic elections that the left boycotted, and then the Democratic Army of Greece forming in the mountains. The civil war the occupation had been postponing has arrived. You came from the resistance. The resistance has now split along a line that runs through the village, through the family, through the street. There are people on the other side whom you know. That is the condition of a civil war: the people on the other side are not strangers.'
       }
-      return 'The Civil War. The communists call it the Democratic Army; the government calls them bandits. The British back the government; the Soviets do not back the communists enough to make a difference. The war runs from 1946 to 1949 in the mountains, in the villages, on the roads. Eighty thousand dead. A hundred thousand exiles to Eastern Europe — the defeated fighters and their families, many of them never returning. The Macedonian Question runs underneath the political question: who is Greek, who controls the north, who was on what side. Your village has people on both sides of this. After 1949, the side that won will decide what the war was about and who gets to be part of the country going forward.'
+      return 'The civil war: the Democratic Army to one side, bandits to the other, the British behind the government and the Soviets not behind the communists enough to matter. Three years in the mountains and the villages and on the roads, and afterwards the beaten fighters and their families go north across the border, many for good. Your village has people on both sides. After 1949 the side that won decides what the war was about, and who gets to belong to the country.'
     },
+    context: 'The Greek Civil War (1946-1949) killed some 80,000 people; about 100,000 went into exile in the Eastern Bloc.',
     choices: [
       {
         text: 'Your family is on the government side — you understand the war as a fight against communist subversion.',
@@ -198,7 +201,7 @@ export const GREECE_DEPTH_EVENTS = [
       G.currentYear >= 1958 && G.currentYear <= 1972 &&
       G.age >= 22 && G.age <= 40 &&
       !G.mem?.grMiracle,
-    text: 'The 1950s and 1960s: the fastest economic growth in Europe after West Germany. Concrete going up everywhere. The villages emptying into Athens. The first refrigerator, the first television, the first motorbike. The tourism beginning — the northern Europeans arriving for the light and the sea. American aid, Marshall Plan money, cheap labour, a government that keeps wages low to attract investment. The growth is real. You can feel it in the city, in the shops, in the construction noise. What the growth does not disturb is the political architecture underneath it: the civil war\'s winners still running the country, the left still classified.',
+    text: 'The fifties and sixties: concrete going up everywhere, the villages emptying into Athens, the first refrigerator, the first television, the first motorbike, the northern Europeans arriving for the light and the sea. You can feel the growth in the shops and the construction noise. It does not disturb what is underneath: the civil war\'s winners still running the country, the left still on file.',
     choices: null,
     effect: (p) => { p.m += 8; p.w += 6; p.addFlag('greek_economic_miracle_gen'); p.setMem('grMiracle', true) },
   },
@@ -217,14 +220,14 @@ export const GREECE_DEPTH_EVENTS = [
     text: (G) => {
       const isFemale = G.character.gender === 'female'
       return isFemale
-        ? 'The labour contract is two years, renewable. The factory is in Stuttgart, or Düsseldorf, or Munich. Greek women clean hospitals, work assembly lines, pack chocolates in factories where the supervisor speaks slowly and loudly as if volume will bridge the language gap. You send money home — a significant amount, converted to drachmas, which means more there than here. The neighbourhood in Germany is Greek: the kafeneion, the Sunday church service conducted in Greek, the newspapers shipped a week late from Athens. You are a *xenitemenē* — one who lives in the foreign land — which in Greek carries a specific weight: the exile who is not an exile, the migrant who left by choice, the person who is not quite anywhere.'
-        : 'The bilateral agreement between Greece and West Germany brings 300,000 Greek workers north between 1960 and 1974. The train from Thessaloniki to Munich takes two days. The factory job pays three times what the same day\'s work would pay in Greece. You send remittances home. You live in a dormitory with men from Crete, from Macedonia, from places you had never been in your own country. The German word for what you are — *Gastarbeiter*, guest worker — contains the expectation that you will eventually go back. You are not sure. The question of whether Germany is somewhere you live or somewhere you are working is something you will answer over many years.'
+        ? 'The labour contract is two years, renewable. The factory is in Stuttgart, or Düsseldorf, or Munich. Greek women clean hospitals, work assembly lines, pack chocolates in factories where the supervisor speaks slowly and loudly as if volume will bridge the language gap. You send money home — a significant amount, converted to drachmas, which means more there than here. The neighbourhood in Germany is Greek: the kafeneion, the Sunday church service conducted in Greek, the newspapers shipped a week late from Athens. You are a *xenitemenē* — one who lives in the foreign land — which in Greek carries a weight: the exile who is not an exile, the migrant who left by choice, the person who is not quite anywhere.'
+        : 'The agreement with West Germany takes hundreds of thousands of Greeks north. The train from Thessaloniki to Munich takes two days, and the factory pays three times what the same day\'s work pays at home. You share a dormitory with men from Crete and Macedonia, places in your own country you had never been. The German word for you, Gastarbeiter, assumes you will go back. Whether Germany is where you live or where you work is something you will answer over many years.'
     },
     choices: [
       {
         text: 'You go and stay. Germany becomes the country you live in.',
         tag: null,
-        outcome: 'Your children will grow up speaking German better than Greek. You will speak Greek at home and German everywhere else for the rest of your life. This arrangement will remain slightly uncomfortable in both directions, which is the permanent condition of having made this particular choice.',
+        outcome: 'Your children will grow up speaking German better than Greek. You will speak Greek at home and German everywhere else for the rest of your life. This arrangement will remain slightly uncomfortable in both directions, for as long as the choice stands.',
         effect: (p) => { p.m -= 6; p.w += 8; p.mo += 4000; p.addFlag('greek_gastarbeiter'); p.addFlag('emigrant'); p.setResidency('work_visa'); p.setMem('grGastarbeiter', true) },
       },
       {
@@ -251,9 +254,9 @@ export const GREECE_DEPTH_EVENTS = [
     text: (G) => {
       const wasLeft = G.flags.has('dissident_family')
       if (wasLeft) {
-        return 'PASOK came to power in 1981. For the first time, the left was in government. Andreas Papandreou acknowledged the National Resistance — EAM, ELAS, the communists in the mountains — as a legitimate part of the war against the occupation. Your family\'s side was rehabilitated by law thirty years after the fact. The pensions came. The official recognition came. The word *symmoriti* — bandit — was formally retired as the government\'s word for the defeated side. What the formal rehabilitation could not restore was the thirty years that came between, the certificates denied, the paths not taken, the people who left for Tashkent and whose children grew up speaking Russian. You are glad the word was retired. You are also doing arithmetic.'
+        return '1981, and PASOK, and for the first time the left is in government. The resistance in the mountains is recognised by law as part of the war against the occupation, thirty years late, and the pensions come, and the word bandit is retired. What the law cannot give back is the thirty years in between: the certificates refused, the paths closed, the cousins who went to Tashkent and whose children grew up speaking Russian. You are glad the word was retired. You are also doing arithmetic.'
       }
-      return 'The civil war is the war Greeks do not argue about openly. The lines it drew are still there — in families, in villages, in the particular silence that descends when certain names come up. The official history changed in 1981, when PASOK acknowledged the wartime resistance and rehabilitated the defeated side. The change was real. It did not change everything. There are people in your village whose relationship to what happened is still determined by which side their grandfather was on. You are old enough to see both sides of the line and to know that the line is still there, faded but present, like the outline of a wall that was taken down.'
+      return 'The civil war is the war Greeks do not argue about openly. The lines it drew are still there — in families, in villages, in the silence that descends when certain names come up. The official history changed in 1981, when PASOK acknowledged the wartime resistance and rehabilitated the defeated side. It did not change everything. There are people in your village whose relationship to what happened is still determined by which side their grandfather was on. You are old enough to see both sides of the line and to know that the line is still there, faded but present, like the outline of a wall that was taken down.'
     },
     choices: null,
     effect: (p) => { p.r += 6; p.e += 4; p.karma += 3; p.setMem('grCivilWarLate', true) },

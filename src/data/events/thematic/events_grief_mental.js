@@ -26,7 +26,7 @@ export const GRIEF_MENTAL_EVENTS = [
       const isNigeria = G.character.country.name === 'Nigeria'
       const isGhana = G.character.country.name === 'Ghana'
       if (isNigeria && G.religion === 'christian_protestant') {
-        return 'The church service runs four hours. The choir sings in Yoruba and English simultaneously, and the sound is so large it vibrates in your chest. Cousins you have not seen in a decade appear. Your mother\'s friends — women who have known her since before you existed — take turns keeping vigil through the night. The coffin is expensive. Funerals here are not quiet; they are a statement. The food afterward continues until midnight. People say: a good send-off. That is the obligation, and it is taken seriously.'
+        return 'The service runs four hours, and the choir sings in Yoruba and English at once, so loud it is in your chest. Cousins you have not seen in ten years appear, and your mother\'s oldest friends take turns keeping vigil through the night. The coffin is expensive, because a funeral here is a statement. The food goes on until midnight, and people say: a good send-off. That is the obligation, and it is kept.'
       }
       if (isGhana) {
         return 'The funeral runs two days. Saturday is for the family — the body is received in the compound, the women in black and red, the men in dark cloth. Drumming begins at dawn and does not stop until well after dark. Sunday is for the church, the crowd, the formal tributes. A man with a microphone reads out every contribution by name. The grief is communal property here. It does not belong to you alone.'
@@ -74,7 +74,7 @@ export const GRIEF_MENTAL_EVENTS = [
       G.character.country.name === 'Ireland' &&
       (G.mem.parentDied || G.flags.includes('bereaved')) &&
       !G.mem.funeral_type_shown,
-    text: 'The body is in the front room, in the open coffin. People have been arriving since last night. Someone you barely know is telling a story about your father at a football match in 1987 and the room is laughing. There is tea, and sandwiches, and later whiskey. The priest comes and goes. A neighbour plays "The Parting Glass" on a tin whistle, badly, and no one minds. The wake is not a failure to grieve. It is grief performed collectively, with the specific Irish understanding that the way you treat the dead says everything about how you treat the living. You will be here all night.',
+    text: 'Your father is in the front room, in the open coffin, and people have been arriving since last night. Someone you barely know is telling a story about him at a football match in 1987, and the room is laughing. There is tea, and sandwiches, and later whiskey, and a neighbour plays "The Parting Glass" on a tin whistle, badly, and no one minds. You will be here all night.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 4; p.setMem('funeral_type_shown', true); p.addFlag('cultural_mourning') },
   },
@@ -124,8 +124,8 @@ export const GRIEF_MENTAL_EVENTS = [
     // it was burying a mother in 1944 through a Bluetooth speaker. The short
     // secular service is the older fact; only the equipment has changed.
     text: (G) => G.currentYear >= 2005
-      ? 'The service is forty minutes. A humanist celebrant who did not know your mother reads from notes you gave her over the phone last week. Someone plays a song on a laptop through a small Bluetooth speaker. The flower arrangements are correct. At the crematorium you are given a printed order of service. Afterwards everyone goes to a pub and says "she would have wanted this" and drinks more than they planned to. The whole thing is over in one day. You drive home thinking: it was not enough. There should be more of this. It should take longer.'
-      : 'The service is forty minutes. A minister who did not know your mother reads out the facts of her life from notes your aunt gave him on Tuesday. The hymn numbers are on the board and only the first two rows sing. The flower arrangements are correct. At the graveside you are given a printed order of service and you keep folding it. Afterwards everyone goes back to the house and says "she would have wanted this" and drinks more than they planned to. The whole thing is over in one day. You walk home thinking: it was not enough. There should be more of this. It should take longer.',
+      ? 'The service is forty minutes. A celebrant who did not know your mother reads from notes you gave her on the phone, and someone plays a song from a laptop through a small speaker. Afterwards everyone goes to a pub and says "she would have wanted this" and drinks more than they planned. The whole thing is over in a day. You drive home thinking it was not enough; it should take longer.'
+      : 'The service is forty minutes. A minister who did not know your mother reads out the facts of her life from your aunt\'s notes, and only the first two rows sing. At the graveside you keep folding the order of service. Afterwards everyone goes back to the house and says "she would have wanted this." The whole thing is over in a day. You walk home thinking it was not enough; it should take longer.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 6; p.setMem('funeral_type_shown', true); p.addFlag('cultural_mourning') },
   },
@@ -153,7 +153,7 @@ export const GRIEF_MENTAL_EVENTS = [
         return 'It is the smell of soy sauce caramelising in a pan, the exact threshold where it goes from savoury to slightly burnt. Your father always let it go a few seconds too long. You have been making it the right way, every time. You stand at your own stove and cry for the first time since the funeral.'
       }
       if (arch === 'post_soviet') {
-        return 'The smell hits you in the stairwell of a building that has nothing to do with your family — a specific combination of damp concrete and boiled cabbage that belongs to a hundred Soviet-era staircases and, without warning, to your grandmother\'s apartment. You sit on the stairs for a while. A neighbour passes and does not ask.'
+        return 'The smell hits you in the stairwell of a building that has nothing to do with your family — a combination of damp concrete and boiled cabbage that belongs to a hundred Soviet-era staircases and, without warning, to your grandmother\'s apartment. You sit on the stairs for a while. A neighbour passes and does not ask.'
       }
       return 'You are in a hardware store when a smell — paint thinner, something like turpentine — arrives before the memory does. By the time you have identified it as your father\'s workshop, your throat is already tight. You turn to the next aisle and wait for your face to settle. Grief does not ask permission.'
     },
@@ -174,16 +174,16 @@ export const GRIEF_MENTAL_EVENTS = [
       const country = G.character.country
       // Era-specific songs by region/archetype
       if (country.name === 'Ireland') {
-        return 'It comes on the radio in the car — "Nothing Compares 2 U" or something from a tape your mother played when you were eight, one of those songs that belonged entirely to a specific time of your life. You reach to change the station and then don\'t. You sit in the parked car in the supermarket car park for several minutes. People walk past with trolleys. The song ends. You go in and buy milk.'
+        return 'It comes on the radio in the car — "Nothing Compares 2 U" or something from a tape your mother played when you were eight, one of those songs that belonged entirely to a time of your life. You reach to change the station and then don\'t. You sit in the parked car in the supermarket car park for several minutes. People walk past with trolleys. The song ends. You go in and buy milk.'
       }
       if (country.name === 'Nigeria' || country.name === 'Ghana') {
         return 'A Fela song comes on in someone else\'s car — or a hymn from Sunday service, the one they always sang at the end, in Yoruba, that your father would hum for days afterward. You hear it now somewhere unexpected: a phone playing on the bus, a child in the street. The feeling is not sadness exactly. It is the feeling of being in two times at once.'
       }
       if (country.name === 'Japan') {
-        return 'The year your parent died, a particular Misora Hibari song was playing constantly — in the konbini, in the lift, on the television in the evenings. You did not notice it at the time. Now you hear it in a department store, and your body has filed it under a year you would rather not return to. You stand by the escalator and wait for it to end.'
+        return 'The year your parent died, a Misora Hibari song was playing constantly — in the konbini, in the lift, on the television in the evenings. You did not notice it at the time. Now you hear it in a department store, and your body has filed it under a year you would rather not return to. You stand by the escalator and wait for it to end.'
       }
       if (country.archetype === 'post_soviet') {
-        return 'There is a song on the television — Soviet-era, something from a film that everyone your parents\' age knew — and for a moment you hear it the way your mother heard it: as the sound of a particular decade, a particular set of expectations, a life before you existed. The grief is for her and also for all the years she had that you were not part of.'
+        return 'There is a song on the television — Soviet-era, something from a film that everyone your parents\' age knew — and for a moment you hear it the way your mother heard it: as the sound of a decade, a set of expectations, a life before you existed. The grief is for her and also for all the years she had that you were not part of.'
       }
       if (country.archetype === 'wealthy_west') {
         const decade = Math.floor((G.character.birthYear + 10) / 10) * 10
@@ -234,7 +234,7 @@ export const GRIEF_MENTAL_EVENTS = [
       G.mem.parentDied &&
       G.age >= 35 &&
       !G.mem.grief_anniversary_ambush,
-    text: 'You forgot what day it was. You were in the middle of a meeting, or a grocery run, or putting the children to bed, and then something — the date on a receipt, the way the light fell — returned you there. You went quiet in a way that the people around you attributed to tiredness. You did not correct them. Grief does not become manageable so much as it becomes portable. You learn to carry it in places others cannot see.',
+    text: 'You forgot what day it was. You were in the middle of a meeting, or a grocery run, or putting the children to bed, and then something — the date on a receipt, the way the light fell — returned you there. You went quiet and the people around you put it down to tiredness. You did not correct them. Grief does not become manageable so much as it becomes portable. You learn to carry it in places others cannot see.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 4; p.setMem('grief_anniversary_ambush', true) },
   },
@@ -274,7 +274,7 @@ export const GRIEF_MENTAL_EVENTS = [
       const country = G.character.country.name
       const condition = G.mentalHealth.condition
       if (condition === 'depression') {
-        return 'When you tell your mother what the doctor said, she is quiet for a moment. Then: "Everyone is sad sometimes. You just need to get outside more. Eat properly." There is no malice in it. In her vocabulary, depression is a foreign concept for people who have not had real problems. She grew up under a regime that did not officially recognise mental illness except as deviance. You do not have the energy to explain. You stop telling her.'
+        return 'You tell your mother what the doctor said, and she is quiet, and then: "Everyone is sad sometimes. Get outside more. Eat properly." There is no malice in it. She grew up under a regime that treated mental illness as deviance, and in her vocabulary depression is for people who have not had real problems. You do not have the energy to explain. You stop telling her.'
       }
       return 'The word "nervy" — nervniy — is the closest translation available to you. It means something between anxious and weak, and carries a moral implication. "He\'s nervous" is not a diagnosis but a character flaw. You learn not to mention the therapy appointments. You say you are seeing a doctor for something physical. This is, in its way, true.'
     },
@@ -347,7 +347,7 @@ export const GRIEF_MENTAL_EVENTS = [
       const isJapan = G.character.country.name === 'Japan'
       const isKorea = G.character.country.name === 'South Korea'
       if (isJapan) {
-        return 'The concept exists — utsu-byo, depression — but naming it at work would be professionally catastrophic. The polite fiction is that you are tired, overworked, perhaps a seasonal thing. Your doctor prescribes medication without much conversation. In Japan, the prescription is the treatment; the conversation is not the point. You take the medication and say nothing to your colleagues. The performance of function continues. It is exhausting in a way that compounds what you are treating.'
+        return 'The concept exists — utsu-byo, depression — but naming it at work would be professionally catastrophic. The polite fiction is that you are tired, overworked, perhaps a seasonal thing. Your doctor prescribes medication without much conversation. In Japan, the prescription is the treatment; the conversation is not the point. You take the medication and say nothing to your colleagues. The performance of function continues. It is exhausting, and the exhaustion compounds what you are treating.'
       }
       if (isKorea) {
         return 'Hwabyung is the word for what happens when you suppress anger and grief long enough that it becomes something physical — a lump in the chest, fatigue, heat. It is recognized as a culture-bound syndrome in the DSM. You do not know this. You know that you cannot bring shame to your family by being unwell in this way. You perform wellness with great precision.'
@@ -386,7 +386,7 @@ export const GRIEF_MENTAL_EVENTS = [
       G.mentalHealth.condition === 'depression' &&
       G.stats.happiness < 30 &&
       !G.mem.dep_lived1,
-    text: 'The alarm goes off. You know exactly what you need to do and in what order. You know the exact sequence of actions between here and there. This knowledge produces nothing. You lie there for two hours looking at the ceiling. The ceiling has a small water stain in one corner. You have developed an extremely detailed familiarity with it. The phone lights up twice. You do not look at it. Eventually hunger produces forward motion. This is called a good day.',
+    text: 'The alarm goes off. You know exactly what you need to do and in what order, and the knowledge produces nothing. You lie there for two hours looking at the small water stain in the corner of the ceiling, which you now know in detail. The phone lights up twice and you do not look at it. Eventually hunger moves you. This is called a good day.',
     choices: null,
     effect: (p) => { p.m -= 8; p.h -= 3; p.setMem('dep_lived1', true) },
   },
@@ -454,7 +454,7 @@ export const GRIEF_MENTAL_EVENTS = [
       {
         text: 'Keep going — the performance is what\'s holding things together',
         tag: null,
-        outcome: 'It is, partly. It is also preventing recovery. Both of these things are true.',
+        outcome: 'It is, partly. It is also preventing recovery.',
         effect: (p) => { p.m -= 8; p.h -= 4; p.setMem('dep_perf_exhaust', true) },
         inject: null,
       },
@@ -565,7 +565,7 @@ export const GRIEF_MENTAL_EVENTS = [
     text: (G) => {
       const arch = G.character.country.archetype
       if (['wealthy_east'].includes(arch)) {
-        return 'There is a specific anxiety that belongs to this context — the performance of correct social form under scrutiny. You know the protocols: the bow, the card exchange with both hands, the correct level of deference. But knowing them does not prevent the feeling that you are one gesture away from visible failure. You leave every professional interaction and replay it once, then twice, then leave it.'
+        return 'There is an anxiety that belongs to this context — the performance of correct social form under scrutiny. You know the protocols: the bow, the card exchange with both hands, the correct level of deference. But knowing them does not prevent the feeling that you are one gesture away from visible failure. You leave every professional interaction and replay it once, then twice, then leave it.'
       }
       if (['subsaharan', 'developing_unstable'].includes(arch)) {
         return 'In your family, in your community, the anxiety you experience is described as overthinking. People here have real problems; what you\'re feeling is a luxury of the mind. You have absorbed this assessment. You do not dispute it. The anxiety does not respond to logic.'
@@ -591,7 +591,7 @@ export const GRIEF_MENTAL_EVENTS = [
     text: (G) => {
       const arch = G.character.country.archetype
       if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(arch)) {
-        return 'In this community, child loss is not uncommon in the statistical sense. That fact provides no comfort. The neighbours know how to sit with you; they have done it before. The rituals exist. But the particular knowledge that your child is gone — not an abstraction, not a statistic — is a fact that will not integrate. You continue forward. You do not recover. These are not the same thing.'
+        return 'In this community, child loss is not uncommon in the statistical sense. That fact provides no comfort. The neighbours know how to sit with you; they have done it before. The rituals exist. But the knowledge that your child is gone — not an abstraction, not a statistic — is a fact that will not integrate. You continue forward. You do not recover. These are not the same thing.'
       }
       return 'People stop saying the name. They are protecting you, they believe. What they are doing is making the absence louder. You begin to say the name deliberately — at dinner, in conversation, in the places where the child would have been. Your partner does the same. You learn, slowly, that grief for a child requires a different architecture than grief for anyone else. It does not diminish. It expands to fit the life you keep living alongside it.'
     },
@@ -716,7 +716,7 @@ export const GRIEF_MENTAL_EVENTS = [
       G.mentalHealth.condition &&
       G.flags.includes('processed_grief') &&
       !G.mem.mh_relapse_unexpected,
-    text: 'You thought you were past the worst of it. Several years of relative stability. The tools working. Then a winter that was slightly greyer than average, a run of bad news, a change in your sleep — and here it is again. Not as bad as the first time. But recognisably the same thing. This is what they did not tell you: that having processed something does not mean it cannot return. The processing is not a cure. It is an increased capacity to carry.',
+    text: 'You thought you were past the worst of it: several steady years, the tools working. Then a winter a little greyer than usual, some bad news, a change in your sleep, and here it is again, not as bad as the first time and recognisably the same. Nobody told you that having worked through something does not mean it cannot come back. What you have now is more capacity to carry it.',
     choices: [
       {
         text: 'Use what you learned last time — restart treatment early',
@@ -830,7 +830,7 @@ export const GRIEF_MENTAL_EVENTS = [
         if (midChildhoodYear >= 1960 && midChildhoodYear <= 1975) {
           return 'You find an old photograph and in the background there is a Showa-era television set, the small boxy kind, and a calendar on the wall advertising a rice brand that no longer exists. The photograph is of something else but your eyes go to the calendar. Your parent is in the photo. The quality of light in the room is the light of that decade. You are not able to explain to your children what it felt like to live inside that time.'
         }
-        return 'Your parent\'s handwriting is on a folded piece of paper inside an old book. The handwriting is very specific — a particular way of writing certain characters that you have not seen in years. You close the book and put it back.'
+        return 'Your parent\'s handwriting is on a folded piece of paper inside an old book. The handwriting is very specific — a way of writing certain characters that you have not seen in years. You close the book and put it back.'
       }
       if (country.name === 'Nigeria') {
         if (midChildhoodYear >= 1970 && midChildhoodYear <= 1985) {
@@ -839,11 +839,11 @@ export const GRIEF_MENTAL_EVENTS = [
         return 'There is a cloth — ankara, the pattern that was everywhere in the years of your childhood — that belonged to your mother. You don\'t wear it. You keep it folded in a drawer. You understand that you are keeping it because the smell, after all these years, is still slightly hers.'
       }
       if (country.name === 'Ireland') {
-        return 'There is a particular smell of turf smoke that belongs to the house you grew up in. You encounter it occasionally — a fireplace somewhere, an older house in the countryside — and the whole of the early years comes back at once: the kitchen table, the pattern of the wallpaper, the texture of the carpet in the hall. Memory lives in the nose. You have known this for a long time.'
+        return 'There is a smell of turf smoke that belongs to the house you grew up in. You encounter it occasionally — a fireplace somewhere, an older house in the countryside — and the whole of the early years comes back at once: the kitchen table, the pattern of the wallpaper, the texture of the carpet in the hall. Memory lives in the nose. You have known this for a long time.'
       }
       if (country.archetype === 'post_soviet') {
         if (midChildhoodYear >= 1960 && midChildhoodYear <= 1980) {
-          return 'Your parent\'s Soviet-era books are still on the shelves. The spines are a particular shade of faded brown that belongs entirely to the printing techniques of that time. You take one down. The pages are yellow at the edges. The name written inside the front cover is your parent\'s, in the handwriting of when they were young — different from the handwriting you knew, more uncertain, still becoming itself.'
+          return 'Your parent\'s Soviet-era books are still on the shelves. The spines are a shade of faded brown that belongs entirely to the printing techniques of that time. You take one down. The pages are yellow at the edges. The name written inside the front cover is your parent\'s, in the handwriting of when they were young — different from the handwriting you knew, more uncertain, still becoming itself.'
         }
         return 'A television programme from the eighties plays on a nostalgia channel — something from Gostelradio, the music or the news broadcast. The production quality is immediately, precisely the quality of every evening of your childhood. You were not aware you had stored it so completely.'
       }
@@ -851,7 +851,7 @@ export const GRIEF_MENTAL_EVENTS = [
         if (midChildhoodYear >= 1965 && midChildhoodYear <= 1980) {
           return 'You are clearing out and find an album that belonged to your parents — The Beatles, or Bowie, or something from the years when they were young and the century felt new. The sleeve art. The track listing on the back. You do not play it but you know every song anyway, from the years it lived on a shelf in the living room, from the afternoons you were in the room while it played in the background. You keep it.'
         }
-        return 'A film from your childhood is on somewhere — the specific palette of eighties or nineties cinema, the particular texture of home video — and the years collapse. Not with sadness exactly. With the physical fact of time: all of that was real, and it is also very far away.'
+        return 'A film from your childhood is on somewhere — the palette of eighties or nineties cinema, the texture of home video — and the years collapse. Not with sadness exactly. With the physical fact of time: all of that was real, and it is also very far away.'
       }
       return 'You find something that belonged to them — an object so ordinary it survived without ceremony: a cup, a pen, a book with their handwriting in the margin. The ordinariness of it is what undoes you. Not a keepsake. Just a thing.'
     },

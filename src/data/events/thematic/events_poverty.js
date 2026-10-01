@@ -209,7 +209,7 @@ export const POVERTY_EVENTS = [
       !G.mem?.povUtilityAnxiety &&
       G.flags.has('utilities_cut_childhood') &&
       G.age >= 32 && G.age <= 50,
-    text: 'You turn off every light when you leave a room. You check the thermostat before you leave the house. You have enough money — have had enough money for years — and you still do this, still feel the specific dread of the moment before the bill arrives. Your partner has noticed and mentioned it once. You did not explain it then and do not now.',
+    text: 'You turn off every light when you leave a room. You check the thermostat before you leave the house. You have enough money — have had enough money for years — and you still do this, still feel the dread of the moment before the bill arrives. Your partner has noticed and mentioned it once. You did not explain it then and do not now.',
     choices: null,
     effect: (p) => {
       p.setMem('povUtilityAnxiety', true)
@@ -249,7 +249,7 @@ export const POVERTY_EVENTS = [
       {
         text: 'You say something — a careful, honest sentence about where you grew up',
         tag: 'names_it',
-        outcome: 'The table briefly reconfigures. Someone says something kind. It is not a big moment, but it is real.',
+        outcome: 'The table briefly reconfigures. Someone says something kind. It is not a big moment.',
         effect: (p) => {
           p.setMem('povShameEcho', true)
           p.addFlag('class_named')
@@ -1008,7 +1008,7 @@ export const POVERTY_EVENTS = [
       G.mem?.isHomeless === true &&
       ['subsaharan', 'developing_urban', 'developing_unstable', 'post_soviet'].includes(G.archetype) &&
       G.age >= 18 && G.age <= 55,
-    text: 'The network holds. An uncle, a second cousin, a neighbour from your old street — someone who knows someone who knows you. A room is found. It is not free — there is an expectation of contribution, of help around the house, of a particular gratitude expressed over months. You meet these conditions. The informal debt is real but has no interest rate.',
+    text: 'The network holds. An uncle, a second cousin, a neighbour from your old street — someone who knows someone who knows you. A room is found. It is not free — there is an expectation of contribution, of help around the house, of a gratitude expressed over months. You meet these conditions. The informal debt is real but has no interest rate.',
     choices: null,
     effect: (p) => {
       p.setMem('povInformalRescue', true)
@@ -1153,7 +1153,7 @@ export const POVERTY_EVENTS = [
       G.money < 800 &&
       G.age >= 20 && G.age <= 40 &&
       (G.wealthTier ?? 3) <= 2,
-    text: 'You have a job and the job pays not quite enough. The gap between what comes in and what goes out has a name — rent, utilities, food — and it is specific every month. You know your bank balance on the twenty-eighth of every month in a way that people with larger balances do not. You count forward to payday in a way that feels like arithmetic and reads, from the outside, like something else.',
+    text: 'You have a job and the job pays not quite enough. The gap between what comes in and what goes out has a name — rent, utilities, food — and it is specific every month. You know your bank balance on the twenty-eighth of every month, as people with larger balances do not. You count forward to payday in a way that feels like arithmetic and reads, from the outside, like something else.',
     choices: null,
     effect: (p) => {
       p.setMem('povWorkingPoor', true)
@@ -1177,7 +1177,7 @@ export const POVERTY_EVENTS = [
       {
         text: 'Keep going — the financial stability is worth it',
         tag: 'keeps',
-        outcome: 'You maintain it for longer than your body expected. You are tired in a way that sleep does not entirely resolve.',
+        outcome: 'You maintain it for longer than your body expected. You are tired, and sleep does not entirely fix it.',
         effect: (p) => {
           p.setMem('povSecondJob', true)
           p.addFlag('works_two_jobs')
@@ -1210,7 +1210,7 @@ export const POVERTY_EVENTS = [
       !G.mem?.povWorkingPoorReckoning &&
       G.flags.has('working_poor') &&
       G.age >= 34 && G.age <= 50,
-    text: 'You have been doing this for over a decade. Working, not getting ahead. Covering costs, not building anything. The middle class is visible from here — a specific distance, a quality of furniture, a specific relationship with uncertainty. You know exactly where you are. The question is whether this is a stage or a condition.',
+    text: 'You have been doing this for over a decade. Working, not getting ahead. Covering costs, not building anything. The middle class is visible from here — a distance, a quality of furniture, a relationship with uncertainty. You know exactly where you are. The question is whether this is a stage or a condition.',
     choices: [
       {
         text: 'Retrain or reskill — change the income ceiling',
@@ -1394,7 +1394,7 @@ export const POVERTY_EVENTS = [
       !G.mem?.povPaydayConsequence &&
       G.flags.has('took_payday_loan') &&
       G.age >= 20 && G.age <= 45,
-    text: 'The payday loan is due on the date specified. The amount is three hundred and twenty percent of what you borrowed, annualised. The specific figure when you took it out was small enough to seem manageable. The specific figure when it is due is larger than the emergency it was supposed to cover. You look at both numbers and understand the mechanism.',
+    text: 'The payday loan is due on the date specified. The amount is three hundred and twenty percent of what you borrowed, annualised. The figure when you took it out was small enough to seem manageable. The figure when it is due is larger than the emergency it was supposed to cover. You look at both numbers and understand the mechanism.',
     choices: [
       {
         text: 'Pay it in full and never use one again',

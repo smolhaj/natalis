@@ -13,7 +13,7 @@ export const FOLLOWTHROUGH_34_EVENTS = [
       G.flags.has('ecu_quechua_home') &&
       G.age >= 55 &&
       !G.mem?.ft34QuechuaLate,
-    text: 'Ecuador officially recognised Quechua in 1998. There are intercultural bilingual schools now — the thing the teacher told you was for grandmothers has become a subject of serious academic study, a language being documented before it thins further. The revitalization is real and insufficient at the same time: real because some children are learning it, insufficient because the children learning it are learning it in classrooms rather than in the homes where it used to be the only language anyone needed. You have been watching this for sixty years. The watching has its own texture.',
+    text: 'Ecuador officially recognised Quechua in 1998. There are intercultural bilingual schools now — the thing the teacher told you was for grandmothers has become a subject of serious academic study, a language being documented before it thins further. The revitalization is real and insufficient at the same time: real because some children are learning it, insufficient because the children learning it are learning it in classrooms rather than in the homes where it used to be the only language anyone needed. You have been watching this for sixty years.',
     choices: null,
     effect: (p) => { p.r += 6; p.m += 4; p.e += 3; p.setMem('ft34QuechuaLate', true) },
   },
@@ -39,7 +39,7 @@ export const FOLLOWTHROUGH_34_EVENTS = [
       G.flags.has('ecu_flower_worker') &&
       G.age >= 42 &&
       !G.mem?.ft34FlowerLate,
-    text: 'The studies came out years later: flower workers in the Cayambe region with elevated pesticide exposure. Respiratory effects. Neurological effects in some workers. The farms brought in certification programs in the 2000s — fair trade labels, worker protections, European market requirements. The protections are real. The exposure from the years before the protections is also real and it is now in your body. The roses you cut are in living rooms in Europe and the United States. The people who bought them do not know this story. You do not expect them to.',
+    text: 'The studies came out years later: flower workers around Cayambe, exposed to pesticides, with damaged lungs and nerves. In the 2000s the farms brought in certification, fair-trade labels, rules the European buyers demanded. The exposure from the years before is in your body. The roses you cut are in living rooms in Europe and America. The people who bought them do not know this story, and you do not expect them to.',
     choices: null,
     effect: (p) => { p.h -= 5; p.r += 6; p.m += 3; p.setMem('ft34FlowerLate', true) },
   },
@@ -52,7 +52,7 @@ export const FOLLOWTHROUGH_34_EVENTS = [
       G.flags.has('ecu_spain_emigrant') &&
       G.age >= 50 &&
       !G.mem?.ft34SpainEcho,
-    text: 'Spain\'s own crisis came in 2008. Construction stopped. The restaurants closed. The cleaning agencies contracted. Ecuador\'s remittances dropped. Some people came back — the ones who could, the ones who had not yet built a life that was more Spain than Ecuador. Others stayed through the crisis in Spain the way their parents had stayed through crises in Ecuador, which is to say by reducing and enduring. You built a life in one country and maintained a version of yourself in another. The arithmetic of this — what you sent, what you missed, who you became — is not finished.',
+    text: 'Spain had its own crash in 2008, and the building stopped, the restaurants closed, the cleaning agencies cut back, and the money sent home to Ecuador shrank. Some came back, the ones who had not yet built a life more Spanish than Ecuadorian. Others stayed and endured, the way their parents had stayed through crises at home. You built a life in one country and kept a version of yourself in another. What you sent, what you missed, who you became: the sum is not finished.',
     choices: null,
     effect: (p) => { p.r += 8; p.m += 3; p.e += 2; p.setMem('ft34SpainEcho', true) },
   },
@@ -65,7 +65,7 @@ export const FOLLOWTHROUGH_34_EVENTS = [
       G.flags.has('ecu_correa_supporter') &&
       G.age >= 50 &&
       !G.mem?.ft34CorreaSupporterLate,
-    text: 'Lenín Moreno, whom Correa backed for the 2017 election, turned. The IMF deal. The fuel subsidy cuts. The prosecution of Correa on corruption charges while Correa was in self-imposed exile in Belgium. The hospitals are still there. The roads are still there. The poverty reduction is still there. Correa himself is in Liège, convicted in absentia, running for the Ecuadorian presidency from Europe in what the constitution does not clearly permit or prohibit. You hold the gains. You are still thinking about the rest.',
+    text: 'Moreno, the man Correa chose, turned: the IMF deal, the subsidy cuts, the prosecution of Correa, now in Belgium, convicted in his absence. The hospitals are still there. The roads are still there. You hold the gains, and you are still thinking about the rest.',
     choices: null,
     effect: (p) => { p.r += 7; p.m += 2; p.e += 4; p.setMem('ft34CorreaSupporterLate', true) },
   },
@@ -78,7 +78,7 @@ export const FOLLOWTHROUGH_34_EVENTS = [
       G.flags.has('ecu_correa_skeptic') &&
       G.age >= 50 &&
       !G.mem?.ft34CorreaSkepticLate,
-    text: 'Correa left office in 2017 and went to Belgium. The courts convicted him in absentia for bribery. His successor dismantled the citizen revolution program by program, cut the fuel subsidies, signed the IMF deal. The streets that Correa built are still there. The hospitals he funded are still there. The press he sued is also still there, damaged but functioning. You were right about the concentration of power. The gains you said were real were also real. Both things were true at the same time, and you knew that. The difficulty was always in knowing what to do with both things at once.',
+    text: 'Correa left in 2017 and went to Belgium, and the courts convicted him in his absence, and his successor took the citizen revolution apart programme by programme. The roads he built are still there, and the hospitals, and the newspapers he sued, damaged and still printing. You were right about the concentration of power, and the gains were gains, and you knew both at the time.',
     choices: null,
     effect: (p) => { p.r += 6; p.m += 4; p.e += 3; p.setMem('ft34CorreaSkepticLate', true) },
   },

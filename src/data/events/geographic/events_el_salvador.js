@@ -18,7 +18,7 @@ export const EL_SALVADOR_EVENTS = [
       G.currentYear === 1980 &&
       G.age >= 15 &&
       !G.mem?.slvRomeroDeath,
-    text: 'On March 24th, 1980, Archbishop Óscar Romero is shot while saying Mass at the Hospital La Divina Providencia. He had just finished his homily. The bullet arrives in the middle of the consecration. The murder is announced on the radio in the same flat voice that announces everything. You sit with this fact for the rest of the day and understand, perhaps for the first time, that no one in this country is beyond reach of what is happening.',
+    text: 'On March 24th, 1980, Archbishop Óscar Romero is shot while saying Mass at the Hospital La Divina Providencia. He had just finished his homily. The bullet arrives in the middle of the consecration. The murder is announced on the radio in the same flat voice that announces everything. The rest of the day you understand, perhaps for the first time, that no one in this country is beyond reach of what is happening.',
     choices: null,
     effect: (p) => { p.m -= 14; p.r += 8; p.karma += 5; p.addFlag('slv_romero_death_witness'); p.setMem('slvRomeroDeath', true) },
   },
@@ -34,7 +34,8 @@ export const EL_SALVADOR_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1995 &&
       G.age >= 30 &&
       !G.mem?.slvElMozote,
-    text: 'In 1992, forensic teams excavate El Mozote, a village in Morazán. They find the bones of children — hundreds of them — in the sacristy. The massacre happened in December 1981. The Atlacatl Battalion, trained at the US School of the Americas in Fort Benning, Georgia, killed between 700 and 1,000 people over three days. The Salvadoran government denied it. The US State Department denied it. The New York Times reported it and was accused of fabrication. Now there are bones. They have always been bones. The denial simply prevented anyone from counting them.',
+    text: 'In 1992 forensic teams dig at El Mozote, in Morazán, and in the sacristy they find the bones of children. The Atlacatl Battalion, trained by the Americans, did it in December 1981, and both governments denied it, and the newspaper that reported it was accused of making it up. Now there are bones. There were always bones. The denial only stopped anyone counting them.',
+    context: 'The El Mozote massacre of 10-12 December 1981 killed between about 800 and 1,000 people, most of them women and children.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 9; p.e += 4; p.addFlag('slv_el_mozote_generation'); p.setMem('slvElMozote', true) },
   },
@@ -101,7 +102,8 @@ export const EL_SALVADOR_EVENTS = [
       G.currentYear >= 2022 &&
       G.age >= 25 &&
       !G.mem?.slvEstadoExcepcion,
-    text: 'In March 2022 the gangs kill eighty-seven people in three days. Bukele declares the estado de excepción. Forty-seven thousand people are arrested in the first year with no warrants required. The mega-prison CECOT opens in Tecoluca — forty thousand cells, cameras, no light. The murder rate drops from one of the highest in the world to one of the lowest. People walk streets they have not walked in twenty years. Some of the people arrested are gang members. Some are men who had a tattoo, or lived in the wrong neighborhood, or whose cousin was known. The numbers are the same regardless of which person you were.',
+    text: 'March 2022, and the gangs kill eighty-seven people in three days, and the president suspends the constitution. Tens of thousands are arrested without warrants, and a mega-prison opens in Tecoluca. The murders stop. People walk streets they have not walked in twenty years. Some of the men taken are gang members, and some only had a tattoo, or lived in the wrong neighbourhood, or had a cousin who was known.',
+    context: 'More than 70,000 people were detained under El Salvador\'s state of exception by 2023. The Terrorism Confinement Center (CECOT) was built for 40,000 prisoners.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 7; p.e += 3; p.addFlag('slv_estado_excepcion_generation'); p.setMem('slvEstadoExcepcion', true) },
   },
@@ -117,7 +119,7 @@ export const EL_SALVADOR_EVENTS = [
       G.currentYear === 2021 &&
       G.age >= 20 &&
       !G.mem?.slvBitcoin,
-    text: 'On September 7, 2021, Bitcoin becomes legal tender in El Salvador. Every business is required by law to accept it. The government distributes thirty dollars in Bitcoin to every citizen through an app called Chivo. The IMF objects. The World Bank declines to assist. El Salvador\'s bonds are downgraded. The Bitcoin price falls 50% in the months after adoption. The thirty dollars are spent. The government buys more Bitcoin. You watch this from a country where people have been paying for pupusas in dollars since 2001 and now own, in addition, a volatile digital asset whose value you check on your phone.',
+    text: 'September 2021, and Bitcoin is legal tender, and every shop must take it. The government puts thirty dollars of it on every citizen\'s phone, in an app called Chivo. The IMF objects and the price halves within months. You spend the thirty dollars. You have been paying for pupusas in dollars since 2001, and now you also own something whose value you check on your phone.',
     choices: null,
     effect: (p) => { p.mo += 30; p.e += 3; p.r += 3; p.setMem('slvBitcoin', true) },
   },

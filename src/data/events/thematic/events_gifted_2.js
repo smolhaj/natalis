@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_gifted_2.js — The deeper gifted arc
 //
 // Extends events_gifted.js with:
@@ -49,7 +50,7 @@ const GOULD_ARC_EVENTS = [
       if (type === 'intellectual') return 'Late in life you understand that the thing you have always been able to do — the pattern underneath the pattern, the answer before the question is finished — was never named by anyone outside your own skull. The naming wasn\'t available. The world you grew up in didn\'t have a category for it, or had the category and kept it for other people.'
       if (type === 'musical') return 'Late in life you understand that the way you hear music — the structure under the melody, the architecture the composer was thinking in, which you have always heard directly without being taught — was never named. Nobody ever handed you a word for it. You had the thing; you never had the word. They turn out to be very different.'
       if (type === 'athletic') return 'Late in life you understand that the body you were given was exceptional by any measure. You used it for the work that was available. The work that was available was not the work the body was built for. These two facts have always coexisted. You are only now finding words for the coexistence.'
-      if (type === 'artistic') return 'Late in life you understand that the way you see — the composition inside things before they\'re made, the relationships between shapes that most people never notice — was never named. Not by a teacher, not by anyone. You made things in the margins of a life that needed other things from you. The making was real. Nobody had a name for what made it different.'
+      if (type === 'artistic') return 'Late in life you understand that the way you see — the composition inside things before they\'re made, the relationships between shapes that most people never notice — was never named. Not by a teacher, not by anyone. You made things in the margins of a life that needed other things from you. Nobody had a name for what made it different.'
       return 'Late in life you understand that the facility with words — the way they arrive complete, the ear for what a sentence is doing — was never named. Not by a teacher, not in a class. You wrote things in the spaces the life permitted. Whether they were good is not the question. The question is what you might have made with the right conditions. That question doesn\'t have a living answer anymore.'
     },
     choices: null,
@@ -70,7 +71,7 @@ const GOULD_ARC_EVENTS = [
       const type = giftType(G)
       if (type === 'intellectual') return 'You read a paper — a proof, a result — and recognize the method. Not because you\'ve encountered it before. Because you were moving in exactly this direction, years ago, before the path closed. Someone else got there. They had different circumstances. The mathematics is right and clean and the work is exactly what you would have made.'
       if (type === 'musical') return 'A recording surfaces — an album, a song — and you sit with it for a long time. The harmonic choices are the ones you were always hearing in your head. Another musician got there. You don\'t begrudge them. You have been waiting to hear this without knowing you were waiting.'
-      if (type === 'athletic') return 'You watch the performance on television — the specific physical intelligence, the movement pattern that has always seemed obvious to you in a way it apparently isn\'t to most people. Someone else has this body, this ability, this gift. They had different circumstances. They got out.'
+      if (type === 'athletic') return 'You watch the performance on television — the physical intelligence, the movement pattern that has always seemed obvious to you in a way it apparently isn\'t to most people. Someone else has this body, this ability, this gift. They had different circumstances. They got out.'
       if (type === 'artistic') return 'You see the work in a museum catalogue or a magazine, and you know immediately, with a certainty that doesn\'t require reasoning, that you were making your way toward exactly this. The composition, the logic of the piece. Another artist got there. Different life, same gift.'
       return 'You read something — a novel, an essay, a collection — and the sentences have the quality yours always had in the margins of your notebooks. Someone else got the conditions. They did the work you would have done. The work is very good. You read it twice.'
     },
@@ -159,7 +160,7 @@ const GENERATIONAL_EVENTS = [
     text: (G) => {
       const sib = G.siblings[0]
       const sibName = sib?.name ? sib.name.split(' ')[0] : 'your sibling'
-      return `${sibName} got the path that wasn't there for you. Your scores were comparable — the teacher wrote letters for both of you. There was enough money for one. ${sibName} sends money home now. They are very good at what they do. You think about this less than you expected to. Or you have learned to think about it less.`
+      return gendered(`${sibName} got the path that wasn't there for you. Your scores were comparable — the teacher wrote letters for both of you. There was enough money for one. ${sibName} sends money home now. They are very good at what they do. You think about this less than you expected to. Or you have learned to think about it less.`, sib)
     },
     choices: [
       {
@@ -191,7 +192,7 @@ const GENERATIONAL_EVENTS = [
       const type = giftType(G)
       const deadParent = Object.values(G.parents ?? {}).find(p => !p.alive)
       const parentLabel = deadParent?.gender === 'male' ? 'father' : 'mother'
-      if (type === 'intellectual') return `Going through your ${parentLabel}'s things you find a notebook. The calculations inside are more sophisticated than anything they would have needed for the life they lived. The margins are full of patterns. You sit with this for a long time. You would like to ask them a question you don't have the words for.`
+      if (type === 'intellectual') return `Going through your ${parentLabel}'s things you find a notebook. The calculations inside are more sophisticated than anything they would have needed for the life they lived. The margins are full of patterns. You look at them for a long time. You would like to ask them a question you don't have the words for.`
       // The cassette is a 1970s object; a parent who recorded themselves before
       // that did it on reels, or on a disc cut at a booth.
       if (type === 'musical') {
@@ -221,11 +222,11 @@ const GENERATIONAL_EVENTS = [
       const type = giftType(G)
       const child = (G.children ?? []).find(c => c.age >= 6 && c.age <= 14)
       const childName = child?.name ? child.name.split(' ')[0] : 'your child'
-      if (type === 'intellectual') return `${childName} solves a puzzle before you finish reading it aloud. You watch their face while they work — the specific stillness you remember from your own childhood, the concentration that isn't effort but something more like listening. You know what this is. You have been waiting to recognize it.`
+      if (type === 'intellectual') return `${childName} solves a puzzle before you finish reading it aloud. You watch their face while they work — the stillness you remember from your own childhood, the concentration that isn't effort but something more like listening. You know what this is. You have been waiting to recognize it.`
       if (type === 'musical') return `${childName} hums something on the way to school — not a song you recognize, something they\'ve made up, and the harmonic logic of it is correct in a way it shouldn\'t be at their age. You stop walking. You ask them to hum it again. They look at you like you\'re being strange.`
       if (type === 'athletic') return `Watching ${childName} move — running in the yard, climbing, just crossing a room — you see the economy of it. The body organized differently from most bodies at that age. You have this exact memory from your own childhood, from the inside. You are seeing it from the outside now.`
       if (type === 'artistic') return `${childName} draws something and leaves it on the table. You pick it up meaning to move it. You don\'t move it. The spatial reasoning in the composition is not what children\'s drawings usually contain. You set it back down carefully.`
-      return `${childName} writes something for school — a short assignment, two paragraphs — and you read it three times. The sentence at the end does the thing that most writers spend years learning to do: it says the true thing sideways. They wrote it without thinking about it. That\'s how you know.`
+      return gendered(`${childName} writes something for school — a short assignment, two paragraphs — and you read it three times. The sentence at the end does the thing that most writers spend years learning to do: it says the true thing sideways. They wrote it without thinking about it. That\'s how you know.`, child)
     },
     choices: [
       {
@@ -366,7 +367,7 @@ const EXPLOITATION_EVENTS = [
       const isUSA = G.currentCountry?.name === 'United States'
       const hasRacism = G.flags.has('experienced_racism')
       if (isMusical) {
-        if (isUSA && hasRacism) return 'The record label contract is twelve pages. The man across the desk is very pleased. He uses the word opportunity several times. Your manager — you don\'t have one, you have a cousin who came with you — says it looks standard. Three years later you understand what standard means. The recordings are yours in name only. The royalties go somewhere else. Your face is on the cover. That is what you got.'
+        if (isUSA && hasRacism) return 'The record contract is twelve pages, and the man across the desk is very pleased and says opportunity several times. You have no manager, only a cousin who came with you, who says it looks standard. Three years later you understand what standard meant: the recordings are yours in name only and the royalties go somewhere else. Your face is on the cover. That is what you got.'
         return 'The contract is twelve pages. You sign it. The advance is real money. Three years later you understand what you signed. The recordings are yours and also not yours. The label explains this with a patience that suggests they have explained it before. They have.'
       }
       return 'The sports programme recruits you with the word scholarship. What the scholarship covers is carefully described. What it requires is described in a different section. The section about academic support exists and has no support in it. Two years in you understand: they want the athletic gift. The rest of you is administrative overhead.'
@@ -617,7 +618,7 @@ const REALIZATION_EVENTS = [
       !G.flags.has('gift_burnout_break') &&
       G.age >= 28 && G.age <= 52 &&
       !G.mem?.giftDeepImmersionFired,
-    text: 'You arrange the conditions: time, isolation, the work and nothing else. People call it different things — a residency, a sabbatical, a retreat, just leaving. Whatever the word, the structure is the same. You go somewhere. There is only the work. The days lose their normal texture. What replaces it is something else — a quality of attention you haven\'t had since you were twelve, before anyone had expectations. You remember this feeling. This is the feeling the gift requires.',
+    text: 'You arrange the conditions: time, solitude, the work and nothing else. People call it a residency or a sabbatical or just leaving; the shape is the same. The days lose their usual texture, and what replaces it is an attention you have not had since you were twelve, before anyone expected anything of you. You remember this feeling. It is the one the gift requires.',
     choices: [
       {
         text: 'Go completely — six months, full withdrawal',
@@ -682,10 +683,10 @@ const REALIZATION_EVENTS = [
     text: (G) => {
       const type = giftType(G)
       if (type === 'intellectual') return 'The proof has a flaw. You find it yourself, at three in the morning, six months after publication. The flaw is structural. The result still holds, probably, but the path to it doesn\'t. You spend the next four months alone with the problem. You tell no one. The problem is the whole thing: the years of work, whether the approach was right, whether you have been building in the wrong direction.'
-      if (type === 'musical') return 'The album is finished and you listen to it and something is wrong — not technically, the technique is fine — wrong in a way that you can hear and can\'t name. You go back into the studio alone. You start again. You have already told the label it\'s done. You call them and say it isn\'t done. This conversation is difficult.'
+      if (type === 'musical') return 'The album is finished and you listen to it and something is wrong — not technically, the technique is fine — wrong, and you can hear it and can\'t name it. You go back into the studio alone. You start again. You have already told the label it\'s done. You call them and say it isn\'t done. This conversation is difficult.'
       if (type === 'athletic') return 'The technique is failing. Not the body — the technique. Something you\'ve been doing for fifteen years is producing diminishing results and when you go back to the video you can see exactly when it changed and why and the change is something you introduced deliberately three years ago and thought was an improvement. You have to unlearn it. You have to go back before the change.'
       if (type === 'artistic') return 'You destroy six months of work. Not impulsively — after looking at it for two weeks and understanding that it is going in the wrong direction and the direction cannot be corrected from where it is. You go back to the beginning. The studio is empty. This is the right condition.'
-      return 'The book has a problem at its structural centre that makes everything else not work. You find it 200 pages into the second draft. The problem cannot be patched. The book has to be rebuilt. You sit with this for three months before you can start.'
+      return 'The book has a problem at its structural centre that makes everything else not work. You find it 200 pages into the second draft. The problem cannot be patched. The book has to be rebuilt. It takes three months before you can start.'
     },
     choices: [
       {
@@ -737,11 +738,11 @@ const REALIZATION_EVENTS = [
       !G.mem?.giftUltimateFired,
     text: (G) => {
       const type = giftType(G)
-      if (type === 'intellectual') return 'The proof closes. You know it closes not because you\'ve run out of things to add but because there\'s nothing that would improve it — and that feeling, which you\'ve had once before briefly, is back and this time it holds. The result is true and clean and the path to it is the most direct path available. You sit with it for a day before you send it anywhere. The day is necessary.'
+      if (type === 'intellectual') return 'The proof closes. You know it closes not because you\'ve run out of things to add but because there\'s nothing that would improve it — and that feeling, which you\'ve had once before briefly, is back and this time it holds. The result is true and clean and the path to it is the most direct path available. You wait a day before you send it anywhere. The day is necessary.'
       if (type === 'musical') return 'The record is finished. You\'ve listened back twice, which is all you allow yourself. The second time through you heard nothing you wanted to change — not because it\'s perfect but because any change would be you and not the music. The music is itself now. That is what you\'ve been trying to make since you were seven years old, in that church, humming the part the organ missed.'
       if (type === 'athletic') return 'The performance is complete — not just successful, complete. You can feel the difference. The thing you\'ve been building since childhood came together in that hour in a way you couldn\'t have designed, that required every year of preparation and still exceeded what the preparation was preparation for. You will perform better technically. You know this was different from better.'
       if (type === 'artistic') return 'You put the brush down and it doesn\'t feel like stopping — it feels like arriving. You\'ve been making work for twenty years. This is the work the twenty years were practice for. You know this the way you know your own handwriting. The piece is done. The piece is itself. Nothing needs to be added.'
-      return 'The last sentence is written. You read it back once. It\'s the sentence the book has been building toward since page one, and you didn\'t know that until you wrote it. The book is complete in a way that none of the others were — not better-crafted, but arrived. The thing you were born to say, said.'
+      return 'The last sentence is written. You read it back once. It\'s the sentence the book has been building toward since page one, and you didn\'t know that until you wrote it. The book is complete as none of the others were — not better-crafted, but arrived. The thing you were born to say, said.'
     },
     choices: null,
     effect: (p) => { p.m += 15; p.fame += 10; p.addFlag('gift_realized'); p.setMem('giftUltimateFired', true) },

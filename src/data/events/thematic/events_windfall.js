@@ -13,7 +13,7 @@ export const WINDFALL_EVENTS = [
     phase: null,
     weight: 7,
     when: (G) => G.flags.has('lottery_winner') && !G.mem?.wfWeekAfter,
-    text: 'The first week is administrative. A form, a bank appointment, a man in a good suit explaining instruments you have no vocabulary for. You had imagined feeling something enormous and instead you feel the specific fatigue of paperwork. The enormous thing arrives later, at three in the morning, and it is not joy exactly.',
+    text: 'The first week is administrative. A form, a bank appointment, a man in a good suit explaining instruments you have no vocabulary for. You had imagined feeling something enormous and instead you feel the fatigue of paperwork. The enormous thing arrives later, at three in the morning, and it is not joy exactly.',
     choices: [
       { text: 'Tell nobody outside the house.', tag: 'windfall_private', outcome: 'It stays a secret for about four years, which is longer than most people manage.', effect: (p) => { p.setMem('wfWeekAfter', true); p.addFlag('windfall_kept_quiet'); p.m += 3 } },
       { text: 'Tell everyone. It is good news.', tag: 'windfall_public', outcome: 'It is good news. It is also, from that week onward, the first thing anyone knows about you.', effect: (p) => { p.setMem('wfWeekAfter', true); p.addFlag('windfall_known'); p.m += 6; p.s -= 3 } },

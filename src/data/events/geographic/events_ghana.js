@@ -71,9 +71,9 @@ export const GHANA_EVENTS = [
         effect: (p) => { p.addFlag('gha_pentecostal_committed'); p.m += 6; p.s += 3; p.karma += 3; p.setMem('ghaPentecostal', true) },
       },
       {
-        text: 'You maintain the relationship with faith but at a distance from this particular intensity.',
+        text: 'You maintain the relationship with faith but at a distance from this intensity.',
         tag: 'gha_faith_private',
-        outcome: 'You believe what you believe. You do not believe it in this specific room.',
+        outcome: 'You believe what you believe. You do not believe it in this room.',
         effect: (p) => { p.addFlag('gha_faith_private'); p.m += 3; p.e += 3; p.setMem('ghaPentecostal', true) },
       },
     ],
@@ -117,7 +117,7 @@ export const GHANA_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1994 &&
       G.age >= 18 &&
       !G.mem?.ghaFirstElection,
-    text: 'Rawlings has put on civilian clothes and won an election. The National Democratic Congress, his party. The opposition boycotted the parliamentary vote citing irregularities. So the transition to democracy has produced a civilian Rawlings, which is either a paradox or a continuity depending on how you read the last decade. You cast a ballot. It is the first election you have voted in. The act of voting contains, simultaneously, the feeling of participation and the knowledge of its limits.',
+    text: 'Rawlings has put on civilian clothes and won an election. The National Democratic Congress, his party. The opposition boycotted the parliamentary vote citing irregularities. So the transition to democracy has produced a civilian Rawlings. You cast a ballot. It is the first election you have voted in. The act of voting contains, simultaneously, the feeling of participation and the knowledge of its limits.',
     choices: null,
     effect: (p) => { p.m += 5; p.e += 4; p.addFlag('gha_first_voter'); p.setMem('ghaFirstElection', true) },
   },
@@ -175,7 +175,7 @@ export const GHANA_EVENTS = [
       IS_GHANAIAN(G) &&
       G.currentYear >= 2014 && G.currentYear <= 2017 &&
       !G.mem?.ghaDumsor,
-    text: '"Dumsor" means off-on in Twi, and in 2014–2016 it is the rhythm of life. The power goes off for twelve hours, comes on for twenty-four, goes off again. The schedule, when there is one, is honoured partially. Businesses run on generators. The generators run on diesel. The diesel has a price. The hashtag is trending. The opposition has made it the central political question. You are learning which of your neighbours have generators by who has lights when you do not.',
+    text: 'Dumsor: off-on, in Twi. Twelve hours off, twenty-four on, off again, and a schedule, when there is one, half honoured. Businesses run on generators, and the generators run on diesel, and diesel costs. The opposition has made it the question of the election. You learn which neighbours have generators by who has light when you do not.',
     choices: null,
     effect: (p) => { p.r += 6; p.m -= 3; p.e += 3; p.addFlag('gha_dumsor_era'); p.setMem('ghaDumsor', true) },
   },

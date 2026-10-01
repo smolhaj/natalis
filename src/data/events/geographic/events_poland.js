@@ -14,7 +14,7 @@ export const POLAND_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 1979 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.polCommunistChildhood,
-    text: 'The school teaches that the Soviet Union is Poland\'s brother nation. History begins in 1944 with the liberation. Before 1944 the history is problematic. The queue at the mięsny — the state butcher — is the shape of the economy. The empty shelf, the substitute product, the relationship with a particular sprzedawczyni who keeps something under the counter for people she knows. Your parents understand the real economy and the official economy as two different systems, and they teach you both.',
+    text: 'The school teaches that the Soviet Union is Poland\'s brother nation. History begins in 1944 with the liberation. Before 1944 the history is problematic. The queue at the mięsny — the state butcher — is the shape of the economy. The empty shelf, the substitute product, the relationship with a sprzedawczyni who keeps something under the counter for people she knows. Your parents understand the real economy and the official economy as two different systems, and they teach you both.',
     choices: [
       {
         text: 'You absorb the official version at school and the real version at home. The gap is normal.',
@@ -102,7 +102,7 @@ export const POLAND_EVENTS = [
       {
         text: 'You participate in the underground — the bibuła, the hidden meetings, the church.',
         tag: null,
-        outcome: 'The underground press: Tygodnik Mazowsze, CDN, the samizdat that circulates in envelopes. The church basements. You become expert at the gap between the official and the real, which is also the entire condition of living in Poland.',
+        outcome: 'The underground press: Tygodnik Mazowsze, CDN, the samizdat that circulates in envelopes. The church basements. You become expert at the gap between the official and the real, and that is the whole condition of living in Poland.',
         effect: (p) => { p.m -= 8; p.karma += 8; p.e += 4; p.addFlag('martial_law_generation'); p.addFlag('underground_poland'); p.setMem('polMartialLaw', true); },
       },
       {
@@ -124,12 +124,12 @@ export const POLAND_EVENTS = [
       G.currentYear === 1989 &&
       G.age >= 18 &&
       !G.mem?.polRoundTable,
-    text: 'February 6, 1989. The Round Table negotiations between the government and Solidarity. On June 4 — the same day as Tiananmen — Poland holds semi-free elections. Solidarity wins all the contested seats. On August 24, Tadeusz Mazowiecki becomes the first non-Communist Prime Minister in the Eastern Bloc. The revolution that took eleven years and was expected to take longer is over. The wall falls in November in Berlin. You watch on television a country you have been watching from inside for forty years.',
+    text: 'February 1989, the Round Table, and on June 4, the same day as Tiananmen, half-free elections, and Solidarity wins every seat it is allowed to contest. In August Mazowiecki is the first non-communist prime minister in the bloc. In November the Wall falls in Berlin. You watch on television a country you have been watching from inside for forty years.',
     choices: [
       {
         text: 'June 4, 1989. You vote. You have been waiting for this your entire adult life.',
         tag: null,
-        outcome: 'The vote is real. The result is real. The first morning of a different Poland is ordinary and extraordinary simultaneously. The ordinary and extraordinary combination is the specific feeling of a historical transition.',
+        outcome: 'You vote. The first morning of a different Poland is ordinary and extraordinary simultaneously. The ordinary and extraordinary combination is the feeling of a historical transition.',
         effect: (p) => { p.m += 12; p.karma += 8; p.addFlag('1989_poland_generation'); p.setMem('polRoundTable', true); },
       },
       {
@@ -156,7 +156,7 @@ export const POLAND_EVENTS = [
       {
         text: 'The transition is painful and necessary. You absorb the cost and build from the new foundation.',
         tag: null,
-        outcome: 'You absorb the cost. Poland\'s GDP grows faster than any EU economy for the next twenty years. The growth is real. The cost was also real. You paid both.',
+        outcome: 'You absorb the cost. Poland\'s GDP grows faster than any EU economy for the next twenty years. The cost was also real. You paid both.',
         effect: (p) => { p.m -= 8; p.w -= 5; p.r += 4; p.addFlag('shock_therapy_generation'); p.setMem('polShockTherapy', true); },
       },
       {
@@ -178,10 +178,10 @@ export const POLAND_EVENTS = [
       G.currentYear === 2004 &&
       G.age >= 18 &&
       !G.mem?.polEU,
-    text: 'May 1, 2004. Poland enters the European Union. The borders open. The work permits for the UK and Ireland exist. In the next three years, nearly a million Poles leave for the UK alone. The Polish plumber becomes the symbol of the anxiety about the new EU — in France a poster of a smiling Polish worker says: "I stay in Poland — vote yes to the European constitution." The vote fails. The Polish plumber exists. He sends money home and builds something.',
+    text: 'May 1, 2004, and Poland is in the European Union, and Britain and Ireland open their doors at once. In three years a great many Poles go to Britain alone. In France a poster of a smiling Polish plumber becomes the face of the fear of the new Europe. The Polish plumber exists. He sends money home and builds something.',
     choices: [
       {
-        text: 'You go west. The UK, Ireland, Germany, Norway — the wages there are real.',
+        text: 'You go west. The UK, Ireland, Germany, Norway: you can live on what they pay there and send some home.',
         tag: null,
         outcome: 'You leave. The remittances arrive in Poland every month. You build the house in the village and the career in London simultaneously. The double life is expensive and full.',
         effect: (p) => { p.m -= 3; p.w += 8; p.r += 5; p.addFlag('poland_eu_emigrant'); p.addFlag('eu_freedom_movement'); p.setMem('polEU', true); },
@@ -233,12 +233,12 @@ export const POLAND_EVENTS = [
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       G.age >= 18 &&
       !G.mem?.polWomensStrike,
-    text: 'October 22, 2020. The Constitutional Tribunal rules that abortions for severe fetal abnormalities are unconstitutional. Ninety-eight percent of the legal abortions performed in Poland were for this reason. Effective immediately. Within hours, a lightning bolt symbol is on phones and walls everywhere. By the weekend, hundreds of thousands of people are in the streets — in Warsaw, in Kraków, in small towns with no previous history of protest. The signs say things that were not said in public in Poland before. The lightning bolt is everywhere. You are somewhere.',
+    text: 'October 22, 2020, and the Constitutional Tribunal rules out almost every abortion that was still legal, effective immediately. Within hours a red lightning bolt is on phones and walls everywhere, and by the weekend hundreds of thousands are in the streets, in Warsaw, in Kraków, in small towns that have never protested anything. The signs say things nobody has said in public in Poland before. You are somewhere among them.',
     choices: [
       {
         text: 'You are in the street with the lightning bolt.',
         tag: null,
-        outcome: 'The strikes run for weeks. The government does not reverse the ruling. What the weeks produce is not the reversal but the knowledge of what is possible — the number of people willing to be in the street, which is a number that matters regardless of the immediate outcome.',
+        outcome: 'The strikes run for weeks. The government does not reverse the ruling. What the weeks produce is not the reversal but the knowledge of how many people are willing to be in the street, a number that matters whatever happens next.',
         effect: (p) => { p.m -= 5; p.karma += 6; p.s += 3; p.addFlag('strajk_kobiet_generation'); p.addFlag('political_active'); p.setMem('polWomensStrike', true); },
       },
       {

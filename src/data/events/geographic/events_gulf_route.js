@@ -111,7 +111,7 @@ export const GULF_ROUTE_EVENTS = [
     when: (G) =>
       eligible(G) && G.character?.gender === 'female' && !G.mem?.gulfrAgency &&
       ['Sri Lanka', 'Philippines', 'Indonesia', 'Ethiopia', 'Nepal', 'Kenya'].includes(G.character?.country?.name),
-    text: (G) => `The recruiter is a woman, which is how it is done for this, and she is from two villages over and has done it herself. Housemaid. A family, a room, a contract in a language you will sign anyway. Your mother is against it and your mother has also seen what the money does. What she says, in the end, is not don't go. What she says is find out the name of the family before you get on the plane, and write it down, and give the paper to me.`,
+    text: (G) => `The recruiter is a woman, as it always is for this, and she is from two villages over and has done it herself. Housemaid. A family, a room, a contract in a language you will sign anyway. Your mother is against it and your mother has also seen what the money does. What she says, in the end, is not don't go. What she says is find out the name of the family before you get on the plane, and write it down, and give the paper to me.`,
     choices: [
       {
         text: 'Go. Two years, and then the decision is yours again.',
@@ -143,7 +143,7 @@ export const GULF_ROUTE_EVENTS = [
       eligible(G) && G.character?.country?.name === 'Egypt' && !G.mem?.gulfrEgypt &&
       G.currentYear >= 1974 && G.currentYear <= 2000 &&
       ['education', 'healthcare', 'government', 'engineering', 'law'].includes(G.career?.field ?? ''),
-    text: 'Half the staff room has gone. Not to Europe — to Riyadh, to Kuwait, to Baghdad while Baghdad was still paying, on two-year contracts that pay in a month what the ministry pays in five. The ones who come back build a floor onto the family building and buy a Peugeot and are slightly different people. The ones who do not come back send for the family in the third year. Your headmaster does not try to talk you out of it, which is its own kind of answer.',
+    text: 'Half the staff room has gone. Not to Europe — to Riyadh, to Kuwait, to Baghdad while Baghdad was still paying, on two-year contracts that pay in a month what the ministry pays in five. The ones who come back build a floor onto the family building and buy a Peugeot and are slightly different people. The ones who do not come back send for the family in the third year. Your headmaster does not try to talk you out of it, which is an answer.',
     choices: [
       {
         text: 'Take the contract.',
@@ -160,7 +160,7 @@ export const GULF_ROUTE_EVENTS = [
       {
         text: 'Stay. Somebody has to teach here.',
         tag: null,
-        outcome: 'The class sizes go up every year and the salary does not, and you are still the person who stayed, which is worth something you cannot spend.',
+        outcome: 'The class sizes go up every year and the salary does not, and you are still the person who stayed.',
         effect: (p) => { p.setMem('gulfrEgypt', true); p.karma += 6; p.r += 4; p.addFlag('stayed_behind') },
       },
     ],
@@ -176,7 +176,7 @@ export const GULF_ROUTE_EVENTS = [
     when: (G) =>
       G.flags.includes('stayed_behind') && !G.mem?.gulfrStayedLate &&
       G.age >= 45 && corridor(G) != null,
-    text: 'The street is roofed now, almost all of it, and the houses have the particular look of houses built in instalments by somebody who was not present for any of it — a floor at a time, over eleven years, decided by telephone. The men who built them this way are mostly back and mostly have something wrong with a knee or a lung. You did not go, and you have your whole family and your whole life in one country, and on the worst days you could not tell anybody which of those two facts is the achievement.',
+    text: 'The street is roofed now, almost all of it, and the houses have the look of houses built in instalments by somebody who was not present for any of it — a floor at a time, over eleven years, decided by telephone. The men who built them this way are mostly back and mostly have something wrong with a knee or a lung. You did not go, and you have your whole family and your whole life in one country, and on the worst days you could not tell anybody which of those two facts is the achievement.',
     choices: null,
     effect: (p) => { p.setMem('gulfrStayedLate', true); p.r += 5; p.m -= 2; p.addFlag('stayed_reckoning') },
   },
@@ -189,7 +189,7 @@ export const GULF_ROUTE_EVENTS = [
       corridor(G) != null && !G.mem?.gulfrBody &&
       G.currentYear >= 1990 && G.age >= 20 && G.age <= 70 &&
       G.currentCountry?.name === G.character?.country?.name,
-    text: 'The coffin comes off the same flight the workers go out on, which is the detail nobody who has not stood at that airport knows. The certificate says cardiac arrest, which is what the certificate says. He was thirty-four and he had been doing outdoor work in a place where the summer is a thing you survive rather than a season. The family is paid something by somebody. The village is at the house for three days and the thing nobody says out loud is that four more men from here are going in the spring.',
+    text: 'The coffin comes off the same flight the workers go out on. The certificate says cardiac arrest. It always does. He was thirty-four and he had been doing outdoor work in a place where the summer is a thing you survive rather than a season. The family is paid something by somebody. The village is at the house for three days and the thing nobody says out loud is that four more men from here are going in the spring.',
     choices: null,
     effect: (p) => { p.setMem('gulfrBody', true); p.m -= 9; p.r += 6; p.addFlag('knows_a_migration_death') },
   },

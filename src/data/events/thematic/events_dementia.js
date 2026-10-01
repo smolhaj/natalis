@@ -114,7 +114,7 @@ export const DEMENTIA_EVENTS = [
       {
         text: 'Take on primary responsibility — you can do this',
         tag: null,
-        outcome: 'The responsibility is enormous and you shoulder it. Your own life reorganises around the care. What you give is real. What it costs is also real.',
+        outcome: 'The responsibility is enormous and you shoulder it. Your own life reorganises around the care. What it costs is also real.',
         effect: (p) => { p.m -= 10; p.h -= 5; p.karma += 10; p.addFlag('dementia_primary_carer'); p.setMem('demParentDxFired', true) },
       },
       {
@@ -141,7 +141,7 @@ export const DEMENTIA_EVENTS = [
       G.flags.has('dementia_parent') &&
       G.age >= 48 &&
       !G.mem?.demParentNoKnowFired,
-    text: 'Your parent looks at you — you, who have been looked at by this face your entire life — and the look is polite. The look is the look one gives a stranger who seems friendly. Your name is not there. You are not there, in the way that matters. You say who you are. Your parent nods in a way that is not recognition but is doing its best. You leave the room before you cry.',
+    text: 'Your parent looks at you — you, who have been looked at by this face your entire life — and the look is polite. The look is the look one gives a stranger who seems friendly. Your name is not there. You are not there, in the way that matters. You say who you are. Your parent nods; it is not recognition, but it is doing its best. You leave the room before you cry.',
     choices: null,
     effect: (p) => { p.m -= 18; p.r += 10; p.addFlag('dementia_parent_forgot_me'); p.setMem('demParentNoKnowFired', true) },
   },
@@ -154,7 +154,7 @@ export const DEMENTIA_EVENTS = [
       G.flags.has('dementia_parent') &&
       G.age >= 55 &&
       !G.mem?.demParentLateFired,
-    text: 'Late stage is a different country from early stage. The person in the bed has your parent\'s face and has lost most of what made that face the specific face it was. You hold the hand. The hand is familiar. You tell stories — your parent\'s stories — into the room. Whether the stories are heard is not known. You tell them anyway. This is for you as much as for them, and there is nothing wrong with that.',
+    text: 'Late stage is a different country from early stage. The person in the bed has your parent\'s face and has lost most of what made that face the face it was. You hold the hand. The hand is familiar. You tell stories — your parent\'s stories — into the room. Whether the stories are heard is not known. You tell them anyway. This is for you as much as for them, and there is nothing wrong with that.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('dementia_parent_late_stage'); p.setMem('demParentLateFired', true) },
   },

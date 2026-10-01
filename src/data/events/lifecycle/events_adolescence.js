@@ -18,7 +18,7 @@ export const ADOLESCENCE_EVENTS = [
        G.casteSystem),
     text: (G) => {
       if (G.casteSystem) {
-        return 'A teacher separates the class for a group project. The division corresponds exactly to caste — not by name, but the result is the same. Nobody says it aloud. You understand, with the specific clarity of adolescence, that the thing you were told was history is happening right now in this room.'
+        return 'A teacher separates the class for a group project. The division corresponds exactly to caste — not by name, but the result is the same. Nobody says it aloud. You understand, with the clarity of adolescence, that the thing you were told was history is happening right now in this room.'
       }
       return 'You are stopped at the entrance to a shop by a security guard who does not stop the person who went in before you. There is no argument. There is no scene. You go inside and buy what you came for. On the walk home you replay it, trying to locate exactly what happened and what you are supposed to do with the knowledge of it.'
     },
@@ -53,7 +53,7 @@ export const ADOLESCENCE_EVENTS = [
       if (arch === 'wealthy_gulf' || G.regime === 'theocracy') {
         return 'You want to study engineering. Your father explains, carefully, that this is not what girls do. He is not cruel about it. He finds you a different path — something more suitable. The word he does not use is lesser. You hear it anyway.'
       }
-      return 'The sports coach posts the team list. Your name is not on it. You ask why. He says the girls\' programme was cut — budget. The boys\' programme was not cut. You note this without surprise and with a specific fury that you have not yet found a name for.'
+      return 'The sports coach posts the team list. Your name is not on it. You ask why. He says the girls\' programme was cut — budget. The boys\' programme was not cut. You note this without surprise and with a fury that you have not yet found a name for.'
     },
     choices: [
       {
@@ -98,7 +98,7 @@ export const ADOLESCENCE_EVENTS = [
       {
         text: 'Raise the questions — with a teacher, a leader, anyone who might answer them',
         tag: null,
-        outcome: 'Some answers satisfy you. Some do not. The conversation itself clarifies what you actually believe, which is different from what you were given.',
+        outcome: 'Some answers satisfy you. Some do not. The conversation itself clarifies what you actually believe, and it is not what you were given.',
         effect: (p) => { p.e += 5; p.s += 3; p.addFlag('faith_questioned'); p.setMem('adolFaithDoubt', true) },
       },
       {
@@ -123,7 +123,7 @@ export const ADOLESCENCE_EVENTS = [
     text: (G) => {
       const smarts = G.stats.smarts
       if (smarts > 65) {
-        return 'Your mathematics teacher asks if anyone worked the problem on the board differently. You raise your hand and show the class your method. There is a pause, then the teacher says he would like to see you after class. The conversation that follows is about acceleration and competitions and a future you had not considered possible until this specific afternoon.'
+        return 'Your mathematics teacher asks if anyone worked the problem on the board differently. You raise your hand and show the class your method. There is a pause, then the teacher says he would like to see you after class. The conversation that follows is about acceleration and competitions and a future you had not considered possible until this afternoon.'
       }
       if (G.stats.charisma > 65) {
         return 'You are given a small part in the school production — three lines, barely a role. On the night, something happens. You are not nervous. The audience laughs exactly where you wanted them to. Afterwards the drama teacher finds you in the corridor and asks why you haven\'t been doing this all along.'
@@ -186,7 +186,7 @@ export const ADOLESCENCE_EVENTS = [
       {
         text: 'Confront them directly',
         tag: null,
-        outcome: 'They apologize. The apology is real. The friendship ends anyway.',
+        outcome: 'They apologize. The friendship ends anyway.',
         effect: (p) => { p.m -= 12; p.s += 5; p.r += 6; p.addFlag('betrayal_adolescence'); p.setMem('adolBetrayal', true) },
       },
       {

@@ -126,7 +126,7 @@ export const CUBA_MULATTO_EVENTS = [
       {
         text: 'Believe it. Look at the schools, the beaches, the hospital.',
         tag: 'yielding',
-        outcome: 'There is a great deal to look at, and it is real. You stop using the word, and after a few years you stop thinking it, most days.',
+        outcome: 'There is a great deal to look at. You stop using the word, and after a few years you stop thinking it, most days.',
         effect: (p) => { p.setMem('cu_mu_sociedad', true); p.m += 2; p.addFlag('cu_race_settled') },
       },
       {
@@ -167,7 +167,7 @@ export const CUBA_MULATTO_EVENTS = [
     phase: null,
     weight: 40,
     when: (G) => CU(G) && MALE(G) && G.currentYear >= 1975 && G.currentYear <= 1988 && G.age >= 18 && G.age <= 28 && !G.inPrison && once(G, 'cu_mu_angola'),
-    text: 'The mission is called Carlota, after the enslaved woman who led the rising at the Triunvirato mill in 1843, and on the troopship the political officer tells the story twice. You are a volunteer, which is to say that at the meeting everybody raised their hand. In Luanda the heat is the same heat as home and the red earth is not. An Angolan boy at a checkpoint looks at your face and asks, in Portuguese, which of his villages your family came from.',
+    text: 'The mission is called Carlota, after the enslaved woman who led the rising at the Triunvirato mill in 1843, and on the troopship the political officer tells the story twice. You are a volunteer: at the meeting everybody raised their hand. In Luanda the heat is the same heat as home and the red earth is not. An Angolan boy at a checkpoint looks at your face and asks, in Portuguese, which of his villages your family came from.',
     context: 'Cuba sent some 300,000 soldiers and civilians to Angola between 1975 and 1991. The first deployment was named Operation Carlota after Carlota Lucumí, who led the 1843 uprising of the enslaved at the Triunvirato sugar mill in Matanzas. Afro-Cuban troops were a large share of those who went.',
     choices: null,
     effect: (p) => { p.setMem('cu_mu_angola', true); p.h -= 4; p.m -= 4; p.addFlag('cu_angola'); p.setMem('cu_mu_angola_year', p._state?.currentYear ?? null); p.scheduleEcho('cu_mu_ft_angola', 2) },
@@ -370,7 +370,7 @@ export const CUBA_MULATTO_EVENTS = [
       {
         text: 'Send it on to three people.',
         tag: 'defiant',
-        outcome: 'By the evening it has come back to you from two of them. The third has deleted the conversation, which is also an answer.',
+        outcome: 'By the evening it has come back to you from two of them. The third has deleted the conversation.',
         effect: (p) => { p.setMem('cu_mu_pyv', true); p.m += 2; p.karma += 2 },
       },
       {
@@ -394,7 +394,7 @@ export const CUBA_MULATTO_FOLLOWTHROUGH = [
     weight: 32,
     when: (G) => CU(G) && G.flags.has('cu_1912_silence') && G.age >= 45 && G.currentYear >= 1990 && once(G, 'cu_mu_ft_1912'),
     text: (G) => G.currentYear >= 2012
-      ? 'In 2012 it is a hundred years, and there is a short article, and a round table on a Thursday afternoon that you watch to the end. Nobody on it says your great-uncle\'s name, because nobody knows it but you. You write it on the back of an envelope and put the envelope in the Bible, which is where your grandmother kept the things she did not say.'
+      ? 'In 2012 it is a hundred years, and there is a short article, and a round table on a Thursday afternoon that you watch to the end. Nobody on it says your great-uncle\'s name, because nobody knows it but you. You write it on the back of an envelope and put the envelope in the Bible, where your grandmother kept the things she did not say.'
       : 'Your granddaughter has a school project on the independence wars, and asks what happened after. You tell her about 1912, the whole of it, in the kitchen, with the tap running out of habit. She writes it down in her careful hand and asks why it is not in the book, and you tell her that is a very good question for her teacher.',
     choices: null,
     effect: (p) => { p.setMem('cu_mu_ft_1912', true); p.m += 2; p.r -= 2 },

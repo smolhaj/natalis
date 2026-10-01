@@ -93,7 +93,7 @@ export const FOLLOWTHROUGH_87_EVENTS = [
       G.currentYear >= 2019 &&
       G.age >= 40 &&
       !G.mem?.ft87PikeRiver,
-    text: 'The Pike River drift is re-entered in May 2019, nine years after the explosion. Cameras go in. Evidence is recovered. The bodies of the twenty-nine men are not. The mine remains sealed. Families who have been fighting for re-entry stand at the gate again, as they have at every anniversary. Some say the evidence recovered will help the prosecution. Some say they needed someone to try. The criminal proceedings continue. The twenty-nine are where they have been since November 2010, and the gate is where the families stand.',
+    text: 'In May 2019, nine years after the explosion, they go back into the Pike River drift. Cameras go in and evidence comes out. The twenty-nine men do not. The families stand at the gate again, as they have every anniversary, and the men are where they have been since November 2010.',
     choices: null,
     effect: (p) => {
       p.m -= 3

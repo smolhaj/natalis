@@ -172,7 +172,7 @@ export const CITY_EVENTS = [
     cooldown: 9,
     when: (G) => G.place?.id === 'eg_cairo',
     text: (G) => {
-      if (G.currentYear >= 2011) return `The ahwa on Tahrir Street is full at two in the afternoon — it will be full at two in the morning as well. The television in the corner is showing the news, which is not news anymore, which everyone watches anyway. The shisha smoke moves under the ceiling fan. The man at the table nearest the road has been there since you arrived three hours ago and has not ordered anything new.`
+      if (G.currentYear >= 2011) return `The ahwa on Tahrir Street is full at two in the afternoon — it will be full at two in the morning as well. The television in the corner is showing the news, which is not news anymore, and everyone watches anyway. The shisha smoke moves under the ceiling fan. The man at the table nearest the road has been there since you arrived three hours ago and has not ordered anything new.`
       return `The ahwa on the corner is open at midnight and still full. The backgammon pieces click between two old men who have been playing for six years without apparent score-keeping. The tea arrives in a glass. The shisha charcoal is changed every twenty minutes. You could spend a year in Cairo and a third of it could be spent here, and this would not be wasted time.`
     },
     choices: null,
@@ -217,7 +217,7 @@ export const CITY_EVENTS = [
     cooldown: 9,
     when: (G) => G.place?.id === 'eg_cairo',
     text: () =>
-      `The Nile Corniche at sunset. The feluccas are still out, moving slowly against the current, which is the slowest thing in Cairo. The city behind you — the traffic, the adhan, the generator noise — exists at a slight remove. A woman is selling lupini beans from a cart. You buy a paper cone and eat them slowly and watch the river, which has been here for all of it, and does not seem particularly moved.`,
+      `The Nile Corniche at sunset. The feluccas are still out, moving slowly against the current, the slowest thing in Cairo. The city behind you — the traffic, the adhan, the generator noise — exists at a slight remove. A woman is selling lupini beans from a cart. You buy a paper cone and eat them slowly and watch the river, which has been here for all of it, and does not seem particularly moved.`,
     choices: null,
     effect: (p) => { p.m += 4; },
   },
@@ -247,7 +247,7 @@ export const CITY_EVENTS = [
     cooldown: 10,
     when: (G) => G.place?.id === 'mx_mexico_city' && G.currentYear >= 1985,
     text: (G) => {
-      if (G.currentYear === 1985 || G.currentYear === 1986) return `September 19, 1985. At 7:19 in the morning the ground moves in a way that is different from the smaller earthquakes you have felt before. The motion is long and rolling. The building sways. When it stops you go to the window: dust has risen over Tlatelolco. You will spend the next week in the rubble. The government does not arrive for three days. The neighbors do not wait.`
+      if (G.currentYear === 1985 || G.currentYear === 1986) return `September 19, 1985. At 7:19 in the morning the ground moves, and it is not like the smaller earthquakes you have felt before. The motion is long and rolling. The building sways. When it stops you go to the window: dust has risen over Tlatelolco. You will spend the next week in the rubble. The government does not arrive for three days. The neighbors do not wait.`
       return `The earthquake alarm goes off — the Alertsísmo system, the radio-wave early warning — and your body moves before you have decided to move it. You know the drill from childhood. You know it from 1985, from 2017, from the smaller ones in between. You are standing in the doorframe before you have thought the word earthquake. This is what living in Mexico City teaches the body.`
     },
     choices: null,
@@ -274,7 +274,7 @@ export const CITY_EVENTS = [
     when: (G) => G.place?.id === 'mx_mexico_city' && G.currentYear >= 1970 && G.currentYear <= 2010,
     text: (G) => {
       if (G.currentYear <= 1992) return `The smog in the Valley of Mexico. The city sits in a bowl surrounded by mountains — Popocatépetl, Iztaccíhuatl — which you have not seen clearly in weeks. The thermal inversion traps the exhaust from three million cars. The air is the color of anxiety. Children are issued masks for school.`
-      return `Even in the better years, Mexico City's air in winter has a particular quality — not the crisis of the eighties but the residue of a city too large for its geography. Popocatépetl is visible today, which is a good day. On a good day people stop to look.`
+      return `Even in the better years, Mexico City's air in winter has a quality — not the crisis of the eighties but the residue of a city too large for its geography. Popocatépetl is visible today. It is a good day. On a good day people stop to look.`
     },
     choices: null,
     effect: (p) => { p.h -= 3; p.m -= 2; },
@@ -290,7 +290,7 @@ export const CITY_EVENTS = [
       G.birthPlace?.id !== 'mx_mexico_city' &&
       !G.mem?.chilangoMoment,
     text: () =>
-      `You are not from here. You are from somewhere with a quality of silence, a kind of food, a specific speed. Mexico City has not asked you to forget this. It has simply made it less and less available — replaced it with the city's noise, its food, its pace. One morning you realize you have started complaining about people from the provinces who don't know how to ride the metro. You have become what you arrived to.`,
+      `You are not from here. You are from somewhere with a quality of silence, a kind of food, a speed. Mexico City has not asked you to forget this. It has simply made it less and less available — replaced it with the city's noise, its food, its pace. One morning you realize you have started complaining about people from the provinces who don't know how to ride the metro. You have become what you arrived to.`,
     choices: null,
     effect: (p) => { p.m += 3; p.s += 3; p.addFlag('became_chilango'); p.setMem('chilangoMoment', true) },
   },

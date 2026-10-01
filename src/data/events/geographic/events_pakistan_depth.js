@@ -111,7 +111,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
       G.age >= 15 &&
       G.ethnicity === 'hazara_pakistani' &&
       !G.mem?.pakDepHazara,
-    text: 'The Hazara of Quetta are Shia in a city where Lashkar-e-Jhangvi and other sectarian groups operate. The killings are targeted: a Hazara on a motorbike, a Hazara at the market, the bodies identifiable by the distinctive features that the gunmen use as criteria. Between 2008 and 2018, over two thousand Hazara are killed in Quetta. The community has contracted its geography: specific neighbourhoods, specific routes, the specific calculation of whether any given trip is necessary. Your family discusses the question of leaving — to Afghanistan, which the Hazara left to come here; to Australia, where the diaspora is building; to anywhere else.',
+    text: 'The Hazara of Quetta are Shia in a city where Lashkar-e-Jhangvi and other sectarian groups operate. The killings are targeted: a Hazara on a motorbike, a Hazara at the market, the bodies identifiable by the distinctive features that the gunmen use as criteria. Between 2008 and 2018, over two thousand Hazara are killed in Quetta. The community has contracted its geography: specific neighbourhoods, specific routes, the calculation of whether any given trip is necessary. Your family discusses the question of leaving — to Afghanistan, which the Hazara left to come here; to Australia, where the diaspora is building; to anywhere else.',
     choices: [
       {
         text: 'Stay. This is your city. Your family\'s graves are here.',
@@ -196,7 +196,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
       G.age >= 8 && G.age <= 20 &&
       (G.ethnicity === 'pashtun' || G.character?.ethnicity === 'pashtun') &&
       !G.mem?.pakDepPashtunwali,
-    text: 'Pashtunwali is the code that governs what you owe and what you are owed. Melmastia: hospitality, the obligation to feed a guest. Nanawatai: sanctuary, the obligation to shelter even an enemy who asks. Badal: exchange — not revenge exactly but the restoration of balance. These are not commandments from a text. They are the structure of what it means to be Pashtun, which is to say the structure of your obligations to the people around you and their obligations to you. The code has been here longer than the states that drew lines across it.',
+    text: 'Pashtunwali is the code that governs what you owe and what you are owed. Melmastia: hospitality, the obligation to feed a guest. Nanawatai: sanctuary, the obligation to shelter even an enemy who asks. Badal: exchange — not revenge exactly but the restoration of balance. They are the structure of what it means to be Pashtun: your obligations to the people around you and theirs to you. The code has been here longer than the states that drew lines across it.',
     choices: null,
     effect: (p) => {
       p.s += 3
@@ -221,7 +221,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
       !G.mem?.pakDepServant,
     text: () => pick([
       'The mali comes on Tuesdays and the darzi comes when called and the cook has been in the kitchen since before you were born. This is the domestic economy of the middle-class Pakistani household: the outsourcing of physical work to people who come from outside the city and send the money home. You know the cook\'s village but you have never been to it. The cook knows your name and your habits and your preferences. The asymmetry of this knowledge is the texture of the relationship.',
-      'You grow up in a house with servants. This is ordinary at your income level and you do not question it until later, when you are living somewhere else and the things that were done for you become visible by requiring you to do them yourself. The floor. The food. The pressing of the clothes. The things the cook knew to do without being asked. The cook knew your house better than you did. The cook was not part of the family, which is something you understood and did not articulate until you were asked.',
+      'You grow up in a house with servants, which is ordinary at your income, and you do not question it until you live somewhere else and the things that were done for you show up by needing to be done: the floor, the food, the pressing. The cook knew your house better than you did. The cook was not part of the family. You understood it and did not say it until you were asked.',
     ]),
     choices: null,
     effect: (p) => {
@@ -244,7 +244,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
       G.age >= 20 && G.age <= 32 &&
       !G.partner &&
       !G.mem?.pakDepRishta,
-    text: 'The rishta system: the proposal that arrives through the mother\'s network, the visit of the aunties who assess the candidate, the exchange of photographs, the meeting with the families in the living room where tea is served and conversation is managed. You are being evaluated and evaluating simultaneously. The criteria are spoken and unspoken: the family name, the education, the skin tone, the earning capacity, the particular measure of compatibility that different families mean different things by. This is how most people you know will get married. The system is efficient and sometimes kind and sometimes brutal and has a very long institutional memory for what families were when.',
+    text: 'The rishta system: the proposal that arrives through the mother\'s network, the visit of the aunties who assess the candidate, the exchange of photographs, the meeting with the families in the living room where tea is served and conversation is managed. You are being evaluated and evaluating simultaneously. The criteria are spoken and unspoken: the family name, the education, the skin tone, the earning capacity, the measure of compatibility that different families mean different things by. This is how most people you know will get married. The system is efficient and sometimes kind and sometimes brutal and has a very long institutional memory for what families were when.',
     choices: [
       {
         text: 'You go through the rishta process. A match is made.',
@@ -260,7 +260,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
       {
         text: 'You resist. The negotiation with the family about this is its own long event.',
         tag: null,
-        outcome: 'The resistance is heard and argued with and partially respected and partially not. The position you end up in is a negotiated one, which is not the same as your chosen one.',
+        outcome: 'The resistance is heard and argued with and partially respected and partially not. The position you end up in is negotiated, not chosen.',
         effect: (p) => {
           p.m -= 5
           p.r += 4
@@ -284,7 +284,7 @@ export const PAKISTAN_DEPTH_EVENTS = [
       G.currentYear >= 1980 &&
       G.age >= 20 && G.age <= 35 &&
       !G.mem?.pakDepOverseas,
-    text: 'Someone from your lane has gone to the Gulf. Someone else has a cousin in the UK who works at Heathrow. The uncle in Toronto sends a remittance that pays the school fees and sometimes sends running shoes. The overseas Pakistani is a specific figure in the domestic imagination: the one who made it out, the one who sends money back, the one whose name is used as a benchmark. The question of whether to go is not abstract. It is arithmetic: the exchange rate, the visa category, the particular skill that the labour market in Saudi or in Britain or in Canada will pay for. The arithmetic changes the conversation at every family dinner.',
+    text: 'Someone from your lane has gone to the Gulf. Someone else has a cousin in the UK who works at Heathrow. The uncle in Toronto sends a remittance that pays the school fees and sometimes sends running shoes. The overseas Pakistani is a figure in the domestic imagination: the one who made it out, the one who sends money back, the one whose name is used as a benchmark. Whether to go is arithmetic: the exchange rate, the visa category, the skill that the labour market in Saudi or in Britain or in Canada will pay for. The arithmetic changes the conversation at every family dinner.',
     choices: [
       {
         text: 'You start applying. The arithmetic comes out in favour of leaving.',

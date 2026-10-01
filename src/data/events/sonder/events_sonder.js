@@ -49,7 +49,7 @@ export const SONDER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 52 && !G.mem?.sonderWeddingSound,
-    text: 'Passing a building at night, you hear music from an upper floor — the unmistakable shape of a wedding: the saxophone, then voices, then laughter too loud to be contained. Someone is dancing. You pass through it and come out the other side still in the same street, still in your own life, which is also complete.',
+    text: 'Passing a building at night, you hear music from an upper floor — the unmistakable shape of a wedding: the saxophone, then voices, then laughter too loud to be contained. Someone is dancing. You pass through it and come out the other side still in the same street, still in your own life, also complete.',
     effect: (p) => { p.m += 1; p.setMem('sonderWeddingSound', true); },
   },
 
@@ -87,7 +87,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 34 && G.currentYear >= 1940 && !G.mem?.sonderTrainStation,
-    text: 'In the station, everyone is going somewhere and has reasons for it. The man with the too-heavy bag has reasons. The woman in the yellow coat has reasons. The child running ahead of the parent has only speed as a reason, which is also a kind of reason. You find your platform. Everyone else finds theirs. The station empties in all directions at once.',
+    text: 'In the station, everyone is going somewhere and has reasons for it. The man with the too-heavy bag has reasons. The woman in the yellow coat has reasons. The child running ahead of the parent has only speed as a reason. You find your platform. Everyone else finds theirs. The station empties in all directions at once.',
     effect: (p) => { p.e += 1; p.setMem('sonderTrainStation', true); },
   },
 
@@ -182,7 +182,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 65 && !G.mem?.mundaneRainInside,
-    text: 'A day when the rain makes the decision for you. You stay inside. You do not have to account for the decision because the weather has made it. There is a particular freedom in having the choice removed. By afternoon you are still inside and the rain is still there, and this is, in its way, a complete day.',
+    text: 'A day when the rain makes the decision for you. You stay inside. You do not have to account for the decision because the weather has made it. There is a freedom in having the choice removed. By afternoon you are still inside and the rain is still there, and this is, in its way, a complete day.',
     effect: (p) => { p.m += 2; p.setMem('mundaneRainInside', true); },
   },
 
@@ -191,7 +191,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 58 && !G.mem?.mundaneEndOfDay,
-    text: 'The day was neither good nor bad. Nothing of significance happened and nothing was asked of you beyond the ordinary, and you provided it. By evening it has passed in a way that feels like most things passing. You eat something. You sit for a while. The day goes where days go.',
+    text: 'The day was neither good nor bad. Nothing of significance happened and nothing was asked of you beyond the ordinary, and you provided it. By evening it has passed, the way most things pass. You eat something. You sit for a while. The day goes where days go.',
     effect: (p) => { p.m += 1; p.setMem('mundaneEndOfDay', true); },
   },
 
@@ -213,7 +213,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => place.hasHealthcare(G) && (G.age >= 28 && G.age <= 58 && !G.mem?.sonderHospitalCorridor),
-    text: 'In the corridor of the hospital you are not a patient in, a family is gathered around something you cannot see — their arrangement tells you everything. They do not notice you. You pass them the way people pass through other people\'s worst days, which is: without touching them.',
+    text: 'In the corridor of the hospital you are not a patient in, a family is gathered around something you cannot see — their arrangement tells you everything. They do not notice you. You pass them the way people pass through other people\'s worst days: without touching them.',
     effect: (p) => { p.e += 1; p.setMem('sonderHospitalCorridor', true); },
   },
 
@@ -441,7 +441,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.mundaneThingOnShelf,
-    text: 'There is an object that has been on the same shelf for fifteen years. You stopped noticing it around year three. This year you noticed it again — by accident, in a particular light. It is still there. It has outlasted the reason you kept it.',
+    text: 'There is an object that has been on the same shelf for fifteen years. You stopped noticing it around year three. This year you noticed it again — by accident, in a light. It is still there. It has outlasted the reason you kept it.',
     effect: (p) => { p.e += 1; p.r += 1; p.setMem('mundaneThingOnShelf', true); },
   },
 
@@ -459,7 +459,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 38 && !G.mem?.mundaneNightKitchen,
-    text: 'You are in the kitchen at an hour you are not usually in the kitchen. The house is quiet. You eat something over the sink. There is a specific freedom in this that has no name.',
+    text: 'You are in the kitchen at an hour you are not usually in the kitchen. The house is quiet. You eat something over the sink. There is a freedom in this that has no name.',
     effect: (p) => { p.m += 2; p.setMem('mundaneNightKitchen', true); },
   },
 
@@ -486,7 +486,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 55 && G.currentYear >= 1920 && !G.mem?.mundaneGoodPen,
-    text: 'There is a pen that writes the way a pen should write. You are careful about where it is. When someone borrows it, you notice. The preference for a specific pen is one of the small dignities of a working life.',
+    text: 'There is a pen that writes the way a pen should write. You are careful about where it is. When someone borrows it, you notice. The preference for a pen is one of the small dignities of a working life.',
     effect: (p) => { p.m += 1; p.setMem('mundaneGoodPen', true); },
   },
 
@@ -567,7 +567,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 58 && !G.mem?.mundaneDreamRecalled,
-    text: 'You remembered a dream into the afternoon, which is unusual. Most dreams leave by nine. This one stayed. You are not sure what it means and are not inclined to interpret it formally, but it occupied a specific corner of the day.',
+    text: 'You remembered a dream into the afternoon. That is unusual. Most dreams leave by nine. This one stayed. You are not sure what it means and are not inclined to interpret it formally, but it occupied a corner of the day.',
     effect: (p) => { p.e += 1; p.setMem('mundaneDreamRecalled', true); },
   },
 
@@ -624,7 +624,7 @@ export const SONDER_EVENTS = [
         hasTech(here, 'television', G.currentYear, rural) &&
         !hasTech(here, 'television', G.currentYear - 2, rural)
     },
-    text: 'The television arrived this year or last year. The living room has rearranged itself around the fact of it. The evenings are different now. Not better, not worse — different in a way that is already becoming normal.',
+    text: 'The television arrived this year or last year. The living room has rearranged itself around the fact of it. The evenings are different now. Not better, not worse — different, and already becoming normal.',
     effect: (p) => { p.m += 1; p.setMem('mundaneTelevisionFirstYear', true); },
   },
 
@@ -730,7 +730,7 @@ export const SONDER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => place.wentToSchool(G) && (G.career?.field === 'education' && G.age >= 28 && !G.mem?.mundaneTeacherJune),
-    text: 'The end of the school year has its own quality: the rooms quiet, the desks empty, the particular exhaustion of thirty-eight weeks of other people\'s growth. You close the door of the classroom. You will not enter it again for six weeks. This is not nothing.',
+    text: 'The end of the school year: the rooms quiet, the desks empty, the exhaustion of thirty-eight weeks of other people\'s growth. You close the door of the classroom. You will not enter it again for six weeks. This is not nothing.',
     effect: (p) => { p.m += 2; p.setMem('mundaneTeacherJune', true); },
   },
 
@@ -777,7 +777,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.character?.gender === 'male' && G.age >= 18 && G.age <= 45 && !G.mem?.mundaneManAskingDirections,
-    text: 'You needed to ask directions. The asking of directions requires a specific recalibration for someone who does not usually ask for directions. You asked. You were given accurate information. You got there.',
+    text: 'You needed to ask directions. The asking of directions requires a recalibration for someone who does not usually ask for directions. You asked. You were given accurate information. You got there.',
     effect: (p) => { p.m += 1; p.setMem('mundaneManAskingDirections', true); },
   },
 
@@ -854,7 +854,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 7 && G.age <= 16 && !G.mem?.mundaneSchoolCorridorSmell,
-    text: 'School has a smell that is the same regardless of which school and which country — a compound of cleaning fluid and paper and children and the particular neutrality of institutional space. You will smell it decades later and be briefly elsewhere.',
+    text: 'School has a smell that is the same regardless of which school and which country — a compound of cleaning fluid and paper and children and the neutrality of institutional space. You will smell it decades later and be briefly elsewhere.',
     effect: (p) => { p.m += 1; p.setMem('mundaneSchoolCorridorSmell', true); },
   },
 
@@ -872,7 +872,7 @@ export const SONDER_EVENTS = [
     phase: 'childhood',
     weight: 2,
     when: (G) => G.age >= 7 && G.age <= 14 && !G.mem?.mundaneSummerLong,
-    text: 'The long summer — or the equivalent in the places that do not have summers — when school is not and time is elastic. The days were longer then than they have been since. This is not nostalgia. It is physics: the same hours occupying more of the available life.',
+    text: 'The long summer — or the equivalent in the places that do not have summers — when school is not and time is elastic. The days were longer then than they have been since. It is physics: the same hours occupying more of the available life.',
     effect: (p) => { p.m += 2; p.setMem('mundaneSummerLong', true); },
   },
 
@@ -996,7 +996,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => place.isUrban(G) && (G.character?.religion?.startsWith('muslim') && G.age >= 28 && G.age <= 65 && !G.mem?.sonderFridayPrayerCourtyard),
-    text: 'After Friday prayer, men talk in the courtyard in groups sorted by age and neighbourhood and how long they have known each other — an arrangement no one decided. An old man stands at the edge alone, watching. He is not excluded. He is the one who sees.',
+    text: 'After Friday prayer, men talk in the courtyard in groups sorted by age and neighbourhood and how long they have known each other — an arrangement no one decided. An old man stands at the edge alone, watching. He is the one who sees.',
     effect: (p) => { p.e += 1; p.m += 1; p.setMem('sonderFridayPrayerCourtyard', true); },
   },
 
@@ -1122,7 +1122,7 @@ export const SONDER_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.age >= 65 && G.children?.length > 0 && !G.mem?.sonderGrandchildQuestion,
-    text: 'A child asks you what something was like when you were young. You describe it. The child listens with the particular patience of someone for whom this is not memory but story. The distance between what you remember and what they can imagine is the length of a century.',
+    text: 'A child asks you what something was like when you were young. You describe it. The child listens with the patience of someone for whom this is not memory but story. The distance between what you remember and what they can imagine is the length of a century.',
     effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderGrandchildQuestion', true); },
   },
 
@@ -1190,7 +1190,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.character?.gender === 'female' && !G.mem?.sonderWomanKeysNight,
-    text: 'Coming home late, you hold your keys in a particular way — one between two fingers — that you do not remember being taught. Other women you know do the same without any of you having discussed it. It is the kind of knowledge that travels without being written down.',
+    text: 'Coming home late, you hold your keys in a way — one between two fingers — that you do not remember being taught. Other women you know do the same without any of you having discussed it. It is the kind of knowledge that travels without being written down.',
     effect: (p) => { p.e += 1; p.setMem('sonderWomanKeysNight', true); },
   },
 
@@ -1309,7 +1309,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 1950 && !G.mem?.sonderLastBusPopulation,
-    text: 'The last bus carries its specific population: the shift workers, the people who stayed out too late, the ones who missed everything earlier. No one is going to the same place. The only thread connecting them is the hour and the fact that this is the last one.',
+    text: 'The last bus carries its population: the shift workers, the people who stayed out too late, the ones who missed everything earlier. No one is going to the same place. The only thread connecting them is the hour and the fact that this is the last one.',
     effect: (p) => { p.e += 2; p.setMem('sonderLastBusPopulation', true); },
   },
 
@@ -1319,7 +1319,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 58 && !G.mem?.sonderOwnGestureStranger,
-    text: 'Someone across the room makes a gesture you recognise — a particular way of carrying weight, the slight turn of the head when listening. It takes a moment to understand: it is the gesture you make. This person you have never met moves as you move. You wonder if either of you learned it or arrived at it separately.',
+    text: 'Someone across the room makes a gesture you recognise — a way of carrying weight, the slight turn of the head when listening. It takes a moment to understand: it is the gesture you make. This person you have never met moves as you move. You wonder if either of you learned it or arrived at it separately.',
     effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderOwnGestureStranger', true); },
   },
 
@@ -1348,7 +1348,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => place.hasPhone(G) && (G.age >= 18 && G.age <= 26 && !G.mem?.sonderFlatmatePhoneWall),
-    text: 'Through the wall you can hear your flatmate on the phone — not the words but the tone. The particular register of someone having a conversation they have been dreading. There is a whole life on the other side of that wall that you have been living next to without knowing.',
+    text: 'Through the wall you can hear your flatmate on the phone — not the words but the tone. The register of someone having a conversation they have been dreading. There is a whole life on the other side of that wall that you have been living next to without knowing.',
     effect: (p) => { p.e += 2; p.setMem('sonderFlatmatePhoneWall', true); },
   },
 
@@ -1387,7 +1387,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => place.hasTrain(G) && G.ruralUrban === 'urban' && G.currentYear >= 1940 && !G.mem?.sonderStrangerCryingPlatform,
-    text: 'A woman on the platform is crying in the particular way of someone who hoped they could stop by now. She watches the arrivals board. You do not know if she is waiting for someone or has just said goodbye. Either way it is a complete story you have only seen the middle of.',
+    text: 'A woman on the platform is crying in the way of someone who hoped they could stop by now. She watches the arrivals board. You do not know if she is waiting for someone or has just said goodbye. Either way it is a complete story you have only seen the middle of.',
     effect: (p) => { p.e += 2; p.setMem('sonderStrangerCryingPlatform', true); },
   },
 
@@ -1481,7 +1481,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => (G.character?.country?.archetype === 'subsaharan' || G.character?.country?.archetype === 'developing_urban' || G.character?.country?.archetype === 'developing_unstable') && !G.mem?.sonderVendorCountingEndOfDay,
-    text: 'The market vendor counts their money at the end of the day with the focused quiet of someone for whom this number means very things. It is a good day or a bad day in a way that has immediate material consequence. They fold the notes and do not speak.',
+    text: 'The market vendor counts their money at the end of the day with the focused quiet of someone for whom this number means very things. It is a good day or a bad day, and either way it has immediate material consequence. They fold the notes and do not speak.',
     effect: (p) => { p.e += 2; p.setMem('sonderVendorCountingEndOfDay', true); },
   },
 
@@ -1673,7 +1673,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => (G.religion === 'animist' || G.religion === 'folk_religion') && !G.mem?.sonderAnimistCrossroadsOffering,
-    text: 'At the crossroads, someone has left something — food, a cloth, something you don\'t name. The leaving was not performed. You came after. The communication between the person who left the offering and whoever they left it for took place without witnesses, which is how it is supposed to work.',
+    text: 'At the crossroads, someone has left something — food, a cloth, something you don\'t name. The leaving was not performed. You came after. The communication between the person who left the offering and whoever they left it for took place without witnesses, as it is supposed to.',
     effect: (p) => { p.e += 1; p.setMem('sonderAnimistCrossroadsOffering', true); },
   },
 
@@ -1682,7 +1682,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.religion === 'christian_orthodox' && !G.mem?.sonderOrthodoxHolyWeekExhausted,
-    text: 'Coming out of the Holy Week service at two in the morning — a three-hour liturgy — people stand on the church steps in their good clothes with the particular exhaustion of having done something difficult on purpose. A woman near you is smiling at nothing. You have seen exhaustion and you have seen joy and this is both.',
+    text: 'Coming out of the Holy Week service at two in the morning — a three-hour liturgy — people stand on the church steps in their good clothes with the exhaustion of having done something difficult on purpose. A woman near you is smiling at nothing. You have seen exhaustion and you have seen joy and this is both.',
     effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderOrthodoxHolyWeekExhausted', true); },
   },
 
@@ -1712,7 +1712,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.casteSystem && G.character?.country?.name === 'India' && G.currentYear <= 2000 && !G.mem?.sonderDalitWaterPump,
-    text: 'At the village pump, a woman waits after the others have gone. This is the arrangement: she uses the pump when the upper-caste families are finished, so that the water is not touched by her touching it first. She does not look at you. She is not waiting to be seen. She is waiting for them to finish.',
+    text: 'At the village pump, a woman waits after the others have gone. This is the arrangement: she uses the pump when the upper-caste families are finished, so that the water is not touched by her touching it first. She does not look at you. She is waiting for them to finish.',
     effect: (p) => { p.e += 2; p.r += 2; p.setMem('sonderDalitWaterPump', true); },
   },
 
@@ -1748,7 +1748,7 @@ export const SONDER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.character?.country?.name === 'Australia' && !G.mem?.sonderAboriginalElderCity,
-    text: 'An elder sits on a bench in the city centre, watching. He has the particular stillness of someone who remembers what was here before the buildings. You don\'t know if he is waiting for someone or if the watching itself is the thing. The city proceeds around him without looking back.',
+    text: 'An elder sits on a bench in the city centre, watching. He has the stillness of someone who remembers what was here before the buildings. You don\'t know if he is waiting for someone or if the watching itself is the thing. The city proceeds around him without looking back.',
     effect: (p) => { p.e += 2; p.setMem('sonderAboriginalElderCity', true); },
   },
 
@@ -1853,7 +1853,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => (G.character?.country?.archetype === 'subsaharan' || G.character?.country?.archetype === 'developing_urban') && !G.mem?.sonderMarketStallNursing,
-    text: 'The market stall woman is nursing while managing a transaction with her other hand. When the transaction is done she resumes the nursing without interruption. The business and the child and the afternoon are all held in the same attention, which is not divided. It is multiple.',
+    text: 'The market stall woman is nursing while managing a transaction with her other hand. When the transaction is done she resumes the nursing without interruption. The business and the child and the afternoon are all held in the same attention, multiple rather than divided.',
     effect: (p) => { p.e += 2; p.setMem('sonderMarketStallNursing', true); },
   },
 
@@ -1891,7 +1891,7 @@ export const SONDER_EVENTS = [
     phase: 'childhood',
     weight: 2,
     when: (G) => G.currentYear >= 1951 && G.currentYear <= 1964 && (G.character?.country?.archetype === 'wealthy_west' || G.character?.country?.archetype === 'post_soviet') && !G.mem?.sonderColdWarCivilDefense,
-    text: 'The civil defense drill: everyone moving to where they are told to move. Children under desks. The drill assumes a particular kind of catastrophe and does not assume it will work. Adults comply. The compliance is its own kind of testament to what this decade contains.',
+    text: 'The civil defense drill: everyone moving to where they are told to move. Children under desks. The drill assumes a kind of catastrophe and does not assume it will work. Adults comply. The compliance says what this decade contains.',
     effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderColdWarCivilDefense', true); },
   },
 
@@ -1941,7 +1941,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => !G.mem?.sonderDeafPersonWatching,
-    text: 'Someone at the next table is watching the room in a particular way — reading lips, reading body language, reading the parts of conversation that don\'t require sound. They are getting more of this room than most people in it. They see you watching them watch. They look away first and then, after a moment, so do you.',
+    text: 'Someone at the next table is watching the room in a way — reading lips, reading body language, reading the parts of conversation that don\'t require sound. They are getting more of this room than most people in it. They see you watching them watch. They look away first and then, after a moment, so do you.',
     effect: (p) => { p.e += 2; p.setMem('sonderDeafPersonWatching', true); },
   },
 
@@ -2033,7 +2033,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.currentYear >= 1950 && !G.mem?.sonderGraduationFamilyAlignment,
-    text: 'A graduation photograph being taken outside the building: the graduate in their gown, the family assembling around them. The photographer keeps asking them to move together. They do not know how to stand together as a group — they know how to stand as a family in their house, which is not the same. The photograph will look right anyway.',
+    text: 'A graduation photograph being taken outside the building: the graduate in their gown, the family assembling around them. The photographer keeps asking them to move together. They do not know how to stand together as a group — they know how to stand as a family in their house, and that is not the same. The photograph will look right anyway.',
     effect: (p) => { p.m += 1; p.e += 1; p.setMem('sonderGraduationFamilyAlignment', true); },
   },
 
@@ -2061,7 +2061,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.age >= 45 && !G.mem?.sonderCancerPatientSun,
-    text: 'A person in a park turning their face to the sun with their eyes closed — the particular quality of someone for whom this is not routine pleasure but something else, something they are paying attention to in a way that suggests the sun cannot be taken for granted right now. You don\'t know their situation. Their face tells you something.',
+    text: 'A person in a park turning their face to the sun with their eyes closed — the quality of someone for whom this is not routine pleasure but something else, something they are paying attention to in a way that suggests the sun cannot be taken for granted right now. You don\'t know their situation. Their face tells you something.',
     effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderCancerPatientSun', true); },
   },
 
@@ -2080,7 +2080,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.ruralUrban === 'urban' && !G.mem?.sonderHomelessMorningArrangement,
-    text: 'A man arranging his things at first light: the bag packed exactly, the coat straightened, the face washed at the fountain with the care of someone who has decided that the day will be taken seriously regardless of what it contains. The arrangement is a refusal of a particular assumption. The arrangement takes about ten minutes.',
+    text: 'A man arranging his things at first light: the bag packed exactly, the coat straightened, the face washed at the fountain with the care of someone who has decided that the day will be taken seriously regardless of what it contains. The arrangement is a refusal of an assumption. The arrangement takes about ten minutes.',
     effect: (p) => { p.e += 2; p.karma += 1; p.setMem('sonderHomelessMorningArrangement', true); },
   },
 
@@ -2215,7 +2215,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.religion?.startsWith('muslim') && (G.currentCountry?.archetype === 'wealthy_west' || G.character?.country?.archetype === 'wealthy_west') && G.currentYear >= 1990 && !G.mem?.sonderHijabWesternCityAttention,
-    text: 'A woman in hijab in this city navigating a particular quality of being looked at — not hostility exactly, but a attention that most people in this street do not attract. She has developed a way of moving that acknowledges nothing. The acknowledgement-of-nothing is its own kind of work.',
+    text: 'A woman in hijab in this city navigating a quality of being looked at — not hostility exactly, but a attention that most people in this street do not attract. She has developed a way of moving that acknowledges nothing. The acknowledgement-of-nothing is work.',
     effect: (p) => { p.e += 2; p.setMem('sonderHijabWesternCityAttention', true); },
   },
 
@@ -2226,7 +2226,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !['secular', 'atheist'].includes(G.religion) && ((G.character?.country?.name === 'Iran' || G.character?.country?.name === 'India') && !G.mem?.sonderZoroastrianFireTemple),
-    text: 'The fire temple: the flame that has been burning continuously for — they will tell you how long — a very long time. Someone is tending it at this hour, which is a quiet hour. The fire is the prayer, the fire is the practice, the fire is the point. You watch them tend it without quite understanding and without needing to.',
+    text: 'The fire temple: the flame that has been burning continuously for — they will tell you how long — a very long time. Someone is tending it at this quiet hour. The fire is the prayer, the fire is the practice, the fire is the point. You watch them tend it without quite understanding and without needing to.',
     effect: (p) => { p.e += 2; p.setMem('sonderZoroastrianFireTemple', true); },
   },
 
@@ -2255,7 +2255,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !G.mem?.sonderInterpreterTwoWorlds,
-    text: 'In the consultation, the interpreter is holding two people at once — translating not just words but weight, register, the thing said and the thing meant behind the thing said. Both sides think the interpreter is a conduit. They are not a conduit. They are doing something more difficult than speaking twice.',
+    text: 'In the consultation, the interpreter is holding two people at once — translating not just words but weight, register, the thing said and the thing meant behind the thing said. Both sides think the interpreter is a conduit. They are doing something more difficult than speaking twice.',
     effect: (p) => { p.e += 2; p.setMem('sonderInterpreterTwoWorlds', true); },
   },
 
@@ -2274,7 +2274,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 1950 && !G.mem?.sonderPrayingTransit,
-    text: 'On the bus, a woman has her eyes closed and her lips moving very slightly. She is not asleep. She is somewhere specific that is also here, on the bus, at this hour, between two places. When she opens her eyes at her stop, she is back without transition — the prayer finished or deposited for later.',
+    text: 'On the bus, a woman has her eyes closed and her lips moving very slightly. Her eyes are closed and she is somewhere else that is also here, on the bus, at this hour, between two places. When she opens her eyes at her stop, she is back without transition — the prayer finished or deposited for later.',
     effect: (p) => { p.e += 1; p.setMem('sonderPrayingTransit', true); },
   },
 
@@ -2295,7 +2295,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.tech('mobile_phone') && (place.hasHealthcare(G) && (!G.mem?.sonderMaternityWardEmergence)),
-    text: 'A man comes out of the maternity ward entrance and stands on the pavement. He is not making a phone call yet. He is just standing. His face has the quality of someone who has just witnessed something enormous and is not yet ready to speak it into the smaller world outside. Then he takes out his phone.',
+    text: 'A man comes out of the maternity ward entrance and stands on the pavement. He has not made the phone call yet. He is just standing. His face has the quality of someone who has just witnessed something enormous and is not yet ready to speak it into the smaller world outside. Then he takes out his phone.',
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('sonderMaternityWardEmergence', true); },
   },
 
@@ -2337,7 +2337,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 60 && !G.mem?.sonderOldManOldDog,
-    text: 'An old man and his old dog, both walking slowly, both taking their time, both evidently fine with this pace. They pause at the same things. The dog is not being walked — they are walking together, at the speed both of them require, which is the same speed.',
+    text: 'An old man and his old dog, both walking slowly, both taking their time, both evidently fine with this pace. They pause at the same things. The dog is not being walked — they are walking together, at the speed both of them require, the same speed.',
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('sonderOldManOldDog', true); },
   },
 
@@ -2431,7 +2431,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.character?.country?.name === 'Kenya' && !G.mem?.sonderNairobiMatatu,
-    text: 'The matatu conductor leaning out the door, calling the route, collecting the fare, keeping the count of who is in and who gets out, managing four conversations at once while the vehicle moves. The speed and the noise are the medium. He is competent in a way that only this particular environment would produce.',
+    text: 'The matatu conductor leaning out the door, calling the route, collecting the fare, keeping the count of who is in and who gets out, managing four conversations at once while the vehicle moves. The speed and the noise are the medium. He is competent as only this environment would make him.',
     effect: (p) => { p.e += 2; p.setMem('sonderNairobiMatatu', true); },
   },
 
@@ -2458,7 +2458,7 @@ export const SONDER_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.character?.country?.name === 'Rwanda' && G.currentYear >= 2000 && !G.mem?.sonderRwandaVillageAlongside,
-    text: 'Two men in the market who are neighbours and who were on opposite sides of what happened. They move around each other without incident. This is something — not reconciliation exactly, not forgiveness exactly, but the practice of continuing to exist in the same place, which is different from, and harder than, either.',
+    text: 'Two men in the market who are neighbours and who were on opposite sides of what happened. They move around each other without incident. This is something — not reconciliation exactly, not forgiveness exactly, but the practice of continuing to exist in the same place, harder than either.',
     effect: (p) => { p.e += 2; p.r += 2; p.setMem('sonderRwandaVillageAlongside', true); },
   },
 
@@ -2477,7 +2477,7 @@ export const SONDER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => (G.character?.country?.name === 'China' || G.character?.country?.name === 'Vietnam' || G.character?.country?.name === 'South Korea' || G.character?.country?.name === 'Taiwan') && !G.mem?.sonderConfucianAncestorTablet,
-    text: 'The ancestor tablet in the home: the incense, the offering, the specific protocol of how the food is arranged. The dead are present in this room in a way that is institutional and daily rather than exceptional. The man tending the altar is not performing ritual. He is doing what is done on a Thursday.',
+    text: 'The ancestor tablet in the home: the incense, the offering, the protocol of how the food is arranged. The dead are present in this room daily and institutionally, rather than exceptionally. The man tending the altar is doing what is done on a Thursday.',
     effect: (p) => { p.e += 2; p.setMem('sonderConfucianAncestorTablet', true); },
   },
 
@@ -2497,7 +2497,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 55 && !G.mem?.sonderGraveAnniversaryVisit,
-    text: 'Someone at a grave on what is clearly an anniversary — not a first visit, not a random visit, but the specific visit that comes at this time every year and will come again. They stand there for a while and then they do something small — adjust the flowers, or speak, or just stand. Then they go. They\'ll be back in a year.',
+    text: 'Someone at a grave on what is clearly an anniversary — not a first visit, not a random visit, but the visit that comes at this time every year and will come again. They stand there for a while and then they do something small — adjust the flowers, or speak, or just stand. Then they go. They\'ll be back in a year.',
     effect: (p) => { p.e += 2; p.r += 2; p.setMem('sonderGraveAnniversaryVisit', true); },
   },
 
@@ -2518,7 +2518,7 @@ export const SONDER_EVENTS = [
     phase: 'adolescence',
     weight: 2,
     when: (G) => G.character?.gender === 'male' && G.age >= 14 && G.age <= 17 && !G.mem?.sonderTeenageBoyRazor,
-    text: 'Through a window or a half-open door: a teenage boy shaving for what is clearly one of the first times. The concentration is out of proportion to the task, which is appropriate given that the task is new. He doesn\'t know he\'s being seen. The seriousness of the face is something he would not want witnessed.',
+    text: 'Through a window or a half-open door: a teenage boy shaving for what is clearly one of the first times. The concentration is out of proportion to the task, and right, given that the task is new. He doesn\'t know he\'s being seen. The seriousness of the face is something he would not want witnessed.',
     effect: (p) => { p.e += 2; p.setMem('sonderTeenageBoyRazor', true); },
   },
 
@@ -2568,7 +2568,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.ruralUrban === 'urban' && !G.mem?.sonderHomelessWomanInvisible,
-    text: 'A woman sleeping on a bench in a public space in the middle of the afternoon, around whom everyone is navigating without acknowledgement. She is not asleep — her eyes are open, watching the ceiling. She is inside a bubble of invisibility that the city constructs without discussion. The bubble is maintained by everyone\'s compliance.',
+    text: 'A woman sleeping on a bench in a public space in the middle of the afternoon, around whom everyone is navigating without acknowledgement. Her eyes are open, watching the ceiling, inside a bubble of invisibility that the city constructs without discussion. The bubble is maintained by everyone\'s compliance.',
     effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderHomelessWomanInvisible', true); },
   },
 
@@ -2675,7 +2675,7 @@ export const SONDER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.character?.gender === 'female' && G.age >= 32 && G.age <= 45 && G.children && G.children.length > 0 && !G.mem?.sonderWomanReturnsToWork),
-    text: 'The first day back at the office after the maternity leave. The desk is the same desk. The coffee machine is the same coffee machine. She is not the same person who sat here before. This is not a complaint. It is an observation about how a person can change category without anyone at the office having witnessed the change.',
+    text: 'The first day back at the office after the maternity leave. The desk is the same desk. The coffee machine is the same coffee machine. She is not the same person who sat here before, and she does not mind. It is an observation about how a person can change category without anyone at the office having witnessed the change.',
     effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderWomanReturnsToWork', true); },
   },
 
@@ -2704,7 +2704,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => place.hasCar(G) && ((G.character?.country?.name === 'India' || G.character?.country?.name === 'Pakistan' || G.character?.country?.name === 'Bangladesh' || G.character?.country?.name === 'Nepal') && G.age >= 22 && G.age <= 40 && !G.mem?.sonderSouthAsianGroomProcession),
-    text: 'The baraat: the groom on the horse, or in the decorated car, moving through the street. The relatives dancing around the car. This is not embarrassing for them in the way it would be embarrassing for other people. It is the required public account of something important. The groom looks slightly overwhelmed, which is appropriate.',
+    text: 'The baraat: the groom on the horse, or in the decorated car, moving through the street. The relatives dancing around the car. For them it is the required public account of something important, and nobody is embarrassed. The groom looks slightly overwhelmed, as he should.',
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('sonderSouthAsianGroomProcession', true); },
   },
 
@@ -2713,7 +2713,7 @@ export const SONDER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => (G.career?.field === 'manual' || G.career?.title?.toLowerCase().includes('mine') || G.character?.country?.name === 'South Africa' || G.character?.country?.name === 'Zambia') && G.age >= 30 && !G.mem?.sonderMinerSurfaceDay,
-    text: 'The men coming up from underground at the end of the shift. They blink at the light in the way that people blink who have been in the dark for a fixed and known quantity of hours. This is not dramatic. This is Tuesday. This is what Tuesday looks like when your work is below the surface of things.',
+    text: 'The men coming up from underground at the end of the shift. They blink at the light in the way that people blink who have been in the dark for a fixed and known quantity of hours. This is Tuesday. This is what Tuesday looks like when your work is below the surface of things.',
     effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderMinerSurfaceDay', true); },
   },
 
@@ -2722,7 +2722,7 @@ export const SONDER_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.character?.country?.name === 'China' && G.age >= 20 && G.age <= 40 && G.currentYear >= 1985 && !G.mem?.sonderChineseNewYearTrainHome,
-    text: 'The Spring Festival train: four hundred million people moving at the same time in the same direction, toward their parents\' homes. You are one of them. The migration is the largest annual human movement on earth and it happens inside the ordinary feeling of going home for the new year, which is just a feeling a person has about a train.',
+    text: 'The Spring Festival train: four hundred million people moving at the same time in the same direction, toward their parents\' homes. You are one of them. The migration is the largest annual human movement on earth and it happens inside the ordinary feeling of going home for the new year: a feeling a person has about a train.',
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('sonderChineseNewYearTrainHome', true); },
   },
 
@@ -2740,7 +2740,7 @@ export const SONDER_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.ruralUrban === 'rural' && G.age >= 60 && !G.mem?.sonderTheLastFarm,
-    text: 'The last farm on a road that used to have several farms. The others became something else over the decades — a subdivision, a storage facility, a field that is now just a field without a purpose. The one that remains is this one. The people who remain in it did not choose to be the last. They chose to stay, which is a different choice.',
+    text: 'The last farm on a road that used to have several farms. The others became something else over the decades — a subdivision, a storage facility, a field that is now just a field without a purpose. The one that remains is this one. The people who remain in it did not choose to be the last. They chose to stay.',
     effect: (p) => { p.r += 2; p.e += 1; p.setMem('sonderTheLastFarm', true); },
   },
 
@@ -2758,7 +2758,7 @@ export const SONDER_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => place.hasHealthcare(G) && (G.age >= 20 && !G.mem?.sonderAirportDepartureGate),
-    text: 'The departure gate: everyone waiting is going somewhere specific, and the somewhere is specific to each of them in a way the gate cannot accommodate. All the particular arrivals — the house, the hospital, the person who does not know yet that you are coming — held inside the general fact of people waiting for a flight.',
+    text: 'The departure gate: everyone waiting is going somewhere specific, and the somewhere is specific to each of them in a way the gate cannot accommodate. All the arrivals — the house, the hospital, the person who does not know yet that you are coming — held inside the general fact of people waiting for a flight.',
     effect: (p) => { p.e += 2; p.setMem('sonderAirportDepartureGate', true); },
   },
 
@@ -2776,7 +2776,7 @@ export const SONDER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.career?.field === 'education' && G.age >= 35 && !G.mem?.sonderTeacherStudentPotential,
-    text: 'A student whose potential is visible to you and not yet visible to them. You have seen this particular quality before, in other students, in other years. You know what it is and what it requires and whether this specific set of circumstances will allow it to develop. You do not say all of this. You give the assignment back with a comment in the margin.',
+    text: 'A student whose potential is visible to you and not yet visible to them. You have seen this quality before, in other students, in other years. You know what it is and what it requires and whether this set of circumstances will allow it to develop. You do not say all of this. You give the assignment back with a comment in the margin.',
     effect: (p) => { p.e += 2; p.m += 2; p.setMem('sonderTeacherStudentPotential', true); },
   },
 
@@ -2831,7 +2831,7 @@ export const SONDER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => (G.religion?.startsWith('christian') || G.religion?.startsWith('muslim') || G.religion === 'hindu') && G.age >= 30 && !G.mem?.sonderPilgrimWalkingDays,
-    text: 'A pilgrim on the road. Not at the destination — on the road between. They have been walking for some days. The walking has a quality that ordinary walking does not have, which is that it is both the means and the point. When they get to where they are going, the getting there will be less important than the road that produced it.',
+    text: 'A pilgrim on the road. Not at the destination — on the road between. They have been walking for some days. The walking is both the means and the point. When they get to where they are going, the getting there will be less important than the road that produced it.',
     effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderPilgrimWalkingDays', true); },
   },
 
@@ -2850,7 +2850,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 6 && G.age <= 11 && !G.mem?.sonderChildWatchingFuneral,
-    text: 'A child watching a funeral from a distance — from a window, or from the edge of the crowd where the adults have not noticed them yet. The child is watching the adults cry. Adults do not usually cry in public. The child is filing this under: things adults do that they normally do not do, which means: things that are serious in a way that ordinary things are not.',
+    text: 'A child watching a funeral from a distance — from a window, or from the edge of the crowd where the adults have not noticed them yet. The child is watching the adults cry. Adults do not usually cry in public. The child is filing this under: things adults do that they normally do not do, which means: things that are serious.',
     effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderChildWatchingFuneral', true); },
   },
 
@@ -2860,7 +2860,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => place.isLiterate(G) && (G.character?.gender === 'female' && G.age >= 30 && (G.character?.country?.archetype === 'subsaharan' || G.character?.country?.archetype === 'developing_urban') && !G.mem?.sonderWomanSmallBusinessLedger),
-    text: 'The woman with the small business and the ledger. The ledger is handwritten. It records what came in and what went out and what the difference is, which is what she lives on and what she is saving from. She has been keeping this ledger for ten years. The ten years are in the handwriting: more confident now, different ink.',
+    text: 'The woman with the small business and the ledger. The ledger is handwritten. It records what came in and what went out and the difference, what she lives on and what she is saving from. She has been keeping this ledger for ten years. The ten years are in the handwriting: more confident now, different ink.',
     effect: (p) => { p.e += 2; p.m += 2; p.setMem('sonderWomanSmallBusinessLedger', true); },
   },
 
@@ -2917,7 +2917,7 @@ export const SONDER_EVENTS = [
     when: (G) => place.isLiterate(G) && (G.age >= 55 &&
       (G.flags.includes('emigrated') || G.flags.includes('diaspora_child') || G.flags.includes('left_for_city')) &&
       !G.mem?.sonderDiasporaPhoto),
-    text: 'You find a photograph of the city you left, taken before you left it. It is someone else\'s photograph — a newspaper, an archive. The street in the photo is the street you knew. The people in it are not people you know. They are someone else\'s life happening in the place you thought was yours. You realise the city never belonged to you any more than it belongs to them. It was just the place you were, and then it wasn\'t.',
+    text: 'You find a photograph of the city you left, taken before you left it. It is someone else\'s photograph — a newspaper, an archive. The street in the photo is the street you knew. The people in it are someone else\'s life, happening in the place you thought was yours. You realise the city never belonged to you any more than it belongs to them. It was just the place you were, and then it wasn\'t.',
     effect: (p) => { p.r += 3; p.e += 2; p.setMem('sonderDiasporaPhoto', true); },
   },
 
@@ -2950,7 +2950,7 @@ export const SONDER_EVENTS = [
     // city street, a working morning, a stranger who is already at work.
     when: (G) => place.isUrban(G) && place.isRich(G) &&
       G.age >= 3 && !G.mem?.sonderGlimpseEcDelivery,
-    text: 'A man goes by with the morning delivery, one hand steadying the load and the other already reaching for the next gate. He has been awake longer than anyone in your house. He does not look up at the window. You watch until he is past the corner and then there is only the street again, which is what the street is like when nobody is crossing it.',
+    text: 'A man goes by with the morning delivery, one hand steadying the load and the other already reaching for the next gate. He has been awake longer than anyone in your house. He does not look up at the window. You watch until he is past the corner and then there is only the street again, as it is when nobody is crossing it.',
     effect: (p) => { p.e += 1; p.setMem('sonderGlimpseEcDelivery', true); },
   },
 
@@ -3050,7 +3050,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 13 && place.isUrban(G) && G.currentYear >= 1930 && !G.mem?.sonderGlimpseAdNightShift,
-    text: 'Out early, you meet the shift coming the other way — people finishing as you are starting. Nobody is talking. Their faces have the particular slackness of a body that has been awake through the part of the night when it should not have been.',
+    text: 'Out early, you meet the shift coming the other way — people finishing as you are starting. Nobody is talking. Their faces have the slackness of a body that has been awake through the part of the night when it should not have been.',
     effect: (p) => { p.e += 2; p.setMem('sonderGlimpseAdNightShift', true); },
   },
 
@@ -3132,7 +3132,7 @@ export const SONDER_EVENTS = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 60 && !G.mem?.sonderGlimpseLlSameAge,
-    text: 'Someone about your age is doing work you could not do now — lifting, climbing, staying down on their knees for a long stretch. They are not exceptional. It is simply that their years went into their body and yours went somewhere else.',
+    text: 'Someone about your age is doing work you could not do now — lifting, climbing, staying down on their knees for a long stretch. Their years went into their body and yours went somewhere else.',
     effect: (p) => { p.e += 1; p.setMem('sonderGlimpseLlSameAge', true); },
   },
 

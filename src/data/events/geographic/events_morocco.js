@@ -104,7 +104,7 @@ export const MOROCCO_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) => IS_MOROCCO(G) && G.age >= 18 && G.age <= 32 && !G.mem.morStraitDecision,
-    text: 'On a clear day from Tangier you can see Spain. Fourteen kilometres. The boats that make the crossing are not designed for fourteen kilometres of open Atlantic — they are designed for a calm day, which is not always what the Strait offers. Thousands cross this way each year. Hundreds die each year. The official route requires a visa which requires a bank statement which requires a job which requires the visa. You consider the options.',
+    text: 'On a clear day from Tangier you can see Spain. Fourteen kilometres. The boats that make the crossing are not designed for fourteen kilometres of open Atlantic; they are designed for a calm day, and the Strait does not always offer one. Thousands cross this way each year. Hundreds die each year. The official route requires a visa which requires a bank statement which requires a job which requires the visa. You consider the options.',
     choices: [
       {
         text: 'Apply for the visa through official channels.',

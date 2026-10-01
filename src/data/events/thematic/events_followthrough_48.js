@@ -14,7 +14,7 @@ export const FOLLOWTHROUGH_48_EVENTS = [
       G.flags.has('greek_prosfyges_family') &&
       G.age >= 45 &&
       !G.mem?.grProsfygesMidlife,
-    text: 'Your grandmother is dead and the language she spoke for the Turkey she remembered has gone with her. She described the market in Smyrna the way you would describe this street — the specific stalls, the specific men who ran them, the smell at a particular time of day. The place she described was destroyed in 1922. She never went back. You never went either, but you have known the map of it since childhood. The place exists only in the description, and now the description is gone too.',
+    text: 'Your grandmother is dead and the language she spoke for the Turkey she remembered has gone with her. She described the market in Smyrna the way you would describe this street — the stalls, the men who ran them, the smell at a time of day. The place she described was destroyed in 1922. She never went back. You never went either, but you have known the map of it since childhood. The place exists only in the description, and now the description is gone too.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.setMem('grProsfygesMidlife', true) },
   },
@@ -47,7 +47,7 @@ export const FOLLOWTHROUGH_48_EVENTS = [
       G.flags.has('greek_civil_war_generation') &&
       G.age >= 35 &&
       !G.mem?.grElascivilSplit,
-    text: 'The resistance was one thing. The civil war was a different thing with some of the same people in it. By 1947, the question of who you fought beside in the mountains had become the question of which side of the country you were on. Some of the men from the resistance are now in exile in Tashkent or Prague. Some of them are dead. Some of them are in the mountains still, or were, before the surrender. You made your decisions year by year between 1942 and 1949 and what you end up with is a record that does not simplify into a single position. The government\'s account says you were a bandit. The men who were with you in the occupation know what the mountains were for. Both things are in the record.',
+    text: 'The resistance was one thing. The civil war was another, with some of the same men in it, and by 1947 who you had fought beside in the mountains decided which side of the country you were on. Some of those men are in Tashkent or Prague now, some are dead, some are still in the hills. The government\'s file says you were a bandit. The men who were with you in the occupation know what the mountains were for.',
     choices: null,
     effect: (p) => { p.r += 8; p.karma += 5; p.e += 3; p.setMem('grElascivilSplit', true) },
   },
@@ -158,7 +158,7 @@ export const FOLLOWTHROUGH_48_EVENTS = [
       G.currentYear >= 1980 &&
       G.age >= 50 &&
       !G.mem?.drTrujilloDemocracy,
-    text: 'The photograph is gone from the wall. You took it down yourself in 1961 or someone else did. What replaced it was a sequence of governments: Balaguer, who ran the country for most of three decades with a different kind of management; elections, which were not always clean; the gradual arrival of something that could be called normal. You grew up in the country where the photograph was required. You have lived long enough to know what is on the other side of that, which is: ordinary politics, ordinary disappointment, ordinary corruption. The ordinariness after the photograph is its own kind of thing.',
+    text: 'The photograph is gone from the wall. You took it down yourself in 1961 or someone else did. What replaced it was a sequence of governments: Balaguer, who ran the country for most of three decades with a different kind of management; elections, which were not always clean; the gradual arrival of something that could be called normal. You grew up in the country where the photograph was required. You have lived long enough to know what is on the other side of that, which is: ordinary politics, ordinary disappointment, ordinary corruption. The ordinariness after the photograph is hard in its own way.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.setMem('drTrujilloDemocracy', true) },
   },

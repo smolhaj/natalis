@@ -82,7 +82,7 @@ export const UZBEKISTAN_EVENTS = [
       G.currentYear >= 1995 && G.currentYear <= 2016 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.uzbFaith,
-    text: 'The SNB — the National Security Service — has a category for what it considers dangerous: Wahhabi. The category has expanded until it includes any visible religiosity that the state did not authorize. A beard is a data point. Attending Friday prayers at an unregistered mosque is a data point. Owning a Koran not issued by the state-approved Muftiate is a data point. Men in the Fergana Valley disappear into Jaslyk prison for this. Jaslyk is in the desert. The conditions in Jaslyk are described in Human Rights Watch reports. The reports are accurate.',
+    text: 'The security service has a category for danger: Wahhabi. It has grown until it covers any religion the state did not authorise: a beard, Friday prayer at an unregistered mosque, a Quran not issued by the official Muftiate. Men from the Fergana Valley disappear into Jaslyk, in the desert. The human rights reports describe the conditions there. The reports are accurate.',
     choices: [
       {
         text: 'You practice privately. The kitchen, the family, the unmarked.',
@@ -156,7 +156,7 @@ export const UZBEKISTAN_EVENTS = [
       G.age >= 16 &&
       (G.place?.region?.toLowerCase().includes('fergana') || G.place?.region?.toLowerCase().includes('andijan') || G.place?.region?.toLowerCase().includes('namangan')) &&
       !G.mem?.uzbFergana,
-    text: 'The Fergana Valley was divided by Soviet border demarcation in the 1920s and 1930s — lines drawn to ensure no single republic could dominate the others, cutting through towns, splitting ethnic communities, placing Uzbek enclaves inside Kyrgyzstan and Tajikistan. After independence the borders became real. In 2010 violence between Kyrgyz and Uzbeks in Osh and Jalal-Abad kills four hundred, perhaps more — the count depends on who is counting. The Uzbeks who were there and who have family on both sides of the line carry a specific geography of belonging: the cousin who is a different citizen now, the market that requires a crossing.',
+    text: 'The Fergana Valley was divided by Soviet border demarcation in the 1920s and 1930s — lines drawn to ensure no single republic could dominate the others, cutting through towns, splitting ethnic communities, placing Uzbek enclaves inside Kyrgyzstan and Tajikistan. After independence the borders became real. In 2010 violence between Kyrgyz and Uzbeks in Osh and Jalal-Abad kills four hundred, perhaps more — the count depends on who is counting. The Uzbeks who were there and who have family on both sides of the line carry a geography of belonging: the cousin who is a different citizen now, the market that requires a crossing.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.addFlag('uzb_fergana_generation'); p.setMem('uzbFergana', true) },
   },
@@ -172,7 +172,7 @@ export const UZBEKISTAN_EVENTS = [
       G.currentYear >= 2016 && G.currentYear <= 2017 &&
       G.age >= 30 &&
       !G.mem?.uzbKarimovDeath,
-    text: 'Islam Karimov dies in September 2016. He has been the leader since before independence — twenty-seven years. The Soviet-era first secretary who became the president who became the permanent president. You have lived your entire adult life under his rule. The state mourning is official and extensive. What you feel is harder to name: it is not quite grief because grief requires loss, and he was not a thing you had. It is something more like the end of a weather system — the pressure was so constant that its absence creates its own disorientation.',
+    text: 'Islam Karimov dies in September 2016. He has been the leader since before independence — twenty-seven years. The Soviet-era first secretary who became the president who became the permanent president. You have lived your entire adult life under his rule. The state mourning is official and extensive. What you feel is harder to name: grief requires loss, and he was not a thing you had. It is more like the end of a weather system — the pressure was so constant that its absence disorients you.',
     choices: null,
     effect: (p) => { p.r += 7; p.m += 3; p.e += 2; p.addFlag('uzb_karimov_death_witness'); p.setMem('uzbKarimovDeath', true) },
   },
@@ -189,7 +189,7 @@ export const UZBEKISTAN_EVENTS = [
       G.age >= 25 &&
       G.flags.has('uzb_karimov_era') &&
       !G.mem?.uzbMirz,
-    text: 'Mirziyoyev releases some political prisoners. The borders with Kazakhstan and Kyrgyzstan open. Tourists begin arriving in Samarkand — the Registan becoming a backdrop for photographs taken by people who do not know who Timur was. The currency becomes convertible. The forced cotton harvest is officially ended. Each of these things is real. The SNB still exists. The press is not free. The reform is announced from above and conducted at the pace the leadership decides. You have learned, over twenty-seven years, to calibrate hope carefully: enough to function, not enough to be destroyed when it decelerates.',
+    text: 'Mirziyoyev lets some prisoners go. The borders with Kazakhstan and Kyrgyzstan open, tourists photograph themselves in the Registan without knowing who Timur was, the som can be changed, and the forced cotton harvest is officially over. The security service still exists and the press is not free. Over twenty-seven years you have learned to ration hope: enough to function, not enough to be destroyed when it slows.',
     choices: [
       {
         text: 'The opening is real enough to act on.',

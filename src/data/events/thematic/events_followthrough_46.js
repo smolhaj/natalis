@@ -35,7 +35,7 @@ export const FOLLOWTHROUGH_46_EVENTS = [
       G.age >= 60 &&
       G.currentYear >= 1970 &&
       !G.mem?.ft46WitnessedDemocracy,
-    text: 'You were young when the Reichstag burned and the Enabling Act passed. What came after is part of your life in the way foundations are part of a house — invisible, load-bearing, not available for ordinary inspection. The Federal Republic was built on those ruins with the specific architectural care of a country that knew what had replaced the last republic. You have watched every new crack in its walls with the attention of someone who knows what can be constructed on foundations that fail.',
+    text: 'You were young when the Reichstag burned and the Enabling Act passed. What came after is part of your life in the way foundations are part of a house — invisible, load-bearing, not available for ordinary inspection. The Federal Republic was built on those ruins with the architectural care of a country that knew what had replaced the last republic. You have watched every new crack in its walls with the attention of someone who knows what can be constructed on foundations that fail.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m -= 3; p.setMem('ft46WitnessedDemocracy', true) },
   },
@@ -83,7 +83,7 @@ export const FOLLOWTHROUGH_46_EVENTS = [
       G.age >= 55 &&
       G.currentYear >= 1985 &&
       !G.mem?.ft46JamIndep,
-    text: 'August 6, 1962. The flag went up and the Union Jack came down and you remember how it felt to be present for that — a pride that belonged to a specific day. What the country did with independence is what the country did: the garrison constituencies that turned Kingston neighbourhoods into armed political camps, the exodus that sent a quarter of the island to London and Brooklyn and Toronto. The flag is still flying. What it flies over is a more complicated answer than anything the flags promised that day.',
+    text: 'August 6, 1962. The flag went up and the Union Jack came down and you remember how it felt to be present for that — a pride that belonged to a day. What the country did with independence is what the country did: the garrison constituencies that turned Kingston neighbourhoods into armed political camps, the exodus that sent a quarter of the island to London and Brooklyn and Toronto. The flag is still flying. What it flies over is a more complicated answer than anything the flags promised that day.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 2; p.setMem('ft46JamIndep', true) },
   },
@@ -115,7 +115,7 @@ export const FOLLOWTHROUGH_46_EVENTS = [
       G.age >= 35 &&
       G.currentYear >= 1995 &&
       !G.mem?.ft46Mariel,
-    text: 'The ones who left on the Mariel boats are in Miami now, or their children are. The families that stayed have not discussed the ones who left, and that silence has lasted long enough to become a kind of answer in itself. The revolution has outlasted every prediction about it, including predictions made by people who stayed and predictions made by people who left. You know people on both sides of the water. The divide between them is not simple. It is made of specific choices made in specific months that cannot be undone.',
+    text: 'The ones who left on the Mariel boats are in Miami now, or their children are. The families that stayed have not discussed the ones who left, and that silence has lasted long enough to become a kind of answer in itself. The revolution has outlasted every prediction about it, including predictions made by people who stayed and predictions made by people who left. You know people on both sides of the water. The divide between them is made of choices made in particular months that cannot be undone.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 3; p.setMem('ft46Mariel', true) },
   },
@@ -131,7 +131,7 @@ export const FOLLOWTHROUGH_46_EVENTS = [
       G.age >= 35 &&
       G.currentYear >= 2010 &&
       !G.mem?.ft46Cochabamba,
-    text: 'The water returned to public hands. Bechtel left. Victor Hugo Daza, who was seventeen when they shot him, has a street named after him in Cochabamba. The Water War is now in political science papers as the first successful uprising against water privatisation in the world. What it felt like from inside the city in 2000 was different from how it reads in those papers. What you remember is the weight of people filling the streets and the specific calculation in the air about whether this time would be different from every other time.',
+    text: 'The water returned to public hands. Bechtel left. Victor Hugo Daza, who was seventeen when they shot him, has a street named after him in Cochabamba. The Water War is now in political science papers as the first successful uprising against water privatisation in the world. What it felt like from inside the city in 2000 was different from how it reads in those papers. What you remember is the weight of people filling the streets and the calculation in the air about whether this time would be different from every other time.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 4; p.karma += 3; p.setMem('ft46Cochabamba', true) },
   },

@@ -36,7 +36,7 @@ export const NEPAL_DEPTH_EVENTS = [
       {
         text: 'You are selected. The training begins. You leave the hill village.',
         tag: null,
-        outcome: 'The village sends you off with ceremony. The depot is nothing like the village. You train with boys from other hills you have never met. The British officers call you by your first name and expect a specific kind of soldier.',
+        outcome: 'The village sends you off with ceremony. The depot is nothing like the village. You train with boys from other hills you have never met. The British officers call you by your first name and expect a kind of soldier.',
         effect: (p) => {
           p.m += 5
           p.h += 5
@@ -48,7 +48,7 @@ export const NEPAL_DEPTH_EVENTS = [
       {
         text: 'You do not pass selection. The return to the village is its own instruction in how much this mattered.',
         tag: null,
-        outcome: 'The boys who failed filter back to the hills and to other futures. The Gulf. Kathmandu. The futures are not nothing. They are just not the one that passed the hill run.',
+        outcome: 'The boys who failed filter back to the hills and to other futures. The Gulf. Kathmandu. The futures are still futures, just not the one that passed the hill run.',
         effect: (p) => {
           p.m -= 6
           p.r += 4
@@ -90,7 +90,7 @@ export const NEPAL_DEPTH_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 2000 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.nepDepDalitWater,
-    text: `The Muluki Ain — the 1854 legal code — classified Nepali society by caste and specified what each group could and could not do, touch, or approach. Dalits were untouchables: barred from the water source that the upper castes used, barred from the temple, barred from the tea shop where the higher-caste men sat. The code was officially abolished in 1963 but the practice, having been law for over a century, did not end with the law. You are at the upper-caste well. You have a container. The question of whether you may fill it is not resolved by the law but by the specific men who are already there and what they decide to enforce today.`,
+    text: `The Muluki Ain — the 1854 legal code — classified Nepali society by caste and specified what each group could and could not do, touch, or approach. Dalits were untouchables: barred from the water source that the upper castes used, barred from the temple, barred from the tea shop where the higher-caste men sat. The code was officially abolished in 1963 but the practice, having been law for over a century, did not end with the law. You are at the upper-caste well. You have a container. The question of whether you may fill it is not resolved by the law but by the men who are already there and what they decide to enforce today.`,
     choices: [
       {
         text: 'You approach the well. What happens next depends on who is watching.',
@@ -105,7 +105,7 @@ export const NEPAL_DEPTH_EVENTS = [
         },
       },
       {
-        text: 'You use the separate source. The indignity of the separate source is its own kind of answer.',
+        text: 'You use the separate source. The separate source is answer enough.',
         tag: null,
         outcome: 'The separate source is the statement made in stone and practice: that you are separate. The water is the same water. The distance to it is different.',
         effect: (p) => {
@@ -135,7 +135,7 @@ export const NEPAL_DEPTH_EVENTS = [
     context: 'The Kamaiya system bound Tharu families in Nepal\'s western Terai to landlords through inherited agricultural debt. The government abolished it in July 2000 and freed roughly 18,000 households, but most received no land, credit or alternative work, and many settled in informal camps or returned to the same landlords under different arrangements. Related bonded systems for women and girls, Kamlari and Haliya, persisted afterwards.',
     choices: [
       {
-        text: 'You are freed. The freedom is real. The alternatives are still being determined.',
+        text: 'You are freed. The alternatives are still being determined.',
         tag: null,
         outcome: 'The government gave some freed Kamaiyas small land plots in resettlement areas. Others found day labor. The debt system was replaced with landlessness and cash wages. The wages are, technically, yours to keep.',
         effect: (p) => {
@@ -215,7 +215,7 @@ export const NEPAL_DEPTH_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2020 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem?.nepDepRemittanceChild,
-    text: `Remittances from Nepali workers abroad are twenty-five to thirty percent of GDP. In the hill villages, the father's absence and the monthly transfer are the economic structure of the household. The money arrives through Western Union in the district town, and your mother goes on a certain day each month to collect it, and the household economy is organized around that day. Your father is in Qatar or Malaysia and calls when the phone signal allows. You know his voice before you know his face in three dimensions. The children who grow up in these households know the specific texture of a parent present by money transfer and absent in every other sense.`,
+    text: `Remittances from Nepali workers abroad are twenty-five to thirty percent of GDP. In the hill villages, the father's absence and the monthly transfer are the economic structure of the household. The money arrives through Western Union in the district town, and your mother goes on a certain day each month to collect it, and the household economy is organized around that day. Your father is in Qatar or Malaysia and calls when the phone signal allows. You know his voice before you know his face in three dimensions. The children who grow up in these households know the texture of a parent present by money transfer and absent in every other sense.`,
     choices: [
       {
         text: 'The money is enough. You go to school. That was the point of the absence.',
@@ -230,7 +230,7 @@ export const NEPAL_DEPTH_EVENTS = [
         },
       },
       {
-        text: 'The money is enough but the absence is its own kind of poverty.',
+        text: 'The money is enough but the absence is a poverty.',
         tag: null,
         outcome: 'The household functions. The function is incomplete. You will spend time later trying to understand what the absence means as a structural fact rather than a personal one.',
         effect: (p) => {
@@ -274,7 +274,7 @@ export const NEPAL_DEPTH_EVENTS = [
       {
         text: 'You stay. The staying is also a choice, with its own costs.',
         tag: null,
-        outcome: 'You find work in Kathmandu or in a trade in the district town. The income is lower. You are present for your own children. Both things are true and the exchange rate between them is not something you calculate neatly.',
+        outcome: 'You find work in Kathmandu or in a trade in the district town. The income is lower. You are present for your own children. The exchange rate between them is not something you calculate neatly.',
         effect: (p) => {
           p.m += 3
           p.r += 3
@@ -302,7 +302,7 @@ export const NEPAL_DEPTH_EVENTS = [
       {
         text: 'You are selected. For the next years your life belongs to the goddess and to the state.',
         tag: null,
-        outcome: 'The ritual life is total. You see the city from a window and through the festivals. When it ends — when your body ends it — the return is a specific kind of difficulty. You have been divine. Ordinary life does not have instructions for coming back from that.',
+        outcome: 'The ritual life is total. You see the city from a window and through the festivals. When it ends — when your body ends it — the return is a kind of difficulty. You have been divine. Ordinary life does not have instructions for coming back from that.',
         effect: (p) => {
           p.m -= 5
           p.r += 6

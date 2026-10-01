@@ -89,7 +89,7 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear >= 1956 && G.currentYear <= 1958 &&
       G.age >= 12 &&
       !G.mem?.ruDepSecretSpeech,
-    text: `February 25, 1956. Khrushchev speaks to the closed session of the Twentieth Congress of the Communist Party. The speech is not broadcast; it is read aloud in factories and institutions and party cells in the weeks after. "On the Cult of Personality and Its Consequences." Stalin's crimes, his personal terror, the 1937 purges, the execution of military commanders, the deportations. The people listening to this speech spent the last thirty years being told these things were necessary, or did not happen, or happened for good reasons. Some of them lost fathers. Some of them signed denunciations. Some of them applauded at the right moments for decades. The speech does not tell them what to do with any of this.`,
+    text: `February 1956. Khrushchev speaks to a closed session of the Party Congress, and in the weeks after the speech is read aloud in factories and institutes and party cells: the cult of personality, the Terror, the generals shot, the deportations. The people listening were told for thirty years that these things were necessary, or did not happen. Some of them lost fathers. Some signed denunciations. The speech does not tell them what to do with any of it.`,
     choices: [
       {
         text: 'This is a correction. The system can correct itself.',
@@ -117,7 +117,7 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear >= 1965 && G.currentYear <= 1985 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.ruDepBlat,
-    text: `The official economy and the real economy are two different things and you move between them. Blat: the system of favours, connections, reciprocal arrangements that gets things done. The doctor who sees your mother without waiting; the sausage that appears through a friend at the meat enterprise; the apartment that moves from the waiting list to yours because someone knows someone at the housing committee. Everyone has a network. Everyone is in someone else's network. The word "достал" — I obtained — implies difficulty surmounted, contacts activated, the satisfaction of having navigated a system that requires navigation. The system is not criminal exactly. It is the real infrastructure.`,
+    text: `The official economy and the real economy are two different things and you move between them. Blat: the system of favours, connections, reciprocal arrangements that gets things done. The doctor who sees your mother without waiting; the sausage that appears through a friend at the meat enterprise; the apartment that moves from the waiting list to yours because someone knows someone at the housing committee. Everyone has a network. Everyone is in someone else's network. The word "достал" — I obtained — implies difficulty surmounted, contacts activated, the satisfaction of having navigated a system that requires navigation. The system is the real infrastructure.`,
     choices: null,
     effect: (p) => {
       p.s += 3
@@ -136,7 +136,7 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1990 &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem?.ruDepDeficit,
-    text: `The queue before you know what is at the end of it. Someone is standing in a line; you join it. You find out it is for boots, or Hungarian salami, or children's shoes, or a subscription to a literary journal. There is an art to queuing: you write your number on your palm, or on the person behind you's palm, or on a piece of paper that goes around. You queue for things you do not need because the queue means a deficit item is available and a deficit item can be traded for something you do need. The word "дефицит" — deficit — does not mean shortage exactly. It means the gap between what exists and what can be officially obtained. The gap is large and has been large for a long time.`,
+    text: `You join a queue before you know what is at the end of it, and find out it is boots, or Hungarian salami, or children's shoes. There is an art to it: your number written on your palm, or on the palm of the person behind you. You queue for things you do not need, because a scarce thing can be traded for something you do. Defitsit does not quite mean shortage. It means the gap between what exists and what can be had officially, and the gap has been large for a long time.`,
     choices: null,
     effect: (p) => {
       p.r += 3
@@ -175,7 +175,7 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear === 1998 &&
       G.age >= 14 &&
       !G.mem?.ruDep1998Default,
-    text: `August 17, 1998. The ruble collapses. The government defaults on domestic debt. Banks close. Savings kept in rubles lose two-thirds of their value in two weeks. The people who kept their savings in dollars under the mattress do not lose. The people who believed in the banking system do. There is a particular conversation happening in every family in Russia in the last two weeks of August about who made which decision, and who was prudent, and what was in the account, and what is in the account now. A teacher's monthly salary is worth nine dollars.`,
+    text: `August 17, 1998, and the ruble collapses and the government stops paying its debts and the banks close. Savings in rubles lose two thirds of their value in two weeks. The ones who kept dollars under the mattress lose nothing; the ones who trusted the banks lose. In every family in the last two weeks of August there is the same conversation about who decided what, and what was in the account, and what is in it now.`,
     choices: null,
     effect: (p) => {
       p.m -= 8

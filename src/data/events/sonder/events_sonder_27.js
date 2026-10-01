@@ -33,7 +33,7 @@ export const EVENTS_SONDER_27 = [
     weight: 2,
     when: (G) => !['secular', 'atheist'].includes(G.religion) && (G.age >= 20 && !G.mem?.sdr27PrayerCrisis),
     text: () => pick([
-      'In the worst of it you pray. Whether you believe in the specific efficacy of praying to the specific entity you are praying to is a question for a time when the worst is over. Right now you are doing what the body knows to do when the situation is beyond what the mind can hold.',
+      'In the worst of it you pray. Whether you believe in the efficacy of praying to the entity you are praying to is a question for a time when the worst is over. Right now you are doing what the body knows to do when the situation is beyond what the mind can hold.',
       'You are not sure you believe. You find yourself in an attitude of prayer anyway — not at the designated times, not in the designated way, but in the car or in the corridor outside the hospital room. The gesture is available when you need it. The theology is a later question.',
     ]),
     choices: null,
@@ -62,7 +62,7 @@ export const EVENTS_SONDER_27 = [
     when: (G) => G.age >= 30 && !G.mem?.sdr27AcceptingHelp,
     text: () => pick([
       'You have gotten better at accepting help. This is not nothing. There was a long period — you can mark its beginning if not its end — when accepting help felt like losing something, when the admission of needing was the problem rather than the need itself. Something shifted. The help comes in more easily now.',
-      'Your default is to say you are fine and manage it. Someone who knows you well enough to read the fine correctly offers to come. You let them. This is not the first time but it is not the usual move either. Something about this particular week made the usual move feel like too much work.',
+      'Your default is to say you are fine and manage it. Someone who knows you well enough to read the fine correctly offers to come. You let them. This is not the first time but it is not the usual move either. Something about this week made the usual move feel like too much work.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('sdr27AcceptingHelp', true) },
@@ -107,7 +107,7 @@ export const EVENTS_SONDER_27 = [
     weight: 2,
     when: (G) => G.age >= 25 && !G.mem?.sdr27InheritedObject,
     text: () => pick([
-      'The object from your grandmother — a bowl, a ring, a knife, a box with a particular smell inside the lid — has moved through hands and is now in yours. The people who used it before you are, most of them, gone. The object is the one thing that was present for all of those usings. You put it somewhere you will see it.',
+      'The object from your grandmother — a bowl, a ring, a knife, a box with a smell inside the lid — has moved through hands and is now in yours. The people who used it before you are, most of them, gone. The object is the one thing that was present for all of those usings. You put it somewhere you will see it.',
       'You receive the watch or the coat or the pan that has been in the family since before you were born. The thing has a history that it cannot tell you directly. What you know of it is what was passed along with it: this belonged to, this was used for. The rest is yours to imagine.',
     ]),
     choices: null,
@@ -121,7 +121,7 @@ export const EVENTS_SONDER_27 = [
     when: (G) => place.isLiterate(G) && (G.age >= 55 && !G.mem?.sdr27ObjectOutlives),
     text: () => pick([
       'The objects will outlive you. This is normal and always has been — the furniture, the photographs, the books with your handwriting in the margins. They will exist in a room after you no longer do. Someone will decide what to keep and what to let go. The choosing is a form of interpretation. You do not get to supervise it.',
-      'You are thinking about what to do with the things that matter. Not practically — practically is understood — but what they will mean to whoever receives them, whether the meaning is transferable, whether the object carries the history or only carries the physical form of it. The second option is more likely. This is not a tragedy. It is the nature of objects.',
+      'You are thinking about what to do with the things that matter. Not practically — practically is understood — but what they will mean to whoever receives them, whether the meaning is transferable, whether the object carries the history or only carries the physical form of it. The second option is more likely. It is the nature of objects.',
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('sdr27ObjectOutlives', true) },
@@ -135,7 +135,7 @@ export const EVENTS_SONDER_27 = [
     weight: 2,
     when: (G) => G.ruralUrban === 'urban' && G.age >= 14 && !G.mem?.sdr27CityRain,
     text: () => pick([
-      'After rain the city smells different — the pavement releasing something held in it, the gutters running, the specific freshness that is not countryside freshness but is its own thing. The people on the street navigate around the pooled water and the drips from awnings. The city is the same city. It is briefly changed.',
+      'After rain the city smells different — the pavement releasing something held in it, the gutters running, the freshness that is not countryside freshness but is its own thing. The people on the street navigate around the pooled water and the drips from awnings. The city is the same city. It is briefly changed.',
       'The city is still drying when you go out. The puddles reflect the sky and the buildings upside down. The ordinary objects — a traffic light, a bollard, the corner of a building — become doubled in the standing water. You step around them and continue.',
     ]),
     choices: null,
@@ -163,7 +163,7 @@ export const EVENTS_SONDER_27 = [
     weight: 2,
     when: (G) => !G.career && G.age >= 60 && !G.mem?.sdr27LastDayWork,
     text: () => pick([
-      'The last day. The cake, the card with everyone\'s names in it, the speech from the manager that recaps the years in the official version. The cardboard box. The drive home, which is the same drive you have taken after work for years, except this is the last time you will take it as a working person.',
+      'The last day. The cake, the card with everyone\'s names in it, the speech from the manager that recaps the years in the official version. The cardboard box. The drive home, the same drive you have taken after work for years, except this is the last time you will take it as a working person.',
       'The work is done and there is no next assignment. The laptop is returned. The system access ends at midnight. The work that was the frame of the day is no longer the frame of the day. What replaces it is unscheduled — which is either freedom or emptiness, and you do not yet know which.',
     ]),
     choices: null,
@@ -209,8 +209,8 @@ export const EVENTS_SONDER_27 = [
     weight: 2,
     when: (G) => place.hasPhotographs(G) && (G.age >= 25 && !G.mem?.sdr27NoPhoto),
     text: () => pick([
-      'The moment you didn\'t photograph. The light, the arrangement, the face — all of it was there and you were there and you didn\'t take the photograph because you were in it too completely to step outside it for the picture. The moment is gone. The memory is there and is not the same as the photograph would have been, which is the reason you didn\'t take it.',
-      'The photograph you wish you had: a specific moment from years ago, before the phone was the camera was always in your pocket. The moment exists clearly in memory and is losing definition around the edges the way all memories do without a photograph to anchor them. You remember the room and the people and less and less of the specific detail.',
+      'The moment you didn\'t photograph. The light, the arrangement, the face — all of it was there and you were there and you didn\'t take the photograph because you were in it too completely to step outside it for the picture. The moment is gone. The memory is there and is not what the photograph would have been, and that is why you didn\'t take it.',
+      'The photograph you wish you had: a moment from years ago, before the phone was the camera was always in your pocket. The moment exists clearly in memory and is losing definition around the edges the way all memories do without a photograph to anchor them. You remember the room and the people and less and less of the detail.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr27NoPhoto', true) },
@@ -225,7 +225,7 @@ export const EVENTS_SONDER_27 = [
     when: (G) => G.age >= 38 && !G.mem?.sdr27BodyRecord,
     text: () => pick([
       'The scar from the thing that happened at eleven. The knee that was injured and then healed and is still sometimes the knee that was injured. The shoulder that moves differently than the left one. The body is a record of what has happened to it and you can read some of the record and have forgotten how to read some of it.',
-      'You notice a gesture in the mirror that you didn\'t know you made: the particular way you hold your head, an expression that is someone else\'s expression that somehow came to live in your face. The body absorbs things without asking. The gestures arrive from a direction you cannot fully trace.',
+      'You notice a gesture in the mirror that you didn\'t know you made: the way you hold your head, an expression that is someone else\'s expression that somehow came to live in your face. The body absorbs things without asking. The gestures arrive from a direction you cannot fully trace.',
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('sdr27BodyRecord', true) },

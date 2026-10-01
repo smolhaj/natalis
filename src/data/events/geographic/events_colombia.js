@@ -59,7 +59,7 @@ const COLOMBIA_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       return yr <= 1954
-        ? 'The men came from the next valley. The family of the wrong party colors — your family, or theirs — left before dawn or did not leave in time. Your parents do not say how many dead because the number is too large for children and also because some of the dead are people whose killers live nearby. La Violencia is the name for it, as though naming it something general makes the specific thing more manageable. It does not.'
+        ? 'The men came from the next valley. The family of the wrong party colors — your family, or theirs — left before dawn or did not leave in time. Your parents do not say how many dead because the number is too large for children and also because some of the dead are people whose killers live nearby. La Violencia is the name for it, as though naming it something general makes the thing more manageable. It does not.'
         : 'The formal war ended in 1953 when Rojas Pinilla took power and declared an amnesty. In the hills the amnesty is a word from the city. The violence in your valley has not read the proclamation. What is being called the end of La Violencia is still going on where you live.'
     },
     choices: [
@@ -91,7 +91,7 @@ const COLOMBIA_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 16 && G.age <= 28 &&
       !G.mem?.col_farc,
-    text: 'The guerrillas control the road after dark. The FARC tax the cattle farmers and the coca growers and call it a war contribution. They have a hospital in the mountains where the state has none. They also disappear people who inform. In your region the choice is not between guerrilla and government — the government is not here. The choice is between being seen to cooperate and being seen not to. Both have consequences. You navigate the road at night with specific knowledge of which headlights mean what.',
+    text: 'The guerrillas own the road after dark. The FARC tax the cattle and the coca and call it a war contribution; they have a clinic in the mountains where the state has none; they disappear people who inform. In your district the choice is not between guerrilla and government, because the government is not here. The choice is between being seen to cooperate and being seen not to. You drive the road at night knowing which headlights mean what.',
     choices: [
       {
         text: 'You keep your head down and give nothing to either side.',
@@ -130,7 +130,7 @@ const COLOMBIA_EVENTS = [
       const isMed = G.place?.name?.includes('Medellín') || G.character?.country?.name === 'Colombia'
       return yr <= 1989
         ? 'The offer to the city is plata o plomo: silver or lead. The judges who refuse the bribes are killed. The journalists who report on the cartel are killed. The presidential candidate who promised to extradite Escobar is killed. The car bomb outside the DAS building in September is eighty kilograms of dynamite in a truck. You learn to notice trucks parked at odd angles.'
-        : 'December 2, 1993: the radio says Escobar was shot on a rooftop in Los Olivos. The hunt lasted sixteen months. The city celebrates in a way that feels like relief and disbelief simultaneously. The men who built the laboratories and ran the routes are still in Cali, in the Cauca Valley. The organization ends; the industry does not.'
+        : 'December 2, 1993: the radio says Escobar was shot on a rooftop in Los Olivos. The hunt lasted sixteen months. The city celebrates with relief and disbelief at once. The men who built the laboratories and ran the routes are still in Cali, in the Cauca Valley. The organization ends; the industry does not.'
     },
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('col_cartel_era'); p.setMem('col_cartel', true); },
@@ -148,7 +148,7 @@ const COLOMBIA_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 20 &&
       !G.mem?.col_para,
-    text: 'The AUC — the Autodefensas Unidas de Colombia — operate in the territory between the guerrilla zones and the cities. They call themselves a counterinsurgency. They massacre entire villages for suspected collaboration with the FARC. The Mapiripán massacre, the El Aro massacre, the El Salado massacre. Each name is a village, each village a list of the dead. The army sometimes arrives after. The investigations sometimes produce reports. The men who gave the orders are sometimes in parliament. You live in the territory where these things are not theoretical.',
+    text: 'The paramilitaries work the ground between the guerrilla country and the cities, calling it counterinsurgency, and they kill whole villages for suspected sympathy with the FARC: Mapiripán, El Aro, El Salado, each name a village and each village a list. The army sometimes arrives after. The men who gave the orders are sometimes in Congress. Where you live, none of this is theory.',
     choices: [
       {
         text: 'You leave. There is no neutrality in a territory where both sides want information.',
@@ -182,7 +182,7 @@ const COLOMBIA_EVENTS = [
       const isWealthy = G.stats.wealth > 60
       return isWealthy
         ? 'Your utility bill says estrato cinco. This number appears on the bill, on your address in certain databases, in the subtext of social introductions. Estrato cinco means the price you pay for gas and electricity subsidizes estrato uno and dos. It also means you live on the right side of a line that is official and numerically precise and never directly discussed but always present.'
-        : 'Your utility bill says estrato uno or estrato dos. The number is the city\'s official designation of your neighborhood. Estrato uno means the cheapest utilities, which is to say the utilities structured for people for whom cost is the first question. When you give your address, the estrato is audible in the name of the barrio. Some doors open differently afterward. Some do not open.'
+        : 'Your utility bill says estrato uno or estrato dos. The number is the city\'s official designation of your neighborhood. Estrato uno means the cheapest utilities, the ones structured for people for whom cost is the first question. When you give your address, the estrato is audible in the name of the barrio. Some doors open differently afterward. Some do not open.'
     },
     choices: null,
     effect: (p) => { p.addFlag('col_estrato_known'); p.e += 3; p.setMem('col_estrato', true); },
@@ -202,12 +202,13 @@ const COLOMBIA_EVENTS = [
     text: (G) => {
       const hasConflict = G.flags.has('col_violencia_generation') || G.flags.has('col_farc_era') || G.flags.has('col_desplazado') || G.flags.has('col_paramilitary_era')
       return hasConflict
-        ? 'The peace accord is signed in Cartagena September 26, 2016. Fifty-two years. The referendum fails on October 2 — the "No" wins by forty thousand votes, 0.43 percent. Santos wins the Nobel Peace Prize anyway. Congress ratifies the accord in November without a new vote. You have been inside this conflict for decades. The end of it is real and contested and ongoing simultaneously. The FARC becomes a political party. The weapons are turned in. The men who ran the mountains are now candidates for parliament. You do not know what to do with that sentence.'
-        : 'The peace accord after fifty-two years. The FARC turned in weapons and became a political party. Santos won the Nobel. The referendum to approve it failed — barely, by forty thousand votes in a country of fifty million. Congress approved it anyway. The war is over in the sense that the organization that signed the accord is no longer fighting. The violence in the territories is ongoing. Both sentences are true.'
+        ? 'The peace accord is signed in Cartagena after fifty-two years, and a week later the referendum fails by a fraction of a percent, and Santos wins the Nobel anyway, and Congress ratifies a revised accord without asking anyone again. The FARC hands in its weapons and becomes a party. The men who ran the mountains are candidates for parliament. You do not know what to do with that sentence.'
+        : 'The peace after fifty-two years: the FARC hand in their weapons and become a party; Santos wins the Nobel; the referendum fails by a sliver and Congress passes the accord anyway. The organisation that signed is no longer fighting. In the territories the killing goes on. You read both in the same newspaper, on the same page.'
     },
+    context: 'The accord was signed on 26 September 2016. The "No" side won the 2 October referendum by about 54,000 votes (50.2%). Congress ratified a revised accord in November 2016.',
     choices: [
       {
-        text: 'The accord is real. Whatever it cost to negotiate, the shooting stopping is worth it.',
+        text: 'The accord is signed. Whatever it cost to negotiate, the shooting stopping is worth it.',
         tag: null,
         outcome: 'The implementation is slower than the agreement. What peace looks like in the territories depends on whether the state arrives to fill the space the FARC left. In many places it has not.',
         effect: (p) => { p.m += 6; p.r -= 3; p.addFlag('col_paz_generation'); p.setMem('col_paz', true); },
@@ -233,7 +234,8 @@ const COLOMBIA_EVENTS = [
       G.currentYear >= 2021 && G.currentYear <= 2022 &&
       G.age >= 16 && G.age <= 40 &&
       !G.mem?.col_paro,
-    text: 'April 28, 2021. The Duque government proposes a tax reform that would expand income tax to workers who earn more than three hundred dollars a month — in a country where COVID has already destroyed a third of informal jobs. The streets fill. Forty-six days of blockades. The ESMAD — the anti-riot police — fires live ammunition. Cali has eleven days where the internet goes down and the army is on the streets. Eighty-three people die. The reform is withdrawn. The protests end. Nothing structural has changed.',
+    text: 'April 2021. The government proposes taxing workers who earn three hundred dollars a month, in a year when the pandemic has already taken a third of the informal jobs, and the streets fill. Forty-six days of blockades. The riot police fire live rounds; in Cali the internet goes down and the army is on the streets. The reform is withdrawn and the protests end. Nothing structural has changed.',
+    context: 'The 2021 Colombian protests left more than 80 people dead according to human rights groups.',
     choices: null,
     effect: (p) => { p.r += 6; p.addFlag('col_paro_generation'); p.setMem('col_paro', true); },
   },

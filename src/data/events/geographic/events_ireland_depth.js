@@ -23,10 +23,11 @@ export const IRELAND_DEPTH_EVENTS = [
     text: (G) => {
       const hasGrandparent = G.currentYear <= 1935
       if (hasGrandparent) {
-        return 'Your grandmother — or someone who fills that place — was a child during the Famine years. She does not call it the Famine. She calls it the bad time, the hungry time, an *drochshaol*. She describes the road with the people lying on it. She says what she ate. She says what she stopped eating when there was no more of it. The count of who in the family stayed and who left is part of how she accounts for the world. One million dead. One million gone. Ireland\'s population will not recover to pre-Famine levels for the next hundred and fifty years. What she carries, you are beginning to understand, is not just her story.'
+        return 'Your grandmother, or someone who fills that place, was a child in the bad time, an drochshaol; she does not call it the Famine. She describes the road with the people lying on it. She says what she ate, and what she stopped eating when there was no more of it. The count of who in the family stayed and who left is how she accounts for the world. What she carries, you begin to understand, is not only her story.'
       }
-      return 'The Famine is in living memory in the sense that living people remember people who remembered it. Your grandfather knew men who had buried children in the field. The word for it in Irish — *an Gorta Mór*, the Great Hunger — is more accurate than Famine, which implies natural cause. There was food in Ireland during the Famine. It was exported while people died alongside the road. England is a word that carries a specific weight in this house. The weight has a history. You are learning the history from the weight.'
+      return 'The Famine is in living memory in the sense that living people remember people who remembered it: your grandfather knew men who buried children in the field. An Gorta Mór, the Great Hunger, is the truer name, because Famine sounds like weather, and there was food in Ireland the whole time, shipped out while people died by the road. England is a word with a weight in this house. You are learning the history from the weight.'
     },
+    context: 'The Great Famine of 1845-52 killed about a million people and drove another million to emigrate. Ireland\'s population has never returned to its pre-Famine level.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.addFlag('ire_famine_family_memory'); p.setMem('ireFamineShadow', true) },
   },
@@ -59,7 +60,7 @@ export const IRELAND_DEPTH_EVENTS = [
       G.currentYear >= 1922 && G.currentYear <= 1945 &&
       G.age >= 14 &&
       !G.mem?.ireCivilWar,
-    text: 'The men who were in the same column two years ago are shooting at each other by the summer, and the Free State executes seventy-seven of them, which is more than the British managed. It is over inside a year and nothing about it is settled. Your grandfather did not go to the funerals on the other side and that fact is available at every wake for the rest of the century. In this house the thing has no name. It is only the reason nobody speaks to the Murphys down the road.',
+    text: 'The men who were in the same column two years ago are shooting at each other by the summer, and the Free State executes seventy-seven of them, more than the British managed. It is over inside a year and nothing about it is settled. Your grandfather did not go to the funerals on the other side and that fact is available at every wake for the rest of the century. In this house the thing has no name. It is only the reason nobody speaks to the Murphys down the road.',
     context: 'The Anglo-Irish Treaty of December 1921 split the independence movement between pro-Treaty and anti-Treaty factions and produced a civil war from June 1922 to May 1923. The Free State executed seventy-seven anti-Treaty prisoners, more than the British executed after the Rising. The two sides became Fine Gael and Fianna Fail, and Irish party politics was organised around Civil War allegiance rather than left and right for most of the following century.',
     choices: [
       {
@@ -89,7 +90,7 @@ export const IRELAND_DEPTH_EVENTS = [
       G.currentYear >= 1939 && G.currentYear <= 1946 &&
       G.age >= 14 &&
       !G.mem?.ireEmergency,
-    text: 'They call it the Emergency, which is what you call a war you are not in. There is no coal after 1941 so it is turf, wet turf, and the bread is grey and the bicycle is how anyone gets anywhere. Two of your cousins are in Britain in uniform and it is not discussed at the table. At night you can find the BBC on the wireless if you move the dial in a direction that is not encouraged, and what it says about the war is not what the newspaper says.',
+    text: 'They call it the Emergency, the name for a war you are not in. There is no coal after 1941 so it is turf, wet turf, and the bread is grey and the bicycle is how anyone gets anywhere. Two of your cousins are in Britain in uniform and it is not discussed at the table. At night you can find the BBC on the wireless if you move the dial in a direction that is not encouraged, and what it says about the war is not what the newspaper says.',
     context: 'Ireland remained neutral throughout the Second World War, a period officially designated the Emergency, on the grounds that it would not fight for a crown still governing six of its counties. Britain cut coal and fuel supplies in 1941 and rationing was severe. Around 70,000 people from the Irish state nonetheless volunteered for the British forces, individually and without state support; those who deserted the Irish army to do so were barred from public employment until a 2013 pardon.',
     choices: null,
     effect: (p) => { p.m -= 6; p.h -= 3; p.e += 4; p.addFlag('ire_emergency_generation'); p.setMem('ireEmergency', true) },
@@ -110,9 +111,9 @@ export const IRELAND_DEPTH_EVENTS = [
     text: (G) => {
       const isDirectExperience = G.stats.wealth < 25
       if (isDirectExperience) {
-        return 'The Industrial School. You were sent there because of what you were — illegitimate, or orphaned, or the child of a mother the state decided could not keep you, or simply poor enough that the parish considered your family inadequate. The Brothers or the Sisters ran it. The regime was: work, prayer, silence, punishment. The punishment was not restrained by any outside authority. You were there for years. You carry it in specific ways that you have no language for because the language for it was not available then and is barely available now. It will be thirty or forty years before a commission examines what the schools were. When the report arrives, its findings will be what you already know.'
+        return 'The Industrial School. You were sent there for what you were: illegitimate, or orphaned, or the child of a mother the state decided could not keep you, or just poor enough. The Brothers or the Sisters ran it, and the regime was work, prayer, silence and punishment, and nobody outside put any limit on the punishment. You were there for years. Thirty or forty years later a commission will look at what the schools were, and its findings will be what you already know.'
       }
-      return 'Someone you know — a neighbour\'s child, a cousin — was sent to an Industrial School. The schools were run by the Christian Brothers or the Sisters of Mercy or other orders, under a state contract for the detention and education of children in moral danger, which was the official phrase for illegitimacy or poverty or having a mother the authorities didn\'t approve of. What happened inside the schools was not a secret, exactly. It was something that was known without being said. You know it without being inside it. This knowledge sits in you differently from the knowledge you were taught.'
+      return 'Someone you know — a neighbour\'s child, a cousin — was sent to an Industrial School. The schools were run by the Christian Brothers or the Sisters of Mercy or other orders, under a state contract for the detention and education of children in moral danger, which was the official phrase for illegitimacy or poverty or having a mother the authorities didn\'t approve of. What happened inside the schools was known without being said. You know it without being inside it. This knowledge sits in you differently from the knowledge you were taught.'
     },
     choices: null,
     effect: (p) => { p.m -= 8; p.h -= 4; p.r += 6; p.karma += 4; p.addFlag('ire_industrial_school_survivor'); p.setMem('ireIndustrialSchool', true) },
@@ -128,7 +129,7 @@ export const IRELAND_DEPTH_EVENTS = [
       IS_IRISH(G) &&
       G.age >= 12 && G.age <= 20 &&
       !G.mem?.ireGaeltacht,
-    text: 'Irish is compulsory at school. Failing Irish is failing the Leaving Cert, which is failing everything. The Irish you learn at school is not the Irish that people speak in the Gaeltacht — the Irish-speaking communities of the west and northwest, the places that resisted the language\'s displacement longest. You may have been to a Gaeltacht summer school: three weeks in a remote parish, billeted with a farming family, Irish at all times or a fine. The young people come from everywhere. The Irish they are speaking is imperfect and competitive and the language sits between them as a thing owned by the state and a thing owned by living communities and these are not the same ownership. You leave with some Irish. You do not know what to do with it.',
+    text: 'Irish is compulsory, and failing it is failing everything. The Irish you learn at school is not the Irish spoken in the Gaeltacht, out west, where the language held on longest. Perhaps you go to a summer college: three weeks billeted with a farming family, Irish at all times or a fine, young people from everywhere speaking an Irish that is imperfect and competitive. The language belongs to the state and to living communities, and that is not the same kind of owning. You leave with some Irish, and do not know what to do with it.',
     choices: null,
     effect: (p) => { p.e += 3; p.r += 2; p.addFlag('ire_gaeltacht_gen'); p.setMem('ireGaeltacht', true) },
   },
@@ -145,7 +146,7 @@ export const IRELAND_DEPTH_EVENTS = [
       G.currentYear >= 1993 && G.currentYear <= 2000 &&
       G.age >= 18 &&
       !G.mem?.ireLgbtqDecrim,
-    text: 'June 24, 1993. The Criminal Law (Sexual Offences) Act. Homosexuality decriminalised in Ireland — the last country in the EU to do so, twenty-five years after England, forty-three years after Germany. Senator David Norris spent fifteen years on the legal challenge that got to the European Court of Human Rights in 1988 and which the Dáil then needed five more years to act on. What the law changing means: you cannot be imprisoned for who you are. What it doesn\'t mean: the Church no longer has an opinion, the family is comfortable, the country is easy. The law changes before the culture does. The culture is changing. You are watching it from where you are.',
+    text: 'June 1993, and Ireland stops treating homosexuality as a crime, the last country in the European Community to do it. It took David Norris fifteen years and the court in Strasbourg, and then five more years for the Dáil. It means you cannot be put in prison for who you are. It does not mean the Church has stopped having an opinion, or the family is comfortable. The law changes before the country does, and you watch the country start to follow.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 3; p.r += 4; p.setMem('ireLgbtqDecrim', true) },
   },
@@ -162,7 +163,8 @@ export const IRELAND_DEPTH_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 25 &&
       !G.mem?.ireMarriageEquality,
-    text: 'May 22, 2015. Ireland becomes the first country in the world to approve same-sex marriage by popular referendum — 62.1 percent in favour. The diaspora comes home to vote: Irish emigrants registering to return for the referendum, flights booked, the hashtag #hometovote, people photographed on ferries and planes with the signs they will carry to the polling station. The country that was defined for so long by what the Church said it could and could not do has voted in the most direct democratic form available. Senator Norris weeps. Something that started in 1977 with his campaign — and earlier, and earlier — lands here. The yes posters in the windows of the houses. The count centres. The numbers.',
+    text: 'May 22, 2015, and Ireland votes for same-sex marriage, the first country ever to do it by popular vote. The emigrants come home to vote, on ferries and planes, photographed holding their signs. The country the Church defined for so long has decided this directly. The Yes posters in the windows. The count centres. The numbers.',
+    context: 'The 2015 referendum passed with 62.1 percent in favour.',
     choices: null,
     effect: (p) => { p.m += 7; p.karma += 5; p.r += 3; p.addFlag('ire_equality_generation'); p.setMem('ireMarriageEquality', true) },
   },
@@ -200,9 +202,9 @@ export const IRELAND_DEPTH_EVENTS = [
     text: (G) => {
       const isDirectSurvivor = G.stats.wealth < 35
       if (isDirectSurvivor) {
-        return 'The Ryan Report is published. 2,600 pages. The Commission to Inquire into Child Abuse, nine years in investigation. It names the orders and the practices and the scale — tens of thousands of children, decades of abuse, a state that contracted the work and did not inspect it and will now pay the settlements while protecting the Church\'s assets in the process. They describe what you know. They call it what it was. You are too old now to know what to do with the official naming of something you have always known. The report uses clinical language. Your knowledge is not in clinical language.'
+        return 'The Ryan Report is published, thousands of pages after nine years of investigation, and it names the orders and the practices and the scale: tens of thousands of children, decades, a state that contracted the work out and never inspected it. It calls it what it was. You are too old now to know what to do with an official name for something you have always known. The report is written in clinical language, and what you know is not.'
       }
-      return 'The Ryan Report. You read it because of what you know. The Commission\'s account of the Industrial Schools — what happened in the schools, for decades, to tens of thousands of children — is written in careful official language and it covers what the person you knew carried without it being called anything. The report names it. The orders that ran the schools will not be prosecuted; the state settled with them in 2002, limiting liability. The survivors are mostly old now. The recognition arrives without the consequences that recognition was supposed to produce. The naming is not nothing. It is not enough.'
+      return 'You read the Ryan Report because of what you know. It describes, in careful official language, what happened in the Industrial Schools for decades to tens of thousands of children, and it covers what the person you knew carried without a name. The orders that ran the schools will not be prosecuted; in 2002 the state agreed a deal that capped what they would pay. The survivors are mostly old now. The naming is something, and not enough.'
     },
     choices: null,
     effect: (p) => { p.r += 7; p.e += 3; p.karma += 4; p.setMem('ireRyanReport', true) },

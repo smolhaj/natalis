@@ -32,7 +32,8 @@ export const FOLLOWTHROUGH_43_EVENTS = [
       G.currentYear >= 1946 && G.currentYear <= 1960 &&
       G.age >= 25 &&
       !G.mem?.ft43LiberationAccounting,
-    text: 'The liberation was followed almost immediately by the settling of accounts. Fifteen thousand people were convicted of collaboration — wartime treason, membership in the NS, various degrees of complicity. For a country of three million people, this was a large number. For the scope of what five years of occupation produces in terms of accommodation, it was probably a smaller number than the full reality. The difficulty of the accounting was that degrees of collaboration were not discrete categories: there were people who took NS membership under economic pressure, people who informed under direct threat, people who collaborated with specific acts and not others. The courts drew lines. The lines were imperfect. You knew people on both sides of various lines.',
+    text: 'The settling of accounts begins almost at once after liberation. Membership of the NS taken for a job; an informer who informed under threat; a man who sold to the Germans and refused them other things. The courts draw lines through all of it, and the lines are imperfect. You know people on both sides of several of them.',
+    context: 'About 90,000 Norwegians were investigated after the war and around 46,000 punished in some form, in a country of three million.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 4; p.m -= 3; p.setMem('ft43LiberationAccounting', true) },
   },
@@ -48,7 +49,8 @@ export const FOLLOWTHROUGH_43_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 60 &&
       !G.mem?.ft43OilFundReckoning,
-    text: 'The Government Pension Fund Global is now the largest sovereign wealth fund in the world. Norway has used oil revenue to buy stakes in the global economy and holds roughly 1.5% of every publicly listed company on earth. The ethical guidelines of the fund exclude certain companies — weapons manufacturers, tobacco companies, companies with severe environmental violations. The fund still holds oil company shares. The fund\'s income depends on an economy that produces carbon. The country that built the most admirable response to oil wealth also produces oil. You have spent the last years of your working life watching this paradox sharpen and you do not have a resolution for it, only the honesty to hold it as a paradox rather than one of its easier versions.',
+    text: 'The oil fund owns a sliver of almost every listed company on earth. Its ethics council excludes the arms makers and the tobacco companies and the worst polluters, and it still holds oil shares, and it is still made of oil. The country with the most admirable answer to oil wealth also pumps oil. You have spent the last of your working years watching that sharpen, and you have no resolution for it.',
+    context: 'The Government Pension Fund Global is the largest sovereign wealth fund in the world and holds about 1.5 per cent of all listed shares globally.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.m -= 3; p.setMem('ft43OilFundReckoning', true) },
   },
@@ -64,7 +66,7 @@ export const FOLLOWTHROUGH_43_EVENTS = [
       G.currentYear >= 2005 &&
       G.age >= 55 &&
       !G.mem?.ft43EuNoLate,
-    text: 'Norway is not in the EU and is deeply integrated with the EU. The single market, the Schengen area, the freedom of movement — Norway has these through the EEA, which it joined instead of the EU. Norwegian companies follow EU product regulations. Norwegian governments implement EU directives. Norway contributes to the EU budget at a rate comparable to member states. The difference: Norway has no vote on the regulations and directives it adopts. The people who voted no in 1972 and again in 1994 believed this was a sovereign trade worth making. You have watched the arrangement function for decades and have your own view on what sovereignty means when it is purchased this way.',
+    text: 'Norway voted no in 1972 and no again in 1994, and is in the single market and Schengen anyway, through the EEA. Norwegian governments put EU directives into law, and Norway pays toward the EU budget. What it does not have is a vote on any of it. The people who voted no thought that sovereignty was worth the trade. You have watched the arrangement for decades and have your own view of what sovereignty means when it is bought this way.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 4; p.setMem('ft43EuNoLate', true) },
   },
@@ -80,7 +82,7 @@ export const FOLLOWTHROUGH_43_EVENTS = [
       G.currentYear >= 2016 &&
       G.age >= 50 &&
       !G.mem?.ft43July22Late,
-    text: 'The survivors of Utøya were teenagers at the time. Many of them went into politics. A significant number of the politicians who shaped Norwegian public life in the 2010s and 2020s were on the island. This is one of the things that followed: that the attack did not, as intended, stop a generation of left-wing activists — it accelerated them. The trial was held publicly and the perpetrator used it to spread his manifesto and the public trial gave him less than he had hoped for. Utøya became a Labour Party youth camp again, within years. These responses to atrocity — the democratic answer, the resumed camp, the survivors in parliament — are the specific Norwegian answer to July 22. Whether they are adequate to what happened is a question that the people who were on the island are better qualified to answer than you are.',
+    text: 'The survivors of Utøya were teenagers, and many of them went into politics; the island did not stop a generation of activists, it hurried them. The trial was public, and he used it, and got less from it than he hoped. Within a few years Utøya was a summer camp again. Whether that answer was equal to what happened is something the people who were on the island can judge better than you.',
     choices: null,
     effect: (p) => { p.r += 8; p.m -= 4; p.karma += 4; p.e += 3; p.setMem('ft43July22Late', true) },
   },

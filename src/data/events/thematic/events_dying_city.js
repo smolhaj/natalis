@@ -125,7 +125,7 @@ export const DYING_CITY_EVENTS = [
       !G.mem?.rustbeltDecided,
     text: (G) => {
       const city = G.place?.name ?? 'the city'
-      return `There is a job offer in a city that is not ${city}. The pay is real. The commute is nothing. You have been thinking about it for two weeks, which is longer than you usually think about anything. Everyone you know who is still here has thought about this. Half of them are gone. The half that stayed, you have asked what kept them. The answers were not always clear even to them.`
+      return `There is a job offer in a city that is not ${city}. The pay is better. The commute is nothing. You have been thinking about it for two weeks, which is longer than you usually think about anything. Everyone you know who is still here has thought about this. Half of them are gone. The half that stayed, you have asked what kept them. The answers were not always clear even to them.`
     },
     choices: [
       {
@@ -153,7 +153,7 @@ export const DYING_CITY_EVENTS = [
       G.currentCountry?.name === 'United States' &&
       !G.mem?.rustbeltReturnVisit,
     text: () =>
-      `You drive back through the city you left. The neighborhood you grew up in has two occupied houses on the block. The third is being turned into a community garden by people who were not born yet when you left. The school you attended is boarded. The diner where you ate after games is a vacant lot. A young woman is photographing the murals on the remaining buildings. She says the city is "emerging." You do not know what to say. You drive home.`,
+      `You drive back through the city you left. Your old block has two occupied houses; the third is being made into a community garden by people who were not born when you left. The school is boarded up, and the diner where you ate after games is a vacant lot. A young woman photographing the murals tells you the city is emerging. You do not know what to say. You drive home.`,
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 4; p.setMem('rustbeltReturnVisit', true) },
   },
@@ -218,7 +218,7 @@ export const DYING_CITY_EVENTS = [
       {
         text: 'Sit with them. You understand what the evenings are for.',
         tag: null,
-        outcome: 'You become a regular. The evenings are warm in a way that the days are not. It is not a sustainable warmth.',
+        outcome: 'You become a regular. The evenings are warm and the days are not. It is not a sustainable warmth.',
         effect: (p) => { p.m += 3; p.h -= 4; p.setMem('postsovietVodkaMoment', true) },
       },
       {

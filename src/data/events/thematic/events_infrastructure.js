@@ -310,7 +310,7 @@ export const INFRASTRUCTURE_EVENTS = [
       G.currentYear >= 1970 &&
       !G.mem?.waterEscalated,
     text: () =>
-      `There has been no water for nine days. The tanker trucks are selling at four times the normal price and running out before noon. You are calculating in a way that leaves no room for anything else.`,
+      `There has been no water for nine days. The tanker trucks are selling at four times the normal price and running out before noon. You are calculating, and there is no room for anything else.`,
     choices: [
       {
         text: 'Pay the tanker price. There is no other option.',

@@ -18,12 +18,12 @@ export const KOREA_DEPTH_EVENTS = [
       G.currentYear >= 1997 && G.currentYear <= 1999 &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem?.krImfCrisis,
-    text: `November 1997. The government applies to the International Monetary Fund. The word that enters the language is simply 'IMF' — not 'the IMF crisis' or 'the foreign exchange crisis' but IMF alone, a noun that now means what happened. The won falls from 900 to 1,900 to the dollar in weeks. Companies that existed for thirty years close in a month. The chaebol lay off workers by the tens of thousands. The hiring that was assumed to continue — the companies that your father's generation joined and stayed at — stops. The social contract of the compressed development generation breaks in a single quarter and does not reassemble in the same form.`,
+    text: `November 1997, and the government goes to the IMF, and the word that enters the language is just IMF, a noun for what happened. The won halves in weeks; companies that lasted thirty years close in a month; the chaebol lay off tens of thousands. The hiring your father's generation could count on stops. The deal the development generation lived by breaks in a single quarter and does not come back in the same form.`,
     choices: [
       {
         text: 'Your father or someone close loses their job.',
         tag: null,
-        outcome: 'The house gets quieter in a specific way. The things that were certain stop being certain. You understand, at twenty-three or thirty-two, that the floor you thought was there was made of something different from what you thought.',
+        outcome: 'The house gets quieter in a way. The things that were certain stop being certain. You understand, at twenty-three or thirty-two, that the floor you thought was there was made of something different from what you thought.',
         effect: (p) => { p.m -= 12; p.r += 8; p.mo -= 2000; p.addFlag('kr_dep_imf_generation'); p.setMem('krImfCrisis', true) },
       },
       {
@@ -60,7 +60,8 @@ export const KOREA_DEPTH_EVENTS = [
       G.age >= 16 &&
       G.flags.has('kr_dep_imf_generation') &&
       !G.mem?.krGoldCollection,
-    text: `The KBS broadcast begins the campaign in January 1998: donate your gold to pay off the national debt. The queues form at the banks. Housewives bring wedding rings. Veterans bring medals. Students bring the gold rings their grandparents gave them at their first birthday — the doljabi rings, the ritual objects of a first year of life. In three months, 3.5 million Koreans donate 227 tonnes of gold. It covers a fraction of the $58 billion owed. The economists will later say it made little material difference. The economists are not wrong about the numbers. They are describing a different thing from what the queues were.`,
+    text: `January 1998, and the television asks the country to give its gold to pay the national debt. Housewives queue at the banks with their wedding rings, veterans with their medals, students with the little rings they were given at their first birthday. Millions of people, in three months. The economists will say later it made little difference to the debt. They are describing a different thing from what the queues were.`,
+    context: 'About 3.5 million South Koreans donated some 227 tonnes of gold in early 1998, against foreign debts of around $58 billion.',
     choices: [
       {
         text: 'Your family donates something.',
@@ -134,7 +135,7 @@ export const KOREA_DEPTH_EVENTS = [
       G.currentYear >= 1975 &&
       G.age >= 22 && G.age <= 40 &&
       !G.mem?.krOfficeHierarchy,
-    text: `The hoesik: the mandatory after-work drinking with the team. The gwajang who must be out-drunk or carefully matched. The seonbae-hoobae relationship that organises the office as precisely as the org chart. You leave at eight because the gwajang is still here and leaving before the gwajang is an implicit statement about your commitment. You have learned the specific art of looking busy at seven-forty-five when you finished your work at five. This is not deception — it is the language the organisation speaks and you have learned it as you learn any language: by watching what works.`,
+    text: `The hoesik: the mandatory after-work drinking with the team. The gwajang who must be out-drunk or carefully matched. The seonbae-hoobae relationship that organises the office as precisely as the org chart. You leave at eight because the gwajang is still here and leaving before the gwajang is an implicit statement about your commitment. You have learned the art of looking busy at seven-forty-five when you finished your work at five. This is not deception — it is the language the organisation speaks and you have learned it as you learn any language: by watching what works.`,
     choices: null,
     effect: (p) => { p.h -= 3; p.r += 3; p.e += 2; p.setMem('krOfficeHierarchy', true) },
   },
@@ -150,7 +151,7 @@ export const KOREA_DEPTH_EVENTS = [
       G.currentYear >= 2013 &&
       G.age >= 20 && G.age <= 35 &&
       !G.mem?.krHellJoseon,
-    text: `Hell Joseon. The word appears online around 2013 and spreads. Joseon is the old dynasty name — the Korea of rigid hierarchy and no social mobility. Hell is what the country feels like to a generation that studied harder than any generation in history and arrived in a labour market with a 3% chaebol hiring rate, a housing market calibrated to the savings of the previous generation, and a political class that uses 'youth' as a word in election manifestos but speaks a different language when governing. The word is not nihilism. It is a very specific naming of a very specific grievance, with historical precision.`,
+    text: `Hell Joseon. The word appears online around 2013 and spreads. Joseon is the old dynasty name — the Korea of rigid hierarchy and no social mobility. Hell is what the country feels like to a generation that studied harder than any generation in history and arrived in a labour market with a 3% chaebol hiring rate, a housing market calibrated to the savings of the previous generation, and a political class that uses 'youth' as a word in election manifestos but speaks a different language when governing. The word is a precise naming of a precise grievance.`,
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('kr_dep_hell_joseon'); p.setMem('krHellJoseon', true) },
   },
@@ -166,7 +167,7 @@ export const KOREA_DEPTH_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 25 && G.age <= 45 &&
       !G.mem?.krCheongyak,
-    text: `The cheongyak: the national housing subscription lottery for new apartments. You open the account as early as possible because the seniority points accumulate over time. You make the monthly deposits. You track the subscription scores required in the neighbourhoods where you might realistically live. The lottery is for new government-designated housing built below market price; winning is the difference between buying and renting forever. Families plan around the cheongyak as they plan around children's school districts. Your parents have been monitoring your score. When the results are announced, the website crashes.`,
+    text: `The cheongyak, the national lottery for new flats: you open the account as early as you can because the points build over time, and you pay in every month, and you follow the scores needed in the neighbourhoods you might afford. Winning is the difference between owning and renting forever. Families plan around it as they plan around school districts, and your parents watch your score. When the results come out, the website crashes.`,
     choices: [
       {
         text: 'You win the lottery.',

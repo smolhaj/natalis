@@ -16,7 +16,7 @@ export const DRIVER_ARC_EVENTS = [
     when: (G) =>
       isDriver(G) &&
       !G.mem?.drvCityFired,
-    text: `You know the city in a way that most people who live in it do not. You know it by its traffic — not the map but the living system of the map, which routes breathe at what hours, where the signals are badly timed, where the shortcuts become shortcuts only in specific conditions. This knowledge is professional knowledge. You carry people across the city using it. The city is your material.`,
+    text: `You know the city as most people who live in it do not. You know it by its traffic — not the map but the living system of the map, which routes breathe at what hours, where the signals are badly timed, where the shortcuts become shortcuts only in specific conditions. This knowledge is professional knowledge. You carry people across the city using it. The city is your material.`,
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -34,7 +34,7 @@ export const DRIVER_ARC_EVENTS = [
       isDriver(G) &&
       G.flags.has('driver_city_knowledge') &&
       !G.mem?.drvPassengerFired,
-    text: `The passenger at 11pm who tells you something they would not tell anyone they know. This is the specific privacy of the back seat — you are not part of their life, you do not know them, they will not see you again. You become the recipient of information that has nowhere else to go. You hear it. You do not carry it out of the car. The car ends and the information stays in it. This happens enough times that you have developed a way of holding it that is not burdening yourself with it.`,
+    text: `The passenger at 11pm who tells you something they would not tell anyone they know. This is the privacy of the back seat — you are not part of their life, you do not know them, they will not see you again. You become the recipient of information that has nowhere else to go. You hear it. You do not carry it out of the car. The car ends and the information stays in it. This happens enough times that you have developed a way of holding it that is not burdening yourself with it.`,
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -89,7 +89,7 @@ export const DRIVER_ARC_EVENTS = [
       isDriver(G) &&
       G.age >= 35 &&
       !G.mem?.drvAccidentFired,
-    text: `The accident is not your fault. The investigation confirms this. The car that came through the intersection did so after the light and there was nothing in the available response time that would have changed the outcome. You know this. The investigation knows this. The passenger in the back seat was not seriously injured. You were not seriously injured. The car was written off. You went back to work after three days, which was earlier than you needed to but later than you wanted to.`,
+    text: `The accident is not your fault, and the investigation says so: the car came through the junction after the light, and nothing in the time you had would have changed it. The passenger in the back is not badly hurt, and neither are you, and the car is written off. You go back to work after three days, earlier than you needed to and later than you wanted to.`,
     choices: null,
     effect: (p) => {
       p.m -= 10

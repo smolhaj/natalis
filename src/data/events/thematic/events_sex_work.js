@@ -52,13 +52,13 @@ export const SEX_WORK_EVENTS = [
       : 'There is money in it. Not a large amount — the money is never what people outside imagine — but money that arrives in cash, the same evening, which is the only quality that matters when rent is owed and there is no other source. You know women who do this. You have known them your whole life, which means you also know what people say about them, and you have spent the last several weeks deciding whether what people say is a thing you can afford to care about.',
     choices: [
       {
-        text: 'You take the work. The cash is real and the month is real.',
+        text: 'You take the work. The cash pays the month.',
         tag: 'enter',
         outcome: 'The first time is the one that sets the shape of it. What you expected and what it is are not the same thing, which is true in both directions.',
         effect: (p) => { p.mo += 600; p.h -= 3; p.m -= 6; p.r += 6; p.addFlag('sex_work_entry'); p.addFlag('sw_criminalized_context'); p.setMem('swEntry', true) },
       },
       {
-        text: 'You find another way. The cost of this particular solution is too high.',
+        text: 'You find another way. The cost of this solution is too high.',
         tag: 'refuse',
         outcome: 'Another way is harder to find than the phrase suggests. It takes months. Some of what it costs does not show on any account.',
         effect: (p) => { p.mo -= 300; p.h -= 4; p.m -= 3; p.r += 4; p.setMem('swEntry', true) },
@@ -194,7 +194,7 @@ export const SEX_WORK_EVENTS = [
       G.flags.has('sex_work_entry') &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.swRegular,
-    text: 'He comes every week, or every two weeks — regular enough that you know his schedule, remember his preferences, understand the particular version of himself he brings here and the version he does not. He is not unkind. He asks about your week. He remembers the name you use. He does not make things difficult. You have had time to think about what the version that does not make things difficult means, in this particular economy of exchange, and the thinking does not fully resolve into a simple feeling.',
+    text: 'He comes every week, or every two weeks — regular enough that you know his schedule, remember his preferences, understand the version of himself he brings here and the version he does not. He is not unkind. He asks about your week. He remembers the name you use. He does not make things difficult. You have had time to think about what the version that does not make things difficult means, in this economy of exchange, and the thinking does not fully resolve into a simple feeling.',
     choices: null,
     effect: (p) => { p.m -= 3; p.r += 6; p.e += 2; p.addFlag('sw_regular_client_known'); p.setMem('swRegular', true) },
   },
@@ -273,7 +273,7 @@ export const SEX_WORK_EVENTS = [
       !G.flags.has('sw_exited') &&
       G.age >= 36 &&
       !G.mem?.swLongTerm,
-    text: 'You have been doing this work for a decade, or twelve years, or fifteen. The arithmetic has shifted: you are better paid than you were when you started, because time teaches you who to take and who to avoid and how to set the terms, and that knowledge is worth something even in this economy. The social world of the work — the other women, the rhythms, the specific body of knowledge about this industry — is the primary knowledge you have about how work operates. You are good at it. Good is a complicated word for it, but it is accurate.',
+    text: 'You have been doing this work for a decade, or twelve years, or fifteen. The arithmetic has shifted: you are better paid than you were when you started, because time teaches you who to take and who to avoid and how to set the terms, and that knowledge is worth something even in this economy. The social world of the work — the other women, the rhythms, the body of knowledge about this industry — is the primary knowledge you have about how work operates. You are good at it. Good is a complicated word for it, but it is accurate.',
     choices: null,
     effect: (p) => { p.h -= 4; p.r += 7; p.e += 4; p.addFlag('sw_long_term_worker'); p.setMem('swLongTerm', true) },
   },

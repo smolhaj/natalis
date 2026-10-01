@@ -62,7 +62,7 @@ export const EMIGRANT_INTEGRATION_EVENTS = [
       const oldCountry = G.character.country.name
       const hasFamilyHere = (G.partner || (G.children ?? []).length > 0)
       if (hasFamilyHere) {
-        return `You are building something here — a life with weight and structure, people who depend on you and on whom you depend. When someone asks if you plan to go back to ${oldCountry}, the answer is no longer automatic. It is not no. It is not yes. It is the answer of a person who has two places and is still working out which is home.`
+        return `You are building something here — a life with weight and structure, people who depend on you and on whom you depend. When someone asks if you plan to go back to ${oldCountry}, the answer is no longer automatic. It is neither no nor yes. It is the answer of a person who has two places and is still working out which is home.`
       }
       return `Three or four years in. Longer than you planned. Not long enough to stop planning. The question of whether you stay permanently presents itself differently now — less like a distant decision and more like something that has been deciding itself while you were otherwise occupied.`
     },

@@ -17,7 +17,7 @@ export const MERCHANT_ARC_EVENTS = [
     when: (G) =>
       isMerchant(G) &&
       !G.mem?.merMarketFired,
-    text: `You know the market the way it takes years to know: not the prices — anyone can read those — but the rhythm under the prices. Which day the suppliers are hungry. Which buyer is overextended. Where the information is before it becomes price. This knowledge is not in any ledger; it accumulates in the way that market knowledge accumulates, through attention and error and the long slow process of learning how a particular trade breathes.`,
+    text: `You know the market the way it takes years to know: not the prices — anyone can read those — but the rhythm under the prices. Which day the suppliers are hungry. Which buyer is overextended. Where the information is before it becomes price. This knowledge is not in any ledger; it accumulates in the way that market knowledge accumulates, through attention and error and the long slow process of learning how a trade breathes.`,
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -35,7 +35,7 @@ export const MERCHANT_ARC_EVENTS = [
       isMerchant(G) &&
       G.flags.has('merchant_market_knowledge') &&
       !G.mem?.merFamilyFired,
-    text: `The business your family has been in for a generation raises the question every family business eventually raises: is this yours, or is this something you are continuing? You have the knowledge. You have been doing it long enough that the knowledge is real. The question of whether you chose it or inherited it is one you have not finished answering. The market does not wait for the answer.`,
+    text: `The business your family has been in for a generation raises the question every family business eventually raises: is this yours, or is this something you are continuing? You have the knowledge. You have been doing it long enough to know. The question of whether you chose it or inherited it is one you have not finished answering. The market does not wait for the answer.`,
     choices: [
       {
         text: 'Claim it — this is your trade, your market, your continuation',
@@ -88,7 +88,7 @@ export const MERCHANT_ARC_EVENTS = [
       isMerchant(G) &&
       G.age >= 34 &&
       !G.mem?.merBadYearFired,
-    text: `The year the market moved the wrong way. Not catastrophically — you are still operating — but significantly enough that the reserve you had built is substantially reduced. The cause is some combination of factors you could not have controlled and decisions you made that, in retrospect, you would not make again. Both of these things are true, and you have to sit with the ratio, and the ratio is not the same for every decision. The market will move again. You need it to move before the reserve is gone.`,
+    text: `The year the market moved the wrong way. Not catastrophically — you are still operating — but significantly enough that the reserve you had built is substantially reduced. The cause is some combination of factors you could not have controlled and decisions you made that, in retrospect, you would not make again. The ratio is not the same for every decision. The market will move again. You need it to move before the reserve is gone.`,
     choices: null,
     effect: (p) => {
       p.w -= 8
@@ -178,7 +178,7 @@ export const MERCHANT_ARC_EVENTS = [
       isMerchant(G) &&
       G.age >= 60 &&
       !G.mem?.merLateFired,
-    text: `The accounting: you spent a career moving goods between people who had them and people who needed them, and you did this in markets that moved in ways you could sometimes anticipate and sometimes could not, and you built a knowledge of how a specific trade breathes that took twenty years to fully build and that cannot be replicated quickly. The good years and the bad years are both in the record. The protection you navigated. The market that shifted. You are still here. The trade is in some form still operating. The knowledge is yours and it is leaving the phase of active use.`,
+    text: `The accounting: you spent a career moving goods between people who had them and people who needed them, and you did this in markets that moved in ways you could sometimes anticipate and sometimes could not, and you built a knowledge of how a trade breathes that took twenty years to fully build and that cannot be replicated quickly. The good years and the bad years are both in the record. The protection you navigated. The market that shifted. You are still here. The trade is in some form still operating. The knowledge is yours and it is leaving the phase of active use.`,
     choices: null,
     effect: (p) => {
       p.m += 10

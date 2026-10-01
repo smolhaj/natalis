@@ -34,7 +34,7 @@ function goodbye(which, phase) {
     text: (G) => {
       const name = G.parents?.[which]?.name
       const named = name ? ` The nurse reads ${pron} name back to you, ${name}, to be sure she has the right bed.` : ''
-      return `The call comes on a Tuesday. Your ${which} is in the hospital.${named} The rules say: no visitors. The specific rule is the shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing ${which === 'father' ? 'he' : 'she'} hears is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.`
+      return `The call comes on a Tuesday. Your ${which} is in the hospital.${named} The rules say: no visitors. The rule is the shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing ${which === 'father' ? 'he' : 'she'} hears is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.`
     },
     choices: [
       {
@@ -79,7 +79,7 @@ export const PANDEMIC_EVENTS = [
       G.currentYear <= 2022 &&
       ['doctor', 'nurse', 'paramedic'].includes(G.career?.id) &&
       !G.mem?.panHealthcare,
-    text: 'You have been on the same ward for seventeen days without a full day off. The PPE runs out by Tuesday and what comes Wednesday is better than nothing. You have watched people die in a specific order: first the very old, then the people who waited too long, then people your age. You hold a tablet up to a dying patient\'s face and their family waves at them from a screen.',
+    text: 'You have been on the same ward for seventeen days without a full day off. The PPE runs out by Tuesday and what comes Wednesday is better than nothing. You have watched people die in an order: first the very old, then the people who waited too long, then people your age. You hold a tablet up to a dying patient\'s face and their family waves at them from a screen.',
     choices: [
       {
         text: 'You carry it — this is what you trained for',
@@ -120,7 +120,7 @@ export const PANDEMIC_EVENTS = [
       G.currentYear <= 2022 &&
       ['doctor', 'nurse', 'paramedic'].includes(G.career?.id) &&
       !G.mem?.panHealthcare,
-    text: 'You have been on the same ward for seventeen days without a full day off. The PPE runs out by Tuesday and what comes Wednesday is better than nothing. You have watched people die in a specific order: first the very old, then the people who waited too long, then people your age. You hold a tablet up to a dying patient\'s face and their family waves at them from a screen.',
+    text: 'You have been on the same ward for seventeen days without a full day off. The PPE runs out by Tuesday and what comes Wednesday is better than nothing. You have watched people die in an order: first the very old, then the people who waited too long, then people your age. You hold a tablet up to a dying patient\'s face and their family waves at them from a screen.',
     choices: [
       {
         text: 'You carry it — this is what you trained for',
@@ -277,7 +277,7 @@ export const PANDEMIC_EVENTS = [
       G.currentYear <= 2021 &&
       G.age >= 70 &&
       !G.mem?.panElderly,
-    text: 'The visit that was supposed to happen on Sunday does not happen. The visit the Sunday after that does not happen either. A grandchild waves through a window. You have learned to wave back through the window in a way that does not show how the window feels. The phone calls are more frequent, which is both good and its own kind of loneliness.',
+    text: 'The visit that was supposed to happen on Sunday does not happen. The visit the Sunday after that does not happen either. A grandchild waves through a window. You have learned to wave back through the window without showing how the window feels. The phone calls are more frequent, which is good and also lonely.',
     choices: null,
     effect: (p) => {
       p.m -= 14;

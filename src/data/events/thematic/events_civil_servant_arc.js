@@ -92,7 +92,7 @@ export const CIVIL_SERVANT_ARC_EVENTS = [
       {
         text: 'Transfer or request reassignment — you will not operate this machinery',
         tag: null,
-        outcome: `The request takes six months to process. In the interim you are technically still in the department. The reassignment is granted. The machinery continues without you. Both of these things are true.`,
+        outcome: `The request takes six months to process. In the interim you are technically still in the department. The reassignment is granted. The machinery continues without you.`,
         effect: (p) => {
           p.m -= 4
           p.karma += 8
@@ -167,7 +167,7 @@ export const CIVIL_SERVANT_ARC_EVENTS = [
       isCS(G) &&
       G.age >= 60 &&
       !G.mem?.csLateFired,
-    text: `The accounting: you spent a career applying the rules that govern other people's access to what they need, and you applied them with varying degrees of the discretion the rules contain, and sometimes you found the discretion and sometimes you applied the rule as written and sometimes the difference mattered and sometimes it did not, and you could not always tell which was which at the time. The file keeps the record. You are not the file. The file is not you. What you carry out is the knowledge of the specific people — the form that needed one more provision found, the directive that required a reassignment request, the person who came back. Those are what you are bringing with you.`,
+    text: `The accounting: you spent a career applying the rules that govern other people's access to what they need, and you applied them with varying degrees of the discretion the rules contain, and sometimes you found the discretion and sometimes you applied the rule as written and sometimes the difference mattered and sometimes it did not, and you could not always tell which was which at the time. The file keeps the record. You are not the file. The file is not you. What you carry out is the knowledge of the people — the form that needed one more provision found, the directive that required a reassignment request, the person who came back. Those are what you are bringing with you.`,
     choices: null,
     effect: (p) => {
       p.m += 8

@@ -16,7 +16,7 @@ export const SYRIA_EVENTS = [
     phase: 'childhood',
     weight: 4,
     when: (G) => IS_SYRIAN(G) && G.age >= 8 && G.age <= 14 && !G.flags.includes('baath_state_learned'),
-    text: 'The portraits are everywhere. Assad in the classroom, Assad in the bakery, Assad at the checkpoint where the road bends toward your grandmother\'s house. At school you learn that the president is the father of the nation, which is the only way to say it. You learn that other things are not said. This education takes about three years and requires no formal curriculum.',
+    text: 'The portraits are everywhere. Assad in the classroom, Assad in the bakery, Assad at the checkpoint where the road bends toward your grandmother\'s house. At school you learn that the president is the father of the nation. There is no other way to say it. You learn that other things are not said. This education takes about three years and requires no formal curriculum.',
     choices: null,
     effect: (p) => {
       p.addFlag('baath_state_learned')
@@ -39,10 +39,11 @@ export const SYRIA_EVENTS = [
     text: (G) => {
       const isFromHama = Math.random() < 0.08
       if (isFromHama) {
-        return 'Your family is from Hama. In February 1982, the army and the security services seal the city. What happens inside the sealed city is not reported. Estimates range from ten thousand dead to forty thousand. Your family finds out through a cousin who got out before the sealing. The cousin does not describe what she saw, and you learn not to ask. The city is rebuilt. The rubble is specific and the silence around it is architectural.'
+        return 'Your family is from Hama. In February 1982 the army seals the city, and what happens inside is not reported. Your family learns of it through a cousin who got out before the cordon closed, and she does not describe what she saw, and you learn not to ask. The city is rebuilt. The silence around it is architectural.'
       }
       return 'Everyone knows what happened in Hama. No one says it directly — not to colleagues, not at dinner, not to the children. It sits in the space between things. The lesson of Hama is available to anyone who knows how to read a silence: this is what the state does to those who challenge it. The lesson is very widely understood.'
     },
+    context: 'Estimates of those killed in the 1982 Hama massacre range from 10,000 to 40,000.',
     choices: null,
     effect: (p) => {
       p.addFlag('hama_silence')
@@ -63,7 +64,7 @@ export const SYRIA_EVENTS = [
       G.age >= 28 &&
       !G.flags.includes('damascus_spring_witness') &&
       (G.career?.field === 'writing' || G.career?.field === 'academia' || G.career?.field === 'media' || G.career?.field === 'law' || G.stats.smarts >= 60),
-    text: 'Bashar al-Assad inherits the presidency from his father and, for about a year, something loosens. Civil society groups meet in private salons — they call them "discussion forums." Intellectuals sign open letters. Someone reads an essay at a gathering and people applaud and you think: perhaps. Perhaps this is what a country changing looks like from the inside. Then the signatories of the Damascus Declaration begin to be arrested. The Damascus Spring lasted nine months. You knew it would be shut down. You also believed in it while it was happening.',
+    text: 'Bashar inherits the presidency from his father, and for about a year something loosens. People meet in private salons they call forums, intellectuals sign open letters, someone reads an essay aloud and people applaud and you think: perhaps. Then the signatories begin to be arrested. The Damascus Spring lasts months. You knew it would be shut down, and you believed in it while it was happening.',
     choices: [
       {
         text: 'Attend the forums while they\'re open.',
@@ -205,7 +206,7 @@ export const SYRIA_EVENTS = [
       !G.flags.includes('syria_europe_arrived'),
     text: (G) => {
       const country = G.currentCountry?.name ?? 'Germany'
-      return `You are in ${country}. The camp is temporary, which means you have been here for eight months. The caseworker has a file with your name on it in a language you are learning. The newspaper has a word for you — *Flüchtling*, or *réfugié*, or *flyktning* — and the word is doing a lot of work, compressing a specific life into a policy category. You have a degree and a profession and a city you know block by block. The file does not know this yet.`
+      return `You are in ${country}. The camp is temporary, which means you have been here for eight months. The caseworker has a file with your name on it in a language you are learning. The newspaper has a word for you — *Flüchtling*, or *réfugié*, or *flyktning* — and the word is doing a lot of work, compressing a life into a policy category. You have a degree and a profession and a city you know block by block. The file does not know this yet.`
     },
     choices: null,
     effect: (p) => {

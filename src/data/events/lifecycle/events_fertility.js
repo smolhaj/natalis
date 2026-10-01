@@ -17,7 +17,7 @@ export const FERTILITY_EVENTS = [
       G.age >= 22 && G.age <= 38 &&
       G.flags.includes('trying_for_child') && !G.flags.includes('sterilised') &&
       G.yearsSince('bereavement') >= 2,
-    text: 'You are eight weeks in when it ends. The clinic is matter-of-fact and kind, which is the correct combination. Your partner drives home. You do not talk much in the car. At home you sit together on the sofa for a long time. Later — days later — you will learn that it is very common. The commonness is both real and irrelevant to the specific weight of it.',
+    text: 'You are eight weeks in when it ends. The clinic is matter-of-fact and kind. Your partner drives home. You do not talk much in the car. At home you sit together on the sofa for a long time. Later — days later — you will learn that it is very common. The commonness is both real and irrelevant to the weight of it.',
     choices: [
       {
         text: 'Grieve it properly, together',
@@ -28,7 +28,7 @@ export const FERTILITY_EVENTS = [
       {
         text: 'Move forward — get the timing right and try again',
         tag: null,
-        outcome: 'The trying-again becomes its own kind of weight. The grief stays compressed, waiting.',
+        outcome: 'The trying-again becomes a weight. The grief stays compressed, waiting.',
         effect: (p) => { p.m -= 15; p.r += 12; p.h -= 5; p.addFlag('experienced_miscarriage'); p.setMem('fertilityMiscarriage', true) },
       },
     ],
@@ -46,7 +46,7 @@ export const FERTILITY_EVENTS = [
       G.age >= 35 && G.age <= 42 &&
       G.flags.includes('trying_for_child') && !G.flags.includes('sterilised') &&
       G.yearsSince('bereavement') >= 2,
-    text: 'The second time, you know what the signs mean. You do not tell anyone you were pregnant again. That means you cannot tell anyone you have lost it again. The silence is its own kind of grief — private and unwitnessed and somehow worse for that.',
+    text: 'The second time, you know what the signs mean. You do not tell anyone you were pregnant again. That means you cannot tell anyone you have lost it again. The silence is a grief of its own, private and unwitnessed and somehow worse for that.',
     choices: [
       {
         text: 'Tell your partner — they should know',
@@ -139,13 +139,13 @@ export const FERTILITY_EVENTS = [
       G.flags.includes('trying_for_child') && !G.flags.includes('sterilised') &&
       ['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.character.country.archetype),
     text: (G) => {
-      return `An older woman in the family takes you aside. She knows someone — a healer, a specific prayer, a preparation that has worked for others. The clinic option exists in ${G.currentCountry?.name ?? G.character.country.name} but it is very far and very expensive. This option is available now and costs the price of belief.`
+      return `An older woman in the family takes you aside. She knows someone — a healer, a prayer, a preparation that has worked for others. The clinic option exists in ${G.currentCountry?.name ?? G.character.country.name} but it is very far and very expensive. This option is available now and costs the price of belief.`
     },
     choices: [
       {
         text: 'Follow the traditional path — it is what your family does',
         tag: null,
-        outcome: 'The ritual is specific and careful. Whether it helps or not is a question the outcome will not clearly answer. The act of trying with the tools you have is its own kind of answer.',
+        outcome: 'The ritual is specific and careful. Whether it helps or not is a question the outcome will not clearly answer. Trying with the tools you have is an answer.',
         effect: (p) => { p.m += 5; p.karma += 4; p.addFlag('fertility_traditional_sought'); p.setMem('fertilityTraditionalRemedy', true) },
       },
       {
@@ -174,7 +174,7 @@ export const FERTILITY_EVENTS = [
       {
         text: 'This is not the life you want — and that\'s a complete answer',
         tag: null,
-        outcome: 'The decision is clear and quiet. You stop waiting for it to feel different. It does not. The life you are building does not have this particular shape and that is its shape.',
+        outcome: 'The decision is clear and quiet. You stop waiting for it to feel different. It does not. The life you are building does not have this shape and that is its shape.',
         effect: (p) => { p.m += 8; p.r -= 6; p.addFlag('chose_childless'); p.setMem('fertilityChildlessChoice', true) },
       },
       {
@@ -195,7 +195,7 @@ export const FERTILITY_EVENTS = [
       !G.mem.fertilityChildlessQuestioned &&
       G.flags.includes('chose_childless') &&
       G.age >= 38 && G.age <= 50,
-    text: 'Your mother asks, for the last time you will allow, whether you have changed your mind. You tell her that you haven\'t. There is a pause in which you can hear her reassessing something. Then she says she hopes you are happy. You tell her that you are. The conversation ends. You sit with what it cost to say it and whether the cost was worth it and decide that it was.',
+    text: 'Your mother asks, for the last time you will allow, whether you have changed your mind. You tell her that you haven\'t. There is a pause in which you can hear her reassessing something. Then she says she hopes you are happy. You tell her that you are. The conversation ends. It cost something to say it. You decide it was worth it.',
     choices: null,
     effect: (p) => { p.m += 6; p.r -= 5; p.karma += 3; p.setMem('fertilityChildlessQuestioned', true) },
   },
@@ -212,7 +212,7 @@ export const FERTILITY_EVENTS = [
       G.partner &&
       G.age >= 36 && G.age <= 44 &&
       G.flags.includes('trying_for_child') && !G.flags.includes('sterilised'),
-    text: 'The obstetrician flags it at the twelve-week scan — the pregnancy is higher risk at this age, with this particular finding. She says the word "monitoring" several times. The monitoring is thorough and the pregnancy proceeds. You carry a specific kind of anxiety for twenty-six weeks that has no name and no resolution until there is a resolution.',
+    text: 'The obstetrician flags it at the twelve-week scan — the pregnancy is higher risk at this age, with this finding. She says the word "monitoring" several times. The monitoring is thorough and the pregnancy proceeds. You carry a kind of anxiety for twenty-six weeks that has no name and no resolution until there is a resolution.',
     choices: [
       {
         text: 'Follow every recommendation precisely',

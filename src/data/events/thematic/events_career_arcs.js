@@ -21,7 +21,7 @@ const ATHLETE_EVENTS = [
       !G.mem?.athFirstInjuryDone,
     text: (G) => {
       const sport = G.mem?.athleteSport ?? 'your sport'
-      return `The injury announces itself mid-performance — not a crack but a specific wrong feeling, the body sending information you do not want to receive. The assessment afterwards takes longer than the injury itself. You are told six to eight weeks. You have heard this before from teammates and know that it means ten to twelve.`
+      return `The injury announces itself mid-performance — not a crack but a wrong feeling, the body sending information you do not want to receive. The assessment afterwards takes longer than the injury itself. You are told six to eight weeks. You have heard this before from teammates and know that it means ten to twelve.`
     },
     choices: [
       {
@@ -91,7 +91,7 @@ const ATHLETE_EVENTS = [
       !G.mem?.athRetirementDone,
     text: (G) => {
       const yr = G.currentYear ?? 2000
-      return `The conversation is not dramatic — no single moment announces the end. It is more that the calculation shifts: the body takes longer to recover, the younger athletes are better than you were at their age, the enthusiasm for the training has a different quality than it did. The sport is still there. You are changing around it.`
+      return `No single moment announces the end. The calculation shifts: the body takes longer to recover, the younger athletes are better than you were at their age, the enthusiasm thins. The sport is still there. You are changing around it.`
     },
     choices: [
       {
@@ -139,7 +139,7 @@ const ATHLETE_EVENTS = [
       {
         text: 'Let the identity crisis run its course',
         tag: null,
-        outcome: 'The difficult years are real. You come out the other side, slowly.',
+        outcome: 'The difficult years come. You come out the other side, slowly.',
         effect: (p) => { p.m -= 8; p.r += 10; p.setMem('athIdentityAfterDone', true) },
       },
     ],
@@ -219,7 +219,7 @@ const ACADEMIA_EVENTS = [
       !G.mem?.acadDefStudentDone,
     text: (G) => {
       const studentName = G.mem?.acadStudentName ?? 'one student'
-      return `You have taught hundreds of students. Most of them you remember only generally. There is one — a particular mind, a particular quality of attention — who you have followed with more care than is strictly professional. You have given them more than the syllabus requires. You are watching them become someone who may be better at this than you are. This is both the goal and, in some specific and honest part of you, complicated.`
+      return `You have taught hundreds of students. Most of them you remember only generally. There is one — a mind, a quality of attention — who you have followed with more care than is strictly professional. You have given them more than the syllabus requires. You are watching them become someone who may be better at this than you are. This is both the goal and, in some specific and honest part of you, complicated.`
     },
     choices: [
       {
@@ -291,7 +291,7 @@ const ACADEMIA_EVENTS = [
       {
         text: 'Leave the institution — the knowledge is yours regardless',
         tag: null,
-        outcome: 'The departure is not a failure. It is a reclassification. What you know is still true outside the building.',
+        outcome: 'The departure is a reclassification. What you know is still true outside the building.',
         effect: (p) => { p.m += 10; p.r += 6; p.addFlag('left_academia'); p.setMem('acadBurnoutDone', true) },
       },
     ],
@@ -315,7 +315,7 @@ const HOSPITALITY_EVENTS = [
       G.career?.level === 0 &&
       G.age >= 17 && G.age <= 25 &&
       !G.mem?.hospKitchenFloorDone,
-    text: 'The kitchen at this level is heat and pressure and hierarchy. The head chef communicates in corrections. You are not supposed to have opinions about the food yet; you are supposed to be fast and clean and present. You are learning the thing underneath the thing — the mise en place, the timing, the specific discipline of producing the same standard under any conditions.',
+    text: 'The kitchen at this level is heat and pressure and hierarchy. The head chef communicates in corrections. You are not supposed to have opinions about the food yet; you are supposed to be fast and clean and present. You are learning the thing underneath the thing — the mise en place, the timing, the discipline of producing the same standard under any conditions.',
     effect: (p) => { p.h -= 6; p.m -= 5; p.e += 8; p.setMem('hospKitchenFloorDone', true) },
     choices: null,
   },
@@ -367,7 +367,7 @@ const HOSPITALITY_EVENTS = [
       {
         text: 'Give the customers what moves — adjust the vision to the viable',
         tag: null,
-        outcome: 'The business stabilises. You have made something sustainable. You have also made compromises. Both are true.',
+        outcome: 'The business stabilises. You have made something sustainable. You have also made compromises.',
         effect: (p) => { p.mo += 5000; p.m += 4; p.setMem('hospOwnRestaurantDone', true) },
       },
     ],
@@ -428,9 +428,9 @@ const SOLDIER_EVENTS = [
       }
       // USA Gulf War / Afghanistan / Iraq framing
       if (country === 'United States' && yr >= 2001) {
-        return 'You are deployed. The deployment is to a country most of your family cannot locate on a map. The daily reality is different from the news coverage in both directions — more tedious and more frightening than the coverage suggests, and also more specific. You come to know the particular quality of light at 5am over this landscape. You did not expect to.'
+        return 'You are deployed. The deployment is to a country most of your family cannot locate on a map. The daily reality is different from the news coverage in both directions — more tedious and more frightening than the coverage suggests, and also more specific. You come to know the quality of light at 5am over this landscape. You did not expect to.'
       }
-      return 'The deployment is the part of the career that the recruitment posters do not show. The waiting, the maintenance, the boredom that is its own kind of stress. When the actual events come, the training holds. You hold. After, you process the holding.'
+      return 'The deployment is the part of the career that the recruitment posters do not show. The waiting, the maintenance, the boredom that is a stress of its own. When the actual events come, the training holds. You hold. After, you process the holding.'
     },
     effect: (p) => { p.h -= 5; p.m -= 10; p.addFlag('deployed'); p.setMem('soldDeploymentDone', true) },
     choices: null,
@@ -445,7 +445,7 @@ const SOLDIER_EVENTS = [
       G.flags.has('deployed') &&
       G.age >= 21 && G.age <= 32 &&
       !G.mem?.soldWhatYouCarryDone,
-    text: 'You are back. The physical re-entry is straightforward; the base, the paperwork, the debrief. What is not on any form is the specific catalogue of things you carry back. Not all of it is bad; some of it is. The civilian world has continued in your absence and expects you to synchronise to it quickly. The synchronisation is not quite complete.',
+    text: 'You are back. The physical re-entry is straightforward; the base, the paperwork, the debrief. What is not on any form is the catalogue of things you carry back. Not all of it is bad; some of it is. The civilian world has continued in your absence and expects you to synchronise to it quickly. The synchronisation is not quite complete.',
     choices: [
       {
         text: 'Talk to someone who was there',
@@ -507,7 +507,7 @@ const SOLDIER_EVENTS = [
       const yr = G.currentYear ?? 2000
       const hasPension = a === 'wealthy_west' || a === 'wealthy_east' || a === 'wealthy_gulf'
       if (hasPension) {
-        return 'The pension is real and the transition support is more than previous generations received. Neither of these fully solves the question of what you are now that you are not what you were. The structure of the military — the clarity of command, the shared purpose, the specific social world it creates — has no civilian equivalent you have found yet.'
+        return 'The pension is real and the transition support is more than previous generations received. Neither of these fully solves the question of what you are now that you are not what you were. The structure of the military — the clarity of command, the shared purpose, the social world it creates — has no civilian equivalent you have found yet.'
       }
       return 'You are leaving. The pension, if there is one, is small. The skills you carry — logistics, command, the ability to perform under pressure — are valuable and also not always visible to civilian employers who see the uniform but not the competency. The translation is yours to do.'
     },
@@ -536,7 +536,7 @@ const SOLDIER_EVENTS = [
       (G.flags.has('combat_veteran') || G.flags.has('unprocessed_service')) &&
       G.age >= 32 && G.age <= 55 &&
       !G.mem?.soldNightmaresDone,
-    text: 'Years later, the mind revisits. Not always at night; sometimes in a kind of light, or a particular sound. You function normally around it — this is not the catastrophic version. It is a room in the house of yourself that is always slightly lit.',
+    text: 'Years later, the mind revisits. Not always at night; sometimes in a kind of light, or a sound. You function normally around it. It is a room in the house of yourself that is always slightly lit.',
     choices: [
       {
         text: 'Get proper help — twenty years of managing alone is enough',

@@ -59,7 +59,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
       G.currentYear >= 1987 && G.currentYear <= 1993 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.sgSpectrum,
-    text: 'May 1987. Twenty-two people are detained under the ISA — social workers, theatre practitioners, Catholic lay workers, a law student. The government calls it a Marxist conspiracy. Most of those detained had been involved in work with migrant workers, prisoners, the urban poor. Several are released and then re-detained after they speak to foreign journalists. The allegations are denied by Amnesty International, lawyers from outside Singapore, and eventually most who knew the detainees. The detentions last two to three years. No charges are ever filed.',
+    text: 'May 1987. Twenty-two people are detained without trial under the Internal Security Act: social workers, theatre people, Catholic lay workers, a law student, most of them people who worked with migrant workers and the poor. The government calls it a Marxist conspiracy. Some are released and taken back in after they speak to foreign journalists. Nobody is ever charged.',
     choices: [
       {
         text: 'You knew one of the detainees — you know what they were actually doing',
@@ -137,7 +137,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
       G.age >= 28 && G.age <= 50 &&
       G.career &&
       !G.mem?.sgForeignTalent,
-    text: 'The 2011 general election: PAP wins 60.1% — its worst result since 1963. The word on the ground is immigration. Not migrant workers this time — professionals. The "foreign talent" programme has brought in tens of thousands of Employment Pass holders, and the question circulating at void decks and coffee shops is whether Singaporeans are being passed over in their own country. The 2013 Population White Paper projects six point nine million people by 2030. Sixty thousand people sign a petition against it. You have your own view. Every Singaporean does.',
+    text: '2011, and the ruling party has its worst result since 1963, and the word in the coffee shops is immigration, not the workers this time but the foreign professionals, and whether Singaporeans are being passed over in their own country. A government paper projects nearly seven million people by 2030, and thousands gather at Hong Lim Park against it. You have your own view. Every Singaporean does.',
     choices: [
       {
         text: 'The openness is what built Singapore — you cannot close the door now',
@@ -167,7 +167,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
       G.currentYear >= 2022 && G.currentYear <= 2025 &&
       G.age >= 25 &&
       !G.mem?.sg377aRepeal,
-    text: 'November 2022. Prime Minister Lee Hsien Loong announces that Section 377A — which criminalises sex between men — will be repealed. It is repealed in January 2023. At the same time, the constitution is amended to define marriage as between a man and a woman, closing the door on any path to marriage equality through the courts. The repeal is real. The amendment is also real. Singapore has given something and taken something in the same legislative session. You have been living in this country for your whole life, and this is what it looks like when it moves.',
+    text: 'November 2022. The prime minister announces that the law against sex between men will go, and in January it goes. In the same session the constitution is changed to protect the definition of marriage as between a man and a woman from the courts. Singapore has given something and taken something in one sitting. You have lived here your whole life, and this is what it looks like when it moves.',
     choices: [
       {
         text: 'The repeal is real and it matters — acknowledge that',
@@ -196,7 +196,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
       G.currentYear >= 2015 && G.currentYear <= 2017 &&
       G.age >= 55 &&
       !G.mem?.sgSG50,
-    text: 'Singapore turns fifty in 2015. The National Day parade on the Padang, the exhibitions, the commemorations. LKY dies in March. The year is dense with the feeling of the founding generation passing. You were young when independence — separation, really — happened, and you are old enough now to have seen everything in between. The country works. You live in something that functions. The people who ask whether Singapore is a good place to live are not wrong to ask it, and the people who answer "yes" are also not wrong. You have lived the fifty years. The question is too simple for the life inside it.',
+    text: '2015, and Singapore is fifty. The parade on the Padang, the exhibitions, and in March the old man dies, and the year is thick with the founding generation passing. You were young at separation and you have seen everything in between. The country works; you live in something that functions. People ask whether it is a good place to live, and the question is too simple for the fifty years inside it.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 4; p.e += 2; p.addFlag('sg_sg50_generation'); p.setMem('sgSG50', true) },
   },

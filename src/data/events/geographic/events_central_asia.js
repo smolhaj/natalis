@@ -87,10 +87,10 @@ export const CENTRAL_ASIA_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => IS_KAZAKH(G) && G.currentYear >= 2000 && G.currentYear <= 2015 && G.age >= 30 && !G.mem.casOil,
-    text: 'The oil money changes the city. Astana — a new capital built in the steppe, renamed from Akmola, being renamed again for the president — is rising. The architecture is ambitious beyond what the scale of the country suggests. The money is real. So is the absence of the institutions that would normally manage it.',
+    text: 'The oil money changes the city. Astana — a new capital built in the steppe, renamed from Akmola, being renamed again for the president — is rising. The architecture is ambitious beyond what the scale of the country suggests. The money is there to be seen. So is the absence of the institutions that would normally manage it.',
     choices: [
       {
-        text: 'The prosperity is real. Your family\'s life has changed.',
+        text: 'Your family\'s life has changed.',
         tag: 'benefited',
         outcome: 'The car, the apartment, the holiday. The prosperity is not evenly distributed but it is widespread enough to feel like a tide.',
         effect: (p) => { p.mo += 15000; p.m += 8; p.addFlag('oil_boom_beneficiary'); p.setMem('casOil', true) },
@@ -114,13 +114,13 @@ export const CENTRAL_ASIA_EVENTS = [
       {
         text: 'Join the crowd. Something is changing.',
         tag: 'joined',
-        outcome: 'Something changes. What changes is: one group of people who had power is replaced by another group of people who want it. This is not nothing. It is also not everything.',
+        outcome: 'Something changes. What changes is: one group of people who had power is replaced by another group of people who want it. It is something, and it is not everything.',
         effect: (p) => { p.m += 8; p.addFlag('political_active'); p.setMem('casTulip', true); p.setMem('kyrTulip', true) },
       },
       {
         text: 'Watch. You have seen promises before.',
         tag: 'watched',
-        outcome: 'You were right to be cautious. You were also right that something changed. Both things are true.',
+        outcome: 'You were right to be cautious. You were also right that something changed.',
         effect: (p) => { p.m -= 3; p.setMem('casTulip', true); p.setMem('kyrTulip', true) },
       },
     ],
@@ -239,7 +239,7 @@ export const CENTRAL_ASIA_EVENTS = [
       {
         text: 'Your household manages independently; others in the family send',
         tag: 'independent',
-        outcome: 'You have stayed. Others left. The village is quieter in a specific way — the age distribution has a gap where working men used to be.',
+        outcome: 'You have stayed. Others left. The village is quieter in a way — the age distribution has a gap where working men used to be.',
         effect: (p) => { p.m -= 4; p.r += 4; p.addFlag('tajik_stayed_home'); p.setMem('tajRemittance', true); },
       },
     ],

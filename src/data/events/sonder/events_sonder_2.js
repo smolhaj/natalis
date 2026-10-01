@@ -44,7 +44,7 @@ export const EVENTS_SONDER_2 = [
     weight: 2,
     when: (G) => (G.season === 'wet' || place.isMonsoonCountry(G)) && (!G.mem?.s2_mon &&
       ['India', 'Bangladesh', 'Pakistan', 'Sri Lanka', 'Myanmar', 'Vietnam', 'Indonesia', 'Philippines', 'Cambodia', 'Thailand', 'Laos', 'Nepal'].includes(G.character.country.name)),
-    text: 'The first rain of the monsoon is not like other rain. It comes with a smell before the drops — something released from the earth — and then the sound on the roof, which is also the sound of relief. Everyone says it the same way: it has come.',
+    text: 'The first rain of the monsoon is not like other rain. It comes with a smell before the drops — something released from the earth — and then the sound on the roof, the sound of relief. Everyone says it the same way: it has come.',
     choices: null,
     effect: (p) => { p.setMem('s2_mon', true); p.m += 2 },
   },
@@ -82,7 +82,7 @@ export const EVENTS_SONDER_2 = [
     when: (G) => place.isUrban(G) && (!G.mem?.s2_traf &&
       (G.character.country.archetype === 'developing_urban' ||
        G.character.country.archetype === 'developing_unstable')),
-    text: 'The traffic at this hour is not an obstacle. It is the city\'s circulatory system and you are in it, moving at its own rhythm. The driver ahead knows exactly when to cut across. You know it too. The foreigner who arrived last year has not learned it yet. You can tell by watching.',
+    text: 'The traffic at this hour is the city\'s circulation and you are in it, moving at its rhythm. The driver ahead knows exactly when to cut across. You know it too. The foreigner who arrived last year has not learned it yet. You can tell by watching.',
     choices: null,
     effect: (p) => { p.setMem('s2_traf', true) },
   },
@@ -95,7 +95,7 @@ export const EVENTS_SONDER_2 = [
       !G.mem?.s2_adhan &&
       (G.religion?.startsWith('muslim') ||
        ['Nigeria', 'Senegal', 'Mali', 'Morocco', 'Algeria', 'Tunisia', 'Egypt', 'Jordan', 'Lebanon', 'Iran', 'Pakistan', 'Bangladesh', 'Indonesia', 'Turkey', 'Saudi Arabia', 'UAE', 'Yemen', 'Sudan', 'Libya'].includes(G.character.country.name)),
-    text: 'The evening call to prayer is the signal that changes what the day is. Before it: one kind of time. After it: another. You never decided to feel this. It arrived with the air of the particular city and settled into the body.',
+    text: 'The evening call to prayer is the signal that changes what the day is. Before it: one kind of time. After it: another. You never decided to feel this. It arrived with the air of the city and settled into the body.',
     choices: null,
     effect: (p) => { p.setMem('s2_adhan', true) },
   },
@@ -122,7 +122,7 @@ export const EVENTS_SONDER_2 = [
       !G.mem?.s2_dust &&
       (G.character.country.archetype === 'wealthy_gulf' ||
        ['Morocco', 'Algeria', 'Tunisia', 'Libya', 'Egypt', 'Jordan', 'Iraq', 'Yemen', 'Iran'].includes(G.character.country.name)),
-    text: 'The dust season. A particular colour settles over everything for weeks — on the windshields, on the balcony furniture, in the fold of your collar. You have learned to move through it without registering it as weather. It is just the season the dust is.',
+    text: 'The dust season. A colour settles over everything for weeks — on the windshields, on the balcony furniture, in the fold of your collar. You have learned to move through it without registering it as weather. It is just the season the dust is.',
     choices: null,
     effect: (p) => { p.setMem('s2_dust', true) },
   },
@@ -135,7 +135,7 @@ export const EVENTS_SONDER_2 = [
       !G.mem?.s2_rains &&
       G.character.country.archetype === 'subsaharan' &&
       G.ruralUrban === 'rural',
-    text: 'The rains have come. The fields are the right colour again. The adults stop making the particular calculation they make in the dry months — how many days left, how much remains. The relief is not spoken but it is in everything.',
+    text: 'The rains have come. The fields are the right colour again. The adults stop making the calculation they make in the dry months — how many days left, how much remains. The relief is not spoken but it is in everything.',
     choices: null,
     effect: (p) => { p.setMem('s2_rains', true); p.m += 2 },
   },
@@ -146,7 +146,7 @@ export const EVENTS_SONDER_2 = [
     weight: 2,
     when: (G) => G.season === 'winter' && (!G.mem?.s2_winter &&
       G.character.country.archetype === 'post_soviet'),
-    text: 'The cold arrives and the city reorganises itself around it. The padded coats, the hats pulled low, the specific technique for opening a frozen car door. You have known this winter your whole life. You know it in your hands before you think it.',
+    text: 'The cold arrives and the city reorganises itself around it. The padded coats, the hats pulled low, the technique for opening a frozen car door. You have known this winter your whole life. You know it in your hands before you think it.',
     choices: null,
     effect: (p) => { p.setMem('s2_winter', true) },
   },
@@ -222,7 +222,7 @@ export const EVENTS_SONDER_2 = [
     weight: 2,
     when: (G) => place.hasWeekend(G) && (!G.mem?.s2_brec &&
       G.age >= 50 && G.age <= 62),
-    text: 'Recovery time. That is the category that has changed most. The same Saturday as five years ago requires a different Sunday. You have adjusted your expectations, which is either wisdom or defeat, and you are not entirely sure which.',
+    text: 'Recovery time. That is the category that has changed most. The same Saturday as five years ago requires a different Sunday. You have adjusted your expectations, and you are not entirely sure whether that is wisdom or defeat.',
     choices: null,
     effect: (p) => { p.setMem('s2_brec', true) },
   },
@@ -360,7 +360,7 @@ export const EVENTS_SONDER_2 = [
     when: (G) => place.hasPhone(G) && (!G.mem?.s2_dpv &&
       G.flags.includes('lost_parent') &&
       G.age >= 35),
-    text: 'You can still hear how they answered the phone. The tone — slightly more formal before they recognised the voice, then the change. That voice was a constant for forty years. You hear it now only in memory, which is less reliable each year.',
+    text: 'You can still hear how they answered the phone. The tone — slightly more formal before they recognised the voice, then the change. That voice was a constant for forty years. You hear it now only in memory, less reliably each year.',
     choices: null,
     effect: (p) => { p.setMem('s2_dpv', true) },
   },
@@ -416,7 +416,7 @@ export const EVENTS_SONDER_2 = [
     when: (G) =>
       !G.mem?.s2_tdec &&
       G.age >= 38,
-    text: 'A decade has gone somewhere. Not gradually — in retrospect it happened all at once. You were thirty-three and then you were forty-three and the decade between is present and somehow also collapsed into a particular quality of light.',
+    text: 'A decade has gone somewhere. Not gradually — in retrospect it happened all at once. You were thirty-three and then you were forty-three and the decade between is present and somehow also collapsed into a quality of light.',
     choices: null,
     effect: (p) => { p.setMem('s2_tdec', true) },
   },

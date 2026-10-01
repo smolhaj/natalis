@@ -51,7 +51,7 @@ export const UYGHUR_EVENTS = [
       {
         text: 'Stay silent. Your family comes first.',
         tag: 'silent',
-        outcome: 'You carry what you know without being able to say it. The specific weight of witnessed truth with no safe place to put it.',
+        outcome: 'You carry what you know without being able to say it. The weight of witnessed truth with no safe place to put it.',
         effect: (p) => { p.m -= 12; p.setMem('uygDiaSilence', true) },
       },
     ],

@@ -35,7 +35,7 @@ export const TECHNOLOGY_EVENTS = [
     // round it.
     when: (G) => G.currentYear >= 1939 && G.currentYear <= 1946 && G.age >= 5 &&
       hasTech(G.currentCountry ?? G.character.country, 'radio', G.currentYear),
-    text: 'The radio is on all the time now. The adults gather around it in a way that has a different quality from before. You cannot follow all the words but you understand from their faces that something serious is happening somewhere larger than here.',
+    text: 'The radio is on all the time now. The adults gather around it differently than before. You cannot follow all the words but you understand from their faces that something serious is happening somewhere larger than here.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 4; p.addFlag('war_radio_childhood') },
   },
@@ -216,7 +216,7 @@ export const TECHNOLOGY_EVENTS = [
     when: (G) => G.currentYear >= 2020 && G.currentYear <= 2022 && G.age >= 18,
     text: 'Everything moves to a screen. Meetings, school, doctor appointments, funerals. You learn that you could always have worked from home, or your children could have had school at home, and nobody thought to try until there was no other option. The commute disappears. The boundary between work and home disappears with it.',
     choices: [
-      { text: 'Adapt and find the new rhythms', tag: null, outcome: 'You rebuild habits. The isolation is real. So is the saved commute time. It\'s not the same and also not without advantages.', effect: (p) => { p.e += 5; p.m -= 5; p.addFlag('remote_work_generation') } },
+      { text: 'Adapt and find the new rhythms', tag: null, outcome: 'You rebuild habits. You are isolated, and you have the commute back. It\'s not the same and also not without advantages.', effect: (p) => { p.e += 5; p.m -= 5; p.addFlag('remote_work_generation') } },
       { text: 'Struggle — you need other people and this is not working', tag: null, outcome: 'The loneliness compounds. The flat screen stands in for things it can\'t replace.', effect: (p) => { p.m -= 12; p.h -= 5; p.r += 5 } },
     ],
     effect: null,
@@ -230,7 +230,7 @@ export const TECHNOLOGY_EVENTS = [
     // "You are in a new city" for someone who had never left the village.
     when: (G) => G.currentYear >= 1960 && G.currentYear <= 1985 && G.age >= 18 && G.age <= 28 &&
       !!G.place && G.place.id !== G.birthPlace?.id && G.place.type !== 'rural',
-    text: 'You are in a new city for the first time. There is no way to reach your family except by letter, which takes a week, or a long-distance call from a phone box with coins. You write a letter. You are genuinely on your own in a way that people born later will find difficult to imagine.',
+    text: 'You are in a new city for the first time. There is no way to reach your family except by letter, which takes a week, or a long-distance call from a phone box with coins. You write a letter. You are genuinely on your own, as people born later will find difficult to imagine.',
     choices: null,
     effect: (p) => { p.m -= 6; p.e += 5; p.addFlag('pre_mobile_independence') },
   },

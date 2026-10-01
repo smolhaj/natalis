@@ -224,7 +224,7 @@ export const FAME_KARMA_EVENTS = [
     when: (G) =>
       G.fame > 30 &&
       !G.mem.fameFamilyReaction,
-    text: 'Someone in your family — a sibling, a cousin — has started introducing you differently. Not by your name but by what you are. You notice the change in how they hold themselves when you are in a room together. It is not pride, exactly. It is something more complicated than pride.',
+    text: 'Someone in your family — a sibling, a cousin — has started introducing you differently. Not by your name but by what you are. You notice the change in how they hold themselves when you are in a room together. It is something more complicated than pride.',
     choices: [
       {
         text: 'Say something. This is not who you want to be to them.',
@@ -291,7 +291,7 @@ export const FAME_KARMA_EVENTS = [
       G.karma > 65 &&
       !G.mem.karmaHelpReturned &&
       G.age >= 35,
-    text: 'A call from someone you helped years ago — in a way you have mostly forgotten, some practical thing you thought nothing of at the time. They are in a position now to return it. They do. It is not a transaction; they say that clearly. It is just that they have not forgotten, and they wanted you to know.',
+    text: 'A call from someone you helped years ago — in a way you have mostly forgotten, some practical thing you thought nothing of at the time. They are in a position now to return it. They do. It is not a transaction, they say clearly. They have not forgotten, and they wanted you to know.',
     choices: null,
     effect: (p) => { p.m += 12; p.mo += 3000; p.karma += 3; p.setMem('karmaHelpReturned', true) },
   },
@@ -368,7 +368,7 @@ export const FAME_KARMA_EVENTS = [
       G.karma < 30 &&
       !G.mem.karmaRepCatchesUp &&
       G.age >= 30,
-    text: 'The new director of the department turns out to be someone you dealt badly with years ago — a situation you thought had no permanent consequences. They are not unkind to you. They are precise, and distant, and very good at paperwork. You understand that your margin for error here is now exactly zero.',
+    text: 'The new director of the department turns out to be someone you dealt badly with years ago — a situation you thought had no permanent consequences. They are precise, and distant, and very good at paperwork. You understand that your margin for error here is now exactly zero.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 10; p.addFlag('karma_pursued'); p.setMem('karmaRepCatchesUp', true) },
   },
@@ -392,7 +392,7 @@ export const FAME_KARMA_EVENTS = [
     when: (G) =>
       G.karma < 35 &&
       !G.mem.karmaBetrayal,
-    text: 'Someone does to you something close to what you once did to another person. The details differ, but the shape is identical: the same convenience, the same willingness to let the other person carry the cost. You recognize it immediately. You sit with the recognition for a long time before you say anything.',
+    text: 'Someone does to you something close to what you once did to another person. The details differ, but the shape is identical: the same convenience, the same willingness to let the other person carry the cost. You recognize it immediately. For a long time you say nothing.',
     choices: [
       {
         text: 'Confront them. You know exactly what this is.',
@@ -403,7 +403,7 @@ export const FAME_KARMA_EVENTS = [
       {
         text: 'Say nothing. You forfeited the right to name this.',
         tag: null,
-        outcome: 'You absorb it. The accounting feels correct, in a way that provides no relief.',
+        outcome: 'You absorb it. The accounting feels correct, and it provides no relief.',
         effect: (p) => { p.m -= 14; p.r += 15; p.setMem('karmaBetrayal', true) },
       },
     ],
@@ -443,7 +443,7 @@ export const FAME_KARMA_EVENTS = [
     when: (G) =>
       G.karma < 35 &&
       !G.mem.karmaConscience,
-    text: 'Three in the morning. The specific clarity of that hour. You go through it again — the decision, the moment you made the calculation, the face of the other person. You have been over this sequence many times. It does not get shorter. You get up and make tea and wait for the sky to change.',
+    text: 'Three in the morning. The clarity of that hour. You go through it again — the decision, the moment you made the calculation, the face of the other person. You have been over this sequence many times. It does not get shorter. You get up and make tea and wait for the sky to change.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 10; p.h -= 2; p.setMem('karmaConscience', true) },
   },
@@ -585,7 +585,7 @@ export const FAME_KARMA_EVENTS = [
       {
         text: 'Stop for now. Some things cannot be modified.',
         tag: null,
-        outcome: 'You miss it in a way that is difficult to explain to people who have not done it.',
+        outcome: 'You miss it, and cannot explain it to people who have not done it.',
         effect: (p) => { p.h -= 6; p.m -= 14; p.r += 9; p.setMem('hobbyInjury', true) },
       },
     ],
@@ -626,7 +626,7 @@ export const FAME_KARMA_EVENTS = [
     when: (G) =>
       G.friends && G.friends.some(f => f.alive) &&
       !G.mem.friendJealousy,
-    text: 'Something good happens — a job, a publication, a relationship, a child — and you watch your friend receive the news. The smile is real. Beneath it there is something else, visible for just a moment before they close it over. You pretend not to have seen it. You are not sure which of you this protects.',
+    text: 'Something good happens — a job, a publication, a relationship, a child — and you watch your friend receive the news. Beneath it there is something else, visible for just a moment before they close it over. You pretend not to have seen it. You are not sure which of you this protects.',
     choices: [
       {
         text: 'Name it, gently. You have known each other long enough.',
@@ -677,16 +677,16 @@ export const FAME_KARMA_EVENTS = [
       G.friends && G.friends.some(f => f.alive) &&
       G.money > 5000 &&
       !G.mem.friendMoneyAsk,
-    text: 'The ask comes in a roundabout way — they say they hate asking, that they would not if there were another option. The amount is real money. Not ruinous, but real. You run through the calculation and you also run through what it would mean to say no to this particular person.',
+    text: 'The ask comes in a roundabout way — they say they hate asking, that they would not if there were another option. The amount is real money. Not ruinous, but real. You run through the calculation and you also run through what it would mean to say no to this person.',
     choices: [
       {
         text: 'Lend it. Call it a loan if that makes it easier.',
         tag: null,
-        outcome: 'They are grateful in a way that slightly changes how they look at you. You both know this money will probably not come back.',
+        outcome: 'They are grateful, and it slightly changes how they look at you. You both know this money will probably not come back.',
         effect: (p) => { p.mo -= 2000; p.karma += 5; p.m -= 3; p.setMem('friendMoneyAsk', true) },
       },
       {
-        text: 'Decline. You cannot afford this particular entanglement.',
+        text: 'Decline. You cannot afford this entanglement.',
         tag: null,
         outcome: 'They say they understand. Something in the friendship has shifted, not permanently, but noticeably.',
         effect: (p) => { p.m -= 8; p.r += 7; p.setMem('friendMoneyAsk', true) },

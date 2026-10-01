@@ -21,7 +21,7 @@ export const GUATEMALA_EVENTS = [
       IS_MAYA(G) &&
       G.age >= 6 && G.age <= 12 &&
       !G.mem?.guaHighland,
-    text: 'The milpa: corn and beans and squash planted together because they grow better that way. The weaving: your mother\'s loom in the corridor, the specific colour combinations that say what village you are from so precisely that you can tell at a market in Chichicastenango. The marimba at the fiesta. The alguacil who summons people to the cofradía meeting in the Mayan calendar\'s own time. These are not picturesque details. They are the structure of the days. You grow up inside this structure and later you will understand that the state does not know it exists, and that this not-knowing is itself a position.',
+    text: 'The milpa: corn and beans and squash planted together because they grow better that way. The weaving: your mother\'s loom in the corridor, the colour combinations that say what village you are from so precisely that you can tell at a market in Chichicastenango. The marimba at the fiesta. The alguacil who summons people to the cofradía meeting in the Mayan calendar\'s own time. These are the structure of the days. You grow up inside this structure and later you will understand that the state does not know it exists, and that this not-knowing is itself a position.',
     choices: null,
     effect: (p) => { p.m += 5; p.s += 3; p.karma += 3; p.addFlag('gua_highland_maya'); p.setMem('guaHighland', true) },
   },
@@ -61,9 +61,10 @@ export const GUATEMALA_EVENTS = [
     text: (G) => {
       const isMaya = IS_MAYA(G)
       return isMaya
-        ? 'The soldiers come in the early morning, before the dogs bark. The village of Río Negro was 440 people. What the soldiers and the PAC — the civil patrols made up of other indigenous men — did there took three hours. You know this because the person who told you survived by hiding under bodies. The Ixil region. San Marcos. Ixcán. The army calls this Plan Sofía. What it is is soldiers burning villages, killing the animals, salting the wells. Your people are the enemy in a war they did not start and cannot end.'
-        : 'The army is fighting the guerrillas in the highlands. The strategy is simple: remove the water from the fish. The Maya communities in the western highlands are the water. The villages are being burned. The civil patrols — indigenous men conscripted to fight their own neighbours — are the instrument. You live in the capital and you know this is happening the way you know things that are happening elsewhere: through the people who arrive, through the things that are not said on the radio, through the specific silences.'
+        ? 'The soldiers come in the early morning, before the dogs bark, with the civil patrols made up of other Indigenous men. In Río Negro it takes three hours. You know this because the person who told you survived by hiding under the bodies. The army has a name for the plan. What it is is villages burned, animals killed, wells salted, and your people the enemy in a war they did not start.'
+        : 'The army is fighting the guerrillas in the highlands. The strategy is simple: remove the water from the fish. The Maya communities in the western highlands are the water. The villages are being burned. The civil patrols — indigenous men conscripted to fight their own neighbours — are the instrument. You live in the capital and you know this is happening the way you know things that are happening elsewhere: through the people who arrive, through the things that are not said on the radio, through the silences.'
     },
+    context: 'The Río Negro massacres of 1980-82 killed more than 400 Maya Achí, about half the village\'s population. Guatemala\'s truth commission found acts of genocide against the Maya.',
     choices: null,
     effect: (p) => {
       // (was: `const isMaya = IS_MAYA(p)` — IS_MAYA expects G and reads
@@ -89,7 +90,7 @@ export const GUATEMALA_EVENTS = [
       G.currentYear >= 1983 && G.currentYear <= 1990 &&
       G.age >= 20 &&
       !G.mem?.guaModelo,
-    text: 'The army calls them "model villages" — polos de desarrollo. You are relocated to one. The houses are in rows. There is a military post at the entrance. The milpa fields are elsewhere and you need permission to go to them. The model village is designed to make you visible, to make visibility the price of survival. Everyone who lives here is a suspect who has been allowed to remain alive pending continued good behaviour. You learn to perform the good behaviour. You learn which of the other people in the rows are also performing it and which have been genuinely broken.',
+    text: 'The army calls them model villages. The houses are in rows, there is a post at the entrance, and the milpa is somewhere else and you need permission to go to it. Everyone here is a suspect allowed to stay alive pending good behaviour. You learn to perform the good behaviour, and to tell which of your neighbours are performing it and which have really been broken.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 8; p.e += 3; p.addFlag('gua_modelo_village_generation'); p.setMem('guaModelo', true) },
   },
@@ -126,7 +127,8 @@ export const GUATEMALA_EVENTS = [
       G.currentYear >= 1996 && G.currentYear <= 1997 &&
       G.age >= 25 &&
       !G.mem?.guaPeace96,
-    text: 'December 29, 1996. The Guatemalan government and the URNG guerrilla movement sign the peace accords in the National Palace. The civil war is officially over after thirty-six years. 200,000 dead. 45,000 disappeared. 1 million displaced. The accord includes indigenous rights provisions, agrarian reform provisions, commitments to demilitarisation. The fireworks happen in the Zócalo. The generals who gave the orders during the scorched earth campaign are not in prison. They are, most of them, in the crowd watching the fireworks.',
+    text: 'December 29, 1996, and the government and the guerrillas sign the peace in the National Palace after thirty-six years. The accords promise Indigenous rights, land, fewer soldiers. There are fireworks over the square. The generals who gave the orders during the scorched earth campaign are, most of them, in the crowd watching the fireworks.',
+    context: 'Guatemala\'s civil war (1960-1996) killed about 200,000 people; some 45,000 were disappeared and a million displaced.',
     choices: null,
     effect: (p) => { p.m += 10; p.r += 5; p.addFlag('gua_1996_peace_generation'); p.setMem('guaPeace96', true) },
   },

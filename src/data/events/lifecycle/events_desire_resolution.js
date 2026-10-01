@@ -16,10 +16,10 @@ export const DESIRE_RESOLUTION_EVENTS = [
       G.karma >= 65 &&
       G.age >= 52 &&
       !G.mem?.drProveWorth,
-    text: 'Something happens — an award, a conversation, a moment of being asked for advice by someone who matters — and you notice that the thing you have been trying to prove most of your adult life no longer needs proving in the same way. The original verdict, from wherever it came from, still lives in you. But it has lost its authority. You did not plan for this. You do not know exactly when it happened. Something shifted, sometime in the last few years, and the shift was real.',
+    text: 'Something happens — an award, a conversation, a moment of being asked for advice by someone who matters — and you notice that the thing you have been trying to prove most of your adult life no longer needs proving in the same way. The original verdict, from wherever it came from, still lives in you. But it has lost its authority. You did not plan for this. You do not know exactly when it happened. Something shifted, sometime in the last few years.',
     choices: [
       {
-        text: 'You let yourself receive it. The work was real and this is what it looks like when the work is real.',
+        text: 'You let yourself receive it. This is what it looks like when the work was done.',
         tag: null,
         outcome: 'You receive it without the reflexive discount. It is allowed to count. You permit it to count.',
         effect: (p) => { p.m += 10; p.karma += 4; p.addFlag('desire_prove_worth_fulfilled'); p.setMem('drProveWorth', true); },
@@ -27,7 +27,7 @@ export const DESIRE_RESOLUTION_EVENTS = [
       {
         text: 'The thing is — you\'re not sure you believe it yet. The old voice is faster than the new evidence.',
         tag: null,
-        outcome: 'The old voice is faster. The new evidence is real. You are working on the lag between them. This is the work that remains.',
+        outcome: 'The old voice is faster. You are working on the lag between them. This is the work that remains.',
         effect: (p) => { p.m += 5; p.r += 3; p.addFlag('desire_prove_worth_fulfilled'); p.setMem('drProveWorth', true); },
       },
     ],
@@ -43,7 +43,7 @@ export const DESIRE_RESOLUTION_EVENTS = [
       G.age >= 48 &&
       (G.partner || (G.friends && G.friends.length >= 2)) &&
       !G.mem?.drBelong,
-    text: 'There is a room you walk into and they know your name and not just your name — they know the small things, the opinions, the specific way you react to certain news. This is not nothing. This is, you realize, the thing. It did not arrive the way you expected it to arrive. It arrived incrementally, in ordinary exchanges, in people who showed up more than once. You have found a version of the thing you were looking for since you were young enough not to know you were looking.',
+    text: 'There is a room you walk into and they know your name and not just your name — they know the small things, the opinions, the way you react to certain news. This, you realize, is the thing. It did not arrive the way you expected it to arrive. It arrived incrementally, in ordinary exchanges, in people who showed up more than once. You have found a version of the thing you were looking for since you were young enough not to know you were looking.',
     choices: [
       {
         text: 'You stay in the room. You stop looking over your shoulder for the version that was supposed to come earlier.',
@@ -104,7 +104,7 @@ export const DESIRE_RESOLUTION_EVENTS = [
       {
         text: 'You let yourself feel the safety. It is allowed to be real.',
         tag: null,
-        outcome: 'It is real. The old hypervigilance does not disappear but it does not run the room anymore.',
+        outcome: 'It happened. The old hypervigilance does not disappear but it does not run the room anymore.',
         effect: (p) => { p.m += 10; p.h += 3; p.karma += 3; p.addFlag('desire_safety_fulfilled'); p.setMem('drSafety', true); },
       },
       {
@@ -127,7 +127,7 @@ export const DESIRE_RESOLUTION_EVENTS = [
       G.partner &&
       (G.partner.quality >= 65 || (G.children && G.children.length > 0)) &&
       !G.mem?.drConnection,
-    text: 'There is a specific moment — not a dramatic one, just ordinary — when you understand that the thing you have been working toward, the closeness that always seemed to stop just short of actual arrival, is here. You are in it. You have been in it for some time without fully recognizing it as the thing. The recognition arrives now, as you are doing something ordinary. The gap you grew up with has closed. Not completely, not permanently — but enough. The connection is real.',
+    text: 'There is a moment — not a dramatic one, just ordinary — when you understand that the thing you have been working toward, the closeness that always seemed to stop just short of actual arrival, is here. You are in it. You have been in it for some time without fully recognizing it as the thing. The recognition arrives now, as you are doing something ordinary. The gap you grew up with has closed. Not completely, not permanently — but enough.',
     choices: [
       {
         text: 'You tell the person. You say the thing you have been working toward saying.',
@@ -171,7 +171,7 @@ export const DESIRE_RESOLUTION_EVENTS = [
         effect: (p) => { p.m += 10; p.karma += 6; p.addFlag('desire_leave_mark_fulfilled'); p.setMem('drLeaveMark', true); },
       },
       {
-        text: 'The mark is not as large as you had hoped. But it is real. That is what you are sitting with.',
+        text: 'The mark is not as large as you had hoped. But it is there. That is what you are sitting with.',
         tag: null,
         outcome: 'What is real does not require being large to be real. You know this now in a way you did not before.',
         effect: (p) => { p.m += 6; p.e += 3; p.r += 2; p.addFlag('desire_leave_mark_fulfilled'); p.setMem('drLeaveMark', true); },
@@ -195,10 +195,10 @@ export const DESIRE_RESOLUTION_EVENTS = [
         (G.currentProject && G.currentProject.phase !== 'abandoned')
       ) &&
       !G.mem?.drFreedom,
-    text: 'The life you have built does not fit the container you were handed as a child. You left, or you refused, or you chose the unconventional path, and enough years have passed now for you to see that the choice held. You are not trapped in the version of your life that was expected of you. The specific freedom you were looking for — to make the choices you were not supposed to make, to live in the structure you built instead of the one you were given — this is the life you are living.',
+    text: 'The life you have built does not fit the container you were handed as a child. You left, or you refused, or you chose the unconventional path, and enough years have passed now for you to see that the choice held. You are not trapped in the version of your life that was expected of you. The freedom you were looking for — to make the choices you were not supposed to make, to live in the structure you built instead of the one you were given — this is the life you are living.',
     choices: [
       {
-        text: 'The freedom is real. You do not take it for granted.',
+        text: 'You are free. You do not take it for granted.',
         tag: null,
         outcome: 'Not taking it for granted is the practice that keeps it. You practice it. The life continues.',
         effect: (p) => { p.m += 10; p.karma += 5; p.addFlag('desire_freedom_fulfilled'); p.setMem('drFreedom', true); },
@@ -222,12 +222,12 @@ export const DESIRE_RESOLUTION_EVENTS = [
       G.age >= 55 &&
       G.karma >= 68 &&
       !G.mem?.drRedemption,
-    text: 'You spent a significant portion of your life trying to make something right. The original wrong — whether you did it or it was done to you or you were complicit in something you should not have been complicit in — you carried it. You have been carrying it and also doing things that are different from the original wrong, building things, repairing things, being present for people in ways you were not present before. The redemption you were looking for is not an event. It is a direction. And you have been going in that direction for long enough that the direction is who you are.',
+    text: 'You spent a significant portion of your life trying to make something right. The original wrong — whether you did it or it was done to you or you were complicit in something you should not have been complicit in — you carried it. You have been carrying it and also doing things that are different from the original wrong, building things, repairing things, being present for people in ways you were not present before. The redemption you were looking for turns out to be a direction. And you have been going in that direction for long enough that the direction is who you are.',
     choices: [
       {
         text: 'You accept that this is what redemption is: a direction, not a destination. You are pointed at it.',
         tag: null,
-        outcome: 'Pointed at it and still moving. The original thing is still there. The direction you are facing is not toward it. This is the accomplishment.',
+        outcome: 'Pointed at it and still moving. The original thing is still there. You are facing away from it now.',
         effect: (p) => { p.m += 10; p.karma += 6; p.addFlag('desire_redemption_fulfilled'); p.setMem('drRedemption', true); },
       },
       {

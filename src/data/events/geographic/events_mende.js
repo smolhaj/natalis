@@ -104,7 +104,7 @@ export const MENDE_EVENTS = [
     phase: null,
     weight: 400,
     when: (G) => (G.currentCountry ?? G.character?.country)?.name === SL && G.ethnicity === 'mende' && G.flags.includes('mende_1982') && G.currentYear >= 1991 && G.currentYear <= 1994 && G.age >= 16 && once(G, 'mende_ft_1982'),
-    text: 'The rebels who come into the south in 1991 have men among them who speak your dialect, and one of them you know by his father\'s name. He crossed into Liberia in 1982, when the party\'s youths burned the villages after the election, and he has been over there ever since. He says they have come back to finish what the Ndogboyosoi started. The old women say he has come back to settle what was done to his family, which is not the same thing.',
+    text: 'The rebels who come into the south in 1991 have men among them who speak your dialect, and one of them you know by his father\'s name. He crossed into Liberia in 1982, when the party\'s youths burned the villages after the election, and he has been over there ever since. He says they have come back to finish what the Ndogboyosoi started. The old women say he has come back to settle what was done to his family. It is not the same thing.',
     context: 'After the 1982 one-party election, violence between supporters of rival APC candidates in Pujehun District — the Ndogboyosoi, named for a bush spirit — was put down by the army and party militias, and villages were burned. Some of those who fled to Liberia returned with the RUF when it opened its southern front through Pujehun in April 1991.',
     choices: null,
     effect: (p) => { p.setMem('mende_ft_1982', true); p.r += 3; p.m -= 3 },
@@ -525,7 +525,7 @@ export const MENDE_EVENTS = [
       {
         text: 'Wash her in the night before they come',
         tag: 'defiant',
-        outcome: 'You wash her, and for twenty-one days you count every headache. None of you falls sick, which is luck and nothing else.',
+        outcome: 'You wash her, and for twenty-one days you count every headache. None of you falls sick. It is luck and nothing else.',
         effect: (p) => { p.setMem('mende_ebola', true); p.m -= 6; p.h -= 3; p.karma += 1; p.addFlag('mende_ebola') },
       },
     ],
@@ -559,7 +559,7 @@ export const MENDE_EVENTS = [
       {
         text: 'Let the chance pass',
         tag: null,
-        outcome: 'You keep the letter. It is in the tin with your certificates, which is where the family keeps the things it might need.',
+        outcome: 'You keep the letter. It is in the tin with your certificates, where the family keeps the things it might need.',
         effect: (p) => { p.setMem('mende_dv', true); p.r += 4 },
       },
     ],

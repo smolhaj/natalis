@@ -38,7 +38,7 @@ const IRAQ_EVENTS = [
       const yr = G.currentYear
       return yr <= 1979
         ? 'The Ba\'ath Party is in everything. Your father\'s Ba\'ath Party card is the card that gets him the promotion, the government apartment, the hospital priority. School starts with a portrait of the President on the wall, then a picture of the President again in the hallway, then a rally on Revolution Day where you wave a flag and chant. You know the words. Everyone knows the words. The knowing is not optional.'
-        : 'The portrait of Saddam is in every room — the classroom, the post office, the barbershop, the hospital waiting room. Your family has one at home; not having one would be noticed. The mukhabarat — the intelligence services — are in the neighborhood in a way that everyone knows but nobody discusses directly. You learn to hear the difference between what people say and what they mean.'
+        : 'The portrait of Saddam is in every room — the classroom, the post office, the barbershop, the hospital waiting room. Your family has one at home; not having one would be noticed. The mukhabarat — the intelligence services — are in the neighborhood, and everyone knows it, and nobody says so. You learn to hear the difference between what people say and what they mean.'
     },
     choices: null,
     effect: (p) => { p.e += 2; p.addFlag('irq_baath_generation'); p.setMem('irq_baath_childhood', true); },
@@ -123,7 +123,7 @@ const IRAQ_EVENTS = [
       {
         text: 'The fall of Saddam is real — whatever comes next, that much is real',
         tag: null,
-        outcome: 'Saddam is real. What comes next is also real and is happening faster than anyone planned for. The planning, it turns out, did not extend to what came after the statue.',
+        outcome: 'Saddam is everywhere. What comes next is also real and is happening faster than anyone planned for. The planning, it turns out, did not extend to what came after the statue.',
         effect: (p) => { p.m += 3; p.r += 5; p.addFlag('irq_postwar_generation'); p.setMem('irq_invasion', true); },
       },
       {
@@ -189,9 +189,10 @@ const IRAQ_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       return yr <= 2015
-        ? 'June 10, 2014. Mosul falls in 48 hours. The Iraqi army divisions melt away before the Islamic State convoy. Two thousand fighters against 30,000 soldiers, and the soldiers leave. The caliphate is declared from the Grand Mosque of al-Nuri on June 29. Eight million people living under Islamic State rule. On Sinjar Mountain: the Yazidis, a non-Muslim minority, surrounded. Thousands killed, thousands of women enslaved. The United States had just left Iraq. The army that the United States trained did not fight.'
+        ? 'June 2014. Mosul falls in two days; the army divisions melt away in front of a convoy a fraction of their size. At the Grand Mosque of al-Nuri a caliphate is declared. On Sinjar Mountain the Yazidis are surrounded, and the men are killed and the women are taken. The army the Americans trained did not fight.'
         : 'The liberation of Mosul: nine months of fighting, July 2016 to July 2017. The old city destroyed block by block. The Mosul you knew — the university, the souk, the al-Nuri mosque itself, demolished by ISIS before they left — is a ruin. The caliphate is gone. The city is a question of what can be rebuilt and by whom and with what money, in a country that does not have much of any of those things.'
     },
+    context: 'Mosul fell on 10 June 2014 to roughly 1,500 Islamic State fighters against a nominal force of some 30,000. The Sinjar massacre of August 2014 killed thousands of Yazidis; thousands of women and girls were enslaved.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.h -= 5; p.addFlag('irq_isis_generation'); p.setMem('irq_isis', true); },
   },
@@ -208,12 +209,12 @@ const IRAQ_EVENTS = [
       G.currentYear >= 2003 &&
       G.age >= 30 &&
       !G.mem?.irq_diaspora,
-    text: 'The Iraqi diaspora is a specific phenomenon: a country that had one of the highest literacy rates and most educated professional classes in the Arab world in 1980, dismantled by two wars and twelve years of sanctions and then an invasion and then a civil war. You are in the diaspora of a place that used to be something and is trying to become something again. The country calls to you in a particular way when it is doing well and when it is doing badly, which is often at the same time.',
+    text: 'The Iraqi diaspora is a phenomenon: a country that had one of the highest literacy rates and most educated professional classes in the Arab world in 1980, dismantled by two wars and twelve years of sanctions and then an invasion and then a civil war. You are in the diaspora of a place that used to be something and is trying to become something again. The country calls to you when it is doing well and when it is doing badly, often at the same time.',
     choices: [
       {
         text: 'You stay in the diaspora — the Iraq that existed is the Iraq you miss, and that Iraq is not there anymore',
         tag: null,
-        outcome: 'The Iraq of your memory is a specific version of a country at a specific moment. The version that exists now has continuity with it but is not it. The distinction is the space the diaspora lives in.',
+        outcome: 'The Iraq of your memory is a version of a country at a moment. The version that exists now has continuity with it but is not it. The distinction is the space the diaspora lives in.',
         effect: (p) => { p.r += 6; p.addFlag('irq_diaspora_generation'); p.setMem('irq_diaspora', true); },
       },
       {
@@ -237,7 +238,8 @@ const IRAQ_EVENTS = [
       G.currentYear >= 2019 && G.currentYear <= 2021 &&
       G.age >= 18 &&
       !G.mem?.irq_tishreen,
-    text: 'October 1, 2019. The Tishreen uprising — named for October in Arabic. Young Iraqis in Baghdad and the Shia south march against corruption, unemployment, and the political class that divided the country between them after 2003. The security forces fire live ammunition into the crowd. More than 600 protesters are killed in six months. The movement has no clear leader and refuses to be captured by any party or militia. The protesters call it a thawra — a revolution. The demands: a new electoral law, an end to the sectarian quota system, accountability for the killing. The government changes. The demands are partially met and then the government changes back.',
+    text: 'October 2019, Tishreen. Young Iraqis in Baghdad and the south march against the corruption and the jobs that do not exist and the parties that divided the country between them after 2003, and the security forces fire into the crowd. The movement has no leader and refuses every party and militia that tries to take it. The government changes. The demands are partly met, and then everything changes back.',
+    context: 'More than 600 protesters were killed between October 2019 and early 2020.',
     choices: [
       {
         text: 'You are in Tahrir Square — this generation has a different claim on Iraq than the parties that carved it up',

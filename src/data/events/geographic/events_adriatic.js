@@ -45,7 +45,7 @@ export const ADRIATIC_EVENTS = [
       G.currentYear >= 1967 && G.currentYear <= 1990 &&
       G.age >= 16 &&
       !G.mem?.adrPassport,
-    text: 'The passport works in both directions, which is the thing that makes Yugoslavia unlike the rest of the bloc, and everyone here knows it. You can go to Trieste for coffee and jeans and come back the same day. You can work in Munich. Cousins in Prague and Bucharest cannot do any of this and the difference is understood, on both sides, as a fact about how good you have it. Later, when the country is gone and the new passport is worse, this is the specific loss people will describe first — not the ideology, the document.',
+    text: 'The passport works in both directions, which is the thing that makes Yugoslavia unlike the rest of the bloc, and everyone here knows it. You can go to Trieste for coffee and jeans and come back the same day. You can work in Munich. Cousins in Prague and Bucharest cannot do any of this and the difference is understood, on both sides, as a fact about how good you have it. Later, when the country is gone and the new passport is worse, this is the loss people will describe first — not the ideology, the document.',
     choices: null,
     effect: (p) => {
       p.m += 8; p.e += 4
@@ -161,10 +161,10 @@ export const ADRIATIC_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 1992 &&
       G.age >= 10 &&
       !G.mem?.adrHrVukovar,
-    text: 'Eighty-seven days. The town on the Danube is shelled until there is no building in it with a roof, and the column that comes out at the end is filmed, and the men taken from the hospital are found later in a field at Ovčara. Dubrovnik is shelled the same autumn — the old town, from the mountain, which is the detail that makes the international news care. You are in a cellar or you are watching it from a safer part of the country, and either way this is the year the word neighbour changes meaning in a way that will not change back in your lifetime.',
+    text: 'Eighty-seven days. The town on the Danube is shelled until there is no building in it with a roof, and the column that comes out at the end is filmed, and the men taken from the hospital are found later in a field at Ovčara. Dubrovnik is shelled the same autumn — the old town, from the mountain — and that is what makes the international news care. You are in a cellar or you are watching it from a safer part of the country, and either way this is the year the word neighbour changes meaning, and it will not change back in your lifetime.',
     choices: [
       { text: 'Volunteer', tag: 'defiant', outcome: 'You are given a rifle that is older than you are and a position on a line. You are there for two years.', effect: (p) => { p.h -= 14; p.m -= 12; p.karma += 4; p.addFlag('adr_hr_veteran'); p.addFlag('combat_veteran'); p.addFlag('adr_hr_war_generation') } },
-      { text: 'Get your family somewhere else', tag: null, outcome: 'You reach a relative on the coast. You spend the war being safe and hearing about it, which has its own weight.', effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('adr_hr_displaced'); p.addFlag('displaced'); p.addFlag('adr_hr_war_generation') } },
+      { text: 'Get your family somewhere else', tag: null, outcome: 'You reach a relative on the coast. You spend the war being safe and hearing about it.', effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('adr_hr_displaced'); p.addFlag('displaced'); p.addFlag('adr_hr_war_generation') } },
       { text: 'Stay where you are and keep something open — a shop, a school, a clinic', tag: null, outcome: 'You keep it open for four years. It is the least heroic and most useful thing available.', effect: (p) => { p.m -= 6; p.karma += 8; p.s += 5; p.addFlag('adr_hr_kept_open'); p.addFlag('adr_hr_war_generation') } },
     ],
     effect: null,
@@ -200,7 +200,7 @@ export const ADRIATIC_EVENTS = [
     text: 'The surname is the problem. It was not a problem in 1989 and it is the first thing about you in 1991 — on a form, at a checkpoint, in the mouth of a man at the bus station who has decided to ask. Your family has been in this village since the Habsburgs put them on the military frontier. There is a decision to be made about whether that history is a defence or an accusation, and you are not the one making it.',
     choices: [
       { text: 'Leave', tag: null, outcome: 'You take what fits and you go north. The house is occupied within a month by people who also had to leave somewhere.', effect: (p) => { p.m -= 16; p.mo -= 2000; p.addFlag('adr_hr_serb_departed'); p.addFlag('displaced'); p.addFlag('lost_home') } },
-      { text: 'Stay and keep your head down', tag: 'yielding', outcome: 'Nothing happens to you, which is not the same as being safe, and you know the difference every day for seven years.', effect: (p) => { p.m -= 12; p.h -= 5; p.addFlag('adr_hr_serb_stayed'); p.addFlag('minority_under_pressure') } },
+      { text: 'Stay and keep your head down', tag: 'yielding', outcome: 'Nothing happens to you, and you know every day for seven years that this is not the same as being safe.', effect: (p) => { p.m -= 12; p.h -= 5; p.addFlag('adr_hr_serb_stayed'); p.addFlag('minority_under_pressure') } },
     ],
     effect: null,
   },
@@ -231,7 +231,7 @@ export const ADRIATIC_EVENTS = [
       G.currentYear >= 1965 &&
       G.age >= 16 && G.age <= 65 &&
       !G.mem?.adrHrSeason,
-    text: 'The year has two halves and the money is made in one of them. From June the town is four times its population and you are renting rooms, or serving, or driving, or all three, and by mid-September it is a place with one bakery open and a great deal of light. Everyone here lives on a summer. The winters are for repairs and arguments and the specific quiet of a resort out of season, which is a quiet with an echo in it.',
+    text: 'The year has two halves and the money is made in one of them. From June the town is four times its population and you are renting rooms, or serving, or driving, or all three, and by mid-September it is a place with one bakery open and a great deal of light. Everyone here lives on a summer. The winters are for repairs and arguments and the quiet of a resort out of season, a quiet with an echo in it.',
     choices: null,
     effect: (p) => {
       p.mo += 1400; p.h -= 4; p.s += 4

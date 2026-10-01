@@ -89,7 +89,7 @@ export const FRIEND_EVENTS = [
       {
         text: 'Reply warmly but keep it at a distance — too much has changed',
         tag: null,
-        outcome: 'You exchange a few messages. The warmth is real. The reunion does not happen.',
+        outcome: 'You exchange a few messages. The reunion does not happen.',
         effect: (p) => { p.m += 4; p.updateFriendRel(0, 5); p.setMem('friendReconnect', true) },
       },
     ],

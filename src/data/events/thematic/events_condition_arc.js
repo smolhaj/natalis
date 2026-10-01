@@ -90,7 +90,7 @@ export const CONDITION_ARC_EVENTS = [
       {
         text: 'Commit to treatment.',
         tag: null,
-        outcome: 'You start. The adjustment is real. So is the difference, once the adjustment settles.',
+        outcome: 'You start. Once the adjustment settles, you can feel the difference.',
         effect: (p) => {
           const c = p._state.conditions?.find(c => CHRONIC_IDS.includes(c.id) && !c.managed)
           if (c) { p.manageCondition(c.id, true); p.addFlag('manages_chronic_condition') }
@@ -135,7 +135,7 @@ export const CONDITION_ARC_EVENTS = [
       const c = G.conditions.find(c => c.managed && yrsWithCond(c, G) >= 10)
       return !!c && G.age >= 55 && !G.mem.condDecadeManaged
     },
-    text: 'Ten years managing the condition — the specific one, the one with its schedule and its monitoring and its periodic adjustments. You have accumulated a kind of expertise that doctors occasionally ask you to contribute to other patients. You know its rhythms. You know what your body will tell you when something is changing. You did not choose this knowledge. It is yours.',
+    text: 'Ten years managing the condition — the one, the one with its schedule and its monitoring and its periodic adjustments. You have accumulated a kind of expertise that doctors occasionally ask you to contribute to other patients. You know its rhythms. You know what your body will tell you when something is changing. You did not choose this knowledge. It is yours.',
     choices: null,
     effect: (p) => { p.m += 5; p.e += 2; p.setMem('condDecadeManaged', true) },
   },
@@ -161,7 +161,7 @@ export const CONDITION_ARC_EVENTS = [
       {
         text: 'Become visible about it — the silence costs something too.',
         tag: 'hiv_disclosed',
-        outcome: 'You tell someone — a partner, a friend, more people over time. The silence was its own weight. So is this. But differently.',
+        outcome: 'You tell someone — a partner, a friend, more people over time. The silence had its own weight. So does this. But differently.',
         effect: (p) => { p.m += 4; p.s += 3; p.karma += 5; p.addFlag('hiv_disclosed'); p.setMem('condHivUndetectable', true) },
       },
     ],
@@ -178,7 +178,7 @@ export const CONDITION_ARC_EVENTS = [
       const c = G.conditions.find(c => c.id === 'chronic_depression' && c.managed)
       return !!c && G.age >= 20 && !G.mem.condDepressionAnnual
     },
-    text: 'The psychiatrist reviews the medication at the annual appointment. The question is whether it is still doing what it should — whether the floor has stayed where it was, whether the plateau is the right height. You have gotten better at answering these questions precisely, which is a skill you did not expect to need. The adjustment this year is small: a different dose, a different timing.',
+    text: 'The psychiatrist reviews the medication at the annual appointment. The question is whether it is still doing what it should — whether the floor has stayed where it was, whether the plateau is the right height. You have gotten better at answering these questions precisely, a skill you did not expect to need. The adjustment this year is small: a different dose, a different timing.',
     choices: [
       {
         text: 'Trust the adjustment. Keep going.',
@@ -205,7 +205,7 @@ export const CONDITION_ARC_EVENTS = [
       const c = G.conditions.find(c => c.id === 'back_pain')
       return !!c && yrsWithCond(c, G) >= 5 && G.age >= 38 && !G.mem.condBackChronic
     },
-    text: 'Five years of the back being what it is. You have stopped dividing life into before-the-injury and after — the after is just the life now. You know which movements are fine and which are not, which mornings are worse, what helps and what doesn\'t. The knowledge is precise in a way that other people\'s knowledge about your body never is. You are the expert on this particular terrain.',
+    text: 'Five years of the back being what it is. You have stopped dividing life into before-the-injury and after — the after is just the life now. You know which movements are fine and which are not, which mornings are worse, what helps and what doesn\'t. The knowledge is precise, as other people\'s knowledge about your body never is. You are the expert on this terrain.',
     choices: null,
     effect: (p) => { p.r += 2; p.e += 2; p.setMem('condBackChronic', true) },
   },

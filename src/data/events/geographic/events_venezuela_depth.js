@@ -20,7 +20,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2012 &&
       G.age >= 16 && G.age <= 45 &&
       !G.mem?.vzlaMisiones,
-    text: `The misiones arrived in your barrio during the oil boom: Misión Barrio Adentro with the Cuban doctors in the small clinics, Misión Robinson teaching your neighbour to read at fifty-three, Misión Ribas giving the high school certificate to people who stopped school in 1979. The oil price was high and the missions were real and the clinics were real and the literacy was real. You know people whose lives changed because of the missions. You also know that the Cuban doctors lived in conditions that were not the conditions Chávez described them in. Both are true.`,
+    text: `The misiones arrived in your barrio during the oil boom: Misión Barrio Adentro with the Cuban doctors in the small clinics, Misión Robinson teaching your neighbour to read at fifty-three, Misión Ribas giving the high school certificate to people who stopped school in 1979. The oil price was high and the missions and the clinics and the literacy came with it. You know people whose lives changed because of the missions. You also know that the Cuban doctors lived in conditions that were not the conditions Chávez described them in.`,
     choices: [
       {
         text: 'The revolution improved your daily life in concrete ways.',
@@ -115,7 +115,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
       {
         text: 'You navigated the colectivo geography carefully.',
         tag: null,
-        outcome: 'The navigation required knowing which streets, which times, which faces. The knowledge was available and you used it. Prudence in a specific shape.',
+        outcome: 'The navigation required knowing which streets, which times, which faces. The knowledge was available and you used it. Prudence in a shape.',
         effect: (p) => { p.m -= 6; p.r += 5; p.e += 3; p.addFlag('vzla_dep_maduro_generation'); p.setMem('vzlaColectivos', true) },
       },
       {
@@ -144,7 +144,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
       {
         text: 'You were in the streets.',
         tag: null,
-        outcome: 'The tear gas, the marching, the specific noise of a crowd that knows it might be shot. You were in it and you are still accounting for what it cost and what it produced.',
+        outcome: 'The tear gas, the marching, the noise of a crowd that knows it might be shot. You were in it and you are still accounting for what it cost and what it produced.',
         effect: (p) => { p.m -= 6; p.karma += 6; p.r += 5; p.addFlag('vzla_dep_maduro_generation'); p.setMem('vzlaGuarimbas', true) },
       },
       {
@@ -197,7 +197,7 @@ export const VENEZUELA_DEPTH_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2023 &&
       G.age >= 22 && G.age <= 45 &&
       !G.mem?.vzlaBrainDrain,
-    text: `You are an engineer, a doctor, a nurse, a teacher, a petroleum worker — one of the professions that the Venezuelan state trained and that the Venezuelan economy can no longer pay in a currency that holds its value for a month. The monthly salary, in dollars at the parallel rate, is twelve dollars, or twenty-five, or forty. The rent in Bogotá is four hundred. The math is the math. Your degree is from a Venezuelan university and the Venezuelan university still exists and the degree has a specific value in the labour market of the receiving country. The value requires revalidation, which takes time, during which you work as something else.`,
+    text: `You are an engineer, a doctor, a nurse, a teacher, a petroleum worker — one of the professions that the Venezuelan state trained and that the Venezuelan economy can no longer pay in a currency that holds its value for a month. The monthly salary, in dollars at the parallel rate, is twelve dollars, or twenty-five, or forty. The rent in Bogotá is four hundred. The math is the math. Your degree is from a Venezuelan university and the Venezuelan university still exists and the degree has a value in the labour market of the receiving country. The value requires revalidation, which takes time, during which you work as something else.`,
     choices: [
       {
         text: 'You left and are working in your field in another country.',

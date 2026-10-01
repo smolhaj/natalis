@@ -162,7 +162,7 @@ export const UNWRITTEN_AP_EVENTS = [
       (G.flags.includes('uap_mom_crocodile_marks') || G.flags.includes('uap_mom_refused_cutting')) &&
       G.age >= 32 && once(G, 'uap_mom_ft_crocodile'),
     text: (G) => G.flags.includes('uap_mom_crocodile_marks')
-      ? 'The ridges on your back have gone pale and hard, like rope under the skin. In the dry season the tourists who come up the river pay to photograph men like you, and a younger man in a shirt from Port Moresby asks, not unkindly, whether you would put your own son through it. Your son is in grade eight and wants to fly aeroplanes. You say you will ask him, which is not an answer, and both of you know it.'
+      ? 'The ridges on your back have gone pale and hard, like rope under the skin. In the dry season the tourists who come up the river pay to photograph men like you, and a younger man in a shirt from Port Moresby asks, not unkindly, whether you would put your own son through it. Your son is in grade eight and wants to fly aeroplanes. You say you will ask him. It is not an answer, and both of you know it.'
       : 'When there is a funeral on the river the men with the marks sit together, and you sit a little to one side of them, not sent there, just there. You have a certificate from the mission school in a plastic sleeve and a job in Wewak. Your cousins, who have the crocodile on their backs, have never once asked you what the job is. You have never decided which of the two you gave up for the other.',
     choices: null,
     effect: (p) => { p.setMem('uap_mom_ft_crocodile', true); p.r += 3; p.e += 1 },

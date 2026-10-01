@@ -36,7 +36,7 @@ export const FGM_EVENTS = [
       G.age >= 5 && G.age <= 10 &&
       !G.flags.has('fgm_underwent') &&
       !G.mem?.fgmCeremony,
-    text: 'The preparations begin several days before. There is food being made in quantities that mean a celebration. The women come — aunts, the elder woman from the edge of the village, neighbours whose presence means the occasion is significant. Your mother has explained what will happen, in the language that women in your community use for this: words that indicate the thing without describing it, because description is not the tradition. You understand that you are crossing into something. You do not understand the crossing until it is happening. Afterwards there are days of recovery, and then the healing, and then you are different and the community treats you as having become something, and the celebration is real.',
+    text: 'The preparations begin several days before. There is food being made in quantities that mean a celebration. The women come — aunts, the elder woman from the edge of the village, neighbours whose presence means the occasion is significant. Your mother has explained what will happen, in the language that women in your community use for this: words that indicate the thing without describing it, because description is not the tradition. You understand that you are crossing into something. You do not understand the crossing until it is happening. Afterwards there are days of recovery, and then the healing, and then you are different and the community treats you as having become something, and there is a celebration.',
     choices: null,
     effect: (p) => { p.h -= 10; p.m -= 10; p.r += 4; p.addFlag('fgm_underwent'); p.setMem('fgmCeremony', true) },
   },
@@ -93,7 +93,7 @@ export const FGM_EVENTS = [
       !G.mem?.fgmMedical,
     text: (G) => G.children && G.children.length > 0
       ? 'During the birth, or at a check-up afterwards, a nurse or doctor makes a note in your file. The term they use is not the term your community uses. The term in the file is a clinical one; it belongs to a different framework for understanding the same body. The nurse explains what she has noted and asks some questions. You answer some of them. The gap between the framework on the form and the framework you grew up inside is not a gap you know how to explain in this room.'
-      : 'A doctor — at a routine appointment, or during an examination for another reason — pauses and asks when you arrived in the country, and then asks some questions you were not expecting. The term they use is not the term your community uses. You understand, from the way the questions are framed, that what was done to your body occupies a specific legal and medical category here that it did not occupy at home. The recognition is not simple.',
+      : 'A doctor — at a routine appointment, or during an examination for another reason — pauses and asks when you arrived in the country, and then asks some questions you were not expecting. The term they use is not the term your community uses. You understand, from the way the questions are framed, that what was done to your body occupies a legal and medical category here that it did not occupy at home. The recognition is not simple.',
     choices: [
       {
         text: 'Explain what you remember and answer the questions.',
@@ -161,7 +161,7 @@ export const FGM_EVENTS = [
         return 'Your daughter was not cut. You made sure of it at the cost of some relationships and some belonging. What you gave her is something you cannot name directly because the naming would require acknowledging too precisely what was done to you. You know what you gave her. She does not know what it was, exactly, that you protected her from. You have decided this is right: some knowledge should not have to be acquired.'
       }
       if (G.flags.has('fgm_refused')) {
-        return 'You refused at the age when you could refuse. The cost of refusing was real and you paid it over years: the unmarriageability that turned out to be navigable, the community distance that became the price of a particular freedom. At this distance you hold both the cost and the thing you kept intact, and the arithmetic between them is something you do not discuss but you know.'
+        return 'You refused at the age when you could refuse. The cost of refusing was real and you paid it over years: the unmarriageability that turned out to be navigable, the community distance that became the price of a freedom. At this distance you hold both the cost and the thing you kept intact, and the arithmetic between them is something you do not discuss but you know.'
       }
       return 'What was done to you was done as care — by women who had gone through it, who believed it was what a girl needed to become a woman in the community, who were not acting out of cruelty. This is true. It is also true that the body carries what the body carries. Both of these things sit alongside each other in your life. You have spent a long time learning to hold both.'
     },

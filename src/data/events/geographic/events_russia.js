@@ -16,7 +16,7 @@ export const RUSSIA_EVENTS = [
       G.currentYear >= 1979 && G.currentYear <= 1992 &&
       G.age >= 18 && G.age <= 28 &&
       !G.mem?.ruAfghanServed,
-    text: 'Afghanistan. The conscription notice does not say Afghanistan but that is where the unit is deployed. The altitude is 2,000 metres and the air does not have enough in it. The mujahideen fight differently from the exercises. The ammunition resupply is unreliable. The casualties are flown back in zinc coffins with sealed lids and the official figures are not published. In 1988, Gorbachev begins the withdrawal. In 1989, the last Soviet soldier crosses back over the Amu Darya. The war that was not officially a war is over. The country you come home to has five more years.',
+    text: 'The notice does not say Afghanistan, but that is where the unit goes. At two thousand metres the air does not have enough in it, the mujahideen do not fight like the exercises, and the resupply is unreliable. The dead go home in zinc coffins with the lids sealed, and the figures are not published. In 1989 the last Soviet soldier crosses back over the Amu Darya. The country you come home to has a few years left.',
     choices: [
       {
         text: 'You serve. You survive. You come home to a country that does not want to discuss where you were.',
@@ -27,7 +27,7 @@ export const RUSSIA_EVENTS = [
       {
         text: 'Your unit is deployed but you find a way out — injury, connections, timing.',
         tag: null,
-        outcome: 'The men from your conscription year came back changed or did not come back. You carry what you avoided, which is not nothing.',
+        outcome: 'The men from your conscription year came back changed or did not come back. You carry what you avoided.',
         effect: (p) => { p.r += 5; p.m -= 4; p.setMem('ruAfghanServed', true); },
       },
     ],
@@ -80,7 +80,7 @@ export const RUSSIA_EVENTS = [
       {
         text: 'You do not go. The system does not change and the people who go will pay.',
         tag: null,
-        outcome: 'The Bolotnaya prisoners are tried in 2014. The people who went pay. Your calculation was not wrong. It is also not the only thing it was.',
+        outcome: 'The Bolotnaya prisoners are tried in 2014. The people who went pay. Your calculation was right, and it was also something else.',
         effect: (p) => { p.r += 5; p.e += 2; p.setMem('ruBolotnaya', true); },
       },
     ],
@@ -96,7 +96,7 @@ export const RUSSIA_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 1992 &&
       G.age >= 14 &&
       !G.mem?.ru1991Coup,
-    text: 'August 19, 1991. The announcement comes on the radio at six in the morning: Gorbachev is ill, the State Committee on the State of Emergency has assumed power. The eight men at the televised press conference look shaken — hands trembling at the podium, eyes not focused. On August 21, Yeltsin climbs on a tank at the White House and reads a decree declaring the coup illegal. The coup collapses. By December 25, the flag over the Kremlin is replaced. The country that existed on August 18 does not exist anymore. You watched this from where you were standing and you know that a country can simply end.',
+    text: 'August 19, 1991. At six in the morning the radio says Gorbachev is ill and a committee has taken power, and on television the men of the committee look shaken, hands trembling on the table. On the 21st Yeltsin climbs onto a tank outside the White House and reads a decree, and the coup collapses. By December 25 there is a different flag over the Kremlin. You watched this from where you were standing, and you know now that a country can simply end.',
     choices: [
       {
         text: 'You are at the barricades, or at the White House, or in the crowd that makes the difference.',
@@ -134,7 +134,7 @@ export const RUSSIA_EVENTS = [
       {
         text: 'The stability is real and the price is acceptable.',
         tag: null,
-        outcome: 'The oil decade: you build something in it. The building is real. The price of the stability — what is not sayable, what is not possible, what is managed — you notice but it does not dominate what you are building.',
+        outcome: 'The oil decade: you build something in it. You build. The price of the stability — what is not sayable, what is not possible, what is managed — you notice but it does not dominate what you are building.',
         effect: (p) => { p.m += 6; p.w += 5; p.addFlag('putin_stability_generation'); p.setMem('ruPutinStability', true); },
       },
       {
@@ -163,9 +163,9 @@ export const RUSSIA_EVENTS = [
     text: (G) => {
       const inExile = G.flags.includes('russia_ukraine_exile')
       if (inExile) {
-        return 'February 16, 2024. Alexei Navalny dies in IK-6 Polar Wolf, a penal colony above the Arctic Circle. He was forty-seven. He had been serving a nineteen-year sentence. The cause of death is listed as "natural causes." The country where you now live reports this clearly. In the country you came from, it is reported differently. From where you are standing you can see both versions simultaneously, which is one of the things exile gives you that you did not ask for.'
+        return 'February 16, 2024. Alexei Navalny dies in a penal colony above the Arctic Circle, at forty-seven, serving nineteen years. The cause is given as natural. The country where you live now reports it plainly; the country you came from reports it otherwise. From where you stand you can see both versions at once, one of the things exile gives you that you did not ask for.'
       }
-      return 'February 16, 2024. Alexei Navalny dies in IK-6 Polar Wolf. He was forty-seven. He went back to Russia in 2021 knowing what the risk was. His associates had told him what the risk was. He went back anyway because he had said publicly that he would not stay out and he returned and was immediately arrested and the sentence was extended and extended until it was nineteen years and then he died in the Arctic. The word "courage" is insufficient. It is also the word.'
+      return 'February 16, 2024. Alexei Navalny dies in a penal colony in the Arctic, at forty-seven. He went back in 2021 knowing what would happen, because he had said publicly that he would not stay away, and he was arrested at the airport, and the sentence grew until it was nineteen years. The word courage is not enough. It is also the word.'
     },
     choices: null,
     effect: (p) => {

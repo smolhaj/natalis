@@ -54,7 +54,7 @@ export const FOLLOWTHROUGH_32_EVENTS = [
       G.flags.has('tkm_information_cautious') &&
       G.age >= 52 &&
       !G.mem?.ft32InfoCautious,
-    text: 'There are things you do not know and know you do not know. The specific mechanism of what happened in the years you were living through — the decisions made, the deals struck, the people who disappeared and the reasons — these are still not fully available to you. The internet is more open now than it was, and you have read some of what was not accessible before. Some of it confirmed what you had suspected. Some of it was worse than what you had suspected.',
+    text: 'There are things you do not know and know you do not know. The mechanism of what happened in the years you were living through — the decisions made, the deals struck, the people who disappeared and the reasons — these are still not fully available to you. The internet is more open now than it was, and you have read some of what was not accessible before. Some of it confirmed what you had suspected. Some of it was worse than what you had suspected.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.m += 2; p.setMem('ft32InfoCautious', true) },
   },

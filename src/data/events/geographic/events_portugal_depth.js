@@ -24,7 +24,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
       {
         text: 'You refuse to inform — they keep you for three days',
         tag: null,
-        outcome: 'Three days in Caxias. The specific architecture of the Estado Novo\'s patience: they do not need to break you today. They have forty-eight years and the architecture is designed for that duration.',
+        outcome: 'Three days in Caxias. The architecture of the Estado Novo\'s patience: they do not need to break you today. They have forty-eight years and the architecture is designed for that duration.',
         effect: (p) => { p.r += 6; p.m -= 8; p.h -= 5; p.karma += 6; p.addFlag('pt_pide_generation'); p.setMem('ptPide', true) },
       },
     ],
@@ -77,7 +77,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
       {
         text: 'You are part of the occupation — the land has been taken back',
         tag: null,
-        outcome: 'The cooperatives. The meetings. The enormous difficulty of running collectively what had always been run by one family. The land reform works in some cooperatives and fails in others and is partially reversed after 1976. The attempt was real.',
+        outcome: 'The cooperatives. The meetings. The enormous difficulty of running collectively what had always been run by one family. The land reform works in some cooperatives and fails in others and is partially reversed after 1976.',
         effect: (p) => { p.m += 6; p.karma += 5; p.addFlag('pt_prec_alentejo_land'); p.setPolitical('left'); p.setMem('ptPrecAlentejo', true) },
       },
       {
@@ -117,7 +117,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
       G.currentYear >= 1965 && G.currentYear <= 1990 &&
       G.age >= 5 && G.age <= 16 &&
       !G.mem?.ptLusoFrances,
-    text: 'Your parents went to France before you were born — a salto or a legal departure after April 25. You are Portuguese and French simultaneously in a way that neither the Portuguese nor the French have a comfortable category for. In Portugal during the summer holidays: your cousins say you speak Portuguese like you have something in your mouth. In France at school: the Portuguese kid. You will spend your whole life translating — not language, but who you are — between two countries neither of which is entirely yours.',
+    text: 'Your parents went to France before you were born — a salto or a legal departure after April 25. You are Portuguese and French at once, and neither the Portuguese nor the French have a comfortable category for it. In Portugal during the summer holidays: your cousins say you speak Portuguese like you have something in your mouth. In France at school: the Portuguese kid. You will spend your whole life translating — not language, but who you are — between two countries neither of which is entirely yours.',
     choices: null,
     effect: (p) => { p.e += 3; p.r += 3; p.addFlag('pt_luso_descendant_france'); p.setMem('ptLusoFrances', true) },
   },
@@ -133,7 +133,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 1985 &&
       G.age >= 12 && G.age <= 22 &&
       !G.mem?.ptFado,
-    text: 'The three F\'s of the Estado Novo: Fado, Football, Fátima. Salazar understood that fado — the music of saudade, of fate, of a beauty that is always also loss — could be the sound of a people accepting things as they are. After April 25, many Portuguese rejected fado for this reason: it was the soundtrack of submission. But fado is also Amália and the specific truth of something that exists before politics and will outlast politics, and the argument about whether it was instrument or art or both is the argument Portugal has been having ever since.',
+    text: 'The three F\'s of the Estado Novo: Fado, Football, Fátima. Salazar understood that fado — the music of saudade, of fate, of a beauty that is always also loss — could be the sound of a people accepting things as they are. After April 25, many Portuguese rejected fado for this reason: it was the soundtrack of submission. But fado is also Amália and the truth of something that exists before politics and will outlast politics, and the argument about whether it was instrument or art or both is the argument Portugal has been having ever since.',
     choices: [
       {
         text: 'You love fado and have made peace with its history',
@@ -144,7 +144,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
       {
         text: 'You cannot hear fado without hearing what it was used for',
         tag: null,
-        outcome: 'The art that was the sound of accommodation is still the art. You cannot separate them, which means you carry the history every time you hear it, which is frequently, in a country where it is everywhere.',
+        outcome: 'The art that was the sound of accommodation is still the art. You cannot separate them, so you carry the history every time you hear it, and you hear it often, in a country where it is everywhere.',
         effect: (p) => { p.r += 4; p.addFlag('pt_fado_political_memory'); p.setMem('ptFado', true) },
       },
     ],
@@ -178,7 +178,7 @@ export const PORTUGAL_DEPTH_EVENTS = [
       G.currentYear >= 2024 && G.currentYear <= 2025 &&
       G.age >= 55 &&
       !G.mem?.ptAbril2024,
-    text: 'The 50th anniversary of April 25, 2024. The Assembleia da República. Chega — the far-right party that won 18 percent in March 2024 — walks out of the ceremony. Their leader says April 25 has been "stolen" by the left. You were alive for April 25. The flowers in the rifle barrels, the carnations. The Chega deputies walking out is the first time in fifty years that a Portuguese party has refused to celebrate April 25. The argument about whether the revolution was good is now the argument about whether the day itself belongs to everyone.',
+    text: 'The fiftieth anniversary of April 25, in the Assembly, and Chega, the new far right with nearly a fifth of the vote, walks out, saying the left has stolen the day. You were alive for the carnations in the rifle barrels. In fifty years no party has refused to celebrate April 25. The argument about whether the revolution was good has become an argument about whether the day belongs to everyone.',
     choices: [
       {
         text: 'The carnations were real — the memory cannot be retaken',

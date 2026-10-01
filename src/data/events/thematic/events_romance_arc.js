@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_romance_arc.js
 // Early relationship arc events: from first conversations to the patterns of long love.
 // Fire when: has partner, phase-gated, mem-gated to prevent repeats.
@@ -59,7 +60,7 @@ export const ROMANCE_ARC_EVENTS = [
       (G.partner.years ?? 0) >= 1 &&
       !G.mem?.romanceMeetFamily,
     text: (G) =>
-      `${G.partner?.name ?? 'Your partner'} takes you to meet their family. The table is full, the noise level is specific to this household, and you understand in a new way what they come from.`,
+      gendered(`${G.partner?.name ?? 'Your partner'} takes you to meet their family. The table is full, the noise level is specific to this household, and you understand in a new way what they come from.`, G.partner),
     choices: [
       {
         text: 'Be yourself — if this is going anywhere, they should meet you',
@@ -117,7 +118,7 @@ export const ROMANCE_ARC_EVENTS = [
       G.age >= 20 &&
       !G.mem?.romanceMovingIn,
     text: (G) =>
-      `The question of moving in comes up — practically, inevitably. ${G.partner?.name ?? 'Your partner'} spends more nights here than at their own place. The rent math makes sense. The emotional math is more complicated.`,
+      gendered(`The question of moving in comes up — practically, inevitably. ${G.partner?.name ?? 'Your partner'} spends more nights here than at their own place. The rent math makes sense. The emotional math is more complicated.`, G.partner),
     choices: [
       {
         text: 'Move in together',
@@ -177,7 +178,7 @@ export const ROMANCE_ARC_EVENTS = [
       (G.partner.relationshipQuality ?? 60) < 55 &&
       !G.mem?.romanceRut,
     text: (G) =>
-      `You and ${G.partner?.name ?? 'your partner'} have settled into patterns. Not bad patterns, exactly — just worn ones. You have the same conversations about the same things. The evenings follow a predictable shape. You cannot remember the last time something surprised you about them.`,
+      gendered(`You and ${G.partner?.name ?? 'your partner'} have settled into patterns. Not bad patterns, exactly — just worn ones. You have the same conversations about the same things. The evenings follow a predictable shape. You cannot remember the last time something surprised you about them.`, G.partner),
     choices: [
       {
         text: 'Name it — you both feel it and pretending doesn\'t help',
@@ -194,7 +195,7 @@ export const ROMANCE_ARC_EVENTS = [
       {
         text: 'This is what long relationships are — accept it',
         tag: null,
-        outcome: 'Acceptance is its own kind of peace. The rut becomes the comfortable groove.',
+        outcome: 'Acceptance is a peace. The rut becomes the comfortable groove.',
         effect: (p) => { p.m += 2; p.partnerRel(-6); p.setMem('romanceRut', true) },
       },
     ],
@@ -264,7 +265,7 @@ export const ROMANCE_ARC_EVENTS = [
       G.flags.includes('strong_marriage') &&
       !G.mem?.romanceRekindling,
     text: (G) =>
-      `You are away for a week — work, or family, or something else. When you come back, ${G.partner?.name ?? 'your partner'} is at the door and you notice something that familiarity usually absorbs. For a moment you see them the way you did at the beginning.`,
+      gendered(`You are away for a week — work, or family, or something else. When you come back, ${G.partner?.name ?? 'your partner'} is at the door and you notice something that familiarity usually absorbs. For a moment you see them the way you did at the beginning.`, G.partner),
     choices: null,
     effect: (p) => { p.m += 14; p.partnerRel(8); p.setMem('romanceRekindling', true) },
   },
@@ -280,7 +281,7 @@ export const ROMANCE_ARC_EVENTS = [
       G.age >= 13 &&
       G.age <= 17 &&
       !G.mem?.romanceFirstCrush,
-    text: 'There is a person. You are aware of them in a way that has no useful precedent in your experience. You study the pattern of when they appear in a room. You have rehearsed conversations that you have not had.',
+    text: 'There is a person. You are aware of them, and nothing in your experience has prepared you. You study the pattern of when they appear in a room. You have rehearsed conversations that you have not had.',
     choices: [
       {
         text: 'Say something',
@@ -308,7 +309,7 @@ export const ROMANCE_ARC_EVENTS = [
       G.age >= 15 &&
       G.age <= 18 &&
       !G.mem?.romanceTeenHeartbreak,
-    text: 'It ends. You are not sure why, exactly — the reasons they gave were real but not the whole thing. You walk home from school a different way for three weeks to avoid the particular intersection. The feeling is more total than you expected anything to be.',
+    text: 'It ends. You are not sure why, exactly — the reasons they gave were real but not the whole thing. You walk home from school a different way for three weeks to avoid the intersection. The feeling is more total than you expected anything to be.',
     choices: null,
     effect: (p) => { p.m -= 14; p.r += 6; p.e += 3; p.setMem('romanceTeenHeartbreak', true) },
   },
@@ -326,7 +327,7 @@ export const ROMANCE_ARC_EVENTS = [
       (G.partner.relationshipQuality ?? 60) < 45 &&
       !G.mem?.romanceInfidelity,
     text: (G) =>
-      `Something happens that you do not intend to happen and then happens again. It is not about ${G.partner?.name ?? 'your partner'}. Or it is partly about them and partly about something in yourself that you have been failing to look at. You carry it in your body the way certain things are carried — weightless in public, very heavy in certain silences.`,
+      gendered(`Something happens that you do not intend to happen and then happens again. It is not about ${G.partner?.name ?? 'your partner'}. Or it is partly about them and partly about something in yourself that you have been failing to look at. You carry it in your body the way certain things are carried — weightless in public, very heavy in certain silences.`, G.partner),
     choices: [
       {
         text: 'End it immediately and say nothing',

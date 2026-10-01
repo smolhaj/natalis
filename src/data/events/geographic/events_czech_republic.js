@@ -37,7 +37,7 @@ export const CZECH_REPUBLIC_EVENTS = [
       G.currentYear >= 1952 && G.currentYear <= 1954 &&
       G.age >= 16 &&
       !G.mem?.czeSlansky,
-    text: 'Rudolf Slánský is the Secretary-General of the Czechoslovak Communist Party. In November 1952 he is tried for treason. Eleven of the fourteen defendants are Jewish; the charges invoke "cosmopolitanism" — the Soviet euphemism. Slánský confesses. All the accused confess. The confessions were produced through weeks of sleep deprivation and psychological methods that have since been documented in detail. Eleven are hanged. You know people who signed declarations supporting the verdict. The terror is not random — it is systematic, and it targets the Party itself, which means no position is safe, which means the compliance it produces is total.',
+    text: 'November 1952, and the general secretary of the Party is on trial for treason with thirteen others, most of them Jews, and the charge is cosmopolitanism. Every one of them confesses, after weeks without sleep. Eleven are hanged. You know people who signed declarations supporting the verdict. The terror reaches into the Party itself, so no position is safe, so the compliance is total.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 8; p.e += 2; p.addFlag('cze_stalinist_terror_generation'); p.setMem('czeSlansky', true) },
   },
@@ -56,7 +56,7 @@ export const CZECH_REPUBLIC_EVENTS = [
     text: (G) => {
       const youth = G.age <= 22
       return youth
-        ? 'January 1968: Dubček becomes First Secretary and the country changes its atmosphere. The censorship is not formally lifted — it simply stops being enforced. Newspapers print things they have not printed. Writers write what they have not written. The radio says things. You have grown up in a country that was grey by administrative decision, and now the grey is retreating. Students are speaking in public. There is a specific quality to the spring of 1968 that has nothing to do with the weather. You are inside it and it feels, for seven months, like something that will last.'
+        ? 'January 1968, and Dubček, and the air changes. The censorship is not lifted; it simply stops being enforced, and the newspapers print what they have never printed and the radio says things. You grew up in a country that was grey by administrative decision, and the grey is retreating. Students speak in public. For seven months it feels like something that will last.'
         : 'Dubček\'s Action Programme is published in April: freedom of the press, rehabilitation of the purge victims, federalisation, a path toward a more human socialism. The Soviet Union is watching. The Party apparatus in Warsaw, Berlin, and Budapest is watching. You are watching too — at your age you have seen enough to know that what is happening may not survive the summer. You are in it anyway. The seven months between January and August 1968 are the seven months that define what it means to have been Czech in the twentieth century.'
     },
     choices: null,
@@ -142,7 +142,7 @@ export const CZECH_REPUBLIC_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1992 &&
       G.age >= 25 &&
       !G.mem?.czeHavel,
-    text: 'Václav Havel becomes president on January 1, 1990. He has spent years in prison. He is a playwright. He has written about what he calls "living in truth" — the specific effort of refusing, even in small ways, to participate in the performance the regime required. The man who was in prison in December is the head of state in January. This sequence of events is not normal. You are living in a country where it has happened. He gives his first presidential address and quotes Masaryk and speaks about the truth that has to be achieved and you are watching and the specific quality of the moment is that it is exactly as strange as it sounds.',
+    text: 'January 1, 1990, and Václav Havel is president: a playwright who spent years in prison, who wrote about living in truth, about refusing even in small ways to take part in the performance. The man who was in prison in December is head of state in January. He gives his first address and quotes Masaryk, and you watch, and the moment is exactly as strange as it sounds.',
     choices: null,
     effect: (p) => { p.m += 12; p.e += 4; p.karma += 5; p.addFlag('cze_havel_generation'); p.setMem('czeHavel', true) },
   },
@@ -158,7 +158,7 @@ export const CZECH_REPUBLIC_EVENTS = [
       G.currentYear === 1993 &&
       G.age >= 25 &&
       !G.mem?.czeVelvetDivorce,
-    text: 'January 1, 1993: Czechoslovakia ceases to exist. The Czech Republic and Slovakia are now two countries. This was decided by the parliamentary leadership without a referendum — polls showed majorities in both countries preferring to stay together — but the Klaus-Mečiar agreement divided the state anyway. The currency splits. The passports split. The football team splits. The shared history splits into two national histories that will tell it differently. You were Czechoslovak and now you are Czech and Slovakia is a foreign country. The divorce was, like the revolution, without violence. The peaceable quality of it does not mean it was not a loss.',
+    text: 'January 1, 1993, and Czechoslovakia ceases to exist. Nobody asked the voters; the polls said most people on both sides wanted to stay together. The currency splits, the passports split, the football team splits, and the history becomes two histories that will tell it differently. You were Czechoslovak and now Slovakia is a foreign country. Like the revolution, it is done without violence, and it is still a loss.',
     choices: null,
     effect: (p) => { p.r += 6; p.m -= 4; p.e += 2; p.addFlag('cze_velvet_divorce_generation'); p.setMem('czeVelvetDivorce', true) },
   },
@@ -174,7 +174,7 @@ export const CZECH_REPUBLIC_EVENTS = [
       G.currentYear === 2004 &&
       G.age >= 25 &&
       !G.mem?.czeEU2004,
-    text: 'May 1, 2004: the Czech Republic joins the European Union along with nine other countries. The border controls that have existed in various forms since the Habsburgs are coming down. You can move to Germany, to France, to any EU country and live and work there legally. The Schengen Zone will follow. For people who grew up in a country where you needed permission to travel — where the passport itself was a privilege the state could withhold — this is something. Your children, if they have them, will grow up in a country that is part of the largest democratic political project in history. They will find this ordinary. You know it is not ordinary.',
+    text: 'May 1, 2004, and the Czech Republic is in the European Union, and border posts that stood in one form or another since the Habsburgs are coming down. You can live and work anywhere in it, legally. For people who grew up needing permission to travel, whose passports were a privilege the state could take away, this is something. Your children will find it ordinary. You know it is not.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 3; p.r -= 2; p.addFlag('cze_eu_generation'); p.setMem('czeEU2004', true) },
   },

@@ -28,7 +28,7 @@ export const CENTRAL_EUROPE_EVENTS = [
       {
         text: 'The twelve days stay with you. The feeling of the street, the radio, the way adults moved differently.',
         tag: null,
-        outcome: 'The twelve days become the measure. The question of whether that particular feeling is possible becomes a question your life organizes itself around.',
+        outcome: 'The twelve days become the measure. The question of whether that feeling is possible becomes a question your life organizes itself around.',
         effect: (p) => { p.m += 4; p.m -= 8; p.r += 5; p.addFlag('hungarian_1956_generation'); p.setMem('hun1956', true); },
       },
       {
@@ -50,7 +50,8 @@ export const CENTRAL_EUROPE_EVENTS = [
       G.currentYear >= 1956 && G.currentYear <= 1957 &&
       G.age >= 18 &&
       !G.mem?.hun1956,
-    text: 'October 23, 1956. The statue of Stalin comes down in the early hours and the crowd walks over the broken boots. The radio announces the end of things that have been in place since 1949. For twelve days: the political prisoners released, the secret police dissolved, the announcement of a multi-party system. Then November 4th: two hundred Soviet tanks roll into Budapest before dawn. Imre Nagy takes shelter in the Yugoslav embassy. The world watches but does not intervene. Two thousand five hundred Hungarians die. Two hundred thousand will leave in the weeks that follow.',
+    text: 'October 23, 1956, and the statue of Stalin comes down in the night, and the crowd walks over the broken boots. For twelve days the prisoners are freed and the secret police dissolved and parties promised. Then on November 4 the Soviet tanks come into Budapest before dawn, and Nagy runs to the Yugoslav embassy, and the world watches. In the weeks after, the border is open to the west, and people go.',
+    context: 'About 2,500 Hungarians were killed in the 1956 uprising and some 200,000 fled the country.',
     choices: [
       {
         text: 'You are in it — in the crowds, in the twelve days, in what they mean while they last.',
@@ -104,12 +105,12 @@ export const CENTRAL_EUROPE_EVENTS = [
       G.currentYear === 1989 &&
       G.age >= 15 &&
       !G.mem?.hun1989,
-    text: 'May 2, 1989: Hungary begins cutting the barbed wire on the Austrian border. It is a bureaucratic decision that changes the twentieth century. By August, East Germans are camping in the West German embassy compound in Budapest. In September, Hungary opens the border formally and a hundred thousand East Germans cross before East Germany can respond. The dominoes that follow: Czechoslovakia, the Berlin Wall falls November 9, Romania, Bulgaria. Hungary did not plan to do this. The specific logic of Kádár\'s Hungary — its pragmatism, its small private freedoms — produced officials who found it possible to make this choice.',
+    text: 'May 2, 1989: Hungary begins cutting the barbed wire on the Austrian border. It is a bureaucratic decision that changes the twentieth century. By August, East Germans are camping in the West German embassy compound in Budapest. In September, Hungary opens the border formally and a hundred thousand East Germans cross before East Germany can respond. The dominoes that follow: Czechoslovakia, the Berlin Wall falls November 9, Romania, Bulgaria. Hungary did not plan to do this. The logic of Kádár\'s Hungary — its pragmatism, its small private freedoms — produced officials who found it possible to make this choice.',
     choices: [
       {
         text: 'You watch the East Germans crossing. You have lived next to an Iron Curtain your entire life and now it is being cut with wire cutters.',
         tag: null,
-        outcome: 'Wire cutters doing ordinary work on an extraordinary thing. The ordinary courage of the specific mechanism.',
+        outcome: 'Wire cutters doing ordinary work on an extraordinary thing. The ordinary courage of the mechanism.',
         effect: (p) => { p.m += 10; p.karma += 5; p.r += 3; p.addFlag('hungary_1989_border_generation'); p.setMem('hun1989', true); },
       },
       {
@@ -137,13 +138,13 @@ export const CENTRAL_EUROPE_EVENTS = [
       if (year >= 2022) {
         return 'Orbán\'s Fidesz has governed since 2010. In that time: a new constitution written by one party, the independent press bought or closed, a supermajority used to rewrite electoral law, the Central European University forced to relocate to Vienna, a constitutional amendment banning same-sex marriage, the anti-Soros billboard campaigns across the country. He won again in 2022. The EU withholds funds. Hungary stays in the EU. The contradiction has been running for over a decade and shows no sign of resolving.'
       }
-      return 'Orbán\'s Fidesz won in 2010 with a two-thirds supermajority and used it immediately to rewrite the constitution. The new basic law. The courts reorganised. The media landscape changing — not through confiscation but through ownership, through the right buyer for the right newspaper. The specific texture of Hungarian public life: the government newspapers distributed free at the coffee counter, the billboard that shows George Soros smiling. You are living in a country its own leader calls an illiberal democracy.'
+      return 'Orbán\'s Fidesz won in 2010 with a two-thirds supermajority and used it immediately to rewrite the constitution. The new basic law. The courts reorganised. The media landscape changing — not through confiscation but through ownership, through the right buyer for the right newspaper. The texture of Hungarian public life: the government newspapers distributed free at the coffee counter, the billboard that shows George Soros smiling. You are living in a country its own leader calls an illiberal democracy.'
     },
     choices: [
       {
         text: 'You stay and navigate it. The navigation looks different depending on what you do for work.',
         tag: null,
-        outcome: 'The navigation is real. Some people navigate it more comfortably than others. You know where you are in the distribution.',
+        outcome: 'You learn to navigate it. Some people navigate it more comfortably than others. You know where you are in the distribution.',
         effect: (p) => { p.r += 4; p.m -= 3; p.addFlag('orban_era_generation'); p.setMem('hunOrban', true); },
       },
       {
@@ -230,13 +231,13 @@ export const CENTRAL_EUROPE_EVENTS = [
       if (age <= 20) {
         return 'November 17, 1989. The students march on Národní třída and the riot police stop them and beat them. By the 19th the news of the beatings has spread and the crowds grow. By the 21st there are two hundred thousand people in Wenceslas Square. Keys are jingled — hundreds of thousands of keychains making the sound of: time is up. On December 29, Václav Havel is elected president by the same parliament that imprisoned him.'
       }
-      return 'Wenceslas Square, November 1989. The specific sound of hundreds of thousands of keychains being shaken in unison — the dismissal sound, the your-time-is-over sound. Havel, who was in prison not long ago, addresses the crowd. By late December the same parliament that imprisoned dissidents has elected him president. Twenty-one days from the first student march to the first non-communist government in forty years. The Velvet Revolution earned its name.'
+      return 'Wenceslas Square, November 1989. The sound of hundreds of thousands of keychains being shaken in unison — the dismissal sound, the your-time-is-over sound. Havel, who was in prison not long ago, addresses the crowd. By late December the same parliament that imprisoned dissidents has elected him president. Twenty-one days from the first student march to the first non-communist government in forty years. The Velvet Revolution earned its name.'
     },
     choices: [
       {
         text: 'You are in the square. You jingle your keys.',
         tag: null,
-        outcome: 'The specific sound, the specific cold of that November, the specific speed of what happened afterward. These are yours.',
+        outcome: 'The sound, the cold of that November, the speed of what happened afterward. These are yours.',
         effect: (p) => { p.m += 15; p.karma += 8; p.r -= 4; p.addFlag('velvet_revolution_generation'); p.setMem('czeVelvet', true); },
       },
       {
@@ -259,7 +260,7 @@ export const CENTRAL_EUROPE_EVENTS = [
       G.flags.includes('normalization_generation') &&
       G.age >= 35 &&
       !G.mem?.czeLustration,
-    text: 'The lustration law: the screening of public employees for collaboration with the StB, the secret police. The files are opened. The neighbour who informed. The colleague. The friend — sometimes. The law is about future employment rather than criminal prosecution, but the names are public. Some of the names are people you know. The specific difficulty of normalization is that the line between signed-under-coercion and willing-collaborator is often not visible from outside the file. The file shows what happened. The file does not show why.',
+    text: 'The lustration law opens the files on who worked for the secret police. The neighbour who informed, the colleague, sometimes a friend. It is about who may hold office, not prison, but the names are public, and some of them are people you know. From outside the file you cannot see the line between signed-under-pressure and willing. The file shows what happened. It does not show why.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 3; p.setMem('czeLustration', true); },
   },

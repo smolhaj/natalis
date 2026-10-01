@@ -47,7 +47,7 @@ export const FOLLOWTHROUGH_41_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 55 &&
       !G.mem?.ft41WelfareRetrenLate,
-    text: 'The cuts of 1992–94 were never fully restored. The welfare state that exists now is a different thing from the one that existed before — the sick pay cap is still lower, the housing allowances still less generous, the sense that the state would catch you unconditionally has been replaced by a sense that the state will catch you within parameters. You have made your peace with this or you have not. The debate about what the *folkhem* was — a specific postwar economic moment that passed, or a commitment that was surrendered — has continued for thirty years and is not resolved. You have your answer, which is probably not the same as your neighbour\'s.',
+    text: 'The cuts of 1992–94 were never fully restored. The welfare state that exists now is a different thing from the one that existed before — the sick pay cap is still lower, the housing allowances still less generous, the sense that the state would catch you unconditionally has been replaced by a sense that the state will catch you within parameters. You have made your peace with this or you have not. The debate about what the *folkhem* was — a postwar economic moment that passed, or a commitment that was surrendered — has continued for thirty years and is not resolved. You have your answer, which is probably not the same as your neighbour\'s.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 3; p.setMem('ft41WelfareRetrenLate', true) },
   },
@@ -80,7 +80,7 @@ export const FOLLOWTHROUGH_41_EVENTS = [
       G.age >= 55 &&
       G.mem?.swePalmeResolved &&
       !G.mem?.ft41PalmeAfterClose,
-    text: 'The case is closed. Stig Engström is the answer the prosecution settled on. He is dead. You have had a year or two to sit with this and you can say now what you actually feel about it, which is not exactly relief and not exactly closure. Closure would require a trial. A trial would require a living suspect. The case closed administratively around a dead man who cannot be questioned, cannot contest the evidence, cannot be convicted or acquitted. Sweden got a probable explanation, not a confirmed one. The thirty-four-year open wound is now more precisely a thirty-four-year open wound with a bandage over it. You can see the edges.',
+    text: 'The case is closed. The prosecutor names Stig Engström, and Engström is dead. What you feel is not relief and not quite closure, which would need a trial, which would need a living man. Sweden has a probable answer, not a proved one. The thirty-four-year wound has a bandage over it now, and you can see the edges.',
     choices: null,
     effect: (p) => { p.r += 5; p.m += 3; p.e += 2; p.setMem('ft41PalmeAfterClose', true) },
   },

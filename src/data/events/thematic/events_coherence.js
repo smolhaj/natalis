@@ -13,12 +13,12 @@ export const COHERENCE_EVENTS = [
       G.flags.has('scholarship_winner') &&
       !G.mem?.cohScholarshipPayoff &&
       G.age >= 20 && G.age <= 28,
-    text: 'The scholarship got you here — that is the first thing you said about yourself for years, the way you began the story. You are far enough in now to see what it led to. The money was real. The door it opened was real. Whether you have walked far enough through it to say the gamble paid off is a question you keep adjusting your answer to.',
+    text: 'The scholarship got you here — that is the first thing you said about yourself for years, the way you began the story. You are far enough in now to see what it led to. Whether you have walked far enough through it to say the gamble paid off is a question you keep adjusting your answer to.',
     choices: [
       {
         text: 'It paid off. The trajectory changed.',
         tag: 'paid_off',
-        outcome: 'You can trace a line from that application to where you are. The line is real.',
+        outcome: 'You can trace a line from that application to where you are.',
         effect: (p) => {
           p.setMem('cohScholarshipPayoff', true)
           p.addFlag('scholarship_transformed_life')
@@ -116,7 +116,7 @@ export const COHERENCE_EVENTS = [
       {
         text: 'It still costs you — you have not stopped compensating',
         tag: 'compensating',
-        outcome: 'The compensation has its own costs. You are aware of this. Awareness has not resolved it.',
+        outcome: 'The compensation costs. You are aware of this. Awareness has not resolved it.',
         effect: (p) => {
           p.setMem('cohFailureEcho', true)
           p.r += 5
@@ -137,7 +137,7 @@ export const COHERENCE_EVENTS = [
       G.mem?.adol2PeerDeath &&
       !G.mem?.cohPeerDeathEcho &&
       G.age >= 28 && G.age <= 38,
-    text: 'You are the age now that your friend never reached. You have been this age for a year and something about it is strange — the specific maths of outliving someone by a decade now, then two, then more. You have done things they will never do. You have become someone they never met. This is not a sad thought exactly, though it is not quite not sad. It is just a fact that you carry.',
+    text: 'You are the age now that your friend never reached. You have been this age for a year and something about it is strange — the maths of outliving someone by a decade now, then two, then more. You have done things they will never do. You have become someone they never met. It is not a sad thought, quite. It is a fact that you carry.',
     choices: null,
     effect: (p) => {
       p.setMem('cohPeerDeathEcho', true)
@@ -157,7 +157,7 @@ export const COHERENCE_EVENTS = [
       G.flags.has('childhood_object') &&
       !G.mem?.cohChildhoodObject &&
       G.age >= 36 && G.age <= 50,
-    text: 'You still have it — the object. Moved it through a number of addresses, which is its own statement. It does nothing useful. You cannot always explain why it has survived when other things have not. It sat on a shelf when you were young and it sits on a shelf now and the arc between those two positions is your life so far.',
+    text: 'You still have it — the object. Moved it through a number of addresses. It does nothing useful. You cannot always explain why it has survived when other things have not. It sat on a shelf when you were young and it sits on a shelf now and the arc between those two positions is your life so far.',
     choices: null,
     effect: (p) => {
       p.setMem('cohChildhoodObject', true)
@@ -176,7 +176,7 @@ export const COHERENCE_EVENTS = [
       (G.flags.has('political_awakening_twenty') || G.flags.has('political_awareness_early')) &&
       !G.mem?.cohPoliticalEcho &&
       G.age >= 35 && G.age <= 48,
-    text: 'You were certain once. There was a moment — a book, a conversation, a specific news event — when the shape of the world became legible and you knew what you thought about it. You still largely think that. But certainty has a different weight now than it did then. You have learned that being right is a more complicated thing than you understood at twenty.',
+    text: 'You were certain once. There was a moment — a book, a conversation, a news event — when the shape of the world became legible and you knew what you thought about it. You still largely think that. But certainty has a different weight now than it did then. You have learned that being right is a more complicated thing than you understood at twenty.',
     choices: [
       {
         text: 'The politics held — deepened rather than simplified',
@@ -224,7 +224,7 @@ export const COHERENCE_EVENTS = [
       G.tech('smartphone') && (G.flags.has('friend_group_scattered') &&
       !G.mem?.cohFriendScatterEcho &&
       G.age >= 33 && G.age <= 44),
-    text: 'You see them occasionally — a wedding, an anniversary, a visit that happens once every few years and then takes eighteen months to schedule again. The group that defined your early twenties exists now mainly as a group chat and a set of faces you can still read at a glance, even after the gap. The closeness is real. The proximity is not. You have both and you have learned they are different things.',
+    text: 'You see them occasionally — a wedding, an anniversary, a visit that happens once every few years and then takes eighteen months to schedule again. The group that defined your early twenties exists now mainly as a group chat and a set of faces you can still read at a glance, even after the gap. The proximity is not. You have both and you have learned they are different things.',
     choices: null,
     effect: (p) => {
       p.setMem('cohFriendScatterEcho', true)
@@ -279,7 +279,7 @@ export const COHERENCE_EVENTS = [
       {
         text: 'You let it go properly — you stop telling yourself you\'ll return',
         tag: 'release',
-        outcome: 'The release is its own kind of freedom. The grief of it is also real.',
+        outcome: 'The release is a freedom. The grief of it is also real.',
         effect: (p) => {
           p.setMem('cohDeferredTalentMidlife', true)
           p.addFlag('talent_released')

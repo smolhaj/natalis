@@ -46,7 +46,8 @@ export const CANADA_DEPTH_EVENTS = [
       G.currentYear >= 1942 && G.currentYear <= 1945 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.canJapInterned,
-    text: (G) => 'Order-in-Council P.C. 1486, February 1942. All persons of Japanese origin must leave the hundred-mile Protected Area on the BC coast. Twenty-two thousand people. Your family has been in British Columbia for two generations — born here, raised here, fishing or farming or running a business. The property is seized and sold at a loss by the Custodian of Enemy Property. The proceeds go to pay for your own internment. You are sent to a sugar beet farm in Alberta or a work camp in the Rockies or a ghost town in the BC interior. ' + (G.currentYear >= 1945 ? 'The war ends in 1945. You are still not permitted to return to the coast.' : 'Nobody will say when you may go back to the coast.'),
+    text: (G) => 'February 1942. Everyone of Japanese origin must leave the coast of British Columbia. Your family has been here two generations, born here, fishing or farming or keeping a shop. The property is seized and sold cheap by the Custodian of Enemy Property, and the proceeds pay for your own internment. You are sent to a sugar beet farm in Alberta, or a road camp in the Rockies, or a ghost town in the interior.' + (G.currentYear >= 1945 ? 'The war ends in 1945. You are still not permitted to return to the coast.' : 'Nobody will say when you may go back to the coast.'),
+    context: 'Order-in-Council P.C. 1486 removed about 22,000 Japanese Canadians from the coast.',
     choices: [
       {
         text: 'Your parents tell you to prove your loyalty through silence and compliance',
@@ -57,7 +58,7 @@ export const CANADA_DEPTH_EVENTS = [
       {
         text: 'Your family protests — the Nisei who go to court, who write petitions',
         tag: null,
-        outcome: 'The courts uphold the order. The protest is real and is not heard in the years you are living inside it. It is heard later, which is a different thing.',
+        outcome: 'The courts uphold the order. Nobody hears the protest in the years you are living inside it. It is heard later.',
         effect: (p) => { p.m -= 8; p.r += 8; p.karma += 4; p.addFlag('can_japanese_internment_generation'); p.setMem('canJapInterned', true) },
       },
     ],
@@ -75,7 +76,7 @@ export const CANADA_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 1975 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.canQuietRev,
-    text: 'The Quiet Revolution: not quiet from the inside. Duplessis is dead. Lesage is premier. The Catholic Church loses the schools and the hospitals it has run for two centuries — the state takes them back. Laïcisation. The Caisse de dépôt is created to invest Quebec pension money in Quebec. The state-owned Hydro-Québec hires engineers who speak French rather than English. Maîtres chez nous — masters in our own house. You are young in the years when the house changes from inside.',
+    text: 'The Quiet Revolution is not quiet from inside. Duplessis is dead and the Church loses the schools and hospitals it ran for two centuries. Hydro-Québec is nationalised and hires engineers who speak French, and the pension money stays in Quebec. Maîtres chez nous: masters in our own house. You are young in the years when the house changes from inside.',
     choices: [
       {
         text: 'You are part of the generation that builds the secular Quebec state',
@@ -170,7 +171,7 @@ export const CANADA_DEPTH_EVENTS = [
       G.currentYear >= 1971 && G.currentYear <= 2005 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.canMulticultural,
-    text: 'Trudeau\'s multiculturalism policy, 1971: the first in the world. Canada officially has no core culture — all cultures are equal, all are celebrated, all are Canadian. The policy produces both real protection and a particular kind of encounter: the dinner where someone asks where you are really from; the school where your heritage is showcased in February; the professional context where your name is mispronounced with cheerful indifference; the friend who says they don\'t see colour, which means they are not seeing you. Multiculturalism as policy and multiculturalism as experience are two different things you have learned to hold simultaneously.',
+    text: 'Trudeau\'s multiculturalism policy, 1971: the first in the world. Canada officially has no core culture — all cultures are equal, all are celebrated, all are Canadian. The policy produces both real protection and a kind of encounter: the dinner where someone asks where you are really from; the school where your heritage is showcased in February; the professional context where your name is mispronounced with cheerful indifference; the friend who says they don\'t see colour, which means they are not seeing you. Multiculturalism as policy and multiculturalism as experience are two different things you have learned to hold simultaneously.',
     choices: null,
     effect: (p) => { p.m -= 2; p.r += 4; p.e += 3; p.addFlag('can_visible_minority_multicultural'); p.setMem('canMulticultural', true) },
   },
@@ -198,7 +199,7 @@ export const CANADA_DEPTH_EVENTS = [
       {
         text: 'The camp is unsustainable — the boom doesn\'t last and neither does the body',
         tag: null,
-        outcome: 'The price of oil moves without asking. The boom becomes the bust and the camp empties in a season. The specific quality of that emptying — the abandoned portable buildings, the trucks for sale — is the landscape of a resource economy from the inside.',
+        outcome: 'The price of oil moves without asking. The boom becomes the bust and the camp empties in a season. The quality of that emptying — the abandoned portable buildings, the trucks for sale — is the landscape of a resource economy from the inside.',
         effect: (p) => { p.mo += 10000; p.m -= 7; p.r += 5; p.addFlag('can_oil_sands_worker'); p.setMem('canOilSands', true) },
       },
     ],

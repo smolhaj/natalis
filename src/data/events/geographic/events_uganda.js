@@ -26,7 +26,7 @@ export const UGANDA_EVENTS = [
       {
         text: 'Someone close to you disappears.',
         tag: null,
-        outcome: 'The disappearance has no official explanation, which is its own explanation. You add this person to the count that no one is officially taking.',
+        outcome: 'The disappearance has no official explanation, and that is the explanation. You add this person to the count that no one is officially taking.',
         effect: (p) => { p.m -= 18; p.r += 10; p.addFlag('amin_generation'); p.addFlag('experienced_loss'); p.setMem('ugaAmin', true) },
       },
     ],
@@ -116,7 +116,7 @@ export const UGANDA_EVENTS = [
       {
         text: 'You remember 1986. The distance between then and now is the education.',
         tag: null,
-        outcome: 'The man who said "no army has the right to mishandle you" removed his own term limits. You have been present for the entire arc. That is a specific kind of knowledge.',
+        outcome: 'The man who said "no army has the right to mishandle you" removed his own term limits. You have been present for the entire arc. That is a kind of knowledge.',
         effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('museveni_consolidation_generation'); p.setMem('ugaConsolidation', true) },
       },
       {

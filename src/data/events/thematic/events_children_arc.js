@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_children_arc.js
 // The full arc of parenthood — school milestones, teen years, adult children,
 // grandchildren, achievement, and loss. Fires from the parent's perspective.
@@ -62,7 +63,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 8 && a <= 14
       })
       const name = child?.name ?? 'Your child'
-      return `The teacher requests a meeting. She is kind about it, which is almost harder — the careful phrasing, the concern that has been accumulating for some time before you knew. ${name} is falling behind in reading. Not dramatically. Enough. You drive home with the silence of a problem you should have noticed earlier.`
+      return `The teacher requests a meeting. She is kind about it, and that is almost harder — the careful phrasing, the concern that has been accumulating for some time before you knew. ${name} is falling behind in reading. Not dramatically. Enough. You drive home with the silence of a problem you should have noticed earlier.`
     },
     choices: [
       {
@@ -143,7 +144,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 18 && a <= 22
       })
       const name = child?.name ?? 'Your child'
-      return `${name} calls on a Tuesday. Not to check in — the call has a shape you recognize before they say anything. They are leaving university. They have thought about this. They are not asking permission. You hold the phone and locate what you actually feel, which is not the same as what comes out of your mouth.`
+      return gendered(`${name} calls on a Tuesday. Not to check in — the call has a shape you recognize before they say anything. They are leaving university. They have thought about this. They are not asking permission. You hold the phone and locate what you actually feel, and it is not what comes out of your mouth.`, child)
     },
     choices: [
       {
@@ -188,7 +189,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 14 && a <= 17
       })
       const name = child?.name ?? 'Your child'
-      return `${name} comes home two hours late. They told you they were at a friend's house. You called the friend's mother at nine o'clock. The conversation was awkward on both sides. When they come through the door, they look at you and know immediately that you know. There is a silence in the hallway.`
+      return gendered(`${name} comes home two hours late. They told you they were at a friend's house. You called the friend's mother at nine o'clock. The conversation was awkward on both sides. When they come through the door, they look at you and know immediately that you know. There is a silence in the hallway.`, child)
     },
     choices: [
       {
@@ -225,7 +226,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 14 && a <= 18
       })
       const name = child?.name ?? 'Your child'
-      return `${name} stops talking to you. Not with a fight — just a gradual closing of doors. Single-word answers. Meals eaten fast. Somewhere in the last year, the access you had to their interior life quietly ended and you did not notice until it was over. Three months pass like this.`
+      return gendered(`${name} stops talking to you. Not with a fight — just a gradual closing of doors. Single-word answers. Meals eaten fast. Somewhere in the last year, the access you had to their interior life quietly ended and you did not notice until it was over. Three months pass like this.`, child)
     },
     choices: [
       {
@@ -264,7 +265,7 @@ export const CHILDREN_ARC_EVENTS = [
       const name = child?.name ?? 'Your child'
       const scenario = Math.random() < 0.5
         ? `The school calls: ${name} was in a fight. Another student. No one was seriously hurt. The word suspended is used.`
-        : `The school calls. The vice-principal is careful with the phrasing: ${name} was found with something they shouldn't have had. There will be consequences.`
+        : gendered(`The school calls. The vice-principal is careful with the phrasing: ${name} was found with something they shouldn't have had. There will be consequences.`, child)
       return `${scenario} You are at work when your phone rings. You sit in your car in the car park for a moment before starting the engine.`
     },
     choices: [
@@ -283,7 +284,7 @@ export const CHILDREN_ARC_EVENTS = [
       {
         text: 'Make it clear this cannot happen again and mean it',
         tag: null,
-        outcome: 'The consequences at home are real. The relationship survives them.',
+        outcome: 'There are consequences at home. The relationship survives them.',
         effect: (p) => { p.m -= 12; p.karma += 2; p.setMem('childTeenTrouble', true) },
       },
     ],
@@ -312,7 +313,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 15 && a <= 22
       })
       const name = child?.name ?? 'Your child'
-      return `${name} tells you at the kitchen table, quietly, with the specific bravery of someone who has been carrying this alone for a long time. You understand in the same moment what they are telling you and what it means in this country, in this time, for your child who is sitting across from you. The weight of it is in both directions at once.`
+      return gendered(`${name} tells you at the kitchen table, quietly, with the bravery of someone who has been carrying this alone for a long time. You understand in the same moment what they are telling you and what it means in this country, in this time, for your child who is sitting across from you. The weight of it is in both directions at once.`, child)
     },
     choices: [
       {
@@ -351,7 +352,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 15 && a <= 22
       })
       const name = child?.name ?? 'Your child'
-      return `${name} tells you. You can see how much the telling cost them — the careful phrasing, the watching your face. You reach across the table. You tell them you love them and that nothing about this changes that. Their shoulders drop about half an inch. You both sit there a moment.`
+      return gendered(`${name} tells you. You can see how much the telling cost them — the careful phrasing, the watching your face. You reach across the table. You tell them you love them and that nothing about this changes that. Their shoulders drop about half an inch. You both sit there a moment.`, child)
     },
     choices: [
       {
@@ -390,7 +391,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 15 && a <= 22
       })
       const name = child?.name ?? 'Your child'
-      return `${name} tells you. You sit with the words in your mouth. What comes out is not what they needed to hear. They leave the room. You sit at the table for a long time with the conversation replaying, and the version of you in the replay does better, and you know the real version is what they will carry.`
+      return gendered(`${name} tells you. The words stay in your mouth. What comes out is not what they needed to hear. They leave the room. You sit at the table for a long time with the conversation replaying, and the version of you in the replay does better, and you know the real version is what they will carry.`, child)
     },
     choices: [
       {
@@ -429,7 +430,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 15 && a <= 22
       })
       const name = child?.name ?? 'Your child'
-      return `${name} tells you. You say the right words, mostly. You are not certain what you feel and you are careful not to let that uncertainty become their problem. Later, in the weeks that follow, you find your way toward understanding. It takes longer than you would have expected of yourself.`
+      return gendered(`${name} tells you. You say the right words, mostly. You are not certain what you feel and you are careful not to let that uncertainty become their problem. Later, in the weeks that follow, you find your way toward understanding. It takes longer than you would have expected of yourself.`, child)
     },
     choices: [
       {
@@ -500,7 +501,7 @@ export const CHILDREN_ARC_EVENTS = [
       const youngestAge = G.age - youngest.ageAtBirth
       return youngestAge >= 18 && youngestAge <= 22
     },
-    text: 'The last one leaves. You help carry the boxes to the car and there is the drive to the new place and the boxes carried up the stairs. On the drive home the car is lighter than it has ever been. You park in the driveway and sit for a moment. The house is the same temperature it always is. The silence is not hostile. It is just very large.',
+    text: 'The last one leaves. You help carry the boxes to the car and there is the drive to the new place and the boxes carried up the stairs. On the drive home the car is lighter than it has ever been. You park in the driveway and sit for a moment. The house is the same temperature it always is. The silence is very large, and not hostile.',
     choices: [
       {
         text: 'Let yourself feel the size of it',
@@ -536,7 +537,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 22 && a <= 28
       })
       const name = child?.name ?? 'Your child'
-      return `${name} has decided what they are going to do. It is not a path you would have chosen for them — not because it is wrong, but because it is not legible to you in the way that legible paths are. You find yourself unable to assess whether it is wise. That may be the point.`
+      return gendered(`${name} has decided what they are going to do. It is not a path you would have chosen for them — not because it is wrong, but because it is not legible to you in the way that legible paths are. You find yourself unable to assess whether it is wise. That may be the point.`, child)
     },
     choices: [
       {
@@ -548,7 +549,7 @@ export const CHILDREN_ARC_EVENTS = [
       {
         text: 'Say you trust them — and leave space for them to ask for help if they need it',
         tag: null,
-        outcome: 'They do not ask for months. Then, one evening, they call with a specific question. You answer it. This is the arrangement.',
+        outcome: 'They do not ask for months. Then, one evening, they call with a question. You answer it. This is the arrangement.',
         effect: (p) => { p.m += 5; p.karma += 6; p.setMem('childCareerChoiceDifferent', true) },
       },
       {
@@ -585,7 +586,7 @@ export const CHILDREN_ARC_EVENTS = [
       {
         text: 'Help with the move — make the departure something to hold, not regret',
         tag: null,
-        outcome: 'The goodbye at the airport is real. You drive home through ordinary streets that look the same and aren\'t.',
+        outcome: 'There is a goodbye at the airport. You drive home through ordinary streets that look the same and aren\'t.',
         effect: (p) => { p.m -= 10; p.karma += 5; p.addFlag('child_lives_abroad'); p.setMem('childMovesAbroad', true) },
       },
       {
@@ -622,13 +623,13 @@ export const CHILDREN_ARC_EVENTS = [
         : Math.random() < 0.5
           ? 'a business idea they have been working on for a year'
           : 'a debt that has become difficult to manage alone'
-      return `${name} calls on a Sunday evening. The conversation circles for a few minutes before it arrives at the point: they need money. Specifically, ${scenario}. They are not asking lightly. You can hear that.`
+      return gendered(`${name} calls on a Sunday evening. The conversation circles for a few minutes before it arrives at the point: they need money. Specifically, ${scenario}. They are not asking lightly. You can hear that.`, child)
     },
     choices: [
       {
         text: 'Give it — with no strings attached',
         tag: null,
-        outcome: 'They are relieved in a way that makes the cost easy. You don\'t think about the amount again. Not much.',
+        outcome: 'They are relieved, and the relief makes the cost easy. You don\'t think about the amount again. Not much.',
         effect: (p) => { p.m += 5; p.mo -= 4000; p.karma += 8; p.setMem('childFinancialHelp', true) },
       },
       {
@@ -671,7 +672,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 24 && a <= 35
       })
       const name = child?.name ?? 'Your child'
-      return `The wedding is as you expected it and not. There is the ceremony, the photographs, the meal, the dancing. You meet, for the first time in the assembled version, the person who will share ${name}'s ordinary life — the mornings, the bills, the small frictions and recoveries that constitute a life. You are glad for them. The gladness is simple.`
+      return gendered(`The wedding is as you expected it and not. There is the ceremony, the photographs, the meal, the dancing. You meet, for the first time in the assembled version, the person who will share ${name}'s ordinary life — the mornings, the bills, the small frictions and recoveries that constitute a life. You are glad for them. The gladness is simple.`, child)
     },
     choices: [
       {
@@ -709,7 +710,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 28 && a <= 45
       })
       const name = child?.name ?? 'Your child'
-      return `${name} tells you the marriage is ending. You hear what they tell you and you hear what they do not tell you, and the two things together are a portrait of a pain they have been inside for some time without telling you. You think about the wedding. You say very little.`
+      return gendered(`${name} tells you the marriage is ending. You hear what they tell you and you hear what they do not tell you, and the two things together are a portrait of a pain they have been inside for some time without telling you. You think about the wedding. You say very little.`, child)
     },
     choices: [
       {
@@ -750,7 +751,7 @@ export const CHILDREN_ARC_EVENTS = [
     text: (G) => {
       const child = G.children[0]
       const name = child?.name ?? 'Your child'
-      return `${name} stops calling. The last conversation was months ago — not a fight, exactly, but something that settled into absence without announcement. You try once and the call goes unanswered and you do not try again for a while. The silence accumulates. It is not like other silences. It has a specific temperature.`
+      return `${name} stops calling. The last conversation was months ago — not a fight, exactly, but something that settled into absence without announcement. You try once and the call goes unanswered and you do not try again for a while. The silence accumulates. It is not like other silences. It has a temperature.`
     },
     choices: [
       {
@@ -784,7 +785,7 @@ export const CHILDREN_ARC_EVENTS = [
     text: (G) => {
       const child = G.children[0]
       const name = child?.name ?? 'Your child'
-      return `${name} reaches out. A message, not a call. The phrasing is careful in a way that tells you they have written it more than once. You read it twice. You do not know what the path forward looks like. You know you want there to be one.`
+      return gendered(`${name} reaches out. A message, not a call. The phrasing is careful; they have written it more than once. You read it twice. You do not know what the path forward looks like. You know you want there to be one.`, child)
     },
     choices: [
       {
@@ -892,7 +893,7 @@ export const CHILDREN_ARC_EVENTS = [
     text: (G) => {
       const child = G.children[0]
       const name = child?.name ?? 'Your child'
-      return `${name} calls and you hear the fear in their voice before you hear the words. The grandchild is in hospital. Something that is probably fine but is not yet confirmed as fine. You are across the city or across the country and there is nothing to do but be on the phone. You understand, for the first time completely, what it felt like to be your own parents when you were the one in the hospital.`
+      return gendered(`${name} calls and you hear the fear in their voice before you hear the words. The grandchild is in hospital. Something that is probably fine but is not yet confirmed as fine. You are across the city or across the country and there is nothing to do but be on the phone. You understand, for the first time completely, what it felt like to be your own parents when you were the one in the hospital.`, child)
     },
     choices: [
       {
@@ -929,7 +930,7 @@ export const CHILDREN_ARC_EVENTS = [
     text: (G) => {
       const child = G.children[0]
       const name = child?.name ?? 'Your child'
-      return `${name} has done something significant. A promotion, a publication, a thing they built that is now in the world in a real way. You hear about it and you feel the pride that is, if you are honest, partly about you — the years of driving them places, the cost of things, the faith that was not always easy to maintain. You let yourself have the feeling. They have earned it and so have you.`
+      return gendered(`${name} has done something significant. A promotion, a publication, a thing they built that is now in the world in a real way. You hear about it and you feel the pride that is, if you are honest, partly about you — the years of driving them places, the cost of things, the faith that was not always easy to maintain. You let yourself have the feeling. They have earned it and so have you.`, child)
     },
     choices: null,
     effect: (p) => { p.m += 14; p.karma += 4; p.setMem('childProfessionalAchievement', true); p.legacy += 5 },
@@ -953,7 +954,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 30 && a <= 45
       })
       const name = child?.name ?? 'Your child'
-      return `${name} is earning more than you were at their age. Or has built something larger, or achieved something you didn\'t manage. The fact of it arrives and sits with you for a while. What you feel is not what you expected to feel. It is complicated in a way that has less to do with them than with an older question about yourself that this has reopened.`
+      return gendered(`${name} is earning more than you were at their age. Or has built something larger, or achieved something you didn't manage. The fact of it arrives and sits with you for a while. What you feel is complicated, and has less to do with them than with an older question about yourself that this has reopened.`, child)
     },
     choices: [
       {
@@ -965,7 +966,7 @@ export const CHILDREN_ARC_EVENTS = [
       {
         text: 'Sit with the complicated thing — it is honest',
         tag: null,
-        outcome: 'You are proud and something else. Both are true. You live in the both for a while.',
+        outcome: 'You are proud and something else. You live in the both for a while.',
         effect: (p) => { p.m += 3; p.r += 5; p.e += 3; p.setMem('childSurpassesYou', true) },
       },
     ],
@@ -991,7 +992,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 40
       })
       const name = child?.name ?? 'Your child'
-      return `${name} has started checking in differently. More frequently, and with a quality to the questions that is new — how are you eating, are you sleeping, have you seen the doctor. You recognize the posture because it is how you used to ask about them. The reversal is strange and, underneath the strangeness, a kind of love.`
+      return gendered(`${name} has started checking in differently. More frequently, and with a quality to the questions that is new — how are you eating, are you sleeping, have you seen the doctor. You recognize the posture because it is how you used to ask about them. The reversal is strange and, underneath the strangeness, a kind of love.`, child)
     },
     choices: [
       {
@@ -1030,13 +1031,13 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 30 && a <= 55
       })
       const name = child?.name ?? 'Your child'
-      return `${name} has a diagnosis. The word lands differently when it is your child — regardless of their age, regardless of your age. You have been preparing for certain losses your whole adult life. This was not one of them. The wrong order of it is the thing. You do not know how to hold it correctly because there is no correct way.`
+      return gendered(`${name} has a diagnosis. The word lands differently when it is your child — regardless of their age, regardless of your age. You have been preparing for certain losses your whole adult life. This was not one of them. The wrong order of it is the thing. You do not know how to hold it correctly because there is no correct way.`, child)
     },
     choices: [
       {
         text: 'Be there — everything else can wait',
         tag: null,
-        outcome: 'You rearrange. You show up. The logistics of it are consuming in a way that is partly a mercy.',
+        outcome: 'You rearrange. You show up. The logistics of it consume you, which is partly a mercy.',
         effect: (p) => { p.m -= 18; p.h -= 4; p.r += 8; p.karma += 6; p.setMem('childSeriousIllness', true) },
       },
       {
@@ -1068,7 +1069,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 25
       })
       const name = child?.name ?? 'Your child'
-      return `${name} dies. You are sitting somewhere ordinary when you find out. You will remember exactly where you were and what the light was doing. Everything after has a different shape. No one is supposed to outlive their children. The loss does not fit any architecture you have built. It is its own country and you will live there now.`
+      return gendered(`${name} dies. You are sitting somewhere ordinary when you find out. You will remember exactly where you were and what the light was doing. Everything after has a different shape. No one is supposed to outlive a child. The loss does not fit any architecture you have built. It is its own country and you will live there now.`, child)
     },
     choices: null,
     effect: (p) => { p.m -= 40; p.h -= 12; p.r += 30; p.addFlag('lost_child'); p.addFlag('bereaved'); p.setMem('childDeathAdult', true) },
@@ -1089,7 +1090,7 @@ export const CHILDREN_ARC_EVENTS = [
     text: (G) => {
       const child = G.children.find(c => (G.age - c.ageAtBirth) <= 1)
       const name = child?.name?.split(' ')[0] ?? 'The baby'
-      return `${name} does not sleep in a way that can be predicted. Nights have become a territory of two-hour windows and the strange lucid exhaustion of someone who is needed without rest. You look at them at 3am and the feeling is too large to live in the same sentence as the tiredness.`
+      return gendered(`${name} does not sleep on any schedule you can predict. Nights have become a territory of two-hour windows and the strange lucid exhaustion of someone who is needed without rest. You look at them at 3am and the feeling is too large to live in the same sentence as the tiredness.`, child)
     },
     choices: null,
     effect: (p) => { p.setMem('childInfantNight', true); p.m -= 4; p.h -= 5; p.r += 3 },
@@ -1111,7 +1112,7 @@ export const CHILDREN_ARC_EVENTS = [
     text: (G) => {
       const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 1 && ca <= 2 })
       const name = child?.name?.split(' ')[0] ?? 'They'
-      return `${name} says something that is recognisably a word. Not clearly — more a sound that the context makes into a word. You hear it twice before you're sure. You are sure. You call someone to tell them and it sounds smaller in the telling than it was in the room.`
+      return gendered(`${name} says something that is recognisably a word. Not clearly — more a sound that the context makes into a word. You hear it twice before you're sure. You are sure. You tell the first person you see, and it sounds smaller in the telling than it was in the room.`, child)
     },
     choices: null,
     effect: (p) => { p.setMem('childFirstWord', true); p.m += 12 },
@@ -1135,7 +1136,7 @@ export const CHILDREN_ARC_EVENTS = [
       const name = child?.name?.split(' ')[0] ?? 'They'
       const traits = child?.traits ?? []
       const trait = traits[0] ?? 'something specific'
-      return `${name} is becoming a person with preferences. The preference is ${trait === 'curious' ? 'to know how everything works — the drawer, the door hinge, your face when you say no' : trait === 'shy' ? 'to watch before they join — a minute at the door before entering any room' : trait === 'spirited' ? 'to be in the middle of whatever is happening, always, regardless of permission' : `something you\'re still learning to name`}. You are meeting someone who will know you for the rest of your life.`
+      return gendered(`${name} is becoming a person with preferences. The preference is ${trait === 'curious' ? 'to know how everything works — the drawer, the door hinge, your face when you say no' : trait === 'shy' ? 'to watch before they join — a minute at the door before entering any room' : trait === 'spirited' ? 'to be in the middle of whatever is happening, always, regardless of permission' : `something you\'re still learning to name`}. You are meeting someone who will know you for the rest of your life.`, child)
     },
     choices: null,
     effect: (p) => { p.setMem('childToddlerPersonality', true); p.m += 8 },
@@ -1157,7 +1158,7 @@ export const CHILDREN_ARC_EVENTS = [
     text: (G) => {
       const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 5 && ca <= 8 })
       const name = child?.name?.split(' ')[0] ?? 'They'
-      return `${name} has a life at school that you only know from reports. A best friend whose name you hear constantly. A teacher they talk about. A person who bothered them in the playground, resolved by the following Monday. You are becoming someone who receives news rather than being present. This is correct and a little strange.`
+      return gendered(`${name} has a life at school that you only know from reports. A best friend whose name you hear constantly. A teacher they talk about. A person who bothered them in the playground, resolved by the following Monday. You are becoming someone who receives news rather than being present. This is correct and a little strange.`, child)
     },
     choices: null,
     effect: (p) => { p.setMem('childSchoolAgeIndep', true); p.m += 5; p.r += 2 },
@@ -1184,10 +1185,10 @@ export const CHILDREN_ARC_EVENTS = [
       const traits = child?.traits ?? []
       const interest = traits.includes('curious') ? 'how things work — the engine, the keyboard, the question nobody thought to ask'
         : traits.includes('sensitive') ? 'stories — reading them, making them up, telling them to anyone who will stay still long enough'
-        : traits.includes('spirited') ? 'sport, specifically the particular sport where the quality they have is most useful'
+        : traits.includes('spirited') ? 'sport, specifically the sport where the quality they have is most useful'
         : traits.includes('funny') ? 'making people laugh, which is a skill that looks accidental and isn\'t'
         : 'something you hadn\'t predicted, which is how it always goes'
-      return `${name} is interested in ${interest}. The interest has the texture of a vocation, not a phase. You are watching someone discover what they\'re for.`
+      return gendered(`${name} is interested in ${interest}. The interest has the texture of a vocation, not a phase. You are watching someone discover what they\'re for.`, child)
     },
     choices: [
       {
@@ -1231,7 +1232,7 @@ export const CHILDREN_ARC_EVENTS = [
         return ca >= 14 && ca <= 18 && (c.relationshipQuality ?? 60) < 55
       })
       const name = child?.name?.split(' ')[0] ?? 'They'
-      return `${name} does something that disappoints you. Not catastrophically — no one is in danger — but a choice that reveals a gap between who you thought they were becoming and who they are. You have to decide how much space the disappointment gets.`
+      return gendered(`${name} does something that disappoints you. Not catastrophically — no one is in danger — but a choice that reveals a gap between who you thought they were becoming and who they are. You have to decide how much space the disappointment gets.`, child)
     },
     choices: [
       {
@@ -1265,9 +1266,9 @@ export const CHILDREN_ARC_EVENTS = [
       const name = child?.name?.split(' ')[0] ?? 'They'
       const q = child?.relationshipQuality ?? 60
       if (q >= 70) {
-        return `${name} is finding their shape in the world. The path they are taking is not the one you imagined for them, and it is more clearly theirs than anything you imagined would have been. You tell them this. The conversation stays with you.`
+        return gendered(`${name} is finding their shape in the world. The path they are taking is not the one you imagined for them, and it is more clearly theirs than anything you imagined would have been. You tell them this. The conversation stays with you.`, child)
       }
-      return `${name} is finding their path, largely without your input. You hear about it in fragments. What you wanted for them and what they are choosing are not the same. You are working out how much that matters.`
+      return gendered(`${name} is finding their path, largely without your input. You hear about it in fragments. What you wanted for them and what they are choosing are not the same. You are working out how much that matters.`, child)
     },
     choices: null,
     effect: (p) => {
@@ -1297,7 +1298,7 @@ export const CHILDREN_ARC_EVENTS = [
     text: (G) => {
       const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 9 && ca <= 11 })
       const name = child?.name?.split(' ')[0] ?? 'Your child'
-      return `${name} is ten. You have photographs of them as a baby that feel impossible — not like a different child but like a different creature, something pre-verbal and soft. The person who now corrects your mispronunciations and has opinions about their friends and sometimes goes quiet for entire evenings is continuous with that creature. You cannot locate the transition. It happened while you were present.`
+      return gendered(`${name} is ten. You have photographs of them as a baby that feel impossible — not like a different child but like a different creature, something pre-verbal and soft. The person who now corrects your mispronunciations and has opinions about their friends and sometimes goes quiet for entire evenings is continuous with that creature. You cannot locate the transition. It happened while you were present.`, child)
     },
     choices: null,
     effect: (p) => { p.m += 6; p.r += 2; p.setMem('childMilestoneTen', true) },
@@ -1317,9 +1318,9 @@ export const CHILDREN_ARC_EVENTS = [
       const name = child?.name?.split(' ')[0] ?? 'Your child'
       const q = child?.relationshipQuality ?? 60
       if (q >= 65) {
-        return `${name} is sixteen. There are parts of their life you are not part of — friends you have not met, conversations you will not hear. This is correct. You watch them from a small distance and feel the satisfaction of a person becoming themselves without requiring your permission.`
+        return gendered(`${name} is sixteen. There are parts of their life you are not part of — friends you have not met, conversations you will not hear. This is correct. You watch them from a small distance and feel the satisfaction of a person becoming themselves without requiring your permission.`, child)
       }
-      return `${name} is sixteen. The distance between you is real and it has been growing for two years. You tell yourself this is normal. You tell yourself they will come back when they are older. You hope you are right, and you do not know how to accelerate it.`
+      return gendered(`${name} is sixteen. The distance between you is real and it has been growing for two years. You tell yourself this is normal. You tell yourself they will come back when they are older. You hope you are right, and you do not know how to accelerate it.`, child)
     },
     choices: null,
     effect: (p) => {
@@ -1345,7 +1346,7 @@ export const CHILDREN_ARC_EVENTS = [
     text: (G) => {
       const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 17 && ca <= 20 })
       const name = child?.name?.split(' ')[0] ?? 'Your child'
-      return `${name} is moving out. The room they leave behind is exactly the room they lived in — the same furniture, the same light from the same window — and now it is a room of absence. You stand in the doorway for a moment. You close the door. You try to remember that this is what you were for, all of it. This departure was the destination.`
+      return gendered(`${name} is moving out. The room they leave behind is exactly the room they lived in — the same furniture, the same light from the same window — and now it is a room of absence. You stand in the doorway for a moment. You close the door. You try to remember that this is what you were for, all of it. This departure was the destination.`, child)
     },
     choices: [
       {

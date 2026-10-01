@@ -86,7 +86,7 @@ export const UNWRITTEN_AMERICAS_EVENTS = [
       ((G.flags.includes('uam_ve_left') && !LIVES_IN(G, VE)) || (G.flags.includes('uam_ve_stayed') && LIVES_IN(G, VE) && G.currentYear >= 2015)) &&
       once(G, 'uam_ve_ft_after'),
     text: (G) => G.flags.includes('uam_ve_left')
-      ? 'The family group on your phone has forty-one members in nine countries, and every morning somebody posts the price of a kilo of something in Caracas as if it were weather. Your mother still lives in the flat in Los Palos Grandes and sends voice notes about the neighbours who have gone. Here you are the venezolana, which in Madrid now means a particular accent at a particular counter. In your father\'s village they called him el venezolano when he came back to visit, for the same reason, from the other side.'
+      ? 'The family group on your phone has forty-one members in nine countries, and every morning somebody posts the price of a kilo of something in Caracas as if it were weather. Your mother still lives in the flat in Los Palos Grandes and sends voice notes about the neighbours who have gone. Here you are the venezolana, which in Madrid now means an accent at a counter. In your father\'s village they called him el venezolano when he came back to visit, for the same reason, from the other side.'
       : 'The supermarket takes your cédula at the door, and the last digit decides which day of the week you are allowed to buy flour. Half the street has gone to Madrid or Miami or Tenerife, and the flats stand with their shutters down and a cousin paying the condominium. You had the passport and did not use it. Some mornings in the queue you cannot remember the reason, and some mornings you can.',
     context: 'From 2014-15, as price controls emptied the shelves, supermarkets rationed regulated goods by the final digit of the buyer\'s identity card. Some seven million Venezuelans left the country in the decade that followed.',
     choices: null,
@@ -149,7 +149,7 @@ export const UNWRITTEN_AMERICAS_EVENTS = [
       {
         text: 'Fill the barrel to the top',
         tag: null,
-        outcome: 'Your mother wears the towels to church, which is not what towels are for, and tells everyone who sent them.',
+        outcome: 'Your mother wears the towels to church, not what towels are for, and tells everyone who sent them.',
         effect: (p) => { p.setMem('uam_bz_ft_barrel', true); p.mo -= 400; p.karma += 4; p.m += 2 },
       },
       {
@@ -285,7 +285,7 @@ export const UNWRITTEN_AMERICAS_EVENTS = [
       {
         text: 'Put it in the drawer',
         tag: null,
-        outcome: 'It goes in with the title deed and your father\'s old identity card, which is where the family keeps what it intends to need.',
+        outcome: 'It goes in with the title deed and your father\'s old identity card, where the family keeps what it intends to need.',
         effect: (p) => { p.setMem('uam_ve_passport', true); p.m += 1; p.addFlag('uam_ve_stayed') },
       },
     ],
@@ -443,13 +443,13 @@ export const UNWRITTEN_AMERICAS_EVENTS = [
     phase: null,
     weight: 40,
     when: (G) => PR_HOME(G) && G.age >= 17 && G.age <= 35 && G.currentYear >= 1946 && G.currentYear <= 1965 && once(G, 'uam_pr_north'),
-    text: 'The cane pays for half the year and the other half is the tiempo muerto. There are flights to New York now for less than a month\'s wages, and you do not need a passport, because the island has been American since before your mother was born. Your brother writes from the Bronx that there are jobs in the garment shops and the hotel kitchens. He does not write about anything else, which is its own letter.',
+    text: 'The cane pays for half the year and the other half is the tiempo muerto. There are flights to New York now for less than a month\'s wages, and you do not need a passport, because the island has been American since before your mother was born. Your brother writes from the Bronx that there are jobs in the garment shops and the hotel kitchens. He does not write about anything else, and that is a letter too.',
     context: 'Puerto Ricans have been US citizens since the Jones Act of 1917. Between 1946 and the mid-1960s, with cheap air fares and the island\'s shift from sugar under Operation Bootstrap, several hundred thousand went to New York.',
     choices: [
       {
         text: 'Get on the plane',
         tag: null,
-        outcome: 'You come down at the airport in Queens in the only coat you own, which is not a winter coat.',
+        outcome: 'You come down at the airport in Queens in the only coat you own, not a winter coat.',
         effect: (p) => { p.setMem('uam_pr_north', true); p.r += 2; p.addFlag('uam_pr_went_north'); p.addFlag('emigrated'); p.emigrateTo('United States', { residency: 'citizen', tier: 'working_class' }) },
       },
       {

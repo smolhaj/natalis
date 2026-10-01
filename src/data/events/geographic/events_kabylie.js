@@ -77,7 +77,7 @@ export const KABYLIE_EVENTS = [
       {
         text: 'Tell him about the night itself',
         tag: null,
-        outcome: 'You tell him about the doors, the hour, the sound in the corridor. He listens the way you listen to history, which is what it is now.',
+        outcome: 'You tell him about the doors, the hour, the sound in the corridor. He listens the way you listen to history, because that is what it is now.',
         effect: (p) => { p.setMem('kab_ft_tafsut', true); p.m += 3; p.karma += 3 },
       },
       {
@@ -142,13 +142,13 @@ export const KABYLIE_EVENTS = [
       {
         text: 'Give what the notebook says',
         tag: null,
-        outcome: 'Your line in the notebook is the same length as everyone else\'s, which is the point of it.',
+        outcome: 'Your line in the notebook is the same length as everyone else\'s. That is the point of it.',
         effect: (p) => { p.setMem('kab_ft_notebook', true); p.mo -= 300; p.karma += 4 },
       },
       {
         text: 'Give more this year',
         tag: null,
-        outcome: 'In August two old men thank you by name at the assembly, which is worse than being thanked privately.',
+        outcome: 'In August two old men thank you by name at the assembly, and that is worse than being thanked privately.',
         effect: (p) => { p.setMem('kab_ft_notebook', true); p.mo -= 800; p.karma += 6; p.m += 2 },
       },
       {
@@ -199,7 +199,7 @@ export const KABYLIE_EVENTS = [
     phase: null,
     weight: 250,
     when: (G) => KAB(G) && G.flags.includes('kab_flag_2019') && G.currentYear >= 2021 && once(G, 'kab_ft_flag'),
-    text: 'The flag is blue, green and yellow with the red letter in the middle, and in 2019 men went to prison for months for carrying it through Algiers on a Friday. Afterwards a court in one city ruled it was no crime and a court in another ruled that it was. You kept yours. It is folded in the drawer with the passports, which is where your family has always kept the things it intends to need.',
+    text: 'The flag is blue, green and yellow with the red letter in the middle, and in 2019 men went to prison for months for carrying it through Algiers on a Friday. Afterwards a court in one city ruled it was no crime and a court in another ruled that it was. You kept yours. It is folded in the drawer with the passports, where your family has always kept the things it intends to need.',
     choices: null,
     effect: (p) => { p.setMem('kab_ft_flag', true); p.m -= 2; p.karma += 2 },
   },
@@ -296,7 +296,7 @@ export const KABYLIE_EVENTS = [
       {
         text: 'Stay inside the university',
         tag: 'defiant',
-        outcome: 'At four in the morning you are face down in a corridor with your hands on your head. Two dozen people are charged, and you are not one of them, which is luck.',
+        outcome: 'At four in the morning you are face down in a corridor with your hands on your head. Two dozen people are charged, and you are not one of them, by luck.',
         effect: (p) => { p.setMem('kab_1980', true); p.h -= 5; p.m -= 3; p.karma += 4; p.addFlag('kab_tafsut_1980') },
       },
       {

@@ -9,12 +9,15 @@
 // are eighteen." The opener is now derived from the age the character actually
 // is, and each event carries a band beyond which the beat has stopped being
 // about entering the phase.
-const AGE_WORD = {
-  18: 'eighteen', 19: 'nineteen', 20: 'twenty', 21: 'twenty-one', 22: 'twenty-two',
-  30: 'thirty', 31: 'thirty-one', 32: 'thirty-two', 33: 'thirty-three', 34: 'thirty-four',
-  50: 'fifty', 51: 'fifty-one', 52: 'fifty-two', 53: 'fifty-three', 54: 'fifty-four',
-}
-const areNow = (G) => AGE_WORD[G.age] ? `You are ${AGE_WORD[G.age]}.` : 'You are here.'
+// The opener used to be one sentence for everybody ("The scaffolding of
+// childhood has been removed"), printed into nearly every life at the same
+// three ages. It is now read from the state — the child at the breast, the
+// field, the job, the war, the grandchildren — by `groundLine` in
+// _phaseLines.js, and the closing question rotates.
+//
+// In passive mode the character answers, and the log prints the outcome: so
+// each outcome opens on the answer itself, in the character's own terms.
+import { groundLine, phaseQuestion } from './_phaseLines.js'
 
 export const PHASE_ENTRY_EVENTS = [
 
@@ -23,24 +26,24 @@ export const PHASE_ENTRY_EVENTS = [
     phase: 'young_adult',
     weight: 5,
     when: (G) => !G.mem?.phaseEntryYoungAdultDone && G.age <= 22,
-    text: (G) => `${areNow(G)} The scaffolding of childhood has been removed. The life ahead is unwritten. What matters most, entering this?`,
+    text: (G) => `${groundLine(G, 'young_adult')} ${phaseQuestion('young_adult')}`,
     choices: [
       {
-        text: 'Making something of yourself. Career, achievement, recognition.',
+        text: 'Making something of yourself, and being known for it.',
         tag: 'ya_priority_achievement',
-        outcome: 'You fix the compass on work and ambition. Other things will have to wait, or happen in the margins.',
+        outcome: 'Making something of yourself: you decide it the way people decide things at that age, all at once and without saying it aloud. Everything else will have to fit in the margins.',
         effect: (p) => { p.e += 3; p.setMem('phaseEntryYoungAdultDone', true) },
       },
       {
-        text: 'Finding your people. Love, friendship, belonging.',
+        text: 'Your people. Love, friends, somewhere to belong.',
         tag: 'ya_priority_connection',
-        outcome: 'You turn toward the people around you. The career can come later, maybe.',
+        outcome: 'Your people, you decide. The ones at the table, the ones you have not met yet. The rest can come later, or not.',
         effect: (p) => { p.s += 3; p.m += 3; p.setMem('phaseEntryYoungAdultDone', true) },
       },
       {
-        text: 'Figuring out who you actually are.',
+        text: 'Finding out who you actually are.',
         tag: 'ya_priority_identity',
-        outcome: 'You reserve the right to not know yet. The finding out will take time and probably make a mess.',
+        outcome: 'You decide not to know yet. Finding out will take years and make a mess, and you would rather that than be told.',
         effect: (p) => { p.r += 3; p.karma += 3; p.setMem('phaseEntryYoungAdultDone', true) },
       },
     ],
@@ -55,35 +58,35 @@ export const PHASE_ENTRY_EVENTS = [
     text: (G) => {
       const d = G.desire
       const desireCtx = {
-        prove_worth: `The scoreboard you have been keeping — achievements, titles, the recognition of people whose opinion matters to you — is it working?`,
-        belong: `The circles you have moved in, the rooms you have made yourself fit — do they feel like home now?`,
-        be_seen: `The visibility you have built, the presence you have made — is it what you wanted it to be?`,
-        safety: `The stability you have constructed — the routines, the provisions, the controlled variables — is it enough?`,
-        connection: `The relationships you have tended — partners, children, friends — how are they holding?`,
-        leave_mark: `The thing you have been building toward — is it taking the shape you imagined?`,
-        freedom: `The life you have shaped for yourself, away from what was given to you — does it feel chosen?`,
-        redemption: `The debt you have been repaying, the wrong you have been righting — where does it stand?`,
+        prove_worth: `The score you have been keeping since you were a child: is anyone else keeping it?`,
+        belong: `The rooms you have made yourself fit: do any of them feel like home yet?`,
+        be_seen: `Some people know your name now. Is it for the thing you wanted?`,
+        safety: `The money put by, the door locked twice: is it enough yet?`,
+        connection: `The people you have kept close: how are they holding?`,
+        leave_mark: `The thing you have been building toward: does it look like what you imagined?`,
+        freedom: `You are a long way from what you were handed. Does it feel chosen?`,
+        redemption: `The thing you have been trying to put right: where does it stand?`,
       }
-      const ctx = desireCtx[d] ?? 'The life you have been building has become recognizable as a life.'
-      return `${areNow(G)} ${ctx} What matters most in this half?`
+      const ctx = desireCtx[d]
+      return [groundLine(G, 'midlife'), ctx, phaseQuestion('midlife')].filter(Boolean).join(' ')
     },
     choices: [
       {
-        text: 'Consolidate. Build what you have been working toward.',
+        text: 'Build on what is already there.',
         tag: 'ml_priority_build',
-        outcome: 'The focus narrows. What exists gets deeper rather than wider.',
+        outcome: 'What is already there, you decide. You stop starting things. What exists gets deeper rather than wider.',
         effect: (p) => { p.e += 3; p.setMem('phaseEntryMidlifeDone', true) },
       },
       {
-        text: 'Repair. The relationships that need attention.',
+        text: 'Mend what has been let slide.',
         tag: 'ml_priority_repair',
-        outcome: 'You turn toward the things you have let slide. Some can be recovered.',
+        outcome: 'The people you have let slide, you decide. You make the visit you have been putting off. Some of it can be recovered.',
         effect: (p) => { p.karma += 4; p.setMem('phaseEntryMidlifeDone', true) },
       },
       {
-        text: 'Reconsider. Something is not working and you know it.',
+        text: 'Change something. Part of this is not working.',
         tag: 'ml_priority_reconsider',
-        outcome: 'The life you built was not wrong, exactly. It was someone\'s life. You are not sure it was always yours.',
+        outcome: 'Something has to change, you decide, though you could not yet say what. The life you built was somebody\'s life. You are not sure it was always yours.',
         effect: (p) => { p.r += 4; p.m -= 3; p.setMem('phaseEntryMidlifeDone', true) },
       },
     ],
@@ -98,35 +101,35 @@ export const PHASE_ENTRY_EVENTS = [
     text: (G) => {
       const d = G.desire
       const desireCtx = {
-        prove_worth: `What you have made of yourself — is that the word for it? What it has cost is a different question, one the fifties ask with some insistence.`,
-        belong: `The rooms you have been part of, the people who have been yours. What of it remains, and what was lost along the way?`,
-        be_seen: `You have been seen, in the ways that were available to you. Looking back: was it what you needed it to be?`,
-        safety: `The structures you built to feel safe — which ones held? Which ones turned out to be unnecessary?`,
-        connection: `The people. Always the people. Who is still here. Who is gone. What was made between you that mattered.`,
-        leave_mark: `The mark question is simpler now. Not what you built for history. What survived. What is still standing.`,
-        freedom: `You escaped, or resisted, or both. The question now is what you built in the space the escape created.`,
-        redemption: `The reckoning you have been postponing, or conducting, or both — it arrives at fifty with some insistence.`,
+        prove_worth: `You have made something of yourself. What it cost is a question the fifties ask more often than the forties did.`,
+        belong: `Of the rooms you were part of, you could count the ones that would still have you.`,
+        be_seen: `You have been seen, in the ways that were on offer. Some of it was the seeing you wanted.`,
+        safety: `Some of the locks you fitted turned out to be for doors nobody ever tried.`,
+        connection: `You could list who is still here and who is gone without stopping to think.`,
+        leave_mark: `What you hoped to leave has got smaller and more exact: a few people, a few things that still stand.`,
+        freedom: `You got away from what you were handed. What you built in the space is what is in front of you.`,
+        redemption: `The thing you have been trying to put right is still there when you wake.`,
       }
-      const ctx = desireCtx[d] ?? 'The life you have lived has become visible, like a landscape from a height.'
-      return `${areNow(G)} ${ctx} What do you carry into this last stretch?`
+      const ctx = desireCtx[d]
+      return [groundLine(G, 'late_life'), ctx, phaseQuestion('late_life')].filter(Boolean).join(' ')
     },
     choices: [
       {
-        text: 'Accept what is. Find peace in what has been built.',
+        text: 'Make peace with what is.',
         tag: 'll_priority_acceptance',
-        outcome: 'Not resignation — something quieter. The life is the life. You can live in it now.',
+        outcome: 'Peace, you decide, or something near it. You stop arguing with the life and start living in it.',
         effect: (p) => { p.m += 5; p.karma += 3; p.setMem('phaseEntryLateLifeDone', true) },
       },
       {
-        text: 'Transmit. Give what you have to the people who come after.',
+        text: 'Pass it on to the people who come after.',
         tag: 'll_priority_transmit',
-        outcome: 'The work is in the passing on now. What you have learned, what you have built, what you still have to offer.',
+        outcome: 'Passing it on, you decide. You start telling the young ones how things were done, whether or not they asked.',
         effect: (p) => { p.karma += 5; p.setMem('phaseEntryLateLifeDone', true) },
       },
       {
-        text: 'One more thing. There is still something unfinished.',
+        text: 'One more thing. Something is still unfinished.',
         tag: 'll_priority_unfinished',
-        outcome: 'The stubbornness of the unlived thing. It has waited this long. It will wait a little longer if it has to.',
+        outcome: 'The unfinished thing, you decide. It has waited this long and it can wait a little longer, but not much.',
         effect: (p) => { p.r += 4; p.e += 3; p.setMem('phaseEntryLateLifeDone', true) },
       },
     ],

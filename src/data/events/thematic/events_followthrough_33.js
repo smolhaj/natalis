@@ -65,7 +65,7 @@ export const FOLLOWTHROUGH_33_EVENTS = [
       G.flags.has('gha_stayed_deliberate') &&
       G.age >= 58 &&
       !G.mem?.ft33StayedLate,
-    text: 'You stayed when others went. Ghana kept changing: the 2000 transition, the oil discoveries in 2007, the dumsor years, the economic pressures of the 2020s. You have watched the country through all of it from the inside. The ones who left and returned bring a version of Ghana with them that stopped updating when they left. You have the version that kept updating. This is not better. It is just the one you have.',
+    text: 'You stayed when others went. Ghana kept changing: the 2000 transition, the oil discoveries in 2007, the dumsor years, the economic pressures of the 2020s. You have watched the country through all of it from the inside. The ones who left and returned bring a version of Ghana with them that stopped updating when they left. You have the version that kept updating. It is the one you have.',
     choices: null,
     effect: (p) => { p.m += 5; p.karma += 5; p.r += 4; p.setMem('ft33StayedLate', true) },
   },
@@ -93,7 +93,7 @@ export const FOLLOWTHROUGH_33_EVENTS = [
       G.flags.has('angola_peace_generation') &&
       G.age >= 55 &&
       !G.mem?.ft33AngolaPeace,
-    text: 'The war ended in 2002. Angola has had more than twenty years of peace now — longer than the civil war lasted, almost. Luanda has been rebuilt and then built beyond what it was before: the skyline changed, the roads changed, the restaurants that charge what restaurants in Dubai charge appeared alongside the musseques where people still have water delivered by truck. You live in both Angolas simultaneously: the one the oil built and the one the oil did not reach. The peace is real. The peace was not accompanied by reckoning.',
+    text: 'The war ended in 2002. Angola has had more than twenty years of peace now — longer than the civil war lasted, almost. Luanda has been rebuilt and then built beyond what it was before: the skyline changed, the roads changed, the restaurants that charge what restaurants in Dubai charge appeared alongside the musseques where people still have water delivered by truck. You live in both Angolas simultaneously: the one the oil built and the one the oil did not reach. There is peace. The peace was not accompanied by reckoning.',
     choices: null,
     effect: (p) => { p.r += 7; p.m += 4; p.e += 4; p.setMem('ft33AngolaPeace', true) },
   },

@@ -68,7 +68,7 @@ export const BONDED_LABOR_EVENTS = [
       G.flags.has('bonded_kiln') &&
       G.age >= 17 && G.age <= 40 &&
       !G.mem?.blKiln,
-    text: 'The quota is one thousand bricks per day, which is possible if nothing goes wrong. The clay must be a particular consistency — too wet and the bricks crack in firing, which counts against your account; too dry and they crack before firing, which also counts against your account. The owner has a ledger. Your wages go into the ledger on one side; the loan, the interest, the cost of the mud you use, the cost of the coal for firing, the cost of your water for the day — all of these go into the ledger on the other side. You have not seen the ledger. The owner reads from it to you at the end of the month. The balance is always approximately the same.',
+    text: 'The quota is one thousand bricks per day, possible if nothing goes wrong. The clay must be a consistency — too wet and the bricks crack in firing, which counts against your account; too dry and they crack before firing, which also counts against your account. The owner has a ledger. Your wages go into the ledger on one side; the loan, the interest, the cost of the mud you use, the cost of the coal for firing, the cost of your water for the day — all of these go into the ledger on the other side. You have not seen the ledger. The owner reads from it to you at the end of the month. The balance is always approximately the same.',
     choices: null,
     effect: (p) => { p.h -= 6; p.m -= 8; p.r += 7; p.e += 3; p.setMem('blKiln', true) },
   },
@@ -89,7 +89,7 @@ export const BONDED_LABOR_EVENTS = [
       (G.parents?.father?.alive === false || G.stats.wealth <= 1) &&
       !G.flags.has('bonded_labor') &&
       !G.mem?.blCarpetChild,
-    text: 'The carpet shed is a low room with looms that fill it wall to wall. The contractor who came to the house said you would learn a trade, which is true in the sense that you are learning something. Your fingers are the right size for the knots — smaller is better, the contractor said, and this was the reason given for why the work is for children rather than adults. The patterns are called by code numbers. You do not know what the carpets look like from the other side because you only ever see the back. Your wages are being held against your father\'s debt.',
+    text: 'The carpet shed is a low room with looms that fill it wall to wall. The contractor who came to the house said you would learn a trade, and you are learning something. Your fingers are the right size for the knots — smaller is better, the contractor said, and this was the reason given for why the work is for children rather than adults. The patterns are called by code numbers. You do not know what the carpets look like from the other side because you only ever see the back. Your wages are being held against your father\'s debt.',
     choices: null,
     effect: (p) => { p.h -= 5; p.e -= 3; p.m -= 10; p.r += 8; p.addFlag('bonded_labor'); p.addFlag('child_laborer'); p.setMem('blCarpetChild', true) },
   },
@@ -168,7 +168,7 @@ export const BONDED_LABOR_EVENTS = [
       G.flags.has('bonded_release_process') &&
       G.age >= 25 && G.age <= 55 &&
       !G.mem?.blLiberation,
-    text: 'The district magistrate has issued a certificate of release. It is one page with a government seal, and it says the debt and the interest on the interest cannot be collected from you. It also means you no longer work at the kiln and no longer live on the kiln premises, and the owner is still the man the village buys its rice from. You have the paper and you have the resettlement money folded inside it. You are standing at the edge of his land, which is also the edge of the village, looking at the other side.',
+    text: 'The district magistrate has issued a certificate of release. It is one page with a government seal, and it says the debt and the interest on the interest cannot be collected from you. It also means you no longer work at the kiln and no longer live on the kiln premises, and the owner is still the man the village buys its rice from. You have the paper and you have the resettlement money folded inside it. You are standing at the edge of his land, the edge of the village, looking at the other side.',
     context: 'India\'s Bonded Labour System (Abolition) Act came into force in 1976. Release certificates were issued by district magistrates, with a rehabilitation grant — around fourteen thousand rupees by the 2000s — that in practice often arrived late or not at all.',
     choices: [
       {
@@ -180,7 +180,7 @@ export const BONDED_LABOR_EVENTS = [
       {
         text: 'You stay in the area. Your family is here. You will navigate the owner\'s presence.',
         tag: 'stay',
-        outcome: 'The paper is real. The freedom is real. The daily calculation of what to avoid and who to not be seen talking to — that is also real, and ongoing.',
+        outcome: 'You have the paper. You are free. The daily calculation of what to avoid and who to not be seen talking to — that is also real, and ongoing.',
         effect: (p) => { p.m += 6; p.r += 10; p.addFlag('bonded_labor_freed'); p.setMem('blLiberation', true) },
       },
     ],
@@ -240,7 +240,7 @@ export const BONDED_LABOR_EVENTS = [
       {
         text: 'You go. Leave at night. Send for your family once you are settled.',
         tag: 'go',
-        outcome: 'Chicago in February is a different kind of cold than Mississippi in February. The plant is loud and the work is hard but the check is real.',
+        outcome: 'Chicago in February is a different kind of cold than Mississippi in February. The plant is loud and the work is hard but the check clears.',
         effect: (p) => { p.m += 8; p.e += 4; p.w += 3; p.addFlag('great_migration'); p.relocate('us_chicago'); p.setResidency('citizen'); p.setMem('blSharecropNorth', true) },
       },
       {
@@ -264,7 +264,7 @@ export const BONDED_LABOR_EVENTS = [
       G.flags.has('bonded_labor') &&
       G.age >= 60 &&
       !G.mem?.blLateReckoning,
-    text: 'You know what a ledger that is not in your favour looks like. You know the specific calculation of a debt that doesn\'t move: how you go in to the settlement and go out of the settlement knowing already what next year will look like. This knowledge — the arithmetic of a trap — does not leave you when the trap ends, if it ends. It reshapes how you hold money when you have it: the compulsive accounting, the distrust of terms you cannot verify, the particular attention to what the other person controls in any transaction. Your grandchildren watch you count change in a way they find excessive. You have not explained why.',
+    text: 'You know what a ledger that is not in your favour looks like. You know the calculation of a debt that doesn\'t move: how you go in to the settlement and go out of the settlement knowing already what next year will look like. This knowledge — the arithmetic of a trap — does not leave you when the trap ends, if it ends. It reshapes how you hold money when you have it: the compulsive accounting, the distrust of terms you cannot verify, the attention to what the other person controls in any transaction. Your grandchildren watch you count change in a way they find excessive. You have not explained why.',
     choices: null,
     effect: (p) => { p.e += 4; p.r += 5; p.m += 3; p.setMem('blLateReckoning', true) },
   },

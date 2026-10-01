@@ -45,7 +45,7 @@ export const INDONESIA_DEPTH_EVENTS = [
       G.age >= 25 &&
       (G.flags.has('id_1965_survived') || G.flags.has('id_1965_stained') || G.flags.has('learned_silence')) &&
       !G.mem?.idNewOrderSilence,
-    text: 'The New Order names this the Year of Living Dangerously and never speaks of it again. The textbook says: the PKI attempted a coup; the people rose up against them; order was restored. The textbook does not say: half a million to a million people, six months, the bodies in the Brantas River, the mass graves in the sugar plantations. You know this in the way that everyone who was there knows it — in silences, in the way certain topics are not raised at the table, in the particular expression on the face of a person who decides not to answer your question.',
+    text: 'The New Order names this the Year of Living Dangerously and never speaks of it again. The textbook says: the PKI attempted a coup; the people rose up against them; order was restored. The textbook does not say: half a million to a million people, six months, the bodies in the Brantas River, the mass graves in the sugar plantations. You know this in the way that everyone who was there knows it — in silences, in the way certain topics are not raised at the table, in the expression on the face of a person who decides not to answer your question.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('id_1965_silence_generation'); p.setMem('idNewOrderSilence', true); },
   },
@@ -64,7 +64,7 @@ export const INDONESIA_DEPTH_EVENTS = [
       {
         text: 'You were there — Bali, that night.',
         tag: 'id_bali_proximate',
-        outcome: 'What you saw is in a specific register that does not match the news reports. The news reports are accurate; they are also not what you carry.',
+        outcome: 'What you saw is in a register that does not match the news reports. The news reports are accurate; they are also not what you carry.',
         effect: (p) => { p.m -= 18; p.h -= 5; p.r += 10; p.karma += 5; p.addFlag('id_bali_bombing_generation'); p.setMem('idBaliBombing', true); },
       },
       {
@@ -87,7 +87,8 @@ export const INDONESIA_DEPTH_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 10 &&
       !G.mem?.idTsunami2004,
-    text: 'December 26, 2004. The undersea earthquake off the northern coast of Sumatra is a 9.1 — the third largest ever recorded. The tsunami it generates reaches the coast of Aceh in seventeen minutes. 170,000 Acehnese are killed. Another 36,000 in other Indonesian provinces, 128,000 in Sri Lanka and India and Thailand. The wave is thirty meters high in places. The province of Aceh is physically changed — coastlines altered, towns erased. The aid that arrives in January 2005 comes from everywhere in the world. You are somewhere along that coast, or you know people who were.',
+    text: 'December 26, 2004. The earthquake off Sumatra, and seventeen minutes later the sea comes into Aceh, thirty metres high in places. Coastlines move; towns are erased. Aid comes in January from everywhere on earth. You are somewhere along that coast, or you know people who were.',
+    context: 'The magnitude 9.1 earthquake and tsunami killed some 170,000 people in Aceh and about 230,000 across the Indian Ocean.',
     choices: [
       {
         text: 'You survived. Your community did not.',
@@ -120,7 +121,7 @@ export const INDONESIA_DEPTH_EVENTS = [
       {
         text: 'Take the transmigration land offer. A chance.',
         tag: 'id_transmigration_went',
-        outcome: 'The land is real. The jungle is real. The other people who were already on the land are also real. You spend years figuring out which of those three things is the most important.',
+        outcome: 'The other people who were already on the land are also real. You spend years figuring out which of those three things is the most important.',
         effect: (p) => { p.r += 5; p.mo -= 500; p.addFlag('id_transmigration_settler'); p.setMem('idTransmigration', true); },
       },
       {
@@ -147,7 +148,7 @@ export const INDONESIA_DEPTH_EVENTS = [
       {
         text: 'Hold your identity. The Star is yours even if you cannot fly it.',
         tag: null,
-        outcome: 'The holding is quiet and costly. The cost is the price of being who you are in this particular country.',
+        outcome: 'The holding is quiet and costly. The cost is the price of being who you are in this country.',
         effect: (p) => { p.m -= 6; p.r += 5; p.karma += 5; p.addFlag('id_papua_identity'); p.addFlag('dual_identity'); p.setMem('idPapuaIdentity', true); },
       },
       {

@@ -15,7 +15,7 @@ export const FOLLOWTHROUGH_77_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 30 &&
       !G.mem?.ft77WarSoldierBody,
-    text: 'The doctor calls the condition a musculoskeletal complaint. The paperwork from the Bonyad-e Janbazan — the Veterans Foundation — calls it a service injury. What you call it is the thing you feel in the cold. The war ended in 1988. What the war left in the body did not end in 1988. You have found the vocabulary for this gradually: not broken, not fine, not trauma in the clinical sense, just the body having been somewhere and carrying the somewhere with it. The foundation processes the paperwork slowly.',
+    text: 'The doctor writes "musculoskeletal complaint". The Veterans Foundation\'s papers say service injury. You call it the thing you feel in the cold. The war ended in 1988 and what it left in your body did not. Not broken, not fine: a body that was somewhere and carries it. The foundation processes the paperwork slowly.',
     choices: null,
     effect: (p) => {
       p.h -= 4
@@ -34,7 +34,7 @@ export const FOLLOWTHROUGH_77_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 50 &&
       !G.mem?.ft77WarSoldierSilence,
-    text: 'The war is official memory now — the Sacred Defence, the term the state uses. The murals are on the walls of every city: the faces of the martyrs, the Imam\'s statement about drinking poison to accept the ceasefire, the years 1980–1988. What the murals do not show is what the front actually was. The human wave tactics. The plastic keys. The men who came back in the zinc coffins before the ceasefire. You have a specific relationship to the official memory: you were there, and the mural is not where you were.',
+    text: 'The war is official memory now, the Sacred Defence. On the walls of every city: the martyrs\' faces, the Imam\'s words about drinking poison when he accepted the ceasefire. The murals do not show the front: the human waves, the plastic keys, the zinc coffins. You were there, and the mural is not where you were.',
     choices: null,
     effect: (p) => {
       p.r += 6
@@ -55,7 +55,7 @@ export const FOLLOWTHROUGH_77_EVENTS = [
       G.currentYear >= 1995 &&
       G.age >= 18 &&
       !G.mem?.ft77MartyrChildState,
-    text: 'The certificate from the Bonyad-e Shahid is a piece of paper that gives you priority for housing, university admission, and monthly income. It is also a piece of paper that announces, in any government office you walk into, what your family\'s relationship to the state is. The photograph on the wall is yours. The certificate is also the state\'s. The state uses the photograph for the murals, the anniversaries, the commemorations. The grief is personal. The uses the state finds for the grief are not personal. You have learned to separate these things imperfectly.',
+    text: 'The certificate from the Martyrs\' Foundation gives your family priority for housing, for a university place, a monthly payment. It also tells every clerk in every office what your family is to the state. The photograph on your wall is yours; the state puts the same face on the murals and brings it out for the anniversaries. The grief is yours. What the state does with it is not, and you have learned to keep the two apart, imperfectly.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -135,7 +135,7 @@ export const FOLLOWTHROUGH_77_EVENTS = [
       G.currentYear >= 2023 &&
       G.age >= 16 &&
       !G.mem?.ft77MahsaAftermath,
-    text: 'The protests were suppressed. The Islamic Republic did not fall. What happened instead: the morality police disappeared from the streets for a year and then returned in a different form. Women who walk without covering in certain neighbourhoods are not arrested. In other neighbourhoods they are. The enforcement is inconsistent in a way that may be policy or may be implementation — it is not possible from the outside to know which. The revolution that did not complete itself left something in the air that is not quite victory and not quite defeat. You are living in the not-quite.',
+    text: 'The protests were put down and the Islamic Republic did not fall. The morality police vanished from the streets for a year and came back in another form. In some neighbourhoods a woman walks uncovered and nobody stops her; in others they do. Whether that is policy or only enforcement, nobody outside can tell. You are living in what was left: not victory and not defeat.',
     choices: null,
     effect: (p) => {
       p.r += 6

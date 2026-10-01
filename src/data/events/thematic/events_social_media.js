@@ -62,7 +62,7 @@ export const SOCIAL_MEDIA_EVENTS = [
       {
         text: 'Engage fully — it is where things are happening',
         tag: null,
-        outcome: 'The connections are real. The cost accumulates slowly.',
+        outcome: 'You make connections. The cost accumulates slowly.',
         effect: (p) => { p.s += 5; p.m += 4; p.addFlag('social_media_user'); p.setMem('smArrivalDone', true) },
       },
       {
@@ -113,7 +113,7 @@ export const SOCIAL_MEDIA_EVENTS = [
     text: (G) => {
       const yr = G.currentYear ?? 2015
       const platform = yr >= 2016 ? 'Instagram' : 'Facebook'
-      return `On ${platform} you exist in a particular way: photographed, rated, compared. The feedback is quantified in a way that face-to-face life is not. You know the images are curated — you curate yours — but the knowing does not prevent your body from reading the comparison as real. There is a version of yourself that the platform wants you to have opinions about constantly. You are fourteen. This is a significant amount of exposure to your own inadequacy.`
+      return `On ${platform} you exist in a way: photographed, rated, compared. The feedback is quantified, as face-to-face life is not. You know the images are curated — you curate yours — but the knowing does not prevent your body from reading the comparison as real. There is a version of yourself that the platform wants you to have opinions about constantly. You are fourteen. This is a significant amount of exposure to your own inadequacy.`
     },
     choices: [
       {
@@ -125,7 +125,7 @@ export const SOCIAL_MEDIA_EVENTS = [
       {
         text: 'Delete it — or at least step back for a while',
         tag: null,
-        outcome: 'The withdrawal is social as well as individual. The FOMO is real. So is the relief.',
+        outcome: 'The withdrawal is social as well as individual. You miss things, and you are relieved.',
         effect: (p) => { p.m += 5; p.e += 4; p.addFlag('social_media_stepped_back'); p.setMem('smAdolGirlDone', true) },
       },
     ],
@@ -209,7 +209,7 @@ export const SOCIAL_MEDIA_EVENTS = [
       G.flags.has('influencer_income') &&
       (G.currentYear ?? 0) >= 2018 &&
       !G.mem?.smAlgorithmDone,
-    text: 'The platform changes the algorithm. Your reach drops by sixty percent in a quarter. The income follows the reach. This is not a metaphor about dependency — it is a specific event with a specific number attached. You built something on someone else\'s infrastructure and they changed the infrastructure.',
+    text: 'The platform changes the algorithm. Your reach drops by sixty percent in a quarter. The income follows the reach. This is not a metaphor about dependency — it is an event with a number attached. You built something on someone else\'s infrastructure and they changed the infrastructure.',
     choices: [
       {
         text: 'Diversify — build off-platform, own the relationship',
@@ -248,7 +248,7 @@ export const SOCIAL_MEDIA_EVENTS = [
       const yr = G.currentYear ?? 2019
       const platform = getPlatform(G) ?? 'the platform'
       if (yr >= 2020) {
-        return `The pandemic-era usage made something visible that was previously deniable: the relationship with ${platform} is not neutral. The hours, the way political content now seems designed to produce a kind of agitation, the specific effect on your mood at the end of a session. You are deciding whether to keep paying this price.`
+        return `The pandemic-era usage made something visible that was previously deniable: the relationship with ${platform} is not neutral. The hours, the way political content now seems designed to produce a kind of agitation, the effect on your mood at the end of a session. You are deciding whether to keep paying this price.`
       }
       return `After years on ${platform}, the costs are clearer than they were at the start: the attention captured, the comparison that is structurally engineered, the version of the world the feed is optimised to show you. You are aware of what it is now. The awareness creates a decision.`
     },
@@ -262,7 +262,7 @@ export const SOCIAL_MEDIA_EVENTS = [
       {
         text: 'Continue but with more deliberate use — the connection is worth it',
         tag: null,
-        outcome: 'The deliberate use becomes the old use within two weeks. This was predictable. You still have the connections, which are real.',
+        outcome: 'The deliberate use becomes the old use within two weeks. This was predictable. You still have the connections.',
         effect: (p) => { p.m += 2; p.setMem('smReckoningDone', true) },
       },
       {

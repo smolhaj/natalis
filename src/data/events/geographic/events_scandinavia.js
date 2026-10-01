@@ -30,7 +30,7 @@ export const SCANDINAVIA_EVENTS = [
         if (yr >= 1980) {
           return 'You have been told, by people from elsewhere, that Norway is expensive and cold. This is true. You have also grown up knowing that illness will not bankrupt your family, that university costs almost nothing, that the state regards your childhood as something worth investing in. The specifics of this — a dentist appointment, a textbook, a year of parental leave — are simply there, unremarkable until they are not.'
         }
-        return 'The welfare state is not an abstraction. It is the student loan you did not take out, the doctor you went to without considering the cost, the parental leave your mother had. The fabric is visible only when it is absent elsewhere.'
+        return 'The welfare state is the student loan you did not take out, the doctor you went to without considering the cost, the parental leave your mother had. The fabric is visible only when it is absent elsewhere.'
       }
       if (country === 'Finland') {
         return 'The Finnish welfare state is built partly on *sisu* — the gut persistence that got you through the Winter War — and partly on a pragmatic belief that equality is efficient. The school you attend is not separated by class; the child beside you is the child of a professor and the child of a factory worker and the difference in their educational opportunity is deliberately small. You do not have a word for this in your daily life. It is just how school works.'
@@ -87,7 +87,7 @@ export const SCANDINAVIA_EVENTS = [
         : country === 'Norway'
         ? 'The Norwegian'
         : 'The Swedish'
-      return `${countryProse} code is old but operational: *Du skal ikke tro du er noe* — you shall not think you are special. You have achieved something you are genuinely proud of. The social pressure is not to deny it, exactly, but to minimise it, to deflect the acknowledgement, to change the subject. You understand why this code exists — equality requires it — and also what it costs in the specific case of being you, now, in this room.`
+      return `${countryProse} code is old but operational: *Du skal ikke tro du er noe* — you shall not think you are special. You have achieved something you are genuinely proud of. The social pressure is not to deny it, exactly, but to minimise it, to deflect the acknowledgement, to change the subject. You understand why this code exists — equality requires it — and also what it costs in the case of being you, now, in this room.`
     },
     choices: [
       {
@@ -99,7 +99,7 @@ export const SCANDINAVIA_EVENTS = [
       {
         text: 'Name what you have done — you earned it',
         tag: null,
-        outcome: 'The room cools slightly. You are not wrong. This is also noted.',
+        outcome: 'The room cools slightly. You are right, and that is noted too.',
         effect: (p) => { p.m += 4; p.s -= 4; p.addFlag('broke_janteloven'); p.setMem('scanJantelovenDone', true) },
       },
     ],
@@ -125,7 +125,7 @@ export const SCANDINAVIA_EVENTS = [
       if (yr < 2000) {
         return 'The oil fund has been accumulating for a decade. Norway has managed to extract and not simply spend — the sovereign wealth fund now holds more money than most people can conceptualise. You grew up in a country that was not wealthy within living memory. You are now in one that is among the wealthiest on earth. The transition carries its own questions about what this means for who you are as a country.'
       }
-      return 'The oil wealth is the background condition of contemporary Norwegian life — the reason the welfare state is not in the austerity discussion that affects other countries, the reason the interest rates are navigable, the reason certain things are possible that elsewhere are not. The fund also represents the carbon that is somewhere in the atmosphere. Both of these are true.'
+      return 'The oil wealth is the background condition of contemporary Norwegian life — the reason the welfare state is not in the austerity discussion that affects other countries, the reason the interest rates are navigable, the reason certain things are possible that elsewhere are not. The fund also represents the carbon that is somewhere in the atmosphere.'
     },
     effect: (p) => { p.m += 5; p.e += 4; p.setMem('scanNorwayOilDone', true) },
     choices: null,
@@ -146,7 +146,7 @@ export const SCANDINAVIA_EVENTS = [
       const yr = G.currentYear ?? 1940
       const isKarelia = G.mem?.isKarelian === true
       if (isKarelia) {
-        return 'The Soviet forces are closing on Karelia. The evacuation order comes in winter. Your family packs what fits in a cart and leaves the house your grandfather built. You do not know you will not go back. The frost is severe. The road is full of families in the same column. Finland will win, technically, in the sense that it will survive. Karelia will not be returned.'
+        return 'The Soviets are closing on Karelia, and the evacuation order comes in winter. Your family packs what fits in a cart and leaves the house your grandfather built, not knowing it is for good. The frost is hard and the road is one long column of families. Finland will win, in the sense that it will survive. Karelia will not come back.'
       }
       return `The war began in November 1939. The Soviet Union has 450,000 troops and Finland has fewer than half that, and is alone. On the radio, the reports use the word *sisu*. The word has always meant something. It means something different now — it is the explanation your country is giving itself for why it is still here.`
     },
@@ -188,7 +188,7 @@ export const SCANDINAVIA_EVENTS = [
       !G.mem?.scanSwedenNeutralityDone,
     text: (G) => {
       const yr = G.currentYear ?? 1942
-      return `Sweden is not at war. This requires a specific kind of navigation — the German troops who transit Swedish railways on the way to Norway and Finland and back; the iron ore that Swedish mines supply to German industry; the Jews who escape here from occupied Denmark in the autumn of 1943. You benefit from the peace in specific ways. You also know what the peace has required. You do not discuss this openly. Almost no one in Sweden does.`
+      return `Sweden is not at war. This requires a kind of navigation — the German troops who transit Swedish railways on the way to Norway and Finland and back; the iron ore that Swedish mines supply to German industry; the Jews who escape here from occupied Denmark in the autumn of 1943. You benefit from the peace in specific ways. You also know what the peace has required. You do not discuss this openly. Almost no one in Sweden does.`
     },
     choices: [
       {

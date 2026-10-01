@@ -15,7 +15,7 @@ export const CELEBRITY_EVENTS = [
     when: (G) =>
       G.fame >= 40 &&
       !G.mem?.celPublicSelfFired,
-    text: 'There is a version of you that exists in the world and that you did not exactly create. It was made from interviews, photographs, selected moments, the things other people said about you when you were not there. The version is not entirely false. It is the public self — partial, permanent, searchable. When you meet people now, you can see them briefly checking you against the version. You are never quite the version. The version is never quite you.',
+    text: 'There is a version of you that exists in the world and that you did not exactly create. It was made from interviews, photographs, selected moments, the things other people said about you when you were not there. The version is the public self — partial, permanent, searchable. When you meet people now, you can see them briefly checking you against the version. You are never quite the version. The version is never quite you.',
     choices: null,
     effect: (p) => { p.m -= 5; p.addFlag('celebrity_public_self'); p.setMem('celPublicSelfFired', true) },
   },
@@ -30,7 +30,7 @@ export const CELEBRITY_EVENTS = [
       !G.mem?.celParasocialFired,
     text: (G) => {
       const yr = G.currentYear ?? 2010
-      if (yr >= 2010) return 'The messages arrive in volume. People you have never met describe, in very specific terms, the effect you have had on their lives. The effect is real — you did the thing, they experienced the thing. But the relationship they describe is not one you are in. They know the public self. What they feel for the public self is genuine. You are grateful and also — there is no other word for it — lonely in a way that the messages make more acute.'
+      if (yr >= 2010) return 'The messages arrive in volume. People you have never met describe, in very specific terms, the effect you have had on their lives. The effect is real — you did the thing, they experienced the thing. But the relationship they describe is not one you are in. They know the public self. What they feel for the public self is genuine. You are grateful and also — there is no other word for it — lonely, and the messages make it worse.'
       return 'The fan letters come in bags. Some are moving, some are unnerving, and all of them are addressed to a person who is a partial version of who you are. The post office has been notified. You do not read all of them. The ones you do read stay with you.'
     },
     choices: null,
@@ -75,7 +75,7 @@ export const CELEBRITY_EVENTS = [
       G.flags.has('celebrity_parasocial') &&
       (G.stats?.happiness ?? 60) < 45 &&
       !G.mem?.celSpiralFired,
-    text: 'The fame and the unhappiness coexist in a way that confuses everyone including you. The narrative says this should be enough: the recognition, the money, the access, the room full of people who want to be near you. The narrative is not equipped to explain the specific emptiness of coming home from the room to an apartment that does not know you are significant. You begin to manage the emptiness in ways that are not sustainable.',
+    text: 'The fame and the unhappiness coexist and confuse everyone, including you. The narrative says this should be enough: the recognition, the money, the access, the room full of people who want to be near you. The narrative is not equipped to explain the emptiness of coming home from the room to an apartment that does not know you are significant. You begin to manage the emptiness in ways that are not sustainable.',
     choices: [
       {
         text: 'Get help — the emptiness is something that can be addressed',
@@ -102,7 +102,7 @@ export const CELEBRITY_EVENTS = [
       G.currentYear >= 2012 &&
       (G.flags.has('celebrity_media_friction') || G.flags.has('celebrity_spiral')) &&
       !G.mem?.celCancelFired,
-    text: 'Something you said, or something about what you did, becomes the thing that people are discussing. The discussion moves faster than you can respond to. The public self is being revised in real time by people who had a specific investment in the previous version. Statements are requested. Apologies are calibrated. The thing is what it is — neither larger nor smaller than what the original fact was. The scale of the response is a function of the machinery, not the fact.',
+    text: 'Something you said, or something about what you did, becomes the thing that people are discussing. The discussion moves faster than you can respond to. The public self is being revised in real time by people who had an investment in the previous version. Statements are requested. Apologies are calibrated. The thing is what it is — neither larger nor smaller than what the original fact was. The scale of the response is a function of the machinery, not the fact.',
     choices: [
       {
         text: 'Face it directly — say what is true, acknowledge what is real',

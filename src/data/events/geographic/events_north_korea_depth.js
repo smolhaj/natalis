@@ -15,7 +15,7 @@ export const NORTH_KOREA_DEPTH_EVENTS = [
       IS_DPRK(G) &&
       G.age >= 6 && G.age <= 12 &&
       !G.flags.has('dprk_inminban_awareness'),
-    text: 'The inminban leader comes on Tuesday afternoons. Every household must be present. The leader has a small notebook in which absences are recorded. You learn, before you can name the system, what the notebook means — that the ordinary facts of where you are and who is with you are information that belongs to someone else. The leader is a neighbor. She brought food when your grandmother was sick. She also has the notebook. Both things are true about her and you learn not to hold them as a contradiction.',
+    text: 'The neighbourhood unit leader comes on Tuesday afternoons, and every household must be there, and she writes absences in a small notebook. Before you can name the system you learn what the notebook means: where you are and who is with you is information that belongs to someone else. She brought food when your grandmother was sick. She also has the notebook.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 2; p.addFlag('dprk_inminban_awareness') },
   },
@@ -28,7 +28,7 @@ export const NORTH_KOREA_DEPTH_EVENTS = [
       IS_DPRK(G) &&
       G.age >= 17 &&
       !G.flags.has('dprk_kwanliso_witness'),
-    text: 'The man who lived two floors above you was taken in February. The phrase used was not taken. It was assigned to a labor facility in the north. The assignment came without a hearing, without a notice to the family, without a date of return. His wife packed one bag and sent it after him and no one knows whether it arrived. You learn not to say his name in the stairwell. You learn the specific shape of the silence that goes around a person who has become a name that is not said. The shape of the silence is also a form of knowledge.',
+    text: 'The man two floors up was taken in February, though taken is not the word used; he was assigned to a labour facility in the north, without a hearing, without notice to the family, without a date of return. His wife packed a bag and sent it after him, and nobody knows if it arrived. You learn not to say his name in the stairwell, and the shape of the silence around a name that is not said.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('dprk_kwanliso_witness') },
   },
@@ -61,7 +61,7 @@ export const NORTH_KOREA_DEPTH_EVENTS = [
       IS_DPRK(G) &&
       G.currentYear >= 2004 &&
       !G.flags.has('dprk_tumen_phone'),
-    text: 'The Chinese SIM card comes through the market. The signal from the Chinese tower reaches the high ground near the river on clear days. You go before dawn, when the patrol pattern has a gap. The call connects after two tries. Your cousin, who has been on the other side for fourteen months, sounds like herself and also like someone who has been somewhere else for fourteen months — some words slightly different, some pauses in different places. The call lasts three minutes. You say: I am here. She says: I am here. You agree to try again in a month. You go back down before the light comes.',
+    text: 'The Chinese SIM card comes through the market. The signal reaches the high ground by the river on clear days, and you go before dawn, when the patrols have a gap. The call connects on the second try. Your cousin, fourteen months on the other side, sounds like herself and like someone who has been somewhere else for fourteen months. You say: I am here. She says: I am here. You go back down before the light comes.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 3; p.addFlag('dprk_tumen_phone') },
   },
@@ -74,7 +74,7 @@ export const NORTH_KOREA_DEPTH_EVENTS = [
       IS_DPRK(G) &&
       G.age >= 18 && G.age <= 30 &&
       !G.flags.has('dprk_pyongyang_privilege'),
-    text: 'You went to Pyongyang for the first time and it was not what you expected, which surprised you, because you did not know you had expectations. The buildings are large. The metro goes deep enough to be a shelter. The mosaics show the history of the revolution in colors that are vivid because they were made to be vivid. The Pyongyangers have a bearing — a way of standing and looking that provincial people do not have. The rations in Pyongyang are better. Everyone knows this and no one says it. The city keeps its knowledge the way all cities keep their advantages: as a fact that structures everything and is mentioned in none of the official descriptions.',
+    text: 'You go to Pyongyang for the first time, and it is not what you expected, which surprises you, because you did not know you had expectations. The buildings are huge; the metro runs deep enough to be a shelter; the mosaics are bright because they were made to be. The Pyongyangers stand and look in a way people from the provinces do not. The rations are better here. Everyone knows it and nobody says it.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 2; p.addFlag('dprk_pyongyang_privilege') },
   },
@@ -93,7 +93,7 @@ export const NORTH_KOREA_DEPTH_EVENTS = [
       {
         text: 'The card comes. You are a party member.',
         tag: 'accepted',
-        outcome: 'The card is in your drawer. The doors it opens are not visible until you walk toward them and they open. This is how party membership works — you do not see the doors until you have the card.',
+        outcome: 'The card is in your drawer. You do not see the doors party membership opens until you walk toward them with the card.',
         effect: (p) => { p.m += 6; p.w += 6; p.s += 3; p.addFlag('dprk_party_member') },
       },
       {
@@ -114,7 +114,7 @@ export const NORTH_KOREA_DEPTH_EVENTS = [
       G.currentYear >= 2005 &&
       G.flags.has('dprk_hostile_class') &&
       !G.flags.has('dprk_songbun_reclassified'),
-    text: 'The market has made certain things possible that were not possible before the market. Among them: the official who processes records in the county office accepts what you bring in an envelope that is sized for documents. He does not look up while he makes the change. Your grandfather\'s record — the grandfather who had a Bible, or whose brother went south in 1950, or who said something in 1972 that was noted — is amended. The file now describes an ordinary family with an ordinary history. The amendment is illegal. It happened. Your grandfather never knew he was defining your ceiling and he never knew the ceiling was removed.',
+    text: 'The markets have made things possible that were not possible before, among them an envelope sized for documents handed to the clerk in the county records office, who does not look up while he makes the change. Your grandfather\'s record, the Bible, or the brother who went south in 1950, or the remark in 1972 that was noted, is amended. The file now describes an ordinary family. Your grandfather never knew he had set your ceiling, or that it was removed.',
     choices: null,
     effect: (p) => { p.m += 8; p.w += 6; p.addFlag('dprk_songbun_reclassified') },
   },
@@ -127,7 +127,7 @@ export const NORTH_KOREA_DEPTH_EVENTS = [
       IS_DPRK(G) &&
       G.flags.has('dprk_hanawon_complete') &&
       !G.flags.has('dprk_south_korea_adjustment'),
-    text: 'You get four words into a sentence before the vowels give you away and the other person\'s face does the small thing it does. Most people are kind. One or two are curious in a way that turns you into an exhibit. The variety in the shop you adjusted to inside a year. It is the quantity you have not adjusted to, the refrigerated aisle running longer than the room you grew up in, and you still stop in front of it.',
+    text: 'You get four words into a sentence before the vowels give you away and the other person\'s face does the small thing it does. Most people are kind. One or two are curious, and their curiosity turns you into an exhibit. The variety in the shop you adjusted to inside a year. It is the quantity you have not adjusted to, the refrigerated aisle running longer than the room you grew up in, and you still stop in front of it.',
     context: 'North Korean arrivals in South Korea spend about twelve weeks at the Hanawon resettlement centre before being placed in housing with a resettlement grant and a police liaison. Roughly 34,000 have arrived since 1998. Northern accent and vocabulary are widely recognisable, and surveys have consistently found high rates of unemployment, underemployment and reported discrimination among resettled defectors.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 5; p.r += 4; p.addFlag('dprk_south_korea_adjustment') },

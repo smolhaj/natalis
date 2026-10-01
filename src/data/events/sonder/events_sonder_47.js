@@ -13,7 +13,7 @@ export const EVENTS_SONDER_47 = [
     when: (G) => !G.mem?.s47a,
     text: () => pick([
       'The appliance that has always made that noise. You stopped hearing it years ago and now, in a quiet moment, you hear it again and it is the sound of every room you have lived in that had this appliance, all at once, layered.',
-      'You have had the same response to the same kind of question for so long that you no longer notice you are giving it. Someone hears it and laughs in a way that tells you the response has become something performed rather than felt. You sit with that for a moment.',
+      'You have had the same response to the same kind of question for so long that you no longer notice you are giving it. Someone hears it and laughs, and the laugh tells you the response has become something performed rather than felt. You hear it, and let it pass.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s47a', true) },
@@ -64,7 +64,7 @@ export const EVENTS_SONDER_47 = [
     weight: 2,
     when: (G) => place.hasHousingMarket(G) && (!G.mem?.s47f),
     text: () => pick([
-      'The landlord\'s smell. The particular smell of someone else\'s home that permeates the place you are renting, that you have learned to stop noticing, that you sometimes catch again as though for the first time.',
+      'The landlord\'s smell. The smell of someone else\'s home that permeates the place you are renting, that you have learned to stop noticing, that you sometimes catch again as though for the first time.',
       'Reading a book and reaching the part where you cannot tell if you read this before or only think you did. The text is familiar but differently familiar from how familiar the book is. Possibly you read it in a dream.',
     ]),
     choices: null,
@@ -78,7 +78,7 @@ export const EVENTS_SONDER_47 = [
     when: (G) => !G.mem?.s47g,
     text: () => pick([
       'You are telling a story from decades ago and you suddenly cannot remember whether it happened to you or to someone you knew so well that their story became indistinguishable from yours. You finish the story as though it happened to you. It probably did.',
-      'The particular quiet of a house where children used to live. Not absence exactly — more like a held breath, a room still oriented toward purposes it no longer serves.',
+      'The quiet of a house where children used to live. Not absence exactly — more like a held breath, a room still oriented toward purposes it no longer serves.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s47g', true) },
@@ -142,7 +142,7 @@ export const EVENTS_SONDER_47 = [
     weight: 2,
     when: (G) => !G.mem?.s47l,
     text: () => pick([
-      'The year that repeats as a reference point in your conversations. Younger people at the table have a different year. The different years are not wrong. They are just from different lives.',
+      'The year that repeats as a reference point in your conversations. Younger people at the table have a different year. The different years are from different lives.',
       'You have been asked how things are going and you have said fine for so many years that "fine" no longer communicates anything. It is a punctuation mark. The actual answer lives somewhere else, unasked.',
     ]),
     choices: null,
@@ -168,7 +168,7 @@ export const EVENTS_SONDER_47 = [
     weight: 2,
     when: (G) => place.wentToSchool(G) && (!G.mem?.s47n),
     text: () => pick([
-      'The smell of a specific classroom at a specific hour of a specific season that you could not describe but would recognise instantly, and which has come back to you once, unexpectedly, in a completely different building, and been gone before you could name it.',
+      'The smell of a classroom at an hour of a season that you could not describe but would recognise instantly, and which has come back to you once, unexpectedly, in a completely different building, and been gone before you could name it.',
       'The adult whose authority you respected and whose private life you never wondered about. Looking back, they must have had one. At the time there was no inside-the-school and outside-the-school for them — they simply existed as teachers exist, fully formed, without childhood.',
     ]),
     choices: null,
@@ -208,7 +208,7 @@ export const EVENTS_SONDER_47 = [
     when: (G) => !G.mem?.s47q,
     text: () => pick([
       'The version of your family that exists in the city you have moved to — the simplified version, the version that starts later than the real one, the version that does not include the things you have decided not to explain. Most people who know you know this version.',
-      'The work that takes longer than anyone thought because the part that takes time is invisible. You are not slow. The invisible part is real.',
+      'The work that takes longer than anyone thought because the part that takes time is invisible. You are not slow.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s47q', true) },
@@ -233,7 +233,7 @@ export const EVENTS_SONDER_47 = [
     weight: 2,
     when: (G) => !G.mem?.s47s,
     text: () => pick([
-      'The meal that only one person makes the right way. Not the recipe — you know the recipe. The particular temperature, the particular timing, the particular something that is in the hands. The meal exists only in the presence of the person.',
+      'The meal that only one person makes the right way. Not the recipe — you know the recipe. The temperature, the timing, the something that is in the hands. The meal exists only in the presence of the person.',
       'The fear that was very large at seven and is a specific, manageable thing at forty-five. The shrinkage is good. But you remember what it was like when it was large and you do not look down on the child who held it.',
     ]),
     choices: null,
@@ -260,7 +260,7 @@ export const EVENTS_SONDER_47 = [
     when: (G) => !G.mem?.s47u,
     text: () => pick([
       'The object in a drawer that you cannot throw away and cannot explain. It has no function and no clear memory attached to it. It is just there, preserved by the same instinct that preserves things whose meaning has not yet finished arriving.',
-      'You are laughing at something and then the laughter is happening and you are watching it happen and then it is over and you are in the room again. The laughter was real. The watching of the laughter was also real. Both things were true at once.',
+      'You are laughing at something and then the laughter is happening and you are watching it happen and then it is over and you are in the room again. The watching of the laughter was also real.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s47u', true) },
@@ -311,7 +311,7 @@ export const EVENTS_SONDER_47 = [
     weight: 2,
     when: (G) => !G.mem?.s47y,
     text: () => pick([
-      'The exact quality of light in the house at a particular hour. Not day and not evening. The light that means the day is done but the night has not started. Later in life, when you are somewhere else at this hour, the light sometimes catches and you are briefly, involuntarily, back.',
+      'The exact quality of light in the house at an hour. Not day and not evening. The light that means the day is done but the night has not started. Later in life, when you are somewhere else at this hour, the light sometimes catches and you are briefly, involuntarily, back.',
       'The older person who treats you as a person worth talking to. Not as a child to be instructed. The difference is felt immediately and remembered for a long time.',
     ]),
     choices: null,
@@ -350,8 +350,8 @@ export const EVENTS_SONDER_47 = [
     weight: 2,
     when: (G) => !G.mem?.s47ab,
     text: () => pick([
-      'The city at a specific hour of a specific season that feels like it is showing you something it normally keeps hidden. The emptiness of it, or the fullness — the quality of the light, the temperature, the particular silence or noise at that precise hour. You walk through it knowing you are inside something that will not repeat exactly.',
-      'The job that was not a career but that gave you something a career does not — a particular calibration of time, a particular relationship to effort. You think about this sometimes when the career is moving in ways that feel out of scale.',
+      'The city at an hour of a season that feels like it is showing you something it normally keeps hidden. The emptiness of it, or the fullness — the quality of the light, the temperature, the silence or noise at that precise hour. You walk through it knowing you are inside something that will not repeat exactly.',
+      'The job that was not a career but that gave you something a career does not — a calibration of time, a relationship to effort. You think about this sometimes when the career is moving in ways that feel out of scale.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s47ab', true) },

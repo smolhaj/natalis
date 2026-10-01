@@ -22,7 +22,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
       G.currentYear >= 1940 &&
       G.age >= 8 && G.age <= 14 &&
       !G.mem?.ethAdwa,
-    text: `At school they teach Adwa differently from how other countries teach their battles. March 1, 1896: the Ethiopian army under Emperor Menelik II destroyed the Italian column. Fifteen thousand Italian and Askari soldiers went in. Three thousand came back. The rest is the number that ended Italy's first attempt to colonise Ethiopia. You learn this in a classroom that still exists because of that day. Your teacher does not say this explicitly. She does not need to.`,
+    text: `At school they teach Adwa differently from how other countries teach their battles. March 1, 1896: Menelik's army destroyed the Italian column, and Italy's first attempt to colonise Ethiopia ended that day. You learn it in a classroom that exists because of that day. Your teacher does not say so. She does not need to.`,
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -42,7 +42,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
       G.currentYear >= 1935 && G.currentYear <= 1940 &&
       G.age >= 5 && G.age <= 15 &&
       !G.mem?.ethItalian,
-    text: `October 1935. The Italian army crosses from Eritrea and Somalia. Mussolini wants what Adwa denied his predecessor. The planes come first — not bombs, but shells that burst and release something the League of Nations has banned: mustard gas. Haile Selassie pleads his case at Geneva. The assembly listens. The Italian advance continues. Addis Ababa falls in 1936 and the Emperor goes into exile in Bath, England, where it rains. The occupation will last five years, nine months, and twelve days — 1,756 days during which Ethiopia, which has never been colonised, is colonised.`,
+    text: `October 1935. The Italians come from Eritrea and Somalia; Mussolini wants what Adwa denied his predecessor. The planes drop something the League has banned, and it burns the skin and the lungs. Haile Selassie pleads at Geneva and the assembly listens and the advance continues. In 1936 Addis falls and the Emperor goes into exile in Bath, where it rains, and Ethiopia, which has never been colonised, is colonised.`,
     choices: [
       {
         text: 'Your family goes to the mountains. The Arbegnoch resistance is already organising.',
@@ -58,7 +58,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
       {
         text: 'Your family stays in the city and navigates the occupation.',
         tag: null,
-        outcome: 'Navigation has its own moral texture. The occupation ends in 1941. Haile Selassie returns from Bath. What the city required during those years — the accommodations, the silences — stays in the family without being named.',
+        outcome: 'Navigation is a moral question. The occupation ends in 1941. Haile Selassie returns from Bath. What the city required during those years — the accommodations, the silences — stays in the family without being named.',
         effect: (p) => {
           p.m -= 10
           p.setMem('ethItalian', true)
@@ -84,7 +84,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
       {
         text: `The famine, the feudal system, the palace animals: change was overdue.`,
         tag: null,
-        outcome: 'The relief at the end of the imperial era is real. What replaces it will reshape that relief many times.',
+        outcome: 'There is relief at the end of the imperial era. What replaces it will reshape that relief many times.',
         effect: (p) => {
           p.m -= 5
           p.addFlag('eth_haile_selassie_generation')
@@ -116,7 +116,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
       G.currentYear >= 1993 && G.currentYear <= 1994 &&
       G.age >= 18 &&
       !G.mem?.ethEritreaRef,
-    text: `April 1993. Eritrea votes for independence. 99.8% yes. The thirty-year war of liberation — started when Haile Selassie dissolved the British-brokered federation in 1961 — is over. Eritrea is now a country. Ethiopia is landlocked. The ports of Assab and Massawa, through which most of the country's imports and exports have moved for decades, belong to a foreign state. Some Ethiopians are relieved: the war cost them enormously and Eritrean independence was, after everything, a fact before the vote confirmed it. Some are bitter: sixty million people in a dry, food-insecure country, now without a coastline.`,
+    text: `April 1993, and Eritrea votes to leave, and the thirty-year war is over, and Ethiopia has no sea. Assab and Massawa, the ports almost everything came and went through, belong to a foreign state. Some people are relieved: the war cost everyone, and it was decided long before the vote. Some are bitter: a dry country of sixty million, now without a coastline.`,
     choices: null,
     effect: (p) => {
       p.m -= 5
@@ -192,7 +192,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
       G.currentYear >= 2011 && G.currentYear <= 2025 &&
       G.age >= 18 &&
       !G.mem?.ethGerd,
-    text: `The Grand Ethiopian Renaissance Dam goes up on the Blue Nile, 500 kilometres from the Sudanese border. It will be the largest hydroelectric dam in Africa when complete. Egypt, which has treated the Nile as its entitlement since antiquity — anchored in a 1959 colonial-era treaty that gave it 55.5 billion cubic metres per year without consulting anyone upstream — is alarmed. Egypt has no legal claim to what Ethiopia builds in Ethiopia. That is, from the Ethiopian side, exactly the point. A country that has had famine, is landlocked, and is building electricity infrastructure it needs with its own engineers and its own bonds. The government asks citizens to buy bonds. A number of people you know already have.`,
+    text: `The dam goes up on the Blue Nile near the Sudanese border, the biggest in Africa. Egypt, which has treated the river as its own since antiquity, under a treaty that never asked anyone upstream, is alarmed, and from here that is exactly the point. A country that has known famine, without a sea, is building the power it needs with its own engineers and its own money. The government asks citizens to buy bonds, and a lot of people you know already have.`,
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -212,7 +212,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
       G.currentYear >= 1960 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem?.ethRunners,
-    text: `At the 1960 Rome Olympics, Abebe Bikila of the Imperial Guard ran the marathon course at night — through the Arch of Constantine, along the Appian Way, past ruins of the civilization that had tried to colonise Ethiopia and failed — and he ran it barefoot and he won and he set a world record. He was the first sub-Saharan African to win an Olympic gold medal. He ran without shoes because the Italian company supplying the Ethiopian team had run out of the right size. In Addis the news arrives by radio. What arrives with it has a specific national frequency.`,
+    text: `At the 1960 Rome Olympics, Abebe Bikila of the Imperial Guard ran the marathon course at night — through the Arch of Constantine, along the Appian Way, past ruins of the civilization that had tried to colonise Ethiopia and failed — and he ran it barefoot and he won and he set a world record. He was the first sub-Saharan African to win an Olympic gold medal. He ran without shoes because the Italian company supplying the Ethiopian team had run out of the right size. In Addis the news arrives by radio. What arrives with it has a national frequency.`,
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -232,7 +232,7 @@ export const ETHIOPIA_DEPTH_EVENTS = [
       G.flags.has('eth_abiy_generation') &&
       G.age >= 35 &&
       !G.mem?.ethOromiaAbiy,
-    text: `Abiy Ahmed is the outcome of the protests, in the way these things work: sustained pressure creates the conditions, and the specific change that emerges is not the change the pressure intended. The people beaten at Irreechaa did not march for Abiy Ahmed. But the years of accumulated pressure — the state of emergencies, the dead, the international scrutiny — are the political landscape he walked into. That he then launched the Tigray war in 2020 adds a layer to the accounting. The protests, and what they produced, and what that production became: you were inside all of it.`,
+    text: `Abiy Ahmed is the outcome of the protests, in the way these things work: sustained pressure creates the conditions, and the change that emerges is not the change the pressure intended. The people beaten at Irreechaa did not march for Abiy Ahmed. But the years of accumulated pressure — the state of emergencies, the dead, the international scrutiny — are the political landscape he walked into. That he then launched the Tigray war in 2020 adds a layer to the accounting. The protests, and what they produced, and what that production became: you were inside all of it.`,
     choices: null,
     effect: (p) => {
       p.r += 5

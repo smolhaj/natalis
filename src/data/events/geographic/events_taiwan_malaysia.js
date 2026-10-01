@@ -19,10 +19,11 @@ export const TAIWAN_MALAYSIA_EVENTS = [
       G.currentYear >= 1947 && G.currentYear <= 1948 &&
       G.age >= 6 &&
       !G.mem?.twn228,
-    text: 'February 28, 1947. A cigarette seller is beaten by tax agents in Taipei; the crowd that gathers is fired on; protests spread across the island. For two weeks Taiwan is in uprising. Then Chiang Kai-shek sends troops from the mainland. In the following weeks and months, between 18,000 and 30,000 Taiwanese civilians are killed. The educated class is particularly targeted: lawyers, doctors, teachers, anyone who might lead. For the next forty years this event will not be spoken of. The official term is "the February 28 Incident." The date will be forbidden in public memory for four decades. You are old enough to know something happened.',
+    text: 'February 1947. Tax agents beat a cigarette seller in Taipei, and the crowd that gathers is fired on, and the island rises. Then the troops come from the mainland, and in the weeks after they kill the lawyers and the doctors and the teachers, anyone who might lead. For forty years nobody says the date in public. You are old enough to know that something happened.',
+    context: 'The 228 Incident and its aftermath killed an estimated 18,000 to 28,000 people. Martial law in Taiwan lasted until 1987.',
     choices: [
       {
-        text: 'Someone in your family is taken or killed. The silence that follows is a specific kind of silence.',
+        text: 'Someone in your family is taken or killed. The silence that follows is a kind of silence.',
         tag: null,
         outcome: 'The silence has a shape and a weight. You learn early that certain questions do not get answered. The not-answering is the answer.',
         effect: (p) => { p.m -= 15; p.r += 7; p.addFlag('taiwan_228_generation'); p.setMem('twn228', true); },
@@ -30,7 +31,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
       {
         text: 'You survive intact, your family intact, but the neighborhood is different afterward.',
         tag: null,
-        outcome: 'The neighborhood is different in the specific way that a place is different when its educated people have been removed from it. You feel the absence without having a word for it.',
+        outcome: 'The neighborhood is different in the way that a place is different when its educated people have been removed from it. You feel the absence without having a word for it.',
         effect: (p) => { p.m -= 8; p.r += 5; p.e += 2; p.addFlag('taiwan_228_generation'); p.setMem('twn228', true); },
       },
     ],
@@ -85,7 +86,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
       {
         text: 'You hold the mainland as somewhere real. The Taiwan you are in is provisional.',
         tag: null,
-        outcome: 'The provisional status has its own texture: the military culture, the retaking that is always about to happen, the identity built around an absence. You carry this into your adult life.',
+        outcome: 'The provisional status shapes everything: the military culture, the retaking that is always about to happen, the identity built around an absence. You carry this into your adult life.',
         effect: (p) => { p.r += 7; p.m -= 5; p.addFlag('waishengren_generation'); p.setMem('twnMainlander', true); },
       },
     ],
@@ -104,7 +105,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year >= 1996) {
-        return 'March 1996: the first direct presidential election in Taiwan\'s history. China fires missiles into the waters near Taiwan\'s ports in the weeks before the vote — a warning about independence ambitions. The US sends two aircraft carrier battle groups to the Taiwan Strait. On election day, the missiles have not stopped the vote. Lee Teng-hui wins with 54 percent. You vote for the first time in a presidential election. The ballot is yours to mark as you choose. This is new.'
+        return 'March 1996, the first direct presidential election in Taiwan\'s history, and in the weeks before it China fires missiles into the sea near the ports. America sends two carrier groups into the Strait. On the day, the missiles have not stopped the vote. Lee Teng-hui wins. You mark your ballot as you choose, and that is new.'
       }
       return 'July 15, 1987: martial law ends. Thirty-eight years — the longest martial law in modern history. The day after, newspapers publish things they could not have published the day before. Political parties begin to organize — the DPP, which had been illegal, now isn\'t. The transition to democracy over the following decade is real and Taiwan-specific: not the velvet revolution, not the color revolutions, but a negotiated opening from within the KMT system that produces genuine pluralism.'
     },
@@ -118,7 +119,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
       {
         text: 'The transition feels incomplete. Democracy arrived but certain structures did not change.',
         tag: null,
-        outcome: 'The incompleteness is accurate and does not cancel the transition. Both can be true simultaneously.',
+        outcome: 'The incompleteness is accurate and does not cancel the transition.',
         effect: (p) => { p.m += 6; p.r += 4; p.addFlag('taiwan_democratic_generation'); p.setMem('twnDemocracy', true); },
       },
     ],
@@ -172,7 +173,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
       if (eth === 'indian_malaysian') {
         return 'May 13, 1969. The post-election violence between Malays and Chinese in Kuala Lumpur kills hundreds. The emergency declaration suspends Parliament. Indians are not the primary targets but they are in the streets too, and the streets are dangerous. What the riots produce — the New Economic Policy, the explicit prioritisation of Malay rights — will shape your life and your children\'s lives in ways that take years to become visible.'
       }
-      return 'May 13, 1969. Post-election violence between communities. Parliament suspended. Emergency declared. The National Operations Council governs for two years. What comes out of the crisis is the New Economic Policy: a restructuring of Malaysian society designed to increase Malay economic participation through quotas, reservations, and preferences. The NEP defines the next fifty years of Malaysian life. You grow up in the Malaysia it creates.'
+      return 'May 13, 1969. After the election, killing between the communities, and Parliament suspended, and the country ruled by emergency council for two years. Out of it comes the New Economic Policy, with its quotas and reservations and preferences to lift Malay ownership. It defines the next fifty years. You grow up in the Malaysia it made.'
     },
     choices: [
       {
@@ -203,10 +204,10 @@ export const TAIWAN_MALAYSIA_EVENTS = [
     text: (G) => {
       const eth = G.character.ethnicity || ''
       if (eth === 'chinese_malaysian') {
-        return 'The New Economic Policy. University places have reserved quotas for Bumiputera students — Malay and indigenous. You are Chinese. Your matriculation result qualifies you for the course you want; the quota means you do not get in. This is not a secret or a rumour — it is the policy, openly stated. Some Chinese families send children to private colleges, to Singapore, to Australia. Some study something else. The NEP has been in effect since 1971 and will remain in effect, under various names, for the rest of your life.'
+        return 'University places are reserved for Bumiputera students, and you are Chinese, and your results qualify you for the course you want and you do not get in. It is not a rumour; it is the policy, stated openly. Some families send their children to private colleges, or Singapore, or Australia; some children study something else. The policy has been in force since 1971 and will be, under one name or another, for the rest of your life.'
       }
       if (eth === 'indian_malaysian') {
-        return 'The New Economic Policy was designed for the Malay majority. Indians are neither Bumiputera nor Chinese — they occupy a specific position: not the target of the policy, not the beneficiary either. The Tamil school system is under-resourced. The rubber estate communities where your grandparents worked have been disrupted by palm oil. The NEP\'s vision of Malaysian unity has a specific shape that does not quite include the Tamil community in the way it was promised.'
+        return 'The New Economic Policy was designed for the Malay majority. Indians are neither Bumiputera nor Chinese — they occupy a position: not the target of the policy, not the beneficiary either. The Tamil school system is under-resourced. The rubber estate communities where your grandparents worked have been disrupted by palm oil. The NEP\'s vision of Malaysian unity has a shape that does not quite include the Tamil community in the way it was promised.'
       }
       return 'The New Economic Policy: 30 percent Bumiputera ownership targets, university quotas, business licence preferences, government contract reservations. You are Malay. The policy is designed for you — to build Malay economic participation that was historically below your population share. The policy works by some measures and creates resentments that also need to be managed. You live in the Malaysia the NEP produces.'
     },
@@ -236,7 +237,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
       G.currentYear >= 1998 && G.currentYear <= 2004 &&
       G.age >= 18 &&
       !G.mem?.mysReformasi,
-    text: 'September 1998. Anwar Ibrahim — Deputy Prime Minister, Mahathir\'s chosen successor — is arrested, charged with sodomy and corruption, beaten by the police chief while handcuffed. The charges are widely believed to be fabricated to neutralize a political rival. The word that emerges from the protests that follow: reformasi. Reformation. The UMNO government has been in power for forty-one years. Mahathir runs the country from a position that admits no real accountability. The reform movement is real and is being suppressed. You are watching both.',
+    text: 'September 1998. Anwar Ibrahim, deputy prime minister and chosen successor, is arrested on charges of sodomy and corruption that almost nobody believes, and beaten in his cell by the head of police. The protests have a word: reformasi. The ruling party has governed for forty-one years. The reform movement is real and it is being suppressed, and you are watching both.',
     choices: [
       {
         text: 'You join the reformasi protests. This is where you find yourself able to be.',
@@ -263,7 +264,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
       G.currentYear === 2018 &&
       G.age >= 21 &&
       !G.mem?.mysGE14,
-    text: 'May 9, 2018. The 14th General Election. UMNO — which has governed Malaysia without interruption since independence in 1957 — loses for the first time. Pakatan Harapan wins. Mahathir Mohamad, now 92, who governed as Prime Minister from 1981 to 2003 and is now running against his old party, becomes Prime Minister for the second time. The transfer of power is peaceful. Sixty-one years of one-party rule ends in an election. The morning after is a specific feeling.',
+    text: 'May 9, 2018. UMNO, which has governed since independence, loses for the first time, and the man who becomes prime minister is Mahathir, ninety-two, who ruled from 1981 to 2003 and now ran against his old party. The handover is peaceful. Sixty-one years of one-party rule end at a ballot box. The morning after is a feeling.',
     choices: [
       {
         text: 'You stayed up for the results. The morning is a different morning.',

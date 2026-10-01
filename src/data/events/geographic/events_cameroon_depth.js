@@ -25,8 +25,8 @@ export const CAMEROON_DEPTH_EVENTS = [
       const yr = G.currentYear
       const context = yr <= 1990
         ? 'Offshore oil was found in 1977. The SNH — the national oil company — is pumping. The revenues are entering the state.'
-        : 'The oil revenues that came in the 1980s funded some things and disappeared into other things. The price fell in 1985. Cameroon went into structural adjustment in 1988. The oil was real. The transformation was not.'
-      return `${context} The economics of an oil state follow a pattern: the resource comes before the institutions that would manage it well, and the institutions that exist reshape themselves around the resource rather than around the population. You learn this not as an economic theory but as the specific fact of which departments get new buildings and which hospitals still use 1960s equipment. Cameroon did not become Nigeria. Cameroon did not become Gabon. Cameroon became itself, with oil added.`
+        : 'The oil revenues that came in the 1980s funded some things and disappeared into other things. The price fell in 1985. Cameroon went into structural adjustment in 1988. The transformation was not.'
+      return `${context} The economics of an oil state follow a pattern: the resource comes before the institutions that would manage it well, and the institutions that exist reshape themselves around the resource rather than around the population. You learn this not as an economic theory but as the fact of which departments get new buildings and which hospitals still use 1960s equipment. Cameroon did not become Nigeria. Cameroon did not become Gabon. Cameroon became itself, with oil added.`
     },
     choices: null,
     effect: (p) => { p.e += 3; p.r += 3; p.addFlag('cmr_oil_generation') },
@@ -43,7 +43,7 @@ export const CAMEROON_DEPTH_EVENTS = [
       G.religion === 'muslim_sunni' &&
       G.age >= 20 &&
       !G.flags.has('cmr_boko_north_witness'),
-    text: 'Boko Haram crossed from Nigeria in 2014. The far north of Cameroon — Maroua, the Lake Chad basin, the Mandara mountains — received what the northeastern Nigerian border had been sending. The raids come at night. They take young men and sometimes young women. They destroy what they cannot use. The Cameroonian army is present and understaffed. The multinational joint task force coordinates across the borders in theory. In practice, you know which villages have been hit and which ones have not yet been hit, and the logic of the sequence is not legible from the outside.',
+    text: 'Boko Haram crossed from Nigeria in 2014, and the far north, Maroua, the lake, the Mandara mountains, began receiving what the Nigerian border had been sending. The raids come at night, take the young men and sometimes the young women, and destroy what they cannot carry. The army is there and thin on the ground. You know which villages have been hit and which have not yet, and the order they come in makes no sense from outside.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('cmr_boko_north_witness') },
   },
@@ -93,7 +93,7 @@ export const CAMEROON_DEPTH_EVENTS = [
       G.currentYear >= 1985 &&
       G.age >= 25 &&
       !G.flags.has('cmr_kondengui_witness'),
-    text: 'Kondengui Central Prison in Yaoundé was built for 1,500 prisoners and holds six to ten thousand, depending on the year. People arrive at Kondengui without charge, without trial date, without lawyer. The provisional detention stretches. It stretches into years. You know someone who went in for a matter that should have been resolved in six months and did not come out for four years, having been tried, eventually, and acquitted. Acquitted. The acquittal came four years later. In Cameroon this is described as the justice system working. It is, in a sense, the justice system working.',
+    text: 'Kondengui prison in Yaoundé holds many times the number it was built for, and people go in without charge, without a trial date, without a lawyer. You know someone who went in over something that should have taken six months and came out four years later, tried at last, and acquitted. Acquitted. In Cameroon that is called the justice system working.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('cmr_kondengui_witness') },
   },

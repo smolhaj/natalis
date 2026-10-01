@@ -49,7 +49,7 @@ export const AUTOMATION_EVENTS = [
       {
         text: 'Take the retraining package before it is withdrawn',
         tag: null,
-        outcome: 'Six months of logistics software training. The qualification is real. The job market is thinner than the brochure suggested.',
+        outcome: 'Six months of logistics software training. You get the qualification. The job market is thinner than the brochure suggested.',
         effect: (p) => { p.e += 8; p.mo -= 2000; p.m -= 5; p.addFlag('retraining_accepted'); p.setMem('autoTruckerReality', true); },
       },
       {
@@ -136,7 +136,7 @@ export const AUTOMATION_EVENTS = [
       {
         text: 'Organise the junior associates — someone should say this out loud',
         tag: null,
-        outcome: 'You say it. It costs you something with management and earns you something with the people who were affected. Both remain true.',
+        outcome: 'You say it. It costs you something with management and earns you something with the people who were affected.',
         effect: (p) => { p.karma += 8; p.m -= 5; p.addFlag('labor_advocate'); p.setMem('autoLegalDocs', true); },
       },
     ],
@@ -221,7 +221,7 @@ export const AUTOMATION_EVENTS = [
       {
         text: 'Contextualise — this is how economies develop, always have',
         tag: null,
-        outcome: 'The contextualisation is not wrong. It is also not complete. Both remain true simultaneously.',
+        outcome: 'The contextualisation is fair, as far as it goes.',
         effect: (p) => { p.e += 3; p.m -= 5; p.setMem('autoProgrammerGuilt', true); },
       },
     ],
@@ -264,7 +264,7 @@ export const AUTOMATION_EVENTS = [
       G.flags.includes('retraining_accepted') &&
       G.age >= 38 &&
       !G.mem?.autoRetrainingOutcome,
-    text: 'Six months of classes. The certificate is real. The job market for this certificate is thinner than the brochure suggested. You apply for twenty-two positions. You hear back from six. You get two interviews. You are offered one role, at a salary twelve per cent lower than what you were making before the disruption. You take it. The commute is longer. The work is fine. You are fine. The outcome is classified in the government\'s statistics as a successful transition.',
+    text: 'Six months of classes. The job market for the certificate is thinner than the brochure said: twenty-two applications, six replies, two interviews, one offer, at twelve per cent less than you earned before. You take it. The commute is longer and the work is fine. In the government\'s statistics you are a successful transition.',
     choices: [
       {
         text: 'Accept it — this is the outcome, and it is livable',

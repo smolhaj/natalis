@@ -32,7 +32,7 @@ export const FOLLOWTHROUGH_44_EVENTS = [
       G.currentYear >= 2001 &&
       G.age >= 40 &&
       !G.mem?.ft44TutsiHiddenLate,
-    text: 'You were sheltered. Someone decided to hide you — a Hutu neighbour, a church community, someone who made a choice that cost them something and possibly their life. You are alive because of that choice. The gacaca courts have processed most of the cases; many perpetrators have been tried. The person or people who sheltered you may or may not have received acknowledgment for what they did. You think about this specific debt — not the guilt of surviving, but the simpler fact of obligation to someone specific who chose you over their own safety — more than you think about most things.',
+    text: 'You were sheltered. Someone decided to hide you — a Hutu neighbour, a church community, someone who made a choice that cost them something and possibly their life. You are alive because of that choice. The gacaca courts have processed most of the cases; many perpetrators have been tried. The person or people who sheltered you may or may not have received acknowledgment for what they did. You think about this debt — not the guilt of surviving, but the simpler fact of obligation to someone specific who chose you over their own safety — more than you think about most things.',
     choices: null,
     effect: (p) => { p.r += 8; p.karma += 6; p.m -= 3; p.setMem('ft44TutsiHiddenLate', true) },
   },
@@ -64,7 +64,7 @@ export const FOLLOWTHROUGH_44_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 55 &&
       !G.mem?.ft44EuGenerationLate,
-    text: 'You have lived with the EU as a given for most of your adult life. The right to live and work across 27 countries. The passport that removes the questions at borders you grew up worrying about. The specific peace of a continent that spent two world wars destroying itself and then built institutions that made a third war unthinkable in the places where it had been most thinkable. The EU is also its bureaucracies, its democratic deficits, its agricultural subsidies and structural fund arguments. You have lived with all of it. The abstract fact — that the continent you grew up in is, however imperfectly, organised to prevent its own self-destruction — is the one you keep coming back to.',
+    text: 'You have lived with the EU as a given for most of your adult life. The right to live and work across 27 countries. The passport that removes the questions at borders you grew up worrying about. The peace of a continent that spent two world wars destroying itself and then built institutions that made a third war unthinkable in the places where it had been most thinkable. The EU is also its bureaucracies, its democratic deficits, its agricultural subsidies and structural fund arguments. You have lived with all of it. The abstract fact — that the continent you grew up in is, however imperfectly, organised to prevent its own self-destruction — is the one you keep coming back to.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 4; p.m += 3; p.setMem('ft44EuGenerationLate', true) },
   },
@@ -144,7 +144,7 @@ export const FOLLOWTHROUGH_44_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 45 &&
       !G.mem?.ft44ChechCivilLate,
-    text: 'Grozny was called the most destroyed city on earth by the UN in 2000. It has been rebuilt — the towers, the mosque, the Akhmat Kadyrov memorial that is everywhere. The city that was flattened in two wars now has glass and light and portraits of the leader. The people who survived in the rubble of the first Grozny and the ruins of the second Grozny live inside the rebuilt version with memories of the versions that were destroyed. You are among them. The rebuilt city looks like a new city. It is not a new city. It is the city that was destroyed, rebuilt, under the governance of the son of the man who was also killed in it. You navigate the gap between the memory and the surface.',
+    text: 'Grozny was called the most destroyed city on earth by the UN in 2000. It has been rebuilt — the towers, the mosque, the Akhmat Kadyrov memorial that is everywhere. The city that was flattened in two wars now has glass and light and portraits of the leader. The people who survived in the rubble of the first Grozny and the ruins of the second Grozny live inside the rebuilt version with memories of the versions that were destroyed. You are among them. The rebuilt city looks like a new city. It is the city that was destroyed, rebuilt, under the governance of the son of the man who was also killed in it. You navigate the gap between the memory and the surface.',
     choices: null,
     effect: (p) => { p.r += 8; p.m -= 4; p.e += 3; p.setMem('ft44ChechCivilLate', true) },
   },
@@ -163,7 +163,7 @@ export const FOLLOWTHROUGH_44_EVENTS = [
     text: (G) => {
       const isApology = G.flags.has('apology_generation')
       return isApology
-        ? 'The Apology happened on February 13, 2008. The words were "We apologise." Not "we express regret" or "we acknowledge." The Stolen Generations members in the gallery and in viewing centres across the country heard it. What followed the Apology was not a resolution of the conditions that produced the Stolen Generations — the gap in health outcomes, incarceration rates, life expectancy, child removal still happening at rates that would have produced a second Stolen Generations report if applied to any other population. The Apology was real and was the beginning of something that has continued to be insufficient. Both of these things are true and you have held them both since 2008.'
+        ? 'The Apology happened on February 13, 2008. The words were "We apologise." Not "we express regret" or "we acknowledge." The Stolen Generations members in the gallery and in viewing centres across the country heard it. What followed the Apology was not a resolution of the conditions that produced the Stolen Generations — the gap in health outcomes, incarceration rates, life expectancy, child removal still happening at rates that would have produced a second Stolen Generations report if applied to any other population. The Apology was real and was the beginning of something that has continued to be insufficient. You have held them both since 2008.'
         : 'The Mabo decision 1992 recognised that the common law doctrine of terra nullius — that Australia was legally uninhabited before 1788 — was false. The decision established native title as a legal concept. Native title claims require continuous connection to land across the dispossession and in specific forms that many communities cannot meet because the dispossession itself interrupted the required forms of connection. The law recognised what the law had denied and then created conditions for the recognition that the dispossession itself often prevents. You have lived with this circularity for thirty years.'
     },
     choices: null,

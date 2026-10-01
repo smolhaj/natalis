@@ -108,7 +108,7 @@ export const FIJI_EVENTS = [
       G.age >= 35 && G.age <= 65 &&
       G.flags.has('cane_farming_generation') &&
       !G.mem?.fjLeaseExp,
-    text: 'The lease expires. The letter from the Native Land Trust Board arrives with the formal language of a system working as designed. The iTaukei landowners — most of whom your family has never met — have decided not to renew. Thirty years ago your parents signed this lease, cleared additional land, built a house, planted the ratoon that still produces. The land is not yours: it has never been yours. You knew this. The lease said it. Still, you find yourself standing in the field calculating what it costs to leave.',
+    text: 'The lease expires, and the letter from the land trust board arrives in the formal language of a system working as designed: the iTaukei owners, most of whom your family has never met, will not renew. Thirty years ago your parents signed this lease, cleared more land, built the house, planted the cane that still comes back. The land was never yours, and you knew it. You find yourself standing in the field anyway, working out what it costs to leave.',
     choices: [
       {
         text: 'You sell the equipment and leave. The lease has ended.',
@@ -144,12 +144,12 @@ export const FIJI_EVENTS = [
       G.age >= 20 && G.age <= 40 &&
       !G.flags.has('emigrated') &&
       !G.mem?.fjEmigration,
-    text: 'Your cousin went to Brisbane two years ago. Your colleague is applying for New Zealand. The Indo-Fijian population is leaving in numbers that show up in the census: 40,000 last decade, this decade heading toward the same. There is a particular arithmetic to the conversation: you have a degree, or qualifications, or an employer in Auckland who will sponsor you. You could stay — people are staying — but staying means the land question, the constitution question, the next coup question, and the question after that. The people leaving are not cowards. The people staying are not fools. It is a choice between two things that are both real.',
+    text: 'Your cousin went to Brisbane two years ago. Your colleague is applying for New Zealand. The Indo-Fijian population is leaving in numbers that show up in the census: 40,000 last decade, this decade heading toward the same. There is an arithmetic to the conversation: you have a degree, or qualifications, or an employer in Auckland who will sponsor you. You could stay — people are staying — but staying means the land question, the constitution question, the next coup question, and the question after that. The people leaving are not cowards. The people staying are not fools, and the choice is between two things that both matter.',
     choices: [
       {
         text: 'You leave. The future here is too uncertain.',
         tag: 'emigrate',
-        outcome: 'Brisbane or Auckland or Toronto. You arrive with your qualifications and your accent and the specific knowledge that you are now a Fijian Indian in a country that does not have a category for that yet.',
+        outcome: 'Brisbane or Auckland or Toronto. You arrive with your qualifications and your accent and the knowledge that you are now a Fijian Indian in a country that does not have a category for that yet.',
         effect: (p) => { p.m -= 5; p.e += 5; p.w += 3; p.addFlag('fiji_emigrated'); p.addFlag('emigrated'); p.emigrateTo(['Australia', 'New Zealand', 'Canada']); p.setResidency('work_visa'); p.setMem('fjEmigration', true) },
       },
       {
@@ -194,7 +194,7 @@ export const FIJI_EVENTS = [
       !G.mem?.fjLate,
     text: G => G.flags.has('fiji_emigrated')
       ? 'You are in Auckland or Brisbane or Toronto, and your children were not born in Fiji and do not know how to be Fijian. They are something else — Indian-Kiwi or Indian-Australian, categories that did not exist when you left. You go back sometimes: the mangoes are the same, the humidity is the same, the pace that is nothing like this city is the same. The people who stayed have built something different in the space the emigration left. You are not sure which choice was right. You are not sure the question has a right answer.'
-      : 'You stayed, and Fiji has changed around you. The new constitution removed the ethnic quotas; Bainimarama\'s decree said one Fiji, all equal. You do not fully trust this. The coups left their mark on how you hold political certainty — loosely now, aware it can be taken. But the mangoes are the same. The cane is the same. The people who went to Brisbane send photographs of their grandchildren who have never seen a cane field. You have not sent them photographs of yours.',
+      : 'You stayed, and Fiji changed around you. The new constitution took out the ethnic quotas: one Fiji, all equal, by decree. You do not fully trust it; the coups taught you to hold political certainty loosely. The mangoes are the same and the cane is the same. The people who went to Brisbane send photographs of grandchildren who have never seen a cane field.',
     choices: null,
     effect: (p) => { p.e += 3; p.r += 4; p.m += 5; p.setMem('fjLate', true) },
   },

@@ -67,7 +67,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       G.currentYear >= 1977 && G.currentYear <= 1979 &&
       G.age >= 14 &&
       !G.mem?.saBiko,
-    text: 'September 12, 1977. Steve Biko dies in police detention in Pretoria. He is thirty years old. He has been in detention since August 18 — held at Port Elizabeth Security Police headquarters, interrogated, beaten, kept naked in a cell for nineteen days. He is transported 1,100 kilometres to Pretoria in the back of a Land Rover, naked, in chains, brain-damaged, and dies on arrival. The Minister of Justice, Jimmy Kruger, tells a National Party congress that Biko\'s death "leaves me cold." He gets a standing ovation. Biko had said: "The most potent weapon in the hands of the oppressor is the mind of the oppressed." He had been working on developing that idea in practice.',
+    text: 'September 1977. Steve Biko dies in police custody in Pretoria at thirty, after weeks of interrogation and beatings in Port Elizabeth and a journey of more than a thousand kilometres in the back of a Land Rover, naked, in chains. The minister of justice tells his party congress that the death leaves him cold, and they applaud him. Biko said the most potent weapon in the hands of the oppressor is the mind of the oppressed. He was working out what to do about that.',
     choices: [
       {
         text: 'Black Consciousness was already in you. Now it has a martyr.',
@@ -147,10 +147,11 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       !G.mem?.saMbekiAids,
     text: (G) => {
       if (G.ethnicity === 'black_south_african') {
-        return 'South Africa has the highest HIV-positive population in the world. The antiretroviral drugs that suppress the virus exist; the global pharmaceutical pressure has brought the price down; the generic drugs are cheaper still. Thabo Mbeki does not believe the science. He has read dissidents who say HIV does not cause AIDS. He appoints a Health Minister who recommends beetroot, garlic, and African potato. In the years between 1999 and 2008, a Harvard study later calculates, 330,000 people die who would not have died if the antiretrovirals had been made available. You know some of them. You know the word "available" — you understand what it implies about what was not done.'
+        return 'The drugs that hold the virus down exist, and the price has come down, and the generics are cheaper still, and the president does not believe the science. He has read the dissidents, and his health minister recommends beetroot, garlic and African potato. You know some of the people who died in those years who did not have to. You understand what the word available means about what was not done.'
       }
       return 'South Africa has the highest HIV-positive population in the world and a president who does not believe the scientific consensus on HIV and AIDS. While AZT and nevirapine are available in other countries, President Mbeki restricts their distribution in public hospitals. A Harvard study later estimates 330,000 preventable deaths. Treatment Action Campaign activists and doctors campaign against the policy and eventually win. The time it takes to win is measured in people who did not survive the delay.'
     },
+    context: 'A Harvard study estimated that more than 330,000 South Africans died between 2000 and 2005 because antiretrovirals were not provided in time.',
     choices: [
       {
         text: 'Someone you know dies in these years, not from HIV but from the gap between what existed and what was provided.',
@@ -201,12 +202,12 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       G.currentYear >= 2004 && G.currentYear <= 2020 &&
       G.age >= 16 &&
       !G.mem?.saServiceDelivery,
-    text: 'The RDP houses. The waiting list. The promise — one million houses in five years, running water and electricity for everyone. The ANC made this promise in 1994 and it was a real promise, not a cynical one. The reality: a shack in an informal settlement outside a township, a water standpipe 300 metres away, electrical connections that arrive ten years late or not at all, a RDP house that arrives but has walls that crack within two years of construction. The protests: burning tyres, blocked roads, community councillors\' offices stoned. The language of the protest is the language of the ANC\'s own election promises. The protesters are not opposition voters.',
+    text: 'The promise in 1994 was a million houses in five years, and water and power for everyone, and it was meant. What came: a shack outside the township, a standpipe three hundred metres away, a power connection ten years late, an RDP house whose walls crack in two years. The protests block the roads and burn tyres and stone the councillor\'s office, and the words on the placards are the ANC\'s own election promises. The protesters are not opposition voters.',
     choices: [
       {
         text: 'You join the protest. The promises were made and they were not kept.',
         tag: 'sa_service_delivery_era',
-        outcome: 'The protest is specific: a particular pothole, a particular substation, a particular sewage pipe that has leaked since 2009. The national promise and the local failure are the same sentence.',
+        outcome: 'The protest is specific: a pothole, a substation, a sewage pipe that has leaked since 2009. The national promise and the local failure are the same sentence.',
         effect: (p) => { p.karma += 5; p.m -= 4; p.r += 4; p.addFlag('sa_service_delivery_era'); p.setPolitical('left'); p.setMem('saServiceDelivery', true); },
       },
       {
@@ -235,7 +236,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       if (G.ethnicity === 'white_south_african') {
         return 'The land debate. The ANC and EFF are pushing for constitutional amendment to allow expropriation without compensation. Your farm, or your family\'s farm, or the farm you have no connection to but that represents the conversation: who owns South Africa\'s land, and what the correct response to that accounting is. The Afrikaner newspapers and the farming community say: food security, capital flight, Zimbabwe. The other side says: 1913, 1950, 2024. Both sides are using arithmetic.'
       }
-      return 'The land debate: who owns South Africa\'s commercial farmland, what the historical accounting says, and what the correct legislative response is. The debate is louder and less resolved with each political cycle. Both the figures of dispossession and the figures of agricultural production are real.'
+      return 'The land debate: who owns South Africa\'s commercial farmland, what the historical accounting says, and what the correct legislative response is. The debate is louder and less resolved with each political cycle.'
     },
     choices: null,
     effect: (p) => {
@@ -256,7 +257,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       G.currentYear >= 1994 && G.currentYear <= 2020 &&
       G.age >= 20 &&
       !G.mem?.saAfrikanerIdentity,
-    text: 'The language question, for Afrikaners, is the identity question. Afrikaans was used as the language of apartheid\'s administration — and it was also the language your grandmother used for prayer, the language of your jokes and your music and your particular way of insulting someone you love. The post-1994 country is reducing Afrikaans from administrative use. Some universities are switching to English. The community that fought to keep Afrikaans alive in the 19th century by asserting it against British imperialism is now navigating its language\'s association with the other thing. The people who say Afrikaans is just a language are not wrong. The people who say language is never just a language are also not wrong.',
+    text: 'The language question, for Afrikaners, is the identity question. Afrikaans was used as the language of apartheid\'s administration — and it was also the language your grandmother used for prayer, the language of your jokes and your music and your way of insulting someone you love. The post-1994 country is reducing Afrikaans from administrative use. Some universities are switching to English. The community that fought to keep Afrikaans alive in the 19th century by asserting it against British imperialism is now navigating its language\'s association with the other thing. The people who say Afrikaans is just a language are not wrong. The people who say language is never just a language are also not wrong.',
     choices: [
       {
         text: 'The language belongs to everyone who speaks it. Including coloured Afrikaans speakers who also built it.',
@@ -267,7 +268,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       {
         text: 'You hold the language and try to hold it separately from what was done in its name.',
         tag: null,
-        outcome: 'This is possible and it costs something. The thing you\'re holding is real and the weight is real.',
+        outcome: 'This is possible and it costs something. The thing you are holding is heavy.',
         effect: (p) => { p.r += 5; p.e += 2; p.setMem('saAfrikanerIdentity', true); },
       },
     ],

@@ -29,7 +29,7 @@ export const WATER_INFRA_EVENTS = [
       G.age >= 6 && G.age <= 16 &&
       !G.flags.has('village_electrified') &&
       !G.mem?.wiDrySeason,
-    text: 'In the dry season the river is a wide pale scar and the water in it is slow, warm, and not safe to drink without boiling. You have known this since before you could name it. You know the specific hierarchy of thirst: the animals first because without them the farm fails, the children second, the adults last. You know how to go to sleep when you are still thirsty without lying awake thinking about it, which is a thing you learned by doing it enough times.',
+    text: 'In the dry season the river is a wide pale scar and the water in it is slow, warm, and not safe to drink without boiling. You have known this since before you could name it. You know the hierarchy of thirst: the animals first because without them the farm fails, the children second, the adults last. You know how to go to sleep when you are still thirsty without lying awake thinking about it, which is a thing you learned by doing it enough times.',
     choices: null,
     effect: (p) => { p.h -= 3; p.e += 4; p.r += 3; p.addFlag('drought_childhood'); p.setMem('wiDrySeason', true) },
   },
@@ -143,7 +143,7 @@ export const WATER_INFRA_EVENTS = [
       G.flags.has('water_walk_childhood') &&
       G.age >= 58 &&
       !G.mem?.wiWaterReckoning,
-    text: 'There is a tap now, or a borehole, or a pipe from the municipal system — however the water arrived. You turn it on in the morning and you remember, briefly, the walk. You remember the particular weight of the full jerry can when you tried to shift it from one arm to the other at the midpoint. You remember the paths, the trees, the women who were always there before you and always left before you. The tap is ordinary now, which means the walk has become a different kind of memory — not of hardship exactly, but of a particular kind of time, and of what your body knew how to carry.',
+    text: 'There is a tap now, or a borehole, or a pipe from the municipal system — however the water arrived. You turn it on in the morning and you remember, briefly, the walk. You remember the weight of the full jerry can when you tried to shift it from one arm to the other at the midpoint. You remember the paths, the trees, the women who were always there before you and always left before you. The tap is ordinary now, which means the walk has become a different kind of memory — not of hardship exactly, but of a kind of time, and of what your body knew how to carry.',
     choices: null,
     effect: (p) => { p.e += 3; p.m += 4; p.r += 3; p.setMem('wiWaterReckoning', true) },
   },

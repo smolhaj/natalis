@@ -23,7 +23,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => place.hasPhone(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s16PhoneCallEnding),
     text: () => pick([
-      `At the end of a telephone call there is a particular small performance: the wind-down, the mutual signal that it is ending, the false goodbyes before the real one. You have done this thousands of times and it has never become easy — the goodbye is always slightly awkward, always faintly asymmetrical, always concluded by someone hanging up first.`,
+      `At the end of a telephone call there is a small performance: the wind-down, the mutual signal that it is ending, the false goodbyes before the real one. You have done this thousands of times and it has never become easy — the goodbye is always slightly awkward, always faintly asymmetrical, always concluded by someone hanging up first.`,
       `You say goodbye on the phone and then wait a half-second to make sure the call has ended before you speak. This is a habit from the era of uncertain connections, of lines that did not always terminate cleanly. The habit has outlasted the technology that produced it.`,
       `A phone call with your mother takes a shape: the real information in the first five minutes, the longer middle section that is mostly company, the long negotiation of goodbye at the end. You know this shape. You have always known it. When she is gone you will reconstruct these calls from memory with surprising accuracy.`,
     ]),
@@ -56,7 +56,7 @@ export const EVENTS_SONDER_16 = [
     text: () => pick([
       `You find a note in their handwriting — a grocery list, a card, something unremarkable at the time of writing and now entirely remarkable. The handwriting is more their presence than the photograph. The photograph captures an exterior. The handwriting is them making a decision about where to place their pen.`,
       `The handwriting survives. A note stuck to the back of something, a name in the front of a book. You know this handwriting better than you realised — you have been reading it your entire life, and it is only now that you can see what it cost them to write, the way the pen went down.`,
-      `There is a box that has letters in it. You have not opened it yet. You know what the handwriting looks like. You will open it, eventually, when you are ready to hold that specific presence without being overwhelmed by it. Not yet.`,
+      `There is a box that has letters in it. You have not opened it yet. You know what the handwriting looks like. You will open it, eventually, when you are ready to hold that presence without being overwhelmed by it. Not yet.`,
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s16HandwritingDead', true) },
@@ -70,9 +70,9 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 20 && !G.mem?.s16RecurringDream,
     text: () => pick([
-      `You have a recurring dream — not every week, but often enough that you know its geography. A building with rooms that extend further than the building should allow. A street that keeps turning. A figure at a distance who does not come closer. The dream is not frightening. It is just persistent. You have stopped asking what it means.`,
+      `You have a recurring dream — not every week, but often enough that you know its geography. A building with rooms that extend further than the building should allow. A street that keeps turning. A figure at a distance who does not come closer. The dream is persistent, more than frightening. You have stopped asking what it means.`,
       `In the recurring dream you are late for something and cannot get there. The obstacle changes — the transport, the road, the geography — but the lateness is always the same. You have had this dream for twenty years. You suspect you will have it for twenty more.`,
-      `You return in dreams to a place you have never been in waking life — a room, a garden, a coast. You know its layout better than rooms you have lived in. The familiarity is not threatening. It is comfortable, almost. A place that belongs to you in the specific economy of sleep.`,
+      `You return in dreams to a place you have never been in waking life — a room, a garden, a coast. You know its layout better than rooms you have lived in. The familiarity is almost comfortable. A place that belongs to you in the economy of sleep.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('s16RecurringDream', true) },
@@ -86,7 +86,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.s16PhraseStoppedUsing,
     text: () => pick([
-      `There is a phrase you stopped using at some point — a word from childhood, an expression from a particular era of your life — and you cannot remember stopping. It was in your mouth for years and then it wasn't. Language sheds things like this, quietly, without notice.`,
+      `There is a phrase you stopped using at some point — a word from childhood, an expression from an era of your life — and you cannot remember stopping. It was in your mouth for years and then it wasn't. Language sheds things like this, quietly, without notice.`,
       `You catch yourself about to say something your mother said, or your grandmother said, a phrase from that world that you absorbed without intending to. You say it or you don't say it. Either way, you've noticed the lineage — the way language moves through generations like furniture, without anyone deciding to pass it on.`,
       `You use a word that nobody under thirty uses anymore. The word is not wrong, it is just dated, and the dating marks you — places you in a decade the way a song does, makes audible what you are made of. Language is biography.`,
     ]),
@@ -102,7 +102,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => place.hasWeekend(G) && (G.age >= 20 && !G.mem?.s16SundayAfternoon),
     text: () => pick([
-      `Sunday afternoon has a quality that no other time of the week has. The particular light of it, the particular sense of time running toward something — the week's resumption — without having reached it yet. You have spent many hours in this light without knowing what to do with them, which may be exactly what Sunday afternoon is for.`,
+      `Sunday afternoon has a quality that no other time of the week has. The light of it, the sense of time running toward something — the week's resumption — without having reached it yet. You have spent many hours in this light without knowing what to do with them, which may be exactly what Sunday afternoon is for.`,
       `Three o'clock on Sunday. The day's plans, if there were any, have been completed or abandoned. What remains is an afternoon with no particular shape. You have never managed to fill this time with anything that feels adequate to it. The feeling of Sunday at three is its own complete experience.`,
       `The Sunday afternoon of childhood was different from the Sunday afternoon of adulthood. Something about the quality of the hours, the way the light feels — expectant, slightly melancholy, entirely familiar. The weight of unstructured time. You carry it differently now but the feeling has the same floor.`,
     ]),
@@ -119,8 +119,8 @@ export const EVENTS_SONDER_16 = [
     when: (G) => place.isLiterate(G) && (G.age >= 18 && G.age <= 40 &&
       !G.mem?.s16CensusName),
     text: () => pick([
-      `On official forms you are a category. The category is accurate and also reductive — it covers you and does not cover you simultaneously. The bureaucracy does not have a field for the particular quality of what you are. It has the nearest available box, which you check.`,
-      `Your name on official documents is a decision someone made about how to fit your name into a system designed for different names. The spelling, the truncation, the removal of the accent — these are small violences that the form was not designed to register as violations. They are not. They are just the form.`,
+      `On official forms you are a category. The category is accurate and also reductive — it covers you and does not cover you simultaneously. The bureaucracy does not have a field for the quality of what you are. It has the nearest available box, which you check.`,
+      `Your name on official documents is a decision someone made about how to fit your name into a system designed for different names. The spelling, the truncation, the removal of the accent — small violences that the form was not designed to register. They are just the form.`,
       `There is the name you are called by and the name on your documents. They may be the same name. They may not be. Either way, the official self and the actual self have a relationship that requires some translation — a learned habit of moving between the version of you that gets filed and the version of you that lives.`,
     ]),
     choices: null,
@@ -135,8 +135,8 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.s16SoundOfDecade,
     text: () => pick([
-      `The sounds that place you in a decade are not the songs — it is the ambient sounds: the particular tone of a dial-up modem, the click of a camera shutter before cameras went silent, the quality of a television turning on in a certain era. These sounds are time. Hearing them is involuntary recall.`,
-      `A specific ringtone that was everywhere for three years and then was gone. A sound effect in a game. The mechanical feedback of a keyboard that no longer exists. The archive of a decade is mostly sound, and sound is not stored where you can access it on purpose — only when something triggers it.`,
+      `The sounds that place you in a decade are not the songs — it is the ambient sounds: the tone of a dial-up modem, the click of a camera shutter before cameras went silent, the quality of a television turning on in a certain era. These sounds are time. Hearing them is involuntary recall.`,
+      `A ringtone that was everywhere for three years and then was gone. A sound effect in a game. The mechanical feedback of a keyboard that no longer exists. The archive of a decade is mostly sound, and sound is not stored where you can access it on purpose — only when something triggers it.`,
       `There are sounds from your childhood that no longer exist in the world — sounds specific to machinery that has been replaced, to technology that has been discontinued. The children who will never hear them will not know what they're missing. That's the nature of what gets lost.`,
     ]),
     choices: null,
@@ -152,7 +152,7 @@ export const EVENTS_SONDER_16 = [
     when: (G) => G.age >= 30 && !G.mem?.s16HandsIdle,
     text: () => pick([
       `When you are not doing anything in particular, your hands do something. A gesture, a tapping pattern, a way of holding them that is yours and has always been yours. You do not choose it. Your hands choose it. You have been watching your hands do this for thirty years and you do not know when it started.`,
-      `You notice your hands in conversation — the specific gestures, the placement, the things your hands say while your mouth is saying something else. A therapist might have something to say about the relationship between the two. You just observe it.`,
+      `You notice your hands in conversation — the gestures, the placement, the things your hands say while your mouth is saying something else. A therapist might have something to say about the relationship between the two. You just observe it.`,
       `Your left hand and your right hand have different habits. The dominant one knows what it is for. The other one improvises — fidgets, holds, hovers. You are ambidextrous in this way: one hand performs, the other one lives.`,
     ]),
     choices: null,
@@ -169,7 +169,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 20 && !G.mem?.s16Receipts,
     text: () => pick([
-      `You have a drawer or a pocket or a wallet that accumulates receipts. The receipts are a kind of diary — the small transactions of a life, the coffee on a specific Tuesday, the medication bought in a specific month. Nobody reads these. They are a record for no one, made automatically, accumulating until someone throws them away.`,
+      `You have a drawer or a pocket or a wallet that accumulates receipts. The receipts are a kind of diary — the small transactions of a life, the coffee on a Tuesday, the medication bought in a month. Nobody reads these. They are a record for no one, made automatically, accumulating until someone throws them away.`,
       `The paper that passes through a life is enormous. Bills, letters, forms, junk. Most of it is not kept. Some of it is kept and then lost. A very small portion survives and becomes the archive — the things that were not important at the time and became, somehow, the record of what the time was.`,
     ]),
     choices: null,
@@ -184,7 +184,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => place.hasPhone(G) && (G.age >= 38 && !G.mem?.s16Clocks),
     text: () => pick([
-      `At some point you started knowing what time it is without checking. Not exactly — within fifteen minutes, which is close enough for most purposes. The body has a clock. You did not install it. It simply arrived, or revealed itself, at an age when you started to notice the passage of time as something you were inside of rather than watching.`,
+      `At some point you started knowing what time it is without checking. Not exactly — within fifteen minutes, close enough for most purposes. The body has a clock. You did not install it. It simply arrived, or revealed itself, at an age when you started to notice the passage of time as something you were inside of rather than watching.`,
       `You check the time less than you used to and know it more. The phone that once answered this question constantly has become less necessary. You are not sure when this happened. The clock in your body is quieter and more accurate than the clock you used to consult.`,
     ]),
     choices: null,
@@ -199,7 +199,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 40 && !G.mem?.s16WhatGotFixed,
     text: () => pick([
-      `There is a thing you spent years on — a quality you wanted to change, a problem you set out to solve in yourself — and at some point you noticed it was better. Not gone, not healed in any clean sense. Better. The work that you were doing without always being aware you were doing it produced something. The thing that changed is not the same thing you were targeting. That is also usually how it works.`,
+      `There is a thing you spent years on — a quality you wanted to change, a problem you set out to solve in yourself — and at some point you noticed it was better. Not gone, not healed in any clean sense. Better. The work that you were doing without always being aware you were doing it produced something. The thing that changed is not the thing you were targeting. It usually isn't.`,
       `Something you were anxious about for years stopped mattering. Not because the circumstances changed — because you changed, or exhausted the anxiety, or it simply ran out. You did not plan this. It happened the way sleep comes: without deciding to.`,
     ]),
     choices: null,
@@ -230,7 +230,7 @@ export const EVENTS_SONDER_16 = [
     when: (G) => G.season === 'winter' && (G.age >= 35 && !G.mem?.s16LightOfPlace),
     text: () => pick([
       `Every place has a quality of light. Not the weather — the light. The angle at which the sun comes into a room at a certain hour in a certain season. You have been in enough rooms to know this is not universal: the light here is different from the light somewhere else, and both are different from the light of where you were as a child.`,
-      `The light of a particular afternoon from a particular time in your life returns without warning — attached to nothing, a quality of illumination that your body recognizes from years ago. Autumn light, or winter morning light, or the specific yellow of a certain kind of lamp in a room that no longer exists. The light is the most persistent part of what a place was.`,
+      `The light of an afternoon from a time in your life returns without warning — attached to nothing, a quality of illumination that your body recognizes from years ago. Autumn light, or winter morning light, or the yellow of a certain kind of lamp in a room that no longer exists. The light is the most persistent part of what a place was.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('s16LightOfPlace', true) },
@@ -261,9 +261,9 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 65 && !G.mem?.s16LateGift,
     text: () => pick([
-      `Something unexpected at this age: you are less afraid than you were. Not fearless — the fear has not gone — but the specific grip of it has loosened. This is not wisdom and it is not acceptance. It is something closer to fatigue: you have been afraid long enough that the fear has become ordinary, and ordinary things require less management.`,
-      `You have developed, late, a tolerance for not knowing. For years the uncertainty was something to resolve. Now you can sit in it for longer without it becoming intolerable. This is not philosophy. It is just what happened, in the way things happen — not through effort, but through accumulation.`,
-      `You have become, at this age, more interested in specifics and less interested in categories. The category of the situation matters less than the actual situation. The general principle interests you less than the particular person. This is the gift, if there is one: that things become more themselves to you rather than less.`,
+      `Something unexpected at this age: you are less afraid than you were. Not fearless — the fear has not gone — but the grip of it has loosened. It is closer to fatigue than to wisdom: you have been afraid long enough that the fear has become ordinary, and ordinary things require less management.`,
+      `You have developed, late, a tolerance for not knowing. For years the uncertainty was something to resolve. Now you can sit in it for longer without it becoming intolerable. It is just what happened, through accumulation rather than effort.`,
+      `You have become, at this age, more interested in specifics and less interested in categories. The category of the situation matters less than the actual situation. The general principle interests you less than the person. This is the gift, if there is one: that things become more themselves to you rather than less.`,
     ]),
     choices: null,
     effect: (p) => { p.e += 2; p.m += 2; p.setMem('s16LateGift', true) },
@@ -295,9 +295,9 @@ export const EVENTS_SONDER_16 = [
       G.age >= 22 && G.age <= 50 &&
       !G.mem?.s16EmigrantCallHome,
     text: () => pick([
-      `The call home is a specific ritual. You dial at the time you have agreed on — accounting for the time difference, which you now calculate automatically — and you hear the room they are in: the television, a chair scraping, the quality of sound in a house that is not where you are. The call is fifteen minutes or an hour. Either way it is a thread back through the distance.`,
+      `The call home is a ritual. You dial at the time you have agreed on — accounting for the time difference, which you now calculate automatically — and you hear the room they are in: the television, a chair scraping, the quality of sound in a house that is not where you are. The call is fifteen minutes or an hour. Either way it is a thread back through the distance.`,
       `You describe your life to someone who cannot see it and they describe theirs to you and neither description is adequate to the thing. But the contact is the point — not the accuracy of the picture, just the voice over the distance, still there.`,
-      `After you hang up there is a feeling that lasts for the rest of the evening. Not sadness exactly — not longing exactly. Something that has no name in either language, the particular weight of being far from something that still claims you.`,
+      `After you hang up there is a feeling that lasts for the rest of the evening. Not sadness exactly — not longing exactly. Something that has no name in either language, the weight of being far from something that still claims you.`,
     ]),
     choices: null,
     effect: (p) => { p.m -= 3; p.r += 3; p.setMem('s16EmigrantCallHome', true) },
@@ -312,7 +312,7 @@ export const EVENTS_SONDER_16 = [
     when: (G) => G.age >= 36 && !G.mem?.s16BodyMemory,
     text: () => pick([
       `You are doing something physical — a movement, a task, a skill — and you notice that your body knows how without your mind's participation. The body learned this years ago and retained it without being asked. Muscle memory, yes, but also something richer: a kind of competence that lives below language, that could not be described before it is demonstrated.`,
-      `Something triggers a physical memory — a smell, a texture, a posture your body recognises. The memory is not visual. It is kinetic: the sensation of a time and place, something the body has kept that the mind has let go. The body is a better archive than you knew.`,
+      `Something triggers a physical memory — a smell, a texture, a posture your body recognises. The memory is kinetic: the sensation of a time and place, something the body has kept that the mind has let go. The body is a better archive than you knew.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('s16BodyMemory', true) },
@@ -326,8 +326,8 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 60 && !G.mem?.s16DoingNothing,
     text: () => pick([
-      `You are doing nothing. Not waiting for something — nothing. Sitting in a chair without a purpose. This was impossible for years: the stillness was immediately colonised by a task, a screen, a worry. At this age it is simply available. You can sit in a chair and be in the chair. This is not enlightenment. It is just time, which you finally have enough of to spend some of it on nothing.`,
-      `There is a quality of presence in doing nothing that you did not have access to at forty. The nothing is full — not empty, not bored. Just present to what the afternoon actually is, which is a quiet room and enough time and no particular requirement. You are not sure when this became available. You are glad it is.`,
+      `You are doing nothing. Not waiting for something — nothing. Sitting in a chair without a purpose. This was impossible for years: the stillness was immediately colonised by a task, a screen, a worry. At this age it is simply available. You can sit in a chair and be in the chair. It is just time, which you finally have enough of to spend some on nothing.`,
+      `There is a quality of presence in doing nothing that you did not have access to at forty. The nothing is full — not empty, not bored. Just present to what the afternoon actually is: a quiet room and enough time and no requirement. You are not sure when this became available. You are glad it is.`,
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s16DoingNothing', true) },
@@ -341,7 +341,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.s16WeatherRelationship,
     text: () => pick([
-      `You have a relationship with a particular kind of weather — not the weather generally, but a specific condition: the first real cold of autumn, or the quality of light in a rainstorm, or the smell before a summer storm. The relationship is old. It was established in childhood, when a type of weather meant something, and it has persisted long after the thing it originally meant has gone.`,
+      `You have a relationship with a kind of weather — not the weather generally, but a condition: the first real cold of autumn, or the quality of light in a rainstorm, or the smell before a summer storm. The relationship is old. It was established in childhood, when a type of weather meant something, and it has persisted long after the thing it originally meant has gone.`,
       `The weather of where you grew up is the weather your body expects. Other climates are interesting, tolerable, sometimes preferred — but they require adjustment. The body orients itself toward the original weather the way a plant orients toward light: without deciding, just doing what the system does.`,
     ]),
     choices: null,
@@ -356,7 +356,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) => G.age >= 64 && !G.mem?.s16YearThatBlurs,
     text: () => pick([
-      `At some point the years started coming faster. Not because less is happening — the events are still there — but because the years no longer have the texture that made them distinct. A decade that was entirely legible at the time has become, in memory, a single shape: the job, the house, the people. The specific sequence within it has softened. This is not failure of memory. It is just what decades become.`,
+      `At some point the years started coming faster. Not because less is happening — the events are still there — but because the years no longer have the texture that made them distinct. A decade that was entirely legible at the time has become, in memory, a single shape: the job, the house, the people. The sequence within it has softened. It is what decades become.`,
       `You cannot remember what year something happened. You remember the order of things and their quality, but not the year. The year requires counting backward from something anchored — the birth of a child, a move, a death — and even then it is approximate. The calendar was always a fiction imposed on a continuous experience. Time has stopped pretending otherwise.`,
     ]),
     choices: null,
@@ -372,7 +372,7 @@ export const EVENTS_SONDER_16 = [
     when: (G) => G.age >= 68 && !G.mem?.s16LastTime,
     text: () => pick([
       `There are things you have done for the last time without knowing they were the last time. The last time you ran. The last time you saw a person who died afterward. The last time you were in a place that no longer exists. The last time of most things is not marked. You only know it retroactively, if you know it at all.`,
-      `You have started, at this age, to notice lasts. Not morbidly — just with attention. The last long-haul flight, if that is what it was. The last time you lifted something heavy. The things that are becoming too hard are also becoming last times, and you are present to this in a way that is neither distressing nor resigned. It is just accurate.`,
+      `You have started, at this age, to notice lasts. Not morbidly — just with attention. The last long-haul flight, if that is what it was. The last time you lifted something heavy. The things that are becoming too hard are also becoming last times, and you notice this without distress or resignation. It is just accurate.`,
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s16LastTime', true) },

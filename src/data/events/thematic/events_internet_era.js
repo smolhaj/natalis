@@ -179,7 +179,7 @@ export const INTERNET_ERA_EVENTS = [
       G.age >= 18 && G.age <= 30 &&
       ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype) &&
       !G.mem?.dotcomOptimism,
-    text: 'The decade has a specific confidence that will later seem naive, but is not naive now — it is warranted by the evidence available. The economy is growing. The wall came down. The web exists and is doubling every year. A friend from university has started a company that does something with servers and the valuation is larger than any rational basis would support, and everyone in the room knows this and invests anyway. The future is a place everyone is rushing toward.',
+    text: 'The decade has a confidence that will later seem naive, but is not naive now — it is warranted by the evidence available. The economy is growing. The wall came down. The web exists and is doubling every year. A friend from university has started a company that does something with servers and the valuation is larger than any rational basis would support, and everyone in the room knows this and invests anyway. The future is a place everyone is rushing toward.',
     choices: [
       {
         text: 'Invest in the enthusiasm — a startup, some shares, a bet',
@@ -204,7 +204,7 @@ export const INTERNET_ERA_EVENTS = [
       G.currentYear >= 2000 && G.currentYear <= 2003 &&
       G.flags.includes('dotcom_gambler') &&
       !G.mem?.dotcomCrash,
-    text: 'The NASDAQ falls 78% from its peak. The company whose shares you held is worth nothing, and then is worth less than nothing — the liabilities exceed the assets. The office closes. The specific atmosphere of the internet in 2001 is different from the internet in 1999: less confident, more careful, the word "business model" now used in earnest rather than as a detail to be addressed later.',
+    text: 'The NASDAQ falls 78% from its peak. The company whose shares you held is worth nothing, and then is worth less than nothing — the liabilities exceed the assets. The office closes. The atmosphere of the internet in 2001 is different from the internet in 1999: less confident, more careful, the word "business model" now used in earnest rather than as a detail to be addressed later.',
     choices: null,
     effect: (p) => { p.wipeMoney(0.4); p.m -= 8; p.addFlag('dotcom_survivor'); p.setMem('dotcomCrash', true); },
   },
@@ -220,7 +220,7 @@ export const INTERNET_ERA_EVENTS = [
       G.age >= 20 && G.age <= 35 &&
       ['wealthy_west'].includes(G.character.country.archetype) &&
       !G.mem?.nineties_optimism,
-    text: 'The decade has a specific logic: the Cold War ended; democracy is the world\'s default; prosperity is spreading in the right direction. A book argues that history itself has reached its conclusion. This sounds like hubris and is also partially accurate and you hold both things at once the way your generation has learned to hold things. The Rwanda news runs for a week and then the music news runs. You know this is not right and continue.',
+    text: 'The decade has a logic: the Cold War ended; democracy is the world\'s default; prosperity is spreading in the right direction. A book argues that history itself has reached its conclusion. This sounds like hubris and is also partially accurate and you hold both things at once the way your generation has learned to hold things. The Rwanda news runs for a week and then the music news runs. You know this is not right and continue.',
     choices: null,
     effect: (p) => { p.m += 4; p.addFlag('end_of_history_generation'); p.setMem('nineties_optimism', true); },
   },

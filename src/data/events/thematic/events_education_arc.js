@@ -21,7 +21,7 @@ export const EDUCATION_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.includes('university_enrolled') && G.age >= 19 && G.age <= 23 && !G.mem.eduProfessor,
-    text: 'One lecturer is different in a way that is hard to name at the time. They are not kind in a performing way. They assign more than is comfortable and do not soften the feedback. But the question they ask on a Tuesday morning in the second year stays with you for the rest of your education and, it turns out, much longer than that.',
+    text: 'One lecturer is different, and you cannot name how at the time. They are not kind in a performing way. They assign more than is comfortable and do not soften the feedback. But the question they ask on a Tuesday morning in the second year stays with you for the rest of your education and, it turns out, much longer than that.',
     choices: null,
     effect: (p) => { p.e += 8; p.m += 6; p.addFlag('formative_teacher'); p.setMem('eduProfessor', true) },
   },
@@ -32,7 +32,7 @@ export const EDUCATION_ARC_EVENTS = [
     weight: 2,
     when: (G) => G.flags.includes('university_enrolled') && G.age >= 19 && G.age <= 22 &&
       (G.stats.smarts ?? 50) < 55 && !G.mem.eduAcademicFailure,
-    text: 'You fail an examination. Not narrowly — actually fail. The mark is returned with red ink in specific places. You sit with it for a day. The version of yourself that sailed through school meets the version that university is making.',
+    text: 'You fail an examination. Not narrowly — actually fail. The mark is returned with red ink in specific places. It stays in your bag for a day. The version of yourself that sailed through school meets the version that university is making.',
     choices: [
       {
         text: 'Attend the resit and take it seriously',
@@ -43,7 +43,7 @@ export const EDUCATION_ARC_EVENTS = [
       {
         text: 'Accept the grade and move on — everyone fails something',
         tag: null,
-        outcome: 'The grade stays on your transcript. You carry it as a specific piece of information about your own limits.',
+        outcome: 'The grade stays on your transcript. You carry it as a piece of information about your own limits.',
         effect: (p) => { p.m -= 8; p.r += 5; p.gpa -= 0.15; p.setMem('eduAcademicFailure', true) },
       },
     ],
@@ -82,7 +82,7 @@ export const EDUCATION_ARC_EVENTS = [
     weight: 3,
     when: (G) => G.education?.level === 'university' && G.age >= 22 && G.age <= 25 &&
       ['wealthy_west'].includes(G.character.country.archetype) && !G.mem.eduGradDebt,
-    text: 'The certificate is real. The debt is also real — a specific number that arrives in a letter about two months after graduation, when the ceremony photographs have been looked at fewer times. You get a job. The first paycheck has a deduction on it labeled with the name of the loan program.',
+    text: 'You have a certificate. The debt is also real — a number that arrives in a letter about two months after graduation, when the ceremony photographs have been looked at fewer times. You get a job. The first paycheck has a deduction on it labeled with the name of the loan program.',
     choices: null,
     effect: (p) => { p.mo -= 12000; p.m -= 8; p.r += 5; p.addFlag('student_debt'); p.setMem('eduGradDebt', true) },
   },
@@ -93,7 +93,7 @@ export const EDUCATION_ARC_EVENTS = [
     weight: 3,
     when: (G) => G.education?.level === 'university' && G.career && G.age >= 24 &&
       G.career.field !== G.education?.field && !G.mem.eduDegreeIrrelevant,
-    text: 'Four years of one subject and you are doing something else entirely. Nobody warned you that this is extremely common. You use almost none of the specific content. You use, constantly, the thing the degree actually trained: how to sit with a difficult problem and not immediately solve it.',
+    text: 'Four years of one subject and you are doing something else entirely. Nobody warned you that this is extremely common. You use almost none of the content. You use, constantly, the thing the degree actually trained: how to sit with a difficult problem and not immediately solve it.',
     choices: null,
     effect: (p) => { p.e += 5; p.m += 3; p.r += 4; p.setMem('eduDegreeIrrelevant', true) },
   },
@@ -128,7 +128,7 @@ export const EDUCATION_ARC_EVENTS = [
     when: (G) => G.flags.includes('university_enrolled') &&
       ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype) &&
       G.age >= 18 && G.age <= 22 && !G.mem.eduFirstGen,
-    text: 'You are the first in your family to attend university. This fact is present in every call home, in the particular way your parents say your name when you answer, in the questions they ask that are technically about your studies and actually about whether you are safe and whether you are becoming someone they will still recognize.',
+    text: 'You are the first in your family to attend university. This fact is present in every call home, in the way your parents say your name when you answer, in the questions they ask that are technically about your studies and actually about whether you are safe and whether you are becoming someone they will still recognize.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 6; p.e += 5; p.addFlag('first_gen_graduate'); p.setMem('eduFirstGen', true) },
   },

@@ -71,7 +71,7 @@ export const SOCIETY_EVENTS = [
       if (country === 'Germany') return 'The Republic has granted women full suffrage. The Kaiser is gone. The war is over. The world is rearranging itself into something none of you recognise. The election is in January. You intend to vote in it.'
       if (country === 'United States') return 'The Nineteenth Amendment has been ratified. Seventy-two years since Seneca Falls. You stand in line. The woman behind you is old enough to have marched. You do not know her name. You want to say something and don\'t.'
       if (country === 'France') return `It is ${year}. The provisional government has granted women the right to vote. France is later than most of Europe. The men who fought in the Resistance will cast their ballots alongside the women who did. You put your name on the register.`
-      if (country === 'Italy') return 'The Fascists are gone. The new republic has granted women full suffrage. The first elections are next year. Your grandmother voted for Mussolini in the only referendum she was ever offered. You will not be repeating that particular history.'
+      if (country === 'Italy') return 'The Fascists are gone. The new republic has granted women full suffrage. The first elections are next year. Your grandmother voted for Mussolini in the only referendum she was ever offered. You will not be repeating that history.'
       if (country === 'Japan') return 'The occupation government has written universal suffrage into the new constitution. Your mother is uncertain about this. You are not. You go to the polling station early, before the heat.'
       if (country === 'China') return 'The People\'s Republic has declared. The new constitution grants women equal voting rights. Whether those rights mean anything under a single-party state is a question you know better than to ask aloud. You mark your ballot.'
       if (country === 'India') return 'The Constitution of the Republic of India grants universal adult suffrage. There is no literacy test, no property requirement, no husband\'s permission needed. You stand in a line that stretches around the block. Most of the women near you have never held a ballot before. Neither have you.'
@@ -909,7 +909,7 @@ export const SOCIETY_EVENTS = [
       G.age >= 18 && G.age <= 35 &&
       (G.flags.includes('emigrated') || G.character.country.ethnicGroups?.find(g => g.id === G.ethnicity)?.disadvantaged) &&
       !G.mem?.accent_navigation,
-    text: 'The way you say certain words identifies where you are from in a way that closes some doors before you open them. You practice saying them differently. Sometimes you succeed. It costs something each time.',
+    text: 'The way you say certain words tells people where you are from, and closes some doors before you open them. You practice saying them differently. Sometimes you succeed. It costs something each time.',
     choices: null,
     effect: (p) => {
       p.s -= 3
@@ -1077,7 +1077,7 @@ export const SOCIETY_EVENTS = [
       if (!year) return false
       return G.currentYear >= year && G.currentYear <= year + 3
     },
-    text: 'With independence, the national language returns to official life. Street signs are changed. Schools switch. Television broadcasts begin in the language that was here before. You grew up speaking it at home in a way that felt like a private act. Now it is simply the language of where you live.',
+    text: 'With independence, the national language returns to official life. Street signs are changed. Schools switch. Television broadcasts begin in the language that was here before. You grew up speaking it at home, privately. Now it is simply the language of where you live.',
     choices: null,
     effect: (p) => {
       p.m += 12

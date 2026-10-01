@@ -25,6 +25,7 @@
     "check-bundle": "node scripts/check-bundle.js",
     "check-ui": "node scripts/check-ui.js",
     "check-reach": "node scripts/check-reach.js",
+    "check-prose": "node scripts/check-prose.js",
     "stats": "node scripts/stats.js"
   },
   "dependencies": {

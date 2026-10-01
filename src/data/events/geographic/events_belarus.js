@@ -11,8 +11,9 @@ const BELARUS_EVENTS = [
     when: (G) => G.character.country.name === 'Belarus' && G.currentYear >= 1950 && G.currentYear <= 1985 && G.age >= 6 && G.age <= 14 && !G.flags.has('bel_partisan_memory'),
     text: (G) => {
       const yr = G.currentYear
-      return `Every May 9. The grandfather who does not walk straight comes to the school and stands in front of the class with his medals. He shows you the photographs — the forest, the men in the photographs younger than your father is now. Belarus lost a third of its population. The village on the monument list near yours has ${yr <= 1965 ? 'forty-three' : 'sixty-one'} names. You learn the names before you learn what the war was about. Every family in Belarus has a grave. Every family knows where the grave is.`
+      return `Every May 9 the old man who does not walk straight comes to the school with his medals and shows you photographs of the forest and men younger than your father. The memorial list for the village near yours has ${yr <= 1965 ? 'forty-three' : 'sixty-one'} names, and you learn the names before you learn what the war was about. Every family in Belarus has a grave, and knows where it is.`
     },
+    context: 'Belarus lost about a quarter to a third of its population in the Second World War.',
     choices: null,
     effect: (p) => { p.m -= 4; p.e += 3; p.addFlag('bel_partisan_memory'); },
   },
@@ -22,7 +23,7 @@ const BELARUS_EVENTS = [
     phase: 'young_adult',
     weight: 6,
     when: (G) => G.character.country.name === 'Belarus' && G.currentYear === 1986 && !G.flags.has('bel_chernobyl_generation'),
-    text: 'April 26, 1986. You hear something about an accident at a Ukrainian nuclear plant, but the official radio says it is under control. The cloud moves north. Seventy percent of the fallout from Chernobyl lands in Belarus. In the Gomel region, people are told nothing for two days. The May Day parade in Minsk goes ahead on schedule, four days after the explosion — children marching in the contaminated air, the officials watching from the tribune. You learn this later. When you learn it, you think about the parade.',
+    text: 'April 1986. You hear about an accident at a nuclear plant in Ukraine, and the radio says it is under control. The cloud moves north, and most of what falls, falls on Belarus. In Gomel nobody is told anything for two days. In Minsk the May Day parade goes ahead, children marching in the air, officials watching from the stand. When you learn this later, you think about the parade.',
     choices: [
       {
         text: 'You were in the affected Gomel or Mogilev region.',
@@ -44,7 +45,7 @@ const BELARUS_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) => G.character.country.name === 'Belarus' && G.currentYear === 1991 && !G.flags.has('bel_independence_1991'),
-    text: 'In March 1991, Belarus voted 83% to stay in the Soviet Union. In August 1991 the coup in Moscow collapsed. In December 1991, Shushkevich signed the Belavezha Accords in a hunting lodge in the Białowieża Forest and the Soviet Union was over. Independence had not been the plan. The country was not emotionally prepared for it. The factories still ran on Soviet supply chains. The ruble was still Soviet. The question of what Belarus was, without the Soviet Union, was not something anyone had thought to answer.',
+    text: 'In March 1991 Belarus voted to stay in the Soviet Union. In December, in a hunting lodge in the Białowieża Forest, the Union was signed away. Independence had not been the plan, and the country was not ready for it: the factories ran on Soviet supply chains and the money was still Soviet money. Nobody had thought to ask what Belarus was without the Union.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 4; p.e += 2; p.addFlag('bel_independence_1991'); },
   },
@@ -69,7 +70,7 @@ const BELARUS_EVENTS = [
     when: (G) => G.character.country.name === 'Belarus' && G.currentYear >= 2000 && G.currentYear <= 2019 && !G.flags.has('bel_state_discipline') && !G.mem.bel_disc_checked,
     text: (G) => {
       const yr = G.currentYear
-      return `The opposition newspaper that printed the wrong thing. The radio station that had its licence revoked. The university professor who said something at a lecture and was no longer at the university the following semester. You work at a state enterprise — most people work at state enterprises — and there are things you do not say at work, not because someone told you not to say them, but because ${yr <= 2010 ? 'someone was let go three years ago for saying something similar' : 'you have watched long enough to understand what the consequences look like'}. This is not fear. It is information.`
+      return `The opposition newspaper that printed the wrong thing. The radio station that had its licence revoked. The university professor who said something at a lecture and was no longer at the university the following semester. You work at a state enterprise — most people work at state enterprises — and there are things you do not say at work, not because someone told you not to say them, but because ${yr <= 2010 ? 'someone was let go three years ago for saying something similar' : 'you have watched long enough to understand what the consequences look like'}. You take it as information.`
     },
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('bel_state_discipline'); p.setMem('bel_disc_checked', true); },
@@ -89,13 +90,13 @@ const BELARUS_EVENTS = [
       {
         text: 'You marched every Sunday.',
         tag: 'marched',
-        outcome: 'You were in the crowd. The crowd was enormous. The specific feeling of standing in it — that many people, that silent, then that loud.',
+        outcome: 'You were in the crowd. The crowd was enormous. The feeling of standing in it — that many people, that silent, then that loud.',
         effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('bel_2020_generation'); p.setMem('bel2020Protests', true); p.addFlag('bel_2020_marcher'); },
       },
       {
         text: 'You supported from the edges — food, logistics, money.',
         tag: 'supported',
-        outcome: 'You did not march but you made things possible for people who did. This was its own kind of choice.',
+        outcome: 'You did not march but you made things possible for people who did. It was a choice.',
         effect: (p) => { p.m += 4; p.karma += 4; p.addFlag('bel_2020_generation'); p.setMem('bel2020Protests', true); },
       },
       {
@@ -139,7 +140,7 @@ const BELARUS_EVENTS = [
     when: (G) => G.flags.has('bel_exile') && G.currentYear >= 2021 && G.currentYear <= 2026 && !G.mem.bel_exile_checked,
     text: (G) => {
       const yr = G.currentYear
-      return `${yr <= 2022 ? 'Warsaw' : 'Vilnius or Warsaw'}: the Belarusian expat community is large enough now to have its own cafes, its own newspapers, its own funerals. You meet people who left in 2020, and people who left when Belarus let the Russian troops use its territory for the February 2022 invasion. The conversation at every gathering eventually reaches the same point: when can we go back. Nobody knows the answer. Nobody says never, because saying never is its own kind of betrayal. You renew your registration and your work permit and wait.`
+      return `${yr <= 2022 ? 'Warsaw' : 'Vilnius or Warsaw'}: the Belarusian expat community is large enough now to have its own cafes, its own newspapers, its own funerals. You meet people who left in 2020, and people who left when Belarus let the Russian troops use its territory for the February 2022 invasion. The conversation at every gathering eventually reaches the same point: when can we go back. Nobody knows the answer. Nobody says never, because saying never would be a betrayal. You renew your registration and your work permit and wait.`
     },
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 5; p.e += 2; p.setMem('bel_exile_checked', true); },

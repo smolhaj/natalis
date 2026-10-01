@@ -21,7 +21,7 @@ export const SOLO_LIFE_EVENTS = [
       {
         text: 'You want this — you are just waiting for the right person',
         tag: 'waiting',
-        outcome: 'The wanting is real. The waiting has its own specific texture.',
+        outcome: 'You want. The waiting has a texture.',
         effect: (p) => {
           p.setMem('slQuestionDone', true)
           p.addFlag('solo_wants_partner')
@@ -62,7 +62,7 @@ export const SOLO_LIFE_EVENTS = [
       !G.partner &&
       !G.mem?.slLivingAloneDone &&
       G.age >= 27 && G.age <= 35,
-    text: 'You have a flat that is exactly as you arranged it. Nothing moves unless you move it. The particular silence of a home with one person in it has a texture you have learned to read: not empty, not full, but specific in a way shared spaces aren\'t. You can leave a book face-down on the arm of the sofa for a week. You can eat dinner at ten. You can leave the lights off when you come in and sit in the dark for a moment without explaining it to anyone.',
+    text: 'You have a flat that is exactly as you arranged it. Nothing moves unless you move it. The silence of a home with one person in it has a texture you have learned to read: not empty, not full, but specific in a way shared spaces aren\'t. You can leave a book face-down on the arm of the sofa for a week. You can eat dinner at ten. You can leave the lights off when you come in and sit in the dark for a moment without explaining it to anyone.',
     choices: null,
     effect: (p) => {
       p.setMem('slLivingAloneDone', true)
@@ -98,7 +98,7 @@ export const SOLO_LIFE_EVENTS = [
       {
         text: 'You find new people — others in the same position',
         tag: 'new_people',
-        outcome: 'There is a specific social world that exists among people who have not coupled. You begin to inhabit it.',
+        outcome: 'There is a social world that exists among people who have not coupled. You begin to inhabit it.',
         effect: (p) => {
           p.setMem('slFriendsCoupledDone', true)
           p.addFlag('solo_found_community')
@@ -186,7 +186,7 @@ export const SOLO_LIFE_EVENTS = [
       !G.partner &&
       !G.mem?.slOccasionDone &&
       G.age >= 48 && G.age <= 60,
-    text: 'There is a day — your birthday, or a particular date, or just a day when the rest of the world seems to be elsewhere with someone else — where the aloneness is not background texture but foreground fact. You make dinner for yourself. You sit with it. It is neither catastrophic nor entirely fine. You think about the person you might have been by now in a different configuration of the same life. That person seems only loosely related to the one you are.',
+    text: 'There is a day — your birthday, or a date, or just a day when the rest of the world seems to be elsewhere with someone else — where the aloneness is not background texture but foreground fact. You make dinner for yourself. You eat it at the table, not standing. It is neither catastrophic nor entirely fine. You think about the person you might have been by now in a different configuration of the same life. That person seems only loosely related to the one you are.',
     choices: null,
     effect: (p) => {
       p.setMem('slOccasionDone', true)
@@ -207,7 +207,7 @@ export const SOLO_LIFE_EVENTS = [
       !G.flags.has('widowed') && !G.flags.has('divorced') &&
       !G.mem?.slWhatInsteadDone &&
       G.age >= 58 && G.age <= 70,
-    text: 'You are accounting for the life honestly, the way people do at this age. You did not have the central relationship that most people built around. What you have instead is not a compensation — it is simply different: work that mattered more because it mattered to you alone, friendships that became primary rather than supplementary, a self that was never divided between two people\'s needs. The accounting is not triumphant. It is honest.',
+    text: 'You are accounting for the life honestly, the way people do at this age. You did not have the central relationship that most people built around. What you have instead is not a compensation — it is simply different: work that mattered more because it mattered to you alone, friendships that became primary rather than supplementary, a self that was never divided between two people\'s needs. The accounting is honest.',
     choices: [
       {
         text: 'The life is a good one — genuinely, without qualification',
@@ -235,7 +235,7 @@ export const SOLO_LIFE_EVENTS = [
       {
         text: 'You are still not sure it was what you would have chosen',
         tag: 'uncertain',
-        outcome: 'The uncertainty is its own kind of answer at this age.',
+        outcome: 'The uncertainty is an answer at this age.',
         effect: (p) => {
           p.setMem('slWhatInsteadDone', true)
           p.addFlag('solo_grief_named')

@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_parent_care.js
 // 8-event arc: parental decline through to death.
 // Fires for midlife characters (30+) who still have living parents.
@@ -21,7 +22,7 @@ export const PARENT_CARE_EVENTS = [
       const parent = G.parents.mother?.alive ? G.parents.mother : G.parents.father
       const name = parent?.name?.split(' ')[0] ?? 'your parent'
       const age = parent?.currentAge ?? 75
-      return `The call is nothing specific. ${name} is fine — they say that. But there is a pause before the answer to a simple question that wasn't there before, and when you mention an appointment they mentioned last week, they say they don't remember mentioning it. You are ${G.age}. ${name} is ${age}. You have been half-expecting this. That doesn't make it less of a shift.`
+      return gendered(`The call is nothing specific. ${name} is fine — they say that. But there is a pause before the answer to a simple question that wasn't there before, and when you mention an appointment they mentioned last week, they say they don't remember mentioning it. You are ${G.age}. ${name} is ${age}. You have been half-expecting this. That doesn't make it less of a shift.`, { gender: parent === G.parents?.mother ? 'female' : 'male' })
     },
     choices: [
       {
@@ -55,7 +56,7 @@ export const PARENT_CARE_EVENTS = [
     text: (G) => {
       const parent = G.parents.mother?.alive ? G.parents.mother : G.parents.father
       const name = parent?.name?.split(' ')[0] ?? 'your parent'
-      return `The conversation you have been putting off. You sit down with ${name} — this is the one where you ask what they want, what they are managing and what they are not, and what happens when the not-managing becomes definitive. It is not a comfortable conversation. They resist it at first, then accept it, then cry a little, then say they are fine. All of this is true simultaneously.`
+      return gendered(`The conversation you have been putting off. You sit down with ${name} — this is the one where you ask what they want, what they are managing and what they are not, and what happens when the not-managing becomes definitive. It is not a comfortable conversation. They resist it at first, then accept it, then cry a little, then say they are fine. All of this is true simultaneously.`, { gender: parent === G.parents?.mother ? 'female' : 'male' })
     },
     choices: [
       {
@@ -92,9 +93,9 @@ export const PARENT_CARE_EVENTS = [
       const archetype = G.character.country.archetype
       const isFamilyCentric = ['subsaharan', 'developing_urban', 'wealthy_gulf', 'wealthy_east'].includes(archetype)
       if (isFamilyCentric) {
-        return `In your family, in this culture, the question of ${name} moving in is not really a question — it is what is expected and, on most days, what you want. But wanting it and living it are different things. The room that would be theirs is a room that is currently used for something else. The logistics begin now.`
+        return gendered(`In your family, in this culture, the question of ${name} moving in is not really a question — it is what is expected and, on most days, what you want. But wanting it and living it are different things. The room that would be theirs is a room that is currently used for something else. The logistics begin now.`, { gender: parent === G.parents?.mother ? 'female' : 'male' })
       }
-      return `The decision has become concrete. ${name} can no longer manage entirely alone. The options are what they always are: move in with you, a supervised residential facility, or significantly increased home care visits. None of these are without cost — financial, spatial, emotional. You have to choose.`
+      return `The decision has become concrete. ${name} can no longer manage entirely alone. The options are the usual three: move in with you, a supervised residential facility, or significantly increased home care visits. None of these are without cost — financial, spatial, emotional. You have to choose.`
     },
     choices: [
       {
@@ -133,7 +134,7 @@ export const PARENT_CARE_EVENTS = [
     text: (G) => {
       const parent = G.parents?.mother?.alive ? G.parents.mother : G.parents?.father
       const name = parent?.name?.split(' ')[0] ?? 'your parent'
-      return `The first months of ${name} living here were adjustment. Now it is simply life. The rhythm includes: the medication schedule, the night when they called you at 2am because they couldn\'t find the bathroom, the afternoon they told you a story about your grandmother that you had never heard and that you stayed for. The weight of the caregiving is real. So is the access to them.`
+      return gendered(`The first months of ${name} living here were adjustment. Now it is simply life. The rhythm includes: the medication schedule, the night when they called you at 2am because they couldn't find the bathroom, the afternoon they told you a story about your grandmother that you had never heard and that you stayed for. The caregiving weighs on you. It also gives you them, in hours you would not otherwise have had.`, { gender: parent === G.parents?.mother ? 'female' : 'male' })
     },
     choices: [
       {
@@ -208,9 +209,9 @@ export const PARENT_CARE_EVENTS = [
       const name = parent?.name?.split(' ')[0] ?? 'your parent'
       const decision = G.mem.pcDecision
       if (decision === 'moved_in') {
-        return `${name} does not recognise you this morning. Not for two hours. They call you by their sibling\'s name — someone who has been dead for forty years. When the recognition returns, they are embarrassed and you do not know what to do with what just happened in your own kitchen.`
+        return gendered(`${name} does not recognise you this morning. Not for two hours. They call you by their sibling\'s name — someone who has been dead for forty years. When the recognition returns, they are embarrassed and you do not know what to do with what just happened in your own kitchen.`, { gender: parent === G.parents?.mother ? 'female' : 'male' })
       }
-      return `The call comes from the facility. ${name} had a fall. Not serious, the staff say, which means not serious today. You drive there. The drive is its own kind of time. They are fine when you arrive. You sit with them for two hours. They seem smaller than they did last month.`
+      return gendered(`The call comes from the facility. ${name} had a fall. Not serious, the staff say, which means not serious today. You drive there. The drive is long. They are fine when you arrive. You sit with them for two hours. They seem smaller than they did last month.`, { gender: parent === G.parents?.mother ? 'female' : 'male' })
     },
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 6; p.setMem('pcBadDay', true) },
@@ -231,7 +232,7 @@ export const PARENT_CARE_EVENTS = [
       const parent = G.parents?.mother?.alive ? G.parents.mother : G.parents?.father
       const name = parent?.name?.split(' ')[0] ?? 'your parent'
       const pAge = parent?.currentAge ?? 80
-      return `You do not know, at the time, that this is the last conversation where ${name} is entirely present. They are ${pAge}. They ask about something you did as a child — they remember it differently from how you do, and you spend an hour in the disagreement, which is a form of connection. When you leave you feel something without being able to name it. It is only later that you understand what you were feeling was the last time.`
+      return gendered(`You do not know, at the time, that this is the last conversation where ${name} is entirely present. They are ${pAge}. They ask about something you did as a child — they remember it differently from how you do, and you spend an hour in the disagreement, which is a form of connection. When you leave you feel something without being able to name it. It is only later that you understand what you were feeling was the last time.`, { gender: parent === G.parents?.mother ? 'female' : 'male' })
     },
     choices: null,
     effect: (p) => { p.m -= 8; p.r -= 10; p.karma += 8; p.setMem('pcLastConversation', true) },
@@ -255,9 +256,9 @@ export const PARENT_CARE_EVENTS = [
       const name = parent?.name?.split(' ')[0] ?? 'your parent'
       const archetype = G.character.country.archetype
       if (['wealthy_west', 'post_soviet'].includes(archetype)) {
-        return `${name} is in the hospital now. The decision has been made to focus on comfort rather than intervention. You sit with them for four days. They sleep more than they are awake. The hours when they are awake matter differently than regular hours. The medical staff are kind in the way that people are kind when they do this every day.`
+        return gendered(`${name} is in the hospital now. The decision has been made to focus on comfort rather than intervention. You sit with them for four days. They sleep more than they are awake. The hours when they are awake matter differently than regular hours. The medical staff are kind in the way that people are kind when they do this every day.`, { gender: parent === G.parents?.mother ? 'female' : 'male' })
       }
-      return `${name}\'s final weeks. You are with them. The extended family comes in shifts that would have been logistically impossible a generation ago but which, now, feel like the right and only way. The house is full of the wrong kind of busy. You are glad they are not alone.`
+      return gendered(`${name}\'s final weeks. You are with them. The extended family comes in shifts that would have been logistically impossible a generation ago but which, now, feel like the right and only way. The house is full of the wrong kind of busy. You are glad they are not alone.`, { gender: parent === G.parents?.mother ? 'female' : 'male' })
     },
     choices: null,
     effect: (p) => {

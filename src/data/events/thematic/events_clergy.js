@@ -20,7 +20,7 @@ export const CLERGY_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) => IS_CLERGY(G) && IS_CATHOLIC_IRELAND(G) && G.currentYear >= 1940 && G.currentYear <= 1975 && G.age >= 22 && G.age <= 30 && !G.mem.cleOrdained,
-    text: 'Ordination. Your mother is in the front pew. Half the village came. In this county there is a priest in every family that can manage one — the Church runs the schools, the hospitals, the mental institutions, the moral accounting of every parish from Donegal to Cork. You have been given genuine authority over people\'s lives. The weight of this is not stated in any ceremony. It is assumed.',
+    text: 'Ordination. Your mother is in the front pew. Half the village came. In this county there is a priest in every family that can manage one — the Church runs the schools, the hospitals, the mental institutions, the moral accounting of every parish from Donegal to Cork. You have been given genuine authority over people\'s lives. No ceremony states the weight of this. It is assumed.',
     effect: (p) => { p.m += 10; p.addFlag('clergy_ordained'); p.addFlag('institutional_power'); p.setMem('cleOrdained', true) },
   },
 
@@ -185,7 +185,7 @@ export const CLERGY_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => IS_ISRAEL(G) && G.flags.has('yeshiva_trained') && G.currentYear === 1967 && !G.mem.cle67,
-    text: 'The Six Day War. Your exemption holds; your secular neighbour from the next street does not have one. He goes to the Sinai. You continue your studies. On the radio the news comes in dispatches — the air force, the Golan, the Old City, the Wall. The specific moral experience of being shielded by a compact you didn\'t choose, on a day when others are not.',
+    text: 'The Six Day War. Your exemption holds; your secular neighbour from the next street does not have one. He goes to the Sinai. You continue your studies. On the radio the news comes in dispatches — the air force, the Golan, the Old City, the Wall. The moral experience of being shielded by a compact you didn\'t choose, on a day when others are not.',
     effect: (p) => { p.m -= 10; p.addFlag('moral_weight_carried'); p.setMem('cle67', true) },
   },
 
@@ -196,7 +196,7 @@ export const CLERGY_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.flags.has('clergy_ordained') && G.age >= 65 && !G.mem.cleLate,
-    text: 'You have held a congregation for decades. You have buried people you baptised. You have baptised the children of people whose parents you buried. This is the specific continuity that religious institutions hold — the long memory, the presence across a life\'s full arc. What it required of you was not always what you expected. What you gave was not always what the institution asked for.',
+    text: 'You have held a congregation for decades. You have buried people you baptised. You have baptised the children of people whose parents you buried. This is the continuity that religious institutions hold — the long memory, the presence across a life\'s full arc. What it required of you was not always what you expected. What you gave was not always what the institution asked for.',
     effect: (p) => { p.m += 10; p.karma += 8; p.setMem('cleLate', true) },
   },
 

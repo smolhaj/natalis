@@ -62,7 +62,7 @@ export const CHILDREN_ABROAD_EVENTS = [
       G.flags.includes('parent_works_abroad') &&
       G.age >= 7 && G.age <= 13 &&
       !G.mem?.caGrandmotherTexture,
-    text: 'The person who is actually raising you is your grandmother, or your aunt, or the combined household that has arranged itself to fill the gap. The rules here are different — older in some ways, more permissive about the things that matter less. She knows things your parents would not have thought to teach you: the name of the plant in the corner of the yard, the way to read the weather from the colour of the light in the morning. You carry her with a particular loyalty.',
+    text: 'The person who is actually raising you is your grandmother, or your aunt, or the combined household that has arranged itself to fill the gap. The rules here are different — older in some ways, more permissive about the things that matter less. She knows things your parents would not have thought to teach you: the name of the plant in the corner of the yard, the way to read the weather from the colour of the light in the morning. You carry her with a loyalty.',
     choices: null,
     effect: (p) => {
       p.m += 3
@@ -135,7 +135,7 @@ export const CHILDREN_ABROAD_EVENTS = [
       G.flags.includes('parent_works_abroad') &&
       G.age >= 13 && G.age <= 18 &&
       !G.mem?.caReunionStranger,
-    text: 'Your parent comes back. You stand in the arrivals area and the person walking toward you is familiar in the way photographs are familiar — recognisable but not known. The hug is real. The strangeness is also real. The family is supposed to resume from where it paused, which is not where it is. You start again, carefully, from here.',
+    text: 'Your parent comes back. You stand in the arrivals area and the person walking toward you is familiar in the way photographs are familiar — recognisable but not known. The strangeness is also real. The family is supposed to resume from where it paused, and it is not there. You start again, carefully, from here.',
     choices: null,
     effect: (p) => {
       p.m += 4

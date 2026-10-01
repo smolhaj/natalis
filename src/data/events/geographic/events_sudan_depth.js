@@ -108,7 +108,7 @@ export const SUDAN_DEPTH_EVENTS = [
       G.age >= 18 && G.age <= 50 &&
       G.flags.has('sudan_bashir_generation') &&
       !G.mem?.sdnGhostHouse,
-    text: `Someone you know disappears. Not into prison — into the other system, the one that has no address. The ghost houses are unofficial detention centres scattered across Khartoum, run by the National Intelligence and Security Service. They do not officially exist. The torture that happens inside them is not officially documented. When someone is taken, the family is not informed. They find out through the informal networks that exist precisely for this purpose — the calls made at specific hours, the names whispered, the coordinates passed person to person. Sometimes people come back. Sometimes they do not. Afterwards, you modify your behaviour in ways you do not fully name as modification.`,
+    text: `Someone you know disappears, not into prison but into the other system, the one with no address. The ghost houses are rooms around Khartoum that officially do not exist, and the family is not told. They learn through the networks that exist for exactly this: calls at certain hours, names passed from person to person. Sometimes people come back. Afterwards you change how you behave in ways you do not call changing.`,
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -129,7 +129,7 @@ export const SUDAN_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2000 &&
       G.age >= 5 && G.age <= 18 &&
       !G.mem?.sdnFurLand,
-    text: `The Fur are the people of Jebel Marra — the volcanic massif in central Darfur that rises to 3,000 metres above the surrounding desert. The millet grows here where it cannot grow in the flat country below. The water sources are different. The seasonal markets that run from highland to lowland along ancient trade routes are the calendar of the year. The Fur Sultanate is in the history books but is also alive in the village structure, the genealogies, the authority of certain elders. Growing up here is growing up in a specific geography with a specific memory. Khartoum is a distant fact. The centre of the country is somewhere else.`,
+    text: `The Fur are the people of Jebel Marra, the volcanic mountain that rises out of the Darfur plain, where millet grows that cannot grow in the flat country and the water is different. The seasonal markets along the old trade routes are the calendar of the year, and the old Sultanate lives on in the villages, the genealogies, the authority of certain elders. You grow up in a landscape with a memory. Khartoum is a distant fact.`,
     choices: null,
     effect: (p) => {
       p.m += 3
@@ -180,7 +180,7 @@ export const SUDAN_DEPTH_EVENTS = [
       {
         text: 'You invested in it — stayed, worked, built something for the new Sudan.',
         tag: null,
-        outcome: 'The coup takes this specifically. The October 25th dissolution is not an abstraction. It is a list of things you personally built, closed.',
+        outcome: 'The coup takes this specifically. The October 25th dissolution is a list of things you personally built, closed.',
         effect: (p) => {
           p.m -= 15
           p.r += 12
@@ -214,7 +214,7 @@ export const SUDAN_DEPTH_EVENTS = [
       IS_SUDAN(G) &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem?.sdnTeaLadies,
-    text: 'On the corner there is a charcoal burner, a kettle, a low plastic table and eight glasses, and she pays the policeman a small amount each morning to keep them there. She pours the attaya from a height, which is not for show, it is how it cools. In the spring the corner moves to the sit-in outside the army headquarters and she cooks for the people sleeping there out of her own takings. On the third of June the Rapid Support Forces come into the camp and she does not leave her burner.',
+    text: 'On the corner there is a charcoal burner, a kettle, a low plastic table and eight glasses, and she pays the policeman a small amount each morning to keep them there. She pours the attaya from a height, not for show; it is how it cools. In the spring the corner moves to the sit-in outside the army headquarters and she cooks for the people sleeping there out of her own takings. On the third of June the Rapid Support Forces come into the camp and she does not leave her burner.',
     context: 'Khartoum\'s sittaat al-shay, unlicensed women tea sellers, are a fixture of the city\'s informal economy and pay daily informal levies to police. During the 2019 revolution they supplied and fed the sit-in outside the army general command. Security forces cleared the camp on 3 June 2019, killing more than a hundred people; several tea sellers were among the dead.',
     choices: null,
     effect: (p) => {
@@ -235,7 +235,7 @@ export const SUDAN_DEPTH_EVENTS = [
       IS_SUDAN(G) &&
       G.age >= 13 && G.age <= 25 &&
       !G.mem?.sdnArabAfrican,
-    text: `Sudan sits at a border that is not on maps: between the Arab world and sub-Saharan Africa. The government's Arabisation policy from the 1980s onward — the promotion of Arabic and Islam as the national identity, the suppression of other languages, of southern Christian and animist traditions — was also a claim about what kind of place Sudan was. For you, the question is personal: in Cairo you are African. In Lagos you are Arab. In Khartoum you are whatever the politics of the moment requires. The census categories have changed several times in your lifetime. Your identity has been a political question without becoming any less personal. The word Sudanese contains a conflict that has never been resolved by simply using it.`,
+    text: `Sudan sits on a border no map shows, between the Arab world and Africa, and from the eighties the government pushed Arabic and Islam as the whole of the national identity. For you it is personal: in Cairo you are African, in Lagos you are Arab, in Khartoum you are whatever the moment's politics needs. The census categories have changed several times in your life. Saying Sudanese has never settled the argument inside the word.`,
     choices: null,
     effect: (p) => {
       p.r += 4

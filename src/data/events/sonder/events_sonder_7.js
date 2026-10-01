@@ -101,7 +101,7 @@ export const EVENTS_SONDER_7 = [
       ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.archetype) &&
       G.age >= 25 &&
       !G.mem?.s7FoodMarket,
-    text: 'The price is not the price. This is understood by both parties. You name what you will pay; she names what she will accept; the final number is somewhere between them and was always going to be somewhere between them. The negotiation is social as much as economic — to not negotiate would be an insult to the process, a refusal of the form. You have been doing this since you were old enough to be sent to the market alone.',
+    text: 'The price is not the price, and both parties understand this. You name what you will pay; she names what she will accept; the final number is somewhere between them and was always going to be somewhere between them. The negotiation is social as much as economic — to not negotiate would be an insult to the process, a refusal of the form. You have been doing this since you were old enough to be sent to the market alone.',
     choices: null,
     effect: (p) => { p.s += 1; p.e += 1; p.setMem('s7FoodMarket', true) },
   },
@@ -124,7 +124,7 @@ export const EVENTS_SONDER_7 = [
     when: (G) =>
       G.age >= 65 &&
       !G.mem?.s7FoodLateLife,
-    text: 'You are not as hungry as you used to be. The food that once occupied an important part of the day is now something you get through. This is not sadness — it is a change in the body\'s requirements, a recalibration. You notice it mostly when someone makes a special effort and you cannot do it justice. You eat what you can and say it was very good, which is both true and not quite the point.',
+    text: 'You are not as hungry as you used to be. The food that once occupied an important part of the day is now something you get through. This is not sadness — it is a change in the body\'s requirements, a recalibration. You notice it mostly when someone makes a special effort and you cannot do it justice. You eat what you can and say it was very good. It is true, and not quite the point.',
     choices: null,
     effect: (p) => { p.h -= 1; p.r += 2; p.setMem('s7FoodLateLife', true) },
   },
@@ -204,7 +204,7 @@ export const EVENTS_SONDER_7 = [
       G.age >= 8 && G.age <= 14 &&
       !['secular', 'atheist'].includes(G.religion) &&
       !G.mem?.s7RitualWeekly,
-    text: 'Once a week the family goes. You do not always want to go. The wanting is not the point — the going is the point. The room smells like a particular kind of old, or incense, or whatever the community uses to mark that this space is different from the spaces outside it. You have been sitting in this room since before you can remember. That is also what this room is: the earliest thing.',
+    text: 'Once a week the family goes. You do not always want to go. The wanting is not the point — the going is the point. The room smells like a kind of old, or incense, or whatever the community uses to mark that this space is different from the spaces outside it. You have been sitting in this room since before you can remember. That is also what this room is: the earliest thing.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s7RitualWeekly', true) },
   },
@@ -217,7 +217,7 @@ export const EVENTS_SONDER_7 = [
       G.partner &&
       G.age >= 35 &&
       !G.mem?.s7RitualAnniversary,
-    text: 'You have forgotten an anniversary or a date that matters to your partner, or they have forgotten one that matters to you. The forgetting is not the problem — the forgetting is the symptom. You have both been living alongside the same life and the markers of the life have moved to the background. You have a conversation that is not quite the conversation you need. This is probably fine. It is also a kind of signal.',
+    text: 'You have forgotten an anniversary or a date that matters to your partner, or they have forgotten one that matters to you. The forgetting is not the problem — the forgetting is the symptom. You have both been living alongside the same life and the markers of the life have moved to the background. You have a conversation that is not quite the conversation you need. It will probably do. It is also a kind of signal.',
     choices: null,
     effect: (p) => { p.m -= 2; p.r += 2; p.setMem('s7RitualAnniversary', true) },
   },
@@ -230,7 +230,7 @@ export const EVENTS_SONDER_7 = [
       G.age >= 10 && G.age <= 14 &&
       !['secular', 'atheist'].includes(G.religion) &&
       !G.mem?.s7RitualFirst,
-    text: 'There is a ceremony for when you are old enough. You have been preparing for months. The ceremony lasts for a specific time and follows its order. Afterward there is food and relatives you rarely see. Everyone tells you that you are grown now. You are not grown. But you have passed through a form that says you are, and the form is real even if the feeling will take years.',
+    text: 'There is a ceremony for when you are old enough. You have been preparing for months. The ceremony lasts for a time and follows its order. Afterward there is food and relatives you rarely see. Everyone tells you that you are grown now. You are not grown. But you have passed through a form that says you are, and the form is real even if the feeling will take years.',
     choices: null,
     effect: (p) => { p.m += 3; p.e += 1; p.setMem('s7RitualFirst', true) },
   },
@@ -261,7 +261,7 @@ export const EVENTS_SONDER_7 = [
     when: (G) =>
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.s7StreetCorner,
-    text: 'There is a corner you pass every day. You know it the way you know a face — not by description but by something more immediate. You know which lamp flickers. You know the stall that moves with the season. You know the hour when a particular kind of person is standing there. The corner does not know you. This asymmetry is just the nature of streets.',
+    text: 'There is a corner you pass every day. You know it the way you know a face — not by description but by something more immediate. You know which lamp flickers. You know the stall that moves with the season. You know the hour when a kind of person is standing there. The corner does not know you. This asymmetry is just the nature of streets.',
     choices: null,
     effect: (p) => { p.e += 1; p.setMem('s7StreetCorner', true) },
   },
@@ -286,7 +286,7 @@ export const EVENTS_SONDER_7 = [
     when: (G) =>
       G.age >= 35 &&
       !G.mem?.s7StreetChanged,
-    text: 'The neighbourhood is not what it was. This is verifiable, not nostalgia — the shops are different, the people on the street are different, the prices are different. You walk through it knowing both versions: the current one and the one underneath. This double vision is one of the things that accumulates over time. You are not sure if it is a gain or a form of haunting.',
+    text: 'The neighbourhood is not what it was, and that is verifiable: the shops are different, the people on the street are different, the prices are different. You walk through it knowing both versions: the current one and the one underneath. This double vision is one of the things that accumulates over time. You are not sure if it is a gain or a form of haunting.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s7StreetChanged', true) },
   },
@@ -325,7 +325,7 @@ export const EVENTS_SONDER_7 = [
       G.ruralUrban === 'urban' &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.s7StreetBusStop,
-    text: 'At the bus stop there is a man you see every Tuesday. You have never spoken. You have shared this corner at this hour perhaps forty or fifty times. He is always reading something. You have seen the covers change over months. This is the extent of what you know about him, which is not nothing — it is that he reads, that he takes this bus, that he is there on Tuesdays. The rest of him is elsewhere, entirely unknown to you, going through its own Tuesday.',
+    text: 'At the bus stop there is a man you see every Tuesday. You have never spoken. You have shared this corner at this hour perhaps forty or fifty times. He is always reading something. You have seen the covers change over months. This is the extent of what you know about him, and it is not nothing: he reads, he takes this bus, he is there on Tuesdays. The rest of him is elsewhere, entirely unknown to you, going through its own Tuesday.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s7StreetBusStop', true) },
   },
@@ -381,7 +381,7 @@ export const EVENTS_SONDER_7 = [
     weight: 2,
     when: (G) => place.hasRadio(G) && (G.age >= 35 &&
       !G.mem?.s7SoundDated),
-    text: 'A song comes on — a shop, a passing car, a radio someone has on in another room — and you are immediately a different age, in a different year, in a specific afternoon you had not thought of in a long time. The memory is not summoned by thinking but by the song arriving before your defences could be organised. This is how music stores time differently from photographs: you do not look at it. It comes in through the part of you that was open.',
+    text: 'A song comes on — a shop, a passing car, a radio someone has on in another room — and you are immediately a different age, in a different year, in an afternoon you had not thought of in a long time. The memory arrives with the song, before your defences can be organised. Music stores time differently from photographs: you do not look at it. It comes in through the part of you that was open.',
     choices: null,
     effect: (p) => { p.m += 2; p.r += 2; p.setMem('s7SoundDated', true) },
   },
@@ -394,7 +394,7 @@ export const EVENTS_SONDER_7 = [
       G.ruralUrban === 'urban' &&
       G.age >= 20 &&
       !G.mem?.s7SoundCity,
-    text: 'You are somewhere quiet — countryside, a room in a different city, late at night — and you become aware that the sound of your city is in you, installed. The traffic frequency you never noticed. The frequency of voices on a certain kind of street. The sound of your city at eleven PM specifically, which is different from midnight, which is different from two AM. You carry the city in the frequency of your expectations.',
+    text: 'You are somewhere quiet — countryside, a room in a different city, late at night — and you become aware that the sound of your city is in you, installed. The traffic frequency you never noticed. The frequency of voices on a certain kind of street. The sound of your city at eleven at night, different from midnight, different again from two. You carry the city in the frequency of your expectations.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s7SoundCity', true) },
   },
@@ -407,7 +407,7 @@ export const EVENTS_SONDER_7 = [
       G.children && G.children.length > 0 &&
       G.age >= 30 && G.age <= 50 &&
       !G.mem?.s7SoundLullaby,
-    text: 'You are singing to the child and you realise you are singing what was sung to you. You did not decide this. Your mother\'s voice is in your voice and she learned it from hers. The song is older than anyone you can name. You are a link in it. The child does not know this. The child just knows the sound, which is what you knew too.',
+    text: 'You are singing to the child and you realise you are singing what was sung to you. You did not decide this. Your mother\'s voice is in your voice and she learned it from hers. The song is older than anyone you can name. You are a link in it. The child does not know this. The child just knows the sound, as you knew it.',
     choices: null,
     effect: (p) => { p.m += 3; p.karma += 2; p.setMem('s7SoundLullaby', true) },
   },
@@ -420,7 +420,7 @@ export const EVENTS_SONDER_7 = [
       (G.religion?.startsWith('muslim')) &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.s7SoundAdhan,
-    text: 'The adhan comes five times a day and you have heard it since before you could count. It is background; it is structure. You know the hours by it without checking the clock. Some days it is sound and some days it is meaning and some days it is both. Today it is both. You stop what you are doing and you do not move for a moment, which is its own kind of response.',
+    text: 'The adhan comes five times a day and you have heard it since before you could count. It is background; it is structure. You know the hours by it without checking the clock. Some days it is sound and some days it is meaning and some days it is both. Today it is both. You stop what you are doing and you do not move for a moment.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s7SoundAdhan', true) },
   },

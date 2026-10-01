@@ -116,7 +116,7 @@ export const EVENTS_SONDER_32 = [
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 26 && !G.mem?.s32k,
     text: () => pick([
-      'The first time you lived alone: the sound of nothing, the specific nothing of a space that was not waiting for anyone else. Provisional at first. Then the space became yours.',
+      'The first time you lived alone: the sound of nothing, the nothing of a space that was not waiting for anyone else. Provisional at first. Then the space became yours.',
       'Everyone at this party is performing slightly. You are performing slightly. The gap between the performance and the person underneath it is the same size in everyone and none of you discuss this openly.',
     ]),
     choices: null,
@@ -143,7 +143,7 @@ export const EVENTS_SONDER_32 = [
     when: (G) => G.age >= 36 && G.age <= 48 && !G.mem?.s32m,
     text: () => pick([
       'Lunch alone, at the counter. Not eating alone because of loneliness but eating alone because of preference, this once, at this counter, watching the cook work.',
-      'At every gathering someone asks how things are going. The answer you give. The answer you do not give. The gap between the two is not dishonesty — it is social convention, which is its own kind of truth.',
+      'At every gathering someone asks how things are going. The answer you give. The answer you do not give. The gap between the two is manners.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s32m', true) },
@@ -194,7 +194,7 @@ export const EVENTS_SONDER_32 = [
     weight: 2,
     when: (G) => G.age >= 46 && G.age <= 60 && !G.mem?.s32q,
     text: () => pick([
-      'You are competent now in a way you were not at thirty. The specific earned knowledge of how to do a thing well. It arrived quietly, through repetition, until one day you noticed you were good at it.',
+      'You are competent now in a way you were not at thirty. The earned knowledge of how to do a thing well. It arrived quietly, through repetition, until one day you noticed you were good at it.',
       'The room in the house that you have been in a thousand times and still sometimes enter wrong — going left when left is not where you meant to go. The body\'s habits are older than the house.',
     ]),
     choices: null,
@@ -234,7 +234,7 @@ export const EVENTS_SONDER_32 = [
     when: (G) => G.season === 'summer' && (G.age >= 8 && G.age <= 14 && !G.mem?.s32t),
     text: () => pick([
       'You made something with your hands that was not perfect and was yours. The imperfection was part of what made it yours.',
-      'The way the day felt the last time before it ended — the last summer of being young in a particular way, the last year before school changed. You did not know it was the last one while it was happening.',
+      'The way the day felt the last time before it ended — the last summer of being young in a way, the last year before school changed. You did not know it was the last one while it was happening.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s32t', true) },
@@ -246,8 +246,8 @@ export const EVENTS_SONDER_32 = [
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 42 && !G.mem?.s32v,
     text: () => pick([
-      'The decision that felt large at the time and which, from here, feels like the only decision that was possible given what you knew and who you were. The largeness was real. The impossibility of the alternative was also real.',
-      'You take a walk that has become yours — the particular stretch of road or park or waterfront that has accumulated enough repetitions to feel owned, without being owned.',
+      'The decision that felt large at the time and which, from here, feels like the only decision that was possible given what you knew and who you were. The impossibility of the alternative was also real.',
+      'You take a walk that has become yours — the stretch of road or park or waterfront that has accumulated enough repetitions to feel owned, without being owned.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s32v', true) },
@@ -260,7 +260,7 @@ export const EVENTS_SONDER_32 = [
     when: (G) => G.age >= 70 && !G.mem?.s32w,
     text: () => pick([
       'Simplification. The not carrying of things that were heavy and are no longer required. The year when you stopped explaining yourself in certain ways and found the silence worked as well.',
-      'The person who you are now, looking back at the person who was so certain. The certainty was not wrong about everything. It was wrong about some things that mattered and right about some things that also mattered.',
+      'The person who you are now, looking back at the person who was so certain. The certainty was wrong about some things that mattered and right about others that also mattered.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s32w', true) },
@@ -285,7 +285,7 @@ export const EVENTS_SONDER_32 = [
     weight: 2,
     when: (G) => place.hasBooks(G) && (G.age >= 60 && G.age <= 74 && !G.mem?.s32z),
     text: () => pick([
-      'The recurring pleasure that has not diminished: the morning coffee, the book before bed, the conversation with a particular person. Some pleasures do not run out. You have located yours.',
+      'The recurring pleasure that has not diminished: the morning coffee, the book before bed, the conversation with a person. Some pleasures do not run out. You have located yours.',
       'Someone you knew long ago has died. The distance between that person and your present life was large. The death still reaches across it. That is something about how grief works.',
     ]),
     choices: null,

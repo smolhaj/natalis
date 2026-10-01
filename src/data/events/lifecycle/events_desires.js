@@ -52,7 +52,7 @@ export const DESIRES_EVENTS = [
     when: (G) => G.age >= 7 && G.age <= 11 && !G.mem?.woundFired && (G.siblings?.length ?? 0) > 0,
     text: (G) => {
       const sib = G.siblings?.[0]
-      return `${sib?.name?.split(' ')[0] ?? 'Your sibling'} gets the photograph taken. You are standing a little to the left. You remember this later, specifically. A wish forms here: to be seen, completely, at least once.`
+      return `${sib?.name?.split(' ')[0] ?? 'Your sibling'} gets the photograph taken. You are standing a little to the left. You remember it later, exactly. A wish forms here: to be seen, completely, at least once.`
     },
     choices: null,
     effect: (p) => { p.setDesire('be_seen'); p.setMem('woundFired', true) },
@@ -140,7 +140,8 @@ export const DESIRES_EVENTS = [
       if (G.education?.enrolled) parts.push('You are studying.')
       else if (G.career) parts.push(`You have found work — ${G.career.title}, for now.`)
       else if (F.has('emigrated')) parts.push(`You have left ${G.character.country.name}.`)
-      else parts.push('You are finding your way into the world.')
+      else if (G.ruralUrban === 'rural' && G.mem?.attendedSchool === false) parts.push('You work, as everyone you grew up with works.')
+      else parts.push('You are still looking for work that will have you.')
 
       if (F.has('rural_to_urban')) parts.push('The city is still mostly unfamiliar.')
       if (G.partner) parts.push(`There is ${(G.partner.name ?? 'someone').split(' ')[0]}.`)
@@ -148,7 +149,7 @@ export const DESIRES_EVENTS = [
       const desireLines = {
         prove_worth: 'There is something you are still trying to earn from someone who probably isn\'t watching anymore. You haven\'t worked out yet that this is the situation.',
         belong: 'What you want most is a room where you stop feeling like a guest. You haven\'t found it yet.',
-        be_seen: 'You want to be noticed for something real. You haven\'t decided yet what that is, which is part of the problem.',
+        be_seen: 'You want to be noticed for something real. You haven\'t decided yet what that is, and that is part of the problem.',
         safety: 'The ground under you doesn\'t feel entirely solid. You are building as fast as you can.',
         connection: 'You are surrounded by people. It doesn\'t quite feel like that from the inside.',
         leave_mark: 'There is a pressure in you — diffuse, unspecified — that something is supposed to happen. You just don\'t know what yet.',
@@ -159,7 +160,7 @@ export const DESIRES_EVENTS = [
       const desireLine = desireLines[G.desire] ?? 'The future is still mostly theoretical.'
       parts.push(desireLine)
 
-      return `You are ${G.age}. ${parts.join(' ')} This is the beginning of something, though you cannot yet see its shape.`
+      return `You are ${numberWord(G.age)}. ${parts.join(' ')}`
     },
     choices: null,
     effect: (p) => { p.setMem('decade20Ack', true) },
@@ -177,7 +178,7 @@ export const DESIRES_EVENTS = [
 
       if (G.partner?.married) parts.push(`You married ${(G.partner.name ?? 'your partner').split(' ')[0]}.`)
       else if (G.partner) parts.push('You are with someone.')
-      else parts.push('You are alone, which is a different thing from lonely.')
+      else parts.push('You are on your own, and most evenings you do not mind.')
 
       if ((G.children ?? []).length > 0) {
         parts.push(`There ${G.children.length === 1 ? 'is a child' : `are ${G.children.length} children`} now.`)
@@ -190,16 +191,16 @@ export const DESIRES_EVENTS = [
         belong: 'You have found some version of belonging — imperfect, provisional. Whether it is the one you wanted is a question you are still living with.',
         be_seen: 'Some people see you now. It helps more than you expected, and somewhat less than you hoped.',
         safety: 'You have built some stability. You check on it more than people who didn\'t grow up without it.',
-        connection: 'The connections you have are real. You are still learning how much of yourself to let in.',
+        connection: 'You have connections. You are still learning how much of yourself to let in.',
         leave_mark: 'You have started something. Whether it will matter is still unclear from this close.',
-        freedom: 'You have more freedom than you did. You are still deciding what to do with it, which is harder than the wanting was.',
+        freedom: 'You have more freedom than you did. You are still deciding what to do with it. It is harder than the wanting was.',
         redemption: 'You are still working on something from before. You may be for a while. That is all right.',
       }
 
       const desireLine = desireLines[G.desire] ?? 'The person you imagined at twenty made different choices.'
       parts.push(desireLine)
 
-      return `You are thirty. ${parts.join(' ')} You are still finding out if your choices were better than the alternatives.`
+      return `You are ${numberWord(G.age)}. ${parts.join(' ')}`
     },
     choices: null,
     effect: (p) => { p.setMem('decade30Ack', true) },
@@ -219,7 +220,7 @@ export const DESIRES_EVENTS = [
         const q = G.partner.relationshipQuality ?? 60
         parts.push(q > 70
           ? `${(G.partner.name ?? 'Your partner').split(' ')[0]} has been beside you for years. You still find things to say.`
-          : `${(G.partner.name ?? 'Your partner').split(' ')[0]} has been beside you for years. The distance between people is not always distance.`)
+          : `${(G.partner.name ?? 'Your partner').split(' ')[0]} has been beside you for years. Some evenings neither of you says anything, and it is not always peace.`)
       } else if (F.has('widowed')) {
         parts.push('You have lost a partner. You are still figuring out what alone means at this age.')
       } else if (F.has('divorced')) {
@@ -239,14 +240,14 @@ export const DESIRES_EVENTS = [
         safety: 'You understand now that complete safety was never the goal — it was the anxiety talking. You are building a different relationship with uncertainty.',
         connection: 'You have let some people in. Maybe not all the way. You are still deciding if that is wisdom or a habit from before.',
         leave_mark: 'You are in the middle of something you will judge from further away. Right now you can\'t see it clearly enough.',
-        freedom: 'You are freer than you were at thirty. The question has shifted from getting free to what to do with it, which is harder.',
+        freedom: 'You are freer than you were at thirty. The question has shifted from getting free to what to do with it, and that is harder.',
         redemption: 'You are still working on it. The weight has not changed, but how you carry it has.',
       }
 
       const desireLine = desireLines[G.desire] ?? 'Half of what you intended, more or less.'
       parts.push(desireLine)
 
-      return `You are forty. ${parts.join(' ')} You have stopped apologising for the gap between what you meant and what is.`
+      return `You are ${numberWord(G.age)}. ${parts.join(' ')}`
     },
     choices: null,
     effect: (p) => { p.setMem('decade40Ack', true) },
@@ -289,14 +290,14 @@ export const DESIRES_EVENTS = [
         safety: 'You have built what you could and accepted what you could not. It took most of your adult life to learn that those are different categories.',
         connection: 'The connections you have managed to keep are the real thing. You have stopped apologising for the ones that didn\'t survive.',
         leave_mark: 'You have made some things. Whether they will last is not entirely yours to decide.',
-        freedom: 'You are freer than you have ever been, which is either wonderful or terrifying depending on the morning.',
+        freedom: 'You are freer than you have ever been, and it is wonderful or terrifying depending on the morning.',
         redemption: 'You have done some of the work. You carry the rest differently now — lighter, but still present.',
       }
 
       const desireLine = desireLines[G.desire] ?? 'There is more past than there used to be.'
       parts.push(desireLine)
 
-      return `You are ${numberWord(G.age)}. ${parts.join(' ')} You are learning to carry it all differently.`
+      return `You are ${numberWord(G.age)}. ${parts.join(' ')}`
     },
     choices: null,
     effect: (p) => { p.setMem('decade50Ack', true) },
@@ -325,7 +326,7 @@ export const DESIRES_EVENTS = [
 
       const desireLines = {
         prove_worth: 'The drive to prove yourself never fully left. But from here you can see that it was always more about you than about anyone watching.',
-        belong: 'The belonging you wanted at twenty looks different from sixty. You belong to your life now — imperfect, specific, yours.',
+        belong: 'The belonging you wanted at twenty looks different from sixty. You belong to your life now, imperfect as it is.',
         be_seen: 'You have been seen — partially, imperfectly, genuinely — by some people. That turns out to be enough.',
         safety: 'Safety was never complete. You have made your peace with that, more or less, over a long time.',
         connection: 'The connections that survived are the real thing. You are glad you kept trying, even when it was easier not to.',
@@ -337,7 +338,7 @@ export const DESIRES_EVENTS = [
       const desireLine = desireLines[G.desire] ?? 'The things you were afraid of did not mostly happen.'
       parts.push(desireLine)
 
-      return `You are sixty. ${parts.join(' ')} The things that happened were different from what you feared, and that is almost always true.`
+      return `You are ${numberWord(G.age)}. ${parts.join(' ')}`
     },
     choices: null,
     effect: (p) => { p.setMem('decade60Ack', true) },
@@ -365,7 +366,7 @@ export const DESIRES_EVENTS = [
       }
 
       if (F.has('cancer_survivor') || (G.conditions?.length ?? 0) > 0) {
-        parts.push('The body has its own opinions, which you have learned to negotiate with.')
+        parts.push('The body has opinions, which you have learned to negotiate with.')
       }
 
       if (F.has('emigrated') && (G.yearsAbroad ?? 0) > 20) {
@@ -373,20 +374,20 @@ export const DESIRES_EVENTS = [
       }
 
       const desireLines = {
-        prove_worth: 'You stopped needing to prove yourself sometime in your fifties. You barely noticed when it happened, which is how these things go.',
-        belong: 'You belong to the life you built. For better and for worse, in all its specific imperfection, it is yours.',
+        prove_worth: 'You stopped needing to prove yourself sometime in your fifties. You barely noticed when it happened.',
+        belong: 'You belong to the life you built. For better and for worse, it is yours.',
         be_seen: 'You have been seen — not fully, not perfectly, but genuinely — by someone. You understand now that is what was on offer all along.',
         safety: 'You built what safety you could. The rest you learned to live without, which turned out to be livable.',
         connection: 'The people who know you, really know you. You stopped counting them long ago and started just being grateful.',
-        leave_mark: 'You have left some marks. They are not the ones you imagined at twenty, but they are yours and they are real.',
-        freedom: 'You are free now in a way that only time gives — free of proving, free of becoming, free to simply be what you are.',
+        leave_mark: 'You have left some marks. They are not the ones you imagined at twenty, but they are yours.',
+        freedom: 'You are free now as only time makes you — free of proving, free of becoming, free to simply be what you are.',
         redemption: 'Whatever you needed to make up for, you did what you could. The rest you are learning to put down. It is time.',
       }
 
       const desireLine = desireLines[G.desire] ?? 'From here, the life has a shape it did not have from inside it.'
       parts.push(desireLine)
 
-      return `You are seventy. ${parts.join(' ')} That is a long time to be one person.`
+      return `You are ${numberWord(G.age)}. ${parts.join(' ')}`
     },
     choices: null,
     effect: (p) => { p.setMem('decade70Ack', true) },
