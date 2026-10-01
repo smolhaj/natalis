@@ -2826,8 +2826,12 @@ const BASE_EVENTS = [
     id: 'ec_parental_abandonment',
     phase: 'early_childhood',
     weight: 2,
-    when: (G) => G.character.familyStability === 'unstable',
-    text: 'One morning a parent is simply gone. No explanation reaches you. The absence leaves a shape in your life that nothing quite fills.',
+    // "A parent is simply gone" was printed while both parents went on living in
+    // the state, speaking in later events and dying by name decades on. The
+    // engine has no verb for a parent who leaves and is still alive, so the
+    // scene is the leaving and the return, which the state can carry.
+    when: (G) => G.character.familyStability === 'unstable' && G.parents?.father?.alive !== false,
+    text: 'One morning your father is not at the table, and his shoes are not by the door. He comes back weeks later. Nobody tells you where he was, and the question goes into the place where you keep the things you do not ask.',
     choices: null,
     effect: (p) => { p.m -= 14; p.r += 12; p.addFlag('abandoned_by_parent'); p.addFlag('guarded_heart'); },
   },
@@ -5562,7 +5566,7 @@ const BASE_EVENTS = [
       {
         text: 'Toddle forward',
         tag: null,
-        outcome: 'You make it three steps before sitting down hard. Everyone cheers.',
+        outcome: 'You make it three steps before sitting down hard.',
         effect: (p) => { p.h += 5; p.setMem('first_steps', true); },
         inject: null,
       },
@@ -7455,7 +7459,7 @@ const BASE_EVENTS = [
     id: 'cz_aid_dependency',
     phase: null,
     weight: 2,
-    when: (G) => G.conflictRisk > 0.15 && G.age >= 12 && !G.mem.cz_aid,
+    when: (G) => G.conflictRisk > 0.15 && G.currentYear >= 1975 && G.age >= 12 && !G.mem.cz_aid,
     text: 'The white trucks come on Tuesdays. WFP, UNHCR, MSF — you know the logos before you know what the letters mean. The queue is orderly because everyone understands the cost of disrupting it. You have grown up knowing what a ration card looks like.',
     context: null,
     choices: [

@@ -8977,7 +8977,7 @@ function* textureCandidates(state, opts = {}) {
     'The Charter is the document that makes certain arguments possible — section 15, equality rights, the court challenges that would not have been possible without it.',
     'Quebec never signed. The constitution is Canada\'s constitution and Quebec exists under it without having ratified it. The sentence describes something that is true and is also the unresolved thing.',
   ])]
-  if (F.has('quebec_question_generation') && Math.random() < 0.2) yield [T.anchored, pick([
+  if (F.has('quebec_question_generation') && currentYear >= 2000 && Math.random() < 0.2) yield [T.anchored, pick([
     'Meech Lake, Charlottetown, the 1995 referendum. The question of whether Quebec is in Canada on terms Quebec can live with has produced three major constitutional failures in fifteen years.',
     phase === 'late_life'
       ? 'The question is quieter now. The sovereigntist parties are lower in the polls. The question is not gone. It is the question that Canada generates when conditions are right. The conditions change.'
@@ -14582,7 +14582,8 @@ function* textureCandidates(state, opts = {}) {
         'Prosperity is the official story. The official story is partly true.',
       ])]
       else if (era === 1950) yield [T.anchored, pick([
-        'The countries to the north are being rebuilt with someone else\'s money and this one is not, and everybody here knows the name of the plan.',
+        // Spain was excluded from the Marshall Plan; Portugal and Greece were not.
+        ...(country?.name === 'Spain' ? ['The countries to the north are being rebuilt with someone else\'s money and this one is not, and everybody here knows the name of the plan.'] : []),
         'The emigration is the economy. The remittance arrives on the same week each month and the household is organised around the date.',
       ])]
       if (era === 1960) yield [T.anchored, pick([

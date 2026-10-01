@@ -3029,8 +3029,10 @@ export const WORLD_EVENTS = [
     countries: ['India'],
     narrative: (G) => {
       const place = G.place?.name || ''
-      if (place === 'Bhopal' || (G.character.country?.name === 'India' && Math.random() < 0.15)) {
-        return 'The Union Carbide pesticide plant in Bhopal leaks methyl isocyanate gas at 2am, 3 December. The gas is heavier than air and settles into the low-lying neighbourhoods around the plant. You wake to your eyes burning and your neighbours running without knowing which direction. By morning, 3,000 people are dead within the week. 500,000 are injured. The company\'s CEO flies to India, is briefly arrested, and is released. He flies home.'
+      // Only a character who lives in Bhopal woke to it; a random 15% of all
+      // Indians used to.
+      if (place === 'Bhopal') {
+        return 'The Union Carbide pesticide plant in Bhopal leaks methyl isocyanate gas at 2am, 3 December. The gas is heavier than air and settles into the low-lying neighbourhoods around the plant. You wake to your eyes burning and your neighbours running without knowing which direction. Within the week 3,000 people are dead. 500,000 are injured. The company\'s CEO flies to India, is briefly arrested, and is released. He flies home.'
       }
       return 'The Union Carbide pesticide plant in Bhopal, Madhya Pradesh, leaks methyl isocyanate gas on the night of 3 December. 3,000 dead in the immediate aftermath; estimates of total deaths range to 15,000. 500,000 people are exposed. The CEO of Union Carbide, Warren Anderson, is arrested in India, released on bail, and flies home. The survivors wait for compensation. The site remains contaminated.'
     },
