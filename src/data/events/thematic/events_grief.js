@@ -409,20 +409,23 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_sibling_call',
-    phase: 'midlife',
-    weight: 2,
+    // This used to narrate a sibling's death and leave every sibling alive in
+    // the state, who went on speaking in later years. The engine now kills
+    // siblings on country rates and narrates it; this is the week after.
+    phase: null,
+    weight: 6,
     when: (G) =>
-      G.siblings && G.siblings.length > 0 &&
-      !G.flags.includes('lost_sibling') &&
-      !G.mem.griefSiblingCall &&
-      G.age >= 30 &&
-      Math.random() < 0.04,
+      G.age >= 25 &&
+      (G.siblings ?? []).some(s => s.alive === false) &&
+      G.mem.lost_siblingYear != null && G.currentYear - G.mem.lost_siblingYear <= 1 &&
+      !G.mem.griefSiblingCall,
     text: (G) => {
-      const sib = G.siblings[0]
-      return gendered(`${sib?.name ?? 'Your sibling'} dies suddenly. An accident, or a diagnosis that moved faster than expected. They are the same age as you — or younger — and that is the thing you cannot stop returning to.`, sib)
+      const sib = (G.siblings ?? []).filter(s => s.alive === false).slice(-1)[0]
+      const first = sib?.name?.split(' ')[0] ?? 'your sibling'
+      return gendered(`You keep reaching for the phone to tell ${first} something, and then remembering. There is nobody else alive who was in that house when you were small, and you find you had been relying on it without knowing.`, sib)
     },
     choices: null,
-    effect: (p) => { p.m -= 22; p.r += 12; p.addFlag('lost_sibling'); p.setMem('griefSiblingCall', true) },
+    effect: (p) => { p.m -= 10; p.r += 6; p.setMem('griefSiblingCall', true) },
   },
 
   {

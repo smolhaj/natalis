@@ -267,7 +267,11 @@ export function fileForDivorce(state) {
     partner: null,
     children: updatedChildren,
     money: Math.max(0, (state.money ?? 0) - cost),
-    flags: [...new Set([...state.flags, wasMarried ? 'divorced' : 'breakup'])],
+    // The marriage ends with the divorce: `married`/`engaged` used to survive
+    // it, so the next wedding read as a second, concurrent one.
+    flags: [...new Set([...state.flags.filter(f => f !== 'married' && f !== 'engaged'), wasMarried ? 'divorced' : 'breakup'])],
+    exPartners: [...(state.exPartners ?? []), { name, gender: state.partner.gender, years: state.partner.years ?? 0, married: !!wasMarried, endedYear: state.currentYear, alive: true }],
+    mem: { ...(state.mem ?? {}), ...(wasMarried ? { divorcedYear: state.currentYear } : {}) },
     regret: clamp(state.regret + 8, 0, 100),
     stats: { ...state.stats, happiness: clamp(state.stats.happiness - 20, 0, 100) },
     log: [...state.log, {

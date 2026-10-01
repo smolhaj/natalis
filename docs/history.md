@@ -817,3 +817,38 @@ of 24 are born in their own group's homeland.
 
 ---
 
+
+### The wide review (October 2026)
+
+Four parallel reviews (interface in a browser, content, simulation, engineering)
+and ten fixes. The ones worth recording:
+
+- **The shipped game could not read its own classification.** `classifyEvent`
+  probes guard source text; the production build renames `G` and lowers optional
+  chaining, so 0 of 1,784 follow-through events were recognised in the bundle and
+  specificity fell from 1,659 to 506. Classification is now a generated index
+  (`npm run build-event-index`, checked in CI). The source was right; the
+  artefact was not.
+- **Nobody's children died.** Children, parents and siblings now die on country
+  and year rates with war risk: a Nigerian born 1962 loses 24-28% of their
+  children, against 7-10% in the United States. War deaths are a separate hazard
+  fitted to recorded tolls (Syria 1.8% against ~2.7%, Cambodia 31% against ~25%),
+  and healthcare is read by year (`healthcareAt`).
+- **Depression was diagnosed in 69% of Nigerian lives**, by a health system that
+  could not have named it. Diagnosis now needs a system that did.
+- **Family land ran a rich-world debt.** Upkeep and authored event money are
+  local to the live country; Nigerian 50-year-olds owing over twice a salary went
+  from 50% to 0%.
+- **Divorce did not exist** (US 1950: 1% ever divorced; now 43%), and where it
+  was illegal it now separates instead.
+- **The world arrived as an American newspaper.** Headlines, soundtrack and
+  global world events match the live country, with ~270 regional entries;
+  `proseFitsWorld` keeps markets, credit, NGOs and the IMF out of places and
+  years that did not have them.
+- **The activities panel was a catalogue.** What is offered is what this place
+  and year had; every verb costs the year's budget; emigration reads closed
+  exits and era entry routes.
+- **Style:** `check-prose`. "specific" 1,760 → 498, "particular" 512 → 1, bodies
+  over six sentences 19.8% → 10.3%.
+- New depth: Iran, Mexico, Brazil and China civilian lives (146 events), early
+  childhood by place (149), late life that remembers (57).

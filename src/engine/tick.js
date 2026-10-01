@@ -9,8 +9,9 @@ import { localCost } from '../data/activities'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PLACES, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
 import { COUNTRIES } from '../data/countries'
-import { HEADLINES } from '../data/headlines'
-import { SOUNDTRACK } from '../data/soundtrack'
+import { HEADLINES, headlineFits } from '../data/headlines'
+import { phaseTransitionLine } from '../data/events/lifecycle/_phaseLines.js'
+import { SOUNDTRACK, soundtrackFits } from '../data/soundtrack'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 import {
   FlagSet, getPhase, getCountryRegime, isLgbtqCriminalized,
@@ -652,9 +653,12 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy._killChild !== undefined && next.children?.length) {
     const living = next.children.map((c, i) => [c, i]).filter(([c]) => c.alive !== false)
-    const target = proxy._killChild >= 0 && next.children[proxy._killChild]?.alive !== false
+    // An index, 'eldest', or nothing for the youngest living child.
+    const target = typeof proxy._killChild === 'number' && proxy._killChild >= 0 && next.children[proxy._killChild]?.alive !== false
       ? proxy._killChild
-      : living.sort(([a], [b]) => (b.ageAtBirth ?? 0) - (a.ageAtBirth ?? 0))[0]?.[1]
+      : proxy._killChild === 'eldest'
+        ? living.sort(([a], [b]) => (a.ageAtBirth ?? 0) - (b.ageAtBirth ?? 0))[0]?.[1]
+        : living.sort(([a], [b]) => (b.ageAtBirth ?? 0) - (a.ageAtBirth ?? 0))[0]?.[1]
     if (target !== undefined) {
       const age = Math.max(0, next.age - (next.children[target].ageAtBirth ?? next.age))
       next = {
@@ -1489,18 +1493,10 @@ function applyWorldEvents(state) {
 
 function applyHeadlines(state) {
   const year = state.currentYear
-  // The news of where the character lives, which is the news they hear.
-  const archetype = liveCountry(state)?.archetype
-  const countryName = liveCountry(state)?.name
+  // The news of where the character lives (and, abroad, of home) — headlineFits.
   const seenKey = `headline_${year}`
   if (state.mem?.[seenKey]) return state
-  const matching = HEADLINES.filter(h => {
-    if (h.year !== year) return false
-    if (h.minAge && state.age < h.minAge) return false
-    if (h.archetypes !== 'all' && !h.archetypes.includes(archetype)) return false
-    if (h.countries && !h.countries.includes(countryName)) return false
-    return true
-  })
+  const matching = HEADLINES.filter(h => headlineFits(h, state))
   if (matching.length === 0) return state
   const newEntries = matching.map(h => ({ age: state.age, text: h.text, isKey: false, isHeadline: true }))
   return {
@@ -1512,19 +1508,9 @@ function applyHeadlines(state) {
 
 function applySoundtrack(state) {
   const year = state.currentYear
-  // The news of where the character lives, which is the news they hear.
-  const archetype = liveCountry(state)?.archetype
-  const countryName = liveCountry(state)?.name
   const seenKey = `soundtrack_${year}`
   if (state.mem?.[seenKey]) return state
-  const matching = SOUNDTRACK.filter(s => {
-    if (s.year !== year) return false
-    if (s.minAge && state.age < s.minAge) return false
-    if (s.maxAge && state.age > s.maxAge) return false
-    if (s.archetypes !== 'all' && !s.archetypes.includes(archetype)) return false
-    if (s.countries && !s.countries.includes(countryName)) return false
-    return true
-  })
+  const matching = SOUNDTRACK.filter(s => soundtrackFits(s, state))
   if (matching.length === 0) return state
   // Pick one soundtrack entry per year, not all of them
   const picked = matching[Math.floor(Math.random() * matching.length)]
@@ -2312,7 +2298,11 @@ export function attemptCrime(state, crimeId) {
     return { ...state, log: [...state.log, { age: state.age, text: "You don't have the technical knowledge for this.", isKey: false }] }
   }
 
-  const archetypeMod = crime.archetypeModifier?.[liveCountry(state).archetype] ?? 0
+  // A regime-keyed riskModifier where the crime has one (dissent under a
+  // dictatorship is not dissent in a democracy), else the archetype table.
+  const archetypeMod = typeof crime.riskModifier === 'function'
+    ? crime.riskModifier(state)
+    : (crime.archetypeModifier?.[liveCountry(state).archetype] ?? 0)
   // Support both old format (arrestRisk/successEffect/caughtEffect) and new format (baseSuccessRate/effect/failEffect)
   const useNewFormat = typeof crime.effect === 'function'
   const failProb = useNewFormat
@@ -2632,7 +2622,7 @@ function buildChildMourningEvent(state) {
       : `The women come and sit, and for some days nobody lets you cook. Then the days start again, because days do.`,
     `There is a small grave now, beside the others. You find reasons to walk past it on the way to things that do not need doing.`,
     `Somebody tells you it was God's will and somebody else tells you it was the water, and you let them both talk.`,
-    `You do not say ${n}'s name for a long time. When you finally do, at the market, the woman beside you says it back, and that helps more than anything.`,
+    `You do not say ${n}'s name for a long time. When you finally do, at the well, the woman beside you says it back, and that helps more than anything.`,
   ] : [
     `The first weeks are forms and casseroles. People bring food because food is a thing that can be brought.`,
     `${n}'s things stay exactly where they were for longer than anyone advises. You know what you are doing. You do it anyway.`,
@@ -3529,8 +3519,8 @@ function buildIllnessEvent(state, illness) {
       // the label is the difference between a choice and a trick.
       const onCredit = adjustedCost > (state.money ?? 0)
       const label = adjustedCost <= 0
-        ? `${t.name} (free)`
-        : `${t.name} ($${adjustedCost.toLocaleString()}${onCredit ? ', on credit' : ''})`
+        ? `${t.name}, at no cost`
+        : `${t.name}, $${adjustedCost.toLocaleString()}${onCredit ? ' owed' : ''}`
       return {
         text: label,
         tag: null,
@@ -3704,54 +3694,9 @@ export function tick(state) {
   const prevPhase = getPhase(state.age)
   const newPhase = getPhase(s.age)
   if (prevPhase !== newPhase) {
-    const desire = s.desire ?? null
-    const _desireAdolescence = {
-      prove_worth: 'The body is changing. The world is starting to require something from you — and you, more than most, feel the pressure to answer.',
-      belong: 'The body is changing. The circles that matter are forming. You can feel yourself on the edge of them.',
-      be_seen: 'The body is changing. Everything about adolescence is about being seen, which is terrifying and exactly what you wanted.',
-      safety: 'The body is changing. The world is starting to feel more dangerous. The old habits of vigilance intensify.',
-      connection: 'The body is changing. You are becoming aware of how much you want people, and how complicated that is.',
-      leave_mark: 'The body is changing. Something in you is restless, looking for a way to matter.',
-      freedom: 'The body is changing. The constraints that felt manageable in childhood feel unbearable now.',
-      redemption: 'The body is changing. The weight you carry is starting to have a shape.',
-    }
-    const _desireYoungAdult = {
-      prove_worth: 'You are eighteen. The proof-of-worth project has a new arena now. The life begins in earnest.',
-      belong: 'You are eighteen. The search for where you belong has new geography now. The life begins in earnest.',
-      be_seen: 'You are eighteen. The world is large and you are ready to be seen in it. The life begins in earnest.',
-      safety: 'You are eighteen. The structures of childhood fall away. You will need to build your own. The life begins in earnest.',
-      connection: 'You are eighteen. The connections you build now will shape everything that follows. The life begins in earnest.',
-      leave_mark: 'You are eighteen. The mark you want to make has its first real opportunity now. The life begins in earnest.',
-      freedom: 'You are eighteen. The life you were handed is behind you. The one you choose begins now.',
-      redemption: 'You are eighteen. Whatever needs to be set right, you can begin to set it right now. The life begins in earnest.',
-    }
-    const _desireMidlife = {
-      prove_worth: 'You are thirty. The proving has been ongoing. You are beginning to notice whether it is working.',
-      belong: 'You are thirty. The life you have built around belonging is recognizable now. The question of whether it fits is a different question.',
-      be_seen: 'You are thirty. The visibility you have built is real. What it hides is also becoming real.',
-      safety: 'You are thirty. The structures hold. The cost of building them is becoming visible.',
-      connection: 'You are thirty. The people in your life are the people in your life. You are beginning to understand what that means.',
-      leave_mark: 'You are thirty. What you are building is starting to have a shape. Whether it is the right shape is a new question.',
-      freedom: 'You are thirty. The life you built for yourself — away from what was given — is your life now. You can see it.',
-      redemption: 'You are thirty. The work of making things right has been ongoing. The ledger is complex.',
-    }
-    const _desireLateLife = {
-      prove_worth: 'You are fifty. The proof-of-worth is what it is. The question of what it was for is not going away.',
-      belong: 'You are fifty. The belonging — what you found, what you made, what you couldn\'t quite reach — is visible now from a height.',
-      be_seen: 'You are fifty. You have been seen, and not seen, in the ways available to you. This is the half where you live with that.',
-      safety: 'You are fifty. The structures you built are what they are. Some held. Some were unnecessary. You carry both.',
-      connection: 'You are fifty. The people. Always the people. What you built with them. What remains.',
-      leave_mark: 'You are fifty. The mark question simplifies now. Not history. What you leave in the people who knew you.',
-      freedom: 'You are fifty. The escapes and resistances of a lifetime. What they opened. What they cost.',
-      redemption: 'You are fifty. The reckoning is closer than it was. The debt question has a new urgency.',
-    }
-    const phaseLine = {
-      childhood: 'The early years end. You begin to know where you are.',
-      adolescence: (desire && _desireAdolescence[desire]) ?? 'The body is changing. The world is starting to require something from you.',
-      young_adult: (desire && _desireYoungAdult[desire]) ?? 'You are eighteen. The life begins in earnest.',
-      midlife:     (desire && _desireMidlife[desire]) ?? 'You are thirty. The life you have been building has become recognizable as a life.',
-      late_life:   (desire && _desireLateLife[desire]) ?? 'You are fifty. What you carry into this half is mostly set.',
-    }[newPhase]
+    // Read from the life rather than a fixed table: every life of the same
+    // phase used to be told the same sentence at eighteen, thirty and fifty.
+    const phaseLine = phaseTransitionLine(buildG(s), newPhase)
     // Inject guaranteed phase entry decision events at key phase boundaries.
     // This runs BEFORE the transition line is logged, because the entry event
     // opens with the same sentence the line does — "You are thirty. The life

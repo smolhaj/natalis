@@ -168,7 +168,7 @@ Event shape:
 **Critical**: `effect` functions receive only `p` (the proxy). `G` is only available in `when` guards. Never put G-dependent logic in effects.
 
 The `G` object (built by `buildG()`) exposes everything event conditions need:
-`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.conflictRisk` (war intensity where the character lives, THIS year — never read `country.conflictRisk`), `G.hasGrandchildren`, `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
+`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.conflictRisk` (war intensity where the character lives, THIS year — never read `country.conflictRisk`), `G.hasGrandchildren`, `G.healthcare` (the health system where the character lives, THIS year, from `healthcareAt` — never read `country.healthcare`), `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
 
 Effect proxy shorthands (all are additive deltas):
 - `p.m` → happiness, `p.h` → health, `p.e` → smarts, `p.s` → charisma, `p.w` → wealth stat, `p.lo` → looks
@@ -177,6 +177,7 @@ Effect proxy shorthands (all are additive deltas):
 - `p.setMem('key', value)` — stores value in `state.mem` (use for once-per-run guards)
 - `p.killParent('father'|'mother')` — marks parent dead
 - `p.killPartner()` — removes partner, sets widowed flag
+- `p.killChild(idx?)` — marks a child dead (`alive: false`, `deathYear`); no index = youngest living, `'eldest'` = eldest living. Never narrate a death without it.
 - `p.setResidency('work_visa')` — sets residencyStatus
 - `p.wipeMoney(fraction)` — deducts fraction of current money (e.g. `p.wipeMoney(0.3)` = lose 30%)
 - `p.addFriend(name, quality)`, `p.updatePartnerRel(delta)`
@@ -596,6 +597,8 @@ npm run check-events     # reachability: dead guards, enum domains, phase/year w
                          # season/country, silent choices, narrated moves that move nobody,
                          # populations the roster models that the corpus never addresses
 npm run check-anachronisms  # plays lives and reads every line against when the world held it
+npm run check-prose      # tics, long bodies and exclamation marks per module, as a ratchet
+                         # (--strict for new modules)
 npm run check-bundle     # builds, opens dist in a browser, starts a life — the only
                          # check that exercises the artefact rather than the source
 npm run check-ui         # plays the built game in a browser at 390-1280px and checks the
@@ -654,7 +657,15 @@ construction; `--broad` is the honest read.
 - **Content for a group has to be read inside a life of that group**, because
   that is the only place the generic content's assumptions show.
 - **Thresholds are instruments.** Assert the contract at the sample size you
-  actually take; a test that fails at random teaches people to ignore it.
+  actually take; a test that fails at random teaches people to ignore it. Tests
+  run on a seeded `Math.random` (`tests/setup/seed.js`; `NATALIS_SEED=n` for
+  another draw, `off` for the platform one), so a red run reproduces.
+- **Death is a fact about the state.** Children, parents and siblings die on
+  country-and-year rates (`under5At`, `adultHazard`, `warDeathHazard` in
+  history.js), and the engine narrates it. An event that narrates a death
+  must make it (`killChild`, `killParent`, `killPartner`) or read one that
+  already happened (`alive === false`), and every guard reading `G.children`
+  should skip the dead.
 - **Money is a statement about when.** Write dollar figures in present-day money
   and let the chokepoints denominate them; a figure denominated twice looks right.
 

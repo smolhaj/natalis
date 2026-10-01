@@ -643,8 +643,11 @@ export const CITIES_EXTENDED_EVENTS = [
       G.place?.id === 'br_sao_paulo' &&
       G.currentYear >= 1979 && G.currentYear <= 1985 &&
       !G.mem?.spAbertura,
-    text: () =>
-      `Abertura — opening. The military government is releasing its grip slowly and deliberately, at a speed it controls. The amnesty law of 1979 pardons the exiles who return — and also pardons the torturers. That is the deal. The Diretas Já movement fills the streets of São Paulo in 1984: one million people demanding direct elections. The elections they demand are denied and then given to them indirectly — and then, in 1989, directly. This is what democracy sounds like when it is being negotiated back from people who took it.`,
+    // Written from the year it prints in: Diretas Já is 1984, and 1989 had not
+    // happened to anybody reading this in 1980.
+    text: (G) => G.currentYear >= 1984
+      ? 'Abertura: the military government is letting go at a speed it chooses. The amnesty of 1979 brought the exiles home and pardoned the torturers in the same law. In 1984 the Diretas Já crowd fills the Praça da Sé and the streets off it, a million people asking to vote for a president. The congress says no.'
+      : 'Abertura: the military government is letting go at a speed it chooses. The amnesty of 1979 brings the exiles home and pardons the torturers in the same law. A man you have seen in a newspaper photograph for ten years is on the bus, older, holding a bag of oranges.',
     choices: null,
     effect: (p) => { p.m += 5; p.s += 2; p.setMem('spAbertura', true) },
   },

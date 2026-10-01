@@ -109,7 +109,7 @@ async function interfaceRules(label) {
   await sleep(200)
   const r = await page.evaluate(() => {
     const grad = [...document.querySelectorAll('button')].filter(b => /gradient/.test(getComputedStyle(b).backgroundImage)).map(b => b.innerText.slice(0, 30))
-    const choices = [...document.querySelectorAll('main article button')].filter(b => !/What was happening/.test(b.innerText))
+    const choices = [...document.querySelectorAll('main article button')].filter(b => !b.hasAttribute('aria-expanded'))
     const styles = new Set(choices.map(b => b.className + '|' + getComputedStyle(b).backgroundColor + '|' + getComputedStyle(b).borderColor))
     return { grad, uneven: choices.length > 1 && styles.size > 1, styles: [...styles].join(' || ') }
   })
@@ -298,7 +298,7 @@ else {
   if (await openCategory('Love')) {
     const love = (await panelButtons()).map(b => b.t).join(' / ')
     if (/Go on a Date|Propose Marriage|File for Divorce|Walter Keene/.test(love)) fail('the Love panel offers verbs with a dead partner')
-    else if (!/Meet Someone New/.test(love)) fail('a widow cannot meet anybody new')
+    else if (!/Meet some(one|body)/i.test(love)) fail('a widow cannot meet anybody new')
     else pass('the Love panel treats a widow as unpartnered')
     await closePanel()
   }

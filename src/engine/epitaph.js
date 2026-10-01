@@ -1145,7 +1145,14 @@ export function generateEpitaph(state) {
   // Killed in a war: the obituary named the influenza of his infancy and not
   // the front he died at twenty-five on.
   const cause = String(state.causeOfDeath ?? '')
-  if (/conflict|combat|the war|crossfire|fighting|civil war/i.test(cause)) {
+  // Murdered for who they were is not a war death, and the obituary says which.
+  if (/genocide|Holocaust|deported and murdered/i.test(cause)) {
+    para2.unshift(/Holocaust|deported/i.test(cause)
+      ? `${He} was murdered at ${age} for being a Jew. There is no grave; there is a list with ${his} name on it.`
+      : `${He} was killed in the genocide, at ${age}, by people who knew where to look.`)
+  } else if (/Khmer Rouge|cadres|work cooperative|in the fields/i.test(cause) && /Cambodia/.test(String(state.character?.country?.name ?? ''))) {
+    para2.unshift(`${He} died at ${age} under the Khmer Rouge, in the years the country was told were Year Zero.`)
+  } else if (/conflict|combat|the war|crossfire|fighting|civil war/i.test(cause)) {
     para2.unshift(f('sov_frontovik')
       ? `${He} went to the front with an egg in ${his} pocket and a twist of earth from the yard, and did not come back. The notice was a printed form with ${his} name filled in by hand.`
       : f('served_military') || f('combat_veteran')

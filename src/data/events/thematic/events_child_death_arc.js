@@ -54,19 +54,20 @@ export const CHILD_DEATH_ARC_EVENTS = [
 
   {
     id: 'child_death_infant',
-    phase: 'young_adult',
+    // A parent of any age can lose an infant; most such deaths now come at 30+.
+    phase: null,
     weight: 2,
     when: (G) => {
       if (!G.children?.length) return false
       if (G.flags.includes('lost_child')) return false
       if (G.mem?.childDeathInfant) return false
-      const hasInfant = G.children.some(c => G.age - c.ageAtBirth <= 1)
+      const hasInfant = G.children.some(c => c.alive !== false && G.age - c.ageAtBirth <= 1)
       if (!hasInfant) return false
       return Math.random() < infantDeathProb(G)
     },
     text: (G) => {
       const cause = infantCauseText(G)
-      const infant = G.children.find(c => G.age - c.ageAtBirth <= 1)
+      const infant = G.children.find(c => c.alive !== false && G.age - c.ageAtBirth <= 1)
       const name = infant?.name ?? 'The baby'
       return `${name} dies of ${cause}\n\nYou are not prepared for the scale of it — a person measured in weeks, and the space they leave. You thought small loss would be small grief. It is not. The grief is the size of everything that was going to happen and now will not.`
     },
@@ -79,6 +80,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
           p.m -= 32; p.h -= 10; p.r += 22
           p.addFlag('lost_child'); p.addFlag('bereaved'); p.addFlag('lost_child_infant')
           p.setMem('griefChildDeath', true); p.setMem('childDeathInfant', true)
+          p.killChild()
         },
       },
       {
@@ -89,6 +91,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
           p.m -= 36; p.h -= 12; p.r += 28
           p.addFlag('lost_child'); p.addFlag('bereaved'); p.addFlag('lost_child_infant')
           p.setMem('griefChildDeath', true); p.setMem('childDeathInfant', true)
+          p.killChild()
         },
       },
     ],
@@ -99,15 +102,16 @@ export const CHILD_DEATH_ARC_EVENTS = [
 
   {
     id: 'child_death_first_weeks',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('lost_child') &&
+      G.mem?.lost_childYear != null && G.currentYear - G.mem.lost_childYear <= 1 &&
       !G.mem?.childDeathFirstWeeks,
     text: (G) => {
       const isInfant = G.flags.includes('lost_child_infant')
       if (isInfant) {
-        return 'The things you bought are unworn: the pram, the monitor, preparations that have become monuments. People bring food. They do not know what to say, so they say what is available: sorry, time helps, at peace. None of it is wrong and none of it lands. The food is in the refrigerator. You are not eating.'
+        return 'The small clothes are folded where they were folded. The blanket is still on the mat. People bring food. They do not know what to say, so they say what is available: sorry, time helps, at peace. None of it is wrong and none of it lands. The food is in the refrigerator. You are not eating.'
       }
       return 'The house is full of their objects. The shoes by the door. The book they were reading that is still facedown on the same page. The arrangement of the bed. People say you do not have to do anything about any of it right away. They are right and also you do not know how to be in the house with all of it unchanged. You learn to be in the house with all of it unchanged. This takes longer than you would have predicted.'
     },

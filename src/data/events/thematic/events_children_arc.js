@@ -1059,12 +1059,14 @@ export const CHILDREN_ARC_EVENTS = [
       if (G.mem.childDeathAdult) return false
       if (G.age < 55) return false
       return G.children.some(c => {
+        if (c.alive === false) return false
         const a = G.age - c.ageAtBirth
         return a >= 25
       })
     },
     text: (G) => {
-      const child = G.children.find(c => {
+      // The eldest living child, which is the one p.killChild('eldest') marks.
+      const child = [...G.children].filter(c => c.alive !== false).sort((x, y) => x.ageAtBirth - y.ageAtBirth).find(c => {
         const a = G.age - c.ageAtBirth
         return a >= 25
       })
@@ -1072,7 +1074,7 @@ export const CHILDREN_ARC_EVENTS = [
       return gendered(`${name} dies. You are sitting somewhere ordinary when you find out. You will remember exactly where you were and what the light was doing. Everything after has a different shape. No one is supposed to outlive a child. The loss does not fit any architecture you have built. It is its own country and you will live there now.`, child)
     },
     choices: null,
-    effect: (p) => { p.m -= 40; p.h -= 12; p.r += 30; p.addFlag('lost_child'); p.addFlag('bereaved'); p.setMem('childDeathAdult', true) },
+    effect: (p) => { p.m -= 40; p.h -= 12; p.r += 30; p.addFlag('lost_child'); p.addFlag('bereaved'); p.setMem('childDeathAdult', true); p.killChild('eldest') },
   },
 
   // ── EARLY PARENTHOOD (ages 0–5) ────────────────────────────────────────────

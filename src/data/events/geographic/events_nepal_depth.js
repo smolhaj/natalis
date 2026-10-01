@@ -131,7 +131,11 @@ export const NEPAL_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2003 &&
       G.age >= 16 && G.age <= 30 &&
       !G.mem?.nepDepKamaiya,
-    text: 'Your grandfather borrowed for a wedding and your father worked the fields against it and now you work the fields against it. The interest is counted once a year at the landlord\'s house and the number at the end is always larger than the number at the start. In 2000 a man comes to the village and reads out that the arrangement is abolished. You are free that afternoon, and also without land, without credit, and living on ground that belongs to the same family.',
+    // Kamaiya bonded labour was abolished in July 2000; a year before that,
+    // the abolition is not something the character can be told about.
+    text: (G) => 'Your grandfather borrowed for a wedding and your father worked the fields against it and now you work the fields against it. The interest is counted once a year at the landlord\'s house and the number at the end is always larger than the number at the start.' + (G.currentYear >= 2000
+      ? ' In 2000 a man comes to the village and reads out that the arrangement is abolished. You are free that afternoon, and also without land, without credit, and living on ground that belongs to the same family.'
+      : ' Nobody in the village has ever seen the paper the debt is written on.'),
     context: 'The Kamaiya system bound Tharu families in Nepal\'s western Terai to landlords through inherited agricultural debt. The government abolished it in July 2000 and freed roughly 18,000 households, but most received no land, credit or alternative work, and many settled in informal camps or returned to the same landlords under different arrangements. Related bonded systems for women and girls, Kamlari and Haliya, persisted afterwards.',
     choices: [
       {
