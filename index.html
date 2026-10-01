@@ -21,7 +21,14 @@
     />
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Painted before any JavaScript: the game is ~9,000 events and their
+         engine, and on a phone parsing that took seconds of blank page. React
+         replaces this when the game has loaded (see src/main.jsx). -->
+    <div id="root"><div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f4f2ed;color:#2b2a27;font-family:'Source Serif 4',Georgia,serif;text-align:center;padding:0 16px">
+      <div style="font-size:2.25rem;letter-spacing:0.02em">Natalis</div>
+      <div style="margin-top:0.75rem;font-style:italic;color:#6b675f">You don't choose where you begin.</div>
+      <div style="margin-top:2rem;font-family:Inter,system-ui,sans-serif;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#9a958a">Loading the world</div>
+    </div></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -31,17 +31,15 @@ export default defineConfig({
             if (/node_modules\/(react|react-dom|scheduler|use-sync-external-store)\//.test(id)) return 'vendor-react'
             return 'vendor'
           }
-          if (id.includes('/src/data/events/geographic/')) return 'content-geographic'
-          if (id.includes('/src/data/events/sonder/')) return 'content-sonder'
-          if (id.includes('/src/data/events/followthrough/')) return 'content-followthrough'
-          if (id.includes('/src/data/events/thematic/')) return 'content-thematic'
-          if (id.includes('/src/data/events/lifecycle/')) return 'content-lifecycle'
-          if (id.includes('/src/data/events/specific_lives/')) return 'content-specific-lives'
-          if (id.includes('/src/data/events/')) return 'content-events'
-          if (id.includes('/src/data/worldEvents')) return 'content-world'
-          if (id.includes('/src/data/countries') || id.includes('/src/data/places')) return 'content-world'
-          if (id.includes('/src/engine/yearTexture') || id.includes('/src/engine/mundaneLayer')) return 'engine-texture'
-          if (id.includes('/src/engine/')) return 'engine'
+          // Engine and content are one chunk. They were split by directory so a
+          // prose fix would invalidate only its own chunk, but content imports
+          // engine helpers and the engine imports all content, so the split
+          // produced nine circular chunks — the same class of defect that once
+          // shipped an empty page. The game now loads behind a static title
+          // shell (index.html, src/main.jsx), so first paint no longer waits on
+          // it, and correct initialisation order is worth more than a finer
+          // cache key.
+          if (id.includes('/src/data/') || id.includes('/src/engine/')) return 'game'
           return undefined
         },
       },
