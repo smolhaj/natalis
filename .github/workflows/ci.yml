@@ -34,8 +34,20 @@ jobs:
           cache: npm
       - run: npm ci
 
+      # The game ships event classification as data, because the production
+      # build minifies the guard source that classification reads. A stale
+      # index is a game that silently differs from the one every test measures.
+      - name: Event index is current
+        run: node scripts/build-event-index.js --check
+
       - name: Build
         run: npm run build
+
+      # The only check that opens the artefact a player receives: builds, serves
+      # dist, starts a life in a browser and fails on any page error. Every other
+      # check here was green while the deployed page rendered an empty div.
+      - name: Bundle loads in a browser
+        run: npx playwright install --with-deps chromium && npm run check-bundle
 
       # There was no linter until September 2026, and two of that pass's defects
       # were exactly what one reports for free: a variable computed from an OR

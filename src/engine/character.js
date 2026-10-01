@@ -99,46 +99,12 @@ export function isLgbtqCriminalized(country, year) {
 }
 
 
-// ─── Historical series ────────────────────────────────────────────────────────
-// countries.js carries per-era series for literacy and urbanisation
-// (`literacyHistory`, `urbanHistory`). Before these existed, a single modern
-// snapshot was applied to every birth year with a token era nudge, so a woman
-// born in 1950 India drew ~39-54% literacy odds against a real ~9%. Same shape
-// and same lerp as HISTORICAL_IMR in tick.js.
-function lerpSeries(table, year, read = (v) => v) {
-  if (!table) return null
-  const keys = Object.keys(table).map(Number).sort((a, b) => a - b)
-  if (keys.length === 0) return null
-  if (year <= keys[0]) return read(table[keys[0]])
-  if (year >= keys[keys.length - 1]) return read(table[keys[keys.length - 1]])
-  for (let i = 0; i < keys.length - 1; i++) {
-    if (year >= keys[i] && year <= keys[i + 1]) {
-      const t = (year - keys[i]) / (keys[i + 1] - keys[i])
-      const a = read(table[keys[i]]), b = read(table[keys[i + 1]])
-      if (a == null || b == null) return a ?? b
-      return a * (1 - t) + b * t
-    }
-  }
-  return null
-}
-
-export function literacyChanceFor(country, gender, birthYear) {
-  const hist = lerpSeries(country?.literacyHistory, birthYear, (v) => gender === 'female' ? v?.f : v?.m)
-  if (hist != null) return Math.max(0.01, Math.min(0.999, hist))
-  // Fallback for countries without a series yet: the old snapshot + era nudge.
-  const base = gender === 'female' ? (country?.literacyFemale ?? 0.95) : (country?.literacyMale ?? 0.97)
-  const poor = ['low', 'very_low', 'low_medium'].includes(country?.gdp)
-  const adj = birthYear < 1960 && poor ? -0.15 : birthYear < 1980 && ['low', 'very_low'].includes(country?.gdp) ? -0.10 : 0
-  return Math.max(0.05, base + adj)
-}
-
-export function urbanChanceFor(country, birthYear) {
-  const hist = lerpSeries(country?.urbanHistory, birthYear)
-  if (hist != null) return Math.max(0.02, Math.min(0.99, hist))
-  const base = country?.urbanRate ?? 0.65
-  const adj = birthYear < 1960 ? -0.15 : birthYear < 1980 ? -0.07 : 0
-  return Math.max(0.05, Math.min(0.98, base + adj))
-}
+// The historical series (literacy, urbanisation) live in src/data/series.js so
+// content modules can read them without importing the engine: every content
+// module that imported from here put an engine -> content -> engine cycle into
+// the production chunks.
+import { lerpSeries, literacyChanceFor, urbanChanceFor } from '../data/series.js'
+export { lerpSeries, literacyChanceFor, urbanChanceFor }
 
 // ─── Character creation ───────────────────────────────────────────────────────
 
@@ -1275,67 +1241,10 @@ export { BUSINESS_TYPES }
 // same way. Southern-hemisphere countries swap summer/winter; tropical countries
 // run dry/wet instead of four seasons. Shared by buildG and the year-texture
 // layer so seasonal prose and seasonal event guards always agree.
-// ─── Climate and season ───────────────────────────────────────────────────────
-// A season is what the prose has to be true about, so the classification is
-// driven by what the writing asks for. There were two lists of this fact and
-// they disagreed: _sonderGuards.js knew India, Pakistan, Sri Lanka, Nepal and
-// Malaysia were monsoon countries, and deriveSeason did not — so every guard
-// reading `season === 'wet'` for the subcontinent was unsatisfiable, and the
-// monsoon prose in events_seasonal.js and yearTexture.js could not fire in the
-// largest monsoon country on earth. MONSOON_COUNTRIES now lives here and
-// _sonderGuards.js imports it, so there is one list.
-
-// Wet/dry, in the monsoon vocabulary: the rains arrive, the rains fail.
-export const MONSOON_COUNTRIES = [
-  'India', 'Bangladesh', 'Pakistan', 'Sri Lanka', 'Nepal', 'Bhutan', 'Myanmar',
-  'Thailand', 'Vietnam', 'Cambodia', 'Laos', 'Philippines', 'Indonesia',
-  'Malaysia', 'Singapore', 'East Timor', 'Maldives',
-]
-
-// Wet/dry without the monsoon's arrival: the tropics and the Sahel, where the
-// year turns on whether there is water, not on whether it is cold.
-const TROPICAL_COUNTRIES = [
-  // West and Central Africa
-  'Nigeria', 'Ghana', 'Senegal', 'Guinea', 'Burkina Faso', 'Mali', 'Ivory Coast',
-  'Liberia', 'Sierra Leone', 'Niger', 'Togo', 'Benin', 'DR Congo', 'Cameroon',
-  'Chad', 'Central African Republic', 'Angola',
-  // East and Southern Africa
-  'Ethiopia', 'Kenya', 'Rwanda', 'Somalia', 'Tanzania', 'Uganda', 'Eritrea',
-  'Djibouti', 'Sudan', 'Mozambique', 'Zambia', 'Zimbabwe', 'Namibia',
-  // Tropical Americas
-  'Colombia', 'Venezuela', 'Ecuador', 'Bolivia', 'Brazil', 'Guyana',
-  'Guatemala', 'Honduras', 'Nicaragua', 'El Salvador', 'Belize', 'Cuba', 'Haiti',
-  'Dominican Republic', 'Puerto Rico', 'Jamaica', 'Trinidad and Tobago', 'Barbados',
-  // Pacific
-  'Fiji', 'Papua New Guinea', 'Samoa', 'Kiribati', 'Tuvalu', 'Marshall Islands',
-  'Vanuatu',
-]
-
-const WET_DRY = new Set([...MONSOON_COUNTRIES, ...TROPICAL_COUNTRIES])
-
-// Only consulted for the four-season countries, so a tropical southern-
-// hemisphere country (Tanzania, Angola, Brazil) is classified by climate above
-// rather than getting a Kenyan winter.
-const SOUTHERN_HEMISPHERE = new Set([
-  'Australia', 'New Zealand', 'Argentina', 'Chile', 'South Africa', 'Peru',
-  'Uruguay', 'Paraguay',
-])
-
-/** The seasons a country can actually produce — exported so audits can check guards. */
-export function seasonsFor(countryName) {
-  return WET_DRY.has(countryName) ? ['dry', 'wet'] : ['winter', 'spring', 'summer', 'autumn']
-}
-
-export function deriveSeason(state) {
-  const currentYear = state.currentYear ?? 0
-  const countryName = (state.currentCountry ?? state.character?.country)?.name ?? ''
-  const raw = ((state.character?.birthYear ?? 1960) * 7 + currentYear * 3) % 4
-  if (WET_DRY.has(countryName)) return raw % 2 === 0 ? 'dry' : 'wet'
-  const seasons = ['winter', 'spring', 'summer', 'autumn']
-  const idx = SOUTHERN_HEMISPHERE.has(countryName) ? (raw + 2) % 4 : raw
-  return seasons[idx]
-}
-
+// Climate and season live in src/data/climate.js — see the note above the
+// series import.
+import { MONSOON_COUNTRIES, seasonsFor, deriveSeason } from '../data/climate.js'
+export { MONSOON_COUNTRIES, seasonsFor, deriveSeason }
 
 // ─── Birth weighting ──────────────────────────────────────────────────────────
 // A random birth used to be uniform across the 145-country roster, so Tuvalu was
