@@ -32,6 +32,10 @@ import { UNWRITTEN_ESA_FLAGS } from './unwritten_esa.js'
 import { UNWRITTEN_AP_FLAGS } from './unwritten_ap.js'
 import { NIGERIA_SOUTH_FLAGS } from './nigeria_south.js'
 import { NIGERIA_NORTH_FLAGS } from './nigeria_north.js'
+import { IRAN_CIVILIAN_FLAGS } from './iran_civilian.js'
+import { MEXICO_LIFE_FLAGS } from './mexico_life.js'
+import { BRAZIL_LIFE_FLAGS } from './brazil_life.js'
+import { CHINA_REFORM_FLAGS } from './china_reform.js'
 
 export const FLAG_REGISTRY = {
   ...IDENTITY_FLAGS,
@@ -50,6 +54,10 @@ export const FLAG_REGISTRY = {
   ...UNWRITTEN_AP_FLAGS,
   ...NIGERIA_SOUTH_FLAGS,
   ...NIGERIA_NORTH_FLAGS,
+  ...IRAN_CIVILIAN_FLAGS,
+  ...MEXICO_LIFE_FLAGS,
+  ...BRAZIL_LIFE_FLAGS,
+  ...CHINA_REFORM_FLAGS,
 }
 
 export {

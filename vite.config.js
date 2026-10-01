@@ -52,6 +52,7 @@ export default defineConfig({
     // `@vitest-environment jsdom` at the top of the file, because the engine
     // and data tests are far faster in node and there are 264 of them.
     include: ['tests/**/*.test.{js,jsx}'],
+    setupFiles: ['tests/setup/seed.js'],
     coverage: {
       provider: 'v8',
       include: ['src/engine/**', 'src/data/**', 'src/store/**'],
