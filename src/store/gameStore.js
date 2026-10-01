@@ -1,16 +1,14 @@
 import { create } from 'zustand'
 import { createCharacter, deriveInitialStats, deriveInitialMoney, deriveInitialParents, deriveInitialSiblings, deriveBirthText, deriveInitialGold, initializeBanked, initializeJointFamily, deriveGenerationalFlags, tick, resolveChoice, applyActivity, attemptCrime, enterCareer, generateEpitaph, askForRaise, quitJob, workHarder, schmoozeBoss, retire, emigrate, meetPotentialPartner, generatePartnerProfile, hookUp, goOnDate, complimentPartner, proposeMarriage, getMarried, fileForDivorce, tryForChild, spendTimeWithChild, callParent, callSibling, adoptChild, getPlasticSurgery, buyProperty, sellProperty, buyVehicle, sellVehicle, adoptPet, visitVet, studyHarder, goToMovies, goClubbing, goShopping, visitSalonSpa, postSocialMedia, promoteSocialMedia, betOnHorses, goToRehab, toggleBirthControl, practiceMartalArts, obtainLicense, interactWithFriend, dropOutOfSchool, abandonChild, useSubstance, bookTrip, startBusiness, manageBusiness, hireEmployee, closeBusiness, prisonWork, prisonCry, prisonConjugalVisit, prisonBribeGuard, prisonStartRiot, upgradeResidency, seekAsylum, relocate, buildG, livingPartner, resolveAutoEvent as applyAutoEventEffect, getCountryRegime } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
-import { inEraMoney } from '../data/economy.js'
+import { PLACES } from '../data/places'
+import { crimeBarred } from '../data/crimes'
+import { estimateCost, estimatePrice, paydayOffer, benefitsOffer, bankruptcyOpen, datingAppAvailable } from '../engine/playerActions'
 import { residencyAtBirth } from '../data/migration.js'
 import { EVENTS } from '../data/events'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { CAREERS } from '../data/careers'
 import { rebuildTickEvent } from '../engine/tick'
-
-// Present-day dollars into the money of the year and place. See economy.js —
-// applied at the definition of a cost, never at the deduction.
-const $$ = (amount, state) => inEraMoney(amount, state.currentCountry ?? state.character?.country, state.currentYear)
 
 const SLOT_KEYS = ['natalis_v1', 'natalis_v2', 'natalis_v3']
 const META_KEYS = ['natalis_meta_0', 'natalis_meta_1', 'natalis_meta_2']
@@ -20,7 +18,7 @@ const META_KEYS = ['natalis_meta_0', 'natalis_meta_1', 'natalis_meta_2']
 // backfills newly added top-level fields). Each migration below takes a save
 // from version N to N+1, so an old save is walked forward one step at a time
 // rather than silently loading with the wrong shape.
-const SAVE_VERSION = 2
+const SAVE_VERSION = 3
 
 const SAVE_MIGRATIONS = {
   // v1 → v2: the contemplative rate limiter moved from an id-prefix test
@@ -34,6 +32,47 @@ const SAVE_MIGRATIONS = {
       lastContemplativeYear: save.mem?.lastContemplativeYear ?? save.mem?.lastSonderYear ?? 0,
     },
   }),
+  // v2 → v3: countries and places are stored by name and id and looked up on
+  // load. A save used to embed the whole country object twice (the birth
+  // country and the one lived in) plus the place objects, so a fix to a
+  // country's data — a corrected religion mix, a regime date, a new place —
+  // never reached anybody who had already started a life. The engine always
+  // read these as objects and still does; only the stored form changes.
+  2: (save) => ({
+    ...save,
+    character: save.character ? {
+      ...save.character,
+      country: refOf(save.character.country),
+      birthPlace: placeRefOf(save.character.birthPlace),
+    } : save.character,
+    currentCountry: refOf(save.currentCountry),
+    currentPlace: placeRefOf(save.currentPlace),
+  }),
+}
+
+// A stored reference: `{ $country: name }`. A bare object from an older save is
+// reduced to its name; one the roster no longer knows is kept whole.
+function refOf(country) {
+  if (!country) return country ?? null
+  if (country.$country) return country
+  const name = typeof country === 'string' ? country : country.name
+  return COUNTRIES.some(c => c.name === name) ? { $country: name } : country
+}
+function placeRefOf(place) {
+  if (!place) return place ?? null
+  if (place.$place) return place
+  return place.id && PLACES.some(p => p.id === place.id) ? { $place: place.id } : place
+}
+function countryFrom(ref) {
+  if (!ref) return ref ?? null
+  const name = ref.$country ?? (typeof ref === 'string' ? ref : null)
+  if (name) return COUNTRIES.find(c => c.name === name) ?? null
+  return ref
+}
+function placeFrom(ref) {
+  if (!ref) return ref ?? null
+  if (ref.$place) return PLACES.find(p => p.id === ref.$place) ?? null
+  return ref
 }
 
 // Events carry functions (guards, effects), so they cannot go into a save as
@@ -88,6 +127,13 @@ function serializeState(state) {
   try {
     return JSON.stringify({
       ...state,
+      character: state.character ? {
+        ...state.character,
+        country: refOf(state.character.country),
+        birthPlace: placeRefOf(state.character.birthPlace),
+      } : state.character,
+      currentCountry: refOf(state.currentCountry),
+      currentPlace: placeRefOf(state.currentPlace),
       saveVersion: SAVE_VERSION,
       usedEventMap: [...(state.usedEventMap ?? new Map()).entries()],
       worldEventsFired: [...(state.worldEventsFired ?? new Set()).values()],
@@ -112,6 +158,15 @@ function deserializeState(raw) {
       v += 1
     }
     parsed.saveVersion = SAVE_VERSION
+    if (parsed.character) {
+      parsed.character = {
+        ...parsed.character,
+        country: countryFrom(parsed.character.country),
+        birthPlace: placeFrom(parsed.character.birthPlace),
+      }
+    }
+    parsed.currentCountry = countryFrom(parsed.currentCountry) ?? parsed.character?.country ?? null
+    parsed.currentPlace = placeFrom(parsed.currentPlace)
     parsed.usedEventMap = new Map(parsed.usedEventMap ?? [])
     parsed.worldEventsFired = new Set(parsed.worldEventsFired ?? [])
     parsed.queue = (parsed.queueRefs ?? []).map(id => eventById(id) ?? rebuildTickEvent(id, parsed)).filter(Boolean)
@@ -138,14 +193,29 @@ function saveSlotMeta(state, slot) {
   } catch { /* ignore */ }
 }
 
+// Returns whether the life is safely on disk. `setItem` throws on a full
+// quota and in Safari's private mode, and it used to throw from inside Age Up
+// — after `set(next)` had already run, so the year advanced on screen and the
+// exception escaped into React. A failed save is now a fact on the state
+// (`saveFailed`) for the interface to mention quietly, never an interruption.
 function saveToStorage(state) {
-  if (!state || state.screen === 'title' || state.screen === 'birth' || state.screen === 'curated_birth') return
+  if (!state || state.screen === 'title' || state.screen === 'birth' || state.screen === 'curated_birth') return true
   const slot = state.activeSaveSlot ?? 0
   const s = serializeState(state)
-  if (s) {
+  if (!s) return false
+  try {
     localStorage.setItem(SLOT_KEYS[slot], s)
-    saveSlotMeta(state, slot)
+  } catch {
+    return false
   }
+  saveSlotMeta(state, slot)
+  return true
+}
+
+// Record whether the last save reached storage, without touching anything else.
+function persist(set, state) {
+  const ok = saveToStorage(state)
+  if ((state.saveFailed ?? false) !== !ok) set({ saveFailed: !ok })
 }
 
 function loadFromStorage(slot = 0) {
@@ -157,10 +227,41 @@ function loadFromStorage(slot = 0) {
 }
 
 function findAvailableSlot() {
-  for (let i = 0; i < SLOT_KEYS.length; i++) {
-    if (!localStorage.getItem(SLOT_KEYS[i])) return i
-  }
+  try {
+    for (let i = 0; i < SLOT_KEYS.length; i++) {
+      if (!localStorage.getItem(SLOT_KEYS[i])) return i
+    }
+  } catch { /* storage blocked: the life runs unsaved */ }
   return 0 // All full — overwrite slot 0
+}
+
+/** What false papers cost where the character is hiding. Shared with the panel. */
+export function forgedPapersCost(state) { return estimateCost(state, 8000) }
+/** A smuggler's crossing: a world price, not a local one. Shared with the panel. */
+export function smugglerFee(state) { return estimatePrice(state, 9000, 'imported') }
+
+// ── The year's actions ──────────────────────────────────────────────────────
+//
+// A year holds two things the player chooses to do. Thirteen verbs never spent
+// one: complimenting a partner, a night with a stranger, a date, a call home,
+// a sibling, time with a child, trying for a child, adopting, surgery, meeting
+// somebody, emigrating, applying for benefits and a payday loan. Pressing
+// "Show appreciation" and "Hook up" thirty times a year held adult happiness
+// at 95 against a control of 38, and thirty calls a year to a parent was the
+// best way to maximise an inheritance. Every one of them now spends from the
+// same budget, in the store, so no surface can reach round it.
+function canAct(state) {
+  return !state.dead && !state.pendingEvent && !state.pendingMinigame && (state.actionsThisYear ?? 0) < (state.maxActionsPerYear ?? 2)
+}
+// A refusal that only says why ("You can't afford that") costs nothing.
+function onlyNarrated(state, next) {
+  if (next === state) return true
+  return Object.keys(next).every(k => k === 'log' || k === 'mem' || next[k] === state[k])
+}
+function charge(state, next, n = 1) {
+  if (onlyNarrated(state, next)) return next
+  if ((next.actionsThisYear ?? 0) > (state.actionsThisYear ?? 0)) return next
+  return { ...next, actionsThisYear: Math.min(state.maxActionsPerYear ?? 2, (state.actionsThisYear ?? 0) + n) }
 }
 
 export function getAllSlotMeta() {
@@ -274,6 +375,7 @@ const INITIAL_STATE = {
   echoQueue: [], // [{ eventId, fireAtAge }] — guaranteed follow-up events scheduled by effects
   legacy: 0, // 0-100: accumulates from children raised, mentoring, community, creative works
   activeSaveSlot: 0,
+  saveFailed: false,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -281,16 +383,20 @@ export const useGameStore = create((set, get) => ({
 
   // ── Persistence ─────────────────────────────────────────────────────────────
 
-  hasSave: () => SLOT_KEYS.some(k => !!localStorage.getItem(k)),
+  hasSave: () => { try { return SLOT_KEYS.some(k => !!localStorage.getItem(k)) } catch { return false } },
 
+  // A load replaces the life in memory; it does not merge into it. `set` is a
+  // shallow merge, so a field the save did not carry — a pending partner, a
+  // minigame, a trial, anything added since it was written — survived from
+  // whatever life had been open before, into the one being loaded.
   continueSave: () => {
     const saved = loadFromStorage(0)
-    if (saved) set({ ...saved, activeSaveSlot: 0 })
+    if (saved) set({ ...INITIAL_STATE, usedEventMap: new Map(), worldEventsFired: new Set(), ...saved, activeSaveSlot: 0, saveFailed: false })
   },
 
   continueSaveSlot: (slot) => {
     const saved = loadFromStorage(slot)
-    if (saved) set({ ...saved, activeSaveSlot: slot })
+    if (saved) set({ ...INITIAL_STATE, usedEventMap: new Map(), worldEventsFired: new Set(), ...saved, activeSaveSlot: slot, saveFailed: false })
   },
 
   deleteSave: () => {
@@ -412,7 +518,7 @@ export const useGameStore = create((set, get) => ({
       legacy: 0,
       currentProject: null,
     })
-    saveToStorage(get())
+    persist(set, get())
   },
 
   // ── Birth screen ─────────────────────────────────────────────────────────────
@@ -534,7 +640,7 @@ export const useGameStore = create((set, get) => ({
       legacy: 0,
       currentProject: null,
     })
-    saveToStorage(get())
+    persist(set, get())
   },
 
   // ── Life screen ─────────────────────────────────────────────────────────────
@@ -548,11 +654,13 @@ export const useGameStore = create((set, get) => ({
       const final = { ...next, epitaph }
       set(final)
       const slot = state.activeSaveSlot ?? 0
-      localStorage.removeItem(SLOT_KEYS[slot])
-      localStorage.removeItem(META_KEYS[slot])
+      try {
+        localStorage.removeItem(SLOT_KEYS[slot])
+        localStorage.removeItem(META_KEYS[slot])
+      } catch { /* storage unavailable: nothing to remove */ }
     } else {
       set(next)
-      saveToStorage(next)
+      persist(set, next)
     }
   },
 
@@ -603,7 +711,7 @@ export const useGameStore = create((set, get) => ({
     const lastOutcome = typeof rawOutcome === 'function' ? rawOutcome(buildG(next)) : rawOutcome
     const resolved = { ...next, lastOutcome }
     set(resolved)
-    saveToStorage(resolved)
+    persist(set, resolved)
   },
 
   resolveAutoEvent: () => {
@@ -611,7 +719,7 @@ export const useGameStore = create((set, get) => ({
     if (!state.pendingEvent?.isAutomatic) return
     const next = applyAutoEventEffect(state)
     set(next)
-    saveToStorage(next)
+    persist(set, next)
   },
 
   takeActivity: (activityId) => {
@@ -623,7 +731,11 @@ export const useGameStore = create((set, get) => ({
 
   commitCrime: (crimeId) => {
     const state = get()
-    if (state.pendingEvent || state.dead || state.pendingMinigame) return
+    // attemptCrime spends the action itself; it was never checked against the
+    // budget, so a crime could be committed with none left.
+    if (!canAct(state)) return
+    // A crime that needs access needs the access — see CRIME_ACCESS.
+    if (crimeBarred(state, crimeId)) return
     const next = attemptCrime(state, crimeId)
     set(next)
   },
@@ -711,10 +823,14 @@ export const useGameStore = create((set, get) => ({
     set(retire(state))
   },
 
+  // Emigrating is the year. It takes every action left in it, and there has
+  // to be one left to take: ten moves in an afternoon had been free.
   emigrate: (countryName, destPlaceId) => {
     const state = get()
-    if (state.dead) return
-    set(emigrate(state, countryName, destPlaceId))
+    if (!canAct(state)) return
+    const next = emigrate(state, countryName, destPlaceId)
+    const left = (state.maxActionsPerYear ?? 2) - (state.actionsThisYear ?? 0)
+    set(charge(state, next, left))
   },
 
   relocateTo: (placeId, neighborhoodTier) => {
@@ -727,8 +843,8 @@ export const useGameStore = create((set, get) => ({
 
   meetSomeone: () => {
     const state = get()
-    if (state.dead) return
-    set(meetPotentialPartner(state))
+    if (!canAct(state)) return
+    set(charge(state, meetPotentialPartner(state)))
   },
 
   acceptPartner: () => {
@@ -755,10 +871,9 @@ export const useGameStore = create((set, get) => ({
 
   useDatingApp: (filters = {}) => {
     const state = get()
-    if (state.dead || livingPartner(state)) return
-    // The fee is era money, like every other price: the gate compared a
-    // nominal balance to a present-day 100 and then charged $$(100).
-    const fee = $$(100, state)
+    if (!canAct(state) || livingPartner(state) || !datingAppAvailable(state)) return
+    // The fee is era money, like every other price, and local.
+    const fee = estimateCost(state, 100)
     if ((state.money ?? 0) < fee) {
       set({ log: [...state.log, { age: state.age, text: `You need $${fee.toLocaleString()} for the dating app.`, isKey: false }] })
       return
@@ -771,27 +886,28 @@ export const useGameStore = create((set, get) => ({
     set({
       ...state,
       money: (state.money ?? 0) - fee,
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
       pendingPartner: profile,
-      log: [...state.log, { age: state.age, text: `Dating app match: ${profile.name}, ${profile.age}.`, isKey: false }],
+      log: [...state.log, { age: state.age, text: `A name and a photograph: ${profile.name}, ${profile.age}.`, isKey: false }],
     })
   },
 
   hookUp: () => {
     const state = get()
-    if (state.dead) return
-    set(hookUp(state))
+    if (!canAct(state)) return
+    set(charge(state, hookUp(state)))
   },
 
   goOnDate: () => {
     const state = get()
-    if (state.dead) return
-    set(goOnDate(state))
+    if (!canAct(state)) return
+    set(charge(state, goOnDate(state)))
   },
 
   complimentPartner: () => {
     const state = get()
-    if (state.dead) return
-    set(complimentPartner(state))
+    if (!canAct(state)) return
+    set(charge(state, complimentPartner(state)))
   },
 
   proposeMarriage: () => {
@@ -820,83 +936,86 @@ export const useGameStore = create((set, get) => ({
 
   tryForChild: () => {
     const state = get()
-    if (state.dead) return
-    set(tryForChild(state))
+    if (!canAct(state)) return
+    set(charge(state, tryForChild(state)))
   },
 
   spendTimeWithChild: (childIndex) => {
     const state = get()
-    if (state.dead) return
-    set(spendTimeWithChild(state, childIndex))
+    if (!canAct(state)) return
+    set(charge(state, spendTimeWithChild(state, childIndex)))
   },
 
   callParent: (key) => {
     const state = get()
-    if (state.dead) return
-    set(callParent(state, key))
+    if (!canAct(state)) return
+    set(charge(state, callParent(state, key)))
   },
 
   callSibling: (idx) => {
     const state = get()
-    if (state.dead) return
-    set(callSibling(state, idx))
+    if (!canAct(state)) return
+    set(charge(state, callSibling(state, idx)))
   },
 
   adoptChild: () => {
     const state = get()
-    if (state.dead) return
-    set(adoptChild(state))
+    if (!canAct(state)) return
+    set(charge(state, adoptChild(state)))
   },
 
   // ── Health actions ──────────────────────────────────────────────────────────
 
   getPlasticSurgery: (type) => {
     const state = get()
-    if (state.dead) return
-    set(getPlasticSurgery(state, type))
+    if (!canAct(state)) return
+    set(charge(state, getPlasticSurgery(state, type)))
   },
 
   // ── Financial hardship actions ────────────────────────────────────────────
 
   takePaydayLoan: () => {
     const state = get()
-    if (state.dead) return
-    if ((state.money ?? 0) >= 300) return
-    const received = $$(300, state)
-    const repayDebt = $$(420, state)
+    if (!canAct(state)) return
+    const offer = paydayOffer(state)
+    if ((state.money ?? 0) >= offer.receive) return
     set({
       ...state,
-      money: (state.money ?? 0) + received,
-      debt: (state.debt ?? 0) + repayDebt,
+      money: (state.money ?? 0) + offer.receive,
+      debt: (state.debt ?? 0) + offer.owe,
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
       flags: [...new Set([...state.flags, 'took_payday_loan', 'debt_spiral_active'])],
-      log: [...state.log, { age: state.age, text: `You take a payday loan of $${received}. You owe $${repayDebt} at the next due date.`, isKey: false }],
+      log: [...state.log, { age: state.age, text: offer.text, isKey: false }],
     })
   },
 
   applyForBenefits: () => {
     const state = get()
-    if (state.dead) return
-    if (state.career || (state.money ?? 0) >= $$(500, state)) return
-    const payment = $$(400, state)
+    if (!canAct(state)) return
+    const offer = benefitsOffer(state)
+    if (!offer || state.career || (state.money ?? 0) >= offer.threshold) return
     set({
       ...state,
-      money: (state.money ?? 0) + payment,
+      money: (state.money ?? 0) + offer.payment,
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
       flags: [...new Set([...state.flags, 'benefits_applied', 'benefits_recipient'])],
-      log: [...state.log, { age: state.age, text: `You apply for and receive ${payment > 0 ? `$${payment} in ` : ''}government assistance.`, isKey: false }],
+      log: [...state.log, { age: state.age, text: `You fill in the forms and sit in the waiting room and answer the questions about why. In the end there is $${offer.payment.toLocaleString()}, and an appointment to come back.`, isKey: false }],
     })
   },
 
   declareBankruptcy: () => {
     const state = get()
     if (state.dead) return
-    if ((state.debt ?? 0) < 8000 || (state.money ?? 0) >= 500) return
+    // The thresholds were nominal 8,000 and 500 — in 1950 Lagos a fortune and
+    // a year's wage, in 2020 Stockholm a car loan and an evening.
+    if (!bankruptcyOpen(state)) return
     // Remove non-exempt assets: vehicles first, then unsecured properties
     const newVehicles = []
     const newProperties = (state.assets?.properties ?? []).filter(p => p.mortgaged)
     set({
       ...state,
       debt: 0,
-      money: Math.max(-2000, state.money ?? 0),
+      money: Math.max(-estimateCost(state, 2000), state.money ?? 0),
       creditScore: 320,
       assets: { ...(state.assets ?? {}), vehicles: newVehicles, properties: newProperties },
       flags: [...new Set([...state.flags, 'bankrupt', 'declared_bankrupt', 'debt_spiral_survived'])],
@@ -908,8 +1027,8 @@ export const useGameStore = create((set, get) => ({
 
   buyProperty: (typeId) => {
     const state = get()
-    if (state.dead) return
-    set(buyProperty(state, typeId))
+    if (!canAct(state)) return
+    set(charge(state, buyProperty(state, typeId)))
   },
 
   sellProperty: (idx) => {
@@ -920,8 +1039,8 @@ export const useGameStore = create((set, get) => ({
 
   buyVehicle: (typeId) => {
     const state = get()
-    if (state.dead) return
-    set(buyVehicle(state, typeId))
+    if (!canAct(state)) return
+    set(charge(state, buyVehicle(state, typeId)))
   },
 
   sellVehicle: (idx) => {
@@ -934,8 +1053,8 @@ export const useGameStore = create((set, get) => ({
 
   adoptPet: (species) => {
     const state = get()
-    if (state.dead) return
-    set(adoptPet(state, species))
+    if (!canAct(state)) return
+    set(charge(state, adoptPet(state, species)))
   },
 
   visitVet: (idx) => {
@@ -1016,14 +1135,14 @@ export const useGameStore = create((set, get) => ({
     set(promoteSocialMedia(state))
   },
 
-  betOnHorses: (horseIdx, betAmount, field) => {
+  betOnHorses: (horseIdx, stakeIdx) => {
     const state = get()
     if (state.dead || state.pendingEvent) return
     // Every action-consuming move respects the yearly budget. Only two of
     // these used to, so relationships, performance and happiness could be
     // maxed by repeat-clicking and the budget meant nothing.
     if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
-    set(betOnHorses(state, horseIdx, betAmount, field))
+    set(betOnHorses(state, horseIdx, stakeIdx))
   },
 
   goToRehab: () => {
@@ -1239,14 +1358,15 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     if (state.flags.includes('assumed_identity')) return
-    const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-    const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-    const cost = $$(Math.round(8000 * mult), state)
+    if (!canAct(state)) return
+    // Priced where the papers are bought, which is where the character is
+    // hiding — not where they were born — in the money of the year.
+    const cost = forgedPapersCost(state)
     if ((state.money ?? 0) < cost) {
-      set({ log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} for forged documents.`, isKey: false }] })
+      set({ log: [...state.log, { age: state.age, text: `Papers that would pass cost $${cost.toLocaleString()}, and you do not have it.`, isKey: false }] })
       return
     }
-    const c = state.character?.country
+    const c = state.currentCountry ?? state.character?.country
     const g = state.character?.gender
     const pool = g === 'male' ? (c?.namePool?.male ?? []) : (c?.namePool?.female ?? [])
     const surnames = c?.surnames ?? ['Smith', 'Jones', 'Brown']
@@ -1255,6 +1375,7 @@ export const useGameStore = create((set, get) => ({
     set({
       ...state,
       money: (state.money ?? 0) - cost,
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
       assumedIdentity: { name: fakeName, adoptedAt: state.age },
       flags: [...new Set([...state.flags, 'assumed_identity'])],
       log: [...state.log, { age: state.age, text: `For $${cost.toLocaleString()} you obtain forged documents and become ${fakeName}. Your old identity is buried.`, isKey: true }],
@@ -1266,9 +1387,10 @@ export const useGameStore = create((set, get) => ({
     if (state.dead) return
     const dest = COUNTRIES.find(c => c.name === countryName)
     if (!dest) return
-    const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-    const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-    const fee = $$(Math.round((8000 + Math.floor(Math.random() * 12000)) * mult), state)
+    if (!canAct(state)) return
+    // A smuggler charges in the world's money for a crossing, not in the
+    // birth country's wage scale.
+    const fee = smugglerFee(state)
     if ((state.money ?? 0) < fee) {
       set({ log: [...state.log, { age: state.age, text: `The smuggler wants $${fee.toLocaleString()}. You can't afford it.`, isKey: false }] })
       return
@@ -1277,6 +1399,7 @@ export const useGameStore = create((set, get) => ({
       set({
         ...state,
         money: (state.money ?? 0) - fee,
+        actionsThisYear: state.maxActionsPerYear ?? 2,
         inPrison: true,
         prisonSentence: (state.prisonSentence ?? 0) + 2,
         wanted: false,
@@ -1287,7 +1410,9 @@ export const useGameStore = create((set, get) => ({
     set({
       ...state,
       money: (state.money ?? 0) - fee,
+      actionsThisYear: state.maxActionsPerYear ?? 2,
       currentCountry: dest,
+      career: null,
       residencyStatus: 'undocumented',
       flags: [...new Set([...state.flags, 'emigrated', 'illegal_immigrant'])],
       stats: { ...state.stats, happiness: Math.min(100, state.stats.happiness + 5) },
@@ -1297,14 +1422,14 @@ export const useGameStore = create((set, get) => ({
 
   upgradeResidency: () => {
     const state = get()
-    if (state.dead) return
-    set(upgradeResidency(state))
+    if (!canAct(state)) return
+    set(charge(state, upgradeResidency(state)))
   },
 
   seekAsylum: () => {
     const state = get()
-    if (state.dead) return
-    set(seekAsylum(state))
+    if (!canAct(state)) return
+    set(charge(state, seekAsylum(state)))
   },
 
   trackExPartner: (partner) => {
