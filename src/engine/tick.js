@@ -1399,7 +1399,7 @@ function applyWorldEvents(state) {
     updated = resolveProxyExtras(updated, proxy)
     updated.worldEventsFired = new Set([...updated.worldEventsFired, we.id])
     const narrativeText = wnText
-    updated.log = [...updated.log, { age: updated.age, year: updated.currentYear, text: narrativeText, worldEventName: we.name, isKey: true, isWorld: true }]
+    updated.log = [...updated.log, { age: updated.age, year: updated.currentYear, text: narrativeText, worldEventName: we.name, context: typeof we.context === 'function' ? we.context(G) : (we.context ?? null), isKey: true, isWorld: true }]
     if (we.addFlags) updated.flags = [...new Set([...updated.flags, ...we.addFlags])]
     // Rebuilt only when an event actually fires (rare), so a later event in the
     // same year sees the flags and stats the earlier one just set.
