@@ -18,12 +18,13 @@ export const SRI_LANKA_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.flags.has('tamil_diaspora') && G.currentYear >= 2009 && G.currentYear <= 2011 && !G.mem.slkDiasWarEnd,
-    text: 'May 2009. The news comes in fragments from unreliable sources. The LTTE is defeated. The last strip of territory at Mullaittivu — the civilians who were inside it. The Sri Lankan army has won. The international community calls it the end of the civil war. Tamil diaspora communities call the end something else. The number of civilian dead is disputed: 40,000, 70,000, more. Nobody is held accountable. You watch this from Toronto.',
+    text: 'May 2009. The news comes in fragments: the Tigers are finished, the last strip of coast at Mullaittivu has fallen, and the civilians who were inside it are not counted. The world calls it the end of the civil war. Tamils abroad call it something else. Nobody is held to account. You watch it from Toronto.',
+    context: 'UN estimates of civilian deaths in the last months of the war start at 40,000; other estimates are far higher.',
     choices: [
       {
         text: 'Organise with the diaspora community.',
         tag: 'organised',
-        outcome: 'You attend vigils. You sign petitions for an international accountability process that is never established. You carry this in the specific way of someone who watched from a safe distance.',
+        outcome: 'You attend vigils. You sign petitions for an international accountability process that is never established. You carry this in the way of someone who watched from a safe distance.',
         effect: (p) => { p.m -= 12; p.karma += 6; p.addFlag('political_active'); p.setMem('slkDiasWarEnd', true) },
       },
       {
@@ -51,7 +52,7 @@ export const SRI_LANKA_EVENTS = [
     phase: 'young_adult',
     weight: 5,
     when: (G) => IS_TAMIL(G) && IS_SRI_LANKA(G) && G.currentYear === 1983 && !G.mem.slkBlackJuly,
-    text: 'July 23. An LTTE ambush killed 13 soldiers. By July 25 the mobs are in the Tamil neighbourhoods of Colombo with electoral registers — someone printed lists of which houses are Tamil. The police are present in the specific way of people who have been told to be present without acting. The fire is visible from three streets. The city you have lived in your whole life is reorganising itself around a line you did not know was there.',
+    text: 'July 23. An LTTE ambush killed 13 soldiers. By July 25 the mobs are in the Tamil neighbourhoods of Colombo with electoral registers — someone printed lists of which houses are Tamil. The police are present in the way of people who have been told to be present without acting. The fire is visible from three streets. The city you have lived in your whole life is reorganising itself around a line you did not know was there.',
     choices: [
       {
         text: 'Hide with Sinhalese friends or colleagues.',
@@ -97,7 +98,7 @@ export const SRI_LANKA_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) => IS_TAMIL(G) && IS_SRI_LANKA(G) && G.currentYear >= 1985 && G.currentYear <= 2000 && G.age >= 6 && G.age <= 16 && !G.mem.slkJaffnaChild,
-    text: 'The school has a schedule now that accounts for shelling. Classes stop when the sound is certain; resume when it\'s uncertain. You learn which sound means how far. You learn this the way children learn anything — by repetition, by watching adults, by the specific calibration of their stillness. In Jaffna in these years, the electricity comes at intervals and the library has books that stop at 1982 and you study by kerosene because the exam still happens.',
+    text: 'The school has a schedule now that accounts for shelling. Classes stop when the sound is certain; resume when it\'s uncertain. You learn which sound means how far. You learn this the way children learn anything — by repetition, by watching adults, by the calibration of their stillness. In Jaffna in these years, the electricity comes at intervals and the library has books that stop at 1982 and you study by kerosene because the exam still happens.',
     effect: (p) => { p.m -= 10; p.h -= 3; p.addFlag('war_childhood'); p.setMem('slkJaffnaChild', true) },
   },
 
@@ -137,13 +138,13 @@ export const SRI_LANKA_EVENTS = [
       {
         text: 'Feel relief. The war is over.',
         tag: 'relieved',
-        outcome: 'The relief is real. The question of the final offensive is a question for later, which becomes a question never asked by anyone with power to ask it.',
+        outcome: 'The relief comes. The question of the final offensive is a question for later, which becomes a question never asked by anyone with power to ask it.',
         effect: (p) => { p.m += 8; p.setMem('slkWarEndSin', true) },
       },
       {
         text: 'The cost of the ending troubles you.',
         tag: 'troubled',
-        outcome: 'The specific word "victory" and what it required troubles you. You are in a minority of your community in this. You do not say it at the dinner table.',
+        outcome: 'The word "victory" and what it required troubles you. You are in a minority of your community in this. You do not say it at the dinner table.',
         effect: (p) => { p.m += 3; p.karma += 6; p.setMem('slkWarEndSin', true) },
       },
     ],
@@ -161,7 +162,7 @@ export const SRI_LANKA_EVENTS = [
       {
         text: 'Join the protest at Galle Face Green.',
         tag: 'protested',
-        outcome: 'The movement is called *Aragalaya* — the struggle. It is peaceful and furious and multiethnic in a way that surprises everyone, including itself.',
+        outcome: 'The movement is called *Aragalaya* — the struggle. It is peaceful and furious and multiethnic, and it surprises everyone, including itself.',
         effect: (p) => { p.m -= 5; p.karma += 8; p.addFlag('political_active'); p.addFlag('aragalaya_generation'); p.setMem('slk2022', true) },
       },
       {

@@ -52,7 +52,7 @@ export const SOLDIER_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.has('deployed_to_conflict') && !G.mem.solFirstWeek,
-    text: 'The first week: the heat, the smell that does not match anything you can name, the weight of carrying what you carry, the way your body recalibrates its sense of safe and not-safe. You learn the route to the latrine in the dark. You learn the sound of the particular vehicles that mean something. You learn which hours are quieter than others.',
+    text: 'The first week: the heat, the smell that does not match anything you can name, the weight of carrying what you carry, the way your body recalibrates its sense of safe and not-safe. You learn the route to the latrine in the dark. You learn the sound of the vehicles that mean something. You learn which hours are quieter than others.',
     effect: (p) => { p.h -= 4; p.addFlag('combat_veteran'); p.setMem('solFirstWeek', true) },
   },
 
@@ -61,7 +61,7 @@ export const SOLDIER_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) => G.flags.has('deployed_to_conflict') && !G.mem.solFriendLost,
-    text: 'There is someone you ate with every morning for four months. Not your closest friend from before — a specific closeness that only forms in a specific context. They are gone by Thursday. The manner of it was fast. You think about that sometimes — that it was fast — as though this is important information.',
+    text: 'There is someone you ate with every morning for four months. Not your closest friend from before — a closeness that only forms in a context. They are gone by Thursday. The manner of it was fast. You think about that sometimes — that it was fast — as though this is important information.',
     effect: (p) => { p.m -= 18; p.h -= 5; p.addFlag('lost_friend'); p.addFlag('grief_carried'); p.setMem('solFriendLost', true) },
   },
 
@@ -160,7 +160,7 @@ export const SOLDIER_ARC_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.flags.has('returned_veteran') && G.children.length > 0 && G.age >= 60 && !G.mem.solChildren,
-    text: 'Your child asks about your service with the specific seriousness of someone who has been wondering for years. You decide what version to give them. There is the version that protects them and the version that is true, and they are not entirely different versions but the emphasis is.',
+    text: 'Your child asks about your service with the seriousness of someone who has been wondering for years. You decide what version to give them. There is the version that protects them and the version that is true, and they are not entirely different versions but the emphasis is.',
     choices: [
       {
         text: 'Tell them the fuller version. They\'re old enough.',

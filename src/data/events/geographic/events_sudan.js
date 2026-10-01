@@ -31,7 +31,7 @@ export const SUDAN_EVENTS = [
       G.currentYear >= 1989 && G.currentYear <= 1995 &&
       G.age >= 16 &&
       !G.mem.sdnBashir,
-    text: 'June 30, 1989. Brigadier Omar al-Bashir launches a coup while the elected civilian government is attempting peace negotiations with the south. The National Islamic Front of Hassan al-Turabi is the civilian face of the new order. The unions are dissolved. The parties are dissolved. The press is closed. Political opponents — lawyers, judges, academics, army officers — are taken to ghost houses: unofficial detention centres that do not appear in official records. The new Sudan is being constructed.',
+    text: 'June 30, 1989. Brigadier Bashir takes power while the elected government is negotiating peace with the south, with Turabi\'s Islamists as his civilian face. The unions, the parties and the newspapers are dissolved. Lawyers, judges, professors and officers are taken to ghost houses, prisons that appear in no record. A new Sudan is being built.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 7; p.addFlag('sudan_bashir_generation'); p.setMem('sdnBashir', true) },
   },
@@ -45,7 +45,8 @@ export const SUDAN_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2010 &&
       G.age >= 16 &&
       !G.mem.sdnDarfur,
-    text: 'February 2003. The Sudan Liberation Army and the Justice and Equality Movement take up arms in Darfur — the western region, the periphery the Khartoum government has long ignored. The government\'s response: the Janjaweed militias, drawn from Arab nomadic groups, burn villages, rape systematically, kill by the hundreds of thousands. Between 300,000 and 400,000 people die. Two million are displaced. The International Criminal Court issues an arrest warrant for Bashir in 2009 — the first sitting head of state to be indicted for genocide. He travels freely. The Janjaweed become the Rapid Support Forces.',
+    text: 'February 2003, and the rebels take up arms in Darfur, the periphery Khartoum has always ignored, and the government answers with the Janjaweed: villages burned, women raped as a method, people killed in their hundreds of thousands. In 2009 the International Criminal Court indicts Bashir for genocide, the first sitting head of state to be charged, and he goes on travelling where he likes. The Janjaweed become the Rapid Support Forces.',
+    context: 'Estimates of deaths in Darfur from 2003 run from 300,000 upward; some two million people were displaced.',
     choices: [
       {
         text: 'You are from Darfur or have family there.',
@@ -114,7 +115,7 @@ export const SUDAN_EVENTS = [
       G.currentYear === 2021 &&
       G.age >= 16 &&
       !G.mem.sdnCoup2021,
-    text: 'October 25, 2021. General Abdel Fattah al-Burhan dissolves the transitional government, arrests civilian leaders, and declares a state of emergency. The transition lasted two years. The military was never genuinely sharing power. The coup is the clearest statement of what the military\'s position was throughout: the transition was a managed space, not a genuine handover. The streets fill again. The crackdowns begin again. The RSF — the Rapid Support Forces, the Janjaweed — are still there.',
+    text: 'October 25, 2021. General Burhan dissolves the transitional government, arrests the civilian leaders and declares an emergency, two years into the transition. The army was never sharing power; the transition was a space it managed. The streets fill again, and the crackdowns begin again. The Rapid Support Forces, which were the Janjaweed, are still there.',
     choices: null,
     effect: (p) => { p.m -= 14; p.r += 9; p.addFlag('sudan_coup_2021_generation'); p.setMem('sdnCoup2021', true) },
   },

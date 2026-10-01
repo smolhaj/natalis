@@ -63,7 +63,7 @@ export const SOCIAL_CAPITAL_EVENTS = [
       {
         text: 'Accept and say the expected things',
         tag: 'performed_loyalty',
-        outcome: 'The talk goes well. Afterward you feel the specific fatigue of having been entirely yourself and entirely not yourself at the same time.',
+        outcome: 'The talk goes well. Afterward you feel the fatigue of having been entirely yourself and entirely not yourself at the same time.',
         effect: (p) => { p.m -= 8; p.s += 3; p.r += 6; p.addFlag('performed_loyalty'); p.setMem('scAuthDangerAck', true) },
       },
       {
@@ -150,7 +150,7 @@ export const SOCIAL_CAPITAL_EVENTS = [
       G.career &&
       ['business', 'sales', 'finance', 'politics', 'media'].includes(G.career.field) &&
       !G.mem?.scLooksAdvAck,
-    text: 'A client signs. They came to the meeting by recommendation and stayed because of the presentation, and you are honest enough to know that the presentation includes you — how you present, how you are received before you speak. The work is real. So is this other thing. You have learned to use it without quite naming it.',
+    text: 'A client signs. They came to the meeting by recommendation and stayed because of the presentation, and you are honest enough to know that the presentation includes you — how you present, how you are received before you speak. The work counts, and so does this other thing. You have learned to use it without quite naming it.',
     choices: null,
     effect: (p) => {
       p.w += 4

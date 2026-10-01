@@ -86,7 +86,7 @@ export const GIFTED_3_EVENTS = [
       G.age >= 13 && G.age <= 18 &&
       G.currentYear >= 1960 &&
       !G.mem?.giftOlympiadFired,
-    text: 'The mathematics olympiad, the physics olympiad, the international science competition — the system that exists for the specific talent you have. You are selected for the national team, or you qualify for the international round, or you simply solve the problems on the practice sheet faster than the teacher can mark them. The competition is global and the global field has people who are as good as you, which is the first time that has been true. The encounter with someone equally capable changes something.',
+    text: 'The mathematics olympiad, the physics olympiad, the international science competition — the system that exists for the talent you have. You are selected for the national team, or you qualify for the international round, or you simply solve the problems on the practice sheet faster than the teacher can mark them. The competition is global and the global field has people who are as good as you, which is the first time that has been true. The encounter with someone equally capable changes something.',
     choices: [
       {
         text: 'Win, or come close to winning',
@@ -149,7 +149,7 @@ export const GIFTED_3_EVENTS = [
       (G.flags.has('gift_gender_fought') || G.flags.has('gift_gender_navigated')) &&
       G.age >= 35 &&
       !G.mem?.giftGenderMidFired,
-    text: 'In midlife you watch younger women in the same field you entered navigate the same terrain you navigated, with somewhat better maps. The landscape has changed. Not beyond recognition — the basic features are preserved — but the specific barriers that cost you specific years are less solid. You are not sure whether to feel that the costs were wasted or that the costs were part of what moved the landscape. Both things seem true.',
+    text: 'In midlife you watch younger women in the same field you entered navigate the same terrain you navigated, with somewhat better maps. The landscape has changed. Not beyond recognition — the basic features are preserved — but the barriers that cost you specific years are less solid. You are not sure whether to feel that the costs were wasted or that the costs were part of what moved the landscape.',
     choices: null,
     effect: (p) => { p.m += 4; p.r -= 3; p.karma += 5; p.addFlag('gift_gender_midlife_reckoned'); p.setMem('giftGenderMidFired', true) },
   },
@@ -210,7 +210,7 @@ export const GIFTED_3_EVENTS = [
       !G.mem?.giftPrizeFired,
     text: (G) => {
       if (G.flags.has('born_gifted_athletic')) return 'The gold medal, the world title, the record — the thing that the career was pointed at. The moment of it is shorter than you expected. The feeling is real and then it is the fact. The fact is permanent. What comes after the fact is a different and interesting question.'
-      if (G.flags.has('born_gifted_musical')) return 'The prize is announced. Your name in the announcement. You have heard your name in a lot of contexts and this is a new context for it. The weight of what the prize represents — the accumulated judgement of the field — lands in a way that takes some time to settle into. The work is the same work it was yesterday. The frame around it has shifted.'
+      if (G.flags.has('born_gifted_musical')) return 'The prize is announced. Your name in the announcement. You have heard your name in a lot of contexts and this is a new context for it. The weight of what the prize represents — the accumulated judgement of the field — takes some time to settle. The work is the same work it was yesterday. The frame around it has shifted.'
       return 'The phone call comes from a number you don\'t recognise early in the morning. You almost don\'t answer. The voice explains what it is calling to say. There is a pause after the explanation that you don\'t know how to fill. The work that led here was done without knowing it would lead here, and the best work usually is.'
     },
     choices: null,

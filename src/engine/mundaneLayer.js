@@ -1,5 +1,5 @@
-import { livingRuralUrban, urbanChanceFor, seasonsFor } from './character'
-import { conflictRiskAt, WAR_YEARS, INDEPENDENCE_YEAR } from '../data/history.js'
+import { livingRuralUrban, urbanChanceFor, seasonsFor, getCountryRegime } from './character'
+import { conflictRiskAt, WAR_YEARS, INDEPENDENCE_YEAR, ADJUSTMENT_PROGRAMME_YEARS, malariaEndemic } from '../data/history.js'
 import { preferUnsaid } from './prose'
 import { hasTech, wasWealthy, techYear, RURAL_TECH_OVERRIDES } from '../data/technology'
 // mundaneLayer.js — Daily-life texture that fires alongside main events every year.
@@ -14,6 +14,124 @@ import { hasTech, wasWealthy, techYear, RURAL_TECH_OVERRIDES } from '../data/tec
 //
 // Writing register: second person, present tense, specific and concrete.
 // Matches the literary tone of the main event system.
+
+// ── What the world held, this year, where the character lives ───────────────
+//
+// The generic layers read archetype as fact: `isDeveloping` gave a Shanghai
+// childhood a corrugated roof and fetched water, a 1948 Soviet flat a landlord,
+// a 1969 Soviet couple a loan officer, and a North Korean life international
+// lenders, social media and a market timed to perfection. The archetype says
+// what a country is like now; these say what it had that year.
+
+// Where nobody let a flat, sold a house, lent against one or traded a share.
+// Inclusive years. The Derg nationalised urban land and every rented house in
+// 1975; Mozambique and Angola nationalised rental buildings in 1976.
+const NO_PRIVATE_MARKET = [
+  [['Russia', 'Ukraine', 'Belarus', 'Georgia', 'Armenia', 'Azerbaijan', 'Kazakhstan', 'Uzbekistan',
+    'Kyrgyzstan', 'Tajikistan', 'Turkmenistan'], 1930, 1991],
+  [['Estonia', 'Latvia', 'Lithuania', 'Moldova'], 1945, 1991],
+  [['Poland', 'Czech Republic', 'Slovakia', 'Hungary', 'Romania', 'Bulgaria'], 1949, 1990],
+  [['Albania'], 1946, 1991],
+  [['Mongolia'], 1930, 1991],
+  [['China'], 1950, 1991],
+  [['North Korea'], 1946, 9999],
+  [['Vietnam'], 1976, 1989],
+  [['Laos', 'Cambodia'], 1975, 1989],
+  [['Cuba'], 1961, 2010],
+  [['Ethiopia', 'Mozambique', 'Angola'], 1976, 1990],
+]
+
+/** Could a private landlord, mortgage, loan officer or share price exist here this year? */
+export function privateMarketAt(countryName, year) {
+  for (const [names, from, to] of NO_PRIVATE_MARKET) {
+    if (names.includes(countryName) && year >= from && year <= to) return false
+  }
+  return true
+}
+
+// Where an aid agency or a voluntary organisation could not open an office.
+// Ethiopia, Mozambique and Angola are omitted on purpose: the famine and war
+// relief of the 1980s were run largely by NGOs.
+export function civilSocietyAt(countryName, year) {
+  if (['North Korea', 'Turkmenistan'].includes(countryName)) return false
+  if (countryName === 'Cuba') return false
+  if (['Ethiopia', 'Mozambique', 'Angola'].includes(countryName)) return year >= 1970
+  return privateMarketAt(countryName, year) && year >= 1960
+}
+
+/** Had this country borrowed under an IMF or World Bank programme by this year? */
+export function adjustedBy(countryName, year) {
+  return (ADJUSTMENT_PROGRAMME_YEARS[countryName] ?? []).some(y => y <= year)
+}
+
+// The solicitor and the barrister are the law in these countries; elsewhere it
+// is a lawyer, an attorney or an advocate. "Your solicitor" reached New York and Tokyo.
+const SOLICITOR_COUNTRIES = new Set(['United Kingdom', 'Ireland', 'Australia', 'New Zealand'])
+
+// Hot all year, or hot enough that the house is built against the heat.
+const HOT_DRY = new Set(['Saudi Arabia', 'UAE', 'Qatar', 'Bahrain', 'Kuwait', 'Oman', 'Egypt', 'Libya', 'Iraq',
+  'Sudan', 'Djibouti', 'Somalia', 'Niger', 'Mali', 'Chad', 'Yemen'])
+export function hotClimate(countryName) {
+  return seasonsFor(countryName)[0] === 'dry' || HOT_DRY.has(countryName)
+}
+
+// The claims a line makes, and what the world has to contain for it to be true.
+const CLAIMS = [
+  // A private rental, credit or property market.
+  [/\blandlord(?!s? label)|\blandlady\b|\bmortgage|loan officer|estate agent|\brealtor\b|property (?:market|ladder|developer)|housing market|gentrif|stock market|share price|\bstock tips?\b|\bcredit card|credit score|\bthe market is doing|\bthe bank loan|\bbank manager\b|time the market|the rent (?:is|has|went|goes|was|rises|day)|\brent (?:rise|increase)|pay(?:ing)? the rent|\bpaid rent\b|\bpay rent\b|school fees?\b|\bthe deposit on\b/i,
+    (w) => w.market],
+  // An aid agency or a voluntary organisation.
+  [/\bNGOs?\b|\bthe charity\b|aid agenc|human rights organi/i, (w) => w.civil],
+  // The lenders.
+  [/\bIMF\b|\bthe Fund\b|World Bank|structural adjustment|\bthe SAP\b|international lenders|\bthe lenders\b|debt relief/i, (w) => w.debtor],
+  [/\bsolicitor/i, (w) => SOLICITOR_COUNTRIES.has(w.cn)],
+  // Things on a screen.
+  [/social media|\bfacebook\b|\binstagram\b|\btiktok\b|\btwitter\b|\bwhatsapp\b|\bthe feed\b|\bthe algorithm\b|\bthe app\b|\bvoice note|\bselfie/i, (w) => w.tech('smartphone') && w.internet],
+  [/\bonline\b|\bthe internet\b(?! caf)|\bwebsite|\bbroadband|\bwi-?fi\b|search engine|\bstreaming\b|\bnetflix\b|\bspotify\b/i, (w) => w.tech('home_internet')],
+  [/\bemail\b|\be-mail\b|\binbox\b/i, (w) => w.tech('email')],
+  [/video call|\bzoom\b|\bskype\b|through (?:the |a )?screens?\b/i, (w) => w.tech('video_call')],
+  // Malaria's furniture.
+  [/mosquito net|\bthe net over the bed/i, (w) => w.malaria],
+]
+
+/**
+ * The facts `proseFitsWorld` reads, computed once per call site. `rural`
+ * follows the character's live place rather than the birth roll.
+ */
+export function worldFacts(state) {
+  const live = state.currentCountry ?? state.character?.country ?? null
+  const cn = live?.name ?? ''
+  const year = state.currentYear
+  const placeType = state.currentPlace?.type
+  const rural = (placeType === 'rural' || placeType === 'urban' ? placeType : state.character?.ruralUrban) === 'rural'
+  return {
+    cn, year, rural,
+    market: privateMarketAt(cn, year),
+    civil: civilSocietyAt(cn, year),
+    debtor: adjustedBy(cn, year),
+    malaria: malariaEndemic(cn, year),
+    tech: (t) => hasTech(live, t, year, { rural }),
+    // North Korea has handsets and an intranet, and no internet at all.
+    internet: techYear(live, 'home_internet') < 9000,
+  }
+}
+
+/** Is everything this line assumes about the world true of this place and year? */
+export function proseFitsWorld(line, facts) {
+  if (typeof line !== 'string' || !line) return true
+  for (const [re, ok] of CLAIMS) {
+    if (re.test(line) && !ok(facts)) return false
+  }
+  return true
+}
+
+/**
+ * "The water in The huts past the ring road runs…" — a neighbourhood name
+ * set mid-sentence keeps its own capital article. Lowercase a leading "The".
+ */
+export function midSentence(name) {
+  return typeof name === 'string' ? name.replace(/^The /, 'the ') : name
+}
 
 export function buildMundaneLayer(state) {
   if (Math.random() < 0.18) return null
@@ -48,7 +166,11 @@ export function buildMundaneLayer(state) {
   const isBuddhist = religion === 'buddhist'
   const isJewish = religion === 'jewish'
   const isFolk = religion === 'folk_religion'
-  const isWealthy = ['very_high', 'high', 'medium_high'].includes(gdp)
+  // Affluence is the household's, in the year it is lived: the country's
+  // present-day GDP tier put "the donation was made without calculation"
+  // into a 1975 Sichuan village, because China is medium_high now.
+  const isWealthy = (state.character?.wealthTier ?? 2) >= 4 ||
+    ((state.character?.wealthTier ?? 2) >= 2 && wasWealthy(state.currentCountry ?? state.character?.country, currentYear))
   const isPoor = ['very_low', 'low'].includes(gdp)
   const isWorkingClass = ['low_medium', 'medium'].includes(gdp)
   const hasChildren = children && children.length > 0
@@ -83,6 +205,15 @@ export function buildMundaneLayer(state) {
   const isSubsaharan = arch === 'subsaharan'
   const isDeveloping = ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(arch)
   const isPostSoviet = arch === 'post_soviet'
+  // The facts the archetype was standing in for. `regime` is the live
+  // country's that year: `arch === 'single_party_communist'` compared an
+  // archetype to a regime and was never true, so the slogan, the curfew and
+  // the careful rooms reached only the five countries named beside it.
+  const regime = getCountryRegime(liveC, currentYear)
+  const marketHere = privateMarketAt(cn, currentYear)
+  const hot = hotClimate(cn)
+  const malariaHere = malariaEndemic(cn, currentYear)
+  const winters = seasonsFor(cn)[0] === 'winter'
   const desire = state.desire ?? null
   // Same object-vs-string mix as yearTexture had: currentCountry is an object,
   // `cn` a name, so `currentCn === cn` and every `currentCn === 'X'` was false.
@@ -307,7 +438,8 @@ export function buildMundaneLayer(state) {
   addIf(tech('colour_television') && currentYear <= techArrival('colour_television') + 8 && notYoung,
     'The colour television is in some houses, not yet all. The question of whether to get one is a category of conversation.',
   )
-  addIf(tech('radio') && notYoung && currentYear >= 1955 && currentYear <= 1985,
+  // A record player is a household with a socket and money for records.
+  addIf(tech('radio') && wired && (wealthyNow || richHousehold) && notYoung && currentYear >= 1955 && currentYear <= 1985,
     'The record player is the household\'s second intelligence. It knows what the afternoon needs.',
   )
   addIf(tech('cassette') && notYoung && currentYear <= 1995,
@@ -388,12 +520,12 @@ export function buildMundaneLayer(state) {
   // three did the laundry, the shopping and the correspondence, and a
   // one-year-old Swede managed around the club and the conversation about
   // money. Grep for every reader of a rule you fix.
-  addIf(gender === 'female' && era <= 1959 && isWealthyArch && adult,
+  addIf(gender === 'female' && era <= 1959 && wealthyNow && adult,
     'The meal is expected at a certain time. The expectation has not been stated. It is understood.',
     'You do the laundry, the shopping, the correspondence. This is called being at home.',
     'There are rooms not intended for you — the meeting, the club, the conversation about money. You manage around them.',
   )
-  addIf(gender === 'female' && era >= 1960 && era <= 1979 && isWealthyArch && employed,
+  addIf(gender === 'female' && era >= 1960 && era <= 1979 && wealthyNow && employed,
     'The job you have was not available to women at this level ten years ago. You are the first, or among the first.',
     'The equal pay conversation is happening in the office. The happening is not the same as the resolution.',
   )
@@ -427,9 +559,9 @@ export function buildMundaneLayer(state) {
   )
   addIf(gender === 'male' && isDeveloping && phase !== 'early_childhood',
     'The obligation to provide is the background frequency on which everything else runs.',
-    'The work is physical and the body carries the record of the years. By evening the back has opinions.',
+    working && !(careerField && DESK_FIELDS.has(careerField)) && 'The work is physical and the body carries the record of the years. By evening the back has opinions.',
   )
-  addIf(gender === 'male' && isWealthyArch && phase === 'midlife',
+  addIf(gender === 'male' && wealthyNow && phase === 'midlife',
     'There are things you would talk about and things you would not. The distinction is longstanding and has not been examined recently.',
     'The emotional work of the household is distributed in a way that has not been explicitly negotiated.',
   )
@@ -468,7 +600,9 @@ export function buildMundaneLayer(state) {
     'Sunday is the day with a different shape. The getting-ready, the walk or drive, the greeting of people seen only in this context.',
     'The hymn arrives without prompting. You are doing something else entirely when it appears.',
   )
-  addIf(isChristian && arch === 'subsaharan' || (isChristian && isDeveloping),
+  const spiritFilled = isChristian && !['christian_catholic', 'christian_orthodox', 'christian_coptic', 'christian_ethiopian_orthodox'].includes(religion) &&
+    !religion.includes('orthodox') && !religion.includes('catholic')
+  addIf(spiritFilled && isDeveloping,
     'The church service runs long because the Spirit arrives when it arrives. You know to leave nothing urgent waiting.',
     'The testimony time — the standing up, the naming of what was given back — is its own form of witnessing.',
     'The pastor\'s name is known in the neighbourhood. His word carries weight that secular institutions have lost.',
@@ -516,7 +650,7 @@ export function buildMundaneLayer(state) {
 
   addIf(isPoor && phase !== 'early_childhood',
     'The calculation of the week\'s food happens before the buying. The margin between enough and not enough is small.',
-    'The phone is shared — with the household, or with a neighbour. Calls are arranged, not spontaneous.',
+    (tech('landline') || tech('mobile_phone')) && 'The phone is shared — with the household, or with a neighbour. Calls are arranged, not spontaneous.',
     'The thing that broke will be repaired. Replacement is not the first option.',
     'The school fees are a number that arrives every term. How to meet the number is worked out.',
     'You eat what is available. What is available is adequate, mostly.',
@@ -550,11 +684,11 @@ export function buildMundaneLayer(state) {
     'The donation was made. The amount was decided in a moment without significant calculation.',
     'The restaurant was chosen before the price was considered. This continues to be a privilege.',
   )
-  addIf(isWealthyArch && isWealthy && phase !== 'early_childhood',
+  addIf(wealthyNow && isWealthy && phase !== 'early_childhood',
     'The cleaner comes on a scheduled day. Their name is known. The arrangement is professional and also human.',
     'The annual leave is taken. The destination was agreed months ago. The planning was part of the pleasure.',
   )
-  addIf(arch === 'wealthy_west' && (gdp === 'medium' || gdp === 'medium_high') && age >= 25,
+  addIf(arch === 'wealthy_west' && wealthyNow && (gdp === 'medium' || gdp === 'medium_high') && age >= 25,
     'The mortgage is the number that lives in the back of the mind. Not urgently. Persistently.',
     'There are two options and both are reasonable. This is a new situation relative to earlier decades.',
     'The car needs a service. This is handled.',
@@ -567,10 +701,10 @@ export function buildMundaneLayer(state) {
     'Everything necessary is within walking distance or requires the acceptance of a long walk.',
     'The walk to the market, the school, the well. The route is known. The feet know it.',
   )
-  addIf(isDeveloping && isUrban && !!ride,
+  addIf(isDeveloping && isUrban && marketHere && !!ride,
     `The ${ride} — the driver knows which streets are faster today. You trust this.`,
   )
-  addIf(isDeveloping && isUrban,
+  addIf(isDeveloping && isUrban && marketHere,
     'The negotiation of the fare is the first conversation of the journey.',
     'The minibus is full. This is the usual condition of the minibus.',
     'The conductor is calling the route from the window. The route is the route you take.',
@@ -625,8 +759,20 @@ export function buildMundaneLayer(state) {
   addIf(liveRegion === 'West Africa' && currentYear >= 2010,
     'The jollof rice debate — whose version, which country, which occasion — is perennial and unresolvable and also enjoyable.',
   )
+  // One line naming fufu, ugali, sadza and eba reached rural Oyo, where it
+  // is eba and amala and pounded yam, and every other country on the
+  // continent, each of which has one of those words and not the other three.
+  const STAPLE = {
+    Nigeria: 'Eba, or amala, or pounded yam on a good day', Ghana: 'Fufu, or banku, or kenkey', 'Ivory Coast': 'Foutou, or attiéké',
+    Cameroon: 'Fufu, or garri', Liberia: 'Fufu, or dumboy', Togo: 'Akoumé', Benin: 'Akassa, or wo',
+    Kenya: 'Ugali', Tanzania: 'Ugali', Uganda: 'Posho, or matoke', Rwanda: 'Ugali, or the plantains', 'DR Congo': 'Fufu',
+    Zambia: 'Nshima', Zimbabwe: 'Sadza', 'South Africa': 'Pap', Mozambique: 'Xima', Angola: 'Funge', Namibia: 'Oshifima',
+    Mali: 'Tô', 'Burkina Faso': 'Tô', Niger: 'Tuwo', Chad: 'Boule', 'Central African Republic': 'Gozo',
+  }[cn]
+  addIf(isSubsaharan && !horn && !!STAPLE,
+    `${STAPLE} — the starch that holds the soup and the evening together.`,
+  )
   addIf(isSubsaharan && !horn,
-    'Fufu, ugali, sadza, eba — the starch that holds the soup and the evening together.',
     'The market tomatoes are riper than the shop\'s. You know this. You go to the market.',
   )
   addIf(westCentral,
@@ -676,7 +822,7 @@ export function buildMundaneLayer(state) {
   addIf(['Vietnam', 'Thailand', 'Malaysia', 'Singapore'].includes(cn),
     'The steamboat is set down and the raw things are set around it and the eating takes the whole evening because it is meant to.',
   )
-  addIf(isWealthyArch && era >= 1960,
+  addIf(wealthyNow && era >= 1960,
     'The supermarket is the weekly ritual. The trolley follows the same route. The choices are stable.',
     'The ingredients are available regardless of season now. Winter strawberries exist. You are still deciding how to feel about this.',
     'The cookbook was opened. Something new was made. This happens occasionally.',
@@ -709,7 +855,7 @@ export function buildMundaneLayer(state) {
     'The rains arrive on schedule or nearly — the sky changes in the afternoon, the smell before the first drop, then all at once.',
     'The monsoon means the road is also a river for the next few months. The navigation adjusts.',
   )
-  addIf(isDeveloping && era <= 1980 && isRural,
+  addIf(isDeveloping && hot && era <= 1980 && isRural,
     'The dry season is hot in a way the body eventually accepts as ordinary.',
     'The water is lower in the river now. Everyone has noticed.',
     'The rains came later this year than last. The planting adjusted.',
@@ -724,7 +870,7 @@ export function buildMundaneLayer(state) {
     'The rain is neither unusual nor over. It is the condition.',
     'The grey sky is the default sky. The sun, when it arrives, causes comment.',
   )
-  addIf(isWealthyArch && (arch === 'wealthy_west' || arch === 'post_soviet'),
+  addIf(winters && !hot,
     'The spring light returns at a different angle. People who were inside are now outside.',
     'The single tree that marks the year — the same tree in the same position, season after season.',
   )
@@ -734,19 +880,19 @@ export function buildMundaneLayer(state) {
 
   // ── HOUSING ────────────────────────────────────────────────────────────────
 
-  addIf(isDeveloping && era <= 1970 && isRural,
+  addIf(isDeveloping && hot && era <= 1970 && isRural,
     'The compound is swept in the morning. The sweeping is the first act of the day.',
     'The walls are thick enough to keep the heat out. This is the building\'s oldest function.',
     'The cooking fire is outside. The smoke goes up. The food takes the time it takes.',
   )
   addIf(isDeveloping && isUrban,
-    'The landlord lives in the same compound. The landlord-tenant relationship requires management.',
+    marketHere && 'The landlord lives in the same compound. The landlord-tenant relationship requires management.',
     'The alley between houses is the social space. The social space is always occupied.',
     tech('smartphone')
       ? 'The power is out again. The candle or the lamp or the phone screen is lit.'
       : 'The power is out again. The candle or the lamp is lit, and the evening rearranges itself around the one light.',
   )
-  addIf(isWealthyArch && era >= 1960,
+  addIf(wealthyNow && era >= 1960,
     'The neighbour above walks with a specific weight at a specific hour. You know this without having met them.',
     'The window faces a particular direction. What you see from it is your portion of the city.',
     'The building has its own sounds at night — the pipes, the lift, the street below.',
@@ -814,7 +960,7 @@ export function buildMundaneLayer(state) {
   addIf(tech('television') && !tech('streaming') && notYoung,
     'The television schedule is fixed. You are there for the programme or you miss it.',
   )
-  addIf(tech('landline') && !tech('mobile_phone') && adult && currentYear >= 1975,
+  addIf(tech('landline') && !tech('mobile_phone') && wealthyNow && adult && currentYear >= 1975,
     'The answering machine message was left. You have been playing it back to check the tone.',
   )
   addIf(tech('mobile_phone') && !tech('smartphone') && age >= 12,
@@ -978,7 +1124,7 @@ export function buildMundaneLayer(state) {
   )
   addIf(cn === 'Russia' || cn === 'Ukraine' || cn === 'Belarus',
     'The blat — the informal exchange, the favour, the who-you-know — is the parallel currency.',
-    'Dacha in summer: the garden, the preserved vegetables, the specific freedom of the plot.',
+    !isRural && 'Dacha in summer: the garden, the preserved vegetables, the specific freedom of the plot.',
     'The banya is the social event that is also a health practice that is also a negotiation space.',
   )
   addIf(cn === 'Cuba',
@@ -1269,7 +1415,9 @@ export function buildMundaneLayer(state) {
     'The park, if there is one, is small and the grass does not recover from summer.',
     'The landlord is a presence in the background, not physically but financially.',
   )
-  addIf(F('neighborhood_informal') || (isDeveloping && isPoor),
+  // A poor country is not a poor household: the settlement lines reached the
+  // daughter of a Lagos businessman. The household's own tier, in a town.
+  addIf(F('neighborhood_informal') || (isDeveloping && isPoor && isUrban && (state.character?.wealthTier ?? 2) <= 1),
     'The lane to your door is navigable in the dry season and a negotiation in the rainy one.',
     'The standpipe is shared between seven households. The schedule for the water is informal but respected.',
     wired
@@ -1770,14 +1918,16 @@ export function buildMundaneLayer(state) {
   addIf(isDeveloping && era <= 1980 && wired,
     'The night is dark when the power cuts. Dark in the way that has no gradation.',
   )
-  addIf(isDeveloping && era <= 1980,
+  addIf(isDeveloping && era <= 1980 && !wired,
     'The lamp is lit. The small circle of light is the evening.',
+  )
+  addIf(isDeveloping && malariaHere && (hot || isRural),
     'The mosquito net arranged before sleep. The arrangement is not decorative.',
   )
   addIf(isPostSoviet && era >= 1991 && era <= 2000,
     'The heating comes on when it comes on. Some winters it does not come on reliably. The extra blanket is not a metaphor.',
   )
-  addIf(isWealthyArch && era >= 1990,
+  addIf(wealthyNow && isUrban && era >= 1990,
     'The light pollution means the stars are not visible. You did not notice when you stopped looking for them.',
     'The phone on the nightstand. The phone checked before sleep. The intention not to check it.',
   )
@@ -1789,7 +1939,7 @@ export function buildMundaneLayer(state) {
     'The informer could be anyone. This is not paranoia. It is an acquired skill of calibration.',
     'The newspaper exists and says what it is permitted to say. What it is not permitted to say is known by its absence.',
   )
-  addIf(arch === 'single_party_communist' || cn === 'Cuba' || cn === 'China' || cn === 'North Korea' || cn === 'Vietnam',
+  addIf(regime === 'single_party_communist',
     'The slogan is on the wall. The slogan has been on the wall for so long it is now the wall.',
     'The meeting where the correct things are said: the attendance is noted, the saying of them is noted.',
     'The family understands what is not to be said outside the family. The understanding requires no discussion.',
@@ -1798,7 +1948,7 @@ export function buildMundaneLayer(state) {
     'The meeting is in someone\'s house and the curtains are drawn from habit, not emergency.',
     'The pamphlet or the text: drafted and redrafted. The language that says the thing without saying the thing directly.',
   )
-  addIf(arch === 'military_dictatorship',
+  addIf(regime === 'military_dictatorship',
     'The curfew is the architecture of the night. After a certain hour the street belongs to the state.',
     'The soldier at the checkpoint: the document produced, the pause, the waving through.',
     'The radio announces what it announces. The gap between what is announced and what happened is a skill you have learned to measure.',
@@ -1868,7 +2018,9 @@ export function buildMundaneLayer(state) {
     'The road to the town: the distance is known in time, not in kilometres. The time depends on the season.',
     'The children who went to the city: you know which households have had a child go. The going is the village\'s long-term project.',
     'The returnee: someone who went to the city and came back. The reasons for coming back are not always freely given.',
-    'The seasons are the years. The year is measured from planting to harvest to the dry to the rains.',
+    hot
+      ? 'The seasons are the years. The year is measured from planting to harvest to the dry to the rains.'
+      : 'The seasons are the years. The year is measured from the thaw to the planting to the harvest to the first frost.',
   )
   addIf(isRural && isDeveloping && gender === 'female',
     'The firewood: collected, carried, stacked. The carrying is not labour that appears in any account.',
@@ -2235,7 +2387,7 @@ export function buildMundaneLayer(state) {
   )
 
   // ── ERA-SPECIFIC: 1940S NON-WESTERN ───────────────────────────────────────
-  addIf(!isWealthyArch && era >= 1940 && era <= 1949,
+  addIf(!isWealthyArch && !atWar && era >= 1940 && era <= 1949,
     'The war is elsewhere and also here: in the prices, in what is not available, in the letters.',
   )
   addIf(!isWealthyArch && era >= 1940 && era <= 1949 && currentYear >= techYear(homeCountry, 'radio'),
@@ -2261,7 +2413,7 @@ export function buildMundaneLayer(state) {
   )
 
   // ── ERA-SPECIFIC: MOBILE PHONE ARRIVAL ───────────────────────────────────
-  addIf(era === 2000 && isDeveloping && phase !== 'early_childhood',
+  addIf(era === 2000 && isDeveloping && phase !== 'early_childhood' && tech('mobile_phone') && !tech('landline'),
     'The phone that arrived without the landline before it. The step that was skipped.',
     'The way the phone changed who you can reach and who can reach you: both at once.',
   )
@@ -2514,12 +2666,13 @@ export function buildMundaneLayer(state) {
   )
 
   // ── 1970S TEXTURE ────────────────────────────────────────────────────────
-  addIf(era === 1970 && isWealthyArch && phase !== 'early_childhood',
+  addIf(era === 1970 && wealthyNow && arch !== 'wealthy_gulf' && phase !== 'early_childhood',
     'The decade doesn\'t know yet whether the previous decade meant anything. The cities are dirtier. The music is louder.',
     'The oil price is a daily fact. The queue, the rationing, the reorientation of what prosperity costs.',
   )
   addIf(era === 1970 && isDeveloping && phase !== 'early_childhood',
-    'The liberation movements and the new governments and the question of what independence has delivered.',
+    indepYear != null && currentYear - indepYear >= 0 && currentYear - indepYear <= 25 &&
+      'The liberation movements and the new governments and the question of what independence has delivered.',
     'The price of things is going up and the reason is far away but the price is here.',
   )
 
@@ -3153,7 +3306,7 @@ export function buildMundaneLayer(state) {
     'After: the years after are not the years before with the prison years subtracted. They are different years.',
     'The file that exists somewhere with your name on it. You have stopped wondering what is in it.',
   )
-  addIf(F('dissident') && (isPostSoviet || arch === 'single_party_authoritarian'),
+  addIf(F('dissident') && (isPostSoviet || regime === 'single_party_authoritarian' || regime === 'single_party_communist'),
     'The small adjustments: what you say and to whom and in which room and with how much specificity.',
   )
 
@@ -3248,6 +3401,11 @@ export function buildMundaneLayer(state) {
     'You looked out the window at a particular moment. What you saw was unremarkable. You looked at it anyway.',
   )
 
+  // Drop any line that assumes something this place did not have this year.
+  const facts = worldFacts(state)
+  const fitting = pool.filter(line => proseFitsWorld(line, facts))
+  pool.length = 0
+  pool.push(...fitting)
   if (pool.length === 0) return null
   // Prefer a line this character has not heard. The mundane layer draws from a
   // flat pool, so over a long life it re-served the same sentence often enough

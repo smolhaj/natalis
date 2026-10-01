@@ -13,7 +13,7 @@ export const FOLLOWTHROUGH_83_EVENTS = [
       G.currentYear >= 1965 && G.currentYear <= 2000 &&
       G.age >= 30 &&
       !G.mem?.ft83Dodenherdenking,
-    text: 'May 4. The National Remembrance Day. Two minutes of silence at 8pm — the whole country stops, the trams stop, the radio stops. You have done this every year since you can remember. As a child it was the silence of adults that impressed itself on you; now you are the adult in the silence and the names you are thinking of are specific. The gap in the street. The daughter who played on the steps. You never knew her name. The silence is partly for that.',
+    text: 'May 4, Remembrance, and two minutes of silence at eight in the evening: the trams stop, the radio stops, the whole country stops. As a child it was the adults\' silence you noticed. Now you are the adult in it, and you are thinking of the gap in your street, and the girl who played on the steps whose name you never knew.',
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -53,7 +53,7 @@ export const FOLLOWTHROUGH_83_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2016 &&
       G.age >= 25 &&
       !G.mem?.ft83SameSexWorldFollows,
-    text: 'Belgium in 2003. Spain in 2005. Canada in 2005. South Africa in 2006. Norway, Sweden, Portugal, Iceland, Argentina, Denmark, France, New Zealand, England, Luxembourg, Ireland, the United States. The countries follow. Not all of them. Not easily. The Netherlands was first and is now one among several. The word "first" no longer applies in the same way. Being first was temporary. The marriages were permanent.',
+    text: 'Belgium in 2003. Spain and Canada in 2005. South Africa, Norway, Sweden, Portugal, Iceland, Argentina, Denmark, France, New Zealand, England, Ireland, the United States. The countries follow, not all of them, not easily, and the Netherlands is one among several. Being first was temporary. The marriages were permanent.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -114,7 +114,7 @@ export const FOLLOWTHROUGH_83_EVENTS = [
       G.currentYear >= 2022 &&
       G.age >= 55 &&
       !G.mem?.ft83BersiapReport,
-    text: '2022. The Dutch government publishes a report on the colonial war in the Dutch East Indies after 1945. The words in the report are "systematic and extreme violence." The Prime Minister apologizes in Jakarta and The Hague simultaneously. Your grandfather has been dead for years. The apology is directed at people who were harmed, not at the grandchildren of those who caused the harm. But the report exists. The words in the report are the government\'s words about what your grandfather did. This is the first time that sentence has been officially true.',
+    text: '2022, and the government publishes its report on the war in the Indies after 1945, and the words in it are systematic and extreme violence. The prime minister apologises. Your grandfather has been dead for years. The apology is for the people who were harmed, not for the grandchildren of the men who harmed them. But those are now the government\'s words for what your grandfather did, and that is the first time that sentence has been officially true.',
     choices: null,
     effect: (p) => {
       p.r += 6

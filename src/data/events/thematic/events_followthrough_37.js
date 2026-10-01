@@ -15,7 +15,7 @@ export const FOLLOWTHROUGH_37_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 50 &&
       !G.mem?.ft37BattalionTruth,
-    text: 'The Committee of Relatives of the Detained and Disappeared in Honduras — COFADEH — has been cataloguing cases since 1982. The cases number in the hundreds. The CIA officers who trained Battalion 316 have given interviews explaining their methods. The Honduran officials who ordered the disappearances retired with pensions. The United States declassified some files. None of this produced a trial. You have watched the machinery of accountability do its work and arrive at the same place it always does: the documentation is complete; the document is filed; the people named in it are dead or comfortable or both.',
+    text: 'The committee of relatives has been cataloguing the disappeared since 1982, and the cases number in the hundreds. The Americans who trained Battalion 316 have given interviews about their methods; the Honduran officers who gave the orders retired on pensions; some files were declassified. None of it produced a trial. The documentation is complete and filed, and the people named in it are dead or comfortable or both.',
     choices: null,
     effect: (p) => { p.r += 7; p.m -= 5; p.karma += 3; p.setMem('ft37BattalionTruth', true) },
   },
@@ -31,7 +31,8 @@ export const FOLLOWTHROUGH_37_EVENTS = [
       G.currentYear >= 2008 &&
       G.age >= 45 &&
       !G.mem?.ft37MitchLate,
-    text: 'The reconstruction happened, in the way that reconstruction happens: the roads came back, the bridges came back in most places, the crops eventually came back. What did not come back was the population. The emigration that accelerated after Mitch did not slow down. Whole generations left for the United States. The villages that sent the most people are half the size they were in 1997. You are still here. The people who left are still gone. The hurricane took seven thousand lives in four days and then kept taking people for the next decade by making it unlivable enough that leaving seemed like the better calculation.',
+    text: 'The roads came back, and most of the bridges, and in time the crops. The people did not. The leaving that started after Mitch never slowed, and the villages that sent the most north are half the size they were in 1997. You are still here, and they are still gone. The hurricane killed for four days and then went on emptying the country for a decade.',
+    context: 'Hurricane Mitch killed about 7,000 people in Honduras in October 1998 and destroyed much of the country\'s infrastructure.',
     choices: null,
     effect: (p) => { p.r += 8; p.m -= 4; p.setMem('ft37MitchLate', true) },
   },
@@ -47,7 +48,7 @@ export const FOLLOWTHROUGH_37_EVENTS = [
       G.currentYear >= 2022 &&
       G.age >= 55 &&
       !G.mem?.ft37ZelayaLate,
-    text: 'In January 2022, Xiomara Castro was inaugurated as the first woman president of Honduras. She is Zelaya\'s wife. The coup that removed him in 2009 and the elections the coup government ran and the twelve years of the governments that followed — all of it led to this morning, to Zelaya sitting in the front row watching his wife take the oath. You are not sure what this means. The same institutions that expelled him in pyjamas are still there. The same interests that called the coup constitutional are still there. She is also there. Whether the morning means what a morning can mean, you are watching to find out.',
+    text: 'January 2022: Xiomara Castro takes the oath as the first woman president of Honduras, with her husband in the front row. Zelaya was put on a plane in his pyjamas in 2009, and twelve years of governments followed from that morning. The institutions that expelled him are still there, and the interests that called it constitutional. Now she is there too. You are watching to find out what the morning means.',
     choices: null,
     effect: (p) => { p.m += 5; p.r += 3; p.e += 2; p.setMem('ft37ZelayaLate', true) },
   },
@@ -63,7 +64,7 @@ export const FOLLOWTHROUGH_37_EVENTS = [
       G.currentYear >= 2021 &&
       G.age >= 45 &&
       !G.mem?.ft37BertaLate,
-    text: 'In 2021, a Honduran court convicted David Castillo — the executive of Desarrollos Energéticos, the company building the Agua Zarca dam — as a co-conspirator in Berta Cáceres\'s murder. He received more than twenty-two years. The Gualcarque River is not dammed. The dam is not built. The activism that stopped it cost Berta her life, and the court confirmed that the company knew this was the price it was willing to pay. The Goldman Environmental Prize she received the year before her death is still awarded annually. Honduras is still the most dangerous country in the world for environmental defenders. The conviction is real. It does not undo the cost of obtaining it.',
+    text: 'In 2021 a court convicts the head of the company building the Agua Zarca dam of helping to plan the murder of Berta Cáceres. The Gualcarque is not dammed. Stopping the dam cost Berta her life, and the court found that the company knew that was the price and was willing to pay it. Honduras is still one of the most dangerous places on earth to defend a river.',
     choices: null,
     effect: (p) => { p.karma += 5; p.r += 5; p.m -= 3; p.setMem('ft37BertaLate', true) },
   },
@@ -79,7 +80,8 @@ export const FOLLOWTHROUGH_37_EVENTS = [
       G.currentYear >= 2007 &&
       G.age >= 55 &&
       !G.mem?.ft37BananaLate,
-    text: 'In 2007, Chiquita Brands International — formerly United Fruit, the company that gave Honduras the name "banana republic" — pleaded guilty in US federal court to making payments to the AUC, a Colombian paramilitary group designated a terrorist organisation by the United States. Twenty-five million dollars, over a period of years. They said it was for the protection of their workers. The workers in question were not consulted. The company paid a fine and continued operating. Chiquita bananas are still in supermarkets. The company\'s relationship to the violence around its operations is now a matter of public record and legal fact, which is different from being a consequence.',
+    text: 'In 2007 Chiquita, which used to be United Fruit, the company that gave the world the phrase banana republic, pleads guilty in an American court to paying a Colombian paramilitary group. For the protection of its workers, it says; nobody asked the workers. It pays a fine and carries on, and the bananas are still in the supermarkets. What it did is now a matter of public record. That is not the same as a consequence.',
+    context: 'Chiquita admitted paying about 1.7 million dollars to the AUC between 1997 and 2004 and was fined 25 million dollars.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 3; p.m -= 4; p.setMem('ft37BananaLate', true) },
   },

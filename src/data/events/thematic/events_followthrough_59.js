@@ -17,7 +17,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
       G.age >= 55 &&
       G.currentYear >= 1960 &&
       !G.mem?.ft59TerrorLate,
-    text: `The rehabilitation documents came years after Stalin died. A certificate: unjustly convicted, posthumously rehabilitated. The state has acknowledged something about what it did. You have been living with the thing the state acknowledged for decades already. The certificate changes the official record. The record in your memory does not require correction — you kept the original. The phrase "posthumously rehabilitated" names a category of absurdity that the Soviet system specialised in producing: the correction that arrives too late to correct anything.`,
+    text: `The certificate comes years after Stalin is dead: unjustly convicted, posthumously rehabilitated. The state has acknowledged what it did. You have lived with that for decades already, and kept the original record in your head, which needed no correction. Posthumously rehabilitated: a correction that arrives too late to correct anything.`,
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.setMem('ft59TerrorLate', true) },
   },
@@ -32,7 +32,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
       G.flags.has('ru_dep_chsir') &&
       G.age >= 55 &&
       !G.mem?.ft59ChsirLate,
-    text: `Your whole life you answered forms with a version of your father that was documentable. Not false — carefully accurate about what could be verified, silent about what could not. You mastered the art of the technically true answer. In late life the forms ask different questions. The category that followed you — "member of the family of a traitor to the Motherland" — has been formally abolished for decades. Formally. The habit of the careful answer persists longer than the system that required it.`,
+    text: `All your life you filled in forms with a version of your father that could be documented: accurate about what could be checked, silent about everything else. You became expert in the technically true answer. "Member of the family of a traitor to the Motherland" was abolished as a category decades ago. The habit of the careful answer has outlived the system that required it.`,
     choices: null,
     effect: (p) => { p.r += 6; p.e += 1; p.setMem('ft59ChsirLate', true) },
   },
@@ -48,7 +48,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
       G.age >= 28 && G.age <= 50 &&
       G.currentYear >= 1955 && G.currentYear <= 1985 &&
       !G.mem?.ft59KommunalkaOwn,
-    text: `The Khrushchev-era apartment building: five floors, no lift, thin walls, a small kitchen that is yours alone. The Khrushchovka, they call it — after the man who ordered them built in vast numbers so that families could have a door that was only theirs. The walls are thin enough to hear the neighbours. You do not know the neighbours the way you knew the kommunalka neighbours. The kitchen is small. It does not matter that it is small. It is yours. The door closes and the apartment is quiet in a way that it was never quiet before and you do not know what to do with the quiet for a while.`,
+    text: `Five floors, no lift, walls thin enough to hear the neighbours cough, and a small kitchen that belongs to nobody but you. A khrushchovka, after the man who ordered them built by the million so a family could have a door of its own. You do not know these neighbours the way you knew the ones in the kommunalka. The door closes and the flat is quieter than anywhere you have lived, and for a while you do not know what to do with the quiet.`,
     choices: null,
     effect: (p) => { p.m += 6; p.r -= 2; p.setMem('ft59KommunalkaOwn', true) },
   },
@@ -61,7 +61,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
       G.flags.has('ru_dep_kommunalka_generation') &&
       G.age >= 55 &&
       !G.mem?.ft59KommunalkaLate,
-    text: `The kommunalka — you think about it sometimes as a texture that no longer exists in the city. The shared kitchen, the roster on the wall for cleaning, the families in their rooms. People who grew up in them and people who did not understand each other about something that could not be described. Not nostalgia exactly. More like: that life produced a knowledge of other people, an intimacy that was not chosen, that shaped how you understand proximity and obligation. You are not sure the apartment building with one family per door produces the same knowledge. You did not choose the kommunalka. The knowledge it gave you was not chosen either.`,
+    text: `You think about the kommunalka sometimes: the shared kitchen, the cleaning roster on the wall, a family behind every door. That life gave you a knowledge of other people that you did not choose, about proximity and about what you owe to the person at the next burner. You are not sure a building with one family per door teaches it. It is not nostalgia, exactly.`,
     choices: null,
     effect: (p) => { p.r += 3; p.m += 2; p.setMem('ft59KommunalkaLate', true) },
   },
@@ -76,7 +76,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
       G.flags.has('ru_dep_thaw_believer') &&
       G.age >= 50 &&
       !G.mem?.ft59ThawBelieverLate,
-    text: `After 1956 you believed the system could correct itself. The Brezhnev years were a long education in the specific limits of that belief. The tanks in Prague in 1968. The narrowing of what could be published, what could be performed, what could be said at conferences. The thaw turned out to be administered — the state had turned the temperature up and the state could turn it back down. By the time you were fifty you had a complete theory of why you were wrong in 1956. The theory did not comfort you. It was just accurate.`,
+    text: `After 1956 you believed the system could correct itself. The Brezhnev years were a long lesson in the limits of that: the tanks in Prague, and every year a little less that could be published or said at a conference. The thaw had been administered, and what the state turned up it could turn down. By fifty you had a complete account of why you had been wrong. It did not comfort you.`,
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.setMem('ft59ThawBelieverLate', true) },
   },
@@ -91,7 +91,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
       G.flags.has('ru_dep_thaw_sceptic') &&
       G.age >= 50 &&
       !G.mem?.ft59ThawScepticLate,
-    text: `You were right about what the thaw was. The secret speech showed you how the system acknowledged error — carefully, partially, in ways that did not destabilise the structure of who was in charge. Prague in 1968 confirmed the rest. The wall held until 1989 and what came after was not what anyone had planned in 1956. Being right about a system's limits is not a pleasant form of rightness. You spent your adult life inside the thing you correctly understood. The correctness was private. It did not change the walls.`,
+    text: `You were right about the thaw. The secret speech showed you how the system admits a mistake: carefully, partly, without disturbing who is in charge, and Prague in 1968 confirmed the rest. You spent your adult life inside the thing you understood correctly. Being right about it was private, and it changed nothing about the walls.`,
     choices: null,
     effect: (p) => { p.r += 4; p.e += 1; p.setMem('ft59ThawScepticLate', true) },
   },
@@ -139,7 +139,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
       G.flags.has('ru_dep_chechnya_generation') &&
       G.age >= 45 &&
       !G.mem?.ft59ChechnyaLate,
-    text: `The war you came back from was called a "counter-terrorist operation" in the official language. The Khasavyurt accord was called a defeat by some and a necessary exit by others. Then the second war began in 1999. Then Chechnya became quieter, officially — the Kadyrov arrangement. What you came back from in 1996 or 1997 had a different ending than you expected when you left, which was itself different from what you expected in the middle of it. The war has been going on in different forms since before you served. The form it is in now has a different name. The mountains are the same.`,
+    text: `Officially it was a counter-terrorist operation. Some called Khasavyurt a defeat and some called it a way out, and then in 1999 the second war began, and then the Kadyrov arrangement made Chechnya quiet, officially. Every stage of it ended differently from what you expected at the stage before. The war has a different name now. The mountains are the same.`,
     choices: null,
     effect: (p) => { p.r += 5; p.m -= 3; p.setMem('ft59ChechnyaLate', true) },
   },

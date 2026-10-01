@@ -33,7 +33,7 @@ export const ECUADOR_EVENTS = [
       G.character.ethnicity === 'indigenous_ecuadorian' &&
       G.age >= 7 && G.age <= 13 &&
       !G.mem?.ecuSchoolQuechua,
-    text: 'At home the language is Quechua. At school it is Spanish or nothing — the teacher says Quechua is for the market, for grandmothers, for people who want to stay poor. You are learning two things simultaneously: Spanish for the school, and the understanding that your home language is considered lesser. You become careful about which words you use in which rooms. This is not a choice. This is an adaptation that happens to children before they are old enough to name what is being taken.',
+    text: 'At home the language is Quechua. At school it is Spanish or nothing — the teacher says Quechua is for the market, for grandmothers, for people who want to stay poor. You are learning two things simultaneously: Spanish for the school, and the understanding that your home language is considered lesser. You become careful about which words you use in which rooms. Nobody chooses it. It happens to children before they are old enough to name what is being taken.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m -= 4; p.addFlag('ecu_quechua_home'); p.setMem('ecuSchoolQuechua', true) },
   },
@@ -84,7 +84,7 @@ export const ECUADOR_EVENTS = [
       G.stats.wealth <= 45 &&
       !G.career?.id &&
       !G.mem?.ecuFlower,
-    text: 'Ecuador exports more roses than almost anywhere. The greenhouses are in the highlands outside Quito — the altitude and the equatorial light produce stems longer than anywhere else in the world. The work starts before light, six days a week. The fumigation mist settles on everything including your lungs. The roses are cut for Valentine\'s Day in countries you have never been to. You develop, without choosing to, a botanical expertise: the exact moment a stem is ready, the particular weight of a head that will make it through shipping, the colour that buyers in Amsterdam will accept. This knowledge earns you almost nothing. The knowledge is yours.',
+    text: 'The greenhouses are in the highlands outside Quito, where the altitude and the equatorial light grow longer stems than anywhere else. The work starts before light, six days a week, and the spray mist settles on everything, including your lungs. You learn without meaning to the exact moment a stem is ready, the weight of a head that will survive the flight, the colour the buyers in Amsterdam will take. The roses go to Valentine\'s Days in countries you have never seen. The knowledge earns you almost nothing, and it is yours.',
     choices: null,
     effect: (p) => { p.h -= 4; p.w -= 3; p.e += 3; p.r += 4; p.addFlag('ecu_flower_worker'); p.setMem('ecuFlower', true) },
   },
@@ -135,15 +135,15 @@ export const ECUADOR_EVENTS = [
     text: 'Rafael Correa wins in 2006. The oil revenues fund hospitals, roads, schools — infrastructure of a country that had been giving that money to creditors for decades. He closes the US air base at Manta. He restructures the foreign debt and wins the argument. He is brilliant and combative and authoritarian by degrees: the press law, the lawsuits against journalists, opponents jailed on sedition charges, the constitution used as an instrument of personal extension. The question of whether you support him is also a question about what you are prepared to overlook.',
     choices: [
       {
-        text: 'Support the revolution. The gains are real.',
+        text: 'Support the revolution.',
         tag: 'supporter',
-        outcome: 'The hospitals are real. The roads are real. The poverty numbers are real. You hold the gains and set aside what they cost.',
+        outcome: 'The hospitals open. The roads go in. The poverty numbers fall. You hold the gains and set aside what they cost.',
         effect: (p) => { p.m += 5; p.e += 2; p.addFlag('ecu_correa_supporter') },
       },
       {
         text: 'Keep your distance. Power that accumulates does not stop accumulating.',
         tag: 'skeptic',
-        outcome: 'You watch the press restrictions tighten, the opposition narrowed, the referendum used to extend what a constitution should limit. The gains are real. So is what they are built on.',
+        outcome: 'You watch the press restrictions tighten, the opposition narrowed, the referendum used to extend what a constitution should limit. The gains are there, and so is what they stand on.',
         effect: (p) => { p.e += 4; p.r += 3; p.m -= 3; p.addFlag('ecu_correa_skeptic') },
       },
     ],

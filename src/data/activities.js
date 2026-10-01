@@ -1,3 +1,5 @@
+import { wageIndex } from './economy.js'
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Prices are written in wealthy-tier dollars and must be localised before they
 // are charged. Salaries are already scaled by GDP tier at the point they are
@@ -28,6 +30,44 @@ export function localCost(base, gdpTier) {
 // themselves. Emigrants pay the prices of where they are, not where they began.
 function liveGdp(p) {
   return p?._state?.currentCountry?.gdp ?? p?._state?.character?.country?.gdp ?? 'very_high'
+}
+
+// ── What a year on the exchange returned ─────────────────────────────────────
+//
+// "Invest in stocks" used to lose money in expectation: a 45% chance of +35%,
+// 30% of -15% and 25% of -50% on a quarter of the balance, the same in 1935
+// Chicago and 1998 Moscow — about -1.25% of everything you had, per press.
+// Over any long run equities returned something like four or five per cent a
+// year above inflation, and the years they did not are named: the crashes the
+// world events already know about, and the currency collapses that took the
+// exchange down with the money.
+const GLOBAL_CRASH = {
+  1929: -0.25, 1930: -0.28, 1931: -0.43, 1937: -0.33, 1940: -0.10, 1941: -0.12,
+  1957: -0.10, 1962: -0.09, 1966: -0.10, 1969: -0.08, 1973: -0.15, 1974: -0.26,
+  1977: -0.07, 1981: -0.05, 2000: -0.09, 2001: -0.12, 2002: -0.22, 2008: -0.37, 2022: -0.18,
+}
+const LOCAL_CRASH = {
+  Japan: { 1990: -0.38, 1992: -0.26, 1997: -0.21, 2001: -0.24, 2008: -0.42 },
+  Thailand: { 1997: -0.55 }, Indonesia: { 1997: -0.6, 1998: -0.3 }, 'South Korea': { 1997: -0.45 },
+  Malaysia: { 1997: -0.5 }, Philippines: { 1997: -0.4 }, Mexico: { 1994: -0.4 },
+  Russia: { 1998: -0.85, 2008: -0.7, 2014: -0.3, 2022: -0.4 }, Argentina: { 1989: -0.7, 2001: -0.5, 2002: -0.5 },
+  Brazil: { 1990: -0.6, 1999: -0.3, 2008: -0.4 }, Peru: { 1990: -0.6 }, Bolivia: { 1985: -0.8 },
+  Turkey: { 2001: -0.4, 2018: -0.3 }, Nigeria: { 2008: -0.45, 2009: -0.35 }, Iceland: { 2008: -0.9 },
+  Ireland: { 2008: -0.66 }, Greece: { 2010: -0.35, 2011: -0.5, 2012: -0.2 }, Zimbabwe: { 2007: -0.8, 2008: -0.95 },
+  Venezuela: { 2016: -0.8, 2017: -0.8, 2018: -0.9 }, 'Sri Lanka': { 2022: -0.4 }, Lebanon: { 2019: -0.5, 2020: -0.6 },
+  China: { 2008: -0.65, 2015: -0.3 }, Egypt: { 2011: -0.5 }, Ukraine: { 2008: -0.7, 2014: -0.4, 2022: -0.6 },
+}
+/** One year's nominal return on a broad holding of shares here: inflation plus the market. */
+export function marketReturn(country, year) {
+  const name = country?.name ?? country
+  const prev = wageIndex(country, year - 1) || 1
+  const inflation = (wageIndex(country, year) || prev) / prev
+  const shock = LOCAL_CRASH[name]?.[year] ?? GLOBAL_CRASH[year]
+  // Box-Muller: a normal year has a spread of about fifteen points.
+  const u = Math.max(1e-9, Math.random()), v = Math.random()
+  const noise = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v) * 0.15
+  const real = shock != null ? shock : 0.05 + noise
+  return Math.max(-0.97, inflation * (1 + real) - 1)
 }
 
 // Reading, writing, the library, a course: offered to a Nigerian girl the
@@ -331,7 +371,7 @@ export const ACTIVITIES = {
       minAge: 18,
       maxAge: null,
       cost: 0,
-      effect: (p) => { p.h += 7; p.m -= 3; p.flags.includes('smoker') && (p.flags = p.flags.filter(f => f !== 'smoker')); },
+      effect: (p) => { p.h += 7; p.m -= 3; p.clearFlag('smoker'); },
       condition: (G) => G.flags.includes('smoker'),
       outcome: 'The withdrawal is real. So is the improvement.',
       prose: (G) => {
@@ -691,29 +731,37 @@ export const ACTIVITIES = {
 
   money: [
     // Every activity in this category used to move `p.w` — the wealth STAT —
-    // which tick() recomputes from `money` every year for anyone with a career.
-    // So none of them did anything, and two were strictly harmful: "Work
-    // overtime" cost 3 health and 3 happiness permanently and "Save
-    // aggressively" cost 2 charisma, for a gain that was erased on the next Age
-    // Up. Measured: wealth 67 → 78 → back to 67.
+    // which tick() recomputes from `money` every year, so none of them did
+    // anything. Then they moved real money, and became the best income in the
+    // game: two presses a year of overtime and a side hustle, or of "save" and
+    // "budget" — which credited a share of the wage from nothing — took a US
+    // life's final balance from $61k to $337k, at no cost but a press.
     //
-    // They move `p.mo` now, which is real money. The figures are written in
-    // present-day dollars and denominated by applyProxy like every other
-    // `p.mo` in the corpus, and where there is a wage they are a share of it,
-    // because an hour of overtime is worth what your hour is worth.
+    // Each now trades something for its money and can be done once a year:
+    // overtime is paid in health, happiness and the evenings at home; a side
+    // business can lose; saving is the money not spent this year, and only
+    // exists where there is an income to not spend.
     {
       id: 'overtime',
       name: 'Work overtime',
-      description: 'Put in extra hours at work this year.',
+      description: 'The extra shifts, all year. Paid, and paid for.',
       minAge: 18,
       maxAge: null,
       cost: 0,
       effect: (p) => {
+        // Six per cent more hours, of which about half is gone by the end of
+        // the year in what working them costs — the meals out, the bus home,
+        // the things done for you because you were not there to do them.
+        // tickLivingCosts prices consumption off the wage alone, so an extra
+        // credited gross was saved in full and compounded: two presses a year
+        // nearly doubled a balance at sixty.
         const wage = p._state?.career?.salary ?? 0
-        p.moNominal += Math.round(wage * 0.09)
-        p.h -= 3; p.m -= 3
+        p.moNominal += Math.round(wage * 0.035)
+        p.h -= 4; p.m -= 4
+        if (p._state?.partner && p._state.partner.alive !== false) p.updatePartnerRel(-3)
+        p.setMem('overtimeYear', p._state?.currentYear)
       },
-      condition: (G) => G.career !== null,
+      condition: (G) => G.career != null && (G.career.salary ?? 0) > 0 && G.mem?.overtimeYear !== G.currentYear,
       outcome: 'The extra money is real. So is the cost.',
       prose: (G) => {
         if (G.age < 30) return 'You put in the extra hours. The money is real. So are the hours.'
@@ -723,120 +771,126 @@ export const ACTIVITIES = {
     },
     {
       id: 'save',
-      name: 'Save aggressively',
-      description: 'Cut back on everything and build savings.',
+      name: 'Go without, this year',
+      description: 'Spend less on everything and keep the difference.',
       minAge: 18,
       maxAge: null,
       cost: 0,
       effect: (p) => {
-        // Saving is not earning. This is the money you did not spend, and the
-        // charisma is what saying no to things costs.
-        const wage = p._state?.career?.salary ?? 0
-        p.moNominal += Math.round(wage * 0.07)
-        p.s -= 2
+        // The money is what would otherwise have been spent: about a sixteenth
+        // of a household's consumption, which runs at roughly two-thirds of income.
+        // It is credited because tickLivingCosts has already priced the year's
+        // spending off the wage; the saving is the part of that not spent.
+        const s = p._state
+        const income = s?.career?.salary ?? (s?.retired ? (s?.pensionAnnual ?? 0) : 0)
+        p.moNominal += Math.round(income * 0.66 * 0.06)
+        p.m -= 3; p.s -= 1
+        p.setMem('frugalYear', s?.currentYear)
       },
-      condition: null,
+      condition: (G) => G.mem?.frugalYear !== G.currentYear && ((G.career?.salary ?? 0) > 0 || (G.retired && (G.pensionAnnual ?? 0) > 0)),
       outcome: 'Security accumulates.',
       prose: (G) => {
-        if (G.stats.wealth < 25) return 'You cut back on everything. The balance rises in small increments.'
-        if (G.age > 50) return 'You have been saving for long enough that it is simply how you live.'
-        return 'Security accumulates. It is unglamorous and works.'
+        if (G.stats.wealth < 25) return 'You go without the small things and then some of the large ones. The balance rises in small increments.'
+        if (G.age > 50) return 'You have been careful for long enough that it is simply how you live.'
+        return 'You say no to things all year. It is unglamorous and it works.'
       },
     },
     {
       id: 'invest_stocks',
-      name: 'Invest in stocks',
-      description: 'Put savings into the market.',
+      name: 'Put savings in shares',
+      description: 'A quarter of what you have, for a year, on the exchange.',
       minAge: 22,
       maxAge: null,
-      cost: 20,
+      cost: 0,
       effect: (p) => {
-        // A share of what is actually in the account, which is what a market
-        // does to savings.
-        const held = p._state?.money ?? 0
+        const s = p._state
+        const held = Math.max(0, s?.money ?? 0)
         const stake = Math.round(held * 0.25)
-        const roll = Math.random()
-        if (roll < 0.45) p.moNominal += Math.round(stake * 0.35)
-        else if (roll < 0.75) p.moNominal -= Math.round(stake * 0.15)
-        else p.moNominal -= Math.round(stake * 0.5)
+        const r = marketReturn(s?.currentCountry ?? s?.character?.country, s?.currentYear)
+        p.moNominal += Math.round(stake * r)
+        p.setMem('investYear', s?.currentYear)
+        p.setMem('lastMarketReturn', r)
       },
-      condition: (G) => G.stats.wealth > 30,
+      condition: (G) => G.mem?.investYear !== G.currentYear,
       outcome: 'Markets are indifferent to your needs.',
-      prose: (G) => 'You follow the numbers as a way of not quite admitting you cannot control them.',
+      prose: (G) => {
+        const r = G.mem?.lastMarketReturn ?? 0
+        if (r <= -0.6) return G.gold > 0
+          ? 'The shares are worth almost nothing by the end of the year. The gold in the tin is worth what gold is worth, and you understand your grandmother better.'
+          : 'The shares are worth almost nothing by the end of the year. People who kept it in gold, or in dollars under a floorboard, kept it.'
+        if (r <= -0.15) return 'It is a bad year on the exchange. You watch the number fall and do not sell, which is either discipline or paralysis.'
+        if (r < 0) return 'The shares end the year a little lower than they began. You tell yourself it is a long game.'
+        if (r > 0.25) return 'It is a good year on the exchange, the kind people talk about at dinner as though they had seen it coming.'
+        return 'The shares end the year somewhat higher. You follow the numbers as a way of not quite admitting you cannot control them.'
+      },
     },
     {
       id: 'side_hustle',
-      name: 'Start a side hustle',
-      description: 'Sell something, offer a service, make something work.',
+      name: 'Take on something on the side',
+      description: 'Sell something, mend something, drive at weekends. It may pay.',
       minAge: 18,
       maxAge: null,
       cost: 10,
       effect: (p) => {
-        const wage = p._state?.career?.salary ?? 0
-        const scale = wage > 0 ? wage : 4000
-        const roll = Math.random()
-        if (roll < 0.6) { p.moNominal += Math.round(scale * 0.2); p.m += 2 }
-        else { p.mo -= 200; p.m -= 3 }
+        const s = p._state
+        const wage = s?.career?.salary ?? 0
+        if (Math.random() < 0.5) {
+          if (wage > 0) p.moNominal += Math.round(wage * 0.05)
+          else p.mo += localCost(500, liveGdp(p))
+          p.m += 1
+        } else {
+          p.mo -= localCost(150, liveGdp(p)); p.m -= 3
+        }
+        p.h -= 2
+        p.setMem('hustleYear', s?.currentYear)
       },
-      condition: null,
+      condition: (G) => G.mem?.hustleYear !== G.currentYear,
       outcome: 'It either finds its feet or it doesn\'t.',
       prose: (G) => {
         if (G.age < 25) return 'You build it on weekends and late nights. It either finds its feet or it doesn\'t.'
-        return 'You have been running this on the side for a while. This year determines whether it was worth it.'
+        return 'You have been running this on the side for a while. This year decides whether it was worth the evenings.'
       },
     },
     {
+      // Moved the wealth stat and nothing else, which tick() overwrites. The
+      // Assets panel buys property with money; this entry is kept for old
+      // saves' activity counters and is never offered.
       id: 'buy_property',
       name: 'Invest in property',
       description: 'Put money into real estate.',
       minAge: 28,
       maxAge: null,
       cost: 30,
-      effect: (p) => {
-        const roll = Math.random()
-        if (roll < 0.6) { p.w += 12; }
-        else { p.w -= 6; }
-      },
-      condition: (G) => G.stats.wealth > 50,
+      effect: () => {},
+      condition: () => false,
       outcome: 'Property is unpredictable and everyone has an opinion about it.',
-      prose: (G) => {
-        if (['United Kingdom', 'Australia', 'Canada'].includes(G.currentCountry)) return 'Property in this country is not a neutral subject. You buy anyway.'
-        return 'The paperwork takes longer than everything else. The investment is illiquid and everyone has an opinion.'
-      },
     },
     {
+      // The same thing as saving, by another name, with its own budget. It is
+      // the same once a year now.
       id: 'budget',
       name: 'Live on a budget',
       description: 'Track every penny. Cut the unnecessary.',
       minAge: 18,
       maxAge: null,
       cost: 0,
-      effect: (p) => {
-        const wage = p._state?.career?.salary ?? 0
-        p.moNominal += Math.round(wage * 0.04)
-        p.m -= 1
-      },
-      condition: null,
+      effect: () => {},
+      condition: () => false,
       outcome: 'Financial discipline is unglamorous and works.',
-      prose: (G) => {
-        if (G.stats.wealth < 25) return 'You track every number. The discipline is hard and useful.'
-        return 'Financial discipline is unglamorous. It works.'
-      },
     },
     {
       id: 'gambling',
-      name: 'Gamble',
-      description: 'Put your luck to the test.',
+      name: 'Bet on something',
+      description: 'Cards in a back room, a football pool, a man who takes bets.',
       minAge: 18,
       maxAge: null,
-      cost: 20,
+      cost: 0,
       effect: (p) => {
-        const held = p._state?.money ?? 0
-        const stake = Math.max(1, Math.round(held * 0.1))
-        const roll = Math.random()
-        if (roll < 0.30) { p.moNominal += stake * 2; p.m += 3 }
-        else if (roll < 0.55) { p.moNominal -= stake }
-        else { p.moNominal -= stake * 3; p.m -= 5; p.addFlag('gambler') }
+        // A stake, not a tenth of everything you own: the old version took 10%
+        // of the balance on every press and lost three times it on a bad roll.
+        const stake = localCost(40, liveGdp(p))
+        if (Math.random() < 0.42) { p.mo += stake; p.m += 3 }
+        else { p.mo -= stake; p.m -= 2; if (Math.random() < 0.2) p.addFlag('gambler') }
       },
       condition: null,
       outcome: 'The odds are known and ignored.',
@@ -848,12 +902,18 @@ export const ACTIVITIES = {
     },
     {
       id: 'donate',
-      name: 'Donate to charity',
-      description: 'Give a meaningful portion of your income away.',
+      name: 'Give some of it away',
+      description: 'To the mosque, the church, the fund, the cousin.',
       minAge: 18,
       maxAge: null,
-      cost: 15,
-      effect: (p) => { p.m += 5; p.s += 3; p.addFlag('generous'); },
+      cost: 0,
+      effect: (p) => {
+        // "A meaningful portion of your income" was a flat $15.
+        const wage = p._state?.career?.salary ?? 0
+        if (wage > 0) p.moNominal -= Math.round(wage * 0.03)
+        else p.mo -= localCost(50, liveGdp(p))
+        p.m += 5; p.s += 3; p.addFlag('generous')
+      },
       condition: (G) => G.stats.wealth > 25,
       outcome: 'The act of giving changes how you think about money.',
       prose: (G) => {
@@ -864,8 +924,8 @@ export const ACTIVITIES = {
     },
     {
       id: 'lottery',
-      name: 'Buy lottery tickets',
-      description: 'A ticket a week, all year. The stake is what a ticket costs where you live.',
+      name: 'A lottery ticket every week',
+      description: 'All year, the same numbers.',
       minAge: 18,
       maxAge: null,
       // cost 0 because the stake is charged inside the effect at local prices,
@@ -899,8 +959,8 @@ export const ACTIVITIES = {
     },
     {
       id: 'casino_blackjack',
-      name: 'Play blackjack at the casino',
-      description: null,
+      name: 'Blackjack',
+      description: 'A table, a dealer, a shoe of cards.',
       minAge: 18,
       maxAge: null,
       cost: 0,
@@ -911,8 +971,8 @@ export const ACTIVITIES = {
     },
     {
       id: 'casino_slots',
-      name: 'Play the slot machines',
-      description: null,
+      name: 'The machines',
+      description: 'A row of lights that pays out just often enough.',
       minAge: 18,
       maxAge: null,
       cost: 0,
@@ -923,8 +983,8 @@ export const ACTIVITIES = {
     },
     {
       id: 'casino_roulette',
-      name: 'Play roulette',
-      description: null,
+      name: 'Roulette',
+      description: 'A wheel, a ball, the sound it makes settling.',
       minAge: 18,
       maxAge: null,
       cost: 0,
@@ -935,19 +995,19 @@ export const ACTIVITIES = {
     },
     {
       id: 'pay_debt',
-      name: 'Pay Off Debt',
-      description: 'Make an extra debt payment beyond the minimum.',
+      name: 'Pay something off the debt',
+      description: 'More than the minimum, this once.',
       minAge: 18,
       maxAge: null,
       cost: 0,
-      effect: (p) => {},
-      condition: null,
+      effect: () => {},
+      condition: (G) => (G.debt ?? 0) > 0 && (G.money ?? 0) > 0,
       outcome: 'You chip away at what you owe.',
     },
     {
       id: 'take_loan',
-      name: 'Take Out Loan',
-      description: 'Borrow money — 18% annual interest.',
+      name: 'Borrow from a bank',
+      description: 'A loan, at eighteen per cent a year.',
       minAge: 18,
       maxAge: null,
       cost: 0,
@@ -963,7 +1023,7 @@ export const ACTIVITIES = {
       maxAge: null,
       cost: 0,
       effect: (p) => {},
-      condition: (G) => !G.rosca && ['subsaharan', 'developing_urban', 'post_soviet', 'developing_unstable', 'conflict_zone'].includes(G.character?.country?.archetype),
+      condition: (G) => !G.rosca && ['subsaharan', 'developing_urban', 'post_soviet', 'developing_unstable', 'conflict_zone'].includes((G.currentCountry ?? G.character?.country)?.archetype),
       outcome: 'You join the circle. Your turn will come.',
     },
     {
@@ -979,8 +1039,8 @@ export const ACTIVITIES = {
     },
     {
       id: 'buy_gold',
-      name: 'Buy gold / jewelry',
-      description: 'Convert cash into gold — holds value through inflation and currency collapse.',
+      name: 'Buy gold',
+      description: 'A bangle, a chain, a coin. It keeps when the money does not.',
       minAge: 18,
       maxAge: null,
       cost: 0,
@@ -990,8 +1050,8 @@ export const ACTIVITIES = {
     },
     {
       id: 'sell_gold',
-      name: 'Sell gold / jewelry',
-      description: 'Convert your gold holdings back to cash.',
+      name: 'Sell the gold',
+      description: 'Back into money, at the jeweller\'s price.',
       minAge: 18,
       maxAge: null,
       cost: 0,
@@ -1047,15 +1107,15 @@ export const ACTIVITIES = {
   ],
 
   hobbies: [
-    { id: 'practice_music',   label: 'Practice Music',   emoji: '🎸', desc: 'Develop your musical skills.', minAge: 5,  cost: 0,    hobbyId: 'music',   delta: 8,  statBonus: { m: 4 } },
-    { id: 'practice_art',     label: 'Draw / Paint',     emoji: '🎨', desc: 'Develop your artistic skills.', minAge: 5,  cost: 0,    hobbyId: 'art',     delta: 8,  statBonus: { m: 4, e: 2 } },
-    { id: 'practice_writing', label: 'Write',            emoji: '✍️', desc: 'Work on your writing.', minAge: 8,  cost: 0,    hobbyId: 'writing', delta: 8,  statBonus: { e: 4 }, literate: true },
-    { id: 'practice_cooking', label: 'Cook Something',   emoji: '🍳', desc: 'Experiment in the kitchen.', minAge: 12, cost: 20,   hobbyId: 'cooking', delta: 8,  statBonus: { m: 5, h: 2 } },
-    { id: 'practice_coding',  label: 'Code a Project',   emoji: '💻', desc: 'Build something with code.', minAge: 14, cost: 0,    hobbyId: 'coding',  delta: 10, statBonus: { e: 5 }, minYear: 1990 },
-    { id: 'practice_sport',   label: 'Train Sport',      emoji: '⚽', desc: 'Physical training and practice.', minAge: 6,  cost: 0,    hobbyId: 'sport',   delta: 8,  statBonus: { h: 5, s: 2 } },
-    { id: 'music_lesson',     label: 'Music Lesson',     emoji: '🎹', desc: 'Professional tuition — costs money but doubles progress.', minAge: 5,  cost: 80,   hobbyId: 'music',   delta: 18, statBonus: { m: 5, e: 3 } },
-    { id: 'art_class',        label: 'Art Class',        emoji: '🖼️', desc: 'Structured tuition — faster skill growth.', minAge: 8,  cost: 60,   hobbyId: 'art',     delta: 16, statBonus: { m: 5 } },
-    { id: 'writing_workshop', label: 'Writing Workshop',  emoji: '📝', desc: 'Workshop with peer feedback.', minAge: 16, cost: 100,  hobbyId: 'writing', delta: 16, statBonus: { e: 6 }, literate: true },
+    { id: 'practice_music',   label: 'Play music',       emoji: '🎸', desc: 'An instrument, most evenings.', minAge: 5,  cost: 0,    hobbyId: 'music',   delta: 8,  statBonus: { m: 4 } },
+    { id: 'practice_art',     label: 'Draw, or paint',   emoji: '🎨', desc: 'Whatever is in front of you, again and again.', minAge: 5,  cost: 0,    hobbyId: 'art',     delta: 8,  statBonus: { m: 4, e: 2 } },
+    { id: 'practice_writing', label: 'Write',            emoji: '✍️', desc: 'Pages that nobody has asked for.', minAge: 8,  cost: 0,    hobbyId: 'writing', delta: 8,  statBonus: { e: 4 }, literate: true },
+    { id: 'practice_cooking', label: 'Cook',             emoji: '🍳', desc: 'Something you have not made before.', minAge: 12, cost: 20,   hobbyId: 'cooking', delta: 8,  statBonus: { m: 5, h: 2 } },
+    { id: 'practice_coding',  label: 'Write a program',  emoji: '💻', desc: 'A small thing that does exactly what you tell it.', minAge: 14, cost: 0,    hobbyId: 'coding',  delta: 10, statBonus: { e: 5 }, minYear: 1990 },
+    { id: 'practice_sport',   label: 'Train',            emoji: '⚽', desc: 'The same drills, until the body knows them.', minAge: 6,  cost: 0,    hobbyId: 'sport',   delta: 8,  statBonus: { h: 5, s: 2 } },
+    { id: 'music_lesson',     label: 'Music lessons',    emoji: '🎹', desc: 'A teacher, once a week, who hears everything.', minAge: 5,  cost: 80,   hobbyId: 'music',   delta: 18, statBonus: { m: 5, e: 3 } },
+    { id: 'art_class',        label: 'An art class',     emoji: '🖼️', desc: 'A room of easels and somebody walking behind them.', minAge: 8,  cost: 60,   hobbyId: 'art',     delta: 16, statBonus: { m: 5 } },
+    { id: 'writing_workshop', label: 'A writing class',  emoji: '📝', desc: 'Strangers reading your pages aloud, and saying what they think.', minAge: 16, cost: 100,  hobbyId: 'writing', delta: 16, statBonus: { e: 6 }, literate: true },
   ],
 
   extracurricular: [

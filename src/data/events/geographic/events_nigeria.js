@@ -58,7 +58,7 @@ export const NIGERIA_EVENTS = [
       G.currentYear >= 1966 && G.currentYear <= 1998 &&
       G.age >= 18 &&
       !G.mem?.ngaCoupCulture,
-    text: 'Another coup. Or the threat of another coup. Or the anniversary of the last one. Since January 15, 1966, the Nigerian army has moved through the political structure more than the politicians have. Ironsi, Gowon, Murtala, Obasanjo, Buhari, Babangida, Abacha — the names change and the uniform remains. What changes is which faction is ascendant and how much they take and how directly they take it. The constitution is a document that can be suspended. You have seen it suspended before.',
+    text: 'Another coup, or the threat of one, or the anniversary of the last. Since January 1966 the army has moved through the government more than the politicians have: Ironsi, Gowon, Murtala, Obasanjo, Buhari, Babangida, Abacha. The names change and the uniform stays; what changes is which faction is up and how much it takes. The constitution is a document that can be suspended. You have seen it suspended before.',
     choices: [
       {
         text: 'Learn to navigate the patronage system.',
@@ -155,13 +155,13 @@ export const NIGERIA_EVENTS = [
       {
         text: 'Join the pro-democracy protests.',
         tag: 'defiant',
-        outcome: 'The protest is real and the government is not interested in the protest. You carry June 12 as a specific argument about what Nigerian democracy is and is not.',
+        outcome: 'The protest is real and the government is not interested in the protest. You carry June 12 as an argument about what Nigerian democracy is and is not.',
         effect: (p) => { p.m -= 8; p.karma += 8; p.r += 6; p.addFlag('nga_june12_generation'); p.addFlag('nga_military_era'); p.addFlag('activist'); p.addFlag('political_aware'); p.setMem('ngaJune12', true); },
       },
       {
         text: 'Stay indoors and keep the radio low.',
         tag: 'yielding',
-        outcome: 'You see how completely a result can be erased. The vote was real and is now not real. The specific lesson this teaches about Nigerian democracy does not leave you.',
+        outcome: 'You see how completely a result can be erased. The vote was real and is now not real. The lesson this teaches about Nigerian democracy does not leave you.',
         effect: (p) => { p.m -= 10; p.r += 7; p.karma += 3; p.addFlag('nga_june12_generation'); p.addFlag('nga_military_era'); p.addFlag('political_aware'); p.setMem('ngaJune12', true); },
       },
     ],
@@ -218,7 +218,7 @@ export const NIGERIA_EVENTS = [
     when: (G) => IS_NG(G) && G.currentYear === 1998 && G.age >= 12 && once(G, 'nga_1998'),
     text: (G) => 'On the eighth of June the radio says Abacha is dead, at Aso Rock, of his heart, and the rest of the country says other things.' +
       (NORTH_KANO(G)
-        ? ' He is buried in Kano before sunset, as the religion requires, and the city is quiet in a way that is partly mourning and partly not.'
+        ? ' He is buried in Kano before sunset, as the religion requires, and the city is quiet, partly in mourning and partly not.'
         : ' In Lagos people come out and dance in the road, which you have never seen anybody do for a death.') +
       ' Everyone says Abiola will be released now. On the seventh of July, at a meeting with the Americans who have come to discuss exactly that, Abiola drinks a cup of tea and says he is unwell, and he is dead that afternoon.' +
       (SOUTHWEST(G) || LAGOS(G) ? ' The Yoruba towns burn for three days.' : '') +
@@ -393,7 +393,7 @@ export const NIGERIA_EVENTS = [
     weight: 300,
     claimsYears: { from: 2019, to: 2019 },
     when: (G) => IS_NG(G) && G.currentYear === 2019 && G.flags.includes('nga_june12_generation') && G.age >= 40 && once(G, 'nga_ft_june12_holiday'),
-    text: (G) => 'Twenty-six years late, the twelfth of June is a public holiday. Last year, in front of Abiola\'s children, a president who was once a general gave the dead man the country\'s highest honour. You take the day off and do not know what to do with it, so you do what you did in 1993, which is sit near a radio and listen to people argue about what happened.' +
+    text: (G) => 'Twenty-six years late, the twelfth of June is a public holiday. Last year, in front of Abiola\'s children, a president who was once a general gave the dead man the country\'s highest honour. You take the day off and do not know what to do with it, so you do what you did in 1993: sit near a radio and listen to people argue about what happened.' +
       (G.flags.includes('nga_kudirat_1996') ? ' Somebody on the programme says Kudirat\'s name, and the room you are in goes still for her in a way it does not for the ceremony.' : ''),
     context: 'On 6 June 2018 President Buhari declared 12 June Democracy Day, replacing 29 May, and conferred Nigeria\'s highest honour, the GCFR, posthumously on M.K.O. Abiola. The holiday was first observed in 2019.',
     choices: null,

@@ -155,7 +155,7 @@ export const EVENTS_SONDER_43 = [
     weight: 2,
     when: (G) => place.isUrban(G) && (G.age >= 18 && G.age <= 26 && !G.mem?.s33m),
     text: () => pick([
-      'Living alone, the first time. The specific freedom and the loneliness, which were not opposites. The sound of the apartment when you came home to it. Learning the difference between alone-and-fine and alone-and-not-fine, and that they could be in the same evening.',
+      'Living alone, the first time. The freedom and the loneliness, which were not opposites. The sound of the apartment when you came home to it. Learning the difference between alone-and-fine and alone-and-not-fine, and that they could be in the same evening.',
       'When you first arrived, the city. The feeling of newness that fades so quickly — the streets you had to concentrate to navigate, the landmarks you used as reference points. Within six months you stopped seeing them. Within a year they were invisible.',
     ]),
     choices: null,
@@ -220,7 +220,7 @@ export const EVENTS_SONDER_43 = [
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 52 && !G.mem?.s33r,
     text: () => pick([
-      'You stayed too late and then walked home. The empty street at three a.m., the sound of your own shoes. The city in that specific state of emptiness. You thought something in those hours that you couldn\'t have thought in daylight.',
+      'You stayed too late and then walked home. The empty street at three a.m., the sound of your own shoes. The city in that state of emptiness. You thought something in those hours that you couldn\'t have thought in daylight.',
       'You abandoned it. You tell the story of abandoning it as a decision, but it was more of a drift. You simply went back to it less often until you stopped going back. The project does not know you abandoned it. It just sits in a folder.',
     ]),
     choices: null,
@@ -299,7 +299,7 @@ export const EVENTS_SONDER_43 = [
     when: (G) => G.season === 'summer' && (G.age >= 9 && G.age <= 13 && !G.mem?.s33aa),
     text: () => pick([
       'The way time moved differently then. A summer afternoon lasted as long as some later years. This is not sentimentality — it is how time actually worked then, when almost everything was new and required processing. The compression comes later, when the new runs out.',
-      'You had a particular way of being alone as a child — a game you played that you didn\'t tell anyone about, a story you were always in the middle of, a version of yourself that existed only in the private space of an unoccupied afternoon.',
+      'You had a way of being alone as a child — a game you played that you didn\'t tell anyone about, a story you were always in the middle of, a version of yourself that existed only in the private space of an unoccupied afternoon.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33aa', true) },
@@ -311,8 +311,8 @@ export const EVENTS_SONDER_43 = [
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 34 && !G.mem?.s33ac,
     text: () => pick([
-      'Looking back, one year was the year you were most yourself. You can identify it from this distance in a way you couldn\'t from inside. Something was aligned — the work and the people and the energy — in a way that hasn\'t been quite the same since. This is not tragic. It might happen again. It\'s just accurate.',
-      'You learned something from someone who was terrible in other ways. You have been trying to separate the thing they taught you from the person they were, because both are real. The separation is useful and incomplete.',
+      'Looking back, one year was the year you were most yourself. You can identify it from this distance in a way you couldn\'t from inside. Something was aligned — the work and the people and the energy — and it hasn\'t been quite the same since. This is not tragic. It might happen again. It\'s just accurate.',
+      'You learned something from someone who was terrible in other ways. You have been trying to separate the thing they taught you from the person they were. The separation is useful and incomplete.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33ac', true) },

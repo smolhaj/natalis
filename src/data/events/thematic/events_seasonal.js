@@ -93,7 +93,7 @@ export const SEASONAL_EVENTS = [
       (G.character.country?.name === 'Nigeria' || G.character.country?.name === 'Ghana') &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.seaHarmattan,
-    text: 'Harmattan season. The air is so dry that your lips crack and bleed at the corners. Your mother rubs petroleum jelly on them and warns you about going out without wrapping up. The dust coats everything. School mornings are cold — surprisingly cold for a place this latitude — and the afternoons are hot and dusty. The season has its own specific colour: the sky a washed-out grey, the dust orange.',
+    text: 'Harmattan season. The air is so dry that your lips crack and bleed at the corners. Your mother rubs petroleum jelly on them and warns you about going out without wrapping up. The dust coats everything. School mornings are cold — surprisingly cold for a place this latitude — and the afternoons are hot and dusty. The sky is a washed-out grey and the dust is orange.',
     choices: null,
     effect: (p) => { p.h -= 3; p.m += 2; p.setMem('seaHarmattan', true) },
   },
@@ -110,7 +110,7 @@ export const SEASONAL_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 2005 &&
       G.age >= 18 &&
       !G.mem?.seaWinterHeating,
-    text: 'The district heating has been off for three days. The explanation involves debts to the supplier. In the meantime: layers, the gas burner left on in the kitchen for warmth, the specific cold of a Soviet-era apartment bloc without heat. Your neighbours are doing the same things. You know this because you can smell their gas burners too.',
+    text: 'The district heating has been off for three days. The explanation involves debts to the supplier. In the meantime: layers, the gas burner left on in the kitchen for warmth, the cold of a Soviet-era apartment bloc without heat. Your neighbours are doing the same things. You know this because you can smell their gas burners too.',
     choices: null,
     effect: (p) => { p.h -= 8; p.m -= 10; p.r += 5; p.setMem('seaWinterHeating', true) },
   },
@@ -140,7 +140,7 @@ export const SEASONAL_EVENTS = [
       (G.character.country?.name === 'Japan' || G.character.country?.name === 'South Korea') &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.seaSakura,
-    text: 'You go to the park, which is something you do not usually do on a weekday. The blossoms are exactly what they are every year. This is why people go: not for novelty but for the specific comfort of a thing that returns. You sit under the trees for longer than you planned.',
+    text: 'You go to the park, which is something you do not usually do on a weekday. The blossoms are exactly what they are every year. This is why people go: not for novelty but for the comfort of a thing that returns. You sit under the trees for longer than you planned.',
     choices: null,
     effect: (p) => { p.m += 8; p.r += 3; p.setMem('seaSakura', true) },
   },
@@ -175,7 +175,7 @@ export const SEASONAL_EVENTS = [
       ['developing_urban', 'developing_unstable', 'subsaharan', 'wealthy_gulf'].includes(G.character.country?.archetype) &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.seaRamadan,
-    text: 'Ramadan. The days are long this year — the heat has arrived early. By afternoon the city has a particular quiet. Iftar: the moment when the fast breaks, the relief of it, the dates and water first. The meals are bigger than usual and eaten with people. The month has a texture that the rest of the year doesn\'t have.',
+    text: 'Ramadan. The days are long this year — the heat has arrived early. By afternoon the city has a quiet. Iftar: the moment when the fast breaks, the relief of it, the dates and water first. The meals are bigger than usual and eaten with people. The month has a texture that the rest of the year doesn\'t have.',
     choices: null,
     effect: (p) => { p.m += 6; p.karma += 5; p.setMem('seaRamadan', true) },
   },

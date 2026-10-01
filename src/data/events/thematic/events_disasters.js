@@ -43,7 +43,7 @@ export const DISASTER_EVENTS = [
       G.flags.includes('flood_season_known') &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.disBangladeshBadFlood,
-    text: 'This year is different. The water comes higher than anyone remembers and does not go down when it should. The rice is underwater. The road to the market is underwater. Three houses on the lower side of the village are uninhabitable. Families double up. Government trucks arrive after what they were needed for. You help carry things. The normalcy of the flood becomes something else when the flood does not end on the flood\'s usual schedule.',
+    text: 'This year the water comes higher than anyone remembers and does not go down when it should. The rice is under it, and the road to the market, and three houses on the low side of the village are lost; families double up. The government trucks arrive after the need they were for. The flood stops being ordinary when it does not end on the flood\'s schedule.',
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -91,7 +91,7 @@ export const DISASTER_EVENTS = [
     text: (G) => {
       const cn = G.character.country.name
       if (cn === 'Japan') {
-        return 'You have done the drill since primary school: drop, cover, hold on. The bag by the door — water, three days of food, cash, a copy of your documents, a torch — is not a precaution but a habit. You know which buildings in your neighbourhood were built before 1981 and are therefore suspect. You know which route out of the city avoids elevated expressways. This knowledge is not anxiety. It is the maintenance of a life in a country that shakes.'
+        return 'You have done the drill since primary school: drop, cover, hold on. The bag by the door — water, three days of food, cash, a copy of your documents, a torch — is not a precaution but a habit. You know which buildings in your neighbourhood were built before 1981 and are therefore suspect. You know which route out of the city avoids elevated expressways. It is the maintenance of a life in a country that shakes.'
       }
       if (cn === 'Turkey') {
         return 'Every building you enter, you check the pillars. You know which neighbourhoods were rebuilt properly after 1999 and which were built by contractors who paid for certificates rather than engineering. The bag by the door has been there since your mother put one there when you were seven. You updated it twice. This is not fear; this is competence in a country where the ground is unreliable.'
@@ -152,7 +152,7 @@ export const DISASTER_EVENTS = [
     text: (G) => {
       const cn = G.character.country.name
       if (cn === 'Philippines') {
-        return 'Typhoon season is June to December. The pattern is known: the sky colour the day before, the pressure drop you feel in your ears. You board the windows with wood from under the house. You fill containers with water. You move the animals. The school will close; the power will go. The family gathers in the room with the fewest windows and waits. This has happened every year of your life. It is not catastrophe; it is the calendar.'
+        return 'Typhoon season runs from June to December, and you know the signs: the colour of the sky the day before, the pressure in your ears. You board the windows with wood from under the house, fill the water containers, move the animals. The school will close and the power will go, and the family waits in the room with the fewest windows. It is not a catastrophe. It is the calendar.'
       }
       if (cn === 'Vietnam') {
         return 'Central Vietnam catches the storms that form in the South China Sea in autumn. The evacuation routes are posted at the commune office. You know which houses in the village are built solid enough and which are not — the difference matters and everyone knows it. The government radio gives six hours\' warning when it works. When it doesn\'t, the birds leaving early in the morning tell you what you need to know.'
@@ -201,7 +201,7 @@ export const DISASTER_EVENTS = [
       (G.flags.includes('flood_season_known') || G.flags.includes('earthquake_prepared') || G.flags.includes('typhoon_season_known')) &&
       G.age >= 60 &&
       !G.mem?.disLivingWithIt,
-    text: 'You have spent your life in a place that requires particular knowledge — the knowledge of when the ground moves, or when the water rises, or when the sky is telling you something. This knowledge is not interesting to the people you are now related to by accident of their geography. They live in places where the floor stays still and the river behaves. What you carry is not fear. It is competence that happened to be required.',
+    text: 'You have spent your life in a place that requires particular knowledge — the knowledge of when the ground moves, or when the water rises, or when the sky is telling you something. This knowledge is not interesting to the people you are now related to by accident of their geography. They live in places where the floor stays still and the river behaves. What you carry is competence that happened to be required.',
     choices: null,
     effect: (p) => {
       p.m += 5

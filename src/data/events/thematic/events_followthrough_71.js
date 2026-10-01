@@ -50,7 +50,7 @@ export const FOLLOWTHROUGH_71_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 30 &&
       !G.mem?.ft71MullivaikkalAcct,
-    text: 'The UN Human Rights Council resolution in 2015 established a hybrid accountability mechanism. The mechanism was not established. The government of Maithripala Sirisena, which campaigned on reconciliation, did not implement it. The resolution was co-sponsored by Sri Lanka and then not implemented by Sri Lanka. This is a particular form of diplomatic manoeuvre. Fifteen years after 2009, the number of dead is still a range — 40,000 to 70,000 to more — and no individual has been charged.',
+    text: 'The UN Human Rights Council resolution in 2015 established a hybrid accountability mechanism. The mechanism was not established. The government of Maithripala Sirisena, which campaigned on reconciliation, did not implement it. The resolution was co-sponsored by Sri Lanka and then not implemented by Sri Lanka. This is a form of diplomatic manoeuvre. Fifteen years after 2009, the number of dead is still a range — 40,000 to 70,000 to more — and no individual has been charged.',
     choices: null,
     effect: (p) => {
       p.r += 6

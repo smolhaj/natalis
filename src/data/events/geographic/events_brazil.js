@@ -55,7 +55,8 @@ const BRAZIL_EVENTS = [
       G.currentYear >= 1968 && G.currentYear <= 1979 &&
       G.age >= 18 &&
       !G.mem?.bra_ai5,
-    text: 'December 13, 1968. Institutional Act Number Five closes Congress, suspends habeas corpus, authorizes indefinite detention without charge. The DOPS — political police — begins systematic arrests. The DOI-CODI interrogation centers operate without judicial oversight. Thousands are tortured; 434 are killed or disappeared. On television: "Brasil, ame-o ou deixe-o" — Brazil, love it or leave it. The economy is growing at 10% a year. These facts coexist.',
+    text: 'December 13, 1968, and the Fifth Institutional Act closes Congress, suspends habeas corpus and allows detention without charge. The political police begin arresting systematically, and in the interrogation centres there are no judges. On television: Brazil, love it or leave it. The economy is growing at ten percent a year.',
+    context: 'Brazil\'s National Truth Commission documented 434 people killed or disappeared by the dictatorship (1964-1985) and thousands tortured.',
     choices: [
       {
         text: 'You keep your opinions to yourself — the price of visibility is too high',
@@ -85,7 +86,7 @@ const BRAZIL_EVENTS = [
       G.flags.has('bra_dictatorship_generation') &&
       G.age >= 25 &&
       !G.mem?.bra_amnesty,
-    text: 'The Amnesty Law passes on August 28, 1979. Political exiles can return. Political prisoners are released. It is also an amnesty for the people who tortured them — the same law, the same signature, the same paperwork. The architects of the abertura considered this non-negotiable: no opening without impunity. The tortured and the torturers walk out into the same country. Some of the exiles come back to streets they do not recognize. Some of the torturers are promoted.',
+    text: 'August 1979, the Amnesty Law. The exiles can come home and the political prisoners walk out, and the same law, the same signature, forgives the men who tortured them; there was to be no opening without impunity. The tortured and the torturers walk out into the same country. Some of the exiles come back to streets they do not recognise. Some of the torturers are promoted.',
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 6; p.addFlag('bra_abertura_generation'); p.setMem('bra_amnesty', true); },
   },
@@ -114,7 +115,7 @@ const BRAZIL_EVENTS = [
       {
         text: 'You watch on television — you have work, a family, obligations that do not stop for politics',
         tag: null,
-        outcome: 'The country changes on television while the rest of life continues. Both things are real.',
+        outcome: 'The country changes on television while the rest of life continues.',
         effect: (p) => { p.r += 3; p.addFlag('bra_diretas_generation'); p.setMem('bra_diretas', true); },
       },
     ],
@@ -133,7 +134,7 @@ const BRAZIL_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 16 && G.age <= 40 &&
       !G.mem?.bra_bala,
-    text: 'Bala perdida — stray bullet. The specific term for what happens when crossfire between police and factions sends a round through an unexpected wall, or an unexpected skull. A neighbor\'s son. A woman hanging laundry on the roof. A cousin you grew up with. The community names this before the state has a database for it. The city\'s geography has sorted who absorbs this arithmetic and who lives in neighborhoods where it does not occur.',
+    text: 'Bala perdida — stray bullet. The term for what happens when crossfire between police and factions sends a round through an unexpected wall, or an unexpected skull. A neighbor\'s son. A woman hanging laundry on the roof. A cousin you grew up with. The community names this before the state has a database for it. The city\'s geography has sorted who absorbs this arithmetic and who lives in neighborhoods where it does not occur.',
     choices: [
       {
         text: 'You leave the hill as soon as you are able — the calculation is clear',
@@ -177,7 +178,7 @@ const BRAZIL_EVENTS = [
       {
         text: 'Brazil is genuinely different from the United States — mixture created something real, not just a cover story',
         tag: null,
-        outcome: 'The difference from the American model is real. The racial inequality visible in income, incarceration, and police shootings is also real. Both propositions coexist.',
+        outcome: 'It is not the American model. The racial inequality visible in income, incarceration, and police shootings is also real. Both propositions coexist.',
         effect: (p) => { p.e += 2; p.setMem('bra_race', true); },
       },
     ],
@@ -211,7 +212,7 @@ const BRAZIL_EVENTS = [
       G.currentYear >= 2013 && G.currentYear <= 2015 &&
       G.age >= 18 &&
       !G.mem?.bra_copa,
-    text: 'June 2013. The bus fare in São Paulo goes up twenty centavos — from R$3.00 to R$3.20. Fifty thousand people in the streets. "Copa para quem?" — the World Cup is for whom? The Maracanã renovation costs R$900 million. The hospitals are understaffed and the schools lack textbooks. The World Cup arrives in 2014 anyway, in stadiums built on demolished neighborhoods, guarded by drones. Brazil loses 7–1 to Germany in the semi-final in its own country. The stadium in Brasília is repurposed for cricket. The country does not fully agree on what any of this meant.',
+    text: 'June 2013. The São Paulo bus fare goes up twenty centavos and the streets fill: World Cup for whom? The stadiums are built anyway, on demolished neighbourhoods, while the hospitals wait for staff. Then the Cup comes, and Brazil loses 7-1 to Germany at home. The country does not agree on what any of it meant.',
     choices: [
       {
         text: 'You are in the street — the bus fare is the entry point to everything else',
@@ -243,7 +244,7 @@ const BRAZIL_EVENTS = [
       G.criminalRecord?.length > 0 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.bra_caranPrx,
-    text: 'The São Paulo papers name 111 dead. The news says riot; the survivors say execution. You know people who were in Carandiru, or people who might have been. The number 7,000 people in a facility built for 3,500 — you can do the arithmetic on what happens when the military police enter with that ratio. Colonel Guimarães will face trial. He will be convicted. The conviction will be overturned. The arithmetic is the country you live in.',
+    text: 'The São Paulo papers list the dead from Carandiru. The news says riot; the survivors say execution. You know people who were in that prison, or might have been. Twice as many men as it was built for, and the military police going in: you can do the arithmetic. The colonel is tried, and convicted, and the conviction is overturned. The arithmetic is the country you live in.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('carandiru_personal_proximity'); p.setMem('bra_caranPrx', true); },
   },
@@ -305,12 +306,12 @@ const BRAZIL_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       if (yr <= 1989) {
-        return 'The price of a coffee changes between when you sit down and when you pay. The Cruzado, the Cruzado Novo, the Cruzeiro — the currency is renamed while the inflation continues. The Plano Cruzado freezes prices in 1986 and Brazilians mob the supermarkets to enforce it, photographing price labels, reporting stores to television cameras. The freeze lasts eight months. Inflation returns at 2,000% per year. Salaries are indexed by formula; the formula is adjusted; the formula adjusts again. You have developed the specific skill of knowing that a price is wrong before the cashier notices.'
+        return 'The price of a coffee changes between when you sit down and when you pay. The Cruzado, the Cruzado Novo, the Cruzeiro — the currency is renamed while the inflation continues. The Plano Cruzado freezes prices in 1986 and Brazilians mob the supermarkets to enforce it, photographing price labels, reporting stores to television cameras. The freeze lasts eight months. Inflation returns at 2,000% per year. Salaries are indexed by formula; the formula is adjusted; the formula adjusts again. You have developed the skill of knowing that a price is wrong before the cashier notices.'
       }
       if (yr <= 1993) {
-        return 'March 1990. The new president freezes every savings account above fifty thousand cruzados novos for eighteen months. The money in the bank is still yours and you cannot touch it. The currency is renamed again, to the cruzeiro, and the inflation does not notice. Salaries are indexed by formula; the formula is adjusted; the formula adjusts again. You have developed the specific skill of knowing that a price is wrong before the cashier notices.'
+        return 'March 1990. The new president freezes every savings account above fifty thousand cruzados novos for eighteen months. The money in the bank is still yours and you cannot touch it. The currency is renamed again, to the cruzeiro, and the inflation does not notice. Salaries are indexed by formula; the formula is adjusted; the formula adjusts again. You have developed the skill of knowing that a price is wrong before the cashier notices.'
       }
-      return 'July 1, 1994. Fernando Henrique Cardoso, Finance Minister, introduces the Plano Real. The old cruzeiro real is exchanged for the new real at a fixed rate. The mechanism is complex — a virtual currency called the URV mediating the transition. What happens next is simple: the inflation stops. Overnight. You go to the supermarket and the price on the shelf is the price at the register. You do not know what to do with this. The generation that grew up with instability has to learn, slowly, that the price of something is a fixed fact.'
+      return 'July 1994, and the Plano Real: the old money swapped for a new one, through a bridge currency nobody fully understands. What happens next is simple. The inflation stops. You go to the supermarket and the price on the shelf is the price at the till, and you do not know what to do with that. A generation that grew up with prices moving by the hour has to learn that a price is a fact.'
     },
     choices: [
       {
@@ -340,7 +341,7 @@ const BRAZIL_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1996 &&
       G.age >= 18 &&
       !G.mem?.bra_carandiru,
-    text: 'October 2, 1992. The Casa de Detenção de Carandiru in São Paulo — the largest prison in Latin America. A riot begins in one pavilion. Military police enter. When they leave, 111 inmates are dead. None of the prisoners had firearms. The commander, Colonel Ubiratan Guimarães, keeps his rank, and nobody has been tried. The Carandiru Massacre enters the language of Brazilian politics as the specific proof of how the state treats its poor and incarcerated.',
+    text: 'October 2, 1992. A riot in one pavilion of Carandiru, the biggest prison in Latin America, and the military police go in, and when they come out 111 prisoners are dead, and no prisoner had a gun. The colonel in command keeps his rank. Carandiru becomes the word for how the state treats its poor once it has them in a cell.',
     choices: [
       {
         text: 'One hundred eleven people. The number is not in dispute.',
@@ -392,7 +393,7 @@ const BRAZIL_EVENTS = [
       {
         text: 'You stay. The sertão is yours and the stories of São Paulo are not all good.',
         tag: null,
-        outcome: 'You stay in the drought and the shortage and the community that has always been here. What you stay for is real. What the sertão costs is also real. The two things coexist in the same parched landscape.',
+        outcome: 'You stay in the drought and the shortage and the community that has always been here. You stay for the people who stayed. What the sertão costs is also real. The two things coexist in the same parched landscape.',
         effect: (p) => { p.m -= 4; p.r += 5; p.addFlag('bra_nordestino_stayed'); p.setMem('bra_nordestino', true); },
       },
     ],
@@ -410,7 +411,7 @@ const BRAZIL_EVENTS = [
       G.currentYear >= 2002 && G.currentYear <= 2007 &&
       G.age >= 18 &&
       !G.mem?.bra_lula,
-    text: 'October 27, 2002. Luiz Inácio Lula da Silva wins the presidency on his fourth attempt with 61% of the vote. A metalworker who lost a finger in a factory accident in the ABC industrial region of São Paulo. A union organizer. A man who did not finish primary school. The markets feared him; he wrote the Carta ao Povo Brasileiro — the letter to the Brazilian people — pledging to honor international creditors. He honored them. He also introduced Bolsa Família: cash transfers that reached 14 million families by 2006. For the first time many poor Brazilians had a government that knew they existed.',
+    text: 'October 2002, and on his fourth try a metalworker who lost a finger on a press in the ABC, a union man who never finished primary school, is elected president. The markets feared him, and he wrote a letter promising to pay the creditors, and paid them. He also started Bolsa Família, a little cash every month for the mothers of children who went to school. For the first time a great many poor Brazilians had a government that knew they existed.',
     choices: [
       {
         text: 'Lula is the proof that the country you were promised is possible — you vote for him, you believe',
@@ -421,7 +422,7 @@ const BRAZIL_EVENTS = [
       {
         text: 'The PT has been in São Paulo politics for twenty years — you know what the party does with power',
         tag: null,
-        outcome: 'What the PT does with power includes Mensalão, the monthly payments to allied politicians that surfaces in 2005. It also includes Bolsa Família. Both are true simultaneously, which is the difficulty.',
+        outcome: 'What the PT does with power includes Mensalão, the monthly payments to allied politicians that surfaces in 2005. It also includes Bolsa Família. You vote, and on the way home you cannot have said for which of the two.',
         effect: (p) => { p.r += 4; p.addFlag('bra_lula_generation'); p.setMem('bra_lula', true); },
       },
     ],
@@ -456,7 +457,7 @@ const BRAZIL_EVENTS = [
       {
         text: 'The Catholicism of your parents is yours — or you have no religion — the Universal Church is a business in a temple',
         tag: null,
-        outcome: 'The observation about the business model is documented. The people who found community in it found community. Both are true. The church is growing regardless of your assessment.',
+        outcome: 'The observation about the business model is documented. The people who found community in it found community. The church is growing regardless of your assessment.',
         effect: (p) => { p.r += 3; p.setMem('bra_evangelical', true); },
       },
     ],
@@ -506,7 +507,7 @@ const BRAZIL_EVENTS = [
       G.currentYear >= 2023 && G.currentYear <= 2025 &&
       G.age >= 25 &&
       !G.mem?.bra_jan8,
-    text: 'January 8, 2023. Nine days after Lula is inaugurated for his third term, thousands of Bolsonaro supporters enter the Planalto Palace, the National Congress, and the Supreme Court. They break furniture, smash art, defecate on tables, destroy Cândido Portinari\'s paintings. Bolsonaro is in Florida. The military stands aside for forty minutes before federal police intervene. More than a thousand people are arrested. The images — a man urinating in Lula\'s desk chair, the broken stained glass — go around the world. Brazil has watched what happened in Washington in January 2021. It has now had its own version.',
+    text: 'January 8, 2023, a week after the inauguration, and thousands of Bolsonaro\'s people walk into the Planalto, Congress and the Supreme Court and smash the furniture, the art, the windows. Bolsonaro is in Florida. The soldiers stand aside for a long time before the police come. Brazil watched Washington in January 2021. Now it has its own pictures.',
     choices: [
       {
         text: 'The democracy held — the institutions responded and the coup failed',

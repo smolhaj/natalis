@@ -32,7 +32,7 @@ export const EGYPT_EVENTS = [
       G.currentYear === 1967 &&
       G.age >= 14 &&
       !G.mem.egyNaksa,
-    text: 'June 5, 1967. The Egyptian air force is destroyed on the ground in the first three hours. The Sinai is lost in six days. The radio has been reporting victories; the reality arriving from the front is of a different order. Nasser announces his resignation and then rescinds it because the crowds in the streets will not accept it. The defeat is being called the Naksa — the setback. The word is calibrated to minimize what has happened. What has happened is: the dream of Arab unity, of a new Egypt that would stand as an equal among nations, has been tested against the morning, and the morning has answered.',
+    text: 'June 5, 1967. The air force is destroyed on the ground in three hours and the Sinai is gone in six days, while the radio is still reporting victories. Nasser resigns, and takes it back because the crowds in the street will not let him go. They call it the Naksa, the setback, a word chosen to make it smaller. The dream of a new Egypt standing equal among nations has been tested against a morning, and the morning has answered.',
     choices: [
       {
         text: 'You had believed it. The belief ends here.',
@@ -59,7 +59,7 @@ export const EGYPT_EVENTS = [
       G.currentYear >= 1974 && G.currentYear <= 1985 &&
       G.age >= 18 &&
       !G.mem.egyInflah,
-    text: 'Sadat\'s infitah: the open door policy. Foreign investment arrives. Consumer goods appear in the markets of Cairo that were not there before. The economy is opening. What it is opening to is a question the policy does not quite answer. The people who benefit immediately are those who already have capital or connections. The new Cairo of imported cars and satellite dishes and five-star hotels occupies the same geography as the old Cairo of crowded apartment blocks and government salaries that do not keep up with prices. The door is open. Not everyone is on the same side of it.',
+    text: 'Sadat\'s open door: foreign money, and in the Cairo markets things that were never there before. The people who gain first are the ones who already had capital or connections. The new Cairo of imported cars and five-star hotels sits on top of the old Cairo of crowded blocks and government salaries that do not keep up. The door is open. Not everyone is on the same side of it.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('infitah_generation'); p.setMem('egyInflah', true) },
   },
@@ -87,7 +87,7 @@ export const EGYPT_EVENTS = [
       G.currentYear === 1977 &&
       G.age >= 16 &&
       !G.mem.egyBread,
-    text: 'The price of the baladi loaf doubles overnight in January and by the afternoon the street is full. It is not a party or a slogan, it is bread. Seventy-nine people are killed and the army is on the corniche by the second day. On the third day the subsidy is back and the government calls what happened the uprising of the thieves. Everybody who was in the street learned the same thing, which is that it can be made to stop.',
+    text: 'The price of the baladi loaf doubles overnight in January and by the afternoon the street is full. It is not a party or a slogan, it is bread. Seventy-nine people are killed and the army is on the corniche by the second day. On the third day the subsidy is back and the government calls what happened the uprising of the thieves. Everybody who was in the street learned the same thing: it can be made to stop.',
     context: 'On 18 January 1977 the Egyptian government removed subsidies on bread and basic goods under IMF conditions. Protests spread across Egypt within hours, 79 people were killed and the army was deployed. Sadat restored the subsidies two days later and the IMF conditions were shelved. The government termed the events intifadat al-haramiyya, the uprising of the thieves.',
     choices: null,
     effect: (p) => { p.m -= 8; p.karma += 6; p.addFlag('egypt_bread_generation'); p.setMem('egyBread', true) },
@@ -102,7 +102,7 @@ export const EGYPT_EVENTS = [
       G.currentYear === 2011 &&
       G.age >= 18 &&
       !G.mem.egyTahrir,
-    text: 'January 25, 2011. Tahrir Square. Mubarak has been president for thirty years. The Emergency Law has been in effect for thirty years. For eighteen days the square holds. Mubarak goes on television twice and does not resign. On February 11 the vice president reads a statement: Mubarak has resigned. The crowd sound in Tahrir is a sound that has no peacetime equivalent. You have been alive through three presidents and thirty years of emergency law. The thing that was assumed to be permanent has just been assumed correctly, and then it ended.',
+    text: 'January 25, 2011, and Tahrir Square. For eighteen days the square holds, and Mubarak goes on television twice and does not resign. On February 11 the vice president reads a statement, and the sound the square makes has no peacetime equivalent. You have lived through thirty years of emergency law. The thing everybody assumed was permanent has ended.',
     choices: [
       {
         text: 'You were in Tahrir.',
@@ -129,7 +129,7 @@ export const EGYPT_EVENTS = [
       G.flags.has('tahrir_generation') &&
       G.currentYear >= 2012 && G.currentYear <= 2016 &&
       !G.mem.egyAftmath,
-    text: 'What followed Tahrir: the SCAF military council, the parliamentary elections won by the Brotherhood, Morsi, the counter-revolution of June 30 and July 3, 2013 — Sisi. The emergency law comes back. The features of the new Egypt resemble the features of the old Egypt with some of the personnel changed. The people who were in Tahrir in 2011 are now in three different places: prison, exile, or a specific kind of silence. The square that held for eighteen days holds a different meaning now, which is also a meaning.',
+    text: 'What followed Tahrir: the SCAF military council, the parliamentary elections won by the Brotherhood, Morsi, the counter-revolution of June 30 and July 3, 2013 — Sisi. The emergency law comes back. The features of the new Egypt resemble the features of the old Egypt with some of the personnel changed. The people who were in Tahrir in 2011 are now in three different places: prison, exile, or a kind of silence. The square that held for eighteen days means something else now.',
     choices: null,
     effect: (p) => { p.m -= 14; p.r += 12; p.addFlag('arab_spring_disillusionment'); p.setMem('egyAftmath', true) },
   },
@@ -150,7 +150,7 @@ export const EGYPT_EVENTS = [
       {
         text: 'You have the connection. Your uncle\'s colleague makes the call.',
         tag: 'wasta',
-        outcome: 'The position is yours. The work is real. The way you got it is also real, and you are aware of both facts in a proportion that shifts over the years.',
+        outcome: 'The position is yours. The way you got it is also real, and you are aware of both facts in a proportion that shifts over the years.',
         effect: (p) => { p.m += 6; p.karma -= 4; p.addFlag('egypt_wasta_beneficiary'); p.setMem('egyWasta', true) },
       },
       {
@@ -200,7 +200,7 @@ export const EGYPT_EVENTS = [
       G.age >= 28 && G.age <= 50 &&
       !G.flags.has('egypt_gulf_worker') &&
       !G.mem?.egyBlocked,
-    text: 'You graduated from Cairo University with an engineering degree. This is an achievement your parents are genuinely proud of. The degree does not connect to employment the way the achievement suggests it should. The engineering faculty graduates fifteen thousand students per year; the private sector cannot absorb most of them; the government desk jobs pay twelve hundred pounds a month. Your cousin drives a taxi. He has a university degree in economics. The taxi makes more than the government job. You have chosen the government job, because the taxi is not what the degree was for. You are not sure the degree was for the government job either.',
+    text: 'You graduate from Cairo University in engineering and your parents are proud. The degree does not lead where it should; the faculty turns out thousands a year and the private sector cannot take them, and the government desk pays very little. Your cousin, who has a degree in economics, drives a taxi and earns more. You take the government job, because the taxi is not what the degree was for. You are not sure the degree was for the government job either.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 8; p.addFlag('egypt_blocked_generation'); p.setMem('egyBlocked', true) },
   },
@@ -221,7 +221,7 @@ export const EGYPT_EVENTS = [
     // schooling and told him about his university.
     text: (G) => G.ruralUrban === 'rural'
       ? 'The church is where the community is, and here the community is also the village — the same forty families, the same names, the saint\'s day when the whole of it walks up to the monastery on the escarpment and back. Upper Egypt is where most of you have always been, whatever anyone in Cairo assumes. Your name announces it before you do. At the market, at the government office in the town, you know within about four seconds which kind of morning it is going to be, and you learned that without anybody teaching you.'
-      : 'The church is where the community is. Sunday mass, the saint\'s day celebrations, the specific social world of a Coptic family in the city — the weddings, the funerals, the network of who is related to whom through three generations of the same neighbourhood. At work, in the queue for a permit, you navigate the gap between that world and the national one. You don\'t hide it — your name announces it. You don\'t advertise it — the calculus of when it helps and when it doesn\'t is something you learned without being taught.',
+      : 'The church is where the community is. Sunday mass, the saint\'s day celebrations, the social world of a Coptic family in the city — the weddings, the funerals, the network of who is related to whom through three generations of the same neighbourhood. At work, in the queue for a permit, you navigate the gap between that world and the national one. You don\'t hide it — your name announces it. You don\'t advertise it — the calculus of when it helps and when it doesn\'t is something you learned without being taught.',
     choices: [
       {
         text: 'The navigation is unremarkable. You\'ve done it your whole life.',

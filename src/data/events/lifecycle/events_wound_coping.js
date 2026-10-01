@@ -20,7 +20,7 @@ export const WOUND_COPING_EVENTS = [
       },
       {
         text: 'Withdraw. If you never fully try, it can never be confirmed.',
-        outcome: 'A certain safety in smallness. The wound is protected. So are the possibilities.',
+        outcome: 'A certain safety in smallness. The wound is protected. The possibilities are kept out with everything else.',
         effect: (p) => { p.setMem('woundCoping', 'withdraw'); p.r += 4 },
       },
     ],
@@ -135,7 +135,7 @@ export const WOUND_COPING_EVENTS = [
     choices: [
       {
         text: 'Escape. Plan to leave. Start leaving.',
-        outcome: 'You become someone oriented toward exits. The freedom is real. The loneliness is too.',
+        outcome: 'You become someone who always knows where the exits are. The loneliness comes with it.',
         effect: (p) => { p.setMem('woundCoping', 'escape'); p.m += 3; p.r += 4 },
       },
       {

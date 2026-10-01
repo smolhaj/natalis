@@ -16,7 +16,7 @@ export const FOLLOWTHROUGH_40_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 55 &&
       !G.mem?.ft40Feb48Late,
-    text: 'After 1989 the archives open. The Masaryk file is among the first things researchers examine. The stairwell from the Foreign Ministry bathroom. The trajectory and condition of the body. The official investigation of 1948 called it suicide. The investigation of 1968 — during the Spring — concluded it was murder. The post-1989 investigation concluded it was murder. The Czech government has since officially accepted this conclusion. Jan Masaryk, son of the founder, threw himself from no window. You always knew the official version was a kind of joke told at everyone\'s expense, and now it is simply on record.',
+    text: 'After 1989 the archives open, and the Masaryk file is among the first anyone reads. The 1948 investigation said suicide. The 1968 one, during the Spring, said murder, and so does the one after 1989, and the government now accepts it. Jan Masaryk did not throw himself from any window. You always knew the official version was a joke told at everyone\'s expense, and now it is on the record.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.karma += 3; p.setMem('ft40Feb48Late', true) },
   },

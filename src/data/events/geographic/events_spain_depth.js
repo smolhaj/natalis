@@ -14,12 +14,12 @@ export const SPAIN_DEPTH_EVENTS = [
       G.currentYear >= 1940 && G.currentYear <= 1960 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.esPosguerraRojo,
-    text: 'The thing that is not spoken of: the photograph that was removed when a visitor came, the relative whose name came up and then didn\'t, the questions you were told not to ask at school. After the war, the losers were classified in the depuration records: rojo, separatista, masón, ateo. The classification determined employment, housing, university admission. Your grandfather or your uncle or the man whose name appears in documents you will find decades later: the losers\' silence was not voluntary. It was the condition of survival.',
+    text: 'The thing that is not spoken of: the photograph that was removed when a visitor came, the relative whose name came up and then didn\'t, the questions you were told not to ask at school. After the war, the losers were classified in the depuration records: rojo, separatista, masón, ateo. The classification determined employment, housing, university admission. Your grandfather or your uncle or the man whose name appears in documents you will find decades later: the losers kept silent because silence was the price of surviving.',
     choices: [
       {
         text: 'You understood early that there was something in the family that was not to be said.',
         tag: null,
-        outcome: 'You understood it the way children understand things they have not been taught: from the shape of the avoided subject, from the specific quiet that surrounded the specific name. You carry the shape without, for years, the content.',
+        outcome: 'You understood it the way children understand things they have not been taught: from the shape of the avoided subject, from the quiet that surrounded the name. You carry the shape without, for years, the content.',
         effect: (p) => { p.r += 5; p.addFlag('spain_rojo_family'); p.setMem('esPosguerraRojo', true); },
       },
       {
@@ -46,13 +46,13 @@ export const SPAIN_DEPTH_EVENTS = [
       {
         text: 'You participate — meetings, pamphlets, the small illegal work.',
         tag: null,
-        outcome: 'The small illegal work is small and illegal. You are careful. You are also doing something. The years accumulate. When Franco dies in 1975, you are one of the people who already had an organization, who already knew how to organize, which is why the transition goes the way it goes.',
+        outcome: 'The small illegal work is small and illegal. You are careful. You are also doing something. The years accumulate. When Franco dies in 1975, you are one of the people who already had an organization, who already knew how to organize, and that is why the transition goes the way it goes.',
         effect: (p) => { p.karma += 8; p.r += 5; p.m -= 3; p.addFlag('spain_anti_franco_cell'); p.setMem('esClandestinity', true); },
       },
       {
         text: 'You know it is happening. You are not part of it. The calculation is not abstract — you have seen what arrest produces.',
         tag: null,
-        outcome: 'The calculation is reasonable and the risk is real. You carry the knowledge of your inaction as one of the things you know about yourself. When the transition arrives it does not require that you did anything. You did not do anything.',
+        outcome: 'The calculation is reasonable and the risk is not small. You carry the knowledge of your inaction as one of the things you know about yourself. When the transition arrives it does not require that you did anything. You did not do anything.',
         effect: (p) => { p.r += 6; p.addFlag('spain_anti_franco_cell'); p.setMem('esClandestinity', true); },
       },
     ],
@@ -68,7 +68,7 @@ export const SPAIN_DEPTH_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 1970 &&
       G.age >= 6 && G.age <= 18 &&
       !G.mem?.esChabolas,
-    text: 'Two million people move from Andalusia, Extremadura, Murcia to Barcelona and Madrid between 1950 and 1975. They build the city before the city builds for them. The barracas, the chabolas — the shantytowns on the periphery — are cities within cities: the same hierarchy of streets and neighbors and children, but without running water, without paving, without the address that would allow you to register for school. The move north is the family\'s wager on the future, which is also your future. The wager is partly right.',
+    text: 'Two million people move from Andalusia, Extremadura, Murcia to Barcelona and Madrid between 1950 and 1975. They build the city before the city builds for them. The barracas, the chabolas — the shantytowns on the periphery — are cities within cities: the same hierarchy of streets and neighbors and children, but without running water, without paving, without the address that would allow you to register for school. The move north is the family\'s wager on the future, your future. The wager is partly right.',
     choices: [
       {
         text: 'You grow up in the barraca at the edge of the city. The city is where you live but not yet where you belong.',
@@ -77,7 +77,7 @@ export const SPAIN_DEPTH_EVENTS = [
         effect: (p) => { p.m -= 4; p.r += 5; p.w += 3; p.addFlag('spain_chabola_childhood'); p.setMem('esChabolas', true); },
       },
       {
-        text: 'You remember the village and you remember arriving and you remember the difference, which is not the difference you expected.',
+        text: 'You remember the village and you remember arriving and you remember the difference, and it is not the difference you expected.',
         tag: null,
         outcome: 'The village had poverty with community. The barraca has poverty with strangers who become community, slowly, over the years, in the way that shared conditions produce it. The difference from what you expected is the making of your urban self.',
         effect: (p) => { p.r += 7; p.addFlag('spain_chabola_childhood'); p.setMem('esChabolas', true); },
@@ -138,12 +138,12 @@ export const SPAIN_DEPTH_EVENTS = [
       G.age >= 18 && G.age <= 40 &&
       G.flags.has('lgbtq_identity') &&
       !G.mem?.esLeyPeligrosidad,
-    text: 'The Ley de Peligrosidad y Rehabilitación Social: the law classifying homosexuals as dangerous persons subject to internment in reformatories — specifically in the separate facilities for homosexuals at Huelva and Badajoz — and mandatory psychiatric treatment. Effective until the law is modified in 1979. The bars that exist are unofficial and the raids are real. Your navigation of a city that contains you illegally is the specific navigation: which bars, which hours, which signals, who can be trusted. The knowledge is shared in a community that has to keep itself invisible to survive.',
+    text: 'The Ley de Peligrosidad y Rehabilitación Social: the law classifying homosexuals as dangerous persons subject to internment in reformatories — specifically in the separate facilities for homosexuals at Huelva and Badajoz — and mandatory psychiatric treatment. Effective until the law is modified in 1979. The bars that exist are unofficial and the police raid them. Your navigation of a city that contains you illegally is the navigation: which bars, which hours, which signals, who can be trusted. The knowledge is shared in a community that has to keep itself invisible to survive.',
     choices: [
       {
         text: 'You navigate it. The navigation is exhausting and specific and you are alive.',
         tag: null,
-        outcome: 'You navigate it and you find the community that also navigates it. The community is not the same as freedom. It is the thing that exists in the absence of freedom and is worth considerably more than nothing.',
+        outcome: 'You navigate it and you find the community that also navigates it. The community is what exists in the absence of freedom, and it is worth a great deal more than nothing.',
         effect: (p) => { p.m -= 8; p.h -= 3; p.r += 6; p.addFlag('spain_ley_peligrosidad_survived'); p.setMem('esLeyPeligrosidad', true); },
       },
     ],
@@ -165,7 +165,7 @@ export const SPAIN_DEPTH_EVENTS = [
       {
         text: 'You give the DNA sample. You wait for the result.',
         tag: null,
-        outcome: 'The result comes back with a match or it does not. Either way you have done what could be done. The graves that are opened give families the specific knowledge instead of the permanent uncertainty. The specific knowledge is worse and better simultaneously.',
+        outcome: 'The result comes back with a match or it does not. Either way you have done what could be done. The graves that are opened give families the knowledge instead of the permanent uncertainty. The knowledge is worse and better simultaneously.',
         effect: (p) => { p.r += 6; p.m -= 3; p.karma += 5; p.addFlag('spain_fosa_recovery'); p.setMem('esFosaComu', true); },
       },
       {
@@ -188,12 +188,12 @@ export const SPAIN_DEPTH_EVENTS = [
       G.age >= 25 && G.age <= 60 &&
       G.flags.has('lgbtq_identity') &&
       !G.mem?.esMatrimonioIgualitario,
-    text: 'June 30, 2005. Spain becomes the third country in the world to legalize same-sex marriage, including adoption rights. The PP appeals to the Constitutional Court; the court upholds the law in 2012. The ceremony: in a room that the law says you can now use for this purpose, signing the papers that say this, which is also the papers that say you exist in the legal category you spent years outside of. Rajoy at a PP congress holds up two rings and says they are the symbol of what marriage is. One of the rings is yours.',
+    text: 'June 30, 2005. Spain becomes the third country in the world to legalize same-sex marriage, including adoption rights. The PP appeals to the Constitutional Court; the court upholds the law in 2012. The ceremony: in a room that the law says you can now use for this purpose, signing the papers that say this, the same papers that say you exist in the legal category you spent years outside of. Rajoy at a PP congress holds up two rings and says they are the symbol of what marriage is. One of the rings is yours.',
     choices: [
       {
-        text: 'You marry or you could now if you chose to, which is the thing that matters.',
+        text: 'You marry, or you could now if you chose to, and that is what matters.',
         tag: null,
-        outcome: 'The legal category is not the same as the feeling, and it is not nothing. The years before it existed, the years of navigating without it, the specific weight of its absence — all of that is present at the ceremony or at the knowledge that the ceremony is now possible.',
+        outcome: 'The legal category is not the same as the feeling, and it is not nothing. The years before it existed, the years of navigating without it, the weight of its absence — all of that is present at the ceremony or at the knowledge that the ceremony is now possible.',
         effect: (p) => { p.m += 8; p.karma += 5; p.addFlag('spain_lgbtq_2005'); p.setMem('esMatrimonioIgualitario', true); },
       },
       {

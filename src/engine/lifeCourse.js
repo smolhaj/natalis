@@ -31,11 +31,11 @@
 
 import { PROPERTY_TYPES, localisePrice } from '../data/assets'
 import { inEraMoney } from '../data/economy.js'
-import { institutionExists } from '../data/history.js'
-import { generatePartnerProfile, getMarried, proposeMarriage, retire, tryForChild } from './playerActions'
+import { institutionExists, divorceAvailable } from '../data/history.js'
+import { generatePartnerProfile, getMarried, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'
 import { livingRuralUrban, childNameCountry } from './character'
-import { preferUnsaid, rememberSaid } from './prose'
+import { preferUnsaid, rememberSaid, hasSaid } from './prose'
 import { pickUnusedName, namesInUse } from './names'
 import { gulfNonNational } from '../data/migration.js'
 import { EVENTS } from '../data/events'
@@ -571,16 +571,149 @@ function courseMarriage(s) {
   if (!chance(clamp(base + overdue * 0.2, 0.08, 0.75))) return s
 
   if (!s.partner.engaged) {
-    const next = proposeMarriage(s)
-    if (next.partner?.engaged) return next
-    // proposeMarriage refuses below a relationship-quality threshold. After
-    // several years together that threshold stops describing anything: people
-    // marry out of expectation, family, housing and inertia at least as often
-    // as out of a high score.
-    if (years >= 3) return { ...s, partner: { ...s.partner, engaged: true } }
-    return s
+    // proposeMarriage is the player's button, and its line is the player's
+    // act: "You propose to Aisha. They say yes." printed into every marriage
+    // the life course made — a Hausa bride of 1980 proposing to her husband,
+    // in the pronoun of nobody. The life course says it the way it happened
+    // there and then. The threshold is the button's too, and after several
+    // years together it stops describing anything: people marry out of
+    // expectation, family, housing and inertia at least as often as out of a
+    // high score.
+    if ((s.partner.relationshipQuality ?? 60) < 55 && years < 3) return s
+    return engagementLine({ ...s, partner: { ...s.partner, engaged: true } })
   }
   return getMarried(s)
+}
+
+const BRIDEWEALTH = new Set(['subsaharan'])
+/** How an engagement happened, for a match that was met rather than arranged. */
+function engagementLine(s) {
+  const p = s.partner
+  const name = p.name
+  const c = liveCountry(s)
+  const y = s.currentYear ?? 1970
+  const female = s.character?.gender === 'female'
+  const partnerMale = p.gender === 'male'
+  const him = partnerMale ? 'him' : 'her'
+  const he = partnerMale ? 'he' : 'she'
+  const his = partnerMale ? 'his' : 'her'
+  let pool
+  if (BRIDEWEALTH.has(c?.archetype)) {
+    pool = female
+      ? [`${name}'s people come to see your people. There is a list, and an afternoon of arguing about the list, and at the end of it you are promised.`,
+        `${name} sends ${his} uncles to your father's house. You are not in the room. You hear the laughter through the wall and know what it means.`]
+      : [`You send your uncles to ${name}'s family with drinks and a speech that is older than any of you. They come back with a list, which is a yes.`,
+        `The bride price is talked down over two visits and settled on the third. ${name} is in the next room the whole time and hears every figure.`]
+  } else if (SOUTH_ASIA.has(c?.name) || MENA.has(c?.name) || c?.archetype === 'wealthy_gulf') {
+    pool = [`Your two families are told, yours first, and then the families take it from there. ${name} finds a way to ask you, out of everyone's hearing, whether you are sure, and you are.`,
+      `It is ${name}'s mother who has to be won over, and she is, slowly, across a season of visits in which nobody mentions it.`]
+  } else if (y < 1985 || !['wealthy_west', 'post_soviet'].includes(c?.archetype)) {
+    pool = female && partnerMale
+      ? [`${name} asks you to marry ${him}. ${he[0].toUpperCase() + he.slice(1)} has clearly rehearsed it, and gets it wrong anyway, and you say yes before ${he} has finished.`,
+        `${name} asks your father first, which you find out afterwards and do not entirely forgive. Then ${he} asks you.`,
+        `${name} asks you on an ordinary evening, on the way back from somewhere. You say yes, and then you both walk the rest of the way not saying anything.`]
+      : [`You ask ${name} to marry you. ${he[0].toUpperCase() + he.slice(1)} says yes, and then asks whether you are going to tell ${his} parents or whether ${he} has to.`,
+        `You ask ${name}'s father before you ask ${name}, because that is how it is done, and he takes long enough answering that you start to sweat.`,
+        `You ask ${name} on an ordinary evening, on the way back from somewhere. ${he[0].toUpperCase() + he.slice(1)} says yes, and you both walk the rest of the way not saying anything.`]
+  } else {
+    pool = [`One of you says it first and neither of you can afterwards agree which. You are engaged.`,
+      `You and ${name} decide to get married, sitting at the kitchen table, in about four sentences.`,
+      female && partnerMale
+        ? `${name} asks you to marry ${him}, badly and sincerely, and you say yes.`
+        : `You ask ${name} to marry you, badly and sincerely, and ${he} says yes.`]
+  }
+  const line = pick(preferUnsaid(s, pool))
+  return { ...log(s, line, true), mem: rememberSaid(s.mem, line) }
+}
+
+// ─── Divorce ─────────────────────────────────────────────────────────────────
+// Married couples never separated on their own: the relationship quality
+// drifted toward 55 and only an unmarried couple under 20 could break up. An
+// American born in 1950 had a 5% chance of ever divorcing, against a real 40%.
+// The hazard is by place and decade, cut to nothing where the law did not allow
+// it (Ireland before 1996, Italy before 1970, the Philippines still), lowered
+// where faith or custom made it rare, and raised by a marriage that is not
+// working.
+const DIVORCE_BY_ARCHETYPE = {
+  wealthy_west:        { 1930: 0.002, 1950: 0.004, 1965: 0.007, 1975: 0.014, 1990: 0.013, 2010: 0.011 },
+  post_soviet:         { 1930: 0.004, 1950: 0.005, 1965: 0.012, 1980: 0.016, 1995: 0.015, 2020: 0.012 },
+  wealthy_east:        { 1950: 0.003, 1980: 0.004, 2000: 0.008, 2020: 0.008 },
+  wealthy_gulf:        { 1950: 0.004, 1990: 0.006, 2020: 0.008 },
+  developing_urban:    { 1950: 0.002, 1980: 0.003, 2000: 0.005, 2020: 0.007 },
+  developing_unstable: { 1950: 0.002, 1990: 0.003, 2020: 0.004 },
+  subsaharan:          { 1950: 0.005, 2020: 0.006 },
+  conflict_zone:       { 1950: 0.002, 2020: 0.003 },
+}
+const DIVORCE_COUNTRY_MULT = {
+  'United States': 1.5, Sweden: 1.3, Denmark: 1.3, Finland: 1.2, Norway: 1.1, 'United Kingdom': 1.2, Russia: 1.2, Ukraine: 1.1, Belarus: 1.1, Latvia: 1.1, Cuba: 1.6,
+  Italy: 0.4, Spain: 0.5, Portugal: 0.6, Ireland: 0.35, Greece: 0.5, Malta: 0.3, Poland: 0.6,
+  Japan: 0.8, India: 0.12, Bangladesh: 0.3, Pakistan: 0.25, Nepal: 0.2, 'Sri Lanka': 0.3,
+}
+export function divorceHazard(s) {
+  const c = liveCountry(s)
+  const y = s.currentYear ?? 1970
+  if (!divorceAvailable(c?.name, y)) return 0
+  let p = overTime(DIVORCE_BY_ARCHETYPE[c?.archetype] ?? DIVORCE_BY_ARCHETYPE.developing_urban, y)
+  p *= DIVORCE_COUNTRY_MULT[c?.name] ?? 1
+  const faith = String(s.religion ?? s.character?.religion ?? '')
+  if (faith === 'hindu' || faith.startsWith('sikh')) p *= 0.4
+  else if (faith === 'christian_catholic') p *= 0.75
+  else if (faith === 'secular' || faith === 'atheist') p *= 1.25
+  if (s.partner?.arranged) p *= 0.6
+  const q = s.partner?.relationshipQuality ?? 55
+  p *= q < 30 ? 4 : q < 45 ? 2 : q > 70 ? 0.4 : 1
+  const years = s.partner?.years ?? 0
+  p *= years < 3 ? 0.8 : years <= 10 ? 1.3 : years > 25 ? 0.4 : 1
+  if (s.age > 60) p *= 0.4
+  return clamp(p, 0, 0.25)
+}
+
+function courseDivorce(s) {
+  const p = s.partner
+  if (!p || p.alive === false || !p.married || s.inPrison) return s
+  if (!chance(divorceHazard(s))) return s
+  const c = liveCountry(s)
+  const y = s.currentYear
+  const name = p.name
+  const first = name?.split(' ')[0] ?? name
+  const kids = (s.children ?? []).filter(k => k.alive !== false && (k.age ?? 99) < 18).length
+  const faith = String(s.religion ?? s.character?.religion ?? '')
+  const female = s.character?.gender === 'female'
+  let pool
+  if (faith.startsWith('muslim') && (MENA.has(c?.name) || c?.archetype === 'wealthy_gulf' || SOUTH_ASIA.has(c?.name))) {
+    pool = female
+      ? [`${first} says the words, and the marriage is over in the time it takes to say them. Your brother comes with a car for your things.`,
+        `The divorce goes through the family before it goes through anybody else. You are back in your mother's house by the end of the month, in the room you left.`]
+      : [`You divorce ${first}. Her family come for her things on a Friday, and her brother does not look at you.`,
+        `The divorce goes through both families before it goes through the court, and by the time it reaches the court there is nothing left in it to decide.`]
+  } else if (c?.archetype === 'subsaharan') {
+    pool = [`The bride price is argued over between the two families, and when it is settled, so is the marriage. ${first} goes back to ${p.gender === 'male' ? 'his' : 'her'} people.`,
+      `${first} leaves. There is a meeting of the elders of both families, which is the divorce, and a long silence between the two houses afterwards, which is also the divorce.`]
+  } else if (c?.archetype === 'post_soviet' && y < 1992) {
+    pool = [`You divorce ${first} at the registry office, in the same building you were married in. It takes twenty minutes and a stamp, and then there is the question of the flat, which takes years.`,
+      `You and ${first} divorce and go on living in the same two rooms, because there is nowhere else on the list for either of you. You learn to be polite.`]
+  } else if (y < 1970) {
+    pool = [`You divorce ${first}. It is still a word people lower their voices for, and you hear them do it.`,
+      `${first} moves out. The divorce takes a lawyer, a reason the court will accept, and most of a year, and the reason is not the real one.`]
+  } else {
+    pool = [`${first} moves out in the spring. The papers take most of a year, and at the end of them you are somebody who was married once.`,
+      `You and ${first} divorce. It is quieter than the years before it, which is how you know it was right, and it still takes a long time to stop setting out two cups.`,
+      `The marriage ends in a lawyer's office, with both of you being careful about the furniture.`]
+  }
+  if (kids > 0) {
+    pool = pool.map(l => `${l} ${kids === 1 ? 'The child learns' : 'The children learn'} the way between two houses.`)
+  }
+  const line = pick(preferUnsaid(s, pool))
+  const out = log(s, line, true)
+  return {
+    ...out,
+    partner: null,
+    exPartners: [...(s.exPartners ?? []), { name, gender: p.gender, years: p.years ?? 0, married: true, endedYear: y, alive: true }],
+    flags: [...new Set([...s.flags.filter(f => f !== 'married' && f !== 'engaged'), 'divorced'])],
+    mem: rememberSaid({ ...(s.mem ?? {}), divorcedYear: y, lastMajorEvent_relationship: y }, line),
+    stats: { ...s.stats, happiness: clamp((s.stats.happiness ?? 50) - 10, 0, 100) },
+    children: (s.children ?? []).map(k => ({ ...k, relationshipQuality: clamp((k.relationshipQuality ?? 60) - 6, 0, 100) })),
+  }
 }
 
 // Births outside marriage as a share of what the same couple would have inside
@@ -701,6 +834,68 @@ export function secondaryChance(state) {
   // choice about it; it does not conjure a school that is not there.
   p *= 0.8 + ((state.stats?.smarts ?? 50) / 250)
   return clamp(p, 0.045, 0.97)
+}
+
+// ─── University ──────────────────────────────────────────────────────────────
+// Whether a place existed. The graduation fork offered university to anyone
+// with 8,000 in the bank or a smarts of 72 — a nominal figure that meant a
+// fortune in 1968 and a month's rent in 2008, and no notion that most of the
+// world had a handful of universities for millions of people. Share of the
+// age cohort entering tertiary education, by the year they are eighteen:
+// the United States crosses a quarter in the late sixties, Sweden is near a
+// tenth in the fifties, Afghanistan is near nothing for most of the century.
+const TERTIARY_BY_ARCHETYPE = {
+  wealthy_west:        { 1920: 0.03, 1940: 0.05, 1958: 0.10, 1970: 0.18, 1990: 0.30, 2010: 0.45 },
+  wealthy_east:        { 1930: 0.02, 1950: 0.05, 1970: 0.15, 1990: 0.35, 2010: 0.60 },
+  wealthy_gulf:        { 1950: 0.002, 1970: 0.03, 1990: 0.12, 2010: 0.25 },
+  post_soviet:         { 1930: 0.03, 1950: 0.08, 1970: 0.15, 1990: 0.18, 2010: 0.35 },
+  developing_urban:    { 1930: 0.005, 1950: 0.02, 1970: 0.06, 1990: 0.12, 2010: 0.25 },
+  developing_unstable: { 1930: 0.003, 1950: 0.01, 1970: 0.03, 1990: 0.06, 2010: 0.12 },
+  subsaharan:          { 1930: 0.0005, 1950: 0.002, 1970: 0.01, 1990: 0.03, 2010: 0.07 },
+  conflict_zone:       { 1930: 0.0005, 1950: 0.002, 1970: 0.01, 1990: 0.03, 2010: 0.06 },
+}
+const TERTIARY_BY_COUNTRY = {
+  'United States': { 1930: 0.08, 1945: 0.15, 1968: 0.27, 1990: 0.33, 2010: 0.42 },
+  Canada:          { 1940: 0.06, 1968: 0.20, 1990: 0.32, 2010: 0.45 },
+  Japan:           { 1940: 0.04, 1960: 0.10, 1975: 0.27, 1990: 0.30, 2010: 0.50 },
+  'South Korea':   { 1950: 0.03, 1970: 0.08, 1980: 0.15, 1995: 0.45, 2010: 0.70 },
+  Afghanistan:     { 1930: 0.0002, 1960: 0.002, 1975: 0.01, 1990: 0.01, 2010: 0.04 },
+  Philippines:     { 1950: 0.05, 1970: 0.15, 1990: 0.25, 2010: 0.28 },
+  India:           { 1950: 0.01, 1970: 0.04, 1990: 0.06, 2010: 0.18 },
+  China:           { 1950: 0.003, 1966: 0.01, 1970: 0.001, 1977: 0.01, 1990: 0.03, 2000: 0.08, 2010: 0.25 },
+  Germany:         { 1950: 0.05, 1970: 0.14, 1980: 0.19, 2000: 0.33, 2010: 0.45 },
+  Ireland:         { 1950: 0.04, 1968: 0.11, 1980: 0.18, 1995: 0.35, 2010: 0.5 },
+  Italy:           { 1950: 0.04, 1970: 0.14, 1990: 0.22, 2010: 0.35 },
+  Sweden:          { 1940: 0.04, 1958: 0.09, 1970: 0.2, 1990: 0.3, 2010: 0.45 },
+}
+// Women's share of places relative to men's, by year: half in the forties,
+// parity by about 1980 in the rich world and later elsewhere, with the
+// country's own literacy gap doing the rest.
+const TERTIARY_FEMALE_RATIO = { 1920: 0.25, 1940: 0.45, 1960: 0.6, 1980: 0.9, 2000: 1.15 }
+export function tertiaryChance(state) {
+  const c = liveCountry(state)
+  const y = state.currentYear ?? 1970
+  const named = TERTIARY_BY_COUNTRY[c?.name]
+  const avg = overTime(named ?? TERTIARY_BY_ARCHETYPE[c?.archetype] ?? TERTIARY_BY_ARCHETYPE.developing_urban, y)
+  const litGap = clamp((c?.literacyFemale ?? 0.9) / Math.max(0.05, c?.literacyMale ?? 0.9), 0.2, 1)
+  const r = overTime(TERTIARY_FEMALE_RATIO, y) * litGap
+  const male = avg * 2 / (1 + r)
+  return clamp(state.character?.gender === 'female' ? male * r : male, 0, 0.9)
+}
+
+/**
+ * The chance a secondary graduate is offered a university place, given how
+ * many of their cohort finished secondary in the first place. A place is
+ * mostly taken when it is offered; `UNI_TAKEUP` is the share who take it.
+ */
+export const UNI_TAKEUP = 0.8
+export function universityPlaceChance(state) {
+  const cohortSecondary = secondaryChance({ ...state, stats: { ...(state.stats ?? {}), smarts: 50 } })
+  const t = tertiaryChance(state)
+  const conditional = t / Math.max(t, cohortSecondary) / UNI_TAKEUP
+  // The sharp get the places, where places are few.
+  const merit = clamp(0.4 + (state.stats?.smarts ?? 60) / 100, 0.6, 1.4)
+  return clamp(conditional * merit, 0, 0.97)
 }
 
 /** Whether this character can read at all, where secondary was not reached. */
@@ -864,7 +1059,7 @@ function courseHousing(s) {
   s = {
     ...s,
     assets: { ...s.assets, properties: [...(s.assets?.properties ?? []), {
-      typeId: type.id, name: unpurchasedHomeName(c, s.flags, allocated), purchasePrice: 0, currentValue: value, mortgage: 0,
+      typeId: type.id, name: unpurchasedHomeName(c, s.flags, allocated), purchasePrice: 0, currentValue: value, mortgage: 0, unfinanced: true,
     }] },
     flags: [...new Set([...s.flags, 'homeowner', 'home_without_a_deed'])],
     mem: { ...s.mem, lcHousingSettled: true, lcHomeYear: s.currentYear },
@@ -920,6 +1115,7 @@ export function tickLifeCourse(state) {
   if (state.dead) return state
   let s = state
   s = courseWork(s)
+  s = courseDivorce(s)
   s = coursePartner(s)
   s = courseMarriage(s)
   s = courseChildren(s)
@@ -966,18 +1162,24 @@ function courseGrandchildren(s) {
     }
     return out
   }
+  let count = before
   for (const c of born) {
-    out = grandchildLine(out, c)
+    count += 1
+    out = grandchildLine(out, c, count)
   }
   return out
 }
+
+const ORDINALS = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth',
+  'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth',
+  'nineteenth', 'twentieth']
 
 // Three fixed templates and no memory: one life read "Ikram calls with the
 // news" four times. The line interpolates the child's name, so the hashed
 // said-lines record cannot see that two of them are the same sentence; the
 // template index is remembered as well, and a fresh one is preferred until
 // all of them have been used.
-function grandchildLine(s, c) {
+function grandchildLine(s, c, count = 2) {
   const first = c.name?.split(' ')[0] ?? 'your child'
   const which = c.gender === 'female' ? 'daughter' : 'son'
   const babyGender = chance(0.5) ? 'female' : 'male'
@@ -997,10 +1199,29 @@ function grandchildLine(s, c) {
       : `Another grandchild. You count them on your fingers afterwards, to be sure of the number.`,
     () => `${first} has a ${baby}. Somebody has to tell you twice, because the first time you are still thinking of ${first} at that age.`,
   ]
+  // A grandchild already announced by an event is still the first one here.
+  if (count === 1) {
+    const text = `${first} has a ${baby}, your first grandchild. You are told on the doorstep and you sit down on the step to hear the rest.`
+    return { ...log(s, text), mem: rememberSaid(s.mem, text) }
+  }
   const used = Array.isArray(s.mem?.gcTemplatesUsed) ? s.mem.gcTemplatesUsed : []
-  let open = templates.map((_, i) => i).filter(i => !used.includes(i))
-  const reset = open.length === 0
-  if (reset) open = templates.map((_, i) => i)
+  const open = templates.map((_, i) => i).filter(i => !used.includes(i))
+  // Once the eight are spent the templates do not start again — the old reset
+  // is how a grandmother of seventeen read the same sentence three times. The
+  // count is the news now, and only now and then: by the twelfth, a birth in
+  // the family is a thing you hear about, and the life log does not need
+  // every one of them.
+  if (open.length === 0) {
+    if (count > ORDINALS.length || (count > 12 && count % 3 !== 0)) return s
+    const nth = ORDINALS[count - 1]
+    const text = pick([
+      `The ${nth} grandchild, ${first}'s. You have to stop and count to be sure of the number, and then you are sure.`,
+      `${first}'s ${baby} makes ${count}. You keep the names in a list now, in the order they came.`,
+      `A ${baby} for ${first}: the ${nth}. The family has grown past what one table holds, and nobody has suggested a second table.`,
+    ])
+    if (hasSaid(s, text)) return s
+    return { ...log(s, text), mem: rememberSaid(s.mem, text) }
+  }
   const lines = open.map(i => [i, templates[i]()])
   const fresh = preferUnsaid(s, lines.map(([, t]) => t))
   const choices = lines.filter(([, t]) => fresh.includes(t))
@@ -1008,7 +1229,7 @@ function grandchildLine(s, c) {
   const out = log(s, text)
   return {
     ...out,
-    mem: rememberSaid({ ...(out.mem ?? {}), gcTemplatesUsed: [...(reset ? [] : used), idx] }, text),
+    mem: rememberSaid({ ...(out.mem ?? {}), gcTemplatesUsed: [...used, idx] }, text),
   }
 }
 let _grandchildEvent

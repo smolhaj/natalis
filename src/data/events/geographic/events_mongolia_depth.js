@@ -30,7 +30,7 @@ export const MONGOLIA_DEPTH_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 8 && G.age <= 14 &&
       !G.mem?.mnGenghis,
-    text: 'The teacher is telling you about Genghis Khan, who is now officially a hero. This is new. Your grandparents were taught that Genghis Khan was a feudal warlord, a negative force in history, a figure better not celebrated. After 1990 he is on the money. The airport in Ulaanbaatar is named for him. An enormous steel statue of him on horseback stands forty metres tall on the Töv steppe. The currency bears his face. You grow up learning that the largest contiguous land empire in human history began here, with horsemen who could shoot backward at a gallop, and that this is something to be proud of.',
+    text: 'The teacher is telling you about Genghis Khan, who is now officially a hero. Your grandparents were taught he was a feudal warlord better not celebrated. After 1990 he is on the money and the airport is named after him, and an enormous steel horseman stands on the steppe outside the city. You grow up learning that the largest land empire in history began here, with horsemen who could shoot backwards at a gallop, and that this is something to be proud of.',
     choices: null,
     effect: (p) => { p.m += 4; p.e += 3; p.addFlag('mn_genghis_rehabilitation_generation'); p.setMem('mnGenghis', true) },
   },
@@ -86,12 +86,12 @@ export const MONGOLIA_DEPTH_EVENTS = [
       G.currentYear >= 1995 &&
       G.age >= 18 &&
       !G.mem?.mnCashmere,
-    text: 'The cashmere goat brings more money per animal than sheep or cattle. The market in the 1990s is clear: tourists, luxury buyers, European factories paying well for the fiber. You shift the herd toward goats — slowly at first, then more. The problem becomes visible later: goats eat differently from sheep. They pull the grass out by the root rather than grazing the top. They denude the steppe in a way that traditional herding never did. Mongolia\'s steppe is turning to desert at the edges. The calculation that made sense in 1996 is part of something you are watching degrade by 2010.',
+    text: 'The cashmere goat pays more per head than sheep or cattle, and in the nineties the buyers are clear about what they want. You shift the herd toward goats, slowly, then more. Later you see the problem: a goat pulls the grass out by the root where a sheep crops the top. At the edges, the steppe is turning to desert. What made sense in 1996 is part of what you watch go wrong by 2010.',
     choices: [
       {
         text: 'The income is necessary. The alternatives do not pay the same way.',
         tag: 'continued',
-        outcome: 'You continue with the goats. The money is real. The steppe change is also real. You live in both things simultaneously, which is how most environmental decisions are made.',
+        outcome: 'You continue with the goats. The steppe change is also real. You live in both things at once, as most environmental decisions are made.',
         effect: (p) => { p.w += 3; p.r += 4; p.addFlag('mn_cashmere_steppe_awareness'); p.setMem('mnCashmere', true) },
       },
       {
@@ -113,7 +113,7 @@ export const MONGOLIA_DEPTH_EVENTS = [
       G.currentYear >= 2009 &&
       G.age >= 25 &&
       !G.mem?.mnOyu,
-    text: 'The Oyu Tolgoi copper and gold mine in the South Gobi is one of the largest mineral deposits in the world. The government signed an agreement with Ivanhoe Mines and Rio Tinto — 66% foreign, 34% Mongolian state. Production begins in 2013. The projections say it will represent a third of GDP. The debate around it is the debate Mongolia has been having since it stopped being a Soviet satellite: who owns the resource, who controls it, what the money is for, where it goes. In 2012 the government renegotiated and demanded a larger share. The foreign investors called it a resource nationalism precedent. The Mongolians called it arithmetic.',
+    text: 'Oyu Tolgoi in the South Gobi is one of the largest copper and gold deposits on earth, signed away to foreign companies for two thirds of the mine. The projections say it will be a third of the economy. The argument over it is the argument Mongolia has had since it stopped being a satellite: who owns what is under the ground, who controls it, where the money goes. In 2012 the government demands a bigger share. The investors call it resource nationalism. Mongolians call it arithmetic.',
     choices: [
       {
         text: 'The state should control more — this is Mongolia\'s mineral wealth',
@@ -154,7 +154,7 @@ export const MONGOLIA_DEPTH_EVENTS = [
       (G.ruralUrban === 'urban' || G.flags.has('ger_district_migrant')) &&
       G.age >= 25 &&
       !G.mem?.mnAir,
-    text: 'Ulaanbaatar in January: the air quality index at 687 when the WHO guideline is 10. The ger districts at the city\'s edge burn coal through the night, wood when coal is unavailable, waste when wood is unavailable. The valley holds the air; the buildings trap it. The pediatric ward fills with respiratory cases. You know the masks help somewhat. You know the children you see at school with the cough that is not the normal cough. Mongolia has the largest sky in the world — you know this because you have stood on the steppe in summer and looked at it. The sky in the city in January is gray-brown and close and costs something to breathe.',
+    text: 'Ulaanbaatar in January. The ger districts at the edge of the city burn coal all night, and wood when there is no coal, and rubbish when there is no wood, and the valley holds the smoke in. The children\'s ward fills with breathing cases, and you know the cough the children at school have is not the ordinary cough. You have stood on the steppe in summer under the largest sky in the world. In the city in January the sky is grey-brown and close, and it costs something to breathe.',
     choices: null,
     effect: (p) => { p.h -= 4; p.m -= 4; p.addFlag('mn_ulaanbaatar_air_crisis'); p.setMem('mnAir', true) },
   },

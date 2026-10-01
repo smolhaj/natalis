@@ -61,7 +61,7 @@ const PERU_EVENTS = [
       !G.mem?.per_sendero,
     text: (G) => {
       return inSenderoZone(G)
-        ? 'The teachers stop coming to school. First one stops coming, then two, then the school is closed because someone burned the door and the army is in the plaza and people say the Senderistas were in the next village. Your parents speak in Quechua when they don\'t want you to understand. You understand some of what they\'re saying. The word they repeat is "runakuna" — the people — and another word for who is killing the people. You learn that the Shining Path kills teachers, community leaders, people who have accepted anything from the government. Your father is on the ronda campesina — the self-defense patrol. He comes home before dawn.'
+        ? 'The teachers stop coming to school, one, then two, then the school is shut because someone burned the door and the army is in the plaza and people say the Senderistas were in the next village. Your parents speak Quechua when they do not want you to understand, and you understand some of it. You learn that the Shining Path kills teachers, and village leaders, and anyone who took anything from the government. Your father is in the ronda campesina, the village patrol, and comes home before dawn.'
         : 'The news from Ayacucho is that the Shining Path has executed the mayor and the two school teachers. The news has been this kind of news for two years. The army is also in Ayacucho and the army has also been executing people. Your parents talk about it as a distant problem. The distance is specifically geographic: the violence is in the highlands, among the indigenous population, in a language and a landscape that Lima does not think about very often.'
     },
     choices: null,
@@ -82,8 +82,8 @@ const PERU_EVENTS = [
     text: (G) => {
       const isWealthy = G.stats.wealth > 60
       return isWealthy
-        ? 'April 5, 1992. Army tanks in front of the Congress building. Fujimori on national television at midnight dissolving Congress, suspending the judiciary, suspending the Constitution. The Shining Path is still active. The economy has had three-digit inflation. The political class that Congress represents has been failing for a decade. On the street in Miraflores, the reaction is complicated: many people approve. The Sendero has to be defeated. If the institutions were working, the autogolpe wouldn\'t have been possible. These sentences are both true and both are being used to justify something that has a different name in the countries that are watching from outside.'
-        : 'April 5, 1992. Tanks in front of Congress. Fujimori on television. Two years ago nobody knew his name; he was the rector of the agrarian university, the son of immigrants from Kumamoto. He says the institutions have failed. He says he will rebuild them with emergency powers. In the highland provinces the response is similar to Lima: many people support him. Congress was not doing anything about the Shining Path. The question you are carrying is: what happens after the emergency powers.'
+        ? 'April 5, 1992. Tanks in front of Congress, and Fujimori on television at midnight dissolving it, and the courts, and the constitution. The Shining Path is still bombing and inflation has had three digits. In Miraflores a lot of people approve: the Sendero has to be beaten, and if the institutions worked this could not have happened. The countries watching from outside have another name for it.'
+        : 'April 5, 1992. Tanks in front of Congress, and Fujimori on television, the agronomist and university rector nobody had heard of two years ago, son of immigrants from Kumamoto. The institutions have failed, he says, and he will rebuild them with emergency powers. In the highland towns, as in Lima, a lot of people support him; Congress was doing nothing about the Shining Path. What you carry is the question of what comes after the emergency.'
     },
     choices: null,
     effect: (p) => { p.e += 3; p.addFlag('per_fujimori_era'); p.setMem('per_autogolpe', true); p.setMem('per_fujimori_golpe', true); },
@@ -113,7 +113,7 @@ const PERU_EVENTS = [
       {
         text: 'You refuse. What the refusal costs is specific and ongoing.',
         tag: null,
-        outcome: 'The health post becomes a complicated place. The specific form of difficulty a rural woman in the 1990s faces when she refuses what the government health worker has told her to do.',
+        outcome: 'The health post becomes a complicated place. The form of difficulty a rural woman in the 1990s faces when she refuses what the government health worker has told her to do.',
         effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('per_fujimori_era'); p.setMem('per_esterilizacion', true); },
       },
     ],
@@ -186,9 +186,10 @@ const PERU_EVENTS = [
       const isVictim = G.flags.has('per_sterilization_survivor')
       if (G.flags.has('pe_desaparecido_family')) return 'The Commission comes to Huamanga and sits at a long table in a hall, and the hearings are on the radio, in Quechua with a translator. The women from the association go in one at a time with their photographs. The final report says 69,280, and says that three of every four of them spoke Quechua, and says it in a language most of them did not read. He is in it as a line in an annex: a name, a date, a place, and the words presumed dead.'
       return isVictim
-        ? 'The CVR — Comisión de la Verdad y Reconciliación — takes testimony. 69,000 dead. 75% Quechua-speaking. The sterilization campaign. The cases accumulate. The cases exist now in a document. The document does not give back what the procedure ended. But the document exists, which is more than the people who gave the orders planned for.'
+        ? 'The Truth Commission takes testimony, and the dead are counted, and most of them spoke Quechua. Then the forced sterilisations, case after case, written into a document. The document does not give back what the operation ended. But it exists, more than the people who gave the orders planned for.'
         : 'The Truth Commission publishes its final report. 69,000 dead, 75% indigenous. The report finds the Shining Path responsible for 54% of deaths and the Peruvian security forces responsible for 32%. Both numbers. The Lima press reports the numbers with less interest than the international press. The people for whom the numbers are names have been waiting for this document for twenty years.'
     },
+    context: 'Peru\'s Truth and Reconciliation Commission (2003) estimated 69,280 deaths in the 1980-2000 conflict; three quarters of the victims spoke Quechua or another indigenous language.',
     choices: [
       {
         text: 'You give testimony. The saying of it is separate from what is done with it.',
@@ -199,7 +200,7 @@ const PERU_EVENTS = [
       {
         text: 'You do not testify. There is no version of saying it that resolves what happened.',
         tag: null,
-        outcome: 'The silence is yours to have. The things that happened in those years are in the report anyway — the pattern, the numbers, the official account. The specific thing is still yours.',
+        outcome: 'The silence is yours to have. The things that happened in those years are in the report anyway — the pattern, the numbers, the official account. The thing is still yours.',
         effect: (p) => { p.r += 6; p.addFlag('per_cvr_witness'); p.setMem('per_cvr', true); },
       },
     ],
@@ -246,7 +247,7 @@ const PERU_EVENTS = [
       const isVictim = G.flags.has('per_sterilization_survivor')
       const isHighland = G.ruralUrban === 'rural'
       return isVictim
-        ? 'You are one of the 270,000. That number exists in the CVR report and in the cases that are still open and in the specific knowledge of your body. The justice has been partial. The accountability has been partial. The Fujimori name is still on the ballot. You are still here, which is the other partial fact.'
+        ? 'You are one of the 270,000. That number exists in the CVR report and in the cases that are still open and in the knowledge of your body. The justice has been partial. The accountability has been partial. The Fujimori name is still on the ballot. You are still here: the other partial fact.'
         : isHighland
           ? 'The Shining Path came from the highlands and killed mostly highland people and the state responded by killing highland people and the Truth Commission named it: 69,000 dead, 75% Quechua-speaking. You were inside the 75% or you were adjacent to it. The accounting took twenty years and is still being debated in Lima as though it happened somewhere else.'
           : `Peru's history in your lifetime: ${PE_PRESIDENTS.filter(([y]) => y >= (G.character?.birthYear ?? 0) + 8 && y <= G.currentYear).map(([, n]) => n).join(', ')}. Each name is a crisis. The pattern under the names is the same crisis repeating.`

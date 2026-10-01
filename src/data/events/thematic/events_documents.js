@@ -1,3 +1,4 @@
+import { bornStateless } from '../_law.js'
 import { wasSovietRepublic } from '../../history.js'
 // BUILD 25 — The census, documents, and official identity
 // The state's power to define you — and to deny that definition.
@@ -54,7 +55,12 @@ export const DOCUMENT_EVENTS = [
     id: 'doc_no_birth_certificate',
     phase: 'childhood',
     weight: 3,
-    when: (G) => (G.character.country?.archetype === 'subsaharan' || G.character.country?.archetype === 'developing_unstable') && G.ruralUrban === 'rural' && G.age >= 6 && G.age <= 12 && !G.mem.docBirth,
+    // An unregistered birth is not statelessness. Most of the world's
+    // unregistered children are citizens of the country they were born in, and
+    // this used to turn every one of them stateless for life — a Yoruba girl in
+    // rural Nigeria carried statelessness texture to her death. The stateless
+    // are a people a state declined to count; see `doc_stateless_birth`.
+    when: (G) => (G.character.country?.archetype === 'subsaharan' || G.character.country?.archetype === 'developing_unstable') && G.ruralUrban === 'rural' && G.age >= 6 && G.age <= 12 && !bornStateless(G) && !G.mem.docBirth,
     text: 'You were born at home. No one wrote it down in a government register. You exist — your family knows you exist, the village knows — but the state does not. At school they ask for a birth certificate to enroll. There is a process for children without certificates. The process costs money your family does not have and requires a trip to the town that takes a day each way.',
     choices: [
       {
@@ -66,10 +72,24 @@ export const DOCUMENT_EVENTS = [
       {
         text: 'You enter school without one. Many children do.',
         tag: 'unregistered',
-        outcome: 'You are enrolled anyway, by a teacher who writes your name in pencil. You exist in this school but not in the official record. The distinction will matter later.',
-        effect: (p) => { p.addFlag('stateless_childhood'); p.setMem('docBirth', true) },
+        outcome: 'You are enrolled anyway, by a teacher who writes your name in pencil. You exist in this school but not in the register in town.',
+        effect: (p) => { p.addFlag('unregistered_birth'); p.setMem('docBirth', true) },
       },
     ],
+  },
+
+  {
+    id: 'doc_stateless_birth',
+    // For the people the roster models as uncounted by their own state
+    // (`STATELESS` in _law.js): Rohingya after 1982, Bihari before 2008, the
+    // ajanib Kurds of Hasakah, the Lhotshampa after 1988, the hill peoples of
+    // northern Thailand.
+    phase: 'childhood',
+    weight: 12,
+    when: (G) => bornStateless(G) && G.age >= 6 && G.age <= 11 && !G.mem.docBirth,
+    text: 'Your mother goes to the office to register you for school and comes back with the form still blank. The man said the family is not on the list, and that what is not on the list cannot be written onto it. You are on the school bench anyway, at the end, and when the inspector comes the teacher sends you out to fetch water.',
+    choices: null,
+    effect: (p) => { p.m -= 6; p.addFlag('stateless_childhood'); p.setMem('docBirth', true) },
   },
 
   {
@@ -116,7 +136,7 @@ export const DOCUMENT_EVENTS = [
     id: 'doc_first_passport',
     phase: 'midlife',
     weight: 3,
-    when: (G) => G.flags.has('stateless_childhood') || G.flags.has('stateless_navigator') && !G.mem.docFirstPassport,
+    when: (G) => (G.flags.has('stateless_childhood') || G.flags.has('stateless_navigator')) && !G.mem.docFirstPassport,
     text: 'You have never had a passport. You have documents — various documents, over various years — but not a passport: the kind of document that is a country saying you are theirs. The window at the passport office is ordinary. You take the photograph and the processing fee and fill out the form and submit it and wait, and a booklet arrives in the post with your name on it and you sit with it for longer than the object probably merits.',
     effect: (p) => { p.m += 20; p.addFlag('first_passport_received'); p.setMem('docFirstPassport', true) },
   },
@@ -125,8 +145,10 @@ export const DOCUMENT_EVENTS = [
     id: 'doc_stateless_marriage',
     phase: null,
     weight: 2,
-    when: (G) => G.flags.has('stateless_childhood') && G.partner !== null && G.age >= 22 && G.age <= 40 && !G.mem.docMarriage,
-    text: 'You need a birth certificate to register a marriage. You don\'t have one — the original, not the late-registered approximation, not the UNHCR document. The registrar explains, not unkindly, what the requirements are. The requirements were written for people who have the documents the requirements require. You ask if there is a process for people who don\'t. There is a process. The process takes two years.',
+    when: (G) => (G.flags.has('stateless_childhood') || G.flags.has('unregistered_birth')) && G.partner && G.age >= 22 && G.age <= 40 && !G.mem.docMarriage,
+    text: (G) => G.flags.has('stateless_childhood')
+      ? 'You need a birth certificate to register a marriage, and the state that would have issued it says you were never its to register. The registrar explains, not unkindly, what the requirements are. You ask if there is a process for people like you. There is a process. It takes two years, and at the end of it is another office.'
+      : 'You need a birth certificate to register a marriage, and you were never written down. The registrar explains, not unkindly, that there is a process: two witnesses who remember your birth, a sworn statement, a fee, a trip to the district office. Your aunt and the old man from the next compound go with you, and swear to a year that is roughly right.',
     effect: (p) => { p.m -= 10; p.addFlag('bureaucratic_obstacle'); p.setMem('docMarriage', true) },
   },
 

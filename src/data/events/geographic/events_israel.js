@@ -39,7 +39,7 @@ export const ISRAEL_EVENTS = [
       if (isMizrahi(G)) {
         return 'You arrived from a country that no longer wants you — or you were born to parents who did. The ma\'abara is corrugated metal in a field at the edge of the desert. The Jewish Agency worker says it is temporary. Your parents speak Arabic at home and the school speaks Hebrew and the school makes clear which language is appropriate here. You are inside the project of building a state that did not exist before you were born, and you are building it from a disadvantaged position in the project.'
       }
-      return 'You are a child in the new state. The independence declaration was on the radio and you were in the room when the adults heard it, or your parents describe being in the room. You have been told the story of why this place, this year, this people. You are the child this was built for. You understand, the way children understand things placed inside them as certainty, that this is true and that it comes with a specific weight.'
+      return 'You are a child in the new state. The independence declaration was on the radio and you were in the room when the adults heard it, or your parents describe being in the room. You have been told the story of why this place, this year, this people. You are the child this was built for. You understand, the way children understand things placed inside them as certainty, that this is true and that it comes with a weight.'
     },
     choices: null,
     effect: (p) => { p.m += 6; p.addFlag('built_state_generation'); p.setMem('ilFoundingFired', true) },
@@ -108,7 +108,7 @@ export const ISRAEL_EVENTS = [
       {
         text: 'Support or intelligence — the service, not the frontline',
         tag: null,
-        outcome: 'You serve. The service is real. The frontline is not the only part of the service that is real.',
+        outcome: 'You serve. The frontline is not the only part of the service.',
         effect: (p) => { p.e += 5; p.s += 3; p.addFlag('idf_served'); p.setMem('ilIdfFired', true) },
       },
     ],
@@ -127,7 +127,7 @@ export const ISRAEL_EVENTS = [
       G.currentYear === 1973 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.ilYomKippurFired,
-    text: 'The sirens begin on Yom Kippur. The holiest day of the year, the day the country stops — and then it does not stop in the way it has stopped every year before. The reservist call-ups are happening outside synagogues, from families who are fasting. Egypt crossed the Suez at multiple points simultaneously. Syria took the Golan by afternoon. The first two days on the radio are not describing the situation honestly. You understand what is being not-described. You are being called up.',
+    text: 'The sirens go on Yom Kippur, the day the whole country stops, and this year it does not stop the way it always has. The call-ups go out at the synagogue doors to men who are fasting. Egypt has crossed the canal and Syria is on the Golan by afternoon, and for two days the radio is not telling the truth about it. You understand what is not being said. You are called up.',
     choices: [
       {
         text: 'You are deployed to the front',
@@ -157,7 +157,7 @@ export const ISRAEL_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1997 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.ilSovietAliyahFired,
-    text: 'You landed at Ben Gurion Airport with a suitcase and a degree that does not transfer. The Soviet Union is dissolving behind you. Ahead is a country that exists in a language you cannot yet speak. The engineer who is now a supermarket cashier — this is not a metaphor, this is someone you know. The word oleh means "one who ascends." The absorption centre smells of institutional cleaning fluid. Someone hands you a textbook for Hebrew learners. The language will take eighteen months to live inside.',
+    text: 'You landed at Ben Gurion with a suitcase and a degree that does not transfer, the Soviet Union dissolving behind you and ahead a country in a language you cannot yet speak. The engineer who is now a supermarket cashier is not a metaphor; it is someone you know. Oleh, they call you, one who ascends. The absorption centre smells of institutional cleaning fluid. It will be a year and a half before you can live inside the Hebrew.',
     choices: [
       {
         text: 'Rebuild here — this is the place and you will make it work',
@@ -168,7 +168,7 @@ export const ISRAEL_EVENTS = [
       {
         text: 'Survive the descent first — the ascent can come later',
         tag: null,
-        outcome: 'The gap between who you were and what is available is the specific texture of the first years. You work inside it.',
+        outcome: 'The gap between who you were and what is available is the texture of the first years. You work inside it.',
         effect: (p) => { p.m -= 10; p.mo -= 500; p.addFlag('soviet_oleh_israel'); p.addFlag('emigrant_deskilling'); p.setMem('ilSovietAliyahFired', true) },
       },
     ],
@@ -196,7 +196,7 @@ export const ISRAEL_EVENTS = [
       {
         text: 'This is your country and you will make your place in it',
         tag: null,
-        outcome: 'The making of place is slower than the claim. Both things are true.',
+        outcome: 'The making of place is slower than the claim.',
         effect: (p) => { p.m -= 5; p.karma += 5; p.addFlag('ethiopian_oleh_israel'); p.setMem('ilEthAliyahFired', true) },
       },
       {
@@ -220,12 +220,12 @@ export const ISRAEL_EVENTS = [
       G.currentYear === 1995 &&
       G.age >= 14 && G.age <= 70 &&
       !G.mem?.ilRabinFired,
-    text: 'The rally in Tel Aviv was for peace. He spoke. The crowd sang. He folded the paper with the lyrics in his jacket pocket. The shots were from behind. At 11:10 PM the radio announces he has died at Ichilov Hospital. The killer is a Jewish Israeli — a student from Bar-Ilan University. This is the specific content of the shock: not that a prime minister was killed, which has happened in other countries, but who killed him and why. The why is written in a letter found in the killer\'s pocket. You will return to the letter for years.',
+    text: 'The rally in Tel Aviv was for peace. He sang with the crowd and folded the lyrics into his jacket pocket. The shots came from behind, and at ten past eleven the radio says he has died. The killer is a Jewish Israeli, a law student. That is the shock: not that a prime minister was killed, but who killed him, and why.',
     choices: [
       {
         text: 'You were at the rally — you were there when it happened',
         tag: null,
-        outcome: 'The specific fact of having been there will not leave. The square will be renamed for him. You will never stop seeing it as it was that night.',
+        outcome: 'The fact of having been there will not leave. The square will be renamed for him. You will never stop seeing it as it was that night.',
         effect: (p) => { p.m -= 20; p.addFlag('rabin_killed_witness'); p.setMem('ilRabinFired', true) },
       },
       {
@@ -250,7 +250,7 @@ export const ISRAEL_EVENTS = [
       G.currentYear >= 2001 && G.currentYear <= 2005 &&
       G.age >= 14 && G.age <= 65 &&
       !G.mem?.ilIntifadaFired,
-    text: 'The bus is no longer a simple thing. The café has become a calculation you run before you sit down. The Dolphinarium bombing killed twenty-one teenagers on a Friday night. The Passover Seder massacre in Netanya killed thirty. The Sbarro pizza restaurant. Bus Route 2. You know the names of the places not because you sought them out but because they are the geography of these four years. You have changed your routes. You enter public spaces differently. This is the daily arithmetic of the intifada — the part that does not appear in casualty statistics.',
+    text: 'The bus is no longer a simple thing. The café is a calculation you run before you sit down. The Dolphinarium on a Friday night, full of teenagers. The Park Hotel at the Seder. Sbarro. You know the names because they are the geography of these years, and you have changed your routes and you enter public spaces differently, and none of that appears in the casualty figures.',
     choices: [
       {
         text: 'Continue living — to stop living normally is to let it work',
@@ -261,7 +261,7 @@ export const ISRAEL_EVENTS = [
       {
         text: 'Restrict yourself — some places are not worth the calculation',
         tag: null,
-        outcome: 'You narrow the circle. The narrowing is its own loss, which is the point of the narrowing.',
+        outcome: 'You narrow the circle. The narrowing is a loss, and the loss was the point.',
         effect: (p) => { p.m -= 18; p.addFlag('second_intifada_terror_lived'); p.setMem('ilIntifadaFired', true) },
       },
     ],
@@ -285,7 +285,7 @@ export const ISRAEL_EVENTS = [
       {
         text: 'Move — the land and the conviction are real',
         tag: null,
-        outcome: 'You move. The community is real. The contested status of the land is also real. You live inside both.',
+        outcome: 'You move. The community takes you in. The contested status of the land is also real. You live inside both.',
         effect: (p) => { p.m += 6; p.addFlag('settlement_moved'); p.setMem('ilSettlementFired', true) },
       },
       {
@@ -315,7 +315,7 @@ export const ISRAEL_EVENTS = [
       {
         text: 'Navigate both — this is the citizenship you were born to',
         tag: null,
-        outcome: 'You learn to move between the frames. The skill is real and the cost of maintaining it is real.',
+        outcome: 'You learn to move between the frames. The skill is useful and it costs you to keep it up.',
         effect: (p) => { p.s += 5; p.e += 3; p.m -= 5; p.addFlag('arab_citizen_divided_self'); p.setMem('ilArabCitizenFired', true) },
       },
       {
@@ -341,7 +341,7 @@ export const ISRAEL_EVENTS = [
       !G.mem?.ilOct7Fired,
     text: (G) => {
       const isArab = isArabCitizen(G)
-      if (isArab) return 'The alert sounds at 6:29 on a Saturday morning. What unfolds over the following hours is the worst single-day killing of Jewish people since the Holocaust. It happens fifteen kilometres from where you live. You are an Arab citizen of Israel. You are also Arab. The two facts have always coexisted in you with some difficulty; what is happening to your state now makes the difficulty acute in a way you have not previously experienced. Your Jewish neighbours. Your Arabic-speaking family watching from across the border. The impossibility of this position is not new. It has never been this visible.'
+      if (isArab) return 'The alert sounds at 6:29 on a Saturday morning, and what happens over the next hours, fifteen kilometres from where you live, is the worst day for Jews since the Holocaust. You are an Arab citizen of Israel. Your Jewish neighbours. Your family across the border, watching. The impossibility of where you stand is not new. It has never been this visible.'
       return 'The alert sounds at 6:29 on a Saturday morning. What unfolds over the following hours comes through in pieces: the kibbutzim, the music festival, the scale becoming clear in stages across the day. By evening: over a thousand people killed, two hundred and fifty taken as hostages into Gaza. The military response begins within days. You know people at the festival or with family in the kibbutzim or with children in the army. The question of what a response looks like that is adequate to this and also adequate to what comes after does not have an answer you can find.'
     },
     choices: [
@@ -373,7 +373,7 @@ export const ISRAEL_EVENTS = [
       G.currentYear >= 2000 && G.currentYear <= 2010 &&
       G.age >= 25 && G.age <= 65 &&
       !G.mem?.ilPostOsloFired,
-    text: 'You remember the handshake on the White House lawn. You remember believing it was a beginning. The Rabin assassination was the first unravelling. The Camp David breakdown in 2000 was the second. The intifada was the third. The settlement population has continued growing through every peace process. The Palestinian Authority exists but the state it was supposed to lead has not materialised in the way the Oslo framework suggested it would. You have arrived at a position you cannot name exactly — not despair, not cynicism, not hope, but something that can hold all three without collapsing.',
+    text: 'You remember the handshake on the White House lawn and believing it was a beginning. Then Rabin, then Camp David breaking down, then the intifada, and the settlements growing through every peace process. The Palestinian Authority exists; the state it was meant to lead does not. You have arrived somewhere you cannot name: not despair, not cynicism, not hope, but something that can hold all three without falling down.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('post_oslo_israeli_despair'); p.setMem('ilPostOsloFired', true) },
   },

@@ -281,6 +281,347 @@ export function generateIdentityCard(state) {
 
 const oneOf = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
+// ─── What defined this life ──────────────────────────────────────────────────
+//
+// The historical spine used to be the first two entries of `worldEventsFired`,
+// which is the order things reached the character — so a German born in 1925
+// who saw Kristallnacht at thirteen, was bombed out at eighteen and was asked
+// about it by his own children in 1968 was summed up as having lived through
+// "the German Federal Election, March 1933 and the Fall of the Berlin Wall.
+// Nobody ever asked him about either." Both halves were false of him.
+//
+// A life is defined first by what happened TO it — the flags the country
+// modules set — ranked by weight, and only then by the world events, ranked by
+// what kind of thing they were rather than by which came first.
+
+/**
+ * [test, significance, noun phrase]. The phrase is what follows "lived
+ * through", so it must read as a thing a person can have been inside. Explicit
+ * flags first; a few shapes after them for the hundreds of module flags that
+ * share a meaning (`*_occupation_survivor`, `*_famine_*`).
+ */
+const DEFINING_FLAGS = [
+  [['holocaust_survived', 'holocaust_survivor'], 100, 'the camps'],
+  [['genocide_survivor', 'genocide_survived', 'tutsi_hidden', 'rwa_genocide_witness'], 100, 'the genocide'],
+  [['survived_khmer_rouge'], 100, 'the Khmer Rouge years'],
+  [['bosnia_camp_survivor'], 100, 'the camps'],
+  [['gulag_survivor', 'gulag_survived'], 98, 'the camps'],
+  [['hibakusha_survivor', 'hibakusha_silent'], 98, 'the bomb'],
+  [['partition_survivor', 'partition_refugee'], 96, 'Partition'],
+  [['de_kristallnacht_witness'], 92, 'Kristallnacht'],
+  [['de_vertriebene'], 92, 'the expulsions from the east'],
+  [['sov_frontovik', 'warsaw_uprising_veteran', 'ww2_pl_warsaw_uprising'], 92, 'the front'],
+  [['sov_famine_1932', 'great_leap_hunger', 'bng_famine_generation', 'famine_survivor'], 90, 'the famine'],
+  [['dprk_arduous_march'], 90, 'the Arduous March'],
+  [['nl_hunger_winter_generation'], 88, 'the Hunger Winter'],
+  [['sov_blockade_survivor'], 90, 'the blockade'],
+  [['sarajevo_siege', 'siege_adolescence', 'sau_siege_generation'], 90, 'the siege'],
+  [['jp_firebombing'], 88, 'the firebombing'],
+  [['de_bombing_survivor', 'de_bombed_out', 'aut_bombing_survivor', 'ww2_cn_bombing', 'survived_bombardment', 'nato_bombing_survived', 'inside_gaza_bombardment'], 86, 'the bombing'],
+  [['de_hunger_winter'], 80, 'the hunger winter after the war'],
+  [['cultural_revolution_survived'], 88, 'the Cultural Revolution'],
+  [['derg_era_survived'], 86, 'the Derg'],
+  [['tehran_revolution_witness', 'iran_revolution_lived'], 84, 'the revolution'],
+  [['camp_boiro_survivor_adjacent'], 80, 'the years of Camp Boiro'],
+  [['sov_deported_people', 'btn_lhotshampa_expelled', 'gulf_expelled_1991'], 88, 'the deportation'],
+  [['grew_up_in_camp', 'refugee_camp_years', 'camp_is_home'], 82, 'the camp'],
+  [['child_soldier_taken'], 92, 'the war {he} was taken into as a child'],
+]
+
+const DEFINING_SHAPES = [
+  // Memory flags are a parent's war, not this one; generation flags are a
+  // cohort, not an experience — both are excluded from the shapes.
+  [/^(?!.*(memory|_family|_kin|generation)).*(occupation_(survived|survivor|childhood|child)|ww2_[a-z]{2}_occupation|kuwait_occupation)$/, 84, 'the occupation'],
+  [/^(?!.*(memory|_family|_kin)).*(famine_(survivor|19\d\d)|hunger_(years|childhood))$/, 82, 'the hunger years'],
+  [/^(?!.*(memory|_family|_kin)).*(evacuated|_evacuation)$/, 70, 'the evacuation'],
+]
+
+/** Every flag that records the character being asked about the past, and answering. */
+const WAS_ASKED = /^(de_told_the_children|de_told_it_straight|de_gave_the_speech|de_named_it|de_deflected_the_children|de_refused_the_children|de_asked_once|memory_keeper|oral_historian|testified|.*_testified|.*_testimony|.*_interviewed|.*told_the_children)$/
+
+function definingFlagItems(state, He) {
+  const flags = state.flags ?? []
+  const he = He.toLowerCase()
+  const seen = new Set()
+  const out = []
+  const push = (sig, phrase, flag) => {
+    const p = phrase.replace('{he}', he)
+    if (seen.has(p)) return
+    seen.add(p)
+    const y = state.mem?.[`${flag}Year`]
+    out.push({ sig, phrase: p, year: Number.isFinite(y) ? y : null, own: true })
+  }
+  for (const [ids, sig, phrase] of DEFINING_FLAGS) {
+    const hit = ids.find(id => flags.includes(id))
+    if (hit) push(sig, phrase, hit)
+  }
+  for (const [re, sig, phrase] of DEFINING_SHAPES) {
+    const hit = flags.find(fl => re.test(fl))
+    if (hit) push(sig, phrase, hit)
+  }
+  // A war that ran through the childhood, only where the record agrees it was
+  // a war (warChildhoodYears reads the dated conflict table).
+  if (flags.includes('war_childhood') && warChildhoodYears(state) >= 3) push(76, 'the war', 'war_childhood')
+  return out.sort((a, b) => b.sig - a.sig)
+}
+
+// World-event names are data, not noun phrases: "1973 Oil Shock — Import
+// Burden", "After Biafra", "East Germany: Stasi Surveillance". Pasted into a
+// sentence they printed "She saw the 1973 Oil Shock — Import Burden from the
+// inside" and "Lived through the After Biafra." These are the phrases a person
+// would use; `null` means the event is not something a life is defined by.
+const WORLD_EVENT_PHRASES = {
+  nine_eleven_muslim_backlash: 'the backlash after September 11',
+  ethiopian_famine: 'the famine of 1984',
+  aids_epidemic_subsaharan: 'the AIDS years',
+  ebola_containment_2014: 'the Ebola outbreak of 2014',
+  east_germany_stasi: 'the Stasi years',
+  east_germany_trabant: 'the long wait for a Trabant',
+  cuba_ration_book: 'the ration book',
+  karabakh_war_2020: 'the Forty-Four-Day War',
+  holodomor: 'the Holodomor',
+  the_troubles: 'the Troubles',
+  aids_crisis_west: 'the AIDS crisis',
+  apartheid_privilege: 'apartheid',
+  apartheid_era: 'apartheid',
+  apartheid_pass_laws: 'the pass laws',
+  australian_bushfires: 'the Black Summer fires',
+  rwandan_genocide_aftermath: 'the years after the genocide',
+  yugoslav_wars_impact: 'the Yugoslav wars',
+  iran_revolution_street: 'the revolution of 1979',
+  vietnam_doi_moi: 'Đổi Mới',
+  chechen_war_first_lived: 'the first war in Chechnya',
+  peru_shining_path: 'the war with the Shining Path',
+  ghana_1966_coup: 'the coup of 1966',
+  nigeria_biafra_aftermath: 'the years after Biafra',
+  oil_shock_1973_periphery: 'the oil shock of 1973',
+  oil_shock_1973: 'the oil shock of 1973',
+  oil_shock_1973_west: 'the oil shock of 1973',
+  oil_shock_1973_gulf: 'the oil boom of 1973',
+  spain_anarchist_factories_1936: 'collectivised Barcelona',
+  cuba_special_period_1991: 'the Special Period',
+  cuba_us_normalization_2014: 'the thaw with the United States',
+  cuba_11j_protests_2021: 'the protests of July 2021',
+  algeria_black_decade_begins: 'the cancelled election of 1991',
+  anfal_campaign_1988: 'the Anfal',
+  spanish_flu_1918: 'the influenza of 1918',
+  spanish_flu_1918_b: 'the influenza of 1918',
+  we_brazil_plano_real: 'the Plano Real',
+  we_mali_revolution_1991: 'the revolution of 1991',
+  we_mali_coup_2012: 'the coup of 2012 and the loss of the north',
+  we_iran_mahsa_amini_2022: 'the autumn of 2022',
+  we_ci_houphouet_death_1993: 'the death of Houphouët-Boigny',
+  we_ci_election_crisis_2010: 'the crisis after the 2010 election',
+  we_cameroon_anglophone_crisis: 'the Anglophone crisis',
+  we_germany_1933_reichstag: 'the election of March 1933',
+  jesse_owens_berlin_1936: 'the Berlin Olympics',
+  west_indies_cricket_1975: "the West Indies' World Cup",
+  lee_kuan_yew_death_2015: 'the death of Lee Kuan Yew',
+  latin_america_coup: 'the coup',
+  tropical_cyclone: 'a cyclone',
+  iraq_war_news: null,
+  conscription_south_korea: null,
+  conscription_russia: null,
+  conscription_norway: null,
+  us_medical_debt: null,
+  internet_revolution: null,
+  corruption_developing: null,
+  paris_agreement_2015: null,
+  decolonisation_disillusionment_1970s: 'the disappointment after independence',
+  womens_liberation_march_1970: "the women's marches of 1970",
+  niger_river_drought: 'the drying of the Sahel',
+  china_economic_boom: "China's rise",
+  olympics_boycott_1980: 'the Olympic boycotts',
+  south_africa_post_apartheid: 'the first years after apartheid',
+  apartheid_namibia: 'independence',
+  namibia_genocide_acknowledgment_2021: 'the year Germany said the word genocide',
+  hurricane_katrina: 'Katrina',
+  korean_war_aftermath: 'the division of Korea',
+  partition_india_refugee: 'Partition',
+  partition_of_india: 'Partition',
+  ghana_independence_1957: 'independence',
+  kenya_independence_1963: 'independence',
+  zimbabwe_independence_1980: 'independence',
+  we_jamaica_independence_1962: 'independence',
+  bay_of_pigs_1961: 'Playa Girón',
+  singapore_independence_1965: 'the separation from Malaysia',
+  fortuyn_assassination_2002: 'the murder of Pim Fortuyn',
+  afghanistan_girls_school_ban_2022: 'the closing of the girls\' schools',
+  romero_assassination_1980: 'the murder of Archbishop Romero',
+  we_george_floyd_2020: 'the summer of 2020',
+  we_brazil_lava_jato: 'Lava Jato',
+  we_bolsonaro_2018: 'the Bolsonaro years',
+  we_south_africa_1948_election: 'the election of 1948',
+  baku_black_january_1990: 'Black January',
+  stroessner_fall_1989: 'the fall of Stroessner',
+  ecuador_dollarization_2000: 'dollarisation',
+  we_guinea_independence_1958: 'the No of 1958',
+  we_bolivia_evo_morales_2005: 'the election of Evo Morales',
+  we_nz_rainbow_warrior_1985: 'the sinking of the Rainbow Warrior',
+  operation_condor: 'Operation Condor',
+  el_mozote_massacre: 'the massacre at El Mozote',
+  egypt_1967_defeat: 'the defeat of 1967',
+  gulf_extreme_heat_2055: 'the summers the Gulf could not be lived in',
+  climate_tipping_point_2045: 'the tipping point',
+  we_sadat_assassination_1981: 'the assassination of Sadat',
+  lumumba_assassination_1961: 'the murder of Lumumba',
+  sankara_assassination_1987: 'the murder of Sankara',
+  we_eritrea_independence_1993: 'independence',
+}
+
+/** A world event as a noun phrase for prose, or null if it is not one. */
+export function worldEventPhrase(we) {
+  if (!we) return null
+  if (Object.prototype.hasOwnProperty.call(WORLD_EVENT_PHRASES, we.id)) return WORLD_EVENT_PHRASES[we.id]
+  let name = String(we.name ?? '').trim()
+  if (!name) return null
+  // "Plano Real — End of Hyperinflation": the part before the dash is the name.
+  name = name.split(/\s+[—–]\s+/)[0]
+  // "Ghana: The First Coup": the part after the colon is the thing.
+  if (/^[^:]+:\s+/.test(name)) name = name.replace(/^[^:]+:\s+/, '')
+  if (/^(After|Before|During) /.test(name)) return `the years ${name[0].toLowerCase()}${name.slice(1)}`
+  // "Hungarian Revolution, 1956" and "Spitak Earthquake, Armenia".
+  name = name.replace(/,\s*(\d{4})$/, ' of $1').replace(/,\s*[A-Z][\w\s.-]*$/, '')
+  const phrased = withDefiniteArticle(name)
+  return phrased.replace(/^The /, 'the ')
+}
+
+/**
+ * How much a world event weighs in a life, by what kind of thing it was.
+ * First-fired is not a ranking: an election in 1933 came before the war.
+ */
+function worldEventSignificance(we) {
+  const n = `${we.id} ${we.name}`.toLowerCase()
+  if (/genocide|holocaust|holodomor|famine|massacre|khmer|partition|anfal|red terror|roundup|vel d'hiv/.test(n)) return 100
+  if (/(?<!on )\bwar\b|occupation|liberation|insurgen|uprising|intifada/.test(n) && !/war on terror|cold war|war on drugs/.test(n)) return 90
+  if (/revolution|coup|crackdown|tiananmen|collapse|hyperinflation|emergency|apartheid|independence|fall of|dirty war|troubles|stasi|special period/.test(n)) return 80
+  if (/earthquake|cyclone|tsunami|flood|disaster|epidemic|pandemic|aids|ebola|influenza|drought|chernobyl|bhopal|explosion|hurricane/.test(n)) return 70
+  if (/crisis|crash|shock|boom|miracle|reform|liberalis|privatis|plan\b|real plan|dollar/.test(n)) return 60
+  if (/assassinat|death|dies|election|referendum|protest|strike|boycott/.test(n)) return 50
+  return 40
+}
+
+function worldEventItems(state) {
+  const country = state.character?.country?.name
+  const live = state.currentCountry?.name
+  const born = state.character?.birthYear ?? 0
+  return [...(state.worldEventsFired ?? [])]
+    .map(id => WORLD_EVENTS.find(w => w.id === id))
+    .filter(w => w && !AMBIENT_WORLD_EVENTS.has(w.id))
+    .map((w, i) => {
+      const phrase = worldEventPhrase(w)
+      if (!phrase) return null
+      const own = !!(w.countries?.includes(country) || (live && w.countries?.includes(live)))
+      return { sig: worldEventSignificance(w) + (own ? 15 : 0), phrase, year: Math.max(born, w.years?.[0] ?? born), order: i, own, id: w.id }
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.sig - a.sig || a.order - b.order)
+}
+
+/** The shape a life took, for choosing which sentence describes it. */
+function lifeArc(state) {
+  const flags = state.flags ?? []
+  const f = (x) => flags.includes(x)
+  const born = state.character?.birthYear ?? 0
+  const leftTheCountry = (state.currentCountry?.name ?? state.character?.country?.name) !== state.character?.country?.name
+  const kids = state.children?.length ?? 0
+  const partner = state.partner
+  const widowedYear = state.mem?.widowedYear
+  const career = lifeWork(state)
+  const everMarried = f('married') || f('widowed') || f('divorced') || f('lost_partner') || !!partner?.married
+  return {
+    emigrant: leftTheCountry,
+    asked: flags.some(fl => WAS_ASKED.test(fl)),
+    deflected: flags.some(fl => /^(de_refused_the_children|de_deflected_the_children)$/.test(fl)) && !flags.includes('de_told_the_children'),
+    toldIt: flags.some(fl => /^(de_told_the_children|de_told_it_straight|de_named_it|memory_keeper|oral_historian|.*testified)$/.test(fl)),
+    war: flags.some(fl => /war_childhood|frontovik|combat_veteran|bombing|bombed|siege|occupation_(survivor|survived)|warsaw_uprising/.test(fl)),
+    longMarriage: !!(partner && partner.alive !== false && partner.married && (partner.years ?? 0) >= 30),
+    widowedYoung: !!(f('widowed') && Number.isFinite(widowedYear) && widowedYear - born < 50),
+    widowedAge: Number.isFinite(widowedYear) ? widowedYear - born : null,
+    manyChildren: kids >= 5,
+    neverMarried: (state.age ?? 0) >= 40 && !everMarried,
+    prisoner: f('served_prison_time') || f('political_prisoner') || f('imprisoned'),
+    farmer: career?.field === 'agriculture' || career?.id === 'farmer',
+    kids,
+    partnerName: partner?.name ? String(partner.name).split(' ')[0] : null,
+    togetherFrom: partner && Number.isFinite(partner.years) ? (state.currentYear ?? 0) - partner.years : null,
+  }
+}
+
+/** The spine sentence: what defined the life, said once, in a register that fits it. */
+function spineSentence(items, arc, P) {
+  const { He, he, him, his } = P
+  if (items.length === 0) return null
+  const [a, b] = items
+  if (!b) {
+    const pool = [
+      `${He} lived through ${a.phrase}, which is the part of ${his} life a stranger would recognise and the smallest part of it to ${him}.`,
+      `${He} was there for ${a.phrase}. It is the only part of ${his} life anybody else can date.`,
+      `${He} lived through ${a.phrase}, and spent far more of ${his} attention on other things.`,
+      ...(arc.toldIt ? [`When people finally asked ${him} about ${a.phrase}, ${he} had been waiting a long time to be asked.`] : []),
+      ...(arc.deflected ? [`${He} lived through ${a.phrase}, and when ${his} children asked about it, ${he} did not tell them.`] : []),
+      ...(arc.emigrant ? [`${He} carried ${a.phrase} to another country, where it had to be explained.`] : []),
+      ...(arc.farmer ? [`${He} lived through ${a.phrase}, and the fields wanted the same things from ${him} afterwards.`] : []),
+    ]
+    return oneOf(pool)
+  }
+  // Two items. Sentences that assert an order need both dates and the dates
+  // in that order; the items arrive ranked, so put them back in time first.
+  const dated = a.year != null && b.year != null
+  const [x, y] = dated && b.year < a.year ? [b, a] : [a, b]
+  const general = [
+    `${He} saw ${x.phrase} and ${y.phrase} from the inside, which is not the same as understanding them.`,
+    `${x.phrase[0].toUpperCase()}${x.phrase.slice(1)} and ${y.phrase} are in the history books. In ${his} life they were weather first, and then they were the reason for things.`,
+    `${He} could date most of ${his} life by ${x.phrase} and ${y.phrase}, and seldom needed to.`,
+    ...(arc.asked ? [] : [`${He} lived through ${x.phrase} and ${y.phrase}. Nobody ever asked ${him} about either.`]),
+    ...(dated ? [
+      `${He} was alive for ${x.phrase}, and then for ${y.phrase}, and was not consulted about either.`,
+      `The century handed ${him} ${x.phrase} and then ${y.phrase}, and ${he} went on getting up in the morning.`,
+    ] : []),
+  ]
+  const shaped = [
+    ...(arc.toldIt ? [
+      `${He} lived through ${x.phrase} and ${y.phrase}, and late in life, when somebody finally asked, ${he} answered.`,
+      `${x.phrase[0].toUpperCase()}${x.phrase.slice(1)} and ${y.phrase} were the parts of ${his} life people wanted to hear about. ${He} told them when they asked, and kept the rest.`,
+    ] : []),
+    ...(arc.deflected ? [
+      `${He} lived through ${x.phrase} and ${y.phrase}. When ${his} own children asked about them, ${he} gave an answer that was true and was not an answer, and they all knew it.`,
+    ] : []),
+    ...(arc.emigrant ? [
+      `${He} lived through ${x.phrase} and ${y.phrase}, and carried both across a border to a place where neither needed explaining to anyone but ${him}.`,
+      `${He} took ${x.phrase} and ${y.phrase} to another country, where they had to be explained.`,
+    ] : []),
+    ...(arc.war ? [`${He} came through ${x.phrase} and ${y.phrase}. A good many people ${he} knew did not.`] : []),
+    ...(arc.farmer ? [`${He} lived through ${x.phrase} and ${y.phrase}, and the fields needed the same things from ${him} either way.`] : []),
+    // "Together" only if they were: both things dated, and both after the
+    // marriage began. A German widow of 1925 was told she and the husband she
+    // met in 1950 lived through Kristallnacht together.
+    ...(arc.longMarriage && arc.partnerName && dated && arc.togetherFrom != null && x.year >= arc.togetherFrom
+      ? [`${He} and ${arc.partnerName} lived through ${x.phrase} and ${y.phrase} together, and remembered them differently.`] : []),
+    ...(arc.neverMarried ? [`${He} lived through ${x.phrase} and ${y.phrase} with nobody at home to compare notes with afterwards.`] : []),
+  ]
+  // A life with a shape gets a sentence about that shape most of the time.
+  return oneOf(shaped.length && Math.random() < 0.7 ? shaped : general)
+}
+
+/**
+ * The ribbon as the death screen should show it, or null.
+ *
+ * An infant does not have a life archetype. And Witness mode cannot tell a
+ * player "You chose the easier path more than once": they chose nothing, the
+ * character did, and the line reads as an accusation of the person holding
+ * the phone.
+ */
+const PASSIVE_RIBBON_TEXT = {
+  the_compromised: 'The easier path was there more than once, and the life took it. The regret accumulated.',
+}
+export function ribbonForDisplay(state) {
+  const r = state?.ribbon
+  if (!r || (state.age ?? 0) < 5) return null
+  if (state.mode === 'passive' && r.id && PASSIVE_RIBBON_TEXT[r.id]) return { ...r, description: PASSIVE_RIBBON_TEXT[r.id] }
+  return r
+}
+
 function warChildhoodYears(state) {
   const born = state.character?.birthYear ?? 1960
   const country = state.character?.country
@@ -756,7 +1097,9 @@ export function generateEpitaph(state) {
   // state already knows the difference. A woman who lived her whole life in one
   // Siberian district was being told she had been carried across borders.
   const leftTheCountry = (state.currentCountry?.name ?? state.character?.country?.name) !== state.character?.country?.name
+  let movementOnly = false
   if (any('refugee', 'displaced') && !any('genocide_survivor', 'tutsi_hidden')) {
+    movementOnly = para2.length === 0
     if (any('sought_asylum', 'refugee_status')) {
       para2.push(`${He} fled and was eventually granted refuge. The years of waiting between were their own kind of sentence.`)
     // The `refugee` flag alone is not a border. Nineteen events set it for
@@ -770,11 +1113,23 @@ export function generateEpitaph(state) {
       para2.push(`${He} was moved by forces larger than any single life, though never out of the country ${he} was born in. Most displacement looks like that.`)
     }
   } else if (any('emigrated', 'diaspora') && para2.length === 0) {
-    // Only add emigration if no heavy history already took up this paragraph
-    if (f('illegal_immigrant') && !f('achieved_citizen')) {
+    // Only add emigration if no heavy history already took up this paragraph.
+    //
+    // Every character starts as a `citizen` of the country they were born in,
+    // so `residencyStatus === 'citizen'` alone told an Egyptian who went to the
+    // Gulf for six years and came home that she had "earned citizenship in an
+    // adopted country". The claim needs her to be living abroad, at death, as
+    // a citizen of where she is.
+    movementOnly = true
+    if (!leftTheCountry) {
+      para2.push(oneOf([
+        `${He} left ${bornIn} for a time, and came back to it, and the years away stayed part of how ${he} saw the place.`,
+        `${He} went abroad and returned. Afterwards ${he} noticed things about home that the people who had never left did not.`,
+      ]))
+    } else if (f('illegal_immigrant') && !f('achieved_citizen') && state.residencyStatus !== 'citizen') {
       para2.push(`${He} crossed without papers and built a life in a country that barely acknowledged ${his} existence.`)
-    } else if (f('achieved_citizen') || (state.residencyStatus === 'citizen')) {
-      para2.push(`${He} left ${bornIn} and eventually earned citizenship in an adopted country — paperwork that meant more than its bureaucratic weight.`)
+    } else if (state.residencyStatus === 'citizen' || (f('achieved_citizen') && state.residencyStatus !== 'undocumented')) {
+      para2.push(`${He} left ${bornIn} and eventually became a citizen of ${countryWithArticle(state.currentCountry?.name ?? 'another country')} — paperwork that meant more than its bureaucratic weight.`)
     } else {
       para2.push(`${He} left ${bornIn} in search of something different, and found it, at a cost.`)
     }
@@ -790,7 +1145,14 @@ export function generateEpitaph(state) {
   // Killed in a war: the obituary named the influenza of his infancy and not
   // the front he died at twenty-five on.
   const cause = String(state.causeOfDeath ?? '')
-  if (/conflict|combat|the war|crossfire|fighting|civil war/i.test(cause)) {
+  // Murdered for who they were is not a war death, and the obituary says which.
+  if (/genocide|Holocaust|deported and murdered/i.test(cause)) {
+    para2.unshift(/Holocaust|deported/i.test(cause)
+      ? `${He} was murdered at ${age} for being a Jew. There is no grave; there is a list with ${his} name on it.`
+      : `${He} was killed in the genocide, at ${age}, by people who knew where to look.`)
+  } else if (/Khmer Rouge|cadres|work cooperative|in the fields/i.test(cause) && /Cambodia/.test(String(state.character?.country?.name ?? ''))) {
+    para2.unshift(`${He} died at ${age} under the Khmer Rouge, in the years the country was told were Year Zero.`)
+  } else if (/conflict|combat|the war|crossfire|fighting|civil war/i.test(cause)) {
     para2.unshift(f('sov_frontovik')
       ? `${He} went to the front with an egg in ${his} pocket and a twist of earth from the yard, and did not come back. The notice was a printed form with ${his} name filled in by hand.`
       : f('served_military') || f('combat_veteran')
@@ -802,44 +1164,26 @@ export function generateEpitaph(state) {
   //
   // `worldEventsFired` is the record of what actually reached this character,
   // written year by year by the engine, and the obituary was ignoring every
-  // entry in it. A Romanian born in 1934 who lived through Ceausescu's whole
-  // rule and died the year after the revolution got an obituary that did not
-  // mention either — while her own state object held `romania_revolution_1989`
-  // and `cold_war_end`.
-  //
-  // Only the last two are named, and only when the paragraph is otherwise
-  // empty: a list of everything is a timeline, not an obituary.
-  if (para2.length === 0) {
-    const fired = [...(state.worldEventsFired ?? [])]
-      .map(id => WORLD_EVENTS.find(w => w.id === id))
-      .filter(w => w?.name && !AMBIENT_WORLD_EVENTS.has(w.id))
-    // An event that names this character's country was written about the place
-    // they actually lived, and is the one an obituary would reach for.
-    const ownCountry = fired.filter(w => w.countries?.includes(country))
-    // `worldEventsFired` is in the order the events reached this character, so
-    // the order is already the chronology. Preferring own-country events threw
-    // it away, and three of the four sentences below assert a sequence: one
-    // Japanese obituary read "The century handed him the Japanese Asset Bubble
-    // Collapse and then the 1973 Oil Shock", which is 1991 and then 1973.
-    // Choose by relevance, then put the two back in the order they happened.
-    const order = new Map(fired.map((w, i) => [w.id, i]))
-    const pick2 = (ownCountry.length >= 2 ? ownCountry : [...ownCountry, ...fired.filter(w => !ownCountry.includes(w))])
-      .slice(0, 2)
-      .sort((a, b) => order.get(a.id) - order.get(b.id))
-    if (pick2.length >= 2) {
-      para2.push(oneOf([
-        `${He} lived through ${withDefiniteArticle(pick2[0].name)} and ${withDefiniteArticle(pick2[1].name)}. Nobody ever asked ${him} about either.`,
-        `${He} was alive for ${withDefiniteArticle(pick2[0].name)}, and then for ${withDefiniteArticle(pick2[1].name)}, and was not consulted about either.`,
-        `The century handed ${him} ${withDefiniteArticle(pick2[0].name)} and then ${withDefiniteArticle(pick2[1].name)}, and ${he} went on getting up in the morning.`,
-        `${He} saw ${withDefiniteArticle(pick2[0].name)} and ${withDefiniteArticle(pick2[1].name)} from the inside, which is not the same as understanding them.`,
-      ]))
-    } else if (pick2.length === 1) {
-      para2.push(oneOf([
-        `${He} lived through ${withDefiniteArticle(pick2[0].name)}, which is the part of ${his} life a stranger would recognise and the smallest part of it to ${him}.`,
-        `${He} was there for ${withDefiniteArticle(pick2[0].name)}. It is the only year of ${his} life anybody else can date.`,
-        `${He} lived through ${withDefiniteArticle(pick2[0].name)}, and spent far more of ${his} attention on other things.`,
-      ]))
+  // entry in it. Then it read the FIRST two, which is chronology and not
+  // weight: a German born in 1925 who lived Kristallnacht and the bombing was
+  // summed up by an election in 1933 and the Wall in 1989. What defined the
+  // life comes from the character's own flags first (definingFlagItems), then
+  // from world events ranked by kind, own-country first (worldEventItems).
+  // Only two are named: a list of everything is a timeline, not an obituary.
+  if (para2.length === 0 || (movementOnly && para2.length === 1)) {
+    const items = [...definingFlagItems(state, He), ...worldEventItems(state)]
+    const seenPhrase = new Set()
+    const picked = []
+    for (const it of items) {
+      if (seenPhrase.has(it.phrase)) continue
+      seenPhrase.add(it.phrase)
+      picked.push(it)
+      if (picked.length === 2) break
     }
+    // The move has just been said; the spine does not say it again.
+    const arc = movementOnly ? { ...lifeArc(state), emigrant: false } : lifeArc(state)
+    const line = spineSentence(picked, arc, { He, he, him, his })
+    if (line) para2.push(line)
   }
 
   // ── PARAGRAPH 3: Dark path, work, ethics, identity ────────────────────────────
@@ -1202,20 +1546,42 @@ export function generateEpitaph(state) {
       `It was not the life ${he} had pictured. Very few of them are.`,
       `${He} made ${his} peace with most of it, and kept the rest to ${him}self.`,
     ]))
-  } else if (f('retired_comfortable')) {
-    para5.push(`${He} retired with enough, which is more than enough to say.`)
-  } else if (stats.happiness > 70) {
-    para5.push(oneOf([
+  } else {
+    // The closing line used to come from a pool of three for every adult life
+    // that was neither at peace nor full of regret, which is most of them, so
+    // a player running several lives met the same last sentence over and over.
+    // The pool is keyed to the shape the life actually took.
+    const arc = lifeArc(state)
+    const happy = stats.happiness > 70
+    const general = happy ? [
       `By most measures, it was a life worth having.`,
       `${He} was, on balance, glad to have been here.`,
       `There was more good in it than not, which is not a small thing to be able to say.`,
-    ]))
-  } else {
-    para5.push(oneOf([
+    ] : [
       `${name}'s life was shaped by circumstances ${he} did not choose, and decisions ${he} made from within them.`,
       `${He} was dealt a particular century in a particular place, and lived it.`,
       `Most of what happened to ${him} was not ${his} doing. What ${he} did with it was.`,
-    ]))
+      `${He} got up most mornings of ${his} life and did what the day needed. That is most of what there is to say, and it is not little.`,
+    ]
+    const shaped = [
+      ...(f('retired_comfortable') ? [`${He} retired with enough, which is more than enough to say.`] : []),
+      ...(arc.emigrant ? [
+        `${He} is buried in the country ${he} went to. Some of ${his} people say ${he} should have gone home; the rest know ${he} was home.`,
+        `${He} spent the second half of ${his} life explaining where ${he} was from, and the last of it no longer needing to.`,
+      ] : []),
+      ...(arc.war && age >= 45 && !/conflict|combat|the war|crossfire|fighting/i.test(String(state.causeOfDeath ?? '')) ? [
+        `${He} outlived the war by a long way, and never by as much as people assumed.`,
+        `Loud noises, empty shelves, a knock after dark: ${he} took them in ${his} stride, mostly, and the people who loved ${him} learned the exceptions.`,
+      ] : []),
+      ...(arc.longMarriage && arc.partnerName ? [`${He} and ${arc.partnerName} were married long enough to finish each other's arguments, and did.`] : []),
+      ...(arc.widowedYoung && age - arc.widowedAge >= 15 ? [`${He} was widowed young and lived a long second life afterwards, which nobody had planned for, least of all ${him}.`] : []),
+      ...(arc.manyChildren ? [`${arc.kids} children, and every one of them can describe a different person.`, `The house was never quiet while ${he} lived in it, and is still not quiet now.`] : []),
+      ...(arc.neverMarried ? [`${He} never married. The people who came to the funeral were the ones ${he} had chosen, and there were more of them than anyone expected.`] : []),
+      ...(arc.prisoner ? [`The years inside were not the story of ${his} life, though they were the part strangers asked about.`] : []),
+      ...(arc.farmer ? [`${He} knew the ground ${he} worked better than most people know anything. It will be planted again this season.`, `${He} watched the weather for a living, and in the end it was a fair trade.`] : []),
+      ...(arc.toldIt ? [`When ${he} was asked, late, ${he} told it straight. That is what ${he} left.`] : []),
+    ]
+    para5.push(oneOf(shaped.length && Math.random() < 0.65 ? shaped : general))
   }
 
   // Fallback — only if overall content is sparse AND para5 not already filled
@@ -1369,23 +1735,28 @@ export function generateLifeNotes(state) {
   // everything else: a Nigerian woman who had four children, built a business
   // and died in childbirth at 25 got eight lines, all of them "Lived through
   // the Sahel Drought". A history reel is not an obituary.
+  // Ranked by kind (worldEventItems), own country first, and phrased as prose
+  // (worldEventPhrase): reading the data name into the sentence printed
+  // "Lived through the After Biafra." and "Lived through the 1973 Oil Shock —
+  // Import Burden."
   const history = []
+  const ranked = worldEventItems(state)
+  const rank = new Map(ranked.map((it, i) => [it.id, i]))
   for (const id of state.worldEventsFired ?? []) {
     if (Object.prototype.hasOwnProperty.call(WORLD_EVENT_NOTES, id)) {
+      // Pyongyang did not report the attacks of September 2001 as a day
+      // anybody would remember where they were.
+      if (id === 'nine_eleven' && (state.currentCountry?.name ?? character.country?.name) === 'North Korea') continue
       const line = WORLD_EVENT_NOTES[id]
-      if (line) history.push([46, line])
+      if (line) history.push({ line, r: (rank.get(id) ?? 99) - 0.5 })
       continue
     }
-    if (AMBIENT_WORLD_EVENTS.has(id)) continue
-    const we = WORLD_EVENTS.find(w => w.id === id)
-    if (we?.name) history.push([45, `Lived through ${withDefiniteArticle(we.name)}.`])
+    if (!rank.has(id)) continue
+    const phrase = ranked[rank.get(id)].phrase
+    history.push({ line: `Lived through ${phrase}.`, r: rank.get(id) })
   }
-  // The ones written for this character's own country first: an event that
-  // names where they lived is a fact about them, not about the decade.
-  const here = state.character?.country?.name
-  history.sort((a, b) => b[0] - a[0])
-  const own = history.filter(h => WORLD_EVENTS.find(w => w.name && h[1].includes(w.name))?.countries?.includes(here))
-  for (const [, line] of [...own, ...history.filter(h => !own.includes(h))].slice(0, 3)) add(21, line)
+  history.sort((a, b) => a.r - b.r)
+  for (const { line } of history.slice(0, 3)) add(21, line)
 
   // ── The ordinary shape of the life (priority 10-30) ─────────────────────
   // So the panel is never blank. An obituary opens with these.

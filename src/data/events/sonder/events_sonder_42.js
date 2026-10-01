@@ -152,7 +152,7 @@ export const EVENTS_SONDER_42 = [
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 19 && !G.mem?.s42p,
-    text: 'Someone explains something you already know in great detail. You let them finish. This is kindness or efficiency — you have not yet decided which — and it costs you nothing. Afterward they say "I hope that wasn\'t too much." You say it was helpful. Both things are true and one is more true than the other.',
+    text: 'Someone explains something you already know in great detail. You let them finish. This is kindness or efficiency — you have not yet decided which — and it costs you nothing. Afterward they say "I hope that wasn\'t too much." You say it was helpful. One is more true than the other.',
     choices: null,
     effect: (p) => { p.s += 2; p.setMem('s42p', true) },
   },

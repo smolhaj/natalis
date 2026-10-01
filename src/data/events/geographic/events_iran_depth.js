@@ -24,7 +24,7 @@ export const IRAN_DEPTH_EVENTS = [
       G.age >= 5 && G.age <= 14 &&
       !G.mem?.irnDepRevChildhood,
     text: () => pick([
-      'The school uniform changes. Girls who were not covering before cover now. The textbooks arrive with pages glued together — the wrong pages, the old-regime pages. The teacher is someone you do not recognise from last year. The teacher explains the revolution. The revolution is the correct thing. The school explains this in the same tone that the school used to explain the Shah was the correct thing. You are old enough to notice the tone is the same. You are not old enough to say this.',
+      'The school uniform changes, and girls who did not cover before cover now. The textbooks come with pages glued together. The teacher you do not recognise explains that the revolution is right, in exactly the tone the school used to explain that the Shah was right. You are old enough to notice the tone is the same, and not old enough to say so.',
       'The komiteh — the revolutionary committee — has an office on your street now. The men inside decide which music is allowed and which is not. The neighbour who had wine at dinner no longer has wine at dinner, or has it without the lights on. The New Year\'s party your mother used to organise: the music, the dancing, the mixed company. This year the party is smaller and quieter and ends earlier. Nobody says why. Everyone understands why.',
     ]),
     choices: [
@@ -58,20 +58,30 @@ export const IRAN_DEPTH_EVENTS = [
 
   {
     id: 'irn_dep_war_soldier',
-    phase: 'young_adult',
-    weight: 4,
+    // The war took Iranian boys from fifteen — that was the Basij — and
+    // conscripts to thirty. `phase: 'young_adult'` cut off the sixteen- and
+    // seventeen-year-olds the event's own prose is about, and at weight 4 over
+    // a nine-year window most men of the cohort never met the war at all. It
+    // was the whole of those years for them, so it claims them.
+    phase: null,
+    weight: 20,
+    claimsYears: { from: 1981, to: 1986 },
     when: (G) =>
       G.character.country.name === 'Iran' &&
       G.currentYear >= 1980 && G.currentYear <= 1988 &&
       G.character.gender === 'male' &&
-      G.age >= 16 && G.age <= 30 &&
+      G.age >= 15 && G.age <= 30 &&
       !G.mem?.irnDepWarSoldier,
-    text: 'Saddam Hussein attacks on September 22, 1980. The war will last eight years. At the front, the tactics include human wave attacks — volunteers walking through minefields to clear them for the regular army. The Basij give teenage boys a plastic key on a string: the key to paradise, to be worn around the neck going forward. Some boys go because they believe. Some because their family cannot afford for them not to go. Some because there is a neighbourhood logic to volunteering that makes refusal complicated. You are of the age. The front is waiting for men your age.',
+    text: (G) => {
+      const n = G.currentYear - 1979
+      const when = n <= 1 ? 'Iraq invaded in September.' : `The war with Iraq is in its ${['', '', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth'][n]} year.`
+      return `${when} At the front the Basij volunteers walk through the minefields ahead of the regular army, and some of the boys wear a plastic key on a string around their necks, the key to paradise. Some go because they believe, some because their family cannot afford a son who refuses, some because the whole street is going. You are of the age.`
+    },
     choices: [
       {
         text: 'You go to the front as a soldier',
         tag: null,
-        outcome: 'The Faw Peninsula. The marshes. The specific smell of the Shatt al-Arab. You come back in 1988 when the ceasefire comes — UN Resolution 598, which Iran accepts as "drinking poison," in Khomeini\'s words. You come back with something that doesn\'t come back with you.',
+        outcome: 'The Faw Peninsula. The marshes. The smell of the Shatt al-Arab at low water. You come back in 1988 when the ceasefire comes — UN Resolution 598, which Iran accepts as "drinking poison," in Khomeini\'s words. You come back with something that doesn\'t come back with you.',
         effect: (p) => {
           p.h -= 10
           p.m -= 10
@@ -108,7 +118,7 @@ export const IRAN_DEPTH_EVENTS = [
       G.currentYear >= 1981 && G.currentYear <= 1995 &&
       G.age >= 6 && G.age <= 18 &&
       !G.mem?.irnDepMartyrChild,
-    text: 'Your father\'s photograph is on the wall. In the photograph he is in uniform. Below the photograph is the word shahid — martyr — and the date. The Bonyad-e Shahid, the Martyr Foundation, sends money and provides benefits: school fees, housing priority, a monthly stipend. The identity it creates is specific: you are a child of a martyr. This is a social position. At school assemblies it is announced. The state has a use for your grief that is not the same as your grief.',
+    text: 'Your father\'s photograph is on the wall, in uniform, with the word shahid under it and a date. The Martyrs Foundation pays: school fees, housing priority, a monthly stipend. You are a child of a martyr, and it is announced at school assemblies. The state has a use for your grief that is not the same as your grief.',
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -132,7 +142,7 @@ export const IRAN_DEPTH_EVENTS = [
       !G.mem?.irnDepNowruz,
     text: () => pick([
       'Nowruz: the Persian New Year, tied to the vernal equinox, 2,500 years old and not Islamic. The Islamic Republic has complicated feelings about Nowruz — it predates Islam, it is Zoroastrian in origin, and it is universally celebrated by Iranians regardless of piety. The state never abolished it. The state tried to reduce it. Every year the families lay out the haft-sin table — the seven items beginning with S — and recite from Hafiz and eat fish and rice and give children money in new banknotes. The ancient feast refuses to become smaller than itself.',
-      'Chaharshanbe Suri: the fire festival the Wednesday before Nowruz. People jump over fires in the street — a pre-Islamic ritual, the fire burning away the old year. The Islamic Republic has discouraged it repeatedly. Every year in the week before Nowruz the fires go in the streets anyway. The authorities issue statements. The fires go anyway. You jump the fire. You say the old words: your redness to me, my paleness to you — give me your warmth and take my sickness.',
+      'Chaharshanbe Suri, the Wednesday before Nowruz, and people jump over fires in the street, a ritual older than Islam, burning away the old year. Every year the Republic discourages it, and every year the fires go up in the streets anyway. You jump the fire and say the old words: your redness to me, my paleness to you.',
     ]),
     choices: null,
     effect: (p) => {
@@ -178,7 +188,7 @@ export const IRAN_DEPTH_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 1984 &&
       G.age >= 17 && G.age <= 30 &&
       !G.mem?.irnDepUniPurge,
-    text: 'The universities close in April 1980 for the Cultural Revolution. They will reopen in 1983 after the purge is complete: professors who taught the wrong things, students who belonged to the wrong organisations, textbooks that contained the wrong knowledge. The purge committee reviews each faculty. Some professors are expelled, some imprisoned, some leave the country. You are at university or about to enter. The university that reopens is not the university that closed. The institution has been revised. The question is whether to enter the revised institution.',
+    text: 'The universities close in April 1980 for the Cultural Revolution and reopen in 1983 when the purge is done: professors who taught the wrong things, students in the wrong organisations, textbooks with the wrong knowledge in them. Some professors are expelled, some imprisoned, some leave. The university that reopens is not the one that closed. You have to decide whether to go into it.',
     choices: [
       {
         text: 'You wait and enter the revised university when it reopens',
@@ -266,7 +276,7 @@ export const IRAN_DEPTH_EVENTS = [
       {
         text: 'You leave. Turkey, Georgia, Germany — wherever the visa clears first.',
         tag: null,
-        outcome: 'You are one of the hundreds of thousands. The Persian cafes in Tbilisi are full of people who speak your language and feel exactly what you feel about having left. The solidarity is real. The distance is also real.',
+        outcome: 'You are one of the hundreds of thousands. The Persian cafes in Tbilisi are full of people who speak your language and feel exactly what you feel about having left. The distance is also real.',
         effect: (p) => {
           p.m -= 8
           p.r += 8

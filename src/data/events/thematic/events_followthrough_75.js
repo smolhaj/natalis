@@ -100,7 +100,7 @@ export const FOLLOWTHROUGH_75_EVENTS = [
       G.currentYear >= 2013 &&
       G.age >= 30 &&
       !G.mem?.ft66ExitVisa2013,
-    text: 'January 14, 2013. The tarjeta blanca is abolished. For the first time since the early 1960s, Cubans can apply for a passport and leave without the state\'s prior permission. The reform comes from Raúl, not as an admission of what the system was, but as an administrative modernization. What happens on January 14: nothing visible. What has changed: the relationship between you and the exit door. The door is still expensive and still complicated. It is no longer locked by the state from the outside. The distinction is political and also specific and real.',
+    text: 'January 14, 2013, and the exit permit is abolished: for the first time since the early sixties you can get a passport and leave without the state\'s permission. It comes from Raúl as an administrative modernisation, not an admission. Nothing visible happens that day. The door out is still expensive and complicated, but the state no longer locks it from outside.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -120,7 +120,7 @@ export const FOLLOWTHROUGH_75_EVENTS = [
       G.currentYear >= 2023 &&
       G.age >= 28 &&
       !G.mem?.ft66EndSarsMid,
-    text: 'The SARS unit was officially dissolved five times between 2017 and 2020. Each dissolution was followed by reconstitution under a different name. After Lekki, SARS became SWAT. SWAT has been accused of the same practices. The specific lesson October 20, 2020 taught your generation — that the state would fire on unarmed protesters — has not been superseded by a different lesson. It sits in the record. You are now old enough to watch the next generation arrive at the same lesson by the same means, and you carry the specific fatigue of someone who has already paid this tuition.',
+    text: 'The SARS unit was officially dissolved five times between 2017 and 2020. Each dissolution was followed by reconstitution under a different name. After Lekki, SARS became SWAT. SWAT has been accused of the same practices. The lesson October 20, 2020 taught your generation — that the state would fire on unarmed protesters — has not been superseded by a different lesson. It sits in the record. You are now old enough to watch the next generation arrive at the same lesson by the same means, and you carry the fatigue of someone who has already paid this tuition.',
     choices: null,
     effect: (p) => {
       p.r += 6
@@ -165,7 +165,7 @@ export const FOLLOWTHROUGH_75_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 30 &&
       !G.mem?.ft66NollywoodMid,
-    text: 'Nollywood is now on Netflix. The films that were bought from roadside VCD sellers are on a streaming platform with 200 million subscribers. Genevieve Nnaji\'s "Lionheart" was the first. The production values have changed. The budgets have changed. What has not changed: the industry is still Nigerian in the way it has always been Nigerian, about the things Nigerian life is about, told from the inside. The audience is now global. The inside is still the inside. You watch the new ones with the same attention you gave the old ones and sometimes the films are the same film told with better lighting.',
+    text: 'Nollywood is on Netflix now. The films you bought from roadside VCD sellers are on a platform with two hundred million subscribers, with bigger budgets and better lighting, and they are still Nigerian in the way they always were, about the things Nigerian life is about, told from inside. The audience is the world. You watch the new ones with the attention you gave the old ones, and sometimes they are the same film.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -184,7 +184,7 @@ export const FOLLOWTHROUGH_75_EVENTS = [
       G.flags.has('cub_education_generation') &&
       G.age >= 50 &&
       !G.mem?.ft66CubaEducLate,
-    text: 'The education the Revolution gave you is real. The doctor, the engineer, the teacher, the biologist — the credentials are from a system that produced them at a rate the country\'s economy could not absorb, which is why the doctors went to Angola and Venezuela and Haiti, why the engineers went to wherever they were sent, why the teachers taught in provinces they had not heard of at eighteen. The education and the limitation are from the same source. You are educated beyond what your country can pay you for. This is the specific paradox of the Cuban professional class: made by the Revolution, underutilised by the Revolution, valued by the world outside the Revolution.',
+    text: 'The education the Revolution gave you is real. The doctor, the engineer, the teacher, the biologist — the credentials are from a system that produced them at a rate the country\'s economy could not absorb, which is why the doctors went to Angola and Venezuela and Haiti, why the engineers went to wherever they were sent, why the teachers taught in provinces they had not heard of at eighteen. The education and the limitation are from the same source. You are educated beyond what your country can pay you for. This is the paradox of the Cuban professional class: made by the Revolution, underutilised by the Revolution, valued by the world outside the Revolution.',
     choices: null,
     effect: (p) => {
       p.r += 5

@@ -93,7 +93,7 @@ export const DRC_EVENTS = [
       {
         text: 'Leave — reach Kinshasa or a camp across the border',
         tag: null,
-        outcome: 'The road takes two weeks. You arrive with what you could carry, which is less than you had, which was already not much.',
+        outcome: 'The road takes two weeks. You arrive with what you could carry, less than you had, which was already not much.',
         effect: (p) => { p.m -= 20; p.h -= 12; p.addFlag('internally_displaced'); p.addFlag('grew_up_in_camp'); p.setResidency('refugee_status'); p.setMem('drcDisplaced', true); },
       },
       {
@@ -117,7 +117,7 @@ export const DRC_EVENTS = [
       {
         text: 'Work the mine — it is income',
         tag: null,
-        outcome: 'You work it for a season. The money is real. So is the cost on your body. You have seen what the men who worked it for five years look like.',
+        outcome: 'You work it for a season. The money comes, and so does the cost to your body. You have seen what the men who worked it for five years look like.',
         effect: (p) => { p.mo += 600; p.h -= 8; p.addFlag('coltan_worker'); p.setMem('drcColtan', true); },
       },
       {
@@ -191,7 +191,7 @@ export const DRC_EVENTS = [
       G.currentYear >= 1998 && G.currentYear <= 2003 &&
       G.character.ruralUrban !== 'rural' &&
       !G.mem?.drcBukavu,
-    text: 'Bukavu changes hands twice in one month. The group that controls it now has a different name from the group that controlled it last month. The flags are different; the checkpoints are in the same places. You have a friend who works for a UN agency and he tells you things — casualty estimates, group movements — that are not on the radio. The radio has its own account. Between your friend\'s information and the radio\'s account is a gap you learn to live inside. You go to work in the morning. Sometimes work is there and sometimes it is not, depending on who controls the road.',
+    text: 'Bukavu changes hands twice in a month; the group holding it now has a different name and a different flag and the checkpoints are in the same places. A friend at a UN agency tells you things, casualty estimates, which group is moving where, that are not on the radio, and the radio tells it differently. You learn to live in the gap between the two. You go to work in the morning, and sometimes the work is there, depending on who holds the road.',
     choices: null,
     effect: (p) => { p.m -= 15; p.e += 4; p.addFlag('second_congo_war_urban_generation'); p.setMem('drcBukavu', true) },
   },

@@ -109,7 +109,7 @@ export const KAZAKHSTAN_EVENTS = [
       G.currentYear >= 2019 && G.currentYear <= 2020 &&
       G.age >= 25 &&
       !G.mem?.kazNazarResign,
-    text: 'On March 19, 2019 Nazarbayev announced his resignation. He has been president since 1989 — through the Soviet period, through independence, through thirty years of consolidated personal power. The announcement was surprising in its form; the reality it announced was not. He remains chairman of the Security Council. His daughter runs the Senate. His son-in-law runs the national company. His party continues. The word for this transition, in Kazakhstan, is managed. The city is renamed for him the next day. You watch the announcement and try to understand what, exactly, has changed.',
+    text: 'March 2019. Nazarbayev resigns, after thirty years, and stays head of the Security Council, and his daughter runs the Senate, and his party runs everything else. The word for it is managed. The next day the capital is renamed after him. You watch and try to work out what, exactly, has changed.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 4; p.m += 2; p.addFlag('kaz_post_nazarbayev'); p.setMem('kazNazarResign', true) },
   },
@@ -125,7 +125,8 @@ export const KAZAKHSTAN_EVENTS = [
       G.currentYear >= 2022 && G.currentYear <= 2023 &&
       G.age >= 20 &&
       !G.mem?.kazQantar,
-    text: 'On January 1, 2022, the subsidies on liquefied petroleum gas are lifted. The price doubles in Zhanaozen — the same town as 2011 — overnight. By January 4 the protests have spread to Almaty, to Aktobe, to Shymkent. The largest protests in Kazakhstan\'s history. On January 5 President Tokayev requests CSTO troops — Russian, Belarusian, Armenian, Kyrgyz soldiers entering Kazakhstan to "restore order." He calls the protesters "20,000 bandits and terrorists" and gives an order to shoot without warning. The internet goes dark. When the count is done: 238 people killed, 10,000 arrested. Qantar — January — enters the language.',
+    text: 'On January 1, 2022, the subsidy on car gas is lifted and the price doubles overnight in Zhanaozen, the same town as 2011. By January 4 there are protests in Almaty, Aktobe, Shymkent, the largest the country has known. Tokayev calls in the CSTO, Russian soldiers among them, calls the protesters bandits and terrorists, and orders the police to shoot without warning. The internet goes dark. The month gives its name, Qantar, to what happened.',
+    context: 'The official toll of the January 2022 unrest was 238 dead; about 10,000 people were detained.',
     choices: [
       {
         text: 'You were in the streets.',
@@ -136,7 +137,7 @@ export const KAZAKHSTAN_EVENTS = [
       {
         text: 'You were at home, watching the internet flicker out.',
         tag: 'kaz_qantar_witness',
-        outcome: 'The Telegram channels going quiet one by one. The VPN that stopped working. The specific quality of an information vacuum: you know something is happening; you know only the silhouette of what it is.',
+        outcome: 'The Telegram channels going quiet one by one. The VPN that stopped working. The quality of an information vacuum: you know something is happening; you know only the silhouette of what it is.',
         effect: (p) => { p.addFlag('kaz_qantar_witness'); p.r += 8; p.m -= 5; p.setMem('kazQantar', true) },
       },
     ],
@@ -153,7 +154,7 @@ export const KAZAKHSTAN_EVENTS = [
       (G.flags.has('kaz_qantar_witness') || G.flags.has('kaz_qantar_protester')) &&
       G.currentYear >= 2022 && G.currentYear <= 2024 &&
       !G.mem?.kazQantarAfter,
-    text: 'The official narrative settled into: foreign terrorists, internal provocateurs, a managed restoration. Tokayev arrested some Nazarbayev allies including the former head of the security services and called it anti-corruption. He renamed the city back to Astana. The CSTO troops left. The 10,000 people who were arrested have had varying outcomes. Some were released. Some were convicted. Human rights organisations have documented torture in detention. The word Qantar is not used officially as anything other than a restored order. You use it differently.',
+    text: 'The official story settles: foreign terrorists, internal provocateurs, order restored. Tokayev arrests some of Nazarbayev\'s people and calls it anti-corruption, and gives the capital its old name back. Of the thousands arrested, some are released and some convicted, and the human rights groups write down what happened in the cells. Officially Qantar means order restored. You use the word differently.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 3; p.setMem('kazQantarAfter', true) },
   },
@@ -201,7 +202,7 @@ export const KAZAKHSTAN_EVENTS = [
       IS_KAZAKH(G) &&
       G.age >= 60 &&
       !G.mem?.kazLate,
-    text: 'You have watched a country be built. Not from nothing — from a Soviet republic that was forty percent Russian and held a nuclear test site and had lost its nomadic life to collectivisation and starvation — but something that did not exist as an independent entity now exists, has a flag, has a capital with a real skyline, has a history being constructed in real time. The construction includes what is included and what is left out. Zhanaozen is not in the official history. The January protests are a managed restoration. The grandfather\'s star names are in a language that is now official policy. You have watched all of this. You hold it without it resolving.',
+    text: 'You have watched a country be built, out of a Soviet republic that was nearly half Russian, that held a nuclear test site and lost its nomadic life to collectivisation and famine. Now it has a flag and a capital with a real skyline and a history being assembled in real time, with some things in it and some left out. Zhanaozen is not in the official history; January is an order restored. You have watched all of it, and it does not resolve.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 7; p.karma += 4; p.e += 4; p.addFlag('kaz_testigo_generation'); p.setMem('kazLate', true) },
   },

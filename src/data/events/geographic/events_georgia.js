@@ -27,12 +27,13 @@ export const GEORGIA_EVENTS = [
       G.currentYear === 1989 &&
       G.age >= 13 &&
       !G.mem?.geoApril9,
-    text: 'April 9, 1989. A peaceful vigil in front of the Government House on Rustaveli Avenue — the center of Tbilisi — has been running for days. Before dawn, Soviet troops arrive with clubs and sapper shovels. Twenty-one people are killed; many later report strange symptoms — it will be confirmed that the troops used nerve agent Iperit. Among those who die are women who came to support hunger strikers. The event has a name afterward: April 9. In Georgia, those two words together mean something specific. The Soviet argument that it was a post-Soviet republic — not a nation — has received an answer in blood.',
+    text: 'April 9, 1989. The vigil on Rustaveli Avenue has gone on for days, and before dawn the Soviet troops come with clubs and sapper shovels and gas, and women who came to support the hunger strikers are among the dead. Afterwards the date is a name, April 9, and in Georgia those two words mean one thing. The argument that Georgia was a Soviet province and not a nation has been answered in blood.',
+    context: 'Twenty-one people were killed on 9 April 1989.',
     choices: [
       {
         text: 'You are on Rustaveli Avenue that night. You are in the thing that happens.',
         tag: null,
-        outcome: 'You survive it. What happened to the people who did not survive it stays with you in the specific way that things stay with the people who were present.',
+        outcome: 'You survive it. What happened to the people who did not survive it stays with you in the way that things stay with the people who were present.',
         effect: (p) => { p.m -= 15; p.karma += 8; p.r += 6; p.addFlag('april_9_generation'); p.addFlag('political_active'); p.setMem('geoApril9', true); },
       },
       {
@@ -60,7 +61,7 @@ export const GEORGIA_EVENTS = [
       {
         text: 'You have family in Abkhazia, or you know people displaced. The displacement is specific and immediate.',
         tag: null,
-        outcome: 'The specific apartment, the specific street, the specific summer smell of the Black Sea coast that cannot be returned to. Some IDP families will wait thirty years and not go back. Some will die waiting.',
+        outcome: 'The apartment, the street, the summer smell of the Black Sea coast that cannot be returned to. Some IDP families will wait thirty years and not go back. Some will die waiting.',
         effect: (p) => { p.m -= 12; p.r += 7; p.addFlag('abkhazia_displaced_connection'); p.setMem('geoAbkhazia', true); },
       },
       {
@@ -82,12 +83,12 @@ export const GEORGIA_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2003 &&
       G.age >= 18 &&
       !G.mem?.geoRose,
-    text: 'November 2003. The parliamentary election results are falsified. The opposition, led by Mikheil Saakashvili and others, calls people into the streets. On November 22, the opposition storms Parliament holding roses and Shevardnadze, who has governed Georgia since 1992 — and before that, who served as Soviet foreign minister — leaves without military response. Shevardnadze resigns. The transfer of power is peaceful. The thing that happened is called the Rose Revolution. It is the first of the color revolutions, and for a few years it seems to suggest something about what is possible in the post-Soviet space.',
+    text: 'November 2003. The election is rigged, and the opposition calls people into the streets, and on November 22 they walk into Parliament holding roses, and Shevardnadze, who has run Georgia since 1992 and was Soviet foreign minister before that, leaves without calling the army. He resigns. They call it the Rose Revolution, the first of the colour revolutions, and for a few years it seems to say something about what is possible.',
     choices: [
       {
         text: 'You are in Parliament Square with the roses. You are part of what the Rose Revolution was.',
         tag: null,
-        outcome: 'The feeling in the square — the roses, the peaceable transfer of power, the sense that this was possible — becomes a specific kind of hope you carry into the following years.',
+        outcome: 'The feeling in the square — the roses, the peaceable transfer of power, the sense that this was possible — becomes a kind of hope you carry into the following years.',
         effect: (p) => { p.m += 12; p.karma += 7; p.r += 3; p.addFlag('rose_revolution_georgia'); p.setMem('geoRose', true); },
       },
       {
@@ -120,7 +121,7 @@ export const GEORGIA_EVENTS = [
       {
         text: 'You are in Gori or near the front. The abstractions become ground and smoke.',
         tag: null,
-        outcome: 'Ground and smoke and the specific sound of military aircraft and the speed at which the world becomes unfamiliar. Five days.',
+        outcome: 'Ground and smoke and the sound of military aircraft and the speed at which the world becomes unfamiliar. Five days.',
         effect: (p) => { p.m -= 18; p.h -= 5; p.r += 7; p.addFlag('georgian_war_2008'); p.setMem('geoWar2008', true); },
       },
     ],
@@ -140,7 +141,7 @@ export const GEORGIA_EVENTS = [
     text: (G) => {
       const year = G.currentYear
       if (year >= 2024) {
-        return 'The Georgian Dream party, despite having secured EU candidate status in 2023, introduces a foreign agents law modelled on Russia\'s. The protests in Tbilisi begin and continue for weeks — tear gas, water cannon, people returning night after night to Rustaveli Avenue. The EU flag alongside the Georgian one. The specific sentence that appears on signs: "I choose Europe." The government does not change course. The EU suspends accession talks. The protesters keep coming. You have been watching Rustaveli Avenue since April 9, 1989.'
+        return 'The governing party, with EU candidate status in its pocket, passes a foreign agents law copied from Russia\'s, and the protests on Rustaveli go on for weeks: tear gas, water cannon, people coming back night after night with the EU flag beside the Georgian one. The signs say: I choose Europe. The government does not change course, and Brussels freezes the talks, and the people keep coming. You have been watching Rustaveli Avenue since April 9, 1989.'
       }
       return 'The EU Association Agreement was signed in 2014, and the EU integration process has been the central axis of Georgian foreign and domestic politics for a decade. The Rose Revolution promised a Western trajectory. The 2008 war clarified that Russia will contest it. What remains is the Georgian insistence — the EU flag in the streets, the applications, the legal reforms. The insistence is not nothing. Whether it is enough is a different question.'
     },
@@ -175,7 +176,7 @@ export const GEORGIA_EVENTS = [
     text: 'Independence, and then the collapse that independence brought: the economy shrank by seventy percent in four years. Power came four hours a day in winter, sometimes less. People burned furniture for heat. The currency — the coupon, then the lari — lost value before you could spend it. The Mkhedrioni were in the streets with guns, ostensibly a paramilitary force, practically a criminal organisation with political protection. Shevardnadze returned from Moscow to run the country because there was no one else. The Tbilisi of the Soviet era — the bookshops, the theatre, the full shelves — was visible from the Tbilisi of the 1990s across a distance that had no name yet.',
     choices: [
       {
-        text: 'Your family adapted. The candles, the wood, the neighbours who shared. The adaptation was real.',
+        text: 'Your family adapted. The candles, the wood, the neighbours who shared.',
         tag: null,
         outcome: 'The adaptation is the competence that the next generation inherits without knowing how it was learned. You learned it the hard way.',
         effect: (p) => { p.w -= 8; p.h -= 5; p.e += 4; p.addFlag('geo_1990s_generation'); p.setMem('geo1990s', true); },
@@ -183,7 +184,7 @@ export const GEORGIA_EVENTS = [
       {
         text: 'You or someone in your family left. Turkey, Russia, Greece — wherever the border was open.',
         tag: null,
-        outcome: 'One million Georgians left in the 1990s. The ones who left carried Georgia with them in a way that required the distance to understand.',
+        outcome: 'One million Georgians left in the 1990s. The ones who left carried Georgia with them, and it took the distance to understand it.',
         effect: (p) => { p.w -= 5; p.m -= 8; p.r += 6; p.addFlag('geo_1990s_generation'); p.setMem('geo1990s', true); },
       },
     ],
@@ -228,7 +229,7 @@ export const GEORGIA_EVENTS = [
       G.character.country.name === 'Georgia' &&
       G.age >= 14 && G.age <= 28 &&
       !G.mem?.geoOrthodox,
-    text: (G) => (G.currentYear >= 1992 ? 'The Georgian Orthodox church survived the Soviet period by being what the Communist Party could not replace: the form of Georgian national continuity. ' : 'The Georgian Orthodox church survives the Soviet period by being what the Communist Party cannot replace: the form of Georgian national continuity. ') + (G.currentYear >= 2023 ? 'Patriarch Ilia II has been Catholicos-Patriarch since 1977 and remains so into his nineties. ' : G.currentYear >= 1978 ? 'Patriarch Ilia II has been Catholicos-Patriarch since 1977. ' : '') + 'The cross of Saint Nino — a cross made of braided grapevines, woven together with the hair of the woman who brought Christianity to Georgia in the fourth century. This is the specific origin story: a woman, from Cappadocia, a vine, a cross. The church is not only religion. It is the argument that Georgia exists, has always existed, is not a Soviet category.',
+    text: (G) => (G.currentYear >= 1992 ? 'The Georgian Orthodox church survived the Soviet period by being what the Communist Party could not replace: the form of Georgian national continuity. ' : 'The Georgian Orthodox church survives the Soviet period by being what the Communist Party cannot replace: the form of Georgian national continuity. ') + (G.currentYear >= 2023 ? 'Patriarch Ilia II has been Catholicos-Patriarch since 1977 and remains so into his nineties. ' : G.currentYear >= 1978 ? 'Patriarch Ilia II has been Catholicos-Patriarch since 1977. ' : '') + 'The cross of Saint Nino — a cross made of braided grapevines, woven together with the hair of the woman who brought Christianity to Georgia in the fourth century. This is the origin story: a woman, from Cappadocia, a vine, a cross. The church is the argument that Georgia exists, has always existed, and is not a Soviet category.',
     choices: [
       {
         text: 'The church is the spine of what you understand yourself to be Georgian to mean.',
@@ -267,7 +268,7 @@ export const GEORGIA_EVENTS = [
       {
         text: 'The reforms worked. The country moved. You saw it.',
         tag: null,
-        outcome: 'What worked is real. The costs that came with it are also real. Both go into the accounting.',
+        outcome: 'Some of it worked. The costs that came with it are also real. Both go into the accounting.',
         effect: (p) => { p.m += 6; p.e += 4; p.addFlag('geo_saakashvili_generation'); p.setMem('geoSaaka', true); },
       },
       {
@@ -301,7 +302,7 @@ export const GEORGIA_EVENTS = [
         return 'From Rustaveli Avenue in April 1989 to the Russian columns forty kilometres out in August 2008 — that is the span of things you have witnessed in this country\'s effort to be what it insists it is. Independence, war, warlords, candles, reforms, another war, the EU flag in the street. Georgia did not stop insisting. That is the accurate sentence about the country you have lived in.'
       }
       if (seenRose && seenWar) {
-        return 'The Rose Revolution said one thing and August 2008 said another thing and both are the same Georgia. The country did not resolve into a single story. You have lived in the unresolved version, which is the only version that has ever existed.'
+        return 'The Rose Revolution said one thing and August 2008 said another thing and both are the same Georgia. The country did not resolve into a single story. You have lived in the unresolved version. There has never been another.'
       }
       return 'The arc of the country in your lifetime: Soviet republic, massacre, independence, collapse, recovery, war, recovery again, protest, and now the same Rustaveli Avenue with the EU flag. Each generation inherits what the previous one didn\'t finish. You have passed something on. What it produces is still being determined.'
     },

@@ -34,7 +34,7 @@ export const ENGINEER_ARC_EVENTS = [
       isEngineer(G) &&
       G.flags.has('engineer_first_design') &&
       !G.mem?.engCompromiseFired,
-    text: `The project budget has been revised. The material you specified — the one with the load distribution you calculated the design around — is no longer in scope. The substituted material is adequate. It meets code. The margin is reduced from what it was, which is still a margin. The client signs off. The project manager signs off. The decision is yours to make on paper that already has the substitute written into it.`,
+    text: `The budget has been revised. The material you designed the load path around is out of scope, and the substitute is adequate and meets code, with a smaller margin that is still a margin. The client has signed and the project manager has signed. The decision is yours, on a sheet that already has the substitute written in.`,
     choices: [
       {
         text: 'Sign off — it meets code, the project needs to move',
@@ -142,7 +142,7 @@ export const ENGINEER_ARC_EVENTS = [
       isEngineer(G) &&
       G.age >= 42 &&
       !G.mem?.engObsoFired,
-    text: `The software the profession runs on has changed twice since you learned it. The first change you adapted to. The second change coincided with a particularly heavy project load, and the adaptation was partial. You can do what you need to do. There are things the newer engineers do faster. You know things about the physical systems that the software does not know, and which the software's outputs do not always reflect. Both of these things are true and the relative value of each depends on who is doing the evaluation.`,
+    text: `The software the profession runs on has changed twice since you learned it. You adapted to the first; the second came in a heavy year and you adapted partly. The newer engineers are faster at some things. You know things about the physical systems that the software does not, and its outputs do not always show. Which matters more depends on who is asking.`,
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -160,7 +160,7 @@ export const ENGINEER_ARC_EVENTS = [
       G.flags.has('engineer_compromised') &&
       G.age >= 55 &&
       !G.mem?.engCompromiseEchoFired,
-    text: `You drive past the thing you built with the substituted material. It is still there. It has been there for twenty years and the margin you reduced it to has held, which is what margins are for. You have checked it, by some means or another, more often than the inspection schedule required. The thing stands. The question you could not answer at the time — whether you made the right call — is still not answered. What is answered is: the thing stands, and nothing bad happened, and the margin held.`,
+    text: `You drive past the thing you built with the substituted material. Twenty years, and the reduced margin has held, which is what margins are for. You have checked on it more often than the inspection schedule asked. Whether you made the right call is still not answered. What is answered: it stands, nothing happened, the margin held.`,
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -177,7 +177,7 @@ export const ENGINEER_ARC_EVENTS = [
       G.flags.has('engineer_safety_flagged') &&
       G.age >= 55 &&
       !G.mem?.engSafetyEchoFired,
-    text: `You still think about the detail you flagged. Not obsessively — as a specific memory in the category of decisions that turned out to have been worth the difficulty. The project manager moved on two years after the project. The structure has been in service since, performing as designed. The ten days cost you something. You are not sure anymore exactly what. The detail is right, and it has been right for however many years since you put it right, and on some balance sheet that is probably the number that matters.`,
+    text: `You still think about the detail you flagged, not often. The project manager moved on two years later and the structure has been in service since, performing as designed. Those ten days cost you something, and you are no longer sure what. The detail has been right every year since you put it right.`,
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -194,7 +194,7 @@ export const ENGINEER_ARC_EVENTS = [
       isEngineer(G) &&
       G.age >= 60 &&
       !G.mem?.engLateFired,
-    text: `The things you built are still there. Some of them you drive past; others are in cities you moved on from; some are in the technical literature of a failure investigation. The accounting of a career spent making permanent things: the tolerances held, the loads were within the envelope, the assumptions were within acceptable practice. The one failure produced a report and a change in how you model. The compromises — the ones where code was met and the margin was reduced but the thing stood — are part of the record too. You built things. The things are still there.`,
+    text: `The things you built are still there: some you drive past, some in cities you left, one in the literature of a failure investigation that changed how you model. The tolerances held; the loads stayed within the envelope. The compromises are part of the record too, the ones where code was met and the margin shrank and the thing stood. You built things. They are still there.`,
     choices: null,
     effect: (p) => {
       p.m += 10

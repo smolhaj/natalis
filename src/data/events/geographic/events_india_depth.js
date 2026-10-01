@@ -15,12 +15,12 @@ export const INDIA_DEPTH_EVENTS = [
       G.age >= 20 && G.age <= 28 &&
       G.partner === null &&
       !G.mem?.indArrangedMeetings,
-    text: 'The family has arranged introductions. The prospective family visits. Your mother serves tea. Someone serves tea. Someone is assessed in the serving of tea. There is a room where the families talk, and a room where you wait, and eventually the rooms converge. Both of these things are true simultaneously: you are choosing and being chosen, and the choosing has a structure that existed before you were born.',
+    text: 'The family has arranged introductions. The prospective family visits. Your mother serves tea. Someone serves tea. Someone is assessed in the serving of tea. There is a room where the families talk, and a room where you wait, and eventually the rooms converge. You are choosing and being chosen, and the choosing has a structure that existed before you were born.',
     choices: [
       {
         text: 'You agree to the meeting and find it tolerable.',
         tag: null,
-        outcome: 'The families are pleased. The process continues. There is a sense, difficult to locate, that you have stepped onto a track that has its own momentum.',
+        outcome: 'The families are pleased. The process continues. There is a sense, difficult to locate, that you have stepped onto a track that is already moving.',
         effect: (p) => { p.m += 4; p.s += 3; p.addFlag('arranged_meeting_accepted'); p.setMem('indArrangedMeetings', true); },
       },
       {
@@ -42,7 +42,7 @@ export const INDIA_DEPTH_EVENTS = [
       G.age >= 22 && G.age <= 30 &&
       G.partner !== null &&
       !G.mem?.indJointFamily,
-    text: 'The house has three generations. Your mother-in-law\'s kitchen is her domain; meals happen on her schedule. The money comes in and is pooled in ways that are not fully discussed. There is a specific grammar to what can be said about the household finances and what cannot. Your salary goes into a shared account that is not quite shared.',
+    text: 'The house has three generations. Your mother-in-law\'s kitchen is her domain; meals happen on her schedule. The money comes in and is pooled in ways that are not fully discussed. There is a grammar to what can be said about the household finances and what cannot. Your salary goes into a shared account that is not quite shared.',
     choices: [
       {
         text: 'You find your place in the household.',
@@ -80,7 +80,7 @@ export const INDIA_DEPTH_EVENTS = [
       {
         text: 'You hold both languages, and the uncomfortable position between them.',
         tag: null,
-        outcome: 'The discomfort does not resolve. You become fluent in the discomfort itself, which is its own kind of fluency.',
+        outcome: 'The discomfort does not resolve. You become fluent in the discomfort itself.',
         effect: (p) => { p.e += 6; p.m -= 3; p.r += 5; p.addFlag('bilingual_identity'); p.setMem('indEnglishMedium', true); },
       },
     ],
@@ -152,7 +152,7 @@ export const INDIA_DEPTH_EVENTS = [
       G.currentYear >= 1990 &&
       (G.flags.includes('joint_family_member') || G.flags.includes('joint_family_tension')) &&
       !G.mem?.indNuclear,
-    text: 'You have found a flat. The conversation with your mother-in-law is specific: you are not leaving because of her, you say. But you are leaving. She accepts this in the specific way that things are accepted in your family — without saying anything that acknowledges what is happening.',
+    text: 'You have found a flat. The conversation with your mother-in-law is specific: you are not leaving because of her, you say. But you are leaving. She accepts this in the way that things are accepted in your family — without saying anything that acknowledges what is happening.',
     choices: [
       {
         text: 'You move, and the relationship adjusts slowly.',
@@ -180,7 +180,7 @@ export const INDIA_DEPTH_EVENTS = [
       G.stats.smarts >= 55 &&
       G.wealthTier <= 2 &&
       !G.mem?.indFirstGen,
-    text: 'Your father\'s shop, or your father\'s land, or your father\'s government job — none of these are what the family has decided you will do. The conversation is not a conversation. It is a declaration of what has been arranged around your existence without consulting it: you will study engineering. Or medicine. The choice between these two is the extent of your options as presented.',
+    text: 'Your father\'s shop, or your father\'s land, or your father\'s government job — none of these are what the family has decided you will do. It is a declaration of what has been arranged around you without consulting you: you will study engineering. Or medicine. The choice between these two is the extent of your options as presented.',
     choices: [
       {
         text: 'You accept the path — it is also what you want.',
@@ -214,7 +214,7 @@ export const INDIA_DEPTH_EVENTS = [
       G.age >= 32 && G.age <= 50 &&
       G.children !== null && G.children.length > 0 &&
       !G.mem?.indMothers,
-    text: 'You have been tracking the things you do that no one counts. The school pick-up. The in-law\'s medication schedule. The homework. The social calendar of the entire family, held in your head. Your husband would say he helps. He does help. The arithmetic of help versus primary responsibility is specific and not quite discussable.',
+    text: 'You keep track of the things you do that nobody counts: the school run, your mother-in-law\'s medicines, the homework, the whole family\'s calendar held in your head. Your husband would say he helps, and he does. The difference between helping and being responsible is real, and not quite something you can say.',
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 6; p.karma += 4; p.addFlag('invisible_labour_known'); p.setMem('indMothers', true); },
   },
@@ -229,7 +229,7 @@ export const INDIA_DEPTH_EVENTS = [
       G.wealthTier >= 3 &&
       !G.flags.includes('rural_upbringing') &&
       !G.mem?.indVillageVisit,
-    text: 'The village your parents came from still exists. You come back for a funeral and find that the cousins who stayed here know things about land and water and seasonal rhythm that you have entirely lost. They also earn in a month what you earn in a day. The distance between you is not resentment. It is more specific than that.',
+    text: 'The village your parents came from still exists. You come back for a funeral and find that the cousins who stayed here know things about land and water and seasonal rhythm that you have entirely lost. They also earn in a month what you earn in a day. The distance between you is not resentment. It has another name you have not found.',
     choices: [
       {
         text: 'You send money when you can.',
@@ -290,7 +290,7 @@ export const INDIA_DEPTH_EVENTS = [
       {
         text: 'You find something that contains it — a class, an evening, a practice.',
         tag: null,
-        outcome: 'It is not what it would have been. It is also not nothing.',
+        outcome: 'It is not what it would have been, and it is something.',
         effect: (p) => { p.m += 6; p.r -= 4; p.addFlag('suppressed_ambition_revived'); p.setMem('indSuppressedEcho', true); },
       },
       {
@@ -315,7 +315,7 @@ export const INDIA_DEPTH_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2022 &&
       !G.mem?.indSwachhBharat,
     text: () =>
-      'Swachh Bharat Abhiyan: the government programme to end open defecation in India. A toilet is now officially under construction behind the house. The health logic is clear — diarrhoea, typhoid, child mortality, all documented — and the programme\'s statistics count structures built. Whether a structure is used is a different count.\n\nFor women the calculation is simpler and more urgent than it is for anyone else. The field requires darkness and distance and both of these create a specific risk that a compound toilet eliminates. The older men of the village will tell you what the field at dawn was. Your mother or your sister or your daughter could tell you what the field at dawn cost.',
+      'A toilet is being built behind the house, the government\'s programme to end open defecation, and the statistics count the structures built, not the ones used. For women the reasons are simpler and more urgent than for anyone: the field needs darkness and distance, and both bring their dangers. The older men can tell you what the field at dawn was. Your mother or your sister could tell you what it cost.',
     choices: [
       {
         text: 'The toilet is used. The practice changes, slowly.',

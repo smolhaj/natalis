@@ -24,7 +24,7 @@ export const UKRAINE_DEPTH_EVENTS = [
       !G.mem?.ukrDepChernobyl,
     text: () => pick([
       'April 26, 1986, reactor four. The explosion is at 1:23 a.m. Pripyat does not evacuate for 36 hours — the Soviet state needs time to determine that the evacuation is necessary. When the buses finally come, residents are told to bring documents for three days. Most leave without photographs, without extra clothing, without anything that acknowledges what three days means. The Ferris wheel in Pripyat is still there. No one ever rides it again.',
-      'The liquidators. 600,000 men across the Soviet Union sent to contain the reactor, clean the rooftops, build the sarcophagus. They receive medals. Some receive doses that are not measured accurately, or measured and not disclosed. The bonus pay is good. The paperwork afterward is complicated. Some of them are your age. Some of them are your uncles.',
+      'The liquidators: hundreds of thousands of men from across the Union sent to contain the reactor, clear the roof, build the sarcophagus. They get medals. Some get doses that were not measured properly, or were measured and not disclosed. The bonus pay is good and the paperwork afterwards is complicated. Some of them are your age. Some of them are your uncles.',
     ]),
     choices: [
       {
@@ -142,7 +142,7 @@ export const UKRAINE_DEPTH_EVENTS = [
       {
         text: 'You stay in Crimea. This is where you are from.',
         tag: null,
-        outcome: 'You stay. You get the Russian passport. The administrative category you now belong to — the annexed population — is not one that has a clean legal status in international law, which is not your daily problem. Your daily problem is the checkpoint, the ruble, the changed phone codes, and the relatives in Kyiv who call less often.',
+        outcome: 'You stay. You get the Russian passport. The administrative category you now belong to — the annexed population — has no clean legal status in international law, and that is not your daily problem. Your daily problem is the checkpoint, the ruble, the changed phone codes, and the relatives in Kyiv who call less often.',
         effect: (p) => {
           p.m -= 8
           p.r += 6

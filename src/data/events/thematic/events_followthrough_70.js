@@ -32,7 +32,7 @@ export const FOLLOWTHROUGH_70_EVENTS = [
       G.currentYear >= 2019 &&
       G.age >= 45 &&
       !G.mem?.ft70MSTBolsonaro,
-    text: 'Under Bolsonaro, the tempo of rural violence increases. FUNAI is gutted. Environmental agencies are hollowed. The MST is labelled a terrorist organization by certain legislators. You have been in this movement long enough to know that the labelling changes the legal terrain even when it doesn\'t change the facts on the ground. The movement has survived worse. The people who say this are the ones who remember the military years.',
+    text: 'Under Bolsonaro the violence in the countryside quickens. FUNAI and the environmental agencies are hollowed out, and some deputies call the movement terrorists. You have been in it long enough to know that a label changes the law around you even when nothing on the ground changes. The movement has survived worse, say the ones who remember the generals.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -91,7 +91,8 @@ export const FOLLOWTHROUGH_70_EVENTS = [
       G.currentYear >= 2005 &&
       G.age >= 25 &&
       !G.mem?.ft70QuilomboTitle,
-    text: 'The title is still under review. This is true twenty years after the 1988 Constitution and thirty years after and, in many cases, thirty-five years after. INCRA is underfunded. The ruralista bancada in Congress has successfully stalled the federal titling process. There are 6,300 quilombola communities identified in Brazil; fewer than 5% have full title. Your community is in the majority. You explain the situation to your children and hear yourself using the same words your mother used.',
+    text: 'The title is still under review, twenty years after the 1988 Constitution promised it, and thirty, and for many thirty-five. INCRA has no money and the landowners\' bloc in Congress has stalled the process. Your community is among the many still waiting. You explain it to your children and hear yourself using your mother\'s words.',
+    context: 'Brazil has identified more than 6,000 quilombola communities; fewer than one in twenty held full title to their land.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -111,7 +112,7 @@ export const FOLLOWTHROUGH_70_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 45 &&
       !G.mem?.ft70SoyWater,
-    text: 'The Cantareira system in São Paulo runs dry in 2014-2015 — the worst drought in eighty years in the region. The connection between cerrado conversion and downstream water security is in the hydrological models and visible in the empty reservoir. The São Paulo that is having a water crisis is the São Paulo that depends on rivers that begin in the cerrado. The cerrado that was converted to soy is the cerrado that no longer holds water. The chain is not complicated. The political economy of soy is also not complicated. They operate on different timescales and nothing has been resolved.',
+    text: 'In 2014 the Cantareira reservoirs that supply São Paulo run nearly dry, the worst drought there in eighty years. The rivers that fill them begin in the cerrado, and the cerrado that was cleared for soy no longer holds water. The chain is not complicated. Neither is the politics of soy. They run on different clocks, and nothing has been settled.',
     choices: null,
     effect: (p) => {
       p.r += 5

@@ -3,6 +3,7 @@ import { pickFrom } from '../utils/random'
 import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt, hasPassengerRail, ADJUSTMENT_PROGRAMME_YEARS } from '../data/history.js'
 import { preferUnsaid, hasSaid } from './prose'
 import { hasTech, wasWealthy } from '../data/technology.js'
+import { worldFacts, proseFitsWorld, midSentence, privateMarketAt, adjustedBy, hotClimate } from './mundaneLayer.js'
 
 // yearTexture — the quiet-year prose layer.
 //
@@ -104,10 +105,17 @@ function buildYearTexture(state, opts = {}) {
       if (typeof line === 'string' && line.length > 0) commits.set(line, onPrint)
     }
   }
+  // A line that assumes something this place did not have this year — a
+  // landlord in 1948 Moscow, the IMF in 1986 India, social media in Pyongyang —
+  // is dropped before the draw rather than after it, so the tier still speaks.
+  const facts = worldFacts(state)
   for (const offer of textureCandidates(state, opts)) {
     if (!Array.isArray(offer)) continue
-    const [tier, value, onPrint] = offer
+    const [tier, rawValue, onPrint] = offer
     if (!buckets[tier]) continue
+    const value = Array.isArray(rawValue)
+      ? rawValue.filter(line => proseFitsWorld(line, facts))
+      : (proseFitsWorld(rawValue, facts) ? rawValue : null)
     // A guard offers either one line or a pool of interchangeable variants. The
     // pool counts as ONE candidate, so a block with thirty alternatives does not
     // outvote a country block with one — it just has thirty ways to say its turn.
@@ -3648,12 +3656,18 @@ function* textureCandidates(state, opts = {}) {
     // so this mixed fallback made every `cc === '...'` below always false once a
     // game was running: the China-tech, US-healthcare and named-Gulf-finance
     // career branches were dead.
-    const cc = (state.currentCountry ?? state.character?.country)?.name
-    const arch = state.character?.country?.archetype
+    const liveCountry = state.currentCountry ?? state.character?.country
+    const cc = liveCountry?.name
+    // The country the work is done in, not the one the character was born in.
+    const arch = liveCountry?.archetype
     const yr = currentYear
+    // "Under-resourced" is a fact about money, not about the archetype: Cuba,
+    // Iran and China share archetypes with Haiti and the DR Congo.
+    const thinBudget = ['very_low', 'low', 'low_medium'].includes(liveCountry?.gdp)
+    const ruralHere = livingRuralUrban(state) === 'rural'
 
     // Technology in developing world: different constraints, different meaning
-    if (field === 'technology' && (arch === 'subsaharan' || arch === 'developing_urban' || arch === 'developing_unstable')) {
+    if (field === 'technology' && thinBudget && (arch === 'subsaharan' || arch === 'developing_urban' || arch === 'developing_unstable')) {
       yield [T.anchored, pick([
         'The connectivity is the constraint. Everything you build is designed for the gaps between the connections, the drop-out, the two-bar signal at the edge of coverage.',
         'You are building something here that does not assume the infrastructure exists. That requires a different architecture than the solutions the tech companies in the north exported.',
@@ -3662,7 +3676,7 @@ function* textureCandidates(state, opts = {}) {
           : 'The electricity goes out. The generator runs for a few hours. You have learned to scope the work to what the generator will give you.',
       ])]
     }
-    if (field === 'technology' && arch === 'post_soviet' && yr >= 1991 && yr <= 2010) {
+    if (field === 'technology' && wasSovietRepublic(cc) && yr >= 1991 && yr <= 2010) {
       yield [T.anchored, pick([
         'The technical skills survived the collapse. The institutions they were embedded in did not. You found ways to offer them to whoever was building the new economy.',
         'You had a qualification from a Soviet-era institute that meant something inside the Soviet system and required translation for everything after. You made the translation.',
@@ -3687,7 +3701,7 @@ function* textureCandidates(state, opts = {}) {
     }
 
     // Education under pressure: teaching in authoritarian contexts
-    if (field === 'education' && (F.has('regime_self_censorship') || ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(state.character?.country?.regime))) {
+    if (field === 'education' && (F.has('regime_self_censorship') || ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(getCountryRegime(liveCountry, yr)))) {
       yield [T.anchored, pick([
         'The curriculum is what it is. What you teach inside it is also what it is. The two things coexist in your classroom without being announced.',
         'You know which questions cannot be answered honestly in front of thirty children whose parents have not chosen to take that risk on their behalf.',
@@ -3697,7 +3711,7 @@ function* textureCandidates(state, opts = {}) {
       ])]
     }
     // Education in under-resourced contexts
-    if (field === 'education' && (arch === 'subsaharan' || arch === 'developing_unstable' || arch === 'conflict_zone') && Math.random() < 0.5) {
+    if (field === 'education' && thinBudget && (arch === 'subsaharan' || arch === 'developing_unstable' || arch === 'conflict_zone') && Math.random() < 0.5) {
       yield [T.anchored, pick([
         'You share the one textbook between four students. You have done this long enough that the workaround is just the method.',
         'The class is too large and the supplies are not enough and the children come anyway, which tells you something.',
@@ -3718,14 +3732,16 @@ function* textureCandidates(state, opts = {}) {
           : 'The debt from the training and the salary from the practice and the hours of both — you are doing the arithmetic that will take a decade to resolve.',
       ])]
     }
-    if (field === 'healthcare' && (arch === 'subsaharan' || arch === 'developing_unstable') && Math.random() < 0.5) {
+    if (field === 'healthcare' && thinBudget && (arch === 'subsaharan' || arch === 'developing_unstable') && Math.random() < 0.5) {
       yield [T.anchored, pick([
         'The drugs are out of stock again. You treat with what you have. That sentence covers a range of improvisations that would alarm a hospital in a wealthy country.',
-        'You are the only doctor in this district. You know what that means for the people in the next village and the one after that.',
+        ruralHere && 'You are the only doctor in this district. You know what that means for the people in the next village and the one after that.',
         'The WHO protocols assume supply chains that function. You work in the gap between the protocol and the supply chain.',
         phase === 'late_life'
           ? 'You have practised medicine here for decades with the materials available here. What you have managed to do with what was available is the record of this career.'
-          : 'The patient walked four hours to get here. You have that in mind when you decide how long the consultation takes.',
+          : ruralHere
+            ? 'The patient walked four hours to get here. You have that in mind when you decide how long the consultation takes.'
+            : 'The queue starts outside before it is light. You have that in mind when you decide how long each consultation takes.',
       ])]
     }
 
@@ -3739,7 +3755,7 @@ function* textureCandidates(state, opts = {}) {
           : 'The money is here and it wants to move and you are part of the system that moves it.',
       ])]
     }
-    if (field === 'finance' && arch === 'post_soviet' && yr >= 1991 && yr <= 2008) {
+    if (field === 'finance' && wasSovietRepublic(cc) && yr >= 1991 && yr <= 2008) {
       yield [T.anchored, pick([
         'The 1990s: the privatisation, the vouchers, the men who understood that the vouchers could be aggregated. You were somewhere in that process.',
         'The new financial system was assembled out of pieces of the old one and pieces imported from outside, and the seams between them are where the fortunes were made.',
@@ -8961,7 +8977,7 @@ function* textureCandidates(state, opts = {}) {
     'The Charter is the document that makes certain arguments possible — section 15, equality rights, the court challenges that would not have been possible without it.',
     'Quebec never signed. The constitution is Canada\'s constitution and Quebec exists under it without having ratified it. The sentence describes something that is true and is also the unresolved thing.',
   ])]
-  if (F.has('quebec_question_generation') && Math.random() < 0.2) yield [T.anchored, pick([
+  if (F.has('quebec_question_generation') && currentYear >= 2000 && Math.random() < 0.2) yield [T.anchored, pick([
     'Meech Lake, Charlottetown, the 1995 referendum. The question of whether Quebec is in Canada on terms Quebec can live with has produced three major constitutional failures in fifteen years.',
     phase === 'late_life'
       ? 'The question is quieter now. The sovereigntist parties are lower in the polls. The question is not gone. It is the question that Canada generates when conditions are right. The conditions change.'
@@ -9370,9 +9386,14 @@ function* textureCandidates(state, opts = {}) {
   if (F.has('post_9_11_world') && Math.random() < 0.15) yield [T.anchored, pick([
     (state.currentCountry ?? state.character?.country)?.name === 'United States'
       ? 'The security lines, the body scanners, the databases, the colour-coded threat level that nobody could explain. The world after 2001 was a world organised around a specific event.'
-      : 'The security lines and the databases arrived here too, imported whole from somewhere else, for a thing that happened somewhere else. Nobody asked and the queues are longer.',
-    // Printed "still there 0 years later" into 2001 itself.
-    state.currentYear - 2001 >= 4 && state.currentYear - 2001 <= 25 && `Something changed in 2001 and the change was sold as temporary emergency measures and the measures are still there ${state.currentYear - 2001} years later.`,
+      // `post_9_11_world` is set for nearly everybody alive in 2001, and this
+      // reached rural Oyo and a farmer in Bihar with a sermon about airport
+      // queues. It is a line for somebody who has stood in one.
+      : ((state.travels?.length ?? 0) > 0 || F.has('emigrated') || F.has('well_traveled')) &&
+        'At the airport the liquids go into a clear bag now and the shoes come off. The rules were written in another country and arrived here as a sign on the wall.',
+    // The colour-coded advisory system ran from 2002 to 2011.
+    (state.currentCountry ?? state.character?.country)?.name === 'United States' && state.currentYear >= 2002 && state.currentYear <= 2011 &&
+      'The threat level on the news is a colour. Nobody you know can say what the difference between two of the colours means.',
   ])]
   if (F.has('katrina_generation') && Math.random() < 0.22) yield [T.anchored, pick([
     'The satellite image of the eye. The levees failing the morning of August 29. The Superdome. The people on the rooftops. "Brownie, you\'re doing a heck of a job." The helicopters flying over.',
@@ -14098,8 +14119,11 @@ function* textureCandidates(state, opts = {}) {
     // and Märkisches Viertel are West Berlin social housing from the 1960s and
     // 70s, and a 1933 Berlin childhood was being told it fetched water from a
     // standpipe in an estate that would not exist for thirty years.
+    // An unplanned settlement needs land nobody planned: there were none in
+    // Pyongyang or in Brezhnev's Moscow, whatever the neighbourhood tier is called.
     const informalIsPossible = !['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(
-      (state.currentCountry ?? state.character?.country)?.archetype)
+      (state.currentCountry ?? state.character?.country)?.archetype) &&
+      privateMarketAt((state.currentCountry ?? state.character?.country)?.name, currentYear)
     // A planned estate is a city and the second half of the century; the
     // tier was also landing on rural Thuringia in 1927.
     if (nbhTier === 'informal' && !informalIsPossible && livingRuralUrban(state) !== 'rural' && currentYear >= 1950 && Math.random() < 0.28) yield [T.anchored, pick([
@@ -14116,7 +14140,7 @@ function* textureCandidates(state, opts = {}) {
     const _gridHere = hasTech(_nbhCountry, 'electricity', currentYear, { rural: false })
     if (nbhTier === 'informal' && informalIsPossible && livingRuralUrban(state) !== 'rural' && Math.random() < 0.3) yield [T.anchored, pick([
       nbhName
-        ? `The water in ${nbhName} runs from the standpipe at the corner until mid-morning. You have arranged your life around this.`
+        ? `The water in ${midSentence(nbhName)} runs from the standpipe at the corner until mid-morning. You have arranged your life around this.`
         : 'The water runs from the standpipe until mid-morning. You have arranged your life around this.',
       'The title to the land the house is on is not the kind of title that appears in government records. You know this and you have learned to live with knowing it.',
       _gridHere && 'The electricity comes from a line that someone ran off the main grid years ago. It is reliable in the way things are reliable when a community maintains them together.',
@@ -14125,14 +14149,17 @@ function* textureCandidates(state, opts = {}) {
         ? 'You have lived here long enough to see the settlement become a neighbourhood — the shops, the school, the church or mosque, the names the streets acquired because someone started using them.'
         : 'The neighbourhood was not built by a plan. It was built by people solving immediate problems one decision at a time, and it works with the logic of that.',
     ])]
+    // The tier names a part of a city. In a village the elite household is the
+    // landowner's, and "other parts of the city" reached rural Sichuan.
+    const _inTownNbh = livingRuralUrban(state) !== 'rural'
     if (nbhTier === 'working_class' && Math.random() < 0.2) yield [T.anchored, pick([
       'A quiet year. The work is steady. The margin is thin but it is there.',
       'The neighbours know your name. This has value that is not easy to account for in any framework that doesn\'t include it.',
       phase === 'midlife' || phase === 'late_life'
         ? 'You have lived in this neighbourhood long enough to see it change and not change. The things that are the same are the things that matter most.'
-        : 'The neighbourhood is not what the magazines show but it is yours — the specific corner, the specific shop, the specific route you take.',
+        : _inTownNbh && 'The neighbourhood is not what the magazines show but it is yours — the specific corner, the specific shop, the specific route you take.',
     ])]
-    if (nbhTier === 'elite' && Math.random() < 0.2) yield [T.anchored, pick([
+    if (nbhTier === 'elite' && _inTownNbh && Math.random() < 0.2) yield [T.anchored, pick([
       'The neighbourhood has a quality of maintained distance from the problems of other parts of the city. You notice this more in some years than others.',
       'You can afford not to think about certain things that people in other parts of the city cannot stop thinking about. This is the structural fact underneath the comfort.',
       phase === 'late_life'
@@ -14400,7 +14427,12 @@ function* textureCandidates(state, opts = {}) {
 
   if (phase === 'early_childhood') {
     const character = state.character
-    const arch = character?.country?.archetype ?? 'developing_urban'
+    const here = state.currentCountry ?? character?.country
+    // Heat is a fact about the climate and plenty a fact about the year; the
+    // archetype was answering both, so Bhutan, Patagonia and Harbin got the
+    // tropical heat, and 1950s Seoul the house full of toys.
+    const hot = hotClimate(here?.name)
+    const plenty = wasWealthy(here, currentYear)
     const ruralUrban = livingRuralUrban(state)
     const wealth = state.stats?.wealth ?? 50
     const cr = conflictRiskAt(state.currentCountry ?? character?.country, state.currentYear)
@@ -14417,10 +14449,10 @@ function* textureCandidates(state, opts = {}) {
         'There are sounds at night that make the adults still. You do not know yet what they are.',
         'The house is where the safety is. You know this without knowing you know it.',
       )
-      if (['subsaharan', 'developing_unstable', 'developing_urban'].includes(arch)) pool.push(
-        'The heat is a fact of life you were born into. So are the sounds of the compound, the street, the neighbors.',
+      if (hot) pool.push(
+        'The heat is a fact of life you were born into. So are the sounds of the yard, the street, the neighbors.',
       )
-      if (['wealthy_west', 'wealthy_east'].includes(arch)) pool.push(
+      if (plenty) pool.push(
         'The house is quiet and warm. You will not remember it. It is making you anyway.',
       )
       yield [T.universal, pick(pool)]
@@ -14439,7 +14471,7 @@ function* textureCandidates(state, opts = {}) {
         'The animals near the house are enormous and familiar. You have feelings about each of them.',
         'The well or the water source is far away. You know this because you have been there.',
       )
-      if (['wealthy_west', 'wealthy_east'].includes(arch)) pool.push(
+      if (plenty) pool.push(
         'There are more things to play with than you can count. Some of them are for you. You are not sure which.',
       )
       if (cr > 0.1) pool.push(
@@ -14464,10 +14496,10 @@ function* textureCandidates(state, opts = {}) {
       'The adults worry about something. You know this from how they are at meals.',
       'There is not always enough of what you want. There is usually enough of what you need.',
     )
-    if (ruralUrban === 'rural' && ['subsaharan', 'developing_urban', 'developing_unstable'].includes(arch)) pool.push(
-      'Your world is small and complete: the compound, the neighbors, the water source, the day of the market.',
+    if (ruralUrban === 'rural' && !plenty && !hasTech(here, 'piped_water', currentYear, { rural: true })) pool.push(
+      'Your world is small and complete: the yard, the neighbors, the water source, the day of the market.',
     )
-    if (['wealthy_west', 'wealthy_east'].includes(arch)) pool.push(
+    if (plenty) pool.push(
       'The world seems large and mostly arranged for your benefit. This is not quite right, but it is close.',
     )
     yield [T.universal, pick(pool)]
@@ -14550,7 +14582,8 @@ function* textureCandidates(state, opts = {}) {
         'Prosperity is the official story. The official story is partly true.',
       ])]
       else if (era === 1950) yield [T.anchored, pick([
-        'The countries to the north are being rebuilt with someone else\'s money and this one is not, and everybody here knows the name of the plan.',
+        // Spain was excluded from the Marshall Plan; Portugal and Greece were not.
+        ...(country?.name === 'Spain' ? ['The countries to the north are being rebuilt with someone else\'s money and this one is not, and everybody here knows the name of the plan.'] : []),
         'The emigration is the economy. The remittance arrives on the same week each month and the household is organised around the date.',
       ])]
       if (era === 1960) yield [T.anchored, pick([
@@ -14602,14 +14635,18 @@ function* textureCandidates(state, opts = {}) {
       // gated on having actually been in the USSR.
       const sovietRepublic = wasSovietRepublic(cn)
       const plannedFrom = sovietRepublic ? 1928 : 1948
+      // The block and the dacha are a city dweller's; they were reaching a
+      // kolkhoz in rural Siberia in 1943.
+      const inTown = livingRuralUrban(state) !== 'rural'
       if (currentYear >= plannedFrom && era <= 1980) yield [T.anchored, pick([
         'Everything is in its correct place according to the plan. The plan is not everything.',
         'The collective has its logic. The individual has their own. They are not always the same logic.',
         'The queue is long. This is ordinary. The ordinariness of the queue is information about the system.',
-        'The apartment block is identical to the one beside it and the one beside that. Inside them: particular lives, none of them identical.',
-        sovietRepublic
+        inTown && currentYear >= 1958 && 'The apartment block is identical to the one beside it and the one beside that. Inside them: particular lives, none of them identical.',
+        inTown && (sovietRepublic
           ? 'The summer dacha is the real home — the place where the city does not follow you, where the garden has its own logic.'
-          : 'The plot outside town is the real home — the place where the city does not follow you, where the garden has its own logic.',
+          : 'The plot outside town is the real home — the place where the city does not follow you, where the garden has its own logic.'),
+        !inTown && 'The brigade leader reads out the workdays at the meeting. What a workday is worth is announced after the harvest, and it is never what anyone hoped.',
       ])]
       if (era === 1990) yield [T.anchored, pick([
         'The system that organized everything is coming apart. What replaces it is not yet clear.',
@@ -14642,7 +14679,11 @@ function* textureCandidates(state, opts = {}) {
     }
 
     // ── developing_urban era texture ──
-    if (arch === 'developing_urban') {
+    // A planned economy is not a developing market one: the informal sector,
+    // the IMF and "democracy is the official story now" were reaching Mao's
+    // China and the Vietnam of the subsidy years. Those countries carry their
+    // own lines; this block is for the market economies it was written about.
+    if (arch === 'developing_urban' && privateMarketAt(cn, currentYear)) {
       // `era <= 1960` meant every year up to 1969, and this fired 198 times
       // from 1931 — telling Tuvalu (1978), Kiribati (1979), Barbados (1966),
       // Belize (1981), the Marshall Islands (1986), Brazil (1822) and Bhutan
@@ -14675,10 +14716,13 @@ function* textureCandidates(state, opts = {}) {
         !inTown && 'The government reaches this place when it wants something — the tax, the census, the men for the road gang. The rest of the year it is an idea in the capital.',
       ])]
       if (era === 1970 || era === 1980) yield [T.anchored, pick([
-        'The IMF has opinions about how the economy should be run. The people living in the economy have different opinions.',
+        // Both of these are claims about a country that had borrowed from the
+        // Fund — India in 1986 and Mexico in 1973 had not — and both closed on
+        // a moral. `adjustedBy` reads ADJUSTMENT_PROGRAMME_YEARS.
+        adjustedBy(cn, currentYear) && 'The IMF team is in the capital again. On the radio the minister says the word conditions, and the bus fare goes up the same week.',
         // Structural adjustment is a word of the 1980s; the 1970s had the
         // standby arrangement and the subsidy cut without the vocabulary.
-        currentYear >= 1980 && 'Structural adjustment is the term. The structure being adjusted is the daily life of ordinary people.',
+        currentYear >= 1980 && adjustedBy(cn, currentYear) && 'Structural adjustment is the phrase on the radio. At the market it is the price of bread, and at the clinic it is the empty shelf behind the counter.',
         inTown && 'The city has grown faster than the roads, the water, the electricity. The gap between the plan and the reality is visible from the street.',
         'The informal sector employs more people than the formal sector. This is not in the official statistics.',
         'The family who moved to the city sends money back to the village and sends news. The village knows what city life is from this relay. Most of what it knows is accurate.',
@@ -14687,7 +14731,8 @@ function* textureCandidates(state, opts = {}) {
       ])]
       if (era === 1990) yield [T.anchored, pick([
         noticesDevices && currentYear >= 1996 && 'The mobile phone is arriving before the landline arrived. This is either a paradox or a bypass. Either way, things work.',
-        'Democracy is the official story now — elections, campaigns, the whole machinery. The substance of it is still being negotiated.',
+        !['single_party_communist', 'single_party_authoritarian', 'absolute_monarchy', 'military_dictatorship', 'theocracy'].includes(getCountryRegime(country, currentYear)) &&
+          'Democracy is the official story now — elections, campaigns, the whole machinery. The substance of it is still being negotiated.',
         inTown && 'The middle class is emerging. It is visible in the cars, in the private schools, in the kind of shopping now available.',
         inTown && 'The family that buys a car this year is purchasing mobility and also membership in something — a tier of city life with its own traffic problems.',
         !inTown && 'The road was graded this year and the bus comes most days now. What it mostly carries out is people.',
@@ -14766,9 +14811,20 @@ function* textureCandidates(state, opts = {}) {
 
     // ── wealthy_gulf era texture ──
     if (arch === 'wealthy_gulf') {
-      if (era <= 1970) yield [T.anchored, pick([
-        'The oil money is new enough that no one has yet agreed on what it is for.',
-        'The bedouin routes that organized this desert for centuries are being replaced by highways.',
+      // The first export cargo: Bahrain 1934, Saudi Arabia 1939, Kuwait 1946,
+      // Qatar 1949, Abu Dhabi 1962, Oman 1967. Before it, the oil lines were
+      // telling a 1940 Omani about highways.
+      const OIL_FROM = { Bahrain: 1934, 'Saudi Arabia': 1939, Kuwait: 1946, Qatar: 1949, UAE: 1962, Oman: 1967 }
+      const oilYears = currentYear - (OIL_FROM[cn] ?? 1950)
+      if (era <= 1970 && oilYears < 0) yield [T.anchored, pick([
+        currentYear >= 1930
+          ? 'The pearling boats go out in the summer and come back thinner every year since the Japanese learned to grow pearls. The debt to the merchant is carried from one season to the next.'
+          : 'The pearling boats go out in the summer for four months. The debt to the merchant is carried from one season to the next.',
+        'The town is the harbour, the fort, the souq and the date gardens. A man who has been to Bombay is listened to.',
+      ])]
+      if (era <= 1970 && oilYears >= 0) yield [T.anchored, pick([
+        oilYears <= 15 && 'The oil money is new enough that no one has yet agreed on what it is for.',
+        oilYears >= 8 && 'The bedouin routes that organized this desert for centuries are being replaced by highways.',
         'Before the wealth, there was the pearl trade, the fishing, the trade routes. The people who remember this are still here.',
       ])]
       if (era === 1980 || era === 1990) yield [T.anchored, pick([
@@ -14914,10 +14970,13 @@ function* textureCandidates(state, opts = {}) {
       const sovereign = indep == null || indep <= currentYear
       const hadCoup = (COUP_YEARS[cn] ?? []).some(y => y <= currentYear)
       if (sovereign) yield [T.anchored, pick([
-        'The election results are announced. The question of whether the result is the result is a question people are careful about where they ask it.',
-        'The currency is not what it was last year. The prices reflect this. The wages have not caught up.',
+        getCountryRegime(country, currentYear) !== 'single_party_communist' &&
+          'The election results are announced. The question of whether the result is the result is a question people are careful about where they ask it.',
+        // Prices fixed by the state do not drift against wages from one year
+        // to the next; this reached Pyongyang in 1979.
+        privateMarketAt(cn, currentYear) && 'The currency is not what it was last year. The prices reflect this. The wages have not caught up.',
         hadCoup && 'The general has been replaced by another general, or by a politician who looks like a general in the important ways.',
-        currentYear >= 1975 && 'The debt to the international lenders is a number that appears in budgets and disappears from daily conversation.',
+        adjustedBy(cn, currentYear) && 'The debt to the international lenders is a number in the budget speech and nowhere in the conversation at the bus stop.',
         'People are managing. Managing is not the same as thriving. It is also not the same as failing. It is its own category.',
       ])]
     }

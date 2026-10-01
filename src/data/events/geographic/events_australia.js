@@ -15,7 +15,7 @@ export const AUSTRALIA_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 1975 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.ausWhiteAustralia,
-    text: 'The White Australia Policy is the law of the land. Your family came under the discretion provisions — technically excluded, practically permitted, contingent on each generation proving it belongs. The dictation test: you can be asked to write fifty words in any European language the officer chooses. The officer chooses a language you do not know. This is the mechanism. You learn early that belonging here is a permission you have to re-earn. The policy will be dismantled in stages between 1966 and 1973. You are living in the years before the dismantling.',
+    text: 'The White Australia Policy is the law, and your family came in under the discretion provisions: excluded on paper, allowed in practice, on condition that each generation proves it belongs. An officer can make you write fifty words in any European language he chooses, and he chooses one you do not know. You learn early that belonging here is a permission to be earned again. It will be dismantled between 1966 and 1973. You are living in the years before.',
     choices: [
       {
         text: 'You become expert at the performance of belonging. The performance is exhausting.',
@@ -48,7 +48,7 @@ export const AUSTRALIA_EVENTS = [
       {
         text: 'Your birthday comes up. You go.',
         tag: null,
-        outcome: 'Phuoc Tuy Province. The Long Tan paddy fields. You come back different, which is what people say, and also correct. The Welcome Home Parade does not happen until 1987, fifteen years after the last troops return.',
+        outcome: 'Phuoc Tuy Province. The Long Tan paddy fields. You come back different, as people say. The Welcome Home Parade does not happen until 1987, fifteen years after the last troops return.',
         effect: (p) => { p.m -= 10; p.h -= 6; p.addFlag('aus_vietnam_vet'); p.addFlag('veteran_unthanked'); p.setMem('ausVietnam', true); },
       },
       {
@@ -76,7 +76,7 @@ export const AUSTRALIA_EVENTS = [
       G.currentYear === 1975 &&
       G.age >= 16 &&
       !G.mem?.ausDismissal,
-    text: 'November 11, 1975. Remembrance Day. The Governor-General John Kerr summons Gough Whitlam and reads him the letter: his commission as Prime Minister has been terminated. The Senate had blocked supply — refused to pass the budget — and Kerr used reserve powers that had never been used before and have not been used since. Whitlam stands on the steps of Parliament House and reads his statement to the crowd. The last line: "Well may we say God save the Queen, because nothing will save the Governor-General." The 1975 election goes to Fraser in a landslide. The question of whether what Kerr did was constitutional is still being argued.',
+    text: 'November 11, 1975, and the Governor-General calls Whitlam in and dismisses him, using powers never used before and not since, because the Senate has blocked the budget. Whitlam stands on the steps of Parliament House and says: "Well may we say God save the Queen, because nothing will save the Governor-General." Fraser wins the election in a landslide. People are still arguing about whether it was constitutional.',
     choices: [
       {
         text: 'What happened was a constitutional coup and it was not supposed to be possible.',
@@ -103,7 +103,8 @@ export const AUSTRALIA_EVENTS = [
       G.currentYear === 1996 &&
       G.age >= 14 &&
       !G.mem?.ausPortArthur,
-    text: 'April 28, 1996. Port Arthur, Tasmania. A tourist site. Thirty-five people killed, twenty-three wounded. The deadliest mass shooting in Australian history. John Howard announces gun law reforms within days. By the following year, 650,000 semi-automatic weapons and pump-action shotguns have been bought back and destroyed. Howard wears a bullet-proof vest to address the gun lobby. The laws pass. The gun buyback is the largest civilian disarmament in a democratic country\'s history. Australia does not have another mass shooting of comparable scale.',
+    text: 'Port Arthur, Tasmania, a tourist site, and thirty-five people dead in an afternoon. Within days the prime minister announces new gun laws, and he goes to the gun lobby\'s meeting in a bulletproof vest. By the next year the semi-automatics are being handed in and cut up at police stations. There is not another shooting like it.',
+    context: 'The Port Arthur massacre of 28 April 1996 killed 35 people. The National Firearms Agreement that followed bought back and destroyed about 650,000 firearms.',
     choices: [
       {
         text: 'The response — the laws, the buyback — feels like the country choosing to be something different.',
@@ -132,7 +133,7 @@ export const AUSTRALIA_EVENTS = [
       !G.mem?.ausTampa,
     text: (G) => {
       if (G.ethnicity === 'asian_australian') {
-        return 'August 2001. The MV Tampa rescues 438 Afghan asylum seekers in the Indian Ocean. The Howard government refuses to allow them to land. The phrase "we will decide who comes to this country and the circumstances in which they come" enters the political language. You were born here or came here legally, which should be different from the situation these people are in. In certain quarters, the distinction is not reliably made. The election is in November. The Tampa and then the September 11 attacks. Howard wins in a landslide.'
+        return 'August 2001. A Norwegian freighter picks up hundreds of Afghans from a sinking boat and the government will not let them land. "We will decide who comes to this country and the circumstances in which they come." You were born here, or came the right way, and in some quarters that distinction is not reliably made. Then September 11, and in November the government wins in a landslide.'
       }
       return 'August 2001. The MV Tampa, a Norwegian cargo ship, rescues 438 Afghan asylum seekers from a sinking vessel in the Indian Ocean and heads for Christmas Island. The Howard government denies permission to land and boards the ship with SAS troops. The Pacific Solution: offshore processing in Nauru and Papua New Guinea. "We will decide who comes to this country and the circumstances in which they come." The election is in November. Howard wins in a landslide.'
     },
@@ -140,13 +141,13 @@ export const AUSTRALIA_EVENTS = [
       {
         text: 'The policy is a cruelty deliberately made visible. You will not be part of the landslide.',
         tag: null,
-        outcome: 'The landslide happens without you. The Pacific Solution continues for years. The offshore detention centres become a specific Australian human rights record that follows the country into subsequent decades.',
+        outcome: 'The landslide happens without you. The Pacific Solution continues for years. The offshore detention centres become an Australian human rights record that follows the country into subsequent decades.',
         effect: (p) => { p.m -= 6; p.karma += 5; p.r += 4; p.addFlag('pacific_solution_era'); p.setMem('ausTampa', true); },
       },
       {
-        text: 'Border security is a genuine policy question. The rhetoric goes too far; the underlying issue is real.',
+        text: 'Border security is a genuine policy question. The rhetoric goes too far; the underlying issue does not go away.',
         tag: null,
-        outcome: 'The issue is real. The specific treatment of people in offshore detention — the indefinite detention, the reports of self-harm, the children in camps — is also real. Both can be true.',
+        outcome: 'The issue does not go away. The treatment of people in offshore detention — the indefinite detention, the reports of self-harm, the children in camps — is also real.',
         effect: (p) => { p.m -= 4; p.r += 5; p.addFlag('pacific_solution_era'); p.setMem('ausTampa', true); },
       },
     ],
@@ -192,15 +193,16 @@ export const AUSTRALIA_EVENTS = [
     text: (G) => {
       const isLGBTQ = G.flags.some(f => ['gay_man', 'lesbian_woman', 'bisexual', 'lgbtq_identity', 'queer_identity', 'came_out'].includes(f))
       if (isLGBTQ) {
-        return 'The parliament cannot pass marriage equality directly, so instead Australia runs a postal survey asking citizens whether they think you should be allowed to marry. The debate runs for months. The No campaign\'s advertising. The billboards in your suburb. Your colleagues who tell you they are voting Yes but also that it\'s complicated. The result comes in on November 15: 61.6 percent Yes. You watch it at a pub or at home or in the street. The Yes win means you can marry. What the process of asking cost is a different accounting.'
+        return 'The parliament will not vote on it, so the country is sent a postal survey about whether you may marry. For months there are No billboards in your suburb, and colleagues tell you they are voting Yes but it\'s complicated. In November it is Yes, and you watch at a pub or at home or in the street. You can marry now. What it cost to be asked is a different accounting.'
       }
       return 'Instead of a parliamentary vote, the government runs a postal survey on same-sex marriage. The campaign: the Yes campaign in the streets, the No campaign on billboards. On November 15, the result: 61.6 percent of Australians who returned a ballot voted Yes. Marriage equality passes parliament the following month. The postal survey will be debated for years as a mechanism — whether it was necessary, whether the debate it produced was worth the cost of having the debate publicly.'
     },
+    context: 'The 2017 Australian Marriage Law Postal Survey returned 61.6 percent Yes; Parliament legislated for same-sex marriage in December 2017.',
     choices: [
       {
         text: 'You vote Yes. The result is what you hoped.',
         tag: null,
-        outcome: 'The result is Yes. The law changes. The cost of the process — the months of being debated as a policy question — is not made good by the outcome, which is also good.',
+        outcome: 'The result is Yes. The law changes. The cost of the process — the months of being debated as a policy question — is not made good by the outcome, though the outcome is good.',
         effect: (p) => { p.m += 6; p.karma += 4; p.addFlag('ssm_australia_generation'); p.setMem('ausSSM', true); },
       },
       {
@@ -228,7 +230,7 @@ export const AUSTRALIA_EVENTS = [
       {
         text: 'You rent and make peace with it. The permanent renter.',
         tag: null,
-        outcome: 'The renting is not temporary. It is the condition. You build what you build within it — the furniture, the community, the life that does not require a mortgage. The net worth calculation is a different calculation.',
+        outcome: 'The renting turns out to be permanent. You build what you build within it — the furniture, the community, the life that does not require a mortgage. The net worth calculation is a different calculation.',
         effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('aus_housing_generation'); p.addFlag('permanent_renter'); p.setMem('ausHousing', true); },
       },
       {
@@ -316,9 +318,10 @@ export const AUSTRALIA_EVENTS = [
     text: (G) => {
       const isAffected = G.age >= 20 && G.age <= 55
       return isAffected
-        ? 'Summer 2019-20. Eighteen-point-six million hectares burn. Thirty-three people die directly; smoke-related mortality will be counted for years. Three billion animals. The sky over Sydney turns red-orange at noon. Melbourne: worst air quality of any city on Earth on certain days. The fires burn through the fire season, through January, into February. The Prime Minister was in Hawaii when the fires started and will be photographed trying to shake hands with people who do not want to shake his hand. You watch it from a city, from a rural property, from a holiday that has become impossible to leave. The country that you thought would be yours to pass on has been revised.'
-        : 'You are younger and the Black Summer of 2019-20 is one of the first large events you are old enough to carry. Eighteen-point-six million hectares. The red sky. The number of animals. You will be asked about climate change at school in a way that is different from how the generation before you was asked. The answer is visible.'
+        ? 'The summer the country burns. The sky over Sydney is orange at noon and the smoke reaches Melbourne and New Zealand. The fires burn through January and into February. The prime minister was in Hawaii when they started, and on the news he tries to shake hands with people who do not want his hand. The country you thought you would pass on has been revised.'
+        : 'You are younger and the Black Summer of 2019-20 is one of the first large events you are old enough to carry. Eighteen-point-six million hectares. The red sky. The number of animals. You will be asked about climate change at school, which nobody asked your parents. The answer is visible.'
     },
+    context: 'The 2019-20 bushfires burned about 18.6 million hectares, killed 33 people directly and an estimated three billion animals.',
     choices: [
       {
         text: 'The fires made something undeniable. The climate argument is over, for you.',
@@ -329,7 +332,7 @@ export const AUSTRALIA_EVENTS = [
       {
         text: 'Someone you know lost a property or was evacuated. The abstract became specific.',
         tag: null,
-        outcome: 'The specific loss of specific people is a different kind of knowledge from the statistics. Both are true. The specific is harder to set aside.',
+        outcome: 'The loss of specific people is a different kind of knowledge from the statistics. The is harder to set aside.',
         effect: (p) => { p.m -= 10; p.r += 6; p.karma += 4; p.addFlag('black_summer_generation'); p.setMem('ausFireSummer', true); },
       },
     ],

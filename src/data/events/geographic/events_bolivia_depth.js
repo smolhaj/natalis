@@ -29,7 +29,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
       G.currentYear >= 1967 && G.currentYear <= 1980 &&
       G.age >= 16 &&
       !G.mem?.bolChe,
-    text: 'The news about Che Guevara\'s capture and death at La Higuera reaches different people as different things. The guerrilla died in the jungle near Vallegrande after eleven months of a campaign that never found support among the campesinos he came to liberate. The Bolivian miners\' unions he hoped would join him did not. The CIA was involved; the Bolivian army was involved. Whether the failure was his, or the particular problem of a revolution imported from Cuba to a country whose revolution had already happened in 1952, will be argued about for decades.',
+    text: 'The news about Che Guevara\'s capture and death at La Higuera reaches different people as different things. The guerrilla died in the jungle near Vallegrande after eleven months of a campaign that never found support among the campesinos he came to liberate. The Bolivian miners\' unions he hoped would join him did not. The CIA was involved; the Bolivian army was involved. Whether the failure was his, or the problem of a revolution imported from Cuba to a country whose revolution had already happened in 1952, will be argued about for decades.',
     choices: [
       {
         text: 'He died for something — even failed revolutions mark the ground they fall on',
@@ -55,7 +55,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
       G.flags.has('bol_mining_generation') &&
       G.age >= 10 && G.age <= 16 &&
       !G.mem?.bolPotosi,
-    text: 'The school teaches you the number: eight million people died in the Potosí mines during the colonial period. Silver from this mountain built the cathedrals of Seville, funded the Spanish armada, priced the global market for two centuries. The Cerro Rico left Bolivia with a hollowed mountain and the lungs of the men who worked it. This is not taught as tragedy. It is taught as history. The distinction between those two things is something you will spend time thinking about.',
+    text: 'The school teaches you the number: eight million people died in the Potosí mines during the colonial period. Silver from this mountain built the cathedrals of Seville, funded the Spanish armada, priced the global market for two centuries. The Cerro Rico left Bolivia with a hollowed mountain and the lungs of the men who worked it. It is taught as history, not as tragedy. The distinction between those two things is something you will spend time thinking about.',
     choices: null,
     effect: (p) => { p.e += 3; p.r += 3; p.addFlag('bol_potosi_colonial_weight'); p.setMem('bolPotosi', true) },
   },
@@ -69,7 +69,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
       G.currentYear >= 2005 && G.currentYear <= 2025 &&
       G.age >= 25 &&
       !G.mem?.bolCholita,
-    text: 'The cholita wrestlers of El Alto wear their pollera skirts and bowler hats into the ring. It began as entertainment — middle-class audiences watching Aymara women perform exaggerated falls — but something shifted. The women performing are Aymara. The costumes are their ordinary clothes. The violence is choreographed. The pride they carry into it is not. After 2006, after Evo\'s inauguration, the pollera is no longer only a marker of market-woman invisibility. The cholitas selling vegetables in the morning and performing in the ring on Saturday are the same women.',
+    text: 'The cholita wrestlers of El Alto go into the ring in their polleras and bowler hats. It began as a show for middle-class audiences who came to laugh at Aymara women falling over. The costumes are the women\'s ordinary clothes and the falls are choreographed; the pride is not. After Evo, the pollera is no longer only the uniform of the invisible market woman. The women selling vegetables in the morning and wrestling on Saturday are the same women.',
     choices: null,
     effect: (p) => { p.m += 4; p.e += 3; p.addFlag('bol_cholita_generation'); p.setMem('bolCholita', true) },
   },
@@ -134,7 +134,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
       IS_BOL(G) &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.bolCocaCeremony,
-    text: 'The coca ceremony is not cocaine. It is older than the word for cocaine. The leaves are arranged on a cloth and offered to Pachamama before a journey, before a difficult undertaking, before harvest. The abuelos say you read the leaves the way you read the year: for what is coming and what must be respected. You are not sure you believe it. You are not sure you don\'t. The leaf in your mouth at altitude is the thing that makes the cold manageable. The drug war happening to the same leaf somewhere else in the world is a different story with the same plant.',
+    text: 'The coca ceremony is older than the word for cocaine. The leaves are arranged on a cloth and offered to Pachamama before a journey, before a difficult undertaking, before harvest. The abuelos say you read the leaves the way you read the year: for what is coming and what must be respected. You are not sure you believe it. You are not sure you don\'t. The leaf in your mouth at altitude is the thing that makes the cold manageable. The drug war happening to the same leaf somewhere else in the world is a different story with the same plant.',
     choices: null,
     effect: (p) => { p.m += 4; p.e += 2; p.addFlag('bol_sacred_coca_identity'); p.setMem('bolCocaCeremony', true) },
   },
@@ -148,7 +148,8 @@ export const BOLIVIA_DEPTH_EVENTS = [
       G.currentYear >= 2013 && G.currentYear <= 2020 &&
       G.age >= 25 &&
       !G.mem?.bolIcj,
-    text: 'Bolivia takes Chile to the International Court of Justice at The Hague to argue that Chile has an obligation to negotiate sea access. Not the return of the 1879 territory — just the obligation to negotiate. The lawyers argue the case for years. In October 2018 the court rules: Chile has no legal obligation to negotiate. The ruling is what legal scholars said it would probably be. Bolivia will continue to have no coast. The case made the argument. The argument did not produce the coast.',
+    text: 'Bolivia takes Chile to The Hague, not for the coast lost in 1879, only for an obligation to talk about it, and the lawyers argue for years. In October 2018 the court rules that Chile has no such obligation, which is what the legal scholars said it would probably rule. The case made the argument. The argument did not produce the sea.',
+    context: 'The International Court of Justice ruled 12 votes to 3 on 1 October 2018 that Chile was not obliged to negotiate sovereign access to the Pacific.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.addFlag('bol_maritime_icj_generation'); p.setMem('bolIcj', true) },
   },

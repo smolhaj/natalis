@@ -62,7 +62,7 @@ export const UPPER_GUINEA_EVENTS = [
     phase: null,
     weight: 250,
     when: (G) => G.ethnicity === 'mandinka_guinean' && G.flags.includes('mgn_gold') && G.age >= 35 && once(G, 'mgn_ft_gold'),
-    text: 'Every dry season somebody is killed at the pits, and every dry season the camp fills again. You went down the shafts for six seasons and came up every time, which is a thing you think about more now than you did then. What you have to show for it is a roof, a cough that comes in the harmattan, and the knowledge of what the inside of the earth smells like at twenty metres. Your nephew leaves for the camp next week.',
+    text: 'Every dry season somebody is killed at the pits, and every dry season the camp fills again. You went down the shafts for six seasons and came up every time, and you think about that more now than you did then. What you have to show for it is a roof, a cough that comes in the harmattan, and the knowledge of what the inside of the earth smells like at twenty metres. Your nephew leaves for the camp next week.',
     choices: [
       {
         text: 'Tell him which men to dig with',
@@ -115,7 +115,7 @@ export const UPPER_GUINEA_EVENTS = [
     phase: null,
     weight: 300,
     when: (G) => (G.currentCountry ?? G.character?.country)?.name === GN && G.ethnicity === 'mandinka_guinean' && G.flags.includes('mgn_2010_sheltered') && G.currentYear >= 2012 && once(G, 'mgn_ft_2010'),
-    text: 'The Peul trader whose stall you stood in front of in 2010 has come back to the market, with less stock than before and a son to watch it. He greets you every morning by your surname and your mother\'s village, which is how respect is spoken here. At election time the two of you do not talk about the election. You buy your sugar from him, and he gives you the good weight.',
+    text: 'The Peul trader whose stall you stood in front of in 2010 has come back to the market, with less stock than before and a son to watch it. He greets you every morning by your surname and your mother\'s village, as respect is spoken here. At election time the two of you do not talk about the election. You buy your sugar from him, and he gives you the good weight.',
     choices: null,
     effect: (p) => { p.setMem('mgn_ft_2010', true); p.m += 3; p.karma += 2 },
   },
@@ -305,7 +305,7 @@ export const UPPER_GUINEA_EVENTS = [
     phase: null,
     weight: 400,
     when: (G) => (G.currentCountry ?? G.character?.country)?.name === GN && G.ethnicity === 'mandinka_guinean' && G.currentYear >= 1969 && G.currentYear <= 1970 && G.age >= 14 && once(G, 'mgn_fodeba'),
-    text: 'Keita Fodéba has been arrested. He is from Siguiri, he made the Ballets Africains that danced Guinea in front of the whole world, he wrote the poem the schoolchildren recite, and as minister he built the camp he has now been taken to. The radio calls him a traitor in a plot. Nobody in the market says anything about it at all, which is how you know everyone has heard.',
+    text: 'Keita Fodéba has been arrested. He is from Siguiri, he made the Ballets Africains that danced Guinea in front of the whole world, he wrote the poem the schoolchildren recite, and as minister he built the camp he has now been taken to. The radio calls him a traitor in a plot. Nobody in the market says anything about it at all, and so you know everyone has heard.',
     context: 'Keita Fodéba founded Les Ballets Africains in Paris in 1952 and served Sékou Touré as minister of the interior and of defence, overseeing the security apparatus that ran Camp Boiro. He was arrested in 1969 in the so-called Kaman-Fodéba plot and executed at the camp that year.',
     choices: null,
     effect: (p) => { p.setMem('mgn_fodeba', true); p.m -= 4; p.r += 2 },

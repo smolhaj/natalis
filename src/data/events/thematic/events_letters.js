@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_letters.js
 // Letters as a UI element (isLetter: true).
 // Pre-2000 characters with active relationship flags occasionally receive a letter —
@@ -22,12 +23,12 @@ export const LETTER_EVENTS = [
       const name = sib?.name ?? 'your sibling'
       const year = G.currentYear
       if (year < 1970) {
-        return `${name} writes from wherever they have ended up. The letter takes three weeks to arrive. The paper is thin — the good paper costs too much to send overseas. They describe the winter there, the language problem, the landlord, a small success at work. They ask about the family. They end with something that is not quite reassurance. You read it twice and then put it somewhere safe.`
+        return gendered(`${name} writes from wherever they have ended up. The letter takes three weeks to arrive. The paper is thin — the good paper costs too much to send overseas. They describe the winter there, the language problem, the landlord, a small success at work. They ask about the family. They end with something that is not quite reassurance. You read it twice and then put it somewhere safe.`, sib)
       }
       if (year < 1985) {
-        return `${name}'s letter arrives — postmarked eleven days ago. They write about the city they are in, which is exactly what they said it would be and also nothing like they expected. They ask you to tell their mother they are fine. The asking implies they have not written to their mother directly. You understand why. You will tell her.`
+        return gendered(`${name}'s letter arrives — postmarked eleven days ago. They write about the city they are in, which is exactly what they said it would be and also nothing like they expected. They ask you to tell their mother they are fine. The asking implies they have not written to their mother directly. You understand why. You will tell her.`, sib)
       }
-      return `${name} has written. The letter is short — a page, back and front — but it contains the shape of their life there: a flat, a job, a person they mention once in passing. The gap between the handwriting you know and the life you cannot see is the specific distance of letters. You write back the same day.`
+      return gendered(`${name} has written. The letter is short — a page, back and front — but it contains the shape of their life there: a flat, a job, a person they mention once in passing. The gap between the handwriting you know and the life you cannot see is the distance of letters. You write back the same day.`, sib)
     },
     choices: null,
     effect: (p) => { p.setMem('letterSiblingAbroad', true) },
@@ -49,7 +50,7 @@ export const LETTER_EVENTS = [
       const mother = G.parents?.mother
       const writer = father?.alive ? father : mother
       const name = writer?.name ?? 'your parent'
-      return `${name} has written. The handwriting is careful — more careful than the voice you know, which is the particular formality of letters. They describe the house, the garden if there is one, a neighbour's news. They say they are managing. The word 'managing' contains, in their usage, an entire domestic situation. They ask when you might visit. They do not ask this as a reproach. You receive it as one anyway. You write back immediately.`
+      return `${name} has written, in a handwriting more careful than the voice you know. They describe the house, the garden if there is one, a neighbour's news. They say they are managing, and the word holds a whole household. They ask when you might visit, not as a reproach, and you take it as one anyway. You write back the same day.`
     },
     choices: null,
     effect: (p) => { p.setMem('letterParentAbroad', true) },
@@ -84,7 +85,7 @@ export const LETTER_EVENTS = [
       ['single_party_communist', 'single_party_authoritarian', 'military_dictatorship'].includes(G.regime) &&
       G.age >= 22 && G.age <= 45 &&
       !G.mem?.letterOfficial,
-    text: 'An official letter. The envelope is a specific colour or has a specific seal — you know what it means before you open it. A summons, a notice, a requirement to report. The letter is bureaucratically polite. The politeness is the most frightening part. You read it three times. You put it in the drawer. You take it out again.',
+    text: 'An official letter. The envelope is a colour or has a seal — you know what it means before you open it. A summons, a notice, a requirement to report. The letter is bureaucratically polite. The politeness is the most frightening part. You read it three times. You put it in the drawer. You take it out again.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.setMem('letterOfficial', true) },
   },
@@ -118,7 +119,7 @@ export const LETTER_EVENTS = [
       !G.mem?.letterLoveLongDist,
     text: (G) => {
       const pname = G.partner?.name ?? 'them'
-      return `${pname} has written. The letter is nine pages, which is unusual even for them, and the nine pages contain everything a phone call cannot — the exact quality of a specific evening, a thought that came at 3am and could not be spoken out loud, the texture of missing. You read it at the kitchen table and then at the window and then again in bed. You understand, reading it, what letters are for.`
+      return `${pname} has written. The letter is nine pages, which is unusual even for them, and the nine pages contain everything a phone call cannot — the exact quality of an evening, a thought that came at 3am and could not be spoken out loud, the texture of missing. You read it at the kitchen table and then at the window and then again in bed. You understand, reading it, what letters are for.`
     },
     choices: null,
     effect: (p) => { p.m += 8; p.r += 4; p.setMem('letterLoveLongDist', true) },

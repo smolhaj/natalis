@@ -159,7 +159,7 @@ export const SECOND_WORLD_WAR_EVENTS = [
     text: (G) => AT('cn_shanghai')(G)
       ? 'In August the fighting comes into the city itself, and three months of it. The shells fall on Zhabei and the people from Zhabei come over the bridges into the foreign concessions with their bedding on their backs, until the concessions are full and there are people sleeping in every doorway on Nanjing Road. From the roof you watch the north of the city burn like something happening in a film.'
       : AT('cn_beijing')(G)
-        ? 'The shooting at the bridge in July is twelve miles off and a week later the soldiers in the streets are Japanese. The city is not destroyed. It is simply somebody else\'s now, and the shopkeepers put up the new flag because the alternative is a conversation nobody wants to have.'
+        ? 'The shooting at the bridge in July is twelve miles off and a week later the soldiers in the streets are Japanese. The city stands. It is somebody else\'s now, and the shopkeepers put up the new flag because the alternative is a conversation nobody wants to have.'
         : 'The news comes up the river weeks late and all at once: Beiping, Shanghai, and then Nanjing in December, and then things about Nanjing that the adults tell each other in low voices and stop telling when you come in. The boats begin arriving from downriver, crowded to the rails, with people who have walked or floated half the length of the country.',
     choices: null,
     effect: (p) => { p.setMem('ww2Cn37', true); p.m -= 12; p.addFlag('ww2_cn_war_generation'); p.addFlag('war_childhood') },
@@ -320,7 +320,7 @@ export const SECOND_WORLD_WAR_EVENTS = [
       {
         text: 'Stay home and keep the family alive.',
         tag: 'yielding',
-        outcome: 'Every army that comes through the village takes something, and you learn to have something ready to be taken. You are still there when it ends, which is the thing you were trying to be.',
+        outcome: 'Every army that comes through the village takes something, and you learn to have something ready to be taken. You are still there when it ends. That is what you were trying to be.',
         effect: (p) => { p.setMem('ww2YuForest', true); p.m -= 8; p.addFlag('ww2_yu_stayed') },
       },
     ],

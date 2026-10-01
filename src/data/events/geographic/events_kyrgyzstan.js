@@ -23,7 +23,7 @@ export const KYRGYZSTAN_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 2010 &&
       G.age >= 7 && G.age <= 16 &&
       !G.mem?.kyrManas,
-    text: 'The Manas epic is half a million lines long. It is the longest oral epic in world literature. For centuries it lived in the memory of specialist singers — manaschi — who recited it from memory at festivals and celebrations. Stalin had it written down in the 1920s; later Soviet authorities sometimes banned parts of it for being too nationalist. You have heard it performed. The singer does not read it. He enters a kind of trance and the words come from somewhere that is not quite him. You are growing up in the country that produced this and has carried it.',
+    text: 'The Manas epic is half a million lines long, the longest in the world, and for centuries it lived only in the memory of the manaschi, who sang it at festivals. You have heard it performed. The singer does not read it; he goes somewhere, and the words come from a place that is not quite him. You are growing up in the country that made it and has carried it.',
     choices: null,
     effect: (p) => { p.m += 6; p.e += 3; p.s += 2; p.addFlag('kyr_manas_generation'); p.setMem('kyrManas', true) },
   },
@@ -72,7 +72,7 @@ export const KYRGYZSTAN_EVENTS = [
       G.currentYear >= 2005 && G.currentYear <= 2006 &&
       G.age >= 16 &&
       !G.mem?.kyrTulip && !G.mem?.casTulip,
-    text: 'On March 24, 2005 protesters storm government buildings in Bishkek. President Askar Akayev flees to Russia. The Tulip Revolution — named after the flower, though the protesters did not choose the name — ends fifteen years of Akayev\'s rule. The optimism is real. What follows is also real: the next president, Bakiyev, proves to be worse. The lesson that the region is taking from these events is still being debated. You watched this happen in the capital of your country and you are still deciding what you watched.',
+    text: 'On March 24, 2005 protesters storm government buildings in Bishkek. President Askar Akayev flees to Russia. The Tulip Revolution — named after the flower, though the protesters did not choose the name — ends fifteen years of Akayev\'s rule. What follows is also real: the next president, Bakiyev, proves to be worse. The lesson that the region is taking from these events is still being debated. You watched this happen in the capital of your country and you are still deciding what you watched.',
     choices: [
       {
         text: 'You were in the streets or among those who believed something had changed.',
@@ -100,7 +100,8 @@ export const KYRGYZSTAN_EVENTS = [
       G.currentYear >= 2010 && G.currentYear <= 2012 &&
       G.age >= 16 &&
       !G.mem?.kyrOsh,
-    text: 'In June 2010, after Bakiyev is overthrown in April, ethnic violence erupts in Osh and Jalal-Abad between Kyrgyz and Uzbeks. More than four hundred people are killed — probably more; the official count is contested. Hundreds of thousands are displaced. Uzbek neighbourhoods in Osh are burned. The violence was organized: there are accounts of trucks carrying armed men in from outside the city, of lists of addresses. The interim government declares a state of emergency. The international response is slow. This is happening in the south of your country.',
+    text: 'June 2010, two months after Bakiyev falls, and the killing starts in Osh and Jalal-Abad, Kyrgyz against Uzbeks. Uzbek neighbourhoods in Osh are burned; there are accounts of trucks bringing armed men in from outside, of lists of addresses. Hundreds of thousands flee. The interim government declares an emergency and the world is slow to respond. This is happening in the south of your country.',
+    context: 'More than 400 people, most of them Uzbek, were killed in the June 2010 violence.',
     choices: [
       {
         text: 'You are Kyrgyz. The violence created a silence around what happened that you have not resolved.',
@@ -153,7 +154,7 @@ export const KYRGYZSTAN_EVENTS = [
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       G.age >= 25 &&
       !G.mem?.kyrThird,
-    text: 'In October 2020, after a disputed parliamentary election, protesters overturn the results and president Sooronbay Jeenbekov resigns. This is the third time in fifteen years that a president of Kyrgyzstan has been forced from power by popular action — Akayev in 2005, Bakiyev in 2010, now Jeenbekov. The pattern is visible to everyone. The country is being called the most democratic of the Central Asian republics by people outside it, and chaotic by people inside it. You are one of the people inside it. You have watched three presidents go. The fourth one is now Sadyr Japarov, who was in prison for hostage-taking six months ago. The pattern continues.',
+    text: 'October 2020, a disputed election, the protesters overturn it, and the president resigns, the third president in fifteen years forced out by the street: Akayev in 2005, Bakiyev in 2010, now Jeenbekov. Outsiders call it the most democratic country in Central Asia, and people inside call it chaos. The new president was in prison for hostage-taking six months ago. The pattern continues.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 4; p.m += 2; p.addFlag('kyr_three_revolutions_generation'); p.setMem('kyrThird', true) },
   },
@@ -192,7 +193,7 @@ export const KYRGYZSTAN_EVENTS = [
       {
         text: 'You know what your rights are and that they are not always enforceable.',
         tag: 'kyr_ala_kachuu_aware',
-        outcome: 'The awareness is not the same as protection. It is the awareness that the protection is partial.',
+        outcome: 'The awareness does not protect you. It only tells you the protection is partial.',
         effect: (p) => { p.addFlag('kyr_ala_kachuu_aware'); p.r += 6; p.e += 4; p.m -= 3; p.setMem('kyrAlakachuu', true) },
       },
       {
@@ -214,7 +215,7 @@ export const KYRGYZSTAN_EVENTS = [
       IS_KYRGYZ(G) &&
       G.age >= 60 &&
       !G.mem?.kyrLate,
-    text: 'You have watched a small landlocked country try to find a form for itself three times in your adult life and succeed three times at overthrow and struggle each time with what comes after. The mountains have not changed. The Manas has not changed. The Kyrgyz identity is in the epic and in the mountains and in the memory of the nomadic way and in the specific shape of the argument that your country keeps having with itself about what it is and who it is for. You hold all of this without it resolving. That seems like the right relationship to it.',
+    text: 'You have watched a small landlocked country try to find a form for itself three times in your adult life and succeed three times at overthrow and struggle each time with what comes after. The mountains have not changed. The Manas has not changed. The Kyrgyz identity is in the epic and in the mountains and in the memory of the nomadic way and in the shape of the argument that your country keeps having with itself about what it is and who it is for. You hold all of this without it resolving. That seems like the right relationship to it.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 7; p.karma += 5; p.e += 4; p.addFlag('kyr_testigo_generation'); p.setMem('kyrLate', true) },
   },

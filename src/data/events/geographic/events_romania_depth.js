@@ -108,7 +108,7 @@ export const ROMANIA_DEPTH_EVENTS = [
       G.currentYear >= 1966 && G.currentYear <= 1990 &&
       G.age >= 4 && G.age <= 14 &&
       !G.mem?.romDepOrphan,
-    text: 'Decree 770 banned abortion in 1966. The generation born to women who could not prevent the pregnancy and could not keep the child fills the state orphanages: 170,000 children in 1990, when the Western cameras finally arrive. You are one of them, or you know someone who is, which in Romania is the same. The institution has a specific logic: minimum care, maximum control. The children learn what they need to learn to survive in an institution that does not think of them as individuals — to fade, to wait, to need very little.',
+    text: 'Decree 770 banned abortion in 1966. The generation born to women who could not prevent the pregnancy and could not keep the child fills the state orphanages: 170,000 children in 1990, when the Western cameras finally arrive. You are one of them, or you know someone who is, which in Romania is the same. The institution has a logic: minimum care, maximum control. The children learn what they need to learn to survive in an institution that does not think of them as individuals — to fade, to wait, to need very little.',
     choices: null,
     effect: (p) => {
       p.m -= 14
@@ -131,7 +131,7 @@ export const ROMANIA_DEPTH_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1992 &&
       G.age >= 16 &&
       !G.mem?.romDepMineriad,
-    text: 'June 1990. Six months after the revolution. Protesters in University Square in Bucharest have been camping for weeks, calling for former communists to be excluded from government — the FSN (National Salvation Front) is led by Ion Iliescu, who was a communist official. Iliescu calls the protesters "fascists" and "gangsters" and summons miners from the Jiu Valley coalfields. The miners arrive on June 13-15 and beat protesters, students, and bystanders with clubs and chains. The police stand back. At least six people die, hundreds are wounded. The new democracy has used the old method.',
+    text: 'June 1990. The protesters in University Square have camped for weeks demanding that former communists be kept out of government, and Iliescu calls them fascists and hooligans and sends for the miners of the Jiu Valley. The miners come and beat students and passers-by with clubs and chains, and the police stand back, and people die. The new democracy has used the old method.',
     choices: [
       {
         text: 'You were in University Square',
@@ -174,7 +174,7 @@ export const ROMANIA_DEPTH_EVENTS = [
       G.age >= 30 &&
       G.flags.has('securitate_generation') &&
       !G.mem?.romDepFile,
-    text: 'The CNSAS — the National Council for the Study of the Securitate Archives — opens after 1999. You can now apply to see your file. The file exists: a record of what the Securitate knew about you, and how it knew it, and who told it. You wait two years for the application to be processed. The file arrives. In it: reports from people you knew. You recognise the handwriting on one report. You know whose handwriting it is.',
+    text: 'After 1999 you can ask to see your Securitate file, and you wait two years, and it comes: what they knew about you, and how, and who told them. There are reports from people you knew. You recognise the handwriting on one of them. You know whose it is.',
     choices: [
       {
         text: 'You confront the informer',
@@ -214,7 +214,7 @@ export const ROMANIA_DEPTH_EVENTS = [
       G.currentYear >= 2002 && G.currentYear <= 2015 &&
       G.age >= 20 && G.age <= 50 &&
       !G.mem?.romDepItaly,
-    text: 'Italy before EU accession: you need a visa, which you can get for work, which means knowing someone who knows someone. After 2007: the border is open. By 2010 there are one million Romanians in Italy. You know the route: the bus from Bucharest that takes twenty-six hours, the arrival in Rome or Turin or Milan, the specific neighbourhood — Pigneto, Piazza Vittorio — where Romanians gather, the Catholic church that holds Romanian-language mass on Sunday. You send money home. The exchange rate works in your favour. The money arrives and your family\'s situation changes. Your own situation is the building site, the domestic care shift, the restaurant kitchen at midnight.',
+    text: 'Before 2007 you need a visa to work in Italy, which means knowing someone who knows someone; after, the border is open. You know the route: twenty-six hours on the bus from Bucharest to Rome or Turin, the neighbourhoods where Romanians gather, the church with a Romanian mass on Sunday. The money you send home changes your family\'s situation. Your own is the building site, the care shift, the restaurant kitchen at midnight.',
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -258,7 +258,7 @@ export const ROMANIA_DEPTH_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 40 &&
       !G.mem?.romDepCasaNow,
-    text: 'The Casa Poporului is now called the Palace of the Parliament. The Romanian parliament meets in it. It was never finished when Ceaușescu was shot — there are entire wings that have never been used. The building required 700,000 tonnes of steel, 1 million cubic metres of marble, 3,500 tonnes of crystal. It bankrupted the country\'s construction budget and diverted cement and steel from housing while people in Bucharest had cold apartments and empty shelves. It is now a tourist attraction. You can buy a ticket to walk through the 1,100 rooms. The guide does not mention the neighbourhood that was demolished to build the hill the palace stands on.',
+    text: 'The House of the People is the Palace of the Parliament now, and the parliament meets in it, and whole wings of it have never been used. It swallowed the country\'s steel and marble and cement while Bucharest sat in cold flats with empty shelves. Now you can buy a ticket to walk through its rooms. The guide does not mention the neighbourhood that was flattened to make the hill it stands on.',
     choices: null,
     effect: (p) => {
       p.r += 6

@@ -19,7 +19,7 @@ export const FOLLOWTHROUGH_73_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 1975 &&
       G.age >= 35 &&
       !G.mem?.ft64OkinawaMidlife,
-    text: 'Your children are studying the war in school. You sit at the table while they do their homework. The textbook has a chapter called "The Pacific War." You turn to the section on Okinawa and read it. It says: heavy fighting, civilians killed, 1945. It does not say about the grenades. It does not say about the orders. You close the textbook and your child asks you something. You answer a different question than the one they asked.',
+    text: 'Your children are studying the war at the kitchen table, and the textbook has a chapter called The Pacific War. You turn to the section on Okinawa: heavy fighting, civilians killed, 1945. Nothing about the grenades. Nothing about the orders. You close the book, and your child asks you something, and you answer a different question from the one they asked.',
     choices: null,
     effect: (p) => {
       p.r += 8
@@ -112,7 +112,7 @@ export const FOLLOWTHROUGH_73_EVENTS = [
       !G.mem?.ft64FukushimaEvacLate,
     text: (G) => {
       if (G.currentYear >= 2017) {
-        return 'Parts of the exclusion zone are declassified. The government says: it is safe to return. They give you a map. There are zones where it is safe, zones where it is safe-in-principle, zones where it is not safe and will not be for decades. Your house is in one of the three. You go to look at it. The house is standing. The calendar in the kitchen is from March 2011. The cat bowl is still on the floor. There is nothing in the cat bowl.'
+        return 'Part of the exclusion zone is reopened. They give you a map: safe, safe in principle, not safe for decades. You go to look at the house. It is standing. The calendar in the kitchen says March 2011, and the cat\'s bowl is still on the floor, empty.'
       }
       return 'Five years after the evacuation. The zone is still the zone. The house is still there — the satellite images show it standing — but you are not allowed to live in it. The compensation payments continue. The compensation is for a house you cannot live in and a life that is elsewhere. You are building the elsewhere-life. The house-life is on hold. You do not know if the hold ever ends.'
     },
@@ -148,7 +148,7 @@ export const FOLLOWTHROUGH_73_EVENTS = [
       {
         text: 'Your family leaves. You carry the village in you the way you carry the language.',
         tag: null,
-        outcome: 'The language and the village come with you, minus the specific sounds — the well, the argument at the market, the particular bird at dawn. You meet these sounds again in other places in versions that are not quite right.',
+        outcome: 'The language and the village come with you, minus the sounds — the well, the argument at the market, the bird at dawn. You meet these sounds again in other places in versions that are not quite right.',
         effect: (p) => { p.m -= 5; p.r += 8; p.addFlag('rural_to_city'); p.setMem('ft64DisplacementLate', true); },
       },
       {

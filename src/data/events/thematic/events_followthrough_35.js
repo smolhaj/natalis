@@ -40,7 +40,7 @@ export const FOLLOWTHROUGH_35_EVENTS = [
       G.flags.has('slv_gang_renta_generation') &&
       G.age >= 50 &&
       !G.mem?.ft35RentaEcho,
-    text: 'After 2022 the renta stopped. The boys who collected it are in CECOT or they disappeared before the arrests or they are living extremely quietly somewhere. The street is different. You walk it without calculating. The body memory of being on this street for twenty years — the particular way you held yourself, the peripheral vision — is still there even though its reason is gone. It takes longer than you expected to walk like someone who is not being watched.',
+    text: 'After 2022 the renta stopped. The boys who collected it are in CECOT or they disappeared before the arrests or they are living extremely quietly somewhere. The street is different. You walk it without calculating. The body memory of being on this street for twenty years — the way you held yourself, the peripheral vision — is still there even though its reason is gone. It takes longer than you expected to walk like someone who is not being watched.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 5; p.h += 2; p.setMem('ft35RentaEcho', true) },
   },
@@ -53,7 +53,7 @@ export const FOLLOWTHROUGH_35_EVENTS = [
       G.flags.has('slv_bukele_believer') &&
       G.age >= 50 &&
       !G.mem?.ft35BukeleBeliev,
-    text: 'The streets are safer than they have been in your lifetime. That is not nothing. Bukele won re-election in 2024 with eighty-three percent of the vote, though the constitution he himself wrote said he could not run again. His party controls every institution. The press is restricted. The opposition is dispersed. You hold the safety with both hands. You also understand, having lived through this country\'s history, what it means when one man holds every lever. You hold both things because both things are yours to hold.',
+    text: 'The streets are safer than they have been in your lifetime, and that is not nothing. Bukele won again in 2024, with the votes of almost everyone, though the constitution said he could not run. His party holds every institution; the press is restricted; the opposition scattered. You hold the safety with both hands. You also know, from this country\'s history, what it means when one man holds every lever.',
     choices: null,
     effect: (p) => { p.r += 6; p.m += 3; p.e += 3; p.setMem('ft35BukeleBeliev', true) },
   },
@@ -79,7 +79,7 @@ export const FOLLOWTHROUGH_35_EVENTS = [
       G.flags.has('slv_estado_excepcion_generation') &&
       G.age >= 45 &&
       !G.mem?.ft35EstadoLate,
-    text: 'The estado de excepción was declared for thirty days in March 2022. It has been renewed every thirty days since. CECOT holds its population in permanent pretrial detention — people whose cases have not been heard, some of whom may never have a hearing. Human rights organizations document the cases of the innocents: men arrested because of a tattoo, a neighborhood, a relative. The murder rate is the lowest in decades. Both of these sentences are true. You live in a country where both are true simultaneously and have stopped waiting for them to resolve.',
+    text: 'The estado de excepción was declared for thirty days in March 2022. It has been renewed every thirty days since. CECOT holds its population in permanent pretrial detention — people whose cases have not been heard, some of whom may never have a hearing. Human rights organizations document the cases of the innocents: men arrested because of a tattoo, a neighborhood, a relative. The murder rate is the lowest in decades. You live in a country where both are true simultaneously and have stopped waiting for them to resolve.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 3; p.m += 2; p.setMem('ft35EstadoLate', true) },
   },

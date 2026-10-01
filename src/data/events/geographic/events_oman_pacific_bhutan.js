@@ -107,7 +107,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.currentYear >= 1964 && G.currentYear <= 1985 &&
       G.age >= 8 &&
       !G.mem?.omnZanzibar,
-    text: 'The family came back from Zanzibar after the revolution — some of them did, the ones who could get out — and the language of the house is Swahili and the food is Swahili and the country you have returned to is one your grandparents left four generations ago. You are Omani by descent and by passport and by nothing else. At school your Arabic is corrected. There is a word for people like you and it is said in a particular tone, and Muscat is full of you.',
+    text: 'The family came back from Zanzibar after the revolution — some of them did, the ones who could get out — and the language of the house is Swahili and the food is Swahili and the country you have returned to is one your grandparents left four generations ago. You are Omani by descent and by passport and by nothing else. At school your Arabic is corrected. There is a word for people like you and it is said in a tone, and Muscat is full of you.',
     choices: [
       { text: 'Keep the Swahili. It is what the family is.', tag: 'defiant', outcome: 'You speak it at home for sixty years and your children speak it badly and your grandchildren not at all.', effect: (p) => { p.m += 6; p.s += 4; p.addFlag('omn_zanzibari_identity'); p.addFlag('heritage_language_kept') } },
       { text: 'Become as Omani as the paperwork says', tag: 'yielding', outcome: 'The accent goes inside two years. Something else goes with it that takes longer to notice.', effect: (p) => { p.e += 5; p.m -= 5; p.addFlag('omn_zanzibari_assimilated') } },
@@ -125,7 +125,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.age >= 20 &&
       G.ethnicity !== 'south_asian_omani' &&
       !G.mem?.omnExpat,
-    text: 'Half the people working in this country are not from it. The man who builds your house is from Kerala and the woman who raises your children is from Luzon and the engineer signing off the road is from Peshawar, and none of them can ever be Omani no matter how many decades they put in. There is a policy called Omanisation with quotas and targets, and there is also a set of jobs nobody here will take at the wage offered. Both of those things are true and the second one is not discussed.',
+    text: 'Half the people working in this country are not from it. The man who builds your house is from Kerala and the woman who raises your children is from Luzon and the engineer signing off the road is from Peshawar, and none of them can ever be Omani no matter how many decades they put in. There is a policy called Omanisation with quotas and targets, and there is also a set of jobs nobody here will take at the wage offered. The second one is not discussed.',
     choices: [
       { text: 'Notice the arrangement and say something about it', tag: 'defiant', outcome: 'It is not a popular observation. You make it anyway, occasionally, and are thought of as difficult.', effect: (p) => { p.karma += 7; p.s -= 3; p.addFlag('omn_kafala_critical') } },
       { text: 'It is how the country works', tag: 'yielding', outcome: 'You are decent to the people in your own house and incurious about the system they are inside.', effect: (p) => { p.m += 2; p.karma -= 3; p.addFlag('omn_kafala_accepted') } },
@@ -142,7 +142,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.currentYear >= 1980 &&
       G.age >= 25 &&
       !G.mem?.omnIbadi,
-    text: 'Your neighbours across the Gulf are in a quarrel and Oman is talking to both of them, which is what Oman does. The Ibadi tradition came out of the same seventh-century quarrel as the other two and answered it a third way — the imam is elected and can be deposed, and neither of the big answers is the one you were raised inside. That third position has hardened over three centuries into a foreign policy: the Iran channel, the Yemen back-door, the embassy that stays open. It is a small country being useful on purpose. When you travel you find that this is the thing people know about the place, if they know anything.',
+    text: 'Your neighbours across the Gulf are in a quarrel and Oman is talking to both of them, as Oman does. The Ibadi tradition came out of the same seventh-century quarrel as the other two and answered it a third way — the imam is elected and can be deposed, and neither of the big answers is the one you were raised inside. That third position has hardened over three centuries into a foreign policy: the Iran channel, the Yemen back-door, the embassy that stays open. It is a small country being useful on purpose. When you travel you find that this is the thing people know about the place, if they know anything.',
     choices: null,
     effect: (p) => {
       p.e += 5; p.karma += 4; p.m += 3
@@ -179,7 +179,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.currentYear >= 1942 && G.currentYear <= 1947 &&
       G.age >= 6 &&
       !G.mem?.vutBase,
-    text: 'Half a million American servicemen pass through Espiritu Santo, on an archipelago of perhaps fifty thousand people. There are roads and airstrips and Coca-Cola and Black soldiers being paid the same as white ones, which is noticed. When it ends they bulldoze the surplus into the sea at a place that is still called Million Dollar Point, and you can wade out at low tide and stand on a jeep. On Tanna the John Frum movement is already several years old by the time the first American lands — it started as a refusal of the mission and the head tax — and what the base gives it is a uniform, a flag and a date to keep waiting for.',
+    text: 'Half a million American servicemen pass through Espiritu Santo, on an archipelago of perhaps fifty thousand people. There are roads and airstrips and Coca-Cola and Black soldiers being paid the same as white ones, and people notice. When it ends they bulldoze the surplus into the sea at a place that is still called Million Dollar Point, and you can wade out at low tide and stand on a jeep. On Tanna the John Frum movement is already several years old by the time the first American lands — it started as a refusal of the mission and the head tax — and what the base gives it is a uniform, a flag and a date to keep waiting for.',
     choices: null,
     effect: (p) => {
       p.mo += 200; p.e += 6; p.m += 4
@@ -218,7 +218,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
     text: 'The land belongs to the line it has always belonged to and the question of who that is now runs through four brothers, two islands and a marriage in 1953. There is a lease application from someone who wants to build bungalows and it requires a signature from the custom owner, and establishing who that is takes three years, two meetings in the nakamal and a payment of pigs and mats that is a legal instrument and not a metaphor. When it is settled the money is real and so is the grievance.',
     choices: [
       { text: 'Push your family\'s claim', tag: 'defiant', outcome: 'You win the signature and the lease money and a cousin who does not speak to you for eleven years.', effect: (p) => { p.mo += 3800; p.w += 6; p.s -= 5; p.addFlag('vut_land_claim_won'); p.addFlag('family_rift') } },
-      { text: 'Defer to the elder line and keep the family whole', tag: 'yielding', outcome: 'You get nothing and you are the person everyone comes to next time, which is its own currency.', effect: (p) => { p.karma += 8; p.s += 6; p.m += 5; p.addFlag('vut_land_deferred') } },
+      { text: 'Defer to the elder line and keep the family whole', tag: 'yielding', outcome: 'You get nothing and you are the person everyone comes to next time, and that is a currency.', effect: (p) => { p.karma += 8; p.s += 6; p.m += 5; p.addFlag('vut_land_deferred') } },
     ],
     effect: null,
   },
@@ -232,7 +232,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.currentYear >= 2015 && G.currentYear <= 2017 &&
       G.age >= 8 &&
       !G.mem?.vutPam,
-    text: 'March, category five, and it goes over the middle of the country for most of a night. In the morning most of the housing stock in Port Vila is not housing any more and the gardens — which is where the food is — are stripped to the stem. You rebuild with what the aid flights bring and with what was always used, and the second thing lasts better. Afterwards the government takes the case for climate liability to the International Court of Justice, which is what a country with no leverage does with a grievance.',
+    text: 'March, category five, and it goes over the middle of the country for most of a night. In the morning most of the housing stock in Port Vila is not housing any more and the gardens — which is where the food is — are stripped to the stem. You rebuild with what the aid flights bring and with what was always used, and the second thing lasts better. Afterwards the government takes the case for climate liability to the International Court of Justice, which is what a country with no leverage can do with a grievance.',
     choices: [
       { text: 'Rebuild the way it was built before', tag: null, outcome: 'Low, tied down, palm thatch that gives instead of tearing. It is standing after the next one.', effect: (p) => { p.h -= 6; p.mo -= 600; p.karma += 6; p.addFlag('vut_rebuilt_kastom'); p.addFlag('climate_displaced') } },
       { text: 'Rebuild with the corrugated iron and the concrete', tag: null, outcome: 'It is faster and drier and it is the thing that peels off in 2023.', effect: (p) => { p.h -= 5; p.mo -= 1400; p.m -= 4; p.addFlag('vut_rebuilt_modern'); p.addFlag('climate_displaced') } },
@@ -251,7 +251,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.currentYear >= 1956 && G.currentYear <= 1968 &&
       G.age >= 10 &&
       !G.mem?.btnSerf,
-    text: 'The king abolishes serfdom and your family is on the list of people it applied to. There is land now, in your name, in a country with no paved road and no currency in general circulation and no relations with anybody except India. The first school opens within a day\'s walk. Your father does not entirely believe the arrangement will hold and works as though it will not, which is how people who have been owned tend to hold good news.',
+    text: 'The king abolishes serfdom and your family is on the list of people it applied to. There is land now, in your name, in a country with no paved road and no currency in general circulation and no relations with anybody except India. The first school opens within a day\'s walk. Your father does not entirely believe the arrangement will hold and works as though it will not, the way people who have been owned hold good news.',
     choices: null,
     effect: (p) => {
       p.m += 10; p.w += 5; p.karma += 4
@@ -305,7 +305,7 @@ export const OMAN_PACIFIC_BHUTAN_EVENTS = [
       G.currentYear >= 2006 && G.currentYear <= 2010 &&
       G.age >= 18 &&
       !G.mem?.btnDemocracy,
-    text: 'The king abdicates in favour of his son and instructs the country to become a parliamentary democracy, and the country is not enthusiastic. There are mock elections to practise on. People ask, in public meetings, why they should choose between parties when the king has been doing it competently and for free. The constitution is adopted anyway. You vote in the first election with a feeling that is closer to obedience than to enfranchisement, which is a strange thing to carry into a polling station.',
+    text: 'The king abdicates in favour of his son and instructs the country to become a parliamentary democracy, and the country is not enthusiastic. There are mock elections to practise on. People ask, in public meetings, why they should choose between parties when the king has been doing it competently and for free. The constitution is adopted anyway. You vote in the first election with a feeling closer to obedience than to enfranchisement, and carry it into the polling station.',
     choices: null,
     effect: (p) => {
       p.e += 6; p.karma += 4; p.m += 3
@@ -354,7 +354,7 @@ export const OMAN_PACIFIC_BHUTAN_FOLLOWTHROUGH = [
     text: 'The new Sultan is building schools in the interior faster than anyone can staff them and the roads go where the tracks were, and it is all genuinely good, and your family does not discuss the fifties. An uncle in Dammam sends money at Eid and has never come back and will not be buried here. You are in a government office in Nizwa filling in a form under a portrait, and the office is the best thing that has happened to this town in your lifetime, and both of these facts are true at once.',
     choices: [
       { text: 'Take the job and say nothing', tag: 'yielding', outcome: 'You are good at it for thirty years. The subject never comes up and the not-coming-up is a skill.', effect: (p) => { p.mo += 3000; p.w += 6; p.m += 4; p.addFlag('omn_imamate_buried') } },
-      { text: 'Tell your children the other version', tag: 'defiant', outcome: 'You tell it once, properly, in the kitchen, and ask them not to repeat it, which is how it was told to you.', effect: (p) => { p.m += 6; p.karma += 6; p.addFlag('omn_imamate_transmitted'); p.addFlag('family_secret_kept') } },
+      { text: 'Tell your children the other version', tag: 'defiant', outcome: 'You tell it once, properly, in the kitchen, and ask them not to repeat it, as it was told to you.', effect: (p) => { p.m += 6; p.karma += 6; p.addFlag('omn_imamate_transmitted'); p.addFlag('family_secret_kept') } },
     ],
     effect: null,
   },

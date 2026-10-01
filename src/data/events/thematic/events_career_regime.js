@@ -17,7 +17,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.career?.field === 'media' && repressiveRegime(G) && G.age >= 22,
-    text: 'You have verified the story three times. The sources are real. The documents are real. You know it will not run. The editorial meeting lasts eight minutes and nobody raises their voice. You file the notes in a folder on a hard drive you keep at home.',
+    text: 'You have verified the story three times. You know it will not run. The editorial meeting lasts eight minutes and nobody raises their voice. You file the notes in a folder on a hard drive you keep at home.',
     choices: [
       { text: 'Keep the file. It will matter someday.', tag: null, outcome: 'The folder grows. You tell yourself this is the long game.', effect: (p) => { p.m -= 6; p.e += 5; p.addFlag('journalist_suppressed_story'); p.addFlag('double_consciousness') } },
       { text: 'Leak it to a foreign outlet anonymously', tag: null, outcome: 'The story runs in a newspaper three countries away. Nobody here can say it. You read it with the curtains drawn.', effect: (p) => { p.m += 4; p.r += 8; p.addFlag('journalist_leaked_abroad'); p.addFlag('dissident_reader') } },
@@ -146,7 +146,7 @@ export const CAREER_REGIME_EVENTS = [
     when: (G) => G.career?.field === 'military' && G.age >= 18 && G.age <= 28 && (
       G.currentYear >= 2001 || ['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype)
     ),
-    text: 'The orders arrive on a Thursday. You are shipping out in three weeks. The name of the place is one you have heard on the news in a way that has a quality — the way names of places acquire weight. You call your family. You do not say the things you mean to say.',
+    text: 'The orders arrive on a Thursday. You are shipping out in three weeks. The name of the place is one you have heard on the news, and it has acquired weight, the way names of places do. You call your family. You do not say the things you mean to say.',
     choices: [
       { text: 'Go without complaint. It\'s what you signed up for.', tag: null, outcome: 'You pack your kit on a Sunday night and do not look at the room when you leave.', effect: (p) => { p.m -= 8; p.addFlag('deployment_orders'); p.addFlag('military_service') } },
       { text: 'Request a transfer or delay through official channels', tag: null, outcome: 'The request is denied. You go anyway. The attempt is on your record.', effect: (p) => { p.m -= 10; p.r += 5; p.addFlag('deployment_orders'); p.addFlag('military_service') } },
@@ -213,7 +213,7 @@ export const CAREER_REGIME_EVENTS = [
     weight: 3,
     when: (G) =>
       G.age <= 49 && G.career?.field === 'education' && ['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 24,
-    text: 'You can tell. After a while you learn to tell. A girl in the third row has not eaten since yesterday. She is attentive in the particular way of someone working very hard to concentrate through something. You teach the lesson. At the end you find a reason to keep her after class.',
+    text: 'You can tell. After a while you learn to tell. A girl in the third row has not eaten since yesterday. She is attentive in the way of someone working very hard to concentrate through something. You teach the lesson. At the end you find a reason to keep her after class.',
     choices: [
       { text: 'Give her food from your own bag without making it a thing', tag: null, outcome: 'She takes it without comment. She comes back tomorrow.', effect: (p) => { p.m += 5; p.karma += 10; p.addFlag('fed_a_student') } },
       { text: 'Refer her to the school social services', tag: null, outcome: 'The referral takes three weeks to process. You give her food in the meantime.', effect: (p) => { p.m += 3; p.karma += 8; p.addFlag('fed_a_student') } },
@@ -246,7 +246,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'midlife',
     weight: 1,
     when: (G) => G.career?.field === 'education' && repressiveRegime(G) && G.age >= 26,
-    text: 'A student you liked — one you pushed to write more, to argue more, to ask more — is arrested. The official reason is vague. You assigned the essay he was apparently writing when they came for him. You sit with this for a long time. You continue assigning essays.',
+    text: 'A student you liked — one you pushed to write more, to argue more, to ask more — is arrested. The official reason is vague. You assigned the essay he was apparently writing when they came for him. You do not move for a long time. You continue assigning essays.',
     choices: null,
     effect: (p) => { p.m -= 18; p.r += 15; p.addFlag('student_arrested'); p.addFlag('moral_injury') },
   },
@@ -348,10 +348,10 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.career?.field === 'government' && (G.regime === 'single_party_authoritarian' || G.regime === 'military_dictatorship' || ['developing_unstable', 'subsaharan'].includes(G.character.country.archetype)) && G.age >= 26,
-    text: 'The envelope is left on your desk. It is not labeled. The amount is not large enough to be noticed. It correlates precisely with a permit application that has been pending for six weeks. You sit with it for an hour before touching it.',
+    text: 'The envelope is left on your desk. It is not labeled. The amount is not large enough to be noticed. It correlates precisely with a permit application that has been pending for six weeks. It stays unopened on the desk for an hour.',
     choices: [
       { text: 'Leave the envelope on your supervisor\'s desk and say nothing', tag: null, outcome: 'The envelope disappears. The permit is approved anyway. You are not promoted for two years.', effect: (p) => { p.m -= 4; p.karma += 5; p.addFlag('refused_bribe') } },
-      { text: 'Process the permit and keep the envelope', tag: null, outcome: 'The envelope becomes the first of several. The system has its own logic.', effect: (p) => { p.mo += 300; p.m -= 10; p.r += 8; p.addFlag('compromised'); p.addFlag('paid_bribe') } },
+      { text: 'Process the permit and keep the envelope', tag: null, outcome: 'The envelope becomes the first of several. The system has a logic.', effect: (p) => { p.mo += 300; p.m -= 10; p.r += 8; p.addFlag('compromised'); p.addFlag('paid_bribe') } },
     ],
     effect: null,
   },
@@ -387,7 +387,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.career?.field === 'agriculture' && G.currentYear >= 2000 && ['subsaharan', 'developing_unstable'].includes(G.character.country.archetype) && G.age >= 30,
-    text: 'The rains come six weeks late. Then they do not come at all. The variety you planted is not suited to this. Nothing is suited to this. Your father farmed this land for forty years without this particular problem. Something has changed and the change has a name and the name is on no one\'s agenda here.',
+    text: 'The rains come six weeks late. Then they do not come at all. The variety you planted is not suited to this. Nothing is suited to this. Your father farmed this land for forty years without this problem. Something has changed and the change has a name and the name is on no one\'s agenda here.',
     choices: [
       { text: 'Try a drought-resistant variety next season — adapt', tag: null, outcome: 'The seed is expensive. The yield is half what you need. It is better than nothing.', effect: (p) => { p.w -= 5; p.m -= 8; p.addFlag('climate_adapted'); p.addFlag('harvest_failure') } },
       { text: 'Consider whether farming is still viable here', tag: null, outcome: 'You begin to look at other things. The land sits unplanted through one season.', effect: (p) => { p.m -= 12; p.r += 10; p.addFlag('harvest_failure'); p.addFlag('rural_to_urban') } },
@@ -454,7 +454,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.career?.field === 'legal' && G.age >= 30 && !G.mem.lawyerEthics,
-    text: 'The client is guilty. You know this, and knowing it is not the issue — the issue is a specific piece of evidence that could change the outcome. You are not obligated to disclose it. You are not obligated to use it. The rules of the profession say one thing. What you believe says another.',
+    text: 'The client is guilty. You know this, and knowing it is not the issue — the issue is a piece of evidence that could change the outcome. You are not obligated to disclose it. You are not obligated to use it. The rules of the profession say one thing. What you believe says another.',
     choices: [
       { text: 'Do your job — everyone is entitled to a defense', tag: null, outcome: 'You represent them fully. The system depends on this principle functioning even when it feels wrong.', effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('legal_defense_principle'); p.setMem('lawyerEthics', true) } },
       { text: 'Find a legitimate reason to step down from the case', tag: null, outcome: 'You withdraw. Another lawyer takes it. The case continues without you.', effect: (p) => { p.m += 4; p.karma += 5; p.setMem('lawyerEthics', true) } },
@@ -587,7 +587,7 @@ export const CAREER_REGIME_EVENTS = [
       Math.random() < 0.09,
     text: (G) => {
       const who = G.career ? 'a man at work' : 'a neighbour on the second floor'
-      return `You are asked, without it being a question, to write down what ${who} said at the gathering. The form has three lines and a place for your name. Declining is also an answer and everyone in the building understands that. You are given the form to take home, which is the part that is designed to work.`
+      return `You are asked, without it being a question, to write down what ${who} said at the gathering. The form has three lines and a place for your name. Declining is also an answer and everyone in the building understands that. You are given the form to take home, the part that is designed to work.`
     },
     choices: [
       {
@@ -613,7 +613,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.flags.has('told_the_truth_at_cost') && G.age >= 40 && !G.mem?.cregTruthEcho,
-    text: `Four people stopped eating lunch with you and none of them ever said why, and it has been eleven years. You do not regret the sentence. You have simply learned what it costs to be the person who says the sentence, which is not remorse and is not comfortable either. When your own name comes up for something now, someone always pauses first.`,
+    text: `Four people stopped eating lunch with you and none of them ever said why, and it has been eleven years. You do not regret the sentence. You have simply learned what it costs to be the person who says the sentence. It is not remorse and it is not comfortable either. When your own name comes up for something now, someone always pauses first.`,
     choices: null,
     effect: (p) => { p.r += 4; p.e += 3; p.karma += 2; p.setMem('cregTruthEcho', true) },
   },

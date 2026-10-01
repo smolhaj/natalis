@@ -144,7 +144,7 @@ export const FOLLOWTHROUGH_74_EVENTS = [
       G.flags.has('ven_hyperinflation_era') &&
       G.age >= 35 &&
       !G.mem?.ft65HyperLate,
-    text: 'The zeroes that were removed and the zeroes that were added and the new name for the currency that arrived with five zeros removed. You have kept the old bills in a drawer — the amounts printed on them that once meant something and now mean the floor of a context. Economic historians will write papers about this period. You lived it as the specific confusion of not knowing how much a thing costs from week to week, of a salary that meant something on Monday and was different on Friday, of the arithmetic of daily life becoming unmanageable and then the adaptation that made it manageable again.',
+    text: 'The zeroes that were removed and the zeroes that were added and the new name for the currency that arrived with five zeros removed. You have kept the old bills in a drawer — the amounts printed on them that once meant something and now mean the floor of a context. Economic historians will write papers about this period. You lived it as the confusion of not knowing how much a thing costs from week to week, of a salary that meant something on Monday and was different on Friday, of the arithmetic of daily life becoming unmanageable and then the adaptation that made it manageable again.',
     choices: null,
     effect: (p) => {
       p.r += 6

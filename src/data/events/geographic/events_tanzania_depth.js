@@ -27,7 +27,7 @@ export const TANZANIA_DEPTH_EVENTS = [
       {
         text: 'Your family is Zanzibari African. The revolution ended a system that excluded you.',
         tag: null,
-        outcome: 'The sultanate is gone. What the revolution left in its wake — the new Zanzibari government, the disappearances, the particular authoritarian quality of the new order — is also on the record. Liberation is not simple.',
+        outcome: 'The sultanate is gone. What the revolution left in its wake — the new Zanzibari government, the disappearances, the authoritarian quality of the new order — is also on the record. Liberation is not simple.',
         effect: (p) => {
           p.m += 6
           p.r += 4
@@ -38,7 +38,7 @@ export const TANZANIA_DEPTH_EVENTS = [
       {
         text: 'Your family is Arab Zanzibari. The revolution meant displacement.',
         tag: null,
-        outcome: 'Some families went to Oman, to the Gulf, to the mainland. Some stayed and navigated. The specific texture of what was lost — a world that had existed for centuries, gone in weeks — is your inheritance.',
+        outcome: 'Some families went to Oman, to the Gulf, to the mainland. Some stayed and navigated. The texture of what was lost — a world that had existed for centuries, gone in weeks — is your inheritance.',
         effect: (p) => {
           p.m -= 14
           p.r += 10
@@ -61,7 +61,8 @@ export const TANZANIA_DEPTH_EVENTS = [
       G.currentYear >= 1978 && G.currentYear <= 1980 &&
       G.age >= 18 &&
       !G.mem?.tanUgandaWar,
-    text: `October 1978. Idi Amin's forces invade the Kagera region of Tanzania, occupying a strip of territory north of the river. Nyerere mobilises. What follows is the Tanzania-Uganda War — the Tanzanian army, with Ugandan exiles, pushing back into Uganda, taking Kampala in April 1979. Idi Amin flees to Libya and then Saudi Arabia. The war costs Tanzania more than $500 million and a significant toll in soldiers, and ends a regime that killed between 100,000 and 500,000 of its own people. It is, by the measure of what it stopped, one of the most defensible military actions in African history. The continent does not universally say so — the OAU principle of non-interference in member states is not designed for cases where the member state is actively committing mass murder.`,
+    text: `October 1978, and Idi Amin's army crosses into Kagera and occupies the land north of the river. Nyerere mobilises, and the Tanzanian army and the Ugandan exiles push back into Uganda and take Kampala in April, and Amin flees to Libya. It costs Tanzania money it does not have and soldiers it will remember. By what it stopped, it is one of the most defensible wars on the continent, though the rest of Africa, bound to a rule of non-interference, does not say so.`,
+    context: 'Amin\'s regime killed an estimated 100,000 to 500,000 Ugandans. The war cost Tanzania more than 500 million dollars.',
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -83,7 +84,8 @@ export const TANZANIA_DEPTH_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 16 &&
       !G.mem?.tanTazara,
-    text: `The TAZARA railway — Tanzania-Zambia — runs for 1,860 kilometres through the interior. The Chinese built it: 15,000 Chinese workers, three years, finished 1975. The railway was what the Western countries said could not be done, declined to finance, and would not believe when it was done. The line runs through territory that had no railway before, past stations that become the reason towns exist. The train arrives at intervals that are not always predictable. When it arrives it brings things from Dar es Salaam — rice, cloth, the city — and takes things the other way. The line is also the longest railway China ever built outside China. The ideology is Nyerere's non-alignment. The material is Chinese steel.`,
+    text: `The TAZARA train comes through at intervals nobody can quite predict, on a line the Western banks said could not be built and would not pay for. The Chinese built it, and towns grew up around its stations where there was nothing before. When it stops it brings Dar es Salaam with it, rice and cloth and news, and takes the other things away. The idea was Nyerere's non-alignment. The rails are Chinese steel.`,
+    context: 'The 1,860 km Tanzania-Zambia Railway was built by China between 1970 and 1975 with some 15,000 Chinese workers.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -103,7 +105,7 @@ export const TANZANIA_DEPTH_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2000 &&
       G.age >= 25 &&
       !G.mem?.tanAids,
-    text: `Slim — that is what they call it in Tanzania: *ukimwi*, or the slimming disease, because of what it does to the body over time. The epidemic arrived along the trucking routes — Dar es Salaam to Nairobi, the commercial corridors — and spread into the rural interior faster than treatment could follow. By 1990 Tanzania has one of the highest infection rates in the world. People you know are sick with something that has a name now but no cure. The funerals accumulate. The children left behind accumulate. The grandmother raising three orphaned grandchildren has become a common enough category that it has its own term. The treatment — antiretrovirals — will eventually arrive, but for this decade you live in the gap between the disease and its management.`,
+    text: `Slim, they call it: ukimwi, the slimming disease, for what it does to a body. It came along the trucking routes and into the villages faster than any treatment could follow. People you know are sick with something that has a name and no cure, and the funerals pile up, and so do the children left behind. The grandmother raising three orphaned grandchildren is common enough to have her own word. For this decade you live in the gap between the disease and the drugs.`,
     choices: [
       {
         text: 'Someone in your immediate world is dying of this.',
@@ -144,12 +146,12 @@ export const TANZANIA_DEPTH_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2010 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.tanGold,
-    text: `The shafts go down by hand, shored with timber that comes from the nearby forest. You go down because the money is different from farming money — three months at the mine can produce what three seasons of maize cannot. The government calls it *madini* — minerals — and has a framework for small-scale artisanal miners that in practice means the framework was designed for the large operations and you are operating in the gap between the law and what the law is enforced to do. Mercury for the amalgamation process. The dust that stays in the lungs. The specific calculation: the risk, the money, the alternative.`,
+    text: `The shafts go down by hand, shored with timber that comes from the nearby forest. You go down because the money is different from farming money — three months at the mine can produce what three seasons of maize cannot. The government calls it *madini* — minerals — and has a framework for small-scale artisanal miners that in practice means the framework was designed for the large operations and you are operating in the gap between the law and what the law is enforced to do. Mercury for the amalgamation process. The dust that stays in the lungs. The calculation: the risk, the money, the alternative.`,
     choices: [
       {
         text: 'Work the mine for a season.',
         tag: null,
-        outcome: 'The money is real. The conditions are also real. You come back with what you went for.',
+        outcome: 'The money comes. The conditions are also real. You come back with what you went for.',
         effect: (p) => {
           p.mo += 2000
           p.h -= 6
@@ -159,7 +161,7 @@ export const TANZANIA_DEPTH_EVENTS = [
       {
         text: 'The risk is not worth the money. Return to farming.',
         tag: null,
-        outcome: 'Farming has its own risk. The years of drought ahead are not yet legible from here.',
+        outcome: 'Farming is a risk. The years of drought ahead are not yet legible from here.',
         effect: (p) => {
           p.m -= 3
           p.r += 3
@@ -185,7 +187,7 @@ export const TANZANIA_DEPTH_EVENTS = [
     context: 'John Magufuli was president of Tanzania from 2015 until his death in March 2021. He cut government spending, replaced the independence anniversary with a national clean-up day and dismissed officials publicly, while opposition figures were arrested, newspapers suspended and prosecutions for homosexuality increased. He declared Tanzania free of COVID-19 in June 2020, halted testing and reporting, and rejected vaccines. Officials attributed his death to heart failure; opposition figures said he had contracted the virus.',
     choices: [
       {
-        text: `The development was real. The roads. The clean cities. You saw what the Bulldozer was moving.`,
+        text: `There was development. The roads. The clean cities. You saw what the Bulldozer was moving.`,
         tag: null,
         outcome: (G) => G.currentYear >= 2020 ? 'He was also burying the statistics and arresting journalists and dismissing COVID. The accounting of him requires both columns.' : 'He is also arresting journalists and closing newspapers. The accounting of him requires both columns.',
         effect: (p) => {
@@ -221,7 +223,7 @@ export const TANZANIA_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2000 &&
       G.age >= 18 &&
       !G.mem?.tanZanzibarId,
-    text: `Zanzibar is part of Tanzania and is not part of Tanzania. It has its own president, its own government, its own house of representatives. The 1964 union is held together by its usefulness and by the fact that neither side has been willing to test what separation would cost. The spice economy — cloves, nutmeg, the archipelago's long commercial history as a hub for Indian Ocean trade — is not the mainland's economy. The Swahili of Stone Town is not the Swahili of Dar es Salaam. The specific density of Arab, Indian, African, and Persian history in the old city is not replicated anywhere on the mainland. You are Zanzibari in a country that includes you but was not made for you.`,
+    text: `Zanzibar is part of Tanzania and is not part of Tanzania. It has its own president, its own government, its own house of representatives. The 1964 union is held together by its usefulness and by the fact that neither side has been willing to test what separation would cost. The spice economy — cloves, nutmeg, the archipelago's long commercial history as a hub for Indian Ocean trade — is not the mainland's economy. The Swahili of Stone Town is not the Swahili of Dar es Salaam. The density of Arab, Indian, African, and Persian history in the old city is not replicated anywhere on the mainland. You are Zanzibari in a country that includes you but was not made for you.`,
     choices: null,
     effect: (p) => {
       p.e += 3

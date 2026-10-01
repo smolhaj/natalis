@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_gulf.js — the two cities in one square kilometre.
 //
 // The UAE's own country note says it: "Citizens are a privileged minority —
@@ -216,7 +217,7 @@ export const GULF_EVENTS = [
       G.mem?.gulfArrivedYear != null &&
       G.currentYear - G.mem.gulfArrivedYear >= 6 &&
       !G.mem?.gulfTheHouse,
-    text: 'The house is finished. There are photographs: the front, the gate, the room that is yours, your mother standing in the doorway being told to stand still. It has a concrete roof and a tank on it and it is the best house on that road, and it exists because of eleven years of a room in the Industrial Area, and you have never stood inside it. You look at the photographs on the phone in the evening, which is what the phone is for, and the strange part is not sadness. The strange part is that it is genuinely, entirely worth it, and that both of those things stay true at once.',
+    text: 'The house is finished. There are photographs: the front, the gate, the room that is yours, your mother standing in the doorway being told to stand still. It has a concrete roof and a tank on it and it is the best house on that road, and it exists because of eleven years of a room in the Industrial Area, and you have never stood inside it. You look at the photographs on the phone in the evening, as the phone is for, and the strange part is not sadness. The strange part is that it is genuinely, entirely worth it, and that both of those things stay true at once.',
     choices: null,
     effect: (p) => { p.setMem('gulfTheHouse', true); p.m += 6; p.r += 6; p.addFlag('gulf_built_it_from_here') },
   },
@@ -235,7 +236,7 @@ export const GULF_EVENTS = [
     text: (G) => {
       const kid = (G.children ?? []).find(c => c.alive !== false)
       const name = kid?.name?.split(' ')[0] ?? 'your eldest'
-      return `${name} is taller in each call and you notice it in steps rather than continuously, which is not how a parent is supposed to learn it. There is a moment in the call where the conversation runs out and neither of you minds, and the phone just stays on, propped against something, while they do their homework and you sit on the edge of the bed. That is the part that is closest to being there. You do about forty minutes a week of being a father and you have got very good at it.`
+      return gendered(`${name} is taller in each call and you notice it in steps rather than continuously, as a parent is not supposed to learn it. There is a moment in the call where the conversation runs out and neither of you minds, and the phone just stays on, propped against something, while they do their homework and you sit on the edge of the bed. That is the part that is closest to being there. You do about forty minutes a week of being a father and you have got very good at it.`, kid)
     },
     choices: null,
     effect: (p) => { p.setMem('gulfScreenChildren', true); p.m -= 5; p.r += 7; p.addFlag('gulf_parent_by_phone') },
@@ -317,7 +318,7 @@ export const GULF_EVENTS = [
       G.age >= 30 &&
       !G.mem?.gulfMinorityEcho,
     text: (G) => here(G) === 'Kuwait'
-      ? 'You are thirty per cent of your own country, which in this region is neither the highest nor the lowest. The mall is not in your language. The clinic is not in your language. It is not resentment exactly — the arrangement was built deliberately and your family is on the side of it that benefits — but there is a specific small disorientation in being from a place and being outnumbered in it better than two to one by people who cannot stay.'
+      ? 'You are thirty per cent of your own country, which in this region is neither the highest nor the lowest. The mall is not in your language. The clinic is not in your language. You do not resent it exactly — the arrangement was built deliberately and your family is on the side of it that benefits — but there is a small disorientation in being from a place and being outnumbered in it better than two to one.'
       : 'Roughly one person in nine here is from here. You have gone whole days conducting your business in English with people who will be in another country within five years, and it is entirely normal, and then a cousin visits from abroad and says something about it and you hear it freshly for an afternoon.',
     choices: null,
     effect: (p) => { p.setMem('gulfMinorityEcho', true); p.r += 4; p.addFlag('gulf_minority_reflection') },
@@ -378,7 +379,7 @@ export const GULF_EVENTS = [
       G.mem?.gulfArrivedYear != null &&
       G.currentYear - G.mem.gulfArrivedYear <= 3 &&
       !G.mem?.gulfRoom,
-    text: 'Eight bunks, six men, one window and an air conditioner that is either off or catastrophic. The cooking is done on the floor at the end where the tiles are. There is a shelf each and the shelf is the whole of your private property in this country and everybody respects it absolutely, which is a small thing and is not a small thing. The bus is at half past four. On Fridays there is a phone call and a shop that sells the right spices at the wrong price, and the road outside fills with men walking with nowhere particular to be.',
+    text: 'Eight bunks, six men, one window and an air conditioner that is either off or catastrophic. The cooking is done on the floor at the end where the tiles are. There is a shelf each and the shelf is the whole of your private property in this country and everybody respects it absolutely. The bus is at half past four. On Fridays there is a phone call and a shop that sells the right spices at the wrong price, and the road outside fills with men walking with nowhere particular to be.',
     choices: null,
     effect: (p) => { p.setMem('gulfRoom', true); p.h -= 4; p.m -= 3; p.addFlag('gulf_labour_accommodation') },
   },
@@ -392,7 +393,7 @@ export const GULF_EVENTS = [
       !G.mem?.gulfHeat,
     text: (G) => G.currentYear >= (here(G) === 'UAE' ? 2005 : here(G) === 'Qatar' ? 2007 : 2010)
       ? 'From June there is a rule: no outdoor work between noon and three. It is a real rule and it is mostly kept, and it means the day starts before light and finishes after dark with a hole in the middle that you spend lying on a bunk in a room that is thirty-eight degrees, waiting. Somebody times it. The men who were here before the rule describe the years before the rule in a flat voice and do not dwell on it.'
-      : 'In August the site metal cannot be touched with a bare hand after ten in the morning. You learn the particular discipline of drinking before you are thirsty and you learn to recognise, in another man, the moment before it goes wrong — the talking that gets a little too easy. Two men from the other camp are taken away in a week and the cause of death, when it is given at all, is given as cardiac arrest.',
+      : 'In August the site metal cannot be touched with a bare hand after ten in the morning. You learn the discipline of drinking before you are thirsty and you learn to recognise, in another man, the moment before it goes wrong — the talking that gets a little too easy. Two men from the other camp are taken away in a week and the cause of death, when it is given at all, is given as cardiac arrest.',
     choices: null,
     effect: (p) => {
       p.setMem('gulfHeat', true)
@@ -449,7 +450,7 @@ export const GULF_EVENTS = [
       G.flags.includes('gulf_migrant_worker') && STILL_LABOUR(G) &&
       G.currentYear >= 2012 && G.currentYear <= 2022 &&
       !G.mem?.gulfWorldCup,
-    text: 'The country is building eight stadiums and a metro and a city that was not there, and you are in the middle of it with a hard hat and a number. The work is enormous and it is genuinely impressive and you are genuinely a part of it. Journalists come, occasionally, escorted; there is a debate somewhere far away about a figure for how many men have died and the figure has a wide range because nobody is obliged to count in a way that would settle it. In 2022 the tournament happens and it is on the television in the room and the room watches it, and the feeling in the room is complicated and mostly not bitter.',
+    text: 'The country is building eight stadiums and a metro and a city that was not there, and you are in the middle of it with a hard hat and a number. The work is enormous and it is genuinely impressive and you are genuinely a part of it. Journalists come, occasionally, escorted; there is a debate somewhere far away about how many men have died, and the figure has a wide range because nobody is obliged to count. In 2022 the tournament happens and it is on the television in the room and the room watches it, and the feeling in the room is complicated and mostly not bitter.',
     choices: null,
     effect: (p) => { p.setMem('gulfWorldCup', true); p.m += 2; p.r += 6; p.addFlag('gulf_built_the_tournament') },
   },
@@ -536,7 +537,7 @@ export const GULF_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.gulfArrangement,
-    text: 'The man who built your parents\' house and the man who drives your grandmother to the clinic and the woman who has been in the kitchen since you were four are all here on a document that ties them to a person, and the person is, in two of those three cases, your father. It is the arrangement. Everybody you know lives inside it and almost nobody discusses it, and it is not a secret — it is written down, it is in the newspaper, the rules are published. The thing that is not discussed is not the fact. It is what you are supposed to feel about it.',
+    text: 'The man who built your parents\' house and the man who drives your grandmother to the clinic and the woman who has been in the kitchen since you were four are all here on a document that ties them to a person, and the person is, in two of those three cases, your father. It is the arrangement. Everybody you know lives inside it and almost nobody discusses it, and it is not a secret — it is written down, it is in the newspaper, the rules are published. Nobody disputes the fact. What is not discussed is what you are supposed to feel about it.',
     choices: [
       {
         text: 'Feel nothing in particular. It is how the country works.',
@@ -573,7 +574,7 @@ export const GULF_EVENTS = [
       G.currentYear === 1990 &&
       G.age >= 5 &&
       !G.mem?.gulfInvasion,
-    text: 'The second of August. They are in the city before most people know it has started, and for seven months the country is a province of another country with a new name on the maps. Some leave in the first week on the road to Saudi Arabia and some cannot and some will not. The occupation is administered and it is also a looting: the museum, the hospitals, the cars, the wiring out of the walls. When it ends in February the sky is black at noon from six hundred burning wells and the rain that falls is oily and everybody remembers the particular smell for the rest of their life.',
+    text: 'The second of August. They are in the city before most people know it has started, and for seven months the country is a province of another country with a new name on the maps. Some leave in the first week on the road to Saudi Arabia and some cannot and some will not. The occupation is administered and it is also a looting: the museum, the hospitals, the cars, the wiring out of the walls. When it ends in February the sky is black at noon from six hundred burning wells and the rain that falls is oily and everybody remembers the smell for the rest of their life.',
     choices: [
       {
         text: 'Get out on the road south while it is still open.',
@@ -629,7 +630,7 @@ export const GULF_EVENTS = [
       !G.mem?.gulfPearlRoundabout,
     text: (G) => G.character?.ethnicity === 'bahraini_shia'
       ? 'February. The roundabout with the pearl monument on it fills, and stays full, and for a few weeks it is the only place in the country where everything is sayable out loud. You are a Shia majority that has never governed and the demands are ordinary — a parliament with power, an end to the recruitment of the police from abroad, the villages getting what the suburbs get. In March the Peninsula Shield force crosses the causeway from Saudi Arabia. On the eighteenth they knock the monument down, so that there is nothing left for anyone to mean by it, and the roundabout is erased from the map and the banknote.'
-      : 'February. The roundabout fills. You watch it from the other side of a division that everybody claims is not sectarian and that everybody can describe precisely. Some of what is being demanded is plainly reasonable and some of what is being said about your side is not, and both of those are true, and by March the Saudi armoured vehicles are on the causeway and the argument is over in the way arguments end when one side has armoured vehicles. They demolish the monument. You are surprised by how much that particular act bothers you.',
+      : 'February. The roundabout fills. You watch it from the other side of a division that everybody claims is not sectarian and that everybody can describe precisely. Some of what is being demanded is plainly reasonable and some of what is being said about your side is not, and both of those are true, and by March the Saudi armoured vehicles are on the causeway and the argument is over in the way arguments end when one side has armoured vehicles. They demolish the monument. You are surprised by how much that act bothers you.',
     choices: [
       {
         text: 'Go to the roundabout.',
@@ -690,7 +691,7 @@ export const GULF_EVENTS = [
       IS_GULF(G) && IS_CITIZEN(G) &&
       G.age >= 14 &&
       !G.mem?.gulfMajlis,
-    text: 'The majlis is on a particular evening and the men of the family are there and so is anyone who wants something, and the two categories overlap. You sit at the end where the young sit and say nothing for about six years. What is transacted is a job, a marriage, a dispute about a wall, a word to somebody who knows somebody — the whole informal government of a place that also has a formal one. By the time you are allowed to speak you have absorbed the entire grammar of it without anybody ever explaining a rule.',
+    text: 'The majlis is on an evening and the men of the family are there and so is anyone who wants something, and the two categories overlap. You sit at the end where the young sit and say nothing for about six years. What is transacted is a job, a marriage, a dispute about a wall, a word to somebody who knows somebody — the whole informal government of a place that also has a formal one. By the time you are allowed to speak you have absorbed the entire grammar of it without anybody ever explaining a rule.',
     choices: null,
     effect: (p) => { p.setMem('gulfMajlis', true); p.s += 5; p.e += 2; p.addFlag('gulf_majlis_raised') },
   },
@@ -756,7 +757,7 @@ export const GULF_EVENTS = [
       G.age >= 20 &&
       !G.mem?.gulfBahrainAfter,
     text: (G) => G.flags.includes('gulf_was_at_the_roundabout')
-      ? 'The list is not published and it is entirely real. It costs a scholarship, or a post, or a licence, or a passport, depending on which list and how long you were there. Nobody ever tells you that you are on it; you find out by applying for something ordinary and receiving a decision with no reasons in it. You apply for three more things over the following years in order to test the shape of it, which is a strange hobby to have.'
+      ? 'The list is not published and it is entirely real. It costs a scholarship, or a post, or a licence, or a passport, depending on which list and how long you were there. Nobody ever tells you that you are on it; you find out by applying for something ordinary and receiving a decision with no reasons in it. You apply for three more things over the following years, to test the shape of it.'
       : 'The roundabout is a junction now and the monument is gone and the banknote was redesigned. What did not change is that everybody can tell you, of anybody, which side of it they were on, and that nobody says so directly, and that the whole country is fluent in a way of talking around it that a visitor cannot hear at all.',
     choices: null,
     effect: (p) => { p.setMem('gulfBahrainAfter', true); p.m -= 5; p.r += 7; p.addFlag('gulf_2011_aftermath') },
@@ -804,7 +805,7 @@ export const GULF_EVENTS = [
       {
         text: 'Take the payment and go.',
         tag: 'yielding',
-        outcome: 'It was work. You had told yourself that the entire time and it was about two-thirds true, which is the part you carry.',
+        outcome: 'It was work. You had told yourself that the entire time and it was about two-thirds true, and you carry the other third.',
         effect: (p) => { p.setMem('gulfDomesticAfter', true); p.m -= 5; p.r += 8; p.addFlag('gulf_left_it_behind'); p.returnHome() },
       },
     ],

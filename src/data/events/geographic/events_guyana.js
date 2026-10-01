@@ -83,7 +83,7 @@ export const GUYANA_EVENTS = [
     phase: null,
     weight: 7,
     when: (G) => IS_GY(G) && G.currentYear >= 1935 && G.currentYear <= 1976 && G.age >= 12 && G.age <= 60 && once(G, 'gy_bookers'),
-    text: 'The wage comes from Bookers. The shop you spend it in is Bookers. The drugstore is Bookers, the rum is Bookers, the ship that takes the sugar out is Bookers, and the estate hospital where your aunt died is Bookers. Someone at the standpipe says the letters stand for Booker\'s Guiana and everybody laughs the particular laugh people use for a joke that is only the truth said quickly.',
+    text: 'The wage comes from Bookers. The shop you spend it in is Bookers. The drugstore is Bookers, the rum is Bookers, the ship that takes the sugar out is Bookers, and the estate hospital where your aunt died is Bookers. Someone at the standpipe says the letters stand for Booker\'s Guiana and everybody laughs the laugh people use for a joke that is only the truth said quickly.',
     context: 'Booker Brothers, McConnell & Co. controlled roughly three-quarters of British Guiana\'s sugar industry along with shipping, retail, and much else. The colony\'s initials, B.G., were widely joked to stand for "Booker\'s Guiana." Bookers was nationalised in 1976, becoming Guysuco.',
     choices: null,
     effect: (p) => { p.setMem('gy_bookers', true); p.e += 2; p.addFlag('booker_colony') },
@@ -96,7 +96,7 @@ export const GUYANA_EVENTS = [
     when: (G) => IS_GY(G) && G.currentYear <= 1990 && G.age >= 14 && G.age <= 55 &&
       (G.character?.ruralUrban === 'rural' || G.place?.id === 'gy_berbice' || G.place?.id === 'gy_essequibo') &&
       once(G, 'gy_backdam'),
-    text: 'You go to the backdam before the sun is properly up because the cane is easier when it is cool and because the day is measured in punts loaded, not in hours. The cutlass has a curve to it and you sharpen it on a file every morning until the edge will take the hair off your arm. By nine the cane dust is inside your shirt and inside your eyes and the trench water you are standing in is warm as blood. Your grandfather cut on this same estate. The difference between you and him is that you can leave, which is not the same thing as leaving.',
+    text: 'You go to the backdam before the sun is properly up because the cane is easier when it is cool and because the day is measured in punts loaded, not in hours. The cutlass has a curve to it and you sharpen it on a file every morning until the edge will take the hair off your arm. By nine the cane dust is inside your shirt and inside your eyes and the trench water you are standing in is warm as blood. Your grandfather cut on this same estate. The difference between you and him is that you can leave, and you have not.',
     choices: null,
     effect: (p) => { p.setMem('gy_backdam', true); p.h -= 3; p.mo += 120; p.addFlag('backdam_cane') },
   },
@@ -281,7 +281,7 @@ export const GUYANA_EVENTS = [
       {
         text: 'Stop going. It is a performance and you will not be in it.',
         tag: 'defiant',
-        outcome: 'You stay home on the day and feel exactly as powerless as you did the year you went. Both are true at once and neither cancels the other.',
+        outcome: 'You stay home on the day and feel exactly as powerless as you did the year you went. Neither cancels the other.',
         effect: (p) => { p.setMem('gy_rig', true); p.m -= 3; p.addFlag('rigged_ballot'); p.addFlag('political_disillusioned') },
       },
     ],
@@ -304,7 +304,7 @@ export const GUYANA_EVENTS = [
       {
         text: 'Eat what the country grows.',
         tag: 'yielding',
-        outcome: 'Cassava bread and rice flour and a great deal of plantain. You get thinner. You also learn to cook in a way that, forty years later, your grandchildren will ask you to teach them.',
+        outcome: 'Cassava bread and rice flour and a great deal of plantain. You get thinner. You also learn to cook dishes that, forty years later, your grandchildren will ask you to teach them.',
         effect: (p) => { p.setMem('gy_flour', true); p.h -= 5; p.e += 2; p.addFlag('bread_ban_years') },
       },
     ],
@@ -373,7 +373,7 @@ export const GUYANA_EVENTS = [
     phase: null,
     weight: 7,
     when: (G) => IS_GY(G) && G.age >= 17 && G.age <= 50 && G.stats.health >= 45 && once(G, 'gy_pork'),
-    text: 'You go in to the bush for gold with four other men, a dredge, a shotgun and a barrel of salt pork, which is where the name comes from. The work is standing in a river moving mud through a sluice box for eleven hours. Out of four trips one pays, and the one that pays pays more than a year of anything else, which is precisely why every man you know has gone in at least twice and exactly why the camps are full of men in their fifties who have not stopped.',
+    text: 'You go in to the bush for gold with four other men, a dredge, a shotgun and a barrel of salt pork, and that is where the name comes from. The work is standing in a river moving mud through a sluice box for eleven hours. Out of four trips one pays, and the one that pays pays more than a year of anything else, which is precisely why every man you know has gone in at least twice and exactly why the camps are full of men in their fifties who have not stopped.',
     context: '"Porkknocker" is the Guyanese term for an independent small-scale gold and diamond prospector in the interior, in use since the nineteenth century, said to derive from the salt pork carried as camp rations.',
     choices: [
       {
@@ -426,13 +426,13 @@ export const GUYANA_EVENTS = [
       {
         text: 'Stay in the house and wait it out upstairs.',
         tag: 'defiant',
-        outcome: 'Three weeks on the upper floor with the water below you. Nothing is stolen, which is the thing you stayed for, and your legs carry sores for a month.',
+        outcome: 'Three weeks on the upper floor with the water below you. Nothing is stolen, and that is what you stayed for, and your legs carry sores for a month.',
         effect: (p) => { p.setMem('gy_flood', true); p.h -= 8; p.m -= 4; p.addFlag('great_flood_2005') },
       },
       {
         text: 'Get the family to the school on the higher ground.',
         tag: 'yielding',
-        outcome: 'Four hundred people in a school. You come back to a house that has to be emptied entirely, and the neighbours who stayed do not say anything about it, which is its own kind of saying something.',
+        outcome: 'Four hundred people in a school. You come back to a house that has to be emptied entirely, and the neighbours who stayed do not say anything about it.',
         effect: (p) => { p.setMem('gy_flood', true); p.m -= 6; p.wipeMoney(0.25); p.addFlag('great_flood_2005') },
       },
     ],
@@ -445,7 +445,7 @@ export const GUYANA_EVENTS = [
     phase: null,
     weight: 7,
     when: (G) => IS_GY(G) && G.currentYear >= 1950 && G.currentYear <= 2005 && G.age >= 8 && once(G, 'gy_bourda'),
-    text: 'Test cricket at Bourda, which is the only Test ground in the world below sea level, and the stand is a wooden thing that moves when the crowd moves. Kanhai is from Port Mourant, which is a sugar estate, and Lloyd is from Georgetown, and both of them are out there in the same maroon cap with men from Barbados and Trinidad and Jamaica, and for five days the question of who your grandparents were does not come up once. It is the only institution in the region that manages this. The rum in the stand is not helping and it is not hurting.',
+    text: 'Test cricket at Bourda, the only Test ground in the world below sea level, and the stand is a wooden thing that moves when the crowd moves. Kanhai is from Port Mourant, which is a sugar estate, and Lloyd is from Georgetown, and both of them are out there in the same maroon cap with men from Barbados and Trinidad and Jamaica, and for five days the question of who your grandparents were does not come up once. It is the only institution in the region that manages this. The rum in the stand is not helping and it is not hurting.',
     context: 'Bourda, the Georgetown Cricket Club ground, hosted Tests from 1930 to 2005 and sat below sea level. Guyana supplied the West Indies with Rohan Kanhai, Clive Lloyd, Lance Gibbs, Alvin Kallicharran, Roy Fredericks, Carl Hooper and Shivnarine Chanderpaul — from both of the country\'s major communities.',
     choices: null,
     effect: (p) => { p.setMem('gy_bourda', true); p.m += 6; p.s += 2; p.addFlag('bourda_cricket') },
@@ -541,7 +541,7 @@ export const GUYANA_EVENTS = [
     phase: null,
     weight: 90,
     when: (G) => IS_GY(G) && G.currentYear >= 2020 && G.age >= 15 && once(G, 'gy_oil'),
-    text: 'They find oil offshore and then they find more, and within a few years the country has the fastest-growing economy on earth, which is a sentence read out on the news in a house where the current still goes at seven. There are new hotels on the East Bank and a great many Texan accents at the airport and the price of a house lot in Georgetown has done something violent. The terms of the contract are printed in the newspaper and argued about by everybody, including people who have never argued about a contract before. So far the wealth is a number. Numbers do eventually become things. This one has not yet.',
+    text: 'They find oil offshore and then they find more, and within a few years the country has the fastest-growing economy on earth, read out on the news in a house where the current still goes at seven. There are new hotels on the East Bank and a great many Texan accents at the airport and the price of a house lot in Georgetown has done something violent. The terms of the contract are printed in the newspaper and argued about by everybody, including people who have never argued about a contract before. So far the wealth is a number. Numbers do eventually become things. This one has not yet.',
     context: 'ExxonMobil confirmed a major offshore discovery in Guyana\'s Stabroek Block in May 2015; first oil was produced in December 2019. Guyana recorded the world\'s fastest GDP growth for several years running, including about 62% in 2022. The production-sharing agreement — a 2% royalty and generous cost-recovery terms — remains politically contested.',
     choices: null,
     effect: (p) => { p.setMem('gy_oil', true); p.e += 3; p.addFlag('oil_found_2015') },
@@ -552,7 +552,7 @@ export const GUYANA_EVENTS = [
     phase: null,
     weight: 8,
     when: (G) => IS_GY(G) && G.currentYear >= 1962 && G.age >= 9 && once(G, 'gy_essequibo'),
-    text: 'The map on the classroom wall has the whole country on it and then a line down it, and the teacher explains that Venezuela says everything west of that line is theirs, which is about two thirds of where you are standing. You learn the year 1899 and the word arbitration before you learn most things. Every Guyanese child learns this map. It comes back, loudly, about every twenty years, and each time it does your grandmother says the same sentence about how they were quiet enough about it when there was nothing out there.',
+    text: 'The map on the classroom wall has the whole country on it and then a line down it, and the teacher explains that Venezuela says everything west of that line is theirs: about two thirds of where you are standing. You learn the year 1899 and the word arbitration before you learn most things. Every Guyanese child learns this map. It comes back, loudly, about every twenty years, and each time it does your grandmother says the same sentence about how they were quiet enough about it when there was nothing out there.',
     context: 'Venezuela claims the Essequibo region — roughly two-thirds of Guyana\'s territory — rejecting the 1899 arbitral award that fixed the border. The dispute, managed under the 1966 Geneva Agreement, escalated sharply after the 2015 offshore oil discoveries, with a Venezuelan referendum and troop movements in late 2023.',
     choices: null,
     effect: (p) => { p.setMem('gy_essequibo', true); p.e += 2; p.addFlag('essequibo_claim') },
@@ -612,7 +612,7 @@ export const GUYANA_FOLLOWTHROUGH = [
     phase: null,
     weight: 9,
     when: (G) => G.flags.includes('guyanese_diaspora') && !IS_GY(G) && G.age >= 50 && once(G, 'gy_ft_return'),
-    text: 'You go back for three weeks after a long time away. The heat is not a memory of heat, it is the heat. People call you by a nickname nobody has used in thirty years and also, without any malice in it, they call you a foreigner — the accent went, or half of it did, and you are paying the price a visitor pays for a taxi. The house is smaller than the house. Both of those are permanently true now and you carry both back with you.',
+    text: 'You go back for three weeks after a long time away. The heat is not a memory of heat, it is the heat. People call you by a nickname nobody has used in thirty years and also, without any malice in it, they call you a foreigner — the accent went, or half of it did, and you are paying the price a visitor pays for a taxi. The house is smaller than the house. You carry both back with you.',
     choices: null,
     effect: (p) => { p.setMem('gy_ft_return', true); p.m += 5; p.r += 2; p.addFlag('returned_as_visitor') },
   },
@@ -653,7 +653,7 @@ export const GUYANA_FOLLOWTHROUGH = [
     weight: 8,
     when: (G) => G.flags.includes('oil_found_2015') && IS_GY(G) && G.currentYear >= 2023 && once(G, 'gy_ft_oil'),
     text: (G) => G.money > 12000
-      ? 'It reached you. Not directly — nobody handed you an oil cheque — but the contract you got was because of the building that went up because of it, and the money is real and it is in the house. You are careful about saying so in front of people it did not reach, which is most people, and the care you take about that is itself new.'
+      ? 'It reached you. Not directly — nobody handed you an oil cheque — but the contract you got was because of the building that went up because of it, and the money is real and it is in the house. You are careful about saying so in front of people it did not reach, most people, and the care is itself new.'
       : 'It has not reached this house. The economy grew sixty-two per cent in one year, which was on the radio, and the current still goes, and the price of everything in the market has moved and the wage has not. Somebody is having the boom. You have the sentence about the boom.',
     choices: null,
     effect: (p) => { p.setMem('gy_ft_oil', true); p.addFlag('oil_boom_lived_through') },
@@ -664,7 +664,7 @@ export const GUYANA_FOLLOWTHROUGH = [
     phase: null,
     weight: 20,
     when: (G) => G.flags.includes('porkknocker') && G.age >= 58 && once(G, 'gy_ft_pork'),
-    text: 'The malaria comes back when you get run down, which is a sentence you have said so often that your wife says it for you now. The knees are from the river. You still know, from across a room, what a man who has been in the bush looks like — something about the forearms and something about how he sits — and you have never been wrong about it yet.',
+    text: 'The malaria comes back when you get run down; you have said it so often that your wife says it for you now. The knees are from the river. You still know, from across a room, what a man who has been in the bush looks like — something about the forearms and something about how he sits — and you have never been wrong about it yet.',
     choices: null,
     effect: (p) => { p.setMem('gy_ft_pork', true); p.h -= 3; p.m += 2; p.addFlag('bush_body') },
   },

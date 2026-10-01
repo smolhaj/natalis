@@ -71,7 +71,7 @@ export const FOLLOWTHROUGH_69_EVENTS = [
       G.currentYear >= 1998 &&
       G.age >= 30 &&
       !G.mem?.ft69CHTAccord,
-    text: 'The CHT Peace Accord was signed in December 1997. The Regional Council was established. The Bengali settlers were supposed to be relocated. The relocation did not happen. The army remained. The Jumma peoples are still a minority in land that was theirs. The accord gave a name to the region\'s autonomy without giving the substance of it. You have had twenty-five years to watch what a partial accord produces. What it produces is a situation that is better than the armed conflict and worse than what the Jumma peoples were promised.',
+    text: 'The peace accord for the Hill Tracts is signed in December 1997, and a regional council set up, and the Bengali settlers are supposed to be moved, and they are not. The army stays. The Jumma are still a minority in land that was theirs. The accord gave the region the name of autonomy without the substance, and you have had twenty-five years to see what that produces: better than the war, worse than what was promised.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -112,7 +112,7 @@ export const FOLLOWTHROUGH_69_EVENTS = [
       G.currentYear >= 2016 &&
       G.age >= 25 &&
       !G.mem?.ft69RanaComp,
-    text: 'The Rana Plaza Arrangement — the compensation fund for survivors and victims\' families — closed in 2015. It paid out $30 million. The Primark and H&M and Walmart that sourced from the building contributed to the fund. The contributions were voluntary; some brands contributed, some did not, some contributed less than they could have. The building that killed 1,134 people produced a compensation framework. The framework was real. It was not proportionate to what happened. Both things are true.',
+    text: 'The Rana Plaza Arrangement — the compensation fund for survivors and victims\' families — closed in 2015. It paid out $30 million. The Primark and H&M and Walmart that sourced from the building contributed to the fund. The contributions were voluntary; some brands contributed, some did not, some contributed less than they could have. The building that killed 1,134 people produced a compensation framework. It was not proportionate to what happened.',
     choices: null,
     effect: (p) => {
       p.r += 4

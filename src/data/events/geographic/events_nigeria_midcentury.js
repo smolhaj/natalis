@@ -98,7 +98,7 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     // Widened to 1967 because the 1966 slot went to other dated events two
     // times in three. In 1967 it is told as last September.
     text: (G) => IGBO(G)
-      ? (G.currentYear === 1967 ? 'Since last September the trains have been arriving' : 'In September the trains start arriving') + ' at Enugu and Port Harcourt with people on them who left everything. Your uncle had a shop in Kano for eleven years and comes back with a bag. Nobody uses a number for how many were killed in the north because nobody counted, and the numbers people do use are far apart and all enormous. The adults stop speaking when you come into the room, which is how you learn that this is different from the other things.'
+      ? (G.currentYear === 1967 ? 'Since last September the trains have been arriving' : 'In September the trains start arriving') + ' at Enugu and Port Harcourt with people on them who left everything. Your uncle had a shop in Kano for eleven years and comes back with a bag. Nobody uses a number for how many were killed in the north because nobody counted, and the numbers people do use are far apart and all enormous. The adults stop speaking when you come into the room, and that is how you learn this is different from the other things.'
       : (G.currentYear === 1967 ? 'They went last September' : 'They go in September') + ', in a hurry, and the street is a different street afterwards. The man who repaired the radios has gone. The two families at the end have gone. ' + (G.parents?.father?.alive ? 'Your father' : 'Your uncle') + ', who traded with them for years, is quiet for a week and then says one sentence at the table about what was done and who did it, and it is not a sentence you are allowed to repeat outside.',
     context: 'After the January 1966 coup and the July counter-coup, massacres of Igbo civilians in northern Nigeria in September and October 1966 killed an estimated 8,000 to 30,000 people and drove more than a million eastward. The exodus is the immediate cause of the Eastern Region\'s secession the following May.',
     choices: null,
@@ -270,7 +270,7 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
       {
         text: 'Take a second thing. Everybody is taking a second thing.',
         tag: 'defiant',
-        outcome: 'You trade on the side, or teach, or run something out of the house. It works, which is to say the household eats. You do not have an evening any more and you will not have one again for eleven years.',
+        outcome: 'You trade on the side, or teach, or run something out of the house. It works: the household eats. You do not have an evening any more and you will not have one again for eleven years.',
         effect: (p) => { p.setMem('ngm_sap', true); p.mo += 500; p.h -= 6; p.m -= 3; p.addFlag('sap_generation'); p.addFlag('second_income') },
       },
       {
@@ -330,7 +330,7 @@ export const NIGERIA_MIDCENTURY_EVENTS = [
     phase: null,
     weight: 999,
     when: (G) => IS_NG(G) && G.currentYear === 1995 && G.age >= 14 && once(G, 'ngm_kenule'),
-    text: 'They hang Ken Saro-Wiwa on the tenth of November with eight other Ogoni men, after a tribunal that the man\'s own defence counsel walked out of. He wrote the television series everybody in this country watched — the comedy, the one with the character everyone could do the voice of — and then he wrote about what the oil companies had done to the creeks his people fished in, and that is the part that killed him. The Commonwealth suspends Nigeria the next day. It takes them five attempts to hang him, which is a detail you did not need and now have.',
+    text: 'They hang Ken Saro-Wiwa on the tenth of November with eight other Ogoni men, after a tribunal that the man\'s own defence counsel walked out of. He wrote the television series everybody in this country watched — the comedy, the one with the character everyone could do the voice of — and then he wrote about what the oil companies had done to the creeks his people fished in, and that is the part that killed him. The Commonwealth suspends Nigeria the next day. It takes them five attempts to hang him, a detail you did not need and now have.',
     context: 'Ken Saro-Wiwa, writer of the popular sitcom Basi and Company and leader of the Movement for the Survival of the Ogoni People, was executed with eight others on 10 November 1995 after a military tribunal widely condemned as a sham. Nigeria was suspended from the Commonwealth the following day. Shell settled a related lawsuit for $15.5 million in 2009 while admitting no liability.',
     choices: null,
     effect: (p) => { p.setMem('ngm_kenule', true); p.m -= 7; p.e += 3; p.addFlag('saro_wiwa_1995') },

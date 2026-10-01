@@ -43,7 +43,7 @@ export const ACTIVITY_CHOICE_EVENTS = [
     when: (G) =>
       G.flags.includes('writing_sent') &&
       !G.mem?.acWritingResponse,
-    text: 'A response arrives. It is not what you imagined, which is partly because you had not imagined this part clearly — you had imagined the work being read, not what followed from that. The response is specific enough to be real. It is not yes.',
+    text: 'A response arrives. It is not what you imagined, partly because you had not imagined this part clearly — you had imagined the work being read, not what followed from that. The response is specific enough to be real. It is not yes.',
     choices: [
       {
         text: 'Keep going anyway',
@@ -69,7 +69,7 @@ export const ACTIVITY_CHOICE_EVENTS = [
       (G.flags.includes('writing_persisted') || (G.mem?.actCount_writing ?? 0) >= 8) &&
       G.age >= 38 &&
       !G.mem?.acWritingLate,
-    text: 'You have been writing long enough that the early self-consciousness has mostly burned off. What is left is the work — the specific problem of getting what you mean onto the page. You have done this long enough that you know what your weaknesses are, which is different from being able to fix them.',
+    text: 'You have been writing long enough that the early self-consciousness has mostly burned off. What is left is the work — the problem of getting what you mean onto the page. You have done this long enough to know your weaknesses, and knowing them does not fix them.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 4; p.addFlag('writing_mature'); p.setMem('acWritingLate', true) },
   },
@@ -109,7 +109,7 @@ export const ACTIVITY_CHOICE_EVENTS = [
     when: (G) =>
       G.flags.includes('musician_performing') &&
       !G.mem?.acFirstGig,
-    text: 'The venue is a room above a pub. The stage is the six feet of carpet in front of the chairs. You have been waiting for this to feel like you expected it to feel. It doesn\'t. It feels different, and better than you expected in a way that is harder to name.',
+    text: 'The venue is a room above a pub. The stage is the six feet of carpet in front of the chairs. You have been waiting for this to feel like you expected it to feel. It doesn\'t. It feels different, and better than you expected, and you cannot say why.',
     choices: null,
     effect: (p) => { p.m += 12; p.s += 5; p.addFlag('musician_played_live'); p.setMem('acFirstGig', true) },
   },
@@ -202,7 +202,7 @@ export const ACTIVITY_CHOICE_EVENTS = [
       G.flags.includes('runner_habit') &&
       G.age >= 55 &&
       !G.mem?.acRunningLate,
-    text: 'You are still running. The pace has changed. The distance has changed. The knees have opinions they did not used to have. But you are still out there, early, before the day starts, which is its own kind of consistency — a form of faithfulness to something you decided about yourself a long time ago.',
+    text: 'You are still running. The pace has changed. The distance has changed. The knees have opinions they did not used to have. But you are still out there, early, before the day starts — a faithfulness to something you decided about yourself a long time ago.',
     choices: null,
     effect: (p) => { p.m += 10; p.h += 5; p.karma += 3; p.setMem('acRunningLate', true) },
   },
@@ -335,7 +335,7 @@ export const ACTIVITY_CHOICE_EVENTS = [
       {
         text: 'It\'s a private thing — not worth explaining',
         tag: 'creative_identity_private',
-        outcome: 'You redirect. The private thing stays private. You carry it with a particular kind of ownership that public things don\'t have.',
+        outcome: 'You redirect. The private thing stays private. You carry it with a kind of ownership that public things don\'t have.',
         effect: (p) => { p.m += 7; p.addFlag('creative_identity_private'); p.setMem('acCreativeIdentity', true) },
       },
     ],
@@ -365,7 +365,7 @@ export const ACTIVITY_CHOICE_EVENTS = [
       G.flags.includes('creative_identity_private') &&
       G.age >= 58 &&
       !G.mem?.acCreativePrivateLate,
-    text: 'What you made — across all those years, in the mornings and evenings when no one was watching — exists. It is real. The question of whether it matters to anyone but you is a question you have been living with long enough that you have an answer: it doesn\'t need to. It was for you. You got it.',
+    text: 'What you made — across all those years, in the mornings and evenings when no one was watching — exists. The question of whether it matters to anyone but you is a question you have been living with long enough that you have an answer: it doesn\'t need to. It was for you. You got it.',
     choices: null,
     effect: (p) => { p.m += 14; p.karma += 6; p.setMem('acCreativePrivateLate', true) },
   },

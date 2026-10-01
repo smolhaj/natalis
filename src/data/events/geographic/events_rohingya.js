@@ -111,7 +111,7 @@ export const ROHINGYA_EVENTS = [
     // event resolves per year, so a 2017-only crossing could never follow it.
     // The burning already carries the river; this is the first year after it.
     when: (G) => G.flags.has('rohingya_displacement') && G.currentYear === 2018 && !G.mem.rohCrossing,
-    text: 'The Naf River was twenty minutes by boat, and the boatman took everything you had left. You still see the crossing point when you close your eyes: hundreds of people waiting for the same few boats, carrying children, elderly parents, what remained after the walk. Bangladesh receives you in the specific way of a country that cannot legally refuse you and refuses to want you. The camp at Cox\'s Bazar is larger than most cities now. The hills it stands on were forest in August.',
+    text: 'The Naf River was twenty minutes by boat, and the boatman took everything you had left. You still see the crossing point when you close your eyes: hundreds of people waiting for the same few boats, carrying children, elderly parents, what remained after the walk. Bangladesh receives you in the way of a country that cannot legally refuse you and refuses to want you. The camp at Cox\'s Bazar is larger than most cities now. The hills it stands on were forest in August.',
     effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('rohingya_coxs_bazar'); p.setMem('rohCrossing', true); p.emigrateTo('Bangladesh', { residency: 'refugee_status' }) },
   },
 
@@ -144,12 +144,12 @@ export const ROHINGYA_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.flags.has('rohingya_coxs_bazar') && G.age >= 32 && !G.flags.has('rohingya_resettled') && !G.mem.rohResettled,
-    text: 'The letter says Canada. Or Malaysia. Or Saudi Arabia without rights. The countries that accept Rohingya resettlement are a short list and each has its own complications. You have been in the camp for three years, or six years, or nine years. The letter is real.',
+    text: 'The letter says Canada. Or Malaysia. Or Saudi Arabia without rights. The countries that accept Rohingya resettlement are a short list and each has its own complications. You have been in the camp for three years, or six years, or nine years. The letter has your name on it.',
     choices: [
       {
         text: 'Go. Whatever country it is.',
         tag: 'went',
-        outcome: 'The flight is the first plane you have been on. The arrival is overwhelming in the specific way of a place designed for people with luggage and plans.',
+        outcome: 'The flight is the first plane you have been on. The arrival is overwhelming in the way of a place designed for people with luggage and plans.',
         effect: (p) => { p.m += 10; p.addFlag('rohingya_resettled'); p.addFlag('emigrated'); p.emigrateTo(['United States', 'Canada', 'Australia']); p.setResidency('refugee_status'); p.setMem('rohResettled', true) },
       },
       {

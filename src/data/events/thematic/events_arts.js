@@ -21,7 +21,7 @@ export const ARTS_EVENTS = [
       {
         text: 'Read it through tonight',
         tag: null,
-        outcome: 'The text does something to you that is hard to name — the specific effect of reading something that someone risked to write, and that risked being passed to you.',
+        outcome: 'The text does something to you that is hard to name — the effect of reading something that someone risked to write, and that risked being passed to you.',
         effect: (p) => { p.e += 6; p.m += 5; p.addFlag('dissident_reader'); p.setMem('artsSamizdatFound', true); },
       },
       {
@@ -189,7 +189,7 @@ export const ARTS_EVENTS = [
       {
         text: 'Leave — the work requires air',
         tag: null,
-        outcome: 'Exile gives the work space and takes the audience. You are known abroad in a way that matters, and irrelevant at home in a way that matters more.',
+        outcome: 'Exile gives the work space and takes the audience. You are known abroad, which matters, and irrelevant at home, which matters more.',
         effect: (p) => { p.m -= 5; p.r += 6; p.karma += 8; p.addFlag('artistic_integrity'); p.addFlag('emigrated'); p.setMem('artsCensoredChoice', true); },
       },
       {

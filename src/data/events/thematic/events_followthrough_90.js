@@ -44,7 +44,7 @@ export const FOLLOWTHROUGH_90_EVENTS = [
       G.currentYear >= 2020 &&
       G.age >= 40 &&
       !G.mem?.ft90Oyu,
-    text: 'The mine is producing. The GDP figures are large. The ger districts are still there. The distribution question — how much of the copper and gold revenue reaches a family in the ger district, versus an apartment downtown, versus an account in a foreign jurisdiction — has been answered in one direction more consistently than the other. Mongolia is not poor by the metrics it was using before the mine. It is not what the mine was supposed to make it, either. Both things are precisely true.',
+    text: 'The mine is producing. The GDP figures are large. The ger districts are still there. The distribution question — how much of the copper and gold revenue reaches a family in the ger district, versus an apartment downtown, versus an account in a foreign jurisdiction — has been answered in one direction more consistently than the other. Mongolia is not poor by the metrics it was using before the mine. It is not what the mine was supposed to make it, either.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 2; p.setMem('ft90Oyu', true) },
   },

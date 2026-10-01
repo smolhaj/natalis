@@ -41,7 +41,8 @@ export const NORWAY_EVENTS = [
       G.age >= 25 &&
       G.flags.has('nor_occupation_generation') &&
       !G.mem?.norQuisling,
-    text: 'Vidkun Quisling\'s name has become an English word for betrayal: *quisling*. At the time it was a practical question — how many people chose the NS, worked with the occupiers, informed on neighbours, took the jobs in the new order. After the liberation in 1945, the legal proceedings began. Fifteen thousand people were sentenced for collaboration. This number, against a population of three million, is both large and not as large as the occupation created. The specific accounting — who did what, who said nothing, who helped — took place in every village and neighbourhood and family. You have your own version of this accounting.',
+    text: 'His name has become a word in other languages for betrayal. Here it was a practical question: who joined the NS, who worked for the occupiers, who informed on a neighbour, who took the job in the new order. After 1945 the courts sentenced thousands. The rest of the accounting took place in every village and every family. You have your own version of it.',
+    context: 'About 46,000 Norwegians were punished for collaboration after the war, out of a population of three million. Vidkun Quisling was executed in October 1945.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.m -= 5; p.setMem('norQuisling', true) },
   },
@@ -57,7 +58,7 @@ export const NORWAY_EVENTS = [
       G.currentYear === 1945 &&
       G.age >= 14 &&
       !G.mem?.norLiberation45,
-    text: 'May 8, 1945. The German forces in Norway capitulated. The king returned from London on June 7 — the same date he had left five years earlier, almost to the day. This symmetry feels meaningful to people who care about such things. The streets had flags that had been kept hidden and were now out. The occupation was over. The accounting — of who had done what — began almost immediately, as it does when occupation ends and the occupied and the collaborators are still living in the same streets.',
+    text: 'May 8, 1945: the Germans in Norway capitulate. The flags that were hidden for five years are out in the streets. On June 7 the king comes home from London, five years to the day after he left. The occupation is over. The question of who did what during it begins at once, in streets where the occupied and the collaborators still live side by side.',
     choices: null,
     effect: (p) => { p.m += 15; p.karma += 5; p.addFlag('nor_liberation_generation'); p.setMem('norLiberation45', true) },
   },
@@ -76,8 +77,8 @@ export const NORWAY_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       return yr <= 1972
-        ? 'Phillips Petroleum found oil at Ekofisk on December 23, 1969. The scale of it — the largest offshore oil field in the world at that time — was not immediately apparent. Norway was a modest country with a large coastline and a fishing tradition and a shipping industry. The question of what to do with an oil field of this size was a genuine one, not a rhetorical one. Some people said take the money and spend it. Others said the money would remake the country in ways that would be hard to manage. Both groups were right.'
-        : 'The oil has changed things. Not in a catastrophic way — not in the way oil changed other countries, the Dutch disease, the resource curse. Norway chose to do something unusual with the money: a pension fund, state-owned, for future generations. The fund now holds more money than you can easily imagine. Whether this was wisdom or luck or both is the kind of question Norwegians debate in the specific way they debate things: carefully, with reference to the long term.'
+        ? 'December 23, 1969: Phillips finds oil at Ekofisk. Nobody understands at first how much. Norway is a modest country of fishing and shipping and a long coast, and what to do with a field this size is a real question. Some say spend it. Others say the money will remake the country in ways nobody can manage. They are arguing about the next fifty years.'
+        : 'The oil has changed things. Not in a catastrophic way — not in the way oil changed other countries, the Dutch disease, the resource curse. Norway chose to do something unusual with the money: a pension fund, state-owned, for future generations. The fund now holds more money than you can easily imagine. Whether this was wisdom or luck or both is the kind of question Norwegians debate in the way they debate things: carefully, with reference to the long term.'
     },
     choices: null,
     effect: (p) => { p.m += 8; p.w += 5; p.e += 3; p.addFlag('nor_oil_generation'); p.setMem('norOilDiscovery', true) },
@@ -118,9 +119,10 @@ export const NORWAY_EVENTS = [
     text: (G) => {
       const young = G.age <= 25
       return young
-        ? 'July 22, 2011. A bomb in the government quarter in Oslo killed eight people. Then a man dressed as a police officer took a ferry to the island of Utøya and killed sixty-nine people at a Labour Party youth camp. Most of them were your age. Some of them were from your school or knew people you knew. The country that was supposed to be safe — the welfare state, the high-trust society, the place where this did not happen — had a Utøya now. The name of the island entered the language as a date and a wound.'
-        : 'The bomb went off at 15:25 in the government quarter. The shooting at Utøya began at 17:20. In the time between, many people thought the bomb was the attack. Then the news from Utøya arrived. Seventy-seven dead in total — the worst atrocity in Norway since the occupation. The perpetrator was Norwegian, right-wing nationalist, acting alone. He wanted a trial to spread his manifesto. The trial was public and the government held it in public and the prime minister at the time said the answer to violence is not less democracy but more. You have thought about what that answer means in practice for the ten years since.'
+        ? 'July 22, 2011. A bomb in the government quarter in Oslo, and then a man dressed as a policeman takes the ferry to Utøya and walks through a Labour youth camp. Most of the dead are your age; some knew people you know. The safe country, the high-trust one, the place where this did not happen, has a date now. Nobody needs to say which.'
+        : 'The bomb goes off in the government quarter at twenty-five past three, and at first everyone thinks that is the attack. Then the news from Utøya, the island, the children at the summer camp. The killer is Norwegian, a nationalist who wanted a trial to spread his manifesto, and the trial is held in public, and the prime minister says the answer to violence is more democracy, not less. For ten years you have thought about what that means in practice.'
     },
+    context: 'The attacks of 22 July 2011 killed 77 people, 69 of them at the Labour Party youth camp on Utøya.',
     choices: null,
     effect: (p) => { p.m -= 18; p.r += 10; p.karma += 3; p.addFlag('nor_july22_generation'); p.setMem('norJuly22', true) },
   },
@@ -137,7 +139,7 @@ export const NORWAY_EVENTS = [
       G.age >= 55 &&
       G.flags.has('nor_oil_generation') &&
       !G.mem?.norOilFundReckoning,
-    text: 'The Government Pension Fund Global is now the largest sovereign wealth fund in the world. It holds over a trillion dollars. It owns shares in almost every large company on earth. Norway\'s fraction of the world\'s wealth, per capita, is extraordinary. And: Norway produces oil that contributes to climate change that will most severely affect countries that produce almost none. The fund\'s sustainability committee debates divestment from fossil fuel companies. The fund owns fossil fuel companies. The country produces fossil fuels. You have lived the whole shape of this — the discovery, the wealth, the choices about the wealth — and you can see now that the choices about the future are harder than the choices about the past were.',
+    text: 'The oil fund is the largest in the world, with shares in almost every big company on earth. Norway is extraordinarily rich per head. And it produces oil that heats a world whose worst heat falls on countries that produce almost none. The fund\'s committee debates selling its oil companies, and the fund owns oil companies, and the country pumps oil. You have lived the whole shape of it, and the choices about the future are harder than the choices about the past were.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 4; p.m -= 3; p.setMem('norOilFundReckoning', true) },
   },
@@ -152,7 +154,7 @@ export const NORWAY_EVENTS = [
       IS_NORWEGIAN(G) &&
       G.age >= 65 &&
       !G.mem?.norLateReckoning,
-    text: 'You have lived in one of the wealthiest and most equal countries in the world during the period of its greatest wealth and equality. This is also the country that was occupied for five years and that spent twenty years counting its collaborators. It is the country that twice voted not to join Europe and exists in a halfway position of high access and no voice. It is the country that elected Breivik\'s victims\' generation to its parliaments and watched that generation lead. The oil is a particular legacy — the money, the emissions, the fund for your grandchildren who will live in a warmer world partly because of what paid for their inheritance. Norway contains all of this and has not fully finished accounting for any of it.',
+    text: 'You have lived in one of the wealthiest and most equal countries in the world during the period of its greatest wealth and equality. This is also the country that was occupied for five years and that spent twenty years counting its collaborators. It is the country that twice voted not to join Europe and exists in a halfway position of high access and no voice. It is the country that elected Breivik\'s victims\' generation to its parliaments and watched that generation lead. The oil is a legacy — the money, the emissions, the fund for your grandchildren who will live in a warmer world partly because of what paid for their inheritance. Norway contains all of this and has not fully finished accounting for any of it.',
     choices: null,
     effect: (p) => { p.r += 5; p.m += 3; p.e += 3; p.karma += 3; p.setMem('norLateReckoning', true) },
   },

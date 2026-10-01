@@ -367,7 +367,7 @@ export const RURAL_TEXTURE_EVENTS = [
       if (cn === 'Romania' || cn === 'Bulgaria') {
         return `The CAP is being liquidated. The land returns to private ownership after forty-five years of collective farming — theoretically to the families who were dispossessed in the 1940s, though those families have died or scattered. The paperwork is complicated and the lawyers are expensive. Someone will have this land. Whether it is you depends on whether you can navigate the next six months.`
       }
-      return `The collective that organized agricultural life in this region since the 1950s has formally dissolved. The employees are now smallholders or nothing. The transition plan does not account for the fact that small farms operating independently cannot achieve what the collective achieved in terms of mechanization and market access. This is the theory of markets meeting the specific road to the grain elevator.`
+      return `The collective that organized agricultural life in this region since the 1950s has formally dissolved. The employees are now smallholders or nothing. The transition plan does not account for the fact that small farms operating independently cannot achieve what the collective achieved in terms of mechanization and market access. This is the theory of markets meeting the road to the grain elevator.`
     },
     choices: [
       {
@@ -466,7 +466,7 @@ export const RURAL_TEXTURE_EVENTS = [
       {
         text: 'Go to the city. Work the factories. Send money home.',
         tag: 'rural_to_urban',
-        outcome: 'You join the largest migration in human history. The money is real. The absence from the village is also real. Both things compound over years.',
+        outcome: 'You join the largest migration in human history. The money comes. The absence from the village is also real. Both things compound over years.',
         effect: (p) => { p.mo += 2000; p.m -= 4; p.addFlag('rural_to_urban'); p.setMem('hukouFelt', true) },
       },
       {

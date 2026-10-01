@@ -44,7 +44,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
       G.character.religion === 'christian_protestant' &&
       G.age >= 5 && G.age <= 14 &&
       !G.mem?.ausTenPound,
-    text: 'Ten pounds: the cost of a passage from Southampton to Fremantle under the Assisted Passage Migration Scheme. Your family is part of the 1.5 million British migrants who came by this mechanism between 1945 and 1972. The ship takes five weeks. The promotional films showed sunshine. What you arrive to is a migrant hostel in Maribyrnong or Bonegilla — rows of huts, a canteen, a waiting time before you can move into actual Australia. The country is not as the films described. It is also real, and you are in it.',
+    text: 'Ten pounds: the cost of a passage from Southampton to Fremantle under the Assisted Passage Migration Scheme. Your family is part of the 1.5 million British migrants who came by this mechanism between 1945 and 1972. The ship takes five weeks. The promotional films showed sunshine. What you arrive to is a migrant hostel in Maribyrnong or Bonegilla — rows of huts, a canteen, a waiting time before you can move into actual Australia. The country is not as the films described, and you are in it.',
     choices: [
       {
         text: 'You adapt faster than your parents — you already sound Australian by the end of school',
@@ -55,7 +55,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
       {
         text: 'You keep the British-ness your parents brought — it becomes how you understand home',
         tag: null,
-        outcome: 'The allegiance to somewhere else is a particular form of not quite being here. You are Australian by passport and British by formation and neither identity fully fills the space. You find the people who understand this and build the community around them.',
+        outcome: 'The allegiance to somewhere else is a form of not quite being here. You are Australian by passport and British by formation and neither identity fully fills the space. You find the people who understand this and build the community around them.',
         effect: (p) => { p.m -= 2; p.r += 4; p.addFlag('ten_pound_pom_generation'); p.setMem('ausTenPound', true) },
       },
     ],
@@ -74,7 +74,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
       G.currentYear >= 1967 && G.currentYear <= 1970 &&
       G.age >= 18 &&
       !G.mem?.ausRef67,
-    text: 'May 27, 1967. The referendum passes with 90.77 percent — the highest yes vote in Australian referendum history. Section 51(xxvi) and Section 127 are amended. Aboriginal and Torres Strait Islander peoples are now counted in the census. For the first time in the eighty years since Federation, the Commonwealth can legislate for you specifically. What it means in practice — how much the vote changes what it is to be alive in this country — you will spend the following years finding out. The vote was 90.77 percent in favour of counting you. They have counted you. You are in the count now.',
+    text: 'May 27, 1967, and the referendum passes with nine in ten voting yes. Aboriginal and Torres Strait Islander people will be counted in the census, and the Commonwealth can make laws for them. What it changes about being alive in this country, you will spend years finding out. They have counted you. You are in the count now.',
     choices: null,
     effect: (p) => { p.m += 5; p.r += 3; p.karma += 3; p.addFlag('aus_1967_generation'); p.setMem('ausRef67', true) },
   },
@@ -91,7 +91,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
       G.currentYear >= 1978 && G.currentYear <= 1985 &&
       G.age >= 18 &&
       !G.mem?.ausMardiGras,
-    text: 'June 24, 1978. The first Sydney Gay and Lesbian Mardi Gras is not the festival it will become. It is a march down Oxford Street that ends in police charging the crowd. Fifty-three people are arrested. Their names are published the next day in the Sydney Morning Herald — full name, full address. They lose jobs and housing and family members from a newspaper column. You know some of them. The Mardi Gras will become the largest in the world, which is a fact that contains and partly conceals its origin: a night of police violence and a list of names in a newspaper.',
+    text: 'June 24, 1978. The first Sydney Gay and Lesbian Mardi Gras is a march down Oxford Street that ends in police charging the crowd. Fifty-three people are arrested. Their names are published the next day in the Sydney Morning Herald — full name, full address. They lose jobs and housing and family members from a newspaper column. You know some of them. The Mardi Gras will become the largest in the world, which is a fact that contains and partly conceals its origin: a night of police violence and a list of names in a newspaper.',
     choices: [
       {
         text: 'You were there. You know what the festival came from.',
@@ -120,7 +120,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
       G.currentYear >= 2005 && G.currentYear <= 2008 &&
       G.age >= 16 && G.age <= 40 &&
       !G.mem?.ausCronulla,
-    text: 'December 11, 2005. Five thousand people gather at Cronulla beach after text messages circulate calling for Australians to reclaim the beach from "Lebs and wogs." Men in Australian flag capes assault anyone who looks Middle Eastern or Muslim. The violence continues for three days in reprisal attacks across Sydney. The talkback radio had been running the temperature up for weeks. Howard says it is not about race. The people in the capes have Australian flags on. You are watching this in a country you thought you understood.',
+    text: 'December 11, 2005. Text messages call on Australians to take back Cronulla beach, and thousands come, and men in flag capes beat anyone who looks Middle Eastern. There are reprisals across Sydney for three nights. Talkback radio had been turning up the heat for weeks. The prime minister says it is not about race. The men in the capes are wearing the flag.',
     choices: [
       {
         text: 'You are Arabic-Australian or Middle Eastern-Australian — this is not an abstraction',
@@ -131,7 +131,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
       {
         text: 'You watch it from outside and understand something has shifted in the national character',
         tag: null,
-        outcome: 'The coverage uses certain language. The footage from the beach enters the memory as a specific image of what the country is capable of producing. You will be looking for the conditions that produced it for the next twenty years.',
+        outcome: 'The coverage uses certain language. The footage from the beach enters the memory as an image of what the country is capable of producing. You will be looking for the conditions that produced it for the next twenty years.',
         effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('aus_cronulla_generation'); p.setMem('ausCronulla', true) },
       },
     ],
@@ -185,9 +185,9 @@ export const AUSTRALIA_DEPTH_EVENTS = [
     text: 'October 14, 2023. The Voice to Parliament referendum: 60.06 percent No. Every state votes No. The proposal would have created an advisory body for Indigenous Australians with no veto power, no legislative power, no ability to force anything. What it would have had is constitutional recognition. Sixty percent of Australians vote against the advisory body with no power. The question of what the No vote means will occupy the analysis for years. The people most affected by the decision watched the results come in on screens in communities where the generational outcomes of policy — the gap in life expectancy, in incarceration, in child removal — are not abstract.',
     choices: [
       {
-        text: 'You voted Yes — the result is a specific kind of grief',
+        text: 'You voted Yes — the result is a kind of grief',
         tag: null,
-        outcome: 'The referendum campaign made the feelings of many Australians about Indigenous Australians legible in a way that was hard to unknow. You will be sifting through that information for years.',
+        outcome: 'The referendum campaign showed you what many Australians felt about Indigenous Australians, and it was hard to unknow. You will be sifting through that information for years.',
         effect: (p) => { p.m -= 6; p.r += 5; p.karma += 3; p.addFlag('aus_voice_generation'); p.setMem('ausVoice2023', true) },
       },
       {

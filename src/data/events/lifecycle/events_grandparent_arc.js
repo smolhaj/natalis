@@ -26,12 +26,12 @@ export const GRANDPARENT_ARC_EVENTS = [
       hasChildren(G) &&
       G.age >= 50 && G.age <= 70 &&
       !G.mem?.gpFirstGrandchild,
-    text: `A child has been born to your child. The category "grandparent" has now applied to you for some hours and you are still calibrating what it means. It is not parent — you know what parent is and this is not that. It is something adjacent to parent but displaced one generation, which means you see it from outside the emergency and with a distance that is new. The baby is small and specific and it is strange that this particular small specific person is in some sense yours and in another sense has nothing to do with you yet.`,
+    text: `A child has been born to your child. The category "grandparent" has now applied to you for some hours and you are still calibrating what it means. It is something adjacent to parent, one generation over, which means you see it from outside the emergency, at a distance that is new. The baby is small and specific and it is strange that this small specific person is in some sense yours and in another sense has nothing to do with you yet.`,
     choices: [
       {
         text: 'Hold them. The calibration can happen later.',
         tag: null,
-        outcome: 'The calibration happens through the holding. The category clarifies itself slowly, in the months that follow, through the specific rather than the general.',
+        outcome: 'The calibration happens through the holding. The category clarifies itself slowly, in the months that follow, through the rather than the general.',
         effect: (p) => {
           p.m += 14
           p.addFlag('became_grandparent')
@@ -60,7 +60,7 @@ export const GRANDPARENT_ARC_EVENTS = [
       G.flags.has('became_grandparent') &&
       G.age >= 55 &&
       !G.mem?.gpRelationship,
-    text: `The relationship that develops between you and your grandchild is not quite any relationship you have had before. You are not responsible for them in the way you were responsible for their parent — the weight has shifted to the generation between you — and this changes what the relationship can be. You can be present without the urgency. You can listen without the intervention you would have performed at their parent's age. The specific freedom of this is something you understand slowly and then suddenly all at once.`,
+    text: `The relationship that develops between you and your grandchild is not quite any relationship you have had before. You are not responsible for them in the way you were responsible for their parent — the weight has shifted to the generation between you — and this changes what the relationship can be. You can be present without the urgency. You can listen without the intervention you would have performed at their parent's age. The freedom of this is something you understand slowly and then suddenly all at once.`,
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -78,7 +78,7 @@ export const GRANDPARENT_ARC_EVENTS = [
       G.flags.has('became_grandparent') &&
       G.age >= 58 &&
       !G.mem?.gpTeaching,
-    text: `There is something you know that is worth passing on, and your grandchild is old enough now to receive it. Not school knowledge — that is being handled elsewhere, by better-qualified people, with better materials than you had. Something else. How to do a specific thing with your hands, or a story about the place where you came from, or a way of thinking about a problem that took you thirty years to arrive at. You show them. They receive it in the partial way that children receive things — enough.`,
+    text: `There is something you know that is worth passing on, and your grandchild is old enough now to receive it. Not school knowledge — that is being handled elsewhere, by better-qualified people, with better materials than you had. Something else. How to do a thing with your hands, or a story about the place where you came from, or a way of thinking about a problem that took you thirty years to arrive at. You show them. They receive it in the partial way that children receive things — enough.`,
     choices: [
       {
         text: 'Teach them the skill. Your hands remember what your mind has half-forgotten.',
@@ -149,7 +149,7 @@ export const GRANDPARENT_ARC_EVENTS = [
       G.flags.has('grandparent_relationship_formed') &&
       G.age >= 68 &&
       !G.mem?.gpLeaves,
-    text: `The grandchild who grew up in your proximity — who was small and then not small, who received things from you and gave things back in the improvised way that children give — has now left for somewhere else. University, or the city, or another country, or simply another life. The proximity that was the condition of the relationship has ended. The relationship continues in its adjusted form: calls, visits, messages that arrive out of sequence. This is not loss. It is the correct trajectory of a child becoming a person. You know this. The apartment is still quieter than it was.`,
+    text: `The grandchild who grew up in your proximity — who was small and then not small, who received things from you and gave things back in the improvised way that children give — has now left for somewhere else. University, or the city, or another country, or simply another life. The proximity that was the condition of the relationship has ended. The relationship continues in its adjusted form: calls, visits, messages that arrive out of sequence. It is a child becoming a person, as it was supposed to be. You know this. The apartment is still quieter than it was.`,
     choices: null,
     effect: (p) => {
       p.m -= 5
@@ -167,7 +167,7 @@ export const GRANDPARENT_ARC_EVENTS = [
       G.flags.has('emigrated') &&
       G.age >= 65 &&
       !G.mem?.gpDistant,
-    text: `The grandchild grows up in another country. You see them in photographs first and then on a screen and then, when it is managed, in person — which is always shorter than anticipated and always different from the screen. They speak the language of where they live, which is not your language, or it is your language but with an accent that would never place them here. They know you in the way that grandchildren know grandparents at a distance: as a presence and a warmth and a name attached to a face, but not the full accumulation of time in proximity that is the other kind of knowing.`,
+    text: `The grandchild grows up in another country. You see them in photographs first and then on a screen and then, when it is managed, in person — which is always shorter than anticipated and always different from the screen. They speak the language of where they live, not your language, or your language with an accent that would never place them here. They know you in the way that grandchildren know grandparents at a distance: as a presence and a warmth and a name attached to a face, but not the full accumulation of time in proximity that is the other kind of knowing.`,
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -185,7 +185,7 @@ export const GRANDPARENT_ARC_EVENTS = [
       G.flags.has('became_grandparent') &&
       G.age >= 72 &&
       !G.mem?.gpLateReckoning,
-    text: `The accounting of grandparenthood from the vantage of late years: what was passed on and what wasn't; what they received from you and what they will not know came from you; the specific times when you were what they needed and the specific times when you were not. The grandchild is a person now, more or less, and the person they became is partly from you and mostly from the thousand other things that shaped them, including the decisions they made themselves. Your contribution is there. It is not always the contribution you planned to make.`,
+    text: `The accounting of grandparenthood from the vantage of late years: what was passed on and what wasn't; what they received from you and what they will not know came from you; the times when you were what they needed and the times when you were not. The grandchild is a person now, more or less, and the person they became is partly from you and mostly from the thousand other things that shaped them, including the decisions they made themselves. Your contribution is there. It is not always the contribution you planned to make.`,
     choices: null,
     effect: (p) => {
       p.m += 6
@@ -206,7 +206,7 @@ export const GRANDPARENT_ARC_EVENTS = [
       G.children?.filter(c => c.alive)?.length >= 2 &&
       G.age >= 65 &&
       !G.mem?.gpMultiple,
-    text: `There are now several grandchildren and the household during visits has a particular quality of organized chaos that you recognize from when your own children were this age, except that you are now watching from the chair rather than managing it. The noise level. The specific way a child of four uses a surface that is not designated as a surface. The negotiations over food. You observe all of this and find, to your surprise, that you are not tired by it in the way you would have been tired by it thirty years ago — the distance from responsibility has changed its texture entirely.`,
+    text: `There are now several grandchildren and the household during visits has a quality of organized chaos that you recognize from when your own children were this age, except that you are now watching from the chair rather than managing it. The noise level. The way a child of four uses a surface that is not designated as a surface. The negotiations over food. You observe all of this and find, to your surprise, that you are not tired by it in the way you would have been tired by it thirty years ago — the distance from responsibility has changed its texture entirely.`,
     choices: null,
     effect: (p) => {
       p.m += 10

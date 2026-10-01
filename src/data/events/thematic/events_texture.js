@@ -233,7 +233,7 @@ export const TEXTURE_EVENTS = [
       ruralDeveloping(G) &&
       G.age >= 16 && G.age <= 25 &&
       !G.flags.includes('rural_migration_decided'),
-    text: 'The young men have been leaving. Some go to the capital. Some go further. A cousin sends back a photograph: he is wearing clean trousers and standing in front of a building that is entirely concrete. You do not know what he does there. He says it is better. Your mother says the village needs people. Both things seem true.',
+    text: 'The young men have been leaving. Some go to the capital. Some go further. A cousin sends back a photograph: he is wearing clean trousers and standing in front of a building that is entirely concrete. You do not know what he does there. He says it is better. Your mother says the village needs people.',
     choices: [
       {
         text: 'Start planning to leave for the city',
@@ -308,7 +308,7 @@ export const TEXTURE_EVENTS = [
     text: (G) => {
       const [city, abroad] = getRemittanceSources(G)
       const first = G.mem?.attendedSchool === false || G.flags.includes('never_schooled') ? 'the seed' : 'school fees'
-      return `Money arrives from a relative in the city or abroad — from ${city}, from ${abroad} — in an envelope or a Western Union slip. The amount is specific. Your mother calculates immediately: ${first}, the roof, the medical bill that has been pending. There is a portion left over that is not spent but held. The relative's name is said with a particular quality at dinner. You understand that obligation and gratitude are not always easy to separate.`
+      return `Money arrives from a relative in the city or abroad — from ${city}, from ${abroad} — in an envelope or a Western Union slip. The amount is specific. Your mother calculates immediately: ${first}, the roof, the medical bill that has been pending. There is a portion left over that is not spent but held. The relative's name is said with a quality at dinner. You understand that obligation and gratitude are not always easy to separate.`
     },
     choices: null,
     effect: (p) => { p.mo += 180; p.m += 5; p.r += 3; p.addFlag('remittance_family'); p.addFlag('rural_remittance_done') },
@@ -738,7 +738,7 @@ export const TEXTURE_EVENTS = [
       deskJob(G) &&
       G.age >= 35 && G.age <= 55 &&
       !G.flags.includes('career_politics_done'),
-    text: 'A new manager arrives. They are not hostile openly — what they are is territorial. Your visibility, which was an asset before, becomes a problem under the new arrangement. You find yourself left off distribution lists for meetings you used to be in. Your manager\'s manager asks you to be patient. You understand that institutional politics has its own logic, separate from competence, and that you have been caught in it.',
+    text: 'A new manager arrives. They are not hostile openly — what they are is territorial. Your visibility, which was an asset before, becomes a problem under the new arrangement. You find yourself left off distribution lists for meetings you used to be in. Your manager\'s manager asks you to be patient. You understand that institutional politics has a logic separate from competence, and that you have been caught in it.',
     choices: [
       {
         text: 'Navigate it carefully — manage up, build new alliances',
@@ -838,7 +838,7 @@ export const TEXTURE_EVENTS = [
       if (!office) {
         return 'Nobody says the word for what this is. Your name is simply not on the list for next month, and the people whose names are on it do not look at you while they read it. You hand back what belongs to the company — the pass, the keys, the coat with the company name on it. Someone says they will call you. You walk to the ' + (hasCar ? 'car' : 'gate') + ' at the hour you always walk to it, and this time there is no reason to hurry.'
       }
-      return 'A company restructure. Your role is eliminated, which is the word they use. The person from personnel is kind and reads from a document and uses words like "transition" and "package." You are given a box. You have been at this company for a specific number of years and the cardboard box is the same size regardless. You carry it out. ' + (hasCar ? 'In the car park you sit for a while before driving.' : 'You stand outside for a while before deciding which way to walk.')
+      return 'A company restructure. Your role is eliminated, which is the word they use. The person from personnel is kind and reads from a document and uses words like "transition" and "package." You are given a box. You have been at this company for a number of years and the cardboard box is the same size regardless. You carry it out. ' + (hasCar ? 'In the car park you sit for a while before driving.' : 'You stand outside for a while before deciding which way to walk.')
     },
     choices: [
       {
@@ -890,7 +890,7 @@ export const TEXTURE_EVENTS = [
       {
         text: 'Resist — your experience deserves more weight in the room',
         tag: null,
-        outcome: 'The friction is noticed. Your performance review uses words like "collaborative" in a way that makes their absence clear.',
+        outcome: 'The friction is noticed. Your performance review uses words like "collaborative", and you hear the absence of the others.',
         effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('career_younger_boss_done') },
       },
     ],

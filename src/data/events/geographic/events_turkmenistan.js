@@ -32,7 +32,7 @@ export const TURKMENISTAN_EVENTS = [
       IS_TURKMEN(G) &&
       G.currentYear >= 1995 && G.currentYear <= 2006 &&
       !G.mem?.tkmRuhnama,
-    text: 'The Ruhnama is required now. Saparmurat Niyazov — Turkmenbashi, Father of all Turkmen — has written the spiritual autobiography of the nation, and you must know it. At school it is examined. To get a driving licence you will need to pass a test on it. Civil servants must demonstrate proficiency. The book is everywhere: on public buildings, in radio broadcasts, in the mouths of teachers. Some say it with genuine feeling. Others say it with the careful blankness of people who have learned to make their faces say things their minds do not.',
+    text: 'The Ruhnama is compulsory now: Turkmenbashi has written the soul of the nation, and you must know it. It is examined at school, civil servants must show they know it, and to get a driving licence you must pass a test on it. It is on the buildings and the radio and in the mouths of teachers. Some say it with feeling. Others with the careful blankness of people whose faces have learned to say what their minds do not.',
     choices: [
       {
         text: 'You learn the Ruhnama the way you learn anything required — thoroughly, so the knowing becomes invisible.',
@@ -57,7 +57,7 @@ export const TURKMENISTAN_EVENTS = [
       IS_TURKMEN(G) &&
       G.currentYear >= 1999 && G.currentYear <= 2006 &&
       !G.mem?.tkmDecrees,
-    text: 'January has been renamed Turkmenbashi. April has been renamed after Turkmenbashi\'s mother, Gurbansoltan. The circus has been banned. Opera and ballet have been banned. Men are required to wear traditional Turkmen dress in official settings. The rotating gold statue in Ashgabat turns to face the sun. The news announces these things as progress. You have developed a particular relationship to the news: you watch it the way you watch weather. It tells you the direction of things without telling you the truth of them.',
+    text: 'January is now called Turkmenbashi, and April is named after his mother. The circus is banned, and opera and ballet. A golden statue of the president in Ashgabat turns to face the sun. The news calls all of this progress. You watch the news the way you watch the weather: it tells you which way things are going, not what they are.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 4; p.addFlag('tkm_turkmenbashi_generation'); p.setMem('tkmDecrees', true) },
   },
@@ -70,7 +70,7 @@ export const TURKMENISTAN_EVENTS = [
       IS_TURKMEN(G) &&
       G.currentYear >= 1997 && G.currentYear <= 2015 &&
       !G.mem?.tkmGasParadox,
-    text: 'Turkmenistan has the fourth largest natural gas reserves in the world. You know this because it is said on state television, in terms that suggest abundance is arriving or has already arrived. The bread ration has been in place for several years. Families queue at distribution points. The gas goes to Russia through a pipeline; money comes back; what happens to the money is not visible to you. The white marble of Ashgabat is visible. The fountains in the desert are visible. Your family\'s ration card is visible.',
+    text: 'Turkmenistan has some of the largest gas reserves on earth; state television says so in a way that suggests the abundance has arrived. The bread ration has been in place for years, and families queue at the distribution points. The gas goes north through the pipe, and money comes back, and where the money goes you cannot see. You can see the white marble of Ashgabat and the fountains in the desert. You can see your family\'s ration card.',
     choices: null,
     effect: (p) => { p.r += 8; p.e += 4; p.m -= 3; p.addFlag('tkm_gas_wealth_paradox'); p.setMem('tkmGasParadox', true) },
   },
@@ -85,7 +85,7 @@ export const TURKMENISTAN_EVENTS = [
       IS_TURKMEN(G) &&
       G.currentYear >= 2006 && G.currentYear <= 2008 &&
       !G.mem?.tkmNiyazovDeath,
-    text: 'Turkmenbashi is dead. December 21, 2006. The announcement comes on the radio, then television, then everywhere simultaneously. The statue still rotates. The months still have his name. For a few days people are genuinely uncertain: in a state with this much invested in one person, what does the death of that person mean? Gurbanguly Berdymukhamedov, deputy prime minister for health — and the president\'s personal dentist — becomes acting president. This is what people say to each other quietly when no one official is listening: the dentist.',
+    text: 'December 21, 2006, and Turkmenbashi is dead. The statue still turns and the months still carry his name, and for a few days nobody knows what the death of the one person means in a state built on him. The acting president is Berdymukhamedov, the health minister, the president\'s own dentist. People say it to each other quietly when nobody official is listening: the dentist.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 5; p.m += 3; p.addFlag('tkm_post_turkmenbashi'); p.setMem('tkmNiyazovDeath', true) },
   },
@@ -132,7 +132,7 @@ export const TURKMENISTAN_EVENTS = [
       IS_TURKMEN(G) &&
       G.currentYear >= 2000 &&
       !G.mem?.tkmInfoBorder,
-    text: 'The internet exists but is filtered. VPNs are illegal. Foreign news is blocked. Satellite dishes were banned, then partially unbanned, then reclassified. You know things are happening in the world — you can feel the shape of what you cannot see — but the specific content is not available through official channels. People share information through channels without names. You learn to understand what is not said as carefully as what is.',
+    text: 'The internet exists but is filtered. VPNs are illegal. Foreign news is blocked. Satellite dishes were banned, then partially unbanned, then reclassified. You know things are happening in the world — you can feel the shape of what you cannot see — but the content is not available through official channels. People share information through channels without names. You learn to understand what is not said as carefully as what is.',
     choices: [
       {
         text: 'You find ways to access what is blocked — quietly, carefully, as a permanent practice.',
@@ -143,7 +143,7 @@ export const TURKMENISTAN_EVENTS = [
       {
         text: 'You work with what is available. The risk of seeking more is not worth it.',
         tag: 'tkm_information_cautious',
-        outcome: 'Safety has its own costs. You pay them without quite naming them as costs.',
+        outcome: 'Safety costs. You pay them without quite naming them as costs.',
         effect: (p) => { p.addFlag('tkm_information_cautious'); p.m -= 3; p.r += 5; p.setMem('tkmInfoBorder', true) },
       },
     ],

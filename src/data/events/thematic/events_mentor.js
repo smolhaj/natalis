@@ -91,7 +91,7 @@ export const MENTOR_EVENTS = [
       {
         text: 'Let it recede — some relationships belong to the phase that needed them',
         tag: null,
-        outcome: 'You remember them with gratitude. The gratitude is real. The contact is not.',
+        outcome: 'You remember them with gratitude. The contact is not.',
         effect: (p) => { p.setMem('menEstranged', true); p.m -= 3; p.r += 4 },
       },
     ],
@@ -128,7 +128,7 @@ export const MENTOR_EVENTS = [
       G.age >= 58 && !G.mem?.menEcho,
     text: (G) => {
       const name = G.mem?.mentorName ?? 'They'
-      return `You catch yourself using a phrase that isn't yours — an observation, a way of framing a question — and realise it came from ${name}, decades ago. The specific words they used in a specific meeting you half-remember. What they gave you is still moving through you, still doing work, thirty years later.`
+      return `You catch yourself using a phrase that isn't yours — an observation, a way of framing a question — and realise it came from ${name}, decades ago. The words they used in a meeting you half-remember. What they gave you is still moving through you, still doing work, thirty years later.`
     },
     choices: null,
     effect: (p) => { p.setMem('menEcho', true); p.m += 8; p.r += 3 },
@@ -149,7 +149,7 @@ export const MENTOR_EVENTS = [
       (G.mem?.has_mentor || G.flags.has('mentored')),
     text: (G) => {
       // career.title is a rank ("Trading Company Owner"), not a field.
-      return `Someone junior is doing work you recognise — not the competence, which is evident, but the particular hunger in how they ask questions. The hunger is familiar. You are old enough now to understand what it means and what to do about it.`
+      return `Someone junior is doing work you recognise — not the competence, which is evident, but the hunger in how they ask questions. The hunger is familiar. You are old enough now to understand what it means and what to do about it.`
     },
     choices: [
       {
@@ -186,7 +186,7 @@ export const MENTOR_EVENTS = [
       G.age >= 58 && !G.mem?.protegeSurpasses,
     text: (G) => {
       const name = G.mem.protegeName
-      return `${name} has received a distinction you never received. Not a bigger version of what you achieved — a different category of achievement, one you recognise as beyond what you were capable of. You are sitting in the audience at a ceremony. You are clapping. Both things are true simultaneously: the pride and the particular quality of being exceeded by someone you helped build.`
+      return `${name} has received a distinction you never received. Not a bigger version of what you achieved — a different category of achievement, one you recognise as beyond what you were capable of. You are sitting in the audience at a ceremony. You are clapping. The pride, and the strangeness of being exceeded by someone you helped build.`
     },
     choices: null,
     effect: (p) => {

@@ -17,7 +17,7 @@ export const ANGOLA_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1980 &&
       G.age >= 14 &&
       !G.mem.angCivilWar,
-    text: 'November 11, 1975. Portugal grants independence and departs — quickly, without a proper handover. The three liberation movements — MPLA, UNITA, FNLA — are simultaneously at war with each other for the country. Cuban troops arrive to back the MPLA; South African forces cross from Namibia to back UNITA and FNLA. The Cold War has chosen Angola as a venue. Luanda is the capital; the MPLA holds it. The rest of the country is divided by force and shifting front lines. This is what independence looks like.',
+    text: 'November 11, 1975, and Portugal leaves, fast, without a proper handover, and the three movements that fought it are at war with each other for the country. Cuban troops come for the MPLA, and South Africans cross from Namibia for the others; the Cold War has chosen Angola as a venue. The MPLA holds Luanda. The rest is front lines. This is what independence looks like.',
     choices: [
       {
         text: 'You support the MPLA — the Marxist movement that holds Luanda.',
@@ -28,7 +28,7 @@ export const ANGOLA_EVENTS = [
       {
         text: 'You are in a rural area — the war arrives as something that happens to the land you live on.',
         tag: null,
-        outcome: 'The front lines are not on maps you have access to. They are in the village one morning and gone the next. You survive by reading the air.',
+        outcome: 'The front lines are on no map you can see. They are in the village one morning and gone the next. You survive by reading the air.',
         effect: (p) => { p.m -= 16; p.h -= 5; p.r += 10; p.addFlag('angola_civil_war_generation'); p.setMem('angCivilWar', true) },
       },
     ],
@@ -44,7 +44,7 @@ export const ANGOLA_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2001 &&
       G.age >= 25 &&
       !G.mem.angWarMidlife,
-    text: 'The war is in its second decade. The MPLA controls the cities; UNITA controls the bush. The landmines are everywhere — Angola has more landmines per square kilometre than any country in the world; the count will reach ten to fifteen million. The roads between cities are mined. A journey by car or bus is a journey with an understood statistical risk. Luanda\'s informal markets — the candonga — are how you get what the formal economy doesn\'t provide. The oil is being extracted offshore. The money doesn\'t arrive in the form of roads or hospitals.',
+    text: 'The war is in its second decade: the MPLA in the cities, UNITA in the bush, and mines everywhere, on the roads between towns, so that every bus journey carries an understood risk. In Luanda you get what the formal economy does not provide at the candonga markets. The oil comes out offshore. The money does not come back as roads or hospitals.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 7; p.addFlag('angola_landmine_generation'); p.setMem('angWarMidlife', true) },
   },
@@ -58,7 +58,8 @@ export const ANGOLA_EVENTS = [
       G.currentYear === 2002 &&
       G.age >= 18 &&
       !G.mem.angPeace,
-    text: 'February 22, 2002. UNITA leader Jonas Savimbi is killed in a government ambush in Moxico province. The war has gone on for twenty-seven years. Six weeks later the MPLA and UNITA sign the Luena Memorandum — ceasefire, integration of UNITA forces. The war that has run your entire adult life, that has shaped everything about the country\'s infrastructure and economy and population, ends. Angola has more landmines in its soil than people alive. 500,000 people are dead. Four million are displaced. Reconstruction begins from this.',
+    text: 'February 2002, and Savimbi is killed in an ambush in the east. Six weeks later the two armies sign a ceasefire at Luena. The war that ran your whole adult life, that shaped every road and every family, ends. There are mines in the ground everywhere. Reconstruction begins from this.',
+    context: 'Angola\'s civil war ran from 1975 to 2002, killing some 500,000 people and displacing about four million.',
     choices: null,
     effect: (p) => { p.m += 14; p.r += 6; p.addFlag('angola_peace_generation'); p.setMem('angPeace', true) },
   },
@@ -72,7 +73,7 @@ export const ANGOLA_EVENTS = [
       G.currentYear >= 2004 && G.currentYear <= 2014 &&
       G.age >= 25 &&
       !G.mem.angOilBoom,
-    text: 'The oil price is high and Angola\'s offshore fields are producing at full capacity. GDP growth is the fastest in Africa for several years. The construction cranes are on Luanda\'s skyline. The Sonangol state oil company\'s revenues are enormous. A fraction of it builds the roads and apartments the city needs. A larger fraction finds its way to other places — MPLA-connected construction companies, the president\'s daughter at the head of Sonangol. Luanda is briefly one of the most expensive cities in the world for foreign workers. For everyone else, the arithmetic is different.',
+    text: 'The oil price is high and the offshore fields are pumping flat out, and the economy grows faster than anywhere in Africa. Cranes on the Luanda skyline. A little of Sonangol\'s money builds roads and flats; more of it finds its way to the companies of the party\'s friends, and the president\'s daughter runs the oil company. For a while Luanda is one of the most expensive cities on earth for foreigners. For everyone else the arithmetic is different.',
     choices: null,
     effect: (p) => { p.m += 4; p.mo += 600; p.r += 5; p.addFlag('angola_oil_boom_generation'); p.setMem('angOilBoom', true) },
   },
@@ -86,7 +87,7 @@ export const ANGOLA_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2016 &&
       G.age >= 20 &&
       !G.mem.angDosSantos,
-    text: 'José Eduardo dos Santos has been president since 1979 — one of the longest-serving heads of state in the world. The MPLA is the state and the state is the MPLA. His daughter Isabel dos Santos runs Sonangol. His son runs the sovereign wealth fund. The political opposition exists in a narrow legal space that the government monitors and occasionally criminalises. The party that fought Portuguese colonialism became its own kind of extraction machine. You know this and know what can and cannot be said about it.',
+    text: 'José Eduardo dos Santos has been president since 1979 — one of the longest-serving heads of state in the world. The MPLA is the state and the state is the MPLA. His daughter Isabel dos Santos runs Sonangol. His son runs the sovereign wealth fund. The political opposition exists in a narrow legal space that the government monitors and occasionally criminalises. The party that fought Portuguese colonialism became an extraction machine of its own. You know this and know what can and cannot be said about it.',
     choices: null,
     effect: (p) => { p.m -= 7; p.r += 5; p.addFlag('angola_mpla_generation'); p.setMem('angDosSantos', true) },
   },

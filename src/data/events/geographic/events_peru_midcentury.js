@@ -96,7 +96,7 @@ export const PERU_MIDCENTURY_FOLLOWTHROUGH = [
     weight: 45,
     when: (G) => G.flags.includes('pe_velasco_1968') && G.currentYear >= 1995 && G.age >= 38 && once(G, 'pem_ft_velasco'),
     text: (G) => G.flags.includes('pe_reforma_hacienda_lost')
-      ? 'Somebody at the table says Velasco gave the country back to itself, and the table goes quiet in the way it has gone quiet at your family\'s tables for thirty years. Your uncle says the word he always says, which is ruina. You have heard both speeches so often that you could give either. What you actually remember from 1968 is the tanks on the radio and a grown-up standing very still in the doorway.'
+      ? 'Somebody at the table says Velasco gave the country back to itself, and the table goes quiet in the way it has gone quiet at your family\'s tables for thirty years. Your uncle says the word he always says: ruina. You have heard both speeches so often that you could give either. What you actually remember from 1968 is the tanks on the radio and a grown-up standing very still in the doorway.'
       : `Somebody at the table says the general ruined the country, and somebody else says he was the only one who ever did anything for the campesino, and it is the same argument it was when you were a child, with the same words in the same order. You were ${inWords(1968 - (G.character?.birthYear ?? 1960))}. What you remember is the tanks on the radio and a man in the plaza saying petróleo as if it were a person who had come home.`,
     choices: null,
     effect: (p) => { p.setMem('pem_ft_velasco', true); p.e += 2 },
@@ -123,7 +123,7 @@ export const PERU_MIDCENTURY_FOLLOWTHROUGH = [
     phase: null,
     weight: 45,
     when: (G) => G.flags.includes('pe_reforma_hacienda_lost') && G.age >= 30 && once(G, 'pem_ft_hacienda'),
-    text: 'The photograph of the casa hacienda hangs in the hall of the flat in Lima, above a chest that came down from it in a lorry in 1970. Nobody born since knows which window was yours. The land is somebody else\'s now in a way that is final and legal, and the house itself is a school or a ruin, depending on who you ask. The old people say the word reform in a particular voice until they die, and you notice at some point that you have started saying it in the same voice, and you stop.',
+    text: 'The photograph of the casa hacienda hangs in the hall of the flat in Lima, above a chest that came down from it in a lorry in 1970. Nobody born since knows which window was yours. The land is somebody else\'s now, finally and legally, and the house itself is a school or a ruin, depending on who you ask. The old people say the word reform in a voice until they die, and you notice at some point that you have started saying it in the same voice, and you stop.',
     choices: null,
     effect: (p) => { p.setMem('pem_ft_hacienda', true); p.r += 3 },
   },
@@ -188,7 +188,7 @@ export const PERU_MIDCENTURY_FOLLOWTHROUGH = [
     text: 'The women meet in Huamanga in a room behind the market, most of them in hats and long skirts, most of them speaking Quechua, holding photographs that have been handled so much the faces have gone soft. The association has a name nobody can say quickly. They go to the barracks at Los Cabitos and ask at the gate. They go to the prosecutor. They go to the ravine at Infiernillo when somebody says there are bodies. You go with his mother, and you carry the photograph when her hands are tired.',
     choices: [
       { text: 'Keep going with her, every week.', tag: 'defiant', outcome: 'The soldier at the gate learns your face. Nobody at the gate ever says his name back to you.', effect: (p) => { p.setMem('pem_ft_anfasep', true); p.karma += 6; p.m -= 4; p.addFlag('disappeared_family_known') } },
-      { text: 'Stop going. Somebody has to be the one who is not on a list.', tag: 'yielding', outcome: 'His mother goes alone. She does not ask you again, which is worse.', effect: (p) => { p.setMem('pem_ft_anfasep', true); p.r += 6; p.addFlag('disappeared_family_known') } },
+      { text: 'Stop going. Somebody has to be the one who is not on a list.', tag: 'yielding', outcome: 'His mother goes alone. She does not ask you again, and that is worse.', effect: (p) => { p.setMem('pem_ft_anfasep', true); p.r += 6; p.addFlag('disappeared_family_known') } },
     ],
     effect: null,
   },
@@ -223,7 +223,7 @@ export const PERU_MIDCENTURY_FOLLOWTHROUGH = [
     phase: null,
     weight: 45,
     when: (G) => G.flags.includes('pe_leva') && G.currentYear >= 1999 && G.age >= 40 && once(G, 'pem_ft_leva'),
-    text: 'When anybody asks what you did in the army you tell them about the cold at the base and the food, which is a story, and not about the other thing, which is not. They took you off a bus. You were eighteen and you had a sack of potatoes for your aunt, and the potatoes stayed on the bus. In 1999 they abolished it — the obligatory service — and you read the article twice to be sure that it meant nobody else\'s son would be pulled off a bus.',
+    text: 'When anybody asks what you did in the army you tell them about the cold at the base and the food, a story, and not about the other thing, which is not one. They took you off a bus. You were eighteen and you had a sack of potatoes for your aunt, and the potatoes stayed on the bus. In 1999 they abolished it — the obligatory service — and you read the article twice to be sure that it meant nobody else\'s son would be pulled off a bus.',
     choices: null,
     effect: (p) => { p.setMem('pem_ft_leva', true); p.r += 4; p.m -= 2 },
   },
@@ -316,8 +316,8 @@ export const PERU_MIDCENTURY_EVENTS = [
     when: (G) => IS_PE(G) && (SIERRA(G) || SUGAR(G)) && G.currentYear >= 1955 && G.currentYear <= 1969 &&
       G.age >= 5 && G.age <= 12 && (G.character?.wealthTier ?? 3) <= 2 && FATHER(G) && once(G, 'pem_hacienda'),
     text: (G) => SUGAR(G)
-      ? 'The cane is higher than the house and it belongs to the company, and so does the house, and the shop where your mother buys the rice with a paper chit, and the hospital, and the train that takes the cane to the mill. The whistle tells the valley when to get up. Your father cuts and his hands are hard in a way that feels like wood when he lifts you. The owners are Gildemeister, which is a word you can say before you can say your own surname.'
-      : 'Your father owes the hacienda four days a week for the right to plant on the steep piece above the river, and when he has done the four days he works his own. The women take their turns in the big house, cooking, and the boys take theirs at the door, sleeping in the passage like a dog, which is the job, and it has a name. The patrón comes up from Lima twice a year. When he rides through, the grown men take their hats off and look at the ground, and you learn to do it too.',
+      ? 'The cane is higher than the house and it belongs to the company, and so does the house, and the shop where your mother buys the rice with a paper chit, and the hospital, and the train that takes the cane to the mill. The whistle tells the valley when to get up. Your father cuts and his hands are hard as wood when he lifts you. The owners are Gildemeister, a word you can say before you can say your own surname.'
+      : 'Your father owes the hacienda four days a week for the right to plant on the steep piece above the river, and when he has done the four days he works his own. The women take their turns in the big house, cooking, and the boys take theirs at the door, sleeping in the passage like a dog; that is the job, and it has a name. The patrón comes up from Lima twice a year. When he rides through, the grown men take their hats off and look at the ground, and you learn to do it too.',
     choices: null,
     effect: (p) => { p.setMem('pem_hacienda', true); p.m -= 4; p.r += 2 },
   },
@@ -389,7 +389,7 @@ export const PERU_MIDCENTURY_EVENTS = [
     when: (G) => IS_PE(G) && PE_PLACE(G, 'pe_ancash_rural', 'pe_chimbote') && G.currentYear === 1970 && G.age >= 4 && once(G, 'pem_terremoto'),
     text: (G) => G.place?.id === 'pe_chimbote'
       ? 'It is Sunday afternoon and the World Cup has started in Mexico, and at twenty past three the floor comes up under you. It goes on for longer than anything goes on. When it stops the town is dust, and people are running uphill in case the sea comes. Half the houses are down. Your family sleeps in the street for a month under a plastic sheet, and the smell of the fishmeal plants is replaced by another smell.'
-      : 'At twenty past three on a Sunday the ground moves for most of a minute and then there is a roar from up the valley that is not the earthquake. A piece of Huascarán has come off, and ice and rock and mud are coming down the valley faster than a lorry. In Yungay the ones who lived were the ones who ran up the cemetery hill. Yungay is gone — not fallen down, gone, under a grey field. You were on the other side of the river, which is the whole reason for everything afterwards.',
+      : 'At twenty past three on a Sunday the ground moves for most of a minute and then there is a roar from up the valley that is not the earthquake. A piece of Huascarán has come off, and ice and rock and mud are coming down the valley faster than a lorry. In Yungay the ones who lived were the ones who ran up the cemetery hill. Yungay is gone — not fallen down, gone, under a grey field. You were on the other side of the river, and that is the reason for everything afterwards.',
     context: 'The Ancash earthquake of 31 May 1970, magnitude 7.9, killed some 70,000 people, the deadliest natural disaster in Peru\'s history. It dislodged part of the north face of Huascarán; the resulting avalanche buried the town of Yungay. It struck on the opening day of the 1970 World Cup, where Peru reached the quarter-finals.',
     choices: null,
     effect: (p) => { p.setMem('pem_terremoto', true); p.m -= 12; p.h -= 3; p.r += 4; p.addFlag('pe_terremoto_1970'); p.addFlag('earthquake_survivor') },
@@ -676,7 +676,7 @@ export const PERU_MIDCENTURY_EVENTS = [
     weight: 400,
     when: (G) => IS_PE(G) && G.currentYear === 1991 && G.age >= 4 && once(G, 'pem_colera'),
     text: (G) => ['informal', 'working_class'].includes(G.neighborhoodTier) || G.ruralUrban === 'rural'
-      ? 'The cholera starts in Chimbote in January and by March it is everywhere the water comes from a tank on a lorry, which is everywhere you have ever lived. The posters say boil the water, wash your hands, do not eat ceviche. Boiling the water takes kerosene and kerosene has just gone up thirty times. A woman two houses down is carried to the health post on a door. The health post has a tent behind it now, with cots, and a smell.'
+      ? 'The cholera starts in Chimbote in January and by March it is everywhere the water comes from a tank on a lorry: everywhere you have ever lived. The posters say boil the water, wash your hands, do not eat ceviche. Boiling the water takes kerosene and kerosene has just gone up thirty times. A woman two houses down is carried to the health post on a door. The health post has a tent behind it now, with cots, and a smell.'
       : 'The cholera starts in Chimbote in January and the posters say do not eat ceviche. The health minister says it and then the fisheries minister eats a plate of ceviche on television to show that you can, and one of them resigns. In your house the water is boiled anyway and nobody eats fish for a year. It is the first epidemic in the hemisphere for a century and it is in the settlements, which your mother mentions as if they were a place you have never been.',
     context: 'The 1991 cholera epidemic began in coastal Peru in late January and spread across Latin America; Peru alone recorded more than 320,000 cases and nearly 3,000 deaths that year, overwhelmingly among people without piped water.',
     choices: null,
@@ -730,7 +730,7 @@ export const PERU_MIDCENTURY_EVENTS = [
     when: (G) => IS_PE(G) && G.place?.id === 'pe_amazon_rural' && G.currentYear >= 1972 && G.currentYear <= 2000 && G.age >= 8 && once(G, 'pem_corrientes'),
     text: 'The company came up the river when you were small, with barges and helicopters, and now there are wells in the forest and a pipe, and the water that comes up out of the ground with the oil goes straight into the streams, hot and salty and smelling of metal. The fish have sores. The river your grandfather fished is the river you do not let your children swim in. The company has a clinic for its workers. It does not have one for you.',
     choices: [
-      { text: 'Work for the company. It is the only wage on the river.', tag: 'yielding', outcome: 'You clear brush along the pipeline for three years and are paid in money, which is new, and in a cough, which is also new.', effect: (p) => { p.setMem('pem_corrientes', true); p.mo += 300; p.h -= 4; p.addFlag('pe_corrientes_oil') } },
+      { text: 'Work for the company. It is the only wage on the river.', tag: 'yielding', outcome: 'You clear brush along the pipeline for three years and are paid in money, new, and in a cough, also new.', effect: (p) => { p.setMem('pem_corrientes', true); p.mo += 300; p.h -= 4; p.addFlag('pe_corrientes_oil') } },
       { text: 'Keep to the forest and the gardens, upriver of the wells.', tag: 'defiant', outcome: 'Upriver is further every year. You go further.', effect: (p) => { p.setMem('pem_corrientes', true); p.h -= 2; p.r += 3; p.addFlag('pe_corrientes_oil') } },
     ],
     effect: null,

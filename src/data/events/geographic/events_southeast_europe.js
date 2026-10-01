@@ -24,13 +24,13 @@ export const SOUTHEAST_EUROPE_EVENTS = [
       {
         text: 'You manage. You find a way.',
         tag: null,
-        outcome: 'The way involves risk and money and a specific kind of knowledge that women share with each other at cost. You know now what the state will and will not allow you.',
+        outcome: 'The way involves risk and money and a kind of knowledge that women share with each other at cost. You know now what the state will and will not allow you.',
         effect: (p) => { p.m -= 8; p.h -= 5; p.r += 6; p.addFlag('romania_decree_generation'); p.setMem('romDecree770', true) },
       },
       {
         text: 'The pregnancy continues.',
         tag: null,
-        outcome: 'You did not choose this. The country has chosen for you, which is also a choice, made by people in buildings with your best interests not among their considerations.',
+        outcome: 'You did not choose this. The country has chosen for you, through people in buildings with your interests not among their considerations.',
         effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('romania_decree_generation'); p.setMem('romDecree770', true) },
       },
     ],
@@ -46,7 +46,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
       G.currentYear >= 1981 && G.currentYear <= 1989 &&
       G.age >= 14 &&
       !G.mem?.romRationing,
-    text: 'The electricity goes off on a schedule now, which is better and worse than random cuts. Bread is rationed. Meat is something that appears occasionally. Ceaușescu is repaying the foreign debt at a rate that requires the country to export everything it produces and import nothing. The number of calories officially available per person per day is below what the World Health Organization defines as subsistence. You are managing.',
+    text: 'The electricity goes off on a schedule now, better and worse than random cuts. Bread is rationed. Meat is something that appears occasionally. Ceaușescu is repaying the foreign debt at a rate that requires the country to export everything it produces and import nothing. The number of calories officially available per person per day is below what the World Health Organization defines as subsistence. You are managing.',
     choices: null,
     effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('romanian_austerity_generation'); p.setMem('romRationing', true) },
   },
@@ -60,7 +60,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1997 &&
       G.age >= 18 &&
       !G.mem?.romPost89,
-    text: 'Communism is over. Ion Iliescu is president, which is not the same as communism being over in a deeper sense. In June 1990 he calls the miners from the Jiu Valley into Bucharest to beat the students in University Square. This is the country\'s democracy now. The factories are closing. The shelves are still mostly empty because there is no money to import what had always been unavailable. The specific disorientation of revolution that produced something that is neither the thing you had nor the thing you wanted.',
+    text: 'Communism is over. Ion Iliescu is president, and communism is not over in any deeper sense. In June 1990 he calls the miners from the Jiu Valley into Bucharest to beat the students in University Square. This is the country\'s democracy now. The factories are closing. The shelves are still mostly empty because there is no money to import what had always been unavailable. The disorientation of revolution that produced something that is neither the thing you had nor the thing you wanted.',
     choices: [
       {
         text: 'Stay and build something in what remains.',
@@ -188,7 +188,7 @@ export const SOUTHEAST_EUROPE_EVENTS = [
       G.currentYear === 2000 &&
       G.age >= 18 &&
       !G.mem?.serMilosevicFalls,
-    text: 'October 5, 2000. The protesters come from every direction into Belgrade. The government buildings are taken. Milošević concedes. The specific feeling is not the one you expected — not triumph exactly, but the sudden removal of something you had been pressing against so long that you had forgotten you were pressing against it. The ICTY extradition will come later. Tonight the thing that was true for eleven years is no longer true.',
+    text: 'October 5, 2000. The protesters come from every direction into Belgrade. The government buildings are taken. Milošević concedes. The feeling is not the one you expected — not triumph exactly, but the sudden removal of something you had been pressing against so long that you had forgotten you were pressing against it. The ICTY extradition will come later. Tonight the thing that was true for eleven years is no longer true.',
     choices: null,
     effect: (p) => { p.m += 10; p.r += 4; p.addFlag('serbian_democratic_transition'); p.setMem('serMilosevicFalls', true) },
   },

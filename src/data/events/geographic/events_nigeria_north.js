@@ -201,7 +201,7 @@ export const NIGERIA_NORTH_EVENTS = [
     weight: 150,
     specificity: 4,
     when: (G) => KANO(G) && HAUSA(G) && MUSLIM(G) && FEMALE(G) && !!G.partner && G.age >= 15 && G.age <= 40 && G.currentYear >= 1950 && once(G, 'nn_kulle'),
-    text: 'After the wedding you do not go out. That is what kulle is, and it is what your mother had and her mother, and the neighbours would talk about a house where it was otherwise. The world is the compound: the rooms, the courtyard, the pot on the fire, the other wife when there is one, the children coming and going through the door you do not use. The door is not locked. That is the thing nobody from outside understands about it.',
+    text: 'After the wedding you do not go out. That is what kulle is, and it is what your mother had and her mother, and the neighbours would talk about a house where it was otherwise. The world is the compound: the rooms, the courtyard, the pot on the fire, the other wife when there is one, the children coming and going through the door you do not use. The door is not locked. Nobody from outside understands that.',
     context: 'Kulle, the seclusion of married women, was widely practised in Kano and other Hausa cities. Secluded women ran substantial trades from inside the compound — cooked food, cloth, caps, groundnut oil — through children who sold for them in the street.',
     choices: [
       {
@@ -494,7 +494,7 @@ export const NIGERIA_NORTH_EVENTS = [
     weight: 80,
     specificity: 3,
     when: (G) => BENUE_XN(G) && G.currentYear >= 2008 && G.currentYear <= 2010 && G.age >= 14 && once(G, 'nn_jos'),
-    text: 'Your cousin in Jos sends word that he is all right, which is how you learn it has started again. It started in 2001 over a political appointment and it has been starting since then over everything: a local election, a mosque, a church, a cow. In March it is Dogo Nahawa, a village outside the city, at night, with machetes, and the photographs of the women laid out on the ground come down to Benue in the newspaper. Your cousin has moved his family into a street where everyone goes to his church. Jos has become that kind of city.',
+    text: 'Your cousin in Jos sends word that he is all right, and that is how you learn it has started again. It started in 2001 over a political appointment and it has been starting since then over everything: a local election, a mosque, a church, a cow. In March it is Dogo Nahawa, a village outside the city, at night, with machetes, and the photographs of the women laid out on the ground come down to Benue in the newspaper. Your cousin has moved his family into a street where everyone goes to his church. Jos has become that kind of city.',
     context: 'Jos, capital of Plateau State, saw large-scale violence between mainly Christian indigenes and mainly Muslim Hausa-Fulani settlers in September 2001 (about 1,000 dead), November 2008, and January and March 2010, including the massacre at Dogo Nahawa on 7 March 2010.',
     choices: null,
     effect: (p) => { p.setMem('nn_jos', true); p.m -= 5 },

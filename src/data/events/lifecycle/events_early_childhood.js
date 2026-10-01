@@ -25,7 +25,7 @@ export const EARLY_CHILDHOOD_2_EVENTS = [
     when: (G) =>
       G.age >= 3 && G.age <= 5 &&
       !G.mem?.ec2FirstLossMemo,
-    text: 'An animal you knew is gone. You were told this in words, but the words haven\'t matched the reality yet. You go to where it usually was. It isn\'t there. This is the first time you understand what gone means — not absent, but permanently absent. There is a difference.',
+    text: 'An animal you knew is gone. You were told this in words, but the words haven\'t matched the reality yet. You go to where it usually was. It isn\'t there. For the first time you understand what gone means: not absent, but permanently absent. There is a difference.',
     choices: null,
     effect: (p) => { p.m -= 4; p.r += 2; p.setMem('ec2FirstLossMemo', true) },
   },
@@ -40,7 +40,7 @@ export const EARLY_CHILDHOOD_2_EVENTS = [
       (G.ruralUrban === 'rural' || G.stats.wealth < 45) &&
       ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype) &&
       !G.mem?.ec2MarketMemo,
-    text: 'The market is vast and loud and smells of things you can name and things you can\'t yet. You hold someone\'s hand. The stalls tower above you. You are given something to eat. You will remember this day — the color, the heat, the particular sound of it — without being able to say why.',
+    text: 'The market is vast and loud and smells of things you can name and things you can\'t yet. You hold someone\'s hand. The stalls tower above you. You are given something to eat. You will remember this day — the color, the heat, the sound of it — without being able to say why.',
     choices: null,
     effect: (p) => { p.m += 5; p.e += 2; p.setMem('ec2MarketMemo', true) },
   },
@@ -61,7 +61,7 @@ export const EARLY_CHILDHOOD_2_EVENTS = [
         : G.religion === 'hindu' || G.religion === 'buddhist'
           ? 'the bells and incense mark certain hours of the day'
           : 'the bells on Sunday or the sound of the choir reaching into the street'
-      return `The adults around you do a particular thing at particular times. ${sound.charAt(0).toUpperCase() + sound.slice(1)}. You don't understand it yet, but you've absorbed the rhythm. This sound will feel like the sound of home for a long time.`
+      return `The adults around you do a thing at particular times. ${sound.charAt(0).toUpperCase() + sound.slice(1)}. You don't understand it yet, but you've absorbed the rhythm. This sound will feel like the sound of home for a long time.`
     },
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('ec2ReligiousSoundMemo', true) },

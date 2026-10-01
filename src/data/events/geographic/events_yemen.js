@@ -29,7 +29,7 @@ export const YEMEN_EVENTS = [
       G.currentYear === 1990 &&
       G.age >= 16 &&
       !G.mem.yemUnification,
-    text: 'May 22, 1990. North Yemen and South Yemen unite after twenty-five years of separation. The north was capitalist, American-adjacent, tribal. The south was Marxist, Soviet-backed, more urbanised, with educated women in professional roles and a different relationship to Islam. The merger is between two states that were always one country in the old maps but had become genuinely different societies. The south gets formal representation. Saleh controls the army. What those two facts mean becomes clearer over the next four years.',
+    text: 'May 22, 1990, and North and South Yemen become one country after twenty-five years apart: the north tribal and leaning toward America, the south Marxist and Soviet, more urban, with women in professions. They were one country on the old maps and had become two different societies. The south gets seats; Saleh keeps the army. Over the next four years it becomes clear what those two facts mean.',
     choices: null,
     effect: (p) => { p.m += 5; p.r += 3; p.addFlag('yemeni_unification_generation'); p.setMem('yemUnification', true) },
   },
@@ -43,7 +43,7 @@ export const YEMEN_EVENTS = [
       G.currentYear === 1994 &&
       G.age >= 18 &&
       !G.mem.yem1994,
-    text: 'May 1994. The south declares independence. The People\'s Democratic Republic of Yemen lasts seventy days. Saleh\'s forces, with northern tribal militias and jihadists who had returned from Afghanistan, crush the secession. Aden is taken. Southern officers are purged from the military. Southern land is redistributed to northern tribal leaders. The south had won the vote to unite; it lost the war to separate. The southerners remember exactly which assets were taken, by whom, and that the accounting has never been settled.',
+    text: 'May 1994, and the south declares independence, and it lasts seventy days. Saleh\'s army, with the northern tribes and the fighters back from Afghanistan, takes Aden. Southern officers are purged and southern land handed to northern sheikhs. The south voted to unite and lost the war to leave. The southerners remember exactly what was taken, and by whom, and that it has never been settled.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('yemeni_1994_generation'); p.setMem('yem1994', true) },
   },
@@ -57,7 +57,7 @@ export const YEMEN_EVENTS = [
       G.currentYear === 2011 &&
       G.age >= 18 &&
       !G.mem.yemSpring,
-    text: 'January 2011. The protests start in Sana\'a — Change Square, the tent city, the students and the tribesmen and the southern movement all in the same space for the first time. Saleh is shot in an assassination attempt in June. He leaves for medical treatment in Saudi Arabia. He eventually signs the Gulf Cooperation Council agreement in November and transfers power to his vice president Hadi. He is given immunity. You are in a country that has just removed a thirty-three-year president without a military coup, which is remarkable. What comes after immunity will also be remarkable, in a different direction.',
+    text: 'January 2011, and Change Square in Sana\'a fills with tents, students and tribesmen and southerners together for the first time. In June Saleh is wounded in an attack on his mosque and flown to Saudi Arabia, and in November he signs the Gulf agreement and hands power to his deputy, in exchange for immunity. A thirty-three-year president has been removed without a military coup. What follows the immunity will be remarkable in another direction.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 5; p.addFlag('yemeni_revolution_generation'); p.setMem('yemSpring', true) },
   },
@@ -99,7 +99,8 @@ export const YEMEN_EVENTS = [
       G.currentYear >= 2016 &&
       G.age >= 16 &&
       !G.mem.yemCrisis,
-    text: 'The worst cholera outbreak in recorded history. The largest humanitarian crisis in the world. Four million displaced. Millions on the edge of famine. The Saudi coalition blockades the port of Hodeidah — through which eighty percent of Yemen\'s food imports flow. The water infrastructure is bombed or broken. In the hospitals that are still functioning, the doctors have not been paid in months, because the state cannot pay salaries. Children are dying of preventable diseases. The number of dead from violence and disease is in the hundreds of thousands. You are alive in this. That is the year\'s primary fact.',
+    text: 'The blockade closes the port at Hodeidah, and the water pipes are bombed or broken, and the cholera comes. In the hospitals still open the doctors have not been paid in months. Children are dying of things nobody dies of anywhere else. You are alive in this, and that is the year\'s primary fact.',
+    context: 'Yemen\'s war produced the world\'s largest humanitarian crisis by UN measure, with over four million displaced and the largest cholera outbreak in recorded history (2016-2018). Hodeidah handled about 80 percent of food imports.',
     choices: null,
     effect: (p) => { p.m -= 16; p.h -= 4; p.r += 12; p.addFlag('yemeni_crisis_generation'); p.setMem('yemCrisis', true) },
   },

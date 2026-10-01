@@ -16,7 +16,7 @@ export const INDIA_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1977 &&
       G.age >= 18 &&
       !G.mem.indEmergency,
-    text: 'June 26, 1975. Indira Gandhi declares a state of emergency. The opposition is arrested — Jayaprakash Narayan, Morarji Desai, hundreds of others. Newspapers are censored. The constitution is suspended. The twenty-point programme: sterilization quotas, slum clearance, productivity. The railway workers\' strike has just been put down. Sanjay Gandhi is managing parts of the programme from a position he does not officially hold. You are living inside the parenthesis that Indian democracy inserted into itself.',
+    text: 'June 26, 1975. Indira Gandhi declares an emergency: the opposition arrested overnight, the newspapers censored, the constitution suspended. Then the twenty-point programme, the sterilisation quotas, the slums bulldozed, and Sanjay running things from a position he does not hold. You are living inside the bracket Indian democracy put around itself.',
     choices: [
       {
         text: 'You adapt to the new constraints. Most people do.',
@@ -27,7 +27,7 @@ export const INDIA_EVENTS = [
       {
         text: 'You know someone who was detained.',
         tag: null,
-        outcome: 'The detentions were real and specific: a particular person, a particular morning, a particular absence. You do not forget the specifics.',
+        outcome: 'The detentions were real and specific: a person, a morning, an absence. You do not forget the specifics.',
         effect: (p) => { p.m -= 12; p.r += 9; p.addFlag('emergency_generation'); p.addFlag('experienced_loss'); p.setMem('indEmergency', true) },
       },
     ],
@@ -43,7 +43,8 @@ export const INDIA_EVENTS = [
       G.currentYear === 1984 &&
       G.age >= 18 &&
       !G.mem.ind1984,
-    text: 'October 31, 1984. Indira Gandhi is shot by her Sikh bodyguards, three weeks after Operation Blue Star — the army\'s assault on the Golden Temple in Amritsar. In the days that follow, organized mobs move through Sikh neighbourhoods in Delhi and other cities. The police are not present or are present and do not act. The official number of dead will be 2,733. Other counts are higher. The government\'s role in the violence will be debated for decades. The commissions of inquiry will not produce convictions for most of those responsible.',
+    text: 'October 31, 1984. Indira Gandhi is shot by her Sikh bodyguards, three weeks after the army stormed the Golden Temple. In the days that follow, mobs move through the Sikh neighbourhoods of Delhi, and the police are absent, or present and do nothing. The government\'s part in it will be argued about for decades, and most of those responsible will never be convicted.',
+    context: 'The official toll of the 1984 anti-Sikh violence is 2,733 in Delhi; other estimates are higher.',
     choices: [
       {
         text: 'You are in Delhi during the pogroms.',
@@ -75,7 +76,7 @@ export const INDIA_EVENTS = [
       {
         text: 'You enter the new economy. Technology, services, something adjacent.',
         tag: null,
-        outcome: 'The decade that follows produces a class that did not exist in the 1980s. You are in it, or adjacent to it, which is also a position.',
+        outcome: 'The decade that follows produces a class that did not exist in the 1980s. You are in it, or beside it.',
         effect: (p) => { p.m += 6; p.mo += 1500; p.e += 4; p.addFlag('liberalization_generation'); p.setMem('indLib', true) },
       },
       {
@@ -101,7 +102,7 @@ export const INDIA_EVENTS = [
     // it you were on, and the event used to report it in the third person to
     // everybody — including to the people the riots were looking for.
     text: (G) => (G.religion === 'muslim_sunni' || G.religion === 'muslim_shia')
-      ? 'December 6, 1992. The mosque at Ayodhya is brought down by hand, by a crowd of several hundred thousand, while the police stand at the edge of it. It was built in 1528. Within a day the riots have reached your city and the arithmetic in your house is not about the constitution: it is about the nameplate on the door, about whether the shop should open, about which of the neighbours would be a problem and which would be the opposite. Some of them come and stand outside for three nights, which is the part you will find hardest to explain afterwards, because it was both true and not enough.'
+      ? 'December 6, 1992. The mosque at Ayodhya is brought down by hand, by a crowd of several hundred thousand, while the police stand at the edge of it. It was built in 1528. Within a day the riots have reached your city and the arithmetic in your house is not about the constitution: it is about the nameplate on the door, about whether the shop should open, about which of the neighbours would be a problem and which would be the opposite. Some of them come and stand outside for three nights, and that is the part you will find hardest to explain afterwards, because it was both true and not enough.'
       : 'December 6, 1992. The Babri Masjid in Ayodhya is demolished by a crowd of several hundred thousand people. The mosque was built in 1528. The claim that a Ram temple stood there before the mosque is the disputed point that the law courts have been considering for decades and that the crowd has now settled by force. The riots that follow kill approximately two thousand people across India. The question of what the demolition means for the constitutional principle of secularism is one that will structure Indian politics for the next three decades.',
     choices: [
       {
@@ -113,7 +114,7 @@ export const INDIA_EVENTS = [
       {
         text: 'You watch from a distance that feels increasingly fictional.',
         tag: null,
-        outcome: 'The distance collapses in the riots. There is no outside position from which to watch this particular thing.',
+        outcome: 'The distance collapses in the riots. There is no outside position from which to watch this thing.',
         effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('babri_generation'); p.setMem('indBabri', true) },
       },
     ],
@@ -131,7 +132,8 @@ export const INDIA_EVENTS = [
       !G.mem.indGujarat,
     text: (G) => (G.religion === 'muslim_sunni' || G.religion === 'muslim_shia')
       ? 'February 2002. A train carrying pilgrims back from Ayodhya burns near Godhra and fifty-nine people die, and by the evening of the next day the lists are being used. That is the detail that stays: not a mob finding a street, but a mob arriving at addresses. The official figure will be 790 Muslims killed and the other counts will be higher and the courts will spend twenty years on the question of what the state government did and did not do. You spend the three months after it deciding, every single morning, whether it is a day to be out of doors.'
-      : "February 2002. A train carrying Hindu pilgrims returning from Ayodhya is set on fire near Godhra. Fifty-nine people die. What follows in Gujarat over the next three months is reported variously as riots, as pogrom, as organised violence. The official figure is 790 Muslims killed. Other counts are higher. The state government's role will be investigated by the courts for years. Narendra Modi is chief minister of Gujarat. The violence and his response to it will be a permanent part of the account.",
+      : "February 2002. A train carrying Hindu pilgrims back from Ayodhya burns near Godhra, and in the three months that follow, across Gujarat, Muslims are killed in what is called rioting and called pogrom. Modi is chief minister. The courts will look at his government's part for years, and it will be a permanent part of the account.",
+    context: 'Fifty-nine people died in the Godhra train fire. The official toll of the Gujarat violence was 1,044, 790 of them Muslim; other estimates are much higher.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('gujarat_2002_generation'); p.setMem('indGujarat', true) },
   },
@@ -164,7 +166,7 @@ export const INDIA_EVENTS = [
       {
         text: 'You have savings in formal banking. You manage.',
         tag: null,
-        outcome: 'The queue is long. You manage. The people who couldn\'t manage were the people whose savings were in cash, which is the majority.',
+        outcome: 'The queue is long. You manage. The people who couldn\'t manage were the people whose savings were in cash: most people.',
         effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('demonetization_generation'); p.setMem('indDemo', true) },
       },
       {
@@ -216,7 +218,7 @@ export const INDIA_EVENTS = [
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       G.age >= 18 &&
       !G.mem?.indFarmers,
-    text: 'November 2020. Hundreds of thousands of farmers from Punjab and Haryana march to the borders of Delhi and stay. They camp on the highways — at Singhu, Tikri, Ghazipur — for thirteen months. The three farm laws the government has passed will, in the farmers\' reading, dismantle the minimum support price system that is their floor. The government says the laws modernise the market. The sit-in is among the largest sustained protests in modern history. In November 2021 Modi repeals all three laws. The farmers go home.',
+    text: 'November 2020, and farmers from Punjab and Haryana march to the edges of Delhi and stay, camped on the highways at Singhu, Tikri and Ghazipur for thirteen months. They read the three new farm laws as the end of the minimum price that is their floor; the government says the laws modernise the market. In November 2021 the prime minister repeals all three. The farmers go home.',
     choices: [
       {
         text: 'You support the farmers — this is the rural economy defending itself.',
@@ -248,7 +250,7 @@ export const INDIA_EVENTS = [
       G.age >= 8 && G.age <= 17 &&
       (G.religion === 'hindu' || G.religion === 'sikh') &&
       !G.mem?.indPartitionMem,
-    text: 'The adults in your family describe a city they no longer live in. Lahore. Rawalpindi. Lyallpur. The name carries the weight of specific streets, a specific temple gate, the smell of wheat at harvest in a Punjab that is now in another country. The 1947 Partition moved fourteen million people in six weeks. Your family does not give you the numbers. They give you the name of the neighbour who helped them across, and the name of the one who did not, and the object they managed to carry.',
+    text: 'The adults in your family describe a city they no longer live in: Lahore, Rawalpindi, Lyallpur. The name carries particular streets, a temple gate, the smell of wheat at harvest in a Punjab that is in another country now. They do not give you numbers. They give you the name of the neighbour who helped them across, and the one who did not, and the object they managed to carry.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 3; p.addFlag('partition_india_memory'); p.setMem('indPartitionMem', true) },
   },
@@ -258,12 +260,18 @@ export const INDIA_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) =>
+      // Lajpat Nagar and Rajinder Nagar are Delhi; this was printing them into
+      // childhoods in Mumbai and rural Uttar Pradesh. Mumbai's Partition
+      // colonies were Sindhi, and had other names.
       G.character.country.name === 'India' &&
+      ['in_delhi', 'in_mumbai'].includes(G.place?.id) &&
       G.flags.has('partition_india_memory') &&
       G.currentYear >= 1958 && G.currentYear <= 1985 &&
       G.age >= 10 && G.age <= 20 &&
       !G.mem?.indPartitionColony,
-    text: 'The neighbourhood has a name: the refugee colony. Lajpat Nagar. Punjabi Bagh. Rajinder Nagar. They were built in the 1950s and 60s for families who arrived carrying what fit in a trunk, or less. The children on your street know, in an imprecise way, that their families came from somewhere else. No one explains exactly when. It is simply before. Before the line was drawn, before the country became two countries, before whatever it was that the adults stop short of describing in full.',
+    text: (G) => G.place?.id === 'in_mumbai'
+      ? 'The neighbourhood has a name: the camp. Sion Koliwada, Chembur, and out past Kalyan the army barracks they renamed Ulhasnagar, all of them built for Sindhi families who came down the coast by ship with what fit in a trunk. The children on your street know their families came from somewhere else. Nobody says when. It is simply before.'
+      : 'The neighbourhood has a name: the refugee colony. Lajpat Nagar, Rajinder Nagar, Punjabi Bagh, built in the fifties for families who arrived with what fit in a trunk. The children on your street know their families came from somewhere else. Nobody says when. It is simply before.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.addFlag('partition_colony_raised'); p.setMem('indPartitionColony', true) },
   },

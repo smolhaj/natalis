@@ -16,7 +16,7 @@ export const ERITREA_EVENTS = [
       G.currentYear >= 1965 && G.currentYear <= 1991 &&
       G.age >= 7 && G.age <= 14 &&
       !G.mem?.eriLibChild,
-    text: 'The fighters come through your area sometimes. Not the Ethiopian soldiers — your people. The EPLF. They move at night and by morning they are gone, but they leave things: a word with your father, food sometimes, a political education pamphlet that you are not supposed to show at school. The school you attend is Ethiopian-run and the language of instruction is Amharic, which is not your language. Your teacher explains the map of Ethiopia and Eritrea is not on it separately — it is a province, the northernmost. You have been taught something different at home. These two accounts of the same land live inside you side by side, and you have learned which one to speak aloud and where.',
+    text: 'The fighters come through sometimes, not the Ethiopian soldiers but your own people, the EPLF, at night, gone by morning, leaving a word with your father, food, a pamphlet you must not show at school. At school the lessons are in Amharic, which is not your language, and the map shows Eritrea as Ethiopia\'s northernmost province. At home you are taught something else. The two accounts live in you side by side, and you know which one to say aloud, and where.',
     choices: null,
     effect: (p) => {
       p.m += 3; p.e += 5; p.s -= 2;
@@ -34,7 +34,8 @@ export const ERITREA_EVENTS = [
       G.currentYear >= 1993 && G.currentYear <= 1995 &&
       G.age >= 18 &&
       !G.mem?.eriIndep,
-    text: 'April 27, 1993. The results of the independence referendum come in — 99.8 percent voted yes — and Asmara becomes a city that has never existed before. People pour into the streets. There are people who have not seen each other in twenty years because the war took them to different countries and now they are standing on the same street corner weeping. You have known what Eritrea was supposed to be all your life. Now it exists. The Italian colonial buildings are still beautiful; the sky is still the same sky; but the flag is different and the flag matters. You know this is the best day of your life. You will spend the rest of your life measuring things against it.',
+    text: 'April 1993, and the referendum result, and Asmara becomes a city that has never existed before. People pour into the streets, and people who have not seen each other in twenty years, scattered by the war, stand on the same corner weeping. All your life you have known what Eritrea was supposed to be. Now it exists, and the flag is different, and the flag matters. You will spend the rest of your life measuring things against this day.',
+    context: 'In the April 1993 independence referendum 99.8 percent voted yes.',
     choices: null,
     effect: (p) => {
       p.m += 18; p.karma += 8;
@@ -80,7 +81,7 @@ export const ERITREA_EVENTS = [
       G.age >= 25 && G.age <= 45 &&
       G.flags.has('eritrean_national_service') &&
       !G.mem?.eriNSIndef,
-    text: 'The Warsay-Yikaalo development campaign: your national service, which was supposed to end, does not end. The government stopped saying when it will end. You earn 500 nakfa a month — roughly equivalent to thirty dollars. Your commander can assign you anywhere: construction, agriculture, teaching in a remote town, factory work. You have no legal right to leave the country without permission; your family cannot receive a visa without proof of your service. This is the thing that makes Eritrea what it is now. Not the poverty exactly — there are poor countries. It is the specific trap of the indefinite service, the years going by without an end date, the arithmetic of what you are losing that you will never get back.',
+    text: 'Your national service, which was supposed to end, does not, and the government has stopped saying when it will. You are paid a few hundred nakfa a month, and your commander can send you anywhere: a building site, a farm, a classroom in a remote town. You cannot leave the country without permission. It is not the poverty that makes Eritrea what it is now; it is the service with no end date, and the years you will not get back.',
     choices: [
       {
         text: 'You stay and endure it.',
@@ -126,12 +127,12 @@ export const ERITREA_EVENTS = [
       (G.flags.has('eri_flight_planned') || (G.currentYear >= 2005 && G.currentYear <= 2018)) &&
       G.age >= 20 && G.age <= 40 &&
       !G.mem?.eriLeave,
-    text: 'Fifty thousand Eritreans leave every year. The crossing is northward: into Sudan, then through the Sahara to Libya, then the Mediterranean, then — if you survive — Europe or Israel. Or southward to Ethiopia, which is also dangerous. Or through Somalia and Kenya. None of the routes are safe. Some routes are run by traffickers who will hold you for ransom or sell you forward. You have heard specific things about the Sinai. You weigh this against staying.',
+    text: 'Tens of thousands leave every year, north into Sudan, across the Sahara to Libya, over the Mediterranean, or south to Ethiopia, or through Somalia and Kenya. None of the routes are safe, and some are run by people who will hold you for ransom or sell you on. You have heard things about the Sinai. You weigh them against staying.',
     choices: [
       {
         text: 'You cross into Sudan. The future is uncertain but the present is certain and it is this.',
         tag: 'left',
-        outcome: 'The border crossing at night, the darkness of the Sudanese desert, and then the long sequence of decisions about what comes next. You are free in the specific way of having no protection from anyone.',
+        outcome: 'The border crossing at night, the darkness of the Sudanese desert, and then the long sequence of decisions about what comes next. You are free in the way of having no protection from anyone.',
         effect: (p) => {
           p.m -= 5; p.h -= 10;
           p.addFlag('eritrean_refugee');
@@ -243,7 +244,7 @@ export const ERITREA_EVENTS = [
       G.flags.has('eri_sinai_witness') &&
       G.age >= 35 &&
       !G.mem?.eriSinaiReckoning,
-    text: 'The person you knew who went through the Sinai — you learn eventually what happened in the specific. Not the whole story, but enough. The ransom calls, the duration, the conditions. They arrived. They are alive in the way that arrival permits. You carry the knowledge of what the crossing costs, which is different from carrying the cost yourself, and you know both things are real without knowing how to weigh one against the other.',
+    text: 'The person you knew who went through the Sinai — you learn eventually what happened in the specific. Not the whole story, but enough. The ransom calls, the duration, the conditions. They arrived. They are alive in the way that arrival permits. You know what the crossing costs without having paid it yourself, and you cannot weigh the one against the other.',
     choices: null,
     effect: (p) => {
       p.m -= 10; p.r += 6; p.karma += 5;
@@ -260,7 +261,7 @@ export const ERITREA_EVENTS = [
       G.flags.has('eritrean_independence_generation') &&
       G.age >= 55 &&
       !G.mem?.eriLateReckoning,
-    text: 'You measure the country against what it was supposed to be. The independence movement said: self-determination, democracy, constitutional government, dignity. These were not just words — the EPLF had functioning democratic structures in the field; people risked their lives for them. The country that exists now has none of this. Isaias Afwerki has been in power for thirty years with no election scheduled. The constitution has not been implemented. A generation has been lost to indefinite service. The Italian-era café where you and your friends celebrated in 1993 is still there in Asmara. You are somewhere else now, or you are still there, older than the country has had to become.',
+    text: 'You measure the country against what it was supposed to be: self-determination, a constitution, elections, dignity, things people died for, which the fighters practised in the field. None of it exists. The same man has ruled for thirty years without an election; the constitution was never put into force; a generation has gone into indefinite national service. The café where you celebrated in 1993 is still there in Asmara. You are somewhere else now, or still there, older than the country should have had to become.',
     choices: null,
     effect: (p) => {
       p.m -= 10; p.r += 12; p.e += 5; p.karma += 8;

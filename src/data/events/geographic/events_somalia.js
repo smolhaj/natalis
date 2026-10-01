@@ -42,7 +42,7 @@ export const SOMALIA_EVENTS = [
       G.currentYear >= 1991 &&
       G.age >= 12 && G.age <= 22 &&
       !G.mem.somClan,
-    text: 'The clan is not an abstraction. It is who picks up the phone when you call at 2am, who vouches for you at the checkpoint, who the compensation goes to if something happens to you. The xeer — customary law — runs on clan obligation. When the state disappeared, the clan did not disappear. It became more visible. Your clan affiliation is one of the first things any stranger tries to establish. The question can be polite or it can be something else. You have learned to read which it is.',
+    text: 'The clan is who picks up the phone when you call at 2am, who vouches for you at the checkpoint, who the compensation goes to if something happens to you. The xeer — customary law — runs on clan obligation. When the state disappeared, the clan did not disappear. It became more visible. Your clan affiliation is one of the first things any stranger tries to establish. The question can be polite or it can be something else. You have learned to read which it is.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 5; p.e += 3; p.addFlag('somali_clan_identity'); p.setMem('somClan', true) },
   },
@@ -75,7 +75,7 @@ export const SOMALIA_EVENTS = [
       {
         text: 'You live in al-Shabaab-controlled territory.',
         tag: null,
-        outcome: 'The music is gone from the street. The phone requires managing. You have adapted to the rules the way you adapted to the rules before, which is to say: carefully, with attention to what is watched and what is not.',
+        outcome: 'The music is gone from the street. The phone requires managing. You have adapted to the rules the way you adapted to the rules before: carefully, with attention to what is watched and what is not.',
         effect: (p) => { p.m -= 14; p.r += 8; p.addFlag('alshabaab_generation'); p.setMem('somAlShabaab', true) },
       },
       {

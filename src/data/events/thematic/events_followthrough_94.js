@@ -29,7 +29,7 @@ export const FOLLOWTHROUGH_94_EVENTS = [
       G.flags.has('laos_sombath_era') &&
       G.age >= 55 &&
       !G.mem?.ft94Sombath,
-    text: 'The investigation into Sombath Somphone\'s disappearance is still open. His wife, Shui Meng, has continued to ask publicly for information that has not been provided. The government\'s responses have remained consistent in form: the investigation continues. You have watched this for more than a decade. The specific lesson about what is available to a person who asks the government directly for accountability, in public, in this country — you carry that lesson. It is not a lesson that produces conclusions. It is a lesson that adjusts what you expect from the mechanisms you used to expect more from.',
+    text: 'The investigation into Sombath Somphone\'s disappearance is still open. His wife, Shui Meng, has continued to ask publicly for information that has not been provided. The government\'s responses have remained consistent in form: the investigation continues. You have watched this for more than a decade. The lesson about what is available to a person who asks the government directly for accountability, in public, in this country — you carry that lesson. It is not a lesson that produces conclusions. It is a lesson that adjusts what you expect from the mechanisms you used to expect more from.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 3; p.setMem('ft94Sombath', true) },
   },

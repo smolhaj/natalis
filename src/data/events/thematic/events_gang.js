@@ -97,7 +97,7 @@ export const GANG_EVENTS = [
     text: (G) => {
       const yr = G.currentYear ?? 1995
       if (yr <= 1993) {
-        return `In Medellín a young man who wants work and has no work has specific options. The cartel does not recruit with promises — it recruits with proximity. Someone you grew up with is already working for someone. The path is not dramatic; it is practical. A message delivered. A corner watched. The money is reliable in a way that legal work in Medellín is not, in 1988, for someone who is seventeen and from this neighbourhood.`
+        return `In Medellín a young man who wants work and has no work has specific options. The cartel does not recruit with promises — it recruits with proximity. Someone you grew up with is already working for someone. The path is not dramatic; it is practical. A message delivered. A corner watched. The money is reliable, as legal work in Medellín is not, in 1988, for someone who is seventeen and from this neighbourhood.`
       }
       return `The paramilitaries have expanded since the cartels fragmented. The FARC controls the rural roads; the *bacrim* control the neighbourhood. You are approached through a cousin — always through someone — with work that is described in terms that are almost ordinary: security, distribution, local management. The word "cartel" is not used. The structure it describes is not different.`
     },
@@ -202,7 +202,7 @@ export const GANG_EVENTS = [
         return `There is a meeting at a warehouse in the industrial district. You are there as a driver. What happens in the warehouse is not your business. You drive home afterward and go to sleep and wake up and the morning is the same as it was. This is the most frightening thing: the morning is the same.`
       }
       if (G.flags.has('cartel_adjacent')) {
-        return `The man who collected on your block last year is not collecting anymore. You know what happened in the way you know things here — through what is not said, through the car that was there and is not there, through the specific change in who nods at you when you pass. The violence does not announce itself. It simply adjusts the population.`
+        return `The man who collected on your block last year is not collecting anymore. You know what happened in the way you know things here — through what is not said, through the car that was there and is not there, through the change in who nods at you when you pass. The violence does not announce itself. It simply adjusts the population.`
       }
       return `Someone is beaten badly enough that they are hospitalised. It is a message to someone else. You understand the message. You also understand that you are close enough to the operation that distinguishing between message-sender and message-receiver is not guaranteed.`
     },
@@ -333,9 +333,9 @@ export const GANG_EVENTS = [
       const arch = G.character?.country?.archetype ?? ''
       const yr = G.currentYear ?? 2000
       if (arch === 'post_soviet') {
-        return `The business you run is legal in a way that can be verified. This is the thing you worked toward. The people from before do not come to the business. The arrangement held. Some months you cannot locate the person you were before any of this, and that is something to be glad of, and also something to grieve, and you are not always sure which is which.`
+        return `The business you run is legal, and it can be checked. This is the thing you worked toward. The people from before do not come to the business. The arrangement held. Some months you cannot locate the person you were before any of this, and that is something to be glad of, and also something to grieve, and you are not always sure which is which.`
       }
-      return `You are out. The out is not clean — the money that built the legal business has a history — but it is real. You have a specific number of people who know what your history is and a specific arrangement with all of them that holds on the condition of continued silence. This is the shape of the rest of your life. You can live with it. Most days.`
+      return `You are out. The out is not clean — the money that built the legal business has a history — but it is real. You have a number of people who know what your history is and an arrangement with all of them that holds on the condition of continued silence. This is the shape of the rest of your life. You can live with it. Most days.`
     },
     effect: (p) => { p.m += 6; p.r += 10; p.e += 4; p.setMem('gangAfterDone', true) },
     choices: null,

@@ -18,10 +18,11 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
     text: (G) => {
       const isFemale = G.character.gender === 'female'
       if (isFemale) {
-        return 'September 27, 1996. The Taliban enter Kabul. The radio station plays Quranic recitation where the music was. The edicts come quickly: women may not leave the house without a male relative. Women may not work. Girls may not attend school. Burqas are required in public. A week ago you were going to school, or to work, or to the market alone. The space between last week and this week is a week, and it is also everything. The school does not say it is closing. It simply does not open on Sunday morning. You wait for a note. No note comes.'
+        return 'The Taliban enter Kabul, and the radio plays Quranic recitation where the music was. The edicts come quickly: no work for women, no school for girls, no street without a male relative, the burqa outside. A week ago you went to school, or to work, or to the market alone. The school does not say it is closing. It simply does not open on Sunday morning, and you wait for a note, and no note comes.'
       }
-      return 'September 27, 1996. The Taliban enter Kabul. Mohammed Najibullah, who had been living under UN protection in the city, is dragged from the compound and killed. His body is hung from a traffic control post in Aryana Square. The radio station plays Quranic recitation. Edicts follow in rapid succession: no music, no television, no photographs, women confined to their homes without male escort, men required to grow beards of a required length. Kabul had been the most secular city in Afghanistan. The Kabul that existed on September 26 is no longer the city you are living in.'
+      return 'September 27, 1996. The Taliban enter Kabul and drag Najibullah from the UN compound where he has lived for four years, and hang his body from a traffic post in Aryana Square. The radio plays Quranic recitation. The edicts come one after another: no music, no television, no photographs, no woman outside without a man, every man\'s beard a required length. Kabul was the most secular city in the country. The city of September 26 is not the one you are living in.'
     },
+    context: 'The Taliban took Kabul on 27 September 1996 and ruled most of Afghanistan until late 2001.',
     choices: [
       {
         text: 'You adapt. The alternative to adapting is worse.',
@@ -80,7 +81,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
     text: (G) => {
       const isFemale = G.character.gender === 'female'
       if (isFemale) {
-        return 'November 13, 2001. The Taliban abandon Kabul overnight. By morning the music is on. Men are shaving their beards in the street, which is also a protest and also a celebration. Women are removing their burqas — some of them, some of them not yet, some of them never. You remove yours. The air on your face is not different from the air through the mesh was different. But the act is different. You have been waiting five years to take it off and the moment is not what you expected a moment that large to be. It is just taking something off. Then you walk outside alone for the first time in five years.'
+        return 'November 13, 2001. The Taliban leave Kabul in the night, and by morning there is music, and men are shaving their beards in the street. Women take off their burqas, some of them, some not yet, some never. You take yours off. You have waited five years for this, and when it comes you are just taking something off. Then you walk outside alone for the first time in five years.'
       }
       return 'November 13, 2001. The Taliban abandon Kabul overnight, retreating south. US air power and Northern Alliance forces on the ground have moved faster than anyone expected. By morning the music is on in the shops. A barber on Chicken Street is shaving men for free. The American and other foreign forces arrive and the world presses begin sending journalists and photographers and the images go out: women with uncovered faces, girls going to school, boys flying kites. The country has a future tense again.'
     },
@@ -132,7 +133,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
       G.flags.has('afg_2001_liberation_hope') &&
       (G.stats.smarts >= 50) &&
       !G.mem?.afgInterpreter,
-    text: 'The American base or the British base or the German base. The recruiter for interpreters is Afghan, which matters. The pay is fifteen hundred dollars a month — more than any Afghan government salary. The work: go with the soldiers, translate what they say and what is said to them. Not just words: context, register, what a refusal means and how a refusal sounds different from a yes that means no. You know the language of the villages in a way the foreign soldiers never will. You are also, to the Taliban, working for the occupation. Your family knows what you are doing. Your cousins in the village know.',
+    text: 'The recruiter for interpreters at the base is Afghan, which matters, and the pay is more than any government salary. You go with the soldiers and translate what they say and what is said back: not just the words but what a refusal means, and how a yes that means no sounds. You know the villages as the soldiers never will. To the Taliban you are working for the occupation. Your cousins in the village know what you do.',
     choices: [
       {
         text: 'You take the work. The money is real and you believe in the mission.',
@@ -190,12 +191,12 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
       const isFemale = G.character.gender === 'female'
       const hasCareer = G.flags.has('afg_women_career_built')
       if (isFemale && hasCareer) {
-        return 'August 15, 2021. You go to work in the morning. By afternoon you are watching colleagues pack their desks. By evening the president has left the country. The Taliban are in the Presidential Palace. You have a career, a degree, two decades of the country\'s imperfect opening. The airport will be overwhelmed within hours. You know the gate number of the evacuation flights and you know you may not reach them. You think about what to pack. You think about what would be abandoned. There is a box in your apartment that you bought two years ago for a different life — a life of staying — and now it is the problem that it is too heavy.'
+        return 'August 15, 2021. You go to work in the morning, and by afternoon your colleagues are packing their desks, and by evening the president has left the country. You have a career, a degree, two decades of the country\'s imperfect opening. You know the gate number of the evacuation flights and you know you may not reach it. There is a box in your apartment that you bought two years ago for a different life, a life of staying, and now the problem is that it is too heavy.'
       }
       if (isFemale) {
-        return 'August 15, 2021. The Taliban enter Kabul. You know what they did the last time — you were here or your mother was here. The girls\' school that opened in 2002 is on the corner. You wonder if it will close again. It closes again. The edict about women leaving the house without male escort comes first. Then the secondary school ban. Then the university ban. The velocity of the restoration is faster than anyone expected.'
+        return 'August 15, 2021. You know what they did the last time; you were here, or your mother was. The girls\' school that opened in 2002 is on the corner, and you wonder if it will close again, and it closes again. First the rule about leaving the house without a man, then secondary school, then the university. It all comes back faster than anyone expected.'
       }
-      return 'August 15, 2021. Kabul. The government dissolved faster than the foreign intelligence assessments predicted — eleven days from the Doha withdrawal to the airport. President Ghani fled. The foreign embassies evacuated their personnel. At Hamid Karzai International Airport, the crowds on the runway were enormous. People tried to hold onto the landing gear of departing military aircraft. Some fell. The images circulated. The Taliban spokesman gave a press conference. He seemed surprised the cameras were there.'
+      return 'August 15, 2021. The government dissolves faster than anyone\'s assessment said it could. At the airport the crowd fills the runway, and people hold on to the landing gear of the departing planes, and some of them fall, and the images go everywhere. The Taliban spokesman holds a press conference. He seems surprised the cameras are there.'
     },
     choices: [
       {
@@ -225,7 +226,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
       G.age >= 18 &&
       !G.flags.has('afg_2021_escaped') &&
       !G.mem?.afgDiasporaWatch,
-    text: 'You left before. Years before — for university, for work, for the war, for a marriage to someone abroad. You have been watching Afghanistan from outside. When the Taliban take Kabul in August 2021 you are watching on a phone or a television in a country that is not Afghanistan. Your family is still there. The contact goes in and out — they are afraid of what a call from an international number means on their phone records. The group chat for your extended family goes quiet for three days, then begins again, carefully. The messages are not about politics.',
+    text: 'You left years ago, for university or work or the war or a marriage abroad, and you have watched Afghanistan from outside ever since. In August 2021 you watch Kabul fall on a phone in another country. Your family is still there, and they are afraid of what a call from an international number looks like on their records. The family group chat goes silent for three days, then starts again, carefully. The messages are not about politics.',
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -245,7 +246,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
       G.currentYear >= 2022 && G.currentYear <= 2030 &&
       G.age >= 20 &&
       !G.mem?.afgNewTaliban,
-    text: 'The specific texture of life under the Taliban now. The ministry checkpoints. The changes in dress code, enforced by the Ministry for the Promotion of Virtue and Prevention of Vice — the same name as before, but the personnel have changed, the methods are similar. What is different from 1996: the phones, the internet that reaches through the restrictions, the awareness that the world is watching even when the world is not doing anything. What is the same: the fear when you pass a checkpoint, the calculation about what you say and to whom, the management of your daily life in the gap between what you are allowed and what you need.',
+    text: 'The texture of life under the Taliban now. The ministry checkpoints. The changes in dress code, enforced by the Ministry for the Promotion of Virtue and Prevention of Vice — the same name as before, but the personnel have changed, the methods are similar. What is different from 1996: the phones, the internet that reaches through the restrictions, the awareness that the world is watching even when the world is not doing anything. What is the same: the fear when you pass a checkpoint, the calculation about what you say and to whom, the management of your daily life in the gap between what you are allowed and what you need.',
     choices: null,
     effect: (p) => {
       p.m -= 10

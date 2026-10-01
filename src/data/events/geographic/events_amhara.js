@@ -99,7 +99,7 @@ export const AMHARA_EVENTS = [
     phase: null,
     weight: 250,
     when: (G) => AMH(G) && G.flags.includes('amh_walked_home') && G.age >= 45 && G.currentYear >= 2000 && once(G, 'amh_ft_vet'),
-    text: 'There is no pension for a soldier of an army that lost, and no day in the year when anyone says your war\'s name aloud. The men you served with are in the district still, farming, and you know each other at the market by a particular way of standing in a queue. Once a year one of you dies and the others go to the funeral, and nobody at the funeral asks why these particular men came.',
+    text: 'There is no pension for a soldier of an army that lost, and no day in the year when anyone says your war\'s name aloud. The men you served with are in the district still, farming, and you know each other at the market by a way of standing in a queue. Once a year one of you dies and the others go to the funeral, and nobody at the funeral asks why these men came.',
     choices: null,
     effect: (p) => { p.setMem('amh_ft_vet', true); p.r += 4; p.m -= 2 },
   },
@@ -267,7 +267,7 @@ export const AMHARA_EVENTS = [
       {
         text: 'Settle with your cousin',
         tag: null,
-        outcome: 'You split it. Both of you tell it afterwards as a victory, which is what a settlement is for.',
+        outcome: 'You split it. Both of you tell it afterwards as a victory. That is what a settlement is for.',
         effect: (p) => { p.setMem('amh_rist', true); p.karma += 3; p.m += 2 },
       },
     ],
@@ -466,7 +466,7 @@ export const AMHARA_EVENTS = [
     phase: null,
     weight: 300,
     when: (G) => HOME(G) && !MALE(G) && G.age >= 17 && G.age <= 28 && G.currentYear >= 2002 && G.currentYear <= 2020 && (NORTH(G) || RURAL(G)) && once(G, 'amh_gulf'),
-    text: 'Half the girls you were at school with are in Saudi Arabia, or Dubai, or Beirut, and the ones who come back build houses with gates. There is an agency in Dessie with a two-year contract and a medical, and there is the other road, through Djibouti and across the water to Yemen, which costs less and needs no papers. Your mother says nothing either way, which is how you know she has already decided.',
+    text: 'Half the girls you were at school with are in Saudi Arabia, or Dubai, or Beirut, and the ones who come back build houses with gates. There is an agency in Dessie with a two-year contract and a medical, and there is the other road, through Djibouti and across the water to Yemen, which costs less and needs no papers. Your mother says nothing either way, and so you know she has already decided.',
     choices: [
       {
         text: 'Go through the agency',

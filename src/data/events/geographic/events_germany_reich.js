@@ -1,3 +1,4 @@
+import { numberWord } from '../_words.js'
 // Germany, 1933–1949: the twelve years and what came after them.
 //
 // The corpus had 29 events whose guard names Germany, and exactly one touching
@@ -63,8 +64,8 @@ export const GERMANY_REICH_EVENTS = [
     text: (G) => {
       const girl = G.character.gender === 'female'
       return girl
-        ? 'You are ten and it is no longer optional. The Jungmädel meet on Wednesdays: the white blouse, the black neckerchief, the songs, the marching in a way that is more like a game than like an army. There is a week under canvas in the summer and it is the best week of the year. Nobody at the campfire says anything about politics. You are being taught to be strong and healthy and to belong to something, and you do belong to it, and the belonging is the point and is not the reason.'
-        : 'You are ten and it is no longer optional. The Jungvolk meet on Wednesdays: the brown shirt, the knife with the words on the blade, the terrain games in the woods, the hierarchy that gives an eleven-year-old somebody to give orders to. There is a week under canvas in the summer and it is the best week of the year. You are good at it. Being good at it feels exactly like being good at anything else, which is how it works.'
+        ? 'You are ten and it is no longer optional. The Jungmädel meet on Wednesdays: the white blouse, the black neckerchief, the songs, the marching that is more like a game than like an army. There is a week under canvas in the summer and it is the best week of the year. Nobody at the campfire says anything about politics. You are being taught to be strong and healthy and to belong to something, and you do belong to it, and the belonging is the point and is not the reason.'
+        : 'You are ten and it is no longer optional. The Jungvolk meet on Wednesdays: the brown shirt, the knife with the words on the blade, the terrain games in the woods, the hierarchy that gives an eleven-year-old somebody to give orders to. There is a week under canvas in the summer and it is the best week of the year. You are good at it. Being good at it feels exactly like being good at anything else.'
     },
     choices: [
       { text: 'You love it', tag: null, outcome: 'You are promoted within it, and for three years you are happier and more certain than you will be again for a long time.', effect: (p) => { p.m += 10; p.h += 5; p.s += 5; p.addFlag('de_hj_enthusiast'); p.addFlag('de_reich_child') } },
@@ -86,9 +87,9 @@ export const GERMANY_REICH_EVENTS = [
       !G.mem?.deClassmate,
     text: 'There is a girl two desks over who has been two desks over since the first year. In the autumn she is not there. The teacher does not mark her absent; the register has been rewritten. Somebody says her family has gone to relatives. Somebody else says a word you have heard on the radio, in the voice the radio uses. You walk past the flat on the way home for a while and then you stop walking that way, and you could not say now whether you stopped on purpose.',
     choices: [
-      { text: 'Ask where she went', tag: 'defiant', outcome: 'Your mother answers with her hand flat on the table, which is not an answer, and you never ask again. You remember the hand.', effect: (p) => { p.m -= 8; p.e += 5; p.karma += 4; p.addFlag('de_classmate_vanished'); p.addFlag('de_asked_once') } },
-      { text: 'Say nothing and think about it at night', tag: null, outcome: 'You are nine. The not-asking is not a decision. It is what there was.', effect: (p) => { p.m -= 6; p.r += 6; p.addFlag('de_classmate_vanished'); p.addFlag('aut_taught_silence') } },
-      { text: 'Repeat what the radio says about her', tag: 'yielding', outcome: 'The other children agree with you. It is the first time you have felt the particular warmth of being on the right side of a room.', effect: (p) => { p.m += 3; p.karma -= 10; p.r += 10; p.addFlag('de_classmate_vanished'); p.addFlag('de_said_it_too') } },
+      { text: 'Ask where she went', tag: 'defiant', outcome: 'Your mother answers with her hand flat on the table, and you never ask again. You remember the hand.', effect: (p) => { p.m -= 8; p.e += 5; p.karma += 4; p.addFlag('de_classmate_vanished'); p.addFlag('de_asked_once') } },
+      { text: 'Say nothing and think about it at night', tag: null, outcome: 'You are nine. Nobody decided not to ask. Not asking was what there was.', effect: (p) => { p.m -= 6; p.r += 6; p.addFlag('de_classmate_vanished'); p.addFlag('aut_taught_silence') } },
+      { text: 'Repeat what the radio says about her', tag: 'yielding', outcome: 'The other children agree with you. It is the first time you have felt the warmth of being on the right side of a room.', effect: (p) => { p.m += 3; p.karma -= 10; p.r += 10; p.addFlag('de_classmate_vanished'); p.addFlag('de_said_it_too') } },
     ],
     effect: null,
   },
@@ -123,7 +124,7 @@ export const GERMANY_REICH_EVENTS = [
       !G.mem?.deBlockwart,
     text: 'The block warden is a man from the second floor who was, before this, a man from the second floor. He knows who subscribes to what, who did not hang the flag out, who came home late and how late. He is not secret police and this is the thing people outside Germany will never quite get: most of what the state knows about you, it knows because a neighbour told it, and the neighbour was not paid and was not threatened. He asks after your mother in the stairwell and it is a pleasant exchange and you both understand exactly what it is.',
     choices: [
-      { text: 'Be scrupulously correct with him', tag: 'yielding', outcome: 'The flag goes out on the right days. The greeting is given first, every time. It works, which is its own kind of education.', effect: (p) => { p.m -= 5; p.s += 3; p.addFlag('de_denunciation_climate'); p.addFlag('aut_taught_silence') } },
+      { text: 'Be scrupulously correct with him', tag: 'yielding', outcome: 'The flag goes out on the right days. The greeting is given first, every time. It works, and you learn from that.', effect: (p) => { p.m -= 5; p.s += 3; p.addFlag('de_denunciation_climate'); p.addFlag('aut_taught_silence') } },
       { text: 'Give him nothing', tag: 'defiant', outcome: 'There is a summons to an office that comes to nothing, and a second one that is harder to explain away, and your mother does not speak to you for a week.', effect: (p) => { p.m -= 10; p.karma += 8; p.addFlag('de_denunciation_climate'); p.addFlag('de_marked_unreliable') } },
     ],
     effect: null,
@@ -150,17 +151,52 @@ export const GERMANY_REICH_EVENTS = [
 
   {
     id: 'dereich_called_up',
+    // A father's call-up, seen by his child: "he", the shelf, "your mother will
+    // not wear black". It had no upper age and no father in the guard, so it
+    // told a forty-year-old with a dead father that the paper had come for him.
+    // The character's OWN call-up is `dereich_own_call_up`, below.
     phase: null,
     weight: 9,
     when: (G) =>
       IS_DE(G) &&
       G.currentYear >= 1939 && G.currentYear <= 1944 &&
-      G.age >= 5 &&
+      G.age >= 5 && G.age <= 16 &&
+      G.parents?.father && G.parents.father.alive !== false &&
       !G.mem?.deCalledUp,
     text: 'The paper comes and then he is at the station in a uniform that does not fit him yet, and there is a photograph taken that afternoon that will be on a shelf for sixty years. The letters come from a place the censor will not let him name, and then from a place further east than the last one, and the handwriting gets smaller because paper is short. Then there is a gap in the letters, and then a letter that is not from him.',
     choices: [
       { text: 'He comes back', tag: null, outcome: 'In 1949, from a camp near Stalingrad, weighing what he weighs. He does not talk about it and he does not sleep much, and the man in the photograph on the shelf is somebody else.', effect: (p) => { p.m -= 10; p.addFlag('de_father_returned_late'); p.addFlag('de_war_family') } },
-      { text: 'He does not', tag: null, outcome: 'Missing, in the east. There is no grave and no date and for eleven years your mother will not wear black, because wearing black would be agreeing to something.', effect: (p) => { p.m -= 20; p.r += 10; p.addFlag('de_father_lost_east'); p.addFlag('de_war_family'); p.addFlag('lost_parent_young') } },
+      { text: 'He does not', tag: null, outcome: 'Missing, in the east. There is no grave and no date and for eleven years your mother will not wear black, because wearing black would be agreeing to something.', effect: (p) => { p.m -= 20; p.r += 10; p.addFlag('de_father_lost_east'); p.addFlag('de_war_family'); p.addFlag('lost_parent_young'); p.killParent('father') } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'dereich_own_call_up',
+    // Every German man born between about 1900 and 1928 who was not exempt
+    // was in it, and the cohort born 1920-1928 was called up at seventeen or
+    // eighteen; about a third of it did not come home. The module had the
+    // father's call-up, the cellar and the flak battery, and nothing for the
+    // man himself, so a German who was eighteen in 1943 was never conscripted.
+    // German Jews were excluded from the Wehrmacht by law from 1935.
+    phase: null,
+    weight: 60,
+    claimsYears: { from: 1939, to: 1944 },
+    when: (G) =>
+      IS_DE(G) && G.character.gender === 'male' &&
+      G.currentYear >= 1939 && G.currentYear <= 1945 &&
+      G.age >= 17 && G.age <= 40 &&
+      G.religion !== 'jewish' && G.ethnicity !== 'turkish_german' &&
+      !G.inPrison && !G.flags.has('de_walked_away') &&
+      !G.mem?.deOwnCallUp,
+    text: (G) => G.currentYear <= 1940
+      ? 'The letter gives a date and a station. Your mother sews your name into your vests. At the barracks they cut your hair and teach you to march in step and strip a rifle blind, and by the spring you are on a train going west in a carriage of men who sing because somebody started.'
+      : G.currentYear <= 1943
+        ? 'The letter gives a date and a station. Your mother sews your name into your vests. Three months at the barracks, and then a train going east for four days, and the names of the stations stop being names you can say.'
+        : 'The letter gives a date and a station, and the station has been bombed, so you report to a school instead. They give you a rifle older than you are and a fortnight of training. The front is no longer somewhere you are sent. It is coming down the road toward the town.',
+    choices: [
+      { text: 'Do what you are told and keep your head down.', tag: 'yielding', outcome: 'You keep your head down. You learn to sleep in a hole and eat standing up, and you learn not to look at what is done in the villages, so well that afterwards you cannot say what you saw.', effect: (p) => { p.setMem('deOwnCallUp', true); p.m -= 12; p.h -= 8; p.addFlag('de_wehrmacht_soldier'); p.addFlag('served_military'); p.addFlag('de_war_family') } },
+      { text: 'Look after the men beside you, and nobody else.', tag: null, outcome: 'Eight men in a section, and you know the names of their sisters. That is the whole of your loyalty by the second winter, and you do not ask yourself what it was in service of until much later.', effect: (p) => { p.setMem('deOwnCallUp', true); p.m -= 10; p.h -= 8; p.s += 2; p.addFlag('de_wehrmacht_soldier'); p.addFlag('served_military'); p.addFlag('de_war_family') } },
     ],
     effect: null,
   },
@@ -175,7 +211,7 @@ export const GERMANY_REICH_EVENTS = [
       G.age >= 4 &&
       G.ruralUrban !== 'rural' &&
       !G.mem?.deCellar,
-    text: 'The siren has a shape to it that you will be able to reproduce with your mouth for the rest of your life. The cellar has a bench, a bucket, a case by the door packed since 1942, and the particular smell of coal dust and other people. The building takes it or it does not. When you come up, the street is either the street or it is a new geography with the same street name, and you learn to read which from the quality of the light before you get to the top of the stairs.',
+    text: 'The siren has a shape to it that you will be able to reproduce with your mouth for the rest of your life. The cellar has a bench, a bucket, a case by the door packed since 1942, and the smell of coal dust and other people. The building takes it or it does not. When you come up, the street is either the street or it is a new geography with the same street name, and you learn to read which from the quality of the light before you get to the top of the stairs.',
     choices: [
       { text: 'Your building stands', tag: null, outcome: 'Yours stands. The one opposite does not, and you knew the family in it by sight, and you find you cannot remember the children\'s names now and that this bothers you more than it should.', effect: (p) => { p.m -= 14; p.h -= 5; p.addFlag('de_bombing_survivor'); p.addFlag('de_war_family') } },
       { text: 'It does not', tag: null, outcome: 'You are dug out. You are on the pavement wrapped in somebody else\'s coat while it is still burning, and everything the family owned is in the handcart by morning.', effect: (p) => { p.m -= 22; p.h -= 14; p.wipeMoney(0.85); p.addFlag('de_bombed_out'); p.addFlag('de_bombing_survivor'); p.addFlag('lost_home'); p.addFlag('de_war_family') } },
@@ -336,7 +372,7 @@ export const GERMANY_REICH_FOLLOWTHROUGH = [
       !G.mem?.deFt68,
     text: 'Your child is nineteen and has been reading, and asks you at the table, in front of everybody, what you did. Not what happened — what you did. It is the first time anybody has asked you directly in thirty years and the question is not being asked kindly, and the unkindness is the point: they have worked out that the whole country has been waiting for everyone who was there to die.',
     choices: [
-      { text: 'Tell them', tag: 'defiant', outcome: 'It takes four hours and you are not forgiven at the end of it, and something in the house is different afterwards in a way that is better.', effect: (p) => { p.m -= 8; p.karma += 14; p.e += 6; p.addFlag('de_told_the_children'); p.addFlag('de_reckoning_begun') } },
+      { text: 'Tell them', tag: 'defiant', outcome: 'It takes four hours and you are not forgiven at the end of it, and something in the house is better afterwards.', effect: (p) => { p.m -= 8; p.karma += 14; p.e += 6; p.addFlag('de_told_the_children'); p.addFlag('de_reckoning_begun') } },
       { text: 'Tell them you were a child, which is true', tag: null, outcome: 'It is true and it is not an answer and you both know it, and they stop asking, and you find you wanted to be asked again.', effect: (p) => { p.m -= 10; p.r += 12; p.addFlag('de_deflected_the_children') } },
       { text: 'Tell them they have no idea what it was like', tag: 'yielding', outcome: 'You are right about that. They leave the table. The conversation does not resume for eleven years.', effect: (p) => { p.m -= 14; p.karma -= 6; p.r += 16; p.addFlag('de_refused_the_children'); p.addFlag('estranged_child') } },
     ],
@@ -402,12 +438,66 @@ export const GERMANY_REICH_FOLLOWTHROUGH = [
       G.currentYear >= 1955 && G.currentYear <= 1970 &&
       G.age >= 25 &&
       !G.mem?.deFtWunder,
-    text: 'There is a new kitchen and a small car and a fortnight in Italy, and the speed of it is not believable to anybody who was in the cellar. The deal, which is never stated anywhere and which everybody has signed, is that the work is the subject and the other thing is not. You are thirty-one and you have a refrigerator and you have never once said out loud what you saw in November 1938.',
+    text: (G) => `There is a new kitchen and a small car and a fortnight in Italy, and the speed of it is not believable to anybody who was in the cellar. The deal, never written down and signed by everybody, is that the work is the subject and the other thing is not. You are ${numberWord(G.age)} and you have a refrigerator and you have never once said out loud what you saw.`,
     choices: null,
     effect: (p) => {
       p.m += 6; p.w += 6; p.r += 8
       p.addFlag('de_wunder_bargain')
       p.setMem('deFtWunder', true)
     },
+  },
+
+  {
+    id: 'dereich_ft_surrender',
+    // Where the soldier was in April 1945 decided the next ten years: the
+    // western Allies released most prisoners within months, the Soviet Union
+    // kept them for years, the last ten thousand until 1955.
+    phase: null,
+    weight: 400,
+    when: (G) =>
+      G.flags.has('de_wehrmacht_soldier') &&
+      G.currentYear >= 1945 && G.currentYear <= 1946 &&
+      !G.mem?.deFtSurrender,
+    text: 'It ends for you in a field. The officers have gone. Somebody says the Americans are forty kilometres west and the Russians twenty kilometres east, and the whole column of you stands in the road doing that arithmetic.',
+    choices: [
+      { text: 'Walk west.', tag: null, outcome: 'Three weeks behind wire in an open meadow by the Rhine, sleeping in a hole you dug with a tin lid, and then a paper and a train. You are home by the autumn, to a town you have to ask the way through.', effect: (p) => { p.setMem('deFtSurrender', true); p.m -= 6; p.h -= 4; p.addFlag('de_pow_west') } },
+      { text: 'Stay with the wounded.', tag: null, outcome: 'The Russians take you with them. A camp past the Urals, timber and a soup with a fishbone in it, and a postcard home of twenty-five words a year. You come back in a cattle wagon, weighing what a boy weighs.', effect: (p) => { p.setMem('deFtSurrender', true); p.m -= 14; p.h -= 12; p.karma += 4; p.addFlag('de_pow_east') } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'dereich_ft_heimkehrer',
+    phase: null,
+    weight: 12,
+    when: (G) =>
+      G.flags.has('de_pow_east') &&
+      G.currentYear >= 1955 && G.currentYear <= 1960 &&
+      !G.mem?.deFtHeimkehrer,
+    text: 'In October the last ten thousand come home from the Soviet camps, and the newsreel shows them at Friedland, and the women holding up photographs of men who are not on the train. You go to the cinema twice to watch it. Both times you look at the faces of the women, and not at the men.',
+    choices: null,
+    effect: (p) => { p.m -= 6; p.r += 6; p.setMem('deFtHeimkehrer', true) },
+  },
+
+  {
+    id: 'dereich_ft_wehrmacht_exhibition',
+    // The 1995-99 travelling exhibition on the crimes of the Wehrmacht was the
+    // first time the war the ordinary soldier fought was put on a wall in front
+    // of his grandchildren. Nearly a million people saw it.
+    phase: null,
+    weight: 30,
+    when: (G) =>
+      G.flags.has('de_wehrmacht_soldier') &&
+      G.currentYear >= 1995 && G.currentYear <= 1999 &&
+      !G.mem?.deFtExhibition,
+    text: (G) => {
+      const where = G.flags.has('de_pow_east') ? 'You were years in a Russian camp, and you have told that story many times.' : G.flags.has('de_pow_west') ? 'You have told the story of the meadow by the Rhine many times.' : 'You have told the story of how it ended many times.'
+      return `The exhibition about the crimes of the Wehrmacht comes to the city and there are queues, and pickets, and men your age outside with placards. ${where} The photographs on those walls are of a different story, and some of the uniforms in them are yours.`
+    },
+    choices: [
+      { text: 'Go, on your own, on a weekday morning.', tag: 'defiant', outcome: 'You stand in front of one photograph for a long time. A young woman with a clipboard asks if you are all right. You say yes. It is not the word.', effect: (p) => { p.setMem('deFtExhibition', true); p.m -= 10; p.karma += 8; p.addFlag('de_reckoning_begun') } },
+      { text: 'Do not go.', tag: 'yielding', outcome: 'You do not go. Your grandson does, and comes back, and does not ask you anything, and that is worse.', effect: (p) => { p.setMem('deFtExhibition', true); p.m -= 6; p.r += 10 } },
+    ],
+    effect: null,
   },
 ]

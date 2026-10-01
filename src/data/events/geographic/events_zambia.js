@@ -17,7 +17,7 @@ export const ZAMBIA_EVENTS = [
       G.currentYear >= 1965 && G.currentYear <= 1985 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem.zmbHumanism,
-    text: 'Kenneth Kaunda\'s philosophy is Humanism — Zambian Humanism, specifically: the dignity of the human being as the centre of everything, not capital and not class. Nationalisation of the copper mines means the state controls the copper. The copper funds the schools and the hospitals and the civil service. "Man at the Centre" is in the school curriculum. The one-party state — UNIP — is the political reality. You grow up with this as the background of civic life: a specific African socialism, a real welfare state funded by copper, and no mechanism to change the government.',
+    text: 'Kenneth Kaunda\'s philosophy is Humanism — Zambian Humanism, specifically: the dignity of the human being as the centre of everything, not capital and not class. Nationalisation of the copper mines means the state controls the copper. The copper funds the schools and the hospitals and the civil service. "Man at the Centre" is in the school curriculum. The one-party state — UNIP — is the political reality. You grow up with this as the background of civic life: an African socialism, a real welfare state funded by copper, and no mechanism to change the government.',
     choices: null,
     effect: (p) => { p.e += 3; p.m += 2; p.addFlag('zambian_kaunda_generation'); p.setMem('zmbHumanism', true) },
   },
@@ -45,7 +45,7 @@ export const ZAMBIA_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1990 &&
       G.age >= 25 &&
       !G.mem.zmbCrash,
-    text: '1975. The copper price collapses — a global commodities crash that hits Zambia harder than almost any country because copper is ninety-five percent of Zambia\'s export earnings. The welfare state that copper funded starts to hollow out. The schools are the schools. The clinics are the clinics. But the budget is not the budget it was. The Zambia we will build is deferred. In the 1980s the IMF arrives with structural adjustment: cut subsidies, devalue the currency, retrench the state. The bread riots happen when the mealie meal subsidy is removed.',
+    text: '1975, and the copper price collapses, and copper is nearly everything Zambia sells. The schools and clinics copper paid for begin to hollow out; the Zambia we will build is postponed. In the eighties the IMF comes with its conditions: cut the subsidies, devalue, shrink the state. When they take the subsidy off mealie meal, there are riots in the towns.',
     choices: [
       {
         text: 'You are in the Copper Belt — the world you built is contracting.',
@@ -72,7 +72,7 @@ export const ZAMBIA_EVENTS = [
       G.currentYear === 1991 &&
       G.age >= 18 &&
       !G.mem.zmbTransition,
-    text: 'October 1991. Kenneth Kaunda — who has governed Zambia since independence in 1964 — holds a multi-party election and loses to Frederick Chiluba\'s Movement for Multi-party Democracy. Kaunda concedes. Peacefully. Zambia becomes the first country in southern Africa to achieve a democratic transfer of power. Kaunda says: "I have been defeated." There is cheering in the streets. You are in a country that has just done something genuinely rare. The MMD wins with 76 percent of the vote.',
+    text: 'October 1991, and Kaunda, who has governed since independence, holds a multi-party election and loses it badly to Chiluba, and concedes. "I have been defeated," he says, peacefully. There is cheering in the streets. You are in a country that has done something genuinely rare.',
     choices: null,
     effect: (p) => { p.m += 12; p.r += 4; p.addFlag('zambian_democracy_generation'); p.setMem('zmbTransition', true) },
   },
@@ -101,7 +101,7 @@ export const ZAMBIA_EVENTS = [
       G.religion === 'christian_protestant' &&
       G.age >= 20 &&
       !G.mem.zmbEvangelical,
-    text: 'Frederick Chiluba declared Zambia a Christian nation in 1991 — one of the only such constitutional declarations in Africa. The Pentecostal and charismatic churches are growing faster than any other institution in the country. The church provides what the contracting state no longer provides: a social network, a crisis fund, a place to go on Sunday, an explanation. The prosperity gospel version of Christianity has a particular appeal in a country where the copper promises didn\'t all arrive.',
+    text: 'Frederick Chiluba declared Zambia a Christian nation in 1991 — one of the only such constitutional declarations in Africa. The Pentecostal and charismatic churches are growing faster than any other institution in the country. The church provides what the contracting state no longer provides: a social network, a crisis fund, a place to go on Sunday, an explanation. The prosperity gospel version of Christianity has an appeal in a country where the copper promises didn\'t all arrive.',
     choices: null,
     effect: (p) => { p.m += 5; p.s += 3; p.addFlag('zambian_evangelical_generation'); p.setMem('zmbEvangelical', true) },
   },

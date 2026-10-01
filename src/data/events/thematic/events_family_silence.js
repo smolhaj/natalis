@@ -105,7 +105,7 @@ export const FAMILY_SILENCE_EVENTS = [
       G.flags.has('hiroshima_family_memory') &&
       !G.mem?.fsHiroshimaDone &&
       G.age >= 7 && G.age <= 15,
-    text: 'Your family is from a city your parent will not visit. You have asked why, more than once. The answers are always short and never complete: "It is too far." "Too busy." Once, just once, they said: "It is complicated, what happened there." They did not say what happened there. You find out at school, years later, from a textbook. You think about your parent\'s face when they said "complicated." You understand, now, that the word was doing a great deal of work.',
+    text: 'Your family is from a city your parent will not visit. You have asked why, and the answers are short: too far, too busy. Once they said, "It is complicated, what happened there," and nothing more. Years later you find out at school, from a textbook, and you think of their face when they said complicated.',
     choices: null,
     effect: (p) => {
       p.setMem('fsHiroshimaDone', true)
@@ -142,7 +142,7 @@ export const FAMILY_SILENCE_EVENTS = [
       G.flags.has('biafra_family_memory') &&
       !G.mem?.fsBiafraDone &&
       G.age >= 7 && G.age <= 15,
-    text: 'Your parent does not speak about the war. You know there was a war — you have heard the word at school, in passing, without context. At home it does not exist. When you ask, your parent\'s answer is short: "It is past." But you have seen them stop when certain songs come on the radio. You have seen them look out of windows in a way that has nothing to do with what is outside.',
+    text: 'Your parent does not speak about the war. You know there was a war — you have heard the word at school, in passing, without context. At home it does not exist. When you ask, your parent\'s answer is short: "It is past." But you have seen them stop when certain songs come on the radio. You have seen them look out of windows at nothing that is outside.',
     choices: null,
     effect: (p) => {
       p.setMem('fsBiafraDone', true)
@@ -213,7 +213,7 @@ export const FAMILY_SILENCE_EVENTS = [
       G.flags.has('reunification_family_memory') &&
       !G.mem?.fsVietnamDone &&
       G.age >= 6 && G.age <= 14,
-    text: 'Your family talks about the north and the south like they are more than directions. There is something in the geography of this that you don\'t fully understand. Your parent came from one and ended up in the other and the story of how is told in pieces, each piece stopping before it reaches the part you want to hear. You know there was a war. You know it ended. You understand, slowly, that for your family the ending was its own kind of thing to survive.',
+    text: 'Your family talks about the north and the south like they are more than directions. There is something in the geography of this that you don\'t fully understand. Your parent came from one and ended up in the other and the story of how is told in pieces, each piece stopping before it reaches the part you want to hear. You know there was a war. You know it ended. You understand, slowly, that for your family the ending was something to survive.',
     choices: null,
     effect: (p) => {
       p.setMem('fsVietnamDone', true)
@@ -231,7 +231,7 @@ export const FAMILY_SILENCE_EVENTS = [
       G.flags.has('red_terror_family_memory') &&
       !G.mem?.fsRedTerrorDone &&
       G.age >= 7 && G.age <= 15,
-    text: 'Your parent keeps a list, somewhere — you have seen it, once, in a notebook that was closed before you could read it. Names. You asked what the list was. They said: "People we knew." They said it in a way that closed the conversation. You understood, later, that "knew" was doing the work that "lost" could not be made to do at the dinner table.',
+    text: 'Your parent keeps a list, somewhere — you have seen it, once, in a notebook that was closed before you could read it. Names. You asked what the list was. They said: "People we knew." They said it so that the conversation closed. You understood, later, that "knew" was doing the work that "lost" could not be made to do at the dinner table.',
     choices: null,
     effect: (p) => {
       p.setMem('fsRedTerrorDone', true)
@@ -305,7 +305,7 @@ export const FAMILY_SILENCE_EVENTS = [
       G.flags.has('carries_family_silence') &&
       !G.mem?.fsAdultAsksDone &&
       G.age >= 26 && G.age <= 38,
-    text: 'You are old enough, now, to ask. One evening at the kitchen table, with the plates still out, you bring it up directly. You say: I want to know what happened. There is a pause. Your parent says: "Why does it matter now?" You say it matters because it is part of where you come from. Another pause. Then they begin. The story is shorter than you expected, and longer than they intended, and does not end cleanly. You sit with it for days afterward.',
+    text: 'You are old enough now to ask. One evening at the kitchen table, with the plates still out, you say: I want to know what happened. Your parent says, "Why does it matter now?" You say it is part of where you come from. Then they begin, and the story is shorter than you expected, and longer than they meant it to be, and does not end cleanly.',
     choices: [
       {
         text: 'You listened to everything, and now you carry it',
@@ -342,7 +342,7 @@ export const FAMILY_SILENCE_EVENTS = [
       G.flags.has('carries_family_silence') &&
       !G.mem?.fsMidlifeDone &&
       G.age >= 48 && G.age <= 58,
-    text: 'You are the age now that your parent was when you first began to understand something was not being said. You think about this sometimes: the specific work of keeping a thing quiet across decades, of going to sleep with it, of answering your children\'s questions without reaching it. You have your own version of the silence now. Different content, same shape.',
+    text: 'You are the age now that your parent was when you first began to understand something was not being said. You think about this sometimes: the work of keeping a thing quiet across decades, of going to sleep with it, of answering your children\'s questions without reaching it. You have your own version of the silence now. Different content, same shape.',
     choices: null,
     effect: (p) => {
       p.setMem('fsMidlifeDone', true)

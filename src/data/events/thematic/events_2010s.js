@@ -19,7 +19,7 @@ export const EVENTS_2010S = [
       (G.character.country.archetype === 'wealthy_west' ||
        G.character.country.archetype === 'wealthy_east' ||
        G.character.country.archetype === 'developing_urban'),
-    text: 'The app. There is work available whenever you want it — driving, delivering, running errands on someone else\'s schedule. You set your own hours. You are your own boss. The app takes its cut and the cut is what the app decides. Your expenses are yours. There is no sick pay. There is flexibility, which is real, and instability, which is also real.',
+    text: 'The app. There is work available whenever you want it — driving, delivering, running errands on someone else\'s schedule. You set your own hours. You are your own boss. The app takes its cut and the cut is what the app decides. Your expenses are yours. There is no sick pay. There is flexibility, and there is instability.',
     choices: [
       {
         text: 'Take the work — it bridges the gap',
@@ -30,7 +30,7 @@ export const EVENTS_2010S = [
       {
         text: 'Decline — you need something with a floor',
         tag: 'security',
-        outcome: 'The flexibility was real. So was the exposure. You keep looking for something with a contract attached.',
+        outcome: 'You had flexibility, and nothing underneath it. You keep looking for something with a contract attached.',
         effect: (p) => { p.m += 3; p.e += 3; p.setMem('dec10GigDone', true); },
       },
     ],
@@ -135,12 +135,12 @@ export const EVENTS_2010S = [
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.dec10OccupyDone &&
       (G.character.country.archetype === 'wealthy_west'),
-    text: 'Zuccotti Park. St Paul\'s Cathedral. The tents in the city square, the general assemblies, the handmade signs. The occupations last weeks, then months. The specific demand — what, exactly, are we asking for? — is the thing they never resolve. But the map they draw of the economy, the vocabulary they put into circulation: that stays.',
+    text: 'Zuccotti Park. St Paul\'s Cathedral. The tents in the city square, the general assemblies, the handmade signs. The occupations last weeks, then months. The demand — what, exactly, are we asking for? — is the thing they never resolve. But the map they draw of the economy, the vocabulary they put into circulation: that stays.',
     choices: [
       {
         text: 'Go down and see it',
         tag: 'curious',
-        outcome: 'You spend a few evenings at the camp. You come away with a specific set of questions about money that you did not have before.',
+        outcome: 'You spend a few evenings at the camp. You come away with a set of questions about money that you did not have before.',
         effect: (p) => { p.e += 6; p.karma += 4; p.s += 2; p.addFlag('occupy_witness'); p.setMem('dec10OccupyDone', true); },
       },
       {
@@ -196,7 +196,7 @@ export const EVENTS_2010S = [
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.dec10AlgoDone &&
       G.flags.has('has_smartphone'),
-    text: 'At some point the feed stopped being chronological. What you see is what the algorithm has decided you want to see, which is a function of what you looked at before, which is already a function of previous versions of the algorithm. You can\'t fully explain how your opinions formed in this decade and whether the sequence was yours.',
+    text: 'At some point the feed stopped being chronological. What you see is what the algorithm has decided you want to see, a function of what you looked at before, itself a function of previous versions of the algorithm. You can\'t fully explain how your opinions formed in this decade and whether the sequence was yours.',
     choices: null,
     effect: (p) => { p.e += 5; p.m -= 3; p.r += 2; p.addFlag('algorithm_aware'); p.setMem('dec10AlgoDone', true); },
   },

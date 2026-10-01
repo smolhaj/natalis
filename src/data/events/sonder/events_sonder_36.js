@@ -18,7 +18,7 @@ export const EVENTS_SONDER_36 = [
     when: (G) => place.hasPhotographs(G) && (!G.mem?.s36RuinedPhotograph),
     text: () => pick([
       'There is a photograph that got ruined — water damage, or a hard drive that died, or a fire that took a box of things. The photographs that were lost are more present in memory now than the ones that survive. The surviving photographs are accurate about surfaces. The lost ones are the ones the memory has edited into something specific and irreplaceable.',
-      'A photograph you know you had and no longer have: the specific image, the moment it caught, the people in it at the ages they were. The loss of the photograph didn\'t take the memory — it changed the relationship between the memory and its evidence. Now the memory is the only version.',
+      'A photograph you know you had and no longer have: the image, the moment it caught, the people in it at the ages they were. The loss of the photograph didn\'t take the memory — it changed the relationship between the memory and its evidence. Now the memory is the only version.',
     ]),
     choices: null,
     effect: (p) => { p.r += 4; p.setMem('s36RuinedPhotograph', true) },
@@ -30,8 +30,8 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => !G.mem?.s36YourNameSaid,
     text: () => pick([
-      'The sound of your own name in a particular person\'s mouth: the way they say it, the register, the syllable they stress. You have had your name said by enough people in enough accents and tones to know that the same name is not the same in all mouths. The version someone says when they are glad to see you and the version they say when they are calling you from another room.',
-      'Your name sounds different depending on who is saying it and what they are about to say. You have learned to read the tone before the words. The name in a particular person\'s voice carries information the name itself does not contain.',
+      'The sound of your own name in a person\'s mouth: the way they say it, the register, the syllable they stress. You have had your name said by enough people in enough accents and tones to know that the same name is not the same in all mouths. The version someone says when they are glad to see you and the version they say when they are calling you from another room.',
+      'Your name sounds different depending on who is saying it and what they are about to say. You have learned to read the tone before the words. The name in a person\'s voice carries information the name itself does not contain.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s36YourNameSaid', true) },
@@ -82,7 +82,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => !G.mem?.s36ColourAfternoon,
     text: () => pick([
-      'A colour that belongs to a specific time of day in a specific place. Not a general observation about light — the particular yellow of three o\'clock in October through the window of a room you spent years in. The colour is not available anywhere else in quite the same way. When something approaches it, you are briefly back in the room.',
+      'A colour that belongs to a time of day in a place. Not a general observation about light — the yellow of three o\'clock in October through the window of a room you spent years in. The colour is not available anywhere else in quite the same way. When something approaches it, you are briefly back in the room.',
       'The quality of light at four in the afternoon in the place you grew up: the angle, the season, the colour it made on the walls of whatever you were inside. The light has been different everywhere you have been since. The original is the reference and nothing matches it exactly.',
     ]),
     choices: null,
@@ -122,7 +122,7 @@ export const EVENTS_SONDER_36 = [
     when: (G) => G.age >= 30 && !G.mem?.s36DebtRepaid,
     text: () => pick([
       'You repaid something — money borrowed, a favour owed, a kindness that required return. The repayment closed the account. You have noticed that some accounts close cleanly and some close technically but still register as open in the other person\'s accounting, or in yours, or in both. This one is closed, you think, on both sides.',
-      'The debt you cleared: the conversation where you said here it is, and the other person said thank you, and something was settled. The settling of small debts has a texture that is different from the settling of large ones. Both are real. Both matter in the economy of a relationship.',
+      'The debt you cleared: the conversation where you said here it is, and the other person said thank you, and something was settled. The settling of small debts has a texture that is different from the settling of large ones. Both matter in the economy of a relationship.',
     ]),
     choices: null,
     effect: (p) => { p.karma += 2; p.setMem('s36DebtRepaid', true) },
@@ -147,7 +147,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => !G.mem?.s36HabitNoReason,
     text: () => pick([
-      'A habit you have that you cannot trace to an origin — always checking a particular thing before you leave, always taking the same side of the pavement, always putting the cup in the same spot. The habit has been running for so long the origin is not available. It may have had a reason once. The reason is gone and the habit is not.',
+      'A habit you have that you cannot trace to an origin — always checking a thing before you leave, always taking the same side of the pavement, always putting the cup in the same spot. The habit has been running for so long the origin is not available. It may have had a reason once. The reason is gone and the habit is not.',
       'You do a small thing in a order every day without knowing why the order became that order. The order was not decided — it accumulated. You are inside the accumulation. The accumulation is what daily life is mostly made of.',
     ]),
     choices: null,
@@ -160,7 +160,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => place.hasCafe(G) && (!G.mem?.s36TimeAlone),
     text: () => pick([
-      'The hours you spend alone that are not lonely: the particular quality of a Saturday morning when the rest of the house is out or quiet, the walk that has no destination, the afternoon in the cafe where you brought nothing to do. Solitude that is chosen is different from solitude that is imposed. You know both and have a relationship with each.',
+      'The hours you spend alone that are not lonely: the quality of a Saturday morning when the rest of the house is out or quiet, the walk that has no destination, the afternoon in the cafe where you brought nothing to do. Solitude that is chosen is different from solitude that is imposed. You know both and have a relationship with each.',
       'Being alone in a place that belongs to you: the room or the house, the quiet that is yours, the freedom to move around the space without consideration for anyone else\'s trajectory. The alone that is a resource rather than a condition. You have learned to treat it as a resource.',
     ]),
     choices: null,
@@ -173,7 +173,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => place.hasBooks(G) && (!G.mem?.s36SentenceReturned),
     text: () => pick([
-      'A sentence you read years ago that has returned to you at intervals since — not a famous line, not a quotation anyone would recognise, just a sentence from a book or a letter or a conversation that hit a particular note and stayed. You have thought about why it stayed. The thinking has not resolved it. The sentence stays anyway.',
+      'A sentence you read years ago that has returned to you at intervals since — not a famous line, not a quotation anyone would recognise, just a sentence from a book or a letter or a conversation that hit a note and stayed. You have thought about why it stayed. The thinking has not resolved it. The sentence stays anyway.',
       'The words that stayed from a book you read long ago: not the story, not the plot, not the theme — one sentence, or part of one, that the rest of the book has faded around. The sentence is still live. It comes back in situations that are relevant to it and sometimes in situations that are not.',
     ]),
     choices: null,
@@ -187,7 +187,7 @@ export const EVENTS_SONDER_36 = [
     when: (G) => !G.mem?.s36SeasonStarts,
     text: () => pick([
       'The first day of a new season: not the calendar date but the day when the temperature changes enough or the light changes enough that the change is bodily. The body recognises the season before the mind does. The recognition is pleasure or anticipation or sometimes a small dread, depending on the season and what the season contains.',
-      'The smell of the season turning: the specific compound that arrives when the cold breaks into warmth, or warmth breaks into cold, or the rain smell of a particular climate changes register. The smell announces the season before the season is visually apparent. You know the smell of your climate by its seasons.',
+      'The smell of the season turning: the compound that arrives when the cold breaks into warmth, or warmth breaks into cold, or the rain smell of a climate changes register. The smell announces the season before the season is visually apparent. You know the smell of your climate by its seasons.',
     ]),
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s36SeasonStarts', true) },
@@ -199,7 +199,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => G.age >= 50 && !G.mem?.s36LastTime,
     text: () => pick([
-      'The last time you did something you did not know was the last time: the last time you were in a particular room, the last conversation with someone, the last time you ran without thinking about running. The last time was ordinary. The last-ness was not apparent at the time. The last-ness only became apparent afterward, when there was no next time.',
+      'The last time you did something you did not know was the last time: the last time you were in a room, the last conversation with someone, the last time you ran without thinking about running. The last time was ordinary. The last-ness was not apparent at the time. The last-ness only became apparent afterward, when there was no next time.',
       'Some things end without marking the ending. The last time you were in the house you grew up in, the last time you saw a person you loved, the last time you could do something your body used to do easily — all of these ended while you were still expecting more. The ending announced itself only in the not-coming-again.',
     ]),
     choices: null,
@@ -238,7 +238,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => !G.mem?.s36BreadLine,
     text: () => pick([
-      'A queue you stood in that was not your usual life — a queue for something rationed or scarce, for a bureaucratic process that required your presence, for a service that was overwhelmed. The queue revealed the specific social contract of what you were waiting for: who cut, who was patient, who helped, who didn\'t. A queue is a brief society.',
+      'A queue you stood in that was not your usual life — a queue for something rationed or scarce, for a bureaucratic process that required your presence, for a service that was overwhelmed. The queue revealed the social contract of what you were waiting for: who cut, who was patient, who helped, who didn\'t. A queue is a brief society.',
       'Standing in a long queue: the people on either side of you, the forward momentum in increments, the quality of collective waiting. The queue has a sociology — the information that travels back from the front, the alliances formed by proximity, the shared goal of reaching a point that is not visible from where you are.',
     ]),
     choices: null,
@@ -251,8 +251,8 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => !G.mem?.s36FestivalCrowd,
     text: () => pick([
-      'The festival crowd, or the market crowd, or any large gathering of people in a purpose — the specific energy of many people wanting the same thing at the same time, moving in the same direction. You are inside the collective and also separate from it. The two things happen simultaneously.',
-      'Being in a crowd that is celebrating: the specific acoustic of it, the way the mood is distributed through bodies and passes between them, the anonymity that is also a belonging. You are one person in a large number of people having the same feeling and the feeling is larger for being shared.',
+      'The festival crowd, or the market crowd, or any large gathering of people in a purpose — the energy of many people wanting the same thing at the same time, moving in the same direction. You are inside the collective and also separate from it. The two things happen simultaneously.',
+      'Being in a crowd that is celebrating: the acoustic of it, the way the mood is distributed through bodies and passes between them, the anonymity that is also a belonging. You are one person in a large number of people having the same feeling and the feeling is larger for being shared.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s36FestivalCrowd', true) },
@@ -277,7 +277,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => place.hasCafe(G) && (!G.mem?.s36Overheard),
     text: () => pick([
-      'A conversation you overheard between strangers: a fragment of a sentence, a tone that made the content clear without all the words, a name said with a particular inflection. The fragment was not yours and you carried it home anyway. It was a piece of someone else\'s story, delivered by accident.',
+      'A conversation you overheard between strangers: a fragment of a sentence, a tone that made the content clear without all the words, a name said with an inflection. The fragment was not yours and you carried it home anyway, a piece of someone else\'s story delivered by accident.',
       'The overheard conversation on the bus or in the cafe or through a wall: not enough to understand the full situation, but enough to feel the shape of it. Someone was going through something. The going-through was audible even when the words were not completely clear.',
     ]),
     choices: null,
@@ -290,8 +290,8 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => !G.mem?.s36SmallCompetence,
     text: () => pick([
-      'A small competence you have that you did not study for — parallel parking, fixing a specific domestic problem, knowing which way is north in a new city without a compass. The competence arrived without instruction and stays without practice. You are not sure where it came from. It is reliable.',
-      'You are good at something small that most people find difficult. The competence is not part of your professional identity; it doesn\'t come up in the contexts where people present themselves. It comes up at specific moments and at those moments you are useful in a way that requires no explanation.',
+      'A small competence you have that you did not study for — parallel parking, fixing a domestic problem, knowing which way is north in a new city without a compass. The competence arrived without instruction and stays without practice. You are not sure where it came from, and it is reliable.',
+      'You are good at something small that most people find difficult. The competence is not part of your professional identity; it doesn\'t come up in the contexts where people present themselves. It comes up at certain moments and at those moments you are useful without explanation.',
     ]),
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s36SmallCompetence', true) },
@@ -329,7 +329,7 @@ export const EVENTS_SONDER_36 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.s36SpecificTired,
     text: () => pick([
-      'A tiredness that is not about sleep — the tiredness of a particular kind of effort sustained over time. Not physical exhaustion, not lack of rest, but the specific depletion of spending months or years in a situation that required more than what you had. The recovery from this tired takes longer than sleep. It requires something the body knows how to do but cannot do on demand.',
+      'A tiredness that is not about sleep — the tiredness of a kind of effort sustained over time. Not physical exhaustion, not lack of rest, but the depletion of spending months or years in a situation that required more than what you had. The recovery from this tired takes longer than sleep. It requires something the body knows how to do but cannot do on demand.',
       'The tired you are is not the tired that sleep fixes. The tired is the kind that comes from a sustained situation — a year that required more than a year of effort, or a relationship that cost more than it returned, or a job that was too much of what you had to give. You know the difference now between the kind that sleep fixes and the kind that requires time.',
     ]),
     choices: null,

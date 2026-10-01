@@ -76,7 +76,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
       G.currentYear === 1961 &&
       G.age >= 14 &&
       !G.mem?.drTrujilloKilled,
-    text: 'May 30, 1961. Conspirators — members of the regime itself, with CIA knowledge — intercept Trujillo\'s car on the Malecón outside the capital. He is shot several times and killed. He was sixty-nine. He had governed the country for thirty-one years. His photograph is in your house. In the days that follow, his son Ramfis uses the SIM to hunt and kill the conspirators. But something has changed. The thing that was always there — the photograph, the initials on the building, the words that could not be said — has become, suddenly, a thing that had an end. You do not know yet what the end means.',
+    text: 'May 30, 1961. Men from inside the regime, with American knowledge, stop Trujillo\'s car on the road outside the capital and shoot him. He has ruled for thirty-one years and his photograph is in your house. In the days after, his son hunts the conspirators down and kills them. But the thing that was always there, the photograph, the initials on the buildings, the words nobody said, has turned out to have an end.',
     choices: null,
     effect: (p) => { p.m += 10; p.addFlag('dr_trujillo_gone'); p.setMem('drTrujilloKilled', true) },
   },
@@ -144,7 +144,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
     text: (G) => {
       const isAfroDominican = G.character.ethnicity === 'afro_dominican'
       return isAfroDominican
-        ? 'The Constitutional Tribunal\'s ruling TC 168-13 retroactively strips citizenship from Dominicans of Haitian descent born since 1929. An estimated 200,000 people are rendered stateless overnight — born here, raised here, speaking Spanish, with Dominican identity documents that are now invalid. You know people this has happened to. The ruling has a particular quality: it is administrative rather than violent, but the administrative is a different kind of permanent. The inter-American human rights system will condemn it. The ruling stands.'
+        ? 'The Constitutional Tribunal\'s ruling TC 168-13 retroactively strips citizenship from Dominicans of Haitian descent born since 1929. An estimated 200,000 people are rendered stateless overnight — born here, raised here, speaking Spanish, with Dominican identity documents that are now invalid. You know people this has happened to. The ruling has a quality: it is administrative rather than violent, but the administrative is a different kind of permanent. The inter-American human rights system will condemn it. The ruling stands.'
         : 'The Constitutional Tribunal\'s ruling TC 168-13 retroactively strips Dominican citizenship from people of Haitian descent born in the country since 1929. Two hundred thousand people lose their citizenship at once. They were born here, they went to school here, they have Dominican documents. The Inter-American Commission on Human Rights condemns it. There are protests from human rights organizations. Dominican public opinion is, on the whole, unmoved. The racial politics of this island — the long history of the country defining itself as not-Haitian, not-Black — has arrived in a court document with a case number.'
     },
     choices: null,

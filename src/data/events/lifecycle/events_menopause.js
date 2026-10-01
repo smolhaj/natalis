@@ -78,7 +78,7 @@ export const MENOPAUSE_EVENTS = [
       if (a === 'subsaharan') {
         const isElder = G.age >= 52
         if (isElder) return 'You have crossed into the years the older women occupy — the ones who are consulted, whose word has weight in the family decisions, who sit at the centre of things rather than the edge. The body has changed. The standing has changed too. Not always easier. Sometimes easier.'
-        return 'The change is physical. The older women in the community have a particular way of receiving you now — a nod, a quiet acknowledgement that you are in the years of becoming. You are not sure yet what that means in practice.'
+        return 'The change is physical. The older women in the community have a way of receiving you now — a nod, a quiet acknowledgement that you are in the years of becoming. You are not sure yet what that means in practice.'
       }
       if (a === 'post_soviet') {
         return hasMedHelp
@@ -118,7 +118,7 @@ export const MENOPAUSE_EVENTS = [
       if (yr < 1990) {
         return 'You are fifty-something and female in a workplace that has mostly stopped noticing you are there. This is not new — it has been building for some years. The meetings where the younger men speak over what you have just said and are thanked for the point. You have watched this happen to older women before you. You are now the older woman.'
       }
-      return 'There is a particular social experience of being a woman in her fifties in a workplace that prizes visible vitality: you become, in certain rooms, easier to overlook. This is not dramatic. It is cumulative and quiet. You have noticed it. You have not decided yet what to do with the noticing.'
+      return 'There is a social experience of being a woman in her fifties in a workplace that prizes visible vitality: you become, in certain rooms, easier to overlook. It is cumulative and quiet. You have noticed it. You have not decided yet what to do with the noticing.'
     },
     choices: [
       {

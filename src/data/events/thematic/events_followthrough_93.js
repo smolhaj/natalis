@@ -57,7 +57,7 @@ export const FOLLOWTHROUGH_93_EVENTS = [
       G.flags.has('cmr_ghost_town_generation') &&
       G.age >= 55 &&
       !G.mem?.ft93Ghost,
-    text: 'Monday is still Monday. The crisis has no resolution framework — no talks, no ceasefire, no plan. The Amba Boys have factionalized; some factions accept that independence is no longer achievable and are waiting for an exit; others continue. The children who lost six or seven years of school during the boycott years are now adults who carry a specific gap in their formation. The generation defined by the school boycott is not abstract. They are in the town. You know them. The gap is theirs and it is also the resolution of the question: what does a ghost town cost?',
+    text: 'Monday is still Monday. The crisis has no resolution framework — no talks, no ceasefire, no plan. The Amba Boys have factionalized; some factions accept that independence is no longer achievable and are waiting for an exit; others continue. The children who lost six or seven years of school during the boycott years are now adults who carry a gap in their formation. The generation defined by the school boycott is not abstract. They are in the town. You know them. The gap is theirs and it is also the resolution of the question: what does a ghost town cost?',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.setMem('ft93Ghost', true) },
   },

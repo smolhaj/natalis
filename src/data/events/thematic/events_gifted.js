@@ -47,7 +47,7 @@ const ACT1_EVENTS = [
     phase: 'early_childhood',
     weight: 999,
     when: (G) => G.flags.has('born_gifted_intellectual') && !G.mem?.giftManifested,
-    text: 'The numbers on the milk crates outside the grocery have always made sense to you in a way you can\'t explain — not what they mean, but the patterns underneath them. You told your mother once. She went quiet in a way that meant something.',
+    text: 'The numbers on the milk crates outside the grocery have always made sense to you in a way you can\'t explain — not what they mean, but the patterns underneath them. You told your mother once. She went quiet, and it meant something.',
     choices: null,
     effect: (p) => { p.e += 3; p.setMem('giftManifested', true) },
   },
@@ -77,7 +77,7 @@ const ACT1_EVENTS = [
     phase: 'early_childhood',
     weight: 999,
     when: (G) => G.flags.has('born_gifted_artistic') && !G.mem?.giftManifested,
-    text: 'You drew your father\'s hands from memory — not hands in general, his specific hands, the knuckle that stays swollen, the way the left thumb curves. Your mother kept the drawing. You didn\'t understand why she looked at it the way she did.',
+    text: 'You drew your father\'s hands from memory — not hands in general, his hands, the knuckle that stays swollen, the way the left thumb curves. Your mother kept the drawing. You didn\'t understand why she looked at it the way she did.',
     choices: null,
     effect: (p) => { p.lo += 2; p.setMem('giftManifested', true) },
   },
@@ -338,7 +338,7 @@ const ACT4_EVENTS = [
       G.currentCountry?.name === 'United States' &&
       G.currentYear >= 1963 && G.currentYear <= 1978 &&
       !G.mem?.giftIntegrationFired,
-    text: 'You are among the first Black students in the programme. The hallways have a particular quality of silence when you walk through them. You are being watched not to be caught doing something wrong but to see if you will confirm or deny the thing they already believe. You have learned to never let them see you struggle.',
+    text: 'You are among the first Black students in the programme. The hallways have a quality of silence when you walk through them. You are being watched not to be caught doing something wrong but to see if you will confirm or deny the thing they already believe. You have learned to never let them see you struggle.',
     choices: [
       {
         text: 'Carry it — be twice as good, always',
@@ -544,7 +544,7 @@ const EXTRAORDINARY_ATHLETIC_EVENTS = [
       G.career?.id !== 'athlete' &&
       G.age >= 32 && G.age <= 45 &&
       !G.mem?.giftAthAfterFired,
-    text: 'The body you had at twenty-six doesn\'t exist anymore. This is not a complaint — you knew the shape of it. What you didn\'t know was what you\'d miss most. Not the winning. The mornings. The training schedule as a frame for the day. The specific state of the body at peak condition that you worked twenty years to reach and held for seven.',
+    text: 'The body you had at twenty-six doesn\'t exist anymore. This is not a complaint — you knew the shape of it. What you didn\'t know was what you\'d miss most. Not the winning. The mornings. The training schedule as a frame for the day. The state of the body at peak condition that you worked twenty years to reach and held for seven.',
     choices: [
       {
         text: 'Coach — pass the knowledge to someone who has what you had',
@@ -685,7 +685,7 @@ const EXTRAORDINARY_MUSICAL_EVENTS = [
       !G.mem?.giftMusicLateFired,
     text: (G) => {
       if (G.flags.has('gift_rekindled') && !G.flags.has('acclaimed_musician')) return 'A documentary maker finds recordings from thirty years ago — the recordings you made when you had no label, when the recording was done on a borrowed machine in someone\'s living room. They put them on a streaming platform with a short essay about what they represent. The response is not large but it is from exactly the right people.'
-      return 'Late recognition has its own texture. The prize arrives when the work it honours is twenty years in the past. You accept it with genuine warmth and the feeling of receiving something in the wrong decade.'
+      return 'Late recognition is strange. The prize arrives when the work it honours is twenty years in the past. You accept it with genuine warmth and the feeling of receiving something in the wrong decade.'
     },
     choices: null,
     effect: (p) => { p.m += 8; p.karma += 5; p.addFlag('gift_passed_on'); p.setMem('giftMusicLateFired', true) },
@@ -727,7 +727,7 @@ const EXTRAORDINARY_ARTISTIC_EVENTS = [
       G.flags.has('acclaimed_artist') &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.giftArtPrizeFired,
-    text: 'The prize is not what you made the work for. You say this at the ceremony and you mean it. What you don\'t say, because there is no place in a ceremony speech to say it, is that the thing you made the work for was the specific sensation of a work resolving — the moment when the piece becomes itself. That has happened eight times clearly in your life. The prize is recognising the residue of those moments.',
+    text: 'The prize is not what you made the work for. You say this at the ceremony and you mean it. What you don\'t say, because there is no place in a ceremony speech to say it, is that the thing you made the work for was the sensation of a work resolving — the moment when the piece becomes itself. That has happened eight times clearly in your life. The prize is recognising the residue of those moments.',
     choices: null,
     effect: (p) => { p.m += 12; p.fame += 15; p.addFlag('gift_extraordinary'); p.setMem('giftArtPrizeFired', true) },
   },
@@ -789,7 +789,7 @@ const EXTRAORDINARY_LINGUISTIC_EVENTS = [
       !G.mem?.giftLiteraryPrizeFired,
     text: (G) => {
       const archetype = G.currentCountry?.archetype ?? ''
-      if (G.flags.has('experienced_racism') && G.currentCountry?.name === 'United States') return 'The prize is the kind that gets announced in a press release. You find out from your editor, who calls before the release goes out. You sit with it for a while before you tell anyone. The thing you keep returning to is not the prize but what your father would have said. He died before the first book.'
+      if (G.flags.has('experienced_racism') && G.currentCountry?.name === 'United States') return 'The prize is the kind that gets announced in a press release. You find out from your editor, who calls before the release goes out. You keep it to yourself for a while. The thing you keep returning to is not the prize but what your father would have said. He died before the first book.'
       if (archetype === 'subsaharan' || archetype === 'developing_urban') return 'The prize is international. The announcement names your country. In your country the announcement is news in a way it would not be elsewhere — not because of you specifically, though that too, but because the naming of a place in an international sentence of recognition still carries weight that it will take another generation to shed.'
       return 'The award citation quotes from the book you wrote twelve years ago and the book you wrote last year. Reading the citation you see something you didn\'t see while writing — a line of argument running through all of it. The work was more coherent than you knew while you were inside it.'
     },
@@ -941,7 +941,7 @@ const ACT7_EVENTS = [
       !G.mem?.giftPassedOnEchoFired,
     text: (G) => {
       const type = giftType(G)
-      if (type === 'intellectual') return 'A former student emails to say they got the position. They credit you — not in the thank-you-for-everything way, but specifically, in terms of what they learned in a particular conversation years ago. You remember the conversation. You didn\'t know they were taking notes.'
+      if (type === 'intellectual') return 'A former student emails to say they got the position. They credit you — not in the thank-you-for-everything way, but specifically, in terms of what they learned in a conversation years ago. You remember the conversation. You didn\'t know they were taking notes.'
       if (type === 'musical') return 'You hear something on the radio and it takes you four bars to realise it\'s the technique you spent a year teaching. The voice is not yours — it\'s theirs, completely theirs. But the thing you showed them is in there, grown into something you couldn\'t have predicted.'
       if (type === 'athletic') return 'One of the kids you trained is competing at a level you barely reached. You watch the footage and recognise the correction you gave in the first month — a small thing, a weight distribution, something that looked trivial. It is in their body now. It will be in their body for the rest of their life.'
       if (type === 'artistic') return 'You are shown a piece of work by someone who doesn\'t know you — a student, a young artist, someone who found something you made years ago. The influence is clear. Not imitation — the thing that influence actually is when it works, which is using what you\'ve learned to make something the teacher couldn\'t have made.'

@@ -32,7 +32,7 @@ export const OFW_EVENTS = [
       !G.mem?.ofwLateReckoning &&
       G.flags.includes('ofw_returned') &&
       G.age >= 65,
-    text: 'A grandchild is drawing at your feet. The house you built with the money is solid — concrete, not wood, with a gate and a second floor that took three contracts to finish. You think about the years. You count them the way you count money: how many birthdays you missed, how many illnesses you heard about by phone, what your child looked like at fifteen versus what you saw in photographs. The house is here. The years are also here, in a different way. You do not regret it. You regret it completely. Both are true and you have stopped trying to resolve them.',
+    text: 'A grandchild is drawing at your feet. The house you built with the money is concrete, with a gate and a second floor that took three contracts to finish. You count the years the way you count money: birthdays missed, illnesses heard about by phone, your child at fifteen in photographs instead of in front of you. You do not regret it. You regret it completely.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 10; p.karma += 12; p.addFlag('ofw_reckoned'); p.setMem('ofwLateReckoning', true) },
   },
@@ -47,7 +47,7 @@ export const OFW_EVENTS = [
       G.flags.includes('ofw_returned') &&
       G.children.length > 0 &&
       G.age >= 38 && G.age <= 58,
-    text: 'Your child tells you they are looking at an agency. The same word — agency. You know what the contract will say about days off. You know what will not be in the contract. You think about saying this. Instead you ask which country. They say the name of a country. You say: take the POEA-certified one. You say: call me every Sunday without fail. You do not say what you are not saying, which is everything else — the specific weight of a Sunday when the phone does not ring, the way a person can be very far away and still the nearest thing.',
+    text: 'Your child says they are looking at an agency. You know what the contract will say about days off, and what it will not say. You ask which country, and they say its name, and you say: the POEA-certified one, and call every Sunday without fail. You do not say the rest: the weight of a Sunday when the phone does not ring, the way a person can be very far away and still the nearest thing.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 8; p.karma += 6; p.addFlag('ofw_cycle_witness'); p.setMem('ofwCycleReckoning', true) },
   },
@@ -61,7 +61,7 @@ export const OFW_EVENTS = [
       !G.mem?.ofwCostAccounting &&
       G.flags.includes('ofw_returned') &&
       G.age >= 24 && G.age <= 34,
-    text: 'You sit with a piece of paper the way your mother sat with the monthly budget. On one side: the house, the tuition paid in full, the refrigerator, the siblings who finished school. On the other side: things that do not have prices. The paper is a useful lie. It does not balance and you know it does not balance, but the exercise is something — proof, maybe, that the years meant something other than just the years.',
+    text: 'You do sums on a piece of paper the way your mother did the monthly budget. On one side: the house, the tuition paid in full, the refrigerator, the siblings who finished school. On the other side: things that do not have prices. The paper is a useful lie. It does not balance and you know it does not balance, but the exercise is something — proof, maybe, that the years meant something other than just the years.',
     choices: [
       {
         text: 'You fold it and put it away. Some things are not for paper.',
@@ -210,7 +210,7 @@ export const OFW_EVENTS = [
         }
       } else {
         if (hasChild) {
-          return 'Sunday. You call on video. Your child holds the phone at the wrong angle — you can see the ceiling and hear them. You say: hold it up. They hold it up. They are taller than the last time you saw them in person. You note this but you do not say it. You ask about school. You say goodbye. You remain in the feeling of the goodbye for the rest of the afternoon.'
+          return 'Sunday, on video. Your child holds the phone at the wrong angle, so you see the ceiling and hear their voice. You say: hold it up. They are taller than the last time you saw them in person, and you do not say so. You ask about school, and say goodbye, and stay in the goodbye for the rest of the afternoon.'
         } else {
           return 'Sunday. The video call connects and you see the living room, the curtain you chose when you ordered things from abroad, your mother in her chair. Everything is familiar and everything is slightly wrong — the wrong time of day, the wrong light, yourself in a small square in the corner of the screen.'
         }
@@ -262,7 +262,7 @@ export const OFW_EVENTS = [
       G.mem?.ofwDestination === 'hongkong' &&
       G.age >= 20 && G.age <= 40 &&
       G.currentYear >= 1975,
-    text: 'The contract allows Sundays off. This is the fact you repeat to yourself on the first week when the Sundays do not feel like Sundays. On your first actual day off you take the bus to Victoria Park. There are hundreds of women there — Filipino, Indonesian, Thai — sitting on flattened cardboard, sharing food from containers, speaking languages that arrive in waves. You find a woman from Batangas. She shows you which bus to take and which employer is worth asking, and which agency is known for padding fees. By four in the afternoon you have more information than three months of worrying gave you. You take the same bus home.',
+    text: 'The contract gives you Sundays, and on your first real day off you take the bus to Victoria Park. There are hundreds of women on flattened cardboard, Filipino, Indonesian, Thai, sharing food from tubs, and you find a woman from Batangas. She tells you which bus, which employers are worth asking, which agencies pad their fees. By four in the afternoon you know more than three months of worrying taught you. You take the same bus home.',
     choices: null,
     effect: (p) => { p.m -= 8; p.s += 5; p.e += 3; p.setResidency('work_visa'); p.addFlag('ofw_hongkong'); p.setMem('ofwArrival', true) },
   },
@@ -319,7 +319,7 @@ export const OFW_EVENTS = [
       !G.flags.includes('emigrated') &&
       G.currentYear >= 1975 &&
       G.age >= 19 && G.age <= 38,
-    text: 'The family conference happens on a Sunday after lunch, which is the only way serious things happen in your family — announced quietly after the dishes are done, with everyone still at the table. Someone says the word abroad. Nobody disagrees about the need. The disagreement is about who, and everyone knows who it has to be. Your mother does not say: don\'t go. She says: if you go, go through POEA. She has a cousin who went through an agency that charged three times the legal cap. She says: get everything in writing. She has been thinking about this longer than the conversation.',
+    text: 'The family conference happens on a Sunday after lunch, after the dishes, with everyone still at the table. Someone says the word abroad. Nobody disagrees about the need; the disagreement is about who, and everyone knows who it has to be. Your mother does not say don\'t go. She says: if you go, go through POEA, and get everything in writing. She has been thinking about this longer than the conversation.',
     choices: [
       {
         text: 'Say yes. You will start the application.',
@@ -367,7 +367,7 @@ export const OFW_EVENTS = [
       {
         text: 'Take out a loan to cover it. The math works if the contract holds.',
         tag: null,
-        outcome: 'The debt is real. The contract is real. You board the plane with both.',
+        outcome: 'There is the debt. There is the contract. You board the plane with both.',
         effect: (p) => { p.mo -= 2500; p.addFlag('ofw_broker_debt'); p.setMem('ofwBrokerFee', true) },
       },
     ],
@@ -397,7 +397,7 @@ export const OFW_EVENTS = [
       } else {
         destText = 'abroad'
       }
-      return `The contract is twelve pages. The civil servant at the POEA office explains the key clauses in the order printed. You sign where indicated. Your departure date is in six weeks. There is a moment — between the last signature and the folder closing — when the life you are leaving becomes specific: the breakfast table, the smell of the street after rain, the particular quality of morning in your parents\' house. Then the folder closes and the civil servant says: good luck, and the next person sits down.`
+      return `The contract is twelve pages. The civil servant at the POEA office explains the key clauses in the order printed. You sign where indicated. Your departure date is in six weeks. There is a moment — between the last signature and the folder closing — when the life you are leaving becomes specific: the breakfast table, the smell of the street after rain, the quality of morning in your parents' house. Then the folder closes and the civil servant says: good luck, and the next person sits down.`
     },
     choices: [
       {

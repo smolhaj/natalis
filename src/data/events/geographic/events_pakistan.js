@@ -28,7 +28,8 @@ export const PAKISTAN_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 1975 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem?.pakPartitionMemory,
-    text: 'Your parents describe a city they no longer live in. Amritsar. Lucknow. Delhi. The words contain the weight of specific streets, specific smells, the particular light in a particular house. The 1947 partition moved twelve million people in six weeks. Seventy-five thousand women abducted. Between two hundred thousand and two million dead. Your parents do not give these numbers. They give the name of the neighbour who helped them and the name of the neighbour who did not.',
+    text: 'Your parents describe a city they no longer live in: Amritsar, Lucknow, Delhi. The names carry the weight of particular streets, the smell of a house, the light in it. They do not give numbers. They give the name of the neighbour who helped them and the name of the neighbour who did not.',
+    context: 'Partition in 1947 displaced 12 to 20 million people. Estimates of the dead range from 200,000 to two million; some 75,000 women were abducted.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 7; p.addFlag('partition_memory_family'); p.setMem('pakPartitionMemory', true) },
   },
@@ -70,7 +71,7 @@ export const PAKISTAN_EVENTS = [
       G.currentYear >= 1977 && G.currentYear <= 1988 &&
       G.age >= 18 &&
       !G.mem?.pakZia,
-    text: 'General Zia ul-Haq suspended the constitution in July 1977 and executed Z.A. Bhutto in 1979. The Hudood Ordinances are now law: flogging, amputation, stoning — punishments from seventh-century jurisprudence inserted into modern statutes. Blasphemy law strengthened. Alcohol prohibited. The call to prayer is broadcast by state television. This is called Islamization. What changes is not only law. The public language of the city changes. The space for certain conversations contracts.',
+    text: 'General Zia suspended the constitution in 1977 and hanged Bhutto in 1979, and now the Hudood Ordinances are law: flogging, amputation, stoning. The blasphemy law is strengthened, alcohol prohibited, the call to prayer on state television. They call it Islamisation. It changes the law, and it also changes what can be said aloud in the city.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('zia_generation'); p.setMem('pakZia', true) },
   },
@@ -155,7 +156,7 @@ export const PAKISTAN_EVENTS = [
       G.currentYear >= 1978 && G.currentYear <= 1995 &&
       G.age >= 8 && G.age <= 14 &&
       !G.mem?.pakMadrassah,
-    text: 'The choice is between state school — underfunded, teachers absent half the time, textbooks shared between four children — and the madrassah, which is free, which provides food, which has a structure and a certainty that the state school lacks. Your parents think about this choice in practical terms. Zia\'s Islamization has dramatically increased the number of registered madrassahs. The education is real. What is also real is what it does and doesn\'t teach.',
+    text: 'The choice is between state school — underfunded, teachers absent half the time, textbooks shared between four children — and the madrassah, which is free, which provides food, which has a structure and a certainty that the state school lacks. Your parents think about this choice in practical terms. Zia\'s Islamization has dramatically increased the number of registered madrassahs. What is also real is what it does and doesn\'t teach.',
     choices: [
       {
         text: 'State school. The family scrapes together the fees.',
@@ -182,7 +183,7 @@ export const PAKISTAN_EVENTS = [
       G.currentYear === 2007 &&
       G.age >= 14 &&
       !G.mem?.pakBenazir,
-    text: 'December 27, 2007. Benazir Bhutto is killed at a rally in Rawalpindi, seventeen days after surviving a suicide bombing in Karachi that killed one hundred and forty-nine others. She had returned from exile in October. The assassin is identified as a sixteen-year-old boy. The investigation produces multiple accounts. Pervez Musharraf\'s government produces one. The UN commission produces another. Bhutto had been the first female prime minister of a Muslim-majority country — twice, with an eight-year exile between the terms. She was fifty-four.',
+    text: 'December 27, 2007. Benazir Bhutto is killed at a rally in Rawalpindi, two months after a bombing in Karachi on the night she came home from exile killed more than a hundred people around her. The government has one account of who did it and the UN commission another. She was the first woman to lead a Muslim-majority country, twice. She was fifty-four.',
     choices: [
       {
         text: 'You grieve for what she represented — whatever her compromises.',
@@ -209,7 +210,7 @@ export const PAKISTAN_EVENTS = [
       G.currentYear === 2014 &&
       G.age >= 10 &&
       !G.mem?.pakAPS,
-    text: 'December 16, 2014. Seven Pakistani Taliban gunmen enter the Army Public School in Peshawar at ten in the morning. A hundred and forty-one people are killed; a hundred and thirty-two are children. The specific horror of the timeline — the school hall, the children under desks, the teachers, the eight hours — is reported in specific detail by the survivors. December 16 was also the day Bangladesh was created in 1971, but that is not the date that will be named when Pakistanis say December 16. The country goes quiet in a way that is different from other attacks.',
+    text: 'December 16, 2014. Seven Pakistani Taliban gunmen enter the Army Public School in Peshawar at ten in the morning. A hundred and forty-one people are killed; a hundred and thirty-two are children. The horror of the timeline — the school hall, the children under desks, the teachers, the eight hours — is reported in specific detail by the survivors. December 16 was also the day Bangladesh was created in 1971, but that is not the date that will be named when Pakistanis say December 16. The country goes quiet, and it is not the quiet of other attacks.',
     choices: null,
     effect: (p) => {
       p.m -= 15
@@ -229,18 +230,18 @@ export const PAKISTAN_EVENTS = [
       G.currentYear >= 2000 && G.currentYear <= 2024 &&
       G.age >= 18 &&
       !G.mem?.pakBlasphemy,
-    text: 'Someone from your neighbourhood has been accused of blasphemy. The charge does not require evidence in the way that other charges do. The accusation is enough for a crowd to assemble. The court is the secondary question; the primary question is whether the person survives to reach the court. Asia Bibi spent ten years on death row; the Supreme Court acquitted her in 2018 and the verdict triggered nationwide protests. She could not go home. She could not stay in Pakistan. The architecture of the law and what the law produces are two different things.',
+    text: 'Someone from your neighbourhood has been accused of blasphemy. The charge needs no evidence the way other charges do; the accusation is enough to gather a crowd, and the first question is not the court but whether the accused lives to reach it. Asia Bibi spent ten years on death row, and when the Supreme Court acquitted her there were riots across the country, and she could not go home, or stay. What the law says and what the law produces are two different things.',
     choices: [
       {
         text: 'You say something. You know this person and you say what you know.',
         tag: null,
-        outcome: 'Speaking makes you adjacent to the accusation in the eyes of the crowd, which is precisely the mechanism that makes the accusation so effective.',
+        outcome: 'Speaking puts you beside the accusation in the eyes of the crowd. That is exactly how the accusation works.',
         effect: (p) => { p.m -= 10; p.karma += 8; p.r += 5; p.addFlag('blasphemy_law_era'); p.setMem('pakBlasphemy', true); },
       },
       {
-        text: 'You say nothing. This is not cowardice. This is how the system preserves itself.',
+        text: 'You say nothing. It is how the system preserves itself.',
         tag: null,
-        outcome: 'You do not speak and you live with not speaking. The two things are connected in a way that becomes part of the interior furniture of your life.',
+        outcome: 'You do not speak and you live with not speaking. The two things are connected, and the connection becomes part of the interior furniture of your life.',
         effect: (p) => { p.m -= 8; p.r += 8; p.addFlag('blasphemy_law_era'); p.setMem('pakBlasphemy', true); },
       },
     ],

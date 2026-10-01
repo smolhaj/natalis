@@ -13,7 +13,7 @@ export const TURKEY_EVENTS = [
       G.currentYear >= 1928 && G.currentYear <= 1950 &&
       G.age >= 15 &&
       !G.mem.turAtaturkAlphabet,
-    text: 'The Latin alphabet is mandatory by decree. The Ottoman script your parents read — the script of the Quran in its Ottoman rendering, of five hundred years of literature and official correspondence — is now illegal for state use. The fez is banned. The call to prayer must be given in Turkish, not Arabic. Mustafa Kemal is remaking the country from its linguistic foundations. The method is speed, not persuasion. You are learning to write your language in an alphabet your grandparents cannot read.',
+    text: 'The new letters are compulsory by decree. The Ottoman script your parents read, five hundred years of books and letters and official papers, is finished for the state. The fez is banned, and the call to prayer is in Turkish now. Mustafa Kemal is remaking the country from the alphabet up, and fast. You are learning to write your language in letters your grandparents cannot read.',
     choices: [
       {
         text: 'The new letters come quickly to you. You are positioned for the new century.',
@@ -41,12 +41,13 @@ export const TURKEY_EVENTS = [
       G.currentYear >= 2023 &&
       G.age >= 12 &&
       !G.mem.turKahramanmaras,
-    text: 'February 6, 2023. Two earthquakes within hours: magnitude 7.8 and 7.7. The epicentre in Kahramanmaraş province. Fifty thousand dead in Turkey and Syria. Buildings collapse that were not supposed to collapse. The government\'s construction amnesty of 2018 — covering 144,000 structures built in violation of earthquake codes — licensed many of them instead of demolishing them. The disaster and the policy are not separable. Search teams pull people out alive on the seventh day. Many are not pulled out at all. The questions about the permits begin before the dust settles.',
+    text: 'February 6, 2023. Two earthquakes in a night, and buildings come down that were not supposed to, many of them buildings the government\'s construction amnesty had licensed instead of demolishing. The rescuers pull people out alive on the seventh day. Many are not pulled out at all. The questions about the permits begin before the dust settles.',
+    context: 'The Kahramanmaraş earthquakes (magnitudes 7.8 and 7.7) killed more than 50,000 people in Turkey and Syria. A 2018 amnesty had registered millions of buildings with code violations.',
     choices: [
       {
         text: 'You are in the southeast. You know what it felt like from inside.',
         tag: null,
-        outcome: 'The shaking at 4am. The silence after. The specific quality of concrete dust in winter air. Things you now know in your body that you did not know before.',
+        outcome: 'The shaking at 4am. The silence after. The quality of concrete dust in winter air. Things you now know in your body that you did not know before.',
         effect: (p) => { p.m -= 18; p.h -= 8; p.r += 10; p.addFlag('tur_kahramanmaras_survivor'); p.addFlag('disaster_survivor'); p.setMem('turKahramanmaras', true) },
       },
       {
@@ -69,7 +70,8 @@ export const TURKEY_EVENTS = [
       G.age >= 20 &&
       G.ethnicity !== 'arab_turkish' &&
       !G.mem.turSyrianRefugees,
-    text: 'Turkey hosts more Syrian refugees than any country in the world — 3.6 million at peak, by official count. Hatay, Gaziantep, Şanlıurfa: the southern cities are transformed. Syrian neighbourhoods have their own bakeries, their own Arabic-language schools, their own parallel economy. Two things are simultaneously true: these people are here because their country was destroyed, and the political economy of their presence is generating a resentment that is being organised into votes. The transit route through Turkey to Greece is the most-travelled in Europe. You see both the people and the politics. Which one you act on is something else.',
+    text: 'Hatay, Gaziantep, Şanlıurfa: the southern cities have Syrian streets now, with their own bakeries and Arabic schools and an economy running alongside. These people are here because their country was destroyed, and their being here is being organised into votes. The route to the Greek islands runs through your coast. You see the people and you see the politics. Which one you act on is another matter.',
+    context: 'Turkey hosted about 3.6 million registered Syrian refugees at the peak, more than any other country.',
     choices: [
       {
         text: 'The neighbourhood changed around you. You adjust.',
@@ -97,7 +99,8 @@ export const TURKEY_EVENTS = [
       G.currentYear >= 2021 &&
       G.age >= 18 &&
       !G.mem.turLira,
-    text: 'The lira loses 44 percent of its value against the dollar in 2021. Then more in 2022. The central bank cuts interest rates as inflation rises — an unorthodox policy the president insists upon, based on his stated belief that high interest rates cause inflation. Inflation reaches 85 percent in October 2022. The price of bread, petrol, everything with a dollar component in its production chain — which is most things — follows. People who had savings in lira watch the purchasing power drain over months. The Turks who hold dollars or euros are, for this period, a different class. The Turks who hold lira are a different problem.',
+    text: 'The lira loses nearly half its value in a year, and then more, and the president makes the central bank cut interest rates as inflation climbs, because he believes high rates cause it. Bread, petrol, anything with a dollar somewhere in how it is made follows the lira down. People with savings in lira watch them drain away month by month. For a while, the Turks who hold dollars are a different class.',
+    context: 'Turkish inflation officially reached 85 percent in October 2022.',
     choices: null,
     effect: (p) => { p.m -= 10; p.wipeMoney(0.3); p.r += 7; p.addFlag('tur_lira_crisis_lived'); p.setMem('turLira', true) },
   },
@@ -113,7 +116,7 @@ export const TURKEY_EVENTS = [
       G.age >= 18 &&
       G.character.gender === 'female' &&
       !G.mem.turIstanbulConvention,
-    text: 'Turkey withdraws from the Istanbul Convention by presidential decree in March 2021. Turkey was the first country to sign it — the Convention on preventing and combating violence against women is named after the city. The withdrawal generates the largest women\'s protest march in years. The women\'s organisations that built legal and support systems around the Convention\'s requirements are left in a vacuum. The femicide statistics are not improving. The government\'s position is that the Convention\'s gender ideology is incompatible with Turkish family values. You have a position.',
+    text: 'March 2021: by presidential decree, Turkey leaves the Istanbul Convention, the treaty on violence against women that it was the first to sign and that carries the name of its own city. The women\'s march that follows is the largest in years. The organisations built around the convention\'s requirements are left with nothing to stand on, and the femicide figures do not improve. The government says the convention is incompatible with the Turkish family. You have a position.',
     choices: [
       {
         text: 'You join the protests. This is the line.',

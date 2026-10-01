@@ -29,7 +29,7 @@ export const PALESTINE_EVENTS = [
         return 'Your grandmother keeps a key on a hook by the door. The key is iron and larger than you expected a house key to be. She tells you it is to a house in Haifa that her mother was born in. You ask if you will go there. She says yes, you will go back. Later you understand that she says this not because she believes it but because the alternative is unbearable to say to a child.'
       }
       if (yr >= 1967 && yr <= 1990) {
-        return 'The adults talk about 1948 as if it is present tense. Your grandfather describes the village — the stone houses, the olive trees, the specific smell of the bread his mother baked — in enough detail that you can see it. The village is gone; Israeli development built over it decades ago. The description keeps it alive in a way that has its own weight.'
+        return 'The adults talk about 1948 as if it is present tense. Your grandfather describes the village — the stone houses, the olive trees, the smell of the bread his mother baked — in enough detail that you can see it. The village is gone; Israeli development built over it decades ago. The description keeps it alive.'
       }
       return 'Your family carries 1948 as a living date. Not a historical one — a present condition. The proof of ownership for a house that no longer legally exists. The village name on a map that names it differently now. You grow up understanding that your family is from somewhere else, even though you have never been there.'
     },
@@ -51,7 +51,7 @@ export const PALESTINE_EVENTS = [
     text: (G) => {
       const yr = G.currentYear ?? 1985
       if (yr >= 2002) {
-        return 'The checkpoint is on the route between your home and the next town. The queue can be twenty minutes or four hours — there is no way to know in advance. You are asked for your identity card. Your car is searched, or not, depending on the soldier\'s mood or instructions or rotation. You are late. You have learned to leave two hours before anything matters. You have also learned that the checkpoint is not a problem that will be solved. It is the arrangement.'
+        return 'The checkpoint is on the road to the next town. The queue is twenty minutes or four hours and there is no knowing which. They take your card, they search the car or do not, depending on the soldier, or the orders, or the rotation, and you are late. You leave two hours early for anything that matters. The checkpoint will not be solved. It is the arrangement.'
       }
       return 'The occupation has specific textures. The curfew that arrives without announcement. The soldier who is eighteen and frightened and armed and in your city. The permit you need to travel to a town twenty kilometres away. The permit request that disappears into an administrative system with no right of appeal you can access. You navigate this as you navigate other things: carefully, with low expectations of consistency.'
     },
@@ -110,7 +110,7 @@ export const PALESTINE_EVENTS = [
       G.flags.has('oslo_hope') &&
       (G.currentYear ?? 0) >= 2000 && (G.currentYear ?? 0) <= 2005 &&
       !G.mem?.palOsloCollapseDone,
-    text: 'The Camp David talks ended and then the Second Intifada began. The hope you held for seven years is identifiable as a specific object now — you know when it started and you can place when it ended. The settlements continued through the Oslo years. The checkpoints continued. The withdrawal that was promised did not happen on the timeline promised. This is the specific content of the betrayal, and you have memorised it.',
+    text: 'The Camp David talks ended and then the Second Intifada began. The hope you held for seven years is identifiable as an object now — you know when it started and you can place when it ended. The settlements continued through the Oslo years. The checkpoints continued. The withdrawal that was promised did not happen on the timeline promised. This is the content of the betrayal, and you have memorised it.',
     effect: (p) => { p.m -= 15; p.r += 10; p.addFlag('second_intifada_lived'); p.setMem('palOsloCollapseDone', true) },
     choices: null,
   },
@@ -126,7 +126,7 @@ export const PALESTINE_EVENTS = [
       G.age >= 14 && G.age <= 30 &&
       (G.currentYear ?? 0) >= 1987 && (G.currentYear ?? 0) <= 1993 &&
       !G.mem?.palFirstIntifadaDone,
-    text: 'The uprising began in December 1987. The economics of it are specific: you throw what you have, which is stones, at an army that has automatic weapons. The mathematics of the exchange are not equal. The stone has a different logic — it is a refusal that is also visible, that cannot be disappeared or filed away. The curfews that follow are collective. The schools that close are collective. You understand now what collective punishment is from the inside.',
+    text: 'The uprising began in December 1987. The economics of it are simple: you throw what you have, stones, at an army that has automatic weapons. The mathematics of the exchange are not equal. The stone has a different logic — it is a refusal that is also visible, that cannot be disappeared or filed away. The curfews that follow are collective. The schools that close are collective. You understand now what collective punishment is from the inside.',
     choices: [
       {
         text: 'Participate in the civil disobedience — the strikes, the commerce boycotts',
@@ -137,7 +137,7 @@ export const PALESTINE_EVENTS = [
       {
         text: 'Protect the family — visibility is dangerous',
         tag: null,
-        outcome: 'The protection is real. The cost is the knowledge of what was not done while the protection was happening.',
+        outcome: 'It protects you. The cost is the knowledge of what was not done while the protection was happening.',
         effect: (p) => { p.m -= 5; p.r += 6; p.setMem('palFirstIntifadaDone', true) },
       },
     ],
@@ -161,7 +161,7 @@ export const PALESTINE_EVENTS = [
       if (isFamily) {
         return 'The notice came three days before. The house your father built in 1971 was demolished for lack of a permit — a permit that cannot legally be obtained in this zone. The furniture was removed in time. The walls came down in an hour. The foundation is rubble. Your father sat in the rubble for a long time and did not say anything. There is no compensation and no appeal process with a realistic outcome.'
       }
-      return 'A house two streets from yours was demolished last week. The owner\'s son was charged with an attack; the demolition is collective punishment, legal under military orders. The logic of it — punishing the family — produces a specific knowledge in your neighbourhood about what proximity to resistance costs. You understand both the resistance and the cost from where you are standing.'
+      return 'A house two streets from yours was demolished last week. The owner\'s son was charged with an attack; the demolition is collective punishment, legal under military orders. The logic of it — punishing the family — produces a knowledge in your neighbourhood about what proximity to resistance costs. You understand both the resistance and the cost from where you are standing.'
     },
     effect: (p) => { p.m -= 18; p.r += 10; p.h -= 5; p.addFlag('witnessed_demolition'); p.setMem('palHouseDemolitionDone', true) },
     choices: null,
@@ -180,7 +180,7 @@ export const PALESTINE_EVENTS = [
       !G.mem?.palGazaSiegeDone,
     text: (G) => {
       const yr = G.currentYear ?? 2010
-      return `Since 2007, Gaza has been under blockade. The movement of goods, people, and materials is controlled by a system that distinguishes between civilian and military goods in ways that are contested at every checkpoint. You know people in Gaza you cannot visit. They know the specific constraints of the blockade in the way people who live inside a closed system always know it: not as statistics but as the list of things that are not available, the medicines that take months to arrive, the ceiling that defines the possible.`
+      return `Since 2007, Gaza has been under blockade. The movement of goods, people, and materials is controlled by a system that distinguishes between civilian and military goods in ways that are contested at every checkpoint. You know people in Gaza you cannot visit. They know the constraints of the blockade in the way people who live inside a closed system always know it: not as statistics but as the list of things that are not available, the medicines that take months to arrive, the ceiling that defines the possible.`
     },
     effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('knows_gaza_siege'); p.setMem('palGazaSiegeDone', true) },
     choices: null,
@@ -197,7 +197,7 @@ export const PALESTINE_EVENTS = [
       G.age >= 18 && G.age <= 30 &&
       G.stats.smarts >= 55 &&
       !G.mem?.palEducationDone,
-    text: 'Palestine has among the highest literacy and university enrollment rates in the Arab world — this is partly UNRWA schools in the camps, partly a specific cultural investment in education as the thing the occupation cannot confiscate. You are the person your family sacrificed for. The degree may or may not produce employment in a territory where the economy is constrained by the occupation\'s terms. The education is not conditional on the employment.',
+    text: 'Palestine has among the highest literacy and university enrollment rates in the Arab world — this is partly UNRWA schools in the camps, partly a cultural investment in education as the thing the occupation cannot confiscate. You are the person your family sacrificed for. The degree may or may not produce employment in a territory where the economy is constrained by the occupation\'s terms. The education is not conditional on the employment.',
     choices: [
       {
         text: 'Study and stay — this is your place and you will build in it',
@@ -272,7 +272,7 @@ export const PALESTINE_EVENTS = [
       G.age >= 18 && G.age <= 60 &&
       (G.currentYear ?? 0) >= 1967 &&
       !G.mem?.palDetentionFired,
-    text: 'Your brother was taken at 3 AM. The detention order is "administrative" — six months, renewable, without charges, without trial, without a specific accusation that can be challenged in court. The military courts have a conviction rate above 99 percent for cases that do reach trial; administrative detention requires no trial at all. You have hired a lawyer. The lawyer explains that there is very little a lawyer can do here. You continue paying the lawyer.',
+    text: 'Your brother was taken at 3 AM. The detention order is "administrative" — six months, renewable, without charges, without trial, without an accusation that can be challenged in court. The military courts have a conviction rate above 99 percent for cases that do reach trial; administrative detention requires no trial at all. You have hired a lawyer. The lawyer explains that there is very little a lawyer can do here. You continue paying the lawyer.',
     choices: [
       {
         text: 'Fight through every legal channel available',
@@ -320,7 +320,7 @@ export const PALESTINE_EVENTS = [
     text: (G) => {
       const yr = G.currentYear ?? 2014
       const operation = yr <= 2009 ? 'Operation Cast Lead' : yr <= 2013 ? 'Operation Pillar of Defense' : yr <= 2015 ? 'Operation Protective Edge' : 'the most recent Israeli military operation'
-      return `The F-16s begin at night. The targets are announced after the fact. You are in your apartment with your children when the nearest strike hits a building two streets away. The building was residential. Your children do not stop hearing the sound for several days after the sound stops. You have memorised the location of the basement. You do not know if a basement is useful against a 2,000-pound bomb. ${operation} will leave the neighbourhood you are in changed in ways that take months to understand.`
+      return `The jets come at night and the targets are announced afterwards. You are in the flat with your children when a building two streets away is hit, a building where people lived, and for days afterwards the children go on hearing the sound. You know where the basement is, and you do not know whether a basement is any use. ${operation} will change the neighbourhood in ways that take months to understand.`
     },
     choices: [
       {
@@ -350,7 +350,7 @@ export const PALESTINE_EVENTS = [
       G.flags.has('nakba_family_memory') &&
       G.age >= 55 &&
       !G.mem?.palLateReturnFired,
-    text: 'You are the generation that will not return. You have understood this for years — not as acceptance, not as abandonment, but as arithmetic. The village your grandparents described is a suburb now. The house was demolished in 1950. The land is registered under a different name under a different state. The key on the hook is for a lock that was replaced before your parents were born. You give it to your grandchild anyway. The act of giving it says what the words cannot.',
+    text: 'You are the generation that will not return, and you have understood it for years, not as giving up but as arithmetic. The village your grandparents described is a suburb; the house came down in 1950; the land is registered under another name in another state. The key on the hook fits a lock replaced before your parents were born. You give it to your grandchild anyway.',
     choices: null,
     effect: (p) => { p.r += 8; p.m += 5; p.addFlag('nakba_day_keeper'); p.setMem('palLateReturnFired', true) },
   },

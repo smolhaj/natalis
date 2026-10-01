@@ -85,7 +85,7 @@ export const EARLY_LIFE_EVENTS = [
       const arch = G.character.country.archetype
       const migrant = ['developing_urban', 'subsaharan', 'developing_unstable'].includes(arch)
       if (migrant) {
-        return 'Your father leaves before it is light. A bag goes with him. Your mother tells you he has gone to find work, which is not a lie and is also not the whole truth. His chair at the table is still his chair. No one sits in it.'
+        return 'Your father leaves before it is light. A bag goes with him. Your mother tells you he has gone to find work. It is not a lie and it is not the whole truth. His chair at the table is still his chair. No one sits in it.'
       }
       return 'One of your parents is gone. The room where they slept is still there. Their things are still there. The adults in the house speak carefully around the fact of the absence, which makes the absence larger, not smaller.'
     },
@@ -93,7 +93,7 @@ export const EARLY_LIFE_EVENTS = [
       {
         text: 'Ask where they went.',
         tag: null,
-        outcome: 'You are told something. The answer does not answer the question. You stop asking, which is its own kind of answer.',
+        outcome: 'You are told something. The answer does not answer the question. You stop asking.',
         effect: (p) => { p.m -= 6; p.r += 4; p.e += 2; p.addFlag('absent_parent'); p.setMem('ecParentAbsent', true) },
       },
       {
@@ -152,7 +152,7 @@ export const EARLY_LIFE_EVENTS = [
       {
         text: 'Show it to someone you trust.',
         tag: 'ec_object_shared',
-        outcome: 'The showing is its own kind of gift. The object does not become less yours. Something between you grows.',
+        outcome: 'The showing is a gift. The object does not become less yours. Something between you grows.',
         effect: (p) => { p.m += 7; p.s += 3; p.setMem('ecObjectYours', true); p.setMem('hasChildhoodObject', true); p.addFlag('childhood_object') },
       },
     ],
@@ -196,7 +196,7 @@ export const EARLY_LIFE_EVENTS = [
       if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(arch)) {
         return 'The fever runs high for four days. There is a discussion among the adults about what to do and where to go and what it will cost. Someone brings something from the market — dried bark steeped in water, or pills without a box. You sweat through sheets. Your grandmother sits at the foot of the mattress through the worst nights.'
       }
-      return 'You are sick in a way that you remember afterward without knowing what it was. The illness has a texture: the specific heat of it, the way the ceiling looked from where you lay, the smell of the room by the third day. You recover. You carry the memory of it as a reference point for what ill means.'
+      return 'You are sick, and you remember it afterward without knowing what it was. The illness has a texture: the heat of it, the way the ceiling looked from where you lay, the smell of the room by the third day. You recover. You carry the memory of it as a reference point for what ill means.'
     },
     choices: [
       {
@@ -268,7 +268,7 @@ export const EARLY_LIFE_EVENTS = [
       {
         text: 'Sit with the family and watch together.',
         tag: null,
-        outcome: 'The television becomes the new shape of the evening. Your family sits in a row. Sometimes your mother laughs. This is a specific sound in a specific room at a specific hour.',
+        outcome: 'The television becomes the new shape of the evening. Your family sits in a row. Sometimes your mother laughs. This is a sound in a room at an hour.',
         effect: (p) => { p.m += 8; p.s += 2; p.addFlag('television_childhood'); p.setMem('ecTelevisionArrives', true) },
       },
     ],
@@ -284,7 +284,7 @@ export const EARLY_LIFE_EVENTS = [
       const regime = G.regime
       const unstable = ['conflict_zone', 'developing_unstable'].includes(G.character.country.archetype)
       if (unstable || ['military_dictatorship', 'theocracy'].includes(regime)) {
-        return 'At night there are sounds from outside that the adults do not explain. A vehicle idling for too long. A door. You lie in the dark with your eyes open and listen to the particular quality of the house being still. You have not been told there is danger. You do not need to be told.'
+        return 'At night there are sounds from outside that the adults do not explain. A vehicle idling for too long. A door. You lie in the dark with your eyes open and listen to the quality of the house being still. You have not been told there is danger. You do not need to be told.'
       }
       return 'Something lives in the dark at the end of the hallway. Not always — only when the light is off and the house is quiet. You have seen its shape at the door once. You cannot describe the shape to anyone because in the daylight the shape is not there and the words for it are not available to you. At night, you know exactly what it is.'
     },
@@ -365,7 +365,7 @@ export const EARLY_LIFE_EVENTS = [
       {
         text: 'Don\'t call yet. Sit in the quiet first.',
         tag: 'ya_first_alone',
-        outcome: 'You sit on the mattress and listen to the specific sound of a place that has no one else in it. This is yours. The feeling is terrifying and correct.',
+        outcome: 'You sit on the mattress and listen to the sound of a place that has no one else in it. This is yours. The feeling is terrifying and correct.',
         effect: (p) => { p.m += 7; p.e += 3; p.addFlag('first_apartment'); p.setMem('yaFirstApartment', true) },
       },
     ],
@@ -386,9 +386,9 @@ export const EARLY_LIFE_EVENTS = [
         return 'The job is in a shop, or on a site, or at the back of a kitchen you cannot see from the street. The hours are long and the money is fixed and the work is physical in ways that make specific parts of your body hurt at specific times of day. You do it because it is a thing that pays.'
       }
       if (['wealthy_west', 'wealthy_east'].includes(arch) && G.currentYear >= 2000) {
-        return 'The job is entry-level in a way that was not what you meant when you imagined entry-level. You answer phones. You restock things. You sit in a chair that was not designed for sitting in for eight hours. The boredom has a texture. The paycheck is real.'
+        return 'The job is entry-level, and not what you meant when you imagined entry-level. You answer phones. You restock things. You sit in a chair that was not designed for sitting in for eight hours. The boredom has a texture. The paycheck clears.'
       }
-      return 'This is not what you thought work would be. The gap between what you imagined and what this is has a specific width. You measure it every shift.'
+      return 'This is not what you thought work would be. The gap between what you imagined and what this is has a width. You measure it every shift.'
     },
     choices: [
       {
@@ -423,15 +423,15 @@ export const EARLY_LIFE_EVENTS = [
     text: (G) => {
       const high = G.stats.smarts > 65 || G.stats.charisma > 65
       if (high) {
-        return 'You have always been good at things. The specific thing you fail at — the audition, the application, the project you spent four months on, the relationship you were certain of — is the first thing you were good at that was not enough. The failure is precise. It does not generalise, but you try to make it generalise anyway.'
+        return 'You have always been good at things. The thing you fail at — the audition, the application, the project you spent four months on, the relationship you were certain of — is the first thing you were good at that was not enough. The failure is precise. It does not generalise, but you try to make it generalise anyway.'
       }
-      return 'Something goes wrong. Not the small wrong that you have learned to absorb — something larger, something you had put yourself into. It does not work. There is a specific day when you know it is not working. That day arrives before you are ready for it.'
+      return 'Something goes wrong. Not the small wrong that you have learned to absorb — something larger, something you had put yourself into. It does not work. There is a day when you know it is not working. That day arrives before you are ready for it.'
     },
     choices: [
       {
         text: 'Admit it directly — to yourself and to someone else.',
         tag: 'ya_failure_admitted',
-        outcome: 'The admission is more useful than it feels. You have a clearer account of what happened, which is not the same as feeling better about it.',
+        outcome: 'The admission is more useful than it feels. You have a clearer account of what happened. You do not feel better about it.',
         effect: (p) => { p.e += 4; p.r += 3; p.s += 3; p.addFlag('knows_failure'); p.setMem('yaFirstRealFailure', true) },
       },
       {
@@ -475,7 +475,7 @@ export const EARLY_LIFE_EVENTS = [
       {
         text: 'Stop trying to maintain the group and let the strongest friendships find their own level.',
         tag: null,
-        outcome: 'Two or three of them stay real. The rest become people you were friends with, which is a category of its own.',
+        outcome: 'Two or three of them stay real. The rest become people you were friends with.',
         effect: (p) => { p.m -= 2; p.e += 3; p.addFlag('friend_group_scattered'); p.setMem('yaFriendGroupScatters', true) },
       },
     ],
@@ -523,7 +523,7 @@ export const EARLY_LIFE_EVENTS = [
       !G.mem?.yaMoneyZero &&
       G.money < 400 &&
       !G.education?.enrolled,
-    text: 'The account shows a number that requires decisions to be made immediately. You calculate what is required between now and next payment. The calculation has no slack in it. You walk past a cafe and do not go in. You eat what is in the cupboard in a specific order — cheapest last, in case something changes.',
+    text: 'The account shows a number that requires decisions to be made immediately. You calculate what is required between now and next payment. The calculation has no slack in it. You walk past a cafe and do not go in. You eat what is in the cupboard in an order — cheapest last, in case something changes.',
     choices: [
       {
         text: 'Ask to borrow money.',
@@ -534,13 +534,13 @@ export const EARLY_LIFE_EVENTS = [
       {
         text: 'Cut everything back to essentials and wait.',
         tag: 'ya_austerity',
-        outcome: 'You make it to the next payment. The week has a specific texture — you know every item in your kitchen by the end of it.',
+        outcome: 'You make it to the next payment. The week has a texture — you know every item in your kitchen by the end of it.',
         effect: (p) => { p.m -= 7; p.e += 3; p.w += 2; p.addFlag('money_zero_survived'); p.addFlag('knows_true_broke'); p.setMem('yaMoneyZero', true) },
       },
       {
         text: 'Ask family for help.',
         tag: null,
-        outcome: 'They help without conditions, which is both generous and slightly harder to receive than conditions would have been.',
+        outcome: 'They help without conditions, and it is both generous and slightly harder to receive than conditions would have been.',
         effect: (p) => { p.m -= 2; p.mo += 250; p.karma += 2; p.addFlag('money_zero_survived'); p.setMem('yaMoneyZero', true) },
       },
     ],
@@ -555,7 +555,7 @@ export const EARLY_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 24 &&
       !G.mem?.yaFlatmate &&
       G.flags.has('first_apartment'),
-    text: 'Someone else lives in the apartment. You share the bathroom and the kitchen and the unspoken rules that you discover only when they are broken. Their things are on the shelf where your things were. They leave dishes in the sink in a specific way. They have moods that are not your moods and affect the air of the room anyway.',
+    text: 'Someone else lives in the apartment. You share the bathroom and the kitchen and the unspoken rules that you discover only when they are broken. Their things are on the shelf where your things were. They leave dishes in the sink in a way. They have moods that are not your moods and affect the air of the room anyway.',
     choices: [
       {
         text: 'Make an effort to become friends.',
@@ -566,13 +566,13 @@ export const EARLY_LIFE_EVENTS = [
       {
         text: 'Keep it cordial but separate.',
         tag: null,
-        outcome: 'It is a functional arrangement. You learn the specific skill of sharing space without sharing your life.',
+        outcome: 'It is a functional arrangement. You learn the skill of sharing space without sharing your life.',
         effect: (p) => { p.m += 2; p.e += 2; p.addFlag('first_flatmate'); p.setMem('yaFlatmate', true) },
       },
       {
         text: 'They become closer than you expected.',
         tag: 'ya_flatmate_unexpected',
-        outcome: 'You did not plan it. Proximity has its own logic. They see a version of you that nobody else at this distance sees.',
+        outcome: 'You did not plan it. Proximity does the rest. They see a version of you that nobody else at this distance sees.',
         effect: (p) => { p.m += 10; p.s += 6; p.makeFriend(78); p.addFlag('first_flatmate'); p.addFlag('unexpected_intimacy'); p.setMem('yaFlatmate', true) },
       },
     ],
@@ -598,7 +598,7 @@ export const EARLY_LIFE_EVENTS = [
       if (arch === 'post_soviet') {
         return `You come to ${name === 'Russia' ? 'Moscow' : 'the capital'} by train. The station is enormous and cold and full of people who know where they are going. You have a bag and a telephone number and the number of the dormitory. Your village is eight hours behind you on the same track.`
       }
-      return 'The city is the size of a fact you cannot hold all at once. You knew it would be large. You did not know large was this specific — this particular density, this particular rhythm of strangers on a pavement, this particular quality of not being known by anyone.'
+      return 'The city is the size of a fact you cannot hold all at once. You knew it would be large. You did not know large was this specific — this density, this rhythm of strangers on a pavement, this quality of not being known by anyone.'
     },
     choices: [
       {
@@ -638,7 +638,7 @@ export const EARLY_LIFE_EVENTS = [
       if (hasFriend) {
         return 'You say something to someone that you should not have said. Not a mistake of information but a mistake of timing, of tone, of failing to think about who you were saying it to. The look on their face is the fact. You know it the moment it happens.'
       }
-      return 'You make a mistake that is clearly yours. There is no version of the story in which it is not yours. This is useful information that is not comfortable to hold.'
+      return 'You make a mistake that is clearly yours. There is no version of the story in which it is not yours, and it is not comfortable to hold.'
     },
     choices: [
       {
@@ -656,7 +656,7 @@ export const EARLY_LIFE_EVENTS = [
       {
         text: 'Let the moment pass without owning it.',
         tag: 'ya_mistake_unowned',
-        outcome: 'The moment passes. The fact of it does not. You carry it as a specific weight — not guilt, but a thing that sits just below the surface of certain conversations.',
+        outcome: 'The moment passes. The fact of it does not. You carry it as a weight — not guilt, but a thing that sits just below the surface of certain conversations.',
         effect: (p) => { p.m -= 4; p.r += 7; p.addFlag('mistake_not_owned'); p.setMem('yaMistakeOwned', true) },
       },
     ],
@@ -693,15 +693,15 @@ export const EARLY_LIFE_EVENTS = [
         return `${pickFrom(pool)} — and for the first time the system you were born into is visible to you as a system. Not a backdrop. An arrangement that someone made and that benefits someone. You cannot go back to not seeing it.`
       }
       if (['developing_unstable', 'conflict_zone'].includes(arch)) {
-        return 'A news story, or a conversation, or the specific way an election result is announced, makes something clear that you had been circling for years. The world has an arrangement. The arrangement is not accidental. People have interests. Some interests are yours and some are not. You are twenty-one or twenty-two and this is the year the politics becomes personal.'
+        return 'A news story, or a conversation, or the way an election result is announced, makes something clear that you had been circling for years. The world has an arrangement. The arrangement is not accidental. People have interests. Some interests are yours and some are not. You are twenty-one or twenty-two and this is the year the politics becomes personal.'
       }
-      return (G.literate ? 'The book, or the conversation, or the news of a specific month' : 'A conversation, or something said on the radio, or the news of a specific month') + ' organises something in you that was disorganised before. You have had opinions. This is different. This is a position — a place you stand in relation to other things, that determines what is visible from it and what is not.'
+      return (G.literate ? 'The book, or the conversation, or the news of a month' : 'A conversation, or something said on the radio, or the news of a month') + ' organises something in you that was disorganised before. You have had opinions. This is different. This is a position — a place you stand in relation to other things, that determines what is visible from it and what is not.'
     },
     choices: [
       {
         text: 'Act on it immediately — march, organise, write.',
         tag: 'ya_politics_action',
-        outcome: 'You go to the meeting or the march or the table. The energy of other people who see what you see is real. So is the gap between the energy and the change.',
+        outcome: 'You go to the meeting or the march or the table. Other people see what you see, and you feel it in the room. You feel the gap between that energy and any change as well.',
         effect: (p) => {
           p.e += 4; p.s += 5; p.m += 3; p.karma += 4;
           p.addFlag('political_awareness_early');
@@ -763,7 +763,7 @@ export const EARLY_LIFE_EVENTS = [
       {
         text: 'Tell one person',
         tag: null,
-        outcome: 'They take it well, or well enough. Having said it once, you cannot go back to not having said it, which is what you wanted.',
+        outcome: 'They take it well, or well enough. Having said it once, you cannot go back to not having said it. That is what you wanted.',
         effect: (p) => { p.m += 5; p.s += 2; p.addFlag('questioning_sexuality'); p.setMem('yaQuestioningLate', true) },
       },
       {

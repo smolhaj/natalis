@@ -39,7 +39,7 @@ export const EVENTS_SONDER_33 = [
     when: (G) => G.age >= 7 && G.age <= 13 && !G.mem?.s33d,
     text: () => pick([
       'Only your group knows the rules, invented over two summers and now elaborate enough to take all afternoon. Outside the group, the rules do not exist.',
-      'This kitchen smells a particular way at this time of year. You will be forty-five before you understand why a kitchen smell from childhood has the weight it has. The understanding does not add to the weight.',
+      'This kitchen smells a way at this time of year. You will be forty-five before you understand why a kitchen smell from childhood has the weight it has. The understanding does not add to the weight.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33d', true) },
@@ -52,7 +52,7 @@ export const EVENTS_SONDER_33 = [
     when: (G) => G.age >= 24 && G.age <= 38 && !G.mem?.s33e,
     text: () => pick([
       'You remember the year very clearly and have forgotten the names of the people in it. The year is vivid. The names are gone. The people are somewhere with their names intact.',
-      'Work was good today. Not exceptional — just good. The solidity of having done a thing well and knowing it. The quiet of that particular satisfaction.',
+      'Work was good today. Not exceptional — just good. The solidity of having done a thing well and knowing it. The quiet of that satisfaction.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33e', true) },
@@ -64,8 +64,8 @@ export const EVENTS_SONDER_33 = [
     weight: 2,
     when: (G) => G.age >= 14 && G.age <= 19 && !G.mem?.s33f,
     text: () => pick([
-      'One song is everywhere this season. You will hear it in twenty years and be returned to exactly here — the temperature, the specific unsettled feeling of this period.',
-      'You perform a different version of yourself for different audiences. The performance is not exactly lying. It is the selection of which true thing to present in which room.',
+      'One song is everywhere this season. You will hear it in twenty years and be returned to exactly here — the temperature, the unsettled feeling of this period.',
+      'You perform a different version of yourself for different audiences. The performance is the selection of which true thing to present in which room.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33f', true) },
@@ -77,7 +77,7 @@ export const EVENTS_SONDER_33 = [
     weight: 2,
     when: (G) => G.age >= 68 && !G.mem?.s33h,
     text: () => pick([
-      'You inherited a habit from your mother or your father and did not know you had it until someone pointed it out. The gesture, the phrase, the particular way of handling a situation.',
+      'You inherited a habit from your mother or your father and did not know you had it until someone pointed it out. The gesture, the phrase, the way of handling a situation.',
       'The accumulation of ordinary days that a life is made of. Not the events — the days between them. The breakfast, the walk, the unremarkable afternoon. The ordinary is the texture. The events are just what the ordinary is interrupted by.',
     ]),
     choices: null,
@@ -90,7 +90,7 @@ export const EVENTS_SONDER_33 = [
     weight: 2,
     when: (G) => G.age >= 27 && G.age <= 40 && !G.mem?.s33i,
     text: () => pick([
-      'The city outside your window is going on without reference to what you are going through. This is not indifference. It is the city being the city, which is the condition you live in.',
+      'The city outside your window is going on without reference to what you are going through. It is the city being the city.',
       'You made a decision that was not the best decision available to you and which you made anyway because the best decision was not bearable at the time. Looking back, the decision holds.',
     ]),
     choices: null,
@@ -129,7 +129,7 @@ export const EVENTS_SONDER_33 = [
     weight: 2,
     when: (G) => G.age >= 9 && G.age <= 15 && !G.mem?.s33n,
     text: () => pick([
-      'You understood, for the first time, that the adult in front of you did not know what they were doing. The realisation was not comforting. It was clarifying.',
+      'You understood, for the first time, that the adult in front of you did not know what they were doing. The realisation clarified more than it comforted.',
       'You are waiting for something that everyone else seems to have already received. You do not ask why. You wait.',
     ]),
     choices: null,
@@ -182,7 +182,7 @@ export const EVENTS_SONDER_33 = [
     when: (G) => place.hasBooks(G) && (G.age >= 15 && G.age <= 20 && !G.mem?.s33r),
     text: () => pick([
       'You are reading and the reading is going into a place that is not quite memory and not quite imagination. The book is doing something to you. Later you will not be able to explain what.',
-      'At one moment you trusted an adult more than you trusted your parents. The adult probably does not know this. The moment was real.',
+      'At one moment you trusted an adult more than you trusted your parents. The adult probably does not know this.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33r', true) },
@@ -208,7 +208,7 @@ export const EVENTS_SONDER_33 = [
     when: (G) => G.age >= 58 && G.age <= 72 && !G.mem?.s33t,
     text: () => pick([
       'Some things about you are permanent and some things changed. The permanent things are not the ones you would have predicted at thirty.',
-      'You find yourself finishing other people\'s sentences in your mind before they finish them aloud. This is not because you are impatient. It is because you have been listening to people for a long time.',
+      'You find yourself finishing other people\'s sentences in your mind before they finish them aloud. You have been listening to people for a long time.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33t', true) },
@@ -221,7 +221,7 @@ export const EVENTS_SONDER_33 = [
     when: (G) => place.hasWeekend(G) && (G.age >= 42 && G.age <= 56 && !G.mem?.s33u),
     text: () => pick([
       'An evening you did not plan became the evening you remember. No event. Just the light and the people and the conversation that went longer than anyone expected.',
-      'Your household has a small ceremony — the way Sunday morning works, the particular thing you do before a journey, the routine that is more than a routine. It is not a ritual because no one named it. It is a ritual.',
+      'Your household has a small ceremony — the way Sunday morning works, the thing you do before a journey, the routine that is more than a routine. Nobody named it, and it is a ritual.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33u', true) },
@@ -311,7 +311,7 @@ export const EVENTS_SONDER_33 = [
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 28 && !G.mem?.s33ab,
     text: () => pick([
-      'You stayed up for no reason except that sleep did not come, and the house was quiet, and you were briefly alone in the world in a way that was not lonely.',
+      'You stayed up for no reason except that sleep did not come, and the house was quiet, and you were briefly alone in the world without being lonely.',
       'The possibility ahead of you — the multiple possible futures — has a quality at this age. From here, many things are still open. You do not fully feel the openness, but it is there.',
     ]),
     choices: null,

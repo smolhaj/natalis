@@ -61,7 +61,8 @@ export const DENMARK_EVENTS = [
       G.currentYear === 1945 &&
       G.age >= 14 &&
       !G.mem?.denLiberation45,
-    text: 'Denmark was liberated on May 5, 1945 — three days before Germany\'s full surrender. The lights went on in windows across the country that night. Then the reckoning began: who had collaborated with the occupiers beyond what was strictly necessary, who had profited, who had volunteered for the Waffen-SS, who had informed. The legal proceedings were called *retsopgøret* — the legal reckoning. Forty thousand people were tried. Thirteen thousand sentences. Forty executions for wartime treason. The model protectorate had produced collaborators as surely as any occupied country. The trial of the accommodation policy was also, in a quieter way, underway.',
+    text: 'May 5, 1945, and the candles go into the windows all over the country. Then the reckoning: who collaborated beyond what was necessary, who profited, who volunteered for the SS, who informed. Tens of thousands are tried, and men are shot for treason. The model protectorate made collaborators like any other occupied country, and the policy of getting along goes quietly on trial with them.',
+    context: 'The Danish legal purge (retsopgøret) tried some 40,000 people; 46 death sentences were carried out.',
     choices: null,
     effect: (p) => { p.m += 12; p.karma += 4; p.addFlag('den_liberation_generation'); p.setMem('denLiberation45', true) },
   },
@@ -101,7 +102,7 @@ export const DENMARK_EVENTS = [
     text: (G) => {
       const isImmigrant = G.flags.has('emigrated') || G.flags.has('refugee')
       return isImmigrant
-        ? 'Denmark has the strictest immigration rules in the EU. The 24-year rule for family reunification. The points system. The "ghetto" designation for specific neighbourhoods that triggers additional requirements. The requirement that children from designated areas attend Danish-language daycare for mandatory hours per week. The policies are administered by governments across the political spectrum — the Social Democrats implemented much of what was originally the far-right Danish People\'s Party programme. You live inside these policies. Some of them have affected you directly. You have formed a view about whether this is integration or something with a different name.'
+        ? 'The strictest immigration rules in Europe: the 24-year rule for bringing a spouse, the points, the lists of neighbourhoods officially called ghettos, the compulsory Danish daycare for children who live in them. Governments of the left and the right have run them; the Social Democrats adopted much of what the far right first proposed. You live inside these rules and some of them have touched you directly. You have formed a view about whether this is integration or something with another name.'
         : 'Denmark became, by some measures, the country in the EU with the most restrictive immigration regime. The journey was across governments and decades — from the 1983 Aliens Act to the 2002 24-year rule to the "ghetto" designation policies to the Social Democratic immigration turn of the 2010s. The argument in favour is integration and social cohesion. The argument against is about what kind of society produces those arguments about itself. You have a view. The view has probably shifted at least once in the years since you formed it.'
     },
     choices: null,

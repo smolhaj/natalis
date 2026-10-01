@@ -31,7 +31,7 @@ export const KENYA_EVENTS = [
       {
         text: 'Stay quiet. This is the only sensible position.',
         tag: 'ken_silent_under_moi',
-        outcome: 'You stay quiet. You are safe, which is a choice you made, and you know you made it.',
+        outcome: 'You stay quiet. You are safe, and you chose it, and you know you chose it.',
         effect: (p) => { p.m -= 6; p.addFlag('ken_silent_under_moi'); p.setMem('kenMoiSilence', true) },
       },
       {
@@ -72,21 +72,31 @@ export const KENYA_EVENTS = [
 
   {
     id: 'ken_post_election_2007',
+    // The violence ran from the announcement on 30 December 2007 to the
+    // February accord, and it was not a Nairobi event: Kisumu, Eldoret, the
+    // Kiambaa church, Naivasha, Nakuru, the western towns, and the Nairobi
+    // settlements. The event was written from Nairobi at weight 5 over three
+    // years, so a Luhya in rural Nyanza never met the worst weeks of the
+    // decade. It is dated now, and says where you are.
     phase: null,
-    weight: 5,
-    when: (G) => IS_KENYAN(G) && G.currentYear >= 2007 && G.currentYear <= 2009 && G.age >= 18 && !G.mem.kenElection2007,
-    text: 'The results are announced. In the three days that follow, over a thousand people die. You know someone who died in Kisumu. You know someone who joined the burning in Eldoret. You are watching the news from Nairobi, aware that the city is dividing along streets you have always known by other names. The Kibera toll is not on the news yet.',
+    weight: 40,
+    claimsYears: { from: 2008, to: 2008 },
+    when: (G) => IS_KENYAN(G) && G.currentYear === 2008 && G.age >= 15 && !G.mem.kenElection2007,
+    context: 'About 1,100 to 1,300 people were killed and some 600,000 displaced between the disputed December 2007 result and the power-sharing accord of 28 February 2008.',
+    text: (G) => G.place?.id === 'ke_nairobi'
+      ? 'The result is announced and by nightfall Kibera is burning. The city divides along streets you have always known by other names, and the young men at the roadblocks ask everybody for their name and listen to the accent of the answer. You know someone who died in Kisumu. On the news, a church at Kiambaa, outside Eldoret, with the people who sheltered in it.'
+      : 'The result is announced and within a day the roads are closed: tyres burning, stones across the tarmac, young men asking each traveller for a name. In Kisumu the police fire into the crowds on the main road. From Eldoret comes the news of the church at Kiambaa and the people who sheltered in it. Neighbours who have shared a boundary for thirty years stop greeting each other at the well.',
     choices: [
       {
         text: 'Stay inside and wait for it to pass.',
         tag: null,
-        outcome: 'You stay. It passes. You are not entirely sure what you survived or what you avoided being part of.',
+        outcome: 'You stay. It passes, in February, with a signature on the news. You are not sure what you survived or what you avoided being part of.',
         effect: (p) => { p.m -= 8; p.setMem('kenElection2007', true) },
       },
       {
-        text: 'Cross the city to reach family.',
+        text: 'Go to reach family.',
         tag: 'ken_crossed_nairobi',
-        outcome: 'You cross. The roadblocks are listening for your name and your accent. You get through. You will remember the sound of the question for a long time.',
+        outcome: 'You go. The roadblocks are listening for your name and your accent. You get through. You will remember the sound of the question for a long time.',
         effect: (p) => { p.m -= 12; p.h -= 3; p.addFlag('ken_crossed_nairobi'); p.setMem('kenElection2007', true) },
       },
     ],
@@ -111,7 +121,7 @@ export const KENYA_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => IS_KENYAN(G) && G.currentYear >= 1970 && G.age >= 18 && G.age <= 28 && G.ruralUrban === 'rural' && !G.mem.kenNairobi,
-    text: 'The matatu drops you at the stage with your bag, which is the wrong bag. Someone speaks Sheng to you and you understand half. A sign advertises something at a price that means nothing to you yet. The city is not hostile. It simply does not care about you, which is both worse and better than you expected.',
+    text: 'The matatu drops you at the stage with your bag, the wrong bag. Someone speaks Sheng to you and you understand half. A sign advertises something at a price that means nothing to you yet. The city is not hostile. It simply does not care about you, and that is both worse and better than you expected.',
     choices: null,
     effect: (p) => { p.m -= 4; p.e += 3; p.s += 2; p.setMem('kenNairobi', true) },
   },
@@ -123,7 +133,7 @@ export const KENYA_EVENTS = [
     phase: 'adolescence',
     weight: 8,
     when: (G) => G.ethnicity === 'maasai' && ['Kenya', 'Tanzania'].includes(G.character.country.name) && G.age >= 14 && G.age <= 18 && !G.mem.kenMaasaiMoran,
-    text: 'The time has come. You know it by the way your father stops treating you as a child without ever saying so. The ceremony takes days — the songs, the ochre, the cutting that you do not cry through, which is the point. Afterward you are a moran. The spear is yours. The cattle you know individually by gait and voice. The land between the Mara and Loita Hills is yours in a way that does not require papers.',
+    text: 'The time has come. You know it by the way your father stops treating you as a child without ever saying so. The ceremony takes days — the songs, the ochre, the cutting that you do not cry through, because not crying is the point. Afterward you are a moran. The spear is yours. The cattle you know individually by gait and voice. The land between the Mara and Loita Hills is yours without papers.',
     choices: null,
     effect: (p) => { p.m += 8; p.s += 4; p.h += 3; p.addFlag('maasai_moran'); p.setMem('kenMaasaiMoran', true) },
   },
@@ -155,7 +165,7 @@ export const KENYA_EVENTS = [
     phase: 'young_adult',
     weight: 5,
     when: (G) => G.ethnicity === 'maasai' && ['Kenya', 'Tanzania'].includes(G.character.country.name) && G.currentYear >= 1975 && G.age >= 20 && G.age <= 32 && G.flags.has('maasai_moran') && !G.mem.kenMaasaiNairobi,
-    text: 'Three of the young men from your age-grade have gone to Nairobi. One is a security guard at a hotel near the airport; another is studying something. The group ranch is subdivided — twenty acres per family, which is a number that makes no sense to cattle. Your older brother inherited more than you did. The land is there, but it is no longer land in the way land used to mean.',
+    text: 'Three of the young men from your age-grade have gone to Nairobi. One is a security guard at a hotel near the airport; another is studying something. The group ranch is subdivided — twenty acres per family, a number that makes no sense to cattle. Your older brother inherited more than you did. The land is there, but it is no longer land in the way land used to mean.',
     choices: [
       {
         text: 'Go to Nairobi. Adapt.',
@@ -180,7 +190,7 @@ export const KENYA_EVENTS = [
     text: 'The lodge at the reserve gate is hiring. The job is to stand at the entrance in full regalia and be photographed. The pay is 4,000 shillings a month plus accommodation. The tourists pay $5 to photograph you; the lodge keeps $4.50. Your grandmother\'s beadwork is on sale in the gift shop, labelled "Maasai craftwork — authentically sourced." The source is a factory in Nairobi.',
     choices: [
       {
-        text: 'Take the job. The money is real.',
+        text: 'Take the job. The money comes.',
         tag: null,
         outcome: 'You take it. The money arrives. Every morning you dress for work and every afternoon you undress. You get good at reading which tourists want a photo and which want a conversation.',
         effect: (p) => { p.mo += 1200; p.m -= 6; p.setMem('kenMaasaiTourist', true) },
@@ -201,7 +211,7 @@ export const KENYA_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.flags.has('ken_silent_under_moi') && G.age >= 55 && !G.mem.kenMoiLate,
-    text: 'Someone asks if you remember what it was like under Moi. You remember. You say: it was complicated. This is not a lie. It is the sentence you learned to build around the thing you are not saying.',
+    text: 'Someone asks if you remember what it was like under Moi. You remember. You say: it was complicated. It is the sentence you learned to build around the thing you are not saying.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('kenMoiLate', true) },
   },

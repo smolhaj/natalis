@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // events_pregnancy.js
 // Pregnancy, birth, and early postpartum arc.
 //
@@ -62,7 +63,7 @@ export const PREGNANCY_EVENTS = [
       !G.mem?.pregFirstTrimDone,
     text: (G) => {
       const a = G.character?.country?.archetype
-      const base = 'The nausea arrives without warning — morning is a misnomer; it is any hour, any smell, any movement. You are exhausted in a way that has no comparison. You are still keeping the news to yourselves. You go to work, attend things, say you are fine.'
+      const base = 'The nausea arrives without warning — morning is a misnomer; it is any hour, any smell, any movement. You are exhausted beyond comparison. You are still keeping the news to yourselves. You go to work, attend things, say you are fine.'
       if (a === 'subsaharan' || a === 'developing_unstable') {
         return 'Your body changes before you have told anyone. The exhaustion is deep and particular. The morning sickness runs into afternoon. You continue your usual work because there is no alternative.'
       }
@@ -81,7 +82,7 @@ export const PREGNANCY_EVENTS = [
       {
         text: 'Wait — the twelve-week threshold has its logic',
         tag: null,
-        outcome: 'You carry it quietly. The first weeks are yours alone, which is both a burden and a kind of privacy.',
+        outcome: 'You carry it quietly. The first weeks are yours alone, a burden and a privacy.',
         effect: (p) => { p.m += 3; p.setMem('pregFirstTrimDone', true) },
       },
     ],
@@ -97,7 +98,7 @@ export const PREGNANCY_EVENTS = [
       G.character.gender === 'male' &&
       G.partner &&
       !G.mem?.pregPartnerTrimDone,
-    text: 'Your partner is pregnant. The first weeks are disorienting in a specific way — the change is enormous but invisible; only the two of you know about it. She is exhausted and nauseated and trying to pretend otherwise. You find you are monitoring things without quite knowing what you are monitoring.',
+    text: 'Your partner is pregnant. The first weeks are disorienting in a way — the change is enormous but invisible; only the two of you know about it. She is exhausted and nauseated and trying to pretend otherwise. You find you are monitoring things without quite knowing what you are monitoring.',
     effect: (p) => { p.m += 6; p.partnerRel(5); p.setMem('pregPartnerTrimDone', true) },
     choices: null,
   },
@@ -121,7 +122,7 @@ export const PREGNANCY_EVENTS = [
       if (yr >= 2000) {
         return `You are large and deliberate and uncomfortable. The due date is weeks away. You have a name — ${name}. The bag is by the door. You do not know what labour will be like. No one can adequately describe it to you in advance, so you have stopped trying to imagine it.`
       }
-      return `You are into the final months. The body has its own priorities now. You are more tired and more certain than you have ever been simultaneously.`
+      return `You are into the final months. The body has other priorities now. You are more tired and more certain than you have ever been simultaneously.`
     },
     effect: (p) => { p.h -= 3; p.setMem('pregLatePregnancyDone', true) },
     choices: null,
@@ -142,7 +143,7 @@ export const PREGNANCY_EVENTS = [
       const child = G.children[G.children.length - 1]
       const childName = child?.name ?? 'the baby'
       const setting = birthSettingText(G)
-      return `${setting} ${childName} arrives. The transition from not-yet to here is very fast and very slow at the same time. You hold them and the world rearranges around that fact.`
+      return gendered(`${setting} ${childName} arrives. The transition from not-yet to here is very fast and very slow at the same time. You hold them and the world rearranges around that fact.`, child)
     },
     choices: [
       {
@@ -177,7 +178,7 @@ export const PREGNANCY_EVENTS = [
       if (yr < 1960) {
         return `${childName} is born and you survive, but it is close enough that the word 'survive' is the right one. The doctor does not explain what happened in terms you fully understand. Later, a nurse tells you quietly that there was a moment when it was not certain. ${childName} does not know any of this yet.`
       }
-      return `${childName} is born and you survive the complications. The room moved fast in a way that told you this was serious. Your partner was asked to step back. The nurse who held your hand through the worst of it did not let go. ${childName} is fine. You are fine, technically. You will process what almost happened later.`
+      return `${childName} is born and you survive the complications. The room moved fast, and that told you this was serious. Your partner was asked to step back. The nurse who held your hand through the worst of it did not let go. ${childName} is fine. You are fine, technically. You will process what almost happened later.`
     },
     effect: (p) => { p.m += 8; p.r += 8; p.addFlag('near_miss_birth'); p.setMem('pregBirthDone', true) },
     choices: null,
@@ -218,7 +219,7 @@ export const PREGNANCY_EVENTS = [
       const childName = child?.name ?? 'the baby'
       const isFirst = G.children.length === 1
       if (isFirst) {
-        return `The first hours with ${childName}. You have never done this before and neither have they. You are both figuring out the same language at the same time. They seem very small and also very complete.`
+        return gendered(`The first hours with ${childName}. You have never done this before and neither have they. You are both figuring out the same language at the same time. They seem very small and also very complete.`, child)
       }
       return `The first hours with ${childName}. You have done this before but the repetition does not make it smaller — it just makes it differently specific. This one is this one.`
     },
@@ -298,7 +299,7 @@ export const PREGNANCY_EVENTS = [
     text: (G) => {
       const child = G.children[G.children.length - 1]
       const childName = child?.name ?? 'the baby'
-      return `The first weeks with ${childName}. The sleep deprivation is a specific kind of unreality. Your partner is recovering physically, feeding, always doing something. You are learning what you can do that actually helps — which is different from what you thought would help. You are more useful than you feared and less than you hoped. This is probably normal.`
+      return `The first weeks with ${childName}. The sleep deprivation is a kind of unreality. Your partner is recovering physically, feeding, always doing something. You are learning what you can do that actually helps — which is different from what you thought would help. You are more useful than you feared and less than you hoped. This is probably normal.`
     },
     effect: (p) => { p.m += 8; p.h -= 4; p.partnerRel(6); p.setMem('pregPartnerFirstWeeksDone', true) },
     choices: null,

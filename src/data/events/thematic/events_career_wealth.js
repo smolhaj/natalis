@@ -84,8 +84,8 @@ export const CAREER_WEALTH_EVENTS = [
       const field = G.career?.field ?? 'work'
       const fieldMap = {
         medical: 'The meeting is about a patient you will never forget — a case the junior doctors are struggling with. The consultant who used to be the most senior person in the room is now you. The juniors look to you the way you once looked to someone else. You say the thing you would have wanted to hear then.',
-        law: 'The other partners defer to you in the room without making a production of it. The client asks a technical question and everyone waits. You realize with no drama that you are the person who is supposed to know the answer, and that you do know the answer, and that arriving here took the specific accumulation of every year before this one.',
-        education: 'The new teacher on the staff is asking you about a student. You recognize the student she\'s describing — not this specific child but the type, the pattern, the way the behaviour is covering something else. You have seen it enough times that you know what to say. The knowledge feels like something earned.',
+        law: 'The other partners defer to you in the room without making a production of it. The client asks a technical question and everyone waits. You realize with no drama that you are the person who is supposed to know the answer, and that you do know the answer, and that arriving here took the accumulation of every year before this one.',
+        education: 'The new teacher on the staff is asking you about a student. You recognize the student she\'s describing — not this child but the type, the pattern, the way the behaviour is covering something else. You have seen it enough times that you know what to say. The knowledge feels like something earned.',
         engineering: 'The site review flags a problem your eye catches before anyone else has finished reading the report. You know what it means and what it will cost and what the fix looks like because you have been here before in three different forms on three different projects.',
       }
       return fieldMap[field] ?? `You are in a meeting and you realize that you have become the most experienced person in the room. It happened incrementally, without ceremony. The weight of it is not unpleasant.`
@@ -118,7 +118,10 @@ export const CAREER_WEALTH_EVENTS = [
       G.career.level >= 2,
     text: (G) => {
       const field = G.career?.field ?? 'work'
-      if (field === 'medical') {
+      // `medical` is not a field; doctors and nurses are `healthcare`, so they
+      // all got the generic line — and so did a Foreman, told about "a project
+      // that carries your name ... in your field".
+      if (field === 'healthcare') {
         return 'The case is documented in the hospital\'s training records now. You did not do anything famous — you recognized something fast, made the correct call, and the patient survived something that usually does not survive. The consultant who reviewed it said simply: good work. The words contain the weight of a career.'
       }
       if (field === 'law') {
@@ -127,7 +130,25 @@ export const CAREER_WEALTH_EVENTS = [
       if (field === 'engineering') {
         return 'The bridge has been open for three years. You drove across it recently for the first time as a civilian — not as the engineer who built it, just as someone using it. The thing about structural work at this scale is that if you did it right, nobody notices. You notice. You know what\'s holding it up.'
       }
-      return 'There is a project that carries your name — not formally, but in the way that people in your field refer to it. The kind of work that takes everything you know and proves it was worth accumulating.'
+      if (['construction', 'electrician', 'plumber'].includes(field)) {
+        return 'There is a building on the main road whose foundations you poured, and you point it out to whoever is in the car with you. Nobody else knows it is yours. You know which corner had to be done twice.'
+      }
+      if (field === 'manufacturing') {
+        return 'There was a fault on the line that the engineers chased for a week, and you found it in an afternoon by the sound the press was making. The plant manager knows your name now, and says it when he walks the floor.'
+      }
+      if (field === 'agriculture') {
+        return 'The year the rains came late, your field was the one that still yielded, because of what you did with the channels the spring before. Men walk over from the next villages to look at it, and you explain it more than once.'
+      }
+      if (field === 'transport' || field === 'aviation') {
+        return 'Fifteen years on the same routes without an accident, and the company puts your photograph up on the wall by the clock. You look at it every morning when you sign in, and it still surprises you.'
+      }
+      if (field === 'education') {
+        return 'A former student stops you in the market, grown, with children of their own, and tells you the thing you said to them at fourteen that they have never forgotten. You do not remember saying it. You go home and sit for a while.'
+      }
+      if (['casual', 'hospitality', 'trade'].includes(field)) {
+        return 'There are people who come back because of you. They ask for you by name, and wait if you are busy, and the owner has noticed.'
+      }
+      return 'There is a piece of work the people you work with still call yours, though nobody wrote your name on it. It took everything you knew, and it held.'
     },
     choices: null,
     effect: (p) => { p.m += 16; p.r -= 10; p.addFlag('career_defining_work'); p.setMem('careerDefiningCase', true) },
@@ -196,7 +217,7 @@ export const CAREER_WEALTH_EVENTS = [
       {
         text: 'Give it — the money is less important than the person',
         tag: null,
-        outcome: 'You give it without conditions. The gratitude is real. You notice something shift in the relationship that may or may not improve it.',
+        outcome: 'You give it without conditions. You notice something shift in the relationship that may or may not improve it.',
         effect: (p) => { p.m += 5; p.mo -= 40000; p.karma += 12; p.addFlag('family_financial_support'); p.setMem('wealthFamilyApproach', true) },
       },
       {
@@ -223,7 +244,7 @@ export const CAREER_WEALTH_EVENTS = [
       !G.mem.wealthPhilanthropy &&
       G.money > 500000 &&
       G.age >= 40,
-    text: 'You have more than you will spend. This is a fact that took a while to become real to you. A financial adviser introduces you to a giving vehicle — a donor-advised fund, a foundation, a specific endowment — and explains the mechanism. The question underneath the mechanism is: what do you actually believe the money should do.',
+    text: 'You have more than you will spend. This is a fact that took a while to become real to you. A financial adviser introduces you to a giving vehicle — a donor-advised fund, a foundation, an endowment — and explains the mechanism. The question underneath the mechanism is: what do you actually believe the money should do.',
     choices: [
       {
         text: 'Give to causes in the community you came from',
@@ -282,7 +303,7 @@ export const CAREER_WEALTH_EVENTS = [
       !G.mem.wealthEstatePlanning &&
       G.money > 300000 &&
       G.age >= 60,
-    text: 'The solicitor spreads the papers. The will is technically straightforward — the assets, the beneficiaries, the specific bequests. The part that is not straightforward is the conversation it forces: which of your children gets the house, what happens if they disagree, what you believe about money and family and fairness and whether those beliefs are consistent with each other.',
+    text: 'The solicitor spreads the papers. The will is technically straightforward — the assets, the beneficiaries, the bequests. The part that is not straightforward is the conversation it forces: which of your children gets the house, what happens if they disagree, what you believe about money and family and fairness and whether those beliefs are consistent with each other.',
     choices: [
       {
         text: 'Divide it equally and let them work out the rest',
@@ -315,7 +336,7 @@ export const CAREER_WEALTH_EVENTS = [
       !G.mem.ruralUrbanAccommodation &&
       G.flags.includes('rural_to_urban') &&
       G.age >= 18 && G.age <= 30,
-    text: 'The room you find is small and expensive for what it is. Five people share a kitchen and a single bathroom. The landlord does not ask for a reference. The room costs half of what the job at the printing warehouse pays. The room is also yours, which is a thing you are still learning the shape of: a door that closes, a key, a small unit of space that is not shared with a family.',
+    text: 'The room you find is small and expensive for what it is. Five people share a kitchen and a single bathroom. The landlord does not ask for a reference. The room costs half of what the job at the printing warehouse pays. The room is also yours, and you are still learning the shape of it: a door that closes, a key, a small unit of space that is not shared with a family.',
     choices: [
       {
         text: 'Make it habitable — a photograph, some order',
@@ -341,7 +362,7 @@ export const CAREER_WEALTH_EVENTS = [
       !G.mem.ruralUrbanNetworkLoss &&
       G.flags.includes('rural_to_urban') &&
       G.age >= 20 && G.age <= 32,
-    text: 'The village social network — the hundred small obligations and reliabilities, the person who will sit with your sick parent, the woman who sends food when there is a death, the elder who mediates a dispute — does not exist here. The city has its own networks but they require time to build, and in the meantime you are an individual in a way you have never been before. The freedom and the loneliness of this are exactly the same thing.',
+    text: 'The village social network — the hundred small obligations and reliabilities, the person who will sit with your sick parent, the woman who sends food when there is a death, the elder who mediates a dispute — does not exist here. The city has networks but they take time to build, and in the meantime you are an individual in a way you have never been before. The freedom and the loneliness of this are exactly the same thing.',
     choices: [
       {
         text: 'Build connections in the city — join something, be present',

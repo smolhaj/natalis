@@ -23,7 +23,7 @@ export const LIBYA_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2010 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.lbyBerber,
-    text: `Gaddafi's Libya is Arab Libya. The Amazigh language — Tamazight — is not permitted in schools, not in public life, not in official space. The Berber villages of the Nafusa Mountains and the Jabal Nafusa know this. The language continues at home, in whispers and in the household, but it cannot be written in any official document. It has no alphabet in public. The cultural memory is sustained privately: the songs, the weaving patterns, the genealogies in a language that the state insists does not belong here. Growing up Amazigh under the Jamahiriya is growing up with a history that the government's version of history does not include.`,
+    text: `Tamazight is spoken at home and nowhere else. Not at school, not in an office, not written on any document; the state says Libya is Arab. In the Nafusa Mountains the songs and the weaving patterns and the genealogies go on in the house. You grow up with a history the government's history does not include.`,
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -44,7 +44,7 @@ export const LIBYA_DEPTH_EVENTS = [
       G.currentYear >= 1976 && G.currentYear <= 2000 &&
       G.age >= 8 && G.age <= 16 &&
       !G.mem?.lbyGreenBook,
-    text: `The Green Book is in the curriculum. You study it the way you study mathematics — as a given, as a system, as a thing that requires correct answers. The Third Universal Theory: neither capitalism nor communism, but something Gaddafi calls the Third Way. Direct democracy through basic popular congresses. Private enterprise abolished. The press replaced with mass media that belongs to the masses. You learn the vocabulary and produce the vocabulary in the right contexts. What you make of it privately is a different question, one that has no safe venue.`,
+    text: `The Green Book is on the curriculum, and you study it like mathematics, a system that needs correct answers: neither capitalism nor communism, people's congresses, no private enterprise, a press that belongs to the masses. You learn the vocabulary and produce it in the right places. What you make of it privately has no safe place to be said.`,
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -65,7 +65,7 @@ export const LIBYA_DEPTH_EVENTS = [
       G.currentYear === 1986 &&
       G.age >= 4 && G.age <= 22 &&
       !G.mem?.lby1986,
-    text: `April 15, 1986. Reagan's retaliation for the West Berlin disco bombing: eighteen American F-111s fly from England, refuelling in the air over the Atlantic because France refused overflight permission. Tripoli at 2am: the bombs fall on the Bab al-Azizia compound, on the Tripoli Military Airport, on the civilian district of Bin Ashour. Gaddafi escapes to a tent. His adopted infant daughter Hana is killed. Sixty-three Libyans die in Tripoli and Benghazi. You are in the country being bombed. The American justification — self-defence against terrorism — is the same logic that will be used in other countries in other decades. You know what it feels like from the receiving end.`,
+    text: `April 1986. The American planes come from England the long way round, because France would not let them cross, and at two in the morning the bombs fall on Tripoli: the compound, the airport, the houses of Bin Ashour. Gaddafi gets away. The Americans call it self-defence against terrorism, a logic other countries will hear in other decades. You know what it feels like from underneath.`,
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -87,7 +87,7 @@ export const LIBYA_DEPTH_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 2010 &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.lbyStudentAbroad,
-    text: `The scholarship takes you abroad — to Bulgaria, Romania, the Soviet Union, Yugoslavia, or later to Britain or Germany if the period is right and the family has connections. The Libyan People's Bureau in the capital you live in is not only a consulate. It also monitors Libyan students: who attends what events, who associates with dissidents, who says the wrong thing in the wrong company. The revolutionary committees have chapters abroad. You have been told, by older students, to be careful. You are careful. The careful version of yourself abroad is not entirely the same person who left Libya.`,
+    text: `The scholarship takes you abroad, to Sofia or Belgrade or later to Manchester. The People's Bureau in that city is not only a consulate: it keeps a note of who goes to which meeting and who sits with whom. The older students tell you to be careful, and you are. The careful person you are abroad is not quite the one who left.`,
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -151,7 +151,7 @@ export const LIBYA_DEPTH_EVENTS = [
       G.currentYear >= 1999 && G.currentYear <= 2011 &&
       G.age >= 25 &&
       !G.mem?.lbyPanAfrica,
-    text: `After the Arab League failed him — Arab unity never arrived, the Arab summits became theatre — Gaddafi turned south. He funded the African Union's founding. He called himself King of Kings of Africa, adopting the title after a gathering of traditional chiefs he convened. He financed movements and militias across the Sahel. Libyan money went into Chad, Niger, Mali. Sub-Saharan African workers, mostly from Mali and Niger, came to Libya in significant numbers for oil-economy jobs. The anti-African xenophobia that existed in Libyan society co-existed with Gaddafi's pan-African rhetoric in the way that contradictions existed under the Jamahiriya: present and not spoken of directly.`,
+    text: `Gaddafi has given up on the Arabs and turned south. He calls himself King of Kings of Africa, and Libyan money goes into Chad, Niger and Mali. Men from Mali and Niger come north to work the oil economy. The xenophobia toward them in the street lives alongside the pan-African speeches on the radio, and nobody mentions the contradiction.`,
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -172,7 +172,7 @@ export const LIBYA_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2010 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.lbyFezzan,
-    text: `The Fezzan is the southern third of Libya — a third of a country that is already ninety percent desert. The oasis towns of Sabha, Murzuk, Ghat. The Tuareg who are Libyan but also part of a people that crosses the Algerian, Malian, and Nigerien borders without the borders meaning much. The ancient Saharan trade routes that predate the country by centuries. Growing up in the Fezzan is growing up in a place the Mediterranean coast considers the interior — remote, underfunded, different. The Sahara has its own texture: the date palms, the cold nights, the way the light is different from the coast. The country of the coast is a distant authority.`,
+    text: `The Fezzan: Sabha, Murzuk, Ghat, a third of a country that is already mostly desert. The Tuareg here are Libyan and also a people that crosses three borders as if they were not there. The nights are cold, the dates are good, and the light is not the coast's light. The coast is a distant authority that thinks of you as the interior.`,
     choices: null,
     effect: (p) => {
       p.e += 2

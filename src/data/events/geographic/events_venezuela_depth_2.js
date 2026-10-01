@@ -21,13 +21,13 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
     text: (G) => {
       const poor = G.stats.wealth < 40
       if (poor) {
-        return 'December 6, 1998. The results come in and Chávez has won with 56 percent. In the barrio this is not a result — it is an event. Fireworks from somewhere below. Your grandmother cries. She is not crying because she is afraid; she cries because this is the first time since she has been alive that someone who speaks like her father spoke, who uses the same words for the same things, has won anything. You understand something about representation that you did not understand yesterday.'
+        return 'December 6, 1998. Chávez has won, and in the barrio it is not a result, it is an event: fireworks from somewhere below. Your grandmother cries, and not from fear. It is the first time in her life that a man who talks like her father talked, using the same words for the same things, has won anything. You understand something about representation that you did not understand yesterday.'
       }
-      return 'December 6, 1998. The results. Hugo Chávez Frías, the coup leader from 1992 who went to prison and came out and ran for election — 56 percent. Your family had voted for the opposition. The television is on. Your father says: they will see. In the next weeks he says it again. You understand that "they will see" is not a prediction about what will happen. It is a statement about whose fault it is for what will happen.'
+      return 'December 6, 1998, the results: Hugo Chávez, the coup leader of 1992, prison and out and elected, with more than half the vote. Your family voted for the other side. The television is on. Your father says: they will see, and says it again in the following weeks. You understand that "they will see" is a statement about whose fault it will be.'
     },
     choices: [
       {
-        text: 'The hope is real. The country needed something to break.',
+        text: 'You hope. The country needed something to break.',
         tag: 'ven_chavez_generation',
         outcome: 'The break arrives. Whether it produces the thing the hope was for is the question of the next two decades.',
         effect: (p) => { p.m += 8; p.addFlag('ven_chavez_generation'); p.setMem('venChavez98', true); },
@@ -71,7 +71,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       G.currentYear >= 2006 && G.currentYear <= 2013 &&
       G.age >= 22 &&
       !G.mem?.venOilBoom,
-    text: 'The oil price is above $100. Venezuela has the largest proven reserves in the world. The petrodollars flow in a specific way: into Miraflores, into the missions, into the import system that brings cheap goods because the official exchange rate makes importing absurdly profitable. You buy appliances, a car, a television. Your cousin takes a trip to Miami to shop — not for a vacation but literally for shopping, for the duty-free gap. The economy is a wheel turning on oil and the wheel is turning fast and the specific feeling of a wheel turning fast is that it will keep turning. It will not keep turning at this speed. You do not know this now in the way you will know it later.',
+    text: 'The oil is above a hundred dollars, and the money flows: into the palace, into the missions, into an import system made absurdly profitable by the official exchange rate. You buy appliances, a car, a television; your cousin flies to Miami not on holiday but to shop. The economy is a wheel turning on oil, turning fast, and a wheel turning fast feels as if it will keep turning. It will not, at this speed.',
     choices: [
       {
         text: 'You save in dollars, slowly, through the parallel market.',
@@ -151,7 +151,8 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       G.currentYear >= 2017 && G.currentYear <= 2018 &&
       G.age >= 17 &&
       !G.mem?.ven2017,
-    text: 'The 2017 protests are the largest in the country\'s history up to that point — 126 dead by July, hundreds injured. The colectivos on motorcycles in response to the guarimba barricades. Tear gas in residential streets. The opposition took the street. Capriles, Leopoldo López from his prison, María Corina Machado from a podium. You are watching or you are in it. The thing the protests did: they were real, they were massive, they were met with the specific proportions of force that allowed them to be eventually exhausted without being crushed in a way that would have made the pictures too internationally legible.',
+    text: '2017. Barricades in the streets and colectivos on motorbikes, tear gas drifting into apartment windows. The opposition has taken the street and the state answers with exactly enough force to wear the protests down without the kind of massacre that makes the world\'s front pages. You are watching from a window, or you are in it. By July the count of the dead is past a hundred.',
+    context: 'The 2017 protests left at least 126 people dead between April and July.',
     choices: [
       {
         text: 'You go out. The street is where the argument lives.',
@@ -178,7 +179,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       G.currentYear >= 2018 && G.currentYear <= 2021 &&
       G.age >= 20 &&
       !G.mem?.venHyperinflation,
-    text: 'The bolívar fuerte gave way to the bolívar soberano in August 2018, removing five zeroes. The bolívar soberano is running at 1,000,000 percent annual inflation when the government introduces the bolívar digital in October 2021, removing six zeroes. You have lived through three currencies in four years. The price of arepas at the corner bakery changes between when you order and when you receive them, or it doesn\'t change today but changed last Tuesday. You keep a dollar bill in your wallet the way people once kept a photo of a saint: for protection, for the specific certainty that this denomination will be worth something tomorrow.',
+    text: 'The bolívar fuerte gave way to the bolívar soberano in August 2018, removing five zeroes. The bolívar soberano is running at 1,000,000 percent annual inflation when the government introduces the bolívar digital in October 2021, removing six zeroes. You have lived through three currencies in four years. The price of arepas at the corner bakery changes between when you order and when you receive them, or it doesn\'t change today but changed last Tuesday. You keep a dollar bill in your wallet the way people once kept a photo of a saint: for protection, for the certainty that this denomination will be worth something tomorrow.',
     choices: null,
     effect: (p) => {
       p.mo -= 3000
@@ -204,7 +205,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       if (hasMoney) {
         return 'You leave by air. The airport is not dramatic — the drama is at home, the month before, the conversations with your mother, the day your father did not come to the airport because he said goodbye at the door because he could not do the airport. The plane lifts over Caracas. You see the barrio lights and then the ocean and then nothing you know. You land in Bogotá or Miami or Santiago and everything is technically the same — the language, the food that is almost the food — and entirely different in ways that will take years to name.'
       }
-      return 'You cross the Simón Bolívar bridge at San Antonio del Táchira into Cúcuta, Colombia. There are Venezuelans you don\'t know on the bridge — families, people alone, people with wheelie suitcases and people with nothing. You have one bag. The bridge is the decision made visible and permanent: the side you came from and the side you are going to. There are Colombians with water and bread at the end of the bridge. There is an NGO table. There is also the road north, which is the rest of this.'
+      return 'You cross the Simón Bolívar bridge from San Antonio del Táchira into Cúcuta. Families, people alone, wheelie suitcases and people with nothing; you have one bag. The bridge makes the decision visible: the side you are leaving and the side you are going to. At the far end Colombians are handing out water and bread, and there is an aid agency\'s table. After that there is the road north.'
     },
     // Both branches say you leave, and both set a residency, and neither moved
     // anybody: the character held a work visa in Caracas. Found once
@@ -219,7 +220,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       {
         text: 'You leave with almost nothing. The departure is the only option left.',
         tag: 'ven_diaspora',
-        outcome: 'The walk across the bridge is the option. The option becomes the life. The life is made from this beginning, which is also an end.',
+        outcome: 'The walk across the bridge is the option. The option becomes the life. The life is made from this beginning, and this end.',
         effect: (p) => { p.mo -= 500; p.m -= 5; p.h -= 5; p.r += 10; p.addFlag('ven_diaspora'); p.addFlag('emigrated'); p.emigrateTo('Colombia', { residency: 'refugee_status' }); p.setMem('venDeparture', true); },
       },
     ],
@@ -247,7 +248,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       {
         text: 'You join. The colectivo is security, money, community, in that order.',
         tag: 'ven_colectivo_era',
-        outcome: 'The security, money, and community are real. The constraints on what you can say, where you can go, what happens to your options later — also real.',
+        outcome: 'You have security, money, and community. The constraints on what you can say, where you can go, what happens to your options later — also real.',
         effect: (p) => { p.s += 4; p.mo += 3000; p.karma -= 5; p.addFlag('ven_colectivo_era'); p.setMem('venColectivo', true); },
       },
     ],
@@ -263,7 +264,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       G.currentYear >= 2019 && G.currentYear <= 2023 &&
       G.age >= 22 &&
       !G.mem?.venDollarization,
-    text: 'The government never officially dollarized. The economy dollarized informally, spontaneously, from below. By 2020 the supermarket prices everything in dollars even though the official currency is the bolívar digital and the law requires bolívares. Restaurants price in USD. Rent is quoted in USD. The government that produced the hyperinflation tacitly permits the dollarization that corrects for the hyperinflation. You think of this sometimes: the currency the government spent twenty years nationalizing, the "gringo money" that was the symbol of what the revolution was against — this is now the unit of daily life, inside the revolution\'s project, by the revolution\'s admission of failure.',
+    text: 'The government never dollarised. The country did it on its own, from below. By 2020 the supermarket, the restaurant and the landlord all quote in dollars, although the law says bolívares. The gringo money the revolution spent twenty years against is now the unit of daily life, under the revolution\'s own eye.',
     choices: null,
     effect: (p) => {
       p.e += 4
@@ -282,12 +283,12 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       G.currentYear >= 2016 && G.currentYear <= 2023 &&
       G.age >= 20 &&
       !G.mem?.venClap,
-    text: 'The CLAP (Comités Locales de Abastecimiento y Producción): government food bags distributed monthly through party-aligned local committees. Inside: cornmeal, rice, lentils, cooking oil, canned goods — the composition varies and cannot be predicted in advance. The CLAP committee controls who receives the box and when. In your building or your block there is a CLAP coordinator. The coordinator may be kind or may be the specific kind of person drawn to controlling a necessary resource. The box is necessary. The coordinator is someone you need to maintain a relationship with regardless of your view of the political system that created the box.',
+    text: 'The CLAP box comes monthly through the local committee: cornmeal, rice, lentils, oil, a few tins, never quite the same. The committee decides who gets one and when, and in your block there is a coordinator. The coordinator may be kind, or may be the kind of person who likes holding something people need. You need the box, so you keep on good terms, whatever you think of the system that made it.',
     choices: [
       {
         text: 'You receive it. The food is real regardless of what it represents.',
         tag: 'ven_clap_system',
-        outcome: 'The food is real. What it represents is also real and these two realities exist in the same bag of cornmeal. You decide which one to pay attention to at meals.',
+        outcome: 'There is food. What it represents is also real and these two realities exist in the same bag of cornmeal. You decide which one to pay attention to at meals.',
         effect: (p) => { p.h += 3; p.m -= 3; p.addFlag('ven_clap_system'); p.setMem('venClap', true); },
       },
       {
@@ -310,7 +311,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
       G.currentYear >= 2017 && G.currentYear <= 2024 &&
       G.age >= 18 &&
       !G.mem?.venMigrantColombia,
-    text: 'The Permiso Especial de Permanencia (PEP), then the Permiso de Protección Temporal (PPT): the Colombian document for Venezuelans, valid for ten years, renewable. You get it or you don\'t get it. Getting it: a queue at Migración Colombia, the cedula venezolana, fingerprints, a number, waiting months, a card with your face on it that makes the legal market accessible and the informal market slightly less necessary. Not getting it: the informal market is the market. Colombians are — mostly — not hostile and not entirely welcoming. There is a word: venezolano, and the word has a register that depends on who says it and how. You learn the register.',
+    text: 'The PEP, then the PPT: a Colombian card for Venezuelans, ten years, renewable. Getting it means a queue at Migración, fingerprints, months of waiting, and then a card with your face that opens the legal job market. Without it the informal market is the only market. Colombians are mostly not hostile and not quite welcoming. You learn the tone in which people say venezolano, and what it means from each of them.',
     choices: [
       {
         text: 'You get the PPT and begin the slow construction of something legal.',

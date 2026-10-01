@@ -19,6 +19,8 @@
 // No emoji, no scare quotes, no winking at the player.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { conflictRiskAt } from './history.js'
+
 // Payouts are written in wealthy-tier dollars. Charge them through crimePayout().
 export const CRIME_GDP_MULT = {
   very_high: 1.0,
@@ -631,13 +633,20 @@ export const CRIMES = [
     criminalRecordEntry: 'Subversion / political crimes',
     addFlag: 'activist',
     requiresFlag: null,
+    // Was keyed by ARCHETYPE, with the sign the wrong way round: +0.20 in the
+    // rich democracies, so a leafleteer in 2010 Ohio was arrested 64% of the
+    // time, and -0.10 in a conflict zone. What decides it is the regime that
+    // year — see `riskModifier` below, which the engine prefers; this table is
+    // the coarse fallback, corrected in direction.
     archetypeModifier: {
-      wealthy_west: 0.20,
-      wealthy_east: 0.05,
-      post_soviet: -0.05,
-      conflict_zone: -0.10,
-      developing_unstable: -0.05,
+      wealthy_west: -0.32,
+      wealthy_east: -0.20,
+      wealthy_gulf: 0.30,
+      post_soviet: 0.15,
+      conflict_zone: 0.15,
+      developing_unstable: 0.10,
     },
+    riskModifier: (state) => dissentRiskModifier(state),
     wealthRequirement: null,
     incomeEstimate: 0,
   },
@@ -789,3 +798,75 @@ export const HOMICIDE_METHODS = [
   { name: 'A blunt weapon',     detection: 0.48 },
   { name: 'A gun, in the street', detection: 0.55 },
 ]
+
+
+// ── The regime decides what a pamphlet costs ─────────────────────────────────
+
+function regimeThen(country, year) {
+  if (!country) return 'democracy'
+  let regime = country.regime ?? 'democracy'
+  for (const shift of [...(country.regimeHistory ?? [])].sort((a, b) => a.year - b.year)) {
+    if (year >= shift.year) regime = shift.to
+  }
+  return regime
+}
+
+// Added to the 0.40 base. A democracy arrests a leafleteer rarely and charges
+// them with something small; a single-party state takes them in nearly always.
+const DISSENT_BY_REGIME = {
+  democracy: -0.33, federal_republic: -0.32, parliamentary_republic: -0.32, constitutional_monarchy: -0.28,
+  single_party_authoritarian: 0.30, military_dictatorship: 0.35, single_party_communist: 0.40,
+  theocracy: 0.35, absolute_monarchy: 0.30,
+}
+
+/** How much more (or less) likely than the base a dissenter is to be taken in, here, this year. */
+export function dissentRiskModifier(state) {
+  const c = state?.currentCountry ?? state?.character?.country
+  const year = state?.currentYear
+  let m = DISSENT_BY_REGIME[regimeThen(c, year)] ?? 0
+  // In a war the police are elsewhere, and the people who come instead do not arrest.
+  if ((conflictRiskAt(c, year) ?? 0) >= 0.2) m -= 0.05
+  return m
+}
+
+// ── Who could even attempt it ────────────────────────────────────────────────
+//
+// Insider trading and corporate fraud were offered to a long-haul trucker and
+// to a Nigerian smallholder. A crime that needs access needs the access: a
+// desk with the numbers on it, a company, a market.
+
+const INFORMAL_FIELDS = new Set(['agriculture', 'casual', 'trade', 'religion', 'sports', 'entertainment', 'arts'])
+const OFFICE = (s) => !!s.career && !INFORMAL_FIELDS.has(s.career.field)
+const MONEY_FIELDS = new Set(['finance', 'law', 'real_estate', 'government', 'politics'])
+
+export const CRIME_ACCESS = {
+  tax_evasion: { needs: (s) => (OFFICE(s) && (s.career.salary ?? 0) > 0) || !!s.business?.active, why: 'There is nothing taxed to hide.' },
+  embezzlement: { needs: (s) => OFFICE(s) || !!s.business?.active, why: 'You do not have your hands on anybody\'s money.' },
+  money_laundering: { needs: (s) => !!s.business?.active || (OFFICE(s) && MONEY_FIELDS.has(s.career.field)), why: 'There is no business to pass it through.' },
+  insider_trading: { needs: (s) => !!s.career && ['finance', 'law', 'government', 'politics', 'real_estate'].includes(s.career.field) && (s.career.level ?? 0) >= 1, why: 'Nothing you hear at work moves a price.' },
+  corporate_fraud: { needs: (s) => (OFFICE(s) && (s.career.level ?? 0) >= 2) || !!s.business?.active, why: 'You are nowhere near the books.' },
+  dui: { needs: (s) => !!s.licenceObtained || (s.assets?.vehicles?.length ?? 0) > 0, why: 'You do not drive.' },
+  bribery: { needs: (s) => (s.money ?? 0) > 0, why: 'There is nothing in your pocket to offer.' },
+  loan_sharking: { needs: (s) => (s.money ?? 0) > 0, why: 'There is nothing to lend.' },
+}
+
+/** Can this person reach this crime at all? Null if yes, a sentence if not. */
+export function crimeBarred(state, crime) {
+  const rule = CRIME_ACCESS[typeof crime === 'string' ? crime : crime?.id]
+  if (!rule) return null
+  return rule.needs(state) ? null : rule.why
+}
+
+/**
+ * The chance of being taken in, as the engine will roll it: the base risk,
+ * moved by the regime that year where the crime declares one (`riskModifier`)
+ * and by the archetype table otherwise. The panel prints this number; it is
+ * the same arithmetic attemptCrime does, so the figure shown is the risk run.
+ */
+export function crimeArrestRisk(crime, state) {
+  if (!crime) return 0
+  if (typeof crime.effect === 'function' && crime.baseSuccessRate != null) return 1 - crime.baseSuccessRate
+  const arch = (state?.currentCountry ?? state?.character?.country)?.archetype
+  const mod = typeof crime.riskModifier === 'function' ? crime.riskModifier(state) : (crime.archetypeModifier?.[arch] ?? 0)
+  return Math.min(0.99, Math.max(0.01, (crime.arrestRisk ?? 0.3) + mod))
+}

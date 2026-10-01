@@ -15,7 +15,7 @@ export const UK_EVENTS = [
       !G.mem?.ukMiners,
     text: (G) => {
       if (G.stats?.wealth < 30 || G.ruralUrban === 'rural') {
-        return 'The NUM called the strike in March. In the mining communities — in Yorkshire, in County Durham, in South Wales — this is not an industrial dispute. It is a question of whether the pit stays open, which is the question of whether the community continues to exist in the form it exists now. The police buses from other forces arrive. The flying pickets. Orgreave, the footage of baton charges, the charges that are later found to have been fabricated. A year later the miners go back on the same terms they refused before. Some pits close anyway.'
+        return 'The NUM called the strike in March. In the mining communities — in Yorkshire, in County Durham, in South Wales — the question is whether the pit stays open, and so whether the community continues to exist at all. The police buses from other forces arrive. The flying pickets. Orgreave, the footage of baton charges, the charges that are later found to have been fabricated. A year later the miners go back on the same terms they refused before. Some pits close anyway.'
       }
       return 'The miners\' strike runs for a year. Mrs Thatcher calls the NUM leadership the "enemy within." The television shows Orgreave: police lines, horses, mounted charges into the crowd. Arthur Scargill\'s face, the crowd\'s faces. The country has a strong opinion about this. Where you stand depends substantially on where you are from.'
     },
@@ -23,7 +23,7 @@ export const UK_EVENTS = [
       {
         text: 'Your community is in the strike. You are in it with them.',
         tag: null,
-        outcome: 'You stand on the picket line in winter. The solidarity is real. The defeat is also real. The community that exists after the strike is not the same community that existed before.',
+        outcome: 'You stand on the picket line in winter. The defeat is also real. The community that exists after the strike is not the same community that existed before.',
         effect: (p) => { p.m -= 10; p.karma += 8; p.r += 6; p.addFlag('miners_strike_generation'); p.addFlag('class_politics_formed'); p.setMem('ukMiners', true); },
       },
       {
@@ -72,18 +72,19 @@ export const UK_EVENTS = [
       G.currentYear === 2003 &&
       G.age >= 16 &&
       !G.mem?.ukIraq,
-    text: 'February 15, 2003. One million people march through London — the largest protest in British history. The evidence for weapons of mass destruction: the dossier, the "45-minute claim," the intelligence that was later understood to have been selected rather than assessed. Parliament approves the war. Two weeks later the invasion begins. The weapons are not found. David Kelly dies. Andrew Gilligan. The Hutton Report. The Butler Report. Each report produces a different question. The conclusion that was reached before the inquiry is that the war was justified.',
+    text: 'A million people march through London against the war, and Parliament approves it anyway, and two weeks later the invasion begins. The weapons are not found. Then David Kelly is found dead in a wood, and there is the Hutton Report, and the Butler Report, and each report produces a different question. The conclusion reached before any of them was that the war was justified.',
+    context: 'The march of 15 February 2003 was the largest protest in British history. The September 2002 dossier\'s claim that Iraq could deploy weapons within 45 minutes was later found to rest on unreliable intelligence.',
     choices: [
       {
         text: 'You were on the march. You knew the intelligence was wrong.',
         tag: null,
-        outcome: 'You were right and it made no difference. This is a specific kind of political education.',
+        outcome: 'You were right and it made no difference. This is a kind of political education.',
         effect: (p) => { p.m -= 8; p.karma += 6; p.r += 6; p.addFlag('iraq_war_generation'); p.addFlag('political_active'); p.setMem('ukIraq', true); },
       },
       {
-        text: 'You supported the war — the Saddam question was real.',
+        text: 'You supported the war; the Saddam question mattered to you.',
         tag: null,
-        outcome: 'The Saddam question was real. The intelligence was fabricated and the legal case was made after the conclusion. The two things coexist in the same position.',
+        outcome: 'The intelligence was fabricated and the legal case was made after the conclusion. The two things coexist in the same position.',
         effect: (p) => { p.m -= 6; p.r += 8; p.addFlag('iraq_war_generation'); p.setMem('ukIraq', true); },
       },
     ],
@@ -99,12 +100,13 @@ export const UK_EVENTS = [
       G.currentYear === 2016 &&
       G.age >= 16 &&
       !G.mem?.ukBrexit,
-    text: 'June 23, 2016. The result comes in at 4am: 52 percent Leave, 48 percent Remain. Scotland voted 62 percent Remain. Northern Ireland voted Remain. London voted Remain. England and Wales voted Leave. Cameron resigns before breakfast. The pound falls to its lowest level in thirty-one years. The thing that was not supposed to happen has happened. Both campaigns had told stories that were not entirely accurate. The story that said £350 million per week for the NHS was on the bus. It is not going to the NHS.',
+    text: 'The result comes in at four in the morning: Leave. Scotland, Northern Ireland and London voted the other way, and it does not matter. Cameron resigns before breakfast and the pound falls through the floor. The thing that was not supposed to happen has happened. The bus said £350 million a week for the NHS, and it is not going to the NHS.',
+    context: 'The 23 June 2016 referendum result was 52% Leave, 48% Remain; Scotland voted 62% Remain. Sterling fell to a 31-year low against the dollar the next morning.',
     choices: [
       {
         text: 'You voted Remain. What just happened is a catastrophic error.',
         tag: null,
-        outcome: 'The years of negotiations, the versions of the withdrawal agreement, the general elections: the catastrophe arrives in instalments rather than all at once, which is its own kind of catastrophe.',
+        outcome: 'The years of negotiations, the versions of the withdrawal agreement, the general elections: the catastrophe arrives in instalments rather than all at once.',
         effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('brexit_generation'); p.addFlag('remain_voter'); p.setMem('ukBrexit', true); },
       },
       {
@@ -126,7 +128,7 @@ export const UK_EVENTS = [
       G.currentYear === 2017 &&
       G.age >= 10 &&
       !G.mem?.ukGrenfell,
-    text: 'June 14, 2017. The cladding on Grenfell Tower in Kensington burns from the second floor to the twenty-fourth in under an hour. Seventy-two people are killed. The tower is public housing in the wealthiest borough in England. The cladding that spread the fire was cheaper and more flammable than an alternative that cost £2 more per panel. Residents had complained about fire safety for years. The Grenfell Action Group had posted, in November 2016: "Only an incident that results in loss of life will bring about change." Their words are still on the internet.',
+    text: 'June 14, 2017, and the cladding on Grenfell Tower burns from the second floor to the twenty-fourth in under an hour, and seventy-two people die. It was council housing in the richest borough in England, and the cladding was chosen because it was a little cheaper than the one that would not have burned. The residents had complained about fire safety for years. In November 2016 their blog said only a fire with loss of life would bring change. The post is still online.',
     choices: [
       {
         text: 'You knew people in the tower, or you live nearby.',
@@ -155,21 +157,21 @@ export const UK_EVENTS = [
       !G.mem?.ukWindrush,
     text: (G) => {
       if (G.ethnicity === 'black_british') {
-        return 'You arrived legally, or your parents arrived legally, on the Windrush generation ships and those that followed. You have been in this country for thirty, forty, fifty years. The Home Office is now telling people — people like you, people you know — that they cannot prove their right to be here. Employment terminated. NHS treatment denied. Deportation notices. The Hostile Environment policy was designed to make life difficult for undocumented migrants; it has no mechanism for distinguishing between undocumented and documented once the documentation was lost. Your landing card was destroyed by the government in 2010.'
+        return 'You came legally, or your parents did, on the Windrush or the ships after it, thirty or forty or fifty years ago. Now the Home Office tells people like you, people you know, that they cannot prove their right to be here: jobs ended, hospital treatment refused, deportation letters. The hostile environment was meant for people without papers and had no way to tell them from people whose papers had been lost. Your landing card was destroyed by the government in 2010.'
       }
-      return 'The Windrush scandal: Caribbean-born British residents — some of whom have been here for decades, who paid taxes and worked and raised children here — are being told they cannot prove their right to remain. Employers are terminating them. The NHS is denying them treatment. Some are being deported to countries they left as children. The Hostile Environment policy was described as being for illegal migrants. These people are not illegal migrants. They are British.'
+      return 'The Windrush scandal: Caribbean-born British residents — some of whom have been here for decades, who paid taxes and worked and raised children here — are being told they cannot prove their right to remain. Employers are terminating them. The NHS is denying them treatment. Some are being deported to countries they left as children. The Hostile Environment policy was described as being for illegal migrants. These people are British.'
     },
     choices: [
       {
         text: 'You are directly affected — your right to be here is suddenly being questioned.',
         tag: null,
-        outcome: 'You fight it. The fighting costs time and money and a specific kind of humiliation. Some people do not win the fight. You eventually do, or you get far enough into it to see which way it goes.',
+        outcome: 'You fight it. The fighting costs time and money and a kind of humiliation. Some people do not win the fight. You eventually do, or you get far enough into it to see which way it goes.',
         effect: (p) => { p.m -= 15; p.r += 8; p.addFlag('windrush_generation'); p.addFlag('citizenship_threatened'); p.setMem('ukWindrush', true); },
       },
       {
         text: 'You watch it happen to people in your community.',
         tag: null,
-        outcome: 'The thing that happens to someone you know in the community that welcomed the Windrush generation is a specific calibration of the welcome.',
+        outcome: 'The thing that happens to someone you know in the community that welcomed the Windrush generation is a calibration of the welcome.',
         effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('windrush_generation'); p.setMem('ukWindrush', true); },
       },
     ],
@@ -205,7 +207,8 @@ export const UK_EVENTS = [
       G.currentYear >= 1982 && G.currentYear <= 1983 &&
       G.age >= 14 &&
       !G.mem?.ukFalklands,
-    text: (G) => 'April 2, 1982. Argentina invades the Falkland Islands. The Task Force is assembled and sails south — eight thousand miles, in April, into the South Atlantic winter. The names come in through the news: HMS Sheffield, HMS Coventry, HMS Ardent. The Belgrano — an Argentine cruiser sailing away from the exclusion zone — is sunk with three hundred and twenty-three men. The campaign lasts seventy-four days. Two hundred and fifty-five British military dead. Six hundred and forty-nine Argentine military dead. Three Falkland Island civilians. ' + (G.currentYear >= 1983 ? 'A year later the war returns a 144-seat Conservative majority in June 1983. ' : 'The prime minister who looked finished in the winter looks unbeatable by the summer. ') + 'The seventy-four days reshape the decade.',
+    text: (G) => 'April 1982, and Argentina takes the Falklands, and the Task Force sails eight thousand miles south into the South Atlantic winter. The names come through on the news: Sheffield, Coventry, Ardent, and the Belgrano, sailing away from the exclusion zone when it is sunk. Seventy-four days. Then a parade, and the names of the dead on both sides.' + (G.currentYear >= 1983 ? 'A year later the war returns a 144-seat Conservative majority in June 1983. ' : 'The prime minister who looked finished in the winter looks unbeatable by the summer. ') + 'The seventy-four days reshape the decade.',
+    context: 'The Falklands War killed 255 British servicemen, 649 Argentine servicemen and three islanders; 323 died on the General Belgrano.',
     choices: [
       {
         text: 'The islands are British territory. The principle of sovereignty has to mean something.',
@@ -216,7 +219,7 @@ export const UK_EVENTS = [
       {
         text: 'Two hundred and fifty-five lives for islands eight thousand miles away that most people couldn\'t have placed on a map six months before.',
         tag: null,
-        outcome: 'The question is real and the islands were also real and the men who died were real. The victory doesn\'t answer the question — it defers it. The politics that follow do the rest.',
+        outcome: 'The islands mattered, and the men who died mattered. The victory doesn\'t answer the question — it defers it. The politics that follow do the rest.',
         effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('falklands_generation'); p.setMem('ukFalklands', true); },
       },
     ],
@@ -232,12 +235,13 @@ export const UK_EVENTS = [
       G.currentYear >= 2005 && G.currentYear <= 2007 &&
       G.age >= 14 &&
       !G.mem?.uk77,
-    text: 'July 7, 2005. Four coordinated bombs on London public transport during the morning rush. Three on the Underground — at King\'s Cross, Edgware Road, Aldgate — and one on a bus on Tavistock Square. Fifty-two people killed, seven hundred injured. The morning after London won the right to host the 2012 Olympics. Emergency services initially describe "power surges." Then the bus. Then the full picture. The four bombers were British — from Beeston in Leeds, from Huddersfield. British citizens who had grown up here. That is the sentence that takes longest to resolve: not foreign, not outsiders. From here.',
+    text: 'Four bombs in the morning rush, three on the Underground and one on a bus in Tavistock Square, the morning after London won the Olympics. At first the radio says power surges. Then the bus. Then the names of the bombers, and they are from Beeston in Leeds and from Huddersfield, British, grown up here. That is the sentence that takes longest: not outsiders. From here.',
+    context: 'The bombings of 7 July 2005 killed 52 people and injured more than 700.',
     choices: [
       {
         text: 'You were in London that morning — on the Underground, nearby, or someone you knew was.',
         tag: null,
-        outcome: 'The morning was ordinary until it wasn\'t. The specific feeling of an ordinary morning becoming that kind of morning does not fully go away.',
+        outcome: 'The morning was ordinary until it wasn\'t. The feeling of an ordinary morning becoming that kind of morning does not fully go away.',
         effect: (p) => { p.m -= 14; p.h -= 4; p.r += 6; p.addFlag('london_77_generation'); p.setMem('uk77', true); },
       },
       {
@@ -259,7 +263,8 @@ export const UK_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2016 &&
       G.age >= 16 &&
       !G.mem?.ukScottishIndy,
-    text: 'September 18, 2014. The question on the ballot: "Should Scotland be an independent country?" The campaign ran for two years. Yes Scotland and Better Together. The Vow — published in the Daily Record three days before the poll, signed by Cameron, Miliband, and Clegg, promising more devolved powers. Turnout 84.6 percent — the highest recorded in any UK election. Result: 55.3 percent No, 44.7 percent Yes. Scotland remains in the Union. Alex Salmond resigns. Nicola Sturgeon becomes First Minister. The Brexit vote, two years later, will return the question with different arithmetic.',
+    text: 'September 18, 2014: "Should Scotland be an independent country?" Two years of campaigning, and three days before the vote the party leaders sign a front-page vow of more powers. Almost everybody votes. The answer is no, by ten points, and Salmond resigns, and Sturgeon takes over. Two years later Brexit asks the question again with different arithmetic.',
+    context: 'The 2014 referendum had a turnout of 84.6%, the highest in any UK election; the result was 55.3% No, 44.7% Yes.',
     choices: [
       {
         text: 'You voted Yes, or you wanted Scotland to vote Yes. The question is about what kind of country Scotland could be.',

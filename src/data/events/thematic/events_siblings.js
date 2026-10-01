@@ -172,7 +172,7 @@ export const SIBLING_EVENTS = [
     when: (G) => G.siblings && G.siblings.length > 0 && G.age >= 60 && !G.mem.sibLateIllness,
     text: (G) => {
       const s = G.siblings[0]
-      return `${s?.name ?? 'Your sibling'} is ill in a way that is serious and probably not fully recoverable. You are in an age when this begins to happen and you understand that intellectually, but the person in the hospital bed is someone who remembers the same house you grew up in and the same parents and a specific afternoon that only the two of you remember.`
+      return `${s?.name ?? 'Your sibling'} is ill in a way that is serious and probably not fully recoverable. You are in an age when this begins to happen and you understand that intellectually, but the person in the hospital bed is someone who remembers the same house you grew up in and the same parents and an afternoon that only the two of you remember.`
     },
     choices: [
       {

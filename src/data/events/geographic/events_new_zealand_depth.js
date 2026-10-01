@@ -14,7 +14,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1998 &&
       G.age >= 28 &&
       !G.mem?.nzWaitangi,
-    text: 'The Waitangi Tribunal is established in 1975 — the first body to hear Māori grievances against the Crown under the Treaty. You have heard the word "Treaty" your whole life in the particular tone that Pākehā use when they want the conversation to end. Now there is a mechanism, slow and adversarial, but a mechanism. Your grandfather\'s land is not coming back. But the word "claim" is in the language now in a way that it was not before, and that is not nothing.',
+    text: 'The Waitangi Tribunal is established in 1975 — the first body to hear Māori grievances against the Crown under the Treaty. You have heard the word "Treaty" your whole life in the tone that Pākehā use when they want the conversation to end. Now there is a mechanism, slow and adversarial, but a mechanism. Your grandfather\'s land is not coming back. But the word "claim" is in the language now, and that is not nothing.',
     choices: [
       {
         text: 'File a claim with the Tribunal',
@@ -74,7 +74,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 1993 &&
       G.age >= 16 &&
       !G.mem?.nzHLR,
-    text: 'The Homosexual Law Reform Bill is introduced in 1985. Two years of parliamentary debate. The petition against it has 800,000 signatures — more than a quarter of the country. The petition for it has 150,000. You read the opposition speeches in the newspaper: "unnatural," "threat to the family," "no place in a healthy society." You are in your twenties and you have existed in this country your entire life. The bill passes on 9 July 1986. The age of consent is set at sixteen, same as heterosexual, which was fought for and won. You remember where you were.',
+    text: 'The homosexual law reform bill goes to Parliament in 1985, and for two years you read the opposition speeches in the newspaper: unnatural, a threat to the family. The petition against it has hundreds of thousands of names. You are in your twenties and have lived here all your life. On July 9, 1986, it passes. You remember where you were.',
     choices: [
       {
         text: 'Celebrate with the community — this night is an exhale after years',
@@ -124,7 +124,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
       'The families of the dead stand at the drift entrance holding photographs at anniversaries. ' +
       (G.currentYear >= 2013 ? 'The Royal Commission finds systematic failures of regulation, management, and oversight. Nobody goes to prison. ' : '') +
       (G.currentYear >= 2019
-        ? 'The mine is re-entered in 2019 and evidence is recovered. Some families say it was what they needed. Some say it is not enough. Both are true.'
+        ? 'The mine is re-entered in 2019 and evidence is recovered. Some families say it was what they needed. Some say it is not enough.'
         : 'They ask for the drift to be re-entered. They are told it is not safe. They keep asking.'),
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('nz_pike_river_generation'); p.setMem('nzPikeRiver', true) },
@@ -160,7 +160,7 @@ export const NEW_ZEALAND_DEPTH_EVENTS = [
       G.currentYear >= 1977 && G.currentYear <= 1983 &&
       G.age >= 16 &&
       !G.mem?.nzBastionPoint,
-    text: 'Ōrākei, January 1977. The last Ngāti Whātua community occupy Bastion Point for 506 days. They build houses. They hold meetings. They farm the land. On 25 May 1978 the government sends in police and army — six hundred personnel — to remove them. The occupiers are arrested. The houses are bulldozed. The land was confiscated by the Crown in stages between 1840 and 1951; the occupation was the latest chapter in the same story. The photographs of the bulldozers circulate for years.',
+    text: 'January 1977, and the last Ngāti Whātua families at Ōrākei occupy Bastion Point, and stay: houses, meetings, gardens. After 506 days the government sends in hundreds of police and soldiers, and the occupiers are arrested and the houses bulldozed. The land had been taken by the Crown piece by piece since 1840. The photographs of the bulldozers go round for years.',
     choices: [
       {
         text: 'Join the occupation — this is the land',

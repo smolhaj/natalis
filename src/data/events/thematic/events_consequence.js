@@ -43,7 +43,7 @@ export const CONSEQUENCE_EVENTS = [
     // `G.literate` is the birth roll; a character can be schooled past it. A
     // secondary-school graduate stood in front of these twelve boxes.
     when: (G) => !G.literate && !G.flags.includes('became_literate') && !SCHOOLED_PAST_PRIMARY(G) && G.age >= 18 && G.age <= 30 && !G.mem?.illiterate_job,
-    text: 'The job posting requires you to fill in a form. You sit with the form for a long time. The pen is in your hand. There are twelve boxes. You can fill in your name and the date. The rest of it is a wall. The person at the desk glances over and you can see the moment they understand.',
+    text: 'The job posting requires you to fill in a form. The form stays on the desk for a long time. The pen is in your hand. There are twelve boxes. You can fill in your name and the date. The rest of it is a wall. The person at the desk glances over and you can see the moment they understand.',
     choices: [
       { text: 'Find a literacy class — this cannot continue', tag: null, outcome: 'The classes are three evenings a week. You are the oldest student by ten years. By the end of the year you can read a menu and a payslip and a letter from school.', effect: (p) => { p.m -= 5; p.e += 8; p.addFlag('became_literate'); p.addFlag('adult_literacy'); p.setMem('illiterate_job', true) } },
       { text: 'Walk away — find work that does not require forms', tag: null, outcome: 'There is always work for hands. The ceiling stays low.', effect: (p) => { p.m -= 12; p.r += 8; p.w -= 5; p.setMem('illiterate_job', true) } },
@@ -123,7 +123,7 @@ export const CONSEQUENCE_EVENTS = [
       G.age >= 35 && !G.mem?.post_911_long_shadow,
     text: 'Twenty years on, your children are growing up in the shadow of something that happened before they were born. They have been asked, at school, what they think about terrorism. They have been told their religion requires explanation. You watch them learn the same calibrations you learned — when to be visible, when to be careful.',
     choices: [
-      { text: 'Teach them to speak clearly and without apology', tag: null, outcome: 'They grow up with a vocabulary for it. It is not easy. It is better than silence.', effect: (p) => { p.m -= 5; p.karma += 8; p.addFlag('raised_with_pride'); p.setMem('post_911_long_shadow', true) } },
+      { text: 'Teach them to speak clearly and without apology', tag: null, outcome: 'They grow up with a vocabulary for it. It is not easy, and it is better than silence.', effect: (p) => { p.m -= 5; p.karma += 8; p.addFlag('raised_with_pride'); p.setMem('post_911_long_shadow', true) } },
       { text: 'Let them find their own way through it', tag: null, outcome: 'They will. You watch and worry and sometimes intervene and mostly don\'t.', effect: (p) => { p.m -= 8; p.r += 6; p.setMem('post_911_long_shadow', true) } },
     ],
     effect: null,
@@ -161,7 +161,7 @@ export const CONSEQUENCE_EVENTS = [
     when: (G) => G.yearsAbroad >= 10 && G.flags.includes('emigrated') && G.age >= 38 && !G.mem?.abroad_roots_pull,
     text: 'A parent is unwell. Or a sibling calls with news. Or you attend a funeral by telephone, in a different time zone, unable to touch anything. The distance that seemed manageable for twenty years reveals a cost that was always there. You think about going back and immediately think about everything you would be leaving.',
     choices: [
-      { text: 'Go back — permanently or for a long stay', tag: null, outcome: 'The reverse journey is its own kind of immigration. The place you left has changed. So have you.', effect: (p) => { p.returnHome(); p.m -= 5; p.r += 8; p.addFlag('returned_home'); p.setMem('abroad_roots_pull', true) } },
+      { text: 'Go back — permanently or for a long stay', tag: null, outcome: 'The reverse journey is an immigration too. The place you left has changed. So have you.', effect: (p) => { p.returnHome(); p.m -= 5; p.r += 8; p.addFlag('returned_home'); p.setMem('abroad_roots_pull', true) } },
       { text: 'Stay — your life is here now', tag: null, outcome: 'You send money instead of presence. It is not enough and you know it and you do it anyway.', effect: (p) => { p.m -= 12; p.r += 12; p.mo -= 2000; p.setMem('abroad_roots_pull', true) } },
     ],
     effect: null,
@@ -207,7 +207,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.flags.includes('lived_through_pandemic') && G.currentYear >= 2020 && G.currentYear <= 2022 && G.age >= 30 && !G.mem?.pandemic_loss && (G.parents?.father?.alive || G.parents?.mother?.alive),
-    text: 'Someone you love is in a hospital you cannot enter. The updates come by phone. You are not allowed to be there. This is the part nobody explained when they talked about the pandemic — that the dying would happen without the people who should be present. The last conversation is through glass or through a nurse who holds the phone.',
+    text: 'Someone you love is in a hospital you cannot enter. The updates come by phone. You are not allowed to be there. Nobody explained, when they talked about the pandemic, that the dying would happen without the people who should be present. The last conversation is through glass or through a nurse who holds the phone.',
     choices: null,
     effect: (p) => { p.m -= 25; p.r += 15; p.karma += 6; p.addFlag('pandemic_grief'); p.setMem('pandemic_loss', true) },
   },
@@ -232,7 +232,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: 'late_life',
     weight: 5,
     when: (G) => G.flags.includes('smoker') && !G.flags.includes('ex_smoker') && G.age >= 58 && !G.mem?.copd_diagnosed,
-    text: 'Chronic obstructive pulmonary disease. The consultant says the full words once and then uses the abbreviation. The abbreviation is four letters for a thing that will now structure your days — the stairs, the distances, the breath that comes too slowly and costs too much. It was not inevitable. It was likely. You knew it was likely.',
+    text: 'Chronic obstructive pulmonary disease. The consultant says the full words once and then uses the abbreviation. The abbreviation is four letters for a thing that will now structure your days — the stairs, the distances, the breath that comes too slowly and costs too much. It was likely. You knew it was likely.',
     choices: [
       { text: 'Quit smoking, start treatment — manage what you can', tag: null, outcome: 'The disease does not reverse. It slows. That is what is available now.', effect: (p) => { p.h -= 12; p.m -= 10; p.r += 10; p.mo -= 3000; p.clearFlag('smoker'); p.addFlag('ex_smoker'); p.addFlag('chronic_illness'); p.setMem('copd_diagnosed', true) } },
       { text: 'Keep smoking — the damage is done', tag: null, outcome: 'The logic is not wrong, only its direction. The deterioration accelerates.', effect: (p) => { p.h -= 20; p.m -= 8; p.r += 8; p.addFlag('chronic_illness'); p.setMem('copd_diagnosed', true) } },
@@ -247,7 +247,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) => G.licenceObtained && G.ruralUrban === 'rural' && G.character.gender === 'female' && G.age >= 17 && G.age <= 28 && !G.mem?.licence_rural_freedom,
-    text: 'The first time you drive alone — not to anywhere specific, just along the road that goes past the fields and the reservoir and the pylons — you understand something about what a car actually is. It is not a vehicle. It is a room with no one else in it that moves.',
+    text: 'The first time you drive alone — not to anywhere specific, just along the road that goes past the fields and the reservoir and the pylons — you understand something about what a car actually is. It is a room with no one else in it that moves.',
     choices: null,
     effect: (p) => { p.m += 14; p.s += 5; p.addFlag('independent_mobility'); p.setMem('licence_rural_freedom', true) },
   },
@@ -257,9 +257,9 @@ export const CONSEQUENCE_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.licenceObtained && G.age >= 17 && G.age <= 25 && !G.mem?.licence_accident,
-    text: 'You are not going fast. You are going too fast for the corner, which is different. The car leaves the road and hits a hedge. You are not injured. The car is damaged in a way that costs money you do not have. You sit in the seat for a long time while the engine ticks.',
+    text: 'You are not going fast. You are going too fast for the corner, which is different. The car leaves the road and hits a hedge. You are not injured. The car is damaged, and the repair costs money you do not have. You sit in the seat for a long time while the engine ticks.',
     choices: [
-      { text: 'Call the insurance, tell your parents, deal with it honestly', tag: null, outcome: 'The cost is real. The lesson is permanent.', effect: (p) => { p.m -= 12; p.mo -= 1500; p.setMem('licence_accident', true) } },
+      { text: 'Call the insurance, tell your parents, deal with it honestly', tag: null, outcome: 'It costs. The lesson is permanent.', effect: (p) => { p.m -= 12; p.mo -= 1500; p.setMem('licence_accident', true) } },
       { text: 'Drive home and hope nobody noticed the hedge', tag: null, outcome: 'Nobody mentions the hedge. The dent in the bumper remains for two years.', effect: (p) => { p.m -= 5; p.r += 5; p.karma -= 4; p.setMem('licence_accident', true) } },
     ],
     effect: null,
@@ -275,7 +275,7 @@ export const CONSEQUENCE_EVENTS = [
     text: 'The clinic is on the second floor of a building that could be anything. You give a number, not a name. The nurse is practised and kind. The result takes four days. In those four days you review decisions that seemed uncomplicated when you made them.',
     choices: [
       { text: 'Get tested and treat it — deal with it cleanly', tag: null, outcome: 'It is treatable. You treat it. You tell the people you need to tell. That part is harder than the treatment.', effect: (p) => { p.m -= 15; p.h -= 5; p.mo -= 400; p.addFlag('sti_treated'); p.setMem('sti_diagnosed', true) } },
-      { text: 'Treat it quietly and tell nobody', tag: null, outcome: 'The condition is managed. The privacy costs its own kind of weight.', effect: (p) => { p.m -= 10; p.h -= 8; p.r += 8; p.mo -= 400; p.setMem('sti_diagnosed', true) } },
+      { text: 'Treat it quietly and tell nobody', tag: null, outcome: 'The condition is managed. The privacy weighs.', effect: (p) => { p.m -= 10; p.h -= 8; p.r += 8; p.mo -= 400; p.setMem('sti_diagnosed', true) } },
     ],
     effect: null,
   },
@@ -325,7 +325,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.includes('in_recovery') && G.age >= 22 && !G.mem?.recoverySocialDrinking,
-    text: 'Work drinks. A colleague is leaving. The table fills with bottles and glasses and the specific pressure of a room where not drinking requires explanation. People are not hostile about it — most of them are fine. One of them is the kind of persistent that feels more like testing than friendliness.',
+    text: 'Work drinks. A colleague is leaving. The table fills with bottles and glasses and the pressure of a room where not drinking requires explanation. People are not hostile about it — most of them are fine. One of them is the kind of persistent that feels more like testing than friendliness.',
     choices: [
       {
         text: 'Hold the line — you have a standard answer and you use it',

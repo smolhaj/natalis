@@ -47,7 +47,7 @@ const UY_PY_EC_EVENTS = [
     phase: 'midlife',
     weight: 4,
     when: (G) => G.character.country.name === 'Uruguay' && G.currentYear === 1985 && !G.flags.has('uru_democracy_restored'),
-    text: 'March 1, 1985. The new civilian government is inaugurated. The political prisoners are released, including the Tupamaros. Mujica walks out of Libertad Prison after fourteen years. He has not seen a newspaper in years. He has not had a real conversation in years. The parliament reopens. The country slowly reassembles what it had been. The people who spent twelve years in exile come back to a city that has changed while they were gone. The people who stayed come back to a self that has also changed.',
+    text: 'March 1, 1985, and a civilian government again. The political prisoners walk out, the Tupamaros among them, Mujica after fourteen years in which he barely saw a newspaper. The parliament reopens. The exiles come back to a city that changed while they were gone, and the people who stayed find that they changed too.',
     choices: null,
     effect: (p) => { p.m += 10; p.karma += 3; p.addFlag('uru_democracy_restored'); },
   },
@@ -82,7 +82,7 @@ const UY_PY_EC_EVENTS = [
     when: (G) => G.character.country.name === 'Paraguay' && G.currentYear >= 1958 && G.currentYear <= 1988 && !G.flags.has('pry_stroessner_era') && !G.mem.pry_stro_checked,
     text: (G) => {
       const yr = G.currentYear
-      return `Alfredo Stroessner has been in power since 1954. He will be in power until 1989. In ${yr}, the Colorado Party controls every patronage position in the country — every government job, every import licence, every land concession. You want to work for the government, or your family does. The price of the party membership card is small. The alternative is to exist outside the system entirely. The exile option exists — Buenos Aires, New York, Madrid — but exile is a particular kind of loss. You know people who chose it. You know people who didn't.`
+      return `Stroessner has been in power since 1954. In ${yr} the Colorado Party holds every government job, every import licence, every land grant. You want to work for the state, or your family does, and the party card is cheap; the alternative is living outside the system entirely. There is exile, Buenos Aires or New York or Madrid, and exile is a loss. You know people who chose it, and people who didn't.`
     },
     choices: [
       {
@@ -94,7 +94,7 @@ const UY_PY_EC_EVENTS = [
       {
         text: 'You stayed outside and lived with the consequences.',
         tag: 'outside',
-        outcome: 'Outside the system was its own kind of difficult. Not dramatic. Just narrow.',
+        outcome: 'Outside the system was difficult too. Not dramatic. Just narrow.',
         effect: (p) => { p.m -= 8; p.r += 4; p.karma += 3; p.addFlag('pry_stroessner_era'); p.addFlag('pry_colorado_refused'); p.setMem('pry_stro_checked', true); },
       },
     ],
@@ -105,7 +105,8 @@ const UY_PY_EC_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.character.country.name === 'Paraguay' && G.currentYear >= 1940 && G.currentYear <= 1980 && G.age >= 8 && G.age <= 16 && !G.flags.has('pry_triple_alliance_memory'),
-    text: 'The war. 1864 to 1870. Paraguay against Brazil, Argentina, and Uruguay at the same time. For five years. The teacher says: sixty percent of the population died. Some say seventy. After the war, four women for every man. After the war, the country was reorganized by the surviving women. You learn this and feel something that does not have a clean name in Spanish or Guaraní — the grief and the pride are the same feeling. We were nearly destroyed. We are still here.',
+    text: 'The war. The teacher says Paraguay fought Brazil, Argentina and Uruguay at once, for five years, and that after it there were four women for every man, and that the women rebuilt the country. Some say sixty percent of the people died; some say seventy. You learn this and feel something that has no clean name in Spanish or in Guaraní, the grief and the pride the same feeling. We were nearly destroyed. We are still here.',
+    context: 'The War of the Triple Alliance (1864-1870) killed a large majority of Paraguay\'s population; estimates of the losses range from about a quarter to over two thirds.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 3; p.r += 4; p.addFlag('pry_triple_alliance_memory'); },
   },
@@ -115,7 +116,7 @@ const UY_PY_EC_EVENTS = [
     phase: 'midlife',
     weight: 4,
     when: (G) => G.character.country.name === 'Paraguay' && G.currentYear === 1992 && !G.flags.has('pry_archive_terror'),
-    text: 'A police station in Asunción. A lawyer looking for a client\'s file finds another filing cabinet, and then another. The Archive of Terror: four tonnes of documents, the files of Operation Condor. The names of people assassinated across six countries. The coordination between the security services of Chile, Argentina, Uruguay, Brazil, Paraguay, and Bolivia to find people who thought distance was protection. The documentation is complete. The Stroessner regime kept records. You read the newspaper account and you feel something cold and specific.',
+    text: 'A lawyer looking for a client\'s file in a police station in Asunción finds another filing cabinet, and then another: the Archive of Terror, tonnes of paper, the files of Operation Condor. The names of people killed across six countries, and the proof that the secret police of Chile, Argentina, Uruguay, Brazil, Paraguay and Bolivia worked together to find people who thought distance would protect them. Stroessner\'s men kept records. You read the newspaper account and something goes cold in you.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 6; p.e += 3; p.addFlag('pry_archive_terror'); },
   },
@@ -161,7 +162,7 @@ const UY_PY_EC_EVENTS = [
     phase: 'midlife',
     weight: 4,
     when: (G) => G.character.country.name === 'Ecuador' && G.currentYear === 2019 && !G.flags.has('ecu_conaie_2019'),
-    text: 'October 2019. The government removes fuel subsidies under IMF pressure. CONAIE — the indigenous confederation — calls a national strike. The highways into Quito are blocked. Thousands march from the Amazon and the Andes to the capital. The government moves the seat of government to Guayaquil and declares a state of emergency. The Quito streets for two weeks: tear gas, marching, negotiation, the president finally back at the table. The fuel subsidies are partially restored. You watched a national movement shut down a government and negotiate. You are still thinking about what it means.',
+    text: 'October 2019. The government removes the fuel subsidy at the IMF\'s request, and CONAIE calls a national strike. The roads into Quito are blocked and thousands march in from the Amazon and the Andes, and the government moves itself to Guayaquil. Two weeks of tear gas and marching, and then the president is back at the table and the subsidy partly restored. You watched a movement shut down a government and make it negotiate.',
     choices: null,
     effect: (p) => { p.m += 4; p.karma += 4; p.e += 2; p.addFlag('ecu_conaie_2019'); },
   },

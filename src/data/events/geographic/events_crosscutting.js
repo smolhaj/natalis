@@ -39,7 +39,7 @@ export const CROSSCUTTING_EVENTS = [
         effect: (p) => { p.m += 3; p.s += 4; p.addFlag('domestic_worker'); p.setMem('ccDomesticUniform', true) },
       },
       {
-        text: 'Feel the particular strangeness of it — the visibility and the invisibility at once',
+        text: 'Feel the strangeness of it — the visibility and the invisibility at once',
         tag: null,
         outcome: 'You are present at everything and absent from everything. This takes some adjusting to.',
         effect: (p) => { p.m -= 4; p.e += 5; p.addFlag('domestic_worker'); p.setMem('ccDomesticUniform', true) },
@@ -57,7 +57,7 @@ export const CROSSCUTTING_EVENTS = [
       G.flags.includes('domestic_worker') &&
       G.age >= 20 &&
       !G.flags.includes('domestic_mistreated'),
-    text: 'The employer asks, at the end of a long Tuesday, whether you are all right. It is a genuine question — not the rhetorical kind, not the kind that expects a particular answer. You answer honestly, which surprises you. She listens. This relationship is not friendship. You both know that. But it has become something that resembles kindness, and kindness has its own complications: it makes it harder to ask for what you need, and harder still to leave.',
+    text: 'The employer asks, at the end of a long Tuesday, whether you are all right. It is a genuine question — not the rhetorical kind, not the kind that expects an answer. You answer honestly, which surprises you. She listens. This relationship is not friendship. You both know that. But it has become something that resembles kindness, and kindness has its own complications: it makes it harder to ask for what you need, and harder still to leave.',
     choices: null,
     effect: (p) => { p.m += 6; p.s += 3; p.addFlag('domestic_employer_kind') },
   },
@@ -70,7 +70,7 @@ export const CROSSCUTTING_EVENTS = [
       !G.mem?.ccDomesticUnkind &&
       G.flags.includes('domestic_worker') &&
       G.age >= 18,
-    text: 'The way she says your name when something is not done to her standard is a specific sound. Not shouted — smaller than that. The tone that means you have failed a test whose rules she has not disclosed. You have no contract to point to and no one to complain to who would see it her way. The house is hers. You are in it.',
+    text: 'The way she says your name when something is not done to her standard is a sound. Not shouted — smaller than that. The tone that means you have failed a test whose rules she has not disclosed. You have no contract to point to and no one to complain to who would see it her way. The house is hers. You are in it.',
     choices: [
       {
         text: 'Endure it — the work is the work, and you need the position',
@@ -79,7 +79,7 @@ export const CROSSCUTTING_EVENTS = [
         effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('domestic_mistreated'); p.setMem('ccDomesticUnkind', true) },
       },
       {
-        text: 'Leave — no wage is worth this particular erosion',
+        text: 'Leave — no wage is worth this erosion',
         tag: null,
         outcome: 'You give a week\'s notice and do not explain yourself. Finding another position takes time. The time is its own price.',
         effect: (p) => { p.m += 4; p.s += 5; p.mo -= 300; p.addFlag('domestic_mistreated'); p.setMem('ccDomesticUnkind', true) },
@@ -97,7 +97,7 @@ export const CROSSCUTTING_EVENTS = [
       !G.mem?.ccDomesticChildrenGrow &&
       G.flags.includes('domestic_worker') &&
       G.age >= 40,
-    text: 'The older child has been accepted to university. The mother tells you over coffee — your coffee, made in the kitchen you have cleaned for nine years. You watched this child learn to walk. You have picked up every object they have ever dropped. You say congratulations and mean it, which is the strangest part. The achievement is theirs. The years inside it were also partly yours, and that accounting has no category.',
+    text: 'The older child has been accepted to university. The mother tells you over coffee — your coffee, made in the kitchen you have cleaned for nine years. You watched this child learn to walk. You have picked up every object they have ever dropped. You say congratulations and mean it, and that is the strangest part. The achievement is theirs. The years inside it were also partly yours, and that accounting has no category.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 6; p.e += 4 },
   },
@@ -138,7 +138,7 @@ export const CROSSCUTTING_EVENTS = [
       G.character.country.name === 'Philippines' &&
       G.currentYear >= 1990 &&
       (G.flags.includes('domestic_worker') || G.flags.includes('emigrated')),
-    text: 'The contract said eight hours and Sundays off. Here the Sundays are not off and the hours are what the family requires. Your passport is in a drawer in the employer\'s bedroom. He said it was for safekeeping. You did not argue because the agency told you this is how it is done here, and the agency was not wrong, exactly — this is how it is done. You send money home every month through a remittance office two bus stops away. The money arrives. You do not ask too carefully what it costs you to send it.',
+    text: 'The contract said eight hours and Sundays off. Here there are no Sundays and the hours are whatever the family needs. Your passport is in a drawer in your employer\'s bedroom, for safekeeping, he said, and you did not argue, because the agency told you this is how it is done here, and it is. You send money home every month from an office two bus stops away. The money arrives.',
     choices: null,
     effect: (p) => { p.m -= 14; p.h -= 5; p.karma += 8; p.addFlag('gulf_domestic_worker'); p.addFlag('domestic_worker'); p.setMem('ccDomesticOfw', true); if (p._state.mem?.gulfDomesticYear == null) p.setMem('gulfDomesticYear', p._state.currentYear) },
   },
@@ -176,7 +176,7 @@ export const CROSSCUTTING_EVENTS = [
       (underBombardment(G.currentCountry ?? G.character.country, G.currentYear) ||
         G.flags.includes('war_zone_civilian')) &&
       G.age >= 5,
-    text: 'The first night it starts in earnest, the sound is instructive. Close means a particular compression in the chest — not just heard but felt. The sound that missed you has a different quality, a lateral passage. Silence after a sound is not the absence of sound: it is the two seconds in which you calculate. By morning you understand a vocabulary you did not have yesterday. You do not know yet that you will carry it for the rest of your life.',
+    text: 'The first night it starts in earnest, the sound is instructive. Close means a compression in the chest — not just heard but felt. The sound that missed you has a different quality, a lateral passage. Silence after a sound is not the absence of sound: it is the two seconds in which you calculate. By morning you understand a vocabulary you did not have yesterday. You do not know yet that you will carry it for the rest of your life.',
     choices: null,
     effect: (p) => { p.m -= 18; p.h -= 5; p.addFlag('city_under_bombardment'); p.addFlag('traumatized_by_violence'); p.setMem('ccBombardmentStart', true); p.setMem('ccBombardmentStartYear', p._state.currentYear) },
   },
@@ -288,7 +288,7 @@ export const CROSSCUTTING_EVENTS = [
     // was carrying it in 1937 Myanmar, eighteen years before there were sets.
     text: (G) => (hasTech(G.currentCountry ?? G.character.country, 'radio', G.currentYear)
       ? 'The ceasefire is announced on the radio in the early afternoon.'
-      : 'Word of the ceasefire comes down the street in the early afternoon, from a neighbour who had it from someone at the depot.') + ' For the first hour after the announcement there is silence where there had been shelling, and the silence is not peaceful — it is the sound of a condition you do not yet trust. You wait. People open windows and look out at the street. No one goes down immediately. The second hour passes. The silence holds. A child somewhere nearby begins to cry, which is the first ordinary sound in a long time.',
+      : 'Word of the ceasefire comes down the street in the early afternoon, from a neighbour who had it from someone at the depot.') + ' For the first hour after the announcement there is silence where there had been shelling, and the silence is not peaceful — it is the sound of a condition you do not yet trust. You wait. People open windows and look out at the street. No one goes down immediately. The second hour passes. The silence holds. A child somewhere nearby begins to cry, the first ordinary sound in a long time.',
     choices: null,
     effect: (p) => { p.m += 10; p.h += 4; p.setMem('ccBombardmentCeasefire', true) },
   },
@@ -302,7 +302,7 @@ export const CROSSCUTTING_EVENTS = [
       G.flags.includes('city_under_bombardment') &&
       G.mem?.ccBombardmentCeasefire &&
       G.age >= 5,
-    text: 'The war in your city has ended. You are not sure, at first, how you know this versus the previous ceasefires — something in the quality of the silence, the movement on the streets, the absence of the particular tension that preceded each resumption. The first week without the sound is its own kind of strange. You keep waking before dawn to listen. The buildings that are not there will not be rebuilt quickly. The people who are not here did not come back. You did.',
+    text: 'The war in your city has ended. You are not sure, at first, how you know this versus the previous ceasefires — something in the quality of the silence, the movement on the streets, the absence of the tension that preceded each resumption. The first week without the sound is strange. You keep waking before dawn to listen. The buildings that are not there will not be rebuilt quickly. The people who are not here did not come back. You did.',
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -326,9 +326,17 @@ export const CROSSCUTTING_EVENTS = [
       // A war this year, not a country that has one now: this registered a
       // Central African child in a camp in 1971, twenty-five years before the
       // mutinies.
-      (G.conflictRisk >= 0.1 || G.residencyStatus === 'refugee_status' || G.residencyStatus === 'asylum_seeker') &&
+      //
+      // And a war is not a camp. `conflictRisk >= 0.1` alone registered a 1932
+      // child in rural Tohoku at a table outside a tent — Japan was at war in
+      // Manchuria, a thousand kilometres away. A camp needs the family to have
+      // fled (a displacement flag, or papers that say refugee), and the
+      // registration-card camp is the post-1948 one of UNRWA and UNHCR.
+      G.currentYear >= 1948 &&
+      (G.residencyStatus === 'refugee_status' || G.residencyStatus === 'asylum_seeker' ||
+        (G.conflictRisk >= 0.1 && (G.flags.includes('displaced') || G.flags.includes('refugee')))) &&
       G.age >= 3 && G.age <= 12,
-    text: 'You are registered at a table outside a tent. The man behind the table asks questions your parents answer. He writes something on a card and hands it to your father. This card is now, in this place, your document of existence — it says who you are and how many of you there are and what you are allowed to receive. You are given a tent number. The tent has a number but not a name. You will live here for longer than anyone at the table is currently imagining.',
+    text: 'You are registered at a table outside a tent. The man behind the table asks questions your parents answer, and writes something on a card and hands it to your father. The card says who you are and how many of you there are and what you are allowed to receive. The tent has a number but not a name. You will live here for longer than anyone at the table imagines.',
     choices: null,
     effect: (p) => {
       p.m -= 18
@@ -372,7 +380,7 @@ export const CROSSCUTTING_EVENTS = [
       !G.mem?.ccCampEconomy &&
       (G.flags.includes('grew_up_in_camp') || G.flags.includes('camp_born')) &&
       G.age >= 18 && G.age <= 35,
-    text: 'Formal employment in the camp is not permitted. The camp has an economy anyway — repair stalls, phone-charging stations, small cooking enterprises, someone who brings fabric from outside and someone else who sews it. The money that moves between people here moves outside the categories that any government recognizes. You have a skill the camp needs.',
+    text: (G) => `Formal employment in the camp is not permitted. The camp has an economy anyway: ${G.currentYear >= 2005 ? 'a phone-charging stall run off a car battery' : 'a radio-repair bench'}, three women who cook for sale, someone who brings fabric in from outside and someone else who sews it. You have a skill the camp needs.`,
     choices: [
       {
         text: 'Build something within the constraints — the camp is where you live',
@@ -397,8 +405,9 @@ export const CROSSCUTTING_EVENTS = [
     when: (G) =>
       !G.mem?.ccCampInterview &&
       (G.flags.includes('grew_up_in_camp') || G.flags.includes('camp_born')) &&
+      G.currentYear >= 1955 &&
       G.age >= 18 && G.age <= 35,
-    text: 'The UNHCR officer comes to the camp once a year. You have been on the list for the interview. The room is a repurposed supply container with a table and two chairs. You are asked about the circumstances of your displacement, your family structure, your health, your skills. The officer types without looking at you. At the end they say your case will be reviewed. They say this to everyone. You cannot tell, from the interview, whether your case is one that will be reviewed or one that will be filed.',
+    text: 'The UNHCR officer comes to the camp once a year, and this year your name is on the list. The room is a supply container with a table and two chairs. You are asked about how you left, who your family are, your health, your skills, and the officer writes without looking up. At the end you are told your case will be reviewed. Everyone is told that.',
     choices: [
       {
         text: 'The interview goes clearly — you answered every question',
@@ -425,7 +434,7 @@ export const CROSSCUTTING_EVENTS = [
       (G.flags.includes('grew_up_in_camp') || G.flags.includes('camp_born')) &&
       G.flags.includes('resettlement_granted') &&
       G.age >= 18 && G.age <= 40,
-    text: 'The airport is fluorescent and enormous. The trolleys have wheels that move in multiple directions. In the supermarket they take you to on the second day, every shelf has thirty varieties of the same product. The traffic lights make a sound for the blind. Nobody is looking at you, which is its own specific strangeness after years in a place where your face was known by a thousand people and your tent number was your address. You have been preparing for this moment for years and it turns out preparation does not tell you how a supermarket feels when you have never been in one before.',
+    text: 'The airport is fluorescent and enormous. In the supermarket they take you to on the second day, every shelf holds thirty kinds of the same thing. The traffic lights make a sound for the blind. Nobody is looking at you, after years in a place where a thousand people knew your face and your tent number was your address. You stand in the aisle with the basket until the caseworker takes it gently out of your hand.',
     choices: null,
     effect: (p) => {
       p.m += 10
@@ -446,7 +455,7 @@ export const CROSSCUTTING_EVENTS = [
       !G.flags.includes('resettlement_granted') &&
       !G.flags.includes('resettlement_established') &&
       G.age >= 40,
-    text: 'Your child is nine. Nine was how old you were when you arrived. The tent your family lives in is not the original tent — tents are replaced when they fail — but it stands on the same ground and faces the same direction as the first one. The word temporary was used at the beginning. No one uses it now. There is a family two rows over whose grandmother arrived in the first year, whose son was born here, whose grandchildren were born here. You understand something about permanence that people outside this place have difficulty imagining.',
+    text: 'The tent your family lives in is not the first tent, because tents fail, but it stands on the same ground and faces the same way. The word temporary was used at the beginning. Nobody uses it now. Two rows over, a grandmother who came in the first year watches her grandchildren, who were born here, play in the lane she was registered in.',
     choices: null,
     effect: (p) => { p.m -= 18; p.r += 12; p.e += 5; p.setMem('ccCampMidlife', true) },
   },

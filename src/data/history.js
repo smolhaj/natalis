@@ -794,3 +794,369 @@ export function conflictRiskAt(country, year) {
   for (const [a, b, r] of spans) if (year >= a && year <= b && r > risk) risk = r
   return risk
 }
+
+// ─── Mortality, health systems and the record ────────────────────────────────
+//
+// Three things the engine read as present-day facts and applied to every year:
+// the healthcare rating (`country.healthcare`), the life expectancy
+// (`country.lifeExpectancy`), and the archetype as a proxy for child mortality.
+// South Korea is `wealthy_east` and `excellent`, so a Korean born in 1955 —
+// two years after the armistice, in one of the poorest countries on earth —
+// was born into Japan's infant mortality and a modern hospital; Syria is
+// `conflict_zone` and `very_poor`, so a Syrian born in 1985, twenty-six years
+// before the war, was born into the war's. It is `isWealthyArch` again, three
+// more times. The tables below are the trajectory; the present-day figures are
+// where it ends.
+
+/** Interpolate an { year: value } anchor table, flat outside it. */
+function anchored(table, year) {
+  const ys = Object.keys(table).map(Number).sort((a, b) => a - b)
+  if (year <= ys[0]) return table[ys[0]]
+  if (year >= ys[ys.length - 1]) return table[ys[ys.length - 1]]
+  for (let i = 0; i < ys.length - 1; i++) {
+    const [a, b] = [ys[i], ys[i + 1]]
+    if (year >= a && year <= b) return table[a] + (table[b] - table[a]) * ((year - a) / (b - a))
+  }
+  return table[ys[ys.length - 1]]
+}
+
+// Infant deaths per 1,000 live births, by archetype. UN IGME / Gapminder.
+const IMR_BY_ARCHETYPE = {
+  wealthy_west:        { 1900: 150, 1920: 100, 1940: 58,  1960: 28,  1980: 12,  2000: 6,   2020: 4   },
+  wealthy_east:        { 1900: 180, 1920: 140, 1940: 90,  1960: 40,  1980: 10,  2000: 4,   2020: 2   },
+  wealthy_gulf:        { 1900: 260, 1920: 240, 1940: 200, 1960: 140, 1980: 60,  2000: 15,  2020: 7   },
+  post_soviet:         { 1900: 230, 1920: 190, 1940: 140, 1960: 75,  1980: 28,  2000: 18,  2020: 8   },
+  developing_urban:    { 1900: 200, 1920: 170, 1940: 150, 1960: 110, 1980: 70,  2000: 35,  2020: 20  },
+  developing_unstable: { 1900: 240, 1920: 210, 1940: 180, 1960: 130, 1980: 90,  2000: 55,  2020: 40  },
+  subsaharan:          { 1900: 300, 1920: 275, 1940: 250, 1960: 190, 1980: 130, 2000: 95,  2020: 55  },
+  conflict_zone:       { 1900: 340, 1920: 310, 1940: 280, 1960: 210, 1980: 160, 2000: 120, 2020: 80  },
+}
+// Countries whose present archetype is a poor description of their past.
+const IMR_BY_COUNTRY = {
+  'United States': { 1920: 85, 1940: 47, 1950: 29, 1960: 26, 1970: 20, 1980: 12.6, 2000: 7, 2020: 5.5 },
+  Sweden:        { 1920: 63, 1940: 39, 1950: 21, 1960: 17, 1970: 11, 1980: 7, 2000: 3.4, 2020: 2 },
+  'United Kingdom': { 1920: 80, 1940: 57, 1950: 31, 1960: 22, 1970: 18, 1980: 12, 2000: 5.6, 2020: 3.6 },
+  Nigeria:       { 1930: 230, 1950: 200, 1962: 180, 1980: 125, 1990: 125, 2000: 110, 2010: 85, 2020: 72 },
+  Ethiopia:      { 1950: 210, 1970: 160, 1985: 150, 2000: 90, 2010: 55, 2020: 35 },
+  'South Korea': { 1940: 130, 1950: 110, 1955: 95, 1960: 75, 1970: 45, 1980: 15, 1990: 8, 2000: 5, 2020: 3 },
+  Taiwan:        { 1940: 120, 1950: 60, 1960: 35, 1970: 20, 1980: 10, 2000: 6, 2020: 4 },
+  Singapore:     { 1940: 130, 1950: 80, 1960: 35, 1970: 20, 1980: 12, 2000: 3, 2020: 2 },
+  Japan:         { 1920: 165, 1940: 90, 1945: 110, 1950: 60, 1960: 30, 1970: 13, 1980: 7, 2000: 3, 2020: 2 },
+  China:         { 1930: 250, 1950: 195, 1958: 130, 1960: 150, 1962: 110, 1970: 80, 1980: 48, 1990: 42, 2000: 30, 2010: 13, 2020: 6 },
+  India:         { 1930: 200, 1950: 165, 1960: 150, 1970: 135, 1980: 110, 1990: 88, 2000: 66, 2010: 45, 2020: 28 },
+  Egypt:         { 1950: 200, 1960: 170, 1970: 150, 1980: 105, 1990: 63, 2000: 37, 2020: 18 },
+  Syria:         { 1950: 150, 1960: 120, 1970: 85, 1980: 55, 1990: 30, 2000: 20, 2010: 14, 2015: 18, 2020: 18 },
+  'North Korea': { 1950: 120, 1970: 40, 1990: 33, 1997: 60, 2005: 30, 2020: 13 },
+  Cuba:          { 1950: 80, 1960: 55, 1970: 38, 1980: 20, 2000: 7, 2020: 4 },
+  Iran:          { 1950: 220, 1970: 120, 1980: 75, 1990: 45, 2000: 28, 2020: 12 },
+  'Sri Lanka':   { 1950: 80, 1970: 50, 1990: 18, 2020: 6 },
+  Israel:        { 1950: 45, 1970: 23, 1990: 10, 2020: 3 },
+  Palestine:     { 1950: 160, 1970: 90, 1990: 35, 2020: 15 },
+  Cambodia:      { 1950: 165, 1970: 140, 1977: 200, 1985: 125, 2000: 80, 2020: 22 },
+  Turkmenistan:  { 1960: 120, 1980: 85, 2000: 65, 2020: 38 },
+  Tajikistan:    { 1960: 110, 1980: 80, 2000: 70, 2020: 30 },
+  Uzbekistan:    { 1960: 100, 1980: 70, 2000: 55, 2020: 15 },
+  Kyrgyzstan:    { 1960: 100, 1980: 65, 2000: 40, 2020: 16 },
+  Kazakhstan:    { 1960: 85, 1980: 55, 2000: 35, 2020: 9 },
+  Azerbaijan:    { 1960: 90, 1980: 60, 2000: 60, 2020: 18 },
+  Mongolia:      { 1960: 110, 1980: 95, 2000: 50, 2020: 14 },
+}
+// Present-day life expectancy by archetype, so a country's own figure can say
+// how far it sits from its archetype — Sierra Leone is not Botswana.
+const LE_REF = {
+  wealthy_west: 82, wealthy_east: 82, wealthy_gulf: 78, post_soviet: 75,
+  developing_urban: 74, developing_unstable: 70, subsaharan: 62, conflict_zone: 64,
+}
+
+/** Infant mortality, as a probability, in this country in this year. */
+export function infantMortalityAt(country, year) {
+  const own = IMR_BY_COUNTRY[country?.name]
+  if (own) return anchored(own, year) / 1000
+  const arch = IMR_BY_ARCHETYPE[country?.archetype] ?? IMR_BY_ARCHETYPE.developing_urban
+  const ref = LE_REF[country?.archetype] ?? 72
+  const le = country?.lifeExpectancy ?? ref
+  const mult = Math.min(1.4, Math.max(0.7, Math.exp((ref - le) * 0.03)))
+  return anchored(arch, year) * mult / 1000
+}
+
+/**
+ * Under-five mortality. Where infants die, toddlers die too — of measles,
+ * diarrhoea and malaria after weaning — so the ratio to infant mortality runs
+ * from about 1.25 in a rich country to 1.55 in a poor one.
+ */
+export function under5At(country, year) {
+  const imr = infantMortalityAt(country, year)
+  return Math.min(0.6, imr * (1.25 + 0.3 * Math.min(1, imr / 0.12)))
+}
+
+/**
+ * The annual risk of dying of ordinary causes for a child of `age` (the
+ * character's own age counter: 1 is the first year). Shared by the player,
+ * their siblings and their children so every child in a life faces the same
+ * place and year.
+ */
+export function childHazard(age, country, year) {
+  const u5 = under5At(country, year)
+  if (age <= 1) return 0.6 * u5
+  if (age <= 5) return 1 - Math.pow((1 - u5) / (1 - 0.6 * u5), 1 / 4)
+  if (age <= 11) return 0.02 * u5 + 0.0003
+  return 0.012 * u5 + 0.0006
+}
+
+// Period life expectancy by archetype, at birth.
+const LE_BY_ARCHETYPE = {
+  wealthy_west:        { 1900: 48, 1920: 56, 1940: 63, 1950: 67, 1960: 70, 1980: 74, 2000: 78, 2020: 81 },
+  wealthy_east:        { 1900: 40, 1920: 43, 1940: 48, 1950: 56, 1960: 64, 1980: 73, 2000: 79, 2020: 83 },
+  wealthy_gulf:        { 1900: 32, 1940: 38, 1950: 42, 1960: 47, 1980: 64, 2000: 73, 2020: 77 },
+  post_soviet:         { 1900: 32, 1920: 35, 1940: 45, 1950: 58, 1960: 66, 1980: 67, 1990: 69, 1995: 65, 2000: 66, 2010: 69, 2020: 73 },
+  developing_urban:    { 1900: 30, 1940: 40, 1950: 47, 1960: 53, 1980: 62, 2000: 69, 2020: 73 },
+  developing_unstable: { 1900: 28, 1940: 35, 1950: 40, 1960: 45, 1980: 54, 2000: 61, 2020: 68 },
+  subsaharan:          { 1900: 26, 1940: 33, 1950: 37, 1960: 41, 1980: 48, 1990: 50, 2000: 50, 2010: 56, 2020: 61 },
+  conflict_zone:       { 1900: 26, 1940: 31, 1950: 34, 1960: 38, 1980: 45, 2000: 52, 2020: 60 },
+}
+const LE_BY_COUNTRY = {
+  'South Korea': { 1940: 42, 1950: 47, 1955: 50, 1960: 55, 1970: 62, 1980: 66, 1990: 72, 2000: 76, 2020: 83 },
+  Taiwan:        { 1940: 45, 1950: 55, 1960: 64, 1980: 72, 2000: 76, 2020: 81 },
+  Singapore:     { 1940: 45, 1950: 58, 1960: 65, 1980: 72, 2000: 78, 2020: 83 },
+  Japan:         { 1920: 42, 1940: 48, 1950: 60, 1960: 68, 1980: 76, 2000: 81, 2020: 84 },
+  China:         { 1930: 32, 1950: 43, 1958: 50, 1960: 33, 1962: 50, 1970: 59, 1980: 66, 2000: 71, 2020: 77 },
+  India:         { 1930: 29, 1950: 36, 1960: 42, 1970: 48, 1980: 54, 1990: 58, 2000: 63, 2020: 70 },
+  Syria:         { 1950: 45, 1970: 57, 1990: 70, 2010: 73, 2015: 66, 2020: 70 },
+  Cuba:          { 1950: 59, 1970: 70, 1990: 75, 2020: 79 },
+  Iran:          { 1950: 38, 1970: 52, 1980: 51, 1990: 63, 2020: 76 },
+  'Saudi Arabia': { 1950: 40, 1970: 53, 1990: 69, 2020: 75 },
+  Russia:        { 1950: 58, 1960: 67, 1980: 67, 1990: 69, 1994: 64, 2000: 65, 2010: 69, 2020: 72 },
+  Ukraine:       { 1950: 60, 1960: 69, 1990: 70, 1995: 67, 2010: 70, 2020: 72 },
+  // Without the killing, which `WAR_DEATH_RATE` carries; with the famine and
+  // the abolished hospitals, which it does not.
+  Cambodia:      { 1950: 40, 1970: 43, 1977: 35, 1985: 50, 2000: 59, 2020: 69 },
+  'Sri Lanka':   { 1950: 55, 1970: 64, 2000: 71, 2020: 77 },
+}
+
+/** Period life expectancy at birth in this country in this year. */
+export function lifeExpectancyAt(country, year) {
+  const own = LE_BY_COUNTRY[country?.name]
+  if (own) return anchored(own, year)
+  const arch = LE_BY_ARCHETYPE[country?.archetype] ?? LE_BY_ARCHETYPE.developing_urban
+  const ref = anchored(arch, 2020)
+  const le = country?.lifeExpectancy ?? ref
+  // A country's own distance from its archetype is a present-day fact; read
+  // half of it into the past and the whole of it into the present.
+  const w = year >= 2020 ? 1 : year <= 1960 ? 0.5 : 0.5 + 0.5 * (year - 1960) / 60
+  return Math.max(18, Math.min(le + 1, anchored(arch, year) + (le - ref) * w))
+}
+
+/**
+ * The annual risk of dying of ordinary causes at `age` — for the people around
+ * the character, who have no health stat of their own. Gompertz-Makeham, with
+ * both the background (infection, accident, childbirth) and the senescent term
+ * raised where life expectancy is low. At 81 it gives roughly 1% at sixty and
+ * 5% at eighty; at 40, about 1% at forty and 3% at sixty — low life
+ * expectancy is mostly children's deaths, so the adult term is raised by less
+ * than the headline gap suggests — and so that a parent dying
+ * in a child's first fifteen years — common across most of the world for most
+ * of this period — can happen.
+ */
+export function adultHazard(age, country, year) {
+  if (age < 15) return childHazard(age, country, year)
+  const le = lifeExpectancyAt(country, year)
+  const L = Math.max(0, Math.min(1.4, (81 - le) / 40))
+  const A = 0.0004 + 0.004 * L
+  const B = 5.6e-5 * (1 + 1.5 * L)
+  return Math.min(0.6, A + B * Math.exp(0.085 * age))
+}
+
+// The healthcare tier a year's child mortality implies, per 1,000 births.
+function tierFromImr(imr) {
+  if (imr <= 8) return 'excellent'
+  if (imr <= 20) return 'good'
+  if (imr <= 50) return 'fair'
+  if (imr <= 110) return 'poor'
+  return 'very_poor'
+}
+const HC_TIERS = ['very_poor', 'poor', 'fair', 'good', 'excellent']
+// Health systems that broke, and the years they were broken in.
+const HEALTH_COLLAPSE = {
+  Russia: [[1992, 2000]], Ukraine: [[1992, 2000]], Belarus: [[1992, 1998]], Moldova: [[1992, 2000]],
+  Georgia: [[1991, 2003]], Armenia: [[1991, 1999]], Azerbaijan: [[1991, 2000]], Kazakhstan: [[1992, 1999]],
+  Kyrgyzstan: [[1992, 2000]], Tajikistan: [[1992, 2002]], Uzbekistan: [[1992, 1999]], Turkmenistan: [[1992, 2026]],
+  Cuba: [[1991, 1996]], 'North Korea': [[1994, 2000]], Iraq: [[1991, 2008]], Syria: [[2012, 2026]],
+  Venezuela: [[2014, 2026]], Zimbabwe: [[2005, 2010]], Lebanon: [[1976, 1990]], Yemen: [[2015, 2026]],
+  Libya: [[2011, 2026]], Somalia: [[1991, 2026]], Liberia: [[1990, 2003]], 'Sierra Leone': [[1991, 2002]],
+  Cambodia: [[1975, 1985]], Afghanistan: [[1979, 2001]], 'Central African Republic': [[2013, 2026]],
+}
+
+/**
+ * The health system a character could actually reach, in this country, this
+ * year. The present-day rating caps it from 2000 on (it is a statement about
+ * now); before that the year's own child mortality decides, a collapse takes
+ * a tier off, and so does a war at full intensity.
+ */
+export function healthcareAt(country, year) {
+  if (!country) return 'fair'
+  let rank = HC_TIERS.indexOf(tierFromImr(infantMortalityAt(country, year) * 1000))
+  const present = HC_TIERS.indexOf(country.healthcare ?? 'fair')
+  if (year >= 2000 && present >= 0) rank = Math.min(rank, present)
+  if ((HEALTH_COLLAPSE[country.name] ?? []).some(([a, b]) => year >= a && year <= b)) rank -= 1
+  if (conflictRiskAt(country, year) >= 0.3) rank -= 1
+  return HC_TIERS[Math.max(0, Math.min(4, rank))]
+}
+
+// ─── War mortality, against the record ───────────────────────────────────────
+//
+// `conflictRiskAt` is an intensity on the scale the guards read, not a death
+// rate, and checkDeath used it as one: cr × 0.04 a year for everyone under 35,
+// ×1.5 for a poor health system. Syria at 0.4 killed 2.4% of its young people
+// every year of the war, about twenty per cent of a cohort over nine years,
+// against a recorded toll of roughly three per cent of the population; a
+// Syrian born in 1985 had a survivor median of 45. Where the record is known,
+// the annual share of the population killed is written down here; elsewhere it
+// is read off the intensity at a rate calibrated against these.
+//
+// Each span is [from, to, annual share of the population killed]. Totals the
+// spans are fitted to (deaths / population): USSR 1941-45 ~14%; Belarus ~25%;
+// Poland 1939-45 ~6% of ethnic Poles; Germany ~9%; Japan ~4%; China 1937-45
+// ~4%; Korea 1950-53 ~7% South, ~12% North; Cambodia 1975-79 ~25%; Bosnia
+// 1992-95 ~2.3%; Syria 2011-19 ~2.7%; Afghanistan 1979-89 ~8%; Lebanon
+// 1975-90 ~5%; East Timor 1975-80 ~20%.
+export const WAR_DEATH_RATE = {
+  Germany: [[1939, 1943, 0.008], [1944, 1945, 0.03]],
+  Poland: [[1939, 1945, 0.01]],
+  Russia: [[1918, 1922, 0.015], [1941, 1945, 0.03], [1994, 1996, 0.0003], [1999, 2003, 0.0002]],
+  Ukraine: [[1918, 1922, 0.015], [1941, 1945, 0.04], [2014, 2021, 0.0003], [2022, 2026, 0.002]],
+  Belarus: [[1941, 1944, 0.07], [1945, 1945, 0.01]],
+  Lithuania: [[1941, 1945, 0.02]], Latvia: [[1941, 1945, 0.015]], Estonia: [[1941, 1945, 0.01]],
+  Japan: [[1937, 1943, 0.002], [1944, 1945, 0.015]],
+  China: [[1927, 1936, 0.001], [1937, 1945, 0.005], [1946, 1949, 0.002]],
+  'United Kingdom': [[1939, 1945, 0.0015]],
+  France: [[1939, 1945, 0.0025], [1954, 1962, 0.0001]],
+  Netherlands: [[1940, 1945, 0.003]], Belgium: [[1940, 1945, 0.0015]],
+  Italy: [[1940, 1945, 0.002]],
+  Greece: [[1940, 1944, 0.015], [1946, 1949, 0.004]],
+  Hungary: [[1944, 1945, 0.02], [1956, 1956, 0.0003]],
+  Austria: [[1939, 1943, 0.004], [1944, 1945, 0.012]],
+  'Czech Republic': [[1939, 1945, 0.004]],
+  Serbia: [[1941, 1945, 0.015], [1991, 1995, 0.0005], [1998, 1999, 0.001]],
+  Croatia: [[1941, 1945, 0.015], [1991, 1995, 0.0012]],
+  Slovenia: [[1941, 1945, 0.008], [1991, 1991, 0.0001]],
+  'Bosnia and Herzegovina': [[1941, 1945, 0.02], [1992, 1995, 0.006]],
+  Finland: [[1939, 1944, 0.0045]], Norway: [[1940, 1945, 0.0006]], Denmark: [[1940, 1945, 0.0002]],
+  Spain: [[1936, 1939, 0.005]],
+  Philippines: [[1941, 1945, 0.015], [1969, 2019, 0.0001]],
+  Indonesia: [[1942, 1945, 0.012], [1946, 1949, 0.002], [1965, 1966, 0.0025]],
+  Singapore: [[1942, 1945, 0.008]], Malaysia: [[1942, 1945, 0.005], [1948, 1960, 0.0002]],
+  Myanmar: [[1942, 1945, 0.004], [1948, 2020, 0.0003], [2021, 2026, 0.001]],
+  'South Korea': [[1950, 1953, 0.02]], 'North Korea': [[1950, 1953, 0.035]],
+  Vietnam: [[1946, 1954, 0.003], [1955, 1964, 0.002], [1965, 1972, 0.006], [1973, 1975, 0.004], [1979, 1979, 0.001]],
+  Cambodia: [[1970, 1974, 0.008], [1975, 1978, 0.06], [1979, 1979, 0.03], [1980, 1991, 0.002]],
+  Laos: [[1960, 1975, 0.005]],
+  India: [[1947, 1947, 0.003]], Pakistan: [[1947, 1947, 0.01], [1971, 1971, 0.0005], [2004, 2015, 0.0002]],
+  Bangladesh: [[1947, 1947, 0.003], [1971, 1971, 0.013]],
+  'Sri Lanka': [[1983, 2009, 0.0004]], Nepal: [[1996, 2006, 0.0001]],
+  'East Timor': [[1975, 1980, 0.04], [1981, 1999, 0.003]],
+  Afghanistan: [[1978, 1979, 0.004], [1980, 1989, 0.008], [1990, 1996, 0.004], [1997, 2001, 0.002], [2002, 2021, 0.0006]],
+  Tajikistan: [[1992, 1997, 0.003]],
+  Armenia: [[1988, 1994, 0.0008], [2020, 2020, 0.001]], Azerbaijan: [[1988, 1994, 0.001], [2020, 2020, 0.0003]],
+  Georgia: [[1991, 1993, 0.001], [2008, 2008, 0.0002]],
+  Iran: [[1980, 1988, 0.0013]],
+  Iraq: [[1961, 1970, 0.0005], [1980, 1988, 0.003], [1991, 1991, 0.005], [2003, 2008, 0.0035], [2009, 2013, 0.0006], [2014, 2017, 0.001]],
+  Syria: [[1982, 1982, 0.002], [2011, 2019, 0.0033], [2020, 2026, 0.0005]],
+  Lebanon: [[1975, 1990, 0.0033], [2006, 2006, 0.0003]],
+  Palestine: [[1948, 1949, 0.006], [1967, 1967, 0.001], [1987, 1993, 0.0002], [2000, 2005, 0.0003], [2008, 2009, 0.0006], [2014, 2014, 0.0005], [2023, 2026, 0.008]],
+  Yemen: [[1962, 1970, 0.003], [2014, 2026, 0.0015]],
+  Algeria: [[1954, 1962, 0.005], [1991, 2002, 0.0006]],
+  Nigeria: [[1967, 1970, 0.006], [2009, 2026, 0.0002]],
+  'DR Congo': [[1960, 1965, 0.001], [1996, 2003, 0.006], [2004, 2026, 0.002]],
+  Ethiopia: [[1974, 1991, 0.002], [1998, 2000, 0.0005], [2020, 2022, 0.002]],
+  Sudan: [[1955, 1972, 0.003], [1983, 2005, 0.004], [2023, 2026, 0.004]],
+  Uganda: [[1971, 1979, 0.002], [1980, 1986, 0.004], [1987, 2006, 0.0008]],
+  Angola: [[1961, 1974, 0.001], [1975, 2002, 0.004]],
+  Mozambique: [[1964, 1974, 0.0005], [1977, 1992, 0.007]],
+  Rwanda: [[1990, 1993, 0.001], [1994, 1994, 0.03], [1995, 1998, 0.002]],
+  Somalia: [[1988, 1995, 0.006], [1996, 2005, 0.0015], [2006, 2026, 0.002]],
+  Liberia: [[1989, 1997, 0.008], [1999, 2003, 0.005]],
+  'Sierra Leone': [[1991, 2002, 0.002]],
+  Guatemala: [[1960, 1977, 0.0006], [1978, 1984, 0.004], [1985, 1996, 0.0006]],
+  'El Salvador': [[1979, 1992, 0.003], [1993, 2019, 0.0005]],
+  Nicaragua: [[1978, 1979, 0.007], [1981, 1990, 0.002]],
+}
+
+const WAR_RATE_PER_INTENSITY = 0.008
+
+/** The population-average annual share killed by war here this year. */
+export function warMortalityAt(country, year) {
+  const spans = WAR_DEATH_RATE[country?.name ?? country]
+  if (spans) {
+    for (const [a, b, r] of spans) if (year >= a && year <= b) return r
+    return 0
+  }
+  // Read off the intensity, above the peacetime floor, which describes a
+  // country's tensions rather than its deaths.
+  return Math.max(0, conflictRiskAt(country, year) - PEACETIME_CAP) * WAR_RATE_PER_INTENSITY
+}
+
+// Where a war was not shared equally, and the record says by whom. Annual
+// rates for the identity, replacing the population average. Keyed on what the
+// engine draws: ethnicity, religion, and whether the character was a city
+// person when the city was emptied.
+//   Rwanda 1994: about 70% of Tutsi in a hundred days.
+//   Democratic Kampuchea 1975-79: ~25% overall; the evacuated "new people"
+//   ~35-40%, the Cham ~36%, the Chinese ~50%, Vietnamese who remained nearly all.
+//   Bosnia 1992-95: Bosniaks were two thirds of the dead at under half the
+//   population.
+//   Iraq 1987-88: Anfal, 50-180,000 Kurds.
+//   Guatemala 1981-83: the Maya highlands.
+//   Darfur 2003-05: Fur, Masalit, Zaghawa.
+//   Europe's Jews 1941-45, where the roster can draw one.
+const HOLOCAUST = new Set(['Poland', 'Germany', 'Lithuania', 'Latvia', 'Belarus', 'Ukraine', 'Netherlands',
+  'Hungary', 'Czech Republic', 'Greece', 'Austria', 'Croatia', 'Serbia', 'Slovakia', 'Romania', 'Belgium', 'France'])
+export function identityWarMortality(countryName, year, { ethnicity, religion, urban } = {}) {
+  if (countryName === 'Rwanda' && year === 1994 && ethnicity === 'tutsi') return 0.7
+  if (countryName === 'Cambodia' && year >= 1975 && year <= 1979) {
+    const k = year === 1979 ? 0.5 : 1
+    if (ethnicity === 'vietnamese_cambodia') return 0.3 * k
+    if (ethnicity === 'chinese_cambodia') return 0.17 * k
+    if (ethnicity === 'cham') return 0.12 * k
+    if (urban) return 0.11 * k
+    return 0.045 * k
+  }
+  if (countryName === 'Bosnia and Herzegovina' && year >= 1992 && year <= 1995) {
+    if (ethnicity === 'bosniak') return 0.009
+    if (ethnicity === 'bosnian_croat') return 0.003
+    if (ethnicity === 'bosnian_serb') return 0.004
+  }
+  if (countryName === 'Iraq' && (year === 1987 || year === 1988) && ethnicity === 'kurdish_iraqi') return 0.012
+  if (countryName === 'Guatemala' && year >= 1981 && year <= 1983 && /^maya|other_maya/.test(ethnicity ?? '')) return 0.012
+  if (countryName === 'Sudan' && year >= 2003 && year <= 2005 && ['fur', 'masalit', 'zaghawa'].includes(ethnicity)) return 0.04
+  if (religion === 'jewish' && HOLOCAUST.has(countryName) && year >= 1941 && year <= 1945) return 0.35
+  return null
+}
+
+/**
+ * The annual chance a character of this age and sex is killed by war, where
+ * they live, this year. Combat deaths fall hardest on men of fighting age;
+ * the rest of the population carries the remainder, which is most of the dead
+ * in most of these wars. An identity-specific rate is what was done to a
+ * people, not a front line, and is not reshaped by age.
+ */
+export function warDeathHazard({ country, year, age, gender, ethnicity, religion, urban }) {
+  const targeted = identityWarMortality(country?.name, year, { ethnicity, religion, urban })
+  if (targeted != null) return { p: targeted, kind: 'targeted' }
+  const base = warMortalityAt(country, year)
+  if (base <= 0) return { p: 0, kind: null }
+  const fighting = gender === 'male' && age >= 17 && age <= 49
+  const shape = fighting ? 1.8 : age < 17 ? 0.6 : age >= 50 ? 0.9 : 0.6
+  return { p: Math.min(0.5, base * shape), kind: fighting ? 'combat' : 'civilian' }
+}
+
+// ─── Divorce law ─────────────────────────────────────────────────────────────
+// The year a married person in this country could actually end a marriage in
+// law. Absent = available throughout the period (with the norms below doing
+// the rest). The Philippines has never had divorce for its non-Muslim majority.
+export const DIVORCE_LEGAL_FROM = {
+  Ireland: 1996, Italy: 1970, Spain: 1981, Chile: 2004, Malta: 2011, Argentina: 1987,
+  Brazil: 1977, Portugal: 1975, Colombia: 1976, Paraguay: 1991, Philippines: 9999,
+}
+export function divorceAvailable(countryName, year) {
+  return year >= (DIVORCE_LEGAL_FROM[countryName] ?? 0)
+}

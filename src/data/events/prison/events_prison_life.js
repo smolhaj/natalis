@@ -84,7 +84,7 @@ export const PRISON_EVENTS = [
     prisonOk: true,
     weight: 5,
     when: (G) => G.inPrison && G.age >= 18 && !G.mem?.prisonOffer,
-    text: 'A man who is owed favours by people you have not met explains that there is work available, inside and after. He is not threatening you. He is being genuinely helpful, which is the part that makes it difficult. He says think about it and then does not mention it again, which is its own kind of pressure.',
+    text: 'A man who is owed favours by people you have not met explains that there is work available, inside and after. He is not threatening you. He is being genuinely helpful, and that is what makes it difficult. He says think about it and then does not mention it again.',
     choices: [
       { text: 'Take the work.', tag: 'criminal_life', outcome: 'It makes the sentence easier and the years after it harder.', effect: (p) => { p.mo += 2000; p.karma -= 8; p.setMem('prisonOffer', true); p.addFlag('prison_recruited'); p.addFlag('criminal_life') } },
       { text: 'Decline it.', outcome: 'Nothing bad happens. You spend a month waiting for something bad to happen.', effect: (p) => { p.m -= 4; p.karma += 4; p.setMem('prisonOffer', true); p.addFlag('prison_refused_recruitment') } },
@@ -98,7 +98,7 @@ export const PRISON_EVENTS = [
     weight: 5,
     when: (G) => G.inPrison && G.age >= 17 && G.prisonSentence >= 2 && !G.mem?.prisonEducation &&
       !['conflict_zone'].includes(G.archetype),
-    text: 'There is a class on Tuesdays in a room with a whiteboard and eleven plastic chairs. The teacher comes in from outside and treats the room like a room of people, which is not how the rest of the building treats it. You sign up mostly to have somewhere to be on Tuesdays.',
+    text: 'There is a class on Tuesdays in a room with a whiteboard and eleven plastic chairs. The teacher comes in from outside and treats the room like a room of people, as the rest of the building does not. You sign up mostly to have somewhere to be on Tuesdays.',
     choices: [
       { text: 'Take it seriously.', outcome: 'You finish the course. The certificate is a piece of paper and it is also the first thing in years with your name on it that is not a charge sheet.', effect: (p) => { p.e += 8; p.m += 6; p.setMem('prisonEducation', true); p.addFlag('prison_education') } },
       { text: 'Drift out of it.', outcome: 'You stop going in the fourth week. Nobody comes to find out why.', effect: (p) => { p.m -= 3; p.setMem('prisonEducation', true) } },
@@ -171,7 +171,7 @@ export const PRISON_EVENTS = [
     text: 'It happens near the servery and it is much quicker than you expect. Afterwards everyone goes back to queuing. You find that you are holding your tray at exactly the same angle you were holding it before, and that nobody is going to mention this again.',
     choices: [
       { text: 'Say nothing to anyone.', outcome: 'You carry it. It stops being an event and becomes a piece of information about the world.', effect: (p) => { p.m -= 8; p.setMem('prisonViolence', true); p.addFlag('witnessed_violence') } },
-      { text: 'Report it.', outcome: 'You are moved to another wing for your own protection, which is also a punishment.', effect: (p) => { p.m -= 6; p.karma += 3; p.setMem('prisonViolence', true); p.addFlag('prison_marked') } },
+      { text: 'Report it.', outcome: 'You are moved to another wing for your own protection. It is also a punishment.', effect: (p) => { p.m -= 6; p.karma += 3; p.setMem('prisonViolence', true); p.addFlag('prison_marked') } },
     ],
     effect: null,
   },
@@ -204,7 +204,7 @@ export const PRISON_EVENTS = [
     prisonOk: true,
     weight: 5,
     when: (G) => G.inPrison && G.prisonSentence >= 5 && G.age >= 25 && !G.mem?.prisonMiddle,
-    text: 'You are somewhere in the middle of it now, which is the part nobody warns you about. The beginning had shock to carry it and the end will have the date. The middle is just the building, indefinitely, and the discovery that you can get used to almost anything and that getting used to it is not the same as being all right.',
+    text: 'You are somewhere in the middle of it now, and nobody warned you about the middle. The beginning had shock to carry it and the end will have the date. The middle is just the building, indefinitely, and the discovery that you can get used to almost anything and that getting used to it is not the same as being all right.',
     choices: null,
     effect: (p) => { p.m -= 5; p.setMem('prisonMiddle', true); p.addFlag('long_sentence_served') },
   },

@@ -21,7 +21,7 @@ export const CAREER_LONGEVITY_EVENTS = [
       G.career?.level >= 3 &&
       G.age >= 40 && G.age <= 52 &&
       !G.mem?.clMostSenior,
-    text: `At some point — you cannot name the exact meeting — you became the most senior person in the room. Not in a hierarchy sense necessarily: in the sense of years spent on this specific problem, this specific type of work. The younger people look at you for the answer before looking at each other. You give it. You notice yourself giving it with less uncertainty than you used to feel, and you are not sure whether the certainty represents genuine competence or the attrition of doubt.`,
+    text: `At some point — you cannot name the exact meeting — you became the most senior person in the room. Not in a hierarchy sense necessarily: in the sense of years spent on this problem, this type of work. The younger people look at you for the answer before looking at each other. You give it. You notice yourself giving it with less uncertainty than you used to feel, and you are not sure whether the certainty represents genuine competence or the attrition of doubt.`,
     choices: [
       {
         text: 'The certainty is earned. Twenty years is twenty years.',
@@ -54,7 +54,7 @@ export const CAREER_LONGEVITY_EVENTS = [
       {
         text: 'You have stayed current. The new tools are yours too.',
         tag: null,
-        outcome: 'You are a person who knows the old way and the new way, which is rarer than it sounds. The translation between them is something only you can do here.',
+        outcome: 'You are a person who knows the old way and the new way, rarer than it sounds. The translation between them is something only you can do here.',
         effect: (p) => { p.e += 4; p.w += 2; p.setMem('clFieldChanged', true) },
       },
       {
@@ -92,12 +92,12 @@ export const CAREER_LONGEVITY_EVENTS = [
       G.career &&
       G.age >= 45 && G.age <= 58 &&
       !G.mem?.clObsolescence,
-    text: `Something you know how to do — that you have done for twenty years, that you were once specifically sought for — is becoming less necessary. Not obsolete yet, not gone, but the gradient is visible. A tool has replaced it partially. A generation that doesn't know the old method has entered the field. The specific skill is being archived while you are still using it. You are watching this happen in real time, which is a particular kind of experience.`,
+    text: `Something you know how to do — that you have done for twenty years, that you were once specifically sought for — is becoming less necessary. Not obsolete yet, not gone, but the gradient is visible. A tool has replaced it partially. A generation that doesn't know the old method has entered the field. The skill is being archived while you are still using it. You are watching this happen in real time.`,
     choices: [
       {
         text: 'Adapt. The skill transfers to the new context.',
         tag: null,
-        outcome: 'The thing you know is not the specific tool. It is the understanding underneath the tool. The understanding transfers. The specific tool does not, but that was never the point.',
+        outcome: 'The thing you know is the understanding underneath the tool. The understanding transfers. The tool does not, but that was never the point.',
         effect: (p) => { p.e += 3; p.r += 2; p.setMem('clObsolescence', true) },
       },
       {
@@ -121,7 +121,7 @@ export const CAREER_LONGEVITY_EVENTS = [
       G.age >= 44 && G.age <= 58 &&
       !G.mem?.clMasteryGrief,
     text: () => pick([
-      `There was a time when the work surprised you constantly. You would finish a task and not quite know how you had done it — you had extended yourself, reached for something, and sometimes it came. That is mostly gone now. The work is good, consistently good, and consistently is the word that replaced the other thing. The consistency is real. The other thing was also real. They could not coexist.`,
+      `There was a time when the work surprised you constantly. You would finish a task and not quite know how you had done it — you had extended yourself, reached for something, and sometimes it came. That is mostly gone now. The work is good, consistently good, and consistently is the word that replaced the other thing. The other thing was also real. They could not coexist.`,
       `You cannot access beginner's mind from here. The literature on expertise calls this the curse of knowledge: the more you know a domain, the less you can see what it was like not to know it, which means you have become worse at certain kinds of understanding even as you have become better at everything else. The trade was not optional. You made it by practicing.`,
     ]),
     choices: null,
@@ -166,7 +166,7 @@ export const CAREER_LONGEVITY_EVENTS = [
       G.career?.level >= 3 &&
       G.age >= 52 && G.age <= 65 &&
       !G.mem?.clPassingOn,
-    text: `There are things you know that cannot be written in a manual. The manual of your field exists and is not what you know — what you know is the judgment layer above the manual: when to deviate from it, which rule bends in which context, what the edge cases actually look like when they arrive. You have been trying to pass this on for years to people who will have to earn it the same way you earned it, which is through the years themselves. The transmission is partial. The partial transmission is still worth attempting.`,
+    text: `There are things you know that cannot be written in a manual. The manual of your field exists and is not what you know — what you know is the judgment layer above the manual: when to deviate from it, which rule bends in which context, what the edge cases actually look like when they arrive. You have been trying to pass this on for years to people who will have to earn it the same way you earned it: through the years themselves. The transmission is partial. The partial transmission is still worth attempting.`,
     choices: null,
     effect: (p) => { p.karma += 5; p.e += 2; p.r += 2; p.setMem('clPassingOn', true) },
   },
@@ -184,7 +184,7 @@ export const CAREER_LONGEVITY_EVENTS = [
     // The year has to be derived: the point of the event is that it is in the
     // past and inside this character's own tenure. Written as a literal it once
     // told a man in 1991 what had been tried in 2007.
-    text: (G) => `You are the memory now. When people need to know why a decision was made fifteen years ago, or why a process works the way it does, or what was tried in ${G.currentYear - 18} and why it didn't work — they come to you. The role is not formal. It has no title. It is simply the function of having been here longer than everyone else. You are the record of things that were not written down, which is most of what was learned.`,
+    text: (G) => `You are the memory now. When people need to know why a decision was made fifteen years ago, or why a process works the way it does, or what was tried in ${G.currentYear - 18} and why it didn't work — they come to you. The role is not formal. It has no title. It is simply the function of having been here longer than everyone else. You are the record of things that were not written down, most of what was learned.`,
     choices: null,
     effect: (p) => { p.s += 3; p.r += 3; p.karma += 3; p.setMem('clInstitutionalMemory', true) },
   },
@@ -199,7 +199,7 @@ export const CAREER_LONGEVITY_EVENTS = [
       G.career?.level >= 3 &&
       G.age >= 58 && G.age <= 70 &&
       !G.mem?.clLateFreedom,
-    text: `Something has become available at this stage that was not available before: the freedom to be wrong without consequence, the freedom to say what you actually think, the freedom to pursue the questions that interest you rather than the questions that advance a position. The cost of reputation is behind you. The cost of being wrong is also behind you — you have been wrong enough that the prospect no longer closes your throat. The specific freedom of late career is not appreciated fully until you are inside it.`,
+    text: `Something has become available at this stage that was not available before: the freedom to be wrong without consequence, the freedom to say what you actually think, the freedom to pursue the questions that interest you rather than the questions that advance a position. The cost of reputation is behind you. The cost of being wrong is also behind you — you have been wrong enough that the prospect no longer closes your throat. The freedom of late career is not appreciated fully until you are inside it.`,
     choices: null,
     effect: (p) => { p.m += 6; p.e += 3; p.setMem('clLateFreedom', true) },
   },
@@ -223,7 +223,7 @@ export const CAREER_LONGEVITY_EVENTS = [
         effect: (p) => { p.m += 4; p.karma += 3; p.setMem('clWorkCost', true) },
       },
       {
-        text: 'The cost was real. Some of it was not necessary.',
+        text: 'It cost. Some of it was not necessary.',
         tag: null,
         outcome: 'The not-necessary part is the part you can actually do something about, going forward, in the years that remain. This is useful information.',
         effect: (p) => { p.r += 4; p.e += 3; p.setMem('clWorkCost', true) },

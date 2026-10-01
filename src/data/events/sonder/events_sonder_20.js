@@ -20,8 +20,8 @@ export const EVENTS_SONDER_20 = [
     when: (G) => !G.mem?.s20ColdBody,
     text: () => pick([
       'The cold came in under the door as a child and your body has never fully forgotten what cold arriving means. You are warm now. You still feel the memory of the draught in your feet.',
-      'You know how to dress for cold in a way that people who have not grown up cold do not know. It is a small knowledge. You do not mention it. It is present anyway.',
-      'The cold in this season has a particular quality — not dangerous, just present. Your body processes it as information, same as always. This is what seasons are: information the body receives and classifies.',
+      'You know how to dress for cold, as people who did not grow up cold do not. It is a small knowledge. You do not mention it. It is present anyway.',
+      'The cold in this season has a quality — not dangerous, just present. Your body processes it as information, same as always. This is what seasons are: information the body receives and classifies.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s20ColdBody', true) },
@@ -50,9 +50,9 @@ export const EVENTS_SONDER_20 = [
       G.age >= 35 &&
       !G.mem?.s20WaitingBeforePhone,
     text: () => pick([
-      'You remember waiting. Not the thing you wait for now, tapping through something, but actual waiting — standing somewhere with nothing to do but be in the place and look at it. It is not a better state than the present one. It is just different. You exist now in the present one.',
+      'You remember waiting. Not the thing you wait for now, tapping through something, but actual waiting — standing somewhere with nothing to do but be in the place and look at it. It is not better than the present. Just different. You exist now in the present one.',
       'There was a time when being early meant standing and looking at nothing in particular. The space that existed was just space. You do not miss it exactly. You notice that it no longer exists.',
-      'Before the phone, arriving somewhere first meant becoming briefly transparent. Invisible in the ordinary way of any person doing nothing visible. Now the invisible state is harder to achieve accidentally. This is not a complaint. It is just a texture you remember.',
+      'Before the phone, arriving somewhere first meant becoming briefly transparent. Invisible in the ordinary way of any person doing nothing visible. Now the invisible state is harder to achieve accidentally. It is a texture you remember.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s20WaitingBeforePhone', true) },
@@ -65,7 +65,7 @@ export const EVENTS_SONDER_20 = [
     when: (G) =>
       G.currentYear >= 2010 &&
       !G.mem?.s20PhoneInPocket,
-    text: 'The phone is in your pocket and it changes the quality of being in a place. You are not more or less present than before. You are present in a different way — the possibility of elsewhere is always on you, even when you are not accessing it. This is simply what it is to be in a place now.',
+    text: 'The phone is in your pocket and it changes the quality of being in a place. You are not more or less present than before. You are present in a different way — the possibility of elsewhere is always on you, even when you are not using it.',
     choices: null,
     effect: (p) => { p.setMem('s20PhoneInPocket', true) },
   },
@@ -80,9 +80,9 @@ export const EVENTS_SONDER_20 = [
       G.career &&
       !G.mem?.s20InvisibleSkill,
     text: () => pick([
-      'There are things you are good at that do not appear on any document and would not be easy to explain. The way you read a room before speaking. The three seconds of calculation that is invisible in your face. This expertise is real. It has no name.',
+      'There are things you are good at that do not appear on any document and would not be easy to explain. The way you read a room before speaking. The three seconds of calculation that is invisible in your face. It has no name.',
       'The skill accumulated slowly and you would struggle to say when you acquired it. It is just the thing you can do now that you could not do at twenty-five. No one gave you credit for learning it. It didn\'t require credit. It just required the years.',
-      'You are better at this than most people. It is a thing you know without announcing and that other people rarely notice. The invisible mastery of something ordinary. It is your particular version of it.',
+      'You are better at this than most people. It is a thing you know without announcing and that other people rarely notice. The invisible mastery of something ordinary. It is your version of it.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s20InvisibleSkill', true) },
@@ -94,7 +94,7 @@ export const EVENTS_SONDER_20 = [
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.career &&
       !G.mem?.s20ColleagueCompetence),
-    text: 'There is a colleague who is good in a way that goes unremarked — not extraordinary, not someone who gets mentioned, just someone who does their part with a steadiness that makes the whole thing work. You notice them. The noticing is private. You wonder if anyone notices the same thing about you.',
+    text: 'There is a colleague who is good and goes unremarked — not extraordinary, not someone who gets mentioned, just someone who does their part with a steadiness that makes the whole thing work. You notice them. The noticing is private. You wonder if anyone notices the same thing about you.',
     choices: null,
     effect: (p) => { p.setMem('s20ColleagueCompetence', true) },
   },
@@ -167,7 +167,7 @@ export const EVENTS_SONDER_20 = [
     weight: 2,
     when: (G) => place.hasRunningWater(G) && (['wealthy_west', 'wealthy_east'].includes(G.character.country?.archetype) &&
       !G.mem?.s20WaterInPipes),
-    text: 'The water arrives when the tap is turned on. You have always known this and will die without fully appreciating it, which is perhaps the correct relationship to have with infrastructure: to assume it so completely that its absence would be shocking. Billions of people experience the shock regularly. You do not.',
+    text: 'The water arrives when the tap is turned on. You have always known this and will die without fully appreciating it, perhaps the correct relationship to have with infrastructure: to assume it so completely that its absence would be shocking. Billions of people experience the shock regularly. You do not.',
     choices: null,
     effect: (p) => { p.setMem('s20WaterInPipes', true) },
   },
@@ -180,7 +180,7 @@ export const EVENTS_SONDER_20 = [
     weight: 2,
     when: (G) => place.hasPhotographs(G) && (G.age >= 38 &&
       !G.mem?.s20GroupPhoto),
-    text: 'A group photograph from years ago. The people in it have dispersed into separate futures — different cities, some dead, some estranged, some still present but different in ways the photograph doesn\'t predict. You were all in the same room. That was real. The room is the past.',
+    text: 'A group photograph from years ago. The people in it have dispersed into separate futures — different cities, some dead, some estranged, some still present but different in ways the photograph doesn\'t predict. You were all in the same room. The room is the past.',
     choices: null,
     effect: (p) => { p.setMem('s20GroupPhoto', true) },
   },
@@ -196,8 +196,8 @@ export const EVENTS_SONDER_20 = [
       !G.mem?.s20UnusedSkill,
     text: () => pick([
       'You once knew how to do something you no longer do. The knowledge is still there, technically. If you tried it now you would find more than you expected and less than you needed. Skills atrophy differently than facts — the fact remains; the skill needs the practice to stay alive.',
-      'There was a time you were good at something you have no use for now. The skill was real then. You don\'t mourn it exactly. You occasionally remember you had it, which is its own kind of inventory.',
-      'The language you studied once has retreated to vocabulary and lost the grammar. The instrument you played has the muscle memory but not the fluency. These are not losses. They are just the shape of a life that has moved on to other proficiencies.',
+      'There was a time you were good at something you have no use for now. The skill was real then. You don\'t mourn it exactly. You occasionally remember you had it.',
+      'The language you studied once has retreated to vocabulary and lost the grammar. The instrument you played has the muscle memory but not the fluency. They are the shape of a life that has moved on to other proficiencies.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s20UnusedSkill', true) },
@@ -311,8 +311,8 @@ export const EVENTS_SONDER_20 = [
       !G.mem?.s20UnsaidSentence,
     text: () => pick([
       'There is a sentence you didn\'t say at the right moment. The moment passed. You say it now sometimes in your head, in the version of the conversation where you said it. The person who would have heard it has no idea this conversation is still running.',
-      'You held your tongue. Looking back you are not certain that was correct. At the time it seemed the more careful choice. The more careful choice has its own cost that is harder to see than the cost of the thing you didn\'t say.',
-      'The unsaid thing doesn\'t deteriorate. It stays at the temperature it was when you decided not to say it, preserved in the moment of that decision. This is not always comfortable. It is just what it is to have held something back.',
+      'You held your tongue. Looking back you are not certain that was correct. At the time it seemed the more careful choice. The careful choice cost something that is harder to see than the cost of the thing you didn\'t say.',
+      'The unsaid thing doesn\'t deteriorate. It stays at the temperature it was when you decided not to say it, preserved in the moment of that decision. It is what it is to have held something back.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s20UnsaidSentence', true) },
@@ -327,8 +327,8 @@ export const EVENTS_SONDER_20 = [
     when: (G) => !G.mem?.s20TheQueue,
     text: () => pick([
       'The queue. Everyone in it is going somewhere. The queue is a temporary community, organized by arrival, dissolved by departure. You will never know anyone in this queue. For a few minutes you are all in the same moment, moving forward at the same speed.',
-      'You have stood in many queues. The counting of time in queues is different from the counting of time elsewhere — slower, more visible, with a clear unit of progress: the step forward, the person departing from the front. The queue has its own arithmetic.',
-      'The person in front of you in the queue shifts their weight and you shift yours. This is not communication. It is just the shared experience of standing still in a line. Both of you want the same thing. Neither of you will remember the other.',
+      'You have stood in many queues. The counting of time in queues is different from the counting of time elsewhere — slower, more visible, with a clear unit of progress: the step forward, the person departing from the front. The queue has an arithmetic.',
+      'The person in front of you in the queue shifts their weight and you shift yours. It is the shared experience of standing still in a line. Both of you want the same thing. Neither of you will remember the other.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s20TheQueue', true) },
@@ -381,7 +381,7 @@ export const EVENTS_SONDER_20 = [
       G.currentYear >= 1950 && G.currentYear <= 2000 &&
       !G.mem?.s20RadioBackground,
     text: () => pick([
-      'The radio is in the other room. The words are half-audible — a voice, the register of news being delivered, the pause between items. You are not listening to it. It is there anyway, the background of the house.',
+      'The radio is in the other room. The words are half-audible — a voice, the register of news being delivered, the pause between items. You are not listening to it, and it is there anyway, the background of the house.',
       'Your parents listened to a radio station and it played and you absorbed more of it than you knew at the time. Songs and fragments of conversation became part of the furniture of childhood. You still hear them occasionally and they are older than any conscious memory of learning them.',
       'The radio fills the room without filling it. A voice, then music, then a voice again. The radio in the background is part of what this decade sounded like from inside a house. You are inside the house. This is the sound.',
     ]),

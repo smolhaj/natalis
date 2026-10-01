@@ -13,7 +13,8 @@ export const NETHERLANDS_DEPTH_EVENTS = [
       G.currentYear >= 1942 && G.currentYear <= 1960 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.nlJodendeportatie,
-    text: 'There is a gap in the street. Not a bombed building — the buildings are intact. The gap is where the Jewish family lived, the one with the daughter who played on the steps. They were collected on a Tuesday. The Dutch population registers, maintained with Dutch administrative precision, listed everyone\'s religion; the Germans asked for the lists and the lists were produced. Seventy-five percent of Dutch Jews are deported and killed — the highest rate in Western Europe. Your parents do not explain the gap. You understand it by the shape of the silence around it.',
+    text: 'There is a gap in the street. The buildings are all standing; the gap is where the Jewish family lived, the one with the daughter who played on the steps, and they were collected on a Tuesday. The population registers kept everyone\'s religion, with Dutch thoroughness, and when the Germans asked for the lists the lists were produced. Your parents do not explain the gap. You understand it from the shape of the silence around it.',
+    context: 'About 75 percent of Dutch Jews were deported and murdered, the highest proportion in Western Europe.',
     choices: [
       {
         text: 'Your family hid people during the occupation',
@@ -42,7 +43,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1994 &&
       G.age >= 18 &&
       !G.mem?.nlBijlmerramp,
-    text: 'October 4, 1992. El Al flight 1862 loses two engines and crashes into the Groeneveen and Klein-Kruitberg apartment towers in Amsterdam Bijlmermeer. The fire burns for hours. The official death toll is 43. But the towers housed thousands of undocumented immigrants — Surinamese, Ghanaian, people from everywhere — who do not go to hospitals or report to authorities. A parliamentary inquiry years later tries to establish how many actually died. The number is never established. A tower burns and reveals an invisible population that the Netherlands had allowed to exist and had not acknowledged.',
+    text: 'October 4, 1992. An El Al cargo plane loses two engines and flies into two apartment towers in the Bijlmermeer. The official toll is forty-three. The towers housed thousands of people with no papers, from Suriname, Ghana, everywhere, who did not go to hospitals or report to anyone, and the inquiry years later never establishes how many died. A tower burns and shows a population the country had allowed to exist and never acknowledged.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 3; p.addFlag('nl_bijlmerramp_witness'); p.setMem('nlBijlmerramp', true) },
   },
@@ -59,7 +60,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
       G.currentYear >= 2001 && G.currentYear <= 2004 &&
       G.age >= 18 &&
       !G.mem?.nlSameSexHuwelijk,
-    text: 'April 1, 2001. Just after midnight, the mayor of Amsterdam officiates the first legal same-sex marriages in the world. Four couples. You are in the Netherlands, which is the first country on earth where this happened. The date is April 1 — some people point this out, meaning something by it or meaning nothing. The marriages are legal. The city is present. The world is not here yet but the world will be, in some countries, which is a fact about the world that did not exist yesterday.',
+    text: 'April 1, 2001, just after midnight, and the mayor of Amsterdam marries four couples, the first legal same-sex marriages anywhere. You are in the country where it happened first. Some people point out the date, meaning something by it or nothing. The marriages are legal. The world will follow, some of it.',
     choices: [
       {
         text: 'You are among those getting married, or you know the couples',
@@ -70,7 +71,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
       {
         text: 'You watch from outside — it is for others but changes something',
         tag: null,
-        outcome: 'The country did this. Being from the country that did this first is a specific position. It does not last as a uniqueness but it cannot be taken back.',
+        outcome: 'The country did this. Being from the country that did this first is a position. It does not last as a uniqueness but it cannot be taken back.',
         effect: (p) => { p.m += 6; p.addFlag('nl_same_sex_pioneer_2001'); p.setMem('nlSameSexHuwelijk', true) },
       },
     ],
@@ -105,7 +106,8 @@ export const NETHERLANDS_DEPTH_EVENTS = [
       G.age >= 25 && G.age <= 45 &&
       G.children?.length > 0 &&
       !G.mem?.nlToeslagen,
-    text: 'The Dutch tax authority has flagged your childcare benefit claim for fraud. The letter says repayment is required. The amount is larger than your annual income. You have not committed fraud. Neither have 26,000 other families — disproportionately families with a migration background, flagged by an algorithm that treats a foreign surname as a risk indicator. The system was designed to recover money. It recovers money from people who do not owe it. The parliamentary inquiry calls it ongekend onrecht — unprecedented injustice. The cabinet resigns. Your debt does not immediately disappear.',
+    text: 'The tax office has flagged your childcare benefit for fraud, and the letter says you must repay more than you earn in a year. You have not committed fraud. Neither have tens of thousands of other families, most of them with a migrant background, flagged by an algorithm that counted a foreign name as a risk. The inquiry calls it unprecedented injustice and the cabinet resigns. Your debt does not disappear with it.',
+    context: 'The toeslagenaffaire wrongly accused some 26,000 families; the Rutte cabinet resigned over it in January 2021.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 8; p.mo -= 5000; p.addFlag('nl_toeslagen_family'); p.setMem('nlToeslagen', true) },
   },
@@ -121,7 +123,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
       G.currentYear >= 2012 && G.currentYear <= 2025 &&
       G.age >= 30 &&
       !G.mem?.nlGroningenGas,
-    text: 'Your house has a crack. A hairline from the ceiling corner down to the window frame — it was not there last year. You know what caused it. Since 1959 the Groningen gas field has supplied a quarter of European natural gas; since 2012 the extraction-induced earthquakes have cracked 100,000 Groningen homes. The NAM — Shell and ExxonMobil — attributes the damage to soil settling. The houses say otherwise. The Dutch state takes years to acknowledge the correlation, longer to acknowledge liability, longer still to compensate the families. The gas made the Dutch welfare state. The welfare state did not extend to the people above the gas.',
+    text: 'There is a crack in your house, a hairline from the corner of the ceiling down to the window frame, that was not there last year. You know what caused it. The gas under Groningen heated half of Europe and paid for the welfare state, and the quakes from taking it out have cracked tens of thousands of houses. The company says the soil is settling. It takes the state years to admit the link, longer to admit fault, longer still to pay.',
     choices: null,
     effect: (p) => { p.r += 6; p.m -= 5; p.mo -= 3000; p.addFlag('nl_groningen_earthquake_affected'); p.setMem('nlGroningenGas', true) },
   },
@@ -153,7 +155,7 @@ export const NETHERLANDS_DEPTH_EVENTS = [
       G.currentYear >= 2023 && G.currentYear <= 2025 &&
       G.age >= 40 &&
       !G.mem?.nlWilders2023,
-    text: 'November 22, 2023. The PVV wins 37 seats — the largest party in parliament. Geert Wilders, under twenty-four-hour police protection since 2004 for jihadi death threats, who has proposed banning the Quran and closing mosques, is now leading the largest party. The Netherlands has been having this argument since Fortuyn, and longer. The argument is not only about Wilders. It is about housing, the toeslagen, Groningen, nitrogen rules, what the state has done to certain people who had no word for what was being done to them. The analysis takes longer than the result.',
+    text: 'November 22, 2023. The PVV wins 37 seats — the largest party in parliament. Geert Wilders, under twenty-four-hour police protection since 2004 for jihadi death threats, who has proposed banning the Quran and closing mosques, is now leading the largest party. The Netherlands has been having this argument since Fortuyn, and longer. The argument is about Wilders, and about housing, the toeslagen, Groningen, nitrogen rules, what the state has done to certain people who had no word for what was being done to them. The analysis takes longer than the result.',
     choices: [
       {
         text: 'Something that was contained has now been legitimised',

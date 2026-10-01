@@ -42,7 +42,7 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2000 &&
       G.age >= 6 && G.age <= 20 &&
       !G.mem?.trkAleviIdentity,
-    text: `The Alevis are not Sunnis. The theology is different — the reverence for Ali, the twelve imams, the cem ceremony conducted in the cemevi (gathering house) rather than the mosque, the poetry of Yunus Emre and Pir Sultan Abdal. What you do on Friday night is not what the Sunni neighbourhood does on Friday. The distinction is not always safe. Alevis were massacred in Maraş in 1978, in Çorum in 1980. The cemevi is not recognised as a place of worship by the state. The state mosque is funded and administrated; the cemevi is not. You learn early what this means for where you are in the republic.`,
+    text: `The Alevis are not Sunnis: the reverence for Ali, the cem held in the cemevi rather than the mosque, the poems of Yunus Emre and Pir Sultan Abdal. What you do on a Thursday night is not what the Sunni neighbourhood does. The difference is not always safe; there were massacres at Maraş in 1978 and Çorum in 1980. The state pays for the mosque and does not recognise the cemevi. You learn early what that means about where you stand in the republic.`,
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -61,7 +61,8 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear === 1993 &&
       G.age >= 10 && G.age <= 35 &&
       !G.mem?.trkSivas,
-    text: `July 2, 1993. Sivas. The Pir Sultan Abdal Cultural Festival: Alevi intellectuals, writers, poets — thirty-five of them plus two hotel workers — die when the crowd outside the Madımak Hotel sets it on fire. The crowd was reacting to a provocateur's claim about a blasphemous author at the festival. The fire burns for hours. The police and fire brigade are late to respond. The charges against the perpetrators will be tried for twenty years. The statute of limitations will run out before a verdict. You know what your community is to the state from the speed of the response and the slowness of the justice.`,
+    text: `July 2, 1993, Sivas, the Alevi festival, and a crowd outside the Madımak Hotel, stirred up over a writer it calls a blasphemer, sets the hotel on fire with the poets and singers inside it. It burns for hours, and the police and the fire brigade are slow to come. The trials run for twenty years, and the statute of limitations runs out before the last of them. You know what your community is to the state from how fast the help came and how slowly the justice did.`,
+    context: 'Thirty-five people, most of them Alevi intellectuals and musicians, and two hotel staff died in the Madımak Hotel fire.',
     choices: null,
     effect: (p) => {
       p.m -= 14
@@ -82,7 +83,8 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear === 1999 &&
       G.age >= 5 &&
       !G.mem?.trk1999Quake,
-    text: `August 17, 1999. 3:02am. The earthquake is 7.6 magnitude and centred near İzmit in the Marmara industrial region. Seventeen thousand dead. The buildings that collapse are the ones that were built with the wrong grade of concrete, that had floors added without permits, that were constructed with sand from the sea rather than river sand — a practice everyone in the construction industry knew about. What the earthquake reveals is not seismic risk; it was already mapped. What it reveals is the infrastructure of corruption: the official stamps on buildings that should not have passed inspection, the building codes that everyone knew were routinely ignored. The earth moves at 3am and the buildings built on corruption come down.`,
+    text: `August 17, 1999, two minutes past three in the morning, the earthquake near İzmit. The buildings that come down are the ones made with the wrong concrete, or with sea sand instead of river sand, which the whole trade knew about, or with floors added without permits. The fault was already on the maps. What the earthquake shows is the stamps on buildings that should never have passed, and the codes everyone ignored. The ground moves at three in the morning and what was built on corruption comes down.`,
+    context: 'The 1999 İzmit earthquake killed about 17,000 people.',
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -156,7 +158,7 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2013 &&
       G.age >= 14 && G.age <= 30 &&
       !G.mem?.trkHeadscarf,
-    text: `The headscarf ban in universities and government employment: official Turkey says the institution requires a secular face; your faith says the head is covered. The ban is enforced with varying strictness depending on the rector, the decade, the government. Some women wear wigs over their headscarves to enter the building. Some switch at the door, a quick adjustment in the stairwell. Some choose the faith and forgo the institution. The ban divides families that have always divided on this question: your mother says keep it on, your aunt says the career is more important, your generation is arguing about something that the generation before could not have imagined debating. The ban is lifted in 2013. The argument it was having continues in a different key.`,
+    text: `The headscarf ban in universities and government offices: the Republic says the institution needs a secular face; your faith says the head is covered. Some women wear wigs over their scarves; some change in the stairwell; some choose the faith and give up the institution. Your mother says keep it on and your aunt says the career matters more. The ban is lifted in 2013. The argument it was part of goes on in another key.`,
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -177,7 +179,7 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 2010 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.trkHemshehri,
-    text: `You come to Istanbul, or Ankara, or İzmir, from a town in Anatolia. The first question after where are you from is not what did you study but who do you know from there. The hemşehrilik network — the association of people from the same place of origin — is the infrastructure of your arrival. The hemşehri derneği (association) in the district has your people in it. They will know who is hiring and who has a room. The job you get first is through this network, not through an advertisement. The city is layered in this way: Trabzonlular here, Erzurumlu there, Konyalı somewhere else. The urban geography has an invisible sub-geography of origin.`,
+    text: `You come to Istanbul or Ankara or İzmir from a town in Anatolia, and the first question is not what you studied but who you know from home. The hemşehri association in the district has your people in it; they know who is hiring and who has a room, and your first job comes through them, not an advertisement. The city is layered this way, Trabzon people here, Erzurum people there. Under the map of the city is a map of where everyone came from.`,
     choices: null,
     effect: (p) => {
       p.s += 3
@@ -198,7 +200,7 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2020 &&
       G.age >= 20 && G.age <= 28 &&
       !G.mem?.trkMilitary,
-    text: 'The letter comes and the posting is drawn like a lottery: the coast if you are lucky, the southeast if you are not. In the southeast at night the rifle has a specific weight that it does not have in the daytime. You come back with a certificate that every employer and every prospective mother-in-law understands on sight. Nobody in your family ever says out loud that a man who has not done it is not quite a man, and everybody proceeds as though they had.',
+    text: 'The letter comes and the posting is drawn like a lottery: the coast if you are lucky, the southeast if you are not. In the southeast at night the rifle has a weight that it does not have in the daytime. You come back with a certificate that every employer and every prospective mother-in-law understands on sight. Nobody in your family ever says out loud that a man who has not done it is not quite a man, and everybody proceeds as though they had.',
     context: 'Turkish military service has been compulsory for men since 1927, running between six and twenty-four months depending on period and education level. Postings during the 1984-1999 phase of the PKK conflict frequently sent conscripts to the southeast. The discharge certificate is routinely requested by employers, and paid exemption schemes have been offered periodically since 1999.',
     choices: null,
     effect: (p) => {

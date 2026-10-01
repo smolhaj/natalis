@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/build-event-index.js && vite build",
+    "build-event-index": "node scripts/build-event-index.js",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -23,7 +24,9 @@
     "check-anachronisms": "node scripts/check-anachronisms.js",
     "check-bundle": "node scripts/check-bundle.js",
     "check-ui": "node scripts/check-ui.js",
-    "check-reach": "node scripts/check-reach.js"
+    "check-reach": "node scripts/check-reach.js",
+    "check-prose": "node scripts/check-prose.js",
+    "stats": "node scripts/stats.js"
   },
   "dependencies": {
     "react": "^18.3.1",

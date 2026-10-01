@@ -40,7 +40,7 @@ export const EVENTS_SONDER_4 = [
       !G.mem?.s4_walkman &&
       G.currentYear >= 1980 && G.currentYear <= 1992 &&
       G.age >= 12 && G.age <= 20,
-    text: 'The headphones go in and the world goes away. This is new — music as a private room you carry with you, as something that insulates the bus ride and the walk to school and the waiting. The tape is a specific object: you turn it over when one side ends. The act of turning it over is a small ceremony that you will not miss when it stops being necessary and that you will occasionally miss for years after.',
+    text: 'The headphones go in and the world goes away. This is new — music as a private room you carry with you, as something that insulates the bus ride and the walk to school and the waiting. The tape is an object: you turn it over when one side ends. The act of turning it over is a small ceremony that you will not miss when it stops being necessary and that you will occasionally miss for years after.',
     choices: null,
     effect: (p) => { p.m += 5; p.setMem('s4_walkman', true) },
   },
@@ -94,7 +94,7 @@ export const EVENTS_SONDER_4 = [
       G.currentYear >= 2005 && G.currentYear <= 2015 &&
       G.age >= 18 &&
       (G.flags.has('emigrated') || G.flags.has('children_emigrated') || G.flags.has('friend_emigrated')),
-    text: 'You can see their face now. The lag is still there — a fraction of a second between the sound and the image and between your reply and theirs — but the face is there, in a window, in the kitchen, and it changes what the distance is. The distance used to be total. Now it is partial. The partiality is its own kind of grief.',
+    text: 'You can see their face now. The lag is still there — a fraction of a second between the sound and the image and between your reply and theirs — but the face is there, in a window, in the kitchen, and it changes what the distance is. The distance used to be total. Now it is partial. The partiality is a grief.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 2; p.setMem('s4_videocall', true) },
   },
@@ -137,7 +137,7 @@ export const EVENTS_SONDER_4 = [
        G.character.country?.archetype === 'developing_unstable' ||
        G.character.country?.archetype === 'developing_urban' ||
        G.character.country?.archetype === 'post_soviet'),
-    text: 'The lights go out and the family finds its candles without needing to discuss the order of things. This has happened often enough that the procedure is settled. The candle is placed on the table. The conversation continues in the altered light, which is warmer and smaller and turns the familiar room into something slightly different. You are happy for a reason you cannot name.',
+    text: 'The lights go out and the family finds its candles without needing to discuss the order of things. This has happened often enough that the procedure is settled. The candle is placed on the table. The conversation continues in the altered light, warmer and smaller, and the familiar room becomes something slightly different. You are happy for a reason you cannot name.',
     choices: null,
     effect: (p) => { p.m += 5; p.setMem('s4_powerCut', true) },
   },
@@ -161,7 +161,7 @@ export const EVENTS_SONDER_4 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => place.worksInOffice(G) && (!G.mem?.s4_colCoffee && G.age >= 22 && G.career),
-    text: 'There is a colleague you get coffee with. Not a friend, exactly — or maybe a friend, but a kind of friend that only exists in the context of this building, this floor, this particular hour. The conversation is easy and contained. If either of you left, you would not stay in touch, probably. This seems fine to both of you. The coffee is good. The hour is good.',
+    text: 'There is a colleague you get coffee with. Not a friend, exactly — or maybe a friend, but a kind of friend that only exists in the context of this building, this floor, this hour. The conversation is easy and contained. If either of you left, you would not stay in touch, probably. This seems fine to both of you. The coffee is good. The hour is good.',
     choices: null,
     effect: (p) => { p.m += 4; p.s += 2; p.setMem('s4_colCoffee', true) },
   },
@@ -225,7 +225,7 @@ export const EVENTS_SONDER_4 = [
       !G.mem?.s4_factorySound &&
       G.age >= 18 && G.age <= 45 &&
       G.career?.field === 'manufacturing',
-    text: 'The sound of the factory floor is a thing you stopped noticing years ago. It is only when someone visits — a family member, a new worker — that you see their face change at the noise and remember that it is noise. To you it is the background of the day. It is what the day sounds like. You hear the particular machines you are responsible for against the general sound, the way a parent hears their child\'s voice in a crowd.',
+    text: 'The sound of the factory floor is a thing you stopped noticing years ago. It is only when someone visits — a family member, a new worker — that you see their face change at the noise and remember that it is noise. To you it is the background of the day. It is what the day sounds like. You hear the machines you are responsible for against the general sound, the way a parent hears their child\'s voice in a crowd.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s4_factorySound', true) },
   },
@@ -269,7 +269,7 @@ export const EVENTS_SONDER_4 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !G.mem?.s4_smellHome && G.age >= 20,
-    text: 'You visit your parents\' home and smell it before you see anything. The combination — cooking, fabric, the particular soap, something unidentifiable — hits before the door is fully open. You have not smelled it in months and it is immediately the smell of being young and not responsible for the morning, which is also the smell of before.',
+    text: 'You visit your parents\' home and smell it before you see anything. The combination — cooking, fabric, the soap, something unidentifiable — hits before the door is fully open. You have not smelled it in months and it is immediately the smell of being young and not responsible for the morning: the smell of before.',
     choices: null,
     effect: (p) => { p.m += 6; p.setMem('s4_smellHome', true) },
   },
@@ -279,7 +279,7 @@ export const EVENTS_SONDER_4 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => place.isLiterate(G) && (!G.mem?.s4_handwriting && G.age >= 55),
-    text: 'You find something your mother or father wrote. A note, a list, a letter. The handwriting is so specific that you are not prepared for it. The person who made those particular marks on paper: you know their handwriting better than you know most things. You sit with it for a while. It is just a note. It is not just a note.',
+    text: 'You find something your mother or father wrote. A note, a list, a letter. The handwriting is so specific that you are not prepared for it. The person who made those marks on paper: you know their handwriting better than you know most things. You hold it for a while. It is just a note. It is not just a note.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 4; p.setMem('s4_handwriting', true) },
   },
@@ -309,7 +309,7 @@ export const EVENTS_SONDER_4 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => !G.mem?.s4_scar && G.age >= 30,
-    text: 'There is a scar from childhood. You know exactly how you got it — the afternoon, the specific location, the exact shape of what happened. The scar has been present for so long that you notice it only when someone else notices it. You explain how you got it. The explanation is shorter than the memory.',
+    text: 'There is a scar from childhood. You know exactly how you got it — the afternoon, the location, the exact shape of what happened. The scar has been present for so long that you notice it only when someone else notices it. You explain how you got it. The explanation is shorter than the memory.',
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('s4_scar', true) },
   },
@@ -355,7 +355,7 @@ export const EVENTS_SONDER_4 = [
        G.character.country?.archetype === 'developing_urban' ||
        G.character.country?.name === 'Bangladesh' ||
        G.character.country?.name === 'India'),
-    text: 'The rain comes in its season. This is not the random rain of other climates — it is the arrival of something that has been anticipated, that the body has been waiting for without knowing it was waiting. The smell before it starts, the sound of the first drops on the roof, the particular cool that follows: you learn these the way you learn a language before you know you\'re learning a language.',
+    text: 'The rain comes in its season. This is not the random rain of other climates — it is the arrival of something that has been anticipated, that the body has been waiting for without knowing it was waiting. The smell before it starts, the sound of the first drops on the roof, the cool that follows: you learn these the way you learn a language before you know you\'re learning a language.',
     choices: null,
     effect: (p) => { p.m += 5; p.e += 2; p.setMem('s4_rainSeason', true) },
   },
@@ -391,7 +391,7 @@ export const EVENTS_SONDER_4 = [
        G.character.country?.name === 'Estonia' ||
        G.character.country?.name === 'Latvia' ||
        G.character.country?.name === 'Lithuania')),
-    text: 'December: the sun rises at nine and sets at three. You go to school in the dark and come home in the dark. The middle of the day has a particular quality — the pale light through the window at noon, the sense that day is a brief guest who will not stay. You are used to this. The body adapts to the dark and comes alive again in March in a way that makes you understand, every year, what the winter cost.',
+    text: 'December: the sun rises at nine and sets at three. You go to school in the dark and come home in the dark. The middle of the day has a quality — the pale light through the window at noon, the sense that day is a brief guest who will not stay. You are used to this. The body adapts to the dark and comes alive again in March, and every year you understand what the winter cost.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 2; p.setMem('s4_winterDark', true) },
   },
@@ -427,7 +427,7 @@ export const EVENTS_SONDER_4 = [
        G.character.country?.name === 'China' ||
        G.character.country?.name === 'South Korea' ||
        G.character.country?.name === 'Japan')),
-    text: 'The snow falls and you are at the window. The accumulation on the sill, the changed sound of everything outside, the particular grey-white light that comes up from the ground rather than down from the sky. You put your hand out the window and catch some. The cold is clean. You know that the morning will be different and you want it to be morning.',
+    text: 'The snow falls and you are at the window. The accumulation on the sill, the changed sound of everything outside, the grey-white light that comes up from the ground rather than down from the sky. You put your hand out the window and catch some. The cold is clean. You know that the morning will be different and you want it to be morning.',
     choices: null,
     effect: (p) => { p.m += 6; p.setMem('s4_firstSnow', true) },
   },
@@ -457,7 +457,7 @@ export const EVENTS_SONDER_4 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => !G.mem?.s4_garden && G.age >= 35 && !G.flags.has('emigrated'),
-    text: 'You have been watching the same tree or garden for long enough to have a year\'s cycle memorized. The exact week the blossom comes. The time the leaves begin. The specific green of May. You have been given this by staying — the knowledge of what a year looks like in this particular piece of ground, which accumulates over years into something that is yours.',
+    text: 'You have been watching the same tree or garden for long enough to have a year\'s cycle memorized. The exact week the blossom comes. The time the leaves begin. The green of May. You have been given this by staying — the knowledge of what a year looks like in this piece of ground, which accumulates over years into something that is yours.',
     choices: null,
     effect: (p) => { p.m += 5; p.karma += 2; p.setMem('s4_garden', true) },
   },

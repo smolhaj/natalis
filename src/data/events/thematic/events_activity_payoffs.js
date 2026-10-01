@@ -32,7 +32,7 @@ export const ACTIVITY_PAYOFF_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.includes('science_club') && G.age >= 18 && G.age <= 26 && !G.mem?.payoffScience,
-    text: 'A professor asks what drew you to this field. You think of a particular experiment, in a particular room, on a particular afternoon — the moment you understood that the world follows rules and you can learn them. You say something close to this. They nod like they recognise it.',
+    text: 'A professor asks what drew you to this field. You think of an experiment, in a room, on an afternoon — the moment you understood that the world follows rules and you can learn them. You say something close to this. They nod like they recognise it.',
     choices: null,
     effect: (p) => { p.e += 6; p.m += 4; p.w += 3; p.setMem('payoffScience', true) },
   },
@@ -228,7 +228,7 @@ export const ACTIVITY_PAYOFF_EVENTS = [
       G.career &&
       ['law', 'finance', 'government', 'healthcare'].includes(G.career.field) &&
       !G.mem?.payoffTattooWork,
-    text: 'Your manager mentions, with careful neutrality, that a client commented on your visible tattoo. It is not a policy issue. It is a preference issue. The subtext is not subtle.',
+    text: 'Your manager mentions, with careful neutrality, that a client commented on your visible tattoo. It is a preference issue. The subtext is not subtle.',
     choices: [
       {
         text: 'Cover it at work — not worth the friction',
@@ -279,7 +279,7 @@ export const ACTIVITY_PAYOFF_EVENTS = [
       {
         text: 'Keep it — the job description said nothing about this',
         tag: null,
-        outcome: 'The norm holds. You are outside it. Both things are true.',
+        outcome: 'The norm holds. You are outside it.',
         effect: (p) => { p.m += 3; p.s += 3; p.setMem('payoffPiercedWork', true) },
       },
     ],

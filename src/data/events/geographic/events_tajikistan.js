@@ -20,7 +20,7 @@ export const TAJIKISTAN_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 1991 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.tajSoviet,
-    text: 'Dushanbe was a village called Dyushambe before the Soviets arrived. The name means Monday in Tajik — it was a market town, a place people came once a week to trade. The Soviets industrialised it, built apartment blocks and a Lenin Avenue and a cotton processing plant and an aluminium smelter. They built schools in Russian where the educated classes taught and studied. You are growing up in the city that grew from those decisions. The bazaar where the traders used to come on Mondays is still there in an altered form. You know this city as normal. It is not the only version of it that has existed.',
+    text: 'Dushanbe was a village before the Soviets came; the name means Monday, the day people came to trade. The Soviets built blocks of flats and a Lenin Avenue and a cotton plant and an aluminium smelter, and schools where the educated taught in Russian. You are growing up in the city those decisions made, and the bazaar is still there in an altered form. You know the city as normal. It is not the only version that has existed.',
     choices: null,
     effect: (p) => { p.e += 3; p.m += 2; p.addFlag('taj_soviet_generation'); p.setMem('tajSoviet', true) },
   },
@@ -65,7 +65,7 @@ export const TAJIKISTAN_EVENTS = [
       G.currentYear >= 1997 && G.currentYear <= 1999 &&
       G.age >= 20 &&
       !G.mem?.tajPeace,
-    text: 'The General Agreement on the Establishment of Peace and National Accord is signed in Moscow in June 1997. Emomali Rahmon stays as president. Thirty percent of government positions go to the United Tajik Opposition. The militias are supposed to integrate into state forces. Some do. Many keep their weapons and their territories. The educated people who left during the war are mostly still gone. Dushanbe\'s population is returning. What is returning to the city is not exactly the city that left.',
+    text: 'June 1997, Moscow, and the peace is signed. Rahmon stays president; the opposition gets a share of the posts; the militias are supposed to join the state\'s forces, and some do, and many keep their guns and their valleys. The educated people who left during the war are mostly still gone. People come back to Dushanbe, and what comes back is not quite the city that left.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m += 3; p.addFlag('taj_postwar_generation'); p.setMem('tajPeace', true) },
   },
@@ -126,12 +126,12 @@ export const TAJIKISTAN_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2020 &&
       G.age >= 16 &&
       !G.mem?.tajPamiri,
-    text: 'The Gorno-Badakhshan Autonomous Oblast is the size of Switzerland and holds roughly three percent of Tajikistan\'s population. The roads from Dushanbe take two days when they are open. The people here speak Shughni, Wakhi, Rushani — languages closer to Persian than to Tajik, not mutually intelligible. The Pamiris are mostly Ismaili Muslim, a minority within a Sunni country. During the civil war the Pamiri fighters were on the opposition side. The Dushanbe government does not forget this. You know what it means to be from here, which is different from what it means in the capital.',
+    text: 'The Gorno-Badakhshan Autonomous Oblast is the size of Switzerland and holds roughly three percent of Tajikistan\'s population. The roads from Dushanbe take two days when they are open. The people here speak Shughni, Wakhi, Rushani — languages closer to Persian than to Tajik, not mutually intelligible. The Pamiris are mostly Ismaili Muslim, a minority within a Sunni country. During the civil war the Pamiri fighters were on the opposition side. The Dushanbe government does not forget this. You know what it means to be from here, and the capital means something else by it.',
     choices: [
       {
         text: 'You stayed in Khorog or the valley. The isolation is also protection.',
         tag: 'taj_pamiri_stayed',
-        outcome: 'The mountains are specific: the altitude, the cold, the passes that close in winter. The Aga Khan Development Network built the schools and the hospitals that the state did not. Your identity is particular in a way that the capital does not have language for.',
+        outcome: 'The mountains are specific: the altitude, the cold, the passes that close in winter. The Aga Khan Development Network built the schools and the hospitals that the state did not. Your identity is one the capital does not have language for.',
         effect: (p) => { p.addFlag('taj_pamiri_stayed'); p.addFlag('taj_pamiri_identity'); p.m += 4; p.s += 2; p.r += 5; p.setMem('tajPamiri', true) },
       },
       {
@@ -159,13 +159,13 @@ export const TAJIKISTAN_EVENTS = [
       {
         text: 'You were in GBAO during the crackdown.',
         tag: 'taj_gbao_witness',
-        outcome: 'The armoured vehicles on the mountain roads. The phone going silent. The specific texture of not being able to tell anyone what was happening while it happened.',
+        outcome: 'The armoured vehicles on the mountain roads. The phone going silent. The texture of not being able to tell anyone what was happening while it happened.',
         effect: (p) => { p.addFlag('taj_gbao_witness'); p.r += 10; p.m -= 7; p.h -= 3; p.setMem('tajGbao', true) },
       },
       {
         text: 'You were in Dushanbe or abroad and watched the internet go dark over GBAO.',
         tag: 'taj_gbao_distant_witness',
-        outcome: 'The GBAO contacts going quiet. The VPNs that stopped working. The specific fear of absence when the absence is over people you know in a place you know.',
+        outcome: 'The GBAO contacts going quiet. The VPNs that stopped working. The fear of absence when the absence is over people you know in a place you know.',
         effect: (p) => { p.addFlag('taj_gbao_distant_witness'); p.r += 7; p.m -= 5; p.setMem('tajGbao', true) },
       },
     ],
@@ -213,7 +213,7 @@ export const TAJIKISTAN_EVENTS = [
       IS_TAJIK(G) &&
       G.age >= 60 &&
       !G.mem?.tajLate,
-    text: 'You have watched a country negotiate its existence: the war, the peace that preserved the men who caused the war, the slow construction of the Leader of the Nation\'s portrait on every wall, the sons of men who disappeared in 1992 who are now managing the state that their fathers opposed. Tajikistan has its own logic — a logic of altitude and isolation and the specific political economy of a landlocked country surrounded by larger powers that all have opinions about what it should be. You have lived inside that logic for sixty years. You do not resolve it. You hold it.',
+    text: 'You have watched a country negotiate its existence: the war, the peace that preserved the men who caused the war, the slow construction of the Leader of the Nation\'s portrait on every wall, the sons of men who disappeared in 1992 who are now managing the state that their fathers opposed. Tajikistan has its own logic — a logic of altitude and isolation and the political economy of a landlocked country surrounded by larger powers that all have opinions about what it should be. You have lived inside that logic for sixty years. You do not resolve it. You hold it.',
     choices: null,
     effect: (p) => { p.m += 5; p.r += 7; p.karma += 4; p.e += 4; p.addFlag('taj_testigo_generation'); p.setMem('tajLate', true) },
   },

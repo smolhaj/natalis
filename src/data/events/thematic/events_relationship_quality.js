@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 // Events gated on relationship quality thresholds.
 // These give texture to the ongoing state of relationships rather than
 // treating them as invisible numbers. Cooldowns prevent over-firing.
@@ -85,7 +86,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
     weight: 2,
     cooldown: 4,
     when: (G) => G.partner && (G.partner.relationshipQuality ?? 60) > 78,
-    text: (G) => `You catch ${G.partner.name ?? 'your partner'} reading and watch them without them knowing — the specific quiet pleasure of being in a room with someone you love and not needing anything from each other.`,
+    text: (G) => `You catch ${G.partner.name ?? 'your partner'} reading and watch them without them knowing — the quiet pleasure of being in a room with someone you love and not needing anything from each other.`,
     choices: null,
     effect: (p) => { p.m += 3 },
   },
@@ -162,7 +163,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
     when: (G) => (G.children ?? []).some(c => c.age >= 22 && (c.relationshipQuality ?? 50) < 24),
     text: (G) => {
       const c = (G.children ?? []).find(c => c.age >= 22 && (c.relationshipQuality ?? 50) < 24)
-      return `You haven't seen ${c?.name?.split(' ')[0] ?? 'them'} in over a year. You have their address. There was a thing said, and then a silence, and the silence became the thing itself.`
+      return gendered(`You haven't seen ${c?.name?.split(' ')[0] ?? 'them'} in over a year. You have their address. There was a thing said, and then a silence, and the silence became the thing itself.`, c)
     },
     choices: [
       {

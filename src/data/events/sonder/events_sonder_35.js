@@ -30,7 +30,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => place.hasBooks(G) && (!G.mem?.s35BookUnfinished),
     text: () => pick([
-      'A book you started and put down and intend to finish. The book has been in this state for longer than it would take to finish it. You know roughly where you stopped. The book sits in the exact position where you left it, accumulating the specific meaning of unfinished things.',
+      'A book you started and put down and intend to finish. The book has been in this state for longer than it would take to finish it. You know roughly where you stopped. The book sits in the exact position where you left it, accumulating the meaning of unfinished things.',
       'There is a book on your shelf that has a bookmark in it at the page where you stopped years ago. You have moved the book through several homes. The bookmark has not moved. You will finish the book. The finishing is not urgent. The intention is.',
     ]),
     choices: null,
@@ -56,7 +56,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => G.age >= 57 && G.age <= 65 && !G.mem?.s35WhatAtSixty,
     text: () => pick([
-      'You are approaching or passing sixty and what happens at sixty is that the future has a different texture from the future at forty. At forty the future was large in both directions — behind and ahead. At sixty the arithmetic is clearer. The clarity is not frightening, exactly. It is more like a focus.',
+      'You are approaching or passing sixty and what happens at sixty is that the future has a different texture from the future at forty. At forty the future was large in both directions — behind and ahead. At sixty the arithmetic is clearer. The clarity is more like a focus than a fright.',
       'Sixty: the decade where the question of what you want to do with your life changes to what you want to do with the time that is clearly there and available. The questions are related but not identical. The second one is more specific and has a different urgency.',
     ]),
     choices: null,
@@ -82,8 +82,8 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => !G.mem?.s35SmellOldPaper,
     text: () => pick([
-      'Old paper has a smell — a compound of lignin and the slow work of time on organic matter. The smell is specific to the age and condition and storage of the paper. You know the smell from a particular library, a particular set of books, a box of papers that belonged to someone before you. The smell is information: it tells you how old something is before you read what it says.',
-      'The smell of a particular room full of old things: papers, books, fabrics stored long enough to develop the smell of their own age. The room is in a house you visited, a library you used. The smell opens the room completely when you encounter it somewhere unexpected.',
+      'Old paper has a smell — a compound of lignin and the slow work of time on organic matter. The smell is specific to the age and condition and storage of the paper. You know the smell from a library, a set of books, a box of papers that belonged to someone before you. The smell is information: it tells you how old something is before you read what it says.',
+      'The smell of a room full of old things: papers, books, fabrics stored long enough to develop the smell of their own age. The room is in a house you visited, a library you used. The smell opens the room completely when you encounter it somewhere unexpected.',
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s35SmellOldPaper', true) },
@@ -147,7 +147,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => !G.mem?.s35SpecificTuesday,
     text: () => pick([
-      'A day you remember for no obvious reason — a Tuesday in an ordinary month of an ordinary year, a day with no event attached to it, just the quality of how the light came through the window and what you were doing and the feeling of that particular hour. The day is filed under nothing but you still have it.',
+      'A day you remember for no obvious reason — a Tuesday in an ordinary month of an ordinary year, a day with no event attached to it, just the quality of how the light came through the window and what you were doing and the feeling of that hour. The day is filed under nothing but you still have it.',
       'Among the days that get remembered, some are remembered for reasons and some are remembered for no clear reason at all. A day that was simply a day, during which nothing happened that would merit recording, but which stayed. The staying is its own mystery.',
     ]),
     choices: null,
@@ -160,8 +160,8 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => place.hasRadio(G) && (!G.mem?.s35ObjectAtTable),
     text: () => pick([
-      'At the table where you grew up: a specific object that was always there. A salt shaker, a fruit bowl, a radio, a cloth that was replaced by the same cloth. The object was not remarkable. It was there every morning. Its presence was the texture of ordinary life and you noticed it only when it was gone.',
-      'The house you grew up in had objects that were permanent — always in the same place, always the same function, always the same relationship to the people around the table. You did not register them as specific until they were not there anymore, and then the absence was its own kind of presence.',
+      'At the table where you grew up: an object that was always there. A salt shaker, a fruit bowl, a radio, a cloth that was replaced by the same cloth. The object was unremarkable. It was there every morning. Its presence was the texture of ordinary life and you noticed it only when it was gone.',
+      'The house you grew up in had objects that were permanent — always in the same place, always the same function, always the same relationship to the people around the table. You did not register them until they were not there anymore, and then the absence was a presence.',
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s35ObjectAtTable', true) },
@@ -186,7 +186,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.s35TalentNotPursued,
     text: () => pick([
-      'There is a thing you were good at that you did not pursue. The not-pursuing had reasons — a different path was more practical, the talent was not legible as a career, life arranged itself in a different direction. The talent is still in you. You use it occasionally, in private, and it is still there, which is a small satisfaction and a small regret simultaneously.',
+      'There is a thing you were good at that you did not pursue. The not-pursuing had reasons — a different path was more practical, the talent was not legible as a career, life arranged itself in a different direction. The talent is still in you. You use it occasionally, in private, and it is still there, a small satisfaction and a small regret.',
       'The ability you did not make central: you can play the instrument, you can do the mathematics, you can draw the thing — but you chose the other road and the ability has been available and unused for years. It remains available. That fact has different meanings at different ages.',
     ]),
     choices: null,
@@ -199,7 +199,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => !G.mem?.s35LongTable,
     text: () => pick([
-      'The long table at a celebration: the specific abundance of a family event or a gathering where the table is too long for one conversation and so there are several conversations happening simultaneously, each with its own logic, and you can hear all of them and belong to only one. The table is a collective event that is also many private events.',
+      'The long table at a celebration: the abundance of a family event or a gathering where the table is too long for one conversation and so there are several conversations happening simultaneously, each with its own logic, and you can hear all of them and belong to only one. The table is a collective event that is also many private events.',
       'A table with many people around it: the noise of it, the cross-conversations, the person at the far end who is having a different evening from the person at the near end. You know this kind of table from many occasions. The memory of all of them is stored as one thing.',
     ]),
     choices: null,
@@ -252,7 +252,7 @@ export const EVENTS_SONDER_35 = [
     when: (G) => !G.mem?.s35PlanFellThrough,
     text: () => pick([
       'A plan you made with someone that fell through — a trip that was going to happen, a project that was going to begin, a thing you were going to do together. The plan had a level of detail that made it feel real. The thing that prevented it was specific and probably small. You never made the plan again.',
-      'The thing you were going to do: the dates were nearly set, the logistics were roughly worked out, the anticipation was real. Then the logistics didn\'t align, or one of you moved, or the money wasn\'t there, or someone got sick. The plan dissolved without a clear moment of dissolution. It simply stopped being scheduled.',
+      'The thing you were going to do: the dates were nearly set, the logistics were roughly worked out, you had told people. Then the logistics didn\'t align, or one of you moved, or the money wasn\'t there, or someone got sick. The plan dissolved without a clear moment of dissolution. It simply stopped being scheduled.',
     ]),
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s35PlanFellThrough', true) },
@@ -277,8 +277,8 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => !G.mem?.s35MoneySmallAmounts,
     text: () => pick([
-      'There was a period when you counted money in small denominations — the coins arranged, the calculation of what the week required, the attention to amounts that later became rounding errors. The attention was not pleasant. It was a kind of knowledge. You still do the calculation automatically even when the denominations are different.',
-      'The arithmetic of a tight month: the amount in the account, the bills due, the days remaining, the calculation you ran in your head before you ran it on paper. The arithmetic made you precise about money in a way that did not leave when the money stopped being tight.',
+      'There was a period when you counted money in small denominations — the coins arranged, the calculation of what the week required, the attention to amounts that later became rounding errors. The attention was unpleasant, and it taught you something. You still do the calculation automatically even when the denominations are different.',
+      'The arithmetic of a tight month: the amount in the account, the bills due, the days remaining, the calculation you ran in your head before you ran it on paper. The arithmetic made you precise about money, and the precision did not leave when the money stopped being tight.',
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s35MoneySmallAmounts', true) },
@@ -303,7 +303,7 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => G.age >= 30 && !G.mem?.s35ApologyMade,
     text: () => pick([
-      'You apologised for something and the apology was accepted and it is done. The sequence completed itself. And yet the thing you apologised for sits in a different file from things that are simply done — it is in the file of things that required the apology, which is its own category.',
+      'You apologised for something and the apology was accepted and it is done. The sequence completed itself. And yet the thing you apologised for sits in a different file from things that are simply done: the file of things that required the apology.',
       'The apology: you said it and meant it and it was received. The account is settled. The thing that required the apology is still there in the record. The settlement does not erase the record, it closes the account. You understand the difference.',
     ]),
     choices: null,
@@ -316,8 +316,8 @@ export const EVENTS_SONDER_35 = [
     weight: 2,
     when: (G) => place.hasCafe(G) && (!G.mem?.s35CornerTable),
     text: () => pick([
-      'The corner table in the cafe or restaurant — the one with the wall on two sides, the view of the room, the relative quiet. You have learned to ask for it when it is available. The preference is not snobbery. It is about where the attention goes when you are in a room: the wall holds you in and the view of the room gives you something to look at without being looked at.',
-      'There is a configuration of furniture in a public space that you prefer: the specific geometry of the seated position relative to the door, the window, the rest of the room. You have this preference without having formally decided it. It arrived gradually from accumulated experience of what worked.',
+      'The corner table in the cafe or restaurant — the one with the wall on two sides, the view of the room, the relative quiet. You have learned to ask for it when it is available. The preference is about where the attention goes when you are in a room: the wall holds you in and the view of the room gives you something to look at without being looked at.',
+      'There is a configuration of furniture in a public space that you prefer: the geometry of the seated position relative to the door, the window, the rest of the room. You have this preference without having formally decided it. It arrived gradually from accumulated experience of what worked.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s35CornerTable', true) },

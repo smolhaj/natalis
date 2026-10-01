@@ -32,7 +32,7 @@ export const THAILAND_EVENTS = [
       !G.mem.thaLeseMajeste,
     // The law is older than the medium: the counts that accumulate are whatever
     // the year can be accused through, and this was listing a post in 1982.
-    text: (G) => `Article 112 of the Criminal Code: insulting, defaming, or threatening the king, queen, heir apparent, or regent carries a penalty of three to fifteen years per count. The counts accumulate: criticise a royal speech, share a critical article, ${hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear) ? 'write something online' : 'repeat what you heard to the wrong person'} — each can be a separate count. You know of cases where this added to decades. The law shapes not what you say but how you think before you speak, the pause before the opinion, the specific texture of self-censorship in a country where the law does not require you to actually insult anyone — only to be accused of it.`,
+    text: (G) => `Article 112 of the Criminal Code: insulting, defaming, or threatening the king, queen, heir apparent, or regent carries a penalty of three to fifteen years per count. The counts accumulate: criticise a royal speech, share a critical article, ${hasTech(G.currentCountry ?? G.character.country, 'home_internet', G.currentYear) ? 'write something online' : 'repeat what you heard to the wrong person'} — each can be a separate count. You know of cases where this added to decades. The law shapes not what you say but how you think before you speak, the pause before the opinion, the texture of self-censorship in a country where the law does not require you to actually insult anyone — only to be accused of it.`,
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('thai_lese_majeste_awareness'); p.setMem('thaLeseMajeste', true) },
   },
@@ -46,12 +46,12 @@ export const THAILAND_EVENTS = [
       G.currentYear === 1997 &&
       G.age >= 18 &&
       !G.mem.tha1997,
-    text: 'July 2, 1997. The Thai government floats the baht after running out of foreign reserves defending the peg. The baht falls forty percent in months. The crisis that begins in Thailand spreads to Indonesia, South Korea, Malaysia, the Philippines — the whole Asian Tiger economy in contagion. In Thailand, companies go bankrupt overnight. The construction cranes stop. The new apartments nobody can afford to buy now cannot be sold even cheaper. The IMF arrives with conditions. You are living inside the year that the phrase "Asian contagion" is being coined.',
+    text: 'July 1997, and Thailand runs out of dollars to defend the baht and lets it float, and it falls by a third and then more. The crisis spreads to Indonesia, Korea, Malaysia, the Philippines. Companies go bankrupt overnight, the cranes stop, and the new flats cannot be sold at any price. The IMF arrives with its conditions. You are living inside the year somebody coins the phrase Asian contagion.',
     choices: [
       {
         text: 'The crisis costs you your job or your family\'s business.',
         tag: null,
-        outcome: 'The baht number, the layoff notice, the conversation about what to sell — these are the specific details of a macroeconomic event as it arrives in your life.',
+        outcome: 'The baht number, the layoff notice, the conversation about what to sell — these are the details of a macroeconomic event as it arrives in your life.',
         effect: (p) => { p.m -= 16; p.mo -= Math.floor((p.mo ?? 0) * 0.35); p.r += 8; p.addFlag('thai_1997_generation'); p.setMem('tha1997', true) },
       },
       {
@@ -100,7 +100,8 @@ export const THAILAND_EVENTS = [
       (G.currentYear === 2006 || G.currentYear === 2014) &&
       G.age >= 20 &&
       !G.mem.thaCoup,
-    text: 'The tanks are in the streets of Bangkok again. Thailand has had more coups than almost any country in the world — thirteen since 1932, depending on how you count. The military\'s relationship to democracy here is specific: elections occur, governments win, then the military or the courts undo the result if the result is inconvenient. The coup is peaceful. There is no fighting. The curfew is temporary. The generals appear on television and explain that this is necessary for national stability. You have heard this before.',
+    text: 'The tanks are in the streets of Bangkok again. Elections happen, governments win, and then the generals or the courts undo the result if the result is inconvenient. The coup is quiet; nobody fights; the curfew is temporary. The generals go on television and explain that it is necessary for stability. You have heard this before.',
+    context: 'Thailand has had thirteen successful coups since 1932.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('thai_coup_generation'); p.setMem('thaCoup', true) },
   },
@@ -130,7 +131,7 @@ export const THAILAND_EVENTS = [
       G.currentYear === 1976 &&
       G.age >= 16 &&
       !G.mem.thaThammasat1976,
-    text: 'October 6, 1976. Rightwing paramilitary groups — the Red Gaurs, the Village Scouts — attack students gathered at Thammasat University in Bangkok. The students were protesting the return of the former military dictator. Students are beaten to death, hanged from trees, dragged through the streets. Photographs circulate. The official count is forty-six dead. Survivors say higher. Hundreds of students flee to the jungle and join the Communist Party of Thailand — not from conviction but because there is nowhere else safe to go. Three years earlier the same campus had the democratic uprising. You are watching the country undo what it briefly became.',
+    text: 'October 6, 1976. Paramilitaries and Village Scouts storm Thammasat, where the students are protesting the return of the old dictator, and students are beaten to death and hanged from the trees of Sanam Luang. The photographs go round. Afterwards hundreds of students go to the jungle and join the communists, because there is nowhere else safe. Three years ago this campus made a democracy. You are watching the country undo what it briefly became.',
     choices: [
       {
         text: 'You are in Bangkok, near the campus.',
@@ -194,13 +195,13 @@ export const THAILAND_EVENTS = [
       {
         text: 'You came to the city and it absorbed you and paid you.',
         tag: null,
-        outcome: 'The city processes you into the factory economy or the service economy or the finance sector depending on your education. The salary is real. The pace is real. Both of them.',
+        outcome: 'The city processes you into the factory economy or the service economy or the finance sector depending on your education. You draw a salary. The pace is fast. Both of them.',
         effect: (p) => { p.w += 8; p.mo += 3000; p.addFlag('thai_boom_generation'); p.setMem('thaBooms', true) },
       },
       {
         text: 'You are in the village watching the money flow toward Bangkok.',
         tag: null,
-        outcome: 'The remittances come from your siblings in the city. The village school is better-funded because a factory in Samut Prakan is paying someone\'s wages. The growth is real and distributed unevenly, which is the definition of most growth.',
+        outcome: 'The remittances come from your siblings in the city. The village school is better-funded because a factory in Samut Prakan is paying someone\'s wages. The growth is real and distributed unevenly, like most growth.',
         effect: (p) => { p.mo += 800; p.r += 4; p.addFlag('thai_boom_generation'); p.setMem('thaBooms', true) },
       },
     ],
@@ -221,7 +222,7 @@ export const THAILAND_EVENTS = [
     text: (G) => {
       const isMalay = G.character.ethnicity === 'malay_thai' || G.character.religion === 'muslim_sunni'
       return isMalay
-        ? 'Pattani, Yala, Narathiwat: the three southernmost provinces. Malay-speaking, Muslim, historically the Patani Sultanate until Bangkok annexed it in 1902. Since January 4, 2004 — when army weapons depots were raided in Narathiwat — the insurgency has killed more than seven thousand people. Your language is Jawi-inflected Malay, not Thai. Your school teaches Thai. The checkpoint outside the village is staffed by soldiers from Chiang Mai who do not speak Malay and who look at you with a particular expression you have learned to recognize.'
+        ? 'Pattani, Yala, Narathiwat: the three southernmost provinces. Malay-speaking, Muslim, historically the Patani Sultanate until Bangkok annexed it in 1902. Since January 4, 2004 — when army weapons depots were raided in Narathiwat — the insurgency has killed more than seven thousand people. Your language is Jawi-inflected Malay, not Thai. Your school teaches Thai. The checkpoint outside the village is staffed by soldiers from Chiang Mai who do not speak Malay and who look at you with an expression you have learned to recognize.'
         : 'The deep south of Thailand: Pattani, Yala, Narathiwat. More than seven thousand dead since 2004 — a low-intensity insurgency that receives almost no international coverage. The soldiers stationed there rotate from other regions and few speak Malay; the local population is Malay-speaking Muslim; the schools teach Thai. Teachers have been specifically targeted — killed on the way to work. Some schools have closed. Most Thai people have formed their opinion of the south from a handful of headlines. You know one sentence more than that.'
     },
     choices: null,
@@ -268,7 +269,7 @@ export const THAILAND_EVENTS = [
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem.tha2020Protest,
-    text: 'The protest movement that begins in 2020 makes three demands: dissolve parliament, stop harassing activists, reform the constitution. Then a fourth demand appears — the one that has never appeared before, the one that sits in the room like an unexploded object: reform the monarchy. The protesters are students, most of them born after the last major political crisis. They make the three-finger Hunger Games salute. They carry rubber ducks as shields against water cannon. Article 112 — lèse-majesté — is activated against hundreds of them after the protests. Prison sentences of fifteen years for a Facebook post. The demand they made in the streets remains, unanswered, in the law books.',
+    text: 'In 2020 the students march with three demands, dissolve parliament, stop harassing activists, rewrite the constitution, and then a fourth that has never been said aloud: reform the monarchy. Most of them were born after the last crisis. They give the three-finger salute from The Hunger Games and carry inflatable ducks against the water cannon. Afterwards the lèse-majesté law is used against hundreds of them, fifteen years for a Facebook post. The fourth demand stays where they left it.',
     choices: [
       {
         text: 'You are in the street. The three-finger salute.',
@@ -297,7 +298,7 @@ export const THAILAND_EVENTS = [
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       G.age >= 25 &&
       !G.mem.thaCovidTourism,
-    text: 'Thirty-nine million foreign visitors in 2019. Four hundred thousand in 2021. The hotels in Krabi empty in three days. The longtail boat operators on Ko Phi Phi have no income. The massage shops on Khao San Road — the tuk-tuk drivers, the guesthouse owners, the street food vendors who fed a million tourists a year — are all running the same calculation about how long they can go without a customer. The government support is insufficient. The savings last as long as they last. The informal economy has no floor. You are in the part of Thailand that tourism paid for, and tourism is not here.',
+    text: 'The foreigners stop coming. The hotels in Krabi empty in three days; the longtail boats at Phi Phi have no passengers; on Khao San Road the masseuses, the tuk-tuk drivers, the guesthouse owners and the street cooks are all doing the same sum about how long they can last without a customer. The government\'s help is not enough. The informal economy has no floor. You are in the part of Thailand tourism paid for, and tourism is not here.',
     choices: null,
     effect: (p) => { p.m -= 14; p.wipeMoney(0.4); p.r += 7; p.addFlag('thai_covid_generation'); p.setMem('thaCovidTourism', true) },
   },
@@ -327,7 +328,7 @@ export const THAILAND_EVENTS = [
       G.flags.has('thai_ordained') &&
       G.age >= 38 &&
       !G.mem.thaOrdainedEcho,
-    text: 'The orange robe is in a box somewhere. The three months of chanting and early mornings and the specific silence of the vihara at 4am — you carry it differently at forty than you carried it at twenty. Whether it changed you in the way ordination is supposed to change you is a question you cannot answer directly. What you can say is that you know how to sit still longer than most people, and that this turns out to be useful in ways that have nothing to do with Buddhism.',
+    text: 'The orange robe is in a box somewhere. The three months of chanting and early mornings and the silence of the vihara at 4am — you carry it differently at forty than you carried it at twenty. Whether it changed you in the way ordination is supposed to change you is a question you cannot answer directly. What you can say is that you know how to sit still longer than most people, and that this turns out to be useful in ways that have nothing to do with Buddhism.',
     choices: null,
     effect: (p) => { p.m += 4; p.e += 2; p.setMem('thaOrdainedEcho', true) },
   },

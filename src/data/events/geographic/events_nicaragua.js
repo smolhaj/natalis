@@ -18,7 +18,7 @@ export const NICARAGUA_EVENTS = [
       G.currentYear >= 1936 && G.currentYear <= 1978 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.nicSomoza,
-    text: 'The Somoza family has governed Nicaragua for most of the living memory of anyone you know. There have been three of them: Anastasio the father who murdered Sandino in 1934, Luis the son, and now Anastasio the grandson — Tachito, they call him — who flies in his own plane and keeps a pet tiger and is reported to be one of the richest men in Central America. The National Guard is his family business. The Guard does not answer to the state; it answers to the Somozas. You have grown up knowing this distinction, which is the first political lesson this country teaches.',
+    text: 'The Somoza family has governed Nicaragua for most of the living memory of anyone you know. There have been three of them: Anastasio the father who murdered Sandino in 1934, Luis the son, and now Anastasio the grandson — Tachito, they call him — who flies in his own plane and keeps a pet tiger and is reported to be one of the richest men in Central America. The National Guard is his family business. The Guard does not answer to the state; it answers to the Somozas. You have grown up knowing this distinction. It is the first political lesson this country teaches.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 3; p.m -= 4; p.addFlag('nic_somoza_generation'); p.setMem('nicSomoza', true) },
   },
@@ -34,7 +34,7 @@ export const NICARAGUA_EVENTS = [
       G.currentYear === 1979 &&
       G.age >= 14 &&
       !G.mem?.nicRevolution,
-    text: 'On July 17, Somoza flees to Miami. Two days later the Sandinista columns enter Managua and the crowds come out of the houses and the streets fill. You are in it or you are watching from a doorway. The National Guard, the institution that sustained forty-three years of the dynasty, dissolves in hours. The people who had the guns yesterday do not have them today. You know that what is ending is not just a government — you have never known a government that was not a Somoza — and you do not yet know what comes next, but the not-yet of it has a specific texture, which is the texture of the morning after a long night.',
+    text: 'On July 17, Somoza flees to Miami. Two days later the Sandinista columns enter Managua and the crowds come out of the houses and the streets fill. You are in it or you are watching from a doorway. The National Guard, the institution that sustained forty-three years of the dynasty, dissolves in hours. The people who had the guns yesterday do not have them today. You know that what is ending is not just a government — you have never known a government that was not a Somoza — and you do not yet know what comes next, but the not-yet of it has a texture, which is the texture of the morning after a long night.',
     choices: null,
     effect: (p) => { p.m += 12; p.r -= 5; p.e += 4; p.addFlag('nic_revolution_generation'); p.setMem('nicRevolution', true) },
   },
@@ -71,7 +71,7 @@ export const NICARAGUA_EVENTS = [
       G.currentYear === 1990 &&
       G.age >= 18 &&
       !G.mem?.nicElection1990,
-    text: 'The election is scheduled and held and the results come in and Ortega has lost. Violeta Chamorro has won with 55 percent. The Sandinistas — who had held power for eleven years and fought a decade of Contra war and buried thousands of their people and built a revolution — have lost a free election and accepted the result. The concession is real. You are watching something unusual: a revolutionary movement choosing democratic accountability over continuance. Ortega speaks on television and looks like a man who has lost. The country is going to have a different government. You do not know yet what to do with what you feel about this.',
+    text: 'The election is scheduled and held and the results come in and Ortega has lost. Violeta Chamorro has won with 55 percent. The Sandinistas — who had held power for eleven years and fought a decade of Contra war and buried thousands of their people and built a revolution — have lost a free election and accepted the result. You are watching something unusual: a revolutionary movement choosing democratic accountability over continuance. Ortega speaks on television and looks like a man who has lost. The country is going to have a different government. You do not know yet what to do with what you feel about this.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 6; p.e += 4; p.addFlag('nic_election_1990_shock'); p.setMem('nicElection1990', true) },
   },
@@ -88,7 +88,7 @@ export const NICARAGUA_EVENTS = [
       G.age >= 30 &&
       G.flags.has('nic_revolution_generation') &&
       !G.mem?.nicOrtegaReturn,
-    text: 'Ortega won the 2006 election and came back. He came back with the red and black of the old FSLN, but also with the Catholic Church — his wife Rosario Murillo runs the communications apparatus and has covered the roundabouts of Managua in metal trees painted in primary colours and in the language of faith. You believed in what 1979 meant. Whether this is that thing continued, or something that has taken its name, is a question you find yourself unable to answer simply. The president is the same man. The country around him is different. You are different. Whether the revolution is the same thing it was is a question you are inside rather than outside of.',
+    text: 'Ortega won in 2006 and came back, with the red and black of the old FSLN and with the Church, and his wife has covered Managua\'s roundabouts in giant metal trees painted in bright colours and the language of faith. You believed in what 1979 meant. Whether this is that, continued, or something that has taken its name, you cannot say simply. The president is the same man. The country around him is not, and neither are you.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 7; p.e += 2; p.addFlag('nic_ortega_return'); p.setMem('nicOrtegaReturn', true) },
   },
@@ -104,7 +104,8 @@ export const NICARAGUA_EVENTS = [
       G.currentYear === 2018 &&
       G.age >= 18 &&
       !G.mem?.nicUprising2018,
-    text: 'It starts in April with a social security reform that cuts pensions and raises employer contributions. University students protest. The government sends the police and the paramilitary groups — the tranques go up across the country, roadblocks of paving stones. Three hundred and twenty-eight people are killed over the following months, according to the Inter-American Commission on Human Rights. Thousands are arrested. You have seen photographs of the students with morteros — homemade mortars made from PVC pipe — holding roundabouts against police in riot gear. The country that came out of 1979 is shooting students in the street. Whether you can hold both of these facts in the same hand at the same time is something you are working out.',
+    text: 'It starts in April with a pension reform, and the students protest, and the government sends police and paramilitaries, and roadblocks of paving stones go up across the country. You have seen the photographs of students with homemade PVC mortars holding roundabouts against riot police. The country that came out of 1979 is shooting students in the street.',
+    context: 'The Inter-American Commission on Human Rights counted 328 people killed in the 2018 crackdown.',
     choices: [
       {
         text: 'Join the protests',
@@ -134,7 +135,7 @@ export const NICARAGUA_EVENTS = [
       G.age >= 22 &&
       G.flags.has('nic_2018_witness') &&
       !G.mem?.nicExileWave,
-    text: 'The people who were most visible in April are the first to go. Then the journalists. Then the lawyers who defended the arrested. Then some of the bishops. The government strips citizenship from critics abroad — calling them traitors, cancelling their passports. By 2023 more than 700 political prisoners have been released only by being expelled to the United States. The exile community in Costa Rica and the United States grows into the tens of thousands. You are still here, or you have left. If you have left you know exactly what the leaving cost. If you are still here you know exactly what the staying costs.',
+    text: 'First the people most visible in April, then the journalists, then the lawyers who defended them, then some of the bishops. Critics abroad are stripped of citizenship as traitors. Prisoners are released by being put on a plane to the United States. You are still here, or you have left. Either way you know exactly what your choice costs.',
     choices: null,
     effect: (p) => { p.r += 9; p.m -= 8; p.addFlag('nic_nicaraguan_exile'); p.setMem('nicExileWave', true) },
   },

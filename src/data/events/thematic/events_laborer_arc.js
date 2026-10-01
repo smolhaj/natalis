@@ -132,7 +132,7 @@ export const LABORER_ARC_EVENTS = [
       isLaborer(G) &&
       G.age >= 45 &&
       !G.mem?.labAgingFired,
-    text: `The foreman gives you the easier jobs now. Not out of respect — out of the same calculation he makes about every worker, which is: what can this body do today. Your body today can do more than some bodies that are younger, because you have maintained it carefully and because the specific damage has been manageable. But you are in the category now. You can feel it in which jobs you get offered. You have opinions about this that you keep to yourself, because the foreman also decides whether you get offered anything at all.`,
+    text: `The foreman gives you the easier jobs now. Not out of respect — out of the same calculation he makes about every worker, which is: what can this body do today. Your body today can do more than some bodies that are younger, because you have maintained it carefully and because the damage has been manageable. But you are in the category now. You can feel it in which jobs you get offered. You have opinions about this that you keep to yourself, because the foreman also decides whether you get offered anything at all.`,
     choices: null,
     effect: (p) => {
       p.m -= 8

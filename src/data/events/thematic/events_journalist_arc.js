@@ -89,7 +89,7 @@ export const JOURNALIST_ARC_EVENTS = [
       isJournalist(G) &&
       (G.conflictRisk >= 0.1 || (G.currentCountry ?? G.character.country)?.archetype === 'developing_unstable') &&
       !G.mem?.journColleagueFired,
-    text: `A colleague is killed. This is not metaphorical or professional — they were covering something and someone killed them for covering it. You were in the same place a week earlier. You will spend a specific amount of time, over the following years, revisiting the question of whether it could have been you, and what that question is actually asking. The work continues because you continue. You are not sure whether this is a professional virtue or a failure of reckoning.`,
+    text: `A colleague is killed. This is not metaphorical or professional — they were covering something and someone killed them for covering it. You were in the same place a week earlier. You will spend an amount of time, over the following years, revisiting the question of whether it could have been you, and what that question is actually asking. The work continues because you continue. You are not sure whether this is a professional virtue or a failure of reckoning.`,
     choices: null,
     effect: (p) => {
       p.m -= 18
@@ -107,7 +107,7 @@ export const JOURNALIST_ARC_EVENTS = [
       isJournalist(G) &&
       G.age >= 38 &&
       !G.mem?.journSubjectFired,
-    text: `You encounter someone you wrote about. Not on purpose — in a market, or at an event, or via a message through someone else. The story changed something in their life. The story was accurate; you are confident it was accurate. But accuracy and the full set of consequences are not the same, and the person standing in front of you is evidence of the consequences. You say what there is to say. There is not much. You both know that the transaction — information provided, information published, life changed — happened in a direction you determined. This does not resolve.`,
+    text: `You meet someone you wrote about, by accident, at the market or through a message from someone else. The story changed their life. It was accurate, you are sure it was accurate, and the person standing in front of you is what the accuracy cost. You say what there is to say, which is not much. You both know whose hand turned the page.`,
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -126,7 +126,7 @@ export const JOURNALIST_ARC_EVENTS = [
       isJournalist(G) &&
       G.flags.has('journalist_self_censored') &&
       !G.mem?.journNotWrittenFired,
-    text: `You know exactly which story you should have written. You know the source, the documentation, the through-line, the public significance. You know why it was not written. The reasons were real — the threat to the publication, the threat to yourself or your family, the calculation that survival mattered more than this specific story. The reasons were real. The story also was real. You carry both of these.`,
+    text: `You know exactly which story you should have written. You know the source, the documentation, the through-line, the public significance. You know why it was not written. The reasons were real — the threat to the publication, the threat to yourself or your family, the calculation that survival mattered more than this story. The reasons were real. The story was true too. You carry both of these.`,
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -161,7 +161,7 @@ export const JOURNALIST_ARC_EVENTS = [
       G.flags.has('journalist_colleague_killed') &&
       G.age >= 50 &&
       !G.mem?.journColleagueEchoFired,
-    text: `The anniversary arrives without announcing itself — not the actual date but a feeling, a context, a story on the wire that puts you in the same region they were in. You did not know them as well as some. You knew them well enough. What you know with some precision is the work they were doing and why someone didn't want it covered. The story exists somewhere in archive. It didn't run in the form they were writing it. You have thought about writing it yourself. You have not. The decision to not write it is its own record.`,
+    text: `The anniversary arrives without announcing itself, as a story on the wire from the region they were working in. You did not know them as well as some, but well enough, and you know the story they were working on and why somebody did not want it told. It never ran the way they were writing it. You have thought about writing it yourself, and you have not, and that is on the record too.`,
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -178,7 +178,7 @@ export const JOURNALIST_ARC_EVENTS = [
       G.flags.has('journalist_source_kept') &&
       G.age >= 55 &&
       !G.mem?.journSourceEchoFired,
-    text: `You hear something about them — through the industry, or a mutual contact, or the ordinary channel of a name in the news. They are well. Or they are not well. You do not know the full extent of what the decision to protect them cost the story, because you cannot know what a different decision would have produced. You know what you did and that it was the baseline requirement of the job. You have taught this to younger journalists in the specific terms it requires: not as an ethical abstraction but as a practical commitment with specific consequences that you either make or do not make.`,
+    text: `You hear something about them — through the industry, or a mutual contact, or the ordinary channel of a name in the news. They are well. Or they are not well. You do not know the full extent of what the decision to protect them cost the story, because you cannot know what a different decision would have produced. You know what you did and that it was the baseline requirement of the job. You have taught this to younger journalists in the terms it requires: not as an ethical abstraction but as a practical commitment with specific consequences that you either make or do not make.`,
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -195,7 +195,7 @@ export const JOURNALIST_ARC_EVENTS = [
       isJournalist(G) &&
       G.age >= 62 &&
       !G.mem?.journLateFired,
-    text: `What journalism does: it records, at the moment of recording, from a particular position, with particular access, for particular readers, under particular constraints. What it does not do: determine what the record will mean in thirty years, or which part of it survives, or what the subjects of the record make of it, or what the stories you couldn't write would have changed. You did the work. Some of it mattered. The gap between what you wrote and what needed to be written is the gap at the centre of the career, and it doesn't close. You stop expecting it to.`,
+    text: `What journalism does: it records, at the moment of recording, from a position, with particular access, for particular readers, under particular constraints. What it does not do: determine what the record will mean in thirty years, or which part of it survives, or what the subjects of the record make of it, or what the stories you couldn't write would have changed. You did the work. Some of it mattered. The gap between what you wrote and what needed to be written is the gap at the centre of the career, and it doesn't close. You stop expecting it to.`,
     choices: null,
     effect: (p) => {
       p.m += 6

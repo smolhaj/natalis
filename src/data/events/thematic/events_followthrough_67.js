@@ -104,7 +104,7 @@ export const FOLLOWTHROUGH_67_EVENTS = [
       G.ruralUrban === 'urban' &&
       G.age >= 22 &&
       !G.mem?.ft67HaciendaCity,
-    text: 'In the city you are nobody\'s sacada. This is what you came for. The landlord relationship — the texture of being known as someone who works someone else\'s land — does not follow you to Manila or Cebu. What follows you is the work ethic the cane taught, and the specific anger of someone who learned young what inequality looks like when it has a face and a surname and a family that has been there since the Spanish period.',
+    text: 'In the city you are nobody\'s sacada. This is what you came for. The landlord relationship — the texture of being known as someone who works someone else\'s land — does not follow you to Manila or Cebu. What follows you is the work ethic the cane taught, and the anger of someone who learned young what inequality looks like when it has a face and a surname and a family that has been there since the Spanish period.',
     choices: null,
     effect: (p) => {
       p.r += 3
@@ -140,7 +140,7 @@ export const FOLLOWTHROUGH_67_EVENTS = [
       G.flags.has('ph_stayed_behind') &&
       G.age >= 38 &&
       !G.mem?.ft67StayedReckoning,
-    text: 'The balikbayan boxes have been arriving for years. You open them with your mother and identify the things from abroad: the Spam, the Toblerone, the specific shoes that your cousin knew you needed. The one who left has a different body now — slightly different clothes, slightly different posture, the way of speaking that has absorbed something from elsewhere. You are the one who stayed. The province is still here because people like you stayed. You know this. You are not sure it is enough.',
+    text: 'The balikbayan boxes have been arriving for years. You open them with your mother and identify the things from abroad: the Spam, the Toblerone, the shoes that your cousin knew you needed. The one who left has a different body now — slightly different clothes, slightly different posture, the way of speaking that has absorbed something from elsewhere. You are the one who stayed. The province is still here because people like you stayed. You know this. You are not sure it is enough.',
     choices: null,
     effect: (p) => {
       p.r += 4

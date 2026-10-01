@@ -73,7 +73,7 @@ export const CUBA_DEPTH_EVENTS = [
     text: (G) => {
       const destinations = ['Angola', 'Venezuela', 'Bolivia', 'Haiti', 'Ethiopia']
       const dest = destinations[Math.floor(Math.random() * destinations.length)]
-      return `The internationalist mission: you are selected to go to ${dest}. Two years, sometimes more. Your salary in Cuba continues; your family receives a portion. The state considers this diplomacy, solidarity, the export of the Revolution's accomplishment in healthcare. You think of it as an assignment. The conditions in ${dest} are what they are — you are there to address them. When you return, you will have seen a version of poverty that is different from Cuban poverty, and a version of political dysfunction that is different from Cuban political dysfunction. The comparison will not settle in the direction the state intends.`
+      return `You are selected for an internationalist mission to ${dest}, for two years, perhaps more. Your salary at home continues and your family gets part of it, and the state calls it solidarity, the export of the Revolution's medicine; you think of it as an assignment. You will see a poverty unlike Cuba's and a political mess unlike Cuba's. The comparison will not settle the way the state intends.`
     },
     choices: [
       {
@@ -180,8 +180,8 @@ export const CUBA_DEPTH_EVENTS = [
       !G.mem?.cubDepExitVisa,
     // The coda is 2013; printed in 1987 it announced a reform twenty-six years off.
     text: (G) => G.currentYear >= 2013
-      ? 'To leave Cuba — even to travel — you need the tarjeta blanca, the white card, the exit permit. It must be applied for and approved. It is not always approved. The application itself requires a reason: medical treatment, a conference, a relative\'s funeral. The state does not owe you an explanation for the denial. What the exit visa system produces is not just the inability to leave but the knowledge that you could be prevented from leaving, which is a different kind of unfreedom from being unable to afford the ticket. After 2013, Raúl removes the requirement. The first time you apply for a passport that does not require government approval to be used, you notice what the absence of the requirement feels like: lighter than you expected, because the weight had been so ordinary.'
-      : 'To leave Cuba — even to travel — you need the tarjeta blanca, the white card, the exit permit. It must be applied for and approved. It is not always approved. The application itself requires a reason: medical treatment, a conference, a relative\'s funeral. The state does not owe you an explanation for the denial. What the exit visa system produces is not just the inability to leave but the knowledge that you could be prevented from leaving, which is a different kind of unfreedom from being unable to afford the ticket.',
+      ? 'To leave Cuba, even for a visit, you need the white card, the exit permit, and you need a reason, a conference, a treatment, a funeral, and it is not always granted, and nobody owes you an explanation. It is not only that you cannot leave; it is knowing that you can be stopped. After 2013 the permit is gone. The first time you hold a passport that needs no one\'s approval, you notice how light the absence feels, because the weight had been so ordinary.'
+      : 'To leave Cuba — even to travel — you need the tarjeta blanca, the white card, the exit permit. It must be applied for and approved. It is not always approved. The application itself requires a reason: medical treatment, a conference, a relative\'s funeral. The state does not owe you an explanation for the denial. The exit visa system produces not just the inability to leave but the knowledge that you could be prevented from leaving, and that is a different unfreedom from being unable to afford the ticket.',
     choices: [
       {
         text: 'Apply for an exit visa. You have somewhere you need to go.',
@@ -219,7 +219,7 @@ export const CUBA_DEPTH_EVENTS = [
       G.age >= 16 && G.age <= 30 &&
       G.flags.has('lgbtq_identity') &&
       !G.mem?.cubDepParagraph69,
-    text: 'The revolutionary state does not officially recognise homosexuality as a crime but does recognise it as a social pathology incompatible with the New Man the Revolution is building. The UMAP — Unidades Militares de Ayuda a la Producción — are labour camps that receive, among others, gay men. University Paragraph 69 expels students deemed "immoral." The CDR can report you. The specific texture of managing your identity in the revolutionary Cuba of the 1960s and 70s: the constant calibration of what can be seen and what must not be, in a society whose stated purpose is the transparent community. Reinaldo Arenas will write about this. He will write about it from exile. The writing will not reach you for a long time.',
+    text: 'The Revolution does not call homosexuality a crime; it calls it a social pathology unfit for the New Man. The labour camps of the UMAP take, among others, gay men; the university expels students judged immoral; the block committee can report you. You calibrate, constantly, what can be seen and what must not be, in a society whose stated purpose is a transparent community. Reinaldo Arenas will write about this from exile, and it will be a long time before the writing reaches you.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -242,7 +242,7 @@ export const CUBA_DEPTH_EVENTS = [
       G.age >= 18 &&
       (G.flags.has('writer') || G.flags.has('artist') || G.flags.has('musician') || G.career?.field === 'arts') &&
       !G.mem?.cubDepGray,
-    text: 'The First National Congress on Education and Culture, 1971. Fidel\'s declaration: "Inside the Revolution, everything. Outside the Revolution, nothing." The quinquenio gris — the gray five-year period — extends longer than five years in practice: the writers blacklisted, the films shelved, the cultural figures exiled into internal administrative jobs, the UNEAC that controls what can be published and what cannot. Herberto Padilla was arrested and forced to confess. The confession was read on television. The intellectuals who had celebrated the Revolution from Paris and Havana wrote their open letter. The letter did not change anything. You are a cultural worker inside this period. The question is what you make and what you keep in the drawer.',
+    text: '1971, and Fidel\'s line is everywhere: inside the Revolution, everything; outside it, nothing. The grey five years last longer than five: writers blacklisted, films shelved, poets given jobs in offices. Padilla is arrested and made to confess on television, and the intellectuals in Paris write their letter, and nothing changes. You are a cultural worker in this. The question is what you make, and what you keep in the drawer.',
     choices: [
       {
         text: 'Work within the parameters. Something can be made within them.',
@@ -282,7 +282,7 @@ export const CUBA_DEPTH_EVENTS = [
       G.age >= 16 &&
       G.ruralUrban === 'rural' &&
       !G.mem?.cubDepVinales,
-    text: 'The vega in Viñales: the tobacco plot, the vegas in the valley between the mogotes, the limestone formations that were here before any politics. The tabaquero work: the seedbed in December, the transplanting, the curing house, the specific knowledge of when to harvest which leaf from which position on the stalk. The tobacco cooperative is state-managed now, the production quota set in Havana. The tabaquero who knows this soil and has always known it knows things that the quota does not know. The cigar factories in Havana use what comes from the vega. The cigars go to the world. What comes back to the vega is what the state decides comes back.',
+    text: 'The vega in Viñales: the tobacco plot, the vegas in the valley between the mogotes, the limestone formations that were here before any politics. The tabaquero work: the seedbed in December, the transplanting, the curing house, the knowledge of when to harvest which leaf from which position on the stalk. The tobacco cooperative is state-managed now, the production quota set in Havana. The tabaquero who knows this soil and has always known it knows things that the quota does not know. The cigar factories in Havana use what comes from the vega. The cigars go to the world. What comes back to the vega is what the state decides comes back.',
     choices: null,
     effect: (p) => {
       p.r += 4

@@ -22,7 +22,8 @@ export const SRI_LANKA_DEPTH_EVENTS = [
       G.currentYear === 2004 &&
       G.age >= 14 &&
       !G.mem?.slkDepTsunami,
-    text: 'December 26. The sea goes out before it comes back, farther than it has ever gone, and the fishing families go down to see what was on the sea floor. The wave comes in fast. In Galle, in Hambantota, in Arugam Bay, in Batticaloa — the eastern coast, the southern coast — it comes in fast. Thirty thousand people die in Sri Lanka in less than two hours. The wall of water does not distinguish: Sinhalese and Tamil and Muslim communities on the coast are equally in its path. The war paused for eleven days while both sides participated in the relief effort. Eleven days is specific and finite and notable.',
+    text: 'December 26, and the sea goes out farther than anyone has seen it go, and the fishing families walk down to see what is on the sea floor. Then it comes back, fast, at Galle, at Hambantota, at Arugam Bay, at Batticaloa, and in a couple of hours tens of thousands are dead, Sinhalese and Tamil and Muslim alike. For a few days the war pauses while both sides help with the relief. Then it does not.',
+    context: 'About 30,000 people died in Sri Lanka in the 2004 Indian Ocean tsunami.',
     choices: [
       {
         text: 'You are on the coast. The water comes.',
@@ -40,7 +41,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
       {
         text: 'You are inland. You hear the numbers for days afterward.',
         tag: null,
-        outcome: 'The relief effort absorbs you. You carry things you never carry. For a brief period the work requires everyone and produces a specific kind of solidarity that does not persist when the work ends.',
+        outcome: 'The relief effort absorbs you. You carry things you never carry. For a brief period the work requires everyone and produces a kind of solidarity that does not persist when the work ends.',
         effect: (p) => {
           p.m -= 8
           p.karma += 5
@@ -63,7 +64,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
       G.character.ethnicity === 'indian_tamil' &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.slkDepEstateTamil,
-    text: 'The estate is its own world in the hill country. Your family has picked tea for three generations — brought from South India by the British to work the estates the Kandyan Sinhalese would not. The line numbers, the check roll, the daily kilos weighed: the vocabulary of the estate is the vocabulary of your childhood. In 1948 the Ceylon Citizenship Act removed citizenship from most estate Tamils — your grandparents voted and then did not. The 1988 Grant of Citizenship restored it for most. Your parents voted in 1989. You will vote in the next election. The vote is not the same thing as equality in Nuwara Eliya.',
+    text: 'The estate is its own world in the hill country. Your family has picked tea for three generations, brought from South India by the British to work estates the Kandyan Sinhalese would not. The line rooms, the check roll, the kilos weighed each day are the words of your childhood. In 1948 citizenship was taken from most estate Tamils, and it was given back in 1988, and your parents voted for the first time in 1989. A vote is not the same thing as equality in Nuwara Eliya.',
     choices: null,
     effect: (p) => {
       p.m -= 4
@@ -129,7 +130,8 @@ export const SRI_LANKA_DEPTH_EVENTS = [
       G.currentYear >= 2009 && G.currentYear <= 2011 &&
       G.age >= 20 &&
       !G.mem?.slkDepMullivaikkal,
-    text: 'The final months: the government declared No Fire Zones on the Vanni coast and then shelled them. The hospitals marked with the Red Cross were shelled. The civilians — 300,000 in January, fewer as the weeks passed, in ways that are still being counted — were inside a corridor that contracted. The UN Panel of Experts put the civilian death toll at 40,000 minimum. The Channel 4 footage exists. The Darusman Report exists. No international tribunal has been established. The government says the army is the most humanitarian army in the world. You have family inside that corridor. Some of them came out.',
+    text: 'The government declares no-fire zones on the coast and then shells them, and shells the hospitals with red crosses on the roofs. The corridor the civilians are inside gets narrower every week. The footage exists. The reports exist. There is no tribunal, and the government says its army was the most humanitarian in the world. You had family inside that corridor. Some of them came out.',
+    context: 'A UN panel of experts put the civilian toll in the final months at a minimum of 40,000.',
     choices: [
       {
         text: 'Some of them came out.',
@@ -189,7 +191,8 @@ export const SRI_LANKA_DEPTH_EVENTS = [
       G.currentYear === 2019 &&
       G.age >= 18 &&
       !G.mem?.slkDepEasterSunday,
-    text: 'April 21, 2019. Easter Sunday. Three churches and three luxury hotels in Colombo and Negombo and Batticaloa. 267 dead. The bombers are linked to the National Thowheed Jamath, to IS. The State Intelligence Services had warnings they did not act on — a parliamentary investigation finds the president\'s office was warned eleven days before. The attacks accelerate Gotabaya Rajapaksa\'s election in November: the security candidate. The country that survived the civil war has a new kind of fear, which arrives from a direction the last twenty-six years did not prepare it for.',
+    text: 'Easter Sunday 2019: bombs in three churches and three hotels, in Colombo, Negombo and Batticaloa, by men linked to the Islamic State. The intelligence services had been warned and did nothing. In November the country elects Gotabaya Rajapaksa, the security candidate. The country that survived the war has a new fear, from a direction twenty-six years of war did not prepare it for.',
+    context: 'The Easter bombings killed about 270 people.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -212,7 +215,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
       G.currentYear >= 1995 && G.currentYear <= 2009 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.slkDepColomboCkpt,
-    text: 'The checkpoint at Colombo 3. You slow down, open the window, hand the ID. The soldier is nineteen. You are twenty-six. The checkpoint is part of the route you take to the office. You have a restaurant you go to on Friday nights, two kilometres from a LTTE bombing that killed sixty-four people in 1987. You understand this is a specific kind of existence — the war as ambient condition, managed rather than resolved. The people at the checkpoints are Tamil. The soldier checking them is Sinhalese. The menu at the restaurant has not changed.',
+    text: 'The checkpoint at Colombo 3. You slow down, open the window, hand over the card. The soldier is nineteen and you are twenty-six, and the checkpoint is on your way to the office. The restaurant you go to on Friday nights is two kilometres from where a bomb killed sixty people when you were a child. The war is an ambient condition, managed rather than resolved. The menu at the restaurant has not changed.',
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -234,7 +237,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
       G.age >= 25 &&
       (G.flags.has('aragalaya_generation') || G.flags.has('slk_rajapaksa_era')) &&
       !G.mem?.slkDepAragalayaAfter,
-    text: 'Ranil Wickremesinghe is president. Wickremesinghe — who has lost every election he has personally contested since 1994, who has been appointed to power each time the country needed someone experienced enough to negotiate with the IMF. The debt restructuring is proceeding. The power cuts have reduced. The petrol is available. The conditions that produced the Aragalaya — the nepotism, the concentration of power, the inability to hear — have not been structurally resolved. The Rajapaksas are still in parliament. The people who stormed the presidential pool are in prison. The people who looted the treasury are in Maldives with their money.',
+    text: 'Ranil Wickremesinghe is president, a man who has lost nearly every election he ever personally fought and is appointed whenever someone is needed to talk to the IMF. The debt is being restructured; the power cuts are shorter; there is petrol. Nothing that produced the Aragalaya has been fixed. The Rajapaksas are still in parliament. The people who swam in the president\'s pool are in prison.',
     choices: null,
     effect: (p) => {
       p.r += 5

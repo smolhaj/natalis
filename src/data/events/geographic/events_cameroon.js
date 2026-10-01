@@ -47,7 +47,7 @@ export const CAMEROON_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2010 &&
       G.age >= 18 &&
       !G.mem?.cmrBiya,
-    text: 'Paul Biya became president in 1982. The elections happen — 1984, 1988, 1992, 1997, 2004, 2011 — and he wins each one. The question of whether winning is the right word is not asked in official spaces. The RDPC — his party — is the party of the state and the state is the party. Public sector jobs, contracts, scholarships: these flow through party networks. You learn this not as a lesson but as the texture of how things work. The man\'s photograph in the office. The form that requires political affiliation. The conversation that stops when certain questions are raised.',
+    text: 'Biya became president in 1982, and the elections come and he wins every one, and nobody in an office asks whether win is the word. The party is the state and the state is the party: jobs, contracts, scholarships all flow through it. You learn this not as a lesson but as how things work. The photograph on the office wall, the form that asks your political affiliation, the conversation that stops when certain questions come up.',
     choices: [
       {
         text: 'Navigate the system — the party card, the appropriate affiliations.',
@@ -75,7 +75,7 @@ export const CAMEROON_EVENTS = [
       IS_ANGLOPHONE(G) &&
       G.age >= 13 && G.age <= 20 &&
       !G.mem?.cmrAngloPhone,
-    text: 'You go to school in English. You study under a common law system inherited from British administration. The civil service, the courts, the government forms, the national radio — these are French. The country has two official languages and one effective language of power. You are called "Anglophone" as if this is an ethnicity, not a colonial inheritance. The northwestern and southwestern regions that speak English and use common law are 20 percent of the country. They have one cabinet minister for every five that the Francophone south has. The arithmetic is not subtle.',
+    text: 'You go to school in English, under the common law the British left. The civil service, the courts, the forms and the national radio are in French. The country has two official languages and one language of power, and you are called Anglophone as if it were an ethnicity rather than a colonial leftover. The English-speaking regions are a fifth of the country and get a fraction of its ministers. The arithmetic is not subtle.',
     choices: [
       {
         text: 'You learn French to access the national systems.',
@@ -120,7 +120,7 @@ export const CAMEROON_EVENTS = [
       G.currentYear >= 2016 && G.currentYear <= 2017 &&
       G.age >= 18 &&
       !G.mem?.cmrStrike2016,
-    text: 'October 2016. Anglophone lawyers go on strike — they are being assigned French-speaking judges who do not understand common law. Anglophone teachers follow — their children are being taught by Francophone teachers who cannot teach in English. The grievances are specific and long-standing. The government\'s response is to shut down the internet in the Anglophone regions for three months. Then to send soldiers. By 2017 what began as a lawyers\' strike has become a secession movement. The Amba Boys — the armed wing — are burning villages. The army is burning villages. Both sides are burning villages.',
+    text: 'October 2016. The Anglophone lawyers strike because they are being given French-speaking judges who do not know common law, and the teachers follow because their children are being taught in French. The government shuts off the internet for three months and then sends soldiers. By 2017 a lawyers\' strike has become a secession. The Amba Boys burn villages, and the army burns villages.',
     choices: [
       {
         text: 'You are Anglophone. The strike was legitimate. What followed was not anticipated.',
@@ -134,7 +134,7 @@ export const CAMEROON_EVENTS = [
       {
         text: 'You are Francophone. The crisis is in the northwest and southwest. You watch from the south.',
         tag: 'Francophone',
-        outcome: 'The crisis is in the regions. Yaoundé and Douala continue. The distance between the news on the radio and your daily life is the specific moral position of being in the majority during a minority crisis.',
+        outcome: 'The crisis is in the regions. Yaoundé and Douala continue. The distance between the news on the radio and your daily life is the moral position of being in the majority during a minority crisis.',
         effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('anglophone_crisis_witness'); p.setMem('cmrStrike2016', true); },
       },
     ],
@@ -152,7 +152,8 @@ export const CAMEROON_EVENTS = [
       G.flags.includes('anglophone_crisis_inside') &&
       G.currentYear >= 2018 && G.currentYear <= 2023 &&
       !G.mem?.cmrDisplaced,
-    text: 'The burning of villages began in 2018. Whole communities emptied. Half a million Anglophones displaced internally; tens of thousands across the border into Nigeria. You have left your town or you have watched your town empty. The Amba Boys control some villages at night; the military controls them in the day. The phrase "no man\'s land" is not metaphor. The schools have been closed — the Amba Boys declared a school boycott that has lasted years. Children who started primary school in 2016 have not attended a class. You count the years in children who cannot read.',
+    text: 'From 2018 the villages burn and empty. You have left your town, or watched it empty. The Amba Boys hold some villages at night and the army holds them by day, and the schools have been shut so long by the boycott that children who started primary school in 2016 have never sat in a class. You count the years in children who cannot read.',
+    context: 'By 2020 the Anglophone crisis had displaced over 700,000 people inside Cameroon and sent tens of thousands into Nigeria.',
     choices: null,
     effect: (p) => { p.m -= 15; p.h -= 5; p.r += 10; p.addFlag('ambazonia_displaced'); p.setMem('cmrDisplaced', true); },
   },
@@ -168,7 +169,7 @@ export const CAMEROON_EVENTS = [
       G.currentYear >= 2020 &&
       (G.flags.includes('cmr_biya_era') || G.flags.includes('anglophone_crisis_witness')) &&
       !G.mem?.cmrLate,
-    text: 'Paul Biya is still president. He has been president for more than forty years. He is photographed infrequently; his absences from the country are counted in months. The government continues. The Anglophone crisis continues — no negotiation, no ceasefire, no resolution. Cameroon does not appear in international news except occasionally. You have grown up in a country called "Africa in miniature" — all the continent\'s ecosystems in one place, all the continent\'s problems in one place. The miniature has been a very long time at this scale.',
+    text: 'Biya is still president after more than forty years, rarely photographed, his absences abroad counted in months. The government goes on, and so does the Anglophone war, with no talks and no ceasefire, and the world barely notices. You have grown up in a country they call Africa in miniature, with every one of the continent\'s landscapes and every one of its problems. The miniature has been at this scale for a very long time.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.addFlag('cmr_long_witness'); p.setMem('cmrLate', true); },
   },

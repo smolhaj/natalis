@@ -160,7 +160,7 @@ export const WEALTH_SYSTEM_EVENTS = [
       {
         text: 'Buy gold instead',
         tag: null,
-        outcome: 'You spend your cash on gold. At least it has weight. At least it is real.',
+        outcome: 'You spend your cash on gold. At least it has weight.',
         effect: (p) => {
           const amount = Math.round((p._state.money ?? 0) * 0.5)
           p.addGold(amount); p.mo -= amount; p.m += 3; p.addFlag('converted_hard_currency')
@@ -382,7 +382,7 @@ export const WEALTH_SYSTEM_EVENTS = [
       (G.parents?.mother?.alive || G.parents?.father?.alive || (G.siblings ?? []).some(s => s.alive)),
     text: (G) => {
       const arch = G.character?.country?.archetype
-      if (arch === 'subsaharan') return 'There is a moment when you realise you have become the one people call. Your uncle needs school fees. Your cousin needs rent. Your mother\'s roof leaks. You have not become wealthy by their standard, but you have exceeded the family average in a way that makes you, by default, the node. There is pride in it. There is also a weight.'
+      if (arch === 'subsaharan') return 'There is a moment when you realise you have become the one people call. Your uncle needs school fees. Your cousin needs rent. Your mother\'s roof leaks. You have not become wealthy by their standard, but you have passed the family average, and that makes you, by default, the node. There is pride in it. There is also a weight.'
       return 'Gradually, without anyone announcing it, you have become the family\'s financial reference point. Requests arrive — some that you can meet, some that you cannot, all arriving with the assumption that you can.'
     },
     choices: [
@@ -593,7 +593,7 @@ export const WEALTH_SYSTEM_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.flags.includes('rosca_payout_received') && !G.mem?.roscaPayoutUsed,
-    text: 'The savings circle payout arrives — months of contributions from all ten members, landing in your hand at once. It is the largest sum of money you have held in a single moment. The temptation to spend it on something you have been waiting for is real. The logic of saving it is also real.',
+    text: 'The savings circle payout arrives — months of contributions from all ten members, landing in your hand at once. It is the largest sum of money you have held in a single moment. You are tempted to spend it on something you have been waiting for. The logic of saving it is also real.',
     choices: [
       {
         text: 'Use it for a productive investment',

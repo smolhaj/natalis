@@ -23,7 +23,8 @@ export const POLAND_DEPTH_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1995 &&
       G.age >= 20 &&
       !G.mem?.polDepKatyn,
-    text: 'April 13, 1990. Mikhail Gorbachev acknowledges that the Soviet NKVD carried out the Katyń massacre. Spring 1940: 22,000 Polish officers, police, intellectuals, and educated reservists, executed in the forests of Smolensk Oblast, Kalinin, Kharkiv. Shot in the back of the head with a German pistol. The Soviets blamed the Nazis for fifty years. Your family may have known someone who did not come back from the east. The official acknowledgment arrives half a century after the event. It is not a surprise. It is something else: the confirmation of something you have always known and been denied the right to say officially.',
+    text: 'April 1990, and Gorbachev admits that the NKVD did Katyń: in the spring of 1940, thousands of Polish officers, policemen and teachers were shot in the back of the head in the forests of Russia, and for fifty years Moscow blamed the Germans. Your family may have known someone who did not come back from the east. The admission comes half a century late. It confirms what you always knew and were not allowed to say.',
+    context: 'About 22,000 Polish prisoners were murdered by the NKVD at Katyń and other sites in April-May 1940.',
     choices: [
       {
         text: 'Someone in your family was at Katyń',
@@ -40,7 +41,7 @@ export const POLAND_DEPTH_EVENTS = [
       {
         text: 'You learn the full scale now — 22,000 in the forests',
         tag: null,
-        outcome: 'The scale was known incompletely from samizdat and Radio Free Europe. Now the figure is official. You are angry with a specific shape: fifty years of lies, confirmed exactly as you always suspected.',
+        outcome: 'The scale was known incompletely from samizdat and Radio Free Europe. Now the figure is official. You are angry with a shape: fifty years of lies, confirmed exactly as you always suspected.',
         effect: (p) => {
           p.m -= 5
           p.r += 6
@@ -65,9 +66,10 @@ export const POLAND_DEPTH_EVENTS = [
       G.age >= 5 && G.age <= 18 &&
       !G.mem?.polDepUprisingChild,
     text: () => pick([
-      'August 1, 1944. The Warsaw Uprising begins. The Home Army — the Armia Krajowa — rises against the German occupation. The Soviets are across the Vistula, close enough to hear the fighting. They stop and wait. For sixty-three days the AK holds parts of Warsaw while the Soviets wait and the Allies argue about supply lines. In October, the city surrenders. The Germans then systematically burn what remains. Two hundred thousand dead. 85 percent of Warsaw destroyed, building by building, street by street. You are small enough that what you know of it is what the adults say in the specific register adults use when the children are listening.',
-      'The Powstanie Warszawskie: your parents\' generation\'s wound. Sixty-three days. The losses are in the faces of everyone you know who was old enough to be there — the particular blankness that arrives when August 1 is mentioned, the way conversations stop and then restart. You inherit the wound secondhand, which is its own shape of carrying it.',
+      'August 1, 1944. The Home Army rises against the Germans, and the Soviets on the far bank of the Vistula, close enough to hear the fighting, stop and wait. For sixty-three days the city holds and burns. In October it surrenders, and then the Germans burn the rest of it, street by street. You are small enough that what you know of it is what the adults say in the voice they use when the children are listening.',
+      'The Powstanie Warszawskie: your parents\' generation\'s wound. Sixty-three days. The losses are in the faces of everyone you know who was old enough to be there — the blankness that arrives when August 1 is mentioned, the way conversations stop and then restart. You inherit the wound secondhand, and carry it that way.',
     ]),
+    context: 'The Warsaw Uprising lasted from 1 August to 2 October 1944. About 200,000 people died, most of them civilians, and some 85 percent of the city was destroyed.',
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -87,7 +89,7 @@ export const POLAND_DEPTH_EVENTS = [
       G.currentYear >= 1944 && G.currentYear <= 1947 &&
       G.age >= 16 &&
       !G.mem?.polDepUprisingAdult,
-    text: 'August 1944. You are in Warsaw or you are not. If you are in Warsaw: sixty-three days of street fighting, the cellars, the runners with messages, the water from the wells, the Soviets across the river not moving. If you are not in Warsaw: the radio silence, then the news, then the silence that is the sound of what happened to the city. The uprising fails. The Soviets cross the river in January when the city is gone. The Home Army is declared a criminal organization by the new government. The people who fought in it will spend decades unable to say so officially.',
+    text: 'August 1944. In Warsaw, sixty-three days of street fighting: cellars, runners with messages, water from the wells, the Soviets on the other bank not moving. Outside Warsaw, the silence on the radio, then the news, then the other silence. The uprising fails, and the Soviets cross in January when the city is gone, and the new government calls the Home Army criminal. The people who fought in it spend decades unable to say so.',
     choices: [
       {
         text: 'You fought in the uprising',
@@ -106,7 +108,7 @@ export const POLAND_DEPTH_EVENTS = [
       {
         text: 'You survived Warsaw — barely',
         tag: null,
-        outcome: 'The rubble and the January cold and the reorganization of what was a city. The communists arrive with their lists and their categories. You learn to navigate the new hierarchy, which is different from the old hierarchy and hostile to some of what you survived.',
+        outcome: 'The rubble and the January cold and the reorganization of what was a city. The communists arrive with their lists and their categories. You learn to navigate the new hierarchy, different from the old one and hostile to some of what you survived.',
         effect: (p) => {
           p.m -= 10
           p.h -= 4
@@ -130,7 +132,7 @@ export const POLAND_DEPTH_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1975 &&
       G.age >= 5 && G.age <= 18 &&
       !G.mem?.polDepKresy,
-    text: 'Your family came from somewhere that is no longer Poland. Lwów — now Lviv, Ukraine. Wilno — now Vilnius, Lithuania. The eastern borderlands, the Kresy, transferred to the Soviet Union by the 1945 Yalta settlement. Four million Poles expelled westward, moved into houses in Wrocław (formerly Breslau), Gdańsk (formerly Danzig), Szczecin (formerly Stettin) — German cities that are now Polish cities because their German residents were expelled into Germany simultaneously. Your parents\' city does not appear on any current map under the name they used for it. They describe it with a specific precision about what was on which street, which is how you know they will never stop needing it.',
+    text: 'Your family came from somewhere that is no longer Poland. Lwów — now Lviv, Ukraine. Wilno — now Vilnius, Lithuania. The eastern borderlands, the Kresy, transferred to the Soviet Union by the 1945 Yalta settlement. Four million Poles expelled westward, moved into houses in Wrocław (formerly Breslau), Gdańsk (formerly Danzig), Szczecin (formerly Stettin) — German cities that are now Polish cities because their German residents were expelled into Germany simultaneously. Your parents\' city does not appear on any current map under the name they used for it. They describe it precisely, what was on which street, and so you know they will never stop needing it.',
     choices: null,
     effect: (p) => {
       p.r += 7
@@ -175,12 +177,12 @@ export const POLAND_DEPTH_EVENTS = [
       G.currentYear >= 2001 && G.currentYear <= 2010 &&
       G.age >= 30 &&
       !G.mem?.polDepJedwabne,
-    text: 'In 2001, the historian Jan Gross publishes Neighbors. The subject: the massacre of the Jewish community of Jedwabne on July 10, 1941. The perpetrators were not the German occupiers — they were the Polish neighbors of the Jewish residents. 340 people burned alive in a barn. The Institute of National Remembrance investigation confirms Polish perpetration. The official acknowledgment arrives sixty years after the event. President Kwaśniewski apologizes at the ceremony in Jedwabne. A significant part of Polish public opinion responds with rejection, counter-claims, the insistence that the Germans must have been responsible. You are somewhere in the middle of this argument, which is an argument about what Poland is and what Poles did and what it means to know.',
+    text: 'In 2001 a historian publishes a book about Jedwabne, July 1941, where the Jews of the town were burned alive in a barn, not by the Germans but by their Polish neighbours. The state\'s own investigation confirms it, and sixty years after, the president goes to Jedwabne and apologises. A large part of the country answers with denial, with counter-claims, with the insistence that it must have been the Germans. You are somewhere in the middle of this argument, about what Poland is and what Poles did and what it means to know.',
     choices: [
       {
         text: 'You accept what the evidence shows. This is part of what happened.',
         tag: null,
-        outcome: 'The acceptance is not self-flagellation — it is the capacity to hold the truth about what people are capable of, which is the precondition for understanding history at all. The acceptance costs something. It costs more for people who would rather not know.',
+        outcome: 'The acceptance is not self-flagellation — it is the capacity to hold the truth about what people are capable of, without which history cannot be understood at all. The acceptance costs something. It costs more for people who would rather not know.',
         effect: (p) => {
           p.e += 5
           p.karma += 4
@@ -214,12 +216,12 @@ export const POLAND_DEPTH_EVENTS = [
       G.currentYear >= 2015 && G.currentYear <= 2024 &&
       G.age >= 25 &&
       !G.mem?.polDepPis,
-    text: 'October 2015. Prawo i Sprawiedliwość wins the parliamentary election with an outright majority. In the following months: the Constitutional Tribunal packed, the state media turned into government media, the independent judiciary systematically dismantled, the public broadcaster reorganized. The European Commission opens Article 7 proceedings. From the outside it looks like democratic backsliding. From the inside it looks like two different things depending on where you live — "Poland A" (the cities, the university towns, the young mobile educated) and "Poland B" (the smaller towns, the rural parishes, the people for whom the EU has been a background condition rather than a personal project). You are in one of these Polands. You know which.',
+    text: 'October 2015, and PiS wins an outright majority, and in the months after the Constitutional Tribunal is packed, the public broadcaster becomes the government\'s, and the courts are taken apart piece by piece, and Brussels opens proceedings. From outside it looks like backsliding. From inside it looks like two things, depending on whether you live in Poland A, the cities and university towns, or Poland B, the small towns and the parishes. You know which one you live in.',
     choices: [
       {
         text: 'The rule of law matters more than any particular policy. This is wrong.',
         tag: null,
-        outcome: 'You march in the 2017 protests. You follow the Committee for the Defence of Democracy, KOD. You watch the judiciary independence removed court by court and feel the specific helplessness of watching an institution disassemble itself under political instruction.',
+        outcome: 'You march in the 2017 protests. You follow the Committee for the Defence of Democracy, KOD. You watch the judiciary independence removed court by court and feel the helplessness of watching an institution disassemble itself under political instruction.',
         effect: (p) => {
           p.m -= 7
           p.karma += 5
@@ -231,7 +233,7 @@ export const POLAND_DEPTH_EVENTS = [
       {
         text: 'The elites had it for long enough. This is correction, not backsliding.',
         tag: null,
-        outcome: 'The Tusk years were cosmopolitan but they did not reach your town. The 500+ child benefit is real. The sense that someone is finally speaking for people like you is real. Whether the Constitutional Tribunal matters to your daily life is a different question from whether it matters in principle.',
+        outcome: 'The Tusk years were cosmopolitan but they did not reach your town. The 500+ child benefit arrives every month. For once someone seems to be speaking for people like you. Whether the Constitutional Tribunal matters to your daily life is a different question from whether it matters in principle.',
         effect: (p) => {
           p.m += 3
           p.r += 4
@@ -254,7 +256,7 @@ export const POLAND_DEPTH_EVENTS = [
       G.currentYear >= 2004 && G.currentYear <= 2020 &&
       G.age >= 20 && G.age <= 40 &&
       !G.mem?.polDepUK,
-    text: 'The UK opened its labour market immediately when Poland joined the EU in 2004, when the other major economies waited. In the next three years nearly a million Poles arrive. The Polish deli on the high street. The Polish Saturday school for the children. The Facebook group for Poles in Bristol, in Manchester, in Edinburgh. The wages are three or four times what they are in Kraków or Wrocław. You do the mental arithmetic about what you are saving and what you are building and whether you are going back. The arithmetic changes every few years. Brexit changes the arithmetic in a way that makes the calculation harder than it was before.',
+    text: 'Britain opened its doors at once when Poland joined, and in three years you and a great many others are there: the Polish shop on the high street, the Saturday school, the Facebook group for Poles in Bristol. The wages are three or four times Kraków\'s. You do the arithmetic about what you are saving and building and whether you are going back, and the arithmetic changes every few years. Brexit makes it harder.',
     choices: [
       {
         text: 'You settle. Britain is where your life is now.',
@@ -297,7 +299,7 @@ export const POLAND_DEPTH_EVENTS = [
       G.age >= 30 &&
       G.flags.has('smolensk_generation') &&
       !G.mem?.polDepSmolenskConspiracy,
-    text: 'The Smolensk crash of 2010 kills Lech Kaczyński and ninety-five others. The Russian investigation finds pilot error in poor visibility. The Polish commission agrees. Jarosław Kaczyński, the President\'s twin brother, does not accept this. By 2014 he is publicly claiming assassination. By 2016, when PiS is in government, the Polish state commission is reopened with a mandate to find evidence of an explosion. The exhumations begin. The grief, which was shared, has been divided into two political categories: those who accept the accident investigation and those who believe in the assassination, which is also the PiS electorate and the non-PiS electorate. Every conversation about Smolensk is now also a conversation about which Poland you live in.',
+    text: 'April 2010, and the president\'s plane goes down at Smolensk in fog. The Russian and Polish investigations both find pilot error, and his twin brother does not accept it, and by the time his party is in power the commission is reopened to find an explosion, and the graves are opened. The grief, which was shared, has been divided in two, and the two halves are the two electorates. Every conversation about Smolensk is now a conversation about which Poland you live in.',
     choices: [
       {
         text: 'The evidence points to accident. The politicization is wrong.',
@@ -313,7 +315,7 @@ export const POLAND_DEPTH_EVENTS = [
       {
         text: 'Russia had motive. The official account is too convenient.',
         tag: null,
-        outcome: 'The suspicion is not irrational given the history. The specific context — flying to Katyń, crashing in Russia — has a certain shape. Whether it points to assassination the evidence does not confirm. The suspicion stays with you regardless.',
+        outcome: 'The suspicion is not irrational given the history. The context — flying to Katyń, crashing in Russia — has a certain shape. Whether it points to assassination the evidence does not confirm. The suspicion stays with you regardless.',
         effect: (p) => {
           p.m -= 6
           p.r += 6

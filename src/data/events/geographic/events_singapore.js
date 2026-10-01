@@ -115,8 +115,8 @@ const SINGAPORE_EVENTS = [
     text: (G) => {
       const isMalay = G.ethnicity === 'malay_singaporean'
       return isMalay
-        ? 'Your enlistment letter arrives. Two years, two months. You report on the appointed day. At the training camp you notice that Malay servicemen are steered toward certain vocations — logistics, engineering, the signals corps. The combat units are predominantly Chinese. Nobody says this out loud; it is simply where you end up. The understanding is that it has to do with "security sensitivities" — your ethnicity, the religion, the countries next door. You are Singaporean. You are serving Singapore. The exact nature of your belonging to it is more complicated than the brochure suggested.'
-        : 'Your enlistment letter arrives. Two years, two months of national service. Everyone does it; it is the male rite of passage of this country. The first three months are BMT — Basic Military Training: the physical regime, the sergeant who knows your name and intends to make it difficult, the specific boredom and camaraderie of a camp. You come out the other side with a unit, a field camp story, and the knowledge that every man in Singapore of your generation has exactly one of each.'
+        ? 'Your enlistment letter arrives, and you report on the day. At training camp you notice that the Malay servicemen are sent to logistics and engineering and signals, and the combat units are mostly Chinese. Nobody says it; it is just where you end up, for what are called security sensitivities: your religion, the countries next door. You are serving Singapore. What exactly you are to it is more complicated than the brochure said.'
+        : 'Your enlistment letter arrives. Two years, two months of national service. Everyone does it; it is the male rite of passage of this country. The first three months are BMT — Basic Military Training: the physical regime, the sergeant who knows your name and intends to make it difficult, the boredom and camaraderie of a camp. You come out the other side with a unit, a field camp story, and the knowledge that every man in Singapore of your generation has exactly one of each.'
     },
     choices: [
       {
@@ -182,7 +182,7 @@ const SINGAPORE_EVENTS = [
         : yr <= 2005
         ? 'The list of fines accumulates in your memory: jaywalking, not flushing a public toilet, eating on the MRT, failing to carry your IC. The country works. The rules that make it work are not hypothetical.'
         : 'Section 377A is still on the books — homosexual acts between men are illegal, even though the government has said it will not prosecute. The law\'s presence is its own message. The country you live in has decided some things are managed rather than resolved.'
-      return `${detail} There is a specific social contract here: you give up certain freedoms and you get safety, efficiency, and wealth. Most people you know consider this a good trade. You are still deciding whether you consider it a choice.`
+      return `${detail} There is a social contract here: you give up certain freedoms and you get safety, efficiency, and wealth. Most people you know consider this a good trade. You are still deciding whether you consider it a choice.`
     },
     choices: [
       {
@@ -237,7 +237,7 @@ const SINGAPORE_EVENTS = [
       G.currentYear >= 2015 && G.currentYear <= 2016 &&
       G.age >= 30 &&
       !G.mem?.sg_lky_death,
-    text: 'March 23, 2015. Lee Kuan Yew dies at ninety-one. He has been prime minister since before Singapore existed as a nation. For five days the queue stretches for hours — people wait through the night to file past the casket. Singapore grieves in a way that surprises even Singaporeans; you did not know the feeling of loss would be this large. He was not always right. He was not always kind. The country he built, for all its costs, is real. The city is quiet for a week in a way it has never been and will not be again.',
+    text: 'March 2015, and Lee Kuan Yew dies at ninety-one. For five days the queue to file past him runs for hours, through the night. Singapore grieves more than Singaporeans expected, and you did not know the loss would be this large. He was not always right, or kind. The city is quiet for a week as it has never been.',
     choices: [
       {
         text: 'You queue — five hours, in the rain',

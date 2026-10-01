@@ -31,7 +31,7 @@ export const FOLLOWTHROUGH_57_EVENTS = [
       G.flags.has('irq_dep_marsh_generation') &&
       G.age >= 60 &&
       !G.mem?.ft57MarshLateWitness,
-    text: `You have lived the whole arc of the marsh: the world before the draining, the draining itself, the desert years, the reflooding, the slow imperfect return. No one else living knows the marsh at all of those stages. The knowledge you carry is specific to your age and to having been in that particular place through that particular sequence of events. The ethnographers and the hydrologists who come to study the recovery ask you questions. The answers you give are in the body as much as in the memory.`,
+    text: `You have lived the whole arc of the marsh: the world before the draining, the draining itself, the desert years, the reflooding, the slow imperfect return. No one else living knows the marsh at all of those stages. The knowledge you carry is specific to your age and to having been in that place through that sequence of events. The ethnographers and the hydrologists who come to study the recovery ask you questions. The answers you give are in the body as much as in the memory.`,
     choices: null,
     effect: (p) => { p.e += 3; p.m += 4; p.setMem('ft57MarshLateWitness', true) },
   },
@@ -47,7 +47,7 @@ export const FOLLOWTHROUGH_57_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2010 &&
       G.age >= 30 &&
       !G.mem?.ft571991Graves,
-    text: `After 2003 the mass graves begin to be opened. The sites were known in the community in the way that things that are known but unspeakable are known — in the particular silence around certain questions, in the way that certain neighbourhoods were not asked about. The Human Rights Ministry begins the process: forensic teams, DNA analysis, the forms to fill in to register a missing family member. The names that come out of the graves are some of the names you knew were missing. The documentation makes it official. The documentation does not change what it was.`,
+    text: `After 2003 the mass graves begin to be opened. The sites were known in the community in the way that things that are known but unspeakable are known — in the silence around certain questions, in the way that certain neighbourhoods were not asked about. The Human Rights Ministry begins the process: forensic teams, DNA analysis, the forms to fill in to register a missing family member. The names that come out of the graves are some of the names you knew were missing. The documentation makes it official. The documentation does not change what it was.`,
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 6; p.setMem('ft571991Graves', true) },
   },
@@ -64,7 +64,7 @@ export const FOLLOWTHROUGH_57_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2023 &&
       G.age >= 20 &&
       !G.mem?.ft57YazidiSinjar,
-    text: `August 2014. The Islamic State reaches Sinjar. The Peshmerga withdraws without warning. The Yazidis on the mountain — forty thousand, fifty thousand, more — are surrounded. The men are killed in the plains below. The women are taken as slaves — sabaya, a word from an ancient practice that the Islamic State has revived precisely. The PKK fighters and Kurdish Syrian forces open a corridor to Syria. You have people on that mountain, or you are on that mountain, or you receive the news from a distance that is no distance at all. This is the thing that happened to your people in your lifetime.`,
+    text: `August 2014. The Islamic State reaches Sinjar and the Peshmerga pull out without warning. The Yazidis flee up the mountain and are surrounded there. Below, in the plains, the men are killed and the women are taken as sabaya, slaves. Kurdish fighters from Syria open a corridor off the mountain. You were on it, or you had people on it, or you heard from a distance that was no distance at all.`,
     choices: null,
     effect: (p) => { p.m -= 18; p.r += 10; p.h -= 5; p.setMem('ft57YazidiSinjar', true) },
   },
@@ -157,7 +157,7 @@ export const FOLLOWTHROUGH_57_EVENTS = [
       G.currentYear >= 2021 && G.currentYear <= 2025 &&
       G.age >= 20 &&
       !G.mem?.ft57TransitionDisillusion,
-    text: `October 25, 2021. The military dissolves the transitional government. General Burhan's coup undoes what was reached in 2019 in a single morning. The protesters who return to the street are met with live fire. The civilian prime minister is detained. The Forces of Freedom and Change that carried the revolution are split between those who engaged with the military council and those who refused. The thawra — the revolution — is not over, but the particular hope of 2019 and 2020 has been replaced by something more complicated and less clean. You have been through this before, in this country, and you know what comes after the clean hope.`,
+    text: `October 25, 2021. The military dissolves the transitional government. General Burhan's coup undoes what was reached in 2019 in a single morning. The protesters who return to the street are met with live fire. The civilian prime minister is detained. The Forces of Freedom and Change that carried the revolution are split between those who engaged with the military council and those who refused. The thawra — the revolution — is not over, but the hope of 2019 and 2020 has been replaced by something more complicated and less clean. You have been through this before, in this country, and you know what comes after the clean hope.`,
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 7; p.setMem('ft57TransitionDisillusion', true) },
   },
@@ -172,7 +172,7 @@ export const FOLLOWTHROUGH_57_EVENTS = [
       G.flags.has('deaf_community_identity') &&
       G.age >= 60 &&
       !G.mem?.ft57DeafElder,
-    text: `You have been in the Deaf community for most of your adult life — the language, the gatherings, the specific social world built on the visual rather than the auditory. Now you are one of the older members of it. The young people who enter the community know a version of it that you helped shape in some small way: by being present, by signing, by showing what a Deaf life that did not apologise for itself looked like. This is what you passed on without intending to and without being able to measure it.`,
+    text: `You have been in the Deaf community for most of your adult life — the language, the gatherings, the social world built on the visual rather than the auditory. Now you are one of the older members of it. The young people who enter the community know a version of it that you helped shape in some small way: by being present, by signing, by showing what a Deaf life that did not apologise for itself looked like. This is what you passed on without intending to and without being able to measure it.`,
     choices: null,
     effect: (p) => { p.m += 6; p.s += 2; p.setMem('ft57DeafElder', true) },
   },

@@ -49,18 +49,18 @@ export const ALGERIA_EVENTS = [
       G.age >= 45 &&
       G.currentYear >= 2003 &&
       !G.mem?.algExileReturn,
-    text: 'You have been in France for ten years. The violence in Algeria has stopped — officially. The country you left is not the country in the news now. You have a life here. You also have a life that you left, which is not the same as no longer having it. Your mother is old. The apartment in Algiers is still there. Your French colleagues ask where you are from and you say Algeria and they say oh, and you wait for the next question, which is always the same question.',
+    text: 'You have been in France for ten years, and the killing in Algeria has officially stopped, and the country you left is not the one in the news. You have a life here. You also have a life you left, and leaving it did not end it: your mother is old, the flat in Algiers is still there. Your French colleagues ask where you are from, and you say Algeria, and they say oh, and you wait for the next question, which is always the same.',
     choices: [
       {
         text: 'Go back — see what is there',
         tag: null,
-        outcome: 'The city is different and the same. The specific way you no longer fit it is also different from what you expected.',
+        outcome: 'The city is different and the same. The way you no longer fit it is also different from what you expected.',
         effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('algeria_returned'); p.setMem('algExileReturn', true); },
       },
       {
         text: 'Stay — France is where your life is now',
         tag: null,
-        outcome: 'You stay. Algeria remains the place you grew up, which is not the same as home.',
+        outcome: 'You stay. Algeria remains the place you grew up, and not quite home.',
         effect: (p) => { p.r += 8; p.addFlag('algeria_exile_permanent'); p.setMem('algExileReturn', true); },
       },
     ],
@@ -78,12 +78,12 @@ export const ALGERIA_EVENTS = [
       G.age >= 45 &&
       G.currentYear >= 2005 &&
       !G.mem?.algToldChildren,
-    text: 'Your child asks what the nineties were like in Algeria. They have heard it mentioned — from you, from relatives, on television — but only in the way people mention weather: something that happened and then stopped. You were twenty-five years old when it started. You remember the specific sound of a year when you did not walk past a certain wall after dark.',
+    text: 'Your child asks what the nineties were like in Algeria. They have heard it mentioned — from you, from relatives, on television — but only in the way people mention weather: something that happened and then stopped. You were twenty-five years old when it started. You remember the sound of a year when you did not walk past a certain wall after dark.',
     choices: [
       {
         text: 'Tell them honestly — they should know what this country went through',
         tag: null,
-        outcome: 'You tell them. Some of it. What you can find words for. They listen in a way that makes you aware of the distance.',
+        outcome: 'You tell them. Some of it. What you can find words for. They listen politely, and the politeness is the distance.',
         effect: (p) => { p.m -= 4; p.karma += 5; p.addFlag('oral_historian'); p.setMem('algToldChildren', true); },
       },
       {
@@ -111,7 +111,8 @@ export const ALGERIA_EVENTS = [
       G.flags.includes('decennie_noire_generation') &&
       G.age >= 60 &&
       !G.mem?.algLateReckoning,
-    text: 'The official figure is 200,000 dead. Some researchers say more. No one has been prosecuted for the massacres. Several men who were senior in the DRS in the 1990s are now senior in the government. This is not a secret. The Civil Concord and subsequent legislation granted amnesty to combatants who surrendered. What it could not grant was an accounting. The perpetrators and the victims live in the same country. They are sometimes in the same village.',
+    text: 'Nobody has been tried for the massacres. Several men who ran the intelligence services in the nineties run other things now, and that is not a secret. The amnesty forgave the fighters who came down from the mountains; it could not give anyone an account. The people who did it and the people it was done to live in the same country, sometimes in the same village.',
+    context: 'Algeria\'s civil war of the 1990s killed an estimated 150,000 to 200,000 people. The 1999 Civil Concord and the 2005 Charter for Peace granted broad amnesties.',
     choices: null,
     effect: (p) => { p.r += 10; p.m -= 5; p.addFlag('decennie_noire_memory'); p.setMem('algLateReckoning', true); },
   },
@@ -127,7 +128,7 @@ export const ALGERIA_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 1992 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.algElectionNight91,
-    text: 'The results from the December 26 elections come through in stages. The Front Islamique du Salut has won 188 seats in the first round. They are on course for a two-thirds majority. In the cafés people are saying things they have not said before, some with satisfaction and some with fear, and some with the specific quiet of a person calculating what this means for them specifically.',
+    text: 'The results from the December 26 elections come through in stages. The Front Islamique du Salut has won 188 seats in the first round. They are on course for a two-thirds majority. In the cafés people are saying things they have not said before, some with satisfaction and some with fear, and some with the quiet of a person calculating what this means for them specifically.',
     choices: [
       {
         text: 'The vote is the vote — this is what democracy looks like',
@@ -168,7 +169,7 @@ export const ALGERIA_EVENTS = [
       G.flags.includes('decennie_noire_generation') &&
       G.currentYear >= 1992 && G.currentYear <= 1995 &&
       !G.mem?.algFirstRoadblock,
-    text: 'There are headlights across the road. Figures standing in the beam. In the *décennie noire*, this moment — headlights across a road at night — will become a category of its own in Algerian memory. The question is who they are. The answer is that the question has no reliable answer. Both the gendarmerie and the armed groups use roadblocks. The way you are expected to behave at each is different. You cannot always tell which this is before you stop.',
+    text: 'There are headlights across the road, and figures standing in the beam. In the black decade this moment, headlights across a road at night, becomes a category of its own. The gendarmes set up roadblocks and so do the armed groups, and you must behave differently at each. You cannot always tell which this is before you stop.',
     choices: [
       {
         text: 'Slow down and stop — whatever this is, stopping is safer than not',
@@ -264,7 +265,7 @@ export const ALGERIA_EVENTS = [
       G.flags.includes('decennie_noire_generation') &&
       G.currentYear >= 1994 && G.currentYear <= 1999 &&
       !G.mem?.algNeighbourGone,
-    text: 'The family on the third floor. Or the man who ran the hardware shop two streets over who always had the right bolt. Not a name from the news — someone whose face you knew. They are gone. The specific mechanics vary: some families left for Algiers or France without saying; some disappeared and then appeared in a statistic; some the neighbours do not speak about because speaking is its own risk. The absence is the fact. The cause is a blank you learn to leave blank.',
+    text: 'The family on the third floor. Or the man who ran the hardware shop two streets over who always had the right bolt. Not a name from the news — someone whose face you knew. They are gone. The mechanics vary: some families left for Algiers or France without saying; some disappeared and then appeared in a statistic; some the neighbours do not speak about because speaking is its own risk. The absence is the fact. The cause is a blank you learn to leave blank.',
     choices: null,
     effect: (p) => { p.m -= 10; p.addFlag('experienced_loss'); p.setMem('algNeighbourGone', true); },
   },
@@ -312,7 +313,7 @@ export const ALGERIA_EVENTS = [
       G.flags.includes('decennie_noire_generation') &&
       G.currentYear >= 1997 && G.currentYear <= 1998 &&
       !G.mem?.algMassacreNews,
-    text: 'The news from Rais, from Bentalha. Four hundred people over four hours. Families in the buildings, the sounds, the morning after. The army barracks were 1.5 kilometres from Bentalha. Nobody came for four hours. Survivors said the killers wore army boots. Foreign journalists who investigated were expelled. This is reported and then not reported and then mentioned alongside other facts in a way that makes it not mean what it means. You know someone who was there. You sit with what you know.',
+    text: 'The news from Rais, from Bentalha: hundreds of people killed over four hours, in their buildings, at night. The army barracks were a kilometre and a half away and nobody came. Survivors said the killers wore army boots, and the foreign journalists who asked were expelled. It is reported and then not reported until it no longer means what it means. You know someone who was there, and you keep what you know to yourself.',
     choices: [
       {
         text: 'Say what you think happened — to whoever will listen',

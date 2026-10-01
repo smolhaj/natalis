@@ -33,14 +33,14 @@ const WWI_EVENTS = [
     text: (G) => {
       const country = G.currentCountry?.name ?? 'your country'
       const yr = G.currentYear ?? 1915
-      if (country === 'United Kingdom' && yr <= 1915) return 'The recruiting sergeant sets up a table outside the post office. The posters have been up for weeks — your country needs you. Most of your friends have already gone or are going. There is a specific social pressure that is not quite force and is not quite choice. You are nineteen.'
+      if (country === 'United Kingdom' && yr <= 1915) return 'The recruiting sergeant sets up a table outside the post office. The posters have been up for weeks — your country needs you. Most of your friends have already gone or are going. There is a social pressure that is not quite force and is not quite choice. You are nineteen.'
       return `${country} has issued the conscription order. This is not a question. You report on the date specified. The physical examination takes twenty minutes. You are passed fit. The uniform is issued. The training begins.`
     },
     choices: [
       {
         text: 'Go — it is your duty and you believe that',
         tag: null,
-        outcome: 'You enlist. The belief is real. The war, when you reach it, is unlike what the belief prepared you for.',
+        outcome: 'You enlist. You believe. The war, when you reach it, is unlike what the belief prepared you for.',
         effect: (p) => { p.addFlag('ww1_soldier'); p.m -= 5; p.setMem('ww1ConscFired', true) },
       },
       {
@@ -73,7 +73,7 @@ const WWI_EVENTS = [
     when: (G) =>
       G.flags.has('ww1_trenches') &&
       !G.mem?.ww1ShellShockFired,
-    text: 'After the bombardment — a continuous barrage that lasts forty-eight hours — something changes. The hands shake without stopping. The sleep, when it comes, brings sounds back. The military medical officer uses a phrase: shell shock. The phrase covers a range of things that the army does not have a framework for yet. Some men are sent home. Some are returned to the line. The decision seems arbitrary. You are among the ones returned to the line.',
+    text: 'After the bombardment, forty-eight hours of it without a break, something changes. Your hands shake and do not stop, and when sleep comes it brings the sounds back. The medical officer calls it shell shock, a phrase for things the army has no framework for yet. Some men are sent home and some are sent back to the line, and the choice seems arbitrary. You are sent back to the line.',
     choices: null,
     effect: (p) => { p.h -= 8; p.m -= 12; p.addFlag('ww1_shell_shock'); p.addCondition('shell_shock', 'moderate'); p.setMem('ww1ShellShockFired', true) },
   },
@@ -132,7 +132,7 @@ const FLU_1918_EVENTS = [
       {
         text: 'Your household survives',
         tag: null,
-        outcome: 'You survive the wave. The street does not all survive. Survival in 1918 is its own kind of luck.',
+        outcome: 'You survive the wave. The street does not all survive. Survival in 1918 is luck.',
         effect: (p) => { p.m -= 5; p.addFlag('flu_1918_survived'); p.setMem('flu1918Fired', true) },
       },
     ],
@@ -182,7 +182,7 @@ const DEPRESSION_EVENTS = [
     when: (G) =>
       G.flags.has('depression_unemployed') &&
       !G.mem?.depBreadlineFired,
-    text: 'The breadline. The queue for soup. These are things that happened to other people, poor people, people in photographs in newspapers — and now you are in the photograph. The shame of the queue is different from the hunger of the queue. The shame is there before the hunger becomes urgent. You stand in it. You are not alone in it. That does not fully address the shame.',
+    text: 'The breadline. The soup queue. They were for other people, poor people, people in newspaper photographs, and now you are in the photograph. The shame of the queue arrives before the hunger does. You stand in it, and you are not alone in it, and that helps less than it should.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('depression_breadline'); p.setMem('depBreadlineFired', true) },
   },

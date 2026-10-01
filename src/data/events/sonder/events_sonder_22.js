@@ -48,7 +48,7 @@ export const EVENTS_SONDER_22 = [
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr22SickDay,
     text: () => pick([
       `You are home sick and it is a weekday. The city is a different city when you are in it at the wrong time. Deliveries, repair vans, women pushing small children, the idle middle hours. You watch from the window for a while. This is what it is like to be retired, you think. Or unemployed. Or free.`,
-      `On the sick day the apartment reveals itself: the water in the pipes when the upstairs neighbour moves, the particular hum of the refrigerator, the way the light crosses the floor between ten and eleven. You have lived here for two years and not known any of this.`,
+      `On the sick day the apartment reveals itself: the water in the pipes when the upstairs neighbour moves, the hum of the refrigerator, the way the light crosses the floor between ten and eleven. You have lived here for two years and not known any of this.`,
       `By three in the afternoon of the sick day you have slept twice and watched something forgettable and there is still three more hours before the day would normally end. Time is a different substance when you are not scheduled.`,
     ]),
     choices: null,
@@ -90,8 +90,8 @@ export const EVENTS_SONDER_22 = [
     when: (G) => place.hasPhone(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.sdr22PhoneCall),
     text: () => pick([
       `You are on the phone with your mother. She is telling you something that is not the thing she is actually trying to say. You have learned to hear the thing beneath the thing. This is a skill no one taught you and you have no name for.`,
-      `The phone call from home always comes at a specific time. You know the time. You have arranged your Sundays around it without deciding to. It has become the structure of the week.`,
-      `You hang up from the call and sit for a moment with the particular feeling of having spoken to someone who loves you without understanding you. Both things are true at once and they do not cancel each other out.`,
+      `The phone call from home always comes at a time. You know the time. You have arranged your Sundays around it without deciding to. It has become the structure of the week.`,
+      `You hang up from the call and sit for a moment with the feeling of having spoken to someone who loves you without understanding you.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22PhoneCall', true) },
@@ -118,7 +118,7 @@ export const EVENTS_SONDER_22 = [
     when: (G) => G.age >= 30 && G.age <= 60 && !G.mem?.sdr22ChildhoodSmell,
     text: () => pick([
       `A smell in a corridor — something cleaning-fluid and old wood — and you are ten again, in a school building, in your body then, completely. The corridor you are standing in is nothing like that corridor. The smell has performed its trick without asking permission.`,
-      `The particular smell of the house you grew up in is nowhere in the world except in the house you grew up in, which you cannot go back to, which belongs to someone else now. This is not grief exactly. It is something smaller and more accurate.`,
+      `The smell of the house you grew up in is nowhere in the world except in the house you grew up in, which you cannot go back to, which belongs to someone else now. It is something smaller than grief, and more accurate.`,
       `Rain on hot pavement, and a summer when you were eight. You are standing in a street that is not that summer. Your body does not know the difference.`,
     ]),
     choices: null,
@@ -174,8 +174,8 @@ export const EVENTS_SONDER_22 = [
     when: (G) => G.age >= 48 && G.age <= 62 && !G.mem?.sdr22BodyAtFifty,
     text: () => pick([
       `The body at fifty requires negotiation. This joint in the morning. This adjustment before sitting. You work around these things so automatically that a full day can pass without noticing you are doing it. The body is accommodating. You are learning to accommodate it back.`,
-      `You catch your reflection from the side and see someone who is clearly your parent. The face you make in response is also your parent's face. You are them now, from this angle, in this light. This is not unpleasant. It is just true.`,
-      `You sleep differently now. The old way — wherever, through anything, dropped like a stone — is unavailable. The new way involves pillows in specific positions and windows at specific angles and a particular kind of quiet. It is better sleep, actually. Just more deliberate.`,
+      `You catch your reflection from the side and see someone who is clearly your parent. The face you make in response is also your parent's face. You are them now, from this angle, in this light. It is just true.`,
+      `You sleep differently now. The old way — wherever, through anything, dropped like a stone — is unavailable. The new way involves pillows in specific positions and windows at specific angles and a kind of quiet. It is better sleep, actually. Just more deliberate.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22BodyAtFifty', true) },
@@ -187,9 +187,9 @@ export const EVENTS_SONDER_22 = [
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr22Recipe,
     text: () => pick([
-      `You make the dish the way you were shown, which is not the way the recipe says, which is not the way anyone else makes it. The dish is yours now. The person who showed you made it differently, and the person who showed them made it differently still, and at the origin of the chain is a version no one can recover.`,
+      `You make the dish the way you were shown, not the way the recipe says, not the way anyone else makes it. The dish is yours now. The person who showed you made it differently, and the person who showed them made it differently still, and at the origin of the chain is a version no one can recover.`,
       `You cook the meal that you cook when you want to remember feeling cared for. No one taught you to do this specifically. You arrived at it yourself, through some route you can no longer trace.`,
-      `The meal you make when you are sad is not the most nutritious. It is the one your body has decided is the appropriate response to this particular feeling, without your having made a deliberate choice about it. The body made this decision for you somewhere along the way.`,
+      `The meal you make when you are sad is the one your body has decided on, without asking you. The body made this decision for you somewhere along the way.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22Recipe', true) },
@@ -286,8 +286,8 @@ export const EVENTS_SONDER_22 = [
     when: (G) => G.age >= 20 && G.age <= 50 && !G.mem?.sdr22Ritual,
     text: () => pick([
       `There is a small ritual you do before something difficult: a way of standing, or breathing, or arranging things, that signals to some part of yourself that this is now beginning. You developed it without intending to. It works. You have never explained it to anyone.`,
-      `The morning ritual — exactly in this order, for reasons that have been lost — takes thirty-five minutes and produces a specific state of readiness. Deviations from the order produce a less reliable state. This is not superstition. It is self-management with the mechanism removed.`,
-      `You find yourself explaining your transit ritual — the particular seat, the direction you face — to someone who asked, and as you explain it you hear how specific it is. You have reasons for all of it. The reasons are not entirely rational. The ritual works anyway.`,
+      `The morning ritual — exactly in this order, for reasons that have been lost — takes thirty-five minutes and produces a state of readiness. Deviations from the order produce a less reliable state. It is self-management with the mechanism removed.`,
+      `You find yourself explaining your transit ritual — the seat, the direction you face — to someone who asked, and as you explain it you hear how specific it is. You have reasons for all of it. The reasons are not entirely rational. The ritual works anyway.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22Ritual', true) },
@@ -314,8 +314,8 @@ export const EVENTS_SONDER_22 = [
     when: (G) => G.age >= 50 && G.age <= 75 && !G.mem?.sdr22LastParent,
     text: () => pick([
       `Both parents are gone now and you are at the front of the line. This is an ordinary fact of the middle of life and it still produces a feeling that is difficult to name. Something about the arrangement of generations. Your generation is the older one now.`,
-      `You are the age your parent was when they seemed old to you. Looking at photographs from that time, they were not old. They were exactly this age. Something has been revised.`,
-      `You find yourself doing the thing your parent did in their last years — a specific small practice, a way of approaching the end of the day — and you understand it now in a way you didn't then. The understanding comes too late to tell them.`,
+      `You are the age your parent was when they seemed old to you. In the photographs from that time, they were exactly this age. Something has been revised.`,
+      `You find yourself doing the thing your parent did in their last years — a small practice, a way of approaching the end of the day — and you understand it now in a way you didn't then. The understanding comes too late to tell them.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22LastParent', true) },
@@ -328,7 +328,7 @@ export const EVENTS_SONDER_22 = [
     when: (G) => place.hasPhotographs(G) && (G.age >= 55 && G.age <= 80 && !G.mem?.sdr22PhotographAgain),
     text: () => pick([
       `A photograph from thirty years ago: the people in it, the arrangement of their faces, the occasion you can barely recover. One of the people in it is dead. One moved somewhere and is effectively gone. One you see every few years. One is you, and the version of you in the photograph is unaware of everything that's coming.`,
-      `You cannot place the year the photograph was taken by looking at it. You can narrow it down by the hairstyle, the clothes, the particular quality of the light. The year is in there. It requires reading.`,
+      `You cannot place the year the photograph was taken by looking at it. You can narrow it down by the hairstyle, the clothes, the quality of the light. The year is in there. It requires reading.`,
       `The photographs from before cameras were everywhere are different from the ones taken in any context now. The before-photographs show only the occasions that were worth photographing. You can see what people thought mattered enough to document. It is not always what you would have predicted.`,
     ]),
     choices: null,
@@ -341,8 +341,8 @@ export const EVENTS_SONDER_22 = [
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr22GoodYear,
     text: () => pick([
-      `You are in the middle of a good period and you know it, which is unusual. Normally the good periods are only good in retrospect, when something has ended them. This one is visible while it is happening. You are trying to pay attention to it, which may or may not be the right response.`,
-      `The year was genuinely fine. This is worth noting. Not many years are genuinely fine. The fine years tend not to produce stories, which is part of why they are fine. They require less processing. They settle quietly.`,
+      `You are in the middle of a good period and you know it. That is unusual. Normally the good periods are only good in retrospect, when something has ended them. This one is visible while it is happening. You are trying to pay attention to it, which may or may not be the right response.`,
+      `The year was genuinely fine. This is worth noting. Not many years are genuinely fine. The fine years tend not to produce stories. That is part of why they are fine. They require less processing. They settle quietly.`,
       `Looking back, this is probably the year that was good. Nothing dramatic. Work was manageable. The relationship was not in difficulty. Health held. The city was bearable. These conditions don't always align. They aligned this year.`,
     ]),
     choices: null,
@@ -356,7 +356,7 @@ export const EVENTS_SONDER_22 = [
     when: (G) => G.age >= 55 && G.age <= 80 && !G.mem?.sdr22UnremarkableDecade,
     text: () => pick([
       `Looking back, there is a decade that is harder to narrate than the others. Not because it was bad. Because it was ordinary. The story of an ordinary decade is a decade of small meals, medium weather, work completed, evenings of television or books or conversation. The decade happened. It is genuinely difficult to recover more than that.`,
-      `There was a ten-year stretch when nothing exceptional occurred. You were in good health. The work was steady. No one died who wasn't old enough to die. You remember it as time, rather than as events. The time was real. The living of it was real. It is just less available now than the years with peaks.`,
+      `There was a ten-year stretch when nothing exceptional occurred. You were in good health. The work was steady. No one died who wasn't old enough to die. You remember it as time, rather than as events. It is just less available now than the years with peaks.`,
       `The decades that were hardest are the most accessible in memory. The decade that was simply good is harder to locate. You know it happened because here you are, on the other side of it, having arrived.`,
     ]),
     choices: null,
@@ -371,7 +371,7 @@ export const EVENTS_SONDER_22 = [
     text: () => pick([
       `You would not recognise yourself to the younger version of yourself. Not in appearance — that's obvious — but in what you worry about, what you find funny, what you can tolerate, what you cannot. You have become someone the younger self would find baffling or boring or reassuring. Probably all three at different moments.`,
       `The younger version of yourself had opinions that are no longer your opinions. You don't quite know when the opinions changed. You didn't hold a funeral for them. They simply ceased to be available and were replaced by different ones, quietly, without debate.`,
-      `If you could speak to yourself at twenty-five you would not give advice. You would just want to tell them: this is going to be a long time, and most of it is not what you think it is, and that is fine. That is actually fine.`,
+      `If you could speak to yourself at twenty-five you would not give advice. You would just want to tell them: this is going to be a long time, and most of it is not what you think it is, and that is fine.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22YoungerSelf', true) },
@@ -384,7 +384,7 @@ export const EVENTS_SONDER_22 = [
     when: (G) => G.age >= 55 && G.age <= 80 && !G.mem?.sdr22QuietHouse,
     text: () => pick([
       `The house is quiet in a way it was not quiet for many years. You are not sure yet whether this is the quiet you wanted or a different quiet. Both are possible. The house is learning what it is now that the arrangement has changed.`,
-      `You wake at four and lie listening to the quiet and the quiet is very specific: the particular nothing of this house at this hour. The nothing has a texture. You have learned it over decades. It is yours.`,
+      `You wake at four and lie listening to the quiet and the quiet is very specific: the nothing of this house at this hour. The nothing has a texture. You have learned it over decades. It is yours.`,
       `In the quiet you hear the building working: the pipes, the settling, the refrigerator's cycle, the faint sound from elsewhere in the structure. All the things that were drowned out when the house was full are audible now. The house has always been this complicated. You just couldn't hear it.`,
     ]),
     choices: null,
@@ -413,7 +413,7 @@ export const EVENTS_SONDER_22 = [
     text: () => pick([
       `There is a thing you made — built, cooked, planted, wrote — that is still here. It has outlasted the moment that produced it. It is not quite yours anymore in the way it was when it was new. But it's here, and it functions, or grows, or sits on a shelf in someone's house, and the making of it is somewhere in you still.`,
       `You fixed something and it stayed fixed. This is not nothing. Most things you fix eventually return to needing fixing. This one held. You remember exactly where you were standing when you realised it was done.`,
-      `The small act of making — the bread, the hem, the shelf — produces a feeling that is out of proportion to the object. The feeling is about competence, maybe, or about the hands knowing what to do, or about time spent in a way that leaves evidence. The evidence is a shelf. The shelf is enough.`,
+      `The small act of making — the bread, the hem, the shelf — produces a feeling that is out of proportion to the object. The feeling is about competence, maybe, or about the hands knowing what to do, or about time spent so that it leaves evidence. The evidence is a shelf. The shelf is enough.`,
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr22ThingYouMade', true) },

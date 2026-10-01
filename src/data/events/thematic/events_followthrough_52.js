@@ -17,7 +17,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
       G.flags.has('war_childhood') &&
       G.age >= 38 && G.age <= 55 &&
       !G.mem?.ft52WarChildhoodMidlife,
-    text: `The war was part of your childhood the way weather is part of childhood — something that formed your baseline without asking permission. In midlife you can see the formation more clearly. The specific calibrations you make in rooms with strangers. The reading of exits. The evaluation of who is in charge and what they want. These are skills. They were acquired at a cost you couldn't refuse at the time.`,
+    text: `The war was part of your childhood the way weather is part of childhood — something that formed your baseline without asking permission. In midlife you can see the formation more clearly. The calibrations you make in rooms with strangers. The reading of exits. The evaluation of who is in charge and what they want. These are skills. They were acquired at a cost you couldn't refuse at the time.`,
     choices: [
       {
         text: 'You have mostly made it past. The calibrations run in the background but don\'t lead the life.',
@@ -71,7 +71,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
       G.flags.has('genocide_survivor') &&
       G.age >= 55 &&
       !G.mem?.ft52GenocieLate,
-    text: `The generation that survived is aging now. There are fewer of them than there would have been. Entire family lines stopped in a season or a year. What is left is the configuration of people who had a different quality of luck, or a different position, or made a choice at the right moment. You carry the weight of the number — not as guilt exactly, but as the specific gravity of having been one of the ones who continued.`,
+    text: `The generation that survived is aging now. There are fewer of them than there would have been. Entire family lines stopped in a season or a year. What is left is the configuration of people who had a different quality of luck, or a different position, or made a choice at the right moment. You carry the weight of the number — not as guilt exactly, but as the gravity of having been one of the ones who continued.`,
     choices: [
       {
         text: 'You have spoken about it. The speaking was also a form of keeping alive what would otherwise have no witness.',
@@ -111,7 +111,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
     text: `Twenty years after 1991 and the question of what the collapse meant has sorted itself into several different answers depending on who is asking. The people who got the factories and the mineral licenses say it was liberation. The people who lost their savings and their state sector jobs and their sense of what the future looked like say something else. You are in one of these positions or somewhere between them. The answer is not neutral. It never was.`,
     choices: [
       {
-        text: 'You managed. The nineties were brutal and the managing was real.',
+        text: 'You managed. The nineties were brutal and you managed.',
         tag: null,
         outcome: 'The managing required compromises you don\'t always discuss. What you built on the other side of the decade is yours.',
         effect: (p) => {
@@ -144,7 +144,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
       G.flags.has('hyperinflation_survivor') &&
       G.age >= 40 &&
       !G.mem?.ft52Hyperinflation15,
-    text: `The hyperinflation era is over and you have rebuilt something. The rebuilding happened and the thing that was rebuilt works differently than what existed before. You do not trust the currency the way people who didn't live through that period trust currency. The distrust is not irrational — it is the correct response to what actually happened. It is also a permanent adjustment to how you move through an economy that others navigate with assumptions you lost the use of.`,
+    text: `The hyperinflation era is over and you have rebuilt something. The rebuilding happened and the thing that was rebuilt works differently than what existed before. You do not trust the currency the way people who didn't live through that period trust currency. The distrust is the correct response to what actually happened, and a permanent adjustment to how you move through an economy that others navigate with assumptions you lost the use of.`,
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -309,7 +309,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
       {
         text: 'The building sits on top of everything that happened and you feel both at once.',
         tag: null,
-        outcome: 'Both things are true and the doubleness is not resolved. The life is yours. The before is also yours. You contain them both.',
+        outcome: 'The life is yours. The before is also yours. You contain them both.',
         effect: (p) => {
           p.m += 2
           p.r += 4

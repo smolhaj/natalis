@@ -17,7 +17,8 @@ export const FOLLOWTHROUGH_76_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 30 &&
       !G.mem?.ft76ChernobylThyroid,
-    text: 'The thyroid cancer rate in the Chernobyl-affected regions is elevated for children who were under five in 1986 — 94 times higher than baseline by some measures. You were not under five. But you were close enough to take the iodine tablets. The doctor who examines your thyroid now uses careful language about monitoring. The monitoring is precautionary. You do not know if the precaution is warranted or routine. The difference between warranted and routine is not always a medical distinction.',
+    text: 'You were not under five in 1986, but you were close enough to be given the iodine tablets. The doctor who examines your thyroid now chooses her words: monitoring, precautionary. You do not know whether that means she is worried or only careful. It is not always a medical distinction.',
+    context: 'Thyroid cancer among children under five at the time of the Chernobyl accident rose many times above the normal rate in the most contaminated regions of Belarus, Ukraine and Russia.',
     choices: null,
     effect: (p) => {
       p.m -= 4
@@ -35,7 +36,7 @@ export const FOLLOWTHROUGH_76_EVENTS = [
       G.currentYear >= 1995 &&
       G.age >= 40 &&
       !G.mem?.ft76ChernobylReturn,
-    text: 'Some of the original residents of Pripyat and the exclusion zone went back — illegally at first, then tolerated. The "self-settlers," mostly elderly, who decided the zone was preferable to the cities they had been relocated to. By the 1990s there are a few hundred people living inside the exclusion zone, growing gardens, keeping to themselves. You do not become one of them. But you understand the logic. The place where you are from is not always the place you can live. Understanding the logic and being unable to follow it is its own condition.',
+    text: 'Some of the people from the zone went back, illegally at first and then tolerated: old people mostly, who preferred their own gardens inside the wire to the flats they had been moved to. By the nineties there are a few hundred of them. You do not go. But you understand it. Where you are from is not always somewhere you can live.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -56,7 +57,7 @@ export const FOLLOWTHROUGH_76_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 45 &&
       !G.mem?.ft76_1990sReckoning,
-    text: 'You are in a generation that measures time by what it cost. The 1990s were the price of independence. You paid it in savings that were erased, in careers that became unreachable, in the ten years between what you should have built and what you actually built. The people who were children during the 1990s do not remember it the same way. To them it is history. To you it is the decade in which you were supposed to be establishing yourself, which you were instead surviving. The accounting runs differently at this distance.',
+    text: 'Your generation measures time by what it cost. You paid for independence with savings that were wiped out and a career that stopped being possible, in the ten years when you should have been building. The people who were children in the nineties remember them differently; to them it is history. To you it was the decade you spent surviving instead.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -97,7 +98,7 @@ export const FOLLOWTHROUGH_76_EVENTS = [
       G.currentYear >= 2023 &&
       G.age >= 22 &&
       !G.mem?.ft76MobilizationLate,
-    text: 'The people in the unit: the electrician is at a different position now. The teacher came back from leave with something wrong in the way he sits. The two students are still in it. The man who ran the restaurant: his name is on a list you have been added to, the list of people who were in the unit, because the unit has fewer people in it now than it did when it was formed. You do not count this. You do not not count it either. It is just what the list is.',
+    text: 'The people in the unit: the electrician has a different post now. The teacher came back from leave sitting differently in his chair. The two students are still here. The man who ran the restaurant is on the list of those who were in the unit and are not any more. You do not count the list, and you do not stop knowing how long it is.',
     choices: null,
     effect: (p) => {
       p.r += 7
@@ -117,7 +118,7 @@ export const FOLLOWTHROUGH_76_EVENTS = [
       G.currentYear >= 2023 &&
       G.age >= 10 &&
       !G.mem?.ft76BasementNormal,
-    text: 'The alert sounds and you are already moving before you are fully aware you have started. The go-bag is by the door. The route to the basement is automatic. You have learned the sound of incoming well enough that you can tell, from the basement, whether it is close. The calibration has happened without you deciding to calibrate. This is the body\'s work: it makes itself useful in the conditions it is given. You did not ask for this skill. You have it now.',
+    text: 'The alert sounds and you are moving before you have decided to. The bag is by the door and your feet know the way to the basement. From down there you can tell by the sound whether it is close. Nobody taught you this; your body learned it from the conditions it was given. You did not ask for the skill. You have it now.',
     choices: null,
     effect: (p) => {
       p.m -= 5

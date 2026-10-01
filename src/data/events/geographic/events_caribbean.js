@@ -42,7 +42,7 @@ export const CARIBBEAN_EVENTS = [
       G.currentYear >= 1965 && G.currentYear <= 1990 &&
       G.age >= 13 && G.age <= 17 &&
       !G.mem?.jam_rasta_encounter,
-    text: 'An older man in the yard has locks down to the middle of his back and he is not performing anything. He talks about Babylon — not as metaphor but as a description of how the banking system, the police, the colonial inheritance all fit together — and the argument is not mystical, it is structural, and it makes sense in a way that the civics lessons at school do not. He talks about Ethiopia and Marcus Garvey and the specific history of how Africans were brought to this island, and the reasoning is careful and documented. You have seen the posters and the T-shirts but this is not that. This is a theology that grew out of poverty and refusal, on this island, in your parents\' lifetime.',
+    text: 'An older man in the yard has locks down to the middle of his back and he is not performing anything. He talks about Babylon — not as metaphor but as a description of how the banking system, the police, the colonial inheritance all fit together — and the argument is not mystical, it is structural, and it makes sense. He talks about Ethiopia and Marcus Garvey and the history of how Africans were brought to this island, and the reasoning is careful and documented. You have seen the posters and the T-shirts, but this is a theology that grew out of poverty and refusal, on this island, in your parents\' lifetime.',
     choices: null,
     effect: (p) => {
       p.e += 4;
@@ -64,7 +64,7 @@ export const CARIBBEAN_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       if (yr === 1980 || yr === 1981) {
-        return 'Eight hundred people are dead by the time the October 30 election is over. The guns came in through the garrisons, distributed by party networks, and the neighborhoods that were already divided became frontlines. You knew someone. Not a gunman — a person who walked the wrong route on the wrong day. The morning after the result, the winning side fires shots in the air and the losing side goes quiet in a specific way, calculating what the new political weather means for who controls the resources, the contracts, the police favors, the don\'s protection in your area.'
+        return 'Eight hundred people are dead by the time the October 30 election is over. The guns came in through the garrisons, distributed by party networks, and the neighborhoods that were already divided became frontlines. You knew someone. Not a gunman — a person who walked the wrong route on the wrong day. The morning after the result, the winning side fires shots in the air and the losing side goes quiet in a way, calculating what the new political weather means for who controls the resources, the contracts, the police favors, the don\'s protection in your area.'
       }
       return 'The election year is months away and already the garrison is tensing. Guns that were not there before are somewhere in the neighborhood. The JLP and PNP have always been rivals but this year the word being used is war.'
     },
@@ -105,7 +105,7 @@ export const CARIBBEAN_EVENTS = [
       !G.mem?.jam_emigration_decision,
     text: (G) => {
       const dest = G.currentYear <= 1962 ? 'London' : (G.currentYear <= 1968 ? 'London or New York' : 'New York or Toronto')
-      return `The conversation has been happening in your family for months. Someone who went already has sent word back. The work is real — factory work, or nursing, or building sites — and the money is real, more than what you can make here. What you imagine when you think of ${dest} is specific: the BBC voice on the radio, the names of streets from the newsreels, the idea that there is a place where your papers mean something. What you do not imagine, because you cannot yet, is the cold in a way that is not just temperature, and the landladies with the signs in the window, and the specific texture of being a person from somewhere else in a place that is not sure it wanted you.`
+      return `The conversation has been happening in your family for months. Someone who went already has sent word back. The work is real — factory work, or nursing, or building sites — and the money is real, more than what you can make here. What you imagine when you think of ${dest} is specific: the BBC voice on the radio, the names of streets from the newsreels, the idea that there is a place where your papers mean something. What you do not imagine, because you cannot yet, is the cold in a way that is not just temperature, and the landladies with the signs in the window, and the texture of being a person from somewhere else in a place that is not sure it wanted you.`
     },
     choices: [
       {
@@ -145,7 +145,7 @@ export const CARIBBEAN_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 2005 &&
       G.age >= 30 && G.age <= 50 &&
       !G.mem?.jam_area_don,
-    text: 'The don is not a mystery. He is a man you have known since you were small, and he has buried people and provided for people, and the two things are not separate. He settles disputes that the police would mishandle or ignore. He lends school fees without paperwork. He ensures that garbage gets collected on your street when the municipality has forgotten you exist. In exchange, you vote correctly without being told, you do not speak to the police about anything you saw or heard, and you do not ask where his money comes from. This is a system, and it functions, and you have lived inside it your whole life.',
+    text: 'The don is a man you have known since you were small, and he has buried people and provided for people, and the two things are not separate. He settles disputes that the police would mishandle or ignore. He lends school fees without paperwork. He ensures that garbage gets collected on your street when the municipality has forgotten you exist. In exchange, you vote correctly without being told, you do not speak to the police about anything you saw or heard, and you do not ask where his money comes from. This is a system, and it functions, and you have lived inside it your whole life.',
     choices: [
       {
         text: 'You accept the arrangement. It works — for now, for your street.',
@@ -162,7 +162,7 @@ export const CARIBBEAN_EVENTS = [
       {
         text: 'You try to navigate outside it — find other ways, keep a certain distance.',
         tag: 'refused',
-        outcome: 'It costs you: the loan you cannot get, the favor that goes to someone else, the mild surveillance of being the person who keeps their distance. You are not punished. You are simply not included, which in a garrison is its own kind of sentence.',
+        outcome: 'It costs you: the loan you cannot get, the favor that goes to someone else, the mild surveillance of being the person who keeps their distance. You are not punished. You are simply not included, which in a garrison is a sentence.',
         effect: (p) => {
           p.m -= 5;
           p.e += 3;
@@ -182,7 +182,7 @@ export const CARIBBEAN_EVENTS = [
       G.currentYear >= 1968 && G.currentYear <= 1988 &&
       G.age >= 12 && G.age <= 17 &&
       !G.mem?.jam_reggae_generation,
-    text: 'The sound system is in someone\'s yard and it is not background music. The bass is physical — you feel it in your sternum before you identify it as sound. Ska gave way to rocksteady gave way to reggae, and what emerged is something that carries a specific political argument in the bass line and the lyric both. Bob Marley is not yet a poster on a wall in Amsterdam; he is a person from Trench Town who is making specific claims about specific conditions, and the people in this yard know which conditions he means. The music is also dancing and also joy, and those things are not in contradiction with the argument.',
+    text: 'The sound system is in someone\'s yard and it is not background music. The bass is physical — you feel it in your sternum before you identify it as sound. Ska gave way to rocksteady gave way to reggae, and what emerged is something that carries a political argument in the bass line and the lyric both. Bob Marley is not yet a poster on a wall in Amsterdam; he is a person from Trench Town who is making specific claims about specific conditions, and the people in this yard know which conditions he means. The music is also dancing and also joy, and those things are not in contradiction with the argument.',
     choices: [
       {
         text: 'You are fully inside it — the sound system, the music, the consciousness it carries.',
@@ -264,7 +264,7 @@ export const CARIBBEAN_EVENTS = [
       IS_TRINIDAD(G) &&
       G.currentYear >= 1973 && G.currentYear <= 1986 &&
       !G.mem?.tri_oil_boom,
-    text: 'The Mighty Sparrow sings that we have money to burn, and it is not entirely satire. The oil price quadrupled in 1973 and T&T is one of the largest producers in the hemisphere, and the government is spending: highways, a national airline, an iron and steel company, a new hospital. Your Caribbean neighbors come here looking for work. The stores in Port of Spain have imported goods that were not available last year. But the pipes in your street still burst and wait three weeks to be fixed, and the contractor who got the highway tender is someone\'s cousin, and when the oil price drops in 1981 the money that should have built a diversified economy has been mostly spent. You are in the specific middle of the boom, when it still feels like it will last.',
+    text: 'The Mighty Sparrow sings that we have money to burn, and it is not entirely satire. The oil price quadrupled in 1973 and T&T is one of the largest producers in the hemisphere, and the government is spending: highways, a national airline, an iron and steel company, a new hospital. Your Caribbean neighbors come here looking for work. The stores in Port of Spain have imported goods that were not available last year. But the pipes in your street still burst and wait three weeks to be fixed, and the contractor who got the highway tender is someone\'s cousin, and when the oil price drops in 1981 the money that should have built a diversified economy has been mostly spent. You are in the middle of the boom, when it still feels like it will last.',
     choices: null,
     effect: (p) => {
       p.m += 6;
@@ -357,7 +357,7 @@ export const CARIBBEAN_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1992 &&
       G.age >= 20 && G.age <= 45 &&
       !G.mem?.tri_1990_coup,
-    text: 'It is a Friday afternoon and the man reading the news is not reading the news. The Prime Minister is on the floor of the Red House with a gun on him and the announcer\'s voice has the wrong amount of air in it. For six days there is no government and there is looting on Frederick Street, which is a thing this country has not done. When it is over the television comes back and the cricket comes back, and the layer you saw underneath does not go away.',
+    text: 'It is a Friday afternoon and the man reading the news is not reading the news. The Prime Minister is on the floor of the Red House with a gun on him and the announcer\'s voice has the wrong amount of air in it. For six days there is no government and there is looting on Frederick Street, a thing this country has not done. When it is over the television comes back and the cricket comes back, and the layer you saw underneath does not go away.',
     context: 'On 27 July 1990 Yasin Abu Bakr and 114 members of the Jamaat al Muslimeen stormed the Red House parliament and the TTT television station in Port of Spain, holding Prime Minister A.N.R. Robinson and much of the cabinet for six days. Twenty-four people died. Abu Bakr surrendered under an amnesty later ruled unconstitutional by the Privy Council; he served no prison sentence.',
     choices: null,
     effect: (p) => {
@@ -415,7 +415,7 @@ export const CARIBBEAN_EVENTS = [
       G.flags.has('trinidad_1990_coup_witness') &&
       G.age >= 35 &&
       !G.mem?.tri_coup_echo,
-    text: 'The amnesty was ruled unconstitutional but Abu Bakr served no time. He gave interviews for years afterward. The government that was held hostage at gunpoint for six days eventually fell for other reasons — corruption, economics — and the men who stormed parliament became one more unresolved piece of national history. You remember exactly where you were when the television cut to the Red House. You remember the prime minister\'s face. The country moved on in the specific way that small countries move on from things too large to hold: by continuing.',
+    text: 'The amnesty was ruled unconstitutional but Abu Bakr served no time. He gave interviews for years afterward. The government that was held hostage at gunpoint for six days eventually fell for other reasons — corruption, economics — and the men who stormed parliament became one more unresolved piece of national history. You remember exactly where you were when the television cut to the Red House. You remember the prime minister\'s face. The country moved on in the way that small countries move on from things too large to hold: by continuing.',
     choices: null,
     effect: (p) => {
       p.m -= 3;

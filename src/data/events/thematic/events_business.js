@@ -110,7 +110,7 @@ export const BUSINESS_EVENTS = [
     weight: 2,
     when: (G) => G.flags.has('entrepreneur') && G.age >= 30 &&
       (G.currentYear === 2001 || G.currentYear === 2009 || G.currentYear === 2020) && !G.mem.bizDownturn,
-    text: 'The orders slow in a way that is not about you. The calls take longer to return. The invoices take longer to pay. Something systemic is happening and you are small enough to feel every tremor of it. You look at the payroll and look at the runway and make calculations.',
+    text: 'The orders slow, and it is not about you. The calls take longer to return. The invoices take longer to pay. Something systemic is happening and you are small enough to feel every tremor of it. You look at the payroll and look at the runway and make calculations.',
     choices: [
       {
         text: 'Cut costs sharply now — preserve the core',
@@ -133,7 +133,7 @@ export const BUSINESS_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.has('entrepreneur') && G.age >= 24 && (G.money ?? 0) < 5000 && !G.mem.bizCashflow,
-    text: 'The invoices are real but unpaid. The expenses are real and immediate. The gap between them is thirty days, which is also the gap between surviving and not. You have sat in this specific chair, in this feeling, before. You know more now but not enough to make it less uncomfortable.',
+    text: 'The invoices are real but unpaid. The expenses are real and immediate. The gap between them is thirty days, the gap between surviving and not. You have sat in this chair, in this feeling, before. You know more now but not enough to make it less uncomfortable.',
     choices: [
       {
         text: 'Take a short-term business loan — bridge the gap',
@@ -158,7 +158,7 @@ export const BUSINESS_EVENTS = [
     phase: 'midlife',
     weight: 1,
     when: (G) => G.flags.has('entrepreneur') && G.age >= 30 && (G.money ?? 0) < -5000 && !G.mem.bizFailure,
-    text: 'The business is not viable any longer. You have known this for three months and have been proceeding anyway, which is sometimes the right call and this time was not. You close it formally, which involves more paperwork than opening it did. You sit in the empty office on the last day for longer than necessary.',
+    text: 'The business is not viable any longer. You have known this for three months and have been proceeding anyway. Sometimes that is the right call. This time it was not. You close it formally, which involves more paperwork than opening it did. You sit in the empty office on the last day for longer than necessary.',
     choices: [
       {
         text: 'Start over — you know far more now than when you began',
@@ -217,7 +217,7 @@ export const BUSINESS_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.flags.has('whistleblower_internal') && G.age >= 42 && !G.mem?.bizWhistleEcho,
-    text: `The role they moved you into has a long title and about nine hours of actual work in it a week. You have been in it for six years. Occasionally someone junior is sent to you for a conversation about integrity, which is either a compliment or a use, and you have stopped needing to know which. You sleep through the night, every night, which was the deal.`,
+    text: `The role they moved you into has a long title and about nine hours of actual work in it a week. You have been in it for six years. Occasionally someone junior is sent to you for a conversation about integrity, a compliment or a use, and you have stopped needing to know which. You sleep through the night, every night, which was the deal.`,
     choices: null,
     effect: (p) => { p.m += 4; p.e += 2; p.karma += 3; p.setMem('bizWhistleEcho', true) },
   },

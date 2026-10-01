@@ -75,7 +75,7 @@ export const UNWRITTEN_WA_EVENTS = [
     phase: null,
     weight: 280,
     when: (G) => KBY(G) && G.flags.includes('uwa_kby_evala_wrestled') && G.age >= 45 && once(G, 'uwa_ft_kby_evala'),
-    text: 'In July you go up to the ring again, this time to stand with the old men at the edge of it. The boys are oiled and chalked the way you were, and their mothers call their names from the crowd the way yours did. One of them is thrown on his back in the first seconds and gets up laughing, which is the right way to lose. You find you still know which hold is coming before it comes.',
+    text: 'In July you go up to the ring again, this time to stand with the old men at the edge of it. The boys are oiled and chalked the way you were, and their mothers call their names from the crowd the way yours did. One of them is thrown on his back in the first seconds and gets up laughing, the right way to lose. You find you still know which hold is coming before it comes.',
     choices: null,
     effect: (p) => { p.setMem('uwa_ft_kby_evala', true); p.m += 4; p.h -= 1 },
   },
@@ -91,7 +91,7 @@ export const UNWRITTEN_WA_EVENTS = [
       {
         text: 'Go to the march in your own town',
         tag: 'defiant',
-        outcome: 'There are more people from the north in the road than you expected. Nobody asks where you are from, which is new.',
+        outcome: 'There are more people from the north in the road than you expected. Nobody asks where you are from. That is new.',
         effect: (p) => { p.setMem('uwa_ft_kby_2017', true); p.karma += 3; p.h -= 2 },
       },
       {

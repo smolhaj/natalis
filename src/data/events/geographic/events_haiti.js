@@ -39,7 +39,7 @@ export const HAITI_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.flags.has('haitian_diaspora') && G.age >= 60 && !G.mem.haiDiasLate,
-    text: 'You have been sending money home for thirty years. You have sent enough to build a house, twice. The house was destroyed in the earthquake and rebuilt again. Your children were born here; they speak Creole like a second language, which is what it is. When you go back, you are called diaspora, which means someone who left. When you stay here, you are called Haitian, which means you haven\'t quite arrived.',
+    text: 'You have been sending money home for thirty years. You have sent enough to build a house, twice. The house was destroyed in the earthquake and rebuilt again. Your children were born here; Creole is their second language. When you go back, you are called diaspora, which means someone who left. When you stay here, you are called Haitian, which means you haven\'t quite arrived.',
     effect: (p) => { p.m -= 4; p.setMem('haiDiasLate', true) },
   },
 
@@ -106,7 +106,7 @@ export const HAITI_EVENTS = [
       {
         text: 'Sit with the numbers for a long time.',
         tag: 'sat_with_it',
-        outcome: 'You carry it now. Not as anger — or not only as anger. As a specific knowledge of how the modern world was made and who paid for it.',
+        outcome: 'You carry it now. Not as anger — or not only as anger. As a knowledge of how the modern world was made and who paid for it.',
         effect: (p) => { p.e += 3; p.addFlag('knows_the_debt'); p.setMem('haiDebtLesson', true) },
       },
       {
@@ -125,12 +125,12 @@ export const HAITI_EVENTS = [
     phase: 'midlife',
     weight: 5,
     when: (G) => IS_HAITI(G) && G.currentYear === 2010 && !G.flags.has('earthquake_2010_survived') && !G.mem.haiEarthquake,
-    text: '4:53 in the afternoon. The ground moves wrong — not like the small ones you have felt before. This is the ground itself failing. Thirty-five seconds. When it stops, the city is not the city. A neighbour\'s wall has become the street. Where the church was: rubble. Where the market was: rubble. You cannot see the National Palace from here but you hear it has fallen. You hear everything has fallen.',
+    text: '4:53 in the afternoon, and the ground moves wrong, not like the small ones; this is the ground itself failing. Thirty-five seconds. When it stops a neighbour\'s wall is in the street, and where the church was there is rubble, and where the market was. You cannot see the National Palace from here, but you hear it has fallen. You hear everything has fallen.',
     choices: [
       {
         text: 'Search for your family in the rubble.',
         tag: 'searched',
-        outcome: 'You find them. Not everyone finds theirs. You will think about that for years — the specific mathematics of who survived.',
+        outcome: 'You find them. Not everyone finds theirs. You will think about that for years — the mathematics of who survived.',
         effect: (p) => { p.m -= 22; p.h -= 8; p.addFlag('earthquake_2010_survived'); p.setMem('haiEarthquake', true) },
       },
       {
@@ -163,7 +163,7 @@ export const HAITI_EVENTS = [
       {
         text: 'Go. Build a life that can send money back.',
         tag: 'left',
-        outcome: 'The crossing is hard. The arrival is harder. The first years are smaller than you imagined. The money you send home is real.',
+        outcome: 'The crossing is hard. The arrival is harder. The first years are smaller than you imagined. The money you send home pays the school fees.',
         effect: (p) => { p.addFlag('haitian_diaspora'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('haiDiasDecision', true) },
       },
       {

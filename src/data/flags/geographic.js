@@ -592,9 +592,17 @@ export const GEOGRAPHIC_FLAGS = {
   stateless_childhood: {
     weight: 'major',
     category: 'displacement',
-    description: 'Character grew up without a registered birth — enrolled in school in pencil, existing in the community but not in the official record.',
+    description: 'Born into a people the state declined to count as its own: no birth registration, no citizenship.',
     intent: 'both',
-    notes: 'Set by doc_no_birth_certificate. Follow-throughs: doc_first_passport, doc_stateless_marriage.',
+    notes: 'Set by doc_stateless_birth, for the groups in STATELESS (src/data/events/_law.js). Follow-throughs: doc_first_passport, doc_stateless_marriage.',
+  },
+
+  unregistered_birth: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Born at home and never written into the civil register; a citizen without the paper that says so.',
+    intent: 'event',
+    notes: 'Set by doc_no_birth_certificate. Follow-through: doc_stateless_marriage (the late registration).',
   },
 
   stateless_navigator: {

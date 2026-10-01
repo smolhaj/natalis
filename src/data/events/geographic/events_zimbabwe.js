@@ -55,7 +55,7 @@ export const ZIMBABWE_EVENTS = [
       G.character.country.name === 'Zimbabwe' &&
       G.currentYear >= 2006 && G.currentYear <= 2009 &&
       !G.mem?.zimInflation,
-    text: 'The note in your hand says one hundred trillion Zimbabwe dollars. It was printed last month. It will not buy a loaf of bread. You do your shopping in the morning, before prices change again. The bank has stopped accepting cash after a certain hour. The word *inflation* does not describe this — inflation is when things become more expensive. This is when numbers stop meaning what they say. People carry cash in wheelbarrows and settle transactions in US dollars or South African rand. Teachers, nurses, police officers — the state salary is a symbolic gesture.',
+    text: 'The note in your hand says one hundred trillion dollars and was printed last month and will not buy a loaf. You shop in the morning, before the prices change again. Inflation is when things get more expensive; this is when numbers stop meaning what they say. People pay in American dollars and rand when they can. For teachers, nurses and police, the state salary is a gesture.',
     choices: [
       {
         text: 'Deal in foreign currency — everyone does now',
@@ -93,7 +93,7 @@ export const ZIMBABWE_EVENTS = [
       {
         text: 'Stay — this is your country',
         tag: null,
-        outcome: 'You stay and watch the people around you leave. What remains requires a specific kind of commitment to keep working.',
+        outcome: 'You stay and watch the people around you leave. What remains requires a kind of commitment to keep working.',
         effect: (p) => { p.m -= 8; p.karma += 6; p.addFlag('stayed_when_others_left'); p.setMem('zimExodus', true); },
       },
     ],
@@ -171,7 +171,7 @@ export const ZIMBABWE_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2011 &&
       G.age >= 18 &&
       !G.mem?.zimJoburgArrival,
-    text: 'The Zimbabwean church meets Sunday mornings in a rented hall in Hillbrow. You know which stalls on Bree Street sell sadza and kapenta and which ones know which brand of mealie meal is closest to home. Your nursing degree — or your teaching certificate, your accounting qualification, your engineering diploma — is not recognised here. Your documentation is not the right kind, which means the formal economy is not available to you. You work below your qualification. You clean houses or work night security or sell airtime at a street stand. One month\'s pay at South African minimum wage exceeds your annual salary in Harare. Your family eats because of this calculation. You do not stop being a nurse in your head.',
+    text: 'The Zimbabwean church meets on Sunday mornings in a rented hall in Hillbrow, and you know which stalls on Bree Street sell sadza and kapenta and which mealie meal is closest to home. Your nursing degree, or your teaching certificate, or your diploma, is not recognised here, and your papers are the wrong kind, so you clean houses or work night security or sell airtime at a stand. A month at the South African minimum is more than a year\'s salary in Harare. Your family eats because of that sum. You do not stop being a nurse in your head.',
     choices: null,
     effect: (p) => { p.m -= 10; p.e += 2; p.addFlag('zim_skilled_displaced'); p.setMem('zimJoburgArrival', true); },
   },
@@ -184,7 +184,7 @@ export const ZIMBABWE_EVENTS = [
       G.flags.has('zim_diaspora') &&
       G.currentYear >= 2008 && G.currentYear <= 2009 &&
       !G.mem?.zimXenophobia,
-    text: 'May 2008. It starts in Alexandra township and spreads. The word they use for foreigners is *makwerekwere*. Sixty-two people are killed. A hundred thousand are displaced within South Africa — people who have already been displaced once. The specific mechanism: people who were also poor, whose situation was also desperate, who had been told that their poverty was caused by you. Your neighbour is Mozambican. She is sixty years old and cannot move quickly.',
+    text: 'May 2008. It begins in Alexandra and spreads: the word for you is makwerekwere, and people are killed and tens of thousands driven from their shacks, people who had already been driven from home once. It is done by people who were also poor and desperate and had been told their poverty was your fault. Your neighbour is Mozambican, sixty, and cannot move quickly.',
     choices: [
       {
         text: 'Get out — a Zimbabwean family in Yeoville has a floor you can sleep on',
@@ -243,7 +243,7 @@ export const ZIMBABWE_EVENTS = [
       {
         text: 'Go back — the country needs people who left to come back',
         tag: null,
-        outcome: 'You go. It is not the same. You knew it would not be the same. You build something anyway, which is what you always did.',
+        outcome: 'You go. It is not the same. You knew it would not be the same. You build something anyway, as you always did.',
         effect: (p) => { p.m += 8; p.r += 5; p.addFlag('zim_diaspora_return'); p.returnHome(); p.setMem('zimDiasporaLate', true); },
       },
       {
@@ -266,7 +266,7 @@ export const ZIMBABWE_EVENTS = [
       G.flags.has('gukurahundi_generation') &&
       G.age >= 55 &&
       !G.mem?.zimGukurahundiLate,
-    text: 'The commissions talk about it now. Some survivors speak publicly. The word has entered the historical record. What has not entered the record is the particular texture of the silence that followed — how long it lasted, how many people maintained it, what that maintaining required.',
+    text: 'The commissions talk about it now. Some survivors speak publicly. The word has entered the historical record. What has not entered the record is the texture of the silence that followed — how long it lasted, how many people maintained it, what that maintaining required.',
     choices: null,
     effect: (p) => { p.r += 5; p.karma += 3; p.setMem('zimGukurahundiLate', true); },
   },

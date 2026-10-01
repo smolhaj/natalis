@@ -17,7 +17,7 @@ export const EVENTS_SONDER_45 = [
     when: (G) => G.age >= 20 && G.age <= 30 && !G.mem?.s35a,
     text: () => pick([
       'There is a document that defines you to systems that don\'t know you. An ID card, a passport, a residence permit. The document reduces you to a set of categories that are accurate and insufficient. You carry it. The carrying becomes so habitual that you notice only when it is absent.',
-      'The year you moved to a new place: the specific disorientation of not knowing which bus goes where, not knowing which shop stays open late, not knowing the names of the streets in a way that means you can navigate without checking. The knowing comes slowly and then is just the knowledge of a place.',
+      'The year you moved to a new place: the disorientation of not knowing which bus goes where, which shop stays open late, the names of the streets. The knowing comes slowly and then is just the knowledge of a place.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s35a', true) },
@@ -29,7 +29,7 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => place.hasFormalJob(G) && (G.age >= 62 && !G.mem?.s35c),
     text: () => pick([
-      'Retirement is a concept that arrived suddenly as a date and is now a condition. The condition is not what you expected when the date was far away. What you expected was rest. What arrived was: the structure is gone and the structure is what the day was organized around and without it the day is open in a way that requires a different organization than you have previously needed to build.',
+      'Retirement is a concept that arrived suddenly as a date and is now a condition. The condition is not what you expected when the date was far away. What you expected was rest. What arrived was: the structure is gone, and the day was organized around the structure, and without it the day is open and needs a shape you have never had to build.',
       'You are learning what your body can do at this age that it could not do at fifty. There are some things. Patience, in the literal physical sense — you can wait in a chair for a long time without needing to be doing something else. This is not nothing. This is not the same as the things that have gone away.',
     ]),
     choices: null,
@@ -42,7 +42,7 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 7 && G.age <= 12 && !G.mem?.s35d,
     text: () => pick([
-      'There is a recipe your grandmother makes that does not have a written version. It exists only in her hands. You watch the hands sometimes without understanding that this is the archive — not a book, not a card, but the specific motion of a specific person. You will try to make it later and the version you make will be a reconstruction from watching the hands.',
+      'There is a recipe your grandmother makes that does not have a written version. It exists only in her hands. You watch the hands sometimes without understanding that this is the archive — not a book, not a card, but the motion of a person. You will try to make it later and the version you make will be a reconstruction from watching the hands.',
       'You are learning to read people. Not reading — you can read — but reading people: the gap between what a face says and what the person says, the way certain silences are answers, the tone that means something different from the words. This is the education that happens outside school.',
     ]),
     choices: null,
@@ -68,8 +68,8 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 40 && G.age <= 54 && !G.mem?.s35f,
     text: () => pick([
-      'There was a year in this decade that was particularly quiet. No major events — no crisis, no breakthrough, no loss. The year is thin in memory as a result. The thin years are the good years and also the ones you can\'t remember. Both of these things are true and neither resolves the other.',
-      'You cook something from memory now — a dish your mother made, or your grandmother, the one that requires no recipe because it is in the hands and the nose and the specific memory of a kitchen in a different decade. The version you make is not the same version. The version you make is what you carry forward.',
+      'There was a year in this decade that was particularly quiet. No major events — no crisis, no breakthrough, no loss. The year is thin in memory as a result. The thin years are the good years and also the ones you can\'t remember.',
+      'You cook something from memory now — a dish your mother made, or your grandmother, the one that requires no recipe because it is in the hands and the nose and the memory of a kitchen in a different decade. The version you make is not the same version. The version you make is what you carry forward.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.r += 3; p.setMem('s35f', true) },
@@ -134,7 +134,7 @@ export const EVENTS_SONDER_45 = [
     when: (G) => G.age >= 8 && G.age <= 13 && !G.mem?.s35k,
     text: () => pick([
       'There is a place in this town or this street or this building where you go when you need to be by yourself. Not hidden — just the place that is yours when you need to be in it. You do not explain this place to anyone. It does not require explaining. It is the geography of your interior life, which has a geography before you know enough to describe it.',
-      'The summer (or the dry season, or the school holiday, depending on where you are): the specific expanse of it, the way time moved differently, the project you had and abandoned and had again. You will remember it as a whole but it was really a series of days each of which required managing.',
+      'The summer (or the dry season, or the school holiday, depending on where you are): the expanse of it, the way time moved differently, the project you had and abandoned and had again. You will remember it as a whole but it was really a series of days each of which required managing.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s35k', true) },
@@ -160,7 +160,7 @@ export const EVENTS_SONDER_45 = [
     when: (G) => G.age >= 70 && !G.mem?.s35n,
     text: () => pick([
       'There is something you have not done and will not do now. The window for it has closed — not because of illness or failure but because the sequence of decisions that would have led to it required choosing it earlier than you chose. You know this without grief exactly. You hold it as a fact about the configuration of a life: it was one configuration and not another. Every configuration excludes other configurations.',
-      'You have been watching the same argument cycle through in your family for three generations. The argument has different people in it each cycle but the structure is the same. You can see the structure clearly from where you are, which is outside it. You were inside it once. You are not sure you could tell them what you see. You are not sure it would help.',
+      'You have been watching the same argument cycle through in your family for three generations. The argument has different people in it each cycle but the structure is the same. You can see the structure clearly from where you are: outside it. You were inside it once. You are not sure you could tell them what you see. You are not sure it would help.',
     ]),
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('s35n', true) },
@@ -172,7 +172,7 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 26 && G.age <= 36 && !G.mem?.s35o,
     text: () => pick([
-      'The city at 2 a.m. is a different city from the city at 2 p.m. You have been in both versions and know both and they share geography but not atmosphere. The 2 a.m. city: the specific populations out, the specific silences and sounds, the way the air quality changes. You have some of your best conversations in the 2 a.m. city and you do some of your worst thinking in it.',
+      'The city at 2 a.m. is a different city from the city at 2 p.m. You have been in both versions and know both and they share geography but not atmosphere. The 2 a.m. city: the populations out, the silences and sounds, the way the air quality changes. You have some of your best conversations in the 2 a.m. city and you do some of your worst thinking in it.',
       'You have a theory about how things work — the relationship, the career, the financial plan — and then the thing happens that the theory did not account for. You revise the theory. The revision makes the theory more accurate and smaller. The more accurate the theory gets, the smaller it gets. You keep revising.',
     ]),
     choices: null,
@@ -198,8 +198,8 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 9 && G.age <= 14 && !G.mem?.s35q,
     text: () => pick([
-      'There is someone in this neighbourhood who has always been old. Older than your parents, older than the oldest person you know well. This person has been old since you can remember, which is the whole span of your consciousness so far. You will learn later that old people were young once and that the knowledge is available but not fully imaginable until you are old yourself.',
-      'The animal in the family: the dog or cat or the goat or the chicken, the creature that is part of the household without being a person. Your relationship to this creature is uncomplicated in a way that very few of your relationships are. You notice this without knowing yet what to make of it.',
+      'There is someone in this neighbourhood who has always been old. Older than your parents, older than the oldest person you know well. This person has been old since you can remember, the whole span of your consciousness so far. You will learn later that old people were young once and that the knowledge is available but not fully imaginable until you are old yourself.',
+      'The animal in the family: the dog or cat or the goat or the chicken, the creature that is part of the household without being a person. Your relationship to this creature is uncomplicated, as very few of your relationships are. You notice this without knowing yet what to make of it.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s35q', true) },
@@ -238,7 +238,7 @@ export const EVENTS_SONDER_45 = [
     when: (G) => G.age >= 66 && G.age <= 78 && !G.mem?.s35t,
     text: () => pick([
       'Your grandchildren are growing up in a world you recognize and don\'t recognize. You recognize the structure of childhood. You don\'t recognize most of the specifics: the devices, the problems, the configurations of social life they navigate. You offer the structure where you can. You stay quiet about the specifics because the specifics were different in your version.',
-      'There are people who exist for you only in memory now. The memory is vivid in some places and has gaps in others. The gaps grow slowly and you become aware of them by reaching for a detail that is no longer there. A face is available but not the voice. A voice is available but not the words from a specific conversation.',
+      'There are people who exist for you only in memory now. The memory is vivid in some places and has gaps in others. The gaps grow slowly and you become aware of them by reaching for a detail that is no longer there. A face is available but not the voice. A voice is available but not the words from a conversation.',
     ]),
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('s35t', true) },
@@ -250,7 +250,7 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 43 && G.age <= 55 && !G.mem?.s35u,
     text: () => pick([
-      'You notice you have started doing the thing your father or mother did. The gesture, the phrase, the specific response to a specific situation. You caught it and it was already out of you before you caught it. This is how things transfer between generations: not by decision but by the body, which has been watching for decades.',
+      'You notice you have started doing the thing your father or mother did. The gesture, the phrase, the response to a situation. You caught it and it was already out of you before you caught it. This is how things transfer between generations: not by decision but by the body, which has been watching for decades.',
       'The project you started two years ago that you have not finished and may not finish. It is still there — in a folder, in a box, in a space in the mind. Not abandoned exactly. In suspension. The suspension is comfortable enough that the completion keeps being delayed. You are deciding whether to finish it or to name the suspension as its actual status.',
     ]),
     choices: null,
@@ -302,8 +302,8 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 48 && G.age <= 60 && !G.mem?.s35y,
     text: () => pick([
-      'The person you were in an argument with years ago and are now not in argument with. Not because the argument was resolved — it was ended, which is different. Ended by time, by both of you needing something the argument was consuming. The thing you disagreed about is still true. You are not arguing about it. This is a different state from resolution.',
-      'You are giving something away. Not metaphorically — an object, a piece of furniture, books, something physical. The giving away is a specific action of deciding that the thing you are giving away does not need to keep moving forward with you. This is not loss. This is a kind of editing. The editing feels clean.',
+      'The person you were in an argument with years ago and are now not in argument with. Not because the argument was resolved — it was ended. Ended by time, by both of you needing something the argument was consuming. The thing you disagreed about is still true. You are not arguing about it. This is a different state from resolution.',
+      'You are giving something away. Not metaphorically — an object, a piece of furniture, books, something physical. The giving away is an action of deciding that the thing you are giving away does not need to keep moving forward with you. It is more like editing than loss. The editing feels clean.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.r += 3; p.setMem('s35y', true) },
@@ -315,8 +315,8 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 16 && G.age <= 21 && !G.mem?.s35z,
     text: () => pick([
-      'The first money you earned yourself. Not given, not a gift — earned by doing a thing someone agreed to pay you to do. The amount is not relevant. What is relevant is the specific difference between this money and given money: the first is yours in a way the second isn\'t, exactly, which is a feeling before it is an economic fact.',
-      'You have a friend who is going through something you are not going through. The difference in your situations is clear to both of you and neither of you says it. You offer what you can, which is presence, which is not enough and is also something. You learn from this that being alongside is different from helping.',
+      'The first money you earned yourself. Not given, not a gift — earned by doing a thing someone agreed to pay you to do. The amount does not matter. What matters is that this money is yours, as given money isn\'t, quite, and you feel that before you understand it.',
+      'You have a friend who is going through something you are not going through. The difference in your situations is clear to both of you and neither of you says it. You offer what you can, presence, which is not enough and is also something. You learn from this that being alongside is different from helping.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.r += 2; p.setMem('s35z', true) },
@@ -328,8 +328,8 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => place.wentToSchool(G) && (G.age >= 40 && G.age <= 52 && !G.mem?.s35aa),
     text: () => pick([
-      'The recurring dream. Not always the same dream — the same category of dream: the one where you are in the school you went to forty years ago and it is enormous and you can\'t find the exit, or the one where you have a test you have not prepared for, or the one where you can\'t run fast enough. The dream is not about the school or the test. The dream is about the feeling, which is available at any age.',
-      'A place from your childhood has been demolished. You find out from a photograph someone posts. The place was not important in the way that famous places are important. It was important in the way that specific places in childhood are important: it was the place, and being the place was the whole of what it needed to be.',
+      'The recurring dream. Not always the same dream — the same category of dream: the one where you are in the school you went to forty years ago and it is enormous and you can\'t find the exit, or the one where you have a test you have not prepared for, or the one where you can\'t run fast enough. The dream is not about the school or the test. The dream is about the feeling, and the feeling is available at any age.',
+      'A place from your childhood has been demolished. You find out from a photograph someone posts. The place was important the way places in childhood are important: it was the place, and that was all it needed to be.',
     ]),
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('s35aa', true) },
@@ -354,8 +354,8 @@ export const EVENTS_SONDER_45 = [
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 32 && !G.mem?.s35ac,
     text: () => pick([
-      'You have arrived somewhere at the same time as thousands of other people: a concert, a sporting event, a political gathering, a memorial. The being-together-in-the-same-direction is a specific experience. Not community — you don\'t know these people. Something else: the temporary fact of a large number of people oriented toward the same thing, the warmth of it, the sound of it, the way it ends and disperses and you are separate again.',
-      'You have been in a relationship long enough now to know what the arguments are actually about. Not what the arguments say they are about — the dishes, the schedule, the money. What they are actually about: the thing underneath, which is always one of a small number of things. Knowing this does not make the argument shorter but it makes it more navigable.',
+      'You have arrived somewhere at the same time as thousands of other people: a concert, a sporting event, a political gathering, a memorial. The being-together-in-the-same-direction is an experience. Not community — you don\'t know these people. Something else: the temporary fact of a large number of people oriented toward the same thing, the warmth of it, the sound of it, the way it ends and disperses and you are separate again.',
+      'You have been in a relationship long enough now to know what the arguments are actually about. Not what the arguments say they are about — the dishes, the schedule, the money. What they are actually about: the thing underneath, always one of a small number of things. Knowing this does not make the argument shorter but it makes it more navigable.',
     ]),
     choices: null,
     effect: (p) => { p.m += 3; p.s += 2; p.setMem('s35ac', true) },

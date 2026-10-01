@@ -53,7 +53,7 @@ const IRAN_EVENTS = [
     // disqualifications it describes. Before 2004 it is only the opening.
     text: (G) => G.currentYear < 2004
       ? 'Khatami wins with seventy percent of the vote. That number means something — the people who voted included women, students, the young, people who had not voted before because there was no point. The newspapers multiply: three hundred in the first years. The word "civil society" is said in public, in print, with seriousness.'
-      : 'Khatami wins with seventy percent of the vote. That number means something — the people who voted included women, students, the young, people who had not voted before because there was no point. The newspapers multiply: three hundred in the first years. The word "civil society" is said in public, in print, with seriousness. The Guardian Council disqualifies reformist candidates from parliament in 2004. The newspapers are closed one by one — there are procedures for this, legal mechanisms, judges who are not reformists. The Supreme Leader is not elected. That fact was always the fact, but the reform era had been a way of not thinking about it continuously. The era ends with the fact clarified.',
+      : 'Khatami wins with seventy percent, and the number means women, students, the young, people who never voted before because there was no point. The newspapers multiply and "civil society" is said aloud. Then the Guardian Council disqualifies the reformist candidates and the judges close the newspapers one by one, legally. The Supreme Leader was never elected. That was always the fact; the reform years were a way of not thinking about it every day.',
     choices: [
       {
         text: 'You believed in it — the reform could have held if the system had allowed it.',
@@ -64,7 +64,7 @@ const IRAN_EVENTS = [
       {
         text: 'You watched it carefully — the ceiling was always going to be the ceiling.',
         tag: null,
-        outcome: 'The analysis was correct. Being correct early is its own kind of cost.',
+        outcome: 'The analysis was correct. Being correct early costs.',
         effect: (p) => { p.e += 4; p.r += 4; p.addFlag('irn_khatami_generation'); p.setMem('irn_khatami', true); },
       },
     ],
@@ -85,8 +85,8 @@ const IRAN_EVENTS = [
     text: (G) => {
       const isYoung = G.currentYear <= 2018
       return isYoung
-        ? 'The sanctions are the condition. Not the government — the sanctions. The distinction matters to some people and does not matter to the people paying for groceries. The rial loses thirty percent of its value in a month. The official rate is a number the government maintains; the street rate is a different number. The dollar price is the real price. You know someone who works in the currency exchange, which means you know someone who navigates this gap for a living. The gap is a livelihood for some and a disaster for everyone else.'
-        : 'May 2018. Trump withdraws from the JCPOA. The rial falls sixty percent in three months. The price of chicken doubles. The price of medicine — imported medicine, the kind that treats things other medicine does not treat — triples, when it is available at all. The secondary sanctions make it technically illegal for European banks to clear any transaction with Iran. This includes transactions for food and medicine. The legal exception exists on paper. The practical exception does not exist in a Swift system.'
+        ? 'The sanctions are the condition. The rial loses a third of its value in a month, and the official rate is one number and the street rate another, and the dollar price is the real price. You know someone who works in currency exchange, which means you know someone who makes a living in the gap. For everyone else the gap is a disaster.'
+        : 'May 2018, and America walks out of the nuclear deal. The rial loses more than half its value in three months, the price of chicken doubles, and the imported medicines triple when they can be found at all. European banks will not touch an Iranian transaction, including for food and medicine. The exemption exists on paper.'
     },
     choices: null,
     effect: (p) => { p.w -= 10; p.m -= 8; p.addFlag('irn_sanctions_generation'); p.setMem('irn_sanctions', true); },
@@ -103,7 +103,7 @@ const IRAN_EVENTS = [
       G.currentYear >= 1985 &&
       G.age >= 14 && G.age <= 30 &&
       !G.mem?.irn_private_public,
-    text: 'The satellite dish is on the roof. It is illegal. It is on every building. The party is in the apartment — the curtains closed, the music low enough, the door locked. Alcohol is illegal. It is at the party. The relationship is not acknowledged in the street and is a relationship. You are learning the geography of the Republic: everything that is permitted in public, everything that is not permitted, and the entire private life that runs in the space that is neither. You learn to navigate between these worlds before you learn to name what the navigation is. The naming comes later, usually after you have left or talked to someone who left.',
+    text: 'The satellite dish on the roof is illegal and it is on every building. The party is in the apartment, curtains closed, music low, door locked, and the alcohol that is illegal is there too. You learn the geography of the Republic: what is permitted in public, what is not, and the whole private life that runs in the space between. You learn to move through it long before you have a name for the moving.',
     choices: [
       {
         text: 'You are fluent in both worlds. The fluency is real and is also exhausting.',
@@ -147,7 +147,7 @@ const IRAN_EVENTS = [
         effect: (p) => { p.e += 3; p.r += 6; p.addFlag('irn_hijab_generation'); p.setMem('irn_hijab', true); },
       },
       {
-        text: 'An encounter with the gasht-e ershad. The specific texture of a warning.',
+        text: 'An encounter with the gasht-e ershad. The texture of a warning.',
         tag: null,
         outcome: 'The warning is a formal procedure that does not feel formal. You carry what was said and what it felt like to be the person it was said to.',
         effect: (p) => { p.m -= 8; p.r += 8; p.karma += 3; p.addFlag('irn_hijab_generation'); p.setMem('irn_hijab', true); },
@@ -170,18 +170,18 @@ const IRAN_EVENTS = [
       !G.mem?.irn_brain_drain,
     // The cohort keeps in touch on whatever the decade has; the group with the
     // flags beside the names is a 2015 object, and this ran from 2000.
-    text: (G) => `The IMF calls it the highest brain drain rate in the world: 150,000 educated Iranians leave each year. The number is the abstraction. The specific version is your group: ${hasTech(G.currentCountry ?? G.character.country, 'smartphone', G.currentYear) ? 'the WhatsApp group of your university cohort, and how many of the names have country flags next to them now — Canadian flag, German flag, Turkish flag, British flag' : 'the cohort you graduated with, and how many of the addresses you write to now end somewhere else — Toronto, Cologne, Istanbul, London'}. The decision is constant because it is never quite final. You have the skills that travel. The question is whether you are a person who leaves or a person who stays, and the question is answered differently in different years depending on what year it is and what the rial rate is and whether the reformists won the last election.`,
+    text: (G) => `The IMF calls it the highest brain drain rate in the world: 150,000 educated Iranians leave each year. The number is the abstraction. The version is your group: ${hasTech(G.currentCountry ?? G.character.country, 'smartphone', G.currentYear) ? 'the WhatsApp group of your university cohort, and how many of the names have country flags next to them now — Canadian flag, German flag, Turkish flag, British flag' : 'the cohort you graduated with, and how many of the addresses you write to now end somewhere else — Toronto, Cologne, Istanbul, London'}. The decision is constant because it is never quite final. You have the skills that travel. The question is whether you are a person who leaves or a person who stays, and the question is answered differently in different years depending on what year it is and what the rial rate is and whether the reformists won the last election.`,
     choices: [
       {
         text: 'You go. Turkey first, then wherever the visa comes through.',
         tag: null,
-        outcome: 'The leaving is also a grief that has no name in the destination country. You carry Iran in a way that people who were not born there do not understand.',
+        outcome: 'The leaving is also a grief that has no name in the destination country. You carry Iran, and people who were not born there do not understand what you are carrying.',
         effect: (p) => { p.r += 8; p.m -= 5; p.e += 5; p.addFlag('irn_diaspora_generation'); p.addFlag('emigrated'); p.emigrateTo(['Turkey', 'Germany', 'Canada', 'United States']); p.setMem('irn_brain_drain', true); },
       },
       {
         text: 'You stay. The country needs people who stay.',
         tag: null,
-        outcome: 'The staying is its own kind of decision, made against the background of the people who left. You watch the WhatsApp group update with flags.',
+        outcome: 'The staying is a decision, made against the background of the people who left. You watch the WhatsApp group update with flags.',
         effect: (p) => { p.r += 6; p.karma += 5; p.addFlag('irn_stayer_generation'); p.setMem('irn_brain_drain', true); },
       },
     ],
@@ -221,7 +221,7 @@ const IRAN_EVENTS = [
     text: (G) => {
       const isOld = G.age >= 70
       return isOld
-        ? 'You were alive before the Revolution and after it. The country that exists now and the country that was are both yours in a way that the generation born after 1979 cannot quite share. The before is in your body as a different texture — different music, different cinema, different kind of street. The after is the longer portion of your life. You have lived in both.'
+        ? 'You were alive before the Revolution and after it. The country that exists now and the country that was are both yours, and the generation born after 1979 cannot quite share that. The before is in your body as a different texture — different music, different cinema, different kind of street. The after is the longer portion of your life. You have lived in both.'
         : 'The years add up to this: Khatami, Ahmadinejad, Rouhani, Raisi. Reform, crackdown, deal, withdrawal, protest, crackdown. The cycle has a rhythm. You have learned the rhythm the way you learn to recognise a recurring dream — with weariness and without surprise. The country you were promised at each cycle and the country you have lived in are different enough that you have stopped making the comparison continuously.'
     },
     choices: null,

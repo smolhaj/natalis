@@ -8,8 +8,13 @@ export const ADOPTEE_EVENTS = [
     id: 'adp_always_knew',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 7 && G.age <= 12 && !G.mem.adpOrigin,
-    text: 'Your parents told you early, before you could fully understand it. The story they tell is about choosing — they wanted you specifically, from all the children. You accept this story and also notice, later, that it is a story made for the child rather than the fact. The fact is more complicated and you are old enough now to sense the edges of it.',
+    // An adoption is a fact about a family, and the state held no such fact:
+    // this told any child of seven to twelve, with both birth parents named at
+    // the table and siblings who share their face, that they had been chosen
+    // from all the children. It reads `character.adopted`, which the birth
+    // must set (with the adoptive parents) for the arc to open.
+    when: (G) => G.character?.adopted === true && G.age >= 7 && G.age <= 12 && !G.mem.adpOrigin,
+    text: 'Your parents told you early, before you could fully understand it. The story they tell is about choosing: out of all the children, they wanted you. You accept this story and also notice, later, that it is a story made for the child rather than the fact. The fact is more complicated and you are old enough now to sense the edges of it.',
     effect: (p) => { p.addFlag('adopted'); p.setMem('adpOrigin', true) },
   },
 
@@ -17,7 +22,9 @@ export const ADOPTEE_EVENTS = [
     id: 'adp_transracial',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.flags.has('adopted') && G.age >= 16 && G.age <= 28 && !G.mem.adpTransracial,
+    // "You look like your birth country" is only true of an adoption across
+    // a border and a face.
+    when: (G) => G.flags.has('adopted') && G.flags.has('transracial_adoptee') && G.age >= 16 && G.age <= 28 && !G.mem.adpTransracial,
     text: 'A stranger asks where you\'re really from. You give the name of the city you grew up in. They mean something else and you know it and they know that you know it. You look like your birth country. You speak, think, dream, argue, and cook like your adoptive one. The two facts coexist without resolving.',
     choices: [
       {
@@ -29,7 +36,7 @@ export const ADOPTEE_EVENTS = [
       {
         text: 'Repeat the city.',
         tag: 'repeated',
-        outcome: '"No, I mean originally." You hold eye contact and say nothing else. They move on. You note the exhaustion of this particular exchange.',
+        outcome: '"No, I mean originally." You hold eye contact and say nothing else. They move on. You note the exhaustion of this exchange.',
         effect: (p) => { p.m -= 3; p.karma += 3; p.setMem('adpTransracial', true) },
       },
     ],
@@ -40,7 +47,7 @@ export const ADOPTEE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.flags.has('adopted') && G.age >= 20 && G.age <= 38 && !G.mem.adpSearch,
-    text: 'The DNA kit costs eighty dollars. The results take three weeks. When they come, there is a list of potential relatives with percentages attached. A half-sibling in a city you have never been to. A first cousin twice removed in the country you were born in. The list makes the abstract specific in a way that requires you to decide what to do with specific things.',
+    text: 'The DNA kit costs eighty dollars. The results take three weeks. When they come, there is a list of potential relatives with percentages attached. A half-sibling in a city you have never been to. A first cousin twice removed in the country you were born in. The list makes the abstract concrete, and you have to decide what to do with each thing on it.',
     choices: [
       {
         text: 'Contact the half-sibling.',
@@ -62,7 +69,7 @@ export const ADOPTEE_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.flags.has('adopted') && G.age >= 30 && G.age <= 55 && !G.mem.adpOriginTrip,
-    text: 'You are in the country you were born in. You have been here three days. The landscape matches something you could not have remembered because you left before you could remember. Your adoptive parents are at home, which is where you are from. The people here share your face. You are a tourist in the place that is supposed to be an origin. The feeling has no single word in either language.',
+    text: 'You are in the country you were born in. You have been here three days. The landscape matches something you could not have remembered because you left before you could remember. Your adoptive parents are at home, where you are from. The people here share your face. You are a tourist in the place that is supposed to be an origin. The feeling has no single word in either language.',
     effect: (p) => { p.m -= 3; p.e += 3; p.addFlag('origin_country_visited'); p.setMem('adpOriginTrip', true) },
   },
 

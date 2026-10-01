@@ -84,7 +84,7 @@ export const FOLLOWTHROUGH_61_EVENTS = [
       G.flags.has('kr_dep_hell_joseon') &&
       G.age >= 55 &&
       !G.mem?.ft61HellJoseonLate,
-    text: `The phrase 'hell Joseon' is dated now — it belongs to a specific online moment in the 2010s. What it named has not dated. Your children or the people who are your children's age are navigating a version of the same structure you named when you were twenty-eight. The birth rate is what it is. The apartment prices are what they are. The competition for the chaebol positions is what it is. The name changes every generation. The thing the name is pointing at does not change at the same speed as the name for it.`,
+    text: `The phrase 'hell Joseon' is dated now — it belongs to an online moment in the 2010s. What it named has not dated. Your children or the people who are your children's age are navigating a version of the same structure you named when you were twenty-eight. The birth rate is what it is. The apartment prices are what they are. The competition for the chaebol positions is what it is. The name changes every generation. The thing the name is pointing at does not change at the same speed as the name for it.`,
     choices: null,
     effect: (p) => { p.r += 6; p.m -= 2; p.setMem('ft61HellJoseonLate', true) },
   },
@@ -100,7 +100,7 @@ export const FOLLOWTHROUGH_61_EVENTS = [
       G.flags.has('kr_dep_hell_joseon') &&
       G.age >= 35 &&
       !G.mem?.ft61ImfHellCross,
-    text: `The two events form a line in your life: 1997 when the floor broke and the 2010s when your generation named the thing that the 1997 floor-breaking had accelerated. The permanent employment your parents' generation received, the company housing, the long tenure — these were already becoming rarer when the IMF crisis made them rarer faster. 'Hell Joseon' named the result. You were old enough to remember the cause and young enough to live in the result. This is a specific position, historically speaking.`,
+    text: `The two events form a line in your life: 1997 when the floor broke and the 2010s when your generation named the thing that the 1997 floor-breaking had accelerated. The permanent employment your parents' generation received, the company housing, the long tenure — these were already becoming rarer when the IMF crisis made them rarer faster. 'Hell Joseon' named the result. You were old enough to remember the cause and young enough to live in the result. This is a position, historically speaking.`,
     choices: null,
     effect: (p) => { p.r += 5; p.e += 4; p.setMem('ft61ImfHellCross', true) },
   },

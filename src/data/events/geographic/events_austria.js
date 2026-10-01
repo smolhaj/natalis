@@ -24,7 +24,7 @@ export const AUSTRIA_EVENTS = [
       G.currentYear >= 1938 && G.currentYear <= 1939 &&
       G.age >= 7 && G.age <= 15 &&
       !G.mem?.autHeldenplatz,
-    text: 'March. Your father takes you into the city because everyone is going. The Heldenplatz is filled in a way you have never seen a place filled — not a crowd, a surface. The man speaks from the balcony of the Hofburg and the sound that comes back from the square is one sound. Your father is not cheering. He is holding your shoulder very tightly and looking straight ahead, and you understand from the hand and not from anything said that you are to keep still. Afterwards, on the tram, nobody in your family says anything about the afternoon. For the next fifty years the country will describe this day as something that was done to it.',
+    text: 'March, and your father takes you into the city because everyone is going. The Heldenplatz is full in a way you have never seen a place full: not a crowd, a surface, and the sound that comes back from it when the man speaks from the balcony is one sound. Your father is not cheering. He is holding your shoulder very tightly and looking straight ahead, and you understand from the hand that you are to keep still. For the next fifty years the country will describe this day as something done to it.',
     choices: [
       { text: 'Ask your father, later, what it was', tag: 'defiant', outcome: 'He says: remember that you were there. Then he says nothing else, ever, about it.', effect: (p) => { p.e += 6; p.m -= 4; p.addFlag('aut_heldenplatz_witness'); p.addFlag('aut_family_uneasy') } },
       { text: 'Learn not to ask', tag: 'yielding', outcome: 'The silence becomes a household rule nobody wrote down. You are fluent in it by the time you are twelve.', effect: (p) => { p.m -= 3; p.s -= 3; p.addFlag('aut_heldenplatz_witness'); p.addFlag('aut_taught_silence') } },
@@ -60,7 +60,7 @@ export const AUSTRIA_EVENTS = [
       G.currentYear >= 1946 && G.currentYear <= 1955 &&
       G.age >= 10 &&
       !G.mem?.autFourPowers,
-    text: 'The city is cut into four and the middle is administered by all of them in rotation, one month each, so the identity of the soldier checking your papers in the Innere Stadt depends on the month. The Russians are in the district where your aunt lives and people there talk about the requisitions and then stop talking. You learn the four uniforms the way children elsewhere learn birds. There is a word for the whole arrangement and the word is temporary, and it lasts ten years, which is long enough to be a childhood.',
+    text: 'The city is cut into four and the middle is administered by all of them in rotation, one month each, so the identity of the soldier checking your papers in the Innere Stadt depends on the month. The Russians are in the district where your aunt lives and people there talk about the requisitions and then stop talking. You learn the four uniforms the way children elsewhere learn birds. There is a word for the whole arrangement and the word is temporary, and it lasts ten years, long enough to be a childhood.',
     choices: null,
     effect: (p) => {
       p.e += 6; p.s += 3; p.m -= 3
@@ -78,7 +78,7 @@ export const AUSTRIA_EVENTS = [
       G.currentYear >= 1955 && G.currentYear <= 1956 &&
       G.age >= 8 &&
       !G.mem?.autTreaty,
-    text: 'May, at the Belvedere. The foreign ministers come out onto the balcony and hold up the signed treaty and Figl says the sentence everyone will repeat — Österreich ist frei. The last occupying soldier leaves in October. What the country agreed to in exchange is permanent neutrality, written into the constitution: no alliance, no foreign bases, and a particular kind of usefulness to everyone. Your parents cry at the radio. For the rest of your life, neutrality will be described to you as a principle rather than a price, and it was both.',
+    text: 'May, at the Belvedere. The foreign ministers come out onto the balcony and hold up the signed treaty and Figl says the sentence everyone will repeat — Österreich ist frei. The last occupying soldier leaves in October. What the country agreed to in exchange is permanent neutrality, written into the constitution: no alliance, no foreign bases, and a kind of usefulness to everyone. Your parents cry at the radio. For the rest of your life, neutrality will be described to you as a principle rather than a price, and it was both.',
     choices: null,
     effect: (p) => {
       p.m += 14; p.karma += 4
@@ -97,7 +97,7 @@ export const AUSTRIA_EVENTS = [
       G.age >= 20 && G.age <= 55 &&
       !G.flags.has('owns_property') &&
       !G.mem?.autGemeindebau,
-    text: 'The flat is municipal. It was built in the 1920s by a city government that wanted workers to have a courtyard, a laundry, a window that opened onto something, and it has all three. The rent is a number that would be a rounding error in Munich. The tenancy can pass to your children. Nobody here expects to own anything and nobody here expects to leave, and those two facts together produce a particular kind of neighbour: someone who has an opinion about the courtyard, because the courtyard will outlast both of you.',
+    text: 'The flat is municipal. It was built in the 1920s by a city government that wanted workers to have a courtyard, a laundry, a window that opened onto something, and it has all three. The rent is a number that would be a rounding error in Munich. The tenancy can pass to your children. Nobody here expects to own anything and nobody here expects to leave, and those two facts together produce a kind of neighbour: someone who has an opinion about the courtyard, because the courtyard will outlast both of you.',
     choices: [
       { text: 'Settle in. This is the life.', tag: 'yielding', outcome: 'You are on the tenants\' committee within three years. You know which window belongs to whom.', effect: (p) => { p.m += 8; p.s += 5; p.addFlag('aut_gemeindebau_life'); p.addFlag('rooted_community') } },
       { text: 'Treat it as a stage on the way somewhere', tag: 'defiant', outcome: 'You stay eleven years. Every one of them is described, by you, as temporary.', effect: (p) => { p.m += 2; p.w += 3; p.addFlag('aut_gemeindebau_life'); p.addFlag('restless_renter') } },
@@ -167,7 +167,7 @@ export const AUSTRIA_EVENTS = [
       G.age >= 60 &&
       (G.flags.has('aut_heldenplatz_witness') || G.flags.has('aut_taught_silence') || G.flags.has('aut_waldheim_reckoning') || G.flags.has('aut_waldheim_defended')) &&
       !G.mem?.autLate,
-    text: 'A grandchild has been given the subject at school, properly, with the dates and the numbers and the transport lists, and comes to you because you were alive. What you have is not the dates. What you have is a hand on a shoulder in a full square, and a family that did not discuss an afternoon, and a sentence you either said or did not say in 1986. The curriculum is better than the silence was. It also cannot hold the thing you actually know, which is how ordinary the silence felt from the inside.',
+    text: 'A grandchild has been given the subject at school, properly, with the dates and the numbers and the transport lists, and comes to you because you were alive. What you have is not the dates. What you have is a hand on a shoulder in a full square, and a family that did not discuss an afternoon, and a sentence you either said or did not say in 1986. The curriculum is better than the silence was. It also cannot hold the thing you actually know: how ordinary the silence felt from the inside.',
     choices: [
       { text: 'Tell them the small true thing', tag: 'defiant', outcome: 'You describe the hand on your shoulder. They write none of it down and forget none of it.', effect: (p) => { p.m += 10; p.karma += 8; p.addFlag('aut_transmitted_memory'); p.addFlag('memory_keeper') } },
       { text: 'Give them the dates. The dates are safer.', tag: 'yielding', outcome: 'You are accurate for forty minutes. Afterwards you sit in the kitchen for a while.', effect: (p) => { p.m -= 3; p.r += 7; p.addFlag('aut_withheld_memory') } },

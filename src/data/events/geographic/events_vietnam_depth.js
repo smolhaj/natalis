@@ -25,7 +25,7 @@ export const VIETNAM_DEPTH_EVENTS = [
       {
         text: 'You rebuilt. The camp is the before; you are the after.',
         tag: null,
-        outcome: 'The rebuilding required a specific kind of silence and a specific kind of energy. Both were available to you, in alternation, across many years.',
+        outcome: 'The rebuilding required a kind of silence and a kind of energy. Both were available to you, in alternation, across many years.',
         effect: (p) => { p.r += 7; p.m -= 6; p.h -= 5; p.addFlag('vn_dep_reeducation_survivor'); p.setMem('vnReedAft', true) },
       },
       {
@@ -42,26 +42,51 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_con_lai',
+    // "Your father was American" is a claim about a parent, and the guard read
+    // only country, year and age — so it told a Kinh Catholic boy whose named
+    // Vietnamese father was at the table that his father had left on the
+    // helicopters. The state can say this much: a father absent from birth
+    // (`alive: false` with no occupation, which is how deriveInitialParents
+    // writes an absent father), in the years American soldiers fathered
+    // children in the South. That is the only population it is true of.
     phase: null,
-    weight: 3,
+    weight: 20,
     when: (G) =>
       isVietnam(G) &&
-      G.currentYear >= 1973 && G.currentYear <= 1988 &&
-      G.age >= 5 && G.age <= 18 &&
+      G.character.birthYear >= 1962 && G.character.birthYear <= 1975 &&
+      G.parents?.father?.alive === false && !G.parents.father.occupation &&
+      G.parents?.mother && G.parents.mother.alive !== false &&
+      G.currentYear >= 1975 && G.currentYear <= 1987 &&
+      G.age >= 5 && G.age <= 16 &&
       !G.mem?.vnConLai,
-    text: `Con lai — "mixed child" — is the category you occupy. Your father was American, Black or white, and left with the troops or the helicopters or the evacuation flights. Your mother stayed, or had no choice about staying. In the postwar decade, children like you live in a zone of particular difficulty: the father's country has left, the mother's country has complicated feelings about what you represent. The other children see the face and make the calculation. You are learning to carry the face you were given.`,
+    text: `Con lai, the other children say, and it means mixed. Your father was American, and left with the troops or the helicopters, and your mother stayed because there was no seat for her. The other children see your face and do the calculation, and so do the cadres at the ward office. You learn to keep your hair short and your head down.`,
+    choices: null,
+    effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('vn_dep_con_lai'); p.setMem('vnConLai', true) },
+  },
+
+  {
+    id: 'vn_dep_con_lai_homecoming',
+    // The Amerasian Homecoming Act passed in December 1987; the flights ran
+    // from 1988 and took some 23,000 Amerasians and their families.
+    phase: null,
+    weight: 40,
+    when: (G) =>
+      isVietnam(G) && G.flags.has('vn_dep_con_lai') &&
+      G.currentYear >= 1988 && G.currentYear <= 1994 &&
+      !G.mem?.vnConLaiHome,
+    text: `The Americans have passed a law with your kind of child in its name. There are queues at the office in Saigon, and people who have never spoken to your mother are suddenly offering to be your family, for the seats.`,
     choices: [
       {
-        text: 'You are accepted by your mother\'s community. The face is noticed but not everything.',
+        text: 'Stay. This is your mother\'s country, and yours.',
         tag: null,
-        outcome: 'The community holds you, with the texture that community always has: warmth and complication and occasional reminders that the holding is conditional. You take the holding and work with the conditionality.',
-        effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('vn_dep_con_lai'); p.setMem('vnConLai', true) },
+        outcome: 'You stay. The face is noticed and not everything, and the holding your mother\'s street gives you is warm and conditional, and you take it.',
+        effect: (p) => { p.m -= 4; p.r += 5; p.setMem('vnConLaiHome', true) },
       },
       {
-        text: 'The Amerasian Homecoming Act 1987 reaches you. You will go to the US.',
+        text: 'Take the flight, with your mother.',
         tag: null,
-        outcome: 'America: the country of the father you do not know, which does not know you either and treats you as Vietnamese, not American. The homecoming is to a home that was never yours.',
-        effect: (p) => { p.m -= 8; p.r += 7; p.addFlag('vn_dep_con_lai'); p.setResidency('refugee_status'); p.setMem('vnConLai', true) },
+        outcome: 'America, the country of the father you do not know, which does not know you either and treats you as Vietnamese. The homecoming is to a home that was never yours.',
+        effect: (p) => { p.m -= 8; p.r += 7; p.setMem('vnConLaiHome', true); p.emigrateTo('United States', { residency: 'refugee_status' }) },
       },
     ],
     effect: null,
@@ -78,7 +103,7 @@ export const VIETNAM_DEPTH_EVENTS = [
       G.currentYear >= 1988 && G.currentYear <= 2005 &&
       G.age >= 16 && G.age <= 40 &&
       !G.mem?.vnDoiMoi,
-    text: `Doi Moi — renovation — the party announced in 1986 and the effects arrived in your life by the late 1980s: small private businesses allowed, price controls relaxed, foreign investment beginning to arrive. The cafe on the corner your uncle opened. The Honda motorbike your cousin saved for. The state still controls what the state controls and the party still leads the party, but between those structures there is new space, and the new space has a specific texture — not freedom exactly, but a kind of room to move that was not there before. You are learning its dimensions.`,
+    text: `Doi Moi — renovation — the party announced in 1986 and the effects arrived in your life by the late 1980s: small private businesses allowed, price controls relaxed, foreign investment beginning to arrive. The cafe on the corner your uncle opened. The Honda motorbike your cousin saved for. The state still controls what the state controls and the party still leads the party, but between those structures there is new space, and the new space has a texture — not freedom exactly, but a kind of room to move that was not there before. You are learning its dimensions.`,
     choices: [
       {
         text: 'You start something. A small business, a venture, a plan.',
@@ -106,7 +131,7 @@ export const VIETNAM_DEPTH_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2015 &&
       G.age >= 16 && G.age <= 35 &&
       !G.mem?.vnCafe,
-    text: `The Vietnamese cafe is a specific institution. The plastic stool at twenty centimetres off the ground. The iced coffee — ca phe sua da — the condensed milk settling at the bottom before you stir it. The street: motorbikes, vendors, the sound of a city doing what it does before the heat arrives. You have spent hours in these chairs, working, not working, talking, looking at the street. The cafe is a room that belongs to everyone and costs thirty cents and is available at five in the morning and eleven at night.`,
+    text: `The Vietnamese cafe is an institution. The plastic stool at twenty centimetres off the ground. The iced coffee — ca phe sua da — the condensed milk settling at the bottom before you stir it. The street: motorbikes, vendors, the sound of a city doing what it does before the heat arrives. You have spent hours in these chairs, working, not working, talking, looking at the street. The cafe is a room that belongs to everyone and costs thirty cents and is available at five in the morning and eleven at night.`,
     choices: null,
     effect: (p) => { p.m += 5; p.r += 2; p.setMem('vnCafe', true) },
   },
@@ -133,7 +158,7 @@ export const VIETNAM_DEPTH_EVENTS = [
       {
         text: 'You are from the South. You call the city Saigon.',
         tag: null,
-        outcome: 'The word Saigon is not nostalgia. It is accuracy about a place that still exists, renamed. The renaming is a political act and calling it by its name is also a political act. You have made your peace with being political.',
+        outcome: 'The word Saigon is accuracy about a place that still exists, renamed. The renaming is a political act and calling it by its name is also a political act. You have made your peace with being political.',
         effect: (p) => { p.r += 5; p.e += 3; p.setMem('vnNorthSouth', true) },
       },
     ],
@@ -170,7 +195,7 @@ export const VIETNAM_DEPTH_EVENTS = [
     text: `The Viet Kieu are coming back — the overseas Vietnamese, who left on the boats or the planes or the evacuation flights, or whose parents did. They are coming back as tourists, as investors, as people who are from here and not from here. The ones who left are older now. Their children have American accents or French accents or Australian accents. They are looking at the country their parents described and finding it resembles the description and does not. The country is also looking at them: their clothes, their confidence, the way they use money, the way they talk about Vietnam as a place rather than a home.`,
     choices: [
       {
-        text: 'You stayed. You watch the returnees with a specific attention.',
+        text: 'You stayed. You watch the returnees with an attention.',
         tag: null,
         outcome: 'The returning diaspora brings money and distance. The distance sometimes registers as condescension and sometimes as longing. You read it case by case.',
         effect: (p) => { p.r += 4; p.e += 2; p.setMem('vnVkReturn', true) },
@@ -201,7 +226,7 @@ export const VIETNAM_DEPTH_EVENTS = [
       {
         text: 'You join. The network and the ideology, in that order.',
         tag: null,
-        outcome: 'The network is real. The ideology is available on demand and sits lightly on most days. You know which days to bring it forward.',
+        outcome: 'You have a network. The ideology is available on demand and sits lightly on most days. You know which days to bring it forward.',
         effect: (p) => { p.s += 4; p.e += 2; p.mo += 1000; p.setMem('vnYouthLeague', true) },
       },
       {
@@ -225,7 +250,8 @@ export const VIETNAM_DEPTH_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1995 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.vnAgentOrange,
-    text: `Between 1962 and 1971, the US military sprayed 77 million litres of herbicide over Vietnam. Agent Orange contained dioxin. The dioxin does not leave the food chain. Four million Vietnamese were exposed. The children and grandchildren of the exposed generation carry the effects: the limb differences, the neurological conditions, the cancers that arrive without family history. You know someone — a cousin, a neighbour, someone in the village — for whom the war's chemistry arrived as a body that works differently. The war ended before you were born. The war has not ended in the same way for everyone.`,
+    text: `For nine years the Americans sprayed herbicide over the country, and Agent Orange carried dioxin, which does not leave the food chain. The children and grandchildren of the people who were exposed carry it: limbs that formed differently, nervous systems, cancers with no family history. You know someone, a cousin, a neighbour, someone in the village, for whom the war's chemistry arrived as a body that works differently. The war ended before you were born. It has not ended the same way for everyone.`,
+    context: 'About 77 million litres of herbicides were sprayed between 1962 and 1971; millions of Vietnamese were exposed to dioxin.',
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 5; p.e += 2; p.setMem('vnAgentOrange', true) },
   },
@@ -241,7 +267,8 @@ export const VIETNAM_DEPTH_EVENTS = [
       G.flags.has('vn_dep_doi_moi_generation') &&
       G.age >= 55 &&
       !G.mem?.vnDoiMoiLate,
-    text: `You lived the Doi Moi years as an active participant and the country that came out of them is unrecognisable from the country that went in. The GDP per capita in 1986 was $230. By the 2020s it is over $4,000. The motorbike streets became car streets. The street food stalls became restaurants and then there were foreign chains and then some of the foreign chains were replaced by Vietnamese chains that did what the foreign chains did. You saw all of this. The party still leads. The country that the party leads has changed so thoroughly that the ideology requires continuous updating about what it is the ideology of.`,
+    text: `You lived through Đổi Mới and the country that came out is unrecognisable from the one that went in. The motorbike streets became car streets; the stalls became restaurants; the foreign chains came, and some of them were replaced by Vietnamese chains doing the same thing. You saw all of it. The Party still leads. The country it leads has changed so much that the ideology has to be continually updated about what it is the ideology of.`,
+    context: 'Vietnam\'s income per head rose from about $230 in 1986 to over $4,000 by the 2020s.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.setMem('vnDoiMoiLate', true) },
   },

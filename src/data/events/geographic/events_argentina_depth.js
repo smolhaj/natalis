@@ -26,7 +26,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
       !G.mem?.argDepPeronEarly,
     text: () => pick([
       'October 17, 1945: the descamisados — the shirtless ones — march on Plaza de Mayo to demand Perón\'s release from prison. The working class of Buenos Aires has a face and a voice for the first time that official Argentina can see it. The oligarchy does not call it a face. The oligarchy calls it a horde. You are in the square, or your parents are in the square, and the word descamisado goes from insult to identity in a single afternoon.',
-      'Eva Perón. The actress from the provinces who became the president\'s wife and then became something the republic had no category for. She ran the social welfare ministry. She built hospitals. She gave women the vote in 1947. The descamisados called her Santa Evita. The oligarchy called her other things. When she died in 1952, at thirty-three, the state of mourning was unprecedented: the body embalmed, the queue outside the Ministry of Labour a kilometre long for days.',
+      'Eva Perón, the actress from the provinces who became the president\'s wife and then something the republic had no category for. She ran the welfare ministry, built hospitals, won women the vote in 1947. The descamisados called her Santa Evita and the oligarchy called her other things. When she dies in 1952, at thirty-three, the queue to see her body is a kilometre long for days.',
     ]),
     choices: [
       {
@@ -68,7 +68,8 @@ export const ARGENTINA_DEPTH_EVENTS = [
       G.currentYear >= 1955 && G.currentYear <= 1957 &&
       G.age >= 18 &&
       !G.mem?.argDepBombing1955,
-    text: 'June 16, 1955. The Argentine Navy and Air Force bomb Plaza de Mayo in the middle of the day. The target is Perón. The result is 308 civilians killed, more than 700 wounded — office workers, pedestrians, people who happened to be in the square. The bombing fails to kill Perón. The coup succeeds in September, when the army joins. Perón goes into exile. What is left is the square, and the dead in it, and a country trying to understand what its military has just done to its capital city in the middle of the afternoon.',
+    text: 'June 16, 1955, the middle of the day, and the navy\'s planes bomb the Plaza de Mayo to kill Perón. They miss him and kill hundreds of office workers and passers-by who happened to be in the square. In September the army joins and the coup succeeds, and Perón goes into exile. What is left is the square, and the dead in it, and a country trying to understand what its own military did to its capital in the afternoon.',
+    context: 'The bombing killed 308 people and wounded more than 700.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -90,7 +91,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.argDepBATexture,
     text: () => pick([
-      'Argentina has more psychoanalysts per capita than any country on earth. The Buenos Aires phone book, at its peak, lists forty thousand. The couch is not luxury here — it is infrastructure. The city has a relationship with interiority, with the examined life, with the speaking of what cannot be spoken in other ways, that is different from the rest of the continent. You begin analysis in your twenties. The analyst\'s consulting room is a specific room in a specific Buenos Aires building, and the particular quality of the silence inside it will follow you.',
+      'Argentina has more psychoanalysts per capita than any country on earth. The Buenos Aires phone book, at its peak, lists forty thousand. The couch is not luxury here — it is infrastructure. The city has a relationship with interiority, with the examined life, with the speaking of what cannot be spoken in other ways, that is different from the rest of the continent. You begin analysis in your twenties. The analyst\'s consulting room is a room in a Buenos Aires building, and the quality of the silence inside it will follow you.',
       'The tango. Not the tango of the tourist shows and the tango lessons — the social tango, the milonga on a Thursday night in a rented hall in Boedo or San Telmo, the music that begins slowly and everyone knows what it means. The embrace is a conversation. The conversation has a grammar that you learn over years: the walk, the pause, the weight transfer, the chest leading. The milonga is where the city meets itself in the dark and says things it cannot say in the light.',
     ]),
     choices: null,
@@ -114,7 +115,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
       G.currentYear >= 1994 && G.currentYear <= 1997 &&
       G.age >= 16 &&
       !G.mem?.argDepAMIA,
-    text: 'July 18, 1994. The AMIA building — the Argentine Israelite Mutual Association — is bombed. 85 killed, more than 300 wounded. The largest terrorist attack in Argentine history. The Jewish Argentine community is the largest in Latin America outside North America: 230,000 people, descended from immigrants who came in the great waves of the late nineteenth century. You know someone in the building or you know someone who knows someone. The investigation becomes a thirty-year scandal of obstruction, cover-up, and political interference. The case is still open.',
+    text: 'July 18, 1994, and a bomb destroys the AMIA, the Jewish community centre in Buenos Aires, and eighty-five people die. Argentina\'s Jewish community is the largest in Latin America, the grandchildren of the great migrations. You know someone who was in the building, or someone who knows someone. The investigation becomes thirty years of obstruction, cover-up and political interference. The case is still open.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -178,7 +179,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
       G.currentYear >= 1989 && G.currentYear <= 1991 &&
       G.age >= 18 &&
       !G.mem?.argDepHyper89,
-    text: 'The Austral Plan fails. In 1989, inflation runs at 3,079 percent. The grocery store price changes between the morning and the afternoon. You go to the market and the price of bread is not the same as it was when you chose the bread. The middle class — the Argentine middle class, which considers itself European and considers poverty someone else\'s condition — discovers that savings are a form of magic that can be undone. Alfonsin leaves office six months early. Menem arrives. The Convertibility Plan of 1991 will fix the peso to the dollar and solve the inflation problem by creating the conditions for 2001.',
+    text: '1989, and inflation passes three thousand percent, and the price of bread changes between choosing it and paying for it. The Argentine middle class, which thinks of itself as European and of poverty as someone else\'s condition, discovers that savings can be undone. Alfonsín leaves office six months early and Menem arrives. In 1991 the peso is tied to the dollar, which ends the inflation and builds 2001.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -223,7 +224,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
       G.age >= 30 &&
       G.flags.has('emigrated') &&
       !G.mem?.argDepExileReturn,
-    text: 'The country you left in 2001 — or 1976, or 1989 — is not the country you return to. The neighbourhood has the same street signs. The café on the corner is still the café on the corner. The people you come back to are older. The city has a layer over it now: the layer of all the years it continued without you. You walk the streets and recognise them and feel the recognising as loss, which is not what you expected. You expected the recognising to feel like return.',
+    text: 'The country you left in 2001 — or 1976, or 1989 — is not the country you return to. The neighbourhood has the same street signs. The café on the corner is still the café on the corner. The people you come back to are older. The city has a layer over it now: the layer of all the years it continued without you. You walk the streets and recognise them and the recognising feels like loss. You expected the recognising to feel like return.',
     choices: null,
     effect: (p) => {
       p.m += 4

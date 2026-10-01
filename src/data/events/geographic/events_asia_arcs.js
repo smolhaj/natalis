@@ -22,7 +22,7 @@ export const ASIA_ARC_EVENTS = [
       G.age >= 4,
     // Villagers were not evacuated; the city came to them. The rural side is
     // cam_rural_year_zero, which this event's flag used to lock out.
-    text: 'Soldiers move through the streets with megaphones. The city is being evacuated, they say. Three days. You will come back when the Americans stop bombing. You take what you can carry in a bag — a change of clothes, a photograph, a pot. The road out of Phnom Penh is a column of people with no end visible in either direction. Wheelchairs, hospital gurneys, men still in surgical bandages. The soldiers say it will be short.',
+    text: 'Soldiers go through the streets with megaphones: the city is being evacuated for three days, until the Americans stop bombing. You take what fits in a bag, a change of clothes, a photograph, a pot. The road out of Phnom Penh is a column of people with no end in either direction, wheelchairs, hospital beds pushed by relatives, men in surgical bandages. The soldiers say it will be short.',
     choices: [
       {
         text: 'Pack only what fits in one bag',
@@ -50,7 +50,7 @@ export const ASIA_ARC_EVENTS = [
       G.character.country.name === 'Cambodia' &&
       G.currentYear >= 1975 && G.currentYear <= 1979 &&
       G.age >= 5 && G.age <= 14,
-    text: 'In the village they have assigned you to, the cadres ask questions at the evening meeting. What did your father do before liberation? Where did you go to school? Do you speak any foreign languages? The right answer to each question is the peasant answer: nothing, nowhere, no. Glasses mark you as educated. Soft hands mark you as someone who did not farm. You learn to hold your hands differently. You learn to answer before you think.',
+    text: 'At the evening meeting in the village they have assigned you to, the cadres ask: what did your father do before liberation, where did you go to school, do you speak any foreign languages? The right answer to each is the peasant\'s: nothing, nowhere, no. Glasses mark you as educated; soft hands mark you. You learn to hold your hands differently, and to answer before you think.',
     choices: null,
     effect: (p) => {
       p.m -= 18;
@@ -318,7 +318,8 @@ export const ASIA_ARC_EVENTS = [
       G.currentYear >= 2013 && G.currentYear <= 2014 &&
       G.flags.includes('garment_worker') &&
       G.age >= 17,
-    text: 'The Rana Plaza building in Savar has cracks in the walls. Workers reported it the day before. The managers say the building is fine and the shift must proceed. On the 24th of April the building falls. It takes seventeen seconds. 1,134 people die in the collapse. You know some of them — the woman who worked the line beside you, the one who always had biscuits in her bag. The floor supervisor who told everyone it was safe.',
+    text: 'The Rana Plaza building in Savar has cracks in the walls, and the workers reported them the day before, and the managers said the building was fine and the shift must go ahead. On April 24 the building falls in seventeen seconds. You knew some of the people in it: the woman beside you on the line who always had biscuits in her bag, the supervisor who told everyone it was safe.',
+    context: 'The collapse of Rana Plaza on 24 April 2013 killed 1,134 people.',
     choices: [
       {
         text: 'You were inside when it collapsed',
@@ -374,7 +375,7 @@ export const ASIA_ARC_EVENTS = [
       {
         text: 'Take the loan',
         tag: null,
-        outcome: 'The machine arrives. The repayment meetings begin. Tuesday mornings carry a specific weight for the next two years.',
+        outcome: 'The machine arrives. The repayment meetings begin. Tuesday mornings carry a weight for the next two years.',
         effect: (p) => { p.mo += 500; p.addFlag('microfinance_borrower'); p.setMem('bdMicrofinance', true); },
       },
       {
@@ -467,12 +468,12 @@ export const ASIA_ARC_EVENTS = [
       G.character.gender === 'female' &&
       G.currentYear >= 1978 && G.currentYear <= 1988 &&
       G.age >= 16,
-    text: 'The Hudood ordinances came into effect in 1979. If you are raped, the legal burden to prove rape requires four Muslim male witnesses to the act. Without them, the report you file can be converted into an admission of unlawful sex. The law is in force now. You calibrate your movements accordingly — which streets, which times, which situations. The calibration is not paranoia. It is legal literacy.',
+    text: 'The Hudood ordinances came into effect in 1979. If you are raped, the legal burden to prove rape requires four Muslim male witnesses to the act. Without them, the report you file can be converted into an admission of unlawful sex. The law is in force now. You calibrate your movements accordingly — which streets, which times, which situations. You call it legal literacy.',
     choices: [
       {
         text: 'Adapt and continue',
         tag: null,
-        outcome: 'The adaptation is exhausting in a way that has no single event attached to it. It is the accumulation of a thousand small adjustments.',
+        outcome: 'The adaptation is exhausting, and there is no single event to point to. It is the accumulation of a thousand small adjustments.',
         effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('zia_generation'); p.addFlag('navigated_gender_law'); p.setMem('pkZiaIslamisation', true); },
       },
       {
@@ -577,7 +578,7 @@ export const ASIA_ARC_EVENTS = [
       G.character.country.name === 'Pakistan' &&
       G.currentYear >= 1985 && G.currentYear <= 1995 &&
       G.age >= 16 && G.age <= 40,
-    text: 'Karachi is divided by neighbourhood in a way that is never written down. The MQM controls Liaquatabad and Orangi. The ANP areas are different. There are streets you take and streets you do not take, depending on the day and who has done what to whom. The shooting is not constant — that would be easier to understand. It is intermittent, which means every ordinary morning has a small calculation attached to it.',
+    text: 'Karachi is divided by neighbourhood, and none of it is written down. The MQM controls Liaquatabad and Orangi. The ANP areas are different. There are streets you take and streets you do not take, depending on the day and who has done what to whom. The shooting is intermittent, which means every ordinary morning has a small calculation attached to it.',
     choices: [
       {
         text: 'Learn the geography and navigate carefully',
@@ -629,7 +630,7 @@ export const ASIA_ARC_EVENTS = [
       {
         text: 'Engage genuinely — see what is there',
         tag: null,
-        outcome: 'The conversation is awkward and then briefly real. Whether it becomes anything depends on what both families decide afterward, which is not entirely in your hands.',
+        outcome: 'The conversation is awkward and then briefly real. Whether it becomes anything depends on what both families decide afterward.',
         effect: (p) => { p.m += 5; p.s += 4; p.addFlag('attended_arranged_meeting'); p.setMem('pkArrangedMeeting', true); },
       },
       {
@@ -641,7 +642,7 @@ export const ASIA_ARC_EVENTS = [
       {
         text: 'Go through the motions and defer the decision',
         tag: null,
-        outcome: 'The meeting ends without a conclusion. Another meeting is proposed. The deferral has its own cost.',
+        outcome: 'The meeting ends without a conclusion. Another meeting is proposed. Every deferral costs.',
         effect: (p) => { p.m -= 2; p.addFlag('attended_arranged_meeting'); p.setMem('pkArrangedMeeting', true); },
       },
     ],

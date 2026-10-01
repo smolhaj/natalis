@@ -63,12 +63,12 @@ export const MOROCCO_DEPTH_EVENTS = [
       G.currentYear >= 1976 && G.currentYear <= 1995 &&
       G.age >= 6 && G.age <= 18 &&
       !G.mem?.morSahrawiTindouf,
-    text: `You are Sahrawi. Your family is in the camps at Tindouf, in the Algerian desert, in the part of the world that is nothing but flat sand and sky and heat. The camps have names: Smara, Laayoune, Dakhla — the names of the cities that were once yours and are now somewhere else. Your parents describe a coast, a fishing culture, a landscape of camels and dunes. You have grown up in a tent in Algeria. You were born in a camp. Your generation is the one that has never been to the place whose return is the purpose of the camp's existence. The UN referendum has been promised since 1991. It has not yet happened.`,
+    text: `You are Sahrawi, and your family is in the camps at Tindouf, in the flat Algerian desert, in tents named after cities that were once yours: Smara, Laayoune, Dakhla. Your parents describe a coast, the fishing, the camels and the dunes. You were born in a camp, part of the generation that has never been to the place whose return is the camp's whole purpose. The referendum has been promised since 1991.`,
     choices: [
       {
         text: 'The camp is all you know. The homeland is a story your parents tell.',
         tag: null,
-        outcome: 'The story is precise and consistent. Your parents have kept the map of the homeland sharp because keeping it sharp is what you do in a camp. The homeland is real to you in the way that things you have been taught to love are real — which is a particular kind of real.',
+        outcome: 'The story is precise and consistent. Your parents have kept the map of the homeland sharp because keeping it sharp is what you do in a camp. The homeland is real to you in the way that things you have been taught to love are real — which is a kind of real.',
         effect: (p) => {
           p.r += 6
           p.addFlag('sahrawi_identity')
@@ -118,7 +118,7 @@ export const MOROCCO_DEPTH_EVENTS = [
       {
         text: 'You grew up near Sidi Moumen. This is also your context.',
         tag: null,
-        outcome: 'The neighbourhood becomes, for a few years, a name that others say with a particular meaning. You live in it. The meaning is not what you know the place to be.',
+        outcome: 'The neighbourhood becomes, for a few years, a name that others say with a meaning. You live in it. The meaning is not what you know the place to be.',
         effect: (p) => {
           p.m -= 10
           p.r += 5
@@ -141,7 +141,7 @@ export const MOROCCO_DEPTH_EVENTS = [
       G.currentYear >= 2004 && G.currentYear <= 2010 &&
       G.age >= 18 &&
       !G.mem?.morMoudawwana,
-    text: `February 2004. Mohammed VI signs the reformed Moudawwana — the family code. The minimum marriage age for women rises from fifteen to eighteen. Divorce by repudiation, which a man could pronounce three times without a court, now requires judicial approval. Polygamy requires the first wife's consent and a court's judgment. The reforms are the most significant change to Moroccan family law since independence. They were opposed by Islamist movements, reluctantly accepted by the religious establishment, and pushed through by the king in a moment when the Arab Spring had not yet arrived and the political window was open. Women's rights organisations that have been working for twenty years say: this is real. This is not all of it.`,
+    text: `February 2004, and the king signs the new family code. A girl cannot be married before eighteen; a man cannot divorce his wife by saying so three times without a court; a second wife needs the first wife's consent and a judge. The Islamists opposed it and the clerics accepted it with their teeth set. The women's groups who have worked for twenty years say this is the real thing, and that it is not all of it.`,
     choices: [
       {
         text: 'The law has changed. Your life has changed with it.',
@@ -179,11 +179,11 @@ export const MOROCCO_DEPTH_EVENTS = [
       G.currentYear >= 2016 && G.currentYear <= 2019 &&
       G.age >= 18 &&
       !G.mem?.morHirakRif,
-    text: 'The police take the swordfish off the man at Al Hoceima and throw it into the compactor, and he climbs in after it and the mechanism starts. The phone footage is everywhere by the evening. For eight months the Rif is in the street asking for a hospital, a university, and the soldiers out, which is a list any government could have granted. Instead they take Zefzafi out of a mosque and give him twenty years, and nobody in the sentencing had accused him of touching anyone.',
+    text: 'The police take the swordfish off the man at Al Hoceima and throw it into the compactor, and he climbs in after it and the mechanism starts. The phone footage is everywhere by the evening. For eight months the Rif is in the street asking for a hospital, a university, and the soldiers out, a list any government could have granted. Instead they take Zefzafi out of a mosque and give him twenty years, and nobody in the sentencing had accused him of touching anyone.',
     context: 'Mouhcine Fikri, a fish seller in Al Hoceima, was crushed in a refuse compactor on 28 October 2016 while attempting to retrieve swordfish confiscated by authorities. The Hirak Rif protest movement that followed demanded a hospital, a university and demilitarisation of the region, which has been in tension with the central Makhzen since Abd el-Krim\'s Rif Republic of the 1920s. Leader Nasser Zefzafi was arrested in May 2017 and sentenced to twenty years, upheld on appeal.',
     choices: [
       {
-        text: 'You follow the movement and feel what it means when demands this specific are met with twenty-year sentences.',
+        text: 'You follow the movement and feel what it means when demands this are met with twenty-year sentences.',
         tag: null,
         outcome: 'The demands were not abstract: a cancer hospital, a university, economic development in a region that felt left behind. The sentences are for what, exactly? For asking.',
         effect: (p) => {
@@ -196,7 +196,7 @@ export const MOROCCO_DEPTH_EVENTS = [
       {
         text: 'You are from the Rif. Your father\'s generation remembers what happened to Rif resistance before.',
         tag: null,
-        outcome: 'The Rif and the Makhzen have a long history. Abd el-Krim. The independence-era marginalisation. The specific disproportion of the state\'s response is something your family has a model for.',
+        outcome: 'The Rif and the Makhzen have a long history. Abd el-Krim. The independence-era marginalisation. The disproportion of the state\'s response is something your family has a model for.',
         effect: (p) => {
           p.m -= 8
           p.r += 6
@@ -240,7 +240,7 @@ export const MOROCCO_DEPTH_EVENTS = [
       G.flags.has('mor_1971_coup_generation') &&
       G.age >= 55 &&
       !G.mem?.morCoupEcho,
-    text: `Hassan II died in July 1999 and was buried before the week was out. His son Mohammed VI was twenty-five. You remember the coup attempts of the 1970s — the birthday party massacre at Skhirat, the jets over the Strait — and you think about the specific kind of monarchical authority it takes to survive two attempts on your life and remain on the throne for thirty-eight years. The authority was also the torture chambers, the disappearances, the prisoners at Derb Moulay Cherif, the years called lead. The two things were the same system. You have lived inside it your whole life.`,
+    text: `Hassan II died in July 1999 and was buried before the week was out. His son Mohammed VI was twenty-five. You remember the coup attempts of the 1970s — the birthday party massacre at Skhirat, the jets over the Strait — and you think about the kind of monarchical authority it takes to survive two attempts on your life and remain on the throne for thirty-eight years. The authority was also the torture chambers, the disappearances, the prisoners at Derb Moulay Cherif, the years called lead. The two things were the same system. You have lived inside it your whole life.`,
     choices: null,
     effect: (p) => {
       p.r += 4

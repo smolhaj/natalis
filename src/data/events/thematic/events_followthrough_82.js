@@ -13,7 +13,7 @@ export const FOLLOWTHROUGH_82_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 2000 &&
       G.age >= 30 &&
       !G.mem?.ft82RojoDocument,
-    text: 'The archives open slowly after 1975. The military records, the prison registers, the civil war casualty lists that the Franco regime kept and that the democratic state inherits. You look for the specific name. The name appears in a record: the sentence, the classification, the date. The date of execution or the date of release. The document converts the family silence into a fact you can hold. The fact is worse and better than the silence simultaneously.',
+    text: 'The archives open slowly after 1975. The military records, the prison registers, the civil war casualty lists that the Franco regime kept and that the democratic state inherits. You look for the name. The name appears in a record: the sentence, the classification, the date. The date of execution or the date of release. The document converts the family silence into a fact you can hold. The fact is worse and better than the silence simultaneously.',
     choices: null,
     effect: (p) => {
       p.r += 7
@@ -73,7 +73,7 @@ export const FOLLOWTHROUGH_82_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 55 &&
       !G.mem?.ft82AntiFrancoLate,
-    text: 'The young people ask about the Franco years with the specific curiosity of people who did not live inside them. You have the answer. The answer has the texture of experience rather than history: the cold apartment, the sound of the specific knock, the names you learned not to say in certain company. You are a source rather than a reader of the history. The position is strange and satisfying.',
+    text: 'The young people ask about the Franco years with the curiosity of people who did not live inside them. You have the answer. The answer has the texture of experience rather than history: the cold apartment, the sound of the knock, the names you learned not to say in certain company. You are a source rather than a reader of the history. The position is strange and satisfying.',
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -132,7 +132,7 @@ export const FOLLOWTHROUGH_82_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1980 &&
       G.age >= 25 &&
       !G.mem?.ft82CarreroTransition,
-    text: 'Franco dies on November 20, 1975 — two years after Carrero Blanco. The transition that follows is the transition that Carrero Blanco would have prevented. Whether ETA\'s calculation was correct — whether a bomb in a Madrid street in 1973 produced a better Spain in 1978 — is the kind of consequentialist question that has a specific answer and does not resolve the moral question. The transition happens. The person who would have prevented it is dead. Both of these are facts.',
+    text: 'Franco dies on November 20, 1975 — two years after Carrero Blanco. The transition that follows is the transition that Carrero Blanco would have prevented. Whether ETA\'s calculation was correct — whether a bomb in a Madrid street in 1973 produced a better Spain in 1978 — is the kind of consequentialist question that has an answer and does not resolve the moral question. The transition happens. The person who would have prevented it is dead. Both of these are facts.',
     choices: null,
     effect: (p) => {
       p.r += 5

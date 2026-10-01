@@ -168,7 +168,7 @@ export const POLICE_ARC_EVENTS = [
       isPolice(G) &&
       G.age >= 40 &&
       !G.mem?.polWeightFired,
-    text: `The things you have seen in the course of the work have accumulated in a way. Not trauma in the clinical sense — or not only that — but a weight of exposure: the specific scenes, the specific faces, the specific decisions you made in the gap between procedure and situation. Some of these you have processed. Some have not been processed in ways you are aware of. The weight is part of the job and you have known this since the beginning, but knowing it at the beginning and knowing it at year fifteen are different kinds of knowing.`,
+    text: `The things you have seen in the course of the work have accumulated in a way. Not trauma in the clinical sense — or not only that — but a weight of exposure: the scenes, the faces, the decisions you made in the gap between procedure and situation. Some of these you have processed. Some have not been processed in ways you are aware of. The weight is part of the job and you have known this since the beginning, but knowing it at the beginning and knowing it at year fifteen are different kinds of knowing.`,
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -186,7 +186,7 @@ export const POLICE_ARC_EVENTS = [
       G.flags.has('police_force_used') &&
       G.age >= 40 &&
       !G.mem?.polForceEchoFired,
-    text: `It was proportionate. The report was accurate. The inquiry cleared you. What has also happened is that the event is still there in a specific part of your memory that is different from the part where other events of similar weight live — it is more specific, more retrievable. You have not talked about it with the people who were not there, because the gap between what it was and what it sounds like is a gap that talking across makes larger. You have talked about it with the partner who was there. Once. The conversation established that you both carry it similarly.`,
+    text: `It was proportionate. The report was accurate. The inquiry cleared you. What has also happened is that the event is still there in a part of your memory that is different from the part where other events of similar weight live — it is more specific, more retrievable. You have not talked about it with the people who were not there, because the gap between what it was and what it sounds like is a gap that talking across makes larger. You have talked about it with the partner who was there. Once. The conversation established that you both carry it similarly.`,
     choices: null,
     effect: (p) => {
       p.m -= 4

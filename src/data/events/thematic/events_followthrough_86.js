@@ -31,7 +31,8 @@ export const FOLLOWTHROUGH_86_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 55 &&
       !G.mem?.ft86ResSchoolTRC,
-    text: 'The Truth and Reconciliation Commission releases its final report in 2015. Ninety-four calls to action. The word "genocide" used in the executive summary. You give testimony, or you do not give testimony, but the testimony exists — six thousand survivors spoke to the Commission over six years. Justice Murray Sinclair says: "Education is what got us into this mess — and education will get us out." You heard him say this. You know what he meant by education, on both sides of it.',
+    text: 'The commission publishes its final report in 2015: ninety-four calls to action, and in the summary the word genocide. You spoke to it, or you did not, but the testimony exists. Murray Sinclair says that education is what got us into this mess and education will get us out. You know what he meant by education, from both sides of it.',
+    context: 'Over six years the Truth and Reconciliation Commission heard from more than 6,000 witnesses, most of them residential school survivors.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -51,7 +52,7 @@ export const FOLLOWTHROUGH_86_EVENTS = [
       G.currentYear >= 1988 &&
       G.age >= 50 &&
       !G.mem?.ft86JapRedress,
-    text: 'September 22, 1988. Mulroney reads the apology in the House of Commons. Twenty-one thousand dollars to each survivor of the internment. The Japanese Canadian Redress Agreement — the result of years of organizing by the National Association of Japanese Canadians. You are in the House gallery or you are watching on television or you are told about it. The word "apology" in Parliament, for what P.C. 1486 did. The twenty-one thousand dollars is not the property, is not the fishing boat, is not the years. It is what the government agreed to call the acknowledgement.',
+    text: 'September 22, 1988, and the prime minister reads the apology in the House of Commons, with twenty-one thousand dollars for each survivor of the internment, after years of organising. You are in the gallery, or watching on television, or told about it afterwards. The money is not the house, not the fishing boat, not the years. It is what the government agreed to call acknowledgement.',
     choices: null,
     effect: (p) => {
       p.mo += 21000
@@ -72,7 +73,8 @@ export const FOLLOWTHROUGH_86_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 2000 &&
       G.age >= 35 &&
       !G.mem?.ft86QuietRevRef,
-    text: 'The referendums: 1980 and 1995. You voted in both or one or neither, depending on where you were and which side of the question you were on. The 1995 result: 49.4% Yes, 50.6% No. Forty-nine thousand votes. Parizeau says it was "money and the ethnic vote." The province you built through the Quiet Revolution is both what Quebec is now and the question of what Quebec will become. The question is not resolved. It is managed, which is a Canadian answer to a question that other countries would answer differently.',
+    text: '1980, and 1995. In 1995 it comes down to fewer than fifty thousand votes, and Parizeau blames money and the ethnic vote. The Quebec your generation built in the Quiet Revolution is both what the province is and the question of what it will become. The question is not resolved. It is managed, which is a Canadian kind of answer.',
+    context: 'The 1995 Quebec referendum on sovereignty failed by 50.6 per cent to 49.4 per cent.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -114,7 +116,7 @@ export const FOLLOWTHROUGH_86_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 35 &&
       !G.mem?.ft86OilSandsBust,
-    text: 'The price of oil drops below the cost of extraction from the oil sands in late 2014. The camp begins to empty in 2015. You have seen this before in smaller versions — the price cycles, the layoffs, the job board that goes from full to empty in a month. What is different this time is the scale and the speed. Fort McMurray in the bust is the portrait of what a resource economy looks like when the resource price moves. The province runs a deficit. The rage turns toward Ottawa. You watch it from whatever place the camp deposited you when it emptied.',
+    text: 'In late 2014 the oil price falls below what it costs to get it out of the sands, and by 2015 the camp is emptying. You have seen smaller versions of this, the job board full and then empty within a month. This time it is bigger and faster. The province runs a deficit and the anger turns toward Ottawa. You watch it from wherever the camp put you down when it closed.',
     choices: null,
     effect: (p) => {
       p.mo -= 15000

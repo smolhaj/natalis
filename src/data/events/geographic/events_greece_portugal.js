@@ -55,7 +55,7 @@ export const GREECE_PORTUGAL_EVENTS = [
       {
         text: 'You find the underground — the music that moves in private apartments, the books passed between people.',
         tag: null,
-        outcome: 'Knowing what is banned and seeking it out anyway is its own kind of education. You learn more from the forbidden shelves than from any curriculum.',
+        outcome: 'Knowing what is banned and seeking it out anyway is an education. You learn more from the forbidden shelves than from any curriculum.',
         effect: (p) => { p.m -= 4; p.e += 6; p.addFlag('dissident_reader'); p.addFlag('junta_youth'); p.setMem('grCulture', true) },
       },
     ],
@@ -71,18 +71,18 @@ export const GREECE_PORTUGAL_EVENTS = [
       G.currentYear === 1973 &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem.grPoly,
-    text: 'November 17, 1973. Students at Athens Polytechnic occupy the building. A homemade radio transmitter broadcasts from inside: "This is the Polytechnic. People of Greece, the Polytechnic is the banner of our struggle and your struggle." The broadcast continues for three days. You are close enough to hear it — through a window, from a street nearby, through someone else\'s transistor radio. In the early morning of November 17th, the military sends a tank through the iron gate. The broadcast stops.',
+    text: 'November 1973. The students occupy the Polytechnic, and a homemade transmitter broadcasts from inside: "This is the Polytechnic. People of Greece." For three days you can hear it, through a window, from a nearby street, on someone else\'s transistor. In the early morning of the seventeenth a tank goes through the iron gate. The broadcast stops.',
     choices: [
       {
         text: 'You go to the square. You are there when it happens.',
         tag: null,
-        outcome: 'The tank moves and you feel it in your feet before you see it. What happens next you remember in fragments, in the specific way that the body stores what the mind cannot keep whole.',
+        outcome: 'The tank moves and you feel it in your feet before you see it. What happens next you remember in fragments, in the way that the body stores what the mind cannot keep whole.',
         effect: (p) => { p.m -= 15; p.r += 12; p.karma += 8; p.addFlag('political_active'); p.addFlag('polytechnic_generation'); p.setMem('grPoly', true) },
       },
       {
         text: 'You listen from a distance. You do not go.',
         tag: null,
-        outcome: 'You are not there, and not being there is something you carry. The broadcast was real. The tank was real. That you heard it from a distance rather than from the street is also real.',
+        outcome: 'You are not there, and not being there is something you carry. That you heard it from a distance rather than from the street is also real.',
         effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('polytechnic_generation'); p.setMem('grPoly', true) },
       },
     ],
@@ -185,10 +185,10 @@ export const GREECE_PORTUGAL_EVENTS = [
       G.currentYear >= 2015 && G.currentYear <= 2016 &&
       G.age >= 20 &&
       !G.mem?.grOxi,
-    text: 'July 5, 2015. The question is: do you accept the creditors\' austerity terms. The ballot says \'OXI\' for no and \'NAI\' for yes. Sixty-one percent vote OXI. Tsipras holds it up as a mandate. One week later he accepts terms significantly more severe than the ones that were rejected. The sequence — the referendum, the week, the capitulation — teaches something specific about the gap between democratic mandate and economic power. The word OXI has meant something specific in Greece since October 1940, when Metaxas said it to Mussolini. It was used again in July 2015, and meant something different, and produced a different result.',
+    text: 'July 5, 2015. The ballot says OXI for no and NAI for yes to the creditors\' terms, and OXI wins by a mile, and Tsipras holds it up as a mandate. A week later he signs terms harsher than the ones that were rejected. OXI has meant something in Greece since October 1940, when Metaxas said it to Mussolini. In July 2015 it meant something else, and got something else.',
     choices: [
       {
-        text: 'You voted OXI. The vote was real. The outcome was not what the vote indicated.',
+        text: 'You voted OXI. You voted. The outcome was not what the vote indicated.',
         tag: null,
         outcome: 'The lesson is not about Tsipras. The lesson is about the structure that produced the outcome.',
         effect: (p) => { p.m -= 10; p.r += 7; p.e += 4; p.addFlag('gr_oxi_generation'); p.setMem('grOxi', true); },
@@ -196,7 +196,7 @@ export const GREECE_PORTUGAL_EVENTS = [
       {
         text: 'You voted NAI, or abstained. You believed the referendum was theater.',
         tag: null,
-        outcome: 'You were right about the theater. The people who voted OXI were also right about what they were saying. Both can be true.',
+        outcome: 'You were right about the theater. The people who voted OXI were also right about what they were saying.',
         effect: (p) => { p.m -= 7; p.r += 5; p.e += 3; p.addFlag('gr_oxi_generation'); p.setMem('grOxi', true); },
       },
     ],
@@ -215,12 +215,12 @@ export const GREECE_PORTUGAL_EVENTS = [
       G.age >= 22 && G.age <= 38 &&
       G.stats.smarts > 45 &&
       !G.mem?.grBrainDrain,
-    text: 'Between 2008 and 2018, four hundred thousand Greeks emigrated — the majority of them with university degrees. You have the degree. You have the EU passport. Germany, the Netherlands, Australia, Canada: the specific geography of where Greeks went. You know people who are already there. The salary offered in Germany is three times what the Greek market offers for the same work, if the Greek market offers it at all. The unemployment rate for your age group has reached fifty percent. The question is whether you are a person who stays or a person who goes, and the question is answered by the same practical arithmetic that is answering it for four hundred thousand other people.',
+    text: 'Hundreds of thousands of Greeks leave in the crisis decade, most of them with degrees. You have the degree and the European passport, and you know people already in Germany, the Netherlands, Australia. The salary there is three times the one here, if there is one here, and half your age group has no work at all. Whether you are a person who stays or goes is being decided by the same arithmetic for everyone.',
     choices: [
       {
         text: 'You go. The degree travels. You follow it.',
         tag: null,
-        outcome: 'You leave carrying the specific double grief of economic emigration: you did not leave because you wanted to, and you do not return because you cannot afford to.',
+        outcome: 'You leave carrying the double grief of economic emigration: you did not leave because you wanted to, and you do not return because you cannot afford to.',
         effect: (p) => { p.m -= 8; p.r += 7; p.e += 5; p.addFlag('emigrated'); p.emigrateTo(['Germany', 'United Kingdom', 'Netherlands']); p.addFlag('greece_crisis_emigrant'); p.setResidency('work_visa'); p.setMem('grBrainDrain', true); },
       },
       {
@@ -274,7 +274,7 @@ export const GREECE_PORTUGAL_EVENTS = [
       G.currentYear >= 1940 && G.currentYear <= 1973 &&
       G.age >= 12 && G.age <= 25 &&
       !G.mem.ptEstado,
-    text: 'The PIDE are not everywhere but they might be. That is the point. The informer network — vizinhos, colleagues, the person at the next workbench — is as much an instrument of control as the actual arrests. You have learned to calibrate: the sentence you do not finish at work, the opinion you do not complete in the café, the joke you start and then redirect. Salazar has been in power since before your parents can remember politics being anything else. The Estado Novo is not exceptional to you. It is the shape of ordinary life.',
+    text: 'The PIDE might be anywhere. That is the point. The informer network — vizinhos, colleagues, the person at the next workbench — is as much an instrument of control as the actual arrests. You have learned to calibrate: the sentence you do not finish at work, the opinion you do not complete in the café, the joke you start and then redirect. Salazar has been in power since before your parents can remember politics being anything else. The Estado Novo is the shape of ordinary life.',
     choices: [
       {
         text: 'You keep your head down. The walls are thin everywhere.',
@@ -332,7 +332,7 @@ export const GREECE_PORTUGAL_EVENTS = [
     text: (G) => {
       const hasLived = G.flags.includes('estado_novo_generation') || G.flags.includes('learned_silence')
       if (hasLived) {
-        return 'April 25, 1974. The signal: Rádio Renascença plays *E Depois do Adeus* at 22:55 on the night of the 24th. Then at 00:20 *Grândola, Vila Morena* — a song banned since 1964, a song about brotherhood and the people, and anyone who knows what is happening knows what hearing it on the national radio means. The Armed Forces Movement has moved. By morning the Estado Novo is over. You have lived your entire life inside this regime. The soldiers have carnations in their rifle barrels. Forty-eight years of one thing, and then this: a day without violence, with flowers in the gun barrels, and the streets full of people who no longer know what to be afraid of.'
+        return 'April 25, 1974. Just before eleven at night the radio plays E Depois do Adeus, and after midnight Grândola, Vila Morena, banned for ten years, and anyone who knows what is happening knows what hearing it means. By morning the Estado Novo is over. You have lived your whole life inside it. The soldiers have carnations in their rifle barrels, and the streets are full of people who no longer know what to be afraid of.'
       }
       return 'April 25, 1974. The signal goes out: Rádio Renascença plays *E Depois do Adeus* at 22:55 — the first codeword. Then at 00:20 they play *Grândola, Vila Morena*, a song banned for its leftist associations, and any soldier who is part of the MFA knows what this means. By morning it is clear the Estado Novo is over. Soldiers have carnations in their rifle barrels. Forty-eight years of dictatorship end in a day, almost without violence, with flowers.'
     },
@@ -362,7 +362,7 @@ export const GREECE_PORTUGAL_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1978 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem.ptRetornado,
-    text: 'Seven hundred thousand people return from Angola and Mozambique after independence — retornados, the returned ones, though many were born in Africa and have never lived in Portugal. They arrive at the airports with what they could carry in the time available, which was rarely enough time. Lajes, Figo Maduro, the transit centres. Some are family. Some are strangers at bus stations with suitcases and the particular look of people who have recently learned what can and cannot be packed in a night.',
+    text: 'Seven hundred thousand people return from Angola and Mozambique after independence — retornados, the returned ones, though many were born in Africa and have never lived in Portugal. They arrive at the airports with what they could carry in the time available, which was rarely enough time. Lajes, Figo Maduro, the transit centres. Some are family. Some are strangers at bus stations with suitcases and the look of people who have recently learned what can and cannot be packed in a night.',
     choices: [
       {
         text: 'Your family is among them. Someone you know arrives with almost nothing.',
@@ -389,7 +389,7 @@ export const GREECE_PORTUGAL_EVENTS = [
       G.currentYear >= 1986 && G.currentYear <= 1992 &&
       G.age >= 28 && G.age <= 60 &&
       !G.mem.ptEU,
-    text: 'Portugal joins the European Community on January 1, 1986. The structural funds begin to arrive. Roads that did not exist are built. A motorway from Lisbon to Porto. A university in every district capital. A pharmacist in Beja applies for European funding for the first time and receives it. What EC membership means for the generation that remembers the Estado Novo and emigrating to France to work in factories is not something that can be measured in GDP figures. The reference point is not Luxembourg. The reference point is 1974.',
+    text: 'January 1, 1986, and Portugal is in Europe, and the money starts to arrive: roads that did not exist, a motorway from Lisbon to Porto, a university in every district capital. A pharmacist in Beja applies for European funding and gets it. For people who remember the Estado Novo and the factories in France, none of this shows up in the GDP figures. The reference point is not Luxembourg. It is 1974.',
     choices: null,
     effect: (p) => { p.m += 8; p.w += 5; p.e += 4; p.addFlag('eu_accession_generation'); p.setMem('ptEU', true) },
   },
@@ -403,7 +403,7 @@ export const GREECE_PORTUGAL_EVENTS = [
       G.currentYear >= 2011 && G.currentYear <= 2013 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.ptRasca,
-    text: 'March 12, 2011. The protest is called "Geração à Rasca" — the desperate generation. It was organized not by unions or parties but by four precarious workers in their twenties who wrote a manifesto on the internet. They chose the name at two in the morning. Three hundred thousand people come to Lisbon; one hundred thousand to Porto; hundreds of thousands to every city in the country. They carry signs that say "Parva que Sou" — Fool That I Am — a line from a José Afonso song that was the second codeword for the Carnation Revolution. The largest protest since 1974. Three weeks later, Sócrates resigns. Six weeks after that, Portugal applies for the EU/IMF bailout.',
+    text: 'March 12, 2011, Geração à Rasca, organised not by a union or a party but by four precarious workers in their twenties who wrote a manifesto online at two in the morning. Hundreds of thousands come out in Lisbon and Porto and everywhere else, carrying signs that say Parva que Sou. The biggest protest since 1974. Three weeks later the prime minister resigns, and six weeks after that Portugal asks for the bailout.',
     choices: [
       {
         text: 'You are in the Rossio, or the Praça do Município, or the streets of Porto.',
@@ -430,7 +430,8 @@ export const GREECE_PORTUGAL_EVENTS = [
       G.currentYear >= 2011 && G.currentYear <= 2015 &&
       G.age >= 30 && G.age <= 60 &&
       !G.mem?.ptTroika,
-    text: 'The troika memorandum runs to several hundred pages of specific conditions attached to the €78 billion bailout. You do not read all of it. You feel what it contains. The social security contribution is raised for workers and reduced for employers. The thirteenth-month and fourteenth-month salaries are suspended. The Constitutional Court strikes some measures down. The government introduces equivalent measures under different names. Doctors who trained here are emigrating to Angola and Mozambique — Portugal is exporting medical professionals to its former colonies, which is a sentence that requires some time to process. Youth unemployment reaches forty percent. The word "austeridade" is in every conversation.',
+    text: 'The troika\'s memorandum runs to hundreds of pages and you do not read it; you feel what it contains. The thirteenth and fourteenth months\' pay are suspended. When the court strikes a measure down, it comes back under another name. Doctors who trained here are emigrating to Angola and Mozambique, and youth unemployment reaches forty percent. Austeridade is in every conversation.',
+    context: 'Portugal\'s 2011 bailout from the EU and IMF totalled 78 billion euros.',
     choices: [
       {
         text: 'You adapt, without calling it adaptation.',

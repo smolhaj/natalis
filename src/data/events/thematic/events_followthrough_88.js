@@ -56,7 +56,7 @@ export const FOLLOWTHROUGH_88_EVENTS = [
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       G.age >= 18 &&
       !G.mem?.ft88CovidDorms,
-    text: 'April 2020. Singapore\'s migrant worker dormitories become the centre of the country\'s COVID-19 outbreak. The dormitories — each housing thousands of men in close quarters — are COVID clusters in a way that the private condominiums and HDB flats of Singaporean citizens are not. By May, more than twenty thousand dormitory residents have tested positive. The workers are locked in. Some are inside for months. Singapore\'s "foreign workers" are visible in the pandemic in a way they were not visible before it. The country has a conversation about the dormitory conditions. The conversation continues after the pandemic. The dormitories are still there.',
+    text: 'April 2020, and the virus is in the migrant workers\' dormitories, thousands of men to a block, and not in the condominiums. By May tens of thousands have tested positive and the men are locked in, some for months. The country notices its foreign workers, and talks about the dormitories, and the talk goes on after the pandemic. The dormitories are still there.',
     choices: null,
     effect: (p) => {
       p.h -= 6

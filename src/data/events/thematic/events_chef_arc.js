@@ -38,7 +38,7 @@ export const CHEF_ARC_EVENTS = [
       isChef(G) &&
       G.flags.has('chef_material_knowledge') &&
       !G.mem?.chefMentorFired,
-    text: `The chef who shaped your technique is not the chef you thought would shape you. Not the famous one or the theoretically correct one but the one in the kitchen where you spent your formative years, whose hands moved with a specific efficiency and whose corrections were exact and whose approach to the material contained a coherent philosophy that you did not recognise as a philosophy until years after you had already absorbed it. You use their techniques and do not always know you are doing it.`,
+    text: `The chef who shaped your technique is not the chef you thought would shape you. Not the famous one or the theoretically correct one but the one in the kitchen where you spent your formative years, whose hands moved with an efficiency and whose corrections were exact and whose approach to the material contained a coherent philosophy that you did not recognise as a philosophy until years after you had already absorbed it. You use their techniques and do not always know you are doing it.`,
     choices: null,
     effect: (p) => {
       p.m += 6
@@ -75,7 +75,7 @@ export const CHEF_ARC_EVENTS = [
       isChef(G) &&
       G.age >= 32 &&
       !G.mem?.chefServiceFired,
-    text: `The service that goes catastrophically wrong. This happens eventually to everyone who runs a kitchen long enough. Tonight it is equipment failure at the worst possible moment, and the workarounds are partial, and the table of twelve that came for the event of the season is getting something that is not the event of the season. You carry this service for a while. You then carry it as information about what holds under pressure, which is a different kind of carrying.`,
+    text: `The service that goes catastrophically wrong. This happens eventually to everyone who runs a kitchen long enough. Tonight it is equipment failure at the worst possible moment, and the workarounds are partial, and the table of twelve that came for the event of the season is getting something that is not the event of the season. You carry this service for a while. You then carry it as information about what holds under pressure.`,
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -127,7 +127,7 @@ export const CHEF_ARC_EVENTS = [
       isChef(G) &&
       G.age >= 60 &&
       !G.mem?.chefLateFired,
-    text: `The accounting of a life in kitchens: the material knowledge built over forty years, the mentor whose technique is still in your hands, the dish that arrived from somewhere specific and became the thing that defines how people remember you. The service that went catastrophically wrong. The body's record of the heat and the hours and the twelve-hour standing days. The juniors who came through, some of whom you shaped and some of whom you drove out. The food is the thing you made. Some of it was the real thing. Some of the people who ate it are still thinking about it, which is the correct lifecycle for the real thing.`,
+    text: `The accounting of a life in kitchens: the material knowledge built over forty years, the mentor whose technique is still in your hands, the dish that arrived from somewhere specific and became the thing that defines how people remember you. The service that went catastrophically wrong. The body's record of the heat and the hours and the twelve-hour standing days. The juniors who came through, some of whom you shaped and some of whom you drove out. The food is the thing you made. Some of it was the real thing. Some of the people who ate it are still thinking about it, the correct lifecycle for the real thing.`,
     choices: null,
     effect: (p) => {
       p.m += 10

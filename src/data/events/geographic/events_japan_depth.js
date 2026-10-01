@@ -18,13 +18,17 @@ export const JAPAN_DEPTH_EVENTS = [
     id: 'jpn_okinawa_battle_1945',
     phase: null,
     weight: 5,
+    // Okinawan, and nobody else: this told a farmer in Tohoku that his village
+    // had been given grenades. It needs the Okinawa place (`jp_okinawa`).
     when: (G) =>
       G.character.country.name === 'Japan' &&
+      (G.birthPlace?.id === 'jp_okinawa' || G.place?.id === 'jp_okinawa') &&
       G.currentYear >= 1945 && G.currentYear <= 1948 &&
       G.age >= 14 &&
       !G.mem?.jpnOkinawa45 &&
       !G.flags.has('jpn_hibakusha_survivor'),
-    text: 'The Battle of Okinawa lasted eighty-two days. The Americans called it "the typhoon of steel." Okinawa: the southernmost prefecture, the staging ground for the invasion of the home islands that the government said was coming. The Imperial Army ordered civilians to commit suicide rather than surrender — there were grenades distributed for this purpose. Whole families: a grenade, then the next grenade. The caves. The cliffs at Mabuni. 94,000 Okinawan civilians dead, a third of the civilian population. This is separate from the atomic bombs; this is before the atomic bombs; this is the specific wound that Okinawa carries that is different from what Hiroshima carries.',
+    text: 'Eighty-two days. The Americans call it the typhoon of steel. Before it reached the village the soldiers handed out grenades, two to a family: one for the enemy, one for yourselves. Whole families in the caves, a grenade and then the next grenade. At Mabuni people walked off the cliffs holding hands.',
+    context: 'The Battle of Okinawa (April-June 1945) killed about 94,000 Okinawan civilians, roughly a quarter to a third of the island\'s population. Imperial Army units distributed grenades and ordered or pressed civilians into mass suicide (shūdan jiketsu) rather than surrender.',
     choices: [
       {
         text: 'Your family survived but others in the village did not. You do not say the word "suicide order" in front of your children.',
@@ -51,12 +55,12 @@ export const JAPAN_DEPTH_EVENTS = [
       G.currentYear >= 1946 && G.currentYear <= 1952 &&
       G.age >= 18 &&
       !G.mem?.jpnOccConst,
-    text: 'The new constitution is promulgated in November 1946, effective May 1947. Article 9: Japan renounces war forever. Not the right to self-defense but war itself, as an instrument of policy. MacArthur\'s government wrote much of it in nine days, working from American models and Japanese drafts. The Meiji constitution is dissolved. The emperor is not divine; he is a symbol. The emperor himself announces this on January 1, 1946, in a statement that does not use the word "divine" but everyone understands. The country that emerges from this — pacifist, constitutionally so, American-protected — is not any country that has existed before.',
+    text: 'The new constitution comes into force in May 1947, much of it drafted by MacArthur\'s staff in nine days, and Article 9 renounces war forever, not only aggression but war itself. Earlier that year the emperor told the country he was not divine, without quite using the word, and everyone understood. He is a symbol now. The country that comes out of this, pacifist by its own constitution and protected by America, is not like any country that existed before.',
     choices: [
       {
         text: 'The constitution is a defeat turned into something. You hold it carefully.',
         tag: 'jpn_article9_generation',
-        outcome: 'What you hold carefully becomes what your children are taught. The teaching and the holding are not quite the same thing, but both are real.',
+        outcome: 'What you hold carefully becomes what your children are taught. The teaching and the holding are not quite the same thing.',
         effect: (p) => { p.r += 5; p.e += 5; p.addFlag('jpn_article9_generation'); p.setMem('jpnOccConst', true); },
       },
       {
@@ -124,13 +128,13 @@ export const JAPAN_DEPTH_EVENTS = [
     // is a different room and gets its own sentences.
     text: (G) => G.currentYear === 1995
       ? 'It is quarter to six in the morning and the room moves in a way rooms are not supposed to move. On the television the elevated expressway is lying on its side with the road surface vertical. The wooden houses that came through the war burn all morning because the mains have gone and there is nothing to put on them. Within two days there are ordinary people driving vans of water down from Osaka, because they got there before anybody official did.'
-      : 'In January they run the footage again: the expressway on its side, the road surface vertical, the smoke over Nagata going up all morning. A year on, the prefabricated housing is still standing in rows on what used to be a playing field, and the people in it are mostly old. What gets said about that morning now is not the shaking. It is the vans of water that came down from Osaka on the second day, driven by people nobody had asked.',
+      : 'In January they run the footage again: the expressway on its side, the road surface vertical, the smoke over Nagata going up all morning. A year on, the prefabricated housing is still standing in rows on what used to be a playing field, and the people in it are mostly old. What gets said about that morning now is the vans of water that came down from Osaka on the second day, driven by people nobody had asked.',
     context: 'The Great Hanshin earthquake struck at 5:46 a.m. on 17 January 1995 with a magnitude of 6.9 and its epicentre near Awaji Island. 6,434 people died, most in the collapse of older wooden housing, and post-quake fires spread unchecked because water mains had ruptured. The slow official response and the improvised civilian relief effort that filled the gap gave 1995 its name in Japan as the first year of the volunteer era.',
     choices: [
       {
         text: 'You were in Kobe or nearby. You were in the moving room.',
         tag: 'jpn_kobe_generation',
-        outcome: 'The specific texture of what came after: the temporary housing, the smell of burning that stayed, the way the neighbourhood looked. You rebuild the neighbourhood differently in memory each time you think of it.',
+        outcome: 'The texture of what came after: the temporary housing, the smell of burning that stayed, the way the neighbourhood looked. You rebuild the neighbourhood differently in memory each time you think of it.',
         effect: (p) => { p.m -= 15; p.r += 8; p.h -= 5; p.addFlag('jpn_kobe_generation'); p.setMem('jpnKobe95', true); },
       },
       {
@@ -152,7 +156,7 @@ export const JAPAN_DEPTH_EVENTS = [
       G.currentYear >= 1993 && G.currentYear <= 2007 &&
       G.age >= 18 && G.age <= 32 &&
       !G.mem?.jpnLostGen,
-    text: 'The employment ice age: 1993–2005. The bubble collapsed and the companies stopped hiring new graduates. The system that your older siblings entered — company loyalty, lifetime employment, the seniority-based salary that grew every year — closed around 1993 and did not reopen the same way. You graduate into part-time work, dispatch work, work through a temp agency. The term is freeter, from the German "frei" and the English "arbeiter." You are not unemployed — you are working. The work does not lead anywhere. The companies that would have hired you in 1989 are not hiring you in 1998. Some of your classmates found the one door that was open that year. Some did not.',
+    text: 'The bubble burst and the companies stopped hiring graduates, and the door your older brothers and sisters went through, a job for life and a salary that rose every year, closed and did not reopen the same way. You graduate into part-time work, temp agencies, dispatch. The word for you is freeter. You are working, and the work does not lead anywhere. Some of your classmates found the one door open that year. Some did not.',
     choices: [
       {
         text: 'You find something — not the career track but something sustainable.',
@@ -190,7 +194,7 @@ export const JAPAN_DEPTH_EVENTS = [
       {
         text: 'The textbook is the curriculum. Other countries\' textbooks also leave things out.',
         tag: null,
-        outcome: 'Other countries\' textbooks also leave things out. This is true. You notice it comes to mind when the specific subject is raised.',
+        outcome: 'Other countries\' textbooks also leave things out. This is true. You notice it comes to mind when the subject is raised.',
         effect: (p) => { p.r += 3; p.setMem('jpnCWsilence', true); },
       },
     ],
@@ -226,7 +230,7 @@ export const JAPAN_DEPTH_EVENTS = [
       G.currentYear >= 2013 &&
       G.age >= 35 &&
       !G.mem?.jpnArt9Late,
-    text: 'The Abe government\'s 2015 reinterpretation of Article 9: Japan\'s "collective self-defense" is now permitted, meaning the Self-Defense Forces can fight alongside allies even if Japan itself is not attacked. This requires reinterpreting the constitution without amending it. The legal scholars say it is constitutionally impossible. The Supreme Court has not yet tested it. The protests outside the Diet are the largest in decades — 100,000 at their peak. Polls show a majority opposing the change. The change passes. The constitution remains unchanged in text; its meaning has been changed by interpretation.',
+    text: '2015, and the government reinterprets Article 9 so that the Self-Defense Forces may fight beside allies even when Japan is not attacked, without changing a word of it. Most constitutional scholars say it cannot be done. The protests outside the Diet are the largest in decades, and most people in the polls are against it, and it passes. The text of the constitution has not changed. Its meaning has.',
     choices: [
       {
         text: 'You were in the protest outside the Diet. The pacifist identity was not abstract.',
@@ -255,7 +259,7 @@ export const JAPAN_DEPTH_EVENTS = [
       G.age >= 22 && G.age <= 35 &&
       G.career &&
       !G.mem?.jpnWomenCeil,
-    text: 'The Equal Employment Opportunity Law passes in 1986. It has no penalties for violation. You enter the workforce at a company that now officially cannot discriminate by gender. The practice: the "general track" which leads to management, and the "clerical track" which does not, and the understanding that women are expected to choose the clerical track or to leave when they marry. Your supervisor tells you that clients are more comfortable with male representatives. The policy is gender-neutral. The practice is not. You are aware of exactly three women at your company who have reached middle management. They are pointed to as evidence that it is possible.',
+    text: 'The equal opportunity law passes in 1986, with no penalties. At your company there are now two tracks, one that leads to management and one that does not, and it is understood which one women take, and that they leave when they marry. Your supervisor says the clients are more comfortable with men. You know of exactly three women at the company in middle management. They are pointed to as proof that it can be done.',
     choices: [
       {
         text: 'You push into the general track. The cost is continuous and specific.',
@@ -286,10 +290,11 @@ export const JAPAN_DEPTH_EVENTS = [
     text: (G) => {
       const inFukushima = G.ruralUrban === 'rural' && G.currentYear >= 2011
       if (inFukushima) {
-        return 'March 11, 2011. The tsunami arrives at Fukushima Daiichi at 3:37 p.m. The backup generators fail. The cooling fails. By March 12 the first hydrogen explosion. The evacuation zone: first 3 km, then 10 km, then 20 km, then 30 km. You have a house in the 20 km zone. The NHK announcer\'s voice is calm. He says to evacuate. You take the documents. You take the things that cannot be replaced. You leave the cat because you cannot catch it. The zone is closed. You are not allowed to return for more than two hours at a time, with dosimeters, to collect belongings. The house is still there. You are not allowed to live in it.'
+        return 'March 2011. The NHK announcer\'s voice is calm, and he says to evacuate. You take the documents and the things that cannot be replaced, and you leave the cat because you cannot catch it. Later you are allowed back for two hours at a time, with a dosimeter clipped to your collar. The house is still there. You are not allowed to live in it.'
       }
       return 'March 11, 2011. The Tōhoku earthquake and tsunami, and then the Fukushima Daiichi nuclear accident. Japan has fifty reactors. The debate about nuclear power that was held before March 11 is a different debate from the one that is held after. The evacuation zone becomes the permanent question: how far, how long, what is safe, who decides what is safe. You live elsewhere in Japan and watch a country discover what its energy infrastructure was built on.'
     },
+    context: 'The tsunami reached the Fukushima Daiichi plant at 3:37 p.m. on 11 March 2011; backup generators and cooling failed and hydrogen explosions followed from 12 March. The evacuation zone widened from 3 km to 20 km, with a further shelter zone to 30 km.',
     choices: [
       {
         text: 'You are in the evacuation zone. The house is there and you are not allowed in it.',

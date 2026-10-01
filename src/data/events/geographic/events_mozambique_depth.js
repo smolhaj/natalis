@@ -22,7 +22,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
       G.currentYear >= 1977 && G.currentYear <= 1985 &&
       G.age >= 6 && G.age <= 18 &&
       !G.mem?.mozDepAldeias,
-    text: `FRELIMO's Operation Production and the aldeias comunais: the government decided that the scattered homestead pattern of rural Mozambique was inefficient, feudal, incompatible with socialist development. Starting in 1977, rural families were instructed — and sometimes compelled — to relocate to communal villages where collective agriculture, schools, and clinics would be provided. About 1.5 million people moved. The land they left was their machamba — the family plot that fed them, that they knew, that their grandparents had worked. The collective plots in the new villages were unfamiliar ground with different drainage, different soil. The experiment failed. The production numbers fell. By 1982 the policy was quietly abandoned. The families had moved. Most stayed.`,
+    text: `Starting in 1977 the government decides the scattered homesteads of the countryside are backward, and families are told, and sometimes made, to move into communal villages with collective fields and a school and a clinic. You leave the machamba your grandparents worked, the plot you knew. The new fields are strange ground, different water, different soil, and the harvests fall. By 1982 the policy is quietly dropped. Most families stay where they were moved.`,
     choices: [
       {
         text: 'Your family relocated to the communal village. The new plot was not the old one.',
@@ -103,7 +103,8 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
       G.age >= 6 && G.age <= 18 &&
       G.flags.has('mozambican_civil_war_generation') &&
       !G.mem?.mozDepLandmine,
-    text: `The peace accords were signed in 1992. The landmines were not. RENAMO and FRELIMO together laid between one and two million landmines in the rural areas during the war — in fields, on paths, near water sources, around bridges, in the exact places that rural life requires you to go. After 1992 the demining organisations came: HALO Trust, Norwegian People's Aid, the UN. The work is slow. A village reports a minefield. Deminers mark it, clear it methodically. Fields that have been unplantable for years become available. In the years before the clearing, people continue to lose feet, hands, eyes. Children who are curious about metal objects in the ground.`,
+    text: `The peace was signed in 1992. The mines were not. They are in the fields, on the paths, by the water and the bridges, in exactly the places a rural life has to go. After the war the deminers come, slow and methodical, and fields that were unplantable for years open up again. Until they reach yours, people keep losing feet and hands, and the children keep being curious about metal in the ground.`,
+    context: 'An estimated one to two million landmines were laid during Mozambique\'s civil war. HALO Trust declared the country free of known minefields in 2015.',
     choices: [
       {
         text: 'You knew someone who was injured by a mine after the war ended. The war was over and the war was not over.',
@@ -143,7 +144,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
       G.flags.has('moz_dep_landmine_generation') &&
       G.age >= 50 &&
       !G.mem?.mozDepLandmineLate,
-    text: `The HALO Trust reports Mozambique cleared of landmines in 2015 — one of the first heavily-mined countries to declare itself clean. The announcement is made and celebrated internationally. You receive this information in a specific way, which is the way you receive information about a thing you have lived inside and are now seeing described from outside. The word "cleared" has a meaning on a press release and a meaning in a body.`,
+    text: `The HALO Trust reports Mozambique cleared of landmines in 2015 — one of the first heavily-mined countries to declare itself clean. The announcement is made and celebrated internationally. You receive this information as you receive anything about a thing you have lived inside and are now seeing described from outside. The word "cleared" has a meaning on a press release and a meaning in a body.`,
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -181,7 +182,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
       {
         text: 'You worked in the processing factory before it closed. The efficiency argument did not reach you from the outside.',
         tag: null,
-        outcome: 'The job was not high-paying. It was reliable and it was yours. The economists who made this decision have papers that explain why it was correct. You have a different accounting.',
+        outcome: 'The job was reliable and it was yours. The economists who made this decision have papers that explain why it was correct. You have a different accounting.',
         effect: (p) => {
           p.mo -= 500
           p.m -= 8
@@ -205,7 +206,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
       G.currentYear >= 1996 && G.currentYear <= 2013 &&
       G.age >= 20 && G.age <= 40 &&
       !G.mem?.mozDepMaputoBoom,
-    text: `Maputo in the peace years: the city rebuilt itself with a specific energy. The Polana Hotel was refurbished. The Avenida Julius Nyerere came back to life. The churrasqueiras — barbecue restaurants — reopened or opened new. Prawns from the Inhambane coast. South African tourists discovering a neighbour that had been inaccessible during the war. Expat development workers with salaries denominated in dollars. A Mozambican middle class, small, growing, visible in the new malls. The contrast between Maputo's post-peace energy and the provinces, where the reconstruction was slower, was stark and is part of what you know about your own country.`,
+    text: `Maputo in the peace years rebuilds itself with energy: the Polana repainted, the avenue alive again, the churrasqueiras open, prawns up from Inhambane, South Africans discovering a neighbour they could not reach in the war. The aid workers are paid in dollars, and a small Mozambican middle class appears in the new malls. In the provinces the rebuilding is slower, and the gap between the two is part of what you know about your own country.`,
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -268,7 +269,8 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
       G.currentYear >= 1993 && G.currentYear <= 2010 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.mozDepAidsOrphan,
-    text: `Mozambique's HIV prevalence peaked at around 15% among adults in 2004. The dying happened in the generation between twenty and forty — the parents. By 2005, Mozambique had 1.5 million orphans, with the proportion of AIDS orphans among the highest in the world. Grandmothers became primary caregivers at seventy. Older siblings took over at fifteen. The household reorganised around the absence. The church helped when it could and sometimes extracted when it shouldn't. You grew up inside this reorganisation — raised in the gap that the dying left.`,
+    text: `The dying came to the generation between twenty and forty, the parents. Grandmothers of seventy became mothers again; older brothers and sisters took over at fifteen. Households rearranged themselves around the empty places, and the church helped where it could. You grew up inside that rearrangement, raised in the gap the dying left.`,
+    context: 'Adult HIV prevalence in Mozambique peaked at around 15 percent in the mid-2000s, leaving some 1.5 million orphans.',
     choices: [
       {
         text: 'Your grandmother raised you after both parents were gone. She is very old and she is the structure of your childhood.',
@@ -309,7 +311,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
       G.flags.has('moz_dep_aids_orphan_moz') &&
       G.age >= 22 && G.age <= 38 &&
       !G.mem?.mozDepAidsOrphanAdult,
-    text: `You are the adult now. The person who raised you — grandmother, sibling — is old or gone. You have the generation above and the generation below and the generation that was supposed to be between them is absent or too thin. You are building your adult life inside this specific demographic shape. There are more of you than the outside world acknowledges. The generation that should have been your parents' is not there in its expected numbers. You fill the gap they left.`,
+    text: `You are the adult now. The person who raised you — grandmother, sibling — is old or gone. You have the generation above and the generation below and the generation that was supposed to be between them is absent or too thin. You are building your adult life inside this demographic shape. There are more of you than the outside world acknowledges. The generation that should have been your parents' is not there in its expected numbers. You fill the gap they left.`,
     choices: null,
     effect: (p) => {
       p.r += 4

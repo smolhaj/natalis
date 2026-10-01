@@ -107,7 +107,7 @@ export const FOLLOWTHROUGH_79_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 30 &&
       !G.mem?.ft79OrphanMidlife,
-    text: 'The Western documentaries about the Romanian orphanages of the 1990s still appear occasionally. The footage: the rows of cots, the children rocking, the specific vacancy in the eyes that the cameras caught. You watch them with the knowledge that this footage is about people like you, which is not the same as the footage being about you. You have built a life. The footage does not capture what comes after the footage.',
+    text: 'The Western documentaries about the Romanian orphanages of the 1990s still appear occasionally. The footage: the rows of cots, the children rocking, the vacancy in the eyes that the cameras caught. You watch them with the knowledge that this footage is about people like you, which is not the same as the footage being about you. You have built a life. The footage does not capture what comes after the footage.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -148,7 +148,7 @@ export const FOLLOWTHROUGH_79_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 55 &&
       !G.mem?.ft79MineriLate,
-    text: 'Ion Iliescu was eventually indicted for crimes against humanity for ordering the miners into Bucharest. This was 2019. The events of June 1990 took until 2019 to reach a criminal indictment. Whether the indictment reaches a conviction you do not know. The specific pace of post-communist accountability is a thing you have come to understand very precisely over the decades.',
+    text: 'Ion Iliescu was eventually indicted for crimes against humanity for ordering the miners into Bucharest. This was 2019. The events of June 1990 took until 2019 to reach a criminal indictment. Whether the indictment reaches a conviction you do not know. The pace of post-communist accountability is a thing you have come to understand very precisely over the decades.',
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -185,7 +185,7 @@ export const FOLLOWTHROUGH_79_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 60 &&
       !G.mem?.ft79FileLate,
-    text: 'In late life the question comes back differently. At the time you were in the middle of it — the discovery of the handwriting, the choice of what to do with the knowledge. Now you are outside it in a way that only time provides. You think: that person reported on you to the Securitate. The regime required it or incentivised it or threatened them until they did. The regime is gone. The person is still here. The question of what you owe them and what they owe you is not one the CNSAS process answers.',
+    text: 'In late life the question comes back differently. At the time you were in the middle of it — the discovery of the handwriting, the choice of what to do with the knowledge. Now you are outside it, as only time can put you. You think: that person reported on you to the Securitate. The regime required it or incentivised it or threatened them until they did. The regime is gone. The person is still here. The question of what you owe them and what they owe you is not one the CNSAS process answers.',
     choices: null,
     effect: (p) => {
       p.r += 5

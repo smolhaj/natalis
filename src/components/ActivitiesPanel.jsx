@@ -1,48 +1,57 @@
 import { useState, useEffect } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { ACTIVITIES } from '../data/activities'
-import { DESTINATIONS } from '../data/destinations'
-import { CRIMES, VIOLENT_TARGETS, HOMICIDE_METHODS, crimePayout } from '../data/crimes'
-import { COUNTRIES } from '../data/countries'
-import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
-import { getAvailableCareers, getAvailableBusinessTypes, getPhase, buildPendingTrial, buildG, livingPartner } from '../engine/gameEngine'
+import { CRIMES, VIOLENT_TARGETS, HOMICIDE_METHODS, crimeBarred, crimeArrestRisk } from '../data/crimes'
+import { getAvailableCareers, buildPendingTrial, livingPartner } from '../engine/gameEngine'
 import { CAREERS } from '../data/careers'
 import { hasTech } from '../data/technology.js'
 import { startingSalaryRange } from '../engine/tick'
-import { estimatePrice, estimateCost, eraMoney, hiringCostOf } from '../engine/playerActions'
+import {
+  estimateCost, eraMoney, hiringCostOf, getAvailableBusinessTypes,
+  activityOffered, placeNow, salonOptions, shoppingOptions, surgeryOptions, martialOptions,
+  petOptions, licenceOptions, propertyOptions, vehicleOptions, tripOptions, emigrationOptions,
+  goingOutAvailable, cinemaAvailable, datingAppAvailable, datingAppLabel, racecourseOpen, raceCard,
+  raceStakes, rehabExists, adoptionExists, adoptionPrice, paydayOffer, benefitsOffer, bankruptcyOpen,
+  divorceLegal, crimeHaul, substanceOptions,
+} from '../engine/playerActions'
+import { destinationsFor } from '../data/exitRules.js'
+import { forgedPapersCost, smugglerFee } from '../store/gameStore'
 
+// The labels were a BitLife menu — "Salon & Spa", "Plastic Surgery", "Race
+// Tracks: Bet on the races", "Nightlife: Go out and party". They are plainer
+// now, and every category below is shown only where something in it exists for
+// this person (see isCategoryVisible).
 const TOP_CATEGORIES = [
-  { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself',              group: 'Self' },
-  { key: 'salon',         label: 'Salon & Spa',      emoji: '💆', desc: 'Take care of yourself',         group: 'Self' },
-  { key: 'shopping',      label: 'Shopping',         emoji: '🛍️',  desc: 'Treat yourself',                group: 'Self' },
-  { key: 'plastic_surg',  label: 'Plastic Surgery',  emoji: '✂️',  desc: 'Enhance your appearance',       group: 'Self' },
-  { key: 'hobbies',       label: 'Hobbies',          emoji: '🎸', desc: 'Practice skills and creative pursuits', group: 'Pursuits' },
-  { key: 'education',     label: 'Education',        emoji: '📚', desc: 'Study and learn',               group: 'Pursuits' },
-  { key: 'movies',        label: 'Movie Theater',    emoji: '🎬', desc: 'Catch a film',                  group: 'Pursuits' },
-  { key: 'nightlife',     label: 'Nightlife',        emoji: '🍸', desc: 'Go out and party',              group: 'Pursuits' },
-  { key: 'love',          label: 'Love',             emoji: '❤️',  desc: 'Relationships',                 group: 'Relationships' },
-  { key: 'fertility',     label: 'Fertility',        emoji: '👶', desc: 'Family planning',               group: 'Relationships' },
-  { key: 'friends',       label: 'Friends',          emoji: '👥', desc: 'Your social circle',            group: 'Relationships' },
-  { key: 'pets',          label: 'Pets',             emoji: '🐾', desc: 'Your animal companions',        group: 'Relationships' },
-  { key: 'career',        label: 'Career',           emoji: '💼', desc: 'Your working life',             group: 'Work & Money' },
-  { key: 'business',      label: 'Business',         emoji: '🏢', desc: 'Run your own company',          group: 'Work & Money' },
-  { key: 'assets',        label: 'Assets',           emoji: '🏠', desc: 'Property & vehicles',           group: 'Work & Money' },
-  { key: 'money',         label: 'Money',            emoji: '💰', desc: 'Financial activities',          group: 'Work & Money' },
-  { key: 'licenses',      label: 'Licenses',         emoji: '🪪', desc: 'Get licenced',                  group: 'Work & Money' },
-  { key: 'social_media',  label: 'Social Media',     emoji: '📱', desc: 'Manage your online presence',   group: 'Social' },
-  { key: 'travel',        label: 'Travel',           emoji: '✈️',  desc: 'See the world',                 group: 'Social' },
-  { key: 'immigration',   label: 'Immigration',       emoji: '🛂', desc: 'Residency & citizenship',       group: 'Social' },
-  { key: 'crime',         label: 'Crime',            emoji: '⚠️',  desc: 'Illegal activities',            group: 'Risk' },
-  { key: 'substances',   label: 'Substances',       emoji: '💊', desc: 'Alcohol and drugs',             group: 'Risk' },
-  { key: 'race_tracks',   label: 'Race Tracks',      emoji: '🏇', desc: 'Bet on the races',              group: 'Risk' },
-  { key: 'rehab',         label: 'Rehab',            emoji: '☀️',  desc: 'Battle addictions',             group: 'Risk' },
-  { key: 'underground',   label: 'Go Underground',   emoji: '🕵️', desc: 'Evade the law',                 group: 'Risk' },
-  { key: 'prison',        label: 'Prison Life',       emoji: '🔒', desc: 'Activities inside',             group: 'Risk' },
+  { key: 'mind_body',     label: 'Mind & Body',      emoji: '🧘', desc: 'Body, mind, the doctor',         group: 'Self' },
+  { key: 'salon',         label: 'Grooming',         emoji: '💆', desc: 'A haircut, or more than that',    group: 'Self' },
+  { key: 'shopping',      label: 'Shopping',         emoji: '🛍️',  desc: 'Something new',                  group: 'Self' },
+  { key: 'plastic_surg',  label: 'Cosmetic surgery', emoji: '✂️',  desc: 'Changing your face',             group: 'Self' },
+  { key: 'hobbies',       label: 'Pastimes',         emoji: '🎸', desc: 'Things done for their own sake', group: 'Pursuits' },
+  { key: 'education',     label: 'Learning',         emoji: '📚', desc: 'School, and after it',           group: 'Pursuits' },
+  { key: 'movies',        label: 'Cinema',           emoji: '🎬', desc: 'A film',                         group: 'Pursuits' },
+  { key: 'nightlife',     label: 'Going out',        emoji: '🍸', desc: 'An evening, and other people',   group: 'Pursuits' },
+  { key: 'love',          label: 'Love',             emoji: '❤️',  desc: 'The people closest',             group: 'Relationships' },
+  { key: 'fertility',     label: 'Children',         emoji: '👶', desc: 'Whether, and when',              group: 'Relationships' },
+  { key: 'friends',       label: 'Friends',          emoji: '👥', desc: 'The people you chose',           group: 'Relationships' },
+  { key: 'pets',          label: 'Animals',          emoji: '🐾', desc: 'Something to feed',              group: 'Relationships' },
+  { key: 'career',        label: 'Career',           emoji: '💼', desc: 'The job, and the next one',      group: 'Work & Money' },
+  { key: 'business',      label: 'Business',         emoji: '🏢', desc: 'Something of your own',          group: 'Work & Money' },
+  { key: 'assets',        label: 'Property',         emoji: '🏠', desc: 'A house, a bicycle, a car',      group: 'Work & Money' },
+  { key: 'money',         label: 'Money',            emoji: '💰', desc: 'Earning, keeping, borrowing',    group: 'Work & Money' },
+  { key: 'licenses',      label: 'Licenses',         emoji: '🪪', desc: 'Papers that let you drive',      group: 'Work & Money' },
+  { key: 'social_media',  label: 'Online',           emoji: '📱', desc: 'An account, and its audience',   group: 'Social' },
+  { key: 'travel',        label: 'Travel',           emoji: '✈️',  desc: 'Away for a while, or for good',  group: 'Social' },
+  { key: 'immigration',   label: 'Papers',           emoji: '🛂', desc: 'Residency and citizenship',      group: 'Social' },
+  { key: 'crime',         label: 'Crime',            emoji: '⚠️',  desc: 'Against the law',                group: 'Risk' },
+  { key: 'substances',    label: 'Drink & drugs',    emoji: '💊', desc: 'Alcohol, and the rest',          group: 'Risk' },
+  { key: 'race_tracks',   label: 'The races',        emoji: '🏇', desc: 'A bet on a horse',               group: 'Risk' },
+  { key: 'rehab',         label: 'Getting clean',    emoji: '☀️',  desc: 'Stopping',                       group: 'Risk' },
+  { key: 'underground',   label: 'On the run',       emoji: '🕵️', desc: 'Staying out of reach',           group: 'Risk' },
+  { key: 'prison',        label: 'Inside',           emoji: '🔒', desc: 'The days in prison',             group: 'Risk' },
 ]
 
 const CATEGORY_GROUP_ORDER = ['Self', 'Pursuits', 'Relationships', 'Work & Money', 'Social', 'Risk']
 
-const MARTIAL_DISCIPLINES = ['Jiu-Jitsu', 'Taekwondo', 'Judo', 'Karate', 'Kung Fu']
 const BELT_NAMES = ['white', 'yellow', 'orange', 'green', 'blue', 'purple', 'red', 'brown', 'black']
 
 function Btn({ onClick, disabled, title, subtitle, cost, danger }) {
@@ -67,7 +76,7 @@ export default function ActivitiesPanel({ onClose }) {
   const [activeTop, setActiveTop] = useState(null)
   const [martialDiscipline, setMartialDiscipline] = useState(null)
   const [horseIdx, setHorseIdx] = useState(0)
-  const [betAmount, setBetAmount] = useState(100)
+  const [stakeIdx, setStakeIdx] = useState(0)
   const [murderStep, setMurderStep] = useState(null) // null | 'victim' | 'method'
   const [murderVictim, setMurderVictim] = useState(null)
   const [assaultStep, setAssaultStep] = useState(null) // null | 'victim'
@@ -85,8 +94,6 @@ export default function ActivitiesPanel({ onClose }) {
   // panel printed the present-day catalogue figure beside it, so 1968 Ohio
   // was offered "Clothes Shopping ~$200" and charged $20.
   const money$ = (n) => `$${Math.round(n).toLocaleString()}`
-  const era$ = (n) => money$(eraMoney(n, state))
-  const eraRange = (a, b) => `${era$(a)}–${era$(b)}`
   const localRange = (a, b) => `${money$(estimateCost(state, a))}–${money$(estimateCost(state, b))}`
   const activityCost = (id) => {
     const a = Object.values(ACTIVITIES).flat().find(x => x?.id === id)
@@ -167,14 +174,7 @@ export default function ActivitiesPanel({ onClose }) {
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
-  // The engine's own G, not a hand-built subset of it. The subset had no
-  // \`rosca\`, \`gold\` or \`literate\`, so "Leave the ROSCA" and "Sell gold" could
-  // never be shown and the reading activities were offered to a character the
-  // engine had just told could not read; and it passed a dead partner through
-  // as a living one, so a widow was offered a date night.
-  const G = buildG(state)
 
-  const phase = getPhase(state.age)
   const conditions = state.conditions ?? []
   const hasCondition = (id) => conditions.some(c => c.id === id)
   const hasSevereUnmanaged = (id) => conditions.some(c => c.id === id && c.severity === 'severe' && !c.managed)
@@ -205,10 +205,23 @@ export default function ActivitiesPanel({ onClose }) {
     switch (activeTop) {
 
       case 'mind_body': {
-        const mindActivities = ACTIVITIES.mind ?? []
+        // Only what exists here, for this person, today: activityOffered reads
+        // the activity's own condition and the place it would happen in.
+        const act = (id) => (Object.values(ACTIVITIES).flat().find(x => x?.id === id))
+        const offered = (id) => activityOffered(state, id)
+        const OfferBtn = ({ id, title, subtitle, danger }) => {
+          const a = act(id)
+          const cost = activityCost(id)
+          return <Btn disabled={noActions || (cost > 0 && (state.money ?? 0) < cost)} danger={danger}
+            onClick={() => go(() => takeActivity(id))}
+            title={title ?? a?.name} subtitle={subtitle ?? a?.description}
+            cost={cost > 0 ? money$(cost) : null} />
+        }
+        const martial = martialOptions(state)
+        const belted = martial.find(m => m.name === ma.discipline)?.belts ?? ['Judo', 'Karate', 'Taekwondo', 'Brazilian Jiu-Jitsu', 'Jiu-Jitsu'].includes(ma.discipline)
+        const healthIds = ['doctor', 'dentist', 'therapy_body', 'treat_sti'].filter(offered)
         return (
           <>
-            {/* Conditions overview */}
             {conditions.length > 0 && (
               <div className="bg-amber-50 rounded-xl border border-amber-200 px-4 py-3 mb-1">
                 <p className="text-amber-700 text-xs font-semibold uppercase tracking-wider mb-1">Your conditions</p>
@@ -219,53 +232,46 @@ export default function ActivitiesPanel({ onClose }) {
                 ))}
               </div>
             )}
-            {/* Gym */}
-            {state.age >= 16 && (
+            {offered('gym') && (
               <>
                 {(hasSevereUnmanaged('heart_disease') || hasSevereUnmanaged('copd')) && (
                   <div className="bg-red-50 rounded-xl border border-red-200 px-3 py-2 mb-1 text-xs text-red-700">
-                    ⚠️ Intense exercise carries real risk with your condition. Consider therapy or walking instead.
+                    Hard exercise carries a real risk with your condition. Walking is the safer habit.
                   </div>
                 )}
-                <Btn disabled={noActions || physicallyRestricted}
-                  onClick={() => go(() => takeActivity('gym'))}
-                  title="Go to the Gym"
-                  subtitle={physicallyRestricted ? (physicalRestrictReason ?? "Not possible with your current condition.") : "Improve your fitness and health."}
-                  cost={`Cost: ${money$(activityCost('gym'))}/visit`}
-                />
+                {physicallyRestricted
+                  ? <p className="text-natalis-muted text-xs italic px-1">{physicalRestrictReason}</p>
+                  : <OfferBtn id="gym" title="Go to the gym" subtitle="Three evenings a week, all year." />}
               </>
             )}
-            {/* Walk */}
-            {state.age >= 6 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('walk'))} title="Go for a Walk" subtitle="Clear your head and move your body." />}
-            {/* Meditate */}
-            {state.age >= 12 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('meditate'))} title="Meditate" subtitle="Stillness and mental discipline." />}
-            {/* Library */}
-            {state.age >= 8 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('library'))} title="Visit the Library" subtitle="Expand your knowledge." />}
-            {/* Read book */}
-            {state.age >= 8 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('read'))} title="Read a Book" subtitle="A good book never hurts." />}
-            {/* Diet */}
-            {state.age >= 14 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('diet'))} title="Go on a Diet" subtitle="Improve your health and appearance." />}
-            {/* Gardening */}
-            {state.age >= 10 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('gardening'))} title="Gardening" subtitle="Get your hands in the earth." />}
-            {/* Therapy */}
-            {state.age >= 16 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('book_therapy'))} title="🛋️ Book Therapy" subtitle="Address your mental health with a professional." cost={money$(activityCost('book_therapy'))} />}
-            {/* STI Treatment */}
-            {state.flags.includes('has_std') && (
-              <Btn disabled={noActions} onClick={() => go(() => takeActivity('treat_sti'))} title="🏥 Treat STI" subtitle="See a doctor and start treatment." cost={money$(activityCost('treat_sti'))} danger />
+            {offered('walk') && <OfferBtn id="walk" title="Walk" subtitle="Every day, the same way or a different one." />}
+            {offered('meditate') && <OfferBtn id="meditate" title="Sit still" subtitle="Fifteen minutes a day of not doing anything." />}
+            {offered('library') && <OfferBtn id="library" title="Go to the library" subtitle="Somewhere quiet, with more books than you will read." />}
+            {offered('read') && <OfferBtn id="read" title="Read" subtitle="Everything you can find, this year." />}
+            {offered('diet') && <OfferBtn id="diet" title="Eat better" subtitle="Less of some things, more of others, and keep to it." />}
+            {offered('gardening') && <OfferBtn id="gardening" title="Grow something" subtitle="A plot, a row of pots, a patch behind the house." />}
+            {offered('book_therapy') && <OfferBtn id="book_therapy" title="See a therapist" subtitle="A room, a chair, somebody whose work is listening." />}
+            {healthIds.length > 0 && (
+              <>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Health</p>
+                {healthIds.includes('doctor') && <OfferBtn id="doctor" title="See a doctor" subtitle="About the thing you have been putting off." />}
+                {healthIds.includes('dentist') && <OfferBtn id="dentist" title="See a dentist" subtitle="It has been longer than you meant." />}
+                {healthIds.includes('therapy_body') && <OfferBtn id="therapy_body" title="See a physiotherapist" subtitle="For the pain that has started to decide things for you." />}
+                {healthIds.includes('treat_sti') && <OfferBtn id="treat_sti" title="Get treated" subtitle="A clinic, a prescription, a conversation you would rather not have." danger />}
+              </>
             )}
-            {/* Martial Arts */}
-            {state.age >= 12 && (
+            {martial.length > 0 && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">
-                  Martial Arts {ma.discipline ? `— ${ma.discipline} (${BELT_NAMES[ma.belt ?? 0]} belt)` : ''}
+                  Fighting arts {ma.discipline ? `— ${ma.discipline}${belted ? ` (${BELT_NAMES[ma.belt ?? 0]} belt)` : ''}` : ''}
                 </p>
                 {physicallyRestricted ? (
-                  <p className="text-natalis-muted text-xs italic px-1">{physicalRestrictReason ?? "Physical condition prevents martial arts training."}</p>
+                  <p className="text-natalis-muted text-xs italic px-1">{physicalRestrictReason ?? 'Your body will not allow it now.'}</p>
                 ) : !ma.discipline
-                  ? MARTIAL_DISCIPLINES.map(d => (
-                      <Btn key={d} disabled={noActions} onClick={() => go(() => practiceMartalArts(d))} title={`Start ${d}`} subtitle="Begin your martial arts journey." />
+                  ? martial.map(m => (
+                      <Btn key={m.name} disabled={noActions} onClick={() => go(() => practiceMartalArts(m.name))} title={`Take up ${m.name}`} subtitle="Twice a week, with people who will hit you." />
                     ))
-                  : <Btn disabled={noActions} onClick={() => go(() => practiceMartalArts(ma.discipline))} title={`Train ${ma.discipline}`} subtitle={`Current belt: ${BELT_NAMES[ma.belt ?? 0]}`} />
+                  : <Btn disabled={noActions} onClick={() => go(() => practiceMartalArts(ma.discipline))} title={`Train`} subtitle={`${ma.discipline}, twice a week.`} />
                 }
               </>
             )}
@@ -276,7 +282,10 @@ export default function ActivitiesPanel({ onClose }) {
       case 'education': {
         const enrolled = state.education?.enrolled
         const gpa = state.gpa
-        const isGraduate = state.education?.level === 'university'
+        // Studying harder, and the school clubs, need a school. A child the
+        // engine had told "There is no school to start" was offered both.
+        const schooled = !state.flags.includes('never_schooled') && state.mem?.attendedSchool !== false
+        const inSchool = !!enrolled || (schooled && state.age >= 10 && state.age <= 18)
         return (
           <>
             {/* Enrollment status */}
@@ -293,33 +302,30 @@ export default function ActivitiesPanel({ onClose }) {
             )}
             {gpa !== null && (
               <div className="flex items-center justify-between bg-white rounded-xl border border-natalis-border px-4 py-3">
-                <span className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">🎓 GPA</span>
+                <span className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">Marks</span>
                 <span className="font-bold text-sm" style={{ color: gpa >= 3.5 ? '#3f6146' : gpa >= 2.5 ? '#8a6635' : '#8c3a2e' }}>{gpa.toFixed(2)}</span>
               </div>
             )}
-            {state.age >= 10 && state.age <= 25 && (
-              <Btn disabled={noActions} onClick={() => go(studyHarder)} title="Study Harder" subtitle="Extra effort boosts GPA and smarts." />
+            {inSchool && (
+              <Btn disabled={noActions} onClick={() => go(studyHarder)} title="Study harder" subtitle="The extra hours, at the kitchen table." />
             )}
             {enrolled && (
               <Btn disabled={false} onClick={() => go(dropOutOfSchool)} title="Drop Out" subtitle="Leave your program early." danger />
             )}
-            {!enrolled && state.flags.includes('university_graduate') && !isGraduate && (
-              <Btn disabled={noActions} onClick={() => go(studyHarder)} title="Pursue Graduate Studies" subtitle="Apply for postgraduate research." />
-            )}
             {(ACTIVITIES.mind ?? [])
               .filter(a => ['study', 'online_course', 'learn_language', 'philosophy'].includes(a.id))
-              .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
-              .filter(a => !a.condition || a.condition(G))
+              .filter(a => a.id !== 'study' || inSchool)
+              .filter(a => activityOffered(state, a.id))
               .map(a => (
-                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${estimateCost(state, a.cost).toLocaleString()}` : null} />
+                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? money$(estimateCost(state, a.cost)) : null} />
               ))
             }
-            {state.age >= 10 && state.age <= 18 && (
+            {inSchool && state.age <= 18 && (
               <>
-                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Extracurriculars</p>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">After school</p>
                 {(ACTIVITIES.extracurricular ?? [])
-                  .filter(a => state.age >= (a.minAge ?? 0) && state.age <= (a.maxAge ?? 99))
-                  .filter(a => !a.minYear || (state.currentYear ?? 0) >= a.minYear)
+                  .filter(a => activityOffered(state, a.id))
+                  .filter(a => a.id !== 'coding_club' || hasTech(placeNow(state).c, 'personal_computer', state.currentYear))
                   .map(a => {
                     const joined = state.flags.includes(a.id.replace('_school', '').replace('volunteer_school', 'volunteer'))
                     return (
@@ -365,7 +371,7 @@ export default function ActivitiesPanel({ onClose }) {
           return bits.join(', ') + '.'
         }
 
-        const PartnerProfileCard = ({ profile, onAccept, onDecline, acceptLabel = 'Go on a Date', declineLabel = 'Not Interested' }) => (
+        const PartnerProfileCard = ({ profile, onAccept, onDecline, acceptLabel = 'See them again', declineLabel = 'Let it go' }) => (
           <div className="bg-natalis-surface rounded-2xl border border-natalis-border overflow-hidden mb-2">
             <div className="px-5 pt-4 pb-3 border-b border-natalis-rule">
               <p className="text-natalis-text font-prose text-prose-lg leading-tight">{profile.name}</p>
@@ -400,8 +406,8 @@ export default function ActivitiesPanel({ onClose }) {
               <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1 mb-1">You meet someone...</p>
               <PartnerProfileCard
                 profile={pendingPartner}
-                acceptLabel="Start Dating"
-                declineLabel="Not Interested"
+                acceptLabel="See them again"
+                declineLabel="Let it go"
                 onAccept={() => { acceptPartner(); onClose() }}
                 onDecline={() => declinePartner()}
               />
@@ -425,6 +431,9 @@ export default function ActivitiesPanel({ onClose }) {
           { label: 'Wealthy ($1M+)', value: 'wealthy', minWealthStat: 80 },
         ]
 
+        const datingFee = estimateCost(state, 100)
+        const pl = placeNow(state)
+        const hasPhoneHere = hasTech(pl.c, 'landline', pl.year, { rural: pl.rural }) || hasTech(pl.c, 'mobile_phone', pl.year, { rural: pl.rural })
         if (datingAppStep === 'filters') {
           const selectedAge = AGE_RANGES.find(r => r.value === datingFilters.ageRange) ?? AGE_RANGES[0]
           const selectedNW = NET_WORTH_OPTIONS.find(r => r.value === datingFilters.netWorth) ?? NET_WORTH_OPTIONS[0]
@@ -433,7 +442,7 @@ export default function ActivitiesPanel({ onClose }) {
               <button onClick={() => setDatingAppStep(null)} className="text-bit-blue text-sm font-semibold mb-3">← Back</button>
               {/* Dating app header card */}
               <div className="bg-natalis-bg border border-natalis-rule rounded-2xl px-5 py-4 mb-4">
-                <p className="font-bold text-lg">💘 Dating App</p>
+                <p className="font-bold text-lg">{datingAppLabel(state)}</p>
                 <p className="text-natalis-muted text-xs mt-0.5">A fee per search. Whether that is a good way to meet somebody is a separate question.</p>
               </div>
 
@@ -469,7 +478,7 @@ export default function ActivitiesPanel({ onClose }) {
               </div>
 
               <button
-                disabled={noActions || (state.money ?? 0) < eraMoney(100, state)}
+                disabled={noActions || (state.money ?? 0) < datingFee}
                 onClick={() => {
                   const ageOpts = AGE_RANGES.find(r => r.value === datingFilters.ageRange) ?? {}
                   const nwOpts = NET_WORTH_OPTIONS.find(r => r.value === datingFilters.netWorth) ?? {}
@@ -479,7 +488,7 @@ export default function ActivitiesPanel({ onClose }) {
                 className="w-full py-3 rounded-xl font-bold text-white text-sm active:scale-95 disabled:opacity-40 transition-all"
                 style={{ background: '#7b4356' }}
               >
-                💘 Let's try it · {(state.money ?? 0) >= eraMoney(100, state) ? era$(100) : `Need ${era$(100)}`}
+                Search · {money$(datingFee)}
               </button>
             </>
           )
@@ -488,12 +497,12 @@ export default function ActivitiesPanel({ onClose }) {
         if (datingAppStep === 'match' && pendingPartner) {
           return (
             <>
-              <button onClick={() => { setDatingAppStep('filters'); declinePartner() }} className="text-bit-blue text-sm font-semibold mb-2">← New Match</button>
+              <button onClick={() => { setDatingAppStep('filters'); declinePartner() }} className="text-bit-blue text-sm font-semibold mb-2">← Search again</button>
               <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1 mb-1">Your match</p>
               <PartnerProfileCard
                 profile={pendingPartner}
-                acceptLabel="Go on a Date"
-                declineLabel="No, try again"
+                acceptLabel="Meet them"
+                declineLabel="Not this one"
                 onAccept={() => { acceptPartner(); setDatingAppStep(null); onClose() }}
                 onDecline={() => {
                   declinePartner()
@@ -517,43 +526,45 @@ export default function ActivitiesPanel({ onClose }) {
             )}
             {state.age >= 16 && !livePartner && (
               <>
-                <Btn disabled={noActions || isHomeless} onClick={() => meetSomeone()} title="Meet Someone New" subtitle={isHomeless ? "Not possible without a stable address." : "Put yourself out there."} />
-                {state.age >= 18 && (
+                <Btn disabled={noActions || isHomeless} onClick={() => meetSomeone()} title="Meet somebody" subtitle={isHomeless ? "Not possible without a stable address." : "Say yes to the things you would usually say no to."} />
+                {state.age >= 18 && datingAppAvailable(state) && (
                   <Btn
-                    disabled={noActions || (state.money ?? 0) < eraMoney(100, state)}
+                    disabled={noActions || (state.money ?? 0) < datingFee}
                     onClick={() => setDatingAppStep('filters')}
-                    title="💘 Dating App"
-                    subtitle="Browse matches with filters."
-                    cost={`${era$(100)} per search`}
+                    title={datingAppLabel(state)}
+                    subtitle="Strangers, sorted by what they said about themselves."
+                    cost={`${money$(datingFee)} a search`}
                   />
                 )}
               </>
             )}
-            {state.age >= 14 && (
-              <Btn disabled={noActions} onClick={() => go(hookUp)} title="Hook Up" subtitle="Casual. No strings. Probably." />
+            {state.age >= 16 && (
+              <Btn disabled={noActions} onClick={() => go(hookUp)} title="A night with somebody" subtitle="Nothing promised, on either side." />
             )}
             {livePartner && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-1">{livePartner.name}</p>
-                <Btn disabled={noActions} onClick={() => go(goOnDate)} title="Go on a Date" subtitle={`Quality time with ${livePartner.name}.`} cost={`Cost: ${eraRange(40, 180)}`} />
-                <Btn disabled={noActions} onClick={() => go(complimentPartner)} title="Show Appreciation" subtitle="Say something true and kind." />
+                <Btn disabled={noActions} onClick={() => go(goOnDate)} title="An evening out together" subtitle={`Just you and ${livePartner.name.split(' ')[0]}.`} cost={localRange(40, 180)} />
+                <Btn disabled={noActions} onClick={() => go(complimentPartner)} title="Say something kind" subtitle="Something true, that you usually leave unsaid." />
                 {!livePartner.engaged && !livePartner.married && (
-                  <Btn disabled={noActions} onClick={() => go(proposeMarriage)} title="Propose Marriage" subtitle="Requires a strong relationship." />
+                  <Btn disabled={noActions} onClick={() => go(proposeMarriage)} title="Marriage" subtitle="Ask, or let it be known you would say yes." />
                 )}
                 {livePartner.engaged && !livePartner.married && (
-                  <Btn disabled={noActions} onClick={() => go(getMarried)} title="Get Married" subtitle="Plan the ceremony." cost={`Cost: ${localRange(800, 18000)}`} />
+                  <Btn disabled={noActions} onClick={() => go(getMarried)} title="The wedding" subtitle="The families, the day, the cost of it." cost={localRange(800, 18000)} />
                 )}
                 {livePartner.married && (
-                  <Btn disabled={noActions} onClick={() => go(tryForChild)} title="Try for a Child" subtitle={state.birthControl ? "Disable birth control first." : "Start or grow your family."} />
+                  <Btn disabled={noActions || state.birthControl} onClick={() => go(tryForChild)} title="Try for a child" subtitle={state.birthControl ? "Not while you are preventing one." : "This year, on purpose."} />
                 )}
-                <Btn disabled={noActions} onClick={() => go(fileForDivorce)} title={livePartner.married ? 'File for Divorce' : 'Break Up'} subtitle="End the relationship." danger />
+                <Btn disabled={noActions} onClick={() => go(fileForDivorce)}
+                  title={livePartner.married ? (divorceLegal(state) ? 'Divorce' : 'Separate') : 'End it'}
+                  subtitle={livePartner.married && !divorceLegal(state) ? 'There is no divorce here. You can live apart.' : 'There is no version of this that does not hurt.'} danger />
               </>
             )}
             {state.children.length > 0 && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Children</p>
                 {state.children.map((child, i) => (
-                  <Btn key={i} disabled={noActions} onClick={() => go(() => spendTimeWithChild(i))} title={`Spend time with ${child.name.split(' ')[0]}`} subtitle="Be present in their life." />
+                  <Btn key={i} disabled={noActions} onClick={() => go(() => spendTimeWithChild(i))} title={`Time with ${child.name.split(' ')[0]}`} subtitle="Nothing planned. That is the point." />
                 ))}
                 {state.children.map((child, i) => (
                   <Btn key={`abandon-${i}`} disabled={false}
@@ -569,16 +580,16 @@ export default function ActivitiesPanel({ onClose }) {
                 {['mother', 'father'].map(key => {
                   const p = state.parents[key]
                   if (!p?.alive) return null
-                  return <Btn key={key} disabled={noActions} onClick={() => go(() => callParent(key))} title={`Call your ${key}`} subtitle={`${p.name}. Stay in touch.`} />
+                  return <Btn key={key} disabled={noActions} onClick={() => go(() => callParent(key))} title={hasPhoneHere ? `Call your ${key}` : `Visit your ${key}`} subtitle={p.name} />
                 })}
               </>
             )}
             {state.siblings && state.siblings.filter(s => s.alive).map((sib, i) => {
               const realIdx = state.siblings.indexOf(sib)
-              return <Btn key={i} disabled={noActions} onClick={() => go(() => callSibling(realIdx))} title={`Call ${sib.name.split(' ')[0]}`} subtitle="Your sibling." />
+              return <Btn key={i} disabled={noActions} onClick={() => go(() => callSibling(realIdx))} title={`${hasPhoneHere ? 'Call' : 'Visit'} ${sib.name.split(' ')[0]}`} subtitle={sib.gender === 'female' ? 'Your sister.' : sib.gender === 'male' ? 'Your brother.' : 'Your sibling.'} />
             })}
-            {state.age >= 25 && (
-              <Btn disabled={noActions} onClick={() => go(adoptChild)} title="Adopt a Child" subtitle="Open your home and your life." />
+            {state.age >= 25 && state.age <= 55 && adoptionExists(state) && (
+              <Btn disabled={noActions || (state.money ?? 0) < adoptionPrice(state)} onClick={() => go(adoptChild)} title="Adopt a child" subtitle="An agency, a home study, a long wait." cost={money$(adoptionPrice(state))} />
             )}
           </>
         )
@@ -596,19 +607,19 @@ export default function ActivitiesPanel({ onClose }) {
             <Btn
               disabled={false}
               onClick={() => go(toggleBirthControl)}
-              title={state.birthControl ? 'Disable Birth Control' : 'Enable Birth Control'}
-              subtitle={state.birthControl ? 'You are currently protected.' : 'Prevent pregnancy.'}
+              title={state.birthControl ? 'Stop preventing a pregnancy' : 'Prevent a pregnancy'}
+              subtitle={state.birthControl ? 'For now, nothing will happen by accident.' : (state.currentYear < 1960 ? 'Such as there is: counting days, and luck.' : 'The pill, a coil, whatever the clinic has.')}
             />
             {livePartner && !state.birthControl && state.age < 50 && (
-              <Btn disabled={noActions} onClick={() => go(tryForChild)} title="Try for a Child" subtitle="Actively try to conceive." />
+              <Btn disabled={noActions} onClick={() => go(tryForChild)} title="Try for a child" subtitle="This year, on purpose." />
             )}
-            {state.age >= 18 && !state.flags.includes('vasectomy') && !state.flags.includes('tubal_ligation') && (
+            {activityOffered(state, 'sterilization') && (
               <Btn
                 disabled={noActions}
                 onClick={() => go(() => takeActivity('sterilization'))}
                 title={state.character?.gender === 'male' ? 'Vasectomy' : 'Tubal Ligation'}
-                subtitle="Permanent sterilisation."
-                cost={`Cost: ${money$(activityCost('sterilization'))}`}
+                subtitle="Not designed to be undone."
+                cost={money$(activityCost('sterilization'))}
                 danger
               />
             )}
@@ -617,10 +628,16 @@ export default function ActivitiesPanel({ onClose }) {
       }
 
       case 'nightlife': {
+        const out = goingOutAvailable(state)
         return (
           <>
-            <Btn disabled={noActions || state.age < 18} onClick={() => go(goClubbing)} title="Go Clubbing" subtitle="Drinks, dancing, and debauchery." cost={`Cost: ${eraRange(50, 120)}`} />
-            {(ACTIVITIES.social ?? []).filter(a => ['volunteer', 'join_club'].includes(a.id)).map(a => (
+            {out && (
+              <Btn disabled={noActions} onClick={() => go(goClubbing)}
+                title={state.currentYear < 1965 ? 'The dance hall' : 'A night out'}
+                subtitle={state.currentYear < 1965 ? 'Saturday, the band, the walk home after.' : 'Music too loud to talk over, which is the point.'}
+                cost={localRange(50, 120)} />
+            )}
+            {(ACTIVITIES.social ?? []).filter(a => ['volunteer', 'join_club'].includes(a.id)).filter(a => activityOffered(state, a.id)).map(a => (
               <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} />
             ))}
           </>
@@ -630,32 +647,21 @@ export default function ActivitiesPanel({ onClose }) {
       case 'movies': {
         return (
           <>
-            <Btn disabled={noActions} onClick={() => go(goToMovies)} title="Watch a Film" subtitle="Catch something at the cinema." cost={`Cost: ${eraRange(15, 25)}`} />
+            <Btn disabled={noActions} onClick={() => go(goToMovies)} title={state.currentYear < 1960 ? 'The pictures' : 'See a film'} subtitle="Two hours in the dark with strangers." cost={localRange(15, 25)} />
           </>
         )
       }
 
       case 'salon': {
-        const services = [
-          { id: 'haircut',  label: 'Haircut',     desc: 'A fresh cut.', cost: 60 },
-          { id: 'hairdye',  label: 'Hair Dye',    desc: 'A new color.', cost: 120 },
-          { id: 'massage',  label: 'Massage',     desc: 'Full-body tension relief.', cost: 150 },
-          { id: 'facial',   label: 'Facial',      desc: 'Rejuvenate your skin.', cost: 100 },
-          { id: 'manicure', label: 'Manicure',    desc: 'Small luxury, big mood.', cost: 50 },
-        ]
-        return services.map(s => (
-          <Btn key={s.id} disabled={noActions} onClick={() => go(() => visitSalonSpa(s.id))} title={s.label} subtitle={s.desc} cost={era$(s.cost)} />
+        return salonOptions(state).map(o => (
+          <Btn key={o.id} disabled={noActions || (state.money ?? 0) < o.cost} onClick={() => go(() => visitSalonSpa(o.id))} title={o.label} subtitle={o.desc} cost={money$(o.cost)} />
         ))
       }
 
       case 'shopping': {
-        return (
-          <>
-            <Btn disabled={noActions} onClick={() => go(() => goShopping('clothes'))} title="Clothes Shopping" subtitle="Pick up some new threads." cost={`~${era$(200)}`} />
-            <Btn disabled={noActions} onClick={() => go(() => goShopping('electronics'))} title="Electronics" subtitle="New gadgets and tech." cost={`~${era$(800)}`} />
-            <Btn disabled={noActions} onClick={() => go(() => goShopping('luxury'))} title="Luxury Goods" subtitle="Something indulgent." cost={`~${era$(3000)}`} />
-          </>
-        )
+        return shoppingOptions(state).map(o => (
+          <Btn key={o.id} disabled={noActions || (state.money ?? 0) < o.cost} onClick={() => go(() => goShopping(o.id))} title={o.label} subtitle={o.desc} cost={money$(o.cost)} />
+        ))
       }
 
       case 'social_media': {
@@ -710,83 +716,73 @@ export default function ActivitiesPanel({ onClose }) {
       }
 
       case 'plastic_surg': {
-        if (state.age < 18) return <p className="text-natalis-muted text-sm italic p-3">You must be 18+ for plastic surgery.</p>
-        const surgeries = [
-          { type: 'minor',    label: 'Minor Procedure',  desc: 'Small adjustments. High success rate.', cost: 3000 },
-          { type: 'major',    label: 'Major Procedure',  desc: 'Significant changes. Higher risk.',     cost: 12000 },
-          { type: 'facelift', label: 'Facelift',         desc: 'Reduce visible signs of aging.',        cost: 7500 },
-        ]
+        const surgeries = surgeryOptions(state)
         return (
           <>
             {state.age >= 75 && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-2 text-xs text-amber-800">
-                ⚠️ At your age, surgical risk is elevated. Anaesthetic complications are more likely.
+                At your age an anaesthetic is not a small thing.
               </div>
             )}
             {(hasSevereUnmanaged('heart_disease') || hasSevereUnmanaged('copd')) && (
               <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-2 text-xs text-red-700">
-                Surgery under general anaesthetic carries serious risk with your heart or lung condition.
+                A general anaesthetic carries a serious risk with your heart or lungs.
               </div>
             )}
-            {surgeries.map(s => (
-              <Btn key={s.type} disabled={noActions} onClick={() => go(() => getPlasticSurgery(s.type))} title={s.label} subtitle={s.desc} cost={era$(s.cost)} />
+            {surgeries.map(o => (
+              <Btn key={o.id} disabled={noActions || (state.money ?? 0) < o.cost} onClick={() => go(() => getPlasticSurgery(o.id))} title={o.label} subtitle={o.desc} cost={money$(o.cost)} />
             ))}
           </>
         )
       }
 
       case 'race_tracks': {
-        const raceHorses = ['Thunderhooves', 'Lucky Lightning', 'Desert Rose', 'Iron Maiden', 'Golden Gallop']
+        // Plain names, local stakes, and the tote's share kept. The card used
+        // to be "Thunderhooves" and "Lucky Lightning" under a slot-machine
+        // button with fixed bets of $50 to $1,000 in any year.
+        const card = raceCard(state)
+        const stakes = raceStakes(state)
+        const stake = stakes[stakeIdx] ?? stakes[0]
         return (
           <>
-            <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">🏇 Pick a Horse</p>
-            {raceHorses.map((horse, i) => (
+            <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">The card</p>
+            {card.map((horse, i) => (
               <button
-                key={i}
+                key={horse}
                 onClick={() => setHorseIdx(i)}
-                className="w-full text-left px-4 py-3 rounded-xl border transition-all text-sm font-semibold active:scale-95"
+                className="w-full text-left px-4 py-3 rounded-xl border transition-all text-sm active:scale-95"
                 style={{
-                  background: horseIdx === i ? '#8a6635' : 'white',
-                  color: horseIdx === i ? 'white' : '#403b33',
-                  borderColor: horseIdx === i ? '#8a6635' : '#e2ddd2',
+                  background: horseIdx === i ? '#f3efe6' : 'white',
+                  color: '#403b33',
+                  borderColor: horseIdx === i ? '#3f5670' : '#e2ddd2',
                 }}
               >
-                #{i + 1} — {horse} {horseIdx === i ? '✓' : ''}
+                {i + 1}. {horse}
               </button>
             ))}
             <div className="pt-2 space-y-2">
-              <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">Bet Amount</p>
+              <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">Stake</p>
               <div className="flex gap-2">
-                {[50, 200, 500, 1000].map(amt => (
-                  <button key={amt} onClick={() => setBetAmount(amt)}
-                    className="flex-1 py-2 text-xs font-bold rounded-xl border transition-all active:scale-95"
+                {stakes.map((amt, i) => (
+                  <button key={i} onClick={() => setStakeIdx(i)}
+                    className="flex-1 py-2 text-xs rounded-xl border transition-all active:scale-95"
                     style={{
-                      background: betAmount === amt ? '#3f5670' : 'white',
-                      color: betAmount === amt ? 'white' : '#7d766a',
-                      borderColor: betAmount === amt ? '#3f5670' : '#e2ddd2',
+                      background: stakeIdx === i ? '#f3efe6' : 'white',
+                      color: '#403b33',
+                      borderColor: stakeIdx === i ? '#3f5670' : '#e2ddd2',
                     }}>
-                    ${amt}
+                    {money$(amt)}
                   </button>
                 ))}
               </div>
-              <input
-                type="number"
-                value={betAmount}
-                onChange={e => setBetAmount(Math.max(1, parseInt(e.target.value) || 1))}
-                className="w-full text-sm"
-                placeholder="Custom amount"
-              />
             </div>
             <div className="pt-1">
-              <button
-                disabled={noActions || (state.money ?? 0) < betAmount}
-                onClick={() => go(() => betOnHorses(horseIdx, betAmount, raceHorses))}
-                className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all active:scale-95 disabled:opacity-40"
-                style={{ background: '#3f6146' }}
-              >
-                🎰 Bet ${betAmount.toLocaleString()} on {raceHorses[horseIdx]}
-              </button>
-              <p className="text-center text-xs text-natalis-muted mt-1">5× payout if your horse wins · Balance: ${(state.money ?? 0).toLocaleString()}</p>
+              <Btn
+                disabled={noActions || (state.money ?? 0) < stake}
+                onClick={() => go(() => betOnHorses(horseIdx, stakeIdx))}
+                title={`${money$(stake)} on ${card[horseIdx]}`}
+                subtitle="Four to one if it comes in first."
+              />
             </div>
           </>
         )
@@ -795,124 +791,105 @@ export default function ActivitiesPanel({ onClose }) {
       case 'rehab': {
         return (
           <>
-            {hasAddiction
-              ? <Btn disabled={noActions} onClick={() => go(goToRehab)} title="Enter Rehab" subtitle="Treat your addiction. Not cheap, but necessary." cost={`Cost: ${localRange(5000, 25000)}`} />
-              : <p className="text-natalis-muted text-sm italic p-3">No active addictions to treat.</p>
-            }
-            {(ACTIVITIES.body ?? []).filter(a => a.id === 'quit_smoking' || a.id === 'rehabilitation').filter(a => !a.condition || a.condition(G)).map(a => (
-              <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} />
-            ))}
+            {hasAddiction && rehabExists(state) && (
+              <Btn disabled={noActions} onClick={() => go(goToRehab)} title="A residential programme" subtitle="Weeks away, and the hard part after." cost={localRange(5000, 25000)} />
+            )}
+            {['quit_smoking', 'rehab'].filter(id => activityOffered(state, id)).map(id => {
+              const a = (ACTIVITIES.body ?? []).find(x => x.id === id)
+              return <Btn key={id} disabled={noActions} onClick={() => go(() => takeActivity(id))}
+                title={id === 'quit_smoking' ? 'Stop smoking' : 'Get help to stop'} subtitle={id === 'quit_smoking' ? 'Again.' : 'A programme, a sponsor, the meetings.'}
+                cost={a?.cost ? money$(activityCost(id)) : null} />
+            })}
           </>
         )
       }
 
       case 'pets': {
-        const adoptionFees = { dog: 400, cat: 200, rabbit: 80, hamster: 30, parrot: 300, fish: 20, bird: 150 }
         const livePets = (state.pets ?? []).filter(p => p.alive)
+        const pl = placeNow(state)
         return (
           <>
-            {livePets.length > 0 && (
+            {livePets.length > 0 && (pl.wealthy || !pl.rural) && (
               <>
-                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Your Pets</p>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Yours</p>
                 {livePets.map(pet => {
                   const allIdx = (state.pets ?? []).indexOf(pet)
                   return (
-                    <Btn key={allIdx} disabled={noActions} onClick={() => go(() => visitVet(allIdx))} title={`Take ${pet.name} to the Vet`} subtitle={`${pet.species} · Age ${pet.age}`} cost={eraRange(150, 600)} />
+                    <Btn key={allIdx} disabled={noActions} onClick={() => go(() => visitVet(allIdx))} title={`Take ${pet.name} to the vet`} subtitle={`${pet.species}, ${pet.age} years old`} cost={localRange(150, 600)} />
                   )
                 })}
               </>
             )}
-            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Adopt a Pet</p>
-            {Object.entries(adoptionFees).map(([species, cost]) => (
-              <Btn key={species} disabled={noActions || (state.money ?? 0) < eraMoney(cost, state)} onClick={() => go(() => adoptPet(species))} title={`Adopt a ${species.charAt(0).toUpperCase() + species.slice(1)}`} subtitle="Give an animal a loving home." cost={`Adoption fee: ${era$(cost)}`} />
+            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Take one in</p>
+            {petOptions(state).map(o => (
+              <Btn key={o.id} disabled={noActions || (state.money ?? 0) < o.fee} onClick={() => go(() => adoptPet(o.id))} title={`A ${o.id}`} subtitle={o.desc} cost={o.fee > 0 ? money$(o.fee) : null} />
             ))}
           </>
         )
       }
 
       case 'licenses': {
-        const hasDriver  = state.flags.includes('has_licence')
-        const hasPilot   = state.flags.includes('pilot_licence')
-        const hasBoating = state.flags.includes('boating_licence')
-        return (
-          <>
-            <Btn disabled={noActions || hasDriver || state.age < 16} onClick={() => go(() => obtainLicense('driver'))} title={hasDriver ? "Driver's Licence ✓" : "Get Driver's Licence"} subtitle={hasDriver ? "Already obtained." : "Required to own & drive cars."} cost={era$(500)} />
-            <Btn disabled={noActions || hasPilot || state.age < 18} onClick={() => go(() => obtainLicense('pilot'))} title={hasPilot ? "Pilot's Licence ✓" : "Get Pilot's Licence"} subtitle={hasPilot ? "Already obtained." : "Required to fly aircraft."} cost={era$(8000)} />
-            <Btn disabled={noActions || hasBoating || state.age < 16} onClick={() => go(() => obtainLicense('boating'))} title={hasBoating ? "Boating Licence ✓" : "Get Boating Licence"} subtitle={hasBoating ? "Already obtained." : "Required to operate boats."} cost={era$(600)} />
-          </>
-        )
+        return licenceOptions(state).map(o => (
+          <Btn key={o.id} disabled={noActions || o.held || (state.money ?? 0) < o.cost} onClick={() => go(() => obtainLicense(o.id))}
+            title={o.held ? `${o.label}, held` : o.label}
+            subtitle={o.held ? 'In the drawer with the other papers.' : o.id === 'driver' ? 'Lessons, a test, a card with your photograph on it.' : 'Courses, hours, an examination.'}
+            cost={o.held ? null : money$(o.cost)} />
+        ))
       }
 
       case 'assets': {
         const properties = state.assets?.properties ?? []
         const vehicles = state.assets?.vehicles ?? []
+        const homes = propertyOptions(state)
+        const rides = vehicleOptions(state)
+        const TIER_LABELS = {
+          bicycle: 'Bicycles', motorcycle: 'Motorcycles', used_car: 'Second-hand cars',
+          new_car: 'New cars', luxury_car: 'Expensive cars', supercar: 'Very expensive cars', watercraft: 'Boats',
+        }
+        const tierKeys = ['bicycle', 'motorcycle', 'used_car', 'new_car', 'luxury_car', 'supercar', 'watercraft']
         return (
           <>
             {isHomeless && (
               <div className="bg-amber-50 rounded-xl border border-amber-200 px-3 py-2 mb-2 text-xs text-amber-700">
-                Property purchase requires proof of address. Resolve your housing situation first.
+                Buying anywhere needs an address to buy from.
               </div>
             )}
-            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Buy Property</p>
-            {PROPERTY_TYPES.map(type => {
-              // What the engine will actually charge, not the catalogue number.
-              const shown = estimatePrice(state, type.basePrice, 'local')
-              const downPayment = Math.round(shown * type.downPaymentRate)
-              return (
-                <Btn key={type.id} disabled={noActions || (state.money ?? 0) < downPayment || state.age < 18 || isHomeless}
-                  onClick={() => { buyProperty(type.id); onClose() }}
-                  title={type.name} subtitle={type.description}
-                  cost={`~$${shown.toLocaleString()} · Deposit: $${downPayment.toLocaleString()}`} />
-              )
-            })}
+            {homes.length > 0 && <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Somewhere to live</p>}
+            {homes.map(type => (
+              <Btn key={type.id} disabled={noActions || (state.money ?? 0) < type.deposit || isHomeless}
+                onClick={() => { buyProperty(type.id); onClose() }}
+                title={type.name} subtitle={type.description}
+                cost={`${money$(type.price)} · deposit ${money$(type.deposit)}`} />
+            ))}
             {properties.length > 0 && (
               <>
-                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Sell Property</p>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Sell</p>
                 {properties.map((p, i) => (
-                  <Btn key={i} onClick={() => { sellProperty(i); onClose() }} title={`Sell ${p.name}`} subtitle={`Value: $${p.currentValue.toLocaleString()}${p.mortgage > 0 ? ` · Mortgage: $${p.mortgage.toLocaleString()}` : ''}`} danger />
+                  <Btn key={i} onClick={() => { sellProperty(i); onClose() }} title={`Sell the ${p.name.toLowerCase()}`} subtitle={`Worth ${money$(p.currentValue)}${p.mortgage > 0 ? ` · ${money$(p.mortgage)} still owed on it` : ''}`} danger />
                 ))}
               </>
             )}
-            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Buy Vehicle</p>
-            {(() => {
-              const TIER_LABELS = {
-                bicycle: '🚲 Bicycles',
-                motorcycle: '🏍️ Motorcycles',
-                used_car: '🚗 Used Cars',
-                new_car: '🚘 New Cars',
-                luxury_car: '🏎️ Luxury Cars',
-                supercar: '💎 Supercars',
-                watercraft: '⛵ Watercraft',
-              }
-              const hasLicence = state.licenceObtained
-              const tierKeys = ['bicycle', 'motorcycle', 'used_car', 'new_car', 'luxury_car', 'supercar', 'watercraft']
-              return tierKeys.map(tier => {
-                const tierVehicles = VEHICLE_TYPES.filter(t => {
-                  if (t.tier !== tier) return false
-                  if (tier === 'bicycle') return true
-                  if (tier === 'watercraft') return hasLicence
-                  return hasLicence
-                }).filter(t => (!t.minYear || (state.currentYear ?? 2000) >= t.minYear) && (!t.maxYear || (state.currentYear ?? 2000) <= t.maxYear))
-                if (tierVehicles.length === 0) return null
-                return (
-                  <div key={tier}>
-                    <p className="text-natalis-muted text-xs font-semibold px-1 pt-2 pb-1">{TIER_LABELS[tier]}</p>
-                    {tierVehicles.map(type => (
-                      <Btn key={type.id} disabled={noActions || (state.money ?? 0) < estimatePrice(state, type.basePrice, 'imported')}
-                        onClick={() => { buyVehicle(type.id); onClose() }}
-                        title={`${type.make} ${type.model}`}
-                        subtitle={type.description}
-                        cost={`~$${estimatePrice(state, type.basePrice, 'imported').toLocaleString()} · $${estimatePrice(state, type.annualMaintenance, 'imported').toLocaleString()}/yr`} />
-                    ))}
-                  </div>
-                )
-              })
-            })()}
+            {tierKeys.map(tier => {
+              const tierVehicles = rides.filter(t => t.tier === tier)
+              if (tierVehicles.length === 0) return null
+              return (
+                <div key={tier}>
+                  <p className="text-natalis-muted text-xs font-semibold px-1 pt-2 pb-1">{TIER_LABELS[tier]}</p>
+                  {tierVehicles.map(type => (
+                    <Btn key={type.id} disabled={noActions || (state.money ?? 0) < type.price}
+                      onClick={() => { buyVehicle(type.id); onClose() }}
+                      title={`${type.make} ${type.model}`}
+                      subtitle={type.description}
+                      cost={`${money$(type.price)} · ${money$(type.upkeep)} a year to keep`} />
+                  ))}
+                </div>
+              )
+            })}
             {vehicles.length > 0 && (
               <>
-                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Sell Vehicle</p>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Sell</p>
                 {vehicles.map((v, i) => (
-                  <Btn key={i} onClick={() => { sellVehicle(i); onClose() }} title={`Sell ${v.name}`} subtitle={`Value: $${v.currentValue.toLocaleString()}`} danger />
+                  <Btn key={i} onClick={() => { sellVehicle(i); onClose() }} title={`Sell the ${v.name}`} subtitle={`Worth ${money$(v.currentValue)}`} danger />
                 ))}
               </>
             )}
@@ -921,57 +898,50 @@ export default function ActivitiesPanel({ onClose }) {
       }
 
       case 'money': {
-        const moneyActivities = ACTIVITIES.money ?? []
         const debt = state.debt ?? 0
         const money = state.money ?? 0
-        const WELFARE_COUNTRIES = ['United States','United Kingdom','Australia','Germany','France','Canada','Netherlands','Sweden','Norway','Denmark','Finland','Ireland','New Zealand','Switzerland','Belgium','Austria']
-        const hasWelfare = WELFARE_COUNTRIES.includes(state.character?.country?.name) || ['wealthy_west','wealthy_east','post_soviet'].includes(state.character?.country?.archetype)
+        const loan = paydayOffer(state)
+        const benefits = benefitsOffer(state)
+        const bankrupt = bankruptcyOpen(state)
         return (
           <>
-            {/* Hardship section */}
             {state.age >= 18 && (
               <>
-                {(debt > 8000 && money < 500) && (
-                  <div className="bg-red-50 rounded-xl border border-red-200 px-3 py-2 mb-2 text-xs text-red-700">
-                    ⚠️ Your debt is critical. You may qualify for bankruptcy protection.
-                  </div>
-                )}
-                {money < eraMoney(300, state) && state.age >= 18 && (
+                {money < loan.receive && (
                   <Btn
                     danger
-                    disabled={money >= eraMoney(300, state)}
+                    disabled={noActions}
                     onClick={() => { takePaydayLoan(); onClose() }}
-                    title="Take a Payday Loan"
-                    subtitle={`${era$(300)} now. ${era$(420)} owed at next due date. Annual rate: 400%+.`}
-                    cost={`Receive: ${era$(300)} · Owe: ${era$(420)}`}
+                    title={loan.label}
+                    subtitle={loan.desc}
+                    cost={`${money$(loan.receive)} now · ${money$(loan.owe)} owed`}
                   />
                 )}
-                {!state.career && money < eraMoney(500, state) && hasWelfare && (
+                {!state.career && benefits && money < benefits.threshold && (
                   <Btn
-                    disabled={!!state.career || money >= eraMoney(500, state)}
+                    disabled={noActions}
                     onClick={() => { applyForBenefits(); onClose() }}
-                    title="Apply for Government Benefits"
-                    subtitle="Welfare, SNAP, Universal Credit, or equivalent. Requires no current employment."
-                    cost={`Receive: ~${era$(400)}`}
+                    title="Apply for assistance"
+                    subtitle="The forms, the queue, the questions about why."
+                    cost={`About ${money$(benefits.payment)}`}
                   />
                 )}
-                {debt > 8000 && money < 500 && (
+                {bankrupt && (
                   <Btn
                     danger
-                    disabled={debt <= 8000 || money >= 500}
                     onClick={() => { declareBankruptcy(); onClose() }}
-                    title="File for Bankruptcy"
-                    subtitle="Wipes qualifying debt. Destroys your credit score. Removes non-exempt assets. A last resort."
+                    title="File for bankruptcy"
+                    subtitle={`${money$(debt)} owed. The debts go; so do the car, the credit, and something harder to name.`}
                   />
                 )}
               </>
             )}
-            {moneyActivities
-              .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
-              .filter(a => !a.condition || a.condition(G))
-              .map(a => (
-                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${estimateCost(state, a.cost).toLocaleString()}` : null} />
-              ))
+            {(ACTIVITIES.money ?? [])
+              .filter(a => activityOffered(state, a.id))
+              .map(a => {
+                const cost = a.cost > 0 ? estimateCost(state, a.cost) : 0
+                return <Btn key={a.id} disabled={noActions || (cost > 0 && money < cost)} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={cost > 0 ? money$(cost) : null} />
+              })
             }
           </>
         )
@@ -1058,7 +1028,7 @@ export default function ActivitiesPanel({ onClose }) {
                 <Btn key={v.key} danger onClick={() => {
                   setAssaultStep(null)
                   onClose()
-                  const baseRisk = assaultCrime?.arrestRisk ?? 0.40
+                  const baseRisk = assaultCrime ? crimeArrestRisk(assaultCrime, state) : 0.40
                   const adjustedRisk = Math.max(0.05, Math.min(0.95, baseRisk + v.arrestMod))
                   triggerMinigame({
                     type: 'fight', difficulty: assaultCrimeId === 'aggravated_assault' ? 'hard' : 'normal',
@@ -1088,7 +1058,7 @@ export default function ActivitiesPanel({ onClose }) {
                       },
                     },
                   })
-                }} title={v.label} subtitle={v.desc} cost={`Arrest risk: ${Math.round(Math.max(0.05, (assaultCrime?.arrestRisk ?? 0.4) + v.arrestMod) * 100)}%`} />
+                }} title={v.label} subtitle={v.desc} cost={`Arrest risk: ${Math.round(Math.max(0.05, Math.min(0.95, (assaultCrime ? crimeArrestRisk(assaultCrime, state) : 0.4) + v.arrestMod)) * 100)}%`} />
               ))}
             </>
           )
@@ -1213,15 +1183,17 @@ export default function ActivitiesPanel({ onClose }) {
             // exist yet"; hacking, which runs through a minigame and never
             // reaches attemptCrime, could be done in 1955.
             if (crime.requiresYear && (state.currentYear ?? 0) < crime.requiresYear) return null
+            // Insider trading was offered to a trucker. Access is a precondition.
+            if (crimeBarred(state, crime)) return null
             const beyondThem = crime.minSmarts && (state.stats?.smarts ?? 0) < crime.minSmarts
             const canAfford = !crime.wealthRequirement || state.character?.wealthTier >= crime.wealthRequirement
+            const risk = crimeArrestRisk(crime, state)
             if (crime.id === 'murder') {
               return (
                 <Btn key="murder" disabled={noActions} danger
                   onClick={() => setMurderStep('victim')}
                   title="Murder"
-                  subtitle="Choose your target and method. Getting away with it is not guaranteed."
-                  cost="Varies by method"
+                  subtitle="Choose who, and how. Getting away with it is not something you can choose."
                 />
               )
             }
@@ -1231,39 +1203,45 @@ export default function ActivitiesPanel({ onClose }) {
                   onClick={() => { setAssaultCrimeId(crime.id); setAssaultStep('victim') }}
                   title={crime.name}
                   subtitle={crime.description}
-                  cost={`Arrest risk: ${Math.round(crime.arrestRisk * 100)}%`}
+                  cost={`Arrest risk: ${Math.round(risk * 100)}%`}
                 />
               )
             }
             const handleCrime = () => {
               if (crime.minigame) {
                 onClose()
+                // Winning the minigame used to skip the arrest roll entirely and
+                // paid present-day dollars at the BIRTH country's wage scale into
+                // any year. Doing it well halves the risk of being caught; it
+                // does not remove it. The take is priced like attemptCrime's:
+                // local goods, in the money of the year, where the character is.
+                const caughtAnyway = Math.random() < risk * 0.5
+                const sentence = calcSentence(crime)
+                const arrested = (s) => ({
+                  ...s,
+                  actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                  pendingTrial: sentence > 0 ? buildPendingTrial(s, crime, sentence) : s.pendingTrial,   // never discard a charge that has not been tried
+                  criminalRecord: [...(s.criminalRecord ?? []), { crime: crime.criminalRecordEntry ?? crime.name, age: s.age, category: crime.category ?? 'other' }],
+                  log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }],
+                })
                 triggerMinigame({
                   ...crime.minigame,
                   onSuccess: {
-                    outcome: crime.minigame.successOutcome ?? 'You pull it off.',
+                    outcome: caughtAnyway ? 'It goes the way you planned. Somebody was watching anyway.' : (crime.minigame.successOutcome ?? 'It goes the way you planned.'),
                     effect: (s) => {
+                      if (caughtAnyway) return arrested(s)
                       const next = { ...s }
-                      next.money = (next.money ?? 0) + crimePayout(crime.incomeEstimate ?? 0, (state.currentCountry ?? state.character?.country)?.gdp)
+                      next.money = (next.money ?? 0) + crimeHaul(s, crime)
                       next.karma = Math.max(0, (next.karma ?? 50) + (crime.minigame.karmaHit ?? -8))
                       next.flags = [...new Set([...next.flags, ...(crime.addFlag ? [crime.addFlag] : [])])]
                       next.actionsThisYear = (next.actionsThisYear ?? 0) + 1
-                      next.log = [...(next.log ?? []), { age: s.age, text: `You committed ${crime.name}.`, isKey: false }]
+                      next.log = [...(next.log ?? []), { age: s.age, text: `Nobody comes. The ${crime.name.toLowerCase()} is done, and the money is in your pocket.`, isKey: false }]
                       return next
                     },
                   },
                   onFailure: {
                     outcome: crime.minigame.failOutcome ?? 'You are caught.',
-                    effect: (s) => {
-                      const sentence = calcSentence(crime)
-                      return {
-                        ...s,
-                        actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                        pendingTrial: sentence > 0 ? buildPendingTrial(s, crime, sentence) : s.pendingTrial,   // never discard a charge that has not been tried
-                        criminalRecord: [...(s.criminalRecord ?? []), { crime: crime.criminalRecordEntry ?? crime.name, age: s.age, category: crime.category ?? 'other' }],
-                        log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }],
-                      }
-                    },
+                    effect: arrested,
                   },
                 })
               } else {
@@ -1275,7 +1253,7 @@ export default function ActivitiesPanel({ onClose }) {
                 onClick={handleCrime}
                 title={crime.name}
                 subtitle={beyondThem ? 'You do not know how to do this.' : crime.description}
-                cost={`Arrest risk: ${Math.round(crime.arrestRisk * 100)}%`}
+                cost={`Arrest risk: ${Math.round(risk * 100)}%`}
                 danger />
             )
           })
@@ -1327,13 +1305,13 @@ export default function ActivitiesPanel({ onClose }) {
             )}
             {isFugitive && (
               <div className="px-3 py-3 rounded-xl border border-red-200 bg-red-50 mb-1">
-                <p className="text-red-700 text-sm font-semibold">🚨 Formal work is not an option</p>
+                <p className="text-red-700 text-sm font-semibold">Formal work is not an option</p>
                 <p className="text-red-600 text-xs mt-0.5">Any employer will run a background check. You need cash work or a false identity first.</p>
               </div>
             )}
             {hasAssumedId && (state.wanted || state.flags.includes('escaped_prisoner')) && (
               <div className="px-3 py-3 rounded-xl border border-yellow-200 bg-yellow-50 mb-1">
-                <p className="text-yellow-700 text-sm font-semibold">⚠️ Operating under a false identity</p>
+                <p className="text-yellow-700 text-sm font-semibold">Working under another name</p>
                 <p className="text-yellow-600 text-xs mt-0.5">Formal careers are available, but any background check may expose you.</p>
               </div>
             )}
@@ -1345,10 +1323,10 @@ export default function ActivitiesPanel({ onClose }) {
                     ⚠️ A severe unmanaged condition is affecting your capacity. Working harder carries additional health risk.
                   </div>
                 )}
-                <Btn disabled={noActions} onClick={() => go(workHarder)} title="Work Harder" subtitle={anySevereUnmanaged ? "Extra effort — with your condition, this costs more health." : "Extra effort. Costs health and happiness."} />
-                <Btn disabled={noActions} onClick={() => go(schmoozeBoss)} title="Schmooze the Boss" subtitle="Charisma-based. Results vary." />
-                <Btn disabled={noActions} onClick={() => go(askForRaise)} title="Ask for a Raise" subtitle="Performance and charisma determine success." />
-                <Btn disabled={noActions} onClick={() => go(quitJob)} title="Quit Your Job" subtitle={`Leave your position as ${state.career.title}.`} danger />
+                <Btn disabled={noActions} onClick={() => go(workHarder)} title="Work harder" subtitle={anySevereUnmanaged ? "With your condition, the body will pay more of this." : "Earlier, later, and the body pays."} />
+                <Btn disabled={noActions} onClick={() => go(schmoozeBoss)} title="Get on the right side of the boss" subtitle="It works on some of them." />
+                <Btn disabled={noActions} onClick={() => go(askForRaise)} title="Ask for more money" subtitle="Whether they say yes depends on the work, and on you." />
+                <Btn disabled={noActions} onClick={() => go(quitJob)} title="Leave the job" subtitle={`No longer ${state.career.title.toLowerCase()}.`} danger />
               </>
             )}
             {state.age >= 55 && !state.retired && (
@@ -1357,10 +1335,10 @@ export default function ActivitiesPanel({ onClose }) {
             {state.retired && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Retirement</p>
-                <Btn disabled={noActions} onClick={() => go(() => takeActivity('volunteer'))} title="Volunteer" subtitle="Give time to a cause. The weeks have a different shape." />
-                <Btn disabled={noActions} onClick={() => go(() => takeActivity('mentor_young'))} title="Mentor Someone" subtitle="Pass on what you know. More useful than it sounds." />
-                {state.age >= 60 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('write_memoirs'))} title="Write Memoirs" subtitle="Set it down, for yourself or for anyone who asks." />}
-                {!physicallyRestricted && state.age < 80 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('walk'))} title="Walk More" subtitle="The retired body does better with routine movement." />}
+                {activityOffered(state, 'volunteer') && <Btn disabled={noActions} onClick={() => go(() => takeActivity('volunteer'))} title="Volunteer" subtitle="Give time to a cause. The weeks have a different shape." />}
+                {activityOffered(state, 'mentor_young') && <Btn disabled={noActions} onClick={() => go(() => takeActivity('mentor_young'))} title="Teach somebody the work" subtitle="Pass on what you know. More useful than it sounds." />}
+                {activityOffered(state, 'write_memoirs') && <Btn disabled={noActions} onClick={() => go(() => takeActivity('write_memoirs'))} title="Write it down" subtitle="The life, for yourself or for anyone who asks." />}
+                {!physicallyRestricted && state.age < 80 && activityOffered(state, 'walk') && <Btn disabled={noActions} onClick={() => go(() => takeActivity('walk'))} title="Walk" subtitle="The retired body does better with a routine." />}
               </>
             )}
             {!isBlockedFromFormal && available.length > 0 && (
@@ -1422,10 +1400,10 @@ export default function ActivitiesPanel({ onClose }) {
               </div>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { action: 'hangout',    label: '🤝 Hang Out',   cost: era$(30) },
-                  { action: 'compliment', label: '😊 Compliment', cost: 'Free' },
-                  { action: 'gift',       label: '🎁 Gift',       cost: era$(100) },
-                  { action: 'prank',      label: '😈 Prank',      cost: 'Free' },
+                  { action: 'hangout',    label: 'Spend time',  cost: money$(estimateCost(state, 30)) },
+                  { action: 'compliment', label: 'Say something kind', cost: '' },
+                  { action: 'gift',       label: 'A present',   cost: money$(estimateCost(state, 100)) },
+                  { action: 'prank',      label: 'A joke at their expense', cost: '' },
                 ].map(act => (
                   <button key={act.action} disabled={noActions}
                     onClick={() => go(() => interactWithFriend(realIdx, act.action))}
@@ -1458,112 +1436,89 @@ export default function ActivitiesPanel({ onClose }) {
                 {(hasCondition('diabetes_type1') || hasCondition('diabetes_type2')) && <p>Diabetes: alcohol affects blood sugar unpredictably.</p>}
               </div>
             )}
-            <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">Alcohol</p>
-            <Btn disabled={noActions} onClick={() => go(() => useSubstance('alcohol'))} title="Have a Drink" subtitle="Relax with alcohol." cost={`~${era$(30)}`} />
-            {state.age >= 16 && (
-              <>
-                <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 pt-2">Drugs</p>
-                <Btn disabled={noActions} onClick={() => go(() => useSubstance('cannabis'))} title="Smoke Cannabis" subtitle="Mild. Still a choice with consequences." cost={`~${era$(40)}`} />
-                {state.age >= 18 && (
-                  <>
-                    <Btn disabled={noActions} onClick={() => go(() => useSubstance('pills'))} title="Take Pills" subtitle="Prescription or otherwise." cost={`~${era$(60)}`} danger />
-                    <Btn disabled={noActions} onClick={() => go(() => useSubstance('cocaine'))} title="Use Cocaine" subtitle="High risk of addiction. Serious health cost." cost={`~${era$(200)}`} danger />
-                    <Btn disabled={noActions} onClick={() => go(() => useSubstance('heroin'))} title="Use Heroin" subtitle="Extreme addiction and overdose risk." cost={`~${era$(150)}`} danger />
-                  </>
-                )}
-              </>
-            )}
+            {substanceOptions(state).map(o => (
+              <Btn key={o.id} disabled={noActions || (state.money ?? 0) < o.cost} onClick={() => go(() => useSubstance(o.id))} title={o.label} subtitle={o.desc} cost={money$(o.cost)} danger={o.hard} />
+            ))}
           </>
         )
       }
 
       case 'hobbies': {
-        const hobbyActivities = ACTIVITIES.hobbies ?? []
-        return hobbyActivities
-          .filter(a => {
-            if (a.minAge && state.age < a.minAge) return false
-            if (a.minYear && (state.currentYear ?? 0) < a.minYear) return false
-            if (a.literate && G.literate === false) return false
-            return true
+        return (ACTIVITIES.hobbies ?? [])
+          .filter(a => activityOffered(state, a.id))
+          .map(a => {
+            const cost = a.cost > 0 ? estimateCost(state, a.cost) : 0
+            return (
+              <Btn key={a.id} disabled={noActions || (state.money ?? 0) < cost}
+                onClick={() => go(() => takeActivity(a.id))}
+                title={a.label}
+                subtitle={a.desc}
+                cost={cost > 0 ? money$(cost) : null}
+              />
+            )
           })
-          .map(a => (
-            <Btn key={a.id} disabled={noActions}
-              onClick={() => go(() => takeActivity(a.id))}
-              title={`${a.emoji} ${a.label}`}
-              subtitle={a.desc}
-              cost={a.cost > 0 ? `$${estimateCost(state, a.cost).toLocaleString()}` : 'Free'}
-            />
-          ))
       }
 
       case 'travel': {
-        if (state.age < 16) return <p className="text-natalis-muted text-sm italic p-3">You're too young to travel alone.</p>
-
-        // Scale costs for display
-        const gdpCostMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-        const costMult = gdpCostMult[state.character?.country?.gdp] ?? 1.0
+        if (state.age < 16) return <p className="text-natalis-muted text-sm italic p-3">Too young to go anywhere alone.</p>
         const visited = (state.travels ?? []).map(t => t.id)
-
+        const trips = tripOptions(state)
         const regions = [
-          { key: 'domestic',      label: '🗺️ Domestic' },
-          { key: 'regional',      label: '🌍 Regional' },
-          { key: 'international', label: '✈️ International' },
-          { key: 'luxury',        label: '💎 Luxury' },
+          { key: 'domestic',      label: 'Inside the country' },
+          { key: 'regional',      label: 'Nearby' },
+          { key: 'international', label: 'Far' },
+          { key: 'luxury',        label: 'Expensive' },
         ]
-
+        // Emigration: the handful of places somebody from here, now, would
+        // think of — not the roster in alphabetical order with its internal
+        // archetype ids and one moving cost for all of them.
+        const { closed, options } = emigrationOptions(state)
         return (
           <>
             {(state.travels ?? []).length > 0 && (
-              <div className="bg-blue-50 rounded-xl border border-blue-200 px-4 py-2 mb-2">
-                <p className="text-blue-700 text-xs font-semibold">{(state.travels ?? []).length} trip{(state.travels ?? []).length !== 1 ? 's' : ''} taken · {[...new Set((state.travels ?? []).map(t => t.name))].slice(-3).join(', ')}</p>
-              </div>
+              <p className="text-natalis-muted text-xs px-1 pb-1">Been: {[...new Set((state.travels ?? []).map(t => t.name))].slice(-3).join(', ')}</p>
             )}
             {regions.map(region => {
-              const dests = DESTINATIONS.filter(d => d.region === region.key && d.minAge <= state.age && (!d.minYear || state.currentYear >= d.minYear))
+              const dests = trips.filter(d => d.region === region.key)
               if (dests.length === 0) return null
               return (
                 <div key={region.key}>
                   <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">{region.label}</p>
                   {dests.map(dest => {
-                    const scaledCost = eraMoney(Math.round(dest.cost * costMult), state)
-                    const canAfford = (state.money ?? 0) >= scaledCost
                     const timesVisited = visited.filter(id => id === dest.id).length
                     return (
                       <Btn
                         key={dest.id}
-                        disabled={noActions || !canAfford}
+                        disabled={noActions || (state.money ?? 0) < dest.price}
                         onClick={() => { bookTrip(dest.id); onClose() }}
-                        title={`${dest.name}${timesVisited > 0 ? ` (×${timesVisited})` : ''}`}
-                        subtitle={dest.type.charAt(0).toUpperCase() + dest.type.slice(1)}
-                        cost={canAfford ? `$${scaledCost.toLocaleString()}` : `Need $${scaledCost.toLocaleString()}`}
+                        title={`${dest.name}${timesVisited > 0 ? `, again` : ''}`}
+                        cost={money$(dest.price)}
                       />
                     )
                   })}
                 </div>
               )
             })}
-
-            {/* Emigrate section */}
             {state.age >= 18 && (
               <>
-                <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 pt-3 pb-1">🛫 Emigrate</p>
-                {state.flags.includes('emigrated') && state.currentCountry && (
-                  <div className="bg-blue-50 rounded-xl border border-blue-200 px-4 py-2 mb-2">
-                    <p className="text-blue-700 text-xs font-semibold">Currently living in {state.currentCountry.name}</p>
-                  </div>
+                <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 pt-3 pb-1">To live somewhere else</p>
+                {closed ? (
+                  <p className="text-natalis-muted text-sm px-1 py-1 leading-relaxed">{closed}</p>
+                ) : (
+                  <>
+                    <p className="text-natalis-muted text-xs px-1 pb-1">A move takes the rest of the year.</p>
+                    {options.map(o => (
+                      <Btn
+                        key={o.name}
+                        disabled={noActions}
+                        onClick={() => { doEmigrate(o.name); onClose() }}
+                        title={o.display.replace(/^the /, 'The ')}
+                        subtitle={o.note}
+                        cost={`${money$(o.cost)}, ${o.how}${(state.money ?? 0) < o.cost ? ' — borrowed' : ''}`}
+                      />
+                    ))}
+                  </>
                 )}
-                {COUNTRIES.filter(c => c.name !== (state.currentCountry ?? state.character?.country)?.name)
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map(c => (
-                    <Btn
-                      key={c.name}
-                      disabled={noActions}
-                      onClick={() => { doEmigrate(c.name); onClose() }}
-                      title={`Move to ${c.name}`}
-                      subtitle={`${c.archetype.replace(/_/g, ' ')} · Est. ${eraRange(3000, 15000)} moving costs`}
-                    />
-                  ))
-                }
               </>
             )}
           </>
@@ -1603,21 +1558,18 @@ export default function ActivitiesPanel({ onClose }) {
           )
         }
         const available = getAvailableBusinessTypes(state)
-        const bizCostMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-        const bizMult = bizCostMult[state.character?.country?.gdp] ?? 1.0
         return (
           <>
-            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Start a Business</p>
+            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Something of your own</p>
             {available.map(bt => (
               <Btn key={bt.id}
-                disabled={noActions || (state.money ?? 0) < eraMoney(Math.round(bt.startupCost * bizMult), state)}
+                disabled={noActions || (state.money ?? 0) < bt.cost}
                 onClick={() => { startBusiness(bt.id); onClose() }}
-                title={`${bt.emoji} ${bt.name}`}
+                title={bt.name}
                 subtitle={bt.description}
-                cost={`Startup: $${eraMoney(Math.round(bt.startupCost * bizMult), state).toLocaleString()}`}
+                cost={`${money$(bt.cost)} to open`}
               />
             ))}
-            {available.length === 0 && <p className="text-natalis-muted text-sm italic p-3">No business types available yet.</p>}
           </>
         )
       }
@@ -1749,33 +1701,33 @@ export default function ActivitiesPanel({ onClose }) {
                     },
                   })
                 }}
-                title="🏃 Attempt Prison Break"
-                subtitle="High risk. Failure adds 3 years. Success leaves you a fugitive."
+                title="Try to get out"
+                subtitle="If it fails, three more years. If it works, you are running for the rest of it."
               />
             </>
           )
         }
 
         // On the run options
-        const gdpIllegalMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-        const illMult = gdpIllegalMult[state.character?.country?.gdp] ?? 1.0
-        const identityCost = eraMoney(Math.round(8000 * illMult), state)
-        const smugglerMin = Math.round(8000 * illMult)
-        const smugglerMax = Math.round(20000 * illMult)
+        // Both were priced at the BIRTH country's wage scale and the smuggler's
+        // range was printed in present-day dollars while the store charged
+        // era money. One figure each, the one the store charges.
+        const identityCost = forgedPapersCost(state)
+        const smugglerMin = smugglerFee(state)
 
         return (
           <>
             <div className="bg-red-50 rounded-xl border border-red-200 p-3 mb-2">
-              <p className="text-red-700 text-xs font-semibold">🚨 You are a wanted fugitive</p>
-              <p className="text-red-500 text-xs mt-0.5">Police search intensifies each year. Reduce your capture risk.</p>
+              <p className="text-red-700 text-xs font-semibold">They are looking for you</p>
+              <p className="text-red-500 text-xs mt-0.5">Every year the search goes on, it gets a little closer.</p>
             </div>
 
             {!state.flags.includes('assumed_identity') && (
               <Btn disabled={noActions || (state.money ?? 0) < identityCost}
                 onClick={() => { assumeIdentity(); onClose() }}
-                title="🪪 Assume a False Identity"
-                subtitle={`Buy forged documents. Reduces annual capture risk by 8%.`}
-                cost={`$${identityCost.toLocaleString()}`}
+                title="Become somebody else"
+                subtitle="Papers with another name on them, good enough for most counters."
+                cost={money$(identityCost)}
               />
             )}
 
@@ -1788,19 +1740,19 @@ export default function ActivitiesPanel({ onClose }) {
             {!state.flags.includes('appearance_changed') && (
               <Btn disabled={noActions}
                 onClick={() => { setActiveTop('plastic_surg') }}
-                title="✂️ Change Your Appearance"
-                subtitle="Cosmetic surgery, hair, style change. Reduces capture risk by 5%."
+                title="Change your face"
+                subtitle="Hair, weight, the way you walk. Surgery, if it is to be had."
               />
             )}
 
             <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2 pb-1">Flee the Country Illegally</p>
-            <p className="text-natalis-muted text-xs px-1 mb-2">Smuggler fee: ${smugglerMin.toLocaleString()}–${smugglerMax.toLocaleString()}. 30% chance of interception.</p>
-            {COUNTRIES.slice(0, 12).filter(c => c.name !== state.character?.country?.name).map(c => (
-              <Btn key={c.name} danger
+            <p className="text-natalis-muted text-xs px-1 mb-2">A smuggler wants {money$(smugglerMin)}. About one crossing in three is stopped.</p>
+            {destinationsFor(state).map(name => (
+              <Btn key={name} danger
                 disabled={noActions || (state.money ?? 0) < smugglerMin}
-                onClick={() => { goIllegal(c.name); onClose() }}
-                title={`→ ${c.name}`}
-                subtitle={`${c.archetype?.replace(/_/g, ' ')} · Flee illegally`}
+                onClick={() => { goIllegal(name); onClose() }}
+                title={name}
+                subtitle="Across the border at night, with papers that are not yours."
               />
             ))}
           </>
@@ -1809,11 +1761,11 @@ export default function ActivitiesPanel({ onClose }) {
 
       case 'prison': {
         if (!state.inPrison) return <p className="text-natalis-muted text-sm italic p-3">You are not in prison.</p>
-        const bribeMin = eraMoney(500, state)
+        const bribeMin = estimateCost(state, 500)
         return (
           <>
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-3 mb-3">
-              <p className="text-white text-xs font-semibold">🔒 Incarcerated</p>
+              <p className="text-white text-xs font-semibold">Inside</p>
               <p className="text-gray-300 text-xs mt-0.5">Sentence remaining: <span className="text-white font-bold">{state.prisonSentence} year{state.prisonSentence !== 1 ? 's' : ''}</span></p>
             </div>
 
@@ -1821,28 +1773,28 @@ export default function ActivitiesPanel({ onClose }) {
 
             <Btn disabled={noActions}
               onClick={() => { doPrisonWork(); onClose() }}
-              title="🧹 Prison Work Detail"
-              subtitle="Laundry, kitchen, yard crew. Earns a little cash."
+              title="Work detail"
+              subtitle="The laundry, the kitchen, the yard. A little money for the commissary."
             />
 
             <Btn disabled={noActions}
               onClick={() => { doPrisonCry(); onClose() }}
-              title="😢 Have a Cry"
-              subtitle="Let it out. Surprisingly therapeutic."
+              title="Let it out"
+              subtitle="In the cell, when it is as quiet as it gets."
             />
 
             <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3 py-1">High-Risk Actions</p>
 
             <Btn disabled={noActions || (state.money ?? 0) < bribeMin} danger
               onClick={() => { doPrisonBribeGuard(); onClose() }}
-              title="💵 Bribe a Guard"
-              subtitle={`50% chance to cut sentence. 25% chance it backfires. Costs ${eraRange(500, 3000)}.`}
+              title="Pay a guard"
+              subtitle={`Half the time a year goes missing from the paperwork. Sometimes the guard reports you. ${localRange(500, 3000)}.`}
             />
 
             <Btn disabled={noActions} danger
               onClick={() => { doPrisonStartRiot(); onClose() }}
-              title="🔥 Start a Riot"
-              subtitle="40% success. Could reduce sentence — or add years and get you hurt."
+              title="Start something on the wing"
+              subtitle="It might cost the paperwork a year. It might cost you more."
             />
 
             {livePartner && (
@@ -1850,8 +1802,8 @@ export default function ActivitiesPanel({ onClose }) {
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3 py-1">Relationships</p>
                 <Btn disabled={noActions}
                   onClick={() => { doPrisonConjugalVisit(); onClose() }}
-                  title={`💑 Conjugal Visit — ${livePartner.name}`}
-                  subtitle="Requires a strong relationship. 10% chance they don't show."
+                  title={`A visit from ${livePartner.name.split(' ')[0]}`}
+                  subtitle="If they come."
                 />
               </>
             )}
@@ -1890,8 +1842,8 @@ export default function ActivitiesPanel({ onClose }) {
                   },
                 })
               }}
-              title="🏃 Attempt Prison Break"
-              subtitle="Maze minigame. Failure adds 3 years. Success: you're a fugitive."
+              title="Try to get out"
+              subtitle="If it fails, three more years. If it works, you are running for the rest of it."
             />
           </>
         )
@@ -1923,15 +1875,35 @@ export default function ActivitiesPanel({ onClose }) {
   const liveC = state.currentCountry ?? state.character?.country
   const socialMediaExists = (state.currentYear ?? 0) >= 2006 &&
     (hasTech(liveC, 'home_internet', state.currentYear) || hasTech(liveC, 'smartphone', state.currentYear))
+  // A category is shown when something in it exists for this person here and
+  // now. "Business: No business types available yet." and a race card in a
+  // village with no racecourse were both categories that opened onto nothing
+  // the character could have done.
+  const OFFERS = {
+    salon: () => salonOptions(state).length > 0,
+    shopping: () => shoppingOptions(state).length > 0,
+    plastic_surg: () => surgeryOptions(state).length > 0,
+    hobbies: () => (ACTIVITIES.hobbies ?? []).some(a => activityOffered(state, a.id)),
+    movies: () => cinemaAvailable(state),
+    nightlife: () => goingOutAvailable(state) || ['volunteer', 'join_club'].some(id => activityOffered(state, id)),
+    pets: () => petOptions(state).length > 0,
+    business: () => !!state.business?.active || getAvailableBusinessTypes(state).length > 0,
+    assets: () => propertyOptions(state).length > 0 || vehicleOptions(state).length > 0 || (state.assets?.properties?.length ?? 0) > 0 || (state.assets?.vehicles?.length ?? 0) > 0,
+    licenses: () => licenceOptions(state).length > 0,
+    travel: () => tripOptions(state).length > 0 || state.age >= 18,
+    race_tracks: () => racecourseOpen(state),
+    substances: () => substanceOptions(state).length > 0,
+    rehab: () => (hasAddiction && rehabExists(state)) || ['quit_smoking', 'rehab'].some(id => activityOffered(state, id)),
+  }
   const isCategoryVisible = (cat) => {
     if (MIN_AGE[cat.key] !== undefined && state.age < MIN_AGE[cat.key]) return false
     if (cat.key === 'social_media' && !socialMediaExists) return false
-    if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return false
     if (cat.key === 'crime' && state.pendingTrial) return false
     if (cat.key === 'immigration' && state.residencyStatus === 'citizen' && !state.flags.includes('emigrated')) return false
     if (cat.key === 'underground' && !isUnderground) return false
     if (cat.key === 'prison' && !state.inPrison) return false
     if (state.inPrison && prisonBlockedCats.includes(cat.key)) return false
+    if (OFFERS[cat.key] && !OFFERS[cat.key]()) return false
     return true
   }
   const anyCategoryVisible = TOP_CATEGORIES.some(isCategoryVisible)
@@ -1957,6 +1929,16 @@ export default function ActivitiesPanel({ onClose }) {
           <button onClick={onClose} className="text-natalis-muted text-lg leading-none">✕</button>
         </div>
       </div>
+
+      {/* The year's budget, said once, quietly. The dots alone never explained
+          what they were counting. */}
+      {!activeTop && state.age >= 5 && !state.dead && (
+        <p className="px-4 pt-2 text-natalis-muted text-xs leading-relaxed">
+          {actionsLeft >= 2 ? 'A year has room for two things you choose to do. The rest of it happens to you.'
+            : actionsLeft === 1 ? 'There is room for one more thing this year.'
+              : 'This year\'s choices are made. The rest of it happens to you.'}
+        </p>
+      )}
 
       {/* Content */}
       <div className="overflow-y-auto" style={{ maxHeight: '60vh' }}>
@@ -1984,7 +1966,7 @@ export default function ActivitiesPanel({ onClose }) {
                                     cat.key === 'underground' && isUnderground ? { text: '!', color: '#8c3a2e' } :
                                     cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#8c3a2e' } :
                                     cat.key === 'mind_body' && anySevereUnmanaged ? { text: '⚕', color: '#8a6635' } :
-                                    cat.key === 'love' && pendingPartner && !livePartner ? { text: '💘', color: '#7b4356' } :
+                                    cat.key === 'love' && pendingPartner && !livePartner ? { text: '1', color: '#7b4356' } :
                                     cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#3f5670' } :
                                     cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#3f6146' } :
                                     null

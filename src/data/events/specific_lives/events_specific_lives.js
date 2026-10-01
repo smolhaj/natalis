@@ -137,7 +137,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 22 && G.age <= 58 &&
       G.ruralUrban !== 'urban' &&
       !G.mem?.sl_widow_india,
-    text: 'After the cremation the bangles are removed. Someone else removes them. The sindoor is wiped from your parting. The white sari is waiting. You are not yet forty. The festivals you attended you will now attend from the edge. The colours that were yours are no longer yours. None of this was written down anywhere you were shown. It doesn\'t need to be written down.',
+    text: 'After the cremation the bangles are removed, by someone else. The sindoor is wiped from your parting, and the white sari is waiting. You are not yet forty. You will go to the festivals from the edge now, and the colours that were yours are not yours. None of this was written down anywhere you were shown. It doesn\'t need to be.',
     choices: null,
     effect: (p) => { p.setMem('sl_widow_india', true); p.m -= 5; p.s -= 3 },
   },
@@ -294,7 +294,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2015 &&
       G.ruralUrban !== 'urban' &&
       !G.mem?.sl_maquila,
-    text: 'The maquiladora is a nine-hour shift at a station that does the same motion nine hundred times. Your hands know the motion before your mind does. At the end of the shift your wrists ache in a way that is becoming less temporary. The bus home takes forty minutes. You eat and sleep and come back. The wage is enough for the rent and almost enough for the rest.',
+    text: 'The maquiladora is a nine-hour shift at a station that does the same motion nine hundred times. Your hands know the motion before your mind does. At the end of the shift your wrists ache, and the ache is becoming less temporary. The bus home takes forty minutes. You eat and sleep and come back. The wage is enough for the rent and almost enough for the rest.',
     choices: null,
     effect: (p) => { p.setMem('sl_maquila', true); p.mo += 200; p.h -= 2 },
   },
@@ -312,7 +312,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.gender === 'female' &&
       G.age >= 16 && G.age <= 35 &&
       !G.mem?.sl_dhaka_gar,
-    text: 'The factory floor is loud in a way that stops being loud after a week and becomes the texture of the day. Your station produces 1,200 button-holes in a ten-hour shift. The target is posted on the wall. The supervisor does not walk past your station when you are behind. He walks past when you are on pace. You send money home on the fifteenth. It arrives before the twentieth. This is the transaction the family is built around.',
+    text: 'The factory floor is loud, and after a week the loud stops being loud and becomes the day. Your station produces 1,200 button-holes in a ten-hour shift. The target is posted on the wall. The supervisor does not walk past your station when you are behind. He walks past when you are on pace. You send money home on the fifteenth. It arrives before the twentieth. This is the transaction the family is built around.',
     choices: null,
     effect: (p) => { p.setMem('sl_dhaka_gar', true); p.mo += 150; p.h -= 2; p.addFlag('dhaka_garment_worked') },
   },
@@ -339,7 +339,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.gender === 'male' &&
       G.age >= 20 && G.age <= 50 &&
       !G.mem?.sl_copper,
-    text: 'You go down before it is light and come up after it is dark again. Underground has its own climate — warmer the deeper you go, a particular smell of blasted rock and diesel and your own sweat that your wife says she can smell before you walk through the door. The copper you mine ends up in electronics you will never own. The wage is better than farming. The body has opinions about the trade.',
+    text: 'You go down before it is light and come up after it is dark again. Underground has its own climate — warmer the deeper you go, a smell of blasted rock and diesel and your own sweat that your wife says she can smell before you walk through the door. The copper you mine ends up in electronics you will never own. The wage is better than farming. The body has opinions about the trade.',
     choices: null,
     effect: (p) => { p.setMem('sl_copper', true); p.mo += 400; p.h -= 3 },
   },
@@ -440,7 +440,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 20 && G.age <= 60 &&
       G.currentYear >= 2010 &&
       !G.mem?.sl_uk_food,
-    text: 'The foodbank is in the back of a church hall on Tuesdays and Thursdays, eleven to one. You bring the referral slip from the GP. The volunteers are kind in the particular way that people are kind when they understand that the dignity question is real and they are trying not to add to it. You take what is in the bag. You do not look at what is in the bag until you get home. At home you find tinned tomatoes, pasta, a small jar of coffee, a chocolate biscuit. The chocolate biscuit is an extravagance from someone\'s calculation.',
+    text: 'The foodbank is in the back of a church hall on Tuesdays and Thursdays, eleven to one. You bring the referral slip from the GP. The volunteers are kind in the way that people are kind when they understand that the dignity question is real and they are trying not to add to it. You take what is in the bag. You do not look at what is in the bag until you get home. At home you find tinned tomatoes, pasta, a small jar of coffee, a chocolate biscuit. The chocolate biscuit is an extravagance from someone\'s calculation.',
     choices: null,
     effect: (p) => { p.setMem('sl_uk_food', true); p.mo += 60; p.m -= 4; p.karma += 1 },
   },
@@ -485,7 +485,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.ethnicity === 'hazara' &&
       G.age >= 14 && G.age <= 30 &&
       !G.mem?.sl_haz_check,
-    text: 'The checkpoint is manned by people who are not Hazara. Your face tells them before you speak. You have Mongoloid features — the specific physical inheritance of a Central Asian ancestry that has made you identifiable for centuries, and in certain political moments has made you a target for that identification. You answer the questions. You do not look at your feet. Looking at your feet is the wrong thing to do. You have learned what the right thing to do is.',
+    text: 'The checkpoint is manned by people who are not Hazara. Your face tells them before you speak. You have Mongoloid features — the physical inheritance of a Central Asian ancestry that has made you identifiable for centuries, and in certain political moments has made you a target for that identification. You answer the questions. You do not look at your feet. Looking at your feet is the wrong thing to do. You have learned what the right thing to do is.',
     choices: null,
     effect: (p) => { p.setMem('sl_haz_check', true); p.m -= 4; p.e += 2 },
   },
@@ -594,7 +594,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 20 && G.age <= 60 &&
       G.currentYear >= 1986 &&
       !G.mem?.sl_pak_chr,
-    text: 'The blasphemy law has been used against a Christian in your district this year. This is not unusual. What is unusual is the neighbour who tells you about it in the tone of someone delivering a warning. You have lived here for thirty years. Your father built this house. The law itself is not the whole of the danger; the danger is also what the law permits others to do with an accusation.',
+    text: 'The blasphemy law has been used against a Christian in your district this year. It is not unusual. What is unusual is the neighbour who tells you about it in the tone of someone delivering a warning. You have lived here for thirty years. Your father built this house. The law itself is not the whole of the danger; the danger is also what the law permits others to do with an accusation.',
     choices: null,
     effect: (p) => { p.setMem('sl_pak_chr', true); p.m -= 4; p.s -= 2 },
   },
@@ -642,7 +642,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1990 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.sl_orth_xmas,
-    text: 'Christmas is not Christmas. It is January 7th, the Orthodox calendar, and it is celebrated at home in a register below official notice. Your grandmother puts the icon back on the wall for this week only. The Kolyadky songs happen in the kitchen with the door closed. The state has decided religion is backward and the family has decided the state is not invited to this particular evening.',
+    text: 'Christmas is January 7th, the Orthodox calendar, celebrated at home in a register below official notice. Your grandmother puts the icon back on the wall for this week only. The Kolyadky songs happen in the kitchen with the door closed. The state has decided religion is backward and the family has decided the state is not invited to this evening.',
     choices: null,
     effect: (p) => { p.setMem('sl_orth_xmas', true); p.m += 3; p.karma += 1 },
   },
@@ -656,7 +656,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.religion === 'buddhist' &&
       G.age >= 7 && G.age <= 14 &&
       !G.mem?.sl_bud_merit,
-    text: 'Every morning before school you go with your mother to the wat. The monks pass in single file, eyes down, bowls extended, feet bare on the path. Your mother places rice in the bowl. This is not a special occasion. This is Tuesday. This is the merit that accumulates and the debt that is repaid and the continuity that makes the day a day and the week a week. You carry the extra rice container without being asked.',
+    text: 'Every morning before school you go with your mother to the wat. The monks pass in single file, eyes down, bowls extended, feet bare on the path. Your mother places rice in the bowl. This is Tuesday. This is the merit that accumulates and the debt that is repaid and the continuity that makes the day a day and the week a week. You carry the extra rice container without being asked.',
     choices: null,
     effect: (p) => { p.setMem('sl_bud_merit', true); p.m += 2; p.karma += 2 },
   },
@@ -685,7 +685,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       ['christian_protestant', 'christian_evangelical', 'christian_pentecostal'].includes(G.religion) &&
       G.age >= 30 && G.age <= 55 &&
       !G.mem?.sl_yoruba_dual,
-    text: 'You are a Christian in the Baptist tradition and you are also a Yoruba person in the tradition of Yoruba religion and these are not, in the actual practice of your life, contradictions. The agbo — the herbal medicine your grandmother makes for the children — is Yoruba medicine. The church on Sunday morning is the church. The orisa have not been addressed directly in your household for two generations. But the Yoruba understanding of what the world is and how forces move within it is not absent from how you think about things. This is not hypocrisy. This is a person.',
+    text: 'You are a Christian in the Baptist tradition and you are also a Yoruba person in the tradition of Yoruba religion and these are not, in the actual practice of your life, contradictions. The agbo — the herbal medicine your grandmother makes for the children — is Yoruba medicine. The church on Sunday morning is the church. The orisa have not been addressed directly in your household for two generations. But the Yoruba understanding of what the world is and how forces move within it is still in how you think about things, and you do not call it hypocrisy. This is a person.',
     choices: null,
     effect: (p) => { p.setMem('sl_yoruba_dual', true); p.e += 2; p.m += 2 },
   },
@@ -700,7 +700,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 7 && G.age <= 14 &&
       !G.mem?.sl_india_fest,
-    text: 'The festivals are the structure of the year. Not the calendar year — the ritual year, which begins differently and has its own logic. Holi means the cold is ending. Diwali means the rabi crop is in and the accounts are being settled. The fair that comes after the harvest has a particular smell — jalebi and diesel and the powder from the sahara rides — that you will recognise for the rest of your life in any city on any continent.',
+    text: 'The festivals are the structure of the year. Not the calendar year — the ritual year, which begins differently and has its own logic. Holi means the cold is ending. Diwali means the rabi crop is in and the accounts are being settled. The fair that comes after the harvest has a smell — jalebi and diesel and the powder from the sahara rides — that you will recognise for the rest of your life in any city on any continent.',
     choices: null,
     effect: (p) => { p.setMem('sl_india_fest', true); p.m += 3 },
   },
@@ -732,7 +732,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 10 && G.age <= 55 &&
       G.currentYear >= 1947 && G.currentYear <= 1952 &&
       !G.mem?.sl_part_vil,
-    text: 'Your village is on the right side of the line they drew. Your neighbour\'s village — four kilometres away, where you bought grain at their market and your cousin\'s wife is from — is now in the other country. The line passes through a field that has been farmed continuously for three hundred years. You and the farmer who works it will not see each other again, which is not a fact that the men who drew the line considered worth noting.',
+    text: 'Your village is on the right side of the line they drew. Your neighbour\'s village — four kilometres away, where you bought grain at their market and your cousin\'s wife is from — is now in the other country. The line passes through a field that has been farmed continuously for three hundred years. You and the farmer who works it will not see each other again, a fact that the men who drew the line did not consider worth noting.',
     choices: null,
     effect: (p) => { p.setMem('sl_part_vil', true); p.m -= 5; p.e += 2; p.addFlag('partition_generation') },
   },
@@ -811,7 +811,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 25 && G.age <= 55 &&
       G.currentYear >= 2014 && G.currentYear <= 2022 &&
       !G.mem?.sl_vzla_prof,
-    text: 'Your salary is twelve dollars a month. This is the official salary for a hospital physician in Venezuela in this year. The black market exchange gives you more if you have dollars from outside. You do not have dollars from outside. The pharmacy you send your patients to has three of the twelve medications they require. Two of your colleagues left last year for Colombia; one for Spain; one for Miami. Each time, they explained and you understood. Each time, you stayed. The staying requires an explanation too, which you are still working on.',
+    text: 'Your salary as a hospital doctor is a few dollars a month at the official rate, and you have no dollars from outside. The pharmacy you send your patients to has three of the twelve medicines they need. Last year two colleagues left for Colombia, one for Spain, one for Miami, and each time they explained and you understood, and you stayed. The staying needs an explanation too. You are still working on it.',
     choices: [
       {
         text: 'Arrange the exit. The patients you cannot treat need you nowhere. The ones somewhere else need someone.',
@@ -856,7 +856,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 25 && G.age <= 55 &&
       G.currentYear >= 2010 && G.currentYear <= 2022 &&
       !G.mem?.sl_opioid,
-    text: 'The pharmacy on Main Street fills more oxycodone prescriptions than any pharmacy in the county, which is a county with a population of eleven thousand people. You know two people who are dead. You know four people who are not dead but are somewhere inside the between. The Suboxone clinic opened last year in the old RadioShack. The waiting list is six weeks. The funerals are not six weeks apart.',
+    text: 'The pharmacy on Main Street fills more oxycodone prescriptions than any pharmacy in the county, a county of eleven thousand people. You know two people who are dead. You know four people who are not dead but are somewhere inside the between. The Suboxone clinic opened last year in the old RadioShack. The waiting list is six weeks. The funerals are not six weeks apart.',
     choices: null,
     effect: (p) => { p.setMem('sl_opioid', true); p.m -= 5; p.e += 2 },
   },
@@ -898,7 +898,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 60 &&
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       !G.mem?.sl_zero_covid,
-    text: 'The lockdown in Shanghai is not the two weeks the notice said. It is seventy-five days. Your compound is sealed. The food deliveries are managed by the neighbourhood committee. Your neighbour in 12B has a cat; pets were removed in April and he did not allow the removal. You can hear the cat. The compound chat group has 847 messages today, mostly about the food delivery and partly about a man three buildings over whose medication ran out on the seventeenth. The medication is insulin.',
+    text: 'The lockdown in Shanghai, which the notice said would be two weeks, is seventy-five days. Your compound is sealed. The food deliveries are managed by the neighbourhood committee. Your neighbour in 12B has a cat; pets were removed in April and he did not allow the removal. You can hear the cat. The compound chat group has 847 messages today, mostly about the food delivery and partly about a man three buildings over whose medication ran out on the seventeenth. The medication is insulin.',
     choices: [
       {
         text: 'Organise the group to get the insulin through. Someone will know someone.',
@@ -974,7 +974,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 35 &&
       QUESTIONING(G) &&
       !G.mem?.sl_ru_prop,
-    text: 'The law against gay propaganda to minors passed in June. You are not a minor. The law does not apply to you technically. The effect of the law is not technical. Your friends from the club have stopped posting. One has left for Amsterdam. You delete the photos from your phone not because you are afraid of the specific law but because the specific law clarifies what was already true: you are in a country that has decided.',
+    text: 'The law against gay propaganda to minors passed in June. You are not a minor. The law does not apply to you technically. The effect of the law is not technical. Your friends from the club have stopped posting. One has left for Amsterdam. You delete the photos from your phone not because you are afraid of the law but because the law clarifies what was already true: you are in a country that has decided.',
     choices: [
       {
         text: 'Stay, and find the people who stayed',
@@ -1033,7 +1033,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 20 && G.age <= 35 &&
       QUESTIONING(G) &&
       !G.mem?.sl_us_aids_gen,
-    text: 'The ones you know who have died. You count them sometimes and stop counting. The number is not a number a generation should know. The disease arrived with a specific moral freight attached to it — the administration would not say the word for years — and you watched the community build the infrastructure of care that the government did not. The buddy system. The phone trees. The hospice that was an apartment. The funerals that happened too often for February.',
+    text: 'The ones you know who have died. You count them sometimes and stop counting. The number is not a number a generation should know. The disease arrived with a moral freight attached to it — the administration would not say the word for years — and you watched the community build the infrastructure of care that the government did not. The buddy system. The phone trees. The hospice that was an apartment. The funerals that happened too often for February.',
     choices: null,
     effect: (p) => { p.setMem('sl_us_aids_gen', true); p.m -= 8; p.h -= 3; p.e += 3; p.addFlag('aids_generation_witness') },
   },
@@ -1057,7 +1057,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'Fight it — the skills are real, the craft is real, the union will hold',
         tag: 'fight',
-        outcome: 'The strike is long and the outcome is not the one you fought for. The skills are real. The industry moved anyway.',
+        outcome: 'The strike is long and the outcome is not the one you fought for. You keep the skills. The industry moved anyway.',
         effect: (p) => { p.m -= 6; p.s += 3; p.karma += 3; p.addFlag('union_solidarity'); p.setMem('sl_print_comp', true) },
       },
       {
@@ -1106,7 +1106,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'Stay with the older variety — one bad yield with the new seed and the family eats nothing',
         tag: 'traditional',
-        outcome: 'The older seeds produce what they have always produced. The gap between your output and your neighbour\'s widens. The stability is real. So is what it costs.',
+        outcome: 'The older seeds produce what they have always produced. The gap between your output and your neighbour\'s widens, and so does what it costs.',
         effect: (p) => { p.m -= 2; p.karma += 2; p.setMem('sl_grn_rev', true) },
       },
     ],
@@ -1187,7 +1187,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 13 && G.age <= 20 &&
       G.flags.includes('arm_genocide_memory_bearer') &&
       !G.mem?.sl_arm_disp_gc,
-    text: 'Your grandparents survived something that the country that did it still does not call by its name. You have grown up with this gap between the word your family uses and the word the Turkish government uses. The gap is not abstract. It is the reason your grandparents\' village is a Turkish village now, the reason you grew up here instead of there. The denial is the second thing they took.',
+    text: 'Your grandparents survived something that the country that did it still does not call by its name. You have grown up with this gap between the word your family uses and the word the Turkish government uses. The gap is the reason your grandparents\' village is a Turkish village now, the reason you grew up here instead of there. The denial is the second thing they took.',
     choices: null,
     effect: (p) => { p.setMem('sl_arm_disp_gc', true); p.m -= 3; p.e += 3; p.karma += 2 },
   },
@@ -1235,7 +1235,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 4 && G.age <= 12 &&
       !G.mem?.sl_polio_surv &&
       Math.random() < 0.08,
-    text: 'The summer the polio came through the town, your mother would not let you swim in the public pool. You got it anyway — the fever first, then the weakness in the left leg, then the weeks in the iron lung ward where the machines breathed and the children did not go home at the same rate they arrived. You came home. The leg does not work the same. You are one of the lucky ones, which is a thing people will tell you for the rest of your life.',
+    text: 'The summer the polio came through the town, your mother would not let you swim in the public pool. You got it anyway — the fever first, then the weakness in the left leg, then the weeks in the iron lung ward where the machines breathed and the children did not go home at the same rate they arrived. You came home. The leg does not work the same. You are one of the lucky ones. People will tell you that for the rest of your life.',
     choices: null,
     effect: (p) => { p.setMem('sl_polio_surv', true); p.h -= 15; p.m -= 5; p.addFlag('childhood_disability'); p.addCondition('mobility_impairment', 'moderate') },
   },
@@ -1264,18 +1264,18 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 30 &&
       (G.flags.includes('born_deaf') || G.flags.includes('deaf_community_found')) &&
       !G.mem?.sl_deaf_work,
-    text: 'The interview is your third this month. You have practised the lip-reading for the specific vocabulary of this industry. The interviewer speaks to the wall behind you for three of the fifteen minutes. You correct him twice, gently, and he is embarrassed and this changes the remainder of the interview in ways that are not in your favour. The job goes to someone else. You have no way of proving the connection and do not try.',
+    text: 'The interview is your third this month. You have practised the lip-reading for the vocabulary of this industry. The interviewer speaks to the wall behind you for three of the fifteen minutes. You correct him twice, gently, and he is embarrassed and this changes the remainder of the interview in ways that are not in your favour. The job goes to someone else. You have no way of proving the connection and do not try.',
     choices: [
       {
         text: 'Continue applying — the right employer exists',
         tag: 'persist',
-        outcome: 'The fourth interview is different. The employer has a policy. The policy is not charity — they have found that Deaf workers have a specific kind of concentration that the work rewards. You are hired.',
+        outcome: 'The fourth interview is different. The employer has a policy. The policy is not charity — they have found that Deaf workers have a kind of concentration that the work rewards. You are hired.',
         effect: (p) => { p.m += 2; p.w += 3; p.karma += 2; p.setMem('sl_deaf_work', true) },
       },
       {
         text: 'Move toward the Deaf community economy — the parallel world that does not need the hearing world to function',
         tag: 'community',
-        outcome: 'The Deaf club, the Deaf-run business, the network that has always existed alongside. You build inside it and the building is real.',
+        outcome: 'The Deaf club, the Deaf-run business, the network that has always existed alongside. You build inside it.',
         effect: (p) => { p.s += 4; p.m += 5; p.addFlag('community_anchor'); p.setMem('sl_deaf_work', true) },
       },
     ],
@@ -1335,7 +1335,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'Stay home. Draw no attention. Survive the first week.',
         tag: 'survive',
-        outcome: 'You survive the first week. The curfew. The neighbours\' cars in the night. The specific silence that a city makes when it is afraid.',
+        outcome: 'You survive the first week. The curfew. The neighbours\' cars in the night. The silence that a city makes when it is afraid.',
         effect: (p) => { p.m -= 4; p.h -= 2; p.setMem('sl_chile_73', true) },
       },
     ],
@@ -1429,7 +1429,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 22 &&
       G.flags.includes('first_gen_graduate') &&
       !G.mem?.sl_fgu_uk,
-    text: 'The university is a place built for someone with different vowels. You hear your own accent in tutorials and understand that it is being heard differently. The boys from the public schools have a particular ease — in the bar, in the seminar, with the professors — that is not intelligence but something closer to the assumption of welcome. You are intelligent. The ease is not the same thing.',
+    text: 'The university is a place built for someone with different vowels. You hear your own accent in tutorials and understand that it is being heard differently. The boys from the public schools have an ease — in the bar, in the seminar, with the professors — that is not intelligence but something closer to the assumption of welcome. You are intelligent. The ease is not the same thing.',
     choices: [
       {
         text: 'Learn to perform the ease. It is a skill like any other.',
@@ -1456,7 +1456,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.stats.wealth >= 60 &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.sl_class_betray,
-    text: 'Your mother cannot come to the dinner party because she would not know which fork. This is not what you say. What you say is that she is not well, which is also true. The awareness of what you have just done sits with you for the rest of the evening. You think about the specific calculus — the social cost to you of bringing her against the cost to her of being left out — and understand that you chose yourself. The education that allowed you to be at this table also taught you the priorities of the people at this table.',
+    text: 'Your mother cannot come to the dinner party because she would not know which fork. This is not what you say. What you say is that she is not well. That is also true. The awareness of what you have just done sits with you for the rest of the evening. You think about the calculus — the social cost to you of bringing her against the cost to her of being left out — and understand that you chose yourself. The education that allowed you to be at this table also taught you the priorities of the people at this table.',
     choices: null,
     effect: (p) => { p.setMem('sl_class_betray', true); p.r += 10; p.m -= 4; p.addFlag('class_guilt') },
   },
@@ -1469,7 +1469,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.flags.includes('first_gen_graduate') &&
       G.age >= 55 &&
       !G.mem?.sl_wc_inh,
-    text: 'What your parents gave you was not money. The inventory: a particular capacity for discomfort that does not stop them. A relation to work that does not require the work to mean anything beyond it being done well. A precise knowledge of how much things cost. A suspicion of people who have never had to think about this. These are inheritances. They operated differently from the ones your colleagues received. You are still working out whether the word better applies.',
+    text: 'What your parents gave you was not money. The inventory: a capacity for discomfort that does not stop them. A relation to work that does not require the work to mean anything beyond it being done well. A precise knowledge of how much things cost. A suspicion of people who have never had to think about this. These are inheritances. They operated differently from the ones your colleagues received. You are still working out whether the word better applies.',
     choices: null,
     effect: (p) => { p.setMem('sl_wc_inh', true); p.m += 4; p.e += 2; p.karma += 2 },
   },
@@ -1582,7 +1582,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1941 && G.currentYear <= 1944 &&
       G.age >= 2 && G.age <= 6 &&
       !G.mem?.sl_lgrad_child,
-    text: 'The bread was 125 grams a day during the worst months. You were too young to understand grams. You understood hunger, which is more fundamental than units of measurement. The adults did not cry in front of you, which was a form of care. Later you understood what the adults were not eating so that you could eat what you ate.',
+    text: 'The bread was 125 grams a day during the worst months. You were too young to understand grams. You understood hunger, more fundamental than units of measurement. The adults did not cry in front of you, which was a form of care. Later you understood what the adults were not eating so that you could eat what you ate.',
     choices: null,
     effect: (p) => { p.setMem('sl_lgrad_child', true); p.h -= 8; p.m -= 5; p.addFlag('war_childhood') },
   },
@@ -1596,7 +1596,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1952 &&
       G.age >= 3 && G.age <= 7 &&
       !G.mem?.sl_pw_jp_child,
-    text: 'The American soldiers handed out chocolate in the street. You had not understood before that moment that a country could be occupied by the army of another country and that children could eat chocolate given by the soldiers of the occupying army. The chocolate was real. Everything else about the situation you spent the rest of your childhood slowly understanding.',
+    text: 'The American soldiers handed out chocolate in the street. You had not understood before that moment that a country could be occupied by the army of another country and that children could eat chocolate given by the soldiers of the occupying army. Everything else about the situation you spent the rest of your childhood slowly understanding.',
     choices: null,
     effect: (p) => { p.setMem('sl_pw_jp_child', true); p.m -= 2; p.e += 2 },
   },
@@ -1645,7 +1645,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 6 && G.age <= 14 &&
       G.flags.includes('minority_language_speaker') &&
       !G.mem?.sl_cat_lang,
-    text: 'The law says Spanish only — Habla la lengua del Imperio. In school: Spanish. In official settings: Spanish. At home, behind the closed door: Catalan, which your grandparents speak and your parents speak and you are learning to speak in the specific register of a language kept alive inside closed doors. You are seven years old and already aware of the architecture of when to speak which language, which is an unusual competence to develop at seven.',
+    text: 'The law says Spanish only — Habla la lengua del Imperio. In school: Spanish. In official settings: Spanish. At home, behind the closed door: Catalan, which your grandparents speak and your parents speak and you are learning to speak in the register of a language kept alive inside closed doors. You are seven years old and already aware of the architecture of when to speak which language, an unusual competence at seven.',
     choices: null,
     effect: (p) => { p.setMem('sl_cat_lang', true); p.m -= 2; p.e += 3; p.addFlag('language_suppression_lived') },
   },
@@ -1659,7 +1659,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1991 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_kaz_russ,
-    text: 'Your mother speaks Kazakh. You answer in Russian. This happened gradually enough that it is now simply how you are. The Russian was the language of advancement, of the city, of the scientific education. The Kazakh was for your grandmother\'s kitchen and the songs at Nauryz. You live between these two registers and have never been asked to choose between them, which is a form of choosing without choosing.',
+    text: 'Your mother speaks Kazakh. You answer in Russian. This happened gradually enough that it is now simply how you are. The Russian was the language of advancement, of the city, of the scientific education. The Kazakh was for your grandmother\'s kitchen and the songs at Nauryz. You live between these two registers and have never been asked to choose between them.',
     choices: null,
     effect: (p) => { p.setMem('sl_kaz_russ', true); p.e += 2; p.m -= 2; p.addFlag('minority_language_gap') },
   },
@@ -1673,7 +1673,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1980 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_ar_dialect,
-    text: 'The written Arabic you use in formal documents is not the spoken Arabic you use with your mother. This is not translation exactly — it is two registers of the same inheritance. The television presenters speak a middle dialect that no one actually uses at home. The university professor writes in Fusha and speaks in Egyptian or Moroccan or Levantine. You navigate between the registers constantly, which is an act of intelligence so daily it has become invisible.',
+    text: 'The written Arabic you use in formal documents is not the spoken Arabic you use with your mother: two registers of the same inheritance. The television presenters speak a middle dialect that no one actually uses at home. The university professor writes in Fusha and speaks in Egyptian or Moroccan or Levantine. You move between the registers constantly, an act of intelligence so daily it has become invisible.',
     choices: null,
     effect: (p) => { p.setMem('sl_ar_dialect', true); p.e += 2; p.s += 2 },
   },
@@ -1743,7 +1743,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       const son = (G.children ?? []).find(c => c.alive !== false && c.gender === 'male')
       const who = son ? ['Your son is in the city.', 'your son does not'] : (G.children ?? []).some(c => c.alive !== false)
         ? ['Your children are in the city.', 'your children do not'] : ['The family that might have taken it on is gone or elsewhere.', 'nobody else does']
-      return `The farm was your husband\'s name in the official records and now that he is gone the question is what it is. ${who[0]} The land is here. You know the land in ways ${who[1]} — which fields hold water in wet years, which drainage ditch needs clearing ${when}, which neighbour will help with the harvest if you help with theirs. The knowledge is not on paper anywhere. It is in thirty years of doing it.`
+      return `The farm was your husband's name in the official records and now that he is gone the question is what it is. ${who[0]} The land is here. You know the land in ways ${who[1]} — which fields hold water in wet years, which drainage ditch needs clearing ${when}, which neighbour will help with the harvest if you help with theirs. The knowledge is in thirty years of doing it, and on no paper.`
     },
     choices: [
       {
@@ -1755,7 +1755,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'Move to the city, near your son. The farm can be rented.',
         tag: 'move',
-        outcome: 'The city is your son\'s world, not yours. The rent from the farm is something. The loss of the particular knowledge of that land is also something, without a word for it.',
+        outcome: 'The city is your son\'s world, not yours. The rent from the farm is something. The loss of the knowledge of that land is also something, without a word for it.',
         effect: (p) => { p.m -= 4; p.mo += 2400; p.r += 5; p.setMem('sl_wid_farm', true) },
       },
     ],
@@ -1838,7 +1838,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.ruralUrban === 'urban' &&
       G.stats.wealth <= 35 &&
       !G.mem?.sl_br_upp,
-    text: 'The UPP police came in 2010. Before the UPP: the traffic, the toque de recolher, the permission structure of the hill that everyone navigated and few acknowledged. After the UPP: police checkpoints, which you navigate differently. The violence is lower in certain categories and unchanged in others. The people of the favela debate what the pacification is for, which is a question about who the pacification serves, which is a question the UPP itself does not raise.',
+    text: 'The UPP police came in 2010. Before the UPP: the traffic, the toque de recolher, the permission structure of the hill that everyone navigated and few acknowledged. After the UPP: police checkpoints, which you navigate differently. The violence is lower in certain categories and unchanged in others. The people of the favela debate what the pacification is for — who it serves — a question the UPP itself does not raise.',
     choices: null,
     effect: (p) => { p.setMem('sl_br_upp', true); p.m += 2; p.e += 2; p.s += 1 },
   },
@@ -1871,7 +1871,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1976 && G.currentYear <= 2000 &&
       G.age >= 25 && G.age <= 50 &&
       !G.mem?.sl_vn_paddy,
-    text: 'The cooperative quota is thirty percent of the harvest. Above the quota the family keeps what it grows. The mathematics of the quota means the mathematics of everything else — what the children eat, whether there is cooking oil, the calculation that happens every harvest between what the state takes and what remains. Doi Moi changed the mathematics. What did not change: the water level in the paddies at four in the morning, the specific ache of transplanting by hand, the number of days between planting and harvest that a body memorises without being asked.',
+    text: 'The cooperative quota is thirty percent of the harvest. Above the quota the family keeps what it grows. The mathematics of the quota means the mathematics of everything else — what the children eat, whether there is cooking oil, the calculation that happens every harvest between what the state takes and what remains. Doi Moi changed the mathematics. What did not change: the water level in the paddies at four in the morning, the ache of transplanting by hand, the number of days between planting and harvest that a body memorises without being asked.',
     choices: null,
     effect: (p) => { p.setMem('sl_vn_paddy', true); p.h -= 3; p.m += 2; p.e += 2 },
   },
@@ -1901,7 +1901,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 35 &&
       G.currentYear >= 1970 && G.currentYear <= 2010 &&
       !G.mem?.sl_ke_tea,
-    text: 'The target is twenty-two kilos of tea leaf per day. Below target, the supervisor notes it. At target, the wage is the wage. Above target, a bonus that is smaller than the calculation suggests it should be. You pick with both hands into the basket on your back. The posture the picking requires has a specific effect on the lower spine that you will carry for the rest of your life. The tea goes to Mombasa, then to the London auction, then to a supermarket shelf with a price that is not connected to the twenty-two kilos.',
+    text: 'The target is twenty-two kilos of tea leaf per day. Below target, the supervisor notes it. At target, the wage is the wage. Above target, a bonus that is smaller than the calculation suggests it should be. You pick with both hands into the basket on your back. The posture the picking requires has an effect on the lower spine that you will carry for the rest of your life. The tea goes to Mombasa, then to the London auction, then to a supermarket shelf with a price that is not connected to the twenty-two kilos.',
     choices: null,
     effect: (p) => { p.setMem('sl_ke_tea', true); p.h -= 4; p.mo += 800; p.e += 1 },
   },
@@ -1945,7 +1945,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'Stay out. The world is enormous and you want to be in it.',
         tag: 'leave',
-        outcome: 'You are shunned in the specific way the Ordnung prescribes — not violently, but completely. Your family eats with you separately. The loss is total and chosen. The world is as large as you thought.',
+        outcome: 'You are shunned in the way the Ordnung prescribes — not violently, but completely. Your family eats with you separately. The loss is total and chosen. The world is as large as you thought.',
         effect: (p) => { p.m -= 8; p.e += 4; p.addFlag('left_faith_community'); p.setMem('sl_amish_rum', true) },
       },
     ],
@@ -1961,7 +1961,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 2000 &&
       G.age >= 8 && G.age <= 14 &&
       !G.mem?.sl_ir_pray_sch,
-    text: 'The school day begins with prayer. The prayer is required. The teacher walks the rows checking that the lips are moving. Your lips move. Whether anything behind them is moving is your private business. You have understood, at ten, that there are two registers of religious practice: the one that is public and required and the one that is private and optional. This is not cynicism. It is a sophisticated understanding of a political regime that you developed before you had words for politics or regimes.',
+    text: 'The school day begins with prayer. The prayer is required. The teacher walks the rows checking that the lips are moving. Your lips move. Whether anything behind them is moving is your private business. You have understood, at ten, that there are two registers of religious practice: the one that is public and required and the one that is private and optional. It is an understanding of the regime you developed before you had words for politics or regimes.',
     choices: null,
     effect: (p) => { p.setMem('sl_ir_pray_sch', true); p.e += 3; p.m -= 2 },
   },
@@ -2039,7 +2039,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     text: 'You are back in the neighbourhood and the neighbourhood has arranged itself around the fact without ever naming it. A shidduch that does not progress past the second meeting. A seat at a simcha that is perfectly polite and slightly to one side. Your mother still writes, and she is the only one who ever asks what the years were actually like.',
     choices: [
       { text: 'Stay, and let it settle.', outcome: 'It does settle, mostly, over about a decade. Mostly is the accurate word.', effect: (p) => { p.m -= 3; p.setMem('sl_haredi_enlist_after', true); p.addFlag('stayed_and_absorbed_it') } },
-      { text: 'Move to a mixed neighbourhood.', outcome: 'Nobody there knows what the uniform cost you, which is restful and is also a kind of erasure.', effect: (p) => { p.m += 4; p.s += 3; p.setMem('sl_haredi_enlist_after', true); p.addFlag('left_the_neighbourhood') } },
+      { text: 'Move to a mixed neighbourhood.', outcome: 'Nobody there knows what the uniform cost you, and that is restful, and also a kind of erasure.', effect: (p) => { p.m += 4; p.s += 3; p.setMem('sl_haredi_enlist_after', true); p.addFlag('left_the_neighbourhood') } },
     ],
     effect: null,
   },
@@ -2240,7 +2240,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 2020 &&
       G.age >= 10 && G.age <= 12 &&
       !G.mem?.sl_sg_stream,
-    text: 'At twelve, the PSLE score determines your secondary school stream: Express, Normal Academic, or Normal Technical. The score is public in the way that matters — your parents know, the neighbours know, the relatives know. You have spent three years preparing for one examination. The stream you are placed in determines the examination you can sit at sixteen which determines the university entry you can attempt. The meritocracy is real and the meritocracy begins at twelve, which is a thing the meritocracy does not emphasise.',
+    text: 'At twelve, the PSLE score determines your secondary school stream: Express, Normal Academic, or Normal Technical. The score is public in the way that matters — your parents know, the neighbours know, the relatives know. You have spent three years preparing for one examination. The stream you are placed in determines the examination you can sit at sixteen which determines the university entry you can attempt. The meritocracy is real and it begins at twelve, which the meritocracy does not emphasise.',
     choices: null,
     effect: (p) => { p.setMem('sl_sg_stream', true); p.e += 2; p.m -= 2 },
   },
@@ -2259,7 +2259,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 25 && G.age <= 55 &&
       G.regime === 'single_party_communist' &&
       !G.mem?.sl_ddr_stasi,
-    text: 'The Stasi officer came to your workplace and said that you had been identified as a reliable comrade and that you could serve the Republic in a way that did not require changing anything about your daily life. You were required only to report, occasionally, on certain colleagues. You said yes. The reporting was infrequent and the information seemed routine and the promotion that followed was coincidental. You maintained this description of events for years. After 1989, the files were opened. Your file exists. You are in it as both subject and source.',
+    text: 'The Stasi officer came to your workplace and said that you had been identified as a reliable comrade and that you could serve the Republic without changing anything about your daily life. You were required only to report, occasionally, on certain colleagues. You said yes. The reporting was infrequent and the information seemed routine and the promotion that followed was coincidental. You maintained this description of events for years. After 1989, the files were opened. Your file exists. You are in it as both subject and source.',
     choices: null,
     effect: (p) => { p.setMem('sl_ddr_stasi', true); p.m -= 8; p.r += 12; p.karma -= 10; p.addFlag('informer_stasi') },
   },
@@ -2326,7 +2326,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'Request your own file. See the full record.',
         tag: 'read',
-        outcome: 'The file is sixty pages. Your own handwritten reports are in it. Reading your own handwriting describing your colleagues is a specific experience that you do not have language for and do not seek language for.',
+        outcome: 'The file is sixty pages. Your own handwritten reports are in it. Reading your own handwriting describing your colleagues is an experience that you do not have language for and do not seek language for.',
         effect: (p) => { p.setMem('sl_stasi_opened', true); p.m -= 10; p.r += 15; p.karma -= 5; p.e += 2 },
       },
       {
@@ -2352,7 +2352,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 1999 &&
       G.age >= 13 && G.age <= 19 &&
       !G.mem?.sl_ir_cass,
-    text: 'The cassette tapes came via cousins in Germany or through the bazaar in ways that did not require asking questions. Michael Jackson, Madonna, Metallica — contraband not because of the content specifically but because of the form, the western-ness of it. You had a Walkman and listened with one earbud and kept the other ear on the door. The arrangement between the private life and the public regime had this specific shape: you could have almost anything inside a room, provided the room was genuinely inside.',
+    text: 'The cassette tapes came via cousins in Germany or through the bazaar in ways that did not require asking questions. Michael Jackson, Madonna, Metallica — contraband not because of the content specifically but because of the form, the western-ness of it. You had a Walkman and listened with one earbud and kept the other ear on the door. The arrangement between the private life and the public regime had this shape: you could have almost anything inside a room, provided the room was genuinely inside.',
     choices: null,
     effect: (p) => { p.setMem('sl_ir_cass', true); p.m += 4; p.s += 2; p.addFlag('private_public_split') },
   },
@@ -2448,7 +2448,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.children?.some(c => c.alive !== false) &&
       G.age >= 65 &&
       !G.mem?.sl_ll_country_q,
-    text: (G) => `The question of where you want to be buried comes up, not dramatically, but in a conversation about practicalities. You realise you have been living in this country for ${numberWord(G.yearsAbroad)} years and have not decided. The country you came from is a different country now — the government changed, the language changed slightly, the neighbourhood you were from has been rebuilt. The country you are in is where your children are. Both of these facts are simultaneously true and do not resolve into an answer.`,
+    text: (G) => `The question of where you want to be buried comes up, not dramatically, but in a conversation about practicalities. You realise you have been living in this country for ${numberWord(G.yearsAbroad)} years and have not decided. The country you came from is a different country now — the government changed, the language changed slightly, the neighbourhood you were from has been rebuilt. The country you are in is where your children are. They do not resolve into an answer.`,
     choices: [
       {
         text: 'Here. The life was here. The end should be here.',
@@ -2459,7 +2459,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'There. Something should go back.',
         tag: 'there',
-        outcome: 'The arrangement is made. The children don\'t fully understand. You don\'t fully explain it. The country you came from has been waiting in a specific way that you are only now admitting.',
+        outcome: 'The arrangement is made. The children don\'t fully understand. You don\'t fully explain it. The country you came from has been waiting, and you are only now admitting it.',
         effect: (p) => { p.setMem('sl_ll_country_q', true); p.m += 2; p.r += 5 },
       },
     ],
@@ -2487,7 +2487,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.flags.includes('minority_language_speaker') &&
       G.age >= 70 &&
       !G.mem?.sl_ll_lang_last,
-    text: 'Your grandchildren understand some words. They do not speak it. The language will continue in recordings and in academic papers and in the work of linguists who came to document it, which is a form of persistence that is different from the form you grew up in. You are not the last speaker — there are others your age — but you are aware that the number is specific and declining and that you know it in ways the recordings will not capture: the exact inflection for a certain kind of irony, the phrase for the particular feeling of returning to a place after a long absence and finding it changed.',
+    text: 'Your grandchildren understand some words. They do not speak it. The language will continue in recordings and in academic papers and in the work of linguists who came to document it, a persistence different from the one you grew up in. You are not the last speaker — there are others your age — but you are aware that the number is specific and declining and that you know it in ways the recordings will not capture: the exact inflection for a certain kind of irony, the phrase for the feeling of returning to a place after a long absence and finding it changed.',
     choices: null,
     effect: (p) => { p.setMem('sl_ll_lang_last', true); p.m -= 3; p.e += 2; p.r += 6; p.addFlag('language_legacy_bearer') },
   },
@@ -2501,7 +2501,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 65 &&
       G.children?.length > 0 &&
       !G.mem?.sl_ll_farm_hand,
-    text: 'The surveyor cannot find the boundary stones and you walk him to all four of them in under an hour, because your grandfather put them where he said he had. Eight months and a fee you had not budgeted for, and the paper at the end says what has been true since 1961. Your son will rent it out to the co-operative, which is the correct decision and which you have told him is the correct decision. You put the deed in the drawer with the others and go out to shut the gate.',
+    text: 'The surveyor cannot find the boundary stones and you walk him to all four of them in under an hour, because your grandfather put them where he said he had. Eight months and a fee you had not budgeted for, and the paper at the end says what has been true since 1961. Your son will rent it out to the co-operative. It is the correct decision, and you have told him so. You put the deed in the drawer with the others and go out to shut the gate.',
     choices: null,
     effect: (p) => { p.setMem('sl_ll_farm_hand', true); p.m += 2; p.r += 8; p.addFlag('land_transferred') },
   },
@@ -2515,7 +2515,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.political_leaning !== null &&
       G.flags.includes('election_felt') &&
       !G.mem?.sl_ll_pol_reck,
-    text: 'The politics you held in your thirties and the politics you hold now are not the same politics and you have not always been honest with yourself about why they changed. Some of the change is wisdom — the accumulation of evidence has updated the position. Some of the change is comfort — the positions that threatened what you had accumulated have become less appealing as what you have accumulated has grown. Distinguishing between the two kinds of change is the work. Most people do not do the work. You are attempting the work, which is better than most.',
+    text: 'The politics you held in your thirties and the politics you hold now are not the same politics and you have not always been honest with yourself about why they changed. Some of the change is wisdom — the accumulation of evidence has updated the position. Some of the change is comfort — the positions that threatened what you had accumulated have become less appealing as what you have accumulated has grown. Distinguishing between the two kinds of change is the work. Most people do not do the work. You are attempting the work. Most people do not.',
     choices: null,
     effect: (p) => { p.setMem('sl_ll_pol_reck', true); p.m += 3; p.e += 3; p.r += 4; p.addFlag('examined_politics') },
   },
@@ -2528,7 +2528,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 65 &&
       G.children?.length > 0 &&
       !G.mem?.sl_ll_gc_world,
-    text: 'The grandchild asks what it was like before the internet and you understand, from the question, that what is being asked is what the world was like before something the child cannot imagine not existing. You describe it and the description sounds like deprivation: no instant access, no search, no way to find out immediately. What you cannot describe is what it felt like from inside — the specific texture of not-knowing that was ordinary rather than a failure of the system. The grandchild listens. The grandchild cannot imagine it. You realise you can no longer imagine it either.',
+    text: 'The grandchild asks what it was like before the internet and you understand, from the question, that what is being asked is what the world was like before something the child cannot imagine not existing. You describe it and the description sounds like deprivation: no instant access, no search, no way to find out immediately. What you cannot describe is what it felt like from inside — the texture of not-knowing that was ordinary rather than a failure of the system. The grandchild listens. The grandchild cannot imagine it. You realise you can no longer imagine it either.',
     choices: null,
     effect: (p) => { p.setMem('sl_ll_gc_world', true); p.m += 4; p.e += 2 },
   },
@@ -2549,7 +2549,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.career?.field &&
       G.flags.includes('experienced_discrimination') &&
       !G.mem?.sl_uk_bl_prof,
-    text: 'The office has twelve people and you are the only Black person in it. You have been the only Black person in three consecutive jobs and you have learned what this means in practice: the specific exhaustion of being the one who gets asked to speak for a demographic, the meetings where you are not assumed to be the most senior person in the room until you speak, the calculation about whether to name what is happening or to let it pass, and the cost of both choices. Your CV is excellent. The excellence is not the whole story.',
+    text: 'The office has twelve people and you are the only Black person in it. You have been the only Black person in three consecutive jobs and you have learned what this means in practice: the exhaustion of being the one who gets asked to speak for a demographic, the meetings where you are not assumed to be the most senior person in the room until you speak, the calculation about whether to name what is happening or to let it pass, and the cost of both choices. Your CV is excellent. The excellence is not the whole story.',
     choices: null,
     effect: (p) => { p.setMem('sl_uk_bl_prof', true); p.m -= 4; p.e += 2; p.s += 2; p.addFlag('racial_tax_paid') },
   },
@@ -2607,7 +2607,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 14 && G.age <= 20 &&
       G.stats.looks >= 65 &&
       !G.mem?.sl_ph_pageant,
-    text: 'The barangay fiesta has a queen contest and the barangay captain has nominated you and your mother has said yes before asking you. The preparation involves a sponsor, who is the daughter of the captain, and a costume, and learning to walk in a way you do not normally walk, and a response to the question "What does beauty mean to you?" which you are required to give in a particular format. You win. The winning is good for your mother. You understand that you have been useful to people around you in a way that you will spend the next several years working out your feelings about.',
+    text: 'The barangay fiesta has a queen contest and the barangay captain has nominated you and your mother has said yes before asking you. The preparation involves a sponsor, who is the daughter of the captain, and a costume, and learning to walk in a way you do not normally walk, and a response to the question "What does beauty mean to you?" which you are required to give in a format. You win. The winning is good for your mother. You understand that you have been useful to people around you in a way that you will spend the next several years working out your feelings about.',
     choices: null,
     effect: (p) => { p.setMem('sl_ph_pageant', true); p.lo += 3; p.s += 3; p.m -= 2; p.addFlag('beauty_capital_used') },
   },
@@ -2661,7 +2661,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.flags.includes('boarding_school_indigenous') &&
       G.age >= 20 && G.age <= 30 &&
       !G.mem?.sl_native_board_ft,
-    text: 'You know the language of the country. You know how the paperwork works and what the forms are asking. You know what the men at the agency expect you to say and how to say it. What you do not know — what was not taught — is the language your grandparents spoke to each other, the ceremonies that correspond to the months, the specific knowledge of how the land you come from names itself. The boarding school did its job. The job was not yours.',
+    text: 'You know the language of the country. You know how the paperwork works and what the forms are asking. You know what the men at the agency expect you to say and how to say it. What you do not know — what was not taught — is the language your grandparents spoke to each other, the ceremonies that correspond to the months, the knowledge of how the land you come from names itself. The boarding school did its job. The job was not yours.',
     choices: null,
     effect: (p) => { p.setMem('sl_native_board_ft', true); p.m -= 5; p.e += 2; p.r += 8; p.addFlag('cultural_erasure_lived') },
   },
@@ -2710,7 +2710,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 20 && G.age <= 40 &&
       (G.political_leaning === 'dissident' || G.flags.includes('dissident')) &&
       !G.mem?.sl_sov_psych,
-    text: 'The diagnosis is "sluggish schizophrenia," a category that exists in Soviet psychiatry and nowhere else in the world, because the symptoms of sluggish schizophrenia include believing that the Soviet system is unjust. You are committed to the Serbsky Centre for commitment processing. The doctors are doctors and the hospital is a hospital and the treatments are medical treatments. None of them are metaphors. You are released after fourteen months. The release condition is that you stop talking about what happened here, which is also not a metaphor.',
+    text: 'The diagnosis is "sluggish schizophrenia," a category that exists in Soviet psychiatry and nowhere else in the world, because the symptoms of sluggish schizophrenia include believing that the Soviet system is unjust. You are committed to the Serbsky Centre for commitment processing. The doctors are doctors and the hospital is a hospital and the treatments are medical treatments. None of them are metaphors. You are released after fourteen months. The release condition is that you stop talking about what happened here. That is not a metaphor either.',
     choices: null,
     effect: (p) => { p.setMem('sl_sov_psych', true); p.m -= 15; p.h -= 8; p.e += 3; p.addFlag('punitive_psychiatry_survived') },
   },
@@ -2725,7 +2725,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age <= 5 &&
       G.flags.includes('orphan') &&
       !G.mem?.sl_gulag_child,
-    text: 'Your mother was a prisoner in the camp when you were born. The camp had a nursery for the children of prisoners, which is a sentence that requires reading twice. She was released when you were two. She found you three years later in the state orphanage where the children of female prisoners were taken. You do not remember her absence. She remembers it exactly.',
+    text: 'Your mother was a prisoner in the camp when you were born. The camp had a nursery for the children of prisoners. You read the sentence twice. She was released when you were two. She found you three years later in the state orphanage where the children of female prisoners were taken. You do not remember her absence. She remembers it exactly.',
     choices: null,
     effect: (p) => { p.setMem('sl_gulag_child', true); p.m -= 6; p.h -= 3; p.addFlag('gulag_birth_generation') },
   },
@@ -3010,7 +3010,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 60 &&
       (G.children?.length ?? 0) > 0 &&
       !G.mem?.sl_partition_reckoning,
-    text: 'A grandchild is given the thing to do for school — interview the oldest person in the family — and arrives with a notebook and a phone recording and asks the question straight out: why did they stay, or why did they go. You find that you do not know. You were seven. The decision was made in a room you were not in by people who are dead, and what you have instead of a reason is a set of images: a buffalo being sold, a door frame, the particular quiet of a road with too few people on it. You say some of that. The child writes down a sentence that is much tidier than anything you said.',
+    text: 'A grandchild is given the thing to do for school — interview the oldest person in the family — and arrives with a notebook and a phone recording and asks the question straight out: why did they stay, or why did they go. You find that you do not know. You were seven. The decision was made in a room you were not in by people who are dead, and what you have instead of a reason is a set of images: a buffalo being sold, a door frame, the quiet of a road with too few people on it. You say some of that. The child writes down a sentence that is much tidier than anything you said.',
     choices: null,
     effect: (p) => { p.setMem('sl_partition_reckoning', true); p.m += 3; p.r += 4; p.addFlag('family_history_transmitted') },
   },
@@ -3134,7 +3134,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1940 && G.currentYear <= 1945 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_uk_factory_w,
-    text: 'The shift is ten hours on Spitfire wing sections and you are quicker at it than the man who held the bench before the war. Mary in assembly tells you what his rate was and yours is three shillings under it. The foreman says you are a natural, twice, in front of people. When the men come back the law will give them their benches, and you will go home, which is not the law but is what will happen.',
+    text: 'The shift is ten hours on Spitfire wing sections and you are quicker at it than the man who held the bench before the war. Mary in assembly tells you what his rate was and yours is three shillings under it. The foreman says you are a natural, twice, in front of people. When the men come back the law will give them their benches, and you will go home: not the law, but what will happen.',
     context: 'The 1941 National Service Act conscripted women aged 20 to 30 into war work. Women in munitions were typically paid 50 to 75 percent of the male rate. The Restoration of Pre-War Practices Act 1942 guaranteed returning men their former jobs; most women in engineering left the industry by 1946.',
     choices: null,
     effect: (p) => { p.setMem('sl_uk_factory_w', true); p.e += 3; p.m -= 4; p.r += 6; p.addFlag('wartime_labour_displaced') },
@@ -3152,7 +3152,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.stats.smarts >= 75 &&
       G.career?.field === 'healthcare' &&
       !G.mem?.sl_ir_woman_doc,
-    text: 'You graduated from medical school in 1977 and the revolution came in 1979 and the question of whether women doctors could practice was contested and then settled and then unsettled again over three years. You practiced during the settling. You practiced during the unsettling. You kept your head covering and your credentials and your consulting room and the patients, who are mostly women and who need you, came and kept coming. The history of women in medicine in the Islamic Republic is not the history they write. It is this: a great deal of practice, continued under conditions that required continuous negotiation.',
+    text: 'You graduated from medical school in 1977 and the revolution came in 1979 and the question of whether women doctors could practice was contested and then settled and then unsettled again over three years. You practiced during the settling. You practiced during the unsettling. You kept your head covering and your credentials and your consulting room and the patients, who are mostly women and who need you, came and kept coming. The history of women in medicine in the Islamic Republic is a great deal of practice, continued under conditions that required continuous negotiation.',
     choices: null,
     effect: (p) => { p.setMem('sl_ir_woman_doc', true); p.e += 3; p.s += 3; p.m += 2; p.addFlag('professional_woman_islamic_republic') },
   },
@@ -3237,7 +3237,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 13 && G.age <= 18 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.sl_sarajevo_siege,
-    text: 'You are thirteen when it starts and sixteen when it stops, so the whole of it happens inside the part of your life that was going to be something else. Class is in the basement because the classrooms have windows and the windows are angles. The teachers come, most days, which is not required of them. There is a girl and there is a battery radio and there is a way of crossing Vojvode Putnika at a particular speed, and you will spend your adult life failing to explain how ordinary all three of those things were.',
+    text: 'You are thirteen when it starts and sixteen when it stops, so the whole of it happens inside the part of your life that was going to be something else. Class is in the basement because the classrooms have windows and the windows are angles. The teachers come, most days, though nothing requires them to. There is a girl and there is a battery radio and there is a way of crossing Vojvode Putnika at a speed, and you will spend your adult life failing to explain how ordinary all three of those things were.',
     context: 'The siege of Sarajevo ran from April 1992 to February 1996, 1,425 days, the longest siege of a capital in modern warfare. Around 11,500 people were killed, over 1,600 of them children. Schools operated in basements and stairwells throughout.',
     choices: null,
     effect: (p) => { p.setMem('sl_sarajevo_siege', true); p.m -= 10; p.e += 4; p.r += 6; p.addFlag('siege_adolescence') },
@@ -3273,7 +3273,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 22 && G.age <= 35 &&
       G.stats.smarts >= 60 &&
       !G.mem?.sl_kr_sampo,
-    text: 'Sampo means the three renunciations: dating, marriage, children. Your cohort added two more and the papers gave it a new number. You studied the thing you were told to study and you are working the job that exists, which is on contract and renewed in March. Your mother asks about grandchildren in the same tone every Chuseok and you give the same answer. The doors your parents walked through were open when they reached them.',
+    text: 'Sampo means the three renunciations: dating, marriage, children. Your cohort added two more and the papers gave it a new number. You studied the thing you were told to study and you are working the job that exists, on contract and renewed in March. Your mother asks about grandchildren in the same tone every Chuseok and you give the same answer. The doors your parents walked through were open when they reached them.',
     context: 'The sampo generation - three renunciations - entered Korean usage around 2011. The term expanded to opo (five, adding home ownership and stable employment) and further. Youth employment is heavily concentrated in non-regular contracts, and Korea\'s fertility rate fell below 0.8 in 2022, the lowest recorded anywhere.',
     choices: null,
     effect: (p) => { p.setMem('sl_kr_sampo', true); p.m -= 4; p.e += 3; p.r += 5; p.addFlag('sampo_generation') },
@@ -3290,7 +3290,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.stats.smarts >= 65 &&
       (G.career?.field === 'healthcare' || G.career?.field === 'science') &&
       !G.mem?.sl_gr_doctor,
-    text: 'The austerity has cut hospital wages by forty percent and cut hospital supplies by a percentage you do not measure in numbers but in the specific absence of things you need to do the job: anaesthesia in sufficient supply, bandages in sufficient supply, a functioning MRI that is not waiting for a part that cannot be ordered because the budget for ordering parts has been cut. You are a doctor who trained for seven years in this country and you are now considering Germany, where they are advertising for Greek doctors in Greek, which tells you something about how clearly they have read the situation. You love this country. That is the part that makes it complicated.',
+    text: 'The austerity has cut hospital wages by forty percent and cut hospital supplies by a percentage you do not measure in numbers but in the absence of things you need to do the job: anaesthesia in sufficient supply, bandages in sufficient supply, a functioning MRI that is not waiting for a part that cannot be ordered because the budget for ordering parts has been cut. You are a doctor who trained for seven years in this country and you are now considering Germany, where they are advertising for Greek doctors in Greek, which tells you something about how clearly they have read the situation. You love this country. That is the part that makes it complicated.',
     choices: [
       {
         text: 'Go to Germany. The practice will be better. The life will be elsewhere.',
@@ -3301,7 +3301,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'Stay. The patients here need you.',
         tag: 'stay',
-        outcome: 'The conditions do not improve for three years. You find workarounds and manage deficits and do the work with what is available. The patients are grateful. The system is still broken. Both things are true.',
+        outcome: 'The conditions do not improve for three years. You find workarounds and manage deficits and do the work with what is available. The patients are grateful. The system is still broken.',
         effect: (p) => { p.setMem('sl_gr_doctor', true); p.h -= 5; p.m -= 3; p.karma += 5; p.addFlag('stayed_through_crisis') },
       },
     ],
@@ -3354,7 +3354,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 22 && G.age <= 35 &&
       G.flags.includes('cold_war_childhood') &&
       !G.mem?.sl_us_bomb_shelter,
-    text: 'Your father built a fallout shelter in the backyard in 1961, the year of Berlin. He stocked it with canned goods and water and a transistor radio and the family has never discussed it directly. The shelter exists. The canned goods exist. The radio exists. The conversation about what the shelter means — the specific calculations your father made about survival and about what would be worth surviving into — has not happened and will not happen. The shelter is the conversation your family is not having. You mow around it on Saturdays.',
+    text: 'Your father built a fallout shelter in the backyard in 1961, the year of Berlin. He stocked it with canned goods and water and a transistor radio and the family has never discussed it directly. The shelter exists. The canned goods exist. The radio exists. The conversation about what the shelter means — the calculations your father made about survival and about what would be worth surviving into — has not happened and will not happen. The shelter is the conversation your family is not having. You mow around it on Saturdays.',
     choices: null,
     effect: (p) => { p.setMem('sl_us_bomb_shelter', true); p.e += 3; p.r += 4; p.m += 1 },
   },
@@ -3370,7 +3370,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.flags.includes('emigrated') &&
       G.flags.includes('dissident') &&
       !G.mem?.sl_chile_exile,
-    text: 'The Swedish solidarity network found you at the airport in 1974 and the people in the committee spoke Spanish with a German or a Swedish accent and they were very kind and they helped with everything they could help with and there were things they could not help with, which are the things inside. You are welcome here. The welcome is real. There are other Chileans in this city — there are Chilean exile communities in every European city — and you find them and the finding is not quite reunion because you were not in the same places in Chile but you have the same shape of absence.',
+    text: 'The Swedish solidarity network found you at the airport in 1974 and the people in the committee spoke Spanish with a German or a Swedish accent and they were very kind and they helped with everything they could help with and there were things they could not help with, which are the things inside. You are welcome here. There are other Chileans in this city — there are Chilean exile communities in every European city — and you find them and the finding is not quite reunion because you were not in the same places in Chile but you have the same shape of absence.',
     choices: null,
     effect: (p) => { p.setMem('sl_chile_exile', true); p.m -= 3; p.s += 3; p.addFlag('exile_community_network') },
   },
@@ -3404,7 +3404,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.country.name === 'Vietnam' &&
       G.age >= 14 && G.age <= 20 &&
       !G.mem?.sl_viet_reedu_return,
-    text: 'He comes back after seven years and he is thin in a way that is not only about food. He speaks carefully, and the careful speaking does not stop when there is nobody in the room who needs to hear it. You are fourteen and you sit across the table trying to find the man who wrote the monitored letters in the man who is now passing you the rice. He asks about your school in the same voice he would use for anything.',
+    text: 'He comes back after seven years and he is thin, and not only from hunger. He speaks carefully, and the careful speaking does not stop when there is nobody in the room who needs to hear it. You are fourteen and you sit across the table trying to find the man who wrote the monitored letters in the man who is now passing you the rice. He asks about your school in the same voice he would use for anything.',
     choices: null,
     effect: (p) => { p.setMem('sl_viet_reedu_return', true); p.m -= 4; p.e += 3; p.r += 6 },
   },
@@ -3437,7 +3437,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.flags.includes('hijra_community') &&
       G.age >= 20 && G.age <= 40 &&
       !G.mem?.sl_hijra_work,
-    text: 'The work is blessings at weddings and births — the clapping that enters the house before you do, the specific blessing that comes from a hijra at a birth, which the family will pay for because the blessing is auspicious and the refusing of the blessing is also considered to have consequences. The theology of this is not simple. You are sacred in one context and humiliated in another and the transition between the two contexts can happen within the same afternoon in the same neighbourhood. The income is real. The dignity in it is real. The other thing is also real.',
+    text: 'The work is blessings at weddings and births — the clapping that enters the house before you do, the blessing that comes from a hijra at a birth, which the family will pay for because the blessing is auspicious and the refusing of the blessing is also considered to have consequences. The theology of this is not simple. You are sacred in one context and humiliated in another and the transition between the two contexts can happen within the same afternoon in the same neighbourhood. There is income. The other thing is also real.',
     choices: null,
     effect: (p) => { p.setMem('sl_hijra_work', true); p.mo += 2500; p.m += 2; p.s += 2 },
   },
@@ -3456,7 +3456,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 4 && G.age <= 12 &&
       !G.mem?.sl_bng_bhola,
-    text: 'The water comes through the mangroves at night and it is not water the way you know water, it is the sea, which is a different thing and moves differently. You go up the mango tree behind the house with your brother and hold on until it is light. Afterwards the relief does not come for eleven days and the men who come are counting, not helping. You know the number of people from your village who are not there, and you have never told anyone that you know it exactly.',
+    text: 'The water comes through the mangroves at night and it is not water the way you know water, it is the sea, and it moves differently. You go up the mango tree behind the house with your brother and hold on until it is light. Afterwards the relief does not come for eleven days and the men who come are counting, not helping. You know the number of people from your village who are not there, and you have never told anyone that you know it exactly.',
     context: 'The Bhola cyclone of November 1970 killed between 300,000 and 500,000 people, the deadliest tropical cyclone on record. West Pakistan\'s slow response was a direct grievance in the 1971 independence war.',
     choices: null,
     effect: (p) => { p.setMem('sl_bng_bhola', true); p.m -= 12; p.h -= 4; p.r += 8; p.addFlag('cyclone_survivor') },
@@ -3472,7 +3472,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.sl_bng_cy_annual,
-    text: 'The cyclone season runs from May to November and every year the radio says watch the coast and every year you do. The preparation is: know which relatives live on higher ground, know where the boat is, know which things can be carried and which cannot. The things that cannot be carried are most things. You have learned to not build too much attachment into the things that cannot be carried. The attachment goes into the people, which is where you can carry it.',
+    text: 'The cyclone season runs from May to November and every year the radio says watch the coast and every year you do. The preparation is: know which relatives live on higher ground, know where the boat is, know which things can be carried and which cannot. The things that cannot be carried are most things. You have learned to not build too much attachment into the things that cannot be carried. The attachment goes into the people, where you can carry it.',
     choices: null,
     effect: (p) => { p.setMem('sl_bng_cy_annual', true); p.e += 2; p.s += 2; p.r += 3 },
   },
@@ -3546,13 +3546,13 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'Keep the faith, let the theology sort itself out.',
         tag: 'faith',
-        outcome: 'The church community is real. The support network is real. The theology can be complicated without the community being less real. You stay.',
+        outcome: 'The church community holds you. The theology can be complicated without the community being less real. You stay.',
         effect: (p) => { p.setMem('sl_ng_pent_adult', true); p.s += 2; p.m += 3; p.karma += 3 },
       },
       {
         text: 'Step back. The argument has become too visible to ignore.',
         tag: 'question',
-        outcome: 'You don\'t leave faith — you leave the specific church. The transition is uncomfortable and your mother asks about it at every family dinner for two years. Eventually it becomes background noise.',
+        outcome: 'You don\'t leave faith — you leave the church. The transition is uncomfortable and your mother asks about it at every family dinner for two years. Eventually it becomes background noise.',
         effect: (p) => { p.setMem('sl_ng_pent_adult', true); p.e += 3; p.m += 2; p.r += 3; p.addFlag('left_faith_community') },
       },
     ],
@@ -3607,7 +3607,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1966 && G.currentYear <= 1968 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.sl_bds_indep,
-    text: 'The independence came on November 30, 1966, which was a Tuesday, and the school gave you the day off. The flag went up — a trident on gold and ultramarine, which the national competition chose over fifty other designs — and the Governor-General took the oath and the Union Jack came down and there was a military band and fireworks at Kensington Oval and you watched from the hill above the oval with your cousins. The country is three weeks old. You are in it. The thing that the country means — the specific thing, the daily thing, the difference between a colony and a country — will take years to find the words for, and the words will keep changing.',
+    text: 'The independence came on November 30, 1966, which was a Tuesday, and the school gave you the day off. The flag went up — a trident on gold and ultramarine, which the national competition chose over fifty other designs — and the Governor-General took the oath and the Union Jack came down and there was a military band and fireworks at Kensington Oval and you watched from the hill above the oval with your cousins. The country is three weeks old. You are in it. The thing that the country means — the thing, the daily thing, the difference between a colony and a country — will take years to find the words for, and the words will keep changing.',
     choices: null,
     effect: (p) => { p.setMem('sl_bds_indep', true); p.m += 6; p.e += 2; p.addFlag('independence_generation_carib') },
   },
@@ -3690,7 +3690,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 2020 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.sl_eth_fasting,
-    text: 'The Ethiopian Orthodox fasting calendar has over 250 fasting days a year. Your family observes the major fasts: Tsom, Filseta, the pre-Easter fast that lasts fifty-five days. During the fasts you eat only after three in the afternoon and eat no animal products and your mother rises before the sun to cook the injera and the lentils and the shiro before the day begins in earnest. This is not deprivation. This is the year. The year is structured by the fasts the way other years are structured by the seasons. The structure is old and specific and your body knows it.',
+    text: 'The Ethiopian Orthodox fasting calendar has over 250 fasting days a year. Your family observes the major fasts: Tsom, Filseta, the pre-Easter fast that lasts fifty-five days. During the fasts you eat only after three in the afternoon and eat no animal products and your mother rises before the sun to cook the injera and the lentils and the shiro before the day begins in earnest. This is the year. The year is structured by the fasts the way other years are structured by the seasons. The structure is old and specific and your body knows it.',
     choices: null,
     effect: (p) => { p.setMem('sl_eth_fasting', true); p.m += 4; p.s += 2; p.addFlag('orthodox_fasting_formation') },
   },
@@ -3737,7 +3737,7 @@ export const SPECIFIC_LIFE_EVENTS = [
         effect: (p) => { p.setMem('sl_pac_climate', true); p.m -= 5; p.mo += 3000; p.addFlag('climate_refugee'); p.addFlag('emigrated'); p.emigrateTo('New Zealand') },
       },
       {
-        text: 'Stay. This is not abstract. This is home.',
+        text: 'Stay. This is home.',
         tag: 'stay',
         outcome: 'You stay. The tides keep coming. The staying is an act of witness and also a kind of grief. You will make this decision again, probably, in five years.',
         effect: (p) => { p.setMem('sl_pac_climate', true); p.m -= 4; p.r += 6; p.addFlag('climate_displaced_stayed') },
@@ -3760,7 +3760,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 2020 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.sl_roma_evict,
-    text: 'The settlement has been here for eleven years. The municipal order to vacate gives you thirty days. The community has had thirty days six times in eleven years and has moved the settlement and rebuilt it each time. The settlement is a collection of what can be moved: the caravans, the timber structures that can be disassembled, the cooking equipment, the tools, the music. The school across town accepts the children theoretically. In practice, the children who have moved seven times in eleven years have a particular relationship with the word theoretically. You have transferred schools four times. You are twelve.',
+    text: 'The settlement has been here for eleven years. The municipal order to vacate gives you thirty days. The community has had thirty days six times in eleven years and has moved the settlement and rebuilt it each time. The settlement is a collection of what can be moved: the caravans, the timber structures that can be disassembled, the cooking equipment, the tools, the music. The school across town accepts the children theoretically. In practice, the children who have moved seven times in eleven years have a relationship with the word theoretically. You have transferred schools four times. You are twelve.',
     choices: null,
     effect: (p) => { p.setMem('sl_roma_evict', true); p.m -= 8; p.h -= 2; p.e -= 3; p.addFlag('eviction_cycle_childhood') },
   },
@@ -3808,7 +3808,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 22 && G.age <= 40 &&
       G.currentYear >= 1995 &&
       !G.mem?.sl_kor_adopt_return,
-    text: 'Seoul is the country you came from and do not come from. You have looked up the flight prices many times. You have found online communities of Korean adoptees who went back — some found their birth families, some found records, some found a country that also did not know what to do with them because Korea does not have a clear category for Korean people who speak no Korean and were raised by white parents in Minnesota. The word for this, in Korean, is the word for overseas Korean, which is the word for every Korean who lives outside Korea, which was not made for exactly this situation. You have booked the flight.',
+    text: 'Seoul is the country you came from and do not come from. You have looked up the flight prices many times. You have found online communities of Korean adoptees who went back — some found their birth families, some found records, some found a country that also did not know what to do with them because Korea does not have a clear category for Korean people who speak no Korean and were raised by white parents in Minnesota. The word for this, in Korean, is the word for overseas Korean, the word for every Korean who lives outside Korea, not made for this situation. You have booked the flight.',
     choices: [
       {
         text: 'Try to find your birth mother.',
@@ -3819,7 +3819,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       {
         text: 'Go to know the country, not to find her.',
         tag: 'explore',
-        outcome: 'Seoul is enormous and fast and indifferent to your specific quest in a way that is both a relief and a disappointment. The kimchi tastes like something your body recognises before your mind does. You stay three weeks. You come back changed in a way you cannot yet describe.',
+        outcome: 'Seoul is enormous and fast and indifferent to your quest, a relief and a disappointment. The kimchi tastes like something your body recognises before your mind does. You stay three weeks. You come back changed in a way you cannot yet describe.',
         effect: (p) => { p.setMem('sl_kor_adopt_return', true); p.m += 3; p.e += 3; p.s += 2 },
       },
     ],
@@ -3839,7 +3839,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1957 && G.currentYear <= 1972 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.sl_sov_space,
-    text: 'Gagarin\'s face is on the poster in your classroom in the same way that Lenin\'s face is on the poster — both are national achievements, both are looking at the future with appropriate confidence. The difference is that Gagarin actually went to space, which no American had done yet in 1961, which is a fact you know with a specific satisfaction. The Soviet Union will be the first country in space: this is what it felt like from inside, at ten, before the other things you later learned to feel about the Soviet Union were available to you. The first thing was the achievement. The first thing was real.',
+    text: 'Gagarin\'s face is on the poster in your classroom in the same way that Lenin\'s face is on the poster — both are national achievements, both are looking at the future with appropriate confidence. The difference is that Gagarin actually went to space, which no American had done yet in 1961, and you know it with satisfaction. The Soviet Union will be the first country in space: this is what it felt like from inside, at ten, before the other things you later learned to feel about the Soviet Union were available to you. The first thing was the achievement.',
     choices: null,
     effect: (p) => { p.setMem('sl_sov_space', true); p.e += 3; p.m += 4; p.addFlag('space_race_generation') },
   },
@@ -4132,7 +4132,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1999 && G.currentYear <= 2012 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.sl_mong_dzud,
-    text: 'By February the sheep are going down in the night and you are dragging them clear of the fold in the morning so the others do not stand on them. The emergency fodder arrives in March, which is after February. Your father counts what is left twice and then a third time and does not say the number aloud. Three generations of the herd, and what is standing in the spring will fit in one fold.',
+    text: 'By February the sheep are going down in the night and you are dragging them clear of the fold in the morning so the others do not stand on them. The emergency fodder arrives in March, after February. Your father counts what is left twice and then a third time and does not say the number aloud. Three generations of the herd, and what is standing in the spring will fit in one fold.',
     context: 'A dzud is a summer drought followed by an extreme winter. The 2009-10 dzud killed 8.5 million head of livestock, roughly a quarter of Mongolia\'s national herd, and drove tens of thousands of herding families into the ger districts of Ulaanbaatar.',
     choices: null,
     effect: (p) => { p.setMem('sl_mong_dzud', true); p.m -= 10; p.mo -= 5000; p.h -= 3; p.addFlag('dzud_survivor') },
@@ -4166,7 +4166,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2020 &&
       G.age >= 50 &&
       !G.mem?.sl_cy_cross,
-    text: 'The checkpoint at Ledra Street opened in April 2003, twenty-nine years after you left. You could go back to the house. You drove to the checkpoint and sat in the car for forty minutes and did not cross. You drove home. The house is there — you have seen the photographs that someone posted online, and someone else is living in it, a Turkish-Cypriot family who were placed there in 1975. This is also a displacement. Both displacements are real. You have sat with this for twenty-nine years and do not yet have a position on it that feels sufficient.',
+    text: 'The checkpoint at Ledra Street opened in April 2003, twenty-nine years after you left. You could go back to the house. You drove to the checkpoint and sat in the car for forty minutes and did not cross. You drove home. The house is there — you have seen the photographs that someone posted online, and someone else is living in it, a Turkish-Cypriot family who were placed there in 1975. This is also a displacement. You have sat with this for twenty-nine years and do not yet have a position on it that feels sufficient.',
     choices: null,
     effect: (p) => { p.setMem('sl_cy_cross', true); p.m -= 4; p.e += 3; p.r += 6 },
   },
@@ -4276,7 +4276,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 4 && G.age <= 16 &&
       G.residencyStatus === 'refugee_status' &&
       !G.mem?.sl_bdi_refugee,
-    text: 'Nyarugusu camp was built for Congolese refugees and then the Burundian refugees came in 1993 when the Ndadaye assassination and the ethnic violence began and the camp that was built for one crisis absorbed another. You were born in the camp or you arrived when you were very young and the camp is the country you grew up in. The camp has a school and a health clinic and a distribution point for food rations and a UNHCR registration office. The camp does not have the right to settle permanently in Tanzania, which is the status of everyone in the camp, which means the camp is where you are from and you cannot become the place you are from.',
+    text: 'Nyarugusu camp was built for Congolese refugees and then the Burundian refugees came in 1993 when the Ndadaye assassination and the ethnic violence began and the camp that was built for one crisis absorbed another. You were born in the camp or you arrived when you were very young and the camp is the country you grew up in. The camp has a school and a health clinic and a distribution point for food rations and a UNHCR registration office. The camp does not have the right to settle permanently in Tanzania, and nobody in the camp does, so the camp is where you are from and you cannot become the place you are from.',
     choices: null,
     effect: (p) => { p.setMem('sl_bdi_refugee', true); p.m -= 6; p.e += 3; p.addFlag('refugee_camp_years') },
   },

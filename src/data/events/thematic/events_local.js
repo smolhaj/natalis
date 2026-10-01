@@ -109,7 +109,7 @@ export const LOCAL_EVENTS = [
       {
         text: 'Deflect. It was everyone who made it happen.',
         tag: 'Deflect',
-        outcome: 'It was everyone. You also made most of it happen. Both are true and you choose to say only one of them.',
+        outcome: 'It was everyone. You also made most of it happen. You choose to say only one of them.',
         effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('local_achievement'); p.setMem('loc_victory_done', true); },
       },
     ],

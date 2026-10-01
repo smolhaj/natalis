@@ -14,7 +14,7 @@ export const SENEGAL_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => IS_SENEGAL(G) && G.religion === 'muslim_sufi' && G.age >= 16 && !G.mem.senMagal,
-    text: 'The Grand Magal: three million people converging on Touba in two days. You travel with your uncle\'s family on a sept-place that should hold seven and holds eleven. The city has no police — the brotherhood manages its own order. The tomb of Cheikh Amadou Bamba is inside the Great Mosque. The specific feeling of arriving at a place where the authority structure of the Senegalese state simply does not apply.',
+    text: 'The Grand Magal: three million people converging on Touba in two days. You travel with your uncle\'s family on a sept-place that should hold seven and holds eleven. The city has no police — the brotherhood manages its own order. The tomb of Cheikh Amadou Bamba is inside the Great Mosque. The feeling of arriving at a place where the authority structure of the Senegalese state simply does not apply.',
     effect: (p) => { p.m += 12; p.addFlag('mouride_member'); p.setMem('senMagal', true) },
   },
 
@@ -23,12 +23,12 @@ export const SENEGAL_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => IS_SENEGAL(G) && G.flags.includes('mouride_member') && G.age >= 30 && !G.mem.senMarabout,
-    text: 'Your marabout has advised against the business partnership. He has not explained why. You have known him since childhood; his father knew your father. The partnership would double your income in two years, on conservative numbers. You sit with the advice and the numbers for a week. In the end you do not take the partnership. Six months later your would-be partner is in a dispute with the tax authority that would have consumed you both.',
+    text: 'Your marabout has advised against the business partnership. He has not explained why. You have known him since childhood; his father knew your father. The partnership would double your income in two years, on conservative numbers. The advice and the numbers stay on the table for a week. In the end you do not take the partnership. Six months later your would-be partner is in a dispute with the tax authority that would have consumed you both.',
     choices: [
       {
         text: 'Your faith in him is confirmed.',
         tag: 'confirmed',
-        outcome: 'The specific relief of having trusted something that cannot be explained. You do not try to explain it to your secular friends in Dakar.',
+        outcome: 'The relief of having trusted something that cannot be explained. You do not try to explain it to your secular friends in Dakar.',
         effect: (p) => { p.m += 8; p.karma += 5; p.setMem('senMarabout', true) },
       },
       {
@@ -83,7 +83,7 @@ export const SENEGAL_EVENTS = [
       G.age >= 18 && G.age <= 32 &&
       !G.mem.senBarca &&
       !G.mem.senMoroccoRoute,
-    text: 'The land route: overland to Mali, then north through Algeria to the Moroccan border at Oujda. The journey takes two to four months — the money for buses and trucks and the men who move you across checkpoints in the dark. The bus is full of people from Senegal, Guinea, Mali, Niger, making the same calculation. The route is not safe. It is also documented, negotiable, survivable, which the Atlantic at night sometimes is not.',
+    text: 'The land route: overland to Mali, then north through Algeria to the Moroccan border at Oujda. The journey takes two to four months — the money for buses and trucks and the men who move you across checkpoints in the dark. The bus is full of people from Senegal, Guinea, Mali, Niger, making the same calculation. The route is dangerous, and also documented, negotiable, survivable, which the Atlantic at night sometimes is not.',
     choices: [
       {
         text: 'Take the overland route north.',
@@ -109,7 +109,7 @@ export const SENEGAL_EVENTS = [
       G.flags.includes('sen_morocco_transit') &&
       G.currentYear >= 2000 && G.currentYear <= 2020 &&
       !G.mem.senNadorForest,
-    text: 'The camp is in the forest above Nador, two kilometres from the fence at Melilla. A hundred people, sometimes three hundred, from Senegal, Guinea, Cameroon, Niger — sleeping under plastic sheeting and cooking on fires. Moroccan police come periodically; the camp is dismantled and rebuilt. Some people have been here eight months. A man from Conakry has been here fourteen months. The fence is visible from the high ground: six metres of steel mesh, razor wire on top, a second fence inside. Spanish police on the other side, Moroccan police on yours. You wait for a night when enough people are ready to go at once.',
+    text: 'The camp is in the forest above Nador, two kilometres from the Melilla fence: a hundred people, sometimes three hundred, from Senegal, Guinea, Cameroon, Niger, under plastic sheeting. The Moroccan police come and break it up and it is built again. A man from Conakry has been here fourteen months. From the high ground you can see the fence, six metres of steel mesh, razor wire, a second fence behind it. You wait for a night when enough people are ready to go at once.',
     choices: [
       {
         text: 'Wait. The mass attempt requires enough people.',
@@ -134,7 +134,7 @@ export const SENEGAL_EVENTS = [
     when: (G) =>
       G.flags.includes('sen_melilla_attempt') &&
       !G.mem.senMelillaFence,
-    text: 'Two hundred people run out of the forest at three in the morning. The sound is not silence and not chaos — it is the sound of people who have agreed to do something that may not work. You get to the outer fence and start climbing. The razor wire opens your hands and your legs. Above you, people are going over. Below, people are falling. The Spanish civil guard is on the other side with rubber bullets. The Moroccan auxiliaries are behind you with batons. You are at the top of the fence.',
+    text: 'Two hundred people run out of the forest at three in the morning, and the sound is neither silence nor chaos; it is people who have agreed to try something that may not work. You reach the outer fence and climb. The razor wire opens your hands and your legs. Above you people are going over; below you people are falling. The Spanish guard is on the other side and the Moroccan auxiliaries are behind you with batons, and you are at the top of the fence.',
     choices: [
       {
         text: 'Go over.',
@@ -172,7 +172,7 @@ export const SENEGAL_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => IS_SENEGAL(G) && G.currentYear >= 1950 && G.currentYear <= 1980 && G.stats.smarts >= 55 && G.age >= 12 && G.age <= 24 && !G.mem.senGoree,
-    text: 'The William Ponty school, or its successor, or the system it became: the best-educated generation in West Africa, trained in French, shaped by Senghor\'s Négritude. You read French poetry and write essays on African philosophy in a language that is not African. The contradiction is the education. You graduate with tools that open doors in Paris and in Dakar, and a specific ambivalence about who those tools were made for.',
+    text: 'The William Ponty school, or its successor, or the system it became: the best-educated generation in West Africa, trained in French, shaped by Senghor\'s Négritude. You read French poetry and write essays on African philosophy in a language that is not African. The contradiction is the education. You graduate with tools that open doors in Paris and in Dakar, and an ambivalence about who those tools were made for.',
     effect: (p) => { p.m += 5; p.e += 4; p.addFlag('francophone_educated'); p.setMem('senGoree', true) },
   },
 
@@ -230,7 +230,7 @@ export const SENEGAL_EVENTS = [
       IS_SENEGAL(G) &&
       G.age >= 30 &&
       !G.mem?.senTeranga,
-    text: 'Teranga. The word is Wolof for hospitality, generosity, welcome — but "hospitality" doesn\'t carry the obligation. Teranga is not a preference or a cultural value. It is closer to a moral requirement that operates regardless of whether you can afford it. The visitor is fed. The family member who arrives with nothing stays until they have something. The compound always has space. You have given meals you could not spare and shelter you needed yourself. The accounting of teranga runs differently from the accounting of money — the debts are social rather than financial and they extend across generations.',
+    text: 'Teranga is Wolof for hospitality, but hospitality does not carry the obligation; it is closer to a moral requirement, and it operates whether you can afford it or not. The visitor is fed. The relative who arrives with nothing stays until they have something. You have given meals you could not spare and shelter you needed yourself. The debts of teranga are social, not financial, and they run across generations.',
     choices: null,
     effect: (p) => { p.m += 6; p.karma += 4; p.s += 2; p.addFlag('teranga_household'); p.setMem('senTeranga', true); },
   },

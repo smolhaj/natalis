@@ -17,7 +17,7 @@ export const FOLLOWTHROUGH_60_EVENTS = [
       G.currentYear >= 2005 && G.currentYear <= 2020 &&
       G.age >= 30 &&
       !G.mem?.ft60NepaPower,
-    text: `The government announces improvements to the grid. Power sector reform. Privatisation of distribution companies. The Independent Power Producers. Megawatts promised. You have heard these announcements before — in 1999, in 2003, in 2007 — and you file this one in the same place as the previous ones, not with contempt exactly, but with the calibrated scepticism of someone who has been managing on generators for twenty years. The grid improves in some places for some periods and then something fails and the grid returns to what it was. The generator is still running. You have not sold it.`,
+    text: `The government announces the grid will be fixed: reform, privatised distribution, new power producers, megawatts promised. You have heard this before, in 1999, in 2003, in 2007, and you file it with the others, not with contempt, but with the measured doubt of someone who has run a generator for twenty years. The power improves in some places for a while, and then something fails. You have not sold the generator.`,
     choices: null,
     effect: (p) => { p.r += 4; p.e += 2; p.setMem('ft60NepaPower', true) },
   },
@@ -30,7 +30,7 @@ export const FOLLOWTHROUGH_60_EVENTS = [
       G.flags.has('nga_dep_nepa_generation') &&
       G.age >= 55 &&
       !G.mem?.ft60NepaLate,
-    text: `You have lived your entire adult life with the power cut as a fact. Your children grew up with it. Your grandchildren, if you have them, will grow up with it. The governments have changed and the problem has not changed. The total capacity of the national grid in 2024 is not dramatically different from what it was in 1990, measured against what a country of 220 million people requires. You know this calculation by heart. You stopped expecting the grid to resolve sometime in your forties. What you feel about that is not anger anymore. It is something closer to the feeling of carrying a weight that you have been carrying for so long you no longer notice its weight, only its absence, briefly, when they tell you it will be set down soon.`,
+    text: `You have lived your whole adult life with the power cut as a fact, and your children grew up with it. The governments have changed and the grid has not, not by the measure of what two hundred million people need. You stopped expecting it to be fixed sometime in your forties. It is not anger any more. It is a weight carried so long you notice it only when somebody says it will soon be put down.`,
     choices: null,
     effect: (p) => { p.r += 5; p.m -= 2; p.setMem('ft60NepaLate', true) },
   },
@@ -77,7 +77,7 @@ export const FOLLOWTHROUGH_60_EVENTS = [
       G.currentYear >= 2021 && G.currentYear <= 2025 &&
       G.age >= 20 &&
       !G.mem?.ft60EndSarsAftermath,
-    text: `After October 2020: SARS was disbanded. SWAT replaced it. Reports of SWAT officers doing what SARS officers did emerged within months of the disbanding. The Judicial Panels of Inquiry set up in each state to receive testimonies about SARS abuses produced reports. The Lagos panel's report included a finding about the toll gate. The Lagos State Government disputed the panel's findings. The dispute continued. The Japa wave accelerated in the months after October 2020, which may or may not be connected. You know what you saw. You know what the government said about what you saw. The gap between those two things is the political education your generation received in real time.`,
+    text: `After October 2020 SARS was disbanded and SWAT replaced it, and within months people were describing SWAT officers doing what SARS officers did. The Lagos panel's report included a finding about the toll gate, and the state government disputed the panel. More of your friends left. You know what you saw, and you know what the government said about what you saw, and the gap between them is the political education your generation received in real time.`,
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 7; p.setMem('ft60EndSarsAftermath', true) },
   },
@@ -107,7 +107,7 @@ export const FOLLOWTHROUGH_60_EVENTS = [
       G.flags.has('nga_dep_stayed_generation') &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.ft60StayedMid,
-    text: `Most of the people who were in your graduating class are gone. Some left in the first wave, in the 2000s. Most left in the Japa years. The group chat is where you maintain the version of the friendship that time and geography have restructured. You are the one they ask about the exchange rate, about the traffic, about whether the situation is improving. You answer honestly. The answer is not improving, not worsening, hovering in the way that Nigeria hovers — chronic and loud and still functioning in all the ways that matter for daily life. You have built something here. The building is real. You do not know if the people who left understand what the building required.`,
+    text: `Most of your graduating class is gone, some in the 2000s, most in the japa years, and the group chat is where the friendship lives now. They ask you about the exchange rate, the traffic, whether things are getting better. You answer honestly: not better, not worse, hovering the way Nigeria hovers, loud and chronic and working in all the ways that matter for the day. You have built something here. You do not know if the people who left understand what the building took.`,
     choices: null,
     effect: (p) => { p.r += 5; p.karma += 3; p.setMem('ft60StayedMid', true) },
   },
@@ -122,7 +122,7 @@ export const FOLLOWTHROUGH_60_EVENTS = [
       G.flags.has('nga_dep_pentecostal_generation') &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.ft60PentecostalMid,
-    text: `The prosperity gospel of your childhood: seed faith, covenant promises, breakthrough testimonies. In your thirties and forties you have watched people sow seeds and not harvest what was promised. You have also watched people who put in the work alongside the prayer succeed in ways that the prayer did not cause. The church has given you a community that has fed you and visited you in hospital and sat with you through things. The theology has given you a framework that sometimes holds and sometimes cannot hold what you have seen. You have not left. You have adjusted what you expect from the two things — the community and the theology — and that adjustment is its own kind of faith.`,
+    text: `The prosperity gospel of your childhood: seed faith, covenant promises, breakthrough testimonies. In your thirties and forties you have watched people sow seeds and not harvest what was promised. You have also watched people who put in the work alongside the prayer succeed in ways that the prayer did not cause. The church has given you a community that has fed you and visited you in hospital and sat with you through things. The theology has given you a framework that sometimes holds and sometimes cannot hold what you have seen. You have not left. You have adjusted what you expect from the two things — the community and the theology — and that adjustment is a faith.`,
     choices: null,
     effect: (p) => { p.r += 3; p.m += 2; p.e += 2; p.setMem('ft60PentecostalMid', true) },
   },

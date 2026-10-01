@@ -107,12 +107,12 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear === 1988 &&
       G.age >= 18 &&
       !G.mem?.chile_plebiscite_88,
-    text: 'The ballot has two options. Sí: Pinochet continues for eight more years. No: there will be an election. The general has the army behind him and has allowed this vote, which is itself a kind of statement about what he expects the result to be. You stand in the booth with the pencil.',
+    text: 'The ballot has two options. Sí: Pinochet continues for eight more years. No: there will be an election. The general has the army behind him and has allowed this vote, and that tells you what he expects the result to be. You stand in the booth with the pencil.',
     choices: [
       {
         text: 'Vote No',
         tag: 'principled',
-        outcome: 'The count takes all night. The No wins 55.99 to 44.01. For a specific moment, a pencil mark achieves what nothing else could.',
+        outcome: 'The count takes all night. The No wins 55.99 to 44.01. For a moment, a pencil mark achieves what nothing else could.',
         effect: (p) => { p.m += 8; p.karma += 5; p.addFlag('chile_voted_no'); p.setMem('chile_plebiscite_88', true); },
         inject: null,
       },
@@ -199,7 +199,7 @@ export const LATIN_AMERICA_EVENTS = [
       {
         text: 'Say nothing — you have a family',
         tag: null,
-        outcome: 'The pragmatism is real. The thing you carry is also real.',
+        outcome: 'You are pragmatic. The thing you carry is also real.',
         effect: (p) => { p.m -= 8; p.r += 7; p.addFlag('witnessed_disappearance'); p.setMem('arg_disappeared_colleague', true); },
         inject: null,
       },
@@ -267,7 +267,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.character.country.name === 'Argentina' &&
       G.currentYear >= 1984 && G.currentYear <= 1990 &&
       !G.mem?.arg_nunca_mas,
-    text: 'The CONADEP report — Nunca Más, Never Again — is published in November 1984 and sells out in days. What it documents: 8,961 disappeared, though everyone knows the real number is larger. Testimony from survivors. The methods. The specific buildings. The specific vocabulary — vuelos, parrilla, capucha — for things that did not have names before they happened.',
+    text: 'The CONADEP report — Nunca Más, Never Again — is published in November 1984 and sells out in days. What it documents: 8,961 disappeared, though everyone knows the real number is larger. Testimony from survivors. The methods. The buildings. The vocabulary — vuelos, parrilla, capucha — for things that did not have names before they happened.',
     choices: null,
     effect: (p) => { p.m -= 7; p.e += 4; p.karma += 4; p.addFlag('witnessed_truth_commission'); p.setMem('arg_nunca_mas', true); },
   },
@@ -445,7 +445,7 @@ export const LATIN_AMERICA_EVENTS = [
       {
         text: 'The old faith holds',
         tag: null,
-        outcome: 'The neighborhood changes around you. The specific loneliness of remaining where you were.',
+        outcome: 'The neighborhood changes around you. The loneliness of remaining where you were.',
         effect: (p) => { p.m -= 3; p.r += 3; p.setMem('bra_evangelical', true); },
         inject: null,
       },
@@ -466,7 +466,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear >= 1984 && G.currentYear <= 2002 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.col_cartel_adjacency,
-    text: 'You know someone. Not a friend, exactly — a relative of a colleague, a neighbor\'s son who was at school with your younger brother. He has a car now. He wears shoes that cost what you make in a month. Nobody says where the money comes from. In this city, in this decade, proximity to the cocaine economy is not something you seek out or avoid. It is a condition of geography.',
+    text: 'You know someone. Not a friend, exactly — a relative of a colleague, a neighbor\'s son who was at school with your younger brother. He has a car now. He wears shoes that cost what you make in a month. Nobody says where the money comes from. In this city, in this decade, proximity to the cocaine economy is a condition of geography.',
     choices: [
       {
         text: 'Maintain the distance that already exists',
@@ -496,7 +496,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.stats.wealth >= 35 &&
       G.age >= 25 &&
       !G.mem?.col_cartel_offer,
-    text: 'A man you have met twice, both times through someone else, asks to sit with you. He says he has an interest in businesses that show steady income. He doesn\'t explain why that particular quality interests him. The amount he names would clear the debt you have been managing for two years. The conversation is entirely normal in tone. That is the part that stays with you afterward.',
+    text: 'A man you have met twice, both times through someone else, asks to sit with you. He says he has an interest in businesses that show steady income. He doesn\'t explain why that quality interests him. The amount he names would clear the debt you have been managing for two years. The conversation is entirely normal in tone. That is the part that stays with you afterward.',
     choices: [
       {
         text: 'Decline — the money has a form you don\'t want',
@@ -668,7 +668,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 1994 &&
       G.age >= 30 &&
       !G.mem?.condor_return,
-    text: 'The juntas are falling. Chile\'s plebiscite went the right way. Argentina has been a democracy since 1983. The specific danger that made you leave has been removed — officially, at least. After ten or twelve years, returning is no longer theoretical. The country you left is not the country that exists now. You are not the person who left.',
+    text: 'The juntas are falling. Chile\'s plebiscite went the right way. Argentina has been a democracy since 1983. The danger that made you leave has been removed — officially, at least. After ten or twelve years, returning is no longer theoretical. The country you left is not the country that exists now. You are not the person who left.',
     choices: [
       {
         text: 'Go back — this is what you worked toward',
@@ -702,7 +702,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.age >= 16 &&
       G.flags.has('witnessed_disappearance') &&
       !G.mem?.arg_78_mundial,
-    text: 'You have seen what the government is doing. You know what is happening in the buildings near the stadium. You are also watching the World Cup final with a country that has gone collective with something you can identify as joy. Kempes scores in extra time. Argentina wins. The general is at the match in a suit. You are in the street. You know both things at the same time, and the knowing doesn\'t stop the feeling, and the feeling doesn\'t stop the knowing.',
+    text: 'You know what is happening in the buildings near the stadium. You are also watching the World Cup final with a country that has become one thing, and the thing is joy. Kempes scores in extra time, and the general is at the match in a suit, and you are in the street. Knowing does not stop the feeling, and the feeling does not stop the knowing.',
     choices: null,
     effect: (p) => { p.r += 7; p.m += 3; p.e += 3; p.setMem('arg_78_mundial', true); },
   },
@@ -846,7 +846,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.age >= 16 && G.age <= 30 &&
       !G.flags.has('emigrated') &&
       !G.mem?.mex_maquiladora,
-    text: 'The assembly plants on the northern border are hiring. The wage is more than you would see at home in a month. You would be in Tijuana or Juárez or Nogales, in a room with other women from Oaxaca and Chiapas and Guerrero, assembling circuit boards or stitching jeans for brands whose names you know from their advertisements. The freedom is real. The vulnerability is also real.',
+    text: 'The assembly plants on the northern border are hiring. The wage is more than you would see at home in a month. You would be in Tijuana or Juárez or Nogales, in a room with other women from Oaxaca and Chiapas and Guerrero, assembling circuit boards or stitching jeans for brands whose names you know from their advertisements. The vulnerability is also real.',
     choices: [
       {
         text: 'Go — the wages are your way out',
@@ -885,7 +885,7 @@ export const LATIN_AMERICA_EVENTS = [
       {
         text: 'Keep your head down — this is not a war you chose',
         tag: null,
-        outcome: 'Most people survive by being invisible. The specific cost of invisibility is that it looks, from outside, like indifference.',
+        outcome: 'Most people survive by being invisible. The cost of invisibility is that it looks, from outside, like indifference.',
         effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('sendero_generation'); p.setMem('per_sendero', true); },
         inject: null,
       },
@@ -1001,12 +1001,12 @@ export const LATIN_AMERICA_EVENTS = [
       G.age >= 25 &&
       !G.flags.has('emigrated') &&
       !G.mem?.ven_exodus,
-    text: 'Five million Venezuelans have left. You know people in Bogotá, in Lima, in Buenos Aires, in Madrid. They send messages — with the specific texture of people who left and need you to understand why, and also the specific texture of people who need to know you are still okay, still the country they left. Every week the question recalculates: stay, or go?',
+    text: 'Five million Venezuelans have left. You know people in Bogotá, in Lima, in Buenos Aires, in Madrid. They send messages — with the texture of people who left and need you to understand why, and also the texture of people who need to know you are still okay, still the country they left. Every week the question recalculates: stay, or go?',
     choices: [
       {
         text: 'Leave — there is nothing left to stay for',
         tag: null,
-        outcome: 'You cross the border with what fits in a bag. The country you arrive in has a specific way of receiving you.',
+        outcome: 'You cross the border with what fits in a bag. The country you arrive in has a way of receiving you.',
         effect: (p) => { p.m -= 8; p.addFlag('emigrated'); p.emigrateTo(['Colombia', 'Peru', 'Chile', 'Brazil']); p.addFlag('venezuela_exodus'); p.setResidency('undocumented'); p.setMem('ven_exodus', true); },
         inject: null,
       },
@@ -1090,7 +1090,7 @@ export const LATIN_AMERICA_EVENTS = [
       {
         text: 'Stay — you won\'t risk the crossing',
         tag: null,
-        outcome: 'Others go and some arrive and some don\'t. You stay. You build a life inside the specific limits of this one.',
+        outcome: 'Others go and some arrive and some don\'t. You stay. You build a life inside the limits of this one.',
         effect: (p) => { p.m -= 5; p.r += 5; p.setMem('cub_leaving', true); },
         inject: null,
       },
@@ -1270,7 +1270,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear >= 1986 && G.currentYear <= 1988 &&
       G.age >= 20 &&
       !G.mem?.hai_duvalier_falls,
-    text: 'February 7, 1986. Jean-Claude Duvalier boards a US Air Force plane at 3 a.m. with his wife and associates and leaves for France — taking the national treasury with him, the amount contested but the fact not. Twenty-nine years of Duvalierism. The streets fill at dawn. People are tearing down the VSN symbols and the portraits. The specific feeling is not joy but the vertigo of a fixed point suddenly not being there.',
+    text: 'February 7, 1986. Jean-Claude Duvalier boards a US Air Force plane at 3 a.m. with his wife and associates and leaves for France — taking the national treasury with him, the amount contested but the fact not. Twenty-nine years of Duvalierism. The streets fill at dawn. People are tearing down the VSN symbols and the portraits. The feeling is not joy but the vertigo of a fixed point suddenly not being there.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 5; p.addFlag('haiti_liberation_moment'); p.setMem('hai_duvalier_falls', true); },
   },
@@ -1318,12 +1318,13 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear >= 1968 && G.currentYear <= 1970 &&
       G.age >= 15 &&
       !G.mem?.mex_tlatelolco,
-    text: 'October 2, 1968. Ten days before the Olympics open. The student movement has been gathering in the Plaza de las Tres Culturas at Tlatelolco all evening. The army has surrounded the square. In the space of twenty minutes, from positions on the surrounding buildings, soldiers open fire. The official count is thirty-three dead. The real count is unknown; the bodies are moved before dawn. The Olympics open on schedule. The government has arranged for this not to exist in the newspapers.',
+    text: 'October 2, 1968, ten days before the Olympics. The students have been in the square at Tlatelolco all evening, and the army has surrounded it, and from the surrounding buildings the soldiers open fire. The bodies are moved before dawn. The Olympics open on time. The government has arranged for this not to be in the newspapers.',
+    context: 'The government\'s count was about 30 dead; later estimates run to 300 or more.',
     choices: [
       {
         text: 'You were in the square.',
         tag: 'tlatelolco_present',
-        outcome: 'You are alive because of where you were standing. The specific contingency of that is something you carry without being able to explain it to people who weren\'t there.',
+        outcome: 'You are alive because of where you were standing. The contingency of that is something you carry without being able to explain it to people who weren\'t there.',
         effect: (p) => { p.m -= 20; p.r += 10; p.h -= 5; p.karma += 6; p.addFlag('tlatelolco_generation'); p.addFlag('traumatized_by_violence'); p.addFlag('political_aware'); p.setMem('mex_tlatelolco', true); },
       },
       {
@@ -1346,7 +1347,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.age >= 18 &&
       (G.flags.has('political_active') || G.flags.has('tlatelolco_generation') || G.career?.field === 'education' || G.career?.field === 'journalism') &&
       !G.mem?.mex_dirty_war,
-    text: 'The Mexican army\'s disappearances are quieter than Chile\'s — less documented, counted in the hundreds rather than the tens of thousands. The Brigada Blanca operates without insignia. In Guerrero, the Liga Comunista 23 de Septiembre. You know someone who went to a meeting and didn\'t come back. The official response is silence, which is a kind of answer.',
+    text: 'The Mexican army\'s disappearances are quieter than Chile\'s — less documented, counted in the hundreds rather than the tens of thousands. The Brigada Blanca operates without insignia. In Guerrero, the Liga Comunista 23 de Septiembre. You know someone who went to a meeting and didn\'t come back. The official response is silence.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('mexico_dirty_war_era'); p.addFlag('learned_silence'); p.setMem('mex_dirty_war', true); },
   },
@@ -1360,7 +1361,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear === 2000 &&
       G.age >= 25 &&
       !G.mem?.mex_pri_falls,
-    text: 'July 2, 2000. The PRI loses the presidency for the first time in seventy-one years. Vicente Fox\'s margin is undeniable. The PRI does not contest it. The specific disorientation is this: you have always known who was going to win before voting. Your parents knew. Your grandparents knew. Tonight the answer is different and the machinery of everyday life — the patronage, the mordida economy, the telephone call that fixes a permit — has no certain shape anymore.',
+    text: 'July 2, 2000, and the PRI loses the presidency for the first time in seventy-one years, and does not contest it. Your parents always knew who would win before anyone voted, and so did your grandparents. Tonight the answer is different, and the machinery of ordinary life, the patronage, the mordida, the phone call that fixes a permit, no longer has a certain shape.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 3; p.addFlag('pri_transition_generation'); p.setMem('mex_pri_falls', true); },
   },
@@ -1374,12 +1375,12 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear >= 2006 && G.currentYear <= 2020 &&
       G.age >= 25 &&
       !G.mem?.mex_narco_era,
-    text: 'President Calderón deploys the army against the cartels. This produces a different kind of violence from the old Sinaloa arrangement — not organized extortion with understood rules but open warfare on highways, in city centres. The counting of bodies has become part of the morning news. The specific change in your own life: there is a name you know now on the list, or a route you no longer take after dark, or a conversation at the school gate about whether to move.',
+    text: 'President Calderón deploys the army against the cartels. This produces a different kind of violence from the old Sinaloa arrangement — not organized extortion with understood rules but open warfare on highways, in city centres. The counting of bodies has become part of the morning news. The change in your own life: there is a name you know now on the list, or a route you no longer take after dark, or a conversation at the school gate about whether to move.',
     choices: [
       {
         text: 'Move your family somewhere safer.',
         tag: 'narco_displaced',
-        outcome: 'The new city is safer by the metrics that are measured. It is not home. Both things are true.',
+        outcome: 'The new city is safer by the metrics that are measured. It is not home.',
         effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('narco_era_generation'); p.addFlag('internally_displaced'); p.setMem('mex_narco_era', true); },
       },
       {
@@ -1402,7 +1403,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 18 &&
       !G.mem?.mex_femicidio,
-    text: 'The pink crosses on the highway median near Ciudad Juárez started in the 1990s for the women found in the desert. By 2010 the phenomenon has a name — feminicidio — and the cases don\'t get investigated, or the investigations go nowhere. There is a specific arithmetic that you and every woman you know perform: what time, which route, who you text when you arrive, and the calculation that runs under every ordinary evening out.',
+    text: 'The pink crosses on the highway median near Ciudad Juárez started in the 1990s for the women found in the desert. By 2010 the phenomenon has a name — feminicidio — and the cases don\'t get investigated, or the investigations go nowhere. There is an arithmetic that you and every woman you know perform: what time, which route, who you text when you arrive, and the calculation that runs under every ordinary evening out.',
     choices: [
       {
         text: 'March with the others. The crosses need witnesses.',
@@ -1438,7 +1439,7 @@ export const LATIN_AMERICA_EVENTS = [
         effect: (p) => { p.m -= 8; p.karma += 6; p.addFlag('ayotzinapa_generation'); p.addFlag('political_active'); p.setMem('mexAyotzinapa', true); },
       },
       {
-        text: 'You are not surprised. This is what the narco-state has always been.',
+        text: 'You are not surprised.',
         tag: null,
         outcome: 'The absence of surprise is its own diagnosis. You have been living in a country where this was possible long enough to have stopped expecting otherwise.',
         effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('ayotzinapa_generation'); p.addFlag('narco_era_generation'); p.setMem('mexAyotzinapa', true); },
@@ -1456,7 +1457,8 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear === 2017 &&
       G.age >= 10 &&
       !G.mem?.mex2017Quake,
-    text: 'September 19, 2017. The date that the 1985 earthquake drills commemorated. At 1:14 in the afternoon the alarm sounds — but this is not a drill. 7.1 magnitude, epicenter near Puebla. In Mexico City, buildings come down. The rescuers with their trained dogs arrive. The civilians arrive before them with their bare hands. The city passes buckets in a chain. Silence, when they demand it: hands up, silence, the dog is listening. 369 dead. The same date as 1985. The city has practised this for thirty-two years.',
+    text: 'September 19, 2017, the anniversary of 1985, and at 1:14 in the afternoon the alarm sounds and it is not a drill. Buildings come down across Mexico City. The neighbours arrive before the rescuers, with their bare hands, and the street passes buckets in a chain. When the fist goes up, everyone goes silent so the dog can listen. The city has practised this for thirty-two years.',
+    context: 'The magnitude 7.1 Puebla earthquake struck on 19 September 2017, the anniversary of the 1985 Mexico City earthquake, killing 370 people.',
     choices: [
       {
         text: 'You go to the rubble and join a bucket chain.',
@@ -1487,7 +1489,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear === 1989 &&
       G.age >= 12 &&
       !G.mem?.ven_caracazo,
-    text: 'February 27, 1989. Carlos Andrés Pérez has implemented the IMF package: price controls lifted, fuel prices tripled. By morning the barrios have come down into Caracas and taken what they haven\'t been able to afford. The army is ordered out. The official death toll will be two hundred and seventy-six. Human rights organizations start their counts at five hundred. The bodies in mass graves near Caracas will not be found until 2009. You know someone who was in a barrio when the soldiers arrived.',
+    text: 'February 27, 1989. Pérez has signed the IMF package, the price controls are off and the fuel price has tripled, and by morning the barrios have come down into Caracas and taken what they could not afford. The army is sent out. The official toll is a few hundred; the human rights groups start counting above that. The mass graves near Caracas will not be found until 2009. You know someone who was in a barrio when the soldiers came.',
     choices: [
       {
         text: 'You were in the street — in a barrio when it started.',
@@ -1514,7 +1516,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear >= 2002 && G.currentYear <= 2012 &&
       G.age >= 25 &&
       !G.mem?.ven_polarization,
-    text: 'The country has divided into two that cannot see each other. Families do not discuss politics at Christmas, or they discuss nothing else. The April 2002 coup lasted forty-seven hours; Chávez returned by helicopter from the presidential guard loyal to him. The oil strike that followed. The recall referendum of 2004. The opposition calls the Chavistas enchufados — plugged in, connected, taking. The barrios call the opposition escuálidos — the puny, the privileged. The word for the other side has become a tone of voice.',
+    text: 'The country has split into two that cannot see each other. Families do not talk politics at Christmas, or talk nothing else. The coup of 2002 that lasted forty-seven hours; the oil strike; the recall vote of 2004. One side calls the other enchufados, plugged in, and the other answers escuálidos, the puny. The word for the other side has become a tone of voice.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('venezuela_polarized_generation'); p.setMem('ven_polarization', true); },
   },
@@ -1536,7 +1538,7 @@ export const LATIN_AMERICA_EVENTS = [
       {
         text: 'Check the box that reflects how others see you.',
         tag: null,
-        outcome: 'The box you check is also a statement about how you have decided to be seen, which is not always the same thing as what you are.',
+        outcome: 'The box you check is also a statement about how you have decided to be seen, not always the same thing as what you are.',
         effect: (p) => { p.r += 4; p.addFlag('brazil_racial_reckoning'); p.addFlag('double_consciousness'); p.setMem('bra_cor', true); },
       },
       {
@@ -1558,7 +1560,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear === 2002 &&
       G.age >= 16 &&
       !G.mem?.bra_lula_2002,
-    text: 'October 27, 2002. Luiz Inácio Lula da Silva is elected president. He is the seventh child of a sharecropper from Pernambuco. He never finished primary school. He lost a finger in a factory press at nineteen. He ran for president three times before this night. When the announcement comes at ten in the evening, the music in the favelas plays until morning. The international markets have already priced in catastrophe. They will be wrong about this, at least for a decade.',
+    text: 'October 2002, and the seventh child of a sharecropper from Pernambuco, who never finished primary school and lost a finger to a factory press at nineteen, is elected president on his fourth try. When the result comes at ten at night, the music in the favelas plays until morning. The markets have already priced in catastrophe. They will be wrong, at least for a decade.',
     choices: [
       {
         text: 'This is yours — your class, your vote, your victory.',
@@ -1619,7 +1621,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear === 2001 &&
       G.age >= 16 &&
       !G.mem?.argCorralito,
-    text: 'December 1, 2001. The economy minister announces the corralito: bank withdrawals are limited to 250 pesos — 250 dollars — per week. Your savings are in the account. You can see the number in the passbook. You cannot take the money out. The queue outside the bank on Monday wraps around the block. The tellers are behind glass. Some people are crying. Some are calm in the way that means they are not calm.',
+    text: 'December 2001, and the corralito: you may take out 250 pesos a week, which is 250 dollars. Your savings are in the account, you can see the number in the passbook, and you cannot have them. On Monday the queue outside the bank goes round the block. Some people are crying. Some are calm in the way that means they are not calm.',
     choices: [
       {
         text: 'You join the queue and wait for the weekly allowance.',
@@ -1628,9 +1630,9 @@ export const LATIN_AMERICA_EVENTS = [
         effect: (p) => { p.m -= 10; p.w -= 8; p.addFlag('corralito_survivor'); p.setMem('argCorralito', true); },
       },
       {
-        text: 'You go to the hardware store and buy supplies. Whatever is physical is real.',
+        text: 'You go to the hardware store and buy supplies.',
         tag: null,
-        outcome: 'The materials are real. The savings will, over the coming months, be converted to something else at a rate the government decides.',
+        outcome: 'You buy the materials. The savings will, over the coming months, be converted to something else at a rate the government decides.',
         effect: (p) => { p.m -= 8; p.e += 3; p.addFlag('corralito_survivor'); p.setMem('argCorralito', true); },
       },
     ],
@@ -1646,7 +1648,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear === 2001 &&
       G.age >= 10 &&
       !G.mem?.argCacerolazos,
-    text: 'December 19. The president declares a state of siege. Within hours, the pots come out — from apartment windows, from balconies, from the street. The cacerolazos: the sound of the middle class turning whatever is in the kitchen into a political statement. The chant becomes "¡Que se vayan todos! ¡Que no quede ni uno solo!" By morning the president has fled the Casa Rosada by helicopter. Five presidents will come and go in the next twelve days.',
+    text: 'December 19. The president declares a state of siege. Within hours, the pots come out — from apartment windows, from balconies, from the street. The chant is "que se vayan todos", all of them out, not one left. By morning the president has fled the Casa Rosada by helicopter. Five presidents will come and go in the next twelve days.',
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -1677,7 +1679,7 @@ export const LATIN_AMERICA_EVENTS = [
       {
         text: 'You stay. You convert what is left into whatever holds value.',
         tag: null,
-        outcome: 'Dollars under the mattress. Gold. Land, if you have it. The trust in the banking system has a specific texture now — the texture of knowing it can disappear.',
+        outcome: 'Dollars under the mattress. Gold. Land, if you have it. The trust in the banking system has a texture now — the texture of knowing it can disappear.',
         effect: (p) => { p.m -= 10; p.r += 4; p.e += 3; p.addFlag('arg_savings_destroyed'); p.addFlag('arg_2001_stayed'); p.setMem('argPesificacion', true); },
       },
     ],
@@ -1693,7 +1695,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear >= 2001 && G.currentYear <= 2004 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.argPiqueteros,
-    text: 'The piqueteros block the road with burning tires. The unemployment rate is twenty-five percent — one in four. The people on the road are not blocking it from ideology. They are blocking it because blocking a road is the one thing that makes you visible when you have nothing else. You are trying to get somewhere. They are trying to be seen.',
+    text: 'The piqueteros block the road with burning tires. The unemployment rate is twenty-five percent — one in four. The people on the road block it because blocking a road is the one thing that makes you visible when you have nothing else. You are trying to get somewhere. They are trying to be seen.',
     choices: [
       {
         text: 'You wait. You understand why they are there.',
@@ -1704,7 +1706,7 @@ export const LATIN_AMERICA_EVENTS = [
       {
         text: 'You are angry. You have somewhere to be and this country is drowning in its own failure.',
         tag: null,
-        outcome: 'The anger is real. So is the unemployment rate. Both things occupy the same road at the same time.',
+        outcome: 'You are angry, and the unemployment rate does not move. Both things occupy the same road at the same time.',
         effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('piquetero_era'); p.setMem('argPiqueteros', true); },
       },
     ],
@@ -1752,7 +1754,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.currentYear >= 1948 && G.currentYear <= 1958 &&
       G.age >= 14 &&
       !G.mem?.col_la_violencia,
-    text: 'April 9, 1948. Jorge Eliécer Gaitán is shot in Bogotá at 1:15 in the afternoon. Within hours the city is burning — El Bogotazo. In the countryside what follows will last ten years and kill two hundred thousand people. The killing has a specific character: Liberal killing Conservative and Conservative killing Liberal, and the borders run through families and through villages, and a neighbor is now a calculation rather than a person.',
+    text: 'April 9, 1948. Jorge Eliécer Gaitán is shot in Bogotá at 1:15 in the afternoon. Within hours the city is burning — El Bogotazo. In the countryside what follows will last ten years and kill two hundred thousand people. The killing has a character: Liberal killing Conservative and Conservative killing Liberal, and the borders run through families and through villages, and a neighbor is now a calculation rather than a person.',
     choices: [
       {
         text: 'Your family is Liberal. The persecution comes from one direction.',

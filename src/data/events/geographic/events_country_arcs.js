@@ -11,7 +11,7 @@ export const COUNTRY_ARC_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => G.character.country.name === 'Nigeria' && G.currentYear >= 1966 && G.currentYear <= 1985 && !G.mem?.nigeriaCoupRadio,
-    text: 'You know something has happened before anyone tells you. The radio is playing martial music — slow, without words. The adults go quiet in a particular way. Then the announcement comes. Another coup. You count this one. You have stopped expecting this to be the last.',
+    text: 'You know something has happened before anyone tells you. The radio is playing martial music — slow, without words. The adults go quiet in a way. Then the announcement comes. Another coup. You count this one. You have stopped expecting this to be the last.',
     choices: [
       { text: 'Ask your father what it means', tag: null, outcome: 'He puts a hand on your shoulder. "It means things will be different for a while," he says. He does not say how different, or for how long.', effect: (p) => { p.m -= 5; p.e += 3; p.setMem('nigeriaCoupRadio', true); p.addFlag('coup_generation'); } },
       { text: 'Say nothing — you already understand', tag: null, outcome: 'You have learned what the music means. You go back to what you were doing. Adults call this resilience. You call it Tuesday.', effect: (p) => { p.m -= 3; p.setMem('nigeriaCoupRadio', true); p.addFlag('coup_generation'); p.addFlag('learned_silence'); } },
@@ -26,7 +26,7 @@ export const COUNTRY_ARC_EVENTS = [
     text: 'You are the first in your family to hold a university degree. At the graduation ceremony, your father sits in the back row in a suit borrowed from a cousin. On the drive home he does not speak for twenty minutes. Then he says: "Your grandfather could not read." You are not sure what to say to that.',
     choices: [
       { text: 'Tell him you will not forget where you came from', tag: null, outcome: 'He nods. You both know this is more complicated than a promise, but the promise is still necessary.', effect: (p) => { p.m += 8; p.karma += 5; p.setMem('nigeriaFirstGenDegree', true); p.addFlag('first_gen_graduate'); } },
-      { text: 'Say nothing — the silence is enough', tag: null, outcome: 'The distance the degree creates is real. So is the connection. Both can be true at the same time.', effect: (p) => { p.m += 5; p.r += 5; p.setMem('nigeriaFirstGenDegree', true); p.addFlag('first_gen_graduate'); } },
+      { text: 'Say nothing — the silence is enough', tag: null, outcome: 'The degree puts a distance between you and the house you grew up in. The connection holds across it.', effect: (p) => { p.m += 5; p.r += 5; p.setMem('nigeriaFirstGenDegree', true); p.addFlag('first_gen_graduate'); } },
     ],
   },
 
@@ -35,10 +35,10 @@ export const COUNTRY_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.character.country.name === 'Nigeria' && G.currentYear >= 1971 && G.currentYear <= 1978 && G.career && !G.mem?.nigeriaBiafraColleague,
-    text: 'An Igbo colleague returned to work last month after three years away. Nobody mentions where he was. You share a corridor. You have known each other since before. The war that officially ended — "no victor, no vanquished" — occupies the space between you in a way that nobody has found words for yet.',
+    text: 'An Igbo colleague returned to work last month after three years away. Nobody mentions where he was. You share a corridor. You have known each other since before. The war that officially ended — "no victor, no vanquished" — sits between you, and nobody has found words for it yet.',
     choices: [
       { text: 'Acknowledge it — ask how he is', tag: null, outcome: 'He looks at you for a moment, as if calculating. Then: "I am here." That is all, and it is enough.', effect: (p) => { p.m += 6; p.s += 4; p.karma += 5; p.setMem('nigeriaBiafraColleague', true); } },
-      { text: 'Follow the unspoken rule — say nothing', tag: null, outcome: 'You nod. He nods. Work continues. The silence has its own logic, its own mercy.', effect: (p) => { p.m -= 4; p.r += 6; p.setMem('nigeriaBiafraColleague', true); } },
+      { text: 'Follow the unspoken rule — say nothing', tag: null, outcome: 'You nod. He nods. Work continues. The silence is a mercy of a kind.', effect: (p) => { p.m -= 4; p.r += 6; p.setMem('nigeriaBiafraColleague', true); } },
     ],
   },
 
@@ -63,7 +63,7 @@ export const COUNTRY_ARC_EVENTS = [
     when: (G) => G.character.country.name === 'India' && G.stats.smarts >= 60 && G.currentYear >= 1970 && !G.mem?.indiaIITPressure,
     text: 'Your parents have been saying the word "IIT" since you were eight years old. It is not a school; it is a destiny, an obligation, a way to justify everything the family has invested in you. The entrance exam accepts less than two percent. Your coaching classes run six days a week. You dream in equations.',
     choices: [
-      { text: 'Commit to it — you want this too', tag: null, outcome: 'You want it and resent the wanting. Both are real. You study. The exam arrives like something you have been fighting for years without knowing whether you wanted to win.', effect: (p) => { p.e += 8; p.m -= 6; p.r += 5; p.setMem('indiaIITPressure', true); p.addFlag('academic_pressure'); } },
+      { text: 'Commit to it — you want this too', tag: null, outcome: 'You want it and resent the wanting. You study. The exam arrives like something you have been fighting for years without knowing whether you wanted to win.', effect: (p) => { p.e += 8; p.m -= 6; p.r += 5; p.setMem('indiaIITPressure', true); p.addFlag('academic_pressure'); } },
       { text: 'Tell your father you want something else', tag: null, outcome: 'The silence that follows is very specific. You have not rejected a school. You have rejected a plan that was made before you existed.', effect: (p) => { p.m -= 10; p.e += 4; p.s += 3; p.r += 8; p.setMem('indiaIITPressure', true); } },
     ],
   },
@@ -87,7 +87,7 @@ export const COUNTRY_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.character.country.name === 'Egypt' && G.currentYear >= 1967 && G.currentYear <= 1970 && !G.mem?.egypt1967After,
-    text: 'The radio had said they were winning. Then they had lost. In six days. You go to work the morning after. Nobody says the word "Israel." Nobody says the word "defeat." The silence is specific and has weight. You remember believing what the radio said and you do not know what to do with the fact of having believed it.',
+    text: 'The radio said they were winning. Then they had lost, in six days. You go to work the next morning and nobody says Israel and nobody says defeat. You remember believing the radio, and you do not know what to do with having believed it.',
     choices: [
       { text: 'Talk to colleagues — share the disillusionment', tag: null, outcome: 'Someone says very quietly: "The radio lied." Nobody responds. The statement stands in the room for a while and then everyone goes back to work.', effect: (p) => { p.m -= 10; p.e += 5; p.r += 6; p.setMem('egypt1967After', true); p.addFlag('1967_generation'); } },
       { text: 'Hold it privately — the disillusionment is too large to speak', tag: null, outcome: 'You carry it for years. The gap between what the state says and what is true is something you cannot un-learn.', effect: (p) => { p.m -= 12; p.r += 8; p.setMem('egypt1967After', true); p.addFlag('1967_generation'); p.addFlag('learned_silence'); } },
@@ -99,7 +99,7 @@ export const COUNTRY_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.character.country.name === 'Egypt' && G.currentYear === 1970 && !G.mem?.egyptNasserDeath,
-    text: 'Nasser dies at 52 from a heart attack. Millions pour into the streets of Cairo for the funeral — spontaneously, without announcement. You are among them or you watch from a window. The mourning is real. You mourn him even while understanding, or beginning to understand, that the project he represented ended three years ago in the Sinai.',
+    text: 'Nasser dies at 52 from a heart attack. Millions pour into the streets of Cairo for the funeral — spontaneously, without announcement. You are among them or you watch from a window. People mourn. You mourn him even while understanding, or beginning to understand, that the project he represented ended three years ago in the Sinai.',
     choices: [
       { text: 'Join the crowds — the grief is genuine', tag: null, outcome: 'You push through streets you cannot see the end of. Whatever he was, he was something, and the something is gone.', effect: (p) => { p.m -= 10; p.karma += 4; p.setMem('egyptNasserDeath', true); p.addFlag('1967_generation'); } },
       { text: 'Watch from a distance — grief and clarity can coexist', tag: null, outcome: 'You feel both. The project failed and you loved the man who led it. These are not contradictions — they are just what it is to have believed in something.', effect: (p) => { p.m -= 8; p.e += 5; p.r += 4; p.setMem('egyptNasserDeath', true); } },
@@ -137,7 +137,7 @@ export const COUNTRY_ARC_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.character.country.name === 'Romania' && G.currentYear === 1989 && !G.mem?.romaniaCeausescuFall && !G.mem?.romRevolution && !G.mem?.romDepTimisoara,
-    text: 'December 21st. The broadcast from the Central Committee balcony begins normally. Then someone boos. In twenty-four years of this, nobody has ever booed. The camera pulls back. Ceaușescu looks confused — he does not know what to do with a crowd that has stopped performing. Neither does anyone else. Everything that follows follows from that boo.',
+    text: 'December 21. The broadcast from the balcony begins as usual, and then someone boos. In twenty-four years nobody has ever booed. Ceaușescu looks confused; he does not know what to do with a crowd that has stopped performing, and neither does anyone else. Everything that follows follows from that boo.',
     choices: [
       { text: 'Go into the streets — this is it', tag: null, outcome: 'You are in the crowd when the army sides with the protesters. On Christmas Day you watch the execution on television. You feel things you do not have names for.', effect: (p) => { p.m += 8; p.karma += 6; p.setMem('romaniaCeausescuFall', true); p.setMem('romRevolution', true); p.setMem('romDepTimisoara', true); p.addFlag('revolution_generation'); } },
       { text: 'Stay inside — you have seen how these things can turn', tag: null, outcome: 'You watch from the window. The army defects anyway. You come out three days later into a different country.', effect: (p) => { p.m += 4; p.setMem('romaniaCeausescuFall', true); p.setMem('romRevolution', true); p.setMem('romDepTimisoara', true); p.addFlag('revolution_generation'); } },
@@ -191,7 +191,7 @@ export const COUNTRY_ARC_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => G.character.country.name === 'Ghana' && G.currentYear >= 1957 && G.currentYear <= 1962 && !G.mem?.ghanaIndependenceChild,
-    text: 'You are a child when independence arrives, which means you inherit it without choosing it, which means you will spend your whole life understanding what it means. Your teacher says: for the first time, this is your country. You repeat this at home. Your grandmother nods. She is quiet in a way that contains more than it shows.',
+    text: 'You are a child when independence arrives, which means you inherit it without choosing it, which means you will spend your whole life understanding what it means. Your teacher says: for the first time, this is your country. You repeat this at home. Your grandmother nods. She is quiet, and the quiet holds more than it shows.',
     choices: [
       { text: 'Ask your grandmother what she thinks', tag: null, outcome: 'She says: "We will see." She has seen colonialism come in and she knows that naming things does not immediately change them. She is right and she is also wrong in ways that will take decades to measure.', effect: (p) => { p.m += 8; p.e += 5; p.setMem('ghanaIndependenceChild', true); p.addFlag('independence_generation'); } },
       { text: 'Just feel the pride — it is enough for now', tag: null, outcome: 'The flag. The anthem. The name that is now yours. This is enough for a child.', effect: (p) => { p.m += 12; p.setMem('ghanaIndependenceChild', true); p.addFlag('independence_generation'); } },
@@ -205,8 +205,8 @@ export const COUNTRY_ARC_EVENTS = [
     when: (G) => G.character.country.name === 'Ghana' && G.currentYear >= 1957 && G.currentYear <= 1966 && !G.mem?.ghanaNkrumahSchool,
     text: 'Under Nkrumah\'s education programme, your school is free. Your father mentions this specifically: that his father paid a fee and he was still taken out of school at twelve, and that you will go as long as you can go. The school has too few textbooks but it is there. That someone decided it should be there is something your father does not let you forget.',
     choices: [
-      { text: 'Understand what this means — take it seriously', tag: null, outcome: 'You take it seriously. The textbook shortage is real. So is the fact that you are there.', effect: (p) => { p.e += 8; p.m += 5; p.setMem('ghanaNkrumahSchool', true); p.addFlag('first_gen_secondary'); } },
-      { text: 'Resent the conditions — the books should be there', tag: null, outcome: 'Both things can be true: it is an achievement and it is not enough. You carry this tension for years.', effect: (p) => { p.e += 5; p.m += 3; p.r += 4; p.setMem('ghanaNkrumahSchool', true); p.addFlag('first_gen_secondary'); } },
+      { text: 'Understand what this means — take it seriously', tag: null, outcome: 'You take it seriously. There are not enough textbooks, and you are there anyway.', effect: (p) => { p.e += 8; p.m += 5; p.setMem('ghanaNkrumahSchool', true); p.addFlag('first_gen_secondary'); } },
+      { text: 'Resent the conditions — the books should be there', tag: null, outcome: 'It is an achievement and it is not enough. You carry this tension for years.', effect: (p) => { p.e += 5; p.m += 3; p.r += 4; p.setMem('ghanaNkrumahSchool', true); p.addFlag('first_gen_secondary'); } },
     ],
   },
 
@@ -218,7 +218,7 @@ export const COUNTRY_ARC_EVENTS = [
     text: 'The coup that removed Nkrumah happened while you were in secondary school. You understood what independence was supposed to mean. The word "coup" arrives nine years later. You are old enough now to hold both: what was promised and what happened. They do not resolve.',
     choices: [
       { text: 'Understand that independence was the start, not the end', tag: null, outcome: 'The project is longer than one person. You decide this. It takes years to believe it.', effect: (p) => { p.e += 6; p.m -= 5; p.r += 6; p.setMem('ghanaAfterCoup', true); p.addFlag('coup_generation'); } },
-      { text: 'Feel the specific grief of the promise broken', tag: null, outcome: 'You grieve. Not for Nkrumah specifically but for the particular feeling of 1957, which will not come again.', effect: (p) => { p.m -= 10; p.r += 10; p.e += 4; p.setMem('ghanaAfterCoup', true); p.addFlag('coup_generation'); } },
+      { text: 'Feel the grief of the promise broken', tag: null, outcome: 'You grieve. Not for Nkrumah specifically but for the feeling of 1957, which will not come again.', effect: (p) => { p.m -= 10; p.r += 10; p.e += 4; p.setMem('ghanaAfterCoup', true); p.addFlag('coup_generation'); } },
     ],
   },
 
@@ -283,7 +283,7 @@ export const COUNTRY_ARC_EVENTS = [
     text: 'Military service is mandatory. Two years, give or take. You report to the induction centre and your head is shaved. The colleague at your future job is holding your position. This is normal. Everybody knows this is normal. The DMZ is ninety kilometres from Seoul and has been there your entire life.',
     choices: [
       { text: 'Serve well — this is part of who you are', tag: null, outcome: 'Two years. You come back with your body changed and an understanding of hierarchy that stays with you in every room you enter after this.', effect: (p) => { p.h += 5; p.m -= 6; p.s += 3; p.setMem('skMilitaryService', true); p.addFlag('military_service_korea'); } },
-      { text: 'Endure it — you already know who you are without it', tag: null, outcome: 'Two years. You come back. The years pass more slowly than the years around them, which is how it is.', effect: (p) => { p.m -= 8; p.h += 3; p.r += 4; p.setMem('skMilitaryService', true); p.addFlag('military_service_korea'); } },
+      { text: 'Endure it — you already know who you are without it', tag: null, outcome: 'Two years. You come back. The years pass more slowly than the years around them.', effect: (p) => { p.m -= 8; p.h += 3; p.r += 4; p.setMem('skMilitaryService', true); p.addFlag('military_service_korea'); } },
     ],
   },
 

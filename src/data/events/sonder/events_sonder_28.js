@@ -30,7 +30,7 @@ export const EVENTS_SONDER_28 = [
     text: () => pick([
       'From the next room, or through a wall, someone is laughing — genuinely, the kind that catches and keeps going. You do not know what they are laughing at. The sound is its own thing, separate from its cause, the pure fact of it arriving through whatever separates you from them.',
       'In the street, two people you do not know are laughing about something. You pass them. Their laughter is still going when you have gone far enough that you cannot hear it anymore. Somewhere behind you it is still happening.',
-      'Laughter from the apartment above, late in the evening. You are not in it. It is not for you. There is something in that — not loneliness exactly, but the knowledge that there are rooms happening everywhere that you are not in.',
+      'Laughter from the apartment above, late in the evening. It is not for you. There is something in that — not loneliness exactly, but the knowledge that there are rooms happening everywhere that you are not in.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28SomeoneLaughing', true) },
@@ -58,7 +58,7 @@ export const EVENTS_SONDER_28 = [
     text: () => pick([
       'You look at the time and it is later than you expected. Not much later — an hour, maybe. But you had thought you had more of it than you do. The evening has been doing something while you were not paying attention.',
       'There is a kind of time that only exists in waiting rooms. It moves differently there — thicker, more visible, each minute aware of itself. You sit in it. At some point it ends.',
-      'Three in the afternoon has always had a particular quality. Not quite afternoon any more, not yet anything else. The light goes sideways. Something in it never fully resolves.',
+      'Three in the afternoon has always had a quality. Not quite afternoon any more, not yet anything else. The light goes sideways. Something in it never fully resolves.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28ClockWatching', true) },
@@ -84,8 +84,8 @@ export const EVENTS_SONDER_28 = [
     weight: 2,
     when: (G) => G.age >= 16 && !G.mem?.sdr28SayingGoodbye,
     text: () => pick([
-      'The goodbye at the door that runs longer than it should — a few more sentences, a question, another thing remembered. You are both already going and yet not quite gone. This is its own kind of attachment: the reluctance to finish.',
-      'There is a particular goodbye that you think about sometimes. Not a big goodbye — just a normal one, at the end of a normal day. You did not know at the time that it was the last one.',
+      'The goodbye at the door that runs longer than it should — a few more sentences, a question, another thing remembered. You are both already going and yet not quite gone. This is attachment: the reluctance to finish.',
+      'There is a goodbye that you think about sometimes. Not a big goodbye — just a normal one, at the end of a normal day. You did not know at the time that it was the last one.',
       'Some people you say goodbye to at the end of every conversation as though you might not speak again for a long time, even when you will speak tomorrow. You do not know where that came from. It is just how you say goodbye to them.',
     ]),
     choices: null,
@@ -101,8 +101,8 @@ export const EVENTS_SONDER_28 = [
     // where there is none the heat line says it in the local register.
     text: (G) => pick([
       place.hasWinter(G)
-        ? `The specific heat of summer at its peak — not just temperature but weight, the air not moving, ${place.isRural(G) ? 'the fields' : 'the city'} holding on to everything collected since morning. You know this heat. It is the same heat it always is.`
-        : `The specific heat of the weeks before the rains — not just temperature but weight, the air not moving, ${place.isRural(G) ? 'the ground' : 'the city'} holding on to everything collected since morning. You know this heat. It is the same heat it always is.`,
+        ? `The heat of summer at its peak — not just temperature but weight, the air not moving, ${place.isRural(G) ? 'the fields' : 'the city'} holding on to everything collected since morning. You know this heat. It is the same heat it always is.`
+        : `The heat of the weeks before the rains — not just temperature but weight, the air not moving, ${place.isRural(G) ? 'the ground' : 'the city'} holding on to everything collected since morning. You know this heat. It is the same heat it always is.`,
       ...(place.hasWinter(G) ? ['There is a cold that gets into the joints and does not leave until spring. You have known this cold for years now. It arrives, settles in, waits. You have learned what helps and what does not.'] : []),
       'After you were sick for a week, the first day you felt well again your body felt like something given back. You walked outside and the air was ordinary air and it was enough.',
     ]),
@@ -116,9 +116,9 @@ export const EVENTS_SONDER_28 = [
     weight: 2,
     when: (G) => G.age >= 16 && !G.mem?.sdr28MarketDay,
     text: () => pick([
-      'The market on a certain morning of the week. The same stalls roughly in the same places. The particular smell of it — vegetables, something fried, the morning damp still in the canvas. You have been here enough times that you know which way to go without thinking about it.',
+      'The market on a certain morning of the week. The same stalls roughly in the same places. The smell of it — vegetables, something fried, the morning damp still in the canvas. You have been here enough times that you know which way to go without thinking about it.',
       'The man selling things from a cart: the same place every day, or every week. You have bought from him enough times that there is something between you, not friendship, but recognition. He knows what you usually take.',
-      'There is always someone at the market who has been there longer than anyone else can remember. They have a particular authority that comes from being older than the stall next to them, from knowing the history of the ground they are standing on.',
+      'There is always someone at the market who has been there longer than anyone else can remember. They have an authority that comes from being older than the stall next to them, from knowing the history of the ground they are standing on.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28MarketDay', true) },
@@ -216,7 +216,7 @@ export const EVENTS_SONDER_28 = [
     text: () => pick([
       'The smell before rain — petrichor, though you may not know that word. The air changes. Something in you recognises it before you consciously register what is coming.',
       'It started raining while you were inside and by the time you noticed the street was already wet. There is always a version of this where you just missed being caught in it.',
-      'Rain on a particular surface makes a sound you know well — roof tiles, a tin roof, leaves, pavement. The sound of rain in the place where you grew up is a sound you carry without knowing you carry it.',
+      'Rain on a surface makes a sound you know well — roof tiles, a tin roof, leaves, pavement. The sound of rain in the place where you grew up is a sound you carry without knowing you carry it.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28SmellOfRain', true) },
@@ -230,7 +230,7 @@ export const EVENTS_SONDER_28 = [
     text: () => pick([
       'Someone recognises you in a place where you did not expect to be recognised. Not a famous kind of recognition — just someone from a chapter of your life that you thought was closed. You are still that person to them.',
       'The shopkeeper who recognises you even though you only come in occasionally. The small nod: you are known here. You do not know their name. They do not know yours. Something passes between you anyway.',
-      'A child who knew you when they were small recognises you now as an adult. You are a particular person to them — a version of you from before they were old enough to know what they were remembering. You can see yourself in how they greet you.',
+      'A child who knew you when they were small recognises you now as an adult. You are a person to them — a version of you from before they were old enough to know what they were remembering. You can see yourself in how they greet you.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28BeingRecognised', true) },
@@ -244,7 +244,7 @@ export const EVENTS_SONDER_28 = [
     text: () => pick([
       'You have been doing this for thirty years or forty and now you are not doing it anymore. Not a decision, exactly — more a gradual stopping. The last time you did it you did not know it was the last time. You know now.',
       'The neighbourhood has changed enough that you stopped going. Not in protest — you just stopped, the way you stop going places. Someone else lives in the version of the neighbourhood you remember.',
-      'There is an era of your life that is over in a way that other eras were not. They ended but they still felt adjacent. This one is genuinely past. You can look at it the way you look at somewhere you lived a long time ago: accurately, without living there.',
+      'There is an era of your life that is over as other eras were not. They ended but they still felt adjacent. This one is genuinely past. You can look at it the way you look at somewhere you lived a long time ago: accurately, without living there.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28EndOfSomething', true) },
@@ -256,9 +256,9 @@ export const EVENTS_SONDER_28 = [
     weight: 2,
     when: (G) => G.age >= 18 && !G.mem?.sdr28TheHabit,
     text: () => pick([
-      'You have done this at this time on this day for so long that if you did not do it you would notice the gap it left. Not because the thing is important but because the gap would be. Habit is its own kind of structure.',
+      'You have done this at this time on this day for so long that if you did not do it you would notice the gap it left. Not because the thing is important but because the gap would be. Habit is a structure.',
       'You no longer remember starting this. You just do it. It is part of the scaffold of the day, one of the things that holds the shape of a day together. You do not think about it. You just do it and the day holds.',
-      'The small ritual that other people would find strange if they saw it — the particular order you do things in, the exact way. You have always done it this way. You have never explained it to anyone.',
+      'The small ritual that other people would find strange if they saw it — the order you do things in, the exact way. You have always done it this way. You have never explained it to anyone.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28TheHabit', true) },
@@ -340,7 +340,7 @@ export const EVENTS_SONDER_28 = [
     weight: 2,
     when: (G) => G.age >= 14 && !G.mem?.sdr28LateAtNight,
     text: () => pick([
-      'The house at 2am or 3am — the particular quality of it. Every sound has a different scale at that hour. The roof settling, a branch against a window, someone outside at a distance. You are the only one awake. This is a different version of the same place.',
+      'The house at 2am or 3am — the quality of it. Every sound has a different scale at that hour. The roof settling, a branch against a window, someone outside at a distance. You are the only one awake. This is a different version of the same place.',
       'You woke up in the middle of the night and could not go back to sleep for a while. You lay there. The dark was its own thing — not frightening, not peaceful, just the dark doing its usual work. Eventually sleep came back.',
       'The silence after midnight is not the same silence as midday. Something is resting in it, or the city is resting, and you happen to be awake inside the rest. You do not know what to do with it except wait for morning.',
     ]),
@@ -356,7 +356,7 @@ export const EVENTS_SONDER_28 = [
     text: () => pick([
       'You overheard something that was not meant for you. A fragment — half a sentence, a name, a number. You do not know the context. The fragment stays with you anyway, incomplete, irreducible.',
       'The person on the phone in a public place, conducting their life at full volume. You try not to listen. You listen anyway. You will carry some version of their conversation for the rest of the day without knowing anything about them.',
-      'Music from somewhere you could not identify — a window, a car, a space behind a wall. The song was one you knew from a specific time. By the time you located where it was coming from, it had changed.',
+      'Music from somewhere you could not identify — a window, a car, a space behind a wall. The song was one you knew from a time. By the time you located where it was coming from, it had changed.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28SomethingHeard', true) },
@@ -370,7 +370,7 @@ export const EVENTS_SONDER_28 = [
     text: () => pick([
       'A winter morning when the light comes late and thin. Getting up before the light makes the day feel front-heavy — all effort at the start, the light arriving as a kind of confirmation after the fact.',
       'The cold in the room before the heat comes on. You know this cold. Every winter it is the same negotiation with yourself about getting out of the blankets. You always do. The moment of it never gets easier.',
-      'Frost on a window or a car or the ground, the particular crystalline precision of it. It has no reason to be beautiful. It is, anyway.',
+      'Frost on a window or a car or the ground, the crystalline precision of it. It has no reason to be beautiful. It is, anyway.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr28WinterMorning', true) },

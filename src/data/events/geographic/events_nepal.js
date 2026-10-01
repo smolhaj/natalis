@@ -77,7 +77,7 @@ export const NEPAL_EVENTS = [
       G.character.gender === 'male' &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem.nepGulfMigration,
-    text: 'Qatar. Saudi Arabia. Malaysia. The labour broker charges a fee you have borrowed against. The ticket is one way. The kafala system means your employer controls your residency: you cannot change jobs, you cannot leave without a no-objection certificate, your passport may be held. The remittance you send home will be, for your family, the difference between the school fees being paid and not being paid. Young men from your village have gone this way. Some come back. You have heard of the ones who did not.',
+    text: 'Qatar, Saudi Arabia, Malaysia. The broker\'s fee is borrowed and the ticket is one way. Your employer will hold your residency, perhaps your passport, and you cannot change jobs or leave without his paper. What you send home will be the difference between the school fees paid and not paid. Young men from your village have gone this way. Some came back.',
     choices: [
       {
         text: 'You go.',
@@ -114,7 +114,8 @@ export const NEPAL_EVENTS = [
       G.currentYear === 2015 &&
       G.age >= 10 &&
       !G.mem.nepEarthquake,
-    text: 'April 25, 2015, 11:56am. The Gorkha earthquake: magnitude 7.8. The shaking lasts almost a minute. Kathmandu\'s brick buildings, Bhaktapur\'s medieval squares, the villages in the hills — the damage is specific and total. 9,000 people die. 600,000 houses are damaged or destroyed. The Langtang valley — a tourist trekking area — is obliterated by an avalanche triggered by the quake. The international aid arrives faster than the government can distribute it. You are somewhere when the shaking starts.',
+    text: 'April 25, 2015, just before noon, and the ground shakes for almost a minute. Kathmandu\'s brick houses, Bhaktapur\'s squares, the villages in the hills; in Langtang the valley is buried by an avalanche. The aid comes faster than the government can hand it out. You are somewhere when the shaking starts.',
+    context: 'The magnitude 7.8 Gorkha earthquake killed about 9,000 people and damaged or destroyed some 600,000 houses.',
     choices: [
       {
         text: 'You are in Kathmandu or the hill districts.',

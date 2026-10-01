@@ -22,7 +22,7 @@ export const BANGLADESH_DEPTH_EVENTS = [
       G.currentYear >= 1952 && G.currentYear <= 1965 &&
       G.age >= 6 && G.age <= 20 &&
       !G.mem?.bngDepEkushey,
-    text: 'February 21, 1952. Students at Dhaka University march to protest the Pakistani government\'s declaration that Urdu — a language most Bengalis do not speak — will be the only national language. The police fire on the procession. Rafiquddin Ahmed. Abul Barkat. Jabbar. Salauddin. The names of the martyrs are learned by every child in East Pakistan. The language they died for is the language you are thinking in right now. Ekushey — the twenty-first — becomes the date that organizes everything. Language is identity is nation.',
+    text: 'February 21, 1952. Students at Dhaka University march against the government\'s decision that Urdu, which most Bengalis do not speak, will be the only national language, and the police fire on them. Rafiq, Barkat, Jabbar, Salam: every child in East Pakistan learns the names. The language they died for is the language you are thinking in now. Ekushey, the twenty-first, becomes the date everything is organised around.',
     choices: null,
     effect: (p) => {
       p.e += 4
@@ -45,9 +45,10 @@ export const BANGLADESH_DEPTH_EVENTS = [
       G.age >= 12 &&
       !G.mem?.bngDepFloods88,
     text: () => pick([
-      'Seventy-five percent of Bangladesh is underwater. The floods of 1988 are the worst in recorded history for this country — worse than 1974, worse than 1987. Dhaka is flooded for the first time. The roads are rivers. The cattle are on the rooftops of buildings that still have rooftops. The water is there for weeks. When it recedes, the roads are gone in places, the crops are gone in most places, and the question of where to begin is the question of every household.',
+      'The water comes and does not go. Dhaka floods, which nobody living can remember; the roads are rivers and the cattle stand on whatever roofs are still above it. It stays for weeks. When it goes down the roads are gone in places and the crops nearly everywhere, and every household asks the same question about where to begin.',
       'The flood takes the winter rice crop before it is harvested. The aid arrives in boats. The boats can reach some villages and not others. In the villages they cannot reach, people eat what they have until they don\'t. You learn the geography of where the food goes in a disaster not from a map but from who comes back thinner and who doesn\'t come back.',
     ]),
+    context: 'The 1988 floods covered about three-quarters of Bangladesh, the worst in the country\'s recorded history.',
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -70,7 +71,7 @@ export const BANGLADESH_DEPTH_EVENTS = [
       G.age >= 16 &&
       G.ethnicity === 'chakma' &&
       !G.mem?.bngDepCHT,
-    text: 'The Chittagong Hill Tracts are the forested hills where the Jumma peoples — Chakma, Marma, Tripura, and others — have lived for centuries. Since 1972, the Bangladesh government has settled Bengali Muslim families in the Hills; since 1973, the Shanti Bahini has fought an insurgency. The army operations are not in the Dhaka newspapers the way the Dhaka events are. Your village has been displaced, or your village knows of a village that was burned. The 1997 peace accord gives autonomy on paper. The settlers remain. The autonomy is partial.',
+    text: 'The Hill Tracts are where the Chakma, the Marma, the Tripura and others have lived for centuries. Since the seventies the government has been settling Bengali families in the hills, and the Shanti Bahini has been fighting it, and the army\'s operations do not reach the Dhaka papers. Your village was moved, or you know a village that was burned. The 1997 accord gives autonomy on paper. The settlers stay.',
     choices: [
       {
         text: 'Join the resistance. The Shanti Bahini is the only defense of the Hills.',
@@ -111,9 +112,10 @@ export const BANGLADESH_DEPTH_EVENTS = [
       G.age >= 20 &&
       !G.mem?.bngDepRohingya,
     text: () => pick([
-      'Cox\'s Bazar. The Kutupalong camp is now the largest refugee camp in the world: over a million Rohingya from Myanmar, who arrived mostly in August 2017 after the military clearance operations. The camp is visible from the beach road. The bamboo shelters on the hillside, the plastic sheeting, the NGO vehicles in a constant circuit. Bangladesh has hosted Rohingya for thirty years and the scale of 2017 is an order of magnitude larger than before. The world\'s attention came and moved on. The Rohingya are still in the camp.',
-      'Your relative works for an NGO in the camp. The stories that come back from the camp are not the stories in the international news. The international news has the broad shape. The camp stories are: the specific family, the medical case that was or wasn\'t treated, the registration card that allows or doesn\'t allow movement, the particular cruelty of a situation that has lasted this long without resolution.',
+      'From the beach road at Cox\'s Bazar you can see the camp: bamboo and plastic sheeting up the hillsides, the aid agencies\' vehicles going round and round. Most of the people in it came in August 2017, from across the border in Myanmar. Bangladesh has sheltered Rohingya for thirty years, but never like this. The world\'s attention came and moved on. The Rohingya are still in the camp.',
+      'Your relative works for an NGO in the camp. The stories that come back from the camp are not the stories in the international news. The international news has the broad shape. The camp stories are: the family, the medical case that was or wasn\'t treated, the registration card that allows or doesn\'t allow movement, the cruelty of a situation that has lasted this long without resolution.',
     ]),
+    context: 'Kutupalong, with about a million Rohingya residents, became the largest refugee camp in the world after the Myanmar military\'s 2017 clearance operations.',
     choices: null,
     effect: (p) => {
       p.r += 5
@@ -202,7 +204,8 @@ export const BANGLADESH_DEPTH_EVENTS = [
       G.currentYear >= 2012 &&
       G.age >= 20 &&
       !G.mem?.bngDepBkash,
-    text: 'bKash: the mobile money system that did in Bangladesh what traditional banks could not do. By 2020, sixty million accounts. The monthly threshold for a bKash account — any phone, no bank required — is low enough that the garment worker in Ashulia, the rickshaw puller in Khulna, the farmer in Bogura can send and receive money. The remittance from Malaysia arrives as a mobile transfer. The market purchase in the village uses the app. The Grameen Bank built financial inclusion with group meetings; bKash built it with a SIM card. Both are real. The country skipped the step where everyone needed a branch.',
+    text: 'bKash: any phone, no bank. The garment worker in Ashulia, the rickshaw puller in Khulna, the farmer in Bogura can all send and receive money now. The remittance from Malaysia arrives as a text message, and the village shop takes payment on the app. Grameen built its lending with group meetings; this was built with a SIM card. The country skipped the step where everyone needed a branch.',
+    context: 'bKash, launched in 2011, had about sixty million registered accounts by 2020.',
     choices: null,
     effect: (p) => {
       p.e += 3

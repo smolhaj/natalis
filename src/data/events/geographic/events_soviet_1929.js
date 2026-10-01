@@ -70,7 +70,7 @@ export const SOVIET_1929_EVENTS = [
       G.age >= 5 && once(G, 'sovKolkhoz'),
     text: (G) => G.age < 14
       ? 'A man from the district comes and the whole village is made to sit in the school while he talks. The word he keeps using is kolkhoz. Afterwards your father walks the cow to the new yard at the end of the street and comes back without her, and your mother does not speak to him until the next day, and not about the cow.'
-      : 'The man from the district talks for three hours and at the end there is a list, and the list is who has signed. The ones who have not signed are written down on a second list. By the spring the horses are in one stable and the ploughs in one shed and nobody can say who the harness belongs to, which is the point.',
+      : 'The man from the district talks for three hours and at the end there is a list, and the list is who has signed. The ones who have not signed are written down on a second list. By the spring the horses are in one stable and the ploughs in one shed and nobody can say who the harness belongs to. That is the point.',
     choices: [
       {
         text: 'Sign, and keep your head down.',
@@ -121,7 +121,7 @@ export const SOVIET_1929_EVENTS = [
       {
         text: 'Stay out of the field.',
         tag: 'yielding',
-        outcome: 'You stay home, and eat what there is, which is less.',
+        outcome: 'You stay home, and eat what there is, less every month.',
         effect: (p) => { p.setMem('sovFiveEars', true); p.h -= 3; p.addFlag('sov_spikelets') },
       },
     ],
@@ -150,7 +150,7 @@ export const SOVIET_1929_EVENTS = [
     claimsYears: { from: 1932, to: 1933 },
     when: (G) => IS('Russia')(G) && RURAL(G) && G.currentYear >= 1932 && G.currentYear <= 1933 &&
       G.age >= 3 && once(G, 'sovFamineVolga'),
-    text: 'The quota is met and then it is raised and met again, and what is left in the village is the seed grain, and then it is not. You eat things that you did not know were things. The passports come that winter and the collective farm does not get any, which is how you learn that the road out of the village is closed to you by a sheet of paper.',
+    text: 'The quota is met and then it is raised and met again, and what is left in the village is the seed grain, and then it is not. You eat things that you did not know were things. The passports come that winter and the collective farm does not get any, and so you learn that the road out of the village is closed to you by a sheet of paper.',
     context: 'The famine of 1932-33 struck the Volga, the North Caucasus and western Siberia as well as Ukraine and Kazakhstan. Internal passports were introduced in December 1932 and withheld from collective farmers, who could not legally leave their farms until 1974.',
     choices: null,
     effect: (p) => { p.setMem('sovFamineVolga', true); p.h -= 10; p.m -= 12; p.addFlag('famine_survivor'); p.addFlag('sov_famine_1932') },
@@ -181,7 +181,7 @@ export const SOVIET_1929_EVENTS = [
     weight: 30,
     when: (G) => IN_USSR(G) && G.currentYear >= 1937 && G.currentYear <= 1939 && G.age >= 4 && G.age <= 30 &&
       G.flags.includes('sov_terror_witness') && G.parents?.father?.alive && once(G, 'sovTerrorHome'),
-    text: 'It is your father, and it is at night, and the men are polite in a way that is worse. They take books and a letter and him. In the morning your mother goes to the prison with a parcel and joins a queue of women with parcels, and when the window refuses a parcel the woman holding it knows, and does not cry until she is in the street.',
+    text: 'It is your father, and it is at night, and the men are polite, and that is worse. They take books and a letter and him. In the morning your mother goes to the prison with a parcel and joins a queue of women with parcels, and when the window refuses a parcel the woman holding it knows, and does not cry until she is in the street.',
     choices: null,
     effect: (p) => {
       p.setMem('sovTerrorHome', true)
@@ -385,7 +385,7 @@ export const SOVIET_1929_FOLLOWTHROUGH = [
     phase: null,
     weight: 60,
     when: (G) => G.flags.includes('sov_terror_household') && G.currentYear >= 1956 && G.currentYear <= 1962 && once(G, 'sovFtRehab'),
-    text: 'A letter from the military collegium of the Supreme Court: your father has been rehabilitated, posthumously, for lack of the elements of a crime. It gives a date of death that is not the date. It gives a cause that is not the cause. It is a half-sheet of paper and you keep it in the drawer with his watch, and it is the only thing anybody has ever given you that admits he existed.',
+    text: 'A letter from the military collegium of the Supreme Court: your father has been rehabilitated, posthumously, for lack of the elements of a crime. It gives a date of death that is not the date. It gives a cause that is not the cause, on a half-sheet of paper, and you keep it in the drawer with his watch, the only thing anybody has ever given you that admits he existed.',
     choices: null,
     effect: (p) => { p.setMem('sovFtRehab', true); p.m += 4; p.r += 4; p.addFlag('sov_rehabilitation_letter') },
   },
@@ -430,7 +430,7 @@ export const SOVIET_1929_FOLLOWTHROUGH = [
       once(G, 'sovFtReturn'),
     text: (G) => G.character?.ethnicity === 'chechen'
       ? 'Thirteen years. The decree that lets you go home is shorter than the one that sent you. There is somebody else in the house — a family from somewhere else, who were also sent here, in their way — and the graveyard has been ploughed, and the headstones are in the foundations of a cowshed. You find your grandfather\'s by the lettering, and you do not take it out, because the cowshed would fall.'
-      : 'Forty-five years. You go back an old woman to a peninsula of other people\'s houses, and are told the land is not available, and put up a shelter on a hillside with other families who are also back, and the police knock it down, and you put it up again. Your grandchildren speak Russian. At night you tell them the name of the village, which is not on any sign.',
+      : 'Forty-five years. You go back an old woman to a peninsula of other people\'s houses, and are told the land is not available, and put up a shelter on a hillside with other families who are also back, and the police knock it down, and you put it up again. Your grandchildren speak Russian. At night you tell them the name of the village. It is not on any sign.',
     choices: null,
     effect: (p) => { p.setMem('sovFtReturn', true); p.m += 4; p.r += 4; p.addFlag('sov_returned_home') },
   },

@@ -103,20 +103,20 @@ export const INDUSTRIAL_EVENTS = [
   // extradition. He died in 2014 having faced no trial.
 
   {
+    // Only for somebody who was there. The world event tells every Indian about
+    // the night; the cheque went to the people of the old city, and a settlement
+    // figure read in a Chennai newspaper is not a payment.
     id: 'ind_bhopal_settlement',
-    phase: 'young_adult',
-    weight: 3,
+    phase: null,
+    weight: 12,
     when: (G) =>
       G.character.country?.name === 'India' &&
-      G.flags.has('industrial_disaster_era') &&
-      G.currentYear >= 1989 && G.currentYear <= 1997 &&
+      (G.place?.name === 'Bhopal' || G.flags.has('bhopal_survivor') || G.mem?.bhopalLocalSurvivor) &&
+      G.age >= 16 &&
+      G.currentYear >= 1990 && G.currentYear <= 1997 &&
       !G.mem?.bhopalSettlement,
-    text: (G) => {
-      const place = G.place?.name || ''
-      if (place === 'Bhopal' || G.mem?.bhopalLocalSurvivor)
-        return 'The settlement cheque arrives. Union Carbide paid the government of India 470 million dollars in 1989. By the time it moves through the process and reaches your hands, your share is 550 dollars. This is the figure the courts arrived at for your lungs, for the years of breathing what the night of December 3rd left in the air, for the family you buried. They have calculated you.'
-      return 'The Bhopal settlement is being distributed. 470 million dollars from Union Carbide, the Indian government acting as administrator, divided among 500,000 people. The arithmetic arrives in the newspapers before the cheques do. Per person: approximately 550 dollars.'
-    },
+    text: 'The settlement cheque arrives, years after the night of December 3rd. The court has put a figure on your lungs, on the years of breathing what the night left in the air, on the people you buried. You hold the paper and read the number again.',
+    context: 'The Indian government accepted 470 million dollars from Union Carbide in 1989 on behalf of all claimants, roughly 550 dollars per injured person once divided. The site was never fully cleaned and the groundwater remains contaminated.',
     choices: [
       {
         text: 'Accept the payment',
@@ -128,12 +128,30 @@ export const INDUSTRIAL_EVENTS = [
       {
         text: 'Refuse it — this sum is an insult',
         tag: null,
-        outcome: 'You don\'t take the 550 dollars. The groundwater is still contaminated either way.',
+        outcome: 'You do not take it. The groundwater is still contaminated either way.',
         effect: (p) => { p.addFlag('bhopal_refused_settlement'); p.karma += 5; p.m -= 3; p.setMem('bhopalSettlement', true) },
         inject: null,
       },
     ],
     effect: null,
+  },
+
+  {
+    // Everybody else in India reads it in the paper.
+    id: 'ind_bhopal_settlement_news',
+    phase: null,
+    weight: 2,
+    when: (G) =>
+      G.character.country?.name === 'India' &&
+      G.flags.has('industrial_disaster_era') &&
+      G.place?.name !== 'Bhopal' && !G.flags.has('bhopal_survivor') && !G.mem?.bhopalLocalSurvivor &&
+      G.age >= 14 &&
+      G.currentYear >= 1989 && G.currentYear <= 1991 &&
+      !G.mem?.bhopalSettlement,
+    text: 'The newspaper does the division before the cheques are written: what Union Carbide has paid, over how many people. Somebody at the tea stall reads the per-person figure out loud and nobody says anything for a moment.',
+    context: 'The 1989 settlement was 470 million dollars for about half a million claimants, roughly 550 dollars each.',
+    choices: null,
+    effect: (p) => { p.m -= 1; p.setMem('bhopalSettlement', true) },
   },
 
   // ── POLLUTION AS CLASS ────────────────────────────────────────────────────────
@@ -229,7 +247,7 @@ export const INDUSTRIAL_EVENTS = [
       {
         text: 'Stay — this is enough, and it is yours',
         tag: null,
-        outcome: 'You stay. The decision has its own weight. You chose it with your eyes open.',
+        outcome: 'You stay. The decision weighs. You chose it with your eyes open.',
         effect: (p) => { p.addFlag('stayed_industrial'); p.m += 5; p.setMem('factoryTownQ', true) },
         inject: null,
       },

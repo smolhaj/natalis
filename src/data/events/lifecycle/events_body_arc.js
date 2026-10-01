@@ -19,8 +19,8 @@ export const BODY_ARC_EVENTS = [
       G.age >= 34 && G.age <= 44 &&
       !G.mem?.bodyArcBack,
     text: () => pick([
-      `Your back goes. Not dramatically — no disc, no surgery, just a particular movement on a Tuesday morning that produces a consequence that lasts four days. You treat it with the assumption that it will resolve, because it always has. It does resolve. But it takes longer than it used to. You file this away.`,
-      `Something in the lower back. A familiar position — reaching for something, getting out of the car — that has been neutral your whole life and is now, apparently, not neutral. You treat it with rest and with the specific competence of someone who has managed their body until now and expects to continue doing so. Largely this is correct.`,
+      `Your back goes. Not dramatically — no disc, no surgery, just a movement on a Tuesday morning that produces a consequence that lasts four days. You treat it with the assumption that it will resolve, because it always has. It does resolve. But it takes longer than it used to. You file this away.`,
+      `Something in the lower back. A familiar position — reaching for something, getting out of the car — that has been neutral your whole life and is now, apparently, not neutral. You treat it with rest and with the competence of someone who has managed their body until now and expects to continue doing so. Largely this is correct.`,
       `The back. You have heard people talk about their backs for years. You understand now that they were not complaining — they were describing a categorical change in the relationship between themselves and the physical world.`,
     ]),
     choices: null,
@@ -39,7 +39,7 @@ export const BODY_ARC_EVENTS = [
     text: () => pick([
       `You eat the same things you have always eaten. Something about the results has changed. Not dramatically — the change is slow enough to be deniable for a long time. But you have been doing the arithmetic and the arithmetic has changed.`,
       `The body's economy has shifted. The same inputs are producing different outputs. You adjust. Not dramatically — small recalibrations in what you eat and when, the kind of negotiation that is too minor to mention but that occupies a portion of your attention it didn't before.`,
-      `You are not heavy. You are heavier than you were. The difference is not the weight — the difference is that you used to not think about it, and now you do, which is its own kind of change.`,
+      `You are not heavy. You are heavier than you were. The difference is not the weight — the difference is that you used to not think about it, and now you do.`,
     ]),
     choices: null,
     effect: (p) => { p.h -= 1; p.setMem('bodyArcMetabolism', true) },
@@ -73,9 +73,9 @@ export const BODY_ARC_EVENTS = [
       G.age >= 43 && G.age <= 54 &&
       !G.mem?.bodyArc3am,
     text: () => pick([
-      `You wake at 3am and do not go back to sleep for two hours. This happens once and then again and then you realize it is a pattern now, a consistent feature of the night rather than an anomaly in it. The 3am hour has a particular quality — the thoughts that arrive in it are not necessarily worse than daytime thoughts, but they have no competition.`,
-      `The problem is not falling asleep. The problem is the waking at a specific hour in the middle of the night with a clarity that feels wrong for the time, and the subsequent difficulty returning to the state you were just in. The body's sleep architecture has apparently revised itself without consulting you.`,
-      `You lie awake at 3am doing nothing in particular. The mind finds things to do in the absence of guidance. Most of them are not useful. You have learned not to turn on the lamp because the light makes it worse. You lie there instead, in the dark, in the particular company of 3am, which is a company everyone will eventually know.`,
+      `You wake at 3am and do not go back to sleep for two hours. This happens once and then again and then you realize it is a pattern now, a consistent feature of the night rather than an anomaly in it. The 3am hour has a quality — the thoughts that arrive in it are not necessarily worse than daytime thoughts, but they have no competition.`,
+      `The problem is not falling asleep. The problem is the waking at an hour in the middle of the night with a clarity that feels wrong for the time, and the subsequent difficulty returning to the state you were just in. The body's sleep architecture has apparently revised itself without consulting you.`,
+      `You lie awake at 3am doing nothing in particular. The mind finds things to do in the absence of guidance. Most of them are not useful. You have learned not to turn on the lamp because the light makes it worse. You lie there instead, in the dark, in the company of 3am.`,
     ]),
     choices: null,
     effect: (p) => { p.h -= 2; p.setMem('bodyArc3am', true) },
@@ -91,9 +91,9 @@ export const BODY_ARC_EVENTS = [
       G.age >= 46 && G.age <= 56 &&
       !G.mem?.bodyArcTired,
     text: () => pick([
-      `It is not fatigue in the way fatigue used to work — not the tiredness of exertion that sleep resolves. It is something more ambient, a tiredness that is present in the background of ordinary days without a clear cause and without a clear solution. You are not sick. This is just the body at this age.`,
+      `It is not fatigue in the way fatigue used to work — not the tiredness of exertion that sleep resolves. It is something more ambient, a tiredness that is present in the background of ordinary days without a clear cause and without a clear solution. You are not sick. This is the body at this age.`,
       `The energy question has changed. There is less of it by default and the recovery after spending it is slower. This is a fact about the world now, the way rain is a fact about the world — manageable, requiring adjustment, not going anywhere.`,
-      `You used to be able to push through. The pushing through still works but the cost is different — it takes two days to recover what used to cost one evening. You recalibrate. What you are willing to spend energy on changes. This is not loss exactly. It is more like editing.`,
+      `You used to be able to push through. The pushing through still works but the cost is different — it takes two days to recover what used to cost one evening. You recalibrate. What you are willing to spend energy on changes. It is less like loss than like editing.`,
     ]),
     choices: null,
     effect: (p) => { p.h -= 2; p.setMem('bodyArcTired', true) },
@@ -145,7 +145,7 @@ export const BODY_ARC_EVENTS = [
       G.age >= 58 && G.age <= 70 &&
       !G.mem?.bodyArcHands,
     text: () => pick([
-      `You look at your hands and see your mother's hands, or your father's hands — the specific topography of aged skin, the prominence of vein and tendon that was invisible at thirty. The hands are the most honest part of the body. They show everything.`,
+      `You look at your hands and see your mother's hands, or your father's hands — the topography of aged skin, the prominence of vein and tendon that was invisible at thirty. The hands are the most honest part of the body. They show everything.`,
       `The hands have changed texture. Not damaged — this is not injury. Just the slow renegotiation of the skin's relationship with the architecture underneath. You notice it when you write, when you hold something small. These are the hands that will do the rest of the work.`,
       `Small jars are occasionally a problem. The grip is still there. The strength is still there. Something in the fine control is different — a small margin of imprecision where there used to be none. You adapt. You open the jar differently, or you ask someone. These are minor logistical adjustments with no existential content.`,
     ]),
@@ -164,7 +164,7 @@ export const BODY_ARC_EVENTS = [
       !G.mem?.bodyArcCold,
     text: () => pick([
       `You are cold in rooms that were not cold before. The thermostat has not changed. The building has not changed. The body has revised its baseline and the rooms are now noticeably cooler than they were. You add layers. You put the jumper on earlier in the year. These are not complaints — just facts of the physical world.`,
-      `The cold gets in differently now. Not unbearably — nothing dramatic — but the bones seem to register it directly in a way that younger skin did not. You sit closer to the heat. You understand now why the old people in your memory always did the same.`,
+      `The cold gets in differently now. Not unbearably — nothing dramatic — but the bones seem to register it directly, as younger skin did not. You sit closer to the heat. You understand now why the old people in your memory always did the same.`,
     ]),
     choices: null,
     effect: (p) => { p.h -= 1; p.setMem('bodyArcCold', true) },
@@ -198,9 +198,9 @@ export const BODY_ARC_EVENTS = [
       G.age >= 68 && G.age <= 78 &&
       !G.mem?.bodyArcStairs,
     text: () => pick([
-      `Stairs have become a thing you plan for. Not a problem — just a factor. You take the lift when it is available. You take the stairs when it is not, but you take them at a pace that is honest about what stairs cost you now. The honesty is not defeat. It is just accuracy.`,
-      `The body has developed opinions about terrain that it did not used to have. Cobblestones. Uneven ground. The specific micro-adjustments of an uncertain surface. None of this is beyond you. All of it is on your radar in a way that it was not at fifty.`,
-      `You look at a flight of stairs and you see a flight of stairs and also you see the way the handrail is positioned, whether there is a rest point halfway, what kind of floor is at the bottom. This is not anxiety. It is the practical intelligence of a person who has learned to read terrain.`,
+      `Stairs have become a thing you plan for. Not a problem — just a factor. You take the lift when it is available. You take the stairs when it is not, but you take them at a pace that is honest about what stairs cost you now. You call it accuracy.`,
+      `The body has developed opinions about terrain that it did not used to have. Cobblestones. Uneven ground. The micro-adjustments of an uncertain surface. None of this is beyond you. All of it is on your radar as it was not at fifty.`,
+      `You look at a flight of stairs and you see a flight of stairs and also you see the way the handrail is positioned, whether there is a rest point halfway, what kind of floor is at the bottom. You call it reading terrain.`,
     ]),
     choices: null,
     effect: (p) => { p.h -= 2; p.r += 2; p.setMem('bodyArcStairs', true) },
@@ -218,7 +218,7 @@ export const BODY_ARC_EVENTS = [
     text: () => pick([
       `The body is a record. Not a complaint — a record. The knee that was strained at thirty, the back surgery if there was one, the shoulder that never fully returned from whatever happened to it in your fifties. The scars you can see and the ones that resolved invisibly. The body holds the history of having lived in it. You are reading the archive.`,
       `At some point the body stops being transparent — the vehicle that carries you through the day without requiring attention — and becomes present, a fact to be accounted for in the planning of things. You have made your peace with this. The body is still doing everything it needs to do. It just does it as the thing it is, rather than the thing you used not to notice.`,
-      `You take stock. The knees. The back. The vision. The hearing, if it is going. The heart, which the doctor is satisfied with. The sum of what is working and what has shifted and what has simply changed register. You are operational. You are not what you were. Both of these are true and neither cancels the other.`,
+      `You take stock: the knees, the back, the eyes, the ears if they are going, the heart, which the doctor is satisfied with. What still works, what has shifted, what has only changed register. You are operational. You are not what you were.`,
     ]),
     choices: null,
     effect: (p) => { p.r += 3; p.e += 2; p.setMem('bodyArcInventory', true) },

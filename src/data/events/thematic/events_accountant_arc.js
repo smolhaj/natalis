@@ -79,7 +79,7 @@ export const ACCOUNTANT_ARC_EVENTS = [
       {
         text: 'Report to regulators — the obligation is clear',
         tag: null,
-        outcome: `You file the report. The investigation starts. You are a witness rather than a subject, which is the correct category to be in. The legal process takes two years. Your name is in documentation that will exist permanently.`,
+        outcome: `You file the report. The investigation starts. You are a witness rather than a subject, the correct category to be in. The legal process takes two years. Your name is in documentation that will exist permanently.`,
         effect: (p) => {
           p.m -= 6
           p.karma += 12

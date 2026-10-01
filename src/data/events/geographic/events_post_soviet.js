@@ -66,7 +66,7 @@ export const POST_SOVIET_EVENTS = [
       G.character.country.archetype === 'post_soviet' &&
       G.currentYear >= 1960 && G.currentYear <= 1985 &&
       G.age >= 18,
-    text: 'You are assigned your position. The job assignment comes from the state, which consulted your aptitude scores and the needs of the Five Year Plan. The work is not what you would have chosen. It is also guaranteed for life, which is not nothing. Your grandmother\'s generation had nothing guaranteed. You sign the papers.',
+    text: 'You are assigned your position. The job assignment comes from the state, which consulted your aptitude scores and the needs of the Five Year Plan. The work is not what you would have chosen, and it is guaranteed for life. Your grandmother\'s generation had nothing guaranteed. You sign the papers.',
     choices: [
       {
         text: 'Accept the assignment — security matters',
@@ -95,7 +95,7 @@ export const POST_SOVIET_EVENTS = [
       G.currentYear >= 1946 && G.currentYear <= 1952 &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem.psGulagArrest,
-    text: 'The knock comes before dawn. Two men in long coats. Article 58: counter-revolutionary activity. The specific accusation: something you said in 1944 that someone wrote down; or that your brother-in-law was in the wrong division; or that your name appeared in someone else\'s testimony; or nothing you will ever be told. Your wife stands in the hallway. You are not given time to dress warmly. The paperwork is already signed.',
+    text: 'The knock comes before dawn. Two men in long coats. Article 58: counter-revolutionary activity. The accusation: something you said in 1944 that someone wrote down; or that your brother-in-law was in the wrong division; or that your name appeared in someone else\'s testimony; or nothing you will ever be told. Your wife stands in the hallway. You are not given time to dress warmly. The paperwork is already signed.',
     choices: [
       {
         text: 'There is nothing to say. You go.',
@@ -121,12 +121,12 @@ export const POST_SOVIET_EVENTS = [
       G.flags.has('gulag_survivor') &&
       G.currentYear >= 1946 && G.currentYear <= 1953 &&
       !G.mem.psGulagCamp,
-    text: 'The camp has a hierarchy no one explains and everyone obeys. The *blatnye* — criminal prisoners — have the informal authority. The politicals are lower. Your ration is tied to your output: less than the norm, less bread. The norm is calibrated so that a person eating the ration for below-norm production gradually loses the strength to reach the norm. You understand this system within a week. The question is whether you understand it fast enough. The Stakhanovite prisoners who exceed their quota are given extra bread and told they are model workers. They die from the overwork. You understand this too.',
+    text: 'The camp has a hierarchy nobody explains and everybody obeys: the criminals on top, the politicals below. Your ration is tied to your output, and the norm is set so that a man eating the below-norm ration slowly loses the strength to reach the norm. You understand the system within a week. The question is whether you understood it fast enough. The ones who exceed the quota get extra bread and a red banner, and die of the work.',
     choices: [
       {
         text: 'Find a way to survive — make yourself useful, learn the social economy',
         tag: null,
-        outcome: 'A man from Leningrad teaches you how to game the output records. You give him bread when you have extra. The friendship is real and is also a survival arrangement. Both are true simultaneously.',
+        outcome: 'A man from Leningrad teaches you how to game the output records. You give him bread when you have extra. The friendship is real and is also a survival arrangement.',
         effect: (p) => { p.h -= 8; p.e += 5; p.s += 3; p.setMem('psGulagCamp', true); },
       },
       {
@@ -153,7 +153,7 @@ export const POST_SOVIET_EVENTS = [
       {
         text: 'Go home, whatever is left of it.',
         tag: null,
-        outcome: 'The journey takes a month. The city is smaller than you remembered and also exactly the same. The apartment that was yours is occupied by a family who had nothing to do with your arrest. The encounter is a specific kind of ordinary awkwardness that contains enormous weight.',
+        outcome: 'The journey takes a month. The city is smaller than you remembered and also exactly the same. The apartment that was yours is occupied by a family who had nothing to do with your arrest. The encounter is a kind of ordinary awkwardness that contains enormous weight.',
         effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('gulag_released_generation'); p.setMem('psGulagRelease', true); },
       },
       {
@@ -174,18 +174,18 @@ export const POST_SOVIET_EVENTS = [
       G.flags.has('gulag_survivor') &&
       G.age >= 55 &&
       !G.mem.psGulagLate,
-    text: 'Khrushchev\'s secret speech was in 1956. Solzhenitsyn published in 1962. Glasnost named the thing in 1988. The archive is partially open now. You could look for your file — the testimony that produced your Article 58 charge, the name of who signed it, the specific sentence in someone\'s statement that sent you east. You have thought about whether you want to know.',
+    text: 'Khrushchev\'s secret speech was in 1956. Solzhenitsyn published in 1962. Glasnost named the thing in 1988. The archive is partially open now. You could look for your file — the testimony that produced your Article 58 charge, the name of who signed it, the sentence in someone\'s statement that sent you east. You have thought about whether you want to know.',
     choices: [
       {
         text: 'You want to know.',
         tag: null,
-        outcome: 'The file says what you knew it would say. A colleague\'s name, the specific phrase he wrote, the date. The man has been dead for twenty years. The file is yours to keep.',
+        outcome: 'The file says what you knew it would say. A colleague\'s name, the phrase he wrote, the date. The man has been dead for twenty years. The file is yours to keep.',
         effect: (p) => { p.r += 6; p.karma += 3; p.setMem('psGulagLate', true); },
       },
       {
         text: 'You do not need the file. You know what happened.',
         tag: null,
-        outcome: 'The knowing is in your body and in the particular way you hold certain things and in the year you lost when you were young. The file adds a name to this. You have decided you do not need the name.',
+        outcome: 'The knowing is in your body and in the way you hold certain things and in the year you lost when you were young. The file adds a name to this. You have decided you do not need the name.',
         effect: (p) => { p.r += 4; p.karma += 6; p.setMem('psGulagLate', true); },
       },
     ],
@@ -210,7 +210,7 @@ export const POST_SOVIET_EVENTS = [
       if (year <= 1992) {
         return 'The factory notice is posted at the gate. The enterprise has been privatised. The new owners have determined that your entire department is redundant. You have three weeks\' severance. The number on the notice, converted to roubles, is what a loaf of bread cost six months ago. The word for what has happened does not exist yet in your vocabulary. It will.'
       }
-      return 'The factory has been closed for eight months now. You heard someone bought the building. The equipment went east — to China, the rumor says, or to Turkey. Your colleagues are scattered. Some are driving taxis. One sells things at the market. None of you talk about what you used to do. The vocabulary of it feels like it belongs to a different language.'
+      return 'The factory has been closed eight months, and someone bought the building, and the machines went east, to China or Turkey, people say. Your colleagues are scattered; some drive taxis, one sells things at the market. None of you talk about what you used to do. The words for it feel like they belong to another language.'
     },
     choices: [
       {
@@ -272,7 +272,7 @@ export const POST_SOVIET_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 1997 &&
       G.flags.includes('post_soviet_collapse') &&
       G.age >= 25 && G.age <= 50,
-    text: 'You had a profession. You had a salary. You had, in the specific way the Soviet system promised it, a place. The place does not exist anymore. What is difficult is not the poverty itself — poverty has a practical logic — but the shame. The shame of having had and then not having. Of not knowing the vocabulary of need because you were never meant to need. Of being new to the queue at the food bank and recognizing the person in front of you from work.',
+    text: 'You had a profession, a salary, a place, as the Soviet system promised. The place no longer exists. Poverty has a practical logic; what is hard is the shame, of having had and then not having, of not knowing the language of need because you were never meant to need. You are new to the queue at the food bank, and you recognise the person in front of you from work.',
     choices: [
       {
         text: 'Accept help when it is offered',
@@ -283,7 +283,7 @@ export const POST_SOVIET_EVENTS = [
       {
         text: 'Refuse — manage alone, whatever it takes',
         tag: null,
-        outcome: 'The management is improvised and mostly works. The pride is intact in a way that is both correct and costly.',
+        outcome: 'The management is improvised and mostly works. The pride is intact, and it is both correct and costly.',
         effect: (p) => { p.m -= 12; p.r += 8; p.e += 3; p.addFlag('post_soviet_shame'); p.setMem('psSuddenPoverty', true) },
       },
     ],
@@ -339,7 +339,7 @@ export const POST_SOVIET_EVENTS = [
       {
         text: 'Find a way to distribute some of it — philanthropy, legitimacy',
         tag: null,
-        outcome: 'The foundation you establish is real. It does not erase what it was built on. It does something for people who need it, which is also real.',
+        outcome: 'You lay a foundation. It does not erase what it was built on. It does something for people who need it.',
         effect: (p) => { p.m += 4; p.karma += 12; p.mo -= 5000; p.setMem('psOligarchCost', true) },
       },
     ],
@@ -363,7 +363,7 @@ export const POST_SOVIET_EVENTS = [
       {
         text: 'Leave — Israel, Germany, anywhere that will take you',
         tag: null,
-        outcome: 'The departure is not heroic. It is practical and irreversible and the right decision, which you will spend years explaining to yourself.',
+        outcome: 'The departure is practical and irreversible and right, and you will spend years explaining it to yourself.',
         effect: (p) => { p.m -= 5; p.addFlag('emigrated'); p.emigrateTo(['Israel', 'Israel', 'Germany', 'United States']); p.addFlag('post_soviet_emigrant'); p.setResidency('permanent_resident'); p.setMem('psJewishEmigration', true) },
       },
       {

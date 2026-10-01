@@ -52,7 +52,7 @@ const VENEZUELA_EVENTS = [
     text: (G) => {
       const isWealthy = G.stats.wealth > 55
       return isWealthy
-        ? 'December 6, 1998. The votes are counted. Hugo Chávez Frías — the paratrooper who staged the coup in 1992, who surrendered on television and said "por ahora" — has won with 56 percent. Your family is watching from the apartment in el este. Your father says: the barbarians are at the gate. Your mother says: that man is going to destroy everything. You are old enough to notice that the people in the cerros are celebrating with a specific kind of joy that looks like recognition.'
+        ? 'December 6, 1998. The votes are counted. Hugo Chávez Frías — the paratrooper who staged the coup in 1992, who surrendered on television and said "por ahora" — has won with 56 percent. Your family is watching from the apartment in el este. Your father says: the barbarians are at the gate. Your mother says: that man is going to destroy everything. You are old enough to notice that the people in the cerros are celebrating with a kind of joy that looks like recognition.'
         : 'December 6, 1998. The barbaro from Barinas, the paratrooper who went on television in 1992 and took responsibility for the coup and said "por ahora" — for now — has won the election with 56 percent. The people in your street are celebrating. Not because they believe in him exactly. Because he talked about people like them for the first time in forty years of democracy that functioned as a conversation between two parties that both forgot you.'
     },
     choices: [
@@ -86,8 +86,8 @@ const VENEZUELA_EVENTS = [
     text: (G) => {
       const isWealthy = G.stats.wealth > 55
       return isWealthy
-        ? 'April 11, 2002. The march against Chávez turns into a confrontation at the palace. Nineteen people are shot. The military high command appears on television to announce that Chávez has resigned. Pedro Carmona — a businessman — is installed as president. The TV stations celebrate. The business federation celebrates. Then: the people come down from the cerros. The loyal generals move their troops. Forty-seven hours later, Chávez is back. The coup lasted less than two days. Your family stops celebrating.'
-        : 'April 11, 2002. The generals say he resigned. He didn\'t. The hours that follow are a compressed course in what the word power means and where it actually lives. The military fractured; the people in the streets came down from the hillside neighborhoods; the loyal generals held their positions. Chávez returns from the island where they took him. The businessmen who signed the Carmona decree go home. You understand something about the country that you could only have understood from watching this specific forty-seven hours.'
+        ? 'April 11, 2002. The march against Chávez reaches the palace and nineteen people are shot, and the generals go on television to say he has resigned. A businessman is sworn in. The TV stations celebrate. Then the people come down from the cerros and the loyal generals move their troops, and forty-seven hours later Chávez is back. Your family stops celebrating.'
+        : 'April 11, 2002. The generals say he resigned, and he did not. The hours that follow are a short course in what power means and where it actually lives: the army split, the people came down from the hills, the loyal generals held. Chávez comes back from the island where they took him, and the businessmen who signed the decree go home. You understand something about your country you could only have learned in those forty-seven hours.'
     },
     choices: null,
     effect: (p) => { p.e += 4; p.addFlag('ven_2002_coup_lived'); p.setMem('ven_coup', true); },
@@ -108,7 +108,7 @@ const VENEZUELA_EVENTS = [
       const isWealthy = G.stats.wealth > 55
       return isWealthy
         ? 'The oil is at ninety, then a hundred dollars a barrel. The PDVSA imports everything — food, cars, spare parts — at the official exchange rate that makes imports cheap and exports nonexistent. The mission hospitals in the poor barrios have Cuban doctors who make house calls. The supermarkets are full. The apartments in el este are selling. The numbers look like a boom. You know the structure underneath the numbers and you are buying dollars at the black market rate anyway.'
-        : 'The doctor came to the barrio. Not to the hospital three kilometers away — to the barrio, to the módulo on the corner. That is what Barrio Adentro means: inside the barrio. Your mother learned to read at 54 in the Misión Robinson. The food bags from Mercal cut the weekly food cost by half. Whether you support Chávez or you don\'t, you live in the decade that produced these specific facts about your life.'
+        : 'The doctor came to the barrio. Not to the hospital three kilometers away — to the barrio, to the módulo on the corner. That is what Barrio Adentro means: inside the barrio. Your mother learned to read at 54 in the Misión Robinson. The food bags from Mercal cut the weekly food cost by half. Whether you support Chávez or you don\'t, you live in the decade that produced these facts about your life.'
     },
     choices: null,
     effect: (p) => { p.m += 5; p.w += 4; p.addFlag('ven_oil_boom_lived'); p.setMem('ven_misiones', true); },
@@ -128,8 +128,8 @@ const VENEZUELA_EVENTS = [
     text: (G) => {
       const isChavista = G.flags.has('chavista_generation') || G.flags.has('bolivarian_generation')
       return isChavista
-        ? 'March 5, 2013. Nicolás Maduro announces it from the state television channel. Chávez has died of cancer at 58. You knew it was coming — the cancer diagnosis in 2011, the surgery, the succession speech in which he named Maduro. Knowing does not prepare you. The people in your street weep the way people weep for a father. The coffin tours the country for two days. You are part of a generation whose political imagination was built around a single person, and that person is dead, and what comes next has not yet been named.'
-        : 'March 5, 2013. The announcement comes from Maduro on the state channel. Chávez is dead. Whatever you thought of him, the country is going to change. The oil is still at a hundred dollars a barrel. The successor is the man Chávez chose. The experiment continues without the person who began it, which is a different experiment.'
+        ? 'March 5, 2013, and Maduro announces on state television that Chávez has died of cancer at fifty-eight. You knew it was coming: the diagnosis, the operations, the speech naming his successor. Knowing does not help. People in your street weep the way people weep for a father, and the coffin goes round the country for days. Your whole political imagination was built around one man, and he is dead.'
+        : 'March 5, 2013. The announcement comes from Maduro on the state channel. Chávez is dead. Whatever you thought of him, the country is going to change. The oil is still at a hundred dollars a barrel. The successor is the man Chávez chose. The experiment continues without the person who began it, and becomes a different experiment.'
     },
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('ven_chavez_death_generation'); p.setMem('ven_chavez_death', true); p.setMem('venChavezDeath', true); },
@@ -158,7 +158,7 @@ const VENEZUELA_EVENTS = [
       {
         text: 'You begin making plans to leave. This is not the country that was promised.',
         tag: null,
-        outcome: 'The planning takes time. The planning has its own costs — in money, in the conversations you have to have with people who are staying.',
+        outcome: 'The planning takes time. The planning costs money, and conversations with the people who are staying.',
         effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('bolivarian_collapse_lived'); p.setMem('ven_escasez', true); },
       },
     ],
@@ -176,7 +176,8 @@ const VENEZUELA_EVENTS = [
       G.currentYear >= 2017 && G.currentYear <= 2017 &&
       G.age >= 15 &&
       !G.mem?.ven_2017,
-    text: 'April to July 2017. Every day for four months. The opposition won the National Assembly in December and Maduro is dissolving its powers through the Supreme Court. The protest route goes down the main avenue. The GNB — National Guard — fires tear gas and birdshot. The colectivos on motorcycles ride into the crowds. A hundred and twenty people die. Your neighborhood makes a decision about whether to come out — the guarimba, the street barricade, the garbage can fire at the intersection. Whether to go out is a calculation that involves knowing which street the motorcycles have been using and at what time the gas arrives.',
+    text: 'April to July 2017, every day for four months, after Maduro uses the court to strip the new Assembly of its powers. The march goes down the main avenue, and the National Guard fires gas and birdshot, and the colectivos ride their motorcycles into the crowd. Your street decides whether to come out: the barricade, the burning bin at the junction. Going out means knowing which street the motorcycles use and what time the gas comes.',
+    context: 'About 125 people were killed in the 2017 protests.',
     choices: [
       {
         text: 'You go out. The country has to be pushed.',
@@ -206,7 +207,7 @@ const VENEZUELA_EVENTS = [
       G.age >= 18 && G.age <= 50 &&
       (G.flags.has('bolivarian_collapse_lived') || G.flags.has('ven_2017_generation')) &&
       !G.mem?.ven_emigrar,
-    text: 'Seven million have left. Bogotá, Lima, Santiago, Buenos Aires, Madrid, Miami. The people in your WhatsApp group are distributed across five countries. The conversation has a specific texture: partly keeping in contact, partly competing accounts of different versions of the same life being lived in different places, partly an ongoing calculation of when to return that keeps getting deferred. You are still here. The question of whether to go is now a daily fact.',
+    text: 'Seven million have left. Bogotá, Lima, Santiago, Buenos Aires, Madrid, Miami. The people in your WhatsApp group are distributed across five countries. The conversation has a texture: partly keeping in contact, partly competing accounts of different versions of the same life being lived in different places, partly an ongoing calculation of when to return that keeps getting deferred. You are still here. The question of whether to go is now a daily fact.',
     choices: [
       {
         text: 'You go. There is nothing left here to stay for that you couldn\'t rebuild somewhere else.',
@@ -217,7 +218,7 @@ const VENEZUELA_EVENTS = [
       {
         text: 'You stay. This is your country and leaving would be the last surrender.',
         tag: null,
-        outcome: 'Staying when most are leaving is its own position. The city empties a specific way. The people who are left know each other differently.',
+        outcome: 'Staying when most are leaving is its own position. The city empties a way. The people who are left know each other differently.',
         effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('ven_stayer'); p.setMem('ven_emigrar', true); },
       },
     ],
@@ -240,9 +241,9 @@ const VENEZUELA_EVENTS = [
       const isChavista = G.flags.has('chavista_generation')
       const left = G.flags.has('venezuela_exodus')
       return left
-        ? 'You left Venezuela. The country you left has a double in your memory: the country before the collapse and the country the collapse made. The one your children know from WhatsApp photos is the second one. The first one — the Caracas of the eighties or the nineties, the Sunday market, the specific light of the valley — exists now only in people of your generation and in the places that remain.'
+        ? 'You left Venezuela. The country you left has a double in your memory: the country before the collapse and the country the collapse made. The one your children know from WhatsApp photos is the second one. The first one — the Caracas of the eighties or the nineties, the Sunday market, the light of the valley — exists now only in people of your generation and in the places that remain.'
         : isChavista
-          ? 'You believed in the project. You have outlived it in some sense. The things the misiones built — the literacy, the infant mortality rates, the poverty reduction — were real. The way the project managed its end was not good. You hold both facts without requiring them to resolve.'
+          ? 'You believed in the project. You have outlived it in some sense. The misiones built literacy, lowered infant mortality, cut poverty. The way the project managed its end was not good. You hold both facts without requiring them to resolve.'
           : 'Venezuela was polarized into chavistas and escuálidos — the term Chávez used for the opposition. You were on one side or you were on the other and the division structured the next twenty years. The country exists now outside that division, in a different kind of collapse, and the polarization feels like an old argument that history has moved past without resolving.'
     },
     choices: null,

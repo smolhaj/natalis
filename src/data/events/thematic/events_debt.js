@@ -16,7 +16,7 @@ export const DEBT_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.flags.has('debt_spiral_experienced') && G.age >= 40 && !G.mem.debtDecadeClean,
-    text: 'Ten years, roughly, since the worst of it. The credit score has recovered — you check it sometimes, still, the way you test a healed bone. You pay the balance in full every month. You know what the minimum payment feeling is like, the specific mathematics of making it worse while appearing to make it better. Your children won\'t know that.',
+    text: 'Ten years, roughly, since the worst of it. The credit score has recovered — you check it sometimes, still, the way you test a healed bone. You pay the balance in full every month. You know what the minimum payment feeling is like, the mathematics of making it worse while appearing to make it better. Your children won\'t know that.',
     effect: (p) => { p.m += 10; p.addFlag('debt_recovered'); p.setMem('debtDecadeClean', true) },
   },
 
@@ -62,7 +62,7 @@ export const DEBT_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) => G.flags.has('debt_spiral_experienced') && G.age >= 62 && !G.flags.has('debt_spiral') && !G.mem.debtLateLifeFree,
-    text: 'The mortgage is paid. The last card is paid. There is a specific absence — the weight you\'ve been managing since your twenties is gone, and you can feel the absence of it more precisely than you could ever feel the weight, because the weight was just the ground you walked on.',
+    text: 'The mortgage is paid. The last card is paid. There is an absence — the weight you\'ve been managing since your twenties is gone, and you can feel the absence of it more precisely than you could ever feel the weight, because the weight was just the ground you walked on.',
     effect: (p) => { p.m += 15; p.addFlag('debt_recovered'); p.setMem('debtLateLifeFree', true) },
   },
 

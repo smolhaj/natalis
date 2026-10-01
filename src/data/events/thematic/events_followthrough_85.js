@@ -32,7 +32,7 @@ export const FOLLOWTHROUGH_85_EVENTS = [
       G.currentYear >= 2008 &&
       G.age >= 50 &&
       !G.mem?.ft85StolnApology,
-    text: 'Rudd says the word on February 13, 2008. Parliament. "We apologise." You have waited decades for a government to say it. The waiting changed shape over the years — from rage to bitterness to something closer to exhaustion to this, watching a politician say a word in a building in Canberra. The apology is real. What it changes in practice — the gap in life expectancy, in incarceration, in child removal that has continued — is the accounting that runs beneath the word.',
+    text: 'February 13, 2008, in Parliament in Canberra, Rudd says it: we apologise. You have waited decades for a government to say it, and the waiting has gone from rage to bitterness to something like exhaustion. The apology is real. What it changes, in the gap in life expectancy and in prisons and in children still being taken, is a separate account.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -52,7 +52,7 @@ export const FOLLOWTHROUGH_85_EVENTS = [
       G.currentYear >= 1980 &&
       G.age >= 50 &&
       !G.mem?.ft85TenPoundReturn,
-    text: 'You go back. The first time since you left — a holiday, a package deal, an inheritance of curiosity. England is not the same as the England your parents described in the migrant hostel at Bonegilla. It has become smaller, greyer, more crowded than the clean bright country in the promotional films. It is also more familiar than you expected. You have been Australian for thirty years. What remains British in you surfaces in England the way an accent surfaces when you are tired.',
+    text: 'You go back for the first time since you left. England is smaller and greyer and more crowded than the bright country in the films they showed at Bonegilla. It is also more familiar than you expected. You have been Australian for thirty years. What is still English in you comes up here the way an accent comes up when you are tired.',
     choices: null,
     effect: (p) => {
       p.m += 3
@@ -72,7 +72,7 @@ export const FOLLOWTHROUGH_85_EVENTS = [
       G.currentYear >= 2007 &&
       G.age >= 55 &&
       !G.mem?.ft85Ref67Late,
-    text: 'The anniversary. Forty years since the referendum. The speeches, the commemorations, the accounting of what changed and what did not change. You are counted in the census now, which is the thing the vote did. The life expectancy gap — twenty years less than non-Indigenous Australians — is the thing the vote did not do. You have been doing this accounting for forty years. You know what column each item goes in.',
+    text: 'Forty years since the referendum: the speeches, the commemorations, the list of what changed. You are counted in the census now; that is what the vote did. The life expectancy gap of twenty years is what it did not do. You have been keeping this account for forty years and you know which column everything goes in.',
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -112,7 +112,7 @@ export const FOLLOWTHROUGH_85_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 30 &&
       !G.mem?.ft85CronullaDecade,
-    text: 'A decade out from Cronulla the analysis has accumulated. The inquiry. The recommendations. The question of whether the talkback radio that ran the temperature up for weeks bore a particular responsibility. The Australian flag as symbol of the beach-crowd is the image that persists — what it meant to hold the flag in one hand and assault someone with the other. You are still doing the accounting of that image. The flag means too many things now to mean only one of them.',
+    text: 'Ten years after Cronulla there have been the inquiry and the recommendations, and the argument about the talkback radio that turned up the heat for a week beforehand. The picture that stays is a flag in one hand and the other hand hitting someone. You are still working out what to do with that picture. The flag means too many things now to mean only one.',
     choices: null,
     effect: (p) => {
       p.r += 4

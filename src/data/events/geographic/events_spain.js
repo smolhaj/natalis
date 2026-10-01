@@ -103,7 +103,7 @@ export const SPAIN_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1975 &&
       G.age >= 12 && G.age <= 20 &&
       !G.mem?.esRegionalLang,
-    text: 'Galicia is the land Franco came from, and this does not protect Galego. The language is what your grandparents speak in; in the cities it becomes something rural, something associated with the village, the old, the not-modern. You speak Castilian at school. You speak Galego with your grandfather and notice that the language has a specific weight when he speaks it — the weight of things said before.',
+    text: 'Galicia is the land Franco came from, and this does not protect Galego. The language is what your grandparents speak in; in the cities it becomes something rural, something associated with the village, the old, the not-modern. You speak Castilian at school. You speak Galego with your grandfather and notice that the language has a weight when he speaks it — the weight of things said before.',
     choices: null,
     effect: (p) => { p.m -= 3; p.r += 3; p.addFlag('galician_suppressed'); p.setMem('esRegionalLang', true); },
   },
@@ -121,7 +121,7 @@ export const SPAIN_EVENTS = [
       G.currentYear === 1975 &&
       G.age >= 12 &&
       !G.mem?.esFrancoDeath,
-    text: 'November 20, 1975. Francisco Franco Bahamonde is dead. The announcement comes in the register of official announcements, which is different from the register of news. You have never known a Spain without him — he took power before you were born, before most people alive today were born. The flag is at half-mast. The television plays a specific kind of music. What comes next is not obvious. The regime has not ended; it has lost the person who named it.',
+    text: 'November 20, 1975, and Franco is dead. The announcement comes in the voice of official announcements, not the voice of news. You have never known a Spain without him. The flags are at half mast and the television plays solemn music. The regime has not ended; it has lost the man who gave it its name.',
     choices: [
       {
         text: 'You feel something that is not exactly grief and not exactly celebration.',
@@ -148,7 +148,7 @@ export const SPAIN_EVENTS = [
       G.currentYear === 1981 &&
       G.age >= 13 &&
       !G.mem?.es23F,
-    text: 'February 23, 1981. Lieutenant Colonel Tejero enters the Cortes de Generales with Civil Guard officers, fires shots at the ceiling, and orders everyone to the floor. The democratically elected deputies lie on the floor of the parliament for seventeen hours. You watch it on television or hear it on the radio. There is a specific moment — it lasts some hours — when nobody knows what kind of country this will be tomorrow. You are inside that moment.',
+    text: 'February 23, 1981. Lieutenant Colonel Tejero enters the Cortes de Generales with Civil Guard officers, fires shots at the ceiling, and orders everyone to the floor. The democratically elected deputies lie on the floor of the parliament for seventeen hours. You watch it on television or hear it on the radio. There is a moment — it lasts some hours — when nobody knows what kind of country this will be tomorrow. You are inside that moment.',
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -170,7 +170,7 @@ export const SPAIN_EVENTS = [
       G.currentYear >= 1978 && G.currentYear <= 1986 &&
       G.age >= 16 && G.age <= 30 &&
       !G.mem?.esMovida,
-    text: 'The thing that follows Franco is not serious. It is the opposite of serious: bands and films and nights that could not have existed five years ago, and a specific speed of living that functions as compensation for the years that were not permitted. Madrid is a city at four in the morning. The censors still technically exist but have been outrun. Almodóvar is making things. People are making things. The making has a quality that knows exactly what it is a reaction against.',
+    text: 'What follows Franco is the opposite of serious: bands and films and nights that could not have existed five years ago, a speed of living that makes up for the years that were not permitted. Madrid is a city at four in the morning. The censors still technically exist but have been outrun. Almodóvar is making things. People are making things. The making has a quality that knows exactly what it is a reaction against.',
     choices: [
       {
         text: 'You live in it, specifically and without reservation.',
@@ -197,7 +197,7 @@ export const SPAIN_EVENTS = [
       G.currentYear === 1992 &&
       G.age >= 14 &&
       !G.mem?.es1992,
-    text: 'The Barcelona Olympics. Expo\'92 in Sevilla. The first AVE high-speed train. Spain is doing something this year — arriving at something, completing something. You are watching Fermín Cacho win the 1500 metres and the crowd is doing the thing that crowds do when they know they are at a specific historical moment. The country that built this was not the country that existed in 1975. The distance between those two years is measured in things that now exist.',
+    text: 'The Barcelona Olympics. Expo\'92 in Sevilla. The first AVE high-speed train. Spain is doing something this year — arriving at something, completing something. You are watching Fermín Cacho win the 1500 metres and the crowd is doing the thing that crowds do when they know they are at a historical moment. The country that built this was not the country that existed in 1975. The distance between those two years is measured in things that now exist.',
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -219,7 +219,7 @@ export const SPAIN_EVENTS = [
       G.currentYear >= 2004 && G.currentYear <= 2006 &&
       G.age >= 18 &&
       !G.mem?.es11M,
-    text: 'March 11, 2004. Four commuter trains at rush hour. Atocha, El Pozo del Tío Raimundo, Santa Eugenia. One hundred and ninety-one dead before eight in the morning. The government says ETA — immediately, insistently, with phone calls to every major newspaper. The evidence that accumulates through the day points somewhere else. Three days before the general election. You know the information is being managed. You go to Cibeles, or the Puerta del Sol, or wherever people in your city are gathering. The sign you carry or pass in the street says "¿Quién ha sido?" — but the question is already larger than the dead.',
+    text: 'March 11, 2004. Four commuter trains at rush hour, Atocha, El Pozo, Santa Eugenia, and nearly two hundred dead before eight in the morning. The government says ETA, at once, insistently, phoning every newspaper, and through the day the evidence points somewhere else. The election is in three days. You go to Sol, or wherever people in your city are gathering, and the signs say ¿Quién ha sido?, who did it, and the question is already about more than the dead.',
     choices: [
       {
         text: 'You believe the official line at first, then revise when the evidence accumulates.',
@@ -246,7 +246,7 @@ export const SPAIN_EVENTS = [
       G.currentYear >= 2011 && G.currentYear <= 2013 &&
       G.age >= 18 &&
       !G.mem?.es15M,
-    text: 'May 15, 2011. Puerta del Sol. The camp appears overnight and does not leave for weeks. "Democracia Real YA." "No nos representan." "No somos antisistema, el sistema es antinosotros." The signs are handmade; the arguments extend across cardboard and sticky notes pinned to tent sides. You are in your twenties, the youth unemployment rate is forty-six percent, and the banks have been rescued. You know these numbers in your body rather than your head. The assemblies are slow and serious and something forms inside the slowness.',
+    text: 'May 15, 2011, and a camp appears overnight in the Puerta del Sol and does not leave for weeks. "No nos representan." The signs are handmade and the arguments run across cardboard pinned to tents. You are in your twenties, half your generation has no work, and the banks have been rescued. The assemblies are slow and serious, and something forms inside the slowness.',
     choices: [
       {
         text: 'You join the camp — seriously, staying through the assemblies.',
@@ -257,7 +257,7 @@ export const SPAIN_EVENTS = [
       {
         text: 'You follow from a distance, sympathetic but not present.',
         tag: null,
-        outcome: 'The camp continues without you. The energy is real. What it produces takes another three years to arrive. The edge is also a position.',
+        outcome: 'The camp continues without you. What it produces takes another three years to arrive. The edge is also a position.',
         effect: (p) => { p.m += 1; p.r += 3; p.addFlag('indignados_generation'); p.setMem('es15M', true); },
       },
     ],
@@ -305,7 +305,7 @@ export const SPAIN_EVENTS = [
       G.age >= 22 && G.age <= 35 &&
       G.stats.smarts >= 45 &&
       !G.mem?.esBrainDrain,
-    text: 'The term is fuga de cerebros — the brain drain. Everyone knows someone who has gone to London or Berlin or Amsterdam. A doctor. An engineer. Someone with a master\'s degree waiting tables in Germany because the waiting in Germany pays more than the graduate job in Madrid. Your generation is the most educated in Spanish history and the youth unemployment rate is fifty percent. You have a degree and a specific problem: the degree and the labour market are not in conversation.',
+    text: 'The term is fuga de cerebros — the brain drain. Everyone knows someone who has gone to London or Berlin or Amsterdam. A doctor. An engineer. Someone with a master\'s degree waiting tables in Germany because the waiting in Germany pays more than the graduate job in Madrid. Your generation is the most educated in Spanish history and the youth unemployment rate is fifty percent. You have a degree and a problem: the degree and the labour market are not in conversation.',
     choices: [
       {
         text: 'You leave.',
@@ -334,7 +334,7 @@ export const SPAIN_EVENTS = [
       !G.mem?.esCatalan2017,
     text: (G) => {
       if (G.ethnicity === 'catalan') {
-        return 'October 1, 2017. The referendum. The Spanish government has declared it illegal. The Civil Guard is at the polling stations. The images of riot gear and ballot boxes travel internationally within the hour. You have made a decision about where you are standing today. You cast a vote that the Constitutional Court does not recognise. You do not know yet what this means for the next five years. You know what it means today.'
+        return 'October 1, 2017, the referendum the government in Madrid has declared illegal, and the Guardia Civil is at the polling stations, and within the hour the pictures of riot shields and ballot boxes are everywhere. You have decided where you are standing today. You cast a vote the Constitutional Court does not recognise. You do not know what it means for the next five years. You know what it means today.'
       }
       return 'October 1, 2017. The Catalan independence referendum, declared illegal by Madrid. The Civil Guard is at the polling stations; the images are international news within hours. Spain is two things simultaneously: the country that appears in those images, and the country that holds a constitutional position with its own logic. Your WhatsApp groups have fractured along lines that were not visible eighteen months ago.'
     },

@@ -49,7 +49,7 @@ const JAPAN_EVENTS = [
     text: (G) => {
       const isEarly = G.currentYear <= 1952
       return isEarly
-        ? 'The American soldiers hand out Hershey bars at the schoolyard gate. Your mother told you not to accept them. You accepted one. The chocolate is sweet in a way that doesn\'t match anything in your vocabulary for food. The city around you is rubble with shoots growing through it. The trains run. The trains always ran. The school has no glass in the windows yet. The emperor\'s voice on the radio last August was the first time anyone heard it.'
+        ? 'The American soldiers hand out Hershey bars at the school gate. Your mother told you not to take one, and you took one, and it is sweet like nothing you have a word for. The city is rubble with green shoots coming through it. The school has no glass in the windows yet. The trains run. The trains always ran.'
         : 'The Korean War bought orders for Japanese factories and the economy is growing and there is a television set in the neighbor\'s house that fifteen people gather to watch on Saturday evenings. What is gone from the city has been replaced by something newer. The something newer is louder and moves faster and smells of concrete. You are growing up in the world that came after the world that ended, and the world that ended is not discussed at the dinner table.'
     },
     choices: null,
@@ -60,17 +60,18 @@ const JAPAN_EVENTS = [
 
   {
     id: 'jpn_anpo_protests',
-    phase: 'young_adult',
-    weight: 4,
+    phase: null,
+    weight: 8,
     when: (G) =>
       G.character.country.name === 'Japan' &&
-      G.currentYear >= 1960 && G.currentYear <= 1961 &&
+      G.currentYear === 1960 &&
       G.age >= 17 && G.age <= 30 &&
-      !G.mem?.jpn_anpo,
-    text: 'June 1960. The Diet building surrounded. Three hundred thousand people in the streets around the parliament, the Zengakuren students at the front with their helmets and linked arms. The US-Japan security treaty is being ratified inside while the crowd outside makes it impossible to hear anything except the crowd. Eisenhower\'s press secretary was mobbed at Haneda two weeks ago and had to be rescued by helicopter. Kishi pushes the vote through at midnight with the opposition absent. The treaty passes. The democracy has been tested and the limits of the test are now visible.',
+      !G.mem?.jpn_anpo && !G.mem?.japanAnpo,
+    text: 'June 1960, and the security treaty with America. In Tokyo the students link arms in the rain around the Diet, and in your town there is a march down the main street to the station and back. Kishi pushes the vote through at midnight with the opposition absent. The treaty passes.',
+    context: 'The 1960 Anpo protests against the revised US-Japan Security Treaty were the largest in Japanese postwar history. The treaty was ratified on 19 June; Prime Minister Kishi resigned in July.',
     choices: [
       {
-        text: 'You are in the crowd. The linked arms in the rain.',
+        text: 'Join the march.',
         tag: null,
         outcome: 'The treaty passes. The Zengakuren era ends slowly over the next decade, turning into something different. You carry the experience of having been in that street.',
         effect: (p) => { p.r += 6; p.karma += 5; p.addFlag('anpo_generation'); p.setMem('jpn_anpo', true); },
@@ -123,9 +124,9 @@ const JAPAN_EVENTS = [
     context: 'Japan\'s postwar large-firm employment model combined lifetime tenure, seniority pay, company housing and company welfare with an expectation of after-hours socialising with superiors. It covered roughly a third of the workforce at its peak and applied almost exclusively to men. It began unravelling after the asset bubble collapsed in 1991.',
     choices: [
       {
-        text: 'You accept the compact. The security is real. So is everything else.',
+        text: 'You accept the compact. You are safe, and everything that comes with it comes too.',
         tag: null,
-        outcome: 'The job is the life. This is not a metaphor inside the compact. It is the literal arithmetic of where your hours go.',
+        outcome: 'The job is the life. It is the literal arithmetic of where your hours go.',
         effect: (p) => { p.w += 8; p.h -= 5; p.m -= 4; p.e += 4; p.addFlag('showa_salaryman'); p.setMem('jpn_salaryman', true); },
       },
       {
@@ -151,7 +152,7 @@ const JAPAN_EVENTS = [
       G.age >= 20 && G.age <= 32 &&
       G.career &&
       !G.mem?.jpn_ol,
-    text: 'The company has a word for what you are: OL. Office Lady. You pour the tea at the meeting where the men decide things. You are educated, possibly better educated than several of the men at the meeting. The tea. The filing. The telephone answered on the second ring. The expectation written into the employment contract and the expectation not written there: that you will leave when you marry, and that the career ceiling is not a ceiling if you understand what you\'re in. The Equal Employment Opportunity Law passes in 1986 but what passes in a law and what changes in a room are different timelines.',
+    text: 'The company has a word for what you are: OL, office lady. You pour the tea at the meeting where the men decide things, and you are better educated than several of them. The filing, the telephone answered on the second ring, and the expectation that is not in the contract: that you will leave when you marry. The equal opportunity law passes in 1986, and what passes in a law and what changes in a room run on different clocks.',
     choices: [
       {
         text: 'You stay and navigate. The navigation is the career.',
@@ -181,7 +182,7 @@ const JAPAN_EVENTS = [
       G.ethnicity?.includes('burakumin') &&
       G.age >= 12 && G.age <= 20 &&
       !G.mem?.jpn_buraku,
-    text: 'The word is not said to your face. It is said behind you, or not said but understood. The ancestors of your ancestors were tanners, butchers, executioners — the work of blood and death that the feudal order required and then designated as impure. Legally abolished 1871. The discrimination is an old thing wearing a new set of clothes. The marriage register check: someone\'s family will hire an investigator before agreeing to the match. The neighborhood. The school address. The things that identify you without being said. You are learning that emancipation on paper and emancipation in a room are different documents.',
+    text: 'The word is said behind you, or not said and understood. Your ancestors\' ancestors were tanners, butchers, executioners, the work of blood that the old order needed and called impure, and it was abolished on paper in 1871. When a match is proposed, the other family hires an investigator. Your address, your neighbourhood, your school identify you without anyone saying anything. Emancipation on paper and emancipation in a room are different documents.',
     choices: null,
     effect: (p) => { p.m -= 10; p.h -= 3; p.r += 10; p.addFlag('burakumin_identity'); p.setMem('jpn_buraku', true); },
   },
@@ -201,7 +202,7 @@ const JAPAN_EVENTS = [
       const isWealthy = G.stats.wealth > 55
       return isWealthy
         ? 'The land under the Imperial Palace is worth more than the entire state of California. This is an actual number that the newspapers print as a wonder. Golf club memberships are traded like securities — you know someone who bought one for eighty million yen. Tokyo real estate has doubled every three years for ten years. The department stores in Ginza have doormen in white gloves. The doormen have never been so busy. Everything that is happening feels like it will continue.'
-        : 'The city is building something — cranes everywhere, the sound of concrete at six AM, land prices rising faster than salaries. The people with assets are getting richer in a specific way. You are employed. The employment is stable. The gap between the city that is rising and the city you live in has a specific texture: you can see it from the train but you can\'t quite reach it.'
+        : 'The city is building something — cranes everywhere, the sound of concrete at six AM, land prices rising faster than salaries. The people with assets are getting richer in a way. You are employed. The employment is stable. The gap between the city that is rising and the city you live in has a texture: you can see it from the train but you can\'t quite reach it.'
     },
     choices: null,
     effect: (p) => { p.w += 5; p.m += 5; p.addFlag('bubble_generation'); p.setMem('jpn_bubble', true); },
@@ -219,7 +220,7 @@ const JAPAN_EVENTS = [
       G.flags.has('bubble_generation') &&
       G.age >= 25 &&
       !G.mem?.jpn_collapse,
-    text: 'The Nikkei peaked at 38,915 on December 29, 1989. By the time you are paying attention to what has happened, it is sixty percent down. The company begins offering early retirement to the people who were there the longest, which is a way of saying what it cannot say directly. The land you were told to buy as an investment has lost half its value and the loan has not lost half its value. The Lost Decade is the name it will be given later — later, you will know it had a name. Now it just has a texture: the deflation, the careful spending, the restaurants that were there last year and are not there this year, the friends who were promoted and now are not being promoted.',
+    text: 'The Nikkei peaked at 38,915 on December 29, 1989. By the time you are paying attention to what has happened, it is sixty percent down. The company begins offering early retirement to the people who were there the longest. It is a way of saying what it cannot say directly. The land you were told to buy as an investment has lost half its value and the loan has not lost half its value. The Lost Decade is the name it will be given later — later, you will know it had a name. Now it just has a texture: the deflation, the careful spending, the restaurants that were there last year and are not there this year, the friends who were promoted and now are not being promoted.',
     choices: [
       {
         text: 'You tighten and adapt. The decade asks for a different mathematics.',
@@ -230,7 +231,7 @@ const JAPAN_EVENTS = [
       {
         text: 'The loss is significant enough that you have to start again from a different position.',
         tag: null,
-        outcome: 'Starting again in Japan in the 1990s has a specific set of available paths, most of which were not the paths that were supposed to be available.',
+        outcome: 'Starting again in Japan in the 1990s has a set of available paths, most of which were not the paths that were supposed to be available.',
         effect: (p) => { p.w -= 15; p.m -= 10; p.r += 8; p.addFlag('lost_decade_generation'); p.setMem('jpn_collapse', true); },
       },
     ],
@@ -249,7 +250,7 @@ const JAPAN_EVENTS = [
       G.age >= 14 && G.age <= 28 &&
       (G.stats.happiness < 40 || G.stats.charisma < 30) &&
       !G.mem?.jpn_hikiko,
-    text: 'The room is the right size. The room has everything — the screen, the manga, the delivery food slot under the door that your mother fills without making you answer it. Outside is a specific kind of hard. The school was hard in a way the room isn\'t. The company interview was hard in a way the room isn\'t. You have been in the room for four months. You have been in the room for a year. The word for what you are is hikikomori and the government estimates a million of you by 2010, which means the room is not unusual, which is something you find neither comforting nor uncomforting.',
+    text: 'The room is the right size. It has everything: the screen, the manga, the food your mother leaves at the door without asking you to answer. Outside is hard, the school was hard, the company interview was hard, in a way the room is not. You have been in the room four months, then a year. The word for what you are is hikikomori, and there are said to be a million of you, and you find that neither comforting nor uncomforting.',
     choices: [
       {
         text: 'You eventually find a way back out. The room was a season, not a life.',
@@ -260,7 +261,7 @@ const JAPAN_EVENTS = [
       {
         text: 'The room extends. Years pass in the room.',
         tag: null,
-        outcome: 'The years in the room are not nothing. They are years. They shape you in the specific way that prolonged withdrawal shapes a person.',
+        outcome: 'The years in the room are years. They shape you in the way that prolonged withdrawal shapes a person.',
         effect: (p) => { p.m -= 12; p.h -= 8; p.s -= 10; p.e += 6; p.addFlag('hikikomori_experience'); p.setMem('jpn_hikiko', true); },
       },
     ],
@@ -281,7 +282,7 @@ const JAPAN_EVENTS = [
     text: (G) => {
       const isTohoku = G.ruralUrban === 'rural'
       return isTohoku
-        ? 'March 11, 2011. The earthquake is 9.0 and the shaking lasts six minutes and when it stops the water comes. The tsunami is fifteen meters in some places. The seawall was five meters. Nineteen thousand dead. Then the reactors at Fukushima Daiichi begin to melt. The evacuation zone is twenty kilometers, then thirty, then they are saying something on the radio that is hard to parse into a clear instruction. You are inside the zone. You leave with what you can carry.'
+        ? 'March 11, 2011. The shaking lasts six minutes, and when it stops the water comes, taller than the seawall built against it. Then the reactors at Fukushima begin to melt, and the evacuation zone grows, and the radio says things that are hard to turn into an instruction. You are inside the zone. You leave with what you can carry.'
         : 'March 11. The earthquake shakes Tokyo for six minutes — long enough that you understand this is not the usual earthquake. The tsunami footage comes in the afternoon. The reactor news comes in the evening. The government\'s statement uses the word "anzen" — safe — in a sentence that the word does not fit. The city in the days after: the queues at the supermarket for water, the trains stopped, the dark windows of buildings in the rolling blackouts. The word "anzen" does not fit the same way afterward.'
     },
     choices: null,
@@ -300,7 +301,7 @@ const JAPAN_EVENTS = [
       G.age >= 40 && G.age <= 60 &&
       G.parents && (G.parents.father?.alive || G.parents.mother?.alive) &&
       !G.mem?.jpn_kaigo,
-    text: 'Japan is the oldest country on earth — twenty-nine percent over sixty-five. The long life expectancy and the low birth rate have produced a specific arithmetic: one working-age person supporting a number of elderly that the system did not calculate. Your parent needs care. The nursing home has a waiting list. The alternative is you. The alternative has a word: kaigo — nursing care — and it has a gender distribution that mirrors the distribution of every other unpaid labor in this society.',
+    text: 'Japan is the oldest country on earth — twenty-nine percent over sixty-five. The long life expectancy and the low birth rate have produced an arithmetic: one working-age person supporting a number of elderly that the system did not calculate. Your parent needs care. The nursing home has a waiting list. The alternative is you. The alternative has a word: kaigo — nursing care — and it has a gender distribution that mirrors the distribution of every other unpaid labor in this society.',
     choices: [
       {
         text: 'You take on the care. It is the expected thing, and also the right thing.',
@@ -311,7 +312,7 @@ const JAPAN_EVENTS = [
       {
         text: 'You find a facility. The guilt is specific and ongoing.',
         tag: null,
-        outcome: 'The facility is fine. The guilt is not about the facility. It is about the expectation of what a child does for a parent, and the distance between the expectation and what you did.',
+        outcome: 'The facility is fine. The guilt is about the expectation of what a child does for a parent, and the distance between the expectation and what you did.',
         effect: (p) => { p.m -= 8; p.r += 5; p.w -= 5; p.addFlag('jpn_caregiver_generation'); p.setMem('jpn_kaigo', true); },
       },
     ],
@@ -367,8 +368,9 @@ const JAPAN_EVENTS = [
       !G.mem?.jpn_hibakusha,
     text: (G) => {
       const city = G.place?.id === 'jp_nagasaki' ? 'Nagasaki' : 'Hiroshima'
-      return `August 1945. The flash. Anyone who could see it was close enough that the seeing was the last clear thing for a long time. The burns. The silence at the hospital — not because people were not in pain but because the pain was past the reach of sound. Hiroshima and Nagasaki: 200,000 dead in the acute phase, more over the years from radiation illness. You survived. The word for what you are is hibakusha — "explosion-affected person." The word carries a stigma that the survivors did not earn: marriage bureaus begin quietly checking A-bomb registries. Employers do the same. The bomb was August 6 and 9; the discrimination begins in the weeks after and continues for decades.`
+      return `August 1945. The flash: anyone who saw it was close enough that the seeing was the last clear thing for a long time. At the hospital it is silent, not because nobody is in pain but because the pain is past the reach of sound. You survived. The word for what you are is hibakusha, and within weeks the marriage brokers are quietly checking the registries, and the employers after them, for decades.`
     },
+    context: 'The atomic bombs on Hiroshima (6 August) and Nagasaki (9 August) killed some 200,000 people by the end of 1945. Survivors faced long-term discrimination in marriage and employment.',
     choices: [
       {
         text: 'You tell people. The truth of it is not something you can carry invisibly.',
@@ -401,15 +403,15 @@ const JAPAN_EVENTS = [
     text: (G) => {
       const yr = G.currentYear
       if (yr <= 1980) {
-        return 'The alien registration card. You have carried it since you were fourteen — the law requires it, and the police can ask for it at any time, and not having it is a crime. Your grandparents were brought to Japan before 1945 to work in the mines, the factories, the construction sites. When Japan surrendered, they lost their Japanese citizenship and became foreigners in the country they had lived in for decades. You were born here. You are still a foreigner here. The fingerprinting requirement: the Japanese state requires you to press your ink-covered finger to the registration card. Many Zainichi begin refusing in the 1970s. The refusal is an act that carries legal consequences.'
+        return 'The alien registration card: you have carried it since you were fourteen, and not having it is a crime. Your grandparents were brought here before 1945 for the mines and the factories, and when Japan surrendered they stopped being Japanese in the country they had lived in for decades. You were born here, and you are a foreigner here. Every renewal, they ink your finger and press it to the card. In the seventies people start refusing, and the refusal is a crime too.'
       }
-      return 'You have a Japanese name you use publicly and a Korean name you use at home. Or you have only the Japanese name. Either way, the choice was made for you or by your parents or by the specific calculation of survival in a country that does not grant citizenship by birth. The fingerprinting requirement for Zainichi Koreans ends in 1999 after decades of resistance. What does not end: the question of naturalization, which requires erasing the Korean name from the register, which not everyone is willing to do.'
+      return 'You have a Japanese name you use publicly and a Korean name you use at home. Or you have only the Japanese name. Either way, the choice was made for you or by your parents or by the calculation of survival in a country that does not grant citizenship by birth. The fingerprinting requirement for Zainichi Koreans ends in 1999 after decades of resistance. What does not end: the question of naturalization, which requires erasing the Korean name from the register, which not everyone is willing to do.'
     },
     choices: [
       {
         text: 'You keep both identities — the Japanese public face and the Korean home face',
         tag: null,
-        outcome: 'The maintenance of two names in two registers has a specific cost and a specific dignity. You know who you are in both languages. The country knows you as one of them.',
+        outcome: 'The maintenance of two names in two registers has a cost and a dignity. You know who you are in both languages. The country knows you as one of them.',
         effect: (p) => { p.m -= 6; p.e += 4; p.s += 2; p.r += 5; p.addFlag('zainichi_identity'); p.setMem('jpn_zainichi', true); },
       },
       {
@@ -444,7 +446,7 @@ const JAPAN_EVENTS = [
       G.currentYear >= 1995 && G.currentYear <= 1997 &&
       G.age >= 20 &&
       !G.mem?.jpn_aum,
-    text: 'March 20, 1995. Aum Shinrikyo punctures plastic bags of sarin on five Tokyo subway lines during the morning rush hour. Thirteen people die. Nearly a thousand suffer permanent vision damage. Thousands more require treatment. The attack opens at a place in the Japanese psyche that was supposed to be sealed: the assumption of safety. Japan is a country where violent crime is extremely rare, where the train is on time to the minute, where the implicit social contract includes the subway being safe. That contract is punctured with the bags.',
+    text: 'March 20, 1995. In the morning rush, men from a religious cult pierce plastic bags of sarin on five Tokyo subway lines with sharpened umbrella tips. Thirteen people die, and thousands are hurt. It opens a place in the country that was meant to be sealed: the assumption of safety, the train on time to the minute, the subway as part of the social contract. The contract is punctured with the bags.',
     choices: [
       {
         // "or you know someone who was" set `aum_proximate`, a flag that the
@@ -518,17 +520,22 @@ const JAPAN_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) =>
+      // "You live under the flight path" — in Okinawa, which `ruralUrban !==
+      // 'urban'` was standing in for, so every Japanese villager lived there.
       G.character.country.name === 'Japan' &&
+      G.place?.id === 'jp_okinawa' &&
       G.currentYear >= 1972 && G.currentYear <= 2020 &&
       G.age >= 16 && G.age <= 45 &&
-      G.ruralUrban !== 'urban' &&
       !G.mem?.jpn_okinawa,
     text: (G) => {
       const yr = G.currentYear
-      if (yr <= 1980) {
-        return 'Okinawa reverted to Japanese sovereignty in 1972 after twenty-seven years of American administration. The reversion brought a Japanese passport but the bases did not leave. Seventy percent of US military bases in Japan are in Okinawa, which is less than one percent of Japan\'s land area. The noise of the F-15s. The off-limits district outside Camp Hansen. The accidents. The 1995 rape of a twelve-year-old girl by three US servicemen becomes the trigger for mass protests — 85,000 people in the streets, the largest protest in Okinawan history.'
+      if (yr <= 1994) {
+        return 'The island went back to Japan in 1972, after twenty-seven years of American administration, and the bases stayed. The jets come in low over the school and the teacher stops mid-sentence and waits. Outside Camp Hansen the signs on the bars are in English. You carry a Japanese passport now, and the fence is where it was.'
       }
-      return 'Okinawa is asked to carry the cost of the US-Japan security alliance while Tokyo and Osaka receive its benefits. The proposed relocation of Marine Corps Air Station Futenma to Henoko — offshore, still in Okinawa — has been opposed by local government for twenty years. Successive Japanese prime ministers promise to resolve it and then, under American pressure, do not resolve it. You live under the flight path. The flight path is the argument, conducted in noise, about who decides what.'
+      if (yr <= 1996) {
+        return 'In September 1995 three American servicemen rape a twelve-year-old girl, and in October eighty-five thousand people stand in a park in Ginowan, more than anyone can remember gathering for anything. The governor refuses to sign the land leases. Tokyo signs them for him.'
+      }
+      return 'The air station at Futenma is to move to Henoko, which is also in Okinawa, and the prefecture has voted against it in every way a prefecture can vote. Prime ministers promise to resolve it and then do not. You live under the flight path, which is the argument, conducted in noise, about who decides.'
     },
     choices: [
       {

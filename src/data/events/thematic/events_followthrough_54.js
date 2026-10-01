@@ -131,7 +131,7 @@ export const FOLLOWTHROUGH_54_EVENTS = [
     text: `You outlasted it. This is not how you expected the story to end when you were in the middle of it — the expectation in the middle of it was not that you would outlast anything, but that you would survive the next year. The regime changed or collapsed or liberalised or simply stopped mattering in the way regimes stop mattering. And you are here, older than the person who made the choices that defined you, still carrying the name of those choices. "Dissident" is now a word with historical weight. At the time it was just what you were.`,
     choices: [
       {
-        text: 'The outlasting is the meaning. The life that followed has its own shape now.',
+        text: 'The outlasting is the meaning. The life that followed has a shape now.',
         tag: null,
         outcome: 'The life after is longer than the life inside. What you made of it is the answer to what it was for.',
         effect: (p) => {
@@ -221,7 +221,7 @@ export const FOLLOWTHROUGH_54_EVENTS = [
       (G.political_leaning === 'left' || G.political_leaning === 'nationalist' || G.political_leaning === 'dissident') &&
       G.age >= 38 && G.age <= 58 &&
       !G.mem?.ft54PolCauseWon,
-    text: `The thing you worked for happened. The election was won, or the wall came down, or the law passed, or the independence was declared. You were there for it. The celebration was real. And then the after started — the governing, the implementation, the management of the people who had different ideas about what winning meant. The cause that was unified in opposition became complicated in power. The people you fought alongside developed separate agendas. The vision divided into factions. The winning was real. It was not the end of the story. The story, it turned out, does not have that kind of ending.`,
+    text: `The thing you worked for happened: the election won, the wall down, the law passed, independence declared. You were there. Then came the governing, and the people who had other ideas about what winning meant, and the cause that was one thing in opposition became several in power. It was not the end of the story. The story does not have that kind of ending.`,
     choices: [
       {
         text: 'What was won is still real, even incomplete. The incomplete is the nature of the thing.',
@@ -237,7 +237,7 @@ export const FOLLOWTHROUGH_54_EVENTS = [
       {
         text: 'Something specific was lost in the winning. You know what it was.',
         tag: null,
-        outcome: 'The specific loss is part of the honest accounting. It does not cancel what was gained. It sits alongside it.',
+        outcome: 'The loss is part of the honest accounting. It does not cancel what was gained. It sits alongside it.',
         effect: (p) => {
           p.r += 5
           p.m += 2

@@ -60,7 +60,7 @@ export const MONGOLIA_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1991 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.mn1990Rev,
-    text: 'January 1990. A group of young people begins a hunger strike in Sukhbaatar Square. The Mongolian People\'s Revolutionary Party has ruled since 1924 — longer than you have been alive, longer than your parents have been alive. The hunger strikers are asking for multi-party elections. The MPRP watches the Soviet Union and calculates. What happens next is not what anyone expected: the Party agrees. No troops. No crackdown. The revolution succeeds by negotiation, which is its own kind of improbable.',
+    text: 'January 1990. Young people go on hunger strike in the square in front of the government palace. The party has ruled since 1924, longer than your parents have been alive, and the strikers want other parties and elections. The party watches Moscow and calculates, and then agrees. No troops, no crackdown. The revolution succeeds by negotiation, which nobody expected.',
     choices: [
       {
         text: 'You are in the square. You are part of the thing that is happening.',
@@ -87,7 +87,7 @@ export const MONGOLIA_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 1995 &&
       G.flags.has('negdel_generation') &&
       !G.mem?.mnNegdelDissolve,
-    text: 'The negdel is dissolved with a decree. The animals are returned to individual families — which is what the animals always were, in truth, and everyone knew it. What is not returned is the veterinary station, or the guaranteed purchase price for wool, or the collective school, or the supply networks. The market economy is announced. The market infrastructure follows at a different pace, which is to say it does not follow. You have the animals and no floor.',
+    text: 'The negdel is dissolved with a decree. The animals are returned to individual families — which is what the animals always were, in truth, and everyone knew it. What is not returned is the veterinary station, or the guaranteed purchase price for wool, or the collective school, or the supply networks. The market economy is announced. The market infrastructure is supposed to follow, and does not. You have the animals and no floor.',
     effect: (p) => { p.m -= 14; p.h -= 6; p.w -= 3; p.mo -= 500; p.r += 7; p.addFlag('mn_post_socialist_shock'); p.setMem('mnNegdelDissolve', true) },
   },
 
@@ -103,7 +103,7 @@ export const MONGOLIA_EVENTS = [
       !G.mem?.mnDzud,
     text: (G) => {
       const year = G.currentYear <= 2001 ? '2000' : '2010'
-      return `The dzud arrives in November and does not leave until April. The snow comes thick and then freezes into a crust the animals cannot break through to reach the grass underneath. The temperature drops to minus forty and stays there. You watch the animals and know the arithmetic: the weakest go first, which is how you try to keep the strongest alive. The ${year} dzud kills a third of the national herd. You count what you have left at the end of March. The number is the answer to what comes next.`
+      return `The dzud arrives in November and does not leave until April. The snow comes thick and then freezes into a crust the animals cannot break through to reach the grass underneath. The temperature drops to minus forty and stays there. You watch the animals and know the arithmetic: the weakest go first, so that the strongest may live. The ${year} dzud kills a third of the national herd. You count what you have left at the end of March. The number is the answer to what comes next.`
     },
     effect: (p) => { p.m -= 20; p.h -= 10; p.mo -= 2000; p.w -= 4; p.r += 8; p.addFlag('dzud_survivor'); p.setMem('mnDzud', true) },
   },
@@ -122,7 +122,7 @@ export const MONGOLIA_EVENTS = [
       {
         text: 'The ger district becomes home. You build a life here, in the margin the city permits.',
         tag: 'ger_district',
-        outcome: 'The neighborhood accumulates — a fence, a small shed, a neighbor you know. The steppe is something you keep in the past tense, which is not the same as forgetting it.',
+        outcome: 'The neighborhood accumulates — a fence, a small shed, a neighbor you know. The steppe is something you keep in the past tense, which is not forgetting it.',
         effect: (p) => { p.m += 5; p.h -= 6; p.s += 4; p.addFlag('ger_district_migrant'); p.addFlag('urban_migrant'); p.setMem('mnUBMigrate', true) },
       },
       {
@@ -146,7 +146,7 @@ export const MONGOLIA_EVENTS = [
       G.flags.has('stalinist_purge_family_memory') &&
       G.age >= 55 &&
       !G.mem?.mnPurgeLate,
-    text: 'The democratic government opens the state archives in the 1990s. The files from 1937 and 1938 list names, charges, verdicts — the verdicts are always the same. Your uncle\'s name is in there. The charge is "feudal lama, enemy of the people." The execution date is listed. You sit with the file for a long time. The thangkas that survived in the felt blanket are still in the family, still not spoken about directly. You decide to have them properly conserved. This is the only thing you can do for him now.',
+    text: 'The archives open in the nineties, and the files from 1937 and 1938 list names, charges and verdicts, and the verdicts are all the same. Your uncle\'s name is in them: feudal lama, enemy of the people, and a date. The thangkas that survived wrapped in a felt blanket are still in the family, still not talked about. You have them properly conserved. It is the only thing you can do for him now.',
     effect: (p) => { p.m -= 8; p.r += 6; p.karma += 8; p.e += 4; p.setMem('mnPurgeLate', true) },
   },
 
@@ -198,7 +198,7 @@ export const MONGOLIA_EVENTS = [
       G.flags.has('mn_1990_revolution_generation') &&
       G.age >= 55 &&
       !G.mem?.mn1990Late,
-    text: 'Mongolia has had peaceful transfers of power since 1990. The MPRP — renamed, reformed, sometimes the government, sometimes the opposition — still exists. The thing you watched happen in Sukhbaatar Square has lasted longer than most revolutions last. You think about the January cold in 1990 and the people who stood in it without knowing what would happen. That uncertainty was real. What resolved it was not inevitable. Someone in the Party calculated the cost and chose to open a door.',
+    text: 'Mongolia has had peaceful transfers of power since 1990. The MPRP — renamed, reformed, sometimes the government, sometimes the opposition — still exists. The thing you watched happen in Sukhbaatar Square has lasted longer than most revolutions last. You think about the January cold in 1990 and the people who stood in it without knowing what would happen. What resolved it was not inevitable. Someone in the Party calculated the cost and chose to open a door.',
     effect: (p) => { p.m += 6; p.r += 4; p.karma += 5; p.setMem('mn1990Late', true) },
   },
 

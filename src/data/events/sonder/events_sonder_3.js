@@ -54,7 +54,7 @@ export const EVENTS_SONDER_3 = [
       (G.character.country.archetype === 'post_soviet' ||
        G.character.country.archetype === 'developing_urban' ||
        G.character.country.archetype === 'subsaharan'),
-    text: 'The government office opens at nine. The queue forms at seven. The woman in front of you has been here before — she knows which window and which form and that you need a specific stamp from a different department before this window will process you. She tells you without being asked. The system is illegible to outsiders; to people who live inside it, the knowledge of how to navigate it is a form of community.',
+    text: 'The government office opens at nine. The queue forms at seven. The woman in front of you has been here before — she knows which window and which form and that you need a stamp from a different department before this window will process you. She tells you without being asked. The system is illegible to outsiders; to people who live inside it, the knowledge of how to navigate it is a form of community.',
     choices: null,
     effect: (p) => { p.s += 1; p.setMem('s3_govQueue', true) },
   },
@@ -84,7 +84,7 @@ export const EVENTS_SONDER_3 = [
        G.conflictRisk >= 0.1 ||
        G.regime === 'single_party_authoritarian' ||
        G.regime === 'military_dictatorship'),
-    text: 'Someone abroad has asked you what it is really like. You have tried to explain. The account you gave was true. It was also completely different from the account you carry inside — the texture of it, the smell of the particular season, the way certain conversations happen in the kitchen and different conversations happen in public. The true account is not transferable. What you gave them was the outline of it.',
+    text: 'Someone abroad has asked you what it is really like. You have tried to explain. The account you gave was true. It was also completely different from the account you carry inside — the texture of it, the smell of the season, the way certain conversations happen in the kitchen and different conversations happen in public. The true account is not transferable. What you gave them was the outline of it.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s3_newsVsExp', true) },
   },
@@ -140,7 +140,7 @@ export const EVENTS_SONDER_3 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => place.hasCar(G) && (!G.mem?.s3_apologyNever && G.age >= 38),
-    text: 'There is someone you have not apologised to. The person, the thing. It was years ago — long enough that reopening it would require explaining the context, which is almost as bad as the original thing. You have thought about it in idle moments, driving or lying awake. The moment when it might have been natural to say it has passed. You carry it as a small weight, not debilitating, just present.',
+    text: 'There is someone you have not apologised to. The person, the thing. It was years ago — long enough that reopening it would require explaining the context, almost as bad as the original thing. You have thought about it in idle moments, driving or lying awake. The moment when it might have been natural to say it has passed. You carry it as a small weight, not debilitating, just present.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s3_apologyNever', true) },
   },
@@ -151,7 +151,7 @@ export const EVENTS_SONDER_3 = [
     weight: 2,
     when: (G) =>
       !G.mem?.s3_outgrew && G.age >= 25 && G.friends?.length > 0,
-    text: 'There is someone from before who would not understand the person you are now. Not because you became better — that is not quite the word — but because you became different, and the friendship was built around the particular people you both were then. You did not stop the friendship. It just has not happened for a while. Long enough that it would require explanation. You find you don\'t want to explain.',
+    text: 'There is someone from before who would not understand the person you are now. Not because you became better — that is not quite the word — but because you became different, and the friendship was built around the people you both were then. You did not stop the friendship. It just has not happened for a while. Long enough that it would require explanation. You find you don\'t want to explain.',
     choices: null,
     effect: (p) => { p.setMem('s3_outgrew', true) },
   },
@@ -173,7 +173,7 @@ export const EVENTS_SONDER_3 = [
     weight: 2,
     when: (G) =>
       !G.mem?.s3_careerNotTaken && G.age >= 38 && G.career !== null,
-    text: 'There was something else you might have done. You can still recall it as a possibility — the period before the choice resolved. The possibility was real. You chose this, which means you did not choose that, and for a while you lived in both timelines simultaneously. You do not live in both now. You cannot tell if what you feel is loss or just recognition.',
+    text: 'There was something else you might have done. You can still recall it as a possibility — the period before the choice resolved. You chose this, which means you did not choose that, and for a while you lived in both timelines simultaneously. You do not live in both now. You cannot tell if what you feel is loss or just recognition.',
     choices: null,
     effect: (p) => { p.r += 1; p.setMem('s3_careerNotTaken', true) },
   },
@@ -214,7 +214,7 @@ export const EVENTS_SONDER_3 = [
       !G.mem?.s3_accentDev &&
       G.flags.has('emigrated') &&
       G.age >= 30,
-    text: 'Someone from home has noticed it. They did not say it critically — or did not mean to — but there is something in your vowels that is not quite home anymore. You hear it too, now that they\'ve said it. The accent of where you are has been accumulating in your voice for years. You did not decide to do this. It happened because you were listening and speaking, which is all speaking is.',
+    text: 'Someone from home has noticed it. They did not say it critically — or did not mean to — but there is something in your vowels that is not quite home anymore. You hear it too, now that they\'ve said it. The accent of where you are has been accumulating in your voice for years. You did not decide to do this. It happened because you were listening and speaking. That is all speaking is.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s3_accentDev', true) },
   },
@@ -239,7 +239,7 @@ export const EVENTS_SONDER_3 = [
     when: (G) =>
       !G.mem?.s3_foodCantFind &&
       G.flags.has('emigrated'),
-    text: 'There is something you cannot find here. You have found a substitute — it is adequate, occasionally good — but it is not the thing. The thing was specific: the particular sourness, the exact texture, the way it tasted on a specific occasion that no substitute recalls. You do not talk about this because it seems small. It is not small. It is one of the specific places where the distance between here and home has no bridge.',
+    text: 'There is something you cannot find here. You have found a substitute — it is adequate, occasionally good — but it is not the thing. The thing was specific: the sourness, the exact texture, the way it tasted on an occasion that no substitute recalls. You do not talk about this because it seems small. It is one of the places where the distance between here and home has no bridge.',
     choices: null,
     effect: (p) => { p.r += 2; p.m -= 1; p.setMem('s3_foodCantFind', true) },
   },
@@ -277,7 +277,7 @@ export const EVENTS_SONDER_3 = [
     when: (G) => place.hasPhone(G) && (!G.mem?.s3_callAfter &&
       G.flags.has('emigrated') &&
       Object.values(G.parents ?? {}).some(p => p.alive)),
-    text: 'After you hang up, the silence is specific. Not empty — it has the shape of the conversation that just ended, the voice that was just there, the time zone you were talking across. You sit with it for a moment. The person is still alive; the call went well; nothing is wrong. The silence is just the distance, asserting itself after having been briefly annulled.',
+    text: 'After you hang up, the silence is specific. Not empty — it has the shape of the conversation that just ended, the voice that was just there, the time zone you were talking across. The phone stays warm in your hand for a moment. The person is still alive; the call went well; nothing is wrong. The silence is just the distance, asserting itself after having been briefly annulled.',
     choices: null,
     effect: (p) => { p.m -= 2; p.setMem('s3_callAfter', true) },
   },
@@ -320,7 +320,7 @@ export const EVENTS_SONDER_3 = [
     when: (G) => place.hasFormalJob(G) && (!G.mem?.s3_mornRetired &&
       G.age >= 63 &&
       (G.career === null || G.flags.has('retired'))),
-    text: 'The alarm is not set. You wake at the same time anyway, which is its own joke. The morning has a different texture without the specific urgency of somewhere to be by a certain hour. You notice the light differently. You have time for the kind of noticing that used to happen only on holidays. This is not the retirement you imagined — it is slower and more domestic — but the light in the morning is something you had been meaning to see for years.',
+    text: 'The alarm is not set. You wake at the same time anyway. The morning has a different texture without the urgency of somewhere to be by a certain hour. You notice the light differently. You have time for the kind of noticing that used to happen only on holidays. This is not the retirement you imagined — it is slower and more domestic — but the light in the morning is something you had been meaning to see for years.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s3_mornRetired', true) },
   },
@@ -343,7 +343,7 @@ export const EVENTS_SONDER_3 = [
     when: (G) => place.hasWeekend(G) && (!G.mem?.s3_othersGrand &&
       G.age >= 65 &&
       G.children?.length === 0),
-    text: 'You know several children who are not yours. The children of people you know, or the children of neighbours, or the children who are always in the square on a Saturday morning. You watch them with the particular attention of someone who has time to watch and no immediate stake. There is something pleasant about it and something adjacent to loss. You have learned not to distinguish too finely between the two.',
+    text: 'You know several children who are not yours. The children of people you know, or the children of neighbours, or the children who are always in the square on a Saturday morning. You watch them with the attention of someone who has time to watch and no immediate stake. There is something pleasant about it and something adjacent to loss. You have learned not to distinguish too finely between the two.',
     choices: null,
     effect: (p) => { p.m += 1; p.r += 2; p.setMem('s3_othersGrand', true) },
   },
@@ -398,7 +398,7 @@ export const EVENTS_SONDER_3 = [
     weight: 2,
     when: (G) =>
       !G.mem?.s3_parentInYou && G.age >= 45,
-    text: 'You said something today in the exact cadence of your father or mother. Not consciously — it arrived in the conversation fully formed. The phrase, the intonation, the particular way the point was made. You heard it as it was leaving your mouth and there was a half-second of something: recognition, surprise, a sense of a channel open that you did not know was open. You are becoming someone\'s version of the parent.',
+    text: 'You said something today in the exact cadence of your father or mother. Not consciously — it arrived in the conversation fully formed. The phrase, the intonation, the way the point was made. You heard it as it was leaving your mouth and there was a half-second of something: recognition, surprise, a sense of a channel open that you did not know was open. You are becoming someone\'s version of the parent.',
     choices: null,
     effect: (p) => { p.m += 1; p.r += 2; p.setMem('s3_parentInYou', true) },
   },

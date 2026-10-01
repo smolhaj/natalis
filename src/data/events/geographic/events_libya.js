@@ -30,7 +30,8 @@ export const LIBYA_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 2002 &&
       G.age >= 18 &&
       !G.mem.lbySanctions,
-    text: 'December 1988. Pan Am Flight 103 explodes over Lockerbie, Scotland — 270 dead. Libya is implicated. The UN imposes sanctions in 1992: no flights, no arms, frozen assets. International isolation. The oil revenue continues — oil doesn\'t need airplanes — but the economy contracts and the shelves are thinner and the travel ban means Libyan medical patients can\'t get to specialist care abroad. You are living inside the sanctions that the world put on the country where you happened to be born.',
+    text: 'In 1992 the UN shuts the country\'s skies over Lockerbie. No flights in or out, frozen accounts, and the oil still flowing, because oil does not need aeroplanes. The shelves are thinner. A sick relative cannot fly to a specialist abroad and goes by road to Tunisia instead. You are living inside sanctions the world put on the country you happened to be born in.',
+    context: 'Pan Am Flight 103 was destroyed over Lockerbie in December 1988, killing 270. UN sanctions on Libya ran from 1992 to 2003.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('libyan_sanctions_generation'); p.setMem('lbySanctions', true) },
   },
@@ -44,7 +45,7 @@ export const LIBYA_EVENTS = [
       G.currentYear >= 2003 && G.currentYear <= 2007 &&
       G.age >= 25 &&
       !G.mem.lbyRehab,
-    text: '2003. Gaddafi discloses Libya\'s WMD programme, pays compensation to the Lockerbie families, renounces terrorism. The sanctions are lifted. Tony Blair arrives in Tripoli to shake hands. Western oil companies return. The world that had isolated Libya for a decade decides it was never actually about the principle — it was always negotiable at the right price. You are watching your country be rehabilitated into the international community and you have opinions about what that means.',
+    text: '2003. Gaddafi gives up his weapons programme and pays the Lockerbie families, and the sanctions lift. Tony Blair comes to Tripoli to shake his hand, and the Western oil companies come back. A decade of principle turns out to have had a price. You watch your country welcomed back into the world and have your own opinion of what that means.',
     choices: null,
     effect: (p) => { p.r += 5; p.mo += 500; p.addFlag('libyan_rehabilitation_generation'); p.setMem('lbyRehab', true) },
   },
@@ -58,7 +59,7 @@ export const LIBYA_EVENTS = [
       G.currentYear === 2011 &&
       G.age >= 16 &&
       !G.mem.lbyRevolution,
-    text: 'February 15, 2011. Protests begin in Benghazi — the eastern city that has always been in tension with Tripoli. Within days they are a revolution. Gaddafi responds with violence: mercenaries, snipers, "cleanse them house by house." The UN authorises a no-fly zone on March 17; NATO\'s "no-fly zone" becomes air support for the rebels. Gaddafi is captured in a drainage pipe outside Sirte on October 20 and killed by the crowd. He ruled for forty-two years. The video of his last minutes circulates immediately. The state he built dissolves with him, because his state was him.',
+    text: 'February 2011, and Benghazi rises, and within days it is a revolution, and Gaddafi promises to cleanse the country house by house. The no-fly zone becomes NATO flying for the rebels. In October he is found in a drainage pipe outside Sirte and killed by the crowd, and the video is everywhere within the hour. His state dissolves with him, because his state was him.',
     choices: [
       {
         text: 'You join or support the uprising.',
@@ -99,7 +100,7 @@ export const LIBYA_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 2010 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem.lbyOilState,
-    text: 'Libya has oil and one person decided how the oil was distributed. Under Gaddafi the housing is subsidised, the university is free, the healthcare is free. The deal: you get the material conditions; you do not get politics. You do not form parties. You do not organise. If you do, the Mukhabarat — the intelligence service — finds out through someone you know. The welfare state is real. So is the surveillance that is the price for it.',
+    text: 'One man decides how the oil money is spent. Housing is subsidised, university is free, the hospital is free. The bargain is that you get the material life and not politics: no parties, no organising. If you try, the Mukhabarat hears of it from somebody you know. That is the price of the free university.',
     choices: null,
     effect: (p) => { p.h += 2; p.m -= 6; p.r += 4; p.addFlag('libyan_oil_state_generation'); p.setMem('lbyOilState', true) },
   },

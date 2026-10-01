@@ -17,7 +17,7 @@ export const EVENTS_SONDER_21 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => place.isLiterate(G) && (!G.mem?.s21GovOffice),
-    text: 'The form requires several documents and the documents require a form that refers to the first form. The person at the window has been explaining this for years and explains it without impatience, which is its own kind of endurance. You leave and come back with the correct sequence. This is what bureaucracy is: a system that requires you to understand it before it will process you.',
+    text: 'The form requires several documents and the documents require a form that refers to the first form. The person at the window has been explaining this for years and explains it without impatience. You leave and come back with the correct sequence. This is what bureaucracy is: a system that requires you to understand it before it will process you.',
     choices: null,
     effect: (p) => { p.setMem('s21GovOffice', true) },
   },
@@ -32,7 +32,7 @@ export const EVENTS_SONDER_21 = [
     text: () => pick([
       'The winter light here is low and brief. By four in the afternoon it is gone and the evening starts without ceremony. You have adapted to this. The adaptation is unconscious — the day restructures itself around the shorter window of light the way a schedule restructures around an early meeting.',
       'The angle of the winter light in the late afternoon makes certain surfaces glow briefly before the day ends. You stop in front of one. There is nothing to do with this. You just noticed it.',
-      'Winter light is honest about the time of year in a way summer light isn\'t. Summer can lie about the hour. Winter cannot. It is four o\'clock and the sky is doing what four o\'clock in winter looks like, which is almost dark.',
+      'Winter light is honest about the time of year in a way summer light isn\'t. Summer can lie about the hour. Winter cannot. It is four o\'clock and the sky is doing what four o\'clock in winter looks like: almost dark.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s21WinterLight', true) },
@@ -60,8 +60,8 @@ export const EVENTS_SONDER_21 = [
     weight: 2,
     when: (G) => !G.mem?.s21StrangerCompetent,
     text: (G) => pick(place.railFilter(G, [
-      'The plumber arrives and knows the problem before you finish describing it — nods at a specific point, goes directly to the place that caused it, fixes it in twenty minutes. The expertise is complete and quiet. You pay them and they leave and you think: they know exactly what they are doing, and no one outside their work knows this about them.',
-      'On the train, someone unfolds a map with the specific efficiency of a person who has used many maps. They locate themselves and fold it back in one motion. The confidence is in the hands, not the face. A whole life of navigation is in the fold.',
+      'The plumber arrives and knows the problem before you finish describing it — nods at a point, goes directly to the place that caused it, fixes it in twenty minutes. The expertise is complete and quiet. You pay them and they leave and you think: they know exactly what they are doing, and no one outside their work knows this about them.',
+      'On the train, someone unfolds a map with the efficiency of a person who has used many maps. They locate themselves and fold it back in one motion. The confidence is in the hands, not the face. A whole life of navigation is in the fold.',
       'The market stall vendor counts out your change before you can say anything — already knows the subtraction, has already counted it, hands it to you and is looking at the next customer. The arithmetic is so fast it disappeared. Years of it.',
     ])),
     choices: null,
@@ -73,7 +73,7 @@ export const EVENTS_SONDER_21 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !G.mem?.s21CraftObserved,
-    text: 'You watch someone do the thing they are good at — cut, or weld, or type, or cook, or arrange, or measure — and there is a quality to the watching that is not envy and not appreciation exactly but something between them. The skill is not yours. It is theirs. You are adjacent to it for a few seconds. Then you move on.',
+    text: 'You watch someone do the thing they are good at — cut, or weld, or type, or cook, or arrange, or measure — and there is a quality to the watching that is not envy and not appreciation exactly but something between them. The skill is theirs. You are adjacent to it for a few seconds. Then you move on.',
     choices: null,
     effect: (p) => { p.setMem('s21CraftObserved', true) },
   },
@@ -88,8 +88,8 @@ export const EVENTS_SONDER_21 = [
       (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.parents?.father?.alive === false || G.parents?.mother?.alive === false) &&
       !G.mem?.s21HouseDuringIllness,
     text: () => pick([
-      'The house during a parent\'s illness had a quality. The sound of the television in the sick room. The particular efficiency of the household reorganized around the care. The way everyone lowered their voices in certain rooms without deciding to.',
-      'The house was the house and also became something else for a while — a site of management, of vigil, of the specific domestic work that illness requires. Then it went back to being the house. The transition in both directions was quiet.',
+      'The house during a parent\'s illness had a quality. The sound of the television in the sick room. The efficiency of the household reorganized around the care. The way everyone lowered their voices in certain rooms without deciding to.',
+      'The house was the house and also became something else for a while — a site of management, of vigil, of the domestic work that illness requires. Then it went back to being the house. The transition in both directions was quiet.',
       'You remember the smell of the sick room — the combination of things that made that smell — and the way the rest of the house was organized around trying to be quiet while life continued.',
     ]),
     choices: null,
@@ -134,9 +134,9 @@ export const EVENTS_SONDER_21 = [
     weight: 2,
     when: (G) => place.hasWeekend(G) && (!G.mem?.s21Sunday),
     text: () => pick([
-      'Sunday has a different texture than Saturday. Saturday is the escape from the week. Sunday is the preparation for the next week that arrives at a specific hour — the hour when the week begins to cast its shadow over the rest of the day. You can feel it arriving.',
-      'The Sunday of childhood was a thing with sounds and smells — the food that was made on Sunday, the visit that happened on Sunday, the particular rhythm of a day that had a shape other days didn\'t.',
-      'In the quiet of Sunday afternoon there is something available that isn\'t available the rest of the week. A particular kind of thinking. A kind of rest that isn\'t sleep. You have never found the right word for it.',
+      'Sunday has a different texture than Saturday. Saturday is the escape from the week. Sunday is the preparation for the next week that arrives at an hour — the hour when the week begins to cast its shadow over the rest of the day. You can feel it arriving.',
+      'The Sunday of childhood was a thing with sounds and smells — the food that was made on Sunday, the visit that happened on Sunday, the rhythm of a day that had a shape other days didn\'t.',
+      'In the quiet of Sunday afternoon there is something available that isn\'t available the rest of the week. A kind of thinking. A kind of rest that isn\'t sleep. You have never found the right word for it.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s21Sunday', true) },
@@ -187,7 +187,7 @@ export const EVENTS_SONDER_21 = [
     when: (G) => !G.mem?.s21CalmingThing,
     text: () => pick([
       'There is a thing you do when you need to come back to yourself. Not dramatic — a kind of movement, or task, or route, or ritual. Other people don\'t know this about you and don\'t need to. The thing works. That is the whole of it.',
-      'The particular activity that resets something. You discovered it by accident years ago — found yourself doing it when something was wrong and found the wrongness had changed shape by the time you finished. You do it now when you need it, knowing what it is.',
+      'The activity that resets something. You discovered it by accident years ago — found yourself doing it when something was wrong and found the wrongness had changed shape by the time you finished. You do it now when you need it, knowing what it is.',
       'What settles you is probably not what you would have predicted when you were young. The young version of yourself had a different theory about what helps. The current version has the evidence.',
     ]),
     choices: null,
@@ -240,9 +240,9 @@ export const EVENTS_SONDER_21 = [
       G.age >= 30 &&
       !G.mem?.s21ReturningHome,
     text: () => pick([
-      'Coming home after time away — the specific recognition of your own space. The particular smell, which you can\'t detect when you are always in it, that becomes briefly available when you return from somewhere else. The smell of your own life.',
-      'The return to the house after an absence. Everything is where you left it, which is both a comfort and, very briefly, strange. You left this behind and it continued without you, unchanged, as if it was waiting — which it wasn\'t, but the house seems to say it was.',
-      'The key in the lock at the end of a long day or a long journey, and the sound of the door opening into your particular arrangement of rooms. The sound is familiar to the point of invisibility. Right now it is visible.',
+      'Coming home after time away — the recognition of your own space. The smell, which you can\'t detect when you are always in it, that becomes briefly available when you return from somewhere else. The smell of your own life.',
+      'The return to the house after an absence. Everything is where you left it, a comfort and, very briefly, strange. You left this behind and it continued without you, unchanged, as if it was waiting — which it wasn\'t, but the house seems to say it was.',
+      'The key in the lock at the end of a long day or a long journey, and the sound of the door opening into your arrangement of rooms. The sound is familiar to the point of invisibility. Right now it is visible.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s21ReturningHome', true) },
@@ -274,7 +274,7 @@ export const EVENTS_SONDER_21 = [
     text: () => pick([
       'The animal in the house moves through the same rooms you do, at different speeds, with different purposes. It has no access to your concerns. It has its own. The two inhabitations coexist without needing to explain themselves to each other.',
       'The pet is asleep in the chair and it has been asleep in the chair for an indeterminate amount of time and will continue to be asleep in the chair. This is the animal\'s relationship to time. It is calming to observe from the outside.',
-      'The cat or the dog or the bird has a specific relationship to the hour of the day that is more accurate than yours. The animal knows when feeding time is before you do. The animal knows when you are coming home before you arrive.',
+      'The cat or the dog or the bird has a relationship to the hour of the day that is more accurate than yours. The animal knows when feeding time is before you do. The animal knows when you are coming home before you arrive.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('s21AnimalInHouse', true) },
@@ -291,7 +291,7 @@ export const EVENTS_SONDER_21 = [
       !G.mem?.s21StreetAtNight,
     text: () => pick([
       'The street you walk in the day and the street at two in the morning are the same surface with different people on it. The late-night version has fewer people and they move differently. You know the daytime version. You are briefly in the other one.',
-      'The street at this hour belongs to a different population than the one you\'re in at noon. The shops are closed. The specific lighting is on. The sound is of a city that has most of its activity inside rather than outside.',
+      'The street at this hour belongs to a different population than the one you\'re in at noon. The shops are closed. The lighting is on. The sound is of a city that has most of its activity inside rather than outside.',
       'You walk a familiar street at an unfamiliar hour and it is strange in the way a familiar face is strange in a different context — recognizable and slightly wrong, as if the street has been replaced with its night version.',
     ]),
     choices: null,
@@ -309,7 +309,7 @@ export const EVENTS_SONDER_21 = [
       !G.mem?.s21FaceSleeping,
     text: () => pick([
       'The sleeping face of someone you love. The quality of a face with the performance absent — the expression that isn\'t being managed, the face returning to what it is when it is not doing anything. You don\'t see this often. You see it now.',
-      'Your child or your partner asleep. The fact of their breathing, the particular position, the face that is theirs and is also simplified by sleep into something more purely itself. You observe this for a few seconds and then leave them to it.',
+      'Your child or your partner asleep. The fact of their breathing, the position, the face that is theirs and is also simplified by sleep into something more purely itself. You observe this for a few seconds and then leave them to it.',
       'The face of someone sleeping is a different face than the waking one. Less defended. The architecture of the expressions that the day requires is gone. You are seeing the face without its day on it.',
     ]),
     choices: null,
@@ -344,7 +344,7 @@ export const EVENTS_SONDER_21 = [
     when: (G) =>
       G.children?.length > 0 &&
       !G.mem?.s21HospitalBirth,
-    text: 'The quality of the maternity ward. The sound of it. The particular institutional light. The fact that in every room something is happening that is ordinary and not ordinary simultaneously — the most ordinary biological event and the least ordinary thing that will happen to the people involved. The place is organized around this contradiction and doesn\'t acknowledge it.',
+    text: 'The quality of the maternity ward. The sound of it. The institutional light. The fact that in every room something is happening that is ordinary and not ordinary simultaneously — the most ordinary biological event and the least ordinary thing that will happen to the people involved. The place is organized around this contradiction and doesn\'t acknowledge it.',
     choices: null,
     effect: (p) => { p.setMem('s21HospitalBirth', true) },
   },

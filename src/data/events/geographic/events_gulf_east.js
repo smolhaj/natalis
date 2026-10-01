@@ -50,7 +50,7 @@ export const GULF_EAST_EVENTS = [
       {
         text: 'Understand where the limits are — and where they can be pushed',
         tag: null,
-        outcome: 'The pushing is small and careful. Each small thing is its own kind of record.',
+        outcome: 'The pushing is small and careful. Each small thing goes on the record.',
         effect: (p) => { p.m += 5; p.e += 7; p.addFlag('gulf_female_navigation'); p.addFlag('quiet_resistance'); p.setMem('gulfGenderRulesFemale', true) },
       },
     ],
@@ -92,7 +92,7 @@ export const GULF_EAST_EVENTS = [
       G.character.country.archetype === 'wealthy_gulf' &&
       (G.religion === 'muslim_sunni' || G.religion === 'muslim_shia' || G.religion?.includes('muslim')) &&
       G.age >= 18 && G.age <= 35,
-    text: 'Your family goes to Mecca for Hajj. The proximity — a few hours\' drive for you, a life\'s savings and years of waiting for others — is something you understand intellectually but not fully. The tawaf. Two million people moving in the same direction. The scale of it is not spiritual until suddenly it is, in a way that surprises you even after a lifetime of faith.',
+    text: 'Your family goes to Mecca for Hajj. The proximity — a few hours\' drive for you, a life\'s savings and years of waiting for others — is something you understand intellectually but not fully. The tawaf. Two million people moving in the same direction. The scale of it is not spiritual until suddenly it is, and that surprises you even after a lifetime of faith.',
     choices: [
       {
         text: 'Let it affect you — this is what it is for',
@@ -122,7 +122,7 @@ export const GULF_EAST_EVENTS = [
     text: (G) => {
       const country = G.character.country.name
       if (country === 'Saudi Arabia') {
-        return 'Women are allowed to drive now. The announcement is on every screen. For your mother\'s generation this is seismic. For yours, it is a beginning that is happening decades late, which is different from gratitude, though you also feel something like relief. The changes that follow — cinemas, concerts, the softening of the morality police — are happening fast. What the pace means for what comes after is not yet clear.'
+        return 'Women are allowed to drive now. The announcement is on every screen. For your mother\'s generation this is seismic. For yours, it is a beginning that is happening decades late, and what you feel is not gratitude, though there is something like relief. The changes that follow — cinemas, concerts, the softening of the morality police — are happening fast. What the pace means for what comes after is not yet clear.'
       }
       return 'The reforms are arriving. The pace is set from above and the direction is real even if the destination is uncertain. The generation coming up behind you will have a different version of this country than you inherited.'
     },
@@ -202,13 +202,13 @@ export const GULF_EAST_EVENTS = [
       G.age >= 14 && G.age <= 17,
     text: (G) => {
       const yr = G.currentYear
-      return `The exam determines the university. The university determines everything after it. The hagwon runs until ten PM. You come home and study more. Your mother checks the light under the door at midnight. The other students in your class are doing the same thing. The competition is not between you and them — it is between you and the version of the future the exam controls. The stakes are not exaggerated. You have watched what happens to the people who did not pass.`
+      return `The exam decides the university and the university decides everything after. The hagwon runs until ten at night, and you come home and study more, and your mother checks the light under your door at midnight. Everyone in your class is doing the same. The stakes are not exaggerated. You have watched what happens to the people who did not pass.`
     },
     choices: [
       {
         text: 'Give it everything — this is what the next year is for',
         tag: null,
-        outcome: 'The result is good. The cost to your body and the year is real. You sleep for three days after the exam.',
+        outcome: 'The result is good. It costs your body a year. You sleep for three days after the exam.',
         effect: (p) => { p.e += 12; p.h -= 10; p.m -= 10; p.addFlag('suneung_survivor'); p.setMem('koreaEduPressure', true) },
       },
       {
@@ -257,7 +257,7 @@ export const GULF_EAST_EVENTS = [
       G.currentYear >= 1965 && G.currentYear <= 1985 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem.koreaFactory,
-    text: 'The factory is part of the miracle. South Korea\'s growth rate is 9.2 percent per year. It requires labour, and the labour is you. The shifts are twelve hours. The dormitories hold eight to a room. The Saemaul Undong posters on the wall say diligence, self-help, cooperation. The wages are low enough that the chaebol model requires them to be low. You are building the country that you were told you were building. You are also building the profit margin of someone you will never meet.',
+    text: 'The factory is part of the miracle, and the miracle needs labour, and the labour is you: twelve-hour shifts, eight to a dormitory room, posters on the wall about diligence and self-help. The wages are low because the model needs them low. You are building the country you were told you were building. You are also building the margins of a man you will never meet.',
     choices: [
       {
         text: 'You stay. You send money home and study at night.',
@@ -288,7 +288,8 @@ export const GULF_EAST_EVENTS = [
       G.currentYear === 1980 &&
       G.age >= 15 &&
       !G.mem.koreaGwangju && !G.mem?.krGwangjuFired,
-    text: 'May 18, 1980. Gwangju. After Park Chung-hee\'s assassination, Chun Doo-hwan seizes power by military coup. When students and citizens protest in Gwangju, the paratroopers are sent in. What happens in the following nine days will be suppressed from national discourse for almost a decade. The number of dead is disputed. The military\'s tally is 144. Civil society\'s is higher. For those who are not in Gwangju, the news arrives in fragments and then does not arrive at all.',
+    text: 'May 1980. Park is dead and Chun has taken power, and when the students and the people of Gwangju protest, the paratroopers are sent in. For nine days the city is cut off. Outside it, the news comes in fragments and then stops coming at all, and for most of a decade nobody may say what happened.',
+    context: 'The official death toll of the Gwangju Uprising was 144; later counts put it in the hundreds.',
     choices: [
       {
         text: (G) => G.place?.id === 'kr_gwangju'
@@ -296,7 +297,7 @@ export const GULF_EAST_EVENTS = [
           : 'Believe the people you trust over the broadcast.',
         tag: 'defiant',
         outcome: (G) => G.place?.id === 'kr_gwangju'
-          ? 'You will not talk about it for years because there is no safe context in which to talk about it. The memory acquires the specific quality of things that cannot yet be named.'
+          ? 'You will not talk about it for years because there is no safe context in which to talk about it. The memory acquires the quality of things that cannot yet be named.'
           : 'The official account and the accounts of people you trust do not agree. You file this. You continue to file this for the next decade, until the country is ready to look at it.',
         effect: (p) => {
           const there = p._state?.currentPlace?.id === 'kr_gwangju'
@@ -347,7 +348,7 @@ export const GULF_EAST_EVENTS = [
       G.currentYear >= 1997 && G.currentYear <= 1999 &&
       G.age >= 28 &&
       !G.mem.koreaIMF,
-    text: 'November 1997. The won collapses. The IMF arrives with $58 billion and conditions: mass layoffs, asset sales to foreign investors, labour market "flexibility." The chaebols — Daewoo, Hyundai, Samsung — begin restructuring. Daewoo will cease to exist. Your father\'s generation considered lifetime employment a social contract. The IMF calls the contract inefficient. People donate gold jewellery to help pay the national debt — wedding rings, school medals. The donations are real, and the gesture is real, and the structural adjustment happens anyway.',
+    text: 'November 1997, and the won collapses, and the IMF comes with money and conditions: layoffs, sales to foreign buyers, flexibility. Daewoo will cease to exist. Your father\'s generation thought a job for life was a promise; the IMF calls it inefficient. People give their wedding rings to the national debt, and the gesture is real, and the restructuring happens anyway.',
     choices: [
       {
         text: 'You lose your job in the restructuring.',
@@ -388,7 +389,7 @@ export const GULF_EAST_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2020 &&
       G.age >= 22 &&
       !G.mem.koreaPpalli,
-    text: 'Ppalli-ppalli: hurry, hurry. The phrase is a cultural value. The broadband is the fastest in the world. The delivery arrives in thirty minutes. The social expectation is that everything happens faster than the speed at which anything naturally happens. You have internalized this. You notice it when you are somewhere else — the slowness of other cities, the way people wait — and what you feel is not quite impatience. It is the specific disorientation of a pace that is no longer yours.',
+    text: 'Ppalli-ppalli: hurry, hurry. The phrase is a cultural value. The broadband is the fastest in the world. The delivery arrives in thirty minutes. The social expectation is that everything happens faster than the speed at which anything naturally happens. You have internalized this. You notice it when you are somewhere else — the slowness of other cities, the way people wait — and the pace you feel the lack of is no longer yours.',
     choices: null,
     effect: (p) => { p.m -= 3; p.e += 3; p.addFlag('korean_speed_culture'); p.setMem('koreaPpalli', true) },
   },

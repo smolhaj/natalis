@@ -46,7 +46,7 @@ export const JAPAN_WAR_EVENTS = [
     when: (G) => IS_JP(G) && G.currentYear >= 1941 && G.currentYear <= 1945 && G.age >= 6 && G.age <= 13 && !G.mem.jpwSchool,
     text: 'The school has a new name this year. It is a national school now, and you are a little citizen of the empire, which is a phrase the teacher uses without smiling. Every morning: the bow towards the palace, the rescript read out in language nobody your age understands, the standing still. You are good at standing still. It is the thing you are most often praised for.',
     choices: [
-      { text: 'You believe every word of it', tag: 'yielding', outcome: 'You do. There is nothing else on offer and it is put beautifully. You will remember the exact cadence of it for sixty years, which is longer than you will remember most things you chose to learn.', effect: (p) => { p.addFlag('jp_believed_it'); p.m += 3; p.e += 1 } },
+      { text: 'You believe every word of it', tag: 'yielding', outcome: 'You do. There is nothing else on offer and it is put beautifully. You will remember the exact cadence of it for sixty years, longer than most things you chose to learn.', effect: (p) => { p.addFlag('jp_believed_it'); p.m += 3; p.e += 1 } },
       { text: 'You are mostly thinking about lunch', tag: null, outcome: 'You are eight. The rescript is long and the room is cold and somewhere behind your ribs is the question of what is in the lunchbox. This is also a way of being present at a historical moment.', effect: (p) => { p.m += 1 } },
     ],
     effect: (p) => { p.setMem('jpwSchool', true); p.addFlag('jp_kokumin_gakko') },
@@ -82,6 +82,27 @@ export const JAPAN_WAR_EVENTS = [
     effect: (p) => { p.setMem('jpwDec8', true); p.addFlag('jp_dec8'); p.m += 4 },
   },
 
+  {
+    id: 'jpw_akagami',
+    // The red paper. Every Japanese man fit for service was liable from
+    // twenty (nineteen from 1943), and by 1945 more than seven million were
+    // under arms. The module was the home front and nothing else, so a man who
+    // was twenty in 1943 was never called up at all.
+    phase: null,
+    weight: 60,
+    claimsYears: { from: 1939, to: 1944 },
+    when: (G) => IS_JP(G) && G.character.gender === 'male' &&
+      G.currentYear >= 1937 && G.currentYear <= 1945 &&
+      G.age >= (G.currentYear >= 1943 ? 19 : 20) && G.age <= 40 &&
+      !G.inPrison && !G.mem.jpwAkagami,
+    text: (G) => `The red paper comes to the house and your mother receives it with both hands. The neighbourhood association sees you off with paper flags and three banzai at the station, and your sister has stood on the corner for a week asking women to put one stitch each into the belt you wear under your shirt. ${G.currentYear <= 1941 ? 'The ship goes to China.' : 'The ship goes south, and nobody on it is told where.'}`,
+    choices: [
+      { text: 'Write home only what the censor will pass.', tag: 'yielding', outcome: 'The postcards say you are well and the food is good and you are proud to serve. Your mother keeps every one in the box with the flag, and reads them for the thing that is not in them.', effect: (p) => { p.setMem('jpwAkagami', true); p.m -= 12; p.h -= 8; p.addFlag('jp_soldier'); p.addFlag('served_military') } },
+      { text: 'Keep a notebook nobody is allowed to read.', tag: 'defiant', outcome: 'Small writing, in pencil, at the back of a field manual. A man in your company is beaten for less. You keep it in your boot through two islands and a hospital ship.', effect: (p) => { p.setMem('jpwAkagami', true); p.m -= 12; p.h -= 8; p.e += 2; p.addFlag('jp_soldier'); p.addFlag('jp_soldier_notebook'); p.addFlag('served_military') } },
+    ],
+    effect: null,
+  },
+
   // ── 1942–44 · scarcity, metal, and children sent away ──────────────────────
 
   {
@@ -89,7 +110,7 @@ export const JAPAN_WAR_EVENTS = [
     phase: null,
     weight: 7,
     when: (G) => IS_JP(G) && G.currentYear >= 1941 && G.currentYear <= 1946 && G.age >= 5 && !G.mem.jpwRations,
-    text: 'The rice ration goes down, and then the rice in the rice ration goes down. Barley first, which is fine. Then sweet potato, and then the vine of the sweet potato, and then things that are being called food by people who are doing their best. The queue forms before the shop opens because the queue is the only part of it anyone can control.',
+    text: 'The rice ration goes down, and then the rice in the rice ration goes down. Barley first. That is fine. Then sweet potato, and then the vine of the sweet potato, and then things that are being called food by people who are doing their best. The queue forms before the shop opens because the queue is the only part of it anyone can control.',
     choices: null,
     effect: (p) => { p.setMem('jpwRations', true); p.addFlag('jp_hunger_years'); p.h -= 4; p.m -= 4 },
   },
@@ -99,7 +120,7 @@ export const JAPAN_WAR_EVENTS = [
     phase: null,
     weight: 6,
     when: (G) => IS_JP(G) && G.currentYear >= 1942 && G.currentYear <= 1945 && G.age >= 7 && !G.mem.jpwMetal,
-    text: 'They take the temple bell. Four men and a cart and a rope, and the priest standing to one side with his hands folded, and then the empty beam where it hung, which is somehow louder than the bell was. After that the railings go, and the door handles, and one of the two good pots. Your grandmother gives the pot up without being asked and does not speak for the rest of the afternoon.',
+    text: 'They take the temple bell. Four men and a cart and a rope, and the priest standing to one side with his hands folded, and then the empty beam where it hung, somehow louder than the bell was. After that the railings go, and the door handles, and one of the two good pots. Your grandmother gives the pot up without being asked and does not speak for the rest of the afternoon.',
     choices: null,
     effect: (p) => { p.setMem('jpwMetal', true); p.addFlag('jp_metal_collection'); p.m -= 4 },
   },
@@ -109,7 +130,7 @@ export const JAPAN_WAR_EVENTS = [
     phase: null,
     weight: 6,
     when: (G) => IS_JP(G) && G.currentYear >= 1943 && G.currentYear <= 1945 && G.age >= 12 && G.age <= 19 && !G.mem.jpwDoin,
-    text: 'School stops and the factory starts. You are thirteen and you are making a part whose purpose nobody explains, eight hundred of them a day, and after a fortnight your hands know it better than your head does. The girl beside you can do a thousand. She is not stronger than you. She has simply stopped thinking about it, which is a skill, and you are learning it from her.',
+    text: 'School stops and the factory starts. You are thirteen and you are making a part whose purpose nobody explains, eight hundred of them a day, and after a fortnight your hands know it better than your head does. The girl beside you can do a thousand. She is not stronger than you. She has simply stopped thinking about it, and you are learning the skill from her.',
     choices: [
       { text: 'You are proud of the count', tag: 'yielding', outcome: 'You are. It is the first thing you have ever been measurably good at, and the fact that nobody will tell you what it is for does not touch that at all.', effect: (p) => { p.addFlag('jp_factory_child'); p.e += 2; p.m += 2 } },
       { text: 'You work out what it is for', tag: 'defiant', outcome: 'You do, roughly, from the shape of it. You do not say so. You go on making eight hundred a day and now there is a second thing happening inside you while you do it.', effect: (p) => { p.addFlag('jp_factory_child'); p.addFlag('jp_saw_through_it'); p.e += 3; p.m -= 4 } },
@@ -124,7 +145,7 @@ export const JAPAN_WAR_EVENTS = [
     when: (G) => IS_JP(G) && G.currentYear >= 1944 && G.currentYear <= 1945 && G.age >= 6 && G.age <= 13 && CITY(G) && !G.mem.jpwSokai,
     text: 'The third-years and above are being evacuated, by school, to the country. You go with your class and your teacher and one cloth bundle to a temple three prefectures away, and your mother is on the platform and does not cry, because there is an agreed way to do this and she does it. The temple is cold. The local children have a word for you. You are hungry in a way you had not previously known was a separate thing from wanting food.',
     choices: [
-      { text: 'Write home that everything is fine', tag: 'yielding', outcome: 'You write it. The teacher reads the letters before they go, so it is the only thing you could write, but you would have written it anyway, which is the part you think about later.', effect: (p) => { p.addFlag('jp_sokai_child'); p.m -= 6; p.karma += 3 } },
+      { text: 'Write home that everything is fine', tag: 'yielding', outcome: 'You write it. The teacher reads the letters before they go, so it is the only thing you could write, but you would have written it anyway, and later that is what you think about.', effect: (p) => { p.addFlag('jp_sokai_child'); p.m -= 6; p.karma += 3 } },
       { text: 'Steal food from the temple kitchen', tag: 'defiant', outcome: 'You do it twice and are caught the second time and beaten in front of the class, and the boy who told on you is caught himself a week later. Nobody in that room ever mentions any of it again.', effect: (p) => { p.addFlag('jp_sokai_child'); p.addFlag('jp_sokai_hunger'); p.m -= 9; p.h -= 3 } },
     ],
     effect: (p) => { p.setMem('jpwSokai', true) },
@@ -167,7 +188,7 @@ export const JAPAN_WAR_EVENTS = [
     choices: [
       { text: 'Feel relief before anything else', tag: null, outcome: 'You do, and you are ashamed of it within the hour, and forty years later you will meet someone who admits the same thing and you will both be enormously relieved again.', effect: (p) => { p.addFlag('jp_surrender_relief'); p.m -= 4 } },
       { text: 'Feel that everything you were told was a lie', tag: 'defiant', outcome: 'Not all at once. It arrives over about a week, item by item, and what you are left with at the end of that week is not anger so much as a very large empty room.', effect: (p) => { p.addFlag('jp_saw_through_it'); p.m -= 10; p.e += 3 } },
-      { text: 'Feel nothing you can name', tag: null, outcome: 'You go out into the afternoon. The light is the same light. It is the strangest thing about it and the thing you will mention first, every time you are asked, which is not often.', effect: (p) => { p.m -= 6 } },
+      { text: 'Feel nothing you can name', tag: null, outcome: 'You go out into the afternoon. The light is the same light. It is the strangest thing about it and the thing you will mention first, every time you are asked, which is rarely.', effect: (p) => { p.m -= 6 } },
     ],
     effect: (p) => { p.setMem('jpwAug15', true); p.addFlag('jp_heard_the_broadcast') },
   },
@@ -181,7 +202,7 @@ export const JAPAN_WAR_EVENTS = [
     when: (G) => IN_OCC(G) && G.currentYear <= 1947 && G.age >= 5 && !G.mem.jpwGIs,
     text: 'You had been told, specifically and often, what they would do when they came. What they do is drive past very slowly in a jeep, enormous and bored, and throw chewing gum. The gum is the problem. It is impossible to hold both the thing you were told and the gum in your hand at the same time, and you are eleven, and you eat the gum.',
     choices: [
-      { text: 'Take the gum', tag: 'yielding', outcome: 'You take it. Your grandmother sees you take it and says nothing, then or ever, which is its own kind of comment.', effect: (p) => { p.m += 3; p.addFlag('jp_occupation_child') } },
+      { text: 'Take the gum', tag: 'yielding', outcome: 'You take it. Your grandmother sees you take it and says nothing, then or ever.', effect: (p) => { p.m += 3; p.addFlag('jp_occupation_child') } },
       { text: 'Refuse it in front of everyone', tag: 'defiant', outcome: 'You walk past with your chin up and it costs you more than you expected and you think about it, on and off, for decades. You were right about something and you have never been able to say exactly what.', effect: (p) => { p.m -= 3; p.karma += 4; p.addFlag('jp_occupation_child'); p.addFlag('jp_refused_the_gum') } },
     ],
     effect: (p) => { p.setMem('jpwGIs', true) },
@@ -259,7 +280,7 @@ export const JAPAN_WAR_EVENTS = [
     when: (G) => IS_JP(G) && (G.flags.includes('jp_war_home_front') || G.flags.includes('jp_kokumin_gakko')) && G.children.length > 0 && G.age >= 45 && G.currentYear >= 1975 && !G.mem.jpwFtAsked,
     text: 'Your child asks what you did in the war, having got the question from a television programme, and is expecting a short answer. You were nine. You blacked out your own textbook and you made eight hundred of something a day and you were, for about a year, completely happy, and none of that is sayable in the order it happened.',
     choices: [
-      { text: 'Tell it properly, in the order it happened', tag: 'defiant', outcome: 'It takes two hours and you get the happy part in, which is the part you had been most afraid of. Your child is quiet for a long time and then asks a second question, which is better than the first.', effect: (p) => { p.addFlag('jp_told_the_child'); p.m += 5; p.karma += 6 } },
+      { text: 'Tell it properly, in the order it happened', tag: 'defiant', outcome: 'It takes two hours and you get the happy part in, the part you had been most afraid of. Your child is quiet for a long time and then asks a second question, a better one.', effect: (p) => { p.addFlag('jp_told_the_child'); p.m += 5; p.karma += 6 } },
       { text: 'Give the short answer', tag: 'yielding', outcome: 'You say it was hard and there was not much food. It is true. It is also the version that will be all your grandchildren ever have, and you know that while you are saying it.', effect: (p) => { p.addFlag('jp_war_never_told'); p.r += 8; p.m -= 4 } },
     ],
     effect: (p) => { p.setMem('jpwFtAsked', true) },
@@ -270,7 +291,7 @@ export const JAPAN_WAR_EVENTS = [
     phase: null,
     weight: 5,
     when: (G) => IS_JP(G) && G.flags.includes('jp_believed_it') && G.age >= 50 && !G.mem.jpwFtBeliever,
-    text: 'You can still recite it. Sixty years on, the whole rescript, in the cadence it was read in, and the thing nobody warns you about is that it is beautiful — the rhythm of it is genuinely beautiful — and you learned it at eight from a man who was doing his job. You have never decided what to do with that, so you have done nothing, which is also a decision.',
+    text: 'You can still recite it. Sixty years on, the whole rescript, in the cadence it was read in, and the thing nobody warns you about is that it is beautiful — the rhythm of it is genuinely beautiful — and you learned it at eight from a man who was doing his job. You have never decided what to do with that, so you have done nothing.',
     choices: null,
     effect: (p) => { p.setMem('jpwFtBeliever', true); p.r += 5; p.m -= 3 },
   },
@@ -343,7 +364,7 @@ export const JAPAN_WAR_EVENTS = [
     phase: null,
     weight: 5,
     when: (G) => IS_JP(G) && (G.flags.includes('jp_repatriation_years') || G.flags.includes('jp_saw_the_burned_city')) && G.age >= 50 && !G.mem.jpwFtBack,
-    text: 'The man from the end of the street who came back from Siberia in 1949 died this week and the notice gives his age and his surviving family and nothing else, which is correct, and which is also the entire problem. Four years of him are simply not in the world any more. You went to the funeral. You were one of about nine people who knew there was a gap.',
+    text: 'The man from the end of the street who came back from Siberia in 1949 died this week and the notice gives his age and his surviving family and nothing else. That is correct, and it is also the whole problem. Four years of him are simply not in the world any more. You went to the funeral. You were one of about nine people who knew there was a gap.',
     choices: null,
     effect: (p) => { p.setMem('jpwFtBack', true); p.m -= 5; p.karma += 3 },
   },
@@ -364,7 +385,7 @@ export const JAPAN_WAR_EVENTS = [
     weight: 5,
     when: (G) => IS_JP(G) && (G.flags.includes('jp_gave_testimony') || G.flags.includes('jp_told_the_child') || G.flags.includes('jp_war_never_told')) && G.age >= 65 && !G.mem.jpwFtTold,
     text: (G) => G.flags.includes('jp_war_never_told')
-      ? 'Your grandchild has a school project about the war and has gone to the library for it, because that is where the information is. You could have been the information. You had a specific reason at the time and you can no longer reconstruct it.'
+      ? 'Your grandchild has a school project about the war and has gone to the library for it, because that is where the information is. You could have been the information. You had a reason at the time and you can no longer reconstruct it.'
       : 'Your grandchild has a school project about the war and comes to you, because somebody in the family told them you would talk about it. You do. It takes an afternoon. Afterwards they read their notes back to you and two of the details are wrong, and you correct them, and that small exchange is the whole thing working.',
     choices: null,
     effect: (p) => { p.setMem('jpwFtTold', true); p.m += 3 },
@@ -391,5 +412,25 @@ export const JAPAN_WAR_EVENTS = [
     text: 'You have become, without planning it, the person who stands up at the back. The ward office knows you. A local reporter has your number. Your children find it faintly embarrassing and entirely characteristic, and neither of them has worked out that it started in a factory in 1944 with a part you could not name, because you have never told them and it would take an afternoon.',
     choices: null,
     effect: (p) => { p.setMem('jpwFtSpeaking', true); p.karma += 5; p.m += 4 },
+  },
+
+  {
+    id: 'jpw_ft_demobilised',
+    phase: null,
+    weight: 300,
+    when: (G) => IS_JP(G) && G.flags.includes('jp_soldier') && G.currentYear >= 1945 && G.currentYear <= 1947 && !G.mem.jpwFtDemob,
+    text: 'You come home in a uniform with the insignia cut off. At the station nobody waves anything. A woman on the platform looks at you the way you would look at a dog that had been somewhere it should not have been, and then a boy runs up and asks if you have any cigarettes. The house is standing, or it is not, and either way you sit down in what is there and for a long time say nothing at all.',
+    choices: null,
+    effect: (p) => { p.setMem('jpwFtDemob', true); p.m -= 8; p.addFlag('jp_repatriation_years') },
+  },
+
+  {
+    id: 'jpw_ft_senyukai',
+    phase: null,
+    weight: 12,
+    when: (G) => IS_JP(G) && G.flags.includes('jp_soldier') && G.currentYear >= 1970 && G.age >= 50 && !G.mem.jpwFtSenyukai,
+    text: (G) => `The comrades' association meets at a hot-spring inn every autumn, and every autumn there are fewer chairs. Somebody reads out the names of the year's dead. After the second bottle the talk goes to the islands, and stops, and goes somewhere else.${G.flags.includes('jp_soldier_notebook') ? ' Your notebook is in a drawer at home. You have never shown it to any of them.' : ''}`,
+    choices: null,
+    effect: (p) => { p.setMem('jpwFtSenyukai', true); p.m -= 3; p.r += 4 },
   },
 ]

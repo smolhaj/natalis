@@ -76,7 +76,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.age >= 38 &&
       G.age < 55 &&
       !G.mem?.ft30AidsMid,
-    text: 'You are alive and your friends from those years are mostly not. The arithmetic has been part of your structure for so long you don\'t notice it until someone younger asks how many people you knew who died. The number you say out loud surprises them. It doesn\'t surprise you. The survival is not a comfort. It is a condition.',
+    text: 'You are alive and your friends from those years are mostly not. The arithmetic has been part of your structure for so long you don\'t notice it until someone younger asks how many people you knew who died. The number you say out loud surprises them. It doesn\'t surprise you. The survival is a condition.',
     choices: null,
     effect: (p) => { p.r += 8; p.m -= 3; p.e += 3; p.karma += 4; p.setMem('ft30AidsMid', true) },
   },
@@ -150,7 +150,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('great_migration_generation') &&
       G.age >= 35 &&
       !G.mem?.ft30GrtMigInh,
-    text: 'Your people moved north for specific reasons — the violence, the crop prices, the calculation of survival in a particular county in a particular decade. You grew up in the city they moved to. The migration is the story your family tells about itself. You are the after. You live where they arrived, and you do not entirely understand the gravity of what they did, which is partly because they made the afterwards ordinary enough that it was possible not to.',
+    text: 'Your people moved north for specific reasons — the violence, the crop prices, the calculation of survival in a county in a decade. You grew up in the city they moved to. The migration is the story your family tells about itself. You are the after. You live where they arrived, and you do not entirely understand the gravity of what they did, which is partly because they made the afterwards ordinary enough that it was possible not to.',
     choices: null,
     effect: (p) => { p.e += 4; p.m += 3; p.karma += 3; p.setMem('ft30GrtMigInh', true) },
   },
@@ -256,7 +256,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 35 &&
       !G.mem?.ft30CommPol,
-    text: 'You grew up in a country that no longer exists. The Poland you learned to read and write in, that gave you your habits of mind and your specific mistrust of certain kinds of authority — that country ended in 1989 and what replaced it is also called Poland. The children born after 1989 know the previous Poland from their parents\' stories. You know it from having lived in it. The knowledge is not transferable.',
+    text: 'You grew up in a country that no longer exists. The Poland you learned to read and write in, that gave you your habits of mind and your mistrust of certain kinds of authority — that country ended in 1989 and what replaced it is also called Poland. The children born after 1989 know the previous Poland from their parents\' stories. You know it from having lived in it. The knowledge is not transferable.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 4; p.setMem('ft30CommPol', true) },
   },
@@ -271,7 +271,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('1989_poland_generation') &&
       G.age >= 50 &&
       !G.mem?.ft301989Pol,
-    text: 'The roundtable in April, the election in June, the first non-communist prime minister in August: 1989 moved fast. You remember the speed — the sense that the arrangement everyone had accepted as permanent was dissolving in real time. Thirty years later, the question of what was gained and what was lost has become a political disagreement. Your own accounting is more specific. The freedom was real. The cost of the transition was also real. The two facts do not cancel each other.',
+    text: 'The roundtable in April, the election in June, the first non-communist prime minister in August: 1989 moved fast. You remember the speed — the sense that the arrangement everyone had accepted as permanent was dissolving in real time. Thirty years later, the question of what was gained and what was lost has become a political disagreement. Your own accounting is more specific. The cost of the transition was also real. The two facts do not cancel each other.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 5; p.setMem('ft301989Pol', true) },
   },
@@ -301,7 +301,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('italian_emigrant') &&
       G.age >= 35 &&
       !G.mem?.ft30ItalEmi,
-    text: 'The question of return has never fully gone away. Italy from a distance is a specific construction — the food, the family, the light you remember, which is also the light that had no job in it for you. When you visit, people ask when you\'re coming back. The answer is complicated by what you have built where you are: the career, the life, the person you\'ve become who is legible here and would have to be translated there.',
+    text: 'The question of return has never fully gone away. Italy from a distance is a construction — the food, the family, the light you remember, which is also the light that had no job in it for you. When you visit, people ask when you\'re coming back. The answer is complicated by what you have built where you are: the career, the life, the person you\'ve become who is legible here and would have to be translated there.',
     choices: [
       {
         text: 'Start planning a real return.',
@@ -328,7 +328,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('southern_migrant_italy') &&
       G.age >= 35 &&
       !G.mem?.ft30SouthItaly,
-    text: 'They put up signs: terroni not wanted. The north had a specific word for you, derived from terra, soil, pointing at what kind of person comes from the land. You worked in the factory or the construction or the kitchen. The word attached itself to your accent, your name, your village. Your children grew up without the accent. They cannot always tell which direction the slur comes from anymore. You can.',
+    text: 'They put up signs: terroni not wanted. The north had a word for you, derived from terra, soil, pointing at what kind of person comes from the land. You worked in the factory or the construction or the kitchen. The word attached itself to your accent, your name, your village. Your children grew up without the accent. They cannot always tell which direction the slur comes from anymore. You can.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 3; p.m -= 2; p.setMem('ft30SouthItaly', true) },
   },
@@ -373,7 +373,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('war_on_drugs_era') &&
       G.age >= 50 &&
       !G.mem?.ft30WarDrugLt,
-    text: 'The neighbourhood you grew up in lost a specific generation of men to it — to the drugs, to the selling of the drugs, to the policing of the selling. The policy was announced from Washington and implemented on your block with handcuffs. You watched it. Some of the men taken out of the neighbourhood in the 1980s and 1990s are still inside. Some came back changed in ways that are not recoverable. The policy has been so thoroughly criticised that everyone agrees it failed. The men are still inside.',
+    text: 'The neighbourhood you grew up in lost a generation of men to it — to the drugs, to the selling of the drugs, to the policing of the selling. The policy was announced from Washington and implemented on your block with handcuffs. You watched it. Some of the men taken out of the neighbourhood in the 1980s and 1990s are still inside. Some came back changed in ways that are not recoverable. The policy has been so thoroughly criticised that everyone agrees it failed. The men are still inside.',
     choices: null,
     effect: (p) => { p.r += 9; p.m -= 5; p.e += 3; p.setMem('ft30WarDrugLt', true) },
   },
@@ -403,7 +403,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('pandemic_long_covid') &&
       G.age >= 35 &&
       !G.mem?.ft30LCovid,
-    text: 'Three years since you got sick. The fatigue is structural now — you have reorganised your life around it. The job has been adjusted. The things you commit to have been filtered through what the body can sustain after a bad week. Your doctor is carefully non-committal about the timeline. The research is ongoing. The research has been ongoing for three years. You manage it. Management is not the same as resolution.',
+    text: 'Three years since you got sick, and the tiredness is structural now; you have built your life around it. The job has been adjusted. Everything you agree to is filtered through what the body can stand after a bad week. Your doctor is careful about timelines, and the research is ongoing, as it has been for three years. You manage it. Managing is not the same as getting better.',
     choices: null,
     effect: (p) => { p.m -= 5; p.h -= 3; p.e += 3; p.r += 5; p.setMem('ft30LCovid', true) },
   },
@@ -433,7 +433,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('northern_journey_taken') &&
       G.age >= 30 &&
       !G.mem?.ft30NorthJrny,
-    text: 'You crossed multiple borders on foot. The route has a name — la bestia, in some stretches, after the freight train rooftops where people ride because there is no other way forward. You are here. You built something. The people who were with you on the route: some arrived, some turned back, and some you don\'t know about. When you see news about the next group making the journey, you know specifically what that journey means because you know the specific distances.',
+    text: 'You crossed multiple borders on foot. The route has a name — la bestia, in some stretches, after the freight train rooftops where people ride because there is no other way forward. You are here. You built something. The people who were with you on the route: some arrived, some turned back, and some you don\'t know about. When you see news about the next group making the journey, you know specifically what that journey means because you know the distances.',
     choices: null,
     effect: (p) => { p.r += 7; p.m += 4; p.karma += 4; p.e += 2; p.setMem('ft30NorthJrny', true) },
   },
@@ -448,7 +448,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('nga_delta_community') &&
       G.age >= 50 &&
       !G.mem?.ft30NgaDelta,
-    text: 'The oil has been coming out of the ground for sixty years. The creek water has been contaminated for forty. The gas flares have been burning since before you were born. The clean-up reports come and go. The companies have paid settlements and continued. The fish you ate as a child — your children don\'t eat those fish. The fish are still there, technically. The Niger Delta Action Report; the UN Environmental Programme assessment; the Ogoni cleanup that began in 2016 and is still ongoing. You know the documents. The documents do not describe your specific creek.',
+    text: 'The oil has been coming out of the ground for sixty years and the gas flares have burned since before you were born. The settlements are paid and the companies carry on. The fish you ate as a child, your children don\'t eat. The clean-up that began in 2016 is still beginning. You know the reports by name. None of them describes your creek.',
     choices: null,
     effect: (p) => { p.r += 9; p.m -= 5; p.e += 3; p.setMem('ft30NgaDelta', true) },
   },
@@ -478,7 +478,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('experienced_loss') &&
       G.age >= 38 &&
       !G.mem?.ft30ExpLoss,
-    text: 'A decade on from the loss that reshaped things. Not the ordinary grief — the one that reorganised the topology of the life. You have rebuilt around it, which is what you do. The rebuilding is real. The space where it was is also real. You have learned to carry both without having resolved the question of which is more present.',
+    text: 'A decade on from the loss that reshaped things. Not the ordinary grief — the one that reorganised the topology of the life. You have rebuilt around it, which is what you do. The space where it was is also real. You have learned to carry both without having resolved the question of which is more present.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.m += 2; p.setMem('ft30ExpLoss', true) },
   },
@@ -493,7 +493,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('nomadic_heritage') &&
       G.age >= 50 &&
       !G.mem?.ft30NomHer,
-    text: 'You grew up in a world organised around movement — the seasonal route, the pasture change, the knowledge of terrain that passes between generations because the terrain is the livelihood. The world that is organised around addresses and borders and property titles is the world you live in now. You know how to live in it. You also know the knowledge your grandparents carried — the specific skill of reading landscape — which has no application in this world and no one to pass it to.',
+    text: 'You grew up in a world organised around movement — the seasonal route, the pasture change, the knowledge of terrain that passes between generations because the terrain is the livelihood. The world that is organised around addresses and borders and property titles is the world you live in now. You know how to live in it. You also know the knowledge your grandparents carried — the skill of reading landscape — which has no application in this world and no one to pass it to.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 5; p.setMem('ft30NomHer', true) },
   },
@@ -523,7 +523,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('nga_boko_haram_generation') &&
       G.age >= 35 &&
       !G.mem?.ft30NgaBH,
-    text: 'The insurgency in the northeast has been running for fifteen years. The Lake Chad basin, the Chibok kidnappings, the cycle of military offensives and regroupings and splinter factions. You grew up in the northeast. You know the specific geography of what was taken — the town markets that closed, the schools that were targeted, the displacement camps. The international coverage flares up and dies down. The situation does not flare and die — it is continuous.',
+    text: 'The insurgency in the northeast has been running for fifteen years. The Lake Chad basin, the Chibok kidnappings, the cycle of military offensives and regroupings and splinter factions. You grew up in the northeast. You know the geography of what was taken — the town markets that closed, the schools that were targeted, the displacement camps. The international coverage flares up and dies down. The situation does not flare and die — it is continuous.',
     choices: null,
     effect: (p) => { p.r += 8; p.m -= 4; p.e += 3; p.setMem('ft30NgaBH', true) },
   },
@@ -553,7 +553,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('referendum_night_generation') &&
       G.age >= 50 &&
       !G.mem?.ft30RefNight,
-    text: '50.58 percent to 49.42 percent. The night of October 30, 1995, and the morning after it. You have been living in the country that almost wasn\'t since. The question — what Quebec is, what Canada is, what the relationship between them will be — has never been answered. It has been managed. The management has its own texture: the sponsorship scandal, the Clarity Act, the periodic resurgences of the separatist question. You watched the whole sequence.',
+    text: '50.58 percent to 49.42 percent. The night of October 30, 1995, and the morning after it. You have been living in the country that almost wasn\'t since. The question — what Quebec is, what Canada is, what the relationship between them will be — has never been answered. It has been managed. The management has been a story of its own: the sponsorship scandal, the Clarity Act, the periodic resurgences of the separatist question. You watched the whole sequence.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 4; p.setMem('ft30RefNight', true) },
   },
@@ -569,7 +569,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.currentYear >= 2005 &&
       G.age >= 55 &&
       !G.mem?.ft30PopeVisit,
-    text: 'There were a million people in Victory Square in Warsaw on that Saturday. You were one of them. He said: do not be afraid. He died in April 2005. The crowds in St. Peter\'s Square held signs that said santo subito — sainthood immediately. You watched it from wherever you were and you thought about the man in the white coat on that first visit, in June 1979, and what it had meant in that specific year, in that specific country, with those specific men running it.',
+    text: 'There were a million people in Victory Square in Warsaw on that Saturday. You were one of them. He said: do not be afraid. He died in April 2005. The crowds in St. Peter\'s Square held signs that said santo subito — sainthood immediately. You watched it from wherever you were and you thought about the man in the white coat on that first visit, in June 1979, and what it had meant in that year, in that country, with those men running it.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.m += 2; p.setMem('ft30PopeVisit', true) },
   },
@@ -584,7 +584,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('tuareg_malian') &&
       G.age >= 50 &&
       !G.mem?.ft30TuaregMali,
-    text: 'The 2012 uprising was the third. The first was in 1963. Then 1990. Then 2012. The pattern is the pattern of a people whose political claims have never been resolved — only suppressed and then re-expressed. The MNLA declared Azawad in April 2012. The Islamists displaced them by June. The French intervened in January 2013. The resolution that was offered, and the resolution that was withheld, followed a logic you have been living inside your entire life.',
+    text: 'The 2012 rising was the third: 1963, then 1990, then 2012, the pattern of a people whose claims are never settled, only put down and raised again. The MNLA declared Azawad in April, the Islamists pushed them out by June, and the French came in January. What was offered and what was withheld followed a logic you have lived inside all your life.',
     choices: null,
     effect: (p) => { p.r += 8; p.e += 5; p.setMem('ft30TuaregMali', true) },
   },
@@ -599,7 +599,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('october_crisis_generation') &&
       G.age >= 55 &&
       !G.mem?.ft30OctCrisis,
-    text: 'The War Measures Act, October 1970. Trudeau on television saying "just watch me." Five hundred arrested. No charges for most. The FLQ had killed Pierre Laporte. The army was in the streets of Montreal. You remember what your parents said about it. You remember what the people around you said about it. The division between those who said the government went too far and those who said it had no choice has never fully resolved. It became the template for a certain kind of Canadian political argument.',
+    text: 'October 1970, and Trudeau on television saying "just watch me," and soldiers in the streets of Montreal, and hundreds arrested, most of them never charged. You remember what your parents said about it, and what the neighbours said. The argument between too far and no choice never settled. It became the shape of a certain kind of Canadian argument.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 4; p.setMem('ft30OctCrisis', true) },
   },
@@ -644,7 +644,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('berlusconi_generation') &&
       G.age >= 55 &&
       !G.mem?.ft30Berlusc,
-    text: 'Three times prime minister. Twenty years of Italian politics defined by one man\'s legal problems, his media empire, his parties at Arcore. The Italy he built — or reflected, depending on whom you ask — was a specific Italy: televised, clannish, spectacularly tolerant of the gap between law and conduct. He died in 2023. The obituaries disagreed about what he meant. You have your own accounting, made from living through it.',
+    text: 'Three times prime minister. Twenty years of Italian politics defined by one man\'s legal problems, his media empire, his parties at Arcore. The Italy he built — or reflected, depending on whom you ask — was an Italy: televised, clannish, spectacularly tolerant of the gap between law and conduct. He died in 2023. The obituaries disagreed about what he meant. You have your own accounting, made from living through it.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.setMem('ft30Berlusc', true) },
   },
@@ -659,7 +659,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('reunification_generation') &&
       G.age >= 50 &&
       !G.mem?.ft30ReunGerm,
-    text: 'November 9, 1989. The wall came down, which meant the wall came down in a specific Berlin on a specific night with specific crowds and specific news anchors trying to say what was happening before they understood what was happening. The thirty years since have not been what either side expected. The east and west grew together more slowly than the optimism of 1990 suggested. The Ostalgie, the wage gap, the structural differences that outlasted the wall itself: you have watched all of it.',
+    text: 'November 9, 1989. The wall came down, which meant the wall came down in a Berlin on a night with specific crowds and specific news anchors trying to say what was happening before they understood what was happening. The thirty years since have not been what either side expected. The east and west grew together more slowly than the optimism of 1990 suggested. The Ostalgie, the wage gap, the structural differences that outlasted the wall itself: you have watched all of it.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 5; p.setMem('ft30ReunGerm', true) },
   },
@@ -690,7 +690,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('id_papua_identity') &&
       G.age >= 45 &&
       !G.mem?.ft30PapuaLate,
-    text: 'The Melanesian face in an Indonesian national context. The resources — gold, copper, LNG — extracted and the royalties that arrived in Jakarta first and the west second and the village never. The Free Papua Movement has been running since 1965. The international press covers it when there is an incident and leaves when the incident ends. The people of the highlands know their land in a way that the land-registration systems in Jakarta do not account for. You know it too.',
+    text: 'The Melanesian face in an Indonesian national context. The resources — gold, copper, LNG — extracted and the royalties that arrived in Jakarta first and the west second and the village never. The Free Papua Movement has been running since 1965. The international press covers it when there is an incident and leaves when the incident ends. The people of the highlands know their land as the land-registration systems in Jakarta do not. You know it too.',
     choices: null,
     effect: (p) => { p.r += 8; p.e += 4; p.karma += 3; p.setMem('ft30PapuaLate', true) },
   },
@@ -735,7 +735,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('id_tsunami_2004_survivor') &&
       G.age >= 30 &&
       !G.mem?.ft30Tsunami04,
-    text: 'December 26, 2004. The water came and then it receded and then the second wave came. 230,000 people across fourteen countries. Banda Aceh was obliterated in minutes. You survived. The rebuilding took years — the literal rebuilding, the houses and the roads, and the other rebuilding, the internal kind that does not have a completion date. The peace agreement between the GAM and the Indonesian government came eight months later. The disaster changed the politics. You were already changed before the politics changed.',
+    text: 'The water came, and went back, and then the second wave came, and Banda Aceh was gone in minutes. You survived. The rebuilding took years, the houses and the roads, and the other rebuilding, which has no completion date. Eight months later the rebels and the government signed a peace. The disaster changed the politics. It had changed you first.',
     choices: null,
     effect: (p) => { p.r += 9; p.m += 3; p.e += 3; p.karma += 4; p.setMem('ft30Tsunami04', true) },
   },
@@ -765,7 +765,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('contra_war_survivor') &&
       G.age >= 45 &&
       !G.mem?.ft30ContraLate,
-    text: 'The Contra war was funded from Washington and fought in your country. The mining of harbours, the attack on oil tanks, the rural villages that were targets because they had organised. The International Court of Justice ruled against the United States in 1986. The United States did not pay. You know the distance between the ruling and the payment in a way that is not abstract. The war ended in 1990. The ideology that funded it was real, and its effects in your country were real, and neither of those facts was fully captured in the peace agreement.',
+    text: 'The Contra war was funded from Washington and fought in your country. The mining of harbours, the attack on oil tanks, the rural villages that were targets because they had organised. The International Court of Justice ruled against the United States in 1986. The United States did not pay. You know the distance between the ruling and the payment, and it is not abstract. The war ended in 1990. The ideology that funded it was real, and its effects in your country were real, and neither of those facts was fully captured in the peace agreement.',
     choices: null,
     effect: (p) => { p.r += 9; p.e += 4; p.m -= 3; p.setMem('ft30ContraLate', true) },
   },
@@ -810,7 +810,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('dhaka_garment_worked') &&
       G.age >= 30 &&
       !G.mem?.ft30DhakaGarm,
-    text: 'The Rana Plaza collapsed on April 24, 2013. 1,134 garment workers killed. The building had visible cracks the day before; workers were sent back in. You were in the industry — before or during or after, you know the texture of the work: the quota, the locked bathroom break, the fire exit that was welded shut. The international brands whose clothes were in the rubble issued statements. The Accord on Fire and Building Safety was signed. The specific women who died had specific names that were not in most of the statements.',
+    text: 'The Rana Plaza collapsed on April 24, 2013. 1,134 garment workers killed. The building had visible cracks the day before; workers were sent back in. You were in the industry — before or during or after, you know the texture of the work: the quota, the locked bathroom break, the fire exit that was welded shut. The international brands whose clothes were in the rubble issued statements. The Accord on Fire and Building Safety was signed. The women who died had specific names that were not in most of the statements.',
     choices: null,
     effect: (p) => { p.r += 9; p.e += 3; p.m -= 3; p.setMem('ft30DhakaGarm', true) },
   },
@@ -825,7 +825,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('nga_sharia_transition') &&
       G.age >= 45 &&
       !G.mem?.ft30NgaSharia,
-    text: 'Twelve northern states adopted sharia criminal law between 1999 and 2000. Zamfara was first. The adoption happened in the specific context of civilian rule returning — sharia was both genuinely demanded and politically performed. The years since have produced the texture of living in a society where the law is one thing and the practice is another, where the moral economy of the community and the formal legal code coexist in ways that are sometimes harmonious and sometimes not. You know what the coexistence looks like from the inside.',
+    text: 'Twelve northern states adopted sharia criminal law between 1999 and 2000. Zamfara was first. The adoption happened in the context of civilian rule returning — sharia was both genuinely demanded and politically performed. The years since have produced the texture of living in a society where the law is one thing and the practice is another, where the moral economy of the community and the formal legal code coexist in ways that are sometimes harmonious and sometimes not. You know what the coexistence looks like from the inside.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.setMem('ft30NgaSharia', true) },
   },
@@ -840,7 +840,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('maasai_conservation_displaced') &&
       G.age >= 45 &&
       !G.mem?.ft30MaasaiCons,
-    text: 'The conservation areas were gazetted for the wildlife. The Maasai had lived in the same land before the gazetting, during the colonial period that produced the gazetting, and after. The relationship between the community and the land and the animals was not a problem that the gazetting was designed to address. The displacement — the removal to make space for tourism infrastructure, for protected wildlife corridors, for the international game-viewing economy — is documented in NGO reports. The reports are accurate in their counts. The specific grass, the specific dry-season route, the specific waterhole: those are not in the reports.',
+    text: 'The conservation areas were gazetted for the wildlife. The Maasai had lived in the same land before the gazetting, during the colonial period that produced the gazetting, and after. The relationship between the community and the land and the animals was not a problem that the gazetting was designed to address. The displacement — the removal to make space for tourism infrastructure, for protected wildlife corridors, for the international game-viewing economy — is documented in NGO reports. The reports are accurate in their counts. The grass, the dry-season route, the waterhole: those are not in the reports.',
     choices: null,
     effect: (p) => { p.r += 8; p.e += 4; p.karma += 3; p.setMem('ft30MaasaiCons', true) },
   },
@@ -981,7 +981,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('geo_testigo_generation') &&
       G.age >= 60 &&
       !G.mem?.ft30GeoTestigo,
-    text: 'You have witnessed the full length of it. April 9, 1989 — the soldiers in the night, the gas, the twenty dead, the shovels. Independence. The civil wars that came immediately after, Abkhazia, South Ossetia, the internally displaced who arrived and then stayed for thirty years. The Rose Revolution in 2003, the hope it carried, the Saakashvili years that produced their own contradictions. The 2008 war, the Russian tanks at Gori. And then the EU protests — the generation in the streets holding European flags, demanding a future that the government was trading away. You have watched all of it. You are one of the people who were there for the whole length of the history.',
+    text: 'You have seen the whole length of it. April 9, 1989, the soldiers in the night, the gas, the shovels. Independence, and the wars straight after it, and the displaced from Abkhazia who came and stayed thirty years. The Rose Revolution and what came after it; the Russian tanks at Gori in 2008. And now a generation in the street with European flags, demanding a future the government is trading away. You were there for all of it.',
     choices: null,
     effect: (p) => { p.r += 8; p.e += 5; p.karma += 3; p.setMem('ft30GeoTestigo', true) },
   },
@@ -1042,7 +1042,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('id_bali_bombing_generation') &&
       G.age >= 28 &&
       !G.mem?.ft30BaliBomb,
-    text: 'October 12, 2002. The Sari Club and Paddy\'s Pub. 202 dead, 88 of them Australian. The bombings came from inside the country, from a network that had been organising in the specific political space that opened after the fall of Suharto — the same space that produced reformasi, that opened civil society, that ended thirty-two years of surveillance. The freedom and the bomb arrived in the same decade. Indonesia\'s reckoning with religious extremism began to look different from then on: more specific, more internal, less abstract.',
+    text: 'October 12, 2002. The Sari Club and Paddy\'s Pub. 202 dead, 88 of them Australian. The bombings came from inside the country, from a network that had been organising in the political space that opened after the fall of Suharto — the same space that produced reformasi, that opened civil society, that ended thirty-two years of surveillance. The freedom and the bomb arrived in the same decade. Indonesia\'s reckoning with religious extremism began to look different from then on: more specific, more internal, less abstract.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.m -= 3; p.setMem('ft30BaliBomb', true) },
   },

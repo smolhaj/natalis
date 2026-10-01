@@ -16,7 +16,7 @@ const LAOS_EVENTS = [
       !G.mem?.laos_uxo,
     text: (G) => {
       const yr = G.currentYear
-      return `The United States dropped more bombs on Laos between 1964 and 1973 than on all of Europe in the Second World War. Thirty percent of them did not explode. They are still in the ground. In your district, the rule is known by every child: do not touch metal in the field. Do not pick up a ball-shaped object. Do not dig where you have not dug before. ${yr <= 1995 ? 'The boy from the village three hours north: last year, in a field his family had planted for twenty years.' : 'The MAG teams come to clear the fields. They mark the safe ground with wooden stakes. You know which ground has stakes and which ground doesn\'t.'} The war ended before you were born. The problem it left has not ended.`
+      return `More bombs fell on Laos between 1964 and 1973 than on all of Europe in the Second World War, and many did not go off, and they are still in the ground. Every child in your district knows the rule: do not touch metal in the field, do not pick up anything shaped like a ball, do not dig where nobody has dug. ${yr <= 1995 ? 'The boy from the village three hours north: last year, in a field his family had planted for twenty years.' : 'The clearance teams mark the safe ground with wooden stakes, and you know which ground has stakes.'} The war ended before you were born. What it left has not.`
     },
     choices: null,
     effect: (p) => { p.m -= 4; p.e += 3; p.addFlag('laos_uxo_generation'); p.setMem('laos_uxo', true); },
@@ -58,7 +58,7 @@ const LAOS_EVENTS = [
       G.character.country.name === 'Laos' &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.laos_party,
-    text: 'The Lao People\'s Revolutionary Party has governed since 1975. It is not the same as North Korea — people live, trade, make small jokes — but certain things are not said in certain company. Criticism of the party leadership is dangerous in a specific way: not always, not visibly enforced, but known. You learn the calibration. You know which friends you speak differently with. You know the formula at the mandatory political meetings: say what is expected, in the expected register, and then go home and say what you actually think to the people you trust.',
+    text: 'The Lao People\'s Revolutionary Party has governed since 1975. It is not the same as North Korea — people live, trade, make small jokes — but certain things are not said in certain company. Criticism of the party leadership is dangerous in a way: not always, not visibly enforced, but known. You learn the calibration. You know which friends you speak differently with. You know the formula at the mandatory political meetings: say what is expected, in the expected register, and then go home and say what you actually think to the people you trust.',
     choices: [
       {
         text: 'You take the party card and work within the structure.',
@@ -84,7 +84,7 @@ const LAOS_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 16 && G.age <= 30 &&
       !G.mem?.laos_mekong,
-    text: 'Thailand is on the other bank of the Mekong. On a clear day you can see the buildings. The ferry takes twenty minutes. Thai products — electronics, medicine, building materials — cost less there and are better. People cross for work, for the hospital, for the market. The border is porous in practice and managed in theory. The Thai baht is more stable than the kip; people keep savings in both. The Mekong is the lifeblood and the commute route and the thing that makes the country feel both bounded and open at the same time.',
+    text: 'Thailand is on the other bank of the Mekong; on a clear day you can see the buildings, and the ferry takes twenty minutes. The electronics, medicine and building materials are cheaper and better there, and people cross for work, for the hospital, for the market. People keep their savings in baht as well as kip. The river is the lifeline and the commute and the thing that makes the country feel bounded and open at once.',
     choices: null,
     effect: (p) => { p.w += 2; p.e += 2; p.addFlag('laos_mekong_generation'); p.setMem('laos_mekong', true); },
   },
@@ -120,7 +120,7 @@ const LAOS_EVENTS = [
       G.currentYear >= 2019 &&
       G.age >= 25 &&
       !G.mem?.laos_dams,
-    text: 'The Mekong has eleven large dams upstream in China and more being built in Laos itself. Laos sells electricity to Thailand and calls itself the "Battery of Southeast Asia." The Xayaburi dam, the Nam Theun 2 dam, the Don Sahong. The fishermen downstream have noticed: the fish are fewer. The river runs lower in the dry season. In 2018 the Xe-Pian Xe-Namnoy auxiliary dam collapsed and killed forty-nine people and displaced thousands. The company was Korean and the contractor was Korean and the investigation was done by the government that approved the dam. The electricity money goes where it goes. The river the fishermen were born on is changing.',
+    text: 'There are dams upstream in China and more being built in Laos itself, which sells its electricity to Thailand and calls itself the battery of Southeast Asia. The fishermen have noticed: fewer fish, a lower river in the dry season. In 2018 a dam collapses in the south and the water takes whole villages. The electricity money goes where it goes. The river the fishermen were born on is changing.',
     choices: null,
     effect: (p) => { p.r += 4; p.e += 3; p.addFlag('laos_dam_generation'); p.setMem('laos_dams', true); },
   },

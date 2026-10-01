@@ -30,7 +30,7 @@ export const LAOS_DEPTH_EVENTS = [
       G.currentYear >= 1978 &&
       G.age >= 28 &&
       !G.flags.has('laos_seminar_camp_kin'),
-    text: 'After 1975 the Pathet Lao sent thousands to "seminars" — samana in Lao, the word for a conference, a meeting, a course of instruction. Former Royal Lao Government officers, civil servants, schoolteachers, monks who had connections to the old order were told to attend a seminar in the north. The seminars were camps in Viengxai, in Phong Saly, in remote provinces. Some people came back in two years. Some in five. Your father attended a seminar. He came back changed in a way that took another five years to understand and then settled as the version of him you knew afterward.',
+    text: 'After 1975 the Pathet Lao sent thousands to "seminars" — samana in Lao, the word for a conference, a meeting, a course of instruction. Former Royal Lao Government officers, civil servants, schoolteachers, monks who had connections to the old order were told to attend a seminar in the north. The seminars were camps in Viengxai, in Phong Saly, in remote provinces. Some people came back in two years. Some in five. Your father attended a seminar. He came back changed, and it took another five years to understand how, and then that was simply who he was.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('laos_seminar_camp_kin') },
   },
@@ -50,7 +50,7 @@ export const LAOS_DEPTH_EVENTS = [
       const destination = yr <= 1990
         ? 'the Soviet Union or Vietnam or Cuba — the countries the new government had agreements with'
         : 'Vietnam or Thailand or, for the well-connected, France'
-      return `The scholarship. Your marks in school were good enough and the recommendation letter came from the right person and you were selected to study in ${destination}. You packed a single bag and spent the first three months not understanding the lectures fully and then understanding them and then understanding them better than your classmates who had grown up there. You learned what your country looked like from outside. The scholarship generation — the ones who went abroad on government scholarships and came back — brought back technical knowledge and, quietly, a specific relationship to comparison.`
+      return `The scholarship. Your marks in school were good enough and the recommendation letter came from the right person and you were selected to study in ${destination}. You packed a single bag and spent the first three months not understanding the lectures fully and then understanding them and then understanding them better than your classmates who had grown up there. You learned what your country looked like from outside. The scholarship generation — the ones who went abroad on government scholarships and came back — brought back technical knowledge and, quietly, a relationship to comparison.`
     },
     choices: null,
     effect: (p) => { p.e += 5; p.m += 2; p.addFlag('laos_scholarship_generation') },
@@ -65,7 +65,7 @@ export const LAOS_DEPTH_EVENTS = [
       G.ruralUrban === 'urban' &&
       G.age >= 18 && G.age <= 35 &&
       !G.flags.has('laos_vientiane_generation'),
-    text: 'Vientiane is the quietest capital city in Southeast Asia. The French colonial buildings on the boulevard along the Mekong. The That Luang stupa visible at the end of the road. The pace of the afternoon that slows further in the heat and does not return to speed until evening. The NGO vehicles and the Chinese construction crews and the monks in orange and the schoolchildren on bicycles occupy the same streets without any of them quite registering the others. The Mekong at sunset: the sandbanks, the boats, the Thai shore in the last light. You have lived in this city long enough to stop seeing it the way visitors see it and begin seeing it as the background of your life, which is the same thing as loving it without noticing.',
+    text: 'Vientiane is the quietest capital city in Southeast Asia. The French colonial buildings on the boulevard along the Mekong. The That Luang stupa visible at the end of the road. The pace of the afternoon that slows further in the heat and does not return to speed until evening. The NGO vehicles and the Chinese construction crews and the monks in orange and the schoolchildren on bicycles occupy the same streets without any of them quite registering the others. The Mekong at sunset: the sandbanks, the boats, the Thai shore in the last light. You have lived in this city long enough to stop seeing it the way visitors see it, and it has become the background of your life, which is loving it without noticing.',
     choices: null,
     effect: (p) => { p.m += 3; p.s += 2; p.addFlag('laos_vientiane_generation') },
   },
@@ -79,7 +79,7 @@ export const LAOS_DEPTH_EVENTS = [
       G.religion === 'buddhist' &&
       G.age >= 12 && G.age <= 17 &&
       !G.flags.has('laos_that_luang_generation'),
-    text: 'The Boun That Luang festival in November: the golden stupa that is the national symbol, that appears on the national seal, that Fa Ngum brought Buddhism through in the fourteenth century. The monks circle the stupa three times at dawn. The political speeches come afterward — the party officials under the flag alongside the Buddhist ceremony. You are old enough to see that the ceremony has two layers: the one that belongs to eight hundred years of religious practice and the one that was added in 1975. The layers do not cancel each other. The monks circle the stupa regardless. The candles go up regardless. This is the specific texture of a country that had a revolution and also had Buddhism before it.',
+    text: 'Boun That Luang in November: the golden stupa on the national seal, the monks circling it three times at dawn. The party speeches come afterwards, under the flag, alongside the ceremony. You are old enough to see two layers, eight hundred years of Buddhism and the one added in 1975. The monks circle the stupa regardless. The candles go up regardless.',
     choices: null,
     effect: (p) => { p.m += 3; p.karma += 2; p.addFlag('laos_that_luang_generation') },
   },
@@ -108,7 +108,7 @@ export const LAOS_DEPTH_EVENTS = [
       IS_LAOTIAN(G) &&
       G.age >= 7 && G.age <= 13 &&
       !G.flags.has('laos_river_generation'),
-    text: 'The Mekong\'s calendar was your calendar: the wet season when the river rose and the low ground flooded and the fish came in great numbers into the shallow water; the dry season when the sandbanks appeared in midstream and you could walk to places that were river in October. The fish traps your father set in the tributary. The pirogue that was kept on the bank and required bailing before it could be used and leaked anyway at speed. The river was the road and the food supply and the boundary and the thing you took for granted the way children take for granted the specific geography that constitutes their world.',
+    text: 'The Mekong\'s calendar was your calendar: the wet season when the river rose and the low ground flooded and the fish came in great numbers into the shallow water; the dry season when the sandbanks appeared in midstream and you could walk to places that were river in October. The fish traps your father set in the tributary. The pirogue that was kept on the bank and required bailing before it could be used and leaked anyway at speed. The river was the road and the food supply and the boundary and the thing you took for granted the way children take for granted the geography that constitutes their world.',
     choices: null,
     effect: (p) => { p.m += 3; p.h += 2; p.addFlag('laos_river_generation') },
   },
@@ -124,7 +124,7 @@ export const LAOS_DEPTH_EVENTS = [
       G.currentYear >= 2009 &&
       G.age >= 25 &&
       !G.flags.has('laos_hmong_return_era'),
-    text: 'In December 2009 the Thai government forcibly repatriated 4,600 Hmong from the Huay Nam Khao camp in Phetchabun province. They had been there for years — some for decades — in conditions that the UN High Commissioner documented and that the Thai government classified as a domestic security matter. They were returned to Laos on buses under UNHCR observation that the UNHCR later acknowledged had been inadequate. Some were absorbed into resettlement villages in the north. Some were resettled elsewhere. The guarantees of safety were given and the ability to verify them was limited. You know the families who came back. You know the specific quality of their silence about where they had been and what had happened.',
+    text: 'In December 2009 Thailand sends four thousand Hmong back from the Huay Nam Khao camp, some of whom had been there for decades, on buses, under an observation the UN later admitted was inadequate. Some go to resettlement villages in the north, some elsewhere. There were guarantees of safety and almost no way to check them. You know families who came back. You know the quality of their silence about where they had been.',
     choices: null,
     effect: (p) => { p.m -= 7; p.r += 6; p.addFlag('laos_hmong_return_era') },
   },

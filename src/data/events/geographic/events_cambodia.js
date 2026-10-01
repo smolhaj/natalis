@@ -65,7 +65,7 @@ export const CAMBODIA_EVENTS = [
     text: (G) => {
       const takenParent = Object.values(G.parents ?? {}).find(p => p.alive) ?? null
       const relation = takenParent?.gender === 'male' ? 'father' : 'mother'
-      return `Your ${relation} is summoned to a meeting. The cadre says it is for "re-education," which is a word that has a specific weight in the way it is said. People who go to re-education meetings do not always come back. Educated people, people who worked for the old government, people who speak French — these are the ones summoned.\n\nYour ${relation} packs a small bag, because the cadre says it may be several days. They do not take anything important, which you understand only later was also a choice — a way of not believing what was happening. You watch them walk up the road with two cadres, one on each side. You do not know yet that this is the last time.`
+      return `Your ${relation} is summoned to a meeting. The cadre says it is for "re-education," which is a word that has a weight in the way it is said. People who go to re-education meetings do not always come back. Educated people, people who worked for the old government, people who speak French — these are the ones summoned.\n\nYour ${relation} packs a small bag, because the cadre says it may be several days. They do not take anything important, which you understand only later was also a choice — a way of not believing what was happening. You watch them walk up the road with two cadres, one on each side. You do not know yet that this is the last time.`
     },
     choices: null,
     effect: (p) => {
@@ -90,7 +90,7 @@ export const CAMBODIA_EVENTS = [
       !G.mem?.camReturn,
     text: (G) => {
       const wasUrban = G.flags.has('khmer_rouge_displaced')
-      if (wasUrban) return 'Phnom Penh is almost empty when you arrive. Four years ago the city had two million people; now it has maybe 50,000, and they are all arriving the same way you are — on foot, carrying what survived. The houses stand open. Their owners fled, or died, or are still in the countryside not yet knowing it is safe to return.\n\nYou walk through streets you remember and find them unchanged in the physical sense — the buildings are still there — and entirely changed in every other sense. You choose a house. It is not yours but there is no owner to object. You sweep the floor. You begin.'
+      if (wasUrban) return 'Phnom Penh is almost empty when you arrive, and everyone in it arrived the way you did: on foot, carrying what survived. The houses stand open; their owners fled, or died, or are still in the countryside not yet knowing it is safe. The streets are unchanged and completely changed. You choose a house that is not yours, because there is no owner to object, and sweep the floor, and begin.'
       return 'You heard Phnom Penh described before but never saw it. Now it is half-empty and people are moving in from everywhere, each claiming a space. The city is being repopulated by people who do not know each other, who survived in different ways, who carry things they are not yet ready to name. The Vietnamese soldiers are still here. You understand they liberated the country and that the situation is complicated.'
     },
     choices: null,
@@ -115,7 +115,7 @@ export const CAMBODIA_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2003 &&
       !G.mem?.camAlongside,
     text: () =>
-      'The man who runs the local authority now served under the Khmer Rouge. Not as a leader — as an ordinary soldier, an ordinary cadre, one of the thousands who operated the apparatus. The amnesty was the price of ending the civil war. There were too many perpetrators to prosecute. Cambodia would have had to empty its institutions to try them all.\n\nYou know what he did, or something close to what he did. He knows you know. You greet each other in the market. Your children go to the same school. The country has made a decision and the decision made the country functional and the cost of that decision is carried in silences like this one, daily, everywhere.',
+      'The man who runs the local authority now was a cadre under the Khmer Rouge, an ordinary one, one of the thousands who worked the apparatus. The amnesty was the price of ending the civil war; there were too many of them to try. You know what he did, or close to it, and he knows you know. You greet each other in the market and your children go to the same school. The cost of the country working is carried in silences like this one, every day, everywhere.',
     choices: [
       {
         text: 'You maintain the necessary civility. Survival required it before; stability requires it now.',
@@ -154,7 +154,7 @@ export const CAMBODIA_EVENTS = [
       return parentHasSurvivedKR && G.currentYear >= 1990 && G.age >= 14 && G.age <= 22
     },
     text: () =>
-      'You ask your mother what happened. You have known, in the way you always knew, that the years before you were born were something she will not look at directly. You are old enough now to ask with the full weight of the question.\n\nShe says a few things. She says she was in the countryside. She says some family members did not come back. She says it was a long time ago. Then she gets up and goes to the kitchen and you understand that this is as much as you will get for now. Possibly for a long time. Possibly ever.\n\nYou sit with the specific loneliness of inheriting something that cannot be named by the person who carries it.',
+      'You ask your mother what happened. She says a few things: she was in the countryside, some of the family did not come back, it was a long time ago. Then she gets up and goes to the kitchen, and you understand that this is as much as you will get for now, possibly ever. It is a lonely thing, to inherit something the person who carries it cannot name.',
     choices: [
       {
         text: 'You research it yourself — libraries, archives, anything you can find.',
@@ -169,7 +169,7 @@ export const CAMBODIA_EVENTS = [
       {
         text: 'You respect the silence. There are reasons it exists.',
         tag: null,
-        outcome: 'The questions do not go away. They change shape. You carry them as a specific kind of not-knowing.',
+        outcome: 'The questions do not go away. They change shape. You carry them as a kind of not-knowing.',
         effect: (p) => {
           p.r += 8; p.m -= 5
           p.addFlag('khmer_rouge_second_gen_silence')
@@ -192,7 +192,7 @@ export const CAMBODIA_EVENTS = [
       !G.mem?.camLandmineFired,
     text: (G) => {
       const yr = G.currentYear ?? 1990
-      if (yr <= 1990) return 'The red markers mean do not walk there. You learn this before you learn to read. Certain fields, certain paths through the forest, certain areas near the roads that were roads during the war. An uncle has one leg below the knee. He doesn\'t talk about how. You are told not to play in the fields beyond the marked path, which you understand is one of those instructions that has a specific reason behind it that adults don\'t explain because they don\'t want to frighten you, which means it is worth being frightened of.'
+      if (yr <= 1990) return 'The red markers mean do not walk there. You learn this before you learn to read. Certain fields, certain paths through the forest, certain areas near the roads that were roads during the war. An uncle has one leg below the knee. He doesn\'t talk about how. You are told not to play in the fields beyond the marked path, which you understand is one of those instructions that has a reason behind it that adults don\'t explain because they don\'t want to frighten you, which means it is worth being frightened of.'
       if (yr <= 2005) return 'The demining organizations are here. There are programs now — people trained specifically to find and remove what was planted in the war and what was planted in the civil war that followed the war. The country has the highest rate of landmine injuries per capita in the world. There are still millions of mines in the ground. The demining will take decades. The red markers are still there in the fields outside town.'
       return 'Cambodia has been demining for forty years and will demonize for forty more. You have grown up knowing certain fields by the markers at their edge. The prosthetics clinic in the provincial town is one of the busiest in the region. This is what postwar means in a place where war left its explosive weight in the ground.'
     },
@@ -246,7 +246,7 @@ export const CAMBODIA_EVENTS = [
       const hasChildren = G.children?.length > 0
       if (isSurvivor && hasChildren) return 'Your children grew up in a country that is not the country you grew up in. They know the history — it is taught in schools now, eventually, incompletely — but they did not carry it in their bodies the way you carry it. You are not sure whether you succeeded or failed in protecting them from that. You are not sure which one would have been better for them. You have not resolved this and you may not.'
       if (isSurvivor) return 'Cambodia has a phrase for this generation — the ones who survived and built and did not speak. You built. What you could not do was speak in the way the younger generation assumes you should — processing, narrative, therapeutic disclosure. The silence was not suppression. The silence was what allowed the building. You understand this now and you are not sure it needs defending.'
-      return 'You were a child during it and became an adult in its aftermath and are now approaching the end of a life shaped by something that happened before you could understand it. The country survived. You survived. The specific cost of the survival is something you have been recounting to yourself for decades and have not finished recounting.'
+      return 'You were a child during it and became an adult in its aftermath and are now approaching the end of a life shaped by something that happened before you could understand it. The country survived. You survived. The cost of the survival is something you have been recounting to yourself for decades and have not finished recounting.'
     },
     choices: null,
     effect: (p) => {

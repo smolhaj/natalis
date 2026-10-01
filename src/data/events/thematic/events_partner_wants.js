@@ -89,7 +89,7 @@ export const PARTNER_WANTS_EVENTS = [
       },
       {
         text: 'Promise to do better.',
-        outcome: 'You make the promise in good faith. Promises made in this conversation have a specific gravity.',
+        outcome: 'You make the promise in good faith. Promises made in this conversation have a gravity.',
         effect: (p) => { p.updatePartnerRel(3) },
       },
       {
@@ -176,7 +176,7 @@ export const PARTNER_WANTS_EVENTS = [
       },
       {
         text: 'Explain it\'s complicated.',
-        outcome: 'They accept this, which is its own kind of answer.',
+        outcome: 'They accept this.',
         effect: (p) => { p.updatePartnerRel(-3); p.setMem('partnerMetFamily', true) },
       },
       {

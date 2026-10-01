@@ -83,7 +83,7 @@ export const RELIGION_ARC_EVENTS = [
     phase: 'childhood',
     weight: 4,
     when: (G) => G.religion === 'jewish' && G.age >= 11 && G.age <= 12 && !G.mem?.bm_prep,
-    text: 'The year before your Bar or Bat Mitzvah you study with a tutor three evenings a week. The Torah portion is in Hebrew and the cantillation marks are their own language. Your tutor is patient. You are less patient. But there are moments — a particular phrase, a vowel held long — when the sound of it is older than anything you can name.',
+    text: 'The year before your Bar or Bat Mitzvah you study with a tutor three evenings a week. The Torah portion is in Hebrew and the cantillation marks are their own language. Your tutor is patient. You are less patient. But there are moments — a phrase, a vowel held long — when the sound of it is older than anything you can name.',
     choices: [
       { text: 'Commit fully — learn every note of the haftarah', tag: null, outcome: 'Your tutor tells your parents you are ready. You are ready. The preparation has given you something that exists independently of the ceremony.', effect: (p) => { p.e += 6; p.m += 5; p.setMem('bm_prep', true) } },
       { text: 'Learn enough to get through it', tag: null, outcome: 'You will remember the day clearly. Whether you will remember the Hebrew is another question.', effect: (p) => { p.e += 2; p.m += 3; p.setMem('bm_prep', true) } },
@@ -216,7 +216,7 @@ export const RELIGION_ARC_EVENTS = [
     weight: 4,
     when: (G) => G.age >= 14 && G.age <= 22 && HAS_FAITH(G) && THEISTIC(G) &&
       !G.flags.includes('left_religion') && !G.flags.includes('lost_faith') && !G.mem?.first_doubt,
-    text: 'The question arrives and it is not rhetorical. If God exists and is good, then why did this particular thing happen — the thing, the one that happened last month, that everyone who knows you knows about. The answer your faith gives you does not fit. You sit with the gap.',
+    text: 'The question arrives and it is not rhetorical. If God exists and is good, then why did this thing happen — the thing, the one that happened last month, that everyone who knows you knows about. The answer your faith gives you does not fit. The gap stays open.',
     choices: [
       { text: 'Stay in the question — doubt is part of it', tag: null, outcome: 'You do not find an answer. You find that living with the question is different from having an answer and not necessarily worse.', effect: (p) => { p.e += 6; p.r += 5; p.addFlag('faith_crisis'); p.setMem('first_doubt', true) } },
       { text: 'Resolve it back toward faith — lean harder into belief', tag: 'devout', outcome: 'You decide the gap is not a disproof. Certainty is not the thing. You stay.', effect: (p) => { p.m += 3; p.addFlag('devout'); p.setMem('first_doubt', true) } },
@@ -229,7 +229,7 @@ export const RELIGION_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.age >= 18 && G.age <= 45 && (G.flags.includes('devout') || G.flags.includes('faith_crisis')) && !G.mem?.tragedy_faith && (G.flags.includes('lost_parent_young') || G.flags.includes('witnessed_disappearance') || G.flags.includes('war_childhood')),
-    text: 'A death that was not supposed to happen. Your theological framework for suffering — the one you were given, the one you have been carrying — does not hold this particular loss. The prayer feels like speaking into a room where no one is home. You do not know what comes after this.',
+    text: 'A death that was not supposed to happen. Your theological framework for suffering — the one you were given, the one you have been carrying — does not hold this loss. The prayer feels like speaking into a room where no one is home. You do not know what comes after this.',
     choices: [
       { text: 'Abandon the faith — you cannot believe in a God who permitted this', tag: null, outcome: 'You stop going. The community is kind but confused. The silence where prayer was is cold at first and then just silence.', effect: (p) => { p.m -= 12; p.e += 5; p.r += 10; p.addFlag('lost_faith'); p.addFlag('faith_crisis'); p.setMem('tragedy_faith', true) } },
       { text: 'Stay inside the tradition and let it hold your grief', tag: 'devout', outcome: 'You do not find an explanation. What you find is people who have been here before, who do not try to explain it, who simply sit with you.', effect: (p) => { p.m -= 4; p.karma += 8; p.setMem('tragedy_faith', true) } },
@@ -241,9 +241,22 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_reading_contradicts_teaching',
     phase: null,
     weight: 3,
-    // "You read something" needs somebody who reads.
-    when: (G) => G.age >= 15 && G.age <= 25 && HAS_FAITH(G) && G.literate && G.mem?.attendedSchool !== false && !G.flags.includes('left_religion') && !G.mem?.reading_contradicts,
-    text: 'You read something — a book on evolutionary biology, a history of religious texts, a comparative religion course — that contradicts what you were taught. Not at the edges but at the foundation. The information is well-sourced. You cannot dismiss it. You have to decide what to do with it.',
+    // "You read something" needs somebody who reads — and a book on how the
+    // scriptures were compiled is not what a labourer with four years of
+    // primary school meets. Literacy was the old gate, and it let through an
+    // unschooled Iranian girl and a Russian labourer; this one asks for
+    // secondary schooling, a university place, or a school still attended.
+    when: (G) => G.age >= 15 && G.age <= 25 && HAS_FAITH(G) && G.literate && G.mem?.attendedSchool === true &&
+      (G.education?.enrolled || ['secondary', 'university', 'graduate'].includes(G.education?.level) ||
+       G.flags.includes('graduated_hs') || G.flags.includes('university_graduate')) &&
+      !G.flags.includes('left_religion') && !G.mem?.reading_contradicts,
+    text: (G) => {
+      const uni = G.education?.enrolled?.type === 'university' || ['university', 'graduate'].includes(G.education?.level) || G.flags.includes('university_graduate')
+      const opener = uni
+        ? 'In a course you took for the credits, a lecturer lays out where the texts you grew up with came from, and when, and who decided which ones stayed.'
+        : 'A book from the school library, about how the scriptures were put together, or about how old the earth is, says something that contradicts what you were taught.'
+      return `${opener} Not at the edges but at the foundation. You read it twice, then put it back where you found it, and it does not go away.`
+    },
     choices: [
       { text: 'Integrate it — faith can survive facts', tag: null, outcome: 'You find a way to hold both. It requires work. The faith that emerges is less certain and more yours.', effect: (p) => { p.e += 8; p.m -= 3; p.r += 4; p.addFlag('faith_crisis'); p.setMem('reading_contradicts', true) } },
       { text: 'Let the contradiction erode the belief', tag: null, outcome: 'The structure comes down slowly, fact by fact. There is no single moment. There is a morning when you realize it is gone.', effect: (p) => { p.e += 10; p.m -= 8; p.addFlag('lost_faith'); p.setMem('reading_contradicts', true) } },
@@ -299,7 +312,7 @@ export const RELIGION_ARC_EVENTS = [
     when: (G) => (G.flags.includes('lost_faith') || G.flags.includes('left_religion')) && G.age >= 18 && G.age <= 35 && !G.mem?.told_family_no_faith,
     text: (G) => {
       if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype)) return 'You tell your family over dinner that you no longer believe. Your parent puts down their fork. They ask if something happened. You say it was gradual. They say they will pray for you. The meal finishes. Something has shifted but the shift is not violent.'
-      return 'You tell your family. What follows is not a meal finishing. It is several weeks of difficult conversations. Some relatives do not speak to you directly after this. Your parent grieves for it in a way that is not about you and entirely about you.'
+      return 'You tell your family. What follows is not a meal finishing. It is several weeks of difficult conversations. Some relatives do not speak to you directly after this. Your parent grieves for it, and it is not about you and entirely about you.'
     },
     choices: [
       { text: 'Hold to it — this is your honest position', tag: null, outcome: 'The relationship survives, rearranged. Some things will not be talked about. You can live with the arrangement.', effect: (p) => { p.m -= 8; p.r += 8; p.setMem('told_family_no_faith', true) } },
@@ -323,7 +336,7 @@ export const RELIGION_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => (G.flags.includes('lost_faith') || G.flags.includes('left_religion')) && G.age >= 20 && G.age <= 40 && !G.mem?.freedom_and_loss,
-    text: 'The freedom is real. The loss is also real. You are no longer required to arrange your life around requirements that felt arbitrary. You are also no longer provided with a framework for what to do when someone you love dies, or for why any of this matters. Both things are true at the same time and neither cancels the other.',
+    text: 'The freedom is real. The loss is also real. You are no longer required to arrange your life around requirements that felt arbitrary. You are also no longer provided with a framework for what to do when someone you love dies, or for why any of this matters.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 8; p.e += 5; p.setMem('freedom_and_loss', true) },
   },

@@ -143,7 +143,7 @@ export const PROJECT_ARC_EVENTS = [
     text: (G) => {
       const type = G.currentProject?.type ?? 'project'
       const desc = {
-        writing: 'You have been writing for most of your adult life. The accumulation is real. What it has given you is not entirely the thing you thought you were getting when you started.',
+        writing: 'You have been writing for most of your adult life. The pages pile up. What it has given you is not entirely the thing you thought you were getting when you started.',
         running: 'You have been running for years. The body has changed; the habit has held. You did not know when you started that it would become this.',
         music: 'You have been playing for most of your adult life. The music has asked things of you and you have given them. That is a relationship that has outlasted many others.',
         art: 'You have been making work for years. The work is what it is. Whether it will outlast you is not the point. That you did it is.',

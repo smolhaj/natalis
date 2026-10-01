@@ -17,7 +17,7 @@ const CUBA_EVENTS = [
       !G.mem?.cub_revolution_childhood,
     text: (G) => {
       const yr = G.currentYear
-      if (yr <= 1963) return 'The literacy campaign sent teenagers into your neighborhood with lanterns and primers. The reading rate goes from sixty percent to ninety-nine in one year, according to the broadcast. You are part of the number. The primer has the face of the revolution on the cover — the palm trees, the specific serif of the slogan — and you learn to read with it the way the generation before you learned to read with the catechism. The state is not God but it is present in the same way.'
+      if (yr <= 1963) return 'The literacy campaign sent teenagers into your neighborhood with lanterns and primers. The reading rate goes from sixty percent to ninety-nine in one year, according to the broadcast. You are part of the number. The primer has the face of the revolution on the cover — the palm trees, the serif of the slogan — and you learn to read with it the way the generation before you learned to read with the catechism. The state is not God but it is present in the same way.'
       return 'You are a Young Pioneer. The red neckerchief must be tied properly before school. You know all the verses about the revolution and you know the faces on the wall and you know that the imperialists are outside and the revolution is what keeps you inside its protection. You believe this the way children believe what is given to them before they have words for belief.'
     },
     choices: null,
@@ -59,7 +59,8 @@ const CUBA_EVENTS = [
       G.currentYear === 1980 &&
       G.age >= 17 && G.age <= 50 &&
       !G.mem?.cub_mariel,
-    text: 'April 1980. Castro announces that anyone who wants to leave can leave from the port of Mariel. Within days 125,000 people are trying to go. He adds prisoners, mental patients, people labeled antisocial. The boats from Miami come and go. He calls the departing ones escoria — scum. Some of the escoria are simply people who want a different life. Some are people who were put on the boats without choosing. You are at the port or you are watching the port from elsewhere.',
+    text: 'April 1980. Castro says anyone who wants to leave can leave from Mariel, and within days tens of thousands are trying. He adds prisoners and patients from the asylums and calls them all escoria, scum. The boats come and go from Miami. You are at the port, or watching it from somewhere else.',
+    context: 'About 125,000 Cubans left in the Mariel boatlift between April and October 1980.',
     choices: [
       {
         text: 'You got on one of the boats.',
@@ -85,7 +86,7 @@ const CUBA_EVENTS = [
       G.religion === 'folk_religion' &&
       G.age >= 13 && G.age <= 22 &&
       !G.mem?.cub_santeria,
-    text: 'The orishas do not appear on the official calendar. The revolution is atheist and Santería is officially backward — a colonial remnant, pre-scientific, not what the new Cuba requires of its citizens. In practice: the altars are in back rooms. The ceremonies happen at night. The babalawo who reads the diloggún does not advertise. You have grown up knowing this division: two registers, two vocabularies, the revolutionary one for public and the Yoruba-inflected one for home. The orishas are Changó, Yemayá, Oshún. The state is the state. Both require offerings.',
+    text: 'The revolution is atheist and Santería is officially backward. In practice the altars are in the back rooms, the ceremonies happen at night, and the babalawo does not advertise. You grew up in two vocabularies, the revolutionary one for outside and the Yoruba one for home. Changó, Yemayá, Oshún. The state is the state. Both require offerings.',
     choices: null,
     effect: (p) => { p.s += 2; p.addFlag('cub_santeria_generation'); p.setMem('cub_santeria', true); },
   },
@@ -125,7 +126,7 @@ const CUBA_EVENTS = [
       {
         text: 'You move carefully to take advantage.',
         tag: 'opener',
-        outcome: 'The paladare, or the phone, or the transaction that is now legal — you enter the space the reform opened. It is small. It is real.',
+        outcome: 'The paladare, or the phone, or the transaction that is now legal — you enter the space the reform opened. It is small.',
         effect: (p) => { p.w += 4; p.m += 3; p.addFlag('cub_raul_opener'); p.setMem('cub_raul_opening', true); },
       },
       {
@@ -146,7 +147,7 @@ const CUBA_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2015 &&
       G.age >= 18 &&
       !G.mem?.cub_obama_thaw,
-    text: 'December 17, 2014. Obama and Raúl Castro give simultaneous televised addresses. The United States and Cuba are restoring diplomatic relations after fifty-three years. The pope mediated. The streets of Havana are quiet with the weight of something large. You watch on a neighbor\'s television and the anchor reads the statement and you sit with what you are feeling, which does not have a single name. The Americans will come. Something will change. You do not know yet whether you should be glad.',
+    text: 'December 17, 2014. Obama and Raúl Castro speak on television at the same hour: after more than half a century, the two countries will have embassies again. Havana\'s streets go quiet with the weight of something large. You watch on a neighbour\'s television. The Americans will come and something will change, and you do not know yet whether to be glad.',
     choices: null,
     effect: (p) => { p.m += 3; p.e += 3; p.addFlag('cub_obama_generation'); p.setMem('cub_obama_thaw', true); },
   },
@@ -165,7 +166,7 @@ const CUBA_EVENTS = [
       {
         text: 'You went outside. You were in the street.',
         tag: 'marched',
-        outcome: 'The hours outside. The arrests that came afterward — sentences of eight and twelve years. The neighbor who is not there now. You were there for the moment. The moment was real.',
+        outcome: 'The hours outside. The arrests that came afterward — sentences of eight and twelve years. The neighbor who is not there now. You were there for the moment.',
         effect: (p) => { p.m -= 5; p.r += 8; p.karma += 6; p.addFlag('cub_july11_marcher'); p.setMem('cub_july11', true); },
       },
       {

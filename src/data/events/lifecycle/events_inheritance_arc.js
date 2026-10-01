@@ -19,7 +19,7 @@ export const INHERITANCE_ARC_EVENTS = [
       G.flags.has('lost_parent') &&
       G.age >= 35 &&
       !G.mem?.inhSorting,
-    text: `The house that was your parent's house needs to be sorted. This is a specific kind of work. You open cupboards and drawers that were not yours to open and find things that were private in the way that everyday things are private — the expired coupons, the collection of rubber bands, the cards and letters filed in an order that made sense to them. You are making decisions about objects that had a relationship to a person who is no longer here to weight them with that relationship. Some things are worth keeping. Most things are not. The worth and the keeping are separate questions.`,
+    text: `The house needs to be sorted. You open drawers that were never yours to open: expired coupons, a ball of rubber bands, letters filed in an order that made sense to one person. Some things are worth keeping. Most are not, and you keep some of those anyway.`,
     choices: [
       {
         text: 'Take your time with it. Rushing would be a different kind of loss.',
@@ -55,7 +55,7 @@ export const INHERITANCE_ARC_EVENTS = [
       G.flags.has('inh_sorting_happened') &&
       G.age >= 35 &&
       !G.mem?.inhObject,
-    text: `There is one object from the house that is yours now. Not the valuable things — those have their own logistics — but the object that is yours in the way that some things become yours without a process. A cup. A specific tool. A piece of furniture that sat in a specific corner of a room that you can still see exactly. The object contains the room. The room contains the person. You take the object home and put it where you put it, which is either in a visible place or in a drawer, and both are correct.`,
+    text: `There is one object from the house that is yours now. Not the valuable things, which have their own paperwork, but the thing that became yours without anyone deciding it. A cup, a tool, the chair from the corner of a room you can still see exactly. You take it home and put it somewhere, on a shelf or in a drawer, and either is right.`,
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -73,12 +73,12 @@ export const INHERITANCE_ARC_EVENTS = [
       G.siblings?.some(s => s.alive) &&
       G.age >= 38 &&
       !G.mem?.inhSiblingEstate,
-    text: `The estate needs to be settled. Between you and your siblings. The estate may be substantial or it may be the house and what's in it and the decision about what to do with the house, which is itself its own conversation. The conversation about money between siblings who have had different financial lives is a specific conversation. There is no version of it that is entirely without the history of who you each are to each other, which is the history of everything that has happened between you since childhood. Most of the time the estate settles. Sometimes it doesn't.`,
+    text: `The estate needs to be settled between you and your siblings. It may be a great deal or it may be the house and what is in it. Either way the conversation brings everything that has happened between you since childhood into the room. Most of the time it settles. Sometimes it does not.`,
     choices: [
       {
         text: 'Handle it practically, without allowing old dynamics to take over.',
         tag: null,
-        outcome: 'The estate settles. The settlement is not entirely without tension. It is complete.',
+        outcome: 'The estate settles. The settlement is complete, if not entirely without tension.',
         effect: (p) => {
           p.m -= 4
           p.r += 2
@@ -111,11 +111,11 @@ export const INHERITANCE_ARC_EVENTS = [
     text: (G) => {
       const wealthTier = G.stats?.wealth ?? 50
       if (wealthTier >= 65) {
-        return `What your parent left: the house, or its value. Some accounts. Objects that have dollar values attached to them. The presence of the money changes the conversation about the death, slightly, in a register that feels wrong. The money is real. The conversation it changes is also real. You navigate both.`
+        return `What your parent left: the house, or its value. Some accounts. Objects that have dollar values attached to them. The presence of the money changes the conversation about the death, slightly, in a register that feels wrong. The conversation it changes is also real. You navigate both.`
       } else if (wealthTier >= 35) {
-        return `What your parent left: not much, in the financial sense. The house, if there was a house, or a share of it. Some things that have no market value and a lot of value. The modest inheritance: you were not expecting wealth, and the absence of wealth is not a disappointment, but the specific amount that arrives — or doesn't arrive — tells you something about how they lived that you didn't fully know while they were living it.`
+        return `What your parent left: not much, in the financial sense. The house, if there was a house, or a share of it. Some things that have no market value and a lot of value. The modest inheritance: you were not expecting wealth, and the absence of wealth is not a disappointment, but the amount that arrives — or doesn't arrive — tells you something about how they lived that you didn't fully know while they were living it.`
       }
-      return `What your parent left: almost nothing, in material terms. A life was lived with what there was and what there was was not much. The objects are the inheritance. You take what can be taken and the rest is the specific texture of a life that did not accumulate assets — not from failure but from the circumstances that existed.`
+      return `What your parent left: almost nothing, in material terms. A life was lived with what there was and what there was was not much. The objects are the inheritance. You take what can be taken and the rest is the texture of a life that did not accumulate assets — not from failure but from the circumstances that existed.`
     },
     choices: null,
     effect: (p) => {
@@ -144,7 +144,7 @@ export const INHERITANCE_ARC_EVENTS = [
       !G.parents.father?.alive &&
       G.age >= 45 &&
       !G.mem?.inhBothGone,
-    text: `Both of your parents are now dead. The phrase has a specific weight that it accumulates slowly rather than arriving at once. There is a generation above you and now there is not. The people who remembered you at the beginning, who carried the specific early information about you, are not here. There is no one left who can answer questions about that period. You are now the oldest version of yourself that exists in anyone's memory. This is the transition that does not have a ceremony. It happens in the background of ordinary life and is understood gradually.`,
+    text: `Both of your parents are dead now. There was a generation above you and now there is not. Nobody is left who can answer a question about the years before you can remember. It happens without a ceremony, and you understand it slowly, in the middle of ordinary days.`,
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -162,7 +162,7 @@ export const INHERITANCE_ARC_EVENTS = [
       G.flags.has('inh_both_parents_gone') &&
       G.age >= 58 &&
       !G.mem?.inhPatterns,
-    text: `What you inherited that has no monetary value and is not an object: a way of holding your shoulders. A sentence structure that is theirs in your mouth. An approach to a specific kind of problem. A fear of a specific kind of situation. A capacity you discovered you had when something required it, and recognized as theirs when it appeared. The inheritance at the level of pattern is not chosen and not refused — it was installed and it operates. You can see some of it from the outside now. You could not always.`,
+    text: `What you inherited that is not money and not an object: a way of holding your shoulders. A sentence that is theirs in your mouth. A fear of one kind of situation, and a steadiness you found when something required it and recognised as theirs. You did not choose any of it. Some of it you can see from the outside now.`,
     choices: null,
     effect: (p) => {
       p.e += 4
@@ -180,7 +180,7 @@ export const INHERITANCE_ARC_EVENTS = [
       G.flags.has('inh_both_parents_gone') &&
       G.age >= 65 &&
       !G.mem?.inhLateReckoning,
-    text: `The accounting of inheritance from the far side of it: what was left in objects, what was left in money (more or less), what was left in patterns that took years to identify, what was left in the specific knowledge of who those people were — which included things that were not visible until the sorting of the house. You are the age now that they were when you were a child forming your first clear memories of them. You have more information about them than you had at any earlier point in your life, and they are not here to ask. The inheritance is complete and it is ongoing.`,
+    text: `The accounting of inheritance from the far side of it: what was left in objects, what was left in money (more or less), what was left in patterns that took years to identify, what was left in the knowledge of who those people were — which included things that were not visible until the sorting of the house. You are the age now that they were when you were a child forming your first clear memories of them. You have more information about them than you had at any earlier point in your life, and they are not here to ask. The inheritance is complete and it is ongoing.`,
     choices: null,
     effect: (p) => {
       p.r += 4

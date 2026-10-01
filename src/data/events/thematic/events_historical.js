@@ -233,7 +233,7 @@ export const HISTORICAL_EVENTS = [
     when: (G) => wasSovietRepublic(G.character.country.name) && G.currentYear >= 1950 && G.currentYear <= 1989 && G.age >= 18 && G.age <= 35 && !G.mem?.party_pressure,
     text: 'Your supervisor tells you that joining the Party would be "beneficial for your career." He says it with a smile that means something else entirely.',
     choices: [
-      { text: 'Join — you need the career advancement', tag: null, outcome: 'The meetings are dull. The ideology is something you perform. The advancement is real.', effect: (p) => { p.m -= 5; p.w += 8; p.addFlag('party_member'); p.setMem('party_pressure', true) } },
+      { text: 'Join — you need the career advancement', tag: null, outcome: 'The meetings are dull. The ideology is something you perform. You are promoted.', effect: (p) => { p.m -= 5; p.w += 8; p.addFlag('party_member'); p.setMem('party_pressure', true) } },
       { text: 'Decline politely', tag: null, outcome: 'The next promotion goes to a colleague. The one after that. You will never be in the inner circle.', effect: (p) => { p.m -= 3; p.e += 5; p.karma += 5; p.setMem('party_pressure', true) } },
     ],
   },
@@ -339,7 +339,7 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_sent_down',
     phase: null,
     weight: 6,
-    when: (G) => G.character.country.name === 'China' && G.currentYear >= 1968 && G.currentYear <= 1978 && G.age >= 16 && G.age <= 25 && !G.mem?.sent_down,
+    when: (G) => G.character.country.name === 'China' && G.currentYear >= 1968 && G.currentYear <= 1978 && G.age >= 16 && G.age <= 25 && G.ruralUrban === 'urban' && !G.mem?.sent_down && !G.mem?.cnSentDownFired,
     text: 'The directive has come: educated youth must go to the countryside for re-education by the peasants. You will be reassigned to a farm in a province you have never heard of. Your family cannot appeal.',
     choices: [
       { text: 'Embrace it — what choice do you have?', tag: null, outcome: 'Years of hard labour and isolation. You learn what your hands can do. You learn what loneliness actually is. You survive.', effect: (p) => { p.m -= 20; p.h -= 8; p.e -= 5; p.setMem('sent_down', true) } },
@@ -390,7 +390,7 @@ export const HISTORICAL_EVENTS = [
     phase: 'young_adult',
     weight: 5,
     when: (G) => G.character.country.name === 'India' && ['dalit', 'adivasi'].includes(G.character.ethnicity) && G.age >= 18 && G.age <= 24 && !G.mem?.reservation_benefit && (G.stats.smarts > 50),
-    text: 'Your marks are high. The reservation system — affirmative action for Scheduled Castes — means you have a place at a university that upper-caste families say is "taken" from their children. They use the word merit in a way that ignores who gave them theirs.',
+    text: 'Your marks are high. The reservation system — affirmative action for Scheduled Castes — means you have a place at a university that upper-caste families say is "taken" from their children. They use the word merit and forget who gave them theirs.',
     choices: [
       { text: 'Accept the place — you earned it', tag: null, outcome: 'University is not welcoming. Some classmates make the reservation status the first thing they say to you. You outperform half of them by second year.', effect: (p) => { p.e += 12; p.m -= 5; p.setMem('reservation_benefit', true) } },
     ],
@@ -439,7 +439,7 @@ export const HISTORICAL_EVENTS = [
       return `School is taught in ${lang} — the coloniser\'s tongue. ${think} The children whose ${lang} is best go furthest. This is the arrangement.`
     },
     choices: [
-      { text: 'Master the colonial language — it\'s the key to everything', tag: null, outcome: 'You become fluent. The doors it opens are real. The thing it does to your sense of self takes longer to name.', effect: (p) => { p.e += 8; p.m -= 3; p.setMem('colonial_school_language', true) } },
+      { text: 'Master the colonial language — it\'s the key to everything', tag: null, outcome: 'You become fluent. It opens doors. The thing it does to your sense of self takes longer to name.', effect: (p) => { p.e += 8; p.m -= 3; p.setMem('colonial_school_language', true) } },
       { text: 'Resist — insist on your own language', tag: 'activist', outcome: 'You are punished. You fall behind. Your mother worries. You learn resistance has costs that fall on others.', effect: (p) => { p.e -= 3; p.karma += 5; p.addFlag('activist'); p.setMem('colonial_school_language', true) } },
     ],
   },
@@ -464,7 +464,7 @@ export const HISTORICAL_EVENTS = [
     phase: null,
     weight: 6,
     when: (G) => G.age >= 20 && G.age <= 35 && G.flags.includes('emigrated') && !G.mem?.remittance_pressure && ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character.country.archetype),
-    text: 'Your family back home is depending on the money you send. A medical emergency. A sibling\'s school fees. A cousin\'s business start-up. The requests are not dishonest — the need is real. But you are saving to rent a proper apartment.',
+    text: 'Your family back home is depending on the money you send. A medical emergency. A sibling\'s school fees. A cousin\'s business start-up. The requests are not dishonest; the need is there. But you are saving to rent a proper apartment.',
     choices: [
       { text: 'Send everything they ask for', tag: null, outcome: 'You delay your own stability by three years. Your family calls you the good one. The weight of that title is considerable.', effect: (p) => { p.mo -= 2000; p.m += 5; p.karma += 5; p.r += 5; p.setMem('remittance_pressure', true) } },
       { text: 'Send what you can afford — explain the rest', tag: null, outcome: 'Some relatives understand. Some do not. You set a boundary that will be tested repeatedly.', effect: (p) => { p.mo -= 800; p.m -= 3; p.setMem('remittance_pressure', true) } },

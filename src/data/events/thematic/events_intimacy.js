@@ -56,7 +56,7 @@ export const INTIMACY_EVENTS = [
       G.age >= 43 && G.age <= 62 &&
       !G.mem?.intLongMarriageShift,
     text: (G) =>
-      `Desire is not what it was at the beginning. It has changed shape — less urgent, more specific, stranger in certain ways. You know ${G.partner?.name ?? 'each other'} with a completeness that is its own kind of intimacy. The body is different. What happens between you is different. You do not know whether to call this diminishment or depth. Perhaps it is both.`,
+      `Desire is not what it was at the beginning. It has changed shape — less urgent, more specific, stranger in certain ways. You know ${G.partner?.name ?? 'each other'} with a completeness that is intimacy too. The body is different. What happens between you is different. You do not know whether to call this diminishment or depth. Perhaps it is both.`,
     choices: null,
     effect: (p) => {
       p.partnerRel(5)
@@ -143,7 +143,7 @@ export const INTIMACY_EVENTS = [
       {
         text: 'Keep trying — you are not done with this',
         tag: null,
-        outcome: 'You decide not to stop hoping for it. This takes a particular kind of courage at this age.',
+        outcome: 'You decide not to stop hoping for it. This takes a kind of courage at this age.',
         effect: (p) => { p.m += 5; p.addFlag('late_love_seeking'); p.setMem('intLateQuestion', true) },
       },
       {
@@ -229,7 +229,7 @@ export const INTIMACY_EVENTS = [
       G.age >= 43 &&
       !G.flags.includes('late_love_found') &&
       !G.mem?.intSoloTexture,
-    text: 'The things people assume you are missing — closeness, the particular warmth of being known — are not entirely absent. They are distributed differently. A friend who has known you for twenty years. The two-hour phone call. The comfort that does not require a shared address. You have assembled something that works. It does not have a name in the language of couplehood. It does not need one.',
+    text: 'The things people assume you are missing — closeness, the warmth of being known — are not entirely absent. They are distributed differently. A friend who has known you for twenty years. The two-hour phone call. The comfort that does not require a shared address. You have assembled something that works. It does not have a name in the language of couplehood. It does not need one.',
     choices: null,
     effect: (p) => {
       p.m += 10

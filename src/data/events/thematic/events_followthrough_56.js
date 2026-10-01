@@ -1,3 +1,4 @@
+import { gendered } from '../_pronouns.js'
 import { hasTech } from '../../technology.js'
 
 // events_followthrough_56.js
@@ -33,7 +34,7 @@ export const FOLLOWTHROUGH_56_EVENTS = [
         : hasTech(where, 'landline', G.currentYear) || hasTech(where, 'mobile_phone', G.currentYear)
           ? 'You speak at Christmas and when somebody is ill, and the call is short because it costs what it costs, and the connection is real and also partial'
           : 'The letters come three or four times a year and are read aloud to whoever is in the house, and the connection is real and also partial'
-      return `${s?.name ?? 'Your sibling'} has been gone long enough now that the absence has become a kind of presence. ${channel} in a way that wasn't true at the beginning. They have a life you cannot imagine completely. You have a life they know in the edited version. The strangeness is that neither of you notices this most of the time. Then occasionally you do.`
+      return gendered(`${s?.name ?? 'Your sibling'} has been gone long enough now that the absence has become a kind of presence. ${channel} as it wasn't at the beginning. They have a life you cannot imagine completely. You have a life they know in the edited version. The strangeness is that neither of you notices this most of the time. Then occasionally you do.`, s)
     },
     choices: [
       {
@@ -73,7 +74,7 @@ export const FOLLOWTHROUGH_56_EVENTS = [
       !G.mem?.ft56SibStayer,
     text: (G) => {
       const s = G.siblings[0]
-      return `${s?.name ?? 'Your sibling'} left. You stayed. At first this was not a position — it was just the shape of what happened. Now, years in, it has accumulated into something. You are the one who knows where the parents' documents are. You are the one who goes to the funerals. You are the one the parents call when something goes wrong, and something goes wrong regularly now. The arrangements that accumulate around an aging family fall to the person who is present. You are present.`
+      return `${s?.name ?? 'Your sibling'} left. You stayed. At first it was not a position, just how things fell out; years in, it has become one. You are the one who knows where the parents' documents are, who goes to the funerals, who the parents call when something goes wrong, and things go wrong regularly now. The work of an ageing family falls to whoever is present. You are present.`
     },
     choices: null,
     effect: (p) => {
@@ -227,7 +228,7 @@ export const FOLLOWTHROUGH_56_EVENTS = [
       !G.mem?.ft56SibLongEst,
     text: (G) => {
       const s = G.siblings[0]
-      return `It has been long enough that the estrangement from ${s?.name ?? 'your sibling'} is not a rupture anymore — it is a fact. You have both built lives in which the other does not appear. You are aware of them the way you are aware of distant weather: you know they exist, you hear occasionally through the network, you register the information without it changing your day. What is left now is a question you have not fully answered: at this age, does it matter to try? Does not trying matter?`
+      return gendered(`It has been long enough that the estrangement from ${s?.name ?? 'your sibling'} is not a rupture anymore — it is a fact. You have both built lives in which the other does not appear. You are aware of them the way you are aware of distant weather: you know they exist, you hear occasionally through the network, you register the information without it changing your day. What is left now is a question you have not fully answered: at this age, does it matter to try? Does not trying matter?`, s)
     },
     choices: [
       {
@@ -267,7 +268,7 @@ export const FOLLOWTHROUGH_56_EVENTS = [
       !G.mem?.ft56SibCaretake,
     text: (G) => {
       const s = G.siblings[0]
-      return `${s?.name ?? 'Your sibling'} is not well in a way that requires managing. Not a crisis — something slower: a health situation that needs checking on, a financial situation that has become precarious, a state of life that the person you grew up alongside should not be in alone. The question of what you do about it arrives without announcement. You had not planned to be in this position. You had not planned not to be.`
+      return `${s?.name ?? 'Your sibling'} is not well, and it needs managing. Not a crisis — something slower: a health situation that needs checking on, a financial situation that has become precarious, a state of life that the person you grew up alongside should not be in alone. The question of what you do about it arrives without announcement. You had not planned to be in this position. You had not planned not to be.`
     },
     choices: [
       {
@@ -329,7 +330,7 @@ export const FOLLOWTHROUGH_56_EVENTS = [
       !G.mem?.ft56SibResemble,
     text: (G) => {
       const s = G.siblings[0]
-      return `At this age you look like ${s?.name ?? 'your sibling'}. Not as you both looked at twenty — as your parent looked at this age, which is to say: you look like each other because you both look like the person who made you. The resemblance is startling the first few times, then settles into something you stop noticing. Sometimes a gesture, a way of holding a cup, a particular turn of phrase, and you catch it again. The family face. Carried forward. Being carried forward.`
+      return `At this age you look like ${s?.name ?? 'your sibling'}. Not as you both looked at twenty — as your parent looked at this age, which is to say: you look like each other because you both look like the person who made you. The resemblance is startling the first few times, then settles into something you stop noticing. Sometimes a gesture, a way of holding a cup, a turn of phrase, and you catch it again. The family face. Carried forward. Being carried forward.`
     },
     choices: null,
     effect: (p) => {

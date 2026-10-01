@@ -103,7 +103,7 @@ export const CLIMATE_EVENTS = [
       G.flags.includes('climate_activist') &&
       G.age >= 35 &&
       !G.mem?.climActivistDecade,
-    text: 'Fifteen years. Some things moved — the legislation, the investment figures, the international agreements. Most things did not move enough, and you knew this while they were moving. You are not the person who gave up and not the person who won. You are the person still in the room, which is its own specific category.',
+    text: 'Fifteen years. Some things moved — the legislation, the investment figures, the international agreements. Most things did not move enough, and you knew this while they were moving. You are not the person who gave up and not the person who won. You are the person still in the room.',
     choices: null,
     effect: (p) => { p.karma += 10; p.m -= 3; p.setMem('climActivistDecade', true); },
   },
@@ -153,7 +153,7 @@ export const CLIMATE_EVENTS = [
       ['subsaharan', 'developing_unstable'].includes(G.character.country.archetype) &&
       G.ruralUrban === 'rural' &&
       !G.mem?.climDroughtSevere,
-    text: 'The well does not refill this year. Not low — empty. Your grandfather says he has not seen this in eighty years, and he is not a man who exaggerates. You dig deeper and find salt water. The cattle are thinning. The land that was your family\'s living is not refusing you in a way that can be fixed with effort.',
+    text: 'The well does not refill this year. Not low — empty. Your grandfather says he has not seen this in eighty years, and he is not a man who exaggerates. You dig deeper and find salt water. The cattle are thinning. The land that was your family\'s living is refusing you, and no amount of effort will fix it.',
     choices: [
       {
         text: 'Stay — this land has survived worse',
@@ -164,7 +164,7 @@ export const CLIMATE_EVENTS = [
       {
         text: 'Leave for the city before the choice is made for you',
         tag: null,
-        outcome: 'You go. The decision is yours to have made, which is not nothing. What you go to is unclear. What you left is clear.',
+        outcome: 'You go. The decision is yours to have made. What you go to is unclear. What you left is clear.',
         effect: (p) => { p.m -= 6; p.addFlag('climate_displaced'); p.addFlag('rural_to_urban'); p.setResidency('climate_displaced'); p.setMem('climDroughtSevere', true); },
       },
     ],
@@ -179,7 +179,7 @@ export const CLIMATE_EVENTS = [
       G.flags.includes('climate_displaced') &&
       G.age >= 25 &&
       !G.mem?.climDisplacedYearLater,
-    text: 'A year into the city. Work of a kind — informal, unreliable, paying less than you need. A room with two or three others. You call home less than you used to, because the news from home is always the same news. The word for what happened to your land does not exist in the language of the city. You use the word drought. It is not wrong. It is not complete.',
+    text: 'A year into the city. Work of a kind — informal, unreliable, paying less than you need. A room with two or three others. You call home less than you used to, because the news from home is always the same news. The word for what happened to your land does not exist in the language of the city. You use the word drought. It is right, as far as it goes.',
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 5; p.setMem('climDisplacedYearLater', true); },
   },
@@ -206,7 +206,7 @@ export const CLIMATE_EVENTS = [
       if (isWealthy) {
         return 'A levy upgrade is being proposed. A council meeting on flood risk management. The engineer presents models. The question is not whether the water will come higher but how much it will cost to keep it out and who pays. The answer, as these things go, is: everyone, unevenly.'
       } else {
-        return 'The lower rooms are unusable for three months this year. The sandbags arrived late, which is their habit. Your grandmother has lived in this house for fifty years and refuses to leave it. You do not argue with her about this, because the argument has no winning side. The water line on the wall is higher than last year\'s mark.'
+        return 'The lower rooms are unusable for three months this year. The sandbags arrived late, as they do. Your grandmother has lived in this house for fifty years and refuses to leave it. You do not argue with her about this, because the argument has no winning side. The water line on the wall is higher than last year\'s mark.'
       }
     },
     choices: null,
@@ -229,14 +229,14 @@ export const CLIMATE_EVENTS = [
       if (isWealthy) {
         return 'Families are arriving from the coast, from the delta regions, from the islands. The phrase climate refugee is technically accurate and legally meaningless — it is not a recognised category under international law. Governments debate what to call them while the camps grow. The people in the camps use the word home for a place they cannot return to.'
       } else {
-        return 'Families are coming from the north — from villages where the land is sand now, which is not a metaphor. They arrive with very little and settle where they can. The city is not designed for this number. Nobody\'s city was designed for this number.'
+        return 'Families are coming from the north — from villages where the land is sand now, literally. They arrive with very little and settle where they can. The city is not designed for this number. Nobody\'s city was designed for this number.'
       }
     },
     choices: [
       {
         text: 'Help — time, money, whatever you have to give',
         tag: null,
-        outcome: 'You give what you can. It is not nothing. It is also not enough, and you know this while you give it.',
+        outcome: 'You give what you can. It is something, and not enough, and you know this while you give it.',
         effect: (p) => { p.karma += 8; p.mo -= 300; p.addFlag('climate_solidarity'); p.setMem('climDisplacementWitness', true); },
       },
       {
@@ -257,7 +257,7 @@ export const CLIMATE_EVENTS = [
       G.flags.includes('climate_solidarity') &&
       G.age >= 40 &&
       !G.mem?.climSolidarityPayoff,
-    text: 'The family you helped is five years settled. The eldest child goes to school here now. You receive a message once a year, at Eid or Christmas or New Year depending on the year and the sender\'s mood. It is a small thing. It persists, which is more than you expected.',
+    text: 'The family you helped is five years settled. The eldest child goes to school here now. You receive a message once a year, at Eid or Christmas or New Year depending on the year and the sender\'s mood. It is a small thing. It persists, more than you expected.',
     choices: null,
     effect: (p) => { p.karma += 6; p.m += 5; p.setMem('climSolidarityPayoff', true); },
   },
@@ -274,7 +274,7 @@ export const CLIMATE_EVENTS = [
       ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype) &&
       G.flags.includes('homeowner') &&
       !G.mem?.climInsuranceCancel,
-    text: 'A letter from the insurance company. They are withdrawing flood coverage from properties in your postcode. The reason for the decision is, the letter says, actuarial. The reason is also visible from your front door. The letter uses the phrase structural reassessment of risk and does not use the phrase we are leaving before the cost of staying exceeds the profit, which is what it means.',
+    text: 'A letter from the insurance company. They are withdrawing flood coverage from properties in your postcode. The reason for the decision is, the letter says, actuarial. The reason is also visible from your front door. The letter uses the phrase structural reassessment of risk and does not use the phrase we are leaving before the cost of staying exceeds the profit, but that is what it means.',
     choices: null,
     effect: (p) => { p.m -= 8; p.w -= 6; p.addFlag('climate_financial_loss'); p.setMem('climInsuranceCancel', true); },
   },
@@ -307,7 +307,7 @@ export const CLIMATE_EVENTS = [
         gulfCountries.includes(country) &&
         !G.mem?.climGulfSummer
     },
-    text: 'Wet-bulb temperature in August. The human body cannot cool itself through sweating when the combination of heat and humidity crosses a threshold, and this August it has crossed it. Outdoor workers are ordered inside. Construction halts for six weeks. The migrant workers who came here on contracts that did not anticipate this specific risk are the ones who cannot afford to leave. Some of them are found in containers.',
+    text: 'Wet-bulb temperature in August. The human body cannot cool itself through sweating when the combination of heat and humidity crosses a threshold, and this August it has crossed it. Outdoor workers are ordered inside. Construction halts for six weeks. The migrant workers who came here on contracts that did not anticipate this risk are the ones who cannot afford to leave. Some of them are found in containers.',
     choices: [
       {
         text: 'Consider leaving — this city was not built for what it is becoming',

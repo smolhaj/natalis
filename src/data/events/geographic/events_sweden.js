@@ -40,7 +40,7 @@ export const SWEDEN_EVENTS = [
       const young = G.age <= 22
       return young
         ? 'The Prime Minister was shot on a street in Stockholm on a Friday night — February 28, 1986 — walking home from a cinema with his wife on Sveavägen. No bodyguard. The gun was never found. The investigation ran for thirty-four years without a conviction. You have grown up with this open wound in the national life, this thing that happened in the country that was supposed to be safe, where prime ministers walked to the cinema without protection because the country was orderly and decent. The shooting restructured what orderly and decent could mean.'
-        : 'Palme was shot on Sveavägen at 23:21 on February 28, 1986. A Swedish prime minister. On a public street. After an ordinary cinema evening. The gun was never recovered. The man who did it was never convicted — not then, not in the decades of investigation that followed. Sweden spent thirty-four years in the specific condition of a country that had been wounded and could not find out how. You know exactly where you were when you heard. Most Swedes do.'
+        : 'Palme was shot on Sveavägen at 23:21 on February 28, 1986, walking home from the cinema with his wife. A Swedish prime minister, on a public street. The gun was never found, and nobody was ever convicted. For thirty-four years Sweden was a country wounded and unable to find out how. You know exactly where you were when you heard. Most Swedes do.'
     },
     choices: null,
     effect: (p) => { p.m -= 15; p.r += 10; p.e += 3; p.addFlag('swe_palme_generation'); p.setMem('swePalme', true) },
@@ -57,7 +57,7 @@ export const SWEDEN_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 1994 &&
       G.age >= 25 &&
       !G.mem?.sweCrisis92,
-    text: 'The fixed currency peg breaks. The Riksbank raises interest rates to 500 percent in an attempt to defend the krona. It fails. Sweden floats. Unemployment goes from 2 percent to 10 percent in three years. The government cuts the welfare state in ways it has never cut before — sick pay reduced, unemployment insurance capped, housing allowances renegotiated. The debate that follows is about what the *folkhem* was: whether the postwar settlement was a specific economic moment that has now passed, or an aspiration that must be defended. You have a position in this debate. The position has something to do with which side of the cuts you are on.',
+    text: 'The krona\'s peg breaks, after the Riksbank has raised its overnight rate to five hundred percent to defend it, and Sweden floats. In three years unemployment goes from two percent to ten, and the government cuts the welfare state as it has never been cut: sick pay, unemployment insurance, housing allowance. The argument afterwards is about what the folkhem was, a moment that has passed or a promise to keep. Your side in that argument has something to do with which side of the cuts you were on.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 6; p.e += 3; p.addFlag('swe_welfare_retrenchment_generation'); p.setMem('sweCrisis92', true) },
   },
@@ -76,8 +76,8 @@ export const SWEDEN_EVENTS = [
     text: (G) => {
       const isImmigrant = G.flags.has('emigrated') || G.flags.has('refugee')
       return isImmigrant
-        ? 'Sweden received you, which is a fact. The reception was not seamless — the housing queue, the Swedish that needed to be learned, the credential recognition that took years, the specific Swedish distance that is not unfriendliness but requires a different code. You have learned the code to varying degrees. Sweden is a country where what you feel and what you say are often different, which takes getting used to when you come from places where they are the same.'
-        : 'The country has changed in a specific and visible way over the decades: the schools, the neighbourhoods, the restaurants, the public conversations. Sweden took in more refugees per capita than any comparable country during multiple crises — Bosnians, Iraqis, Somalis, Syrians. The national self-image as a humanitarian country collided with the practical limits of integration capacity. You have watched the collision from inside a country that argued about it more openly and more anxiously than most, and you have formed opinions that you sometimes say out loud and sometimes do not.'
+        ? 'Sweden received you. The reception was not seamless — the housing queue, the Swedish that needed to be learned, the credential recognition that took years, the specific Swedish distance that is not unfriendliness but requires a different code. You have learned the code to varying degrees. Sweden is a country where what you feel and what you say are often different, which takes getting used to when you come from places where they are the same.'
+        : 'The country has changed in an and visible way over the decades: the schools, the neighbourhoods, the restaurants, the public conversations. Sweden took in more refugees per capita than any comparable country during multiple crises — Bosnians, Iraqis, Somalis, Syrians. The national self-image as a humanitarian country collided with the practical limits of integration capacity. You have watched the collision from inside a country that argued about it more openly and more anxiously than most, and you have formed opinions that you sometimes say out loud and sometimes do not.'
     },
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.addFlag('swe_immigration_era_generation'); p.setMem('sweImmigration', true) },
@@ -127,7 +127,7 @@ export const SWEDEN_EVENTS = [
       IS_SWEDISH(G) &&
       G.age >= 60 &&
       !G.mem?.sweLateReckoning,
-    text: 'The *folkhem* was real. The comprehensive provision, the trust in the state, the expectation that public institutions would be competent and honest — these were real and are partially still real. The Palme years were real and ended on a street at 23:21 in February. The 1992 crisis and the welfare retrenchment were real. The immigration debate and the Sweden Democrats at 20 percent are real. The COVID pandemic, during which Sweden chose a path no other country chose — no lockdown, relying on individual responsibility, with a higher death toll than its neighbours in the first wave — is real. You have lived the whole shape of the Swedish century and you know that the model is neither the ideal its admirers described nor the failure its critics declared, but something more complicated that requires you to hold all of it at once.',
+    text: 'The *folkhem* was built. The comprehensive provision, the trust in the state, the expectation that public institutions would be competent and honest — these were real and are partially still real. The Palme years were real and ended on a street at 23:21 in February. Then came the 1992 crisis and the welfare retrenchment. Then the immigration debate, and the Sweden Democrats at 20 percent. Then the pandemic, when Sweden chose a path no other country chose — no lockdown, individual responsibility, and more dead than its neighbours in the first wave. You have lived the whole shape of the Swedish century and you know that the model is neither the ideal its admirers described nor the failure its critics declared, but something more complicated that requires you to hold all of it at once.',
     choices: null,
     effect: (p) => { p.r += 6; p.m += 3; p.e += 3; p.karma += 3; p.setMem('sweLateReckoning', true) },
   },

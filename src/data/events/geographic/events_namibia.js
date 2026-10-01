@@ -59,7 +59,7 @@ const NAMIBIA_EVENTS = [
       !G.mem?.nam_aids,
     text: (G) => {
       const yr = G.currentYear
-      return `In the late 1990s Namibia had one of the highest HIV rates in the world — one in five adults. By ${yr} the funerals have become a rhythm in the year. The school your teacher went to last month; the cousin who is sick in a particular way that everyone understands without the word being said; the condom distribution program at the clinic that arrives the same year the church says not to use them. You are the generation that grew up with this knowledge — that a specific kind of decision, at a specific moment, can determine what the rest of your life looks like. The knowledge is heavy and it is also clarifying.`
+      return `In the late 1990s Namibia had one of the highest HIV rates in the world — one in five adults. By ${yr} the funerals have become a rhythm in the year. The school your teacher went to last month; the cousin who is sick and everyone understands without the word being said; the condom distribution program at the clinic that arrives the same year the church says not to use them. You are the generation that grew up with this knowledge — that a kind of decision, at a moment, can determine what the rest of your life looks like. The knowledge is heavy and it is also clarifying.`
     },
     choices: null,
     effect: (p) => { p.m -= 6; p.e += 3; p.h -= 4; p.addFlag('nam_aids_generation_nam'); p.setMem('nam_aids', true); },
@@ -102,7 +102,7 @@ const NAMIBIA_EVENTS = [
       G.age >= 18 &&
       G.ethnicity !== 'herero' && G.ethnicity !== 'nama' &&
       !G.mem?.nam_german_apology,
-    text: 'May 2021. Germany formally acknowledges the Herero and Nama genocide of 1904–1908 — the first use of that word by the German government. The offer: 1.1 billion euros over thirty years for "acknowledgment and reconciliation." Not reparations — the German government is specific about the word. The Herero and Nama negotiating committees rejected the agreement; they were not consulted. The Namibian government accepted it. The word genocide is in the statement. Whether that is enough, or too little, or the wrong question — this depends on who you ask and which loss you are accounting for.',
+    text: 'May 2021, and Germany uses the word genocide for the first time about the Herero and Nama, and offers money over thirty years under a name carefully chosen not to be reparations. The Herero and Nama committees reject it; nobody asked them. The government in Windhoek accepts it. Whether the word is enough, or too little, or the wrong question, depends on whom you ask and which loss they are counting.',
     choices: null,
     effect: (p) => { p.e += 2; p.r += 3; p.addFlag('nam_german_apology_generation'); p.setMem('nam_german_apology', true); },
   },
@@ -119,8 +119,9 @@ const NAMIBIA_EVENTS = [
       !G.mem?.nam_german_apology,
     text: (G) => {
       const eth = G.ethnicity === 'herero' ? 'Herero' : 'Nama'
-      return `May 2021. Germany acknowledges the genocide of the ${eth} and Nama peoples of 1904–1908. The formal word: genocide. The offer: 1.1 billion euros over thirty years, called "acknowledgment and reconciliation funds." Not reparations. The ${eth} Council of Chiefs rejected the agreement — their negotiating committee was not consulted. The Namibian government — which has more Ovambo members than Herero or Nama — accepted it. Your grandmother carries this in her body. The bones of her grandmother's generation were sent to German universities for skull measurements. Some have come back. Not all of them. The question of whether 1.1 billion euros is the right number for what was done to your people has no right answer. That it finally has a number is something. What it is worth is not agreed.`
+      return `May 2021. Germany calls it genocide at last, the killing of the ${eth} and Nama peoples, and offers money over thirty years under a name that is careful not to be reparations. The chiefs say they were not consulted; the government in Windhoek accepts anyway. The skulls of your grandmother's grandmother's generation were sent to German universities to be measured, and some have come back, and not all. That it finally has a number is something. What it is worth is not agreed.`
     },
+    context: 'In May 2021 Germany acknowledged the 1904-1908 genocide of the Herero and Nama and offered 1.1 billion euros over thirty years as "reconstruction and development" funds. Herero and Nama traditional authorities rejected the deal, saying they had been excluded from the negotiations.',
     choices: null,
     effect: (p) => { p.r += 7; p.m -= 3; p.addFlag('nam_german_apology_generation'); p.addFlag('nam_herero_memory_bearer'); p.setMem('nam_german_apology', true); },
   },
@@ -133,7 +134,7 @@ const NAMIBIA_EVENTS = [
       G.character.country.name === 'Namibia' &&
       G.age >= 16 && G.age <= 32 &&
       !G.mem?.nam_diamond,
-    text: 'The Sperrgebiet — the Forbidden Zone — runs two hundred kilometers along the southern coast. You cannot enter it without a permit. The diamonds are below the sand, in the ocean floor off the coast, in terraces where the Orange River meets the Atlantic. De Beers and the Namibian state share the proceeds through Namdeb. The country is one of the world\'s top diamond producers by value. The hospitals in your district are understaffed. These two facts are in the same country, which is something the economy textbooks call a resource curse and something the people who live in it call their life.',
+    text: 'The Sperrgebiet, the forbidden zone, runs two hundred kilometres along the southern coast, and you cannot go in without a permit. The diamonds are under the sand and the seabed where the Orange River meets the Atlantic, and the company and the state share them. The hospitals in your district are short of staff. The economy textbooks call it a resource curse; the people who live in it call it their life.',
     choices: null,
     effect: (p) => { p.e += 3; p.addFlag('nam_diamond_country'); p.setMem('nam_diamond', true); },
   },

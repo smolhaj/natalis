@@ -106,7 +106,7 @@ export const HAWIYE_EVENTS = [
     phase: null,
     weight: 300,
     when: (G) => G.ethnicity === 'somali_hawiye' && G.flags.includes('haw_sheltered') && G.currentYear >= 2000 && G.age >= 35 && once(G, 'haw_ft_neighbour'),
-    text: 'A call comes through a number you do not know, and the voice on it is a man\'s, with an American way of stretching the vowels. He is the youngest son of the family that slept in your back room in January 1991, the one who was four. He says his mother told him your name every year, so that he would have it. He wants to send something, and you tell him there is nothing you need, which is not true, and you both know it is not the point.',
+    text: 'A call comes through a number you do not know, and the voice on it is a man\'s, with an American way of stretching the vowels. He is the youngest son of the family that slept in your back room in January 1991, the one who was four. He says his mother told him your name every year, so that he would have it. He wants to send something, and you tell him there is nothing you need. It is not true, and you both know it is not the point.',
     choices: null,
     effect: (p) => { p.setMem('haw_ft_neighbour', true); p.m += 6; p.karma += 3 },
   },
