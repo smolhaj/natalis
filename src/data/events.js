@@ -9270,6 +9270,7 @@ import { POLITICAL_PRISON_EVENTS } from './events/prison/events_political_prison
 import { HOUSING_EVENTS } from './events/thematic/events_housing.js'
 import { WINDFALL_EVENTS } from './events/thematic/events_windfall.js'
 import { wasSovietRepublic, malariaEndemic, institutionsAssumed } from './history.js'
+import EVENT_INDEX from './eventIndex.generated.js'
 
 // Which parent is still alive, and the name to use for them. `effect` receives
 // only `p`, so the choice of which parent dies has to be made from `p._state`.
@@ -9621,7 +9622,38 @@ function effectSource(e) {
   try { return fns.map(f => Function.prototype.toString.call(f)).join(' ') } catch (_) { return '' }
 }
 
+// Classification reads each guard's own source text, which is right in Node
+// and in tests and wrong in the shipped game: the production build renames the
+// guard's parameter from `G` to `e` and lowers `G.mem?.x` to
+// `(t=e.mem)!=null&&t.x`, and every probe that looks for `G.` matched nothing.
+// The follow-through boosts never fired for a real player (0 of 1,784
+// `continuesFlag` events recognised), specificity collapsed (1,659 events at
+// 3+ became 506) and 152 events changed register — while every sim and every
+// test, which run unminified source, said the system worked.
+//
+// So the classification is computed once, from source, by
+// `scripts/build-event-index.js` (run before every build) and shipped as data.
+// `classifyEvent` reads it first and only falls back to reading source for an
+// event the index does not know — a test fails if the two ever disagree.
+const INDEX_FIELDS = ['departs', 'writtenForAbroad', 'assumesSchool', 'assumesInstitutions',
+  'anchored', 'continuesMem', 'continuesFlag', 'specificity', 'dated', 'register']
+let RAW_ONLY = typeof globalThis !== 'undefined' && globalThis.__NATALIS_RAW_CLASSIFY === true
+export function setRawClassification(on) { RAW_ONLY = !!on }
+
 export function classifyEvent(e) {
+  if (!RAW_ONLY && e && e.register === undefined && e.id && Object.prototype.hasOwnProperty.call(EVENT_INDEX, e.id)) {
+    const row = EVENT_INDEX[e.id]
+    for (let i = 0; i < INDEX_FIELDS.length; i++) {
+      const f = INDEX_FIELDS[i]
+      if (e[f] === undefined) e[f] = row[i] === undefined ? null : row[i]
+    }
+    return e
+  }
+  return classifyEventRaw(e)
+}
+
+/** Classification from the guard's source text. Correct only on unminified code. */
+export function classifyEventRaw(e) {
   // Does resolving this event take the character out of the country? The
   // eighty emigration events are written from home — "You leave. Germany, the
   // Netherlands, the UK" — and once emigration actually moved people, a Greek
