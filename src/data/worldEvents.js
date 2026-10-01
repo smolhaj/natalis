@@ -1,4 +1,4 @@
-import { INDEPENDENCE_YEAR } from './history.js'
+import { INDEPENDENCE_YEAR, wasSovietRepublic } from './history.js'
 
 // Large disasters kill or displace a small fraction of a national population.
 // Firing the full "you were in it" narration and its stat penalty at every
@@ -57,6 +57,27 @@ const OIL_EXPORTERS_1973 = new Set([
   'Ecuador', 'Saudi Arabia', 'Kuwait', 'Qatar', 'UAE', 'Bahrain', 'Oman',
   'Trinidad and Tobago', 'Syria',
 ])
+
+// Countries with roughly one percent or more of cumulative CO2 emissions
+// (fossil fuels and land use, 1850 to 2015). The rest of the roster is under
+// one percent each; the Paris narrative reads this rather than the archetype,
+// which had told China and India they were bystanders.
+const LARGE_EMITTERS = new Set([
+  'United States', 'China', 'Russia', 'Germany', 'United Kingdom', 'Japan', 'India', 'France',
+  'Canada', 'Ukraine', 'Poland', 'Italy', 'Brazil', 'Indonesia', 'Mexico', 'Australia',
+  'South Africa', 'South Korea', 'Iran', 'Kazakhstan', 'Spain', 'Argentina', 'Saudi Arabia',
+])
+
+// Who stayed away. Moscow 1980: the US-led boycott over Afghanistan (Britain,
+// France, Italy, Spain, Sweden and Australia went). Los Angeles 1984: the
+// Soviet Union and its allies (Romania went).
+const BOYCOTT_1980 = new Set(['United States', 'Canada', 'Germany', 'Japan', 'South Korea', 'Norway',
+  'Israel', 'Turkey', 'Kenya', 'Argentina', 'Chile', 'Philippines', 'China', 'Pakistan', 'Egypt',
+  'Saudi Arabia', 'Malaysia', 'Indonesia', 'Thailand'])
+const BOYCOTT_1984 = new Set(['Russia', 'Ukraine', 'Belarus', 'Moldova', 'Estonia', 'Latvia', 'Lithuania',
+  'Georgia', 'Armenia', 'Azerbaijan', 'Kazakhstan', 'Uzbekistan', 'Kyrgyzstan', 'Tajikistan', 'Turkmenistan',
+  'Bulgaria', 'Czech Republic', 'Slovakia', 'Hungary', 'Poland', 'Mongolia', 'Vietnam', 'Laos', 'Cuba',
+  'Afghanistan', 'Ethiopia', 'Angola', 'North Korea'])
 
 // The Delta was inside Biafra.
 function biafraDelta(state) {
@@ -178,9 +199,9 @@ export const WORLD_EVENTS = [
     id: 'gulf_war_1991',
     name: '1991 Gulf War',
     years: [1990, 1991],
-    archetypes: ['wealthy_gulf', 'conflict_zone'],
-    countries: null,
-    narrative: 'Coalition forces push into Iraq. The war is forty-three days long — short by war standards — but the images are everywhere and the oil fields burn for months. The region will not be the same. The price of everything connected to oil has already moved.',
+    archetypes: 'all',
+    countries: ['Saudi Arabia', 'Kuwait', 'Bahrain', 'Qatar', 'UAE', 'Oman', 'Iraq', 'Jordan', 'Syria', 'Palestine', 'Yemen', 'Israel'],
+    narrative: 'Coalition forces push into Iraq. The air war is five weeks long and the ground war a hundred hours, and on the television the oil wells in Kuwait burn. They will burn for months. The price of everything connected to oil has already moved.',
     context: 'Iraq\'s August 1990 invasion of Kuwait triggered a US-led coalition of 35 nations. Operation Desert Storm (January–February 1991) included one of history\'s heaviest aerial bombardment campaigns. Iraqi forces were expelled but the coalition did not march on Baghdad — a decision President George H.W. Bush later defended as avoiding quagmire. Iraq was left under UN sanctions until 2003 that devastated its civilian population. The permanent US military presence in Saudi Arabia established by the war was later cited by Osama bin Laden as a central motivation for al-Qaeda\'s attacks.',
     effect: (p) => { p.m -= 8; p.h -= 5; },
     addFlags: [],
@@ -209,12 +230,14 @@ export const WORLD_EVENTS = [
       if (G.ruralUrban === 'rural' && !['wealthy_west', 'wealthy_east'].includes((G.currentCountry ?? G.character.country)?.archetype)) {
         return 'It arrives as a thing somebody heard. By the second day there is a number attached and by the third there is a name, and a man with a radio says it again more slowly for the people at the back. Nobody here has been to America. Everybody here has an opinion by Friday, and the opinions do not all run the same way.'
       }
-      return 'You watch it on a screen with other people watching it on a screen. The buildings are in a city you have seen in films. What follows over the next two years — the airports, the queues, the word terrorism entering ordinary conversation, the war that is announced as though it were a consequence — reaches your country too, and nobody asked.'
+      return 'You watch it on a screen with other people watching it on a screen. The buildings are in a city you have seen in films. What follows over the next two years — the airports, the queues, the word terrorism in ordinary conversation, two wars — reaches your country too.'
     },
     context: 'On September 11, 2001, al-Qaeda hijackers flew four commercial aircraft into the World Trade Center, the Pentagon, and a Pennsylvania field, killing 2,977 people. The attacks triggered the US-led "War on Terror," the invasion of Afghanistan in 2001 and Iraq in 2003, and a permanent transformation of global airport security, surveillance law, and the public experience of civil liberties.',
     effect: (p) => { p.m -= 5; },
     addFlags: ['post_9_11_world'],
     minAge: 5,
+    // The one country whose papers did not carry it.
+    when: (G) => (G.currentCountry ?? G.character.country)?.name !== 'North Korea',
   },
 
   {
@@ -290,7 +313,7 @@ export const WORLD_EVENTS = [
     years: [2015, 2017],
     archetypes: ['wealthy_west'],
     countries: null,
-    narrative: 'The photograph of the boy on the beach travels around the world in hours. Aylan Kurdi, three years old. More than a million people cross into Europe in 2015, most through the Aegean. The political response divides governments. Hungary builds a fence. Germany says wir schaffen das. The debate happening in newspapers and parliaments is conducted almost entirely without asking what made people leave.',
+    narrative: 'The photograph of the boy on the beach travels around the world in hours. Aylan Kurdi, three years old. More than a million people cross into Europe in 2015, most through the Aegean. The political response divides governments. Hungary builds a fence. Germany says wir schaffen das.',
     context: 'The 2015 refugee crisis saw over 1 million asylum seekers arrive in Europe, predominantly Syrians fleeing the civil war. Germany accepted over 890,000 asylum applications in 2015–16. The photograph of 3-year-old Aylan Kurdi, drowned on a Turkish beach, became the defining image. The crisis accelerated far-right parties across Europe and reshaped immigration politics for the following decade.',
     effect: (p) => { p.m -= 5; p.addFlag('refugee_crisis_witness') },
     addFlags: ['refugee_crisis_witness'],
@@ -317,9 +340,24 @@ export const WORLD_EVENTS = [
     name: '2008 Global Financial Crisis',
     years: [2008, 2009],
     archetypes: 'all',
-    countries: null,
-    narrative: 'The banks are not actually solid. This becomes clear in September. Firms that existed for a century are gone over a weekend. Governments that said there was no money for schools find money for banks. The unemployment numbers rise for years afterward. The people who caused the crash keep their bonuses.',
-    context: 'The 2008 global financial crisis was triggered by the collapse of the US subprime mortgage market. Lehman Brothers failed September 15, 2008 — the largest bankruptcy in US history. Governments worldwide injected an estimated $14 trillion in support for financial institutions. The recession cost approximately 30 million jobs globally. Eurozone countries including Greece, Ireland, Portugal, and Spain required IMF-EU bailouts with conditions of severe austerity. The decade of wage stagnation and rising inequality that followed accelerated the political shifts that produced Brexit, Donald Trump, and the broader populist wave of 2015–2020.',
+    // Every newspaper carried it; it was a household event where it took the
+    // house, the job or the savings with it. It fired in 17 of 22 read lives,
+    // rural Oyo and rural Bavaria at 83 among them, and closed on a sermon.
+    countries: ['United States', 'United Kingdom', 'Ireland', 'Iceland', 'Spain', 'Portugal', 'Italy',
+      'Latvia', 'Lithuania', 'Estonia', 'Hungary', 'Ukraine', 'Denmark', 'Netherlands', 'Belgium', 'Cyprus'],
+    narrative: (G) => {
+      const here = (G.currentCountry ?? G.character.country)?.name
+      if (here === 'Iceland') return 'In the first week of October all three banks fail. The króna loses half its value, and the car loan that was taken out in yen and Swiss francs because the rate was better now costs twice as much a month. People bang pots outside the parliament on Saturday afternoons.'
+      if (here === 'Ireland') return 'On the last night of September the government guarantees every deposit in every Irish bank, and in the morning the cranes over the city are still standing but have stopped moving. The half-built estate on the edge of town stays half-built. The men who were building it are looking at flights.'
+      if (here === 'Spain') return 'The building stops. On the coast the apartment blocks stand with no windows in them and the cranes still on top. The bricklayer from your street, who was earning more than the doctor two years ago, is at home in the daytime.'
+      if (here === 'Hungary') return 'The mortgage was in Swiss francs because the interest was lower, and every bank was offering it. The forint falls, and the monthly payment on the flat climbs past what it was when you signed, and keeps climbing.'
+      if (['Latvia', 'Lithuania', 'Estonia'].includes(here)) return 'The boom stops in a season. The government cuts public wages by a fifth, then by more, and the teacher, the nurse and the clerk all take the cut. By next summer the queue at the airport is people leaving for Ireland and Britain to work.'
+      if (here === 'Ukraine') return 'The hryvnia loses a third of its value before the winter. The loan for the flat was in dollars. The bank on the corner closes its doors for a week and puts a handwritten notice in the window.'
+      if (here === 'United States') return 'The bank that held the mortgage on the house down the street is gone over a weekend in September. The For Sale signs on your road stay up all year, then come down and are replaced by different signs. Someone you know who builds houses has stopped building them.'
+      if (here === 'United Kingdom') return 'Last year it was a queue outside a building society. This year the government buys the banks on Sunday nights and the Monday papers print the figures in billions. At work the word is restructuring, said quietly, in the kitchen.'
+      return 'The banks are not as solid as everyone said. In September firms that existed for a century are gone over a weekend, and the governments find the money to rescue the banks. Then the jobs go, slowly, for years.'
+    },
+    context: 'The 2008 financial crisis began in the US subprime mortgage market. Lehman Brothers failed on September 15, 2008, the largest bankruptcy in US history. Iceland\'s three main banks collapsed within a week in October; Ireland guaranteed all bank liabilities on September 30. Latvia\'s economy contracted by about 18% in 2009, and Hungary, Latvia and Ukraine took IMF loans in late 2008. The global recession cost an estimated 30 million jobs. Greece, Ireland, Portugal, Spain and Cyprus later required EU and IMF assistance with austerity conditions.',
     effect: (p) => { p.w -= 10; p.m -= 4; },
     addFlags: [],
     minAge: 10,
@@ -330,7 +368,20 @@ export const WORLD_EVENTS = [
     years: [2020, 2022],
     archetypes: 'all',
     countries: null,
-    narrative: 'The news in January is about a virus in one city. By March, you are not allowed to leave your home. The streets are empty. The hospitals are not. By the end of the year, more people have died than in any year since the Second World War. Normal resumes slowly and unevenly, and is not the same normal as before.',
+    // One narrative of a stay-at-home order, for the planet. Sweden never
+    // locked down; Belarus played its football league through it; Tanzania
+    // declared itself free of the virus in June 2020; Turkmenistan and North
+    // Korea reported no cases at all.
+    narrative: (G) => {
+      const here = (G.currentCountry ?? G.character.country)?.name
+      if (here === 'North Korea') return 'In January the border with China is closed, and then closed harder. Nothing comes across: no cloth, no medicine, no cooking oil. The broadcast says there are no cases in the Republic. The price of rice at the market doubles.'
+      if (here === 'Turkmenistan') return 'The word is not used on the television. Officially there are no cases. You are told to wear a mask against the dust, and the hospital in town is full.'
+      if (here === 'Sweden') return 'There is no lockdown. The advice is to keep your distance and work from home if you can, and most people do. The schools for the younger children stay open. In the homes for the old the deaths come early and fast, and the argument about it does not stop.'
+      if (here === 'Belarus') return 'The president says vodka, the sauna and work in the fields will see it off, and the football league plays on, the only one in Europe. The hospitals are full by April. Nobody is told how full.'
+      if (here === 'Tanzania') return 'In June the president declares the country free of it, thanks to prayer, and the figures stop being published. People wear masks anyway, quietly, and steam themselves over pots of leaves and boiling water.'
+      if (G.ruralUrban === 'rural' && !G.tech('television')) return 'It arrives as a rule before it arrives as an illness: the market closed, the bus not running, the police at the junction. The money from the city stops. Some of the people who went to the city come back on foot.'
+      return 'The news in January is about a virus in one city. By March, you are not allowed to leave your home. The streets are empty. The hospitals are not. By the end of the year, more people have died than in any year since the Second World War. Normal resumes slowly and unevenly, and is not the same normal as before.'
+    },
     context: 'The COVID-19 pandemic, caused by SARS-CoV-2, was declared a global pandemic by the WHO on March 11, 2020. By the end of 2022, official death tolls exceeded 6.5 million, with excess mortality estimates suggesting 15–20 million additional deaths. Lockdowns closed economies from March 2020; many countries enacted restrictions lasting two years. Global GDP contracted 3.4% in 2020 — the largest peacetime contraction since the 1930s. mRNA vaccines, developed in under a year, represented the fastest vaccine development in history, though access varied enormously by income level.',
     effect: (p) => { p.h -= 8; p.m -= 7; p.w -= 6; },
     addFlags: ['lived_through_pandemic'],
@@ -408,6 +459,9 @@ export const WORLD_EVENTS = [
     addFlags: ['internet_generation'],
     minAge: 10,
     maxAge: 40,
+    // A claim about a household that could get online: it was reaching rural
+    // India in 1995 and a Bolivian village in 1998.
+    when: (G) => G.tech('personal_computer') && G.ruralUrban !== 'rural',
   },
   {
     id: 'myanmar_coup',
@@ -527,7 +581,7 @@ export const WORLD_EVENTS = [
     years: [1950, 1994],
     archetypes: 'all',
     countries: ['South Africa'],
-    narrative: 'Race determines where you live, where you work, what school you attend. The law enforces a hierarchy that crushes some and privileges others.',
+    narrative: 'Race determines where you live, where you work, what school you attend. The bench at the station, the door of the post office and the beach on a Sunday all have a sign saying who they are for.',
     context: 'Apartheid was formally legislated from 1948, when South Africa\'s National Party took power on a platform of racial separation, though segregation had existed under earlier colonial rule. The Population Registration Act classified every citizen by race; the Group Areas Act enforced residential separation; the Bantu Education Act deliberately provided inferior schooling for Black South Africans. Pass laws required Black citizens to carry passbooks at all times. The ANC was banned in 1960 after the Sharpeville massacre (69 killed); Nelson Mandela was imprisoned from 1964 to 1990. The first democratic elections were held April 27, 1994.',
     effect: (p) => { p.m -= 12; p.e -= 6; p.addFlag('apartheid_generation'); },
     addFlags: ['apartheid_generation'],
@@ -748,7 +802,7 @@ export const WORLD_EVENTS = [
     years: [1950, 2025],
     archetypes: ['developing_unstable', 'post_soviet', 'subsaharan'],
     countries: null,
-    narrative: 'The official tells you there is a fee. There is no official fee. You pay, or you wait forever. This is how things work.',
+    narrative: 'The official tells you there is a fee. There is no official fee. You pay, or you wait forever.',
     context: 'Petty corruption — unofficial fees to access official services — functions as a parallel tax system in many states. Transparency International\'s Corruption Perceptions Index consistently ranks developing and post-Soviet states lowest. Corruption in this context is not individual moral failure but structural: underpaid civil servants, weak oversight, and citizens who cannot afford the time cost of waiting. Studies in sub-Saharan Africa find 30–50% of households pay bribes annually for basic services including healthcare, permits, and school places. The cumulative effect is a regressive tax: the poor pay proportionally more, and the wealthy bypass the system entirely.',
     effect: (p) => { p.w -= 5; p.m -= 6; p.addFlag('compromised'); },
     addFlags: ['compromised'],
@@ -1015,8 +1069,8 @@ export const WORLD_EVENTS = [
     id: 'cuban_missile_crisis',
     name: 'Cuban Missile Crisis',
     years: [1962, 1962],
-    archetypes: ['wealthy_west', 'post_soviet'],
-    countries: null,
+    archetypes: 'all',
+    countries: ['United States', 'Canada', 'United Kingdom', 'Ireland', 'Cuba', 'Germany', 'France', 'Netherlands', 'Belgium', 'Italy', 'Norway', 'Denmark', 'Sweden', 'Iceland', 'Turkey'],
     narrative: 'For thirteen days, the adults are frightened in a way they cannot hide. The news is terse. The drills at school become something different. Then it passes and no one explains what would have happened.',
     context: 'The Cuban Missile Crisis (October 16–28, 1962) erupted when US reconnaissance confirmed Soviet ballistic missiles being installed in Cuba, capable of striking most of the United States. Thirteen days of secret negotiations between Kennedy and Khrushchev ended with the Soviets withdrawing missiles in exchange for a US pledge not to invade Cuba and a secret removal of US Jupiter missiles from Turkey. Documents declassified decades later revealed how close the crisis came to nuclear war — including a Soviet submarine that nearly fired a nuclear torpedo after being depth-charged by the US Navy.',
     effect: (p) => { p.m -= 8; p.addFlag('cold_war_generation'); },
@@ -1091,7 +1145,7 @@ export const WORLD_EVENTS = [
     years: [1982, 1982],
     archetypes: 'all',
     countries: ['Argentina'],
-    narrative: 'The junta sends young men to fight for islands no one had thought about in years. Many die of cold before they die of fighting. When it ends badly, the junta falls. The democracy that follows is worth the defeat.',
+    narrative: 'The junta sends young men to fight for islands no one had thought about in years. Many die of cold before they die of fighting. It ends in June with a surrender at Puerto Argentino. Within the week the general who started it has resigned, and in October of the next year there is an election.',
     context: 'Argentina\'s military junta invaded the Falkland Islands (Islas Malvinas) on April 2, 1982, expecting Britain not to respond militarily. Britain dispatched a naval task force; 74 days of fighting cost 649 Argentine and 255 British lives. Argentine forces surrendered June 14. The defeat discredited the junta and accelerated the return to civilian democracy in 1983. Many Argentine conscripts were poorly equipped and trained; the suffering of young soldiers in the South Atlantic later became a major political and cultural grievance. Argentina continues to assert sovereignty over the islands.',
     effect: (p) => { p.m -= 10; p.addFlag('war_generation'); },
     addFlags: ['war_generation'],
@@ -1479,7 +1533,7 @@ export const WORLD_EVENTS = [
       if (G.ruralUrban === 'rural' || inDisasterZone(G.character, 'pakfloods2022', 20)) {
         return 'The water arrives in August and does not go anywhere, because there is nowhere for it to go. The cotton is under it. The buffalo are under it. You live on the raised road for eleven weeks with everyone else from the village, and the mosquitoes come, and then the fevers. Scientists call it climate change. Pakistan has produced less than one percent of the world\'s emissions.'
       }
-      return 'A third of the country is under water. Thirty-three million people are affected — more than the population of most countries. The relief appeals go out; the prices in the market climb through the autumn because the crop that fed the country is gone. Scientists attribute the scale to climate change. Pakistan contributed less than one percent of global emissions. The word injustice is insufficient.'
+      return 'A third of the country is under water. Thirty-three million people are affected — more than the population of most countries. The relief appeals go out; the prices in the market climb through the autumn because the crop that fed the country is gone. On the news a minister says the country produces less than one percent of the world\'s emissions, and is standing in the water to say it.'
     },
     context: 'Pakistan\'s 2022 floods, triggered by record monsoon rainfall and rapid glacial melt, submerged approximately one-third of the country\'s land area between June and October 2022. 1,739 people died; 33 million were affected; $30 billion in damage was sustained. Pakistan emits less than 1% of global greenhouse gases. UN Secretary-General António Guterres visited Sindh province and called it "a climate catastrophe" and "a monsoon on steroids." Pakistan\'s UN climate envoy Sherry Rehman used the crisis to argue for a "loss and damage" mechanism — compensation from high-emitting nations for climate-driven disasters. The 2022 UN climate conference (COP27) subsequently agreed in principle to such a fund.',
     effect: (p) => {
@@ -2401,7 +2455,13 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m -= 12; p.h -= 5; p.w -= 10; p.wipeMoney(0.2); p.addFlag('oil_shock_generation'); },
     addFlags: ['oil_shock_generation'],
     minAge: 5,
-    when: (G) => !G.flags.includes('oil_shock_generation'),
+    // The exporters had the opposite year: Nigeria's oil revenue quadrupled.
+    // The exporters had the opposite year: Nigeria's oil revenue quadrupled.
+    // And the planned economies bought their oil at Soviet prices, not at the
+    // world's, so stagflation was not a word in the Pyongyang newspapers.
+    when: (G) => !G.flags.includes('oil_shock_generation') &&
+      !OIL_EXPORTERS_1973.has((G.currentCountry ?? G.character.country)?.name) &&
+      !['North Korea', 'China', 'Cuba', 'Vietnam', 'Laos', 'Cambodia', 'Mongolia'].includes((G.currentCountry ?? G.character.country)?.name),
   },
 
   // ── TRIANGLE SHIRTWAIST FIRE 1911 ─────────────────────────────────────────
@@ -2463,15 +2523,23 @@ export const WORLD_EVENTS = [
     years: [1930, 1935],
     archetypes: 'all',
     countries: null,
+    // Read the archetype as a fact twice over: Latin America (independent for
+    // a century) was told about its colonial administration, and the Soviet
+    // republics — outside the world market and in the middle of
+    // collectivisation — were told their export prices had fallen.
     narrative: (G) => {
-      const arch = G.character.country.archetype
+      const c = G.currentCountry ?? G.character.country
+      const arch = c?.archetype
       if (arch === 'wealthy_west') {
         return 'The bank has failed or the harvest has been unsold or the factory has closed — the mechanism varies but the result is the same. Men stand in lines. The word breadline enters the vocabulary. Things that felt certain six months ago are not certain. Your family does not say the word poverty. They say: times are hard.'
       }
       if (arch === 'subsaharan' || arch === 'developing_urban' || arch === 'developing_unstable') {
-        return 'The price of the export crop — cocoa, cotton, groundnuts, sisal — has collapsed because the buyers abroad have stopped buying. The cash that was entering the village from the market is gone. The colonial administration still requires its taxes. The gap between what the land produces and what survival costs has closed.'
+        const colony = (INDEPENDENCE_YEAR[c?.name] ?? 0) > G.currentYear
+        return 'The price of the export crop has collapsed because the buyers abroad have stopped buying. The cash that was entering the village from the market is gone. ' +
+          (colony ? 'The colonial administration still requires its taxes.' : 'The tax collector still comes.') +
+          ' The gap between what the land produces and what survival costs has closed.'
       }
-      return 'The global economy has contracted sharply. Prices for what your country sells abroad have fallen; prices for what your country buys have not. The adjustment is paid for by people who had no part in creating the crisis.'
+      return 'The prices for what your country sells abroad have fallen, and the prices for what it buys have not. The shops are quieter. The factory takes on nobody this year.'
     },
     context: 'The Great Depression began with the Wall Street Crash of October 1929 and spread to become a worldwide economic catastrophe. US GDP fell 30%, unemployment reached 25%. The Depression was transmitted globally through commodity price collapses: prices for cocoa, cotton, wheat, and rubber fell 40-70%, devastating colonial and developing economies. In Nigeria, cocoa prices fell 50%; in Kenya, settler farms collapsed; in India, the Depression catalysed the independence movement. The Depression transformed political economies everywhere it reached, accelerating both welfare states and fascism.',
     effect: (p) => {
@@ -2484,7 +2552,9 @@ export const WORLD_EVENTS = [
     },
     addFlags: ['depression_generation'],
     minAge: 5,
-    when: (G) => !G.flags.includes('depression_generation'),
+    when: (G) => !G.flags.includes('depression_generation') &&
+      !wasSovietRepublic((G.currentCountry ?? G.character.country)?.name) &&
+      (G.currentCountry ?? G.character.country)?.name !== 'Mongolia',
   },
 
   // ── SPANISH FLU 1918 ──────────────────────────────────────────────────────
@@ -2516,11 +2586,15 @@ export const WORLD_EVENTS = [
     archetypes: ['wealthy_east', 'developing_urban', 'developing_unstable'],
     countries: ['Thailand', 'Indonesia', 'South Korea', 'Malaysia', 'Philippines'],
     narrative: (G) => {
-      const cn = G.character.country.name
+      const cn = (G.currentCountry ?? G.character.country)?.name
+      // Malaysia is the one that refused the Fund: capital controls and a
+      // fixed ringgit in September 1998. It was being told the government was
+      // negotiating with the IMF.
+      if (cn === 'Malaysia') return 'The ringgit loses almost half its value against the dollar inside a year. In September the Prime Minister refuses the IMF, fixes the ringgit at three-eighty, and closes the door on money leaving the country. The next day his deputy is sacked, and then arrested.'
       if (cn === 'Thailand') return 'The baht collapses on July 2nd. The news anchors say "managed float" but by the end of the week everyone knows it is a freefall. The currency halves in value inside six months. The middle class that took out dollar-denominated loans to buy apartments — a class that spent a decade believing in its own arrival — watches those loans double in real terms overnight. The IMF arrives with conditions attached. The conditions are: cut everything.'
       if (cn === 'Indonesia') return 'The rupiah loses 80% of its value within months. Suharto\'s New Order, which staked its legitimacy on economic growth, is suddenly presiding over a famine of savings. The social fabric tears in a predictable direction: the ethnic Chinese community, 3% of the population and most visible in trade, becomes the target. The riots of May 1998 are not about economics. They are about what economics makes available to those who want to harm.'
       if (cn === 'South Korea') return 'The won collapses and the government requires an IMF bailout of $58 billion. Companies that were considered industrial pillars — chaebols founded in the postwar miracle — begin to fail. The government asks citizens to donate their gold jewellery to pay the national debt. People bring rings, necklaces, wedding gifts. Several hundred tonnes of gold arrives.'
-      return 'The currency has lost half its value since spring. The savings your family kept in the bank have not changed in number, but what they will buy has. The debt, taken in dollars, has doubled. The government is negotiating with the IMF and the IMF\'s terms are familiar to anyone who lived through structural adjustment: cut pensions, cut public employment, raise interest rates, open the market.'
+      return 'The currency has lost half its value since spring. The savings your family kept in the bank have not changed in number, but what they will buy has. The debt, taken in dollars, has doubled. The government signs with the IMF, and the terms are printed in the newspaper: higher interest rates, fewer public jobs, the subsidies cut back.'
     },
     context: 'The 1997-98 Asian financial crisis began with Thailand\'s decision to float the baht after currency speculators attacked it. Within months, contagion spread to Indonesia, Malaysia, South Korea, and the Philippines. Indonesia\'s GDP fell 13.5% in one year — a peacetime economic collapse comparable to the Great Depression. In Indonesia, the crisis triggered political violence against the ethnic Chinese community (May 1998 Jakarta riots) and the fall of Suharto after 32 years. South Korea\'s gold collection campaign raised $2.2 billion. The IMF\'s structural adjustment conditions — widely blamed for deepening the crisis — reshaped regional politics for a generation.',
     effect: (p) => { p.w -= 12; p.wipeMoney(0.35); p.m -= 10; p.addFlag('asian_crisis_generation'); },
@@ -2555,7 +2629,7 @@ export const WORLD_EVENTS = [
       if (G.age < 10) {
         return 'A name goes quiet in the house. It was said constantly for a year — on the radio, at the table, in the street — and then in February it is not said at all, or only in the other room, and you are sent outside. Years later you will be told which name it was and what happened to the man who had it, and you will already have known that something did.'
       }
-      return 'The radio announces it on February 13th: Lumumba is dead. Shot, they say, while trying to escape. Nobody believes the escape story. The first prime minister of your independent country, who gave the speech at independence that made you feel the word "dignity" for the first time, has been killed five months into his tenure. The Belgians knew. The CIA knew. Mobutu knew. The word betrayal is too small for what has happened.'
+      return 'The radio announces it on February 13th: Lumumba is dead. Shot, they say, while trying to escape. Nobody believes the escape story. The first prime minister of your independent country, whose speech on independence day you heard or heard about, is dead seven months later, and nobody says aloud who they think did it.'
     },
     context: 'Patrice Lumumba, the Democratic Republic of Congo\'s first democratically elected prime minister, was killed on 17 January 1961 near Élisabethville in Katanga, in the presence of Belgian officers; his body was dissolved in acid. Belgium and the CIA had both worked actively to remove him, fearing his nationalism and his approach to Moscow. His death was not announced until 13 February, with a fabricated story about villagers killing him after an escape. Mobutu Sese Seko, who had helped deliver him to Katanga, proclaimed him a national hero in 1966 and named a boulevard after him. A Belgian parliamentary commission accepted "moral responsibility" in 2001 and the state apologised in 2002; a single gold-capped tooth, all that remained, was returned to his family in 2022.',
     effect: (p) => { p.m -= 14; p.karma -= 3; p.addFlag('lumumba_generation'); if ((p._state?.age ?? 0) >= 10) p.setPolitical('dissident'); },
@@ -2786,22 +2860,33 @@ export const WORLD_EVENTS = [
     name: 'Paris Climate Agreement',
     years: [2015, 2016],
     archetypes: 'all',
-    countries: null,
+    // Front-page news where it was signed, where the 1.5 figure came from, and
+    // in the large emitters whose pledges were the story; elsewhere it was a
+    // paragraph on an inside page, and it fired in more than half of all lives.
+    countries: ['France', 'Germany', 'United Kingdom', 'Netherlands', 'Sweden', 'Norway', 'Denmark', 'Finland', 'Ireland',
+      'Canada', 'United States', 'Australia', 'New Zealand', 'China', 'India', 'Bangladesh', 'Maldives',
+      'Fiji', 'Samoa', 'Kiribati', 'Tuvalu', 'Marshall Islands', 'Vanuatu'],
+    // The 'less than one percent' line was printed to China, India, Brazil and
+    // Iran, three of which are among the world's largest emitters, and to a
+    // Mexican living in New York. The claim is about the country the character
+    // lives in, so it is now read from that country's share of the carbon
+    // already in the air, and the closing sentence about reparations is gone.
     narrative: (G) => {
-      const arch = G.character.country.archetype
-      if (['wealthy_west', 'wealthy_east'].includes(arch)) {
-        return 'One hundred and ninety-six countries agree to limit warming to 1.5 degrees. The agreement is binding in intent and voluntary in mechanism. Scientists say it is insufficient. Diplomats say it is historic. Both are true. The planet will warm past 1.5 degrees. The agreement made it somewhat less warm than it would otherwise have been, which is something, and not enough.'
+      const here = (G.currentCountry ?? G.character.country)?.name
+      if (here === 'France') return 'The conference is at Le Bourget, north of Paris, a fortnight after the attacks, behind more police than anyone has seen in one place. On a Saturday evening the chairman brings his little green hammer down: well below two degrees, one and a half if possible.'
+      if (['Tuvalu', 'Kiribati', 'Marshall Islands', 'Maldives', 'Fiji', 'Samoa', 'Vanuatu'].includes(here)) {
+        return 'One point five to stay alive: it was the slogan of the island delegations for years, and in Paris it goes into the text. The delegates come home to a welcome at the airport. The sea wall at the end of the runway is the same height it was.'
       }
-      if (['subsaharan', 'developing_unstable', 'developing_urban'].includes(arch)) {
-        return 'Your country signed an agreement it did not cause to be necessary. The wealthy countries that burned coal and oil for two centuries agreed to slow down, somewhat. Your country — which contributed less than one percent of cumulative emissions — will experience the consequences of what the wealthy countries did. The agreement acknowledges this, in language. The reparations promised in that language remain theoretical.'
+      if (LARGE_EMITTERS.has(here)) {
+        return 'One hundred and ninety-five countries agree in Paris to keep warming well below two degrees. Each writes its own pledge and nothing obliges it to keep one. On the evening news your country\'s pledge is a percentage and a year, read out between the weather and the football.'
       }
-      return 'The world agrees to limit warming. Whether it will is a different question from whether it agreed to.'
+      return 'One hundred and ninety-five countries agree in Paris to keep warming well below two degrees. Your country\'s share of the carbon already in the air is a small fraction of one percent, and much of the pledge it signs depends on money from elsewhere.'
     },
-    context: 'The Paris Agreement was adopted on December 12, 2015 by 196 parties at COP21. It committed signatories to limiting global temperature rise to well below 2°C above pre-industrial levels, pursuing 1.5°C. National pledges (NDCs) are voluntary; enforcement mechanisms are weak. Current NDCs, even if fully implemented, place warming on a trajectory of approximately 2.5-3°C. The agreement is widely considered necessary but insufficient.',
+    context: 'The Paris Agreement was adopted on December 12, 2015 at COP21 by the 196 parties to the UN climate convention. It commits signatories to holding warming well below 2°C above pre-industrial levels and to pursuing 1.5°C, a target pressed for by small island states. Each country sets its own pledge (an NDC); there is no enforcement mechanism. Many developing-country pledges are partly conditional on international finance. Cumulative emissions are highly concentrated: the United States, China, the EU and Russia account for over half of all CO2 emitted since 1850.',
     effect: (p) => { p.m -= 2; p.e += 3; p.addFlag('climate_generation'); },
     addFlags: ['climate_generation'],
     minAge: 10,
-    when: (G) => !G.flags.includes('climate_generation'),
+    when: (G) => !G.flags.includes('climate_generation') && G.tech('television'),
   },
 
   // ── GREAT BARRIER REEF BLEACHING 2030s ───────────────────────────────────
@@ -2810,15 +2895,9 @@ export const WORLD_EVENTS = [
     name: 'Great Barrier Reef Mass Bleaching',
     years: [2030, 2035],
     archetypes: 'all',
-    countries: null,
-    narrative: (G) => {
-      const country = G.currentCountry?.name || G.character.country.name
-      if (country === 'Australia') {
-        return 'The fourth consecutive mass bleaching event on the Great Barrier Reef. Sixty percent of the coral is now bleached or dead. The reef is 2,300 kilometres long and is the largest living structure on earth, or was. The tourism operators have a careful vocabulary for what is happening. The marine biologists do not bother with the careful vocabulary. What the bleaching means is that the water is too warm for the coral, and the water will not get cooler, and the reef is dying at a scale that no individual intervention can reverse.'
-      }
-      return 'The Great Barrier Reef is declared functionally extinct by the scientific bodies that track such things. It took 25 million years to form. It bleached to death in under a century. The thing that killed it — carbon dioxide warming the oceans — is still accumulating in the atmosphere. The reef is a specific loss: one species, one ecosystem, one measure of what was possible before.'
-    },
-    context: 'The Great Barrier Reef has experienced mass bleaching events in 1998, 2002, 2016, 2017, 2020, 2022, and 2024 — the last five consecutive years. Bleaching occurs when water temperatures rise above a threshold: the coral expels the symbiotic algae that provides 90% of its energy and colour. Prolonged bleaching causes death. The IPCC projects that at 1.5°C warming, 70-90% of coral reefs will decline; at 2°C, more than 99% will be lost.',
+    countries: ['Australia'],
+    narrative: 'The fourth mass bleaching in a row on the Great Barrier Reef. On the news the coral is white from the air for hundreds of kilometres. The dive boats out of Cairns are running half empty, and the brochures in the racks at the airport still have the old photographs in them.',
+    context: 'The Great Barrier Reef has had mass bleaching events in 1998, 2002, 2016, 2017, 2020, 2022 and 2024. Bleaching happens when water stays above a temperature threshold: the coral expels the algae that supply most of its energy and colour, and prolonged bleaching kills it. The IPCC projects that 70-90% of warm-water coral reefs will decline at 1.5°C of warming, and more than 99% at 2°C. This event is a projection.',
     effect: (p) => { p.m -= 5; p.addFlag('climate_generation'); p.addFlag('reef_loss_generation'); },
     addFlags: ['climate_generation', 'reef_loss_generation'],
     minAge: 10,
@@ -2826,33 +2905,6 @@ export const WORLD_EVENTS = [
   },
 
   // ── FIRST MASS CLIMATE DISPLACEMENT 2040s ────────────────────────────────
-  {
-    id: 'climate_mass_displacement_2040s',
-    name: 'First Mass Climate Displacement',
-    years: [2040, 2048],
-    archetypes: 'all',
-    countries: null,
-    narrative: (G) => {
-      const arch = G.character.country.archetype
-      if (['subsaharan', 'developing_unstable', 'developing_urban'].includes(arch)) {
-        return 'The UN estimates 200 million climate-displaced people by the end of the decade. The estimate is in a report. What the report cannot capture is what it looks like at ground level: the families who sold what they had and walked north, the camps outside cities that became cities themselves, the children who have never seen the land their parents describe. The word for these people — climate refugee — is still not in international law. They have no legal standing in the countries they arrived in. They are there anyway.'
-      }
-      return 'The television shows camps at the borders of your country. Climate refugees — though the law does not call them that. The argument about what to do with them has been going for twenty years. It is still going. The camps are permanent. Children are being born in them who have never been anywhere else.'
-    },
-    context: 'The World Bank\'s Groundswell report (2021) projected 216 million internal climate migrants by 2050, primarily from Sub-Saharan Africa, South Asia, and Latin America. Climate displacement currently has no dedicated legal framework: the 1951 Refugee Convention does not cover people displaced by climate change, only those fleeing persecution. This legal gap leaves climate-displaced people without international protection, even as displacement numbers rise.',
-    effect: (p) => {
-      const arch = p._state?.character?.country?.archetype
-      if (['subsaharan', 'developing_unstable', 'developing_urban', 'conflict_zone'].includes(arch)) {
-        p.m -= 10; p.h -= 4;
-      } else {
-        p.m -= 6;
-      }
-      p.addFlag('climate_generation');
-    },
-    addFlags: ['climate_generation'],
-    minAge: 12,
-    when: (G) => !G.flags.includes('climate_displacement_witnessed'),
-  },
 
   // ── ARCTIC ICE-FREE SUMMER 2040s ──────────────────────────────────────────
   {
@@ -2860,8 +2912,8 @@ export const WORLD_EVENTS = [
     name: 'First Ice-Free Arctic Summer',
     years: [2042, 2048],
     archetypes: 'all',
-    countries: null,
-    narrative: 'The Arctic Ocean is ice-free in summer for the first time in recorded human history — and, scientists say, for the first time in at least three million years. The news is treated as a milestone. Scientists resist the framing of milestone: a milestone implies a journey with a destination, and this is not that kind of journey. This is a door. It opens once.',
+    countries: ['Norway', 'Iceland', 'Canada', 'Denmark', 'Finland', 'Sweden', 'Russia'],
+    narrative: 'In September the satellite pictures show open water across the top of the world for the first time. On the news a cargo ship goes over the pole without an icebreaker. The fishermen talk about which fish have come north this year, and which have gone.',
     context: 'Sea ice in the Arctic has declined approximately 13% per decade since satellite measurements began in 1979. IPCC models project a first ice-free Arctic summer (defined as sea ice below 1 million km²) to occur before 2050 under high-emissions scenarios and possibly before 2040 under higher scenarios. The loss of sea ice accelerates warming through the ice-albedo feedback: dark ocean water absorbs heat that white ice would have reflected.',
     effect: (p) => { p.m -= 5; p.e += 3; p.addFlag('climate_generation'); },
     addFlags: ['climate_generation'],
@@ -2876,7 +2928,7 @@ export const WORLD_EVENTS = [
     years: [2055, 2065],
     archetypes: null,
     countries: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain'],
-    narrative: 'The summer wet-bulb temperature in the Gulf has crossed the threshold beyond which a human body cannot cool itself outdoors, even in shade, even with water. This is not a heat wave — heat waves end. This is the summer now. The cities were built around air conditioning, which is infrastructure that can be maintained; they were also built around outdoor workers, which is a category of person that can no longer safely work here between June and September. The reconfiguration of what is possible in this climate is underway.',
+    narrative: 'This summer the government bans outdoor work between eleven and four for the whole of June, July and August, and the buses bring the construction crews back to the camps at noon. The heat at night does not drop below thirty-five. The street is empty until after dark, and then it is full.',
     context: 'Wet-bulb temperature (a combined measure of heat and humidity) above 35°C is fatal to humans after prolonged outdoor exposure regardless of activity level. IPCC reports project that wet-bulb temperatures above 35°C will become an annual occurrence across the Gulf region by mid-century under high-emissions scenarios. The UAE, Qatar, and Saudi Arabia have already recorded wet-bulb events above 30°C. Outdoor workers — primarily migrant laborers from South Asia — are disproportionately exposed.',
     effect: (p) => { p.h -= 8; p.m -= 10; p.addFlag('heat_stress_generation'); p.addFlag('climate_generation'); },
     addFlags: ['heat_stress_generation', 'climate_generation'],
@@ -2890,13 +2942,13 @@ export const WORLD_EVENTS = [
     name: 'Maldives National Evacuation',
     years: [2065, 2075],
     archetypes: 'all',
-    countries: null,
+    countries: ['Maldives', 'Tuvalu', 'Kiribati', 'Marshall Islands', 'Sri Lanka', 'India'],
     narrative: (G) => {
       const country = G.currentCountry?.name || G.character.country.name
       if (['Maldives', 'Tuvalu', 'Kiribati', 'Marshall Islands'].includes(country)) {
-        return 'The government has completed the evacuation. The last families have left. There are islands — there will be islands for some years still, above water technically, but inhabited by no one. You carry the coordinates of where your house was. You carry the name of the island in the language that was spoken there. You are somewhere else now, which is called refuge, which is a word that means you are alive and does not mean you are home.'
+        return 'The government has completed the evacuation. The last families have left. The islands are still above water at low tide, for now, and nobody lives on them. You carry the coordinates of where the house was, and the name of the island in the language that was spoken there.'
       }
-      return 'The Maldives completes its national evacuation — the first country to be rendered uninhabitable by sea level rise. 500,000 people relocated across several decades to higher ground in India, Sri Lanka, and Australia under climate refugee agreements that took fifteen years to negotiate. The last inhabited island goes underwater during a storm surge in the early 2070s. The government-in-exile continues to exist in international law, which is more than can be said for the land.'
+      return 'The last families leave Malé. The ferries and the flights have been running for years, and the new arrivals have a street of their own now near the harbour, with a mosque and a shop that sells the fish the way they cook it at home.'
     },
     context: 'The Maldives — an archipelago of 1,200 islands with an average elevation of 1.5 metres above sea level — has been purchasing land in India, Sri Lanka, and Australia as a contingency for national relocation since 2008. At 1.5°C warming, sea level rise of 26-77cm is projected by 2100; storm surges would make the islands uninhabitable well before they are permanently submerged. Kiribati and Tuvalu face similar timelines. This would be the first complete elimination of a nation-state by climate change.',
     effect: (p) => {
@@ -3025,13 +3077,14 @@ export const WORLD_EVENTS = [
     name: 'Climate Tipping Point Confirmed',
     years: [2046, 2053],
     archetypes: 'all',
-    countries: null,
+    countries: ['Netherlands', 'Bangladesh', 'Vietnam', 'Egypt', 'Maldives', 'Kiribati', 'Tuvalu', 'Marshall Islands'],
     narrative: (G) => {
-      const arch = G.character.country.archetype
-      if (['wealthy_west', 'wealthy_east'].includes(arch)) {
-        return 'Scientists confirm that the West Antarctic Ice Sheet has entered an irreversible collapse. The process will take centuries, but it has begun and it cannot now be stopped. Sea level rise of one to three metres is now locked in regardless of what happens to emissions from this point. The news arrives on a Tuesday. People discuss it and go back to what they were doing. This is perhaps the most important thing that has happened in human history and it is received like weather.'
-      }
-      return 'Scientists say a tipping point has been crossed. The ice sheet that is collapsing will add a metre to the ocean over the next few centuries. The countries that will be underwater are, in the main, not the countries that emitted the carbon. The scientists are careful about language. The implication of what they are saying is not careful at all.'
+      const here = (G.currentCountry ?? G.character.country)?.name
+      if (here === 'Netherlands') return 'The scientists say the West Antarctic ice sheet has passed the point of no return. It will take centuries. The water board publishes the new figures for the dikes, and the meeting at the town hall about the polder runs until midnight.'
+      if (here === 'Bangladesh') return 'The scientists say the ice sheet at the bottom of the world is going and cannot be stopped. In the delta the salt has been in the paddy for years already. The family two plots over has planted shrimp ponds where the rice was.'
+      if (here === 'Vietnam') return 'The scientists say the ice in the far south has passed a point and will melt whatever happens now. In the Mekong delta the salt comes further up the river every dry season, and the farmers measure it with a meter dipped in a cup.'
+      if (here === 'Egypt') return 'The scientists say the ice sheet in the far south is going and cannot be stopped. In the Delta the fields nearest the sea have turned white with salt, and the young men from those villages are in Cairo.'
+      return 'The scientists say the ice sheet at the bottom of the world has passed the point where it can be saved. Here the highest ground is two metres above the tide. The government publishes, again, the plan for where everyone will go.'
     },
     context: 'Climate tipping points are thresholds beyond which changes become self-reinforcing and irreversible. Key tipping points include: West Antarctic Ice Sheet collapse (triggered at approximately 1.5°C), Greenland Ice Sheet collapse (triggered at 1.5-2°C), Amazon rainforest dieback, and permafrost carbon release. A 2022 Science study found that four of nine major tipping points may already have been triggered at current temperature levels (~1.2°C above pre-industrial). Each tipping point can trigger others in a cascade.',
     effect: (p) => { p.m -= 8; p.e += 3; p.addFlag('climate_generation'); p.addFlag('tipping_point_generation'); },
@@ -3223,21 +3276,28 @@ export const WORLD_EVENTS = [
     id: 'olympics_boycott_1980',
     name: 'Olympics Boycott',
     years: [1980, 1985],
-    archetypes: ['wealthy_west', 'wealthy_east'],
+    archetypes: 'all',
     countries: null,
+    // Archetype-scoped, it told Britain, France, Italy, Spain and Sweden —
+    // which all went to Moscow — that their athletes had stayed home. It now
+    // reaches the countries that stayed away in 1980, and in 1984 the ones
+    // that stayed away from Los Angeles.
     narrative: (G) => {
       const yr = G.currentYear
       if (yr <= 1981) {
-        return '65 countries do not go to the Moscow Olympics. The USA boycott, in response to the Soviet invasion of Afghanistan, takes their athletes with it. The athletes who spent four years preparing for this have their preparation rendered irrelevant by a diplomatic decision that neither side believes will change anything. The Soviet troops stay in Afghanistan regardless. The athletes train anyway, toward Los Angeles, four years off.'
+        return 'Sixty-five countries do not go to the Moscow Olympics, and yours is one of them. The boycott is over the invasion of Afghanistan. Athletes who spent four years preparing stay at home and watch it on television. They train anyway, toward Los Angeles, four years off.'
       }
-      if (yr < 1984) return 'The athletes who stayed home from Moscow are training for Los Angeles. Nobody can say yet who will come.'
-      return 'The 1984 Los Angeles Games proceed without the Soviet bloc. 14 countries stay away, mirroring the 1980 Western boycott. The cycle ends. The athletes compete. No political outcome of either boycott is ever identified.'
+      return 'The newspapers say the team will not go to Los Angeles, for the athletes\' safety. The Friendship Games are held instead, in Moscow and other socialist capitals, and the results are printed beside the ones from California.'
     },
     context: 'The 1980 Moscow Olympics were boycotted by 65 countries led by the United States, in response to the Soviet invasion of Afghanistan. US President Jimmy Carter initially threatened athletes who defied the boycott with passport revocation. Many athletes who had spent years preparing did not compete. In 1984, the Soviet Union and 13 allies boycotted the Los Angeles Olympics, officially citing security concerns but widely understood as retaliation. Neither boycott had any measurable effect on the political situations that prompted them.',
     effect: (p) => { p.r += 4; p.m -= 3 },
     addFlags: [],
     minAge: 14,
-    when: (G) => !G.flags.includes('olympics_boycott_felt'),
+    when: (G) => {
+      const here = (G.currentCountry ?? G.character.country)?.name
+      if (G.currentYear <= 1981) return BOYCOTT_1980.has(here)
+      return G.currentYear === 1984 && BOYCOTT_1984.has(here)
+    },
   },
 
   {
@@ -3319,7 +3379,7 @@ export const WORLD_EVENTS = [
     countries: null,
     minAge: 15,
     maxAge: null,
-    narrative: 'Independence was ten, fifteen years ago. The flags changed. The faces on the currency changed. The underlying structure — who owns the land, where the export revenue goes, which families hold the contracts — has been slower to change. The leaders who led the independence movement are older now, and some of them have become the thing they replaced. You are old enough to notice this.',
+    narrative: 'Independence was ten, fifteen years ago. The flags changed. The faces on the currency changed. The underlying structure — who owns the land, where the export revenue goes, which families hold the contracts — has been slower to change. The men who led the independence movement are older now, and they are still the men on the platform at every parade.',
     context: 'Much of the developing world gained independence from European powers in the 1950s-60s. By the 1970s, many newly independent nations faced coups, single-party states, IMF structural adjustment conditions, and continued economic dependency on former colonial powers. The gap between independence-era promise and lived reality shaped a generation\'s political consciousness.',
     effect: (p) => { p.m -= 6; p.r += 6 },
     addFlags: ['independence_disillusionment'],
