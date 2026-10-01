@@ -25,13 +25,13 @@ function SlotCard({ meta, onContinue, onDelete }) {
     )
   }
 
-  const flagEmoji = meta.country ? getCountryFlag({ name: meta.country }) : ''
+  const flagEmoji = meta.country ? getCountryFlag({ name: meta.country }, meta.year) : ''
 
   return (
-    <div className="bg-white rounded-2xl border border-natalis-border shadow-sm overflow-hidden">
+    <div className="bg-natalis-surface rounded-2xl border border-natalis-border overflow-hidden">
       <div className="px-4 py-3 flex items-center justify-between">
         <div className="flex-1 min-w-0">
-          <p className="font-bold text-natalis-text text-sm truncate">{meta.displayName || 'Unknown'}</p>
+          <p className="font-prose text-natalis-text text-[0.9375rem] truncate">{meta.displayName || 'Unknown'}</p>
           <p className="text-natalis-muted text-xs mt-0.5">
             {flagEmoji} {meta.country} · Age {meta.age} · {meta.year}
           </p>
@@ -41,7 +41,7 @@ function SlotCard({ meta, onContinue, onDelete }) {
             <>
               <button
                 onClick={() => { onDelete(); setConfirmDelete(false) }}
-                className="text-xs font-bold text-red-500 px-2 py-1 rounded-lg bg-red-50"
+                className="text-xs text-natalis-alarm px-2 py-1 rounded-lg border border-natalis-alarm"
               >
                 Delete
               </button>
@@ -63,8 +63,7 @@ function SlotCard({ meta, onContinue, onDelete }) {
               </button>
               <button
                 onClick={onContinue}
-                className="px-3 py-1.5 rounded-xl text-xs font-bold text-white"
-                style={{ background: '#3f6146' }}
+                className="px-3 py-1.5 rounded-lg bg-natalis-text text-natalis-surface font-prose text-sm hover:bg-natalis-dim transition-colors"
               >
                 Continue
               </button>
@@ -107,8 +106,10 @@ export default function TitleScreen() {
             Simulator", which describes the genre rather than the game. */}
         <div className="space-y-2 pt-2">
           <h1 className="font-prose text-5xl text-natalis-text tracking-tight">natalis</h1>
+          {/* Was "from natalis — of a birth", directly under "natalis": the word
+              glossed by itself. The gloss is the part worth saying. */}
           <p className="font-prose text-natalis-muted text-sm italic">
-            from <span className="not-italic">natalis</span> — of a birth
+            Latin: of a birth
           </p>
         </div>
 

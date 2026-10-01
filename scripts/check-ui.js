@@ -177,7 +177,7 @@ await page.locator('input[type=range]').evaluate((el) => {
   Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(el, '1950')
   el.dispatchEvent(new Event('input', { bubbles: true }))
 })
-await click(/♀ Female/)
+await click(/^Female$/)
 await click(/Next →/)
 await click(/Preview →/)
 await overflowAt('the birth preview')
@@ -193,14 +193,14 @@ pass(`a crafted life (United States, 1950, Inhabit) reaches 18 ${DIM(`(${toAdult
 
 // ── 3. A price shown is the price charged ────────────────────────────────────
 if (await openCategory('Shopping')) {
-  const clothes = (await panelButtons()).find(b => /^Clothes Shopping/.test(b.t))
-  const shown = dollars(clothes?.t.match(/~\$([\d,]+)/)?.[1] ?? NaN)
-  await page.locator('div.fixed button').filter({ hasText: /^Clothes Shopping/ }).first().click(); await sleep(300)
+  const clothes = (await panelButtons()).find(b => /^Clothes/.test(b.t))
+  const shown = dollars(clothes?.t.match(/\$([\d,]+)/)?.[1] ?? NaN)
+  await page.locator('div.fixed button').filter({ hasText: /^Clothes/ }).first().click(); await sleep(300)
   await closePanel()
-  const charged = dollars((await newestLog()).match(/new clothes\. \$([\d,]+) spent/)?.[1] ?? NaN)
-  if (!Number.isFinite(charged)) fail('clothes shopping did not report what it charged')
-  else if (shown !== charged) fail(`Clothes Shopping shows ~$${shown} and charges $${charged} (1968)`)
-  else pass(`Clothes Shopping shows and charges the same ${DIM(`($${charged} in 1968)`)}`)
+  const charged = dollars((await newestLog()).match(/It costs \$([\d,]+)\./)?.[1] ?? NaN)
+  if (!Number.isFinite(charged)) fail('buying clothes did not report what it charged')
+  else if (shown !== charged) fail(`Clothes shows $${shown} and charges $${charged} (1968)`)
+  else pass(`Clothes shows and charges the same ${DIM(`($${charged} in 1968)`)}`)
 } else fail('no Shopping category at 18')
 
 await ageYears(1); await clearBlocking()
@@ -236,7 +236,7 @@ if (await openCategory('Crime')) {
   await overflowAt('the crime panel')
   await closePanel()
 }
-for (const cat of ['Mind & Body', 'Love', 'Money', 'Travel', 'Assets', 'Licenses', 'Pets', 'Salon & Spa']) {
+for (const cat of ['Mind & Body', 'Love', 'Money', 'Travel', 'Assets', 'Licenses', 'Pets', 'Grooming']) {
   if (await openCategory(cat)) { await overflowAt(`the ${cat} panel`); await interfaceRules(`the ${cat} panel`) }
 }
 await closePanel()

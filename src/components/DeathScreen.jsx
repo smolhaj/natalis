@@ -1,5 +1,9 @@
+import { useState } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { generateLifeNotes } from '../engine/gameEngine'
+import { ribbonForDisplay } from '../engine/epitaph'
+import { getCountryDisplayName } from '../utils/countryUtils'
+import LogEntry from './LogEntry'
 
 // The ribbon palette bypassed the muted remap with raw saturated hexes. The
 // ribbon is a one-line verdict on a life; it does not need to be a colour.
@@ -17,11 +21,8 @@ const RIBBON_STYLES = {
 export default function DeathScreen() {
   const character      = useGameStore(s => s.character)
   const stats          = useGameStore(s => s.stats)
-  const flags          = useGameStore(s => s.flags)
-  const regret         = useGameStore(s => s.regret)
   const age            = useGameStore(s => s.age)
   const causeOfDeath   = useGameStore(s => s.causeOfDeath)
-  const ribbon         = useGameStore(s => s.ribbon)
   const epitaph        = useGameStore(s => s.epitaph)
   const criminalRecord = useGameStore(s => s.criminalRecord)
   const career         = useGameStore(s => s.career)
@@ -29,12 +30,21 @@ export default function DeathScreen() {
   const money          = useGameStore(s => s.money)
   const startNewLife   = useGameStore(s => s.startNewLife)
   const fullState      = useGameStore(s => s)
+  const log            = useGameStore(s => s.log)
+  const mode           = useGameStore(s => s.mode)
+  const [reading, setReading] = useState(false)
 
   if (!character) return null
 
+  // An infant is not given an archetype or a column of final stats: "LIFE
+  // ARCHETYPE: The Quiet Life" and "Smarts 41" over a death at seven months
+  // is the game reporting on a person who did not get to be one yet.
+  const infant = age < 5
+  const shownRibbon = ribbonForDisplay(fullState)
+
   const birthYear = character.birthYear
   const deathYear = birthYear + age
-  const rs = RIBBON_STYLES[ribbon?.color ?? 'gray'] ?? RIBBON_STYLES.gray
+  const rs = RIBBON_STYLES[shownRibbon?.color ?? 'gray'] ?? RIBBON_STYLES.gray
   const lifeNotes = generateLifeNotes(fullState)
   const epitaphParagraphs = epitaph ? epitaph.split('\n\n').filter(Boolean) : []
 
@@ -53,7 +63,7 @@ export default function DeathScreen() {
   ]
 
   return (
-    <div className="min-h-screen flex items-start justify-center py-8 px-4" style={{ background: '#f5f0e8' }}>
+    <div className="min-h-screen flex items-start justify-center py-8 px-4 bg-natalis-bg">
       <div className="w-full max-w-sm space-y-4">
 
         {/* ── Masthead ── */}
@@ -77,20 +87,22 @@ export default function DeathScreen() {
               <span className="text-natalis-faint">—</span>
               <span className="text-xs text-natalis-muted">{deathYear}</span>
             </div>
-            <p className="text-xs text-natalis-faint mt-0.5">{character.country.name} · Died aged {age}</p>
+            <p className="text-xs text-natalis-faint mt-0.5">
+              {getCountryDisplayName(character.country, birthYear)} · {age === 0 ? 'Died in the first year' : `Died aged ${age}`}
+            </p>
             {causeOfDeath && (
               <p className="text-xs text-natalis-faint italic mt-1">{causeOfDeath}</p>
             )}
           </div>
 
           {/* Ribbon as pull-quote */}
-          {ribbon && (
+          {shownRibbon && (
             <div className="mx-5 mb-4 mt-2 px-4 py-3 rounded-xl border-l-4" style={{ borderColor: rs.border, background: 'rgba(0,0,0,0.03)' }}>
               <p className="text-xs font-bold uppercase tracking-wider mb-0.5" style={{ color: rs.text, opacity: 0.6 }}>
                 Life Archetype
               </p>
-              <p className="font-prose text-[1.0625rem] text-natalis-text">{ribbon.name}</p>
-              <p className="font-prose text-sm italic mt-1 text-natalis-dim leading-relaxed">{ribbon.description}</p>
+              <p className="font-prose text-[1.0625rem] text-natalis-text">{shownRibbon.name}</p>
+              <p className="font-prose text-sm italic mt-1 text-natalis-dim leading-relaxed">{shownRibbon.description}</p>
             </div>
           )}
         </div>
@@ -101,7 +113,9 @@ export default function DeathScreen() {
             <p className="text-xs font-bold uppercase tracking-wider text-natalis-faint mb-3">Obituary</p>
             <div className="space-y-3">
               {epitaphParagraphs.map((para, i) => (
-                <p key={i} className="font-prose text-prose text-natalis-text" style={{ fontStyle: i === 0 ? 'normal' : 'italic' }}>
+                // The first paragraph was roman and the rest italic, which read
+                // as two different voices. An obituary is one.
+                <p key={i} className="font-prose text-prose text-natalis-text">
                   {para}
                 </p>
               ))}
@@ -110,7 +124,7 @@ export default function DeathScreen() {
         )}
 
         {/* ── Final stats — compact inline ── */}
-        <div className="rounded-2xl px-5 py-4 border border-natalis-border" style={{ background: '#fdfcf9' }}>
+        {!infant && <div className="rounded-2xl px-5 py-4 border border-natalis-border" style={{ background: '#fdfcf9' }}>
           <p className="text-xs font-bold uppercase tracking-wider text-natalis-faint mb-3">At death</p>
           <div className="grid grid-cols-2 gap-x-4 gap-y-2">
             {statItems.map(([label, val]) => (
@@ -136,14 +150,15 @@ export default function DeathScreen() {
             ].filter(Boolean).map(([label, value]) => (
               <div key={label} className="flex flex-col">
                 <span className="text-xs text-natalis-faint uppercase tracking-wide" style={{ fontSize: '0.6rem' }}>{label}</span>
-                <span className="text-xs font-bold text-natalis-dim truncate">{value}</span>
+                {/* Wraps: "Trading Company Owner" was cut to "Trading Company O…" at phone width. */}
+                <span className="text-xs font-bold text-natalis-dim break-words">{value}</span>
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* ── Life in brief ── */}
-        {lifeNotes.length > 0 && (
+        {!infant && lifeNotes.length > 0 && (
           <div className="rounded-2xl px-5 py-4 border border-natalis-border" style={{ background: '#fdfcf9' }}>
             <p className="text-xs font-bold uppercase tracking-wider text-natalis-faint mb-3">Life in brief</p>
             <ul className="space-y-1.5">
@@ -157,11 +172,34 @@ export default function DeathScreen() {
           </div>
         )}
 
+        {/* ── The life, in order ── */}
+        {/* The log was gone the moment the life ended, so the player could not
+            go back and read the thing the obituary was summarising. */}
+        {(log?.length ?? 0) > 1 && (
+          <div className="rounded-2xl border border-natalis-border bg-natalis-surface overflow-hidden">
+            <button
+              onClick={() => setReading(r => !r)}
+              aria-expanded={reading}
+              className="w-full px-5 py-3 flex items-center justify-between text-left font-prose text-[0.9375rem] text-natalis-dim hover:text-natalis-text transition-colors"
+            >
+              <span>{reading ? 'Close the life' : 'Read this life'}</span>
+              <span aria-hidden="true" className="text-natalis-muted text-sm">{reading ? '▾' : '▸'}</span>
+            </button>
+            {reading && (
+              <div className="divide-y divide-natalis-border border-t border-natalis-border">
+                {log.map((entry, i) => (
+                  <LogEntry key={i} entry={entry} birthYear={birthYear} passive={mode === 'passive'} variant="row" />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* ── Restart ── */}
         <button
           onClick={startNewLife}
-          className="w-full py-4 rounded-2xl font-bold text-white text-base shadow-card-lg transition-all active:scale-95"
-          style={{ background: '#3f5670' }}
+          className="w-full py-3.5 rounded-xl bg-natalis-text text-natalis-surface font-prose text-base
+                     hover:bg-natalis-dim transition-colors active:scale-[0.99]"
         >
           Begin another life
         </button>
