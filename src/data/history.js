@@ -1153,10 +1153,24 @@ export function warDeathHazard({ country, year, age, gender, ethnicity, religion
 // The year a married person in this country could actually end a marriage in
 // law. Absent = available throughout the period (with the norms below doing
 // the rest). The Philippines has never had divorce for its non-Muslim majority.
+// Ireland's referendum passed in 1995 and the Family Law (Divorce) Act came
+// into force in February 1997; Malta's in October 2011. One table: the player
+// action and the life-course hazard each kept their own copy, and they
+// disagreed about Ireland by a year and about Malta entirely.
 export const DIVORCE_LEGAL_FROM = {
-  Ireland: 1996, Italy: 1970, Spain: 1981, Chile: 2004, Malta: 2011, Argentina: 1987,
+  Ireland: 1997, Italy: 1970, Spain: 1981, Chile: 2004, Malta: 2011, Argentina: 1987,
   Brazil: 1977, Portugal: 1975, Colombia: 1976, Paraguay: 1991, Philippines: 9999,
 }
 export function divorceAvailable(countryName, year) {
   return year >= (DIVORCE_LEGAL_FROM[countryName] ?? 0)
+}
+/**
+ * Whether THIS person could end a marriage in law, where they live, that year.
+ * The Philippines' Code of Muslim Personal Laws (1977) allows it to Filipino
+ * Muslims, who are the exception to the country's having no divorce at all.
+ */
+export function divorceLegalFor(country, year, religion = '') {
+  const name = typeof country === 'string' ? country : country?.name
+  if (name === 'Philippines' && /muslim|islam/.test(String(religion ?? ''))) return year >= 1977
+  return divorceAvailable(name, year)
 }

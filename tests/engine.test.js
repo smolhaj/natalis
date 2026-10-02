@@ -179,6 +179,7 @@ describe('buildEffectProxy', () => {
       'relocate', 'practiceHobby', 'addGold', 'addDebt', 'setDebt',
       'setBanked', 'setJointFamily', 'partnerRel', 'updatePartnerRel',
       'addPartnerMoment', 'scheduleEcho',
+      'killChild', 'killSibling', 'endMarriage',
     ]
     for (const m of methods) {
       expect(typeof proxy[m]).toBe('function', `proxy.${m} should be a function`)

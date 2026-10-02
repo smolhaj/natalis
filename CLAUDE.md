@@ -168,7 +168,7 @@ Event shape:
 **Critical**: `effect` functions receive only `p` (the proxy). `G` is only available in `when` guards. Never put G-dependent logic in effects.
 
 The `G` object (built by `buildG()`) exposes everything event conditions need:
-`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.conflictRisk` (war intensity where the character lives, THIS year — never read `country.conflictRisk`), `G.hasGrandchildren`, `G.healthcare` (the health system where the character lives, THIS year, from `healthcareAt` — never read `country.healthcare`), `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
+`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children` and `G.siblings` (the **living** only — `G.allChildren`, `G.deadChildren` and `G.allSiblings` carry the dead), `G.divorceLegal`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions), `G.currentProject` (active slow-burn project object, or null), `G.conflictRisk` (war intensity where the character lives, THIS year — never read `country.conflictRisk`), `G.hasGrandchildren`, `G.healthcare` (the health system where the character lives, THIS year, from `healthcareAt` — never read `country.healthcare`), `G.retirementAge` (the age this character can retire at, or **null** where there is no pension system to be inside — a smallholder does not retire)
 
 Effect proxy shorthands (all are additive deltas):
 - `p.m` → happiness, `p.h` → health, `p.e` → smarts, `p.s` → charisma, `p.w` → wealth stat, `p.lo` → looks
@@ -178,6 +178,8 @@ Effect proxy shorthands (all are additive deltas):
 - `p.killParent('father'|'mother')` — marks parent dead
 - `p.killPartner()` — removes partner, sets widowed flag
 - `p.killChild(idx?)` — marks a child dead (`alive: false`, `deathYear`); no index = youngest living, `'eldest'` = eldest living. Never narrate a death without it.
+- `p.killSibling(idx?)` — the same for a sibling
+- `p.endMarriage()` — divorces where the law allowed it (`divorceLegalFor` in history.js), separates where it did not
 - `p.setResidency('work_visa')` — sets residencyStatus
 - `p.wipeMoney(fraction)` — deducts fraction of current money (e.g. `p.wipeMoney(0.3)` = lose 30%)
 - `p.addFriend(name, quality)`, `p.updatePartnerRel(delta)`

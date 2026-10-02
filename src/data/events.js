@@ -595,7 +595,7 @@ const BASE_EVENTS = [
     id: 'ec_illness',
     phase: 'early_childhood',
     weight: 2,
-    when: (G) => G.character.country.healthcare === 'poor' || G.character.country.healthcare === 'very_poor',
+    when: (G) => G.healthcare === 'poor' || G.healthcare === 'very_poor',
     text: 'A childhood illness passes through your area. You survive, but it leaves its mark.',
     context: null,
     choices: null,
@@ -1552,9 +1552,9 @@ const BASE_EVENTS = [
             },
             {
               text: 'Let it end',
-              tag: 'divorced',
+              tag: null, // endMarriage sets divorced or breakup, by the law where you live
               outcome: 'The end is quiet and painful in equal measure.',
-              effect: (p) => { p.m -= 8; p.r += 6; p.clearPartner(); p.addFlag('divorced'); },
+              effect: (p) => { p.m -= 8; p.r += 6; p.endMarriage(); },
               inject: null,
             },
           ],
@@ -2142,9 +2142,9 @@ const BASE_EVENTS = [
             },
             {
               text: 'Let the marriage end',
-              tag: 'divorced',
+              tag: null, // endMarriage sets divorced or breakup, by the law where you live
               outcome: 'The silence after is enormous.',
-              effect: (p) => { p.m -= 10; p.r += 8; p.clearPartner(); p.addFlag('divorced'); },
+              effect: (p) => { p.m -= 10; p.r += 8; p.endMarriage(); },
               inject: null,
             },
           ],
@@ -3085,8 +3085,8 @@ const BASE_EVENTS = [
     when: (G) => G.partner && G.age >= 58 && Math.random() < 0.12,
     text: 'Your partner of many years dies. The house is very quiet. Everything reminds you of them.',
     choices: [
-      { text: 'Lean on family and friends', tag: null, outcome: 'You are not alone. That is not nothing.', effect: (p) => { p.m -= 20; p.r += 8; p.clearPartner() }, inject: null },
-      { text: 'Grieve in solitude', tag: null, outcome: 'The grief is entirely yours. It does not share itself.', effect: (p) => { p.m -= 28; p.h -= 6; p.r += 15; p.clearPartner() }, inject: null },
+      { text: 'Lean on family and friends', tag: null, outcome: 'You are not alone. That is not nothing.', effect: (p) => { p.m -= 20; p.r += 8; p.killPartner() }, inject: null },
+      { text: 'Grieve in solitude', tag: null, outcome: 'The grief is entirely yours. It does not share itself.', effect: (p) => { p.m -= 28; p.h -= 6; p.r += 15; p.killPartner() }, inject: null },
     ],
     effect: null,
   },
@@ -3415,9 +3415,12 @@ const BASE_EVENTS = [
     phase: null,
     weight: 6,
     when: (G) => G.grandchildCount > 0 && !G.flags.includes('grandparent'),
+    // The household the grandchild is born into is where the family lives now:
+    // a Ghanaian grandmother in Hamburg is not doing the school pickups in Kumasi.
     text: (G) => {
-      if (G.character.country.archetype === 'wealthy_east') return 'Your child calls. The baby has arrived. In this culture, your role is expected to be central — caregiver, daily presence, family anchor.'
-      if (['subsaharan','developing_unstable'].includes(G.character.country.archetype)) return 'The grandchild arrives. In this family, this means you: childcare while the parents work, school pickups, stories at night.'
+      const arch = (G.currentCountry ?? G.character.country).archetype
+      if (arch === 'wealthy_east') return 'Your child calls. The baby has arrived. In this culture, your role is expected to be central — caregiver, daily presence, family anchor.'
+      if (['subsaharan','developing_unstable'].includes(arch)) return 'The grandchild arrives. In this family, this means you: childcare while the parents work, school pickups, stories at night.'
       return 'You are a grandparent. The weight of the word settles on you slowly, then all at once.'
     },
     choices: [
@@ -4852,7 +4855,7 @@ const BASE_EVENTS = [
         text: 'End the marriage',
         tag: null,
         outcome: 'The decision is clear, if not easy. The aftermath is complex.',
-        effect: (p) => { p.m -= 15; p.clearPartner(); p.addFlag('divorced'); p.setMem('infidelityEvent', true); },
+        effect: (p) => { p.m -= 15; p.endMarriage(); p.setMem('infidelityEvent', true); },
         inject: null,
       },
       {
@@ -5553,7 +5556,7 @@ const BASE_EVENTS = [
     // universal; the room is not.
     text: (G) => {
       const rural = G.character?.ruralUrban === 'rural'
-      const poor = ['very_low', 'low', 'low_medium'].includes(G.character?.country?.gdp)
+      const poor = ['very_low', 'low', 'low_medium'].includes(G.currentCountry?.gdp)
       const where = rural
         ? 'across the swept ground of the yard'
         : poor

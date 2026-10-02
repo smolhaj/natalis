@@ -25,7 +25,7 @@ import { buildMundaneLayer } from './mundaneLayer'
 import { rememberSaid, preferUnsaid } from './prose'
 import { tickLifeCourse, secondaryChance, primaryChance, unpurchasedHomeName, retirementAge, universityPlaceChance } from './lifeCourse'
 import { withArticle } from '../utils/countryUtils'
-import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic, choleraEndemic, healthcareAt, childHazard, adultHazard, warDeathHazard } from '../data/history.js'
+import { suspendedInstitutions, proseFitsInstitutions, institutionExists, conflictRiskAt, malariaEndemic, choleraEndemic, healthcareAt, childHazard, adultHazard, warDeathHazard, divorceLegalFor } from '../data/history.js'
 import { wageIndex, inEraMoney, inTodayMoney, eraDrift } from '../data/economy.js'
 import { hasTech } from '../data/technology.js'
 import { migrationDestinations, gulfNonNational } from '../data/migration.js'
@@ -369,6 +369,11 @@ function buildEffectProxy(state) {
   proxy.clearCareer = () => { proxy._clearCareer = true }
   proxy.setPartner = (partner) => { proxy._newPartner = partner }
   proxy.clearPartner = () => { proxy._clearPartner = true }
+  // The end of a union, in the law that applies where the character lives
+  // that year. Three events set `divorced` in Ireland before 1997 and in the
+  // Philippines, where there has never been divorce for most of the country;
+  // there a marriage ending is a separation, and the flag says so.
+  proxy.endMarriage = () => { proxy._endMarriage = true; proxy._clearPartner = true }
   // Events may hand over a partial child. Four already do: no name, and
   // `ageAtBirth: 0`, which meant a newborn came out the same age as its parent
   // once child ages were actually derived. Fill in whatever is missing here so
@@ -421,6 +426,14 @@ function buildEffectProxy(state) {
     proxy._killChild = idx ?? -1
     proxy.mem['lastMajorEvent_bereavement'] = state.currentYear
     proxy.mem['lost_childYear'] = state.currentYear
+  }
+  // A sibling's death, made true. `idx` is the index in `siblings`; without
+  // one, the first living sibling — which is `G.siblings[0]`, the one a text
+  // naming "your sibling" named.
+  proxy.killSibling = (idx) => {
+    proxy._killSibling = idx ?? -1
+    proxy.mem['lastMajorEvent_bereavement'] = state.currentYear
+    proxy.mem['lost_siblingYear'] = state.currentYear
   }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
   // Its missing counterpart. Prison could only ever be entered through
@@ -587,6 +600,7 @@ function resolveProxyExtras(state, proxy) {
   // `married` used to survive both, so a Russian of 1940 whose wife an event
   // had replaced with a new partner then "married" the new one while the game
   // still held the first marriage — two weddings, no divorce, no death.
+  const endingPartner = proxy._endMarriage && next.partner && next.partner.alive !== false ? next.partner : null
   const endsUnion = (proxy._clearPartner || (proxy._newPartner !== undefined && proxy._newPartner !== next.partner)) &&
     next.partner && next.partner.alive !== false
   if (endsUnion) {
@@ -599,6 +613,19 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
+  if (endingPartner) {
+    const legal = divorceLegalFor(liveCountry(next), next.currentYear, next.religion ?? next.character?.religion ?? '')
+    const divorced = !!endingPartner.married && legal
+    next = {
+      ...next,
+      flags: [...new Set([...(next.flags ?? []), divorced ? 'divorced' : 'breakup'])],
+      mem: {
+        ...(next.mem ?? {}),
+        ...(divorced ? { divorcedYear: next.currentYear, lastMajorEvent_relationship: next.currentYear } : {}),
+        ...(endingPartner.married && !legal ? { marriedStillInLaw: { name: endingPartner.name, year: next.currentYear } } : {}),
+      },
+    }
+  }
   if (proxy._newChild)       next = { ...next, children: [...next.children, proxy._newChild] }
   if (proxy._newFriends)     next = { ...next, friends: [...(next.friends ?? []), ...proxy._newFriends] }
   if (proxy._newGpa !== undefined) next = { ...next, gpa: proxy._newGpa }
@@ -668,6 +695,19 @@ function resolveProxyExtras(state, proxy) {
       }
     }
   }
+  if (proxy._killSibling !== undefined && next.siblings?.length) {
+    const k = proxy._killSibling
+    const target = typeof k === 'number' && k >= 0 && next.siblings[k] && next.siblings[k].alive !== false
+      ? k
+      : next.siblings.findIndex(sb => sb.alive !== false)
+    if (target >= 0) {
+      next = {
+        ...next,
+        siblings: next.siblings.map((sb, i) => i === target ? { ...sb, alive: false, deathYear: next.currentYear } : sb),
+        flags: [...new Set([...(next.flags ?? []), 'lost_sibling'])],
+      }
+    }
+  }
   if (proxy._killPartner && next.partner) {
     // Same as tickPartner's own death path: the marriage ends with the partner,
     // so `married` must not survive them.
@@ -679,9 +719,20 @@ function resolveProxyExtras(state, proxy) {
     }
   }
   if (proxy._childRelDeltas && next.children) {
+    // The index is into `children`, which keeps the dead. Most callers pass a
+    // literal 0 for the child the text named, and the text named
+    // `G.children[0]` — the eldest LIVING child. A delta aimed at a dead child
+    // goes to the first living one instead of warming a grave.
+    const firstLiving = next.children.findIndex(c => c.alive !== false)
+    const deltas = {}
+    for (const [k, d] of Object.entries(proxy._childRelDeltas)) {
+      const i = Number(k)
+      const to = next.children[i]?.alive === false ? firstLiving : i
+      if (to >= 0) deltas[to] = (deltas[to] ?? 0) + d
+    }
     next = { ...next, children: next.children.map((c, i) =>
-      proxy._childRelDeltas[i] !== undefined
-        ? { ...c, relationshipQuality: clamp((c.relationshipQuality ?? 50) + proxy._childRelDeltas[i], 0, 100) }
+      deltas[i] !== undefined
+        ? { ...c, relationshipQuality: clamp((c.relationshipQuality ?? 50) + deltas[i], 0, 100) }
         : c
     )}
   }
@@ -1289,7 +1340,17 @@ export function buildG(state) {
     currentYear,
     career: state.career,
     education: state.education,
-    children: state.children,
+    // The living children. The engine kills children now (`killChild`, the
+    // under-5 and adult hazards), and ~350 guards read `G.children` as "the
+    // children you have": `.length > 0`, `.some(c => c.age >= 18)`,
+    // `G.children[0].name`, and every one of them could name a dead child as
+    // living — "calls once a month now" about a son already buried. Fixing
+    // the predicate here fixes all of them; the few readers
+    // that want the dead (grief, the count of children ever born) read
+    // `allChildren` or `deadChildren`.
+    children: (state.children ?? []).filter(c => c && c.alive !== false),
+    allChildren: state.children ?? [],
+    deadChildren: (state.children ?? []).filter(c => c && c.alive === false),
     mem: state.mem ?? {},
     criminalRecord: state.criminalRecord ?? [],
     inPrison: state.inPrison,
@@ -1316,7 +1377,14 @@ export function buildG(state) {
     hooksUpCount: state.hooksUpCount ?? 0,
     karma: state.karma ?? 50,
     fame: state.fame ?? 0,
-    siblings: state.siblings ?? [],
+    // Living siblings, for the same reason as `children`: tickSiblings kills
+    // them on country-and-year rates and keeps them on state with
+    // `alive: false`, and 81 guards read the list bare. `allSiblings` keeps
+    // the dead for the grief layer.
+    siblings: (state.siblings ?? []).filter(s => s && s.alive !== false),
+    allSiblings: state.siblings ?? [],
+    // Whether a marriage can be ended in law here, this year, for this person.
+    divorceLegal: divorceLegalFor(liveCountry(state), currentYear, state.religion ?? state.character?.religion ?? ''),
     pets: state.pets ?? [],
     assets: state.assets ?? { properties: [], vehicles: [] },
     licenceObtained: state.licenceObtained ?? false,
@@ -2378,7 +2446,7 @@ export function attemptCrime(state, crimeId) {
  * family was when the character left it as an adult, and went with them when
  * the family left together.
  */
-function familyCountry(state) {
+export function familyCountry(state) {
   const live = liveCountry(state)
   const left = state.mem?.leftHomeAge
   if (left != null && left >= 18) return state.character?.country ?? live
@@ -3626,7 +3694,9 @@ function tickEnrollment(state) {
 function birthLine(s, child) {
   const n = child.name
   const first = n.split(' ')[0]
-  const order = (s.children ?? []).length // includes this child
+  // Living children, this one included: "the older child stands at the edge
+  // of the bed" is about who is in the room, not who was ever born.
+  const order = (s.children ?? []).filter(c => c.alive !== false).length
   const lc = liveCountry(s)
   const y = s.currentYear
   const hc = healthcareAt(lc, y)
@@ -4063,7 +4133,10 @@ export function tick(state) {
   // comparing against undefined, silently killing the teen-children,
   // estranged-child, children-abroad and grandparent texture.
   if (s.children?.length) {
-    s.children = s.children.map(c => ({ ...c, age: Math.max(0, s.age - (c.ageAtBirth ?? s.age)) }))
+    // The dead do not have birthdays: a child keeps the age they died at.
+    s.children = s.children.map(c => c.alive === false
+      ? { ...c, age: c.deathAge ?? c.age }
+      : { ...c, age: Math.max(0, s.age - (c.ageAtBirth ?? s.age)) })
     s = tickChildMortality(s)
 
     // `cared_for_children` gates the late-life grandchild and children-support
@@ -4071,7 +4144,7 @@ export function tick(state) {
     // its inverse-guarded partner always did. Earned here instead: raising a
     // child to adulthood while the relationship holds.
     if (!s.flags.includes('cared_for_children') &&
-        s.children.some(c => (c.age ?? 0) >= 18 && (c.relationshipQuality ?? 0) >= 50)) {
+        s.children.some(c => c.alive !== false && (c.age ?? 0) >= 18 && (c.relationshipQuality ?? 0) >= 50)) {
       s.flags = [...new Set([...s.flags, 'cared_for_children'])]
     }
   }
@@ -4700,7 +4773,7 @@ export function tick(state) {
 
   // Children relationship drift
   if (s.children.length > 0) {
-    s.children = s.children.map(child => ({
+    s.children = s.children.map(child => child.alive === false ? child : ({
       ...child,
       relationshipQuality: clamp(child.relationshipQuality + (70 - child.relationshipQuality) * 0.02 + randomBetween(-1, 2), 0, 100),
     }))

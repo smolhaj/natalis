@@ -110,8 +110,11 @@ export const INDUSTRIAL_EVENTS = [
     phase: null,
     weight: 12,
     when: (G) =>
+      // The flag, not the address: bhopal_1984 sets it for whoever lived in
+      // Bhopal that night, and somebody who moved there in 1988 was not a
+      // claimant. Reads where the character lives now only through the flag.
       G.character.country?.name === 'India' &&
-      (G.place?.name === 'Bhopal' || G.flags.has('bhopal_survivor') || G.mem?.bhopalLocalSurvivor) &&
+      (G.flags.has('bhopal_survivor') || G.mem?.bhopalLocalSurvivor) &&
       G.age >= 16 &&
       G.currentYear >= 1990 && G.currentYear <= 1997 &&
       !G.mem?.bhopalSettlement,
@@ -144,7 +147,7 @@ export const INDUSTRIAL_EVENTS = [
     when: (G) =>
       G.character.country?.name === 'India' &&
       G.flags.has('industrial_disaster_era') &&
-      G.place?.name !== 'Bhopal' && !G.flags.has('bhopal_survivor') && !G.mem?.bhopalLocalSurvivor &&
+      !G.flags.has('bhopal_survivor') && !G.mem?.bhopalLocalSurvivor &&
       G.age >= 14 &&
       G.currentYear >= 1989 && G.currentYear <= 1991 &&
       !G.mem?.bhopalSettlement,
@@ -152,6 +155,26 @@ export const INDUSTRIAL_EVENTS = [
     context: 'The 1989 settlement was 470 million dollars for about half a million claimants, roughly 550 dollars each.',
     choices: null,
     effect: (p) => { p.m -= 1; p.setMem('bhopalSettlement', true) },
+  },
+
+  {
+    // The criminal case, twenty-five years on. On 7 June 2010 a Bhopal
+    // magistrate convicted seven former executives of Union Carbide India of
+    // causing death by negligence: two years and a fine, and bail the same
+    // afternoon. Warren Anderson had been declared an absconder and was not in
+    // the dock.
+    id: 'ind_bhopal_verdict_2010',
+    phase: null,
+    weight: 40,
+    when: (G) =>
+      G.flags.has('bhopal_survivor') &&
+      G.currentYear === 2010 &&
+      G.age >= 26 &&
+      !G.mem?.bhopalVerdict,
+    text: 'In June the court gives its verdict. Seven men, old now, are guilty of causing death by negligence, which is the charge the law has for it. Two years each, and a fine of about a hundred thousand rupees. They are given bail before the evening news. Outside the court the women who have been coming to every hearing for twenty-five years hold up photographs of husbands and children, and one of them holds up a photograph of herself at twenty, before.',
+    context: 'On 7 June 2010 the Chief Judicial Magistrate in Bhopal convicted seven former officials of Union Carbide India Limited under section 304A of the Indian Penal Code, death by negligence, the charge having been reduced from culpable homicide by the Supreme Court in 1996. Each received two years. Warren Anderson, chairman of the American parent company, was never tried; he died in Florida in 2014.',
+    choices: null,
+    effect: (p) => { p.m -= 5; p.r += 3; p.setMem('bhopalVerdict', true) },
   },
 
   // ── POLLUTION AS CLASS ────────────────────────────────────────────────────────

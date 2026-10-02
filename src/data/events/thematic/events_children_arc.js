@@ -1274,7 +1274,7 @@ export const CHILDREN_ARC_EVENTS = [
     },
     choices: null,
     effect: (p) => {
-      const children = p._state?.children ?? []
+      const children = (p._state?.children ?? []).filter(c => c.alive !== false)
       const child = children.find(c => {
         const ca = (p._state?.age ?? 0) - c.ageAtBirth
         return ca >= 18 && ca <= 25
@@ -1326,7 +1326,7 @@ export const CHILDREN_ARC_EVENTS = [
     },
     choices: null,
     effect: (p) => {
-      const child = (p._state?.children ?? []).find(c => {
+      const child = (p._state?.children ?? []).filter(c => c.alive !== false).find(c => {
         const ca = (p._state?.age ?? 0) - c.ageAtBirth
         return ca >= 15 && ca <= 17
       })

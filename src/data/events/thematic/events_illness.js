@@ -19,7 +19,7 @@ export const ILLNESS_EVENTS = [
       !G.conditions.some(c => c.id === 'diabetes') &&
       (G.fitness < 40 || G.stats.health < 55),
     text: (G) => {
-      const hc = G.character.country.healthcare ?? 'fair'
+      const hc = G.healthcare ?? 'fair'
       if (hc === 'excellent' || hc === 'good') {
         return 'A routine blood test comes back with elevated glucose. The doctor is matter-of-fact: Type 2 diabetes. Manageable with lifestyle changes and, depending on how you respond, medication. It is a diagnosis that many people have and that requires ongoing attention.'
       }
@@ -114,8 +114,8 @@ export const ILLNESS_EVENTS = [
       !G.conditions.some(c => c.id === 'cancer_survivable') &&
       !G.flags.includes('cancer'),
     text: (G) => {
-      const hc = G.character.country.healthcare ?? 'fair'
-      const archetype = G.character.country.archetype
+      const hc = G.healthcare ?? 'fair'
+      const archetype = (G.currentCountry ?? G.character.country).archetype
       if (hc === 'excellent' || hc === 'good') {
         return 'The scan was precautionary. The result is not. Early-stage — that word, early, does significant work in the oncologist\'s sentence. Treatable. A course of treatment, monitoring, and the statistical likelihood of a full recovery. The word cancer has landed. You let it stay there for a while.'
       }
@@ -239,11 +239,11 @@ export const ILLNESS_EVENTS = [
       !G.conditions.some(c => c.id === 'hiv') &&
       G.currentYear >= 1981 &&
       (G.flags.includes('lgbtq_identity') || G.hooksUpCount >= 8 ||
-       ['subsaharan', 'developing_unstable'].includes(G.character.country.archetype)) &&
+       ['subsaharan', 'developing_unstable'].includes((G.currentCountry ?? G.character.country).archetype)) &&
       G.hooksUpCount >= 3,
     text: (G) => {
       const year = G.currentYear
-      const hc = G.character.country.healthcare ?? 'fair'
+      const hc = G.healthcare ?? 'fair'
       if (year < 1995) {
         return 'The test result is positive. In ' + year + ', this diagnosis carries a weight that is different from what it will carry in twenty years. There is no reliable treatment. What follows will be a series of decisions about what kind of life is possible inside this.'
       }

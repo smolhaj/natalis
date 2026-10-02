@@ -84,4 +84,9 @@ export const IRAN_CIVILIAN_FLAGS = {
     description: 'Lived through the November 2019 fuel protests and the internet shutdown.',
     notes: 'Follow-through: irc_ft_rooftops_2022.',
   },
+  irc_khuzestan_1980: {
+    weight: 'major', category: 'conflict', intent: 'event',
+    description: 'Lived in Khuzestan when Iraq invaded in September 1980: Ahvaz shelled, the border villages emptied.',
+    notes: 'Follow-through: irc_ft_khuzestan_palms, the beheaded palms along the Arvand.',
+  },
 }

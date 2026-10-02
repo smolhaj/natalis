@@ -634,7 +634,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_rural_no_doctor',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.ruralUrban === 'rural' && G.character.country.healthcare === 'very_poor',
+    when: (G) => G.ruralUrban === 'rural' && G.healthcare === 'very_poor',
     text: 'Your sister gets sick with a fever that does not break. The nearest clinic is three hours on foot. Your mother walks through the night. By morning the fever has broken on its own. Your sister is fine. Your mother sits down and does not get up for a day.',
     choices: null,
     effect: (p) => { p.h -= 3; p.m -= 8; p.r += 5; p.addFlag('witnessed_medical_crisis') },

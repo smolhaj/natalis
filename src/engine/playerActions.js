@@ -17,7 +17,7 @@ import {
 import { hasTech, wasWealthy } from '../data/technology.js'
 import { livingRuralUrban, getCountryRegime } from './character'
 import { urbanChanceFor } from '../data/series.js'
-import { institutionExists } from '../data/history.js'
+import { institutionExists, healthcareAt, divorceLegalFor } from '../data/history.js'
 import { exitClosed, entryRoute, destinationsFor, destinationThen, routeCost } from '../data/exitRules.js'
 import { getCountryDisplayName } from '../utils/countryUtils.js'
 
@@ -227,17 +227,8 @@ export function getMarried(state) {
 // Where and until when a marriage could not be ended by a court. A married
 // Irish couple in 1980 could separate, live apart and never remarry; the
 // panel granted them a divorce for a legal fee.
-const DIVORCE_ILLEGAL_UNTIL = {
-  Ireland: 1997, Italy: 1970, Spain: 1981, Argentina: 1987, Brazil: 1977, Chile: 2004,
-  Paraguay: 1991, Colombia: 1976, Philippines: 9999, Portugal: 1975,
-}
 export function divorceLegal(state) {
-  const c = liveCountry(state)
-  const until = DIVORCE_ILLEGAL_UNTIL[c?.name]
-  if (until == null) return true
-  // The Code of Muslim Personal Laws allows it to Filipino Muslims.
-  if (c?.name === 'Philippines' && /muslim|islam/.test(state.religion ?? state.character?.religion ?? '')) return true
-  return state.currentYear >= until
+  return divorceLegalFor(liveCountry(state), state.currentYear, state.religion ?? state.character?.religion ?? '')
 }
 
 export function fileForDivorce(state) {
@@ -331,7 +322,7 @@ export function tryForChild(state, opts = {}) {
     // to be counted before they can be said.
     const tryingSince = state.mem?.tryingSinceAge ?? state.age
     const years = Math.max(1, state.age - tryingSince + 1)
-    const hasChildren = (state.children ?? []).length > 0
+    const hasChildren = (state.children ?? []).some(c => c.alive !== false)
     const pool = hasChildren
       // A couple who already have a child are not inside the same silence.
       ? years <= 2
@@ -423,7 +414,7 @@ export function tryForChild(state, opts = {}) {
 
 export function spendTimeWithChild(state, childIndex) {
   const child = state.children[childIndex]
-  if (!child) return state
+  if (!child || child.alive === false) return state
   const updated = [...state.children]
   updated[childIndex] = { ...child, relationshipQuality: clamp(child.relationshipQuality + randomBetween(5, 12), 0, 100) }
   const h = habituated(state, 'child_time', 3)
@@ -627,7 +618,10 @@ export function placeNow(state) {
   // top of a poor one, or simply a lot of money in this place's terms.
   const comfortable = wealthy || tier >= 5 || means >= $$(localCost(40000, c?.gdp), state)
   const regime = getCountryRegime(c, year)
-  return { c, name: c?.name, year, rural, urbanShare, wealthy, income, means, tier, comfortable, regime }
+  // The health system there THAT YEAR. `c.healthcare` is today's rating, and
+  // put 2020 clinics into 1950 Seoul.
+  const hc = healthcareAt(c, year) ?? c?.healthcare
+  return { c, name: c?.name, year, rural, urbanShare, wealthy, income, means, tier, comfortable, regime, hc }
 }
 
 /** A price within reach of somebody with these means: `years` of income, or the savings. */
@@ -635,7 +629,7 @@ function withinReach(p, price, years = 1) {
   return price <= Math.max(p.means * years, 1)
 }
 
-const clinicHere = (p) => institutionExists(p.name, p.year, 'clinic') && p.c?.healthcare !== 'very_poor' || (p.comfortable && institutionExists(p.name, p.year, 'clinic'))
+const clinicHere = (p) => institutionExists(p.name, p.year, 'clinic') && p.hc !== 'very_poor' || (p.comfortable && institutionExists(p.name, p.year, 'clinic'))
 
 // ── Salon, shopping, surgery ────────────────────────────────────────────────
 
@@ -699,7 +693,7 @@ export function surgeryPrice(state, type) { return estimateCost(state, SURGERY[t
 export function surgeryOptions(state) {
   if (state.age < 18) return []
   const p = placeNow(state)
-  const hc = p.c?.healthcare
+  const hc = p.hc
   // Cosmetic surgery as a thing ordinary people bought is postwar and rich-world,
   // and then the cities of Brazil, Korea, Iran and Lebanon from the 1980s.
   const exists = p.year >= 1950 && clinicHere(p) && (
@@ -940,7 +934,7 @@ export function substanceOptions(state) {
 
 export function therapyExists(state) {
   const p = placeNow(state)
-  const hc = p.c?.healthcare
+  const hc = p.hc
   return p.year >= 1920 && hc !== 'poor' && hc !== 'very_poor' && (!p.rural || p.wealthy) && clinicHere(p)
 }
 export function rehabExists(state) {
@@ -1158,7 +1152,7 @@ export function applyActivity(state, activityId) {
     // There is nobody to book where the health system has no one trained in
     // it, which is the same sentence the diagnosis prints there. Costs nothing
     // and no action, because nothing happened.
-    const hc = liveCountry(state)?.healthcare
+    const hc = healthcareAt(liveCountry(state), state.currentYear)
     if (hc === 'poor' || hc === 'very_poor' || state.currentYear < 1920) {
       return { ...state, log: [...state.log, { age: state.age, isKey: false, text: pickFrom(preferUnsaid(state, [
         'There is nobody here who does this. You ask, and the answer is a pastor, an imam, an aunt, or a doctor in the capital who does something else.',
@@ -1419,7 +1413,7 @@ export function sellVehicle(state, vehicleIdx) {
 
 export function abandonChild(state, childIndex) {
   const child = state.children[childIndex]
-  if (!child) return state
+  if (!child || child.alive === false) return state
   const updated = state.children.filter((_, i) => i !== childIndex)
   return {
     ...state,
@@ -2326,7 +2320,7 @@ export function bookTrip(state, destinationId) {
   // Queue a random travel event
   const travelEventPool = [
     { id: `travel_food_poison_${state.age}`, phase: getPhase(state.age), weight: 5, text: `You get food poisoning in ${dest.name}. Two days in bed. Still worth it.`, effect: (p) => { p.m -= 10; p.h -= 5 }, choices: null },
-    { id: `travel_pickpocket_${state.age}`, phase: getPhase(state.age), weight: 4, text: `Someone picks your pocket in a crowded market. You lose some cash but not your passport.`, effect: (p) => { p.mo -= Math.round(cost * 0.1); p.h -= 5 }, choices: null },
+    { id: `travel_pickpocket_${state.age}`, phase: getPhase(state.age), weight: 4, text: `Someone picks your pocket in a crowded market. You lose some cash but not your passport.`, effect: (p) => { p.moNominal -= Math.round(cost * 0.1); p.h -= 5 }, choices: null },
     { id: `travel_beautiful_${state.age}`, phase: getPhase(state.age), weight: 8, text: `${dest.name} is more beautiful than the photos. You watch the sunset from a hillside and feel genuinely alive.`, effect: (p) => { p.m += 15; p.h += 2; p.e += 3 }, choices: null },
     { id: `travel_culture_${state.age}`, phase: getPhase(state.age), weight: 7, text: `You spend a morning in a local market in ${dest.name}, eating things you can't name and watching how people live. Something shifts in how you see the world.`, effect: (p) => { p.m += 10; p.e += 2; p.e += 8 }, choices: null },
     { id: `travel_romance_${state.age}`, phase: getPhase(state.age), weight: 3, text: `You meet someone interesting on the trip. It doesn't last past the airport, but while it lasted it was perfect.`, effect: (p) => { p.m += 20; p.s += 3 }, choices: null, when: (G) => !G.partner },
@@ -2401,6 +2395,10 @@ export function getAvailableBusinessTypes(state) {
     if (state.age < bt.minAge) return false
     if (bt.minSmarts && state.stats.smarts < bt.minSmarts) return false
     if (bt.minYear && state.currentYear < bt.minYear) return false
+    if (bt.minEducation) {
+      const order = ['none', 'primary', 'secondary', 'university', 'graduate']
+      if (order.indexOf(state.education?.level ?? 'none') < order.indexOf(bt.minEducation)) return false
+    }
     return BUSINESS_HERE[bt.id]?.(p) ?? true
   }).map(bt => {
     const local = BUSINESS_LOCAL_NAME[bt.id]?.(p)

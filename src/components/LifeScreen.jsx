@@ -5,7 +5,7 @@ import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import LogEntry from './LogEntry'
 import { getCountryFlag, getCountryDisplayName, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
-import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, localCreditScore, formatParentIncome, getPhase } from '../engine/gameEngine'
+import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, localCreditScore, formatParentIncome, getPhase, familyCountry } from '../engine/gameEngine'
 import { getPlacesForCountry, getRelocationCost } from '../data/places'
 import { eraMoney } from '../engine/playerActions'
 import ActivitiesPanel from './ActivitiesPanel'
@@ -127,6 +127,9 @@ export default function LifeScreen() {
   const education    = useGameStore(s => s.education)
   const partner      = useGameStore(s => s.partner)
   const children     = useGameStore(s => s.children)
+  // Where the parents earn: the birth country if the character left them
+  // there as an adult, the new one if the family moved together.
+  const parentCountry = useGameStore(s => familyCountry(s))
   const inPrison     = useGameStore(s => s.inPrison)
   const prisonSentence = useGameStore(s => s.prisonSentence)
   const pendingTrial = useGameStore(s => s.pendingTrial)
@@ -1167,6 +1170,17 @@ export default function LifeScreen() {
                   <div className="space-y-2">
                     {children.map((child, i) => {
                       const childAge = child.ageAtBirth !== undefined ? age - child.ageAtBirth : null
+                      // A dead child kept counting birthdays here, with a
+                      // relationship bar, as if still at the table.
+                      if (child.alive === false) return (
+                        <div key={i} className="flex justify-between items-center">
+                          <div>
+                            <p className="text-natalis-dim text-sm">{child.name.split(' ')[0]}{genderMark(child.gender, 'child')}</p>
+                            <p className="text-natalis-muted text-xs">{child.deathAge != null ? `Died at ${child.deathAge}` : 'Deceased'}</p>
+                          </div>
+                          <span className="text-[10px] uppercase tracking-[0.12em] text-natalis-faint">Died</span>
+                        </div>
+                      )
                       return (
                         <div key={i} className="flex justify-between items-center">
                           <div>
@@ -1201,7 +1215,7 @@ export default function LifeScreen() {
                     {['mother', 'father'].map(key => {
                       const p = parents[key]
                       if (!p) return null
-                      const parentIncome = p.occupation ? formatParentIncome(p.occupation, character?.country?.gdp, character?.country, currentYear) : null
+                      const parentIncome = p.occupation ? formatParentIncome(p.occupation, parentCountry?.gdp, parentCountry, currentYear) : null
                       return (
                         <div key={key} className="flex justify-between items-center">
                           <div>

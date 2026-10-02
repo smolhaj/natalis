@@ -709,7 +709,7 @@ export const NIGERIA_NORTH_EVENTS = [
     when: (G) => (G.flags.includes('nn_benue_2018') || G.flags.includes('nn_agatu_2016') || G.flags.includes('nn_zaki_biam') || G.flags.includes('nn_tiv_jukun') || G.flags.includes('nn_tiv_riots')) &&
       BENUE_XN(G) && G.currentYear >= 2019 && G.currentYear <= 2026 && G.age >= 25 && once(G, 'nn_ft_bfarm'),
     text: (G) => {
-      const past = G.flags.includes('nn_zaki_biam') ? ' You have seen soldiers burn a market and herders burn a village and you no longer rank them.' : G.flags.includes('nn_tiv_riots') ? ' Your father fought the North with a cutlass in 1964 and died thinking it was finished.' : ''
+      const past = G.flags.includes('nn_zaki_biam') ? ' You have seen soldiers burn a market and herders burn a village and you no longer rank them.' : G.flags.includes('nn_tiv_riots') ? (G.parents?.father?.alive === false ? ' Your father fought the North with a cutlass in 1964 and died thinking it was finished.' : ' Your father fought the North with a cutlass in 1964 and still thinks it was finished.') : ''
       return `There is a farm of yours past the stream you do not go to any more, not since the burials. You tell people it is the distance. The yams on it are still yours in the sense that nobody else has planted there, and each season you plant closer to the house.${past}`
     },
     choices: null,

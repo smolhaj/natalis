@@ -25,9 +25,9 @@ const inPregnancyYear = (G) =>
 
 // Archetype-branched birth setting text
 function birthSettingText(G) {
-  const a = G.character?.country?.archetype
+  const a = (G.currentCountry ?? G.character?.country)?.archetype
   const yr = G.currentYear ?? 2000
-  const hc = G.character?.country?.healthcare
+  const hc = G.healthcare
   if (a === 'subsaharan' || a === 'developing_unstable' || a === 'conflict_zone' || hc === 'very_poor') {
     if (yr < 1990) return 'The traditional birth attendant has done this many times. You are in the room where your mother was born. The lamp is kerosene. The pain is the same as it has always been.'
     return 'You give birth at the district clinic. The midwife has been on shift since yesterday. There are no complications. The basics are there.'

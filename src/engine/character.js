@@ -9,7 +9,7 @@ import { religionFor } from '../data/identity.js'
 import { pickUnusedName, surnameFor, nameKey, personName } from './names'
 import { wageIndex, inEraMoney } from '../data/economy.js'
 import { wasWealthy } from '../data/technology.js'
-import { conflictRiskAt } from '../data/history.js'
+import { conflictRiskAt, healthcareAt } from '../data/history.js'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
 // Extends Set with Array.prototype.includes as an alias for has(), so existing
@@ -223,7 +223,9 @@ export function createCharacter(overrides = {}) {
     ['subsaharan', 'conflict_zone', 'developing_unstable'].includes(country.archetype) ? 2 : 0
   ), 1, 12)
 
-  const hcBonus = { excellent: 15, good: 8, fair: 0, poor: -10, very_poor: -20 }[country.healthcare] ?? 0
+  // The maternity ward and clinics of the birth year, not the country's
+  // present-day rating: a 1931 Omani newborn was not born into 2020 Oman.
+  const hcBonus = { excellent: 15, good: 8, fair: 0, poor: -10, very_poor: -20 }[healthcareAt(country, birthYear) ?? country.healthcare] ?? 0
   const health = clamp(55 + hcBonus + (wealthTier - 3) * 4, 15, 100)
   const stabBonus = { secure: 15, stable: 5, struggling: -5, unstable: -20 }[familyStability] ?? 0
   const happiness = clamp(60 + stabBonus + randomBetween(-5, 5), 10, 100)
@@ -585,8 +587,11 @@ export function deriveGenerationalFlags(char) {
 
 // ─── Household contribution calculation ──────────────────────────────────────
 export function calculateHouseholdContribution(state) {
+  // The obligation is the culture the character comes from (a Nigerian in
+  // London still sends money home); the money it is measured in is where they
+  // live and earn now.
   const archetype = state.character?.country?.archetype
-  const gdp = state.character?.country?.gdp
+  const gdp = (state.currentCountry ?? state.character?.country)?.gdp
   const income = state.career ? state.career.salary : 0
   if (income <= 0) return { annualAmount: 0, obligationType: null }
 
@@ -910,8 +915,10 @@ export function tickFamilyIncome(state) {
   const parents = state.parents
   if (!parents) return state
 
-  const gdp = state.character?.country?.gdp ?? 'medium'
-  const arch = state.character?.country?.archetype ?? 'developing_urban'
+  // The household's income is earned where the family lives now, which for a
+  // child who emigrated with them is not the birth country.
+  const gdp = (state.currentCountry ?? state.character?.country)?.gdp ?? 'medium'
+  const arch = (state.currentCountry ?? state.character?.country)?.archetype ?? 'developing_urban'
   const year = state.currentYear ?? state.character?.birthYear ?? 1980
   const mult = GDP_MULT[gdp] ?? 0.2
   const tier = state.classTier ?? state.character?.wealthTier ?? 2
@@ -1227,7 +1234,11 @@ export function partnerOccupation(state, gender = null) {
 const BUSINESS_TYPES = [
   { id: 'corner_shop',    name: 'Corner Shop',       emoji: '🏪', startupCost: 5000,   baseRevenue: [8000, 18000],   minAge: 21, description: 'A small retail shop. Low risk, steady income.' },
   { id: 'restaurant',     name: 'Restaurant',        emoji: '🍽️', startupCost: 30000,  baseRevenue: [25000, 80000],  minAge: 21, description: 'Food service. High overhead, high reward.' },
-  { id: 'consulting',     name: 'Consulting Firm',   emoji: '💼', startupCost: 2000,   baseRevenue: [15000, 60000],  minAge: 25, description: 'Sell your expertise. Needs smarts 60+.' , minSmarts: 60 },
+  // Expertise is the product, so there has to be some: it was open to anyone
+  // with smarts 60 and cost $2,000 in present-day money — $176 in a low-income
+  // country — for a firm returning up to $60,000 a year. An office, the
+  // registration and the months before the first invoice is paid cost more.
+  { id: 'consulting',     name: 'Consulting Firm',   emoji: '💼', startupCost: 15000,  baseRevenue: [15000, 60000],  minAge: 25, description: 'Sell your expertise. Needs a degree and smarts 60+.' , minSmarts: 60, minEducation: 'university' },
   { id: 'bar',            name: 'Bar / Nightclub',   emoji: '🍸', startupCost: 20000,  baseRevenue: [20000, 70000],  minAge: 21, description: 'Entertainment venue. Volatile income.' },
   { id: 'tech_startup',   name: 'Tech Startup',      emoji: '💻', startupCost: 50000,  baseRevenue: [0, 200000],     minAge: 21, description: 'High risk, high reward. Needs smarts 70+.', minSmarts: 70, minYear: 1995 },
   { id: 'online_shop',    name: 'Online Shop',       emoji: '📦', startupCost: 1000,   baseRevenue: [5000, 40000],   minAge: 18, description: 'E-commerce. Low overhead.', minYear: 2005 },

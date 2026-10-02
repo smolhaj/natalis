@@ -1,6 +1,6 @@
 import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime, livingRuralUrban, urbanChanceFor } from './character'
 import { pickFrom } from '../utils/random'
-import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt, hasPassengerRail, ADJUSTMENT_PROGRAMME_YEARS } from '../data/history.js'
+import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt, hasPassengerRail, ADJUSTMENT_PROGRAMME_YEARS, healthcareAt } from '../data/history.js'
 import { preferUnsaid, hasSaid } from './prose'
 import { hasTech, wasWealthy } from '../data/technology.js'
 import { worldFacts, proseFitsWorld, midSentence, privateMarketAt, adjustedBy, hotClimate } from './mundaneLayer.js'
@@ -178,7 +178,11 @@ function buildYearTexture(state, opts = {}) {
  */
 function* textureCandidates(state, opts = {}) {
   const F = new FlagSet(state.flags ?? [])
-  const { partner, children, age, currentYear, mem, career, residencyStatus, yearsAbroad, desire, political_leaning } = state
+  const { partner, age, currentYear, mem, career, residencyStatus, yearsAbroad, desire, political_leaning } = state
+  // The living children. Every reader below is present tense — "the teenager
+  // in the house", "the call from abroad" — and the dead stay on state with
+  // `alive: false`. The grief blocks read flags and mem, not this list.
+  const children = (state.children ?? []).filter(c => c && c.alive !== false)
   const phase = getPhase(age)
   const mh = state.mentalHealth ?? {}
 
@@ -487,7 +491,7 @@ function* textureCandidates(state, opts = {}) {
   // diagnosis itself printed "The nearest person who would understand it as an
   // illness is a long way off" — then, three years later, "The therapist asks
   // a question that follows you into the week". Same tiers the diagnosis uses.
-  const _hc = (state.currentCountry ?? state.character?.country)?.healthcare ?? 'fair'
+  const _hc = healthcareAt(state.currentCountry ?? state.character?.country, currentYear) ?? 'fair'
   const therapyHere = !['poor', 'very_poor'].includes(_hc)
   // Managed mental health — the texture of living with it, not through it
   if (mh.condition && mh.therapy && therapyHere && !mh.medicating && career && Math.random() < 0.35) {
@@ -11578,14 +11582,16 @@ function* textureCandidates(state, opts = {}) {
   ])]
   if (F.has('irn_hijab_generation') && Math.random() < 0.22) yield [T.anchored, pick([
     'The morning calculation: which coat, which route, which neighbourhood, which time. The knowledge of where the patrols are is as automatic as the knowledge of where the market is.',
-    'The gasht-e ershad car is white and recognisable and you learned to notice it before you learned to articulate why you were noticing it. The noticing is knowledge now, not reflex.',
-    phase === 'late_life'
-      ? 'You wore the covering for forty years, in the way and to the extent required by the specific enforcement of specific years. The 2022 generation took it off in front of schools and waved it in the air. You understand both the cost of taking it off and the cost of wearing it.'
-      : 'After September 2022 the enforcement map changed. Some streets are different now. Some are the same. You update the map continuously. The updating is the citizenship.',
+    // Each line is dated: the guidance patrols from 2006, Mahsa Amini in
+    // September 2022. Undated, they printed into 2002, 2011 and 2016.
+    ...(currentYear >= 2006 ? ['The gasht-e ershad van is white and you learned to see it before you could have said why you were looking.'] : []),
+    ...(currentYear >= 2022 ? [phase === 'late_life'
+      ? 'You wore the covering for forty years, to the exact extent each year demanded. In 2022 girls took it off in front of their schools and waved it over their heads. You know what both cost.'
+      : 'After September 2022 the enforcement map changed. Some streets are different now. Some are the same. You update the map continuously.'] : []),
   ])]
   if (F.has('irn_jcpoa_generation') && Math.random() < 0.2) yield [T.anchored, pick([
     'The deal was signed. International companies came to Tehran. Boeing, Airbus, Shell, Total. The hotels were full of delegations. The rial strengthened. Something that looked like integration into the global economy was becoming visible.',
-    'Trump withdrew. The secondary sanctions came back. The Europeans wanted to stay but their banks were afraid. Iran was cut from SWIFT again. The hotels emptied. The rial fell sixty percent. The double loss is precise: the hope and the loss of the hope.',
+    ...(currentYear >= 2018 ? ['Trump withdrew. The secondary sanctions came back. The Europeans wanted to stay but their banks were afraid. Iran was cut from SWIFT again. The hotels emptied. The rial fell sixty percent. The double loss is precise: the hope and the loss of the hope.'] : []),
     phase === 'late_life'
       ? 'The JCPOA is the specific document that contains forty years of Iranian foreign policy in concentrated form: the capacity for hope and the structural conditions that prevent it from resolving.'
       : 'You made plans around the JCPOA. The plans were reasonable. The plans required the deal to hold. You understand now what "depending on a deal holding" means in the Middle East.',

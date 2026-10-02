@@ -138,7 +138,12 @@ export function buildMundaneLayer(state) {
 
   const flags = new Set(state.flags ?? [])
   const F = (f) => flags.has(f)
-  const { age, currentYear, partner, children, career } = state
+  const { age, currentYear, career } = state
+  // The living partner and the living children. tickPartner and the child
+  // hazards keep the dead on state with `alive: false`, and this layer is all
+  // present tense: "the baby" and "your partner" are about who is in the house.
+  const partner = state.partner?.alive === false ? null : state.partner
+  const children = (state.children ?? []).filter(c => c && c.alive !== false)
   const phase = age <= 5 ? 'early_childhood'
     : age <= 11 ? 'childhood'
     : age <= 17 ? 'adolescence'

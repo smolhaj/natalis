@@ -1193,7 +1193,7 @@ export const LATE_LIFE_EVENTS = [
         outcome: 'There are phone calls now. Sometimes weeks apart, sometimes weekly. The content doesn\'t always matter.',
         effect: (p) => {
           p.m += 14; p.r -= 10; p.karma += 8; p.setMem('recon_resolved', true); p.addFlag('reconciled_damaged');
-          const estrangedChildIdx = p._state?.children?.findIndex(c => c.relationshipQuality < 45)
+          const estrangedChildIdx = p._state?.children?.findIndex(c => c.alive !== false && c.relationshipQuality < 45)
           if (estrangedChildIdx >= 0) p.updateChildRel(estrangedChildIdx, 28)
           const estrangedSibIdx = p._state?.siblings?.findIndex(s => s.relationshipQuality < 45)
           if (estrangedSibIdx >= 0 && estrangedChildIdx < 0) {

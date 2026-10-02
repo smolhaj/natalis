@@ -36,7 +36,7 @@ export const CHINA_REFORM_FLAGS = {
   },
   cnr_dagong: {
     weight: 'major', category: 'migration', intent: 'event',
-    description: 'Left rural Sichuan to work in a Shanghai factory.',
+    description: 'Left the village (rural Sichuan or Guangxi) to work in a factory in Shenzhen or Shanghai.',
     notes: 'Follow-through: cnr_ft_chunyun, cnr_ft_left_child, cnr_ft_return_village.',
   },
   cnr_three_gorges: {

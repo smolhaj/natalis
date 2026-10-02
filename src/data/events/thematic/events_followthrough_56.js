@@ -95,7 +95,9 @@ export const FOLLOWTHROUGH_56_EVENTS = [
     when: (G) =>
       G.siblings && G.siblings.length > 0 &&
       G.flags.has('sibling_estranged') &&
-      (!G.parents?.father?.alive || !G.parents?.mother?.alive) &&
+      // The funeral is this year's: a parent dead twenty years is not a
+      // service you are both standing at.
+      [G.mem?.lost_parent_fatherYear, G.mem?.lost_parent_motherYear].some(y => y != null && G.currentYear - y <= 1) &&
       G.age >= 40 &&
       !G.mem?.ft56SibFuneral,
     text: (G) => {

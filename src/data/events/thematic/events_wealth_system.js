@@ -90,7 +90,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'You take your share. Gold holds what paper cannot.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.2
           const amount = Math.round(800 * mult * (0.8 + Math.random() * 0.4))
           p.addGold(amount); p.m += 8; p.setMem('goldInherited', true); p.addFlag('gold_inherited')
@@ -101,7 +101,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'You convert it to money the same week. The amount is useful. Something is lost that is harder to name.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.2
           const amount = Math.round(800 * mult * 0.9)
           p.mo += amount; p.m += 3; p.r += 4; p.setMem('goldInherited', true)
@@ -240,7 +240,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'The wedding proceeds. Your family pays. The debt of it stays with them for years.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.2
           const dowry = Math.round(3000 * mult * (p._state.character?.wealthTier ?? 2) / 2)
           p.mo -= dowry; p.setMem('dowryNegotiated', true); p.m -= 3; p.addFlag('dowry_paid')
@@ -251,7 +251,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'There is tension. The negotiation continues. You give less than they asked.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.2
           const dowry = Math.round(1200 * mult)
           p.mo -= dowry; p.setMem('dowryNegotiated', true); p.m += 2; p.addFlag('dowry_paid')
@@ -280,7 +280,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'You pay. The families are satisfied. The wedding can proceed with everyone\'s blessing.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.05
           const lobola = Math.round(2500 * mult * (1 + (p._state.character?.wealthTier ?? 2) * 0.3))
           p.mo -= lobola; p.setMem('lobolaPaid', true); p.m += 8; p.s += 3; p.addFlag('lobola_paid')
@@ -291,7 +291,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'There is grumbling on her side. But the arrangement holds. You pay over two years.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.05
           const lobola = Math.round(1200 * mult)
           p.mo -= lobola; p.setMem('lobolaPaid', true); p.m += 3; p.addFlag('lobola_paid')
@@ -315,7 +315,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: 'generous',
         outcome: 'She accepts. The amount is written into the contract. Whatever happens, she has this.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.2
           const mahr = Math.round(1500 * mult * (1 + (p._state.character?.wealthTier ?? 2) * 0.4))
           p.mo -= mahr; p.setMem('mahrSet', true); p.m += 6; p.karma += 5; p.addFlag('mahr_paid')
@@ -326,7 +326,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'The amount is honest. The contract is signed.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.2
           const mahr = Math.round(400 * mult)
           p.mo -= mahr; p.setMem('mahrSet', true); p.m += 3; p.addFlag('mahr_paid')
@@ -391,7 +391,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: 'generous',
         outcome: 'You take on the obligations. Some are manageable. The connection to home deepens.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.05
           p.mo -= Math.round(800 * mult); p.karma += 10; p.m += 6; p.s += 4
           p.setMem('patronEmerged', true); p.addFlag('family_patron'); p.reduceHouseholdContribution()
@@ -428,7 +428,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'He lends you what you need at a rate you cannot afford. You sign where he points. The debt will follow the harvest.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.05
           const loan = Math.round(300 * mult)
           p.mo += loan; p.addDebt(Math.round(loan * 1.4))
@@ -440,7 +440,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'Your brother-in-law lends you what he can spare. It is not enough, but it is something.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.05
           p.mo += Math.round(150 * mult); p.m -= 5; p.setMem('farmingDebtThisYear', true); p.addFlag('family_debt')
         },
@@ -469,7 +469,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'You take the market price while it holds. The money pays off a debt and leaves something over.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.05
           p.mo += Math.round(600 * mult); p.m += 10; p.setMem('farmingBumperThisYear', true)
         },
@@ -479,7 +479,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         tag: null,
         outcome: 'The price improves somewhat. Not as much as you hoped, but more than the harvest price.',
         effect: (p) => {
-          const gdp = p._state.character?.country?.gdp
+          const gdp = (p._state.currentCountry ?? p._state.character?.country)?.gdp
           const mult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }[gdp] ?? 0.05
           p.mo += Math.round(800 * mult); p.m += 8; p.setMem('farmingBumperThisYear', true)
         },

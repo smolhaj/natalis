@@ -237,7 +237,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.character.country.name === 'Argentina' &&
       G.currentYear === 1982 &&
       G.age >= 36 &&
-      G.children?.some(c => c.alive) &&
+      G.children?.length > 0 &&
       !G.mem?.arg_falklands_family,
     text: 'The government invades the Malvinas on April 2nd and the streets fill with people chanting. The Junta is popular for the first time. Your son is of conscription age. The generals who spent six years disappearing civilians are now asking those civilians to send their sons to die in the South Atlantic.',
     choices: [
@@ -852,7 +852,7 @@ export const LATIN_AMERICA_EVENTS = [
         text: 'Go — the wages are your way out',
         tag: null,
         outcome: 'You arrive with an address on a piece of paper. The plant is real, the wage is real, the dormitory is also real. You send money home. You build a life that looks nothing like what was expected of you.',
-        effect: (p) => { p.m += 5; p.mo += 600; p.addFlag('maquiladora_worker'); p.addFlag('rural_to_urban'); p.setMem('mex_maquiladora', true); },
+        effect: (p) => { p.m += 5; p.mo += 600; p.addFlag('maquiladora_worker'); p.addFlag('rural_to_urban'); p.setMem('mex_maquiladora', true); p.relocate('mx_juarez', 'informal') },
         inject: null,
       },
       {

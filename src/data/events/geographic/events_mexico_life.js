@@ -12,11 +12,14 @@
 // overnight in 1982, the night the system crashed in 1988, the Metro's first
 // orange train.
 //
-// The roster draws Mexicans in Mexico City and rural Oaxaca. Guards read the
-// LIVE country and the place id. Afro-Mexican content is written for the
-// Costa Chica, which is Oaxaca's; indigenous content for the Mixtec and
-// Zapotec villages, which are the sending villages of the long migration
-// north from the 1980s.
+// The roster draws Mexicans in Mexico City, Guadalajara, Monterrey, Ciudad
+// Juárez, rural Oaxaca and a village in Michoacán. Guards read the LIVE
+// country and the place id. Afro-Mexican content is written for the Costa
+// Chica and indigenous content for the Mixtec and Zapotec villages, which is
+// why rural Oaxaca is their `homeOf`. What every village had — the metate,
+// the caseta, the price of maize, the houses built with dollars — reads
+// ANY_VILLAGE; what only Oaxaca had (the Guelaguetza, tequio, the cargo)
+// reads VILLAGE. Michoacán is the older migration, the braceros of 1942.
 //
 // Dates used, all checked:
 //   18 Mar 1938  Cárdenas expropriates the oil companies; 12 April 1938,
@@ -50,17 +53,39 @@
 //   May 2019     labour law reform gives domestic workers written contracts
 //                and social security.
 //   3 May 2021   Line 12 overpass collapses at Olivos, 26 dead.
+//
+// The new places:
+//   1942-64      the Bracero Program; DDT at the reception centres; 10% of
+//                wages withheld into a savings fund. 2005-08 the Mexican
+//                government pays ex-braceros or their widows and children
+//                38,000 pesos.
+//   1965         the Border Industrialization Program; maquiladoras.
+//   10 May 1986  Fundidora de Monterrey declared bankrupt.
+//   17 Sep 1988  Hurricane Gilbert; the Santa Catarina floods Monterrey.
+//   22 Apr 1992  the sewer explosions in Analco and Reforma, Guadalajara.
+//   31 Jan 2010  Villas de Salvárcar, Ciudad Juárez; 2010 the city's worst
+//                year, over three thousand killed.
+//   Feb 2013     autodefensas in Tepalcatepec and La Ruana, Michoacán.
 
 const once = (G, key) => !G.mem?.[key]
 const IN_MX = (G) => (G.currentCountry?.name ?? G.character?.country?.name) === 'Mexico'
 const PLACE = (G) => G.place?.id ?? null
 const CDMX = (G) => IN_MX(G) && PLACE(G) === 'mx_mexico_city'
 const VILLAGE = (G) => IN_MX(G) && PLACE(G) === 'mx_rural'
+const RANCHO = (G) => IN_MX(G) && PLACE(G) === 'mx_rural_michoacan'
+const ANY_VILLAGE = (G) => VILLAGE(G) || RANCHO(G)
+const GDL = (G) => IN_MX(G) && PLACE(G) === 'mx_guadalajara'
+const MTY = (G) => IN_MX(G) && PLACE(G) === 'mx_monterrey'
+const JUAREZ = (G) => IN_MX(G) && PLACE(G) === 'mx_juarez'
+const MX_CITY = (G) => IN_MX(G) && ['mx_mexico_city', 'mx_guadalajara', 'mx_monterrey', 'mx_juarez'].includes(PLACE(G))
+const FATHER = (G) => !!G.parents?.father && G.parents.father.alive !== false
 const FEMALE = (G) => G.character?.gender === 'female'
 const INDIG = (G) => IN_MX(G) && G.character?.ethnicity === 'indigenous_mexican'
 const AFRO = (G) => IN_MX(G) && G.character?.ethnicity === 'afro_mexican'
 const MOTHER = (G) => !!G.parents?.mother && G.parents.mother.alive !== false
-const POOR_CDMX = (G) => CDMX(G) && ['informal', 'working_class'].includes(G.neighborhoodTier)
+// The self-built edge and the government milk were every Mexican city's, not
+// only the capital's.
+const POOR_CDMX = (G) => MX_CITY(G) && ['informal', 'working_class'].includes(G.neighborhoodTier)
 const LANG = (G) => ((G.character?.surname ?? '').length % 2) ? 'Zapotec' : 'Mixtec'
 const daughterAged = (G, lo, hi) => (G.children ?? []).some(c => c && c.alive !== false && c.gender === 'female' && (c.age ?? -1) >= lo && (c.age ?? -1) <= hi)
 
@@ -72,7 +97,7 @@ export const MEXICO_LIFE_EVENTS = [
     id: 'mxl_metate',
     phase: null,
     weight: 60,
-    when: (G) => VILLAGE(G) && MOTHER(G) && G.age >= 5 && G.age <= 10 && G.currentYear >= 1935 && G.currentYear <= 1965 && once(G, 'mxl_metate'),
+    when: (G) => ANY_VILLAGE(G) && MOTHER(G) && G.age >= 5 && G.age <= 10 && G.currentYear >= 1935 && G.currentYear <= 1965 && once(G, 'mxl_metate'),
     text: 'Your mother is up before anyone, kneeling at the metate in the dark, grinding the soaked maize on the stone with the stone, forward and back, and the sound of it is the first sound of every day you can remember. It takes her three hours to make the day\'s tortillas. The year the motor mill opens by the church she carries the pail of nixtamal down there with the other women, and comes back in a quarter of an hour, and does not know what to do with her hands.',
     choices: null,
     effect: (p) => { p.setMem('mxl_metate', true); p.m += 1 },
@@ -158,7 +183,7 @@ export const MEXICO_LIFE_EVENTS = [
     weight: 60,
     when: (G) => POOR_CDMX(G) && G.age >= 22 && G.age <= 45 && G.currentYear >= 1955 && G.currentYear <= 2000 && once(G, 'mxl_colado'),
     text: 'You have a lot at the edge of the city with no water and no papers that anybody believes, and you build on Sundays: one room of grey block, then a second. The day of the colado, when the roof slab is poured, the compadres come at six with buckets and you pass concrete hand to hand up a ladder until the whole roof is wet and level, and at noon there are carnitas and beer on the slab, and the rebar sticks up at the corners for the floor you will put on one day.',
-    context: 'Much of Mexico City was built by its inhabitants on lots bought informally at the city\'s edge, in a process called autoconstrucción. Pouring a concrete roof — the colado — was done in a day by friends and neighbours and ended in a meal.',
+    context: 'Much of urban Mexico, the capital first among it, was built by its inhabitants on lots bought informally at the city\'s edge, in a process called autoconstrucción. Pouring a concrete roof — the colado — was done in a day by friends and neighbours and ended in a meal.',
     choices: null,
     effect: (p) => { p.setMem('mxl_colado', true); p.m += 4; p.mo -= 1500; p.s += 2; p.addFlag('mxl_colado') },
   },
@@ -178,7 +203,7 @@ export const MEXICO_LIFE_EVENTS = [
     id: 'mxl_maid_to_capital',
     phase: null,
     weight: 70,
-    when: (G) => VILLAGE(G) && FEMALE(G) && !G.partner && G.age >= 13 && G.age <= 17 && G.currentYear >= 1950 && G.currentYear <= 2000 && once(G, 'mxl_maid'),
+    when: (G) => ANY_VILLAGE(G) && FEMALE(G) && !G.partner && G.age >= 13 && G.age <= 17 && G.currentYear >= 1950 && G.currentYear <= 2000 && once(G, 'mxl_maid'),
     text: 'A woman from the village who works in the capital says a family in Coyoacán needs a girl. Your mother looks at you a long time. You would sleep in the little room on the roof, by the water tank, and cook and clean six and a half days a week, and send the money home.',
     choices: [
       {
@@ -307,7 +332,7 @@ export const MEXICO_LIFE_EVENTS = [
     id: 'mxl_caseta',
     phase: null,
     weight: 70,
-    when: (G) => VILLAGE(G) && G.age >= 8 && G.currentYear >= 1985 && G.currentYear <= 2008 && once(G, 'mxl_caseta'),
+    when: (G) => ANY_VILLAGE(G) && G.age >= 8 && G.currentYear >= 1985 && G.currentYear <= 2008 && once(G, 'mxl_caseta'),
     text: 'There is one telephone in the village, in the caseta by the plaza, and on Sunday afternoons the north calls. The woman who runs it picks up and then speaks into the loudspeaker on the roof — a call for the family so-and-so, they ring back in ten minutes — and you see the mother or the wife running across the plaza with her shawl coming off. Most Sundays it is your name. Your uncle in Los Angeles, your cousin in New York, asking about the rain.',
     choices: null,
     effect: (p) => { p.setMem('mxl_caseta', true); p.m -= 1; p.addFlag('mxl_caseta_calls') },
@@ -317,7 +342,7 @@ export const MEXICO_LIFE_EVENTS = [
     id: 'mxl_corn_price',
     phase: null,
     weight: 70,
-    when: (G) => VILLAGE(G) && G.age >= 22 && G.age <= 65 && G.currentYear >= 1996 && G.currentYear <= 2008 && once(G, 'mxl_corn'),
+    when: (G) => ANY_VILLAGE(G) && G.age >= 22 && G.age <= 65 && G.currentYear >= 1996 && G.currentYear <= 2008 && once(G, 'mxl_corn'),
     text: 'The maize from the United States comes in by train since the agreement, yellow and cheap, and the man at the warehouse in town pays less for yours than it costs you to grow it. You plant the milpa anyway, corn and beans and squash in the same hill as your grandfather did, but now it is for the house and not for sale. The young men do the arithmetic and get on the bus north. The arithmetic is not hard.',
     choices: null,
     effect: (p) => { p.setMem('mxl_corn', true); p.m -= 3; p.mo -= 200; p.addFlag('mxl_corn_price') },
@@ -351,6 +376,87 @@ export const MEXICO_LIFE_EVENTS = [
     text: 'In January the government shuts the pipelines to stop the fuel thieves and the petrol stations run dry: queues of cars around the block at three in the morning, men pushing them forward with the engine off to save what is left. In Hidalgo a pipeline someone has tapped is spilling petrol into a field and the village comes with buckets, and it catches. You watch it on your phone. Somebody you work with says the people deserved it, and you find you cannot be in the same room as him.',
     choices: null,
     effect: (p) => { p.setMem('mxl_gas19', true); p.m -= 3 },
+  },
+
+  // ── THE WEST AND THE NORTH ────────────────────────────────────────────────
+
+  {
+    id: 'mxl_bracero_father',
+    phase: null,
+    weight: 120,
+    when: (G) => RANCHO(G) && FATHER(G) && G.age >= 5 && G.age <= 14 && G.currentYear >= 1943 && G.currentYear <= 1964 && once(G, 'mxl_bracero'),
+    text: 'Your father goes north with the braceros. He has his name on a list at the municipal office and a letter from the priest, and he goes on the train to the reception centre at the border, where they make the men take off their clothes in a shed and spray them with white powder like a field. He sends money orders from California in the cotton season and comes home at Christmas thinner, with a radio. A part of every pay is kept back, they tell him, to be paid to him here in Mexico, into a fund.',
+    context: 'Under the Bracero Program (1942-1964) some 4.6 million contracts took Mexican men to work in American agriculture, Michoacán and Jalisco among the largest senders. At border reception centres workers were stripped and sprayed with DDT. Ten per cent of their wages was withheld for a savings fund to be paid in Mexico; most never received it.',
+    choices: null,
+    effect: (p) => { p.setMem('mxl_bracero', true); p.mo += 150; p.m -= 2; p.addFlag('mxl_bracero_father') },
+  },
+
+  {
+    id: 'mxl_autodefensas_2013',
+    phase: null,
+    weight: 200,
+    when: (G) => RANCHO(G) && G.currentYear >= 2013 && G.currentYear <= 2014 && G.age >= 16 && once(G, 'mxl_autodef'),
+    text: 'Down in Tierra Caliente the lime pickers and the cattlemen of Tepalcatepec and La Ruana put on white shirts and take the rifles out of the walls and run the Templarios out of town, because the Templarios had been taking a cut of every crate, every cow, every tortilla. By the summer there are farmers with rifles at checkpoints on the roads, and the army does not know whether to disarm them or deputise them, and does both. Everyone you know has an opinion and lowers their voice to give it.',
+    context: 'In February 2013 armed self-defence groups (autodefensas) formed in Tepalcatepec and La Ruana, Michoacán, against the Knights Templar cartel, which extorted farmers and businesses across Tierra Caliente. They spread across the state through 2013; in 2014 the federal government incorporated some of them into a rural police force and arrested others.',
+    choices: null,
+    effect: (p) => { p.setMem('mxl_autodef', true); p.m -= 3 },
+  },
+
+  {
+    id: 'mxl_guadalajara_1992',
+    phase: null,
+    weight: 300,
+    when: (G) => GDL(G) && G.currentYear === 1992 && G.age >= 6 && once(G, 'mxl_gdl92'),
+    text: 'For two days the whole of the Reforma district smells of petrol, coming up out of the drains, and people call the fire brigade and the fire brigade comes and goes. On the Wednesday morning, a little after ten, the street lifts. Eight kilometres of it, in a line, along the sewer: the asphalt, the buses, the fronts of the houses. You hear it across the city like a train going over a bridge, and then the sirens all day, and then the lists.',
+    context: 'On 22 April 1992 a series of explosions tore open some eight kilometres of streets in the Analco and Reforma districts of Guadalajara, after petrol leaking from a Pemex pipeline collected in the sewers. Residents had reported the smell for days. Officially around 200 people died; local groups counted more.',
+    choices: null,
+    effect: (p) => { p.setMem('mxl_gdl92', true); p.m -= 5 },
+  },
+
+  {
+    id: 'mxl_fundidora_1986',
+    phase: null,
+    weight: 250,
+    when: (G) => MTY(G) && G.currentYear === 1986 && G.age >= 8 && once(G, 'mxl_fundidora'),
+    text: (G) => (G.age >= 20 && ['informal', 'working_class'].includes(G.neighborhoodTier)
+      ? 'In May the Fundidora closes. You come to the gate on the Monday and there is a chain on it and a notice, and eight thousand men standing in front of it reading the same notice. The furnace has been there since before your grandfather. The severance is a few months. By the summer men from the steelworks are driving taxis and selling tacos from the boots of cars, and the ones who are too old for that stand at the corner by the gate in the mornings out of habit.'
+      : 'In May the Fundidora closes, the steelworks that has been there since before anybody\'s grandfather, and eight thousand men are told on a Monday morning. At school a boy whose father worked the furnace stops coming. The chimney stays up over the city for years with no smoke from it.'),
+    context: 'Fundidora de Fierro y Acero de Monterrey, founded in 1900 as the first integrated steelworks in Latin America, was declared bankrupt by the government on 10 May 1986, in the debt crisis. Its grounds later became a park, with the blast furnace kept as a monument.',
+    choices: null,
+    effect: (p) => { p.setMem('mxl_fundidora', true); p.m -= 4 },
+  },
+
+  {
+    id: 'mxl_gilberto_1988',
+    phase: null,
+    weight: 200,
+    when: (G) => MTY(G) && G.currentYear === 1988 && G.age >= 6 && once(G, 'mxl_gilberto'),
+    text: 'The Santa Catarina is a river nobody has seen with water in it. It is a wide bed of stones through the middle of the city with football pitches in it, a market on Sundays, families living in shacks along it. In September the hurricane comes in from the Gulf over the mountains and the riverbed fills in a night, brown, from bank to bank, and in the morning the football pitches are gone, and the shacks, and the people who did not get out of them.',
+    context: 'Hurricane Gilbert reached Monterrey on 17 September 1988. Rain over the Sierra Madre turned the normally dry Santa Catarina river into a flood that destroyed settlements in its bed; around two hundred people died in the metropolitan area.',
+    choices: null,
+    effect: (p) => { p.setMem('mxl_gilberto', true); p.m -= 4 },
+  },
+
+  {
+    id: 'mxl_maquila',
+    phase: null,
+    weight: 90,
+    when: (G) => JUAREZ(G) && FEMALE(G) && G.age >= 16 && G.age <= 30 && G.currentYear >= 1975 && G.currentYear <= 2008 && once(G, 'mxl_maquila'),
+    text: 'The plant assembles wiring harnesses for American cars, and the line is women, nearly all of them from somewhere else: Durango, Zacatecas, Veracruz. At the hiring they give you a form and a cup and test whether you are pregnant. The bus leaves the colonia at five in the dark, and on the line you do the same eleven movements until the bell, and in the evening you cross the empty lots back from the bus stop with your keys between your fingers, because everyone knows why.',
+    context: 'Under the Border Industrialization Program of 1965, foreign-owned assembly plants (maquiladoras) in Ciudad Juárez grew to employ hundreds of thousands, most of them young women. Pregnancy testing at hiring was documented by Human Rights Watch in the 1990s. From 1993 the murders of women in Juárez became known internationally.',
+    choices: null,
+    effect: (p) => { p.setMem('mxl_maquila', true); p.mo += 400; p.m -= 3 },
+  },
+
+  {
+    id: 'mxl_juarez_2010',
+    phase: null,
+    weight: 200,
+    when: (G) => JUAREZ(G) && G.currentYear >= 2009 && G.currentYear <= 2011 && G.age >= 14 && once(G, 'mxl_juarez10'),
+    text: 'The city empties at dusk. Half the restaurants on your avenue have closed and the rest pay somebody every week to stay open. Then, at the end of January, men with rifles go into a birthday party in Villas de Salvárcar and kill fifteen people, most of them teenagers, and the president says from Japan that it was a fight between gangs. When he comes to Juárez, one of the mothers stands up in front of him and says she cannot tell him he is welcome.',
+    context: 'Ciudad Juárez had over three thousand homicides in 2010, the worst year of the war between the Sinaloa and Juárez cartels. On 31 January 2010 gunmen killed fifteen people at a student party in Villas de Salvárcar. President Calderón first described the victims as gang members; at a public meeting in Juárez in February, Luz María Dávila, who lost two sons, told him to his face that he was not welcome.',
+    choices: null,
+    effect: (p) => { p.setMem('mxl_juarez10', true); p.m -= 6 },
   },
 
   // ── FOLLOW-THROUGH ─────────────────────────────────────────────────────────
@@ -409,7 +515,7 @@ export const MEXICO_LIFE_EVENTS = [
     id: 'mxl_ft_colado',
     phase: null,
     weight: 60,
-    when: (G) => CDMX(G) && G.flags.has('mxl_colado') && G.age >= 50 && once(G, 'mxl_ft_colado'),
+    when: (G) => MX_CITY(G) && G.flags.has('mxl_colado') && G.age >= 50 && once(G, 'mxl_ft_colado'),
     text: 'The house has three floors now, a floor for each family under the roof now, each poured in a day with carnitas on the slab, and the rebar still sticks up at the corners for a fourth. The colonia has water and a paved street and a name on the map, and the papers came through in the end. You look at the roof from the street sometimes. It is the only thing in the world you built.',
     choices: null,
     effect: (p) => { p.setMem('mxl_ft_colado', true); p.m += 4 },
@@ -450,7 +556,7 @@ export const MEXICO_LIFE_EVENTS = [
     id: 'mxl_ft_remittance_house',
     phase: null,
     weight: 60,
-    when: (G) => VILLAGE(G) && G.flags.has('mxl_corn_price') && G.currentYear >= 2005 && once(G, 'mxl_ft_house'),
+    when: (G) => ANY_VILLAGE(G) && G.flags.has('mxl_corn_price') && G.currentYear >= 2005 && once(G, 'mxl_ft_house'),
     text: 'On the road into the village there are houses of two storeys, painted orange and green, with satellite dishes and iron gates and nobody in them. They were built with dollars by men in Chicago and Atlanta for the day they come home, and they send the money for the paint every few years. A woman you know is paid to open the windows once a month. The milpas in between them are the ones the old people still plant.',
     choices: null,
     effect: (p) => { p.setMem('mxl_ft_house', true); p.m -= 2 },
@@ -496,5 +602,16 @@ export const MEXICO_LIFE_EVENTS = [
     text: 'Your aunt has joined the mothers who search. On Saturdays they go out in a borrowed truck to fields somebody has told them about, with shovels and long steel rods, and push the rods into the ground and pull them up and smell the tip. You go with her once. It is the most ordinary-looking field you have ever seen, with a cow at the far end. She thanks you for coming as if you were a stranger at a funeral.',
     choices: null,
     effect: (p) => { p.setMem('mxl_ft_busca', true); p.m -= 6; p.karma += 3 },
+  },
+
+  {
+    id: 'mxl_ft_bracero_fund',
+    phase: null,
+    weight: 120,
+    when: (G) => IN_MX(G) && G.flags.has('mxl_bracero_father') && G.currentYear >= 2005 && G.currentYear <= 2008 && once(G, 'mxl_ft_bracero'),
+    text: (G) => `Sixty years late the government says it will pay the braceros what was kept back from them, or their widows, or their children: thirty-eight thousand pesos, if you have the papers. ${G.parents?.father && G.parents.father.alive !== false ? 'Your father' : 'You'} queue${G.parents?.father && G.parents.father.alive !== false ? 's' : ''} outside the government office in the state capital with the old men in their hats, each of them holding a plastic folder: a contract with a stamp, a photograph of a young man nobody would recognise, a pay stub from Stockton. The clerk counts the pages. The line does not move all morning.`,
+    context: 'From 2005 the Mexican government paid 38,000 pesos to former braceros or their surviving spouses and children who could document contracts from 1942 to 1964, in settlement of the savings withheld from their wages and never returned. Many could not produce the papers, and the amount was a fraction of what had been taken with interest.',
+    choices: null,
+    effect: (p) => { p.setMem('mxl_ft_bracero', true); p.mo += 400; p.m -= 1 },
   },
 ]

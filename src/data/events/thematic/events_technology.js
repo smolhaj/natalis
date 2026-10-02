@@ -3,7 +3,7 @@ import { hasTech } from '../../technology.js'
 // events_technology.js
 // Era-defining technology moments that mark when you lived.
 // A character born in 1955 experiences these differently than one born in 1985.
-// All gate on G.currentYear and G.character.country.gdp / archetype.
+// All gate on G.currentYear and G.currentCountry?.gdp / archetype.
 
 const wealthy = (G) => ['very_high','high','medium_high'].includes((G.currentCountry ?? G.character.country).gdp)
 // `wealthy` above reads present-day GDP, which is not a statement about the

@@ -193,9 +193,11 @@ export const EVENTS_SONDER_43 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => place.hasHealthcare(G) && (G.age >= 63 && !G.mem?.s33p),
-    text: () => pick([
+    // The second line remembers the year your mother died, so it is only
+    // offered to somebody whose mother has.
+    text: (G) => pick([
       'The stranger glimpsed through a window across a courtyard: a woman putting on an earring, a man standing very still looking at the floor, a child doing homework at a kitchen table at ten p.m. Their entire life is invisible to you except this thirty-second window, which you have now. They do not know you are watching.',
-      'Names come to you now that did not come to you then. The year your mother died: you remember the room but not the name of the nurse who held your hand in the corridor. Now, inexplicably, the name arrives. Maureen. You have no idea why it comes now and not then.',
+      ...(G?.parents?.mother?.alive === false ? ['Names come to you now that did not come to you then. The year your mother died: you remember the room but not the name of the nurse who held your hand in the corridor. Now, inexplicably, the name arrives. Maureen. You have no idea why it comes now and not then.'] : []),
     ]),
     choices: null,
     effect: (p) => { p.setMem('s33p', true) },

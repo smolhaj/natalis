@@ -1,4 +1,4 @@
-// Geographic place data: 389 places, at least one for every country on the roster.
+// Geographic place data: at least one place for every country on the roster.
 //
 // It was 197 across 83 of 154, and `pickBirthPlace` returns null for a country
 // with none — which left `currentPlace`, `character.birthPlace` and
@@ -187,6 +187,21 @@ export const PLACES = [
       working_class: ['Rusholme', 'Salford', 'Chorlton-cum-Hardy', 'Hulme'],
       middle_class:  ['Didsbury', 'Chorlton', 'Withington', 'West Didsbury'],
       elite:         ['Altrincham', 'Hale', 'Prestbury', 'Bowdon'],
+    },
+  },
+  // Britain was London, Manchester and the Dales, so nobody in the roster was
+  // Scottish by place. Glasgow is the other industrial city of the period:
+  // the Clyde yards, the tenements cleared to the peripheral schemes after
+  // 1955. The schemes are year-gated in NEIGHBOURHOOD_IDENTITY below.
+  {
+    id: 'uk_glasgow', name: 'Glasgow', country: 'United Kingdom',
+    type: 'urban', scale: 'major_city', region: 'Scotland',
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['The Gorbals', 'Easterhouse', 'Castlemilk', 'Drumchapel'],
+      working_class: ['Govan', 'Springburn', 'Partick', 'Bridgeton', 'Dennistoun'],
+      middle_class:  ['Shawlands', 'Hyndland', 'Knightswood', 'Mount Florida'],
+      elite:         ['Kelvinside', 'Bearsden', 'Newton Mearns', 'Park Circus'],
     },
   },
   {
@@ -466,6 +481,24 @@ export const PLACES = [
       elite:         ['Yamate', 'Sanjo end'],
     },
   },
+  // Two events were written for Okinawa (the 1945 battle, the bases) and
+  // guarded on `jp_okinawa`, which did not exist, so neither could fire. The
+  // prefecture is about one per cent of Japan; the weight keeps it near that
+  // inside an urban pool that already over-draws Hiroshima and Nagasaki.
+  // The roster has no Ryukyuan id, so there is no `homeOf`. Between 1945 and
+  // May 1972 the islands were under American administration; the bases event
+  // is dated from the reversion for that reason.
+  {
+    id: 'jp_okinawa', name: 'Naha', country: 'Japan',
+    type: 'urban', scale: 'city', region: 'Okinawa',
+    weight: 0.1,
+    neighborhoods: {
+      informal:      ['Kakinohana', 'The houses along the Asato river'],
+      working_class: ['Tsuboya', 'Tomari', 'Asato', 'Makishi'],
+      middle_class:  ['Kume', 'Izumizaki', 'Wakasa'],
+      elite:         ['Shuri', 'Kumoji'],
+    },
+  },
 
   // ── SOUTH KOREA ────────────────────────────────────────────────────────────
 
@@ -739,6 +772,9 @@ export const PLACES = [
   {
     id: 'br_sao_paulo', name: 'São Paulo', country: 'Brazil',
     type: 'urban', scale: 'megacity', region: 'Southeast Brazil',
+    // Liberdade: three quarters of Japanese Brazilians lived in São Paulo
+    // state, and the Nikkei childhood event is written for the city.
+    homeOf: ['asian_brazilian'],
     neighborhoods: {
       informal:      ['Brasilândia favela', 'Jaçanã', 'Heliópolis', 'Paraisópolis'],
       working_class: ['Zona Leste', 'Penha', 'Vila Prudente', 'Itaquera'],
@@ -794,9 +830,16 @@ export const PLACES = [
 
   // ── MEXICO ─────────────────────────────────────────────────────────────────
 
+  // Mexico was the capital and one Oaxacan village, so every urban Mexican
+  // was a chilango and every rural one was Zapotec or Mixtec. The capital
+  // keeps the largest weight because it stands in for the cities the roster
+  // does not carry (Puebla, León, Toluca); the north and the west now have
+  // their own, and the long migration north has a sending village in the
+  // west, where it began, as well as the Oaxacan one.
   {
     id: 'mx_mexico_city', name: 'Mexico City', country: 'Mexico',
     type: 'urban', scale: 'megacity', region: 'Valle de México',
+    weight: 1.5,
     neighborhoods: {
       informal:      ['Neza (Ciudad Nezahualcóyotl)', 'Ecatepec outskirts', 'Iztapalapa Sur'],
       working_class: ['Iztapalapa', 'Gustavo A. Madero', 'Azcapotzalco', 'Venustiano Carranza'],
@@ -807,11 +850,63 @@ export const PLACES = [
   {
     id: 'mx_rural', name: 'Rural Oaxaca', country: 'Mexico',
     type: 'rural', scale: 'village', region: 'Southern Mexico',
+    // The indigenous content is written for the Mixtec and Zapotec villages and
+    // the Afro-Mexican content for the Costa Chica, both Oaxaca's.
+    homeOf: ['indigenous_mexican', 'afro_mexican'],
     neighborhoods: {
       informal:      ['Colonia popular', 'El barrio de abajo'],
       working_class: ['Calle Principal', 'Barrio del mercado'],
       middle_class:  ['Centro', 'Calle Real'],
       elite:         ['La hacienda', 'El mirador'],
+    },
+  },
+  // The bracero villages. Michoacán and Jalisco sent more men north than any
+  // other states from 1942 on, and it is their plazas that had the caseta with
+  // the loudspeaker and the two-storey houses nobody lives in.
+  {
+    id: 'mx_rural_michoacan', name: 'A Village in Michoacán', country: 'Mexico',
+    type: 'rural', scale: 'village', region: 'Western Mexico',
+    neighborhoods: {
+      informal:      ['The adobe houses past the arroyo', 'The ejido plots up the hill'],
+      working_class: ['Calle Hidalgo', 'El barrio de abajo'],
+      middle_class:  ['La plaza', 'Calle Morelos'],
+      elite:         ['La casa grande', 'The house with the walled orchard'],
+    },
+  },
+  {
+    id: 'mx_guadalajara', name: 'Guadalajara', country: 'Mexico',
+    type: 'urban', scale: 'major_city', region: 'Western Mexico',
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['Oblatos', 'Cerro del Cuatro', 'San Andrés'],
+      working_class: ['Analco', 'San Juan de Dios', 'Tlaquepaque', 'Atemajac'],
+      middle_class:  ['Chapalita', 'Colonia Providencia', 'Colonia Moderna'],
+      elite:         ['Colonia Americana', 'Lafayette', 'Country Club'],
+    },
+  },
+  {
+    id: 'mx_monterrey', name: 'Monterrey', country: 'Mexico',
+    type: 'urban', scale: 'major_city', region: 'Northern Mexico',
+    weight: 0.4,
+    neighborhoods: {
+      informal:      ['Colonia Independencia', 'Tierra y Libertad', 'The Topo Chico hillside'],
+      working_class: ['Colonia Industrial', 'San Nicolás de los Garza', 'Guadalupe', 'Bella Vista'],
+      middle_class:  ['Mitras', 'Linda Vista', 'Contry'],
+      elite:         ['Obispado', 'Colonia del Valle', 'San Pedro Garza García'],
+    },
+  },
+  // The border, and the maquiladoras: the Border Industrialization Program is
+  // 1965, and by the 1980s most of the assembly-line workers in Juárez were
+  // young women from somewhere else.
+  {
+    id: 'mx_juarez', name: 'Ciudad Juárez', country: 'Mexico',
+    type: 'urban', scale: 'city', region: 'Northern Mexico',
+    weight: 0.25,
+    neighborhoods: {
+      informal:      ['The colonias on the western hills', 'The squatter lots past the railway yards'],
+      working_class: ['La Chaveña', 'Bellavista', 'Barrio Alto', 'Colonia Hidalgo'],
+      middle_class:  ['Partido Romero', 'Avenida 16 de Septiembre'],
+      elite:         ['Campestre', 'The doctors\' houses off Avenida 16 de Septiembre'],
     },
   },
 
@@ -873,11 +968,120 @@ export const PLACES = [
   {
     id: 'cn_rural', name: 'Rural Sichuan', country: 'China',
     type: 'rural', scale: 'village', region: 'Southwest China',
+    // Ngaba and Kardze: the Tibetan content is written for western Sichuan.
+    homeOf: ['tibetan'],
     neighborhoods: {
       informal:      ['Liumin zu', 'Cha ditou'],
       working_class: ['Zheng jie', 'Shichang lu'],
       middle_class:  ['Cun zhongxin', 'Miao qian'],
       elite:         ['Da hu zhai', 'Zhen zhengfu'],
+    },
+  },
+  // China was three cities and Sichuan, so a Zhuang, a Hui and a Uyghur were
+  // all born among the Han of the Sichuan basin — four in five of each in
+  // Rural Sichuan. Tibetans stay there on purpose: the Tibetan content is
+  // written for Ngaba and Kardze, the Tibetan counties of western Sichuan.
+  // The homelands carry small weights so a Han birth draws them about as
+  // rarely as the provinces' share of China, while `homeOf` sends the group
+  // itself home.
+  {
+    id: 'cn_wuhan', name: 'Wuhan', country: 'China',
+    type: 'urban', scale: 'megacity', region: 'Central China',
+    weight: 0.6,
+    neighborhoods: {
+      informal:      ['Hanzheng Street back lanes', 'The shacks along the Han river', 'Houhu edge'],
+      working_class: ['Qingshan', 'Hanyang', 'Qiaokou', 'Jianghan lanes'],
+      middle_class:  ['Wuchang', "Jiang'an", 'Hongshan'],
+      elite:         ['The old concession streets in Hankou', 'East Lake shore'],
+    },
+  },
+  // Shenzhen was a market town of some thirty thousand in Bao'an county until
+  // the special economic zone of 1980, and almost nobody in it was born there;
+  // it is a place people arrive in. Weight 0 keeps it out of the birth draw.
+  {
+    id: 'cn_shenzhen', name: 'Shenzhen', country: 'China',
+    type: 'urban', scale: 'megacity', region: 'Guangdong',
+    weight: 0,
+    neighborhoods: {
+      informal:      ['Baishizhou urban village', 'Shuiwei village lanes', "The factory dormitories in Bao'an"],
+      working_class: ["Bao'an", 'Longgang', 'Buji', 'Longhua'],
+      middle_class:  ['Luohu', 'Futian', 'Nanshan'],
+      elite:         ['Overseas Chinese Town', 'Xiangmihu', 'The Shekou hillside'],
+    },
+  },
+  {
+    id: 'cn_nanning', name: 'Nanning', country: 'China',
+    type: 'urban', scale: 'city', region: 'Guangxi',
+    homeOf: ['zhuang'],
+    weight: 0.25,
+    neighborhoods: {
+      informal:      ['The stilt shacks along the Yong river', 'Jiangnan back lanes'],
+      working_class: ['Jiangnan', 'Xixiangtang', 'Zhonghua Road'],
+      middle_class:  ['Xingning', 'Minzu Avenue', 'Chaoyang Road'],
+      elite:         ['The Qingxiu Mountain side', 'Nanhu lakeside'],
+    },
+  },
+  {
+    id: 'cn_rural_guangxi', name: 'Rural Guangxi', country: 'China',
+    type: 'rural', scale: 'village', region: 'Guangxi',
+    homeOf: ['zhuang'],
+    weight: 0.08,
+    neighborhoods: {
+      informal:      ['The stilt houses up the karst valley', 'The far end past the sugarcane'],
+      working_class: ['The market street', 'By the banyan tree'],
+      middle_class:  ['The township road', 'Near the school'],
+      elite:         ['The township office row', 'The big brick house'],
+    },
+  },
+  {
+    id: 'cn_yinchuan', name: 'Yinchuan', country: 'China',
+    type: 'urban', scale: 'city', region: 'Ningxia',
+    homeOf: ['hui_chinese'],
+    weight: 0.1,
+    neighborhoods: {
+      informal:      ['The mud-brick lanes by the Nanguan mosque', 'The resettlement estate on the edge of town'],
+      working_class: ['Nanguan', 'Xingqing old town', 'Xinhua Street'],
+      middle_class:  ['Jinfeng', 'The new town west of the old city', 'Beijing Road'],
+      elite:         ["The cadres' compound", 'Near the Drum Tower'],
+    },
+  },
+  // Xihaigu: Xiji, Haiyuan and Guyuan, the dry loess hills of southern
+  // Ningxia, mostly Hui, and from 1983 the subject of the largest planned
+  // resettlement of farmers in China.
+  {
+    id: 'cn_rural_ningxia', name: 'The Xihaigu Hills', country: 'China',
+    type: 'rural', scale: 'village', region: 'Ningxia',
+    homeOf: ['hui_chinese'],
+    weight: 0.02,
+    neighborhoods: {
+      informal:      ['The cave dwellings dug into the loess', 'The far gully'],
+      working_class: ['Below the mosque', 'The lane by the water cellars'],
+      middle_class:  ['The township street', 'Near the school'],
+      elite:         ["The imam's courtyard", 'The brick house by the road'],
+    },
+  },
+  {
+    id: 'cn_kashgar', name: 'Kashgar', country: 'China',
+    type: 'urban', scale: 'city', region: 'Xinjiang',
+    homeOf: ['uyghur'],
+    weight: 0.03,
+    neighborhoods: {
+      informal:      ['The mud-brick lanes of the old city', 'The houses on the loess cliff'],
+      working_class: ['Kona Sheher', 'Near the Id Kah mosque', 'The Sunday bazaar quarter'],
+      middle_class:  ['Along Renmin Road', 'The new blocks east of the river'],
+      elite:         ["The cadres' compound", 'Near the Chini Bagh'],
+    },
+  },
+  {
+    id: 'cn_rural_xinjiang', name: 'A Village in the Kashgar Oasis', country: 'China',
+    type: 'rural', scale: 'village', region: 'Xinjiang',
+    homeOf: ['uyghur'],
+    weight: 0.01,
+    neighborhoods: {
+      informal:      ['The houses at the desert edge', 'Past the last row of poplars'],
+      working_class: ['By the canal', 'The bazaar-day street'],
+      middle_class:  ['Near the mosque', 'The township road'],
+      elite:         ['The township office row', 'The orchard with the high wall'],
     },
   },
 
@@ -2096,6 +2300,36 @@ export const PLACES = [
       elite:         ['Thakur haveli', 'Landlord\'s block'],
     },
   },
+  // Bhopal. The world event for 3 December 1984 and the settlement event that
+  // follows it both read `place.name === 'Bhopal'`, and there was no Bhopal, so
+  // nobody in the game lived through the night the corpus wrote for the people
+  // who did. It also stands in for the Hindi-belt state capital the roster
+  // otherwise lacks, which is why its weight is above its own population.
+  {
+    id: 'in_bhopal', name: 'Bhopal', country: 'India',
+    type: 'urban', scale: 'city', region: 'Madhya Pradesh',
+    weight: 0.3,
+    neighborhoods: {
+      informal:      ['Jayaprakash Nagar', 'Kazi Camp', 'Chhola'],
+      working_class: ['Jahangirabad', 'Budhwara', 'Itwara', 'Ibrahimpura'],
+      middle_class:  ['Peer Gate', 'T. T. Nagar', 'Shivaji Nagar'],
+      elite:         ['Shyamla Hills', 'Idgah Hills', 'Koh-e-Fiza'],
+    },
+  },
+  // The only countryside in India was Uttar Pradesh. Kerala is the other
+  // pole of it: near-universal literacy, a third of the state Christian or
+  // Muslim, and from the mid-1970s the Gulf money that built its houses.
+  {
+    id: 'in_rural_kerala', name: 'Rural Kerala', country: 'India',
+    type: 'rural', scale: 'village', region: 'Kerala',
+    weight: 0.1,
+    neighborhoods: {
+      informal:      ["The coir workers' huts by the backwater", 'The fishing hamlet on the shore'],
+      working_class: ['The junction', 'Near the toddy shop'],
+      middle_class:  ['Temple road', 'Near the church'],
+      elite:         ['The old tharavad house', 'The estate bungalow'],
+    },
+  },
 
   // ── PAKISTAN ───────────────────────────────────────────────────────────────
 
@@ -2135,6 +2369,9 @@ export const PLACES = [
   {
     id: 'ir_tehran', name: 'Tehran', country: 'Iran',
     type: 'urban', scale: 'megacity', region: 'Tehran Province',
+    // Stands in for every Persian-speaking city the roster does not carry
+    // (Mashhad, Isfahan, Shiraz), so it outweighs the four homeland cities.
+    weight: 3,
     neighborhoods: {
       informal:      ['Khak-e-Sefid', 'Islamshahr South', 'Shahr-e-Rey edge'],
       working_class: ['Narmak', 'Shahr-e-Rey', '13 Aban', 'Dolatabad'],
@@ -2150,6 +2387,108 @@ export const PLACES = [
       working_class: ['Chaharshouq', 'Khiaban-e asli'],
       middle_class:  ['Bakhshdarye', 'Near the mosque'],
       elite:         ['Agha\'s land', 'District office road'],
+    },
+  },
+  // A third of Iran is not Persian, and the roster drew every Azeri, Kurd,
+  // Arab and Baluch in Tehran or an Isfahan village: the Kurdistan event of
+  // 1979 had to be written as an uncle arriving in Tehran because there was
+  // nowhere else to put the family. Each people now has its city and its
+  // countryside. The weights are small so a Persian birth rarely lands in
+  // them; `homeOf` is what sends the group home.
+  {
+    id: 'ir_tabriz', name: 'Tabriz', country: 'Iran',
+    type: 'urban', scale: 'major_city', region: 'East Azerbaijan',
+    homeOf: ['azerbaijani_iranian'],
+    weight: 0.5,
+    neighborhoods: {
+      informal:      ['The hillside lanes above Davachi', 'The mud-brick edge of Hokmabad'],
+      working_class: ['Davachi', 'Sheshgelan', 'Amirkhiz', 'Hokmabad'],
+      middle_class:  ['Maralan', 'Lilava', 'Baghmisheh'],
+      elite:         ['Abresan', 'The villas toward Shahgoli'],
+    },
+  },
+  {
+    id: 'ir_rural_azerbaijan', name: 'A Village near Tabriz', country: 'Iran',
+    type: 'rural', scale: 'village', region: 'East Azerbaijan',
+    homeOf: ['azerbaijani_iranian'],
+    weight: 0.12,
+    neighborhoods: {
+      informal:      ['The houses below the threshing floor', "The shepherds' end"],
+      working_class: ['The lane by the bathhouse', 'The square by the mosque'],
+      middle_class:  ["The schoolteacher's row", 'The orchards by the stream'],
+      elite:         ["The khan's old house", 'Behind the orchard walls'],
+    },
+  },
+  {
+    id: 'ir_sanandaj', name: 'Sanandaj', country: 'Iran',
+    type: 'urban', scale: 'city', region: 'Kurdistan Province',
+    homeOf: ['kurd_iranian'],
+    weight: 0.2,
+    neighborhoods: {
+      informal:      ['The houses up the slope behind the bazaar', 'The squatters\' edge on the Hamadan road'],
+      working_class: ['Abbasabad', 'Shalman', 'Near the Dar ol-Ehsan mosque'],
+      middle_class:  ['Ferdowsi Street', 'The lanes near the Asef Vaziri house'],
+      elite:         ['Below the Khosrowabad mansion', "The old merchants' houses"],
+    },
+  },
+  {
+    id: 'ir_rural_kurdistan', name: 'A Village near Marivan', country: 'Iran',
+    type: 'rural', scale: 'village', region: 'Kurdistan Province',
+    homeOf: ['kurd_iranian'],
+    weight: 0.08,
+    neighborhoods: {
+      informal:      ['The flat roofs at the top of the village', 'The far side of the stream'],
+      working_class: ['Below the mosque', 'The lane by the spring'],
+      middle_class:  ["The schoolteacher's house", 'The square'],
+      elite:         ["The agha's house", 'The orchard walls'],
+    },
+  },
+  {
+    id: 'ir_ahvaz', name: 'Ahvaz', country: 'Iran',
+    type: 'urban', scale: 'major_city', region: 'Khuzestan',
+    homeOf: ['arab_iranian'],
+    weight: 0.35,
+    neighborhoods: {
+      informal:      ['Hasirabad', 'Kut Abdullah', 'Malashiyeh'],
+      working_class: ['Kuy-e Alavi', 'Lashkarabad', 'The old bazaar by the Karun'],
+      middle_class:  ['Amanieh', 'Naderi'],
+      elite:         ['Kianpars', 'The oil company bungalows'],
+    },
+  },
+  {
+    id: 'ir_rural_khuzestan', name: 'A Village near Hoveyzeh', country: 'Iran',
+    type: 'rural', scale: 'village', region: 'Khuzestan',
+    homeOf: ['arab_iranian'],
+    weight: 0.05,
+    neighborhoods: {
+      informal:      ['The reed houses at the marsh edge', 'The buffalo pens'],
+      working_class: ['The mudhif end', 'The lane by the canal'],
+      middle_class:  ['The square by the husseiniyeh', 'Near the school'],
+      elite:         ["The sheikh's guesthouse", 'The date garden walls'],
+    },
+  },
+  {
+    id: 'ir_zahedan', name: 'Zahedan', country: 'Iran',
+    type: 'urban', scale: 'city', region: 'Sistan and Baluchestan',
+    homeOf: ['baloch_iranian'],
+    weight: 0.15,
+    neighborhoods: {
+      informal:      ['Shirabad', 'The mud-brick lanes past the bus terminal'],
+      working_class: ['The bazaar quarter', 'The lanes behind the old customs post'],
+      middle_class:  ['The railway quarter', 'Along the main avenue'],
+      elite:         ["The officials' quarter", "The houses near the governor's office"],
+    },
+  },
+  {
+    id: 'ir_rural_baluchestan', name: 'A Village near Saravan', country: 'Iran',
+    type: 'rural', scale: 'village', region: 'Sistan and Baluchestan',
+    homeOf: ['baloch_iranian'],
+    weight: 0.03,
+    neighborhoods: {
+      informal:      ['The palm-frond huts', 'The far wells'],
+      working_class: ['By the date palms', 'The lane to the madrasa'],
+      middle_class:  ['Near the mosque', 'The road to the border'],
+      elite:         ["The sardar's compound", 'The walled date garden'],
     },
   },
 
@@ -5241,6 +5580,9 @@ export const PLACES = [
   {
     id: 'jp_hiroshima', name: 'Hiroshima', country: 'Japan',
     type: 'urban', scale: 'city', region: 'Chugoku',
+    // At default weight the two cities took a fifth of all Japanese births;
+    // their prefectures held about 4.5% of Japan in 1940.
+    weight: 0.12,
     neighborhoods: {
       informal:      ['The barracks by the river', 'Aioi riverbank', 'Motomachi'],
       working_class: ['Danbara', 'Eba', 'Ujina', 'Koi'],
@@ -5251,6 +5593,7 @@ export const PLACES = [
   {
     id: 'jp_nagasaki', name: 'Nagasaki', country: 'Japan',
     type: 'urban', scale: 'city', region: 'Kyushu',
+    weight: 0.12,
     neighborhoods: {
       informal:      ['The Urakami slopes', 'Near the shipyard gate'],
       working_class: ['Urakami', 'Inasa', 'Tateyama'],
@@ -5417,6 +5760,28 @@ const NEIGHBOURHOOD_IDENTITY = [
   [/^Gropiusstadt$/,        (id) => (id?.year ?? 9999) >= 1965],
   [/^Märkisches Viertel$/,  (id) => (id?.year ?? 9999) >= 1966],
   [/^Hellersdorf-Nord$/,    (id) => (id?.year ?? 9999) >= 1986],
+  // Glasgow's peripheral schemes, built for the tenement clearances from 1954.
+  [/^(Easterhouse|Castlemilk|Drumchapel)$/, (id) => (id?.year ?? 9999) >= 1955],
+  // Bhopal: the new capital's sectors after 1956, and the basti opposite the
+  // Union Carbide plant, named for Jayaprakash Narayan.
+  [/^T\. T\. Nagar$/,        (id) => (id?.year ?? 9999) >= 1958],
+  [/^Shivaji Nagar$/,       (id) => (id?.year ?? 9999) >= 1960],
+  [/^Jayaprakash Nagar$/,   (id) => (id?.year ?? 9999) >= 1975],
+  // Guadalajara and Monterrey: colonias laid out from the 1940s on, and the
+  // two land invasions of the 1970s.
+  [/^(Chapalita|Country Club)$/, (id) => (id?.year ?? 9999) >= 1945],
+  [/^Colonia Providencia$/, (id) => (id?.year ?? 9999) >= 1952],
+  [/^Contry$/,              (id) => (id?.year ?? 9999) >= 1962],
+  [/^Cerro del Cuatro$/,    (id) => (id?.year ?? 9999) >= 1970],
+  [/^Tierra y Libertad$/,   (id) => (id?.year ?? 9999) >= 1971],
+  [/^Overseas Chinese Town$/, (id) => (id?.year ?? 9999) >= 1985],
+  [/^Kianpars$/,            (id) => (id?.year ?? 9999) >= 1965],
+  // Dubai's elite tier was all twenty-first-century reclamation and towers, so
+  // a 1950 Dubai childhood was placed on the Palm.
+  [/^(Emirates Hills|Dubai Marina)$/, (id) => (id?.year ?? 9999) >= 2003],
+  [/^Silicon Oasis$/,       (id) => (id?.year ?? 9999) >= 2005],
+  [/^Palm Jumeirah$/,       (id) => (id?.year ?? 9999) >= 2006],
+  [/^Downtown Dubai$/,      (id) => (id?.year ?? 9999) >= 2008],
 ]
 
 /**

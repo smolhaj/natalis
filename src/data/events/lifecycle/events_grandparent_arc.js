@@ -14,7 +14,7 @@
 // so events fire based on having children + appropriate age, and prose refers to
 // "your grandchild" as a real but untracked person in the character's life.
 
-const hasChildren = (G) => G.children?.some(c => c.alive)
+const hasChildren = (G) => (G.children?.length ?? 0) > 0
 
 export const GRANDPARENT_ARC_EVENTS = [
 
@@ -203,7 +203,7 @@ export const GRANDPARENT_ARC_EVENTS = [
     weight: 4,
     when: (G) =>
       G.flags.has('became_grandparent') &&
-      G.children?.filter(c => c.alive)?.length >= 2 &&
+      (G.children?.length ?? 0) >= 2 &&
       G.age >= 65 &&
       !G.mem?.gpMultiple,
     text: `There are now several grandchildren and the household during visits has a quality of organized chaos that you recognize from when your own children were this age, except that you are now watching from the chair rather than managing it. The noise level. The way a child of four uses a surface that is not designated as a surface. The negotiations over food. You observe all of this and find, to your surprise, that you are not tired by it in the way you would have been tired by it thirty years ago — the distance from responsibility has changed its texture entirely.`,

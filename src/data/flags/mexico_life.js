@@ -69,4 +69,9 @@ export const MEXICO_LIFE_FLAGS = {
     description: 'A cousin disappeared on the road north during the drug war.',
     notes: 'Follow-through: mxl_ft_buscadoras, searching the fields with the mothers.',
   },
+  mxl_bracero_father: {
+    weight: 'moderate', category: 'migration', intent: 'event',
+    description: 'Child in a Michoacán village whose father went north as a bracero, 1943-64.',
+    notes: 'Follow-through: mxl_ft_bracero_fund, the 2005-08 payment of the withheld wages.',
+  },
 }

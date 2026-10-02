@@ -80,6 +80,13 @@ const BOYCOTT_1984 = new Set(['Russia', 'Ukraine', 'Belarus', 'Moldova', 'Estoni
   'Afghanistan', 'Ethiopia', 'Angola', 'North Korea'])
 
 // The Delta was inside Biafra.
+// Reads G (`place`) or the raw state (`currentPlace`, which may be an id).
+function bhopalResident(x) {
+  const pl = x?.place ?? x?.currentPlace ?? x?.character?.birthPlace
+  const id = typeof pl === 'string' ? pl : pl?.id
+  return id === 'in_bhopal'
+}
+
 function biafraDelta(state) {
   const pl = state?.currentPlace ?? state?.character?.birthPlace
   const id = typeof pl === 'string' ? pl : pl?.id
@@ -3021,6 +3028,11 @@ export const WORLD_EVENTS = [
   },
 
   // ── BHOPAL 1984 ───────────────────────────────────────────────────────────
+  // Every Indian reads about it; somebody who lives in Bhopal breathes it, and
+  // carries `bhopal_survivor` into the settlement of 1989 and the verdict of
+  // 2010 (events_industrial.js). The gas was heavier than air and lay in the
+  // low old city and the bastis by the plant; the bungalows on Shyamla Hills
+  // were above most of it, which is the whole social geography of the night.
   {
     id: 'bhopal_1984',
     name: 'Bhopal Disaster',
@@ -3028,18 +3040,34 @@ export const WORLD_EVENTS = [
     archetypes: null,
     countries: ['India'],
     narrative: (G) => {
-      const place = G.place?.name || ''
-      // Only a character who lives in Bhopal woke to it; a random 15% of all
-      // Indians used to.
-      if (place === 'Bhopal') {
-        return 'The Union Carbide pesticide plant in Bhopal leaks methyl isocyanate gas at 2am, 3 December. The gas is heavier than air and settles into the low-lying neighbourhoods around the plant. You wake to your eyes burning and your neighbours running without knowing which direction. Within the week 3,000 people are dead. 500,000 are injured. The company\'s CEO flies to India, is briefly arrested, and is released. He flies home.'
+      if (bhopalResident(G)) {
+        if (G.age < 5) {
+          return 'You are too small to remember the night of the third of December, when the gas from the Union Carbide plant came down into the lanes. Your mother tells it for you, later: she wrapped you in a wet sari, and ran, and ran the wrong way first, towards the plant, because everyone was running and nobody knew which way the wind was.'
+        }
+        if (G.neighborhoodTier === 'elite') {
+          return 'At two in the morning, 3 December, the Union Carbide plant leaks methyl isocyanate into the city. Up on the hill you wake to a smell like chillies burning and a noise from below that you do not understand until morning. By then the old city is lying in the streets. Within the week three thousand people are dead. The company\'s chairman flies to India, is arrested, is released on bail, and flies home.'
+        }
+        return 'At two in the morning, 3 December, the Union Carbide plant leaks methyl isocyanate gas. It is heavier than air and it settles into the low lanes around the plant. You wake to your eyes burning and the whole street coughing, and you run, everyone runs, without knowing which way the wind is. At Hamidia Hospital the bodies are laid in rows on the ground. Within the week three thousand people are dead. The company\'s chairman flies to India, is arrested, is released on bail, and flies home.'
       }
       return 'The Union Carbide pesticide plant in Bhopal, Madhya Pradesh, leaks methyl isocyanate gas on the night of 3 December. 3,000 dead in the immediate aftermath; estimates of total deaths range to 15,000. 500,000 people are exposed. The CEO of Union Carbide, Warren Anderson, is arrested in India, released on bail, and flies home. The survivors wait for compensation. The site remains contaminated.'
     },
     context: 'The Bhopal disaster is the world\'s worst industrial accident. Union Carbide\'s Bhopal plant had been cutting costs; multiple safety systems were non-functional on the night of the leak. The Indian government accepted a $470 million settlement in 1989 — about $550 per affected person. Clean-up of the site has never been completed; groundwater contamination continues. Warren Anderson, Union Carbide\'s CEO, was declared a fugitive in India but the US government refused extradition requests. He died in 2014, never having faced trial.',
-    effect: (p) => { p.m -= 6; p.h -= 2; p.addFlag('industrial_disaster_era'); },
+    effect: (p) => {
+      // `effect` cannot read G; the state is on the proxy, as the Biafra
+      // event reads it.
+      if (bhopalResident(p._state)) {
+        p.addFlag('bhopal_survivor')
+        if (p._state?.currentNeighborhoodTier === 'elite') { p.m -= 10; p.h -= 3 }
+        else { p.m -= 14; p.h -= 12; p.addCondition('copd', 'mild') }
+      } else {
+        p.m -= 6; p.h -= 2
+      }
+      p.addFlag('industrial_disaster_era')
+    },
     addFlags: ['industrial_disaster_era'],
-    minAge: 5,
+    // A baby in Bhopal was in it; a baby in Madras was not told.
+    minAge: 0,
+    when: (G) => G.age >= 5 || bhopalResident(G),
   },
 
   // ── ANGOLA CIVIL WAR 1975–2002 (depth) ───────────────────────────────────

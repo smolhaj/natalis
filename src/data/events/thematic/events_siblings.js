@@ -201,7 +201,7 @@ export const SIBLING_EVENTS = [
       return `${s?.name ?? 'Your sibling'} dies. You are one of the few people left who holds the version of the world that both of you came from. The shared history that required two people to maintain now requires only you. You are the last custodian of certain things.`
     },
     choices: null,
-    effect: (p) => { p.m -= 20; p.r += 12; p.addFlag('sibling_died'); p.setMem('sibLateDeath', true) },
+    effect: (p) => { p.m -= 20; p.r += 12; p.addFlag('sibling_died'); p.setMem('sibLateDeath', true); p.killSibling() },
   },
 
 

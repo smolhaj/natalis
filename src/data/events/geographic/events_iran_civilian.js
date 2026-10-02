@@ -8,11 +8,15 @@
 // street, the video man with the bag, the satellite dish under the washing —
 // was the part almost every Iranian actually lived, and it was unwritten.
 //
-// The roster draws Iranians in two places: Tehran and rural Isfahan. Guards
-// read the LIVE country and the place id, so an emigrant in Los Angeles does
-// not get the red alert; ethnicity is read only where the prose names a
-// people (Azeri, Kurdish). Baluch, Arab and Baha'i lives need places and a
-// religion id the roster does not yet have, and are not attempted here.
+// The roster drew Iranians in two places, Tehran and rural Isfahan, so the
+// Kurdistan of 1979 had to be written as an uncle arriving in Tehran. Each of
+// the four peoples now has a city and a countryside with `homeOf` (Tabriz,
+// Sanandaj and Marivan, Ahvaz and Hoveyzeh, Zahedan and Saravan), and the
+// homeland events below read the place, not the ethnicity, because a Persian
+// teacher posted to Zahedan lived Bloody Friday and an Azeri in Tehran did
+// not live the Tabriz of 1946. Guards read the LIVE country and the place id,
+// so an emigrant in Los Angeles does not get the red alert. Baha'i lives need
+// a religion id the roster does not yet have, and are not attempted here.
 //
 // Dates used, all checked:
 //   19 Aug 1953 (28 Mordad 1332)  coup against Mosaddegh; crowds from south
@@ -52,6 +56,36 @@
 //                "Jin, jiyan, azadi" is a Kurdish slogan. Chants from the
 //                rooftops at night, as in 1978 and 2009.
 //   13-24 Jun 2025  Israeli strikes on Tehran; roads north jammed.
+//
+// The homelands:
+//   Nov 1945 - Dec 1946  the Azerbaijan People's Government in Tabriz; schools
+//                taught in Azerbaijani Turkish. The army re-enters Tabriz on
+//                12-13 December 1946; the Turkish schoolbooks are burned in
+//                public, the leaders flee over the Aras to the Soviet side.
+//   18 Feb 1978 (29 Bahman)  the fortieth-day mourning for the dead of Qom
+//                becomes a riot in Tabriz: banks, cinemas and the Rastakhiz
+//                party office burned; troops brought in from outside.
+//   Aug 2011     the Majlis rejects the emergency bill for Lake Urmia;
+//                protests in Tabriz and Urmia. The lake has lost most of its
+//                surface by 2013.
+//   22 Sep 1980  Iraq invades Khuzestan. Hoveyzeh occupied in the first
+//                weeks, retaken May 1982; Khorramshahr falls 24-26 Oct 1980,
+//                retaken 24 May 1982. Ahvaz under artillery fire. Iraqi radio
+//                broadcasts in Arabic to "Arabistan"; no uprising follows.
+//                Millions of date palms along the Arvand Rud destroyed.
+//   16 Mar 1988  Halabja gassed; survivors carried over the border to
+//                hospitals in Iranian Kurdistan and Kermanshah.
+//   2000s-2020s  the kolbars, porters carrying loads over the Iraqi border
+//                from Baneh, Marivan and Sardasht; border guards shoot.
+//   2011         the WHO's air-quality table puts Ahvaz first in the world
+//                for particulates; the dust off the dried Hoor al-Azim.
+//   Jul 2021     water protests in Khuzestan ("I am thirsty"); several dead.
+//   2010s-2020s  the sukhtbar, Baluch fuel carriers driving Zamyad pickups of
+//                subsidised diesel to Pakistan; 22 Feb 2021 shootings at
+//                Saravan.
+//   30 Sep 2022  "Bloody Friday" in Zahedan: security forces fire on
+//                worshippers and protesters after Friday prayers at the Makki
+//                mosque; some ninety dead.
 //   Zayandeh Rud dry through Isfahan for most of most years from the late
 //   2000s.
 
@@ -60,6 +94,18 @@ const IN_IR = (G) => (G.currentCountry?.name ?? G.character?.country?.name) === 
 const PLACE = (G) => G.place?.id ?? null
 const TEHRAN = (G) => IN_IR(G) && PLACE(G) === 'ir_tehran'
 const VILLAGE = (G) => IN_IR(G) && PLACE(G) === 'ir_rural'
+const at = (...ids) => (G) => IN_IR(G) && ids.includes(PLACE(G))
+const AZERBAIJAN = at('ir_tabriz', 'ir_rural_azerbaijan')
+const TABRIZ = at('ir_tabriz')
+const KURDISTAN = at('ir_sanandaj', 'ir_rural_kurdistan')
+const KHUZESTAN = at('ir_ahvaz', 'ir_rural_khuzestan')
+const BALUCHESTAN = at('ir_zahedan', 'ir_rural_baluchestan')
+// Any Iranian village. The Literacy Corps went to all of them; the soldier
+// came on the bus from the provincial capital.
+const ANY_VILLAGE = at('ir_rural', 'ir_rural_azerbaijan', 'ir_rural_kurdistan', 'ir_rural_khuzestan', 'ir_rural_baluchestan')
+const PROVINCIAL_TOWN = { ir_rural: 'Isfahan', ir_rural_azerbaijan: 'Tabriz', ir_rural_kurdistan: 'Sanandaj', ir_rural_khuzestan: 'Ahvaz', ir_rural_baluchestan: 'Zahedan' }
+const POOR = (G) => (G.wealthTier ?? 2) <= 2
+const MALE = (G) => G.character?.gender === 'male'
 const AZERI = (G) => IN_IR(G) && G.character?.ethnicity === 'azerbaijani_iranian'
 const KURD = (G) => IN_IR(G) && G.character?.ethnicity === 'kurd_iranian'
 const WAR_BROTHER = (G) => (G.siblings ?? []).some(s => s && s.alive !== false && s.gender === 'male' && G.age + (s.ageDiff ?? 0) >= 16 && G.age + (s.ageDiff ?? 0) <= 30)
@@ -120,8 +166,8 @@ export const IRAN_CIVILIAN_EVENTS = [
     id: 'irc_sepah_danesh',
     phase: null,
     weight: 120,
-    when: (G) => VILLAGE(G) && G.age >= 6 && G.age <= 12 && G.currentYear >= 1964 && G.currentYear <= 1978 && once(G, 'irc_sepah'),
-    text: 'A young man in an army uniform arrives on the bus from Isfahan with a suitcase and a box of chalk. He is from Tehran, he is nineteen, and he is the teacher now. He holds school in a rented room by the mosque with a blackboard on a nail, and the boys sit on one side and the girls on the other, and some fathers keep their girls home. He teaches you the first letters, the shape of alef standing up like a man, and you write your own name in the dust on the way home.',
+    when: (G) => ANY_VILLAGE(G) && G.age >= 6 && G.age <= 12 && G.currentYear >= 1964 && G.currentYear <= 1978 && once(G, 'irc_sepah'),
+    text: (G) => `A young man in an army uniform arrives on the bus from ${PROVINCIAL_TOWN[PLACE(G)] ?? 'the city'} with a suitcase and a box of chalk. He is from Tehran, he is nineteen, and he is the teacher now. He holds school in a rented room by the mosque with a blackboard on a nail, and the boys sit on one side and the girls on the other, and some fathers keep their girls home. He teaches you the first letters, the shape of alef standing up like a man, and you write your own name in the dust on the way home.`,
     context: 'The Literacy Corps (Sepah-e Danesh) was part of the Shah\'s White Revolution of 1963. Young men with secondary diplomas did their military service as teachers in villages; by the late 1970s some 200,000 had served. For many villages it was the first school.',
     choices: null,
     effect: (p) => { p.setMem('irc_sepah', true); p.e += 4; p.addFlag('irc_literacy_corps') },
@@ -212,7 +258,12 @@ export const IRAN_CIVILIAN_EVENTS = [
     phase: null,
     weight: 300,
     when: (G) => KURD(G) && MOTHER(G) && G.currentYear >= 1979 && G.currentYear <= 1980 && G.age >= 10 && G.age <= 35 && once(G, 'irc_kurd79'),
-    text: 'In the spring everybody\'s cousin in Sanandaj said the revolution would give Kurdistan its own say. By August the radio says the army is going in, and Paveh is a name, and then Sanandaj is, and then Mahabad. Your mother calls her brother from the post office and the line rings and rings. When he comes to Tehran in the winter he sleeps on your floor for a month and does not say what happened, only that the mountains are full of young men now.',
+    // Written when the roster had nowhere in Kurdistan to put the family, so
+    // it was the uncle who came to Tehran. The family at home is the first
+    // branch now; the one who left keeps the original.
+    text: (G) => KURDISTAN(G)
+      ? `In the spring the men in the square said the revolution would give Kurdistan its own say, and the party offices opened with their flags out. In August the radio says the army is going in. Paveh first, then the helicopters over ${PLACE(G) === 'ir_sanandaj' ? 'the city' : 'the road to Sanandaj'}, then the Guards at the crossroads with a list of names. Your mother keeps the shutters closed and sends you for bread only in the morning. By the winter the mountains are full of young men, and two of them are your cousins.`
+      : `In the spring everybody's cousin in Sanandaj said the revolution would give Kurdistan its own say. By August the radio says the army is going in, and Paveh is a name, and then Sanandaj is, and then Mahabad. Your mother calls her brother from the post office and the line rings and rings. When he comes ${TEHRAN(G) ? 'to Tehran ' : ''}in the winter he sleeps on your floor for a month and does not say what happened, only that the mountains are full of young men now.`,
     context: 'In August 1979 Khomeini ordered the army and the Revolutionary Guards into Kurdistan after fighting at Paveh. Sanandaj and Mahabad were retaken over the following year; thousands were killed and dozens executed after summary trials. Kurdish parties went into armed opposition for most of the next decade.',
     choices: null,
     effect: (p) => { p.setMem('irc_kurd79', true); p.m -= 6; p.addFlag('irc_kurdistan_1979') },
@@ -473,6 +524,151 @@ export const IRAN_CIVILIAN_EVENTS = [
     effect: (p) => { p.setMem('irc_2025', true); p.m -= 6 },
   },
 
+  // ── THE HOMELANDS ──────────────────────────────────────────────────────────
+  // Read by place, not by people: these happened to whoever lived there.
+
+  {
+    id: 'irc_tabriz_1946',
+    phase: null,
+    weight: 300,
+    when: (G) => AZERBAIJAN(G) && G.currentYear >= 1946 && G.currentYear <= 1947 && G.age >= 7 && G.age <= 15 && once(G, 'irc_tabriz46'),
+    text: 'For one school year the reader was in Turkish, the language of the kitchen, with the government\'s own picture on the cover, and the teacher said the words the way your grandmother says them. In December the army comes back from Tehran. The men who ran the government are gone north over the Aras, or in prison, and in the square the soldiers make a pile of the Turkish schoolbooks and set it alight. In January the reader is Persian again, and nobody mentions the other one.',
+    context: 'The Azerbaijan People\'s Government, backed by Soviet troops, ran Iranian Azerbaijan from November 1945 to December 1946 and made Azerbaijani Turkish the language of schools and administration. When the Iranian army re-entered Tabriz on 12-13 December 1946 its leaders fled to the Soviet Union, and the Turkish-language textbooks were publicly burned.',
+    choices: null,
+    effect: (p) => { p.setMem('irc_tabriz46', true); p.m -= 4; p.addFlag('irc_azeri_tongue') },
+  },
+
+  {
+    id: 'irc_tabriz_1978',
+    phase: null,
+    weight: 250,
+    when: (G) => TABRIZ(G) && G.currentYear === 1978 && G.age >= 10 && once(G, 'irc_tabriz78'),
+    text: 'In February it is forty days since the shooting in Qom, and the mosques of Tabriz hold the mourning, and the police padlock one of them. By noon the crowd has come down the avenue and the banks are burning, and the cinemas, and the building of the Shah\'s party with his picture over the door. The local garrison is not trusted with it; soldiers come in from outside with tanks. Your father pulls the shutter of the shop down and sits behind it in the dark with you until the evening, listening.',
+    context: 'On 18 February 1978 the fortieth-day commemoration of the demonstrators killed in Qom became an uprising in Tabriz. Banks, cinemas, liquor shops and offices of the Rastakhiz party were burned, and army units were brought in to suppress it. Each round of deaths set the date of the next mourning, forty days on, and the revolution moved across the country in that rhythm.',
+    choices: null,
+    effect: (p) => { p.setMem('irc_tabriz78', true); p.m -= 3 },
+  },
+
+  {
+    id: 'irc_urmia_salt',
+    phase: null,
+    weight: 80,
+    when: (G) => AZERBAIJAN(G) && G.currentYear >= 2011 && G.currentYear <= 2018 && G.age >= 25 && once(G, 'irc_urmia'),
+    text: 'When you were small your father drove you to the lake on a Friday and you floated on your back in water so salt you could not sink, and came out white to the knees. Now the shore is two kilometres out across a plain of salt, and the boats are lying on their sides in it. In the summer of 2011 the parliament votes down the plan to bring water to it, and people walk through Tabriz chanting that the lake is dying, and the police are waiting at the end of the avenue.',
+    context: 'Lake Urmia, once the largest lake in the Middle East, lost most of its surface between the 1990s and 2013 to dams and irrigation in its basin and to drought. In August 2011 the Majlis rejected an emergency bill to divert water to it, and protests in Tabriz and Urmia were broken up with arrests.',
+    choices: null,
+    effect: (p) => { p.setMem('irc_urmia', true); p.m -= 3 },
+  },
+
+  {
+    id: 'irc_halabja_1988',
+    phase: null,
+    weight: 250,
+    when: (G) => KURDISTAN(G) && G.currentYear === 1988 && G.age >= 8 && once(G, 'irc_halabja'),
+    text: 'In March they come over the mountain from Iraq, from a town called Halabja, on foot and on tractors and in the backs of trucks, with their eyes swollen shut and the skin coming off their hands. They say the planes dropped something that smelled of apples. The hospital is full by the second day and the mosque is a hospital by the third. A woman sits by the road with a child in her lap and will not let anyone take it from her.',
+    context: 'On 16 March 1988, in the last months of the war, Iraqi aircraft attacked the Kurdish town of Halabja with chemical weapons, killing some five thousand people. Thousands of survivors crossed into Iran and were treated in hospitals in Iranian Kurdistan, Kermanshah and Tehran.',
+    choices: null,
+    effect: (p) => { p.setMem('irc_halabja', true); p.m -= 6; p.karma += 2 },
+  },
+
+  {
+    id: 'irc_kolbar',
+    phase: null,
+    weight: 90,
+    when: (G) => KURDISTAN(G) && MALE(G) && POOR(G) && G.age >= 17 && G.age <= 45 && G.currentYear >= 2008 && G.currentYear <= 2023 && once(G, 'irc_kolbar'),
+    text: 'The work there is is on your back. You go up the mountain at night with the others to the border, and on the Iraqi side a man loads you: a television, a crate of tea, two tyres roped together, fifty kilos. Then the path down in the dark, in snow from November, with the border guards somewhere above. They are paid for the loads and not for the men. Every winter somebody from the valley does not come down.',
+    choices: [
+      {
+        text: 'Go up with the others.',
+        tag: 'defiant',
+        outcome: 'Your knees are an old man\'s by thirty. There is meat at home on Fridays.',
+        effect: (p) => { p.setMem('irc_kolbar', true); p.mo += 900; p.h -= 6; p.m -= 2 },
+      },
+      {
+        text: 'Find something else, however little it pays.',
+        tag: 'yielding',
+        outcome: 'You lay bricks in Sanandaj by the day. Your cousin goes up instead.',
+        effect: (p) => { p.setMem('irc_kolbar', true); p.mo += 200; p.m -= 2 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'irc_khuzestan_1980',
+    phase: null,
+    weight: 300,
+    when: (G) => KHUZESTAN(G) && G.currentYear === 1980 && G.age >= 6 && once(G, 'irc_khz80'),
+    text: (G) => PLACE(G) === 'ir_rural_khuzestan'
+      ? 'In September the Iraqi tanks come across the border in the dust and the radio from Baghdad speaks to you in Arabic, your own Arabic, and says it has come to free you. Nobody in the village rises. Your father loads what the cart will take and you leave the buffalo and walk to Ahvaz with everyone else, and for the rest of the year you sleep in a school with the families from Khorramshahr, and the shells come over at night.'
+      : 'In September the Iraqi army comes across the border and the radio from Baghdad speaks to the city in Arabic and says it has come to free it. Nobody rises. The shells reach Ahvaz within the week. The families from Khorramshahr arrive with nothing and sleep in the schools, and at the end of October Khorramshahr falls and they stop talking about going back.',
+    context: 'Iraq invaded Iran on 22 September 1980 across the Khuzestan border, expecting the province\'s Arab population to rise in its support; it did not. Hoveyzeh was occupied in the first weeks and Khorramshahr fell after a month of street fighting. Ahvaz was shelled throughout. Hundreds of thousands of people from the border towns were displaced, most of them for years.',
+    choices: null,
+    effect: (p) => {
+      p.setMem('irc_khz80', true); p.m -= 10; p.h -= 2; p.addFlag('irc_khuzestan_1980')
+      // Hoveyzeh was occupied until May 1982; the village goes to the city.
+      if ((p._state?.currentPlace?.id ?? p._state?.currentPlace) === 'ir_rural_khuzestan') p.relocate('ir_ahvaz', 'informal')
+    },
+  },
+
+  {
+    id: 'irc_ahvaz_dust',
+    phase: null,
+    weight: 70,
+    when: (G) => KHUZESTAN(G) && G.currentYear >= 2009 && G.currentYear <= 2020 && G.age >= 8 && once(G, 'irc_dust'),
+    text: 'Some days the sky goes the colour of tea and then of rust, and the dust comes in under the doors and lies on the windowsills like flour. The schools close and the offices close and the hospital corridors fill with old men and children who cannot breathe. The dust comes off the marsh that was drained for the oil wells and off the river that is half what it was. A report says Ahvaz has the dirtiest air in the world, and people repeat it the way they repeat the temperature in August.',
+    context: 'Dust storms in Khuzestan grew sharply from the late 2000s as wetlands such as Hoor al-Azim were drained for oil exploration and the Karun was dammed and diverted upstream. In 2011 the World Health Organization\'s air-quality database ranked Ahvaz first in the world for particulate pollution.',
+    choices: null,
+    effect: (p) => { p.setMem('irc_dust', true); p.h -= 2; p.m -= 2 },
+  },
+
+  {
+    id: 'irc_khuzestan_thirst_2021',
+    phase: null,
+    weight: 250,
+    when: (G) => KHUZESTAN(G) && G.currentYear === 2021 && G.age >= 16 && once(G, 'irc_thirst'),
+    text: 'In July it is fifty degrees and the taps in the villages have run dry for days, and the water comes in a tanker when it comes. At night people go out on the roads and chant the one sentence, I am thirsty, in Arabic and in Persian. The internet slows to nothing. Then the shooting, and the names of the dead going round on phones when the internet comes back, young men, from villages you know.',
+    context: 'In July 2021 protests over water shortages spread across Khuzestan during a heatwave and drought, under the slogan "I am thirsty". Security forces opened fire in several towns; rights groups counted at least eight people killed.',
+    choices: null,
+    effect: (p) => { p.setMem('irc_thirst', true); p.m -= 4 },
+  },
+
+  {
+    id: 'irc_sukhtbar',
+    phase: null,
+    weight: 90,
+    when: (G) => BALUCHESTAN(G) && MALE(G) && POOR(G) && G.age >= 17 && G.age <= 45 && G.currentYear >= 2008 && G.currentYear <= 2023 && once(G, 'irc_sukhtbar'),
+    text: 'Diesel costs almost nothing on this side of the border and a great deal on the other, and between them is a desert and a road nobody paves. The young men drive it at night in blue Zamyad pickups loaded with plastic drums, without headlights, fast, and sell it on the Pakistani side. The border guards shoot at the tyres, and sometimes not at the tyres. There is no other work that pays like it.',
+    choices: [
+      {
+        text: 'Drive.',
+        tag: 'defiant',
+        outcome: 'You learn the road by the shape of the hills against the stars. The money is real and you spend it fast, as everyone does.',
+        effect: (p) => { p.setMem('irc_sukhtbar', true); p.mo += 1100; p.h -= 3 },
+      },
+      {
+        text: 'Stay off the road.',
+        tag: 'yielding',
+        outcome: 'You load trucks in the bazaar for a fifth of it. Your mother does not have to wait up.',
+        effect: (p) => { p.setMem('irc_sukhtbar', true); p.mo += 200; p.m -= 1 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'irc_zahedan_2022',
+    phase: null,
+    weight: 300,
+    when: (G) => BALUCHESTAN(G) && G.currentYear === 2022 && G.age >= 10 && once(G, 'irc_zahedan22'),
+    text: (G) => PLACE(G) === 'ir_zahedan'
+      ? 'On the last Friday of September the men come out of prayers at the Makki mosque and walk to the police station, because of a girl in Chabahar and what a police commander did to her. From the roofs the guards open fire into the crowd and into the prayer ground. You hear it from the house. By night the hospital is asking for blood over the mosque loudspeaker, and in the morning the city is counting, and the count goes past ninety.'
+      : 'On the last Friday of September the news comes from Zahedan on the phones: the men came out of Friday prayers and the guards fired on them from the roofs, into the prayer ground. A cousin is in the hospital there. By the time the count is known it is past ninety, and every Friday after it the men in the town go to prayers knowing.',
+    context: 'On 30 September 2022 security forces in Zahedan fired on worshippers and protesters after Friday prayers at the Makki mosque; the protest had been called over the alleged rape of a fifteen-year-old Baluch girl by a police commander in Chabahar. Rights groups counted around ninety dead. Baluch Iranians, who are Sunni, call it Bloody Friday.',
+    choices: null,
+    effect: (p) => { p.setMem('irc_zahedan22', true); p.m -= 8 },
+  },
+
   // ── FOLLOW-THROUGH ─────────────────────────────────────────────────────────
 
   {
@@ -499,7 +695,7 @@ export const IRAN_CIVILIAN_EVENTS = [
     id: 'irc_ft_letters',
     phase: null,
     weight: 60,
-    when: (G) => VILLAGE(G) && G.flags.has('irc_literacy_corps') && G.age >= 18 && G.age <= 60 && G.currentYear >= 1980 && G.currentYear <= 2000 && once(G, 'irc_ft_letters'),
+    when: (G) => ANY_VILLAGE(G) && G.flags.has('irc_literacy_corps') && G.age >= 18 && G.age <= 60 && G.currentYear >= 1980 && G.currentYear <= 2000 && once(G, 'irc_ft_letters'),
     text: 'Women from the lanes bring you their letters to read, because you can, because a soldier in a uniform taught you the letters in a room by the mosque. Letters from sons at the front, from sons in Tehran, from a daughter married in Shiraz. You read them out slowly in the courtyard and the women watch your mouth. Some of them want you to read the same letter twice.',
     choices: null,
     effect: (p) => { p.setMem('irc_ft_letters', true); p.s += 2; p.karma += 2 },
@@ -615,5 +811,15 @@ export const IRAN_CIVILIAN_EVENTS = [
       : 'At ten at night, from the dark roofs, the shouting starts, building after building, women\'s voices high above the men\'s. The last time the city did this you were indoors with no internet, counting rumours. You go up. On the roof opposite someone is filming, the screen lighting a face, and then sensibly turns it off.',
     choices: null,
     effect: (p) => { p.setMem('irc_ft_roof22', true); p.m -= 2; p.s += 2 },
+  },
+
+  {
+    id: 'irc_ft_khuzestan_palms',
+    phase: null,
+    weight: 60,
+    when: (G) => IN_IR(G) && G.flags.has('irc_khuzestan_1980') && G.currentYear >= 1998 && G.currentYear <= 2015 && G.age >= 25 && once(G, 'irc_ft_palms'),
+    text: 'Along the Arvand the date palms the shells took off at the crown in 1980 are still standing, rows of them, grey trunks with nothing on top, because nobody has had the money to pull them out. Nobody under twenty has seen the river with leaves along it. When the television shows the liberation of Khorramshahr every May, with the mosque that was kept with its holes in it, you change the channel, and then you change it back.',
+    choices: null,
+    effect: (p) => { p.setMem('irc_ft_palms', true); p.m -= 2 },
   },
 ]
