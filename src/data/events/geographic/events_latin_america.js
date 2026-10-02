@@ -237,7 +237,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.character.country.name === 'Argentina' &&
       G.currentYear === 1982 &&
       G.age >= 36 &&
-      G.children?.some(c => c.alive) &&
+      G.children?.length > 0 &&
       !G.mem?.arg_falklands_family,
     text: 'The government invades the Malvinas on April 2nd and the streets fill with people chanting. The Junta is popular for the first time. Your son is of conscription age. The generals who spent six years disappearing civilians are now asking those civilians to send their sons to die in the South Atlantic.',
     choices: [

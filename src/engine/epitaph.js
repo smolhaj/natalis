@@ -43,7 +43,9 @@ export function generateIdentityCard(state) {
   // partner" and means a living one, so a widow was told "You are married to
   // Vikram Joshi" on the card that renders every year for the rest of her life,
   // four years after his death line printed. 9 of 13 widowed lives got this.
-  const { age, children, education, desire } = state
+  const { age, education, desire } = state
+  // The card is present tense: "you have two children" counts the living.
+  const children = (state.children ?? []).filter(c => c && c.alive !== false)
   // `retire()` nulls the career, so a retiree's whole working life was absent
   // from the death screen: a Detective Chief Inspector with thirty-one years and
   // a Celebrated Author with thirty-seven both read as having never worked.
@@ -1416,9 +1418,15 @@ export function generateEpitaph(state) {
 
   if (children?.length > 0) {
     const n = children.length
-    const verb = f('absent_parent') ? (character.gender === 'male' ? 'fathered' : 'had') : 'raised'
+    // A child who died at two was not raised. Saying "raised four children"
+    // over a life that buried one of them is the obituary lying.
+    const dead = children.filter(c => c && c.alive === false).length
+    const verb = dead > 0 || f('absent_parent') ? (character.gender === 'male' && f('absent_parent') ? 'fathered' : 'had') : 'raised'
     const gk = children.reduce((m, c) => m + (c.kids ?? 0), 0)
-    para4.push(`${He} ${verb} ${n === 1 ? 'a child' : `${n} children`}${gk > 1 ? `, and lived to know ${gk} grandchildren` : gk === 1 ? ', and lived to hold a grandchild' : ''}.`)
+    const buried = dead === 0 ? ''
+      : dead === n ? (n === 1 ? ', and outlived that child' : ', and outlived every one of them')
+      : dead === 1 ? ', and buried one of them' : `, and buried ${dead} of them`
+    para4.push(`${He} ${verb} ${n === 1 ? 'a child' : `${n} children`}${buried}${gk > 1 ? `${buried ? `. ${He}` : ', and'} lived to know ${gk} grandchildren` : gk === 1 ? `${buried ? `. ${He}` : ', and'} lived to hold a grandchild` : ''}.`)
   } else if (f('chose_childless')) {
     para4.push(`${He} chose not to have children. It was a complete answer.`)
   } else if (f('ivf_success')) {

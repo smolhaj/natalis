@@ -69,6 +69,7 @@ export {
   tick,
   resolveChoice,
   resolveAutoEvent,
+  familyCountry,
 } from './tick'
 
 // ── playerActions.js ──────────────────────────────────────────────────────────

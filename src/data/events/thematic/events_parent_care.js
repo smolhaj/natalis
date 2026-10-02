@@ -130,7 +130,9 @@ export const PARENT_CARE_EVENTS = [
       G.mem.pcDecision &&
       !G.mem.pcDailyReality &&
       G.age >= 54 &&
-      G.flags.includes('parent_moved_in'),
+      G.flags.includes('parent_moved_in') &&
+      // The parent who moved in may have died since the decision was made.
+      (G.parents?.mother?.alive || G.parents?.father?.alive),
     text: (G) => {
       const parent = G.parents?.mother?.alive ? G.parents.mother : G.parents?.father
       const name = parent?.name?.split(' ')[0] ?? 'your parent'

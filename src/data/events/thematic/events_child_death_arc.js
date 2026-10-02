@@ -111,7 +111,8 @@ export const CHILD_DEATH_ARC_EVENTS = [
     text: (G) => {
       const isInfant = G.flags.includes('lost_child_infant')
       if (isInfant) {
-        return 'The small clothes are folded where they were folded. The blanket is still on the mat. People bring food. They do not know what to say, so they say what is available: sorry, time helps, at peace. None of it is wrong and none of it lands. The food is in the refrigerator. You are not eating.'
+        return 'The small clothes are folded where they were folded. The blanket is still on the mat. People bring food. They do not know what to say, so they say what is available: sorry, time helps, at peace. None of it is wrong and none of it lands. ' +
+          (G.tech?.('refrigerator') ? 'The food is in the refrigerator.' : 'The food sits covered on the shelf.') + ' You are not eating.'
       }
       return 'The house is full of their objects. The shoes by the door. The book they were reading that is still facedown on the same page. The arrangement of the bed. People say you do not have to do anything about any of it right away. They are right and also you do not know how to be in the house with all of it unchanged. You learn to be in the house with all of it unchanged. This takes longer than you would have predicted.'
     },
@@ -243,7 +244,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.includes('lost_child') &&
-      (G.children ?? []).filter(c => !G.flags.includes('lost_child') || G.children.indexOf(c) > 0).length > 1 &&
+      (G.children ?? []).length >= 1 &&
       !G.mem?.childDeathSiblings &&
       G.age >= 32,
     text: 'Your other child or children are grieving. They are also watching you grieve, a burden to put on a child. They go quiet in ways they didn\'t before, or they become louder, or they develop a vigilance about you — checking you are all right, becoming small adults you did not ask them to become. You are their parent. You are also broken. Both have to live in the same house.',

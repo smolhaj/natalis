@@ -398,7 +398,7 @@ export const TEXTURE_EVENTS = [
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
-      ['low', 'very_low'].includes(G.character.country.gdp) &&
+      ['low', 'very_low'].includes(G.currentCountry?.gdp) &&
       G.age >= 8 && G.age <= 14 &&
       !G.flags.includes('rural_childhood_labor_done'),
     text: 'Before school, or some days instead of school, you sell things at the roadside or help at your mother\'s market stall. You learn to count money quickly, to give change, to say the price with enough confidence that no one argues. The school knows. The teacher does not report it. You are not the only one. There is a whole economy running parallel to the school day that the school day cannot afford to acknowledge.',

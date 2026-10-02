@@ -142,7 +142,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
         text: `Call more often.`,
         outcome: `You call. The conversation is warmer than you expected, which tells you something.`,
         effect: (p) => {
-          const idx = (p._state?.children ?? []).findIndex(c => c.age >= 20 && (c.relationshipQuality ?? 50) < 40)
+          const idx = (p._state?.children ?? []).findIndex(c => c.alive !== false && c.age >= 20 && (c.relationshipQuality ?? 50) < 40)
           if (idx >= 0) p.updateChildRel(idx, 10)
           p.m += 3
         },
@@ -171,7 +171,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
         tag: 'wrote_estranged_child',
         outcome: `You write it three times before you send it. Whether they respond is out of your hands.`,
         effect: (p) => {
-          const idx = (p._state?.children ?? []).findIndex(c => c.age >= 22 && (c.relationshipQuality ?? 50) < 24)
+          const idx = (p._state?.children ?? []).findIndex(c => c.alive !== false && c.age >= 22 && (c.relationshipQuality ?? 50) < 24)
           if (idx >= 0) p.updateChildRel(idx, 8)
           p.karma += 4; p.r += 3
         },

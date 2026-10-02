@@ -3897,6 +3897,8 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('mani_pulite_generation') &&
       G.currentYear >= 1995 &&
       G.age >= 30 &&
+      // "Your father died before the second half of it."
+      G.parents?.father?.alive === false &&
       !G.mem?.ft14ManiPuliteAfter,
     text: 'Di Pietro was on the news every evening for two years and your father would not have the volume turned down during it. The party your family had voted for since the war stopped existing while you were at university. Now the tender for the bypass goes to a consortium nobody has heard of and the local paper runs it on page seven. Your father died before the second half of it, which you have decided to be glad about.',
     context: 'The Mani Pulite investigation from 1992 implicated over 5,000 people and destroyed the Christian Democrat and Socialist parties. Antonio Di Pietro became the public face of it. Silvio Berlusconi entered politics in 1994.',

@@ -31,7 +31,7 @@
 
 import { PROPERTY_TYPES, localisePrice } from '../data/assets'
 import { inEraMoney } from '../data/economy.js'
-import { institutionExists, divorceAvailable } from '../data/history.js'
+import { institutionExists, divorceLegalFor } from '../data/history.js'
 import { generatePartnerProfile, getMarried, retire, tryForChild } from './playerActions'
 import { enterCareer, getAvailableCareers, liveCountry } from './tick'
 import { livingRuralUrban, childNameCountry } from './character'
@@ -652,7 +652,7 @@ const DIVORCE_COUNTRY_MULT = {
 export function divorceHazard(s) {
   const c = liveCountry(s)
   const y = s.currentYear ?? 1970
-  if (!divorceAvailable(c?.name, y)) return 0
+  if (!divorceLegalFor(c, y, s.religion ?? s.character?.religion ?? '')) return 0
   let p = overTime(DIVORCE_BY_ARCHETYPE[c?.archetype] ?? DIVORCE_BY_ARCHETYPE.developing_urban, y)
   p *= DIVORCE_COUNTRY_MULT[c?.name] ?? 1
   const faith = String(s.religion ?? s.character?.religion ?? '')

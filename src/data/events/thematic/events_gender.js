@@ -19,6 +19,14 @@ const finishedSecondary = (G) =>
   ['secondary', 'university', 'graduate'].includes(G.education?.level) ||
   G.education?.enrolled?.type === 'university'
 
+// "Your husband has died" was guarded on `married && !partner`. A husband's
+// death clears `married` (killPartner, tickPartner), so the guard could only
+// pass for a woman whose marriage had ended some other way — separated, never
+// widowed. It reads the death itself now, in the year it happened or the next.
+const husbandJustDied = (G) =>
+  !G.partner && G.deceasedPartner?.gender === 'male' &&
+  G.mem?.partnerDeathYear != null && G.currentYear - G.mem.partnerDeathYear <= 1
+
 export const GENDER_EVENTS = [
 
   // ── FEMALE EDUCATION GATEKEEPING ───────────────────────────────────────────
@@ -67,7 +75,7 @@ export const GENDER_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
-      ['low_medium', 'low', 'very_low'].includes(G.character.country.gdp) &&
+      ['low_medium', 'low', 'very_low'].includes(G.currentCountry?.gdp) &&
       G.age >= 10 && G.age <= 14,
     text: 'School fees must be paid. Your parents have enough for one child this term. Your brother is enrolled. You are not. "Next year," your mother says. Next year she will say the same thing.',
     context: null,
@@ -555,7 +563,7 @@ export const GENDER_EVENTS = [
       G.character.gender === 'female' &&
       G.age >= 14 && G.age <= 17 &&
       G.flags.includes('child_marriage') &&
-      ['very_low', 'low'].includes(G.character.country.gdp),
+      ['very_low', 'low'].includes(G.currentCountry?.gdp),
     text: 'You are pregnant. You are fifteen. You know something is wrong when the bleeding starts. The midwife is three hours away. Your body is not ready for this.',
     context: null,
     choices: [
@@ -1104,7 +1112,7 @@ export const GENDER_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
-      ['very_poor', 'poor'].includes(G.character.country.healthcare) &&
+      ['very_poor', 'poor'].includes(G.healthcare) &&
       G.children && G.children.length > 0,
     text: 'After the birth something goes wrong. You lose blood you cannot afford to lose. The clinic does not have the supplies. A nurse stays with you through the night, doing what she can with what she has. You survive. Three other women in the region this month do not.',
     context: null,
@@ -2219,8 +2227,8 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'female' &&
       G.character.country.archetype === 'subsaharan' &&
-      G.flags.includes('married') &&
-      !G.partner,
+      husbandJustDied(G) &&
+      (G.children?.length ?? 0) > 0,
     text: 'Your husband has died. His family has come to the house. His brother is explaining that, by custom, you will now marry him — or another male relative. This is to keep you within the family, to protect the children, to maintain the land.',
     context: null,
     choices: [
@@ -2257,8 +2265,7 @@ export const GENDER_EVENTS = [
       G.character.gender === 'female' &&
       G.religion === 'hindu' &&
       G.character.country.name === 'India' &&
-      G.flags.includes('married') &&
-      !G.partner,
+      husbandJustDied(G),
     text: 'Your husband has died. The older women come with the white sari. They speak about what is required: the removal of the sindoor, the bangles, the ornaments. In the old tradition, widows shave their heads. Your mother-in-law does not insist on this. Others do.',
     context: null,
     choices: [

@@ -560,13 +560,13 @@ export default function ActivitiesPanel({ onClose }) {
                   subtitle={livePartner.married && !divorceLegal(state) ? 'There is no divorce here. You can live apart.' : 'There is no version of this that does not hurt.'} danger />
               </>
             )}
-            {state.children.length > 0 && (
+            {state.children.some(c => c.alive !== false) && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Children</p>
-                {state.children.map((child, i) => (
+                {state.children.map((child, i) => child.alive === false ? null : (
                   <Btn key={i} disabled={noActions} onClick={() => go(() => spendTimeWithChild(i))} title={`Time with ${child.name.split(' ')[0]}`} subtitle="Nothing planned. That is the point." />
                 ))}
-                {state.children.map((child, i) => (
+                {state.children.map((child, i) => child.alive === false ? null : (
                   <Btn key={`abandon-${i}`} disabled={false}
                     onClick={() => { if (window.confirm(`Abandon ${child.name.split(' ')[0]}? This cannot be undone.`)) { abandonChild(i); onClose() } }}
                     title={`Abandon ${child.name.split(' ')[0]}`}
@@ -970,7 +970,7 @@ export default function ActivitiesPanel({ onClose }) {
           else if (victim.key === 'father' && next.parents?.father) { next.parents = { ...next.parents, father: { ...next.parents.father, alive: false } } }
           else if (victim.key?.startsWith('sibling_')) { const sibs = [...(next.siblings ?? [])]; if (sibs[victim.idx]) sibs[victim.idx] = { ...sibs[victim.idx], alive: false }; next.siblings = sibs }
           else if (victim.key?.startsWith('friend_')) { const frds = [...(next.friends ?? [])]; if (frds[victim.idx]) frds[victim.idx] = { ...frds[victim.idx], alive: false }; next.friends = frds }
-          else if (victim.key?.startsWith('child_')) { const clds = [...(next.children ?? [])]; if (clds[victim.idx]) clds[victim.idx] = { ...clds[victim.idx], alive: false }; next.children = clds }
+          else if (victim.key?.startsWith('child_')) { const clds = [...(next.children ?? [])]; if (clds[victim.idx]) clds[victim.idx] = { ...clds[victim.idx], alive: false, deathYear: next.currentYear, deathAge: Math.max(0, (next.age ?? 0) - (clds[victim.idx].ageAtBirth ?? next.age ?? 0)) }; next.children = clds }
           else if (victim.key?.startsWith('ex_')) { const exs = [...(next.exPartners ?? [])]; if (exs[victim.idx]) exs[victim.idx] = { ...exs[victim.idx], alive: false }; next.exPartners = exs }
         }
 
@@ -1070,10 +1070,10 @@ export default function ActivitiesPanel({ onClose }) {
             ...(livePartner ? [{ label: `${livePartner.name} (Partner)`, key: 'partner' }] : []),
             ...(state.parents?.mother?.alive ? [{ label: `${state.parents.mother.name} (Mother)`, key: 'mother' }] : []),
             ...(state.parents?.father?.alive ? [{ label: `${state.parents.father.name} (Father)`, key: 'father' }] : []),
-            ...((state.siblings ?? []).filter(s => s.alive).map((s, i) => ({ label: `${s.name} (Sibling)`, key: `sibling_${i}`, idx: i }))),
-            ...((state.children ?? []).filter(c => c.alive !== false).map((c, i) => ({ label: `${c.name.split(' ')[0]} (Child)`, key: `child_${i}`, idx: i }))),
-            ...((state.friends ?? []).filter(f => f.alive).map((f, i) => ({ label: `${f.name} (Friend)`, key: `friend_${i}`, idx: i }))),
-            ...((state.exPartners ?? []).filter(e => e.alive !== false).map((e, i) => ({ label: `${e.name} (Ex)`, key: `ex_${i}`, idx: i }))),
+            ...((state.siblings ?? []).map((s, i) => [s, i]).filter(([s]) => s.alive).map(([s, i]) => ({ label: `${s.name} (Sibling)`, key: `sibling_${i}`, idx: i }))),
+            ...((state.children ?? []).map((c, i) => [c, i]).filter(([c]) => c.alive !== false).map(([c, i]) => ({ label: `${c.name.split(' ')[0]} (Child)`, key: `child_${i}`, idx: i }))),
+            ...((state.friends ?? []).map((f, i) => [f, i]).filter(([f]) => f.alive).map(([f, i]) => ({ label: `${f.name} (Friend)`, key: `friend_${i}`, idx: i }))),
+            ...((state.exPartners ?? []).map((e, i) => [e, i]).filter(([e]) => e.alive !== false).map(([e, i]) => ({ label: `${e.name} (Ex)`, key: `ex_${i}`, idx: i }))),
           ]
           const strangerVictimsForMurder = STRANGER_VICTIMS.map(v => ({
             label: `${v.label} (Stranger)`, key: v.key, isStranger: true, detectionMod: v.detectionMod, desc: v.desc,

@@ -1,6 +1,6 @@
 import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime, livingRuralUrban, urbanChanceFor } from './character'
 import { pickFrom } from '../utils/random'
-import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt, hasPassengerRail, ADJUSTMENT_PROGRAMME_YEARS } from '../data/history.js'
+import { wasSovietRepublic, INDEPENDENCE_YEAR, COUP_YEARS, WAR_YEARS, conflictRiskAt, hasPassengerRail, ADJUSTMENT_PROGRAMME_YEARS, healthcareAt } from '../data/history.js'
 import { preferUnsaid, hasSaid } from './prose'
 import { hasTech, wasWealthy } from '../data/technology.js'
 import { worldFacts, proseFitsWorld, midSentence, privateMarketAt, adjustedBy, hotClimate } from './mundaneLayer.js'
@@ -178,7 +178,11 @@ function buildYearTexture(state, opts = {}) {
  */
 function* textureCandidates(state, opts = {}) {
   const F = new FlagSet(state.flags ?? [])
-  const { partner, children, age, currentYear, mem, career, residencyStatus, yearsAbroad, desire, political_leaning } = state
+  const { partner, age, currentYear, mem, career, residencyStatus, yearsAbroad, desire, political_leaning } = state
+  // The living children. Every reader below is present tense — "the teenager
+  // in the house", "the call from abroad" — and the dead stay on state with
+  // `alive: false`. The grief blocks read flags and mem, not this list.
+  const children = (state.children ?? []).filter(c => c && c.alive !== false)
   const phase = getPhase(age)
   const mh = state.mentalHealth ?? {}
 
@@ -487,7 +491,7 @@ function* textureCandidates(state, opts = {}) {
   // diagnosis itself printed "The nearest person who would understand it as an
   // illness is a long way off" — then, three years later, "The therapist asks
   // a question that follows you into the week". Same tiers the diagnosis uses.
-  const _hc = (state.currentCountry ?? state.character?.country)?.healthcare ?? 'fair'
+  const _hc = healthcareAt(state.currentCountry ?? state.character?.country, currentYear) ?? 'fair'
   const therapyHere = !['poor', 'very_poor'].includes(_hc)
   // Managed mental health — the texture of living with it, not through it
   if (mh.condition && mh.therapy && therapyHere && !mh.medicating && career && Math.random() < 0.35) {

@@ -420,7 +420,7 @@ export const GERMANY_REICH_FOLLOWTHROUGH = [
       G.flags.has('de_father_lost_east') &&
       G.age >= 40 &&
       !G.mem?.deFtFather,
-    text: 'The Red Cross tracing service writes back, decades on, with a card. The card says the date is unknown and the place is unknown and the case is closed. Your mother is dead. You realise you have been waiting for this card since you were eleven, and that the waiting had a shape and a schedule, and that now there is a gap where it was.',
+    text: (G) => `The Red Cross tracing service writes back, decades on, with a card. The card says the date is unknown and the place is unknown and the case is closed. ${G.parents?.mother?.alive === false ? 'Your mother is dead.' : 'You do not show it to your mother.'} You realise you have been waiting for this card since you were eleven, and that the waiting had a shape and a schedule, and that now there is a gap where it was.`,
     choices: null,
     effect: (p) => {
       p.m -= 10; p.r += 8

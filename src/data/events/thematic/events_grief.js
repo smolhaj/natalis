@@ -376,7 +376,7 @@ export const GRIEF_EVENTS = [
       return `${child?.name ?? 'Your child'} dies. There is no way to write this. No parent expects to outlive a child. The grief is not an arc with a resolution — it is a reorganization. Everything after has a different shape.`
     },
     choices: null,
-    effect: (p) => { p.m -= 35; p.h -= 10; p.r += 25; p.addFlag('lost_child'); p.addFlag('bereaved'); p.setLastMajorEvent('bereavement'); p.setMem('griefChildDeath', true) },
+    effect: (p) => { p.m -= 35; p.h -= 10; p.r += 25; p.addFlag('lost_child'); p.addFlag('bereaved'); p.setLastMajorEvent('bereavement'); p.setMem('griefChildDeath', true); p.killChild('eldest') },
   },
 
   {
@@ -416,11 +416,11 @@ export const GRIEF_EVENTS = [
     weight: 6,
     when: (G) =>
       G.age >= 25 &&
-      (G.siblings ?? []).some(s => s.alive === false) &&
+      (G.allSiblings ?? []).some(s => s.alive === false) &&
       G.mem.lost_siblingYear != null && G.currentYear - G.mem.lost_siblingYear <= 1 &&
       !G.mem.griefSiblingCall,
     text: (G) => {
-      const sib = (G.siblings ?? []).filter(s => s.alive === false).slice(-1)[0]
+      const sib = (G.allSiblings ?? []).filter(s => s.alive === false).slice(-1)[0]
       const first = sib?.name?.split(' ')[0] ?? 'your sibling'
       return gendered(`You keep reaching for the phone to tell ${first} something, and then remembering. There is nobody else alive who was in that house when you were small, and you find you had been relying on it without knowing.`, sib)
     },
@@ -775,7 +775,7 @@ export const GRIEF_EVENTS = [
       !G.mem?.griefWidowedYoung,
     text: (G) => {
       const kids = (G.children ?? []).filter(c => c.alive !== false && (c.age ?? 99) < 18).length
-      const poor = ['very_low', 'low', 'low_medium'].includes(G.currentCountry?.gdp ?? G.character?.country?.gdp)
+      const poor = ['very_low', 'low', 'low_medium'].includes(G.currentCountry?.gdp)
       if (kids > 0 && poor) {
         return `There is a period of about three weeks in which people come, and then there is the rest of it. The arithmetic arrives before the grief has finished arriving: ${kids === 1 ? 'a child' : `${kids} children`} in the house, the fees due at the start of term, and one income where there were two, except that it was never quite two. Somebody's relative suggests, kindly, that the eldest could stop at the end of this year. You say you will think about it. You do think about it.`
       }
