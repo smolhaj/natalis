@@ -13,13 +13,18 @@
 // tax abolished, the cooperative medical card, fifty-five yuan of pension, a
 // QR code on a sweet-potato barrow.
 //
-// The roster draws Chinese characters in Beijing, Shanghai, Chongqing and
-// rural Sichuan, which is apt: Sichuan was the first province to take the
-// commune sign down, the largest sender of migrant workers, and the epicentre
-// in 2008; Chongqing holds most of the Three Gorges reservoir. Guards read the
-// LIVE country and place. Tibetan content is written for the Tibetan
-// counties of western Sichuan (Ngaba, Kardze), where rural Sichuan includes
-// them; Zhuang and Hui need places the roster does not yet have.
+// The roster draws most Chinese characters in Beijing, Shanghai, Chongqing,
+// Wuhan and rural Sichuan, which is apt: Sichuan was the first province to
+// take the commune sign down, the largest sender of migrant workers, and the
+// epicentre in 2008; Chongqing holds most of the Three Gorges reservoir.
+// Guards read the LIVE country and place. Tibetan content is written for the
+// Tibetan counties of western Sichuan (Ngaba, Kardze), and rural Sichuan is
+// the Tibetans' `homeOf`. The Zhuang are born in Guangxi (Nanning and the
+// karst villages), the Hui in Ningxia (Yinchuan and the Xihaigu hills), the
+// Uyghurs in Kashgar. Shenzhen is nobody's birthplace (weight 0): it is where
+// the migrant goes. Until it existed the migrant went to Shanghai, which in
+// the 1990s was the smaller of the two roads out of Sichuan and the only one
+// out of Guangxi nobody took.
 //
 // Dates used, all checked:
 //   1978-83      decollectivisation; Guanghan county, Sichuan, takes down its
@@ -55,6 +60,27 @@
 //   1 Jan 2016   universal two-child policy.
 //   Jan 2020     Wuhan locked down 23 January, two days before Spring
 //                Festival; Li Wenliang dies 7 February.
+//
+// The new places:
+//   15 Oct 1957  the Wuhan Yangtze River Bridge opens, the first across the
+//                river: railway below, road above.
+//   Jun 1989     in Wuhan, students sit on the Yangtze bridge and stop the
+//                trains.
+//   Jul-Aug 1998 the Yangtze flood; the water at Hankou above 29 metres;
+//                soldiers on the dikes.
+//   17 Feb 1979  the war with Vietnam, launched from Guangxi and Yunnan.
+//   1983 on      the "diaozhuang" resettlement out of Xihaigu, the dry hills
+//                of southern Ningxia, to the irrigated Yellow River plain.
+//   1980s on     Guangxi's song fairs on the third of the third month,
+//                revived after the Cultural Revolution.
+//   10 Aug 1992  Shenzhen: a million people queue for share-subscription
+//                forms; riot when they run out.
+//   1980-2010    the "second line": a border permit to enter the Shenzhen
+//                zone from the rest of China.
+//   2010         fourteen suicides at Foxconn's Longhua plant; nets on the
+//                dormitories.
+//   2018-2020    mosque domes and Arabic signs removed in Ningxia; the
+//                Weizhou mosque standoff, August 2018.
 
 const once = (G, key) => !G.mem?.[key]
 const IN_CN = (G) => (G.currentCountry?.name ?? G.character?.country?.name) === 'China'
@@ -63,7 +89,21 @@ const RURAL = (G) => IN_CN(G) && PLACE(G) === 'cn_rural'
 const BEIJING = (G) => IN_CN(G) && PLACE(G) === 'cn_beijing'
 const SHANGHAI = (G) => IN_CN(G) && PLACE(G) === 'cn_shanghai'
 const CHONGQING = (G) => IN_CN(G) && PLACE(G) === 'cn_chongqing'
-const CITY = (G) => IN_CN(G) && ['cn_beijing', 'cn_shanghai', 'cn_chongqing'].includes(PLACE(G))
+const WUHAN = (G) => IN_CN(G) && PLACE(G) === 'cn_wuhan'
+const SHENZHEN = (G) => IN_CN(G) && PLACE(G) === 'cn_shenzhen'
+const GUANGXI = (G) => IN_CN(G) && ['cn_nanning', 'cn_rural_guangxi'].includes(PLACE(G))
+const NINGXIA = (G) => IN_CN(G) && ['cn_yinchuan', 'cn_rural_ningxia'].includes(PLACE(G))
+const XIHAIGU = (G) => IN_CN(G) && PLACE(G) === 'cn_rural_ningxia'
+// The Han and Hui provincial cities. Kashgar is left out: its reform era is
+// the Uyghur module's, not the work unit's.
+const CITY = (G) => IN_CN(G) && ['cn_beijing', 'cn_shanghai', 'cn_chongqing', 'cn_wuhan', 'cn_shenzhen', 'cn_nanning', 'cn_yinchuan'].includes(PLACE(G))
+// Any countryside the national rural programmes reached on the same terms.
+const ANY_RURAL = (G) => IN_CN(G) && ['cn_rural', 'cn_rural_guangxi', 'cn_rural_ningxia'].includes(PLACE(G))
+// Where the cousin's factory is. Guangxi's road out goes to Guangdong; most of
+// Sichuan's did too in the 1990s, and the rest went to the Yangtze delta.
+// Read from the birth year so the text and the move agree.
+const DAGONG_DEST = (birthYear, placeId) =>
+  placeId === 'cn_rural_guangxi' || (birthYear ?? 0) % 3 !== 0 ? 'cn_shenzhen' : 'cn_shanghai'
 const SICHUAN_SIDE = (G) => IN_CN(G) && ['cn_rural', 'cn_chongqing'].includes(PLACE(G))
 const FEMALE = (G) => G.character?.gender === 'female'
 const TIBETAN = (G) => G.character?.ethnicity === 'tibetan'
@@ -126,7 +166,9 @@ export const CHINA_REFORM_EVENTS = [
     text: (G) => {
       if (SHANGHAI(G)) return 'All May the students march down Nanjing Road with banners and the workers watch from the pavement and some of them join. After the news from Beijing on the fourth there are barricades of buses at the crossroads, and on the sixth a train runs into the people sitting on the tracks at Guangxin Road and they set it on fire. The mayor is on television asking everyone to go to work. By the end of the week, everyone goes to work.'
       if (CHONGQING(G)) return 'In May there are students in front of the Liberation Monument with banners, and your colleagues go at lunch to look. Then the fourth of June, and in Chengdu, along the river, they say the police station burned and the hotel, and people were shot on Renmin Road. You hear it on the bus, from a man whose cousin was there. On television there is only a soldier being given a watermelon by a grateful old woman.'
-      return 'In May the radio talks about students in Beijing and the teacher says nothing about it, which is how you know it is important. In June a man back from Chengdu says the city burned for three nights and soldiers were on Renmin Road. An old man tells him to keep his voice down, here, in the village, where nobody could possibly be listening.'
+      if (WUHAN(G)) return 'In May the students march from Luojia Hill across the city with banners, and people on the pavements hand them water. After the fourth of June they go out onto the Yangtze bridge and sit down on the rails, and the trains from Beijing to Guangzhou stop on either bank. For two days nothing crosses. Then the bridge is cleared, and at work nobody says what they did that week, and nobody asks.'
+      if (RURAL(G)) return 'In May the radio talks about students in Beijing and the teacher says nothing about it, which is how you know it is important. In June a man back from Chengdu says the city burned for three nights and soldiers were on Renmin Road. An old man tells him to keep his voice down, here, in the village, where nobody could possibly be listening.'
+      return 'In May the radio talks about students in Beijing and nobody at work says anything about it, which is how you know it is important. After the fourth of June the television shows soldiers being thanked by old women, and a man back from the provincial capital says there were students in the square there too. Somebody tells him to keep his voice down, and he does, and so does everyone, for thirty years.'
     },
     choices: null,
     effect: (p) => { p.setMem('cnr_1989', true); p.m -= 4; p.addFlag('cnr_spring_1989') },
@@ -138,7 +180,7 @@ export const CHINA_REFORM_EVENTS = [
     id: 'cnr_southern_tour',
     phase: null,
     weight: 250,
-    when: (G) => CITY(G) && G.currentYear >= 1992 && G.currentYear <= 1993 && G.age >= 22 && G.age <= 45 && once(G, 'cnr_xiahai'),
+    when: (G) => CITY(G) && !SHENZHEN(G) && G.currentYear >= 1992 && G.currentYear <= 1993 && G.age >= 22 && G.age <= 45 && once(G, 'cnr_xiahai'),
     text: 'The old man has been to Shenzhen and said that it does not matter whether a cat is black or white, and now everyone in your work unit is talking about going down into the sea. A man from the next office hands in his notice, unthinkable last year, and goes south to sell telephones. An older colleague says the iron rice bowl is iron for a reason. Your friend says it has rusted through and nobody has noticed.',
     choices: [
       {
@@ -182,13 +224,24 @@ export const CHINA_REFORM_EVENTS = [
     id: 'cnr_dagong',
     phase: null,
     weight: 80,
-    when: (G) => RURAL(G) && G.age >= 17 && G.age <= 28 && G.currentYear >= 1990 && G.currentYear <= 2012 && once(G, 'cnr_dagong'),
-    text: 'Half the young people in the village are already gone. They come back at New Year in new jeans with mobile phones and go again after the fifteenth. A cousin can get you on at a factory in Shanghai making electric fans, dormitory included, eight to a room. The fields can be done by whoever stays.',
+    when: (G) => (RURAL(G) || PLACE(G) === 'cn_rural_guangxi') && G.age >= 17 && G.age <= 28 && G.currentYear >= 1990 && G.currentYear <= 2012 && once(G, 'cnr_dagong'),
+    text: (G) => DAGONG_DEST(G.character?.birthYear, PLACE(G)) === 'cn_shenzhen'
+      ? 'Half the young people in the village are already gone. They come back at New Year in new jeans with mobile phones and go again after the fifteenth. A cousin can get you on at a factory in Shenzhen putting together telephones, dormitory included, eight to a room. The fields can be done by whoever stays.'
+      : 'Half the young people in the village are already gone. They come back at New Year in new jeans with mobile phones and go again after the fifteenth. A cousin can get you on at a factory in Shanghai making electric fans, dormitory included, eight to a room. The fields can be done by whoever stays.',
     choices: [
       {
         text: 'Go out to work.',
-        outcome: 'The bus takes a day and a night. The dormitory has a bunk with your name taped on it, and a girl from Hunan in the bunk above who cries for a week and then does not.',
-        effect: (p) => { p.setMem('cnr_dagong', true); p.m -= 3; p.mo += 1200; p.addFlag('cnr_dagong'); p.relocate('cn_shanghai', 'informal') },
+        outcome: (G) => SHENZHEN(G)
+          ? (G.currentYear <= 2009
+            ? 'At the checkpoint at the edge of the zone a guard looks at the border permit the factory arranged and waves the bus through. The dormitory has a bunk with your name taped on it, and a girl from Hunan in the bunk above who cries for a week and then does not.'
+            : 'The bus takes a day and a night. The dormitory has a bunk with your name taped on it, and a girl from Hunan in the bunk above who cries for a week and then does not.')
+          : 'The bus takes a day and a night. The dormitory has a bunk with your name taped on it, and a girl from Hunan in the bunk above who cries for a week and then does not.',
+        effect: (p) => {
+          p.setMem('cnr_dagong', true); p.m -= 3; p.mo += 1200; p.addFlag('cnr_dagong')
+          const st = p._state
+          const here = st?.currentPlace?.id ?? st?.currentPlace
+          p.relocate(DAGONG_DEST(st?.character?.birthYear, here), 'informal')
+        },
       },
       {
         text: 'Stay with the land.',
@@ -228,7 +281,7 @@ export const CHINA_REFORM_EVENTS = [
     id: 'cnr_school_merger',
     phase: null,
     weight: 80,
-    when: (G) => RURAL(G) && G.age >= 7 && G.age <= 10 && G.currentYear >= 2001 && G.currentYear <= 2014 && once(G, 'cnr_merge'),
+    when: (G) => ANY_RURAL(G) && G.age >= 7 && G.age <= 10 && G.currentYear >= 2001 && G.currentYear <= 2014 && once(G, 'cnr_merge'),
     text: 'The village school closes; there are too few children left to fill it. Now you board at the township school, an hour and a half by road, from Sunday night to Friday afternoon, twelve to a room, with a jar of pickled vegetables from your grandmother to eat with the canteen rice. The little ones cry on Sunday nights. By the second term you only cry on the bus.',
     choices: null,
     effect: (p) => { p.setMem('cnr_merge', true); p.m -= 3; p.e += 1 },
@@ -238,7 +291,7 @@ export const CHINA_REFORM_EVENTS = [
     id: 'cnr_ncms',
     phase: null,
     weight: 50,
-    when: (G) => RURAL(G) && G.age >= 30 && G.currentYear >= 2004 && G.currentYear <= 2015 && once(G, 'cnr_ncms'),
+    when: (G) => ANY_RURAL(G) && G.age >= 30 && G.currentYear >= 2004 && G.currentYear <= 2015 && once(G, 'cnr_ncms'),
     text: 'A man from the township comes round collecting ten yuan a head for the new cooperative medical scheme and gives each household a little green book. Nobody believes in it. Then your neighbour\'s father has his gallbladder out in the county hospital and the scheme pays back nearly half, and the next year everybody pays the ten yuan before the man has finished knocking.',
     choices: null,
     effect: (p) => { p.setMem('cnr_ncms', true); p.h += 1; p.mo -= 5 },
@@ -307,7 +360,7 @@ export const CHINA_REFORM_EVENTS = [
     id: 'cnr_rural_pension',
     phase: null,
     weight: 60,
-    when: (G) => RURAL(G) && G.age >= 60 && G.currentYear >= 2010 && G.currentYear <= 2022 && once(G, 'cnr_pension'),
+    when: (G) => ANY_RURAL(G) && G.age >= 60 && G.currentYear >= 2010 && G.currentYear <= 2022 && once(G, 'cnr_pension'),
     text: 'Fifty-five yuan a month comes into your bank card from the government, for being old. Nobody in your family has ever been paid for being anything. It does not buy much — oil, salt, a little meat on the first of the month — but you go to the township to look at the balance on the machine, and you tell the other old people at the card table how much yours is, though it is the same as theirs.',
     choices: null,
     effect: (p) => { p.setMem('cnr_pension', true); p.m += 3; p.mo += 100 },
@@ -358,9 +411,133 @@ export const CHINA_REFORM_EVENTS = [
     phase: null,
     weight: 400,
     when: (G) => IN_CN(G) && G.currentYear === 2020 && G.age >= 8 && !G.flags.has('cnr_sars') && once(G, 'cnr_2020'),
-    text: 'Two days before Spring Festival they close Wuhan. Nobody visits anyone. The New Year dinner is the people already under your roof, and the Gala plays to a family that keeps checking its phones. In February a young doctor who had been made to sign a confession for warning his colleagues dies of it, and for one night the whole of WeChat is a wall of candles and his words, before it is deleted.',
+    text: (G) => WUHAN(G)
+      ? 'At ten in the morning on the twenty-third of January, two days before Spring Festival, they close the city: the trains, the airport, the bridges, the expressways. Then the housing compounds. A volunteer leaves vegetables at the gate and you go down for them in a mask, one person a household. At night people open their windows and shout to each other across the dark, Wuhan, jiayou. In February the young doctor from the Central Hospital, who was made to sign a confession for warning his colleagues, dies of it in his own hospital.'
+      : 'Two days before Spring Festival they close Wuhan. Nobody visits anyone. The New Year dinner is the people already under your roof, and the Gala plays to a family that keeps checking its phones. In February a young doctor who had been made to sign a confession for warning his colleagues dies of it, and for one night the whole of WeChat is a wall of candles and his words, before it is deleted.',
     choices: null,
     effect: (p) => { p.setMem('cnr_2020', true); p.m -= 5 },
+  },
+
+  // ── THE OTHER CHINAS: WUHAN, SHENZHEN, GUANGXI, NINGXIA ───────────────────
+
+  {
+    id: 'cnr_wuhan_bridge_1957',
+    phase: null,
+    weight: 250,
+    when: (G) => WUHAN(G) && G.currentYear === 1957 && G.age >= 5 && once(G, 'cnr_bridge57'),
+    text: 'All your life the river has been a ferry: the queue on the steps at Hankou, the boat swinging out into brown water a kilometre wide, Wuchang coming slowly up on the other side. In October the bridge opens. Trains underneath, buses and bicycles and people on top. Your father walks you across it on the first Sunday with half the city, and halfway over he stops and looks down at the water as if it owes him something.',
+    context: 'The Wuhan Yangtze River Bridge, built with Soviet engineering help and opened on 15 October 1957, was the first bridge across the Yangtze. Its double deck carried the Beijing-Guangzhou railway below and a road above, joining Hankou and Hanyang to Wuchang.',
+    choices: null,
+    effect: (p) => { p.setMem('cnr_bridge57', true); p.m += 3 },
+  },
+
+  {
+    id: 'cnr_wuhan_flood_1998',
+    phase: null,
+    weight: 250,
+    when: (G) => WUHAN(G) && G.currentYear === 1998 && G.age >= 8 && once(G, 'cnr_flood98'),
+    text: 'All summer the river rises, and the gauge at Hankou is read out on the radio every evening like a temperature. In August it is higher than the streets behind the embankment. Soldiers sleep on the dike in their uniforms between shifts of sandbags, and the neighbourhood committee sends everyone who can lift a bag. You stand on the floodwall at Longwangmiao at night and the water is right there, at your feet, wide and quiet, higher than the roofs behind you.',
+    context: 'The Yangtze flood of 1998 killed more than 3,000 people across China. At Hankou the river peaked at over 29 metres in August, above most of the city behind its embankments; hundreds of thousands of soldiers and civilians held the dikes, and Wuhan itself did not flood.',
+    choices: null,
+    effect: (p) => { p.setMem('cnr_flood98', true); p.m -= 2; p.karma += 1 },
+  },
+
+  {
+    id: 'cnr_shenzhen_shares_1992',
+    phase: null,
+    weight: 250,
+    when: (G) => SHENZHEN(G) && G.currentYear === 1992 && G.age >= 18 && once(G, 'cnr_shares92'),
+    text: 'The city says it will sell forms for buying shares, and everyone has heard what shares did last year. For three days the queues go round the blocks outside the banks, a million people, some of them paid by bosses to hold places, with bags of identity cards borrowed from whole villages. You sleep on the pavement with a newspaper under you. On the second morning the forms are gone, and the word goes down the queue that they were sold out of the back door, and by night people are throwing stones at the government building.',
+    context: 'In August 1992 Shenzhen offered five million subscription forms for new share issues; over a million people queued, many with batches of borrowed identity cards. When the forms ran out within a day amid reports of officials keeping them for insiders, the protests of 10 August turned into a riot.',
+    choices: null,
+    effect: (p) => { p.setMem('cnr_shares92', true); p.m -= 2 },
+  },
+
+  {
+    id: 'cnr_foxconn_nets_2010',
+    phase: null,
+    weight: 200,
+    when: (G) => SHENZHEN(G) && G.currentYear === 2010 && G.age >= 17 && G.age <= 35 && ['informal', 'working_class'].includes(G.neighborhoodTier) && once(G, 'cnr_nets'),
+    text: 'In the spring a boy from the line jumps from the roof of a dormitory at Longhua, and then another, and by May there have been more than ten. The company puts up nets, yellow nets all round the buildings at the third floor, and a monk comes to chant, and everyone is made to sign a paper promising not to kill themselves. In June the wage goes up. People send the photograph of the nets to each other and do not write anything with it.',
+    context: 'Fourteen young workers died by suicide at Foxconn plants in 2010, most of them at the Longhua campus in Shenzhen, which assembled products for Apple and others. The company installed nets around its dormitories, asked workers to sign no-suicide pledges, and raised basic wages.',
+    choices: null,
+    effect: (p) => { p.setMem('cnr_nets', true); p.m -= 4 },
+  },
+
+  {
+    id: 'cnr_guangxi_1979',
+    phase: null,
+    weight: 250,
+    when: (G) => GUANGXI(G) && G.currentYear === 1979 && G.age >= 8 && once(G, 'cnr_gx79'),
+    text: 'In February the trucks go south on the road all night with their lights off, and the trains are full of soldiers who wave from the doors. The radio calls it a counterattack in self-defence. Three weeks later it is over and the trains come back with the wounded, and the hospitals in Nanning put beds in the corridors. A boy you were at school with went in the first week. His mother is given a certificate in a frame.',
+    context: 'China invaded northern Vietnam on 17 February 1979 from Guangxi and Yunnan, calling it a "self-defensive counterattack". The fighting lasted about a month. Chinese losses are estimated at over twenty thousand dead; border clashes continued through the 1980s.',
+    choices: null,
+    effect: (p) => { p.setMem('cnr_gx79', true); p.m -= 4 },
+  },
+
+  {
+    id: 'cnr_zhuang_song_fair',
+    phase: null,
+    weight: 70,
+    when: (G) => GUANGXI(G) && G.character?.ethnicity === 'zhuang' && G.age >= 14 && G.age <= 24 && G.currentYear >= 1982 && once(G, 'cnr_gexu'),
+    text: (G) => `On the third day of the third month the young people from the villages go up to the slope by the river and sing at each other, a line from the girls, an answer from the boys, in Zhuang, making it up, everybody laughing when an answer is too slow. Your grandmother says that when she was young this is how people were married. Then for years it was not allowed. Now the township puts up a banner over it. ${G.character?.gender === 'female' ? 'Your aunt has sewn you an embroidered ball, and a boy from across the river is singing in your direction.' : 'A girl from across the river throws an embroidered ball, and it lands at your feet.'}`,
+    choices: [
+      {
+        text: 'Sing back.',
+        outcome: 'Your answer is a good one; the whole slope hears it. Somebody is waiting at the bottom of the path afterwards.',
+        effect: (p) => { p.setMem('cnr_gexu', true); p.m += 4; p.s += 2 },
+      },
+      {
+        text: 'Laugh, and say nothing.',
+        outcome: 'The singing goes on without you. Everybody saw.',
+        effect: (p) => { p.setMem('cnr_gexu', true); p.m += 2 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cnr_xihaigu_cellar',
+    phase: null,
+    weight: 80,
+    when: (G) => XIHAIGU(G) && G.age >= 6 && G.age <= 13 && G.currentYear >= 1950 && G.currentYear <= 2005 && once(G, 'cnr_cellar'),
+    text: 'There is no river and no well. Under the yard is the water cellar, a bottle-shaped hole in the loess plastered with clay, and when it rains every gutter and footpath is turned to run into it. In a dry summer it is half a metre of green water by August, and your mother measures it out by the ladle: for cooking, for the donkey, a little for washing your face, none for your feet. At school a teacher from the plain says that once a foreigner called this the least fit place on earth for people to live.',
+    context: 'Xihaigu, the dry loess hills of southern Ningxia, mostly Hui, depended on rain-fed cellars for drinking water into the 2000s. Chinese accounts repeat that a United Nations food agency judged it unfit for human habitation in the 1970s; from 1983 the government moved hundreds of thousands of its people to irrigated land on the Yellow River plain.',
+    choices: null,
+    effect: (p) => { p.setMem('cnr_cellar', true); p.h -= 1 },
+  },
+
+  {
+    id: 'cnr_xihaigu_resettlement',
+    phase: null,
+    weight: 90,
+    when: (G) => XIHAIGU(G) && G.age >= 20 && G.age <= 50 && G.currentYear >= 1985 && G.currentYear <= 2015 && once(G, 'cnr_diaozhuang'),
+    text: 'The township says the village is to move down to the plain by the Yellow River, where there is water in canals and a new settlement of brick houses in rows, each the same, two rooms and a yard. The old people do not want to leave the graves. The young ones have already been to see it. The trucks will come after the harvest.',
+    choices: [
+      {
+        text: 'Go down to the plain.',
+        outcome: 'The house has a tap. The first night your mother turns it on and off, on and off, and then sits in the yard and cries, and will not say whether it is for the tap or the graves.',
+        effect: (p) => { p.setMem('cnr_diaozhuang', true); p.m += 2; p.mo += 300; p.relocate('cn_yinchuan', 'informal') },
+      },
+      {
+        text: 'Stay with the graves.',
+        tag: 'defiant',
+        outcome: 'Half the village goes. In the evening you can count the lit windows on the hill, and every year there are fewer.',
+        effect: (p) => { p.setMem('cnr_diaozhuang', true); p.m -= 2 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cnr_ningxia_domes',
+    phase: null,
+    weight: 120,
+    when: (G) => NINGXIA(G) && G.character?.ethnicity === 'hui_chinese' && G.age >= 16 && G.currentYear >= 2018 && G.currentYear <= 2021 && once(G, 'cnr_domes'),
+    text: 'The scaffolding goes up round the mosque one spring and when it comes down the green dome is gone and there is a roof of grey tiles in its place, like a temple, with a red flag on it. On the noodle shop the Arabic word for halal is painted out and the Chinese left. In Weizhou, people say, the whole county stood in front of their mosque for three days so that it would not be done, and it was done anyway, later, more quietly. The imam reads the sermon he is sent.',
+    context: 'From 2018 authorities in Ningxia and other Hui areas removed domes, minarets and Arabic script from mosques and shops as part of a campaign to "sinicise" religion. In August 2018 thousands of Hui gathered for days outside the new Grand Mosque at Weizhou, Ningxia, to prevent its demolition; it was later altered.',
+    choices: null,
+    effect: (p) => { p.setMem('cnr_domes', true); p.m -= 5 },
   },
 
   // ── FOLLOW-THROUGH ─────────────────────────────────────────────────────────
@@ -447,7 +624,13 @@ export const CHINA_REFORM_EVENTS = [
       {
         text: 'Go back.',
         outcome: 'The village is old men, old women and small children. You are, for the first time since you were seventeen, the young.',
-        effect: (p) => { p.setMem('cnr_ft_return', true); p.m += 3; p.relocate('cn_rural', 'working_class') },
+        effect: (p) => {
+          p.setMem('cnr_ft_return', true); p.m += 3
+          // Home is the village they left, not Sichuan by default.
+          const born = p._state?.character?.birthPlace
+          const bornId = born?.id ?? born
+          p.relocate(born?.type === 'rural' && bornId ? bornId : 'cn_rural', 'working_class')
+        },
       },
       {
         text: 'Stay one more year. The money is still here.',
@@ -473,7 +656,7 @@ export const CHINA_REFORM_EVENTS = [
     phase: null,
     weight: 450,
     when: (G) => IN_CN(G) && G.flags.has('cnr_sars') && G.currentYear === 2020 && once(G, 'cnr_2020'),
-    text: 'Two days before Spring Festival they close Wuhan, and you know at once what this is, because you have the vinegar smell of 2003 in your nose before anyone says the word. You buy masks the same afternoon, before the pharmacies run out, and rice, and you tell your family not to come for the New Year and they think you are being dramatic. In February a doctor who was made to confess for warning his colleagues dies of it. You were right. It is no comfort at all.',
+    text: (G) => `Two days before Spring Festival they close ${WUHAN(G) ? 'the city around you' : 'Wuhan'}, and you know at once what this is, because you have the vinegar smell of 2003 in your nose before anyone says the word. You buy masks the same afternoon, before the pharmacies run out, and rice, and you tell your family not to come for the New Year and they think you are being dramatic. In February a doctor who was made to confess for warning his colleagues dies of it. You were right. It is no comfort at all.`,
     choices: null,
     effect: (p) => { p.setMem('cnr_2020', true); p.m -= 4; p.h += 1 },
   },
