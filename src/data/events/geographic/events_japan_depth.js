@@ -17,7 +17,7 @@ export const JAPAN_DEPTH_EVENTS = [
   {
     id: 'jpn_okinawa_battle_1945',
     phase: null,
-    weight: 5,
+    weight: 150,
     // Okinawan, and nobody else: this told a farmer in Tohoku that his village
     // had been given grenades. It needs the Okinawa place (`jp_okinawa`).
     when: (G) =>
@@ -255,7 +255,7 @@ export const JAPAN_DEPTH_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Japan' &&
       G.character.gender === 'female' &&
-      G.currentYear >= 1980 && G.currentYear <= 2015 &&
+      G.currentYear >= 1986 && G.currentYear <= 2015 &&
       G.age >= 22 && G.age <= 35 &&
       G.career &&
       !G.mem?.jpnWomenCeil,

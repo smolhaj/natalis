@@ -852,7 +852,7 @@ export const LATIN_AMERICA_EVENTS = [
         text: 'Go — the wages are your way out',
         tag: null,
         outcome: 'You arrive with an address on a piece of paper. The plant is real, the wage is real, the dormitory is also real. You send money home. You build a life that looks nothing like what was expected of you.',
-        effect: (p) => { p.m += 5; p.mo += 600; p.addFlag('maquiladora_worker'); p.addFlag('rural_to_urban'); p.setMem('mex_maquiladora', true); },
+        effect: (p) => { p.m += 5; p.mo += 600; p.addFlag('maquiladora_worker'); p.addFlag('rural_to_urban'); p.setMem('mex_maquiladora', true); p.relocate('mx_juarez', 'informal') },
         inject: null,
       },
       {

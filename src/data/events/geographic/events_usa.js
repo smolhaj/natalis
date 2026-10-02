@@ -356,7 +356,7 @@ export const USA_EVENTS = [
       !G.mem?.usa911Experience,
     text: (G) => {
       const place = G.place
-      const isNYC = place && (place.name === 'New York' || place.name === 'Manhattan' || place.name === 'Brooklyn' || place.name === 'Queens')
+      const isNYC = place?.id === 'us_nyc'
       if (isNYC) {
         return 'You see the second plane hit from wherever you are in the city, or you come up out of the subway into a sky that is wrong. The towers are ten minutes\' walk from somewhere you were last week. By half past ten both are gone, and you are standing in the street with everyone else in a city that has gone very quiet. The phones do not work, and you need to reach someone. The streets are full of paper.'
       }

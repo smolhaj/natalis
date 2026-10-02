@@ -94,10 +94,7 @@ describe('places', () => {
     const ID_RE = /(?:place\??\.id|PLACE\(G\)|placeId|relocate\(|birthPlace\??\.id)\s*(?:[!=]==|:|\()?\s*['"]([a-z]{2}_[a-z0-9_]+)['"]/g
     const LIST_RE = /\[([^\]]*)\]\.includes\((?:PLACE\(G\)|G\.place\?\.id|G\.birthPlace\?\.id)\)/g
     const NAME_RE = /place\??\.name\s*[!=]==\s*['"]([^'"]+)['"]/g
-    // Known and reported to the module's owner: the 9/11 event tests for
-    // 'New York' and its boroughs, and the place is called 'New York City'.
-    const KNOWN = new Set(['events_usa.js: name New York', 'events_usa.js: name Manhattan',
-      'events_usa.js: name Brooklyn', 'events_usa.js: name Queens'])
+    const KNOWN = new Set()
     const bad = new Set()
     for (const f of walk(path.join(process.cwd(), 'src'))) {
       if (f.endsWith(`${path.sep}places.js`)) continue

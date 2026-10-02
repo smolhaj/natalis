@@ -5580,6 +5580,9 @@ export const PLACES = [
   {
     id: 'jp_hiroshima', name: 'Hiroshima', country: 'Japan',
     type: 'urban', scale: 'city', region: 'Chugoku',
+    // At default weight the two cities took a fifth of all Japanese births;
+    // their prefectures held about 4.5% of Japan in 1940.
+    weight: 0.12,
     neighborhoods: {
       informal:      ['The barracks by the river', 'Aioi riverbank', 'Motomachi'],
       working_class: ['Danbara', 'Eba', 'Ujina', 'Koi'],
@@ -5590,6 +5593,7 @@ export const PLACES = [
   {
     id: 'jp_nagasaki', name: 'Nagasaki', country: 'Japan',
     type: 'urban', scale: 'city', region: 'Kyushu',
+    weight: 0.12,
     neighborhoods: {
       informal:      ['The Urakami slopes', 'Near the shipyard gate'],
       working_class: ['Urakami', 'Inasa', 'Tateyama'],
